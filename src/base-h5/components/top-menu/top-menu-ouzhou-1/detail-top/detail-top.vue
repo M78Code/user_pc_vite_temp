@@ -42,9 +42,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useMittEmit, MITT_TYPES } from "src/core";
+import { useMittEmit, MITT_TYPES } from "src/core/index";
 import { MatchDataWarehouse_H5_Detail_Common,MatchDataWarehouse_H5_List_Common } from 'src/core/index'
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
@@ -56,27 +56,23 @@ const active = ref(0);
 const show_list = ref(false);
 const detail_top_pop = ref(null);
 
+getDropDownList()
 
-onMounted(() => {
-  getDropDownList()
-})
-
-/** @type {Ref<Array<TYPES.MatchDetail>>} */
+/** @type {Ref<Array<TYPES.MatchDetail>>} 下拉列表 */
 const drop_down_list = ref([]);
-
 /** 获取下拉列表 */
 function getDropDownList() {
-  let result = MatchDataWarehouse_H5_List_Common.get_quick_mid_obj(route.params.mid)
-  if(!result){
-    result = MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route.params.mid)
-  }
-  console.log("----", result)
-
   api_common.get_matchDetail_getMatchDetailByTournamentId({
-    tId: result.tid
+    tId: route.params.tid
   }).then(res => {
     if(res.code == '200' || res.code == "0000000"){
       drop_down_list.value = res.data
+      const mid = route.params.mid
+      res.data.forEach((item,index)=>{
+        if(item.mid == mid){
+          active.value = index
+        }
+      })
     }else {
       console.error(res)
     }
@@ -85,11 +81,7 @@ function getDropDownList() {
   })
 }
 
-// /**
-//  * @description: 返回上一页
-//  * @param {*}
-//  * @return {*}
-//  */
+/** 返回上一页 */
 const toHome = () => {
   router.go(-1);
 };
@@ -104,7 +96,9 @@ watch(() => detail_top_pop.value,
  * @return {*}
  */
 function change_active(item, index) {
-  if (active.value === index) return;
+  if (active.value === index) {
+    return;
+  }
   active.value = index;
   /*
   if (this.$route.name == "category") {
@@ -112,18 +106,19 @@ function change_active(item, index) {
   }
   else {
   */
-  router.replace({ name: 'category', params: { mid: item.mid, csid: item.csid } });
+  const params = { mid: item.mid, csid: item.csid, tid:item.tid }
+  router.replace({ name: 'category', params});
+  refresh(params)
 }
 /**
  * @description: 刷新
+ * @param {{ mid: string, csid: string, tid: string }} params
  * @return {*}
  */
-const refresh = () => {
+const refresh = (params = {}) => {
   refresh_is_active.value = true;
-  useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
-  setTimeout(() => {
-    refresh_is_active.value = false;
-  }, 1000);
+  useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS,params)
+  refresh_is_active.value = false;
 }
 </script>
 

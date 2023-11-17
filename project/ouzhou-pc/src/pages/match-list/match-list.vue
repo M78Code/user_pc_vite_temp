@@ -24,7 +24,7 @@
         打印数据
       </div>
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
-      length--- {{ match_list_card_key_arr.length }}
+      length--- 
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
@@ -92,8 +92,7 @@
   </div>
 </template>
 <script>
-import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
-
+import { onMounted,onActivated, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 import { IconWapper } from "src/components/icon";
 import LoadData from "src/components/load_data/load_data.vue";
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
@@ -188,6 +187,40 @@ export default {
 
     const { proxy } = getCurrentInstance();
 
+    const filter_20_match = (data)=>{
+      const result = [];
+      // 足球最多10个
+      const max_football_count = 5;
+      let football_count = 0;
+      // 别的球种5个
+      const max_other_count = 2;
+
+      //用来跟踪每种球种的数量
+      const sport_counts = {}
+
+      for(const item of data){
+        if(item.csid === '1' && football_count < max_football_count){
+          result.push(item);
+          football_count++;
+        }else if(item.csid !== '1'){
+          //当前球种数量
+          const current_count = sport_counts['ball' + item.csid] || 0;
+          // 当前球种数量小于5时，推入result
+          if(current_count < max_other_count){
+            result.push(item);
+            sport_counts['ball' + item.csid] = current_count + 1;
+          }
+        }
+        // 大于20条时，跳出循环
+        if(result.length >= 10){
+          break;
+        }
+        console.log('resultt', sport_counts, result);
+      }
+      
+      return result;
+    }    
+
     const init_home_matches = () => {
       const params = {
         type: 1,
@@ -199,6 +232,9 @@ export default {
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
         MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
         let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
+        //过滤前20条数据
+        sort_list = filter_20_match(sort_list);
+        console.log(res.dataList, sort_list, 'sort_list');
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(sort_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
@@ -219,10 +255,10 @@ export default {
       match_list_card_key_arr.value =
         MatchListCardDataClass.match_list_card_key_arr;
     };
-
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
+      MenuData.set_menu_root(0)
 
       mounted_fn();
       init_home_matches();
@@ -231,6 +267,11 @@ export default {
     onUnmounted(() => {
       // handle_destroyed()
     });
+    onActivated(()=>{
+      LayOutMain_pc.set_oz_show_right(false);
+      LayOutMain_pc.set_oz_show_left(true);
+      MenuData.set_menu_root(0)
+    })
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
       MatchListCardDataClass_match_list_card_key_arr();

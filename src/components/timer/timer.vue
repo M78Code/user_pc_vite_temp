@@ -10,7 +10,8 @@
 <template>
   <div class="timer-layout">
     <span class="timer-layout0">{{time_str_old}}</span>
-    <span class="timer-layout2">{{time_str}}</span>
+    <span class="timer-layout2"
+    :class="[date_show_type === 'inline' && 'no-absolute' ]">{{time_str}}</span>
   </div>
 </template>
 <script>
@@ -40,7 +41,12 @@ export default {
       timer_ms: 1000,
       // 时间变化事件
       on_time_change: ""
-    }
+    },
+     // 控制日期是否绝对定位，不换行时，不需要定位
+     date_show_type: {
+      type: String,
+      default: 'br',
+    },
   },
   // let off_ = ''
   created() {
@@ -144,4 +150,8 @@ export default {
   left: 0px;
   /* text-align: center; */
 }
+.timer-layout2.no-absolute {
+    position: static;
+    margin-left: -30px;
+  }
 </style>

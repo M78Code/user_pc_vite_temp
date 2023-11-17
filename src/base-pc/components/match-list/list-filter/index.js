@@ -2,7 +2,7 @@
 import { ref, watch } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 import BaseData from "src/core/base-data/base-data.js";
 
 const current_menu = ref({});
@@ -16,25 +16,25 @@ const vr_menu_obj = ref([]);
 set_init();
 resolve_mew_menu_res();
 
-watch(menu_config.menu_data_version, () => {
+watch(MenuData.menu_data_version, () => {
     resolve_mew_menu_res();
 })
 
 function set_init() {
     let mif = "",
         rootf = "";
-    if (menu_config.menu_root == 1) {
+    if (MenuData.menu_root == 1) {
         mif = 1;
         rootf = 1;
     } else {
         mif = 400;
         rootf = 400;
     }
-    const { mi = mif, root = rootf } = menu_config.mid_menu_result;
+    const { mi = mif, root = rootf } = MenuData.mid_menu_result;
     let obj = { mi, root };
-    if (menu_config.menu_root == 400) {
+    if (MenuData.menu_root == 400) {
         return handle_click_menu_mi_400({ ...obj, guanjun: "guanjun" });
-    } else if (menu_config.menu_root == 1) {
+    } else if (MenuData.menu_root == 1) {
         let sports = menu_mi.value == 1 ? "quanbu-gunqiu" : "common";
         handle_click_menu_mi_1({ ...obj, sports });
     }
@@ -80,13 +80,13 @@ function handle_click_menu_mi_pre_process() {
  * 解析菜单数据
  */
 function resolve_mew_menu_res() {
-    if (menu_config.menu_root == 500) {
+    if (MenuData.menu_root == 500) {
         //热门
         resolve_mew_menu_res_mi_500();
-    } else if (menu_config.menu_root == 1) {
+    } else if (MenuData.menu_root == 1) {
         //滚球  常规 +电竞
         resolve_mew_menu_res_mi_100_2000();
-    } else if (menu_config.menu_root == 400) {
+    } else if (MenuData.menu_root == 400) {
         // 冠军
         resolve_mew_menu_res_mi_400();
     }
@@ -192,28 +192,35 @@ function compute_mi_400_sl_mi_csid(mi) {
  */
 function handle_click_menu_mi_1(detail = {}) {
     let obj = {
-        md: detail.md,
-        mi: detail.mi,
-        mif: detail.mif
-    }
-    // 设置 中间 菜单输出
-    menu_config.set_mid_menu_result(obj);
-    // 设置   请求  列表结构  API 参数的  值
-    menu_config.set_match_list_api_config(obj);
+        // 当前赛种 菜单id
+        mid_menu_mi: detail.mi,  
+        // 当前菜单的赛种id
+        csid: (detail.mif*1 - 100), 
+        current_mi: detail.mi,  
+    } 
+    set_menu_config(obj)
 }
 /**
  * 单个菜单按钮点击  冠军的
  */
 function handle_click_menu_mi_400(detail = {}) {
     let obj = {
-        md: detail.md,
-        mi: detail.mi,
-        mif: detail.mif
+        // 当前赛种 菜单id
+        mid_menu_mi: detail.mi,  
+        // 当前菜单的赛种id
+        csid: (detail.mif*1 - 400), 
+        current_mi: detail.mi,  
     }
+    set_menu_config(obj)
+}
+
+function set_menu_config(obj = {}) {
     // 设置 中间 菜单输出
-    menu_config.set_mid_menu_result(obj);
+    MenuData.set_mid_menu_result(obj);
     // 设置   请求  列表结构  API 参数的  值
-    menu_config.set_match_list_api_config(obj);
+    // MenuData.set_match_list_api_config(obj);
+    // 设置终极菜单id
+    MenuData.set_menu_current_mi(obj.current_mi)
 }
 
 export {

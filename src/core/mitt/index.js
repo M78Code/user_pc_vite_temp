@@ -2,12 +2,18 @@ import mitt from "mitt";
 import * as MITT_TYPES_PROJECT from "base_path/core/mitt/mitt-keys.js";
  
 import * as MITT_TYPES_DEFAULT from "./mitt-keys";
- 
+
+/** @type {MittType} */
 const MITT_TYPES = Object.assign({}, MITT_TYPES_DEFAULT, MITT_TYPES_PROJECT);
 const emitter = new mitt();
 /**
  * 使用 mitt on方法
- * @returns {off,emit(data)}
+ * @param {keyof MittType} type MITT_TYPES事件类型
+ * @param {(params?)=>void} callback 事件触发时的回调函数
+ * @returns {MITT.UseMittOnResult}
+ * @example 
+ * import { useMittOn, MITT_TYPES } from "src/core/index";
+ * useMittOn(MITT_TYPES.EMIT_KEY,(param?)=>void)
  */
 function useMittOn(type,callback) {
  
@@ -32,7 +38,12 @@ function useMittOn(type,callback) {
 }
 /**
  * 使用 mitt emit方法
- *
+ * @param {keyof MittType} type MITT_TYPES事件类型
+ * @param {Object} [param] 事件传递的参数
+ * @example 
+ * import { useMittEmit, MITT_TYPES } from "src/core/index";
+ * useMittEmit(MITT_TYPES.EMIT_KEY)
+ * useMittEmit(MITT_TYPES.EMIT_KEY,{key:value})
  */
 function useMittEmit(type, param) {
   // console.error("mitt----------useMittEmit-----   :", type,param);

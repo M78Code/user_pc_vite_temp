@@ -9,7 +9,7 @@
             <MatchesHeader />
             <div class="leagues-tabs leagues-bg" v-if="MenuData.mid_menu_result?.mi == '1001'">
                 <!-- 联赛菜单 -->
-                <LeagueTab current_mi="1001"/>
+                <LeagueTab current_mi="1001" />
             </div>
             <!-- <ListFilter current_mi="1001"/> -->
         </div>
@@ -50,7 +50,7 @@
 <script>
 // import ListFilter from 'src/base-pc/components/match-list/list-filter/index.vue'
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
-import { onMounted, onUnmounted, ref, watch, getCurrentInstance } from "vue";
+import { onMounted, onUnmounted, ref, watch, getCurrentInstance, onActivated } from "vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
@@ -58,7 +58,6 @@ import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/com
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue"
-import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
@@ -69,7 +68,7 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, compute_css_obj,LayOutMain_pc } from 'src/core/index.js';
+import { PageSourceData, compute_css_obj, LayOutMain_pc } from 'src/core/index.js';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/core/index.js";
 
 import "../match-list/match_list.scss";
@@ -90,30 +89,31 @@ export default {
         ConmingSoon
     },
     setup() {
-        LayOutMain_pc.set_oz_show_right(true)
-        LayOutMain_pc.set_oz_show_left(false)
         // 设置 左侧菜单
         MenuData.set_left_menu_result({
-            root: 1,
             lv1_mi: "",
             lv2_mi: "",
-            sports: "",
-            guanjun: "",
-            mid_menu_show: { list_filter: true },
             has_mid_menu: true,
         });
+        MenuData.set_menu_root(1)
+
         const match_list_card_key_arr = ref([])
-        const coom_soon_state = ref(false)
         const { proxy } = getCurrentInstance()
         const MatchListCardDataClass_match_list_card_key_arr = () => {
             match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
         }
         onMounted(() => {
+            LayOutMain_pc.set_oz_show_right(true)
+            LayOutMain_pc.set_oz_show_left(false)
             mounted_fn();
             MatchListCardDataClass_match_list_card_key_arr()
         });
         onUnmounted(() => {
             // handle_destroyed()
+        })
+        onActivated(() => {
+            LayOutMain_pc.set_oz_show_right(true)
+            LayOutMain_pc.set_oz_show_left(false)
         })
         watch(
             MatchListCardDataClass.list_version,
@@ -122,14 +122,7 @@ export default {
                 proxy?.$forceUpdate()
             }
         )
-        watch(
-            MatchListOuzhouClass.coom_soon,
-            () => {
-                console.log('MatchListOuzhouClass.coom_soon', MatchListOuzhouClass.coom_soon)
-                coom_soon_state.value = MatchListOuzhouClass.coom_soon.value
-                proxy?.$forceUpdate()
-            },
-        )
+      
         return {
             MenuData,
             MatchListData,
@@ -142,7 +135,6 @@ export default {
             compute_css_obj, match_list_card,
             MatchListCardDataClass,
             load_data_state,
-            coom_soon_state
         };
     },
 };

@@ -88,10 +88,12 @@ const set_match_list_mapping_relation_obj_type = () => {
     type = 1;
   }
   // 欧洲版也不区分赛种 且需要一个新的计算逻辑 但是因为接口结构不一样 所以需要有两套计算逻辑
+  // 但是需要区分滚球全部和单球种
   if (PROJECT_NAME == 'ouzhou-pc') {
     if (
-      (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) ||
-      ["today", "early", "bet",'match-play-common'].includes(page_source)
+      (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) 
+      || ["today", "early", "bet",'match-play-common'].includes(page_source)
+      || !MenuData.menu_root
     ) {
       type = 9
     } else {

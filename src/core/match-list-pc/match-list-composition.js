@@ -30,7 +30,7 @@ import { match_list_handle_set } from './match-handle-data.js'
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
 const { update_collect_data, mx_collect_count, collect_count, mx_collect } = collect_composable_fn();
-const { show_mids_change } = ws_composable_fn();
+const { show_mids_change, ws_destroyed } = ws_composable_fn();
 const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
 // 数据请求状态
@@ -51,6 +51,7 @@ let axios_debounce_timer;
 let axios_debounce_timer2;
 let virtual_list_timeout_id;
 let switch_timer_id
+let mitt_list = [];
 
 let tid_match_list;
 useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
@@ -58,7 +59,7 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 	tid_match_list = setTimeout(() => {
 		fetch_match_list()
 	}, 80);
-})
+}).off
 // watch(() => MenuData.match_list_version.value, () => {
 // 	clearTimeout(tid_match_list)
 // 	tid_match_list = setTimeout(() => {
@@ -202,6 +203,8 @@ function handle_destroyed() {
 	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
 	clearInterval(check_match_last_update_timer_id);
+	// 销毁 ws message通信
+	ws_destroyed();
 	for (let key in timer_obj.value) {
 		clearTimeout(timer_obj.value[key]);
 	}
@@ -209,19 +212,7 @@ function handle_destroyed() {
 	if (hot_match_list_timeout) {
 		clearTimeout(hot_match_list_timeout);
 	}
-	// this.debounce_throttle_cancel();
-	// useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change()).off;
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data()).off;
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off;
-	// 站点 tab 休眠状态转激活
-	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off;
-	clearTimeout(virtual_list_timeout_id);
-	clearTimeout(switch_timer_id);
-	clearTimeout(get_match_list_timeid);
-	// 调用列表接口
-	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list()).off;
-	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({})).off;
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off;
+	mitt_list.forEach(i => i());
 	timer_obj.value = {};
 }
 function init_page_when_base_data_first_loaded() {
@@ -251,17 +242,21 @@ function mounted_fn() {
 	// });
 	api_error_count.value = 0;
 	// is_vr_numer.value = 0;
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data);
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count);
-	// 站点 tab 休眠状态转激活
-	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active);
-	// 调用列表接口
-	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
-	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
-	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
-	useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded);
+	mitt_list = [
+		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data).off,
+		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count).off,
+		// 站点 tab 休眠状态转激活
+		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
+		// 调用列表接口
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off,
+		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
+		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match).off,
+		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change).off,
+		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded).off,
+	]
+	
 	load_video_resources();
+	
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
 // 		// bug 版本没有变化 也可以进入

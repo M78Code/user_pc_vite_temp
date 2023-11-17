@@ -695,7 +695,7 @@ if (type.value == 30) {
 .scroll-setect-all {
   display: flex;
   justify-content: flex-end;
-  padding: 0 0.26rem 0 0.4rem;
+  padding: 0 0.36rem 0 0.4rem;
   height: .4rem;
   align-items: center;
   font-size: .14rem;
@@ -736,7 +736,7 @@ if (type.value == 30) {
   .content_box2 {
     width: 100%;
     font-size: 0.16rem;
-    margin: 0 .36rem 0 .4rem;
+    margin: 0 .6rem 0 .4rem;
     height: 100%;
     position: relative;
 
@@ -854,20 +854,18 @@ if (type.value == 30) {
   .bg-f6f7f8 {
     height: 0.3rem;
     line-height: 0.3rem;
-
     padding-left: 0.2rem;
-
+    padding-right: 0.6rem;
     font-size: 0.14rem;
   }
 
   .scroll-title {
     height: .4rem;
-    background-color: var(--q-gb-bd-c-5);
-     -background: #7981A4;
+    background-color: var(--q-gb-bg-c-11);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 .36rem 0 .14rem;
+    padding: 0 .6rem 0 .14rem;
     .scroll-title-text {
       display: flex;
       align-items: center;
@@ -955,6 +953,7 @@ if (type.value == 30) {
   color: var(--q-color-fs-color-3);
 
   .content_box2 {
+    margin-right: 20px;
     &:before {
       background: var(--q-color-border-color-5);
     }

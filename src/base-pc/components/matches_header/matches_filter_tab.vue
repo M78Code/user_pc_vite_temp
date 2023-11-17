@@ -1,10 +1,11 @@
 <template>
+  <div v-show="false"> {{ MenuData.menu_data_version }} {{ MenuData.mid_menu_result.md }}</div>
   <div class="current-filter-wrap">
     <div class="current-filter-list" @scroll="on_scroll">
-      <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.value">
-        <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': final_index == index }">
-          {{ item.label }}
-          <div class="current-mark" :class="{'show-mark': final_index == index}"></div>
+      <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.label">
+        <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label }">
+          {{ item.value }}
+          <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label}"></div>
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
       </div>
@@ -22,19 +23,14 @@
         <img src="../../../assets/images/tr_right_arrow.png" alt="">
       </div>
     </div>
+   
   </div>
 </template>
 
 <script setup>
-  import { ref,onMounted,onUnmounted, watch } from 'vue';
-  import BaseData from "src/core/base-data/base-data.js";
-  import { UserCtr,MenuData, useMittOn, useMittEmit,MITT_TYPES } from 'src/core/index.js'
-  import {
-    handle_click_menu_mi_3_date,
-    // get_date_menu_matches_list,
-    // current_filter_list,
-    final_index
-  } from "src/base-pc/components/tab/date-tab/index.js"
+  import { ref,onMounted } from 'vue';
+  import { UserCtr,MenuData} from 'src/core/index.js'
+  import { handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { format_M_D_PC } from "src/core/format"
 
     // 是否显示左边按钮
@@ -46,57 +42,51 @@
 
   let area_obj = null;
   let area_obj_wrap = null;
+
+  let time = ''
   onMounted(async ()=>{
     area_obj = document.querySelector('.current-filter-list');
     area_obj_wrap = document.querySelector('.current-filter-wrap');
     if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
       show_right_btn.value = true;
     }
-    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change)
-    let time = await UserCtr.get_system_time()
+    time = await UserCtr.get_system_time()
     update_time(time)
-    // get_date_menu_matches_list()
+
   })
 
-  onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_menu_change).off
-  })
-
-    // 左侧菜单切
-  watch(()=>MenuData.left_menu_mi.value,async (news_)=>{
-    let time = await UserCtr.get_system_time()
-    update_time(time)
-  })
+  /**
+   * 一周时间
+   * @param {*} day 
+   * @returns 
+   */
+  const dateWeekFormat = (day) => {
+    let result = [];
+    Date.prototype.getMonthDay = function (i) {
+        let date_time = new Date(this.setHours(12, 0, 0, 0)).getTime()
+        return {
+          label: date_time,
+          value: i == 0 ? 'Tomorrow' : `${format_M_D_PC(date_time)}`,
+          type: 3
+        };
+    }
+   
+    for (let i = 0; i < 6; i++) {
+        day.setDate(day.getDate() + 1);
+        result.push(day.getMonthDay(i))
+    }
+    return result;
+  };
 
   const update_time = (time) => {
-    let arr = []
-    let day = 24 * 60 * 60 * 1000
-    let label = ''
-    let value = ''
-   for (let i = 0; i <=6; i++) {
-    value = i === 0 ? time : time + day * i
-    label = i === 0 ? "Today" :  i === 1 ? "Tomorrow" : `${format_M_D_PC(value)}`
-    arr.push({
-      label,
-      value
-    })
-   }
-   current_filter_list.value = arr
-   choose_filter_tab(arr[0], 0)
+
+    let arr = [{label:'',value:'Today',type:2},...dateWeekFormat(new Date(time))];
+
+    current_filter_list.value = arr
   }
 
-  const set_menu_change = () => {
-    let obj = {
-      ...MenuData.left_menu_result,
-      lv2_mi: MenuData.left_menu_mi.value + '2',
-    }
-    MenuData.set_left_menu_result(obj)
-
-    MenuData.set_match_list_api_config(obj)
-  }
  
  const choose_filter_tab = (item ,index) => {
-  final_index.value = index
   handle_click_menu_mi_3_date(item)
  }
 

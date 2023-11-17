@@ -580,6 +580,8 @@ class MatchMeta {
     // 四大联赛 tid 写死 西甲 320 英超 180 意甲 239 德甲 276 法甲 79
     // 只有足球 euid 40203
     // 热门 type 12
+    const filterData = {}
+    const max = 5
     const tid = ['320', '180', '239', '276', '79']
     const euid = '40203'
     const type = '12'
@@ -593,8 +595,18 @@ class MatchMeta {
     })
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list, base: MatchDataBaseFiveLeagueH5 })
-    return list
+    list.forEach(item => {
+      const { tid } = item
+      if (!filterData[tid]) {
+        filterData[tid] = [item]
+      } else if (filterData[tid].length < max) {
+        filterData[tid].push(item)
+      }
+    })
+    const results = Object.values(filterData).flat()
+    // console.log('get_five_leagues_list', list)
+    this.handler_match_list_data({ list: results, base: MatchDataBaseFiveLeagueH5 })
+    return results
   }
 
   /**

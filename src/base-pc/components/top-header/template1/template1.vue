@@ -22,13 +22,13 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, ref, nextTick } from "vue";
 import _ from "lodash"
 import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
-import { LayOutMain_pc,MenuData } from "src/core/"
+import {MenuData, useMittEmit,MITT_TYPES } from "src/core/"
 
 // import store from "src/store-redux-vuex/redux_menu";
 
@@ -42,51 +42,32 @@ export default defineComponent({
     const userRouter = useRouter()
     const route = useRoute()
     const navList = ref([
-      { label: i18n_t("ouzhou.match.home"), id:1, name: 'home' },
-      { label: i18n_t("menu.match_playing"), id:2, name: 'in_play' },
-      { label: i18n_t("common.betting_record"), id: 3, name: 'bet_record' },
+      { label: i18n_t("ouzhou.match.home"), id:0, name: 'home' },
+      { label: i18n_t("menu.match_playing"), id:1, name: 'in_play' },
+      { label: i18n_t("common.betting_record"), id: 102, name: 'bet_record' },
     ]);
     const nav_click = (item = {}) => {
-      //页面中间头部导航显示处理
-      MenuData.set_router_root_lv_1(item.id)
-      switch (item.id) {
-        case 1:
-          MenuData.set_menu_root(2); 
-          LayOutMain_pc.set_oz_show_right(false)
-          LayOutMain_pc.set_oz_show_left(true)
-          // 默认设置 fetured
-          MenuData.set_router_root_lv_2(1001)
-          userRouter.push({name: item.name})
-          break;
-        case 2:
-          LayOutMain_pc.set_oz_show_right(true)
-          LayOutMain_pc.set_oz_show_left(false)
-          // 设置滚球
-          userRouter.push({name: item.name})
-          break;
-        case 3:
-          LayOutMain_pc.set_oz_show_right(false)
-          LayOutMain_pc.set_oz_show_left(false)
-          userRouter.push({name: item.name})
-          break;
+    
+     
+      // 默认设置 fetured
+      if(item.id == 0){
+        let obj = {
+          root: 0,
+          filter_tab: 1001, //
+        }
+        MenuData.set_mid_menu_result(obj)
       }
-      // let state = store.getState()
-      // // 获取最新的 数据
-      // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu)
-      // // 修改菜单数据
-      // redux_menu.menu_root = item.id
 
-      // // in play 默认足球
-      // if (item.id == 2) {
-      //   redux_menu.mid_tab_menu_type = 101
-      // }
-      // // 存储
-      // store.dispatch({
-      //   type: 'SETREDUXMENU',
-      //   data: redux_menu
-      // })
+      MenuData.set_menu_root(item.id); 
 
+      //页面中间头部导航显示处理
+      userRouter.push({name: item.name})
+      // 触发设置matches头部信息
+      nextTick(()=>{
+        useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, item.id)
+      })
     };
+
     return {
       logo,
       navList,
@@ -129,6 +110,8 @@ export default defineComponent({
       font-weight: 500;
       font-size: 16px;
       line-height: 68px;
+      color: #ffe2cc;
+      font-weight: 500;
       cursor: pointer;
 
       &:hover {
@@ -147,6 +130,7 @@ export default defineComponent({
       .header-nav-title {
         border-bottom: 2px solid #ffffff;
         color:#ffffff;
+        font-weight: 500;
       }
     }
   }

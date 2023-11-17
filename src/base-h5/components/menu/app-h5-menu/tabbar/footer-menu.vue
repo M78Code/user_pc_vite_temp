@@ -3,8 +3,8 @@
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item)" v-for="(item, k) of footer_menu_list" :key="k">
         <div class="m-item-inner">
-          <div class="item-img-wrapper">
-            <img class="menu-item-img" :src="item.icon" alt="" />
+          <div class="item-img-wrapper c-refresh">
+            <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading}" :src="item.icon" alt="" />
           </div>
           <div class="menu-item-title" >
             <span class="title-p1">  {{ item.title }}</span>
@@ -23,7 +23,8 @@ import { i18n_t } from "src/boot/i18n.js";;
 import { UserCtr } from "src/core/";
 // 路由
 const router = useRouter();
-
+//刷新加载中
+const loading = ref(false)
 const footer_list = [
   {
     title: i18n_t('menu_itme_name.results'), 
@@ -51,14 +52,13 @@ const footer_list = [
   },{
     title: UserCtr.daily_activities ? '每日活动' : i18n_t('footer_menu.refresh'),
     icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_nor.png`,
-    id: 5
+    id: 5,
   }
 ]
 const footer_menu_list = ref(footer_list)
 
 
 const menu_item_click = (item = {}) => {
- 
   switch(item.id){
 
     // 赛果
@@ -88,6 +88,12 @@ const menu_item_click = (item = {}) => {
       if (UserCtr.daily_activities){
         console.log('每日活动')
       }else {
+        //加载中
+        loading.value = true;
+        const timer = setTimeout(() => {
+          loading.value = false
+          clearTimeout(timer);
+        }, 1000);
         useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-refresh",
         });
