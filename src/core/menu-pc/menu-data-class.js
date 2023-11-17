@@ -192,7 +192,6 @@ class MenuData {
       console.error('进来了几次',this);
       useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
       useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)//列表滚动到顶部
-      EMIT_SET_MATCH_LIST_SCROLL_TOP
       this.menu_data_version.value = Date.now()
       nextTick(()=>{
         SessionStorage.set('menu_pc',this)
