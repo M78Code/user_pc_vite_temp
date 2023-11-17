@@ -3,13 +3,10 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 主菜单
  */
-
+import { reactive } from 'vue';
 const project_name = window.env.config.FINAL_TARGET_PROJECT_NAME
 
-export default {
-  // namespaced: true,
-  state: {
-    // 左侧列表显示形式 normal：展开 mini：收起
+const state = reactive({
     main_menu_toggle:"normal",
 
     // 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关
@@ -19,8 +16,10 @@ export default {
     },
     // 内嵌版 菜单收起状态
     menu_collapse_status: false,
-  },
+})
 
+export default {
+  // namespaced: true,
   getters: {
     //左侧列表显示形式 normal：展开 mini：收起
     get_main_menu_toggle(state) {

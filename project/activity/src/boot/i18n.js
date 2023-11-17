@@ -16,11 +16,6 @@ const i18n = createI18n({
   silentTranslationWarn: true
 })
 
-export default ({ app }) => {
-  // Set i18n instance on app
-  app.i18n = i18n;
-  app.use(i18n)
-}
 /**
  * @description: 异步获取国际化数据,并设置
  * @param {*} lang

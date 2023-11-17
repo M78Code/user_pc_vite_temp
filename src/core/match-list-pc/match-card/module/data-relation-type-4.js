@@ -87,23 +87,23 @@ import {get_match_template_id} from '../../match-handle-data.js'
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
       let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
-      console.log('match', match);
-      league_repeat_count_obj[match.tid] = league_repeat_count_obj[match.tid] || 0
-      let match_ms =  get_match_status(match.ms)
+      console.log('_match');
+      league_repeat_count_obj[_match.tid] = league_repeat_count_obj[_match.tid] || 0
+      let match_ms =  get_match_status(_match.ms)
       // 赛事数量统计
       if(match_ms == 1){
         play_match_count++
       }else{
         no_start_match_count++
       }
-      let csid_key = 'csid_'+match.csid
+      let csid_key = 'csid_'+_match.csid
       // 赛种ID到卡片key的映射
       csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []
 
       // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
-      if(MatchListCardData.match_list_mapping_relation_obj_type == 9 && match.csid != pre_match_csid){
-        pre_match_csid = match.csid
-        card_key = `sport_title_${match.csid}`
+      if(MatchListCardData.match_list_mapping_relation_obj_type == 9 && _match.csid != pre_match_csid){
+        pre_match_csid = _match.csid
+        card_key = `sport_title_${_match.csid}`
         // 判断球种标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复球种标题卡片
         if(!csid_to_card_key_obj[csid_key].includes(card_key)){
           // 球种标题卡片处理
@@ -116,9 +116,9 @@ import {get_match_template_id} from '../../match-handle-data.js'
             // 卡片索引
             card_index,
             // 球种名称
-            csna:match.csna,
+            csna:_match.csna,
             // 球种ID
-            csid:match.csid,
+            csid:_match.csid,
           }
           // 如果不是ws调用  设置折叠数据
           if(!is_ws_call){
@@ -157,12 +157,12 @@ import {get_match_template_id} from '../../match-handle-data.js'
       }
 
       // 如果当前联赛 不等于上一个联赛,或者刚创建了一个赛事开赛状态标题卡片，  需要添加一个联赛标题卡片
-      if(match.tid != pre_match_tid || is_create_match_status_card){
+      if(_match.tid != pre_match_tid || is_create_match_status_card){
         // 生成自定义联赛ID
-        league_repeat_count_obj[match.tid]++
-        cus_tid = `${match.tid}_${league_repeat_count_obj[match.tid]}`
+        league_repeat_count_obj[_match.tid]++
+        cus_tid = `${_match.tid}_${league_repeat_count_obj[_match.tid]}`
 
-        pre_match_tid = match.tid
+        pre_match_tid = _match.tid
 
         // 联赛标题卡片处理
         card_index += 1
@@ -184,16 +184,16 @@ import {get_match_template_id} from '../../match-handle-data.js'
           // 卡片索引
           card_index,
           // 赛事ID
-          mid:match.mid,
+          mid:_match.mid,
           // 对应的联赛容器卡片key
           league_container_card_key:`league_container_${cus_tid}`,
           // 联赛信息对象 联赛名称 联赛logo等
           league_obj:{
-            csid:match.csid,
-            lurl:match.lurl,
-            tf:match.tf,
-            tid:match.tid,
-            tn:match.tn,
+            csid:_match.csid,
+            lurl:_match.lurl,
+            tf:_match.tf,
+            tid:_match.tid,
+            tn:_match.tn,
             mids:''
           },
         }
@@ -233,9 +233,9 @@ import {get_match_template_id} from '../../match-handle-data.js'
 
       // 联赛卡片下的所有赛事ID列表
       league_card_mids_arr[card_key] = league_card_mids_arr[card_key] || []
-      league_card_mids_arr[card_key].push(match.mid)
+      league_card_mids_arr[card_key].push(_match.mid)
       // 赛事表征数据
-      all_card_obj[match.mid+'_'] =  compute_style_template_by_matchinfo(match, get_match_template_id(match), true)
+      all_card_obj[_match.mid+'_'] =  compute_style_template_by_matchinfo(_match, get_match_template_id(_match), true)
     })
 
     // 设置赛事状态标题卡片下的赛事数量

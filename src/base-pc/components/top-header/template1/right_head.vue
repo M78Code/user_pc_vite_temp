@@ -28,7 +28,7 @@
     </div> -->
     <div class="h-right">
       <div class="user-info">
-        <span style="font-weight: 500;">  {{ format_balance(UserCtr.balance) }} </span>
+        <span style="font-weight: 500;color:#ffffff">  {{ format_balance(UserCtr.balance) }} </span>
         <span style="font-size: 14px;font-weight: 400;opacity: 0.8;">{{ UserCtr.user_info.nickName }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
