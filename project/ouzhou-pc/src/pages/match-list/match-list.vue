@@ -24,7 +24,7 @@
         打印数据
       </div>
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
-      length--- {{ match_list_card_key_arr }}
+      length--- 
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
