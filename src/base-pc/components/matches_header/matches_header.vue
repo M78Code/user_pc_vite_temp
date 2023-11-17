@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result.filter_tab }}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result.filter_tab }}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -38,6 +38,7 @@ const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 
 let mitt_list = null
 onMounted(()=>{
+	console.error('MenuData.menu_root',MenuData.menu_root)
 	set_tab_list(MenuData.menu_root)
 	mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_tab_list).off ]
 })
@@ -59,7 +60,7 @@ const set_tab_list = (news_) =>{
 	// 滚球
 	if( news_ == 1 ){
 		matches_header_title.value = "In Play"
-   	match_list_top.value = '146px'
+   		match_list_top.value = '146px'
 	}
 	
 	// 左侧菜单
@@ -68,6 +69,7 @@ const set_tab_list = (news_) =>{
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
+	// console.log(tab_list.value[0],'tab_list.value[0]')
 	if (tab_list.value.length) {
 		checked_current_tab(tab_list.value[0])
 	}

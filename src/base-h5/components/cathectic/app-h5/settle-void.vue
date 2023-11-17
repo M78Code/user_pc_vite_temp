@@ -6,7 +6,6 @@
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="settle-void" @touchmove.prevent>
-    <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
     <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
     <template>
       <p class="centerText">{{ i18n_t( 'app_h5.cathectic.' + formatInternationalText(BetRecordClass.selected) ) }}</p>

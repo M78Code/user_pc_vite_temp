@@ -152,7 +152,7 @@ const changeDatetab = (item, index) => {
     emit("changeDate", item.val);
 };
 onMounted(() => {
-    MenuData.set_date_time(week[0].val);
+    setDefaultData('101');//默认足球
 })
 /**
  * 默认请求今日数据

@@ -185,8 +185,8 @@ class MatchListCardInfo {
   /**
    * @Description 设置卡片偏移量
    */
-  set_card_show_level() {
-    set_card_show_level()
+  set_card_show_level(e) {
+    set_card_show_level(e)
   }
 
   /**

@@ -163,6 +163,7 @@ import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
 import LotteryDialog from "project/activity/src/pages/yazhou-pc/lottery_dialog.vue";
 import common from "project/activity/src/pages/yazhou-pc/common";
 import format_date_base from "project/activity/src/public/mixins/common/time_format";
+import utils from 'project/activity/src/public/utils/utils'
 export default {
   name: 'BettingEveryday',
   mixins: [common, format_date_base],
@@ -372,12 +373,14 @@ export default {
             }
           } else {
             // 否则就通知首页导航取消小红点提示
-            window.opener.postMessage({name: 'cancelActivityDot', dotHide: 1}, '*');
+            // window.opener.postMessage({name: 'cancelActivityDot', dotHide: 1}, '*');
+            alert('cancelActivityDot')
           }
         } else {
           // 如果当前有可领取任务，也发送通知去更新小红点
           if (ids && this.activityObj.period == 2 && this.taskIds != '') {
-            window.opener.postMessage({name: 'cancelActivityDot', dotHide: 0}, '*');
+            // window.opener.postMessage({name: 'cancelActivityDot', dotHide: 0}, '*');
+            alert('cancelActivityDot')
           }
         }
       }).catch(err => {
@@ -428,7 +431,7 @@ export default {
           this.getLotteryDialog = true;
           this.getLotterySuc = true;
           this.getLotteryNum = data.ticket;
-          this.$utils.gtag_event_send(this.isGrow ? 'PC_grtask_getAwardClick' : 'PC_edtask_getAwardClick', 'PC_活动', this.isGrow ? 'PC_成长任务' : 'PC_每日任务')
+          utils.gtag_event_send(this.isGrow ? 'PC_grtask_getAwardClick' : 'PC_edtask_getAwardClick', 'PC_活动', this.isGrow ? 'PC_成长任务' : 'PC_每日任务')
         } else {
           if (code == '0410502' || code == '0410500' || code == '0410501' || code == '0410506') {
             this.toastText = res.data.msg;
@@ -555,7 +558,7 @@ export default {
           this.hisToryListDataState = "empty";
         }
         this.$nextTick(() => {
-          this.$utils.set_page_aria_hidden()
+          utils.set_page_aria_hidden()
         })
       }).catch(err => {
         this.hisToryListDataState = "empty";

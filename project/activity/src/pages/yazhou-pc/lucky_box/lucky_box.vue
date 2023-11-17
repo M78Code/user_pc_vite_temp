@@ -405,6 +405,7 @@ import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
 import common from "project/activity/src/pages/yazhou-pc/common";
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
 import format_date_base from "project/activity/src/public/mixins/common/time_format";
+import utils from 'project/activity/src/public/utils/utils'
 
 // import { mapGetters } from "vuex";
 import UserStore from 'project/activity/src/public/store/module/user/index';
@@ -656,7 +657,7 @@ export default {
         this.top50Info.data.push(this.top50.data[i]);
       }
       this.$nextTick(() => {
-        this.$utils.set_page_aria_hidden()
+        utils.set_page_aria_hidden()
       })      
     },
     /***
@@ -806,7 +807,7 @@ export default {
                 }
                 this.historyList[index] = item;
               });
-              this.$utils.set_page_aria_hidden()
+              utils.set_page_aria_hidden()
             } else {
               this.historyList = [];
               this.hisToryListDataState = 'empty';
@@ -952,7 +953,7 @@ export default {
               }
             }, 1000);
           }, 1000);
-          this.$utils.gtag_event_send('PC_luckybox_getAwardClick', 'PC_活动', 'PC_幸运盲盒', parseInt(data.award))
+          utils.gtag_event_send('PC_luckybox_getAwardClick', 'PC_活动', 'PC_幸运盲盒', parseInt(data.award))
         } else {
           this.isLoading = "data";
           // 登录失效提示
@@ -1159,7 +1160,7 @@ export default {
      */
     utc_to_gmt_no_8_ms2_(value) {
       if (!value) { return '' }
-      let time = this.$utils.format_time_zone_millisecond(parseInt(value));
+      let time = utils.format_time_zone_millisecond(parseInt(value));
       let [y, m, d, h, mm, s] = this.format_date_base(time)
       return {y, m, d, h, mm, s}
     }
@@ -1243,7 +1244,7 @@ export default {
       margin: 0 auto 25px;
     }
     .timer_btn {
-      background-image: url("~project/activity/src/assets/activity_imgs/imgs/waiting.svg");
+      background-image: url("project/activity/src/assets/activity_imgs/imgs/waiting.svg");
       width: 200px;
       height: 60px;
       line-height: 60px;
@@ -1294,7 +1295,7 @@ export default {
           font-size: 18px;
         }
         .btn_blue {
-          background-image: url("~project/activity/src/assets/activity_imgs/imgs/lottery.svg");
+          background-image: url("project/activity/src/assets/activity_imgs/imgs/lottery.svg");
           cursor: auto;
           img {
             width: 32px;
@@ -1303,7 +1304,7 @@ export default {
           }
         }
         .btn_red {
-          background-image: url("~project/activity/src/assets/activity_imgs/imgs/waiting.svg");
+          background-image: url("project/activity/src/assets/activity_imgs/imgs/waiting.svg");
           line-height: 8px;
           padding-top: 15px;
           margin: 0 35px;
@@ -1342,7 +1343,7 @@ export default {
         }
         /*  按钮置灰 */
         .btn_gray {
-          background-image: url("~project/activity/src/assets/activity_imgs/imgs/history_list_bg.svg");
+          background-image: url("project/activity/src/assets/activity_imgs/imgs/history_list_bg.svg");
         }
       }
     }
@@ -1355,7 +1356,7 @@ export default {
         margin-bottom: 20px;
       }
       .bettingHistory {
-        background-image: url("~project/activity/src/assets/activity_imgs/imgs/history_list_bg.svg");
+        background-image: url("project/activity/src/assets/activity_imgs/imgs/history_list_bg.svg");
         border-radius: 30px;
         font-size: 18px !important;
         font-family: PingFangSC-Medium;
@@ -1372,14 +1373,14 @@ export default {
       line-height: 48px;
       font-family: PingFangSC-Medium;
       font-size: 18px !important;
-      background-image: url("~project/activity/src/assets/activity_imgs/imgs/btn_bg.png");
+      background-image: url("project/activity/src/assets/activity_imgs/imgs/btn_bg.png");
       margin: 70px auto 50px;
     }
     .bonus_title {
       width: 234px;
       height: 56px;
       line-height: 48px;
-      background-image: url("~project/activity/src/assets/activity_imgs/imgs/btn_bg.png");
+      background-image: url("project/activity/src/assets/activity_imgs/imgs/btn_bg.png");
       font-family: PingFangSC-Medium;
       font-size: 18px;
       margin: 40px auto 30px;
@@ -1653,7 +1654,7 @@ export default {
     .content_title {
       width: 260px;
       height: 62px;
-      background-image: url("~project/activity/src/assets/activity_imgs/imgs/title_bg.svg");
+      background-image: url("project/activity/src/assets/activity_imgs/imgs/title_bg.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
@@ -1768,7 +1769,7 @@ export default {
     width: 200px;
     height: 60px;
     line-height: 60px;
-    background-image: url("~project/activity/src/assets/activity_imgs/imgs/waiting.svg");
+    background-image: url("project/activity/src/assets/activity_imgs/imgs/waiting.svg");
     border-radius: 28px;
     font-size: 18px;
     margin: 0 auto;
