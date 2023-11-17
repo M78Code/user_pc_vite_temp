@@ -32,7 +32,9 @@ export const get_detail_data = (params, config={}, url = "/yewu11/v1/w/matchDeta
 // 赛种列表页接口(暂定)
 export const get_matches_list = (params, config={}, url = "/yewu11/v1/m/matches") => http.post(url, params,{axios_debounce_cache_key:'get_matches_list'});
 
-// 详情获取动画地址接口()
+/** 详情获取动画地址接口()
+ *  @param {{mid:string,type:"Animation"}} params type的其他可选值暂不清楚,可自行补充(type:"Animation"|"Other")
+ */
 export const post_video_url = (params, config={}, url = "/yewu11/v1/w/videoAnimationUrl") => {
     params.imgDm =lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT.img_domains[0]');
     return http.post(url, params);
