@@ -1,5 +1,5 @@
 
-function t() {
+function t () {
     "use strict";
     void 0 === Array.isArray && (Array.isArray = function(e) {
         return "[object Array]" === Object.prototype.toString.call(e)
@@ -967,6 +967,4 @@ function t() {
     u
 };
 
-const fp = t();
-
-export default fp;
+export default t();

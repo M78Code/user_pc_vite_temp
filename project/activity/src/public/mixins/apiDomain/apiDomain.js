@@ -10,7 +10,7 @@ import http from "src/public/utils/http/axios_warpper";
 http.init_window_env()
 import AllDomain from 'src/public/utils/http/all_domain.js'
 import {   loadLanguageAsync } from 'src/boot/i18n'
-
+import utils from 'project/activity/src/public/utils/utils'
 import axios from "axios";
 
 const axios_instance = axios.create()
@@ -374,7 +374,7 @@ export default {
         // 延迟隐藏首屏loading动画
         this.loading_is_show_timer = setTimeout(() => {
           // 隐藏首屏loading动画
-          this.$utils.loading_animation_hidden();
+          utils.loading_animation_hidden();
         }, 3000);
       }
     }

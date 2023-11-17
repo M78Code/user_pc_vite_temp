@@ -314,7 +314,7 @@ import format_date_base from "project/activity/src/public/mixins/common/time_for
 import NumberScroll from "project/activity/src/pages/yazhou-pc/slot_machine/number_scroll.vue"
 import compose from "project/activity/src/pages/yazhou-pc/slot_machine/compose.vue"
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
-
+import utils from 'project/activity/src/public/utils/utils'
 export default {
   mixins: [common, format_date_base],
   data() {
@@ -433,8 +433,8 @@ export default {
     this.get_activity_slot_config()
     this.init()
     // 老虎机重置和抽奖请求需要节流处理
-    this.resetSlot = this.throttle(this.resetSlot, 800)
-    this.start = this.throttle(this.start, 800)
+    this.resetSlot = _.throttle(this.resetSlot, 800)
+    this.start = _.throttle(this.start, 800)
     // 记录当前时间
     this.totalTime = 0;
 
@@ -637,7 +637,7 @@ export default {
             });
             this.historyDataState = 'data';
             this.$nextTick(() => {
-              this.$utils.set_page_aria_hidden()
+              utils.set_page_aria_hidden()
             })            
           } else {
             // 没数据就显示【暂无数据】
@@ -954,7 +954,7 @@ export default {
      */
     utc_to_gmt_no_8_ms2_(value) {
       if (!value) { return '' }
-      let time = this.$utils.format_time_zone_millisecond(parseInt(value));
+      let time = utils.format_time_zone_millisecond(parseInt(value));
       let [y, m, d, h, mm, s] = this.format_date_base(time)
       return {y, m, d, h, mm, s}
     },
