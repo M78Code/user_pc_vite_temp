@@ -40,6 +40,8 @@
                         @touchmove="touchmove_handle($event)">
                         <bet-mix-box-child2></bet-mix-box-child2>
                     </div>
+                    <!-- 键盘 -->
+                    <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board>
                 </div>
             </div>
 
@@ -56,6 +58,7 @@
                     </div>
                     <bet-mix-box-child6 v-else></bet-mix-box-child6>
                 </div>
+                <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board>
 
                 <bet-info></bet-info>
             </div>
@@ -103,13 +106,20 @@ import betBar from "./bet-bar.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { UserCtr, i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
-import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 
 const state = 6 //1单关投注  2：合并单关   3：串关投注   4:单关投注等待、单关投注成功、单关投注失败    5:合并单关等待、合并单关成功、合并单关失败   6：串关投注等待、串关投注成功、串关投注失败
+
+const ref_data = reactive({
+  money: 0,
+  key_board_config: {}, //键盘配置信息
+  index_: '', // 当前选中的数据
+  flicker_timer:"",
+})
 
 //串关的按钮
 const is_strand = ref(true)

@@ -2,6 +2,7 @@ import { ref } from "vue";
 import lodash from 'lodash'
 
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import use_featch_fn from "./match-list-featch.js";
 import {utils } from 'src/core/index.js';
 //  订阅所需 赛事ID
@@ -16,6 +17,7 @@ const backend_run = ref(false);
 const load_data_state = ref('data');
 // 订阅所需 盘口ID
 const skt_hpid = ref("");
+let message_fun = null;
 const { api_bymids } = use_featch_fn();
 
 
@@ -91,11 +93,14 @@ const ws_c8_subscribe = () => {
 	return _skt_mid_obj;
 };
 const refresh_c8_subscribe = () => {
-	if (this.SCMD_C8) {
-		const skt_mid_obj = ws_c8_subscribe();
-		// 订阅赛事
-		//  this.SCMD_C8(skt_mid_obj);
-	}
+	message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
+		console.log('cmd:',cmd,data);
+	})
+	// if (this.SCMD_C8) {
+	// 	const skt_mid_obj = ws_c8_subscribe();
+	// 	// 订阅赛事
+	// 	 this.SCMD_C8(skt_mid_obj);
+	// }
 };
 /**
 		 * @Description 可视赛事ID改变
@@ -107,9 +112,14 @@ const show_mids_change = lodash.throttle(() => {
 		return;
 	}
 	// 重新订阅C8
-	// refresh_c8_subscribe();
+	refresh_c8_subscribe();
 	api_bymids({ is_show_mids_change: true })
 }, 3000)
+
+
+const ws_destroyed = () => {
+	ws_message_listener.ws_remove_message_listener(message_fun)
+}
 
 const ws_composable_fn = () => {
 	return {
@@ -124,6 +134,7 @@ const ws_composable_fn = () => {
 		// 订阅所需 盘口id
 		skt_hpid,
 		refresh_c8_subscribe,
+		ws_destroyed,
 		// 可视区域id变更
 		show_mids_change,
 	}

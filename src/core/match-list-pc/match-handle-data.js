@@ -310,6 +310,7 @@ export function get_match_to_map_obj(match, key_arr) {
 
 /*额外给赛事添加对象*/
 export function match_list_handle_set(match_list) {
+    if (Object.prototype.toString.call(match_list) == '[object Array]')
     match_list.forEach(match => {
         match.tpl_id = get_match_template_id(match)
     })
