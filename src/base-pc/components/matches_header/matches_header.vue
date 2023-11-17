@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.router_root_version}} -{{MenuData.left_menu_mi.value}}--{{MenuData.router_root_lv_1}}-{{MenuData.router_root_lv_2}}-{{MenuData.router_root_lv_3}}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result.filter_tab }}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -8,95 +8,87 @@
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">All Matches</div>
 				<div v-else class="matches_tab" >
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
-						:class="{ 'checked': item.value == MenuData.router_root_lv_2 }">
+						:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
 						{{ item.label }}
 					</div>
 				</div>
 			</div>
 		</div>
 		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot()"  />
-		<MatchesDateTab  v-if="MenuData.is_today() || MenuData.is_zaopan()" />
+		<MatchesDateTab v-if="MenuData.is_left_today() || MenuData.is_left_zaopan()" />
 	</div>
 </template>
 
 <script setup>
- // 菜单的 router_root 节点   router_root ： 1 首页  2 滚球  3 my bets   // 4000 左侧赛种 1001 fetured  10002 top events  4001 matches  4002 langue   
-import { ref,onMounted,onUnmounted, watch } from 'vue';
-import { useRouter } from "vue-router";
+import { ref,onMounted,onUnmounted } from 'vue';
 import lodash_ from "lodash"
 
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
-import { MenuData, UserCtr } from "src/core/index.js"
+import { MenuData, useMittOn,MITT_TYPES } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 
 const tab_list = ref([])
-
 // 获取当前header展示背景图
 const current_ball_type = ref(630)
-
-const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px') 
-const coom_soon_state =ref(false)
+
+const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
+
+let mitt_list = null
 onMounted(()=>{
-	set_tab_list(MenuData.menu_root,MenuData.left_menu_mi.value)
-})
-// 左侧菜单切
-watch(MenuData.menu_data_version,(news_)=>{ 
-	console.log(MenuData.menu_root, MenuData.is_scroll_ball(), MenuData.is_zaopan(), 'menu_root')
-	// if(MenuData.is_today() || MenuData.is_zaopan()){
-	// 	set_tab_list(4, MenuData.left_menu_mi.value);
-	// } else {
-	// 	set_tab_list(MenuData.menu_root, MenuData.left_menu_mi.value);
-	// }
-	set_tab_list(MenuData.menu_root, MenuData.left_menu_mi.value);
+	set_tab_list(MenuData.menu_root)
+	mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_tab_list).off ]
 })
 
+onUnmounted(()=>{
+	mitt_list.forEach(item => item());
+})
+
+
 // 设置 头部信息配置
-const set_tab_list = (news_,sport_mi) =>{
+const set_tab_list = (news_) =>{
+	// debugger
+	tab_list.value = []
 	// 首页
 	if(news_ == 0 ){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
-		console.log(tab_list.value, 'tab_list.value')
 		matches_header_title.value = "Matches"
 	}
 	// 滚球
 	if( news_ == 1 ){
 		matches_header_title.value = "In Play"
-        match_list_top.value = '146px'
+   		match_list_top.value = '146px'
 	}
+	
 	// 左侧菜单
-	if(MenuData.is_today() || MenuData.is_zaopan()){
+	if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'sport_tab', [])  
 		// 设置赛种名称
-		matches_header_title.value = BaseData.menus_i18n_map[sport_mi] 
+		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
-	console.log(tab_list.value, 'tab_list.value', lodash_.get(MenuData.ouzhou_filter_config,'home_tab', []) )
+	// console.log(tab_list.value[0],'tab_list.value[0]')
 	if (tab_list.value.length) {
 		checked_current_tab(tab_list.value[0])
 	}
 }
 
 const checked_current_tab = payload => {
-
-	// 暂时不做 
-	if (['1002', '4002'].includes(payload.value)) {
-		// 修改菜单数据
-		MenuData.coom_soon.value = true
-	}else{
-		// 修改菜单数据
-		MenuData.coom_soon.value = false
+	// 判断头部高度
+	if ([1001,1002,4002].includes(payload.value*1) ) {
+			match_list_top.value = '80px'
+	} else if([4001].includes(payload.value*1)){
+			match_list_top.value = '134px'
+	} else {
+			match_list_top.value = '146px'
 	}
-	coom_soon_state.value = MenuData.coom_soon.value
-      // 判断头部高度
-	if (['1001','1002','4002'].includes(payload.value) ) {
-        match_list_top.value = '80px'
-    } else if(['4001'].includes(payload.value)){
-        match_list_top.value = '134px'
-    } else {
-        match_list_top.value = '146px'
-    }
+
+	let obj = {
+		...MenuData.mid_menu_result,
+		filter_tab: payload.value*1
+	}
+	MenuData.set_mid_menu_result(obj)
 }
 
 

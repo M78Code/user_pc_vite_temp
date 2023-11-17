@@ -24,7 +24,7 @@
         打印数据
       </div>
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
-      length--- {{ match_list_card_key_arr.length }}
+      length--- 
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
@@ -204,19 +204,19 @@ export default {
           football_count++;
         }else if(item.csid !== '1'){
           //当前球种数量
-          const current_count = sport_counts[item.name] || 0;
+          const current_count = sport_counts['ball' + item.csid] || 0;
           // 当前球种数量小于5时，推入result
           if(current_count < max_other_count){
             result.push(item);
-            sport_counts[item.name] = current_count + 1;
+            sport_counts['ball' + item.csid] = current_count + 1;
           }
         }
         // 大于20条时，跳出循环
         if(result.length >= 10){
           break;
         }
+        console.log('resultt', sport_counts, result);
       }
-      console.log('resultt', result);
       
       return result;
     }    
@@ -231,8 +231,10 @@ export default {
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
         MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
-        // res.dataList = filter_20_match(res.dataList);
         let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
+        //过滤前20条数据
+        sort_list = filter_20_match(sort_list);
+        console.log(res.dataList, sort_list, 'sort_list');
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(sort_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(

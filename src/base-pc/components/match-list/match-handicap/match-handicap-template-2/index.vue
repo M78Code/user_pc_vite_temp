@@ -38,6 +38,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
+import {get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
 
 const props = defineProps({
   // 盘口列表
@@ -77,7 +78,7 @@ const update_score = (res)=>{
 }
 watch(() => MatchListData.data_version.version, () => {
   MatchListDataInfo = MatchListData
-  match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
+  many_obj = get_match_to_map_obj(props.match.mid); //非坑位对象
 })
 // 组件是否已挂载
 const is_mounted = ref(true);
@@ -88,26 +89,41 @@ onMounted(() => {
   //   is_mounted.value = true
   // })
 })
+let many_obj = get_match_to_map_obj(props.match.mid)
 
-function deal_width_handicap_ols (payload) {
-  const { match } = props;
-  let handicap_type = 1
-  let { hn, mid } =  match
-  if(hn){
-    handicap_type =  hn
-  }else{
-    handicap_type = 1
-  }
+function deal_width_handicap_ols(payload) {
+  let { hn, mid } = props.match
+  let handicap_type = hn || 1
+  const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
   let new_ols = payload.map(item => {
     if (item.empty) { return }
     // 投注项数据拼接
-    let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
+    let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
     // 获取投注项内容 
-      item = lodash.get(MatchListDataInfo, hn_obj_config,{})
-    return item;
+    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
   })
   return new_ols
 }
+
+// function deal_width_handicap_ols (payload) {
+//   const { match } = props;
+//   let handicap_type = 1
+//   let { hn, mid } =  match
+//   if(hn){
+//     handicap_type =  hn
+//   }else{
+//     handicap_type = 1
+//   }
+//   let new_ols = payload.map(item => {
+//     if (item.empty) { return }
+//     // 投注项数据拼接
+//     let hn_obj_config = `list_to_obj.hn_obj.${mid}_${mid}_${item._hpid}_${handicap_type}_${item.ot}`
+//     // 获取投注项内容 
+//       item = lodash.get(MatchListDataInfo, hn_obj_config,{})
+//     return item;
+//   })
+//   return new_ols
+// }
 
 /**
  * @description 获取5分钟玩法时的类名，滚球时不需要背景色，早盘时需要背景色

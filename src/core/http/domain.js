@@ -281,7 +281,7 @@ class AllDomain {
     let url_api = this.url_api || [];
 
     // 获取token
-    let token = SessionStorage.get(token_key);
+    let token = window.SEARCH_PARAMS.init_param.get('token') || SessionStorage.get(token_key);
 
     // 并发请求
     let reqs = [];
