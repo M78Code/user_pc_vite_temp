@@ -247,7 +247,7 @@ export default defineComponent({
       userRouter.push("/match_results")
     }
     const onExpend = () => {
-      visible.value = !visible.value
+            visible.value = !visible.value
     }
 
     // 切换语言
@@ -332,7 +332,6 @@ export default defineComponent({
     margin-right: 10px;
     font-family: "DIN";
   }
-  
 }
 .q-item{
   padding: 8px 0 !important;
@@ -340,7 +339,6 @@ export default defineComponent({
     padding: 0 16px;
   }
 }
-
 .icon{
   width: 20px;
   height: 20px;
@@ -395,7 +393,6 @@ export default defineComponent({
   background-size: calc(3.2px * 5) calc(36.4px * 5);
   
 }
-
 /*语言国旗图标*/
 @each $code, $index in (zh: 0, en: 1, tw: 2, vi: 3, th: 4, ms: 5, ad: 6, md: 7, ry: 8, pty: 9, hy: 10) {
   .lang-#{$code} {
@@ -456,7 +453,6 @@ export default defineComponent({
     border-radius: 20px;
     padding-left: 10px;
   }
-
   :deep(.q-field__control) {
     height: 40px;
   }
@@ -475,7 +471,6 @@ export default defineComponent({
   width: 500px;
   &:deep(.q-field) {
     background-color: #CE5B00 !important;
-
   }
 }
 .icon-search,
