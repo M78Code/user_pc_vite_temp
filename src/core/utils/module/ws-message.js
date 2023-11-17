@@ -40,6 +40,20 @@ const ws_add_message_listener = (callback) =>{
   return fun;
 }
 
+/** 增加ws消息监听的包装函数, 返回取消监听的回调函数, 在组件销毁时调用
+ * @param {(cmd:string,data:{cmd:string,ctsp:number,ld:string,cd:object})=>void} callback 
+ * @returns {()=>void} 移除监听的函数, 于组件销毁时调用
+ * @example
+ * import { addWsMessageListener } from "src/core/utils/module/ws-message.js"
+ * const close = addWsMessageListener(callback)
+ * onBeforeUnmount(close)
+ */
+function addWsMessageListener(callback){
+  const close = ws_add_message_listener(callback)
+  // onBeforeUnmount(close)
+  return ws_remove_message_listener.bind((void 0),close)
+}
+
 /**
  * @description: 移除ws消息监听
  * @param {function} callback 需要销毁的方法
@@ -49,5 +63,5 @@ const ws_remove_message_listener = (callback) =>{
   // 移除ws消息监听
   window.removeEventListener("message", callback);
 }
-export {ws_add_message_listener, ws_remove_message_listener};
+export {ws_add_message_listener, ws_remove_message_listener, addWsMessageListener };
 
