@@ -22,13 +22,13 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, ref, nextTick } from "vue";
 import _ from "lodash"
 import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
-import { LayOutMain_pc,MenuData } from "src/core/"
+import {MenuData, useMittEmit,MITT_TYPES } from "src/core/"
 
 // import store from "src/store-redux-vuex/redux_menu";
 
@@ -52,7 +52,7 @@ export default defineComponent({
       // 默认设置 fetured
       if(item.id == 0){
         let obj = {
-          root: 1,
+          root: 0,
           filter_tab: 1001, //
         }
         MenuData.set_mid_menu_result(obj)
@@ -62,7 +62,10 @@ export default defineComponent({
 
       //页面中间头部导航显示处理
       userRouter.push({name: item.name})
-
+      // 触发设置matches头部信息
+      nextTick(()=>{
+        useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, item.id)
+      })
     };
 
     return {
