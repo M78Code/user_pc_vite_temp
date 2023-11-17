@@ -29,11 +29,12 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
-        <li class="f-s-c" :class="{ 'menu_checked': MenuData.lv1_mi  == item&&menu_type=='1' }" v-for="item in (left_menu_list || menu)"
-          :key="item" @click="jump_func(item,'1')">
-          <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
-          {{ (BaseData.menus_i18n_map || {})[item] || "" }}
-        </li>
+        <template v-for="item in (left_menu_list || menu)" :key="item">
+          <li class="f-s-c" :class="{ 'menu_checked': MenuData.lv1_mi  == item&&menu_type=='1' }"  @click="jump_func(item,'1')">
+            <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
+            {{ (BaseData.menus_i18n_map || {})[item] || "" }}
+          </li>
+        </template>
       </ul>
     </div>
     <div class="menu-line"></div>
@@ -100,9 +101,9 @@ const jump_func = (payload,type) => {
   menu_type.value = type
 
   //太多了 后续做优化
+  MenuData.set_menu_root(202)
   MenuData.set_left_menu_result(obj)
   MenuData.set_menu_current_mi(obj.lv2_mi)
-  MenuData.set_menu_root(202)
 
   let mid_config = {
     ...MenuData.mid_menu_result,

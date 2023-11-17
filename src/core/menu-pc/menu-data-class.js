@@ -16,7 +16,7 @@ import store from "src/store-redux/index.js";
 import { compute_sport_id } from 'src/core/constant/index.js'
 import { LayOutMain_pc } from "src/core/index.js";
 import { ref } from "vue";
-import lodash from 'lodash';
+import lodash, { includes } from 'lodash';
 import BaseData from "src/core/base-data/base-data.js"
 
 
@@ -149,7 +149,8 @@ class MenuData {
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
     // 菜单数据缓存
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    this.set_match_list_api_config()
   }
 
   // 设置一级菜单id
@@ -301,25 +302,25 @@ class MenuData {
     ) {
       val = "match_list";
     }
-
-    const { jinri_zaopan, guanjun } = obj
+    console.error('this.menu_root',this.menu_root)
+    // const { jinri_zaopan, guanjun } = obj
     let text = 'match-today-common'
     // 今日
-    if (jinri_zaopan == 2) {
+    if ([2,202].includes(this.menu_root *1)) {
       text = 'match-today-common'
     }
     // 早盘
-    if (jinri_zaopan == 3) {
+    if ([3,203].includes(this.menu_root *1)) {
       text = 'match-early-common'
     }
     // 常规赛种下的冠军
-    if (guanjun == 'common-guanjun') {
-      text = 'match-common-champion'
-    }
-    // 冠军下面的常规赛事
-    if (guanjun == 'guanjun-common') {
-      text = 'match-champion'
-    }
+    // if (guanjun == 'common-guanjun') {
+    //   text = 'match-common-champion'
+    // }
+    // // 冠军下面的常规赛事
+    // if (guanjun == 'guanjun-common') {
+    //   text = 'match-champion'
+    // }
     if (this.menu_root == 1) {
       text = 'match-play-common'
     }
@@ -380,7 +381,6 @@ class MenuData {
    */
   set_left_menu_result(obj) {
     console.log('MENUDATA.set_left_menu_result', this.is_scroll_ball())
-    this.menu_root = obj.root;
     // 设置 列表接口类型
     // this.set_match_list_api_type(obj);
 
@@ -760,16 +760,16 @@ class MenuData {
   /**
    * 定义  设置 请求  列表结构  API 参数的   值
    */
-  set_match_list_api_config(config) {
+  set_match_list_api_config() {
    
     // 更新列表数据类型
-    this.set_match_list_api_type(config);
+    this.set_match_list_api_type(this.mid_menu_result);
 
     // 设置投注类别
     this.set_bet_category();
 
     // 菜单数据缓存
-    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
 
   /**
