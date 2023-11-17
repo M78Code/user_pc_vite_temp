@@ -190,19 +190,21 @@ export default {
     const filter_20_match = (data)=>{
       const result = [];
       // 足球最多10个
-      const max_football_count = 5;
+      const max_football_count = 10;
       let football_count = 0;
       // 别的球种5个
-      const max_other_count = 2;
+      const max_other_count = 5;
+      //足球的csid为1
+      const football_csid = '1'
 
       //用来跟踪每种球种的数量
       const sport_counts = {}
 
       for(const item of data){
-        if(item.csid === '1' && football_count < max_football_count){
+        if(item.csid === football_csid && football_count < max_football_count){
           result.push(item);
           football_count++;
-        }else if(item.csid !== '1'){
+        }else if(item.csid !== football_csid){
           //当前球种数量
           const current_count = sport_counts['ball' + item.csid] || 0;
           // 当前球种数量小于5时，推入result
@@ -212,7 +214,7 @@ export default {
           }
         }
         // 大于20条时，跳出循环
-        if(result.length >= 10){
+        if(result.length >= 20){
           break;
         }
         console.log('resultt', sport_counts, result);
@@ -258,7 +260,6 @@ export default {
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      MenuData.set_menu_root(0)
 
       mounted_fn();
       init_home_matches();
@@ -270,7 +271,6 @@ export default {
     onActivated(()=>{
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      MenuData.set_menu_root(0)
     })
 
     watch(MatchListCardDataClass.list_version, (list_version) => {

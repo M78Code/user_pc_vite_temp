@@ -106,11 +106,13 @@ onMounted(() => {
   if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
     show_right_btn.value = true;
   }
+  console.error('sss')
 
   //判断接口是否正常返回数据
-  if (mi_100_arr.value.length) {
+  const { current_mi } = MenuData.mid_menu_result
+  if (current_mi) {
     // 默认选中当前第一个tab
-    current_choose_tab.value = mi_100_arr.value[0].mi
+    current_choose_tab.value = current_mi
   } else {
     // 默认选中当前第一个tab
     current_choose_tab.value = 1011
@@ -118,7 +120,7 @@ onMounted(() => {
     return
   }
 
-  handle_click_menu_mi_1(mi_100_arr.value[0])
+  handle_click_menu_mi_1({mi: current_mi ,mif: current_mi+''.substring(0,3) })
 })
 /**
  * 
