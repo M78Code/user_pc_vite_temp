@@ -4,10 +4,10 @@
 -->
 <template>
   <div class="cathectic">
-    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <!-- 加载中 -->
     <!-- <SRecord v-if="is_loading" /> -->
     <scroll ref="myScroll" :on-pull="onPull">
+      <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
         <!-- 订单内容 -->
         <div v-for="(value, name, index) in BetRecordClass.list_data" :key="index" class="cathectic-list">
@@ -106,7 +106,7 @@ const init_data = (_index) => {
 // 根据索引获取当前接口的api和params
 const init_params_api = (_index) => {
   let params = {}
-  let url_api = null;
+  let url_api = Promise.resolve();
   switch (_index) {
     case 0: //未结算
       params = {
