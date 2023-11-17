@@ -59,7 +59,7 @@ const scrollHeight = ref(0);
 const area_height = ref(0);
 const is_bootom_height = ref(0);
 
-const area_obj = ref('area')
+const area_ref = ref('area')
 let mitt_list = [];
 
 
