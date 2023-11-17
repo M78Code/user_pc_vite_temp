@@ -89,7 +89,7 @@ export const calc_text = (data_b) => {
   return { text, color }
 }
 
-// 根据状态，过滤数据，显示提前结算的列表
+// 根据状态过滤，显示提前结算的列表
 const filter_early_list = (list_data, bol) => {
   let all_list = lodash.cloneDeep(list_data)
   if(bol) {

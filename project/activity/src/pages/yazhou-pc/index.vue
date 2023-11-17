@@ -10,7 +10,7 @@
       <!-- 头部 banner 图 -->
       <div class="top-banner">
         <img
-          src="~project/activity/src/assets/activity_banner/banner_slot.jpg"
+          src="~public/yazhou-pc/image/common/activity_banner/banner_slot.jpg"
           alt=""
           width="100%"
         />
@@ -32,19 +32,19 @@
               <span class="tips">
                 <img
                   v-if="v.period == 2"
-                  src="~project/activity/src/assets/activity_imgs/imgs/processing.png"
+                  src="~public/yazhou-pc/image/activity_imgs/imgs/processing.png"
                   alt=""
                   width="100%"
                 />
                 <img
                   v-if="v.period == 1"
-                  src="~project/activity/src/assets/activity_imgs/imgs/waiting.png"
+                  src="~public/yazhou-pc/image/activity_imgs/imgs/waiting.png"
                   alt=""
                   width="100%"
                 />
                 <img
                   v-if="v.period == 3"
-                  src="~project/activity/src/assets/activity_imgs/imgs/finished.png"
+                  src="~public/yazhou-pc/image/activity_imgs/imgs/finished.png"
                   alt=""
                   width="100%"
                 />
@@ -90,6 +90,7 @@ import Alert from "./public_alert.vue";
 import UserStore from 'project/activity/src/public/store/module/user/index';
 import time_format_mixin from "project/activity/src/public/mixins/common/time_format";
 import { api_account } from "project/activity/src/public/api/index.js";
+import utils from 'project/activity/src/public/utils/utils'
 
 // let BUILD_VERSION = window.env.config.BUILD_VERSION
 let BUILD_VERSION = '';
@@ -228,7 +229,7 @@ export default {
         this.allPageState = "data";
         // 如果活动处于维护状态，就切换到维护页面
         if (e.maintaining == true) {
-          this.$utils.redirect_router('/activity_aegis');
+          utils.redirect_router('/activity_aegis');
           return;
         } else {
           this.getActivityTabs();
@@ -362,15 +363,15 @@ export default {
       let clickName = ""
       // 每日任务
       if (k == '10007') {
-        this.$utils.gtag_event_send('PC_edtask_click', 'PC_活动', 'PC_每日任务', new Date().getTime())
+        utils.gtag_event_send('PC_edtask_click', 'PC_活动', 'PC_每日任务', new Date().getTime())
         clickName=  'PC_每日任务页签'
       // 成长任务
       } else if (k == '10008') {
-        this.$utils.gtag_event_send('PC_grtask_click', 'PC_活动', 'PC_成长任务', new Date().getTime())
+        utils.gtag_event_send('PC_grtask_click', 'PC_活动', 'PC_成长任务', new Date().getTime())
         clickName=  'PC_成长任务页签'
       // 幸运盲盒
       } else if (k == '10009') {
-        this.$utils.gtag_event_send('PC_luckybox_click', 'PC_活动', 'PC_幸运盲盒', new Date().getTime())
+        utils.gtag_event_send('PC_luckybox_click', 'PC_活动', 'PC_幸运盲盒', new Date().getTime())
         clickName=  'PC_幸运盲盒页签'
       }
       // 每次切换活动时重新获取一次活动状态
@@ -382,7 +383,7 @@ export default {
     record_zhuge_point(eventLabel) {
       // 发送埋点事件
       if (eventLabel) {
-        this.$utils.send_zhuge_event(eventLabel);
+        utils.send_zhuge_event(eventLabel);
       }
     },
     /**
@@ -394,7 +395,7 @@ export default {
         api_account.get_user_info({token: token}).then(({ data: { data } }) => {
           // 配置埋点信息
           // PV
-          this.$utils.gtag_view_send('PC_activity', '/activity')
+          gtag_view_send('PC_activity', '/activity')
           if (_.get(data, 'activityList')) {
             this.activity_list = data.activityList
           }
@@ -458,6 +459,7 @@ export default {
     min-height: 384px;
     img {
       display: block;
+      width: 100% !important;
     }
   }
   /*  内容 */
@@ -615,7 +617,7 @@ p {
       padding-left: 30px;
     }
     .q-item--active {
-      background-image: url("~project/activity/src/assets/activity_imgs/imgs/got.svg") !important;
+      background-image: url("~public/yazhou-pc/image/activity_imgs/imgs/got.svg") !important;
       background-repeat: no-repeat;
       background-size: 16px;
       background-position-x: 7px;

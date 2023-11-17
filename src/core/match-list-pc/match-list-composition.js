@@ -289,8 +289,9 @@ export function handle_match_list_request_when_ok(data, is_socket, cut, collect)
 		match_list_api_type,
 		left_menu_result,
 	} = MenuData;
+
 	let current_menu = ([2, 3].includes(Number(menu_root)) && left_menu_result.guanjun != "common-guanjun")
-	if ((menu_root == 2000 || current_menu) && !match_list_api_config.is_collect) {
+	if (lodash.get(data, "data.livedata")  ||lodash.get(data, "data.nolivedata") ||  ((menu_root == 2000 || current_menu) && !match_list_api_config.is_collect)) {
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法

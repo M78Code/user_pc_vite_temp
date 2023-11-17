@@ -22,6 +22,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import utils from 'project/activity/src/public/utils/utils'
 export default {
   data() {
     return {
@@ -52,7 +53,7 @@ export default {
         document.querySelector('.activity_aegis_scroll').style.backgroundImg =  require('public/image/activity_imgs/imgs/activity_aegis_bg.jpg');
         // 如果活动处于维护状态，就切换到维护页面
         if (e.maintaining == false) {
-          this.$utils.redirect_router('/activity');
+          utils.redirect_router('/activity');
           return;
         }
       }
