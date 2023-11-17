@@ -1,6 +1,6 @@
 import { http, AllDomain } from "src/core/http/";
 import { SessionStorage,enter_params } from "src/core/index.js";
-import { loadLanguageAsync, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass } from "src/core/index.js";
+import { loadLanguageAsync, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass,MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -14,6 +14,7 @@ export default {
     created () {
         // 参数控制处理和跳转逻辑
         url_param_ctr_init(this);
+        MenuData.get_new_data()
         this.init_process() 
         
       },

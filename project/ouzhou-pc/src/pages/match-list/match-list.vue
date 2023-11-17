@@ -256,7 +256,6 @@ export default {
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      MenuData.set_menu_root(0)
 
       mounted_fn();
       init_home_matches();
@@ -268,7 +267,6 @@ export default {
     onActivated(()=>{
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      MenuData.set_menu_root(0)
     })
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
