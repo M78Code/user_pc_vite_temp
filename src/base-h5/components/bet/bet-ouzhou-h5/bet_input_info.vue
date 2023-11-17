@@ -10,7 +10,7 @@
         </div>
        </div>
        <div class="info_right size_14">
-        <div class="content-b" @click.stop="input_click">
+        <div class="content-b" @click.stop="input_click(item,index,$event)">
             <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
   
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
@@ -35,10 +35,18 @@ const props = defineProps({
         default:()=>{},
         type:Object,
     },
-    index:{}
+    index: {
+        default:0,
+    }
 })
 
-
+const input_click = (item,index,evnet) => {
+    console.error('index', index)
+  event.preventDefault()
+  BetData.set_bet_keyboard_config(item)
+  BetData.set_bet_keyboard_show(true)
+  BetData.set_active_index(index)
+}
 
 // 光标
 const money_span = ref(null)
@@ -109,7 +117,7 @@ const set_ref_data_bet_money = () => {
   clearInterval(flicker_timer)
   flicker_timer = setInterval(() => {
     money_span.value && money_span.value.classList.toggle('money-span3')
-  }, 700);
+  }, 1000);
 }
 
 </script>
@@ -192,8 +200,9 @@ const set_ref_data_bet_money = () => {
     margin: 0 1px;
     background: var(--q-gb-bg-c-1);
     &.money-span3{
-      background: transparent;
+      background: var(--q-gb-bg-c-12);
+      border-left: 2px solid var(--q-gb-bg-c-12);
+      
     }
   }
-
 </style>

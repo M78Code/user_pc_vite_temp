@@ -125,6 +125,7 @@ watch(() => active_index, (new_) => {
 
 // 点击键盘
 const _handleKeyPress = (e) => {
+  console.error('active_index', active_index)
   e.preventDefault();
   if (e.target.className.includes("shadow-show")) { return }; // 置灰的按钮不能再点击
   let num = e.target.dataset.num;
