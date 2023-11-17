@@ -73,7 +73,7 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 
 const route = useRoute();
 const sportId = route.query.sportId;
-const emit = defineEmits(["changeDate", "changeTab"]);
+const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
 const dateIndex = ref(0);//下拉框选择
@@ -179,6 +179,8 @@ const areaListChange = (item,index) => {
     const move_index = areaList.findIndex((t, _index) => _index === index);
     scrollRefArea.value.scrollTo(move_index - 2, "start-force");
     area_tab_index.value = index;
+    emit("changeArea", item.val);
+
 }
 </script>
   

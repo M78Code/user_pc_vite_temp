@@ -2,7 +2,7 @@
  * @Author: land land@itcom888.com
 -->
 <template>
-  <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate"/>
+  <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
   <!--二级赛事列表-->
   <div class="match-list-page">
     <match-container v-if="curTab === 0 || isClickDetail && curTab === 1" />
@@ -31,14 +31,21 @@ const onTabChange = e => {
 }
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
+  console.log('onChangeDate', e)
 }
 
 const onMatchDateChange = e => {
+  console.log('onMatchDateChange', e)
   curDate.value = e
 }
 const onLeagueChange = (league, game) => {
+  console.log('onLeagueChange', e)
   isClickDetail.value = true
   curLeague.value = league
+}
+
+const onChangeArea = e => {
+  console.log('onChangeArea', e)
 }
 
 const goback = () => {
