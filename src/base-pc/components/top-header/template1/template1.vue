@@ -107,6 +107,8 @@ export default defineComponent({
       font-weight: 500;
       font-size: 16px;
       line-height: 68px;
+      color: #ffe2cc;
+      font-weight: 500;
       cursor: pointer;
 
       &:hover {
@@ -125,6 +127,7 @@ export default defineComponent({
       .header-nav-title {
         border-bottom: 2px solid #ffffff;
         color:#ffffff;
+        font-weight: 500;
       }
     }
   }
