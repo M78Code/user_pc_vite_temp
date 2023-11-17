@@ -127,6 +127,7 @@ defineProps({});
       .sl-icon-left {
         position: absolute;
         left: 0.16rem;
+        transform: translateY(0.02rem);
         .search-icon {
           width: 0.18rem;
           height: 0.18rem;
