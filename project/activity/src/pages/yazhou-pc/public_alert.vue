@@ -7,7 +7,7 @@
 <template>
   <q-dialog v-model="isShow">
     <div class="dialog_content">
-      <div class="alert-wrap">
+      <!-- <div class="alert-wrap">
         <img src="~public/yazhou-pc/image/image/logout_notice.png" alt="" width="100%">
 
         <div class="row items-center relative-position">
@@ -22,7 +22,7 @@
           </ul>
           <div class="btn" @click="confirm">{{$root.$t("login.logout_alert_close")}}</div>
         </div>
-      </div>
+      </div> -->
     </div>
   </q-dialog>
 </template>
