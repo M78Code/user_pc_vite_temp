@@ -4,9 +4,6 @@
  * @Description: url参数页面跳转核心逻辑
  */
 
-// 允许在url中直接累加的参数key
-const PARAM_ADD_KEY = ['wsl', 'pb', 'vlog'];
-
 // 获取sessionStorage中的location_search数据
 const get_session_storage_location_search = () =>
 {
@@ -247,7 +244,7 @@ const url_param_ctr_init = (vue_that)=>{
     
       break;
     case 'ouzhou-pc':
-    
+      window.history.replaceState('', '', url);
       break;
     default:
       break;

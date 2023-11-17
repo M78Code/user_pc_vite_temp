@@ -10,13 +10,21 @@
         <span>(已选16)</span>
       </div>
       <div>
+      </div>
+      <div class="more row items-center justify-between"  @click="searchClick">
        <img
             class="league-icon"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.svg`"
             alt=""
           />
+        <p>
+        更多
+        <img  
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/left_icon.svg`"
+          srcset="">
+        </p>
+      
       </div>
-      <div class="more"  @click="searchClick">更多></div>
     </div>
     <div class="setting-list">
       <div class="setting-item border" v-for="item in setting_list" :key="item.name">
@@ -32,7 +40,11 @@
       </div>
       <div class="setting-item" @click="jumpHandle">
         <div class="title">盘口教程</div>
-        <div class="more">></div>
+        <div class="more">
+        <img  
+        :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/left_icon.svg`"
+         srcset="">
+        </div>
       </div>
       <div class="setting-item">
         <div class="title">前往旧版</div>
@@ -217,10 +229,6 @@ const activity_handle = item => {
     padding: 0.14rem;
     margin: 0;
     height: 0.5rem;
-    .league-icon{
-     margin-top: 0.08rem;
-     margin-left: 0.96rem;
-    }
   }
 
   .setting-item {
