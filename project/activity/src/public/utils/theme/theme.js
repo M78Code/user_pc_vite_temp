@@ -3,8 +3,8 @@
  * @Date: 2022-10-17 14:03:48
  * @Description:
  */
-import all_in_one from "src/css/config/module/all_in_one";
-import alltheme from "src/css/config/theme";
+import all_in_one from "project/activity/src/css/config/module/all_in_one";
+import alltheme from "project/activity/src/css/config/theme";
 //为压缩js文件大小此处暂时转换一下，后期可整体替换
 
 const oldKeys={

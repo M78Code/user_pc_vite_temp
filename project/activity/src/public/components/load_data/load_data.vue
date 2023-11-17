@@ -120,8 +120,11 @@
 </template>
 
 <script>
-import no_data from "src/public/components/no_data/no_data";
-import { mapGetters,mapActions } from "vuex";
+import no_data from "project/activity/src/public/components/no_data/no_data.vue";
+import userStore from 'project/activity/src/public/store/module/user/index'
+import menuStore from 'project/activity/src/public/store/module/main_menu/main_menu'
+import { EMIT_SHOW_ALERT_CMD } from 'project/activity/src/public/utils/http/emit_cmd.js';
+
 export default {
   name: "loadData",
 
@@ -183,19 +186,19 @@ export default {
     // 用户登录失效时,直接关闭loading中动画
     this.no_user = this.vx_get_is_invalid;
     // 绑定接收用户失效事件
-    this.$root.$on(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    // this.$root.$on(EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 
   computed: {
-    ...mapGetters({
-      // 登录是否失效
-      vx_get_is_invalid: "get_is_invalid",
-      //获取当前菜单类型
-      vx_cur_menu_type: "get_cur_menu_type",
-    }),
+    vx_get_is_invalid() {
+        return userStore.getters.get_is_invalid();
+    },
+    vx_cur_menu_type() {
+        return menuStore.getters.get_cur_menu_type();
+    },
     //是否电子竞技
     is_eports(){
-        return this.$utils.is_eports_csid(+this.$route.params.csid)
+        return is_eports_csid(+this.$route.params.csid)
     },
     cur_state(){
       return this.state
@@ -237,7 +240,7 @@ export default {
   },
   destroyed () {
     // 解绑接收用户失效事件
-    this.$root.$off(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    // this.$root.$off(EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 };
 </script>

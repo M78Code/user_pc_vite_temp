@@ -265,7 +265,10 @@ export const details_main = (router,route) => {
     // use_polling_mst(match_detail.value)
     // mock end
   };
-
+  /** 
+   * @var mid 用于detail_init函数初始化的赛事id 
+   * @var csid 用于detail_init函数初始化的csid 
+   */
   let {mid, csid} = route.params;
   /**
    *@description 初始化
@@ -277,10 +280,14 @@ export const details_main = (router,route) => {
       mid,
       cuid: cuid.value,
     });
-
-  
-  
   };
+  /** 监听顶部刷新功能 */
+  const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, (params)=>{
+    mid = params.mid
+    csid = params.csid
+    detail_init()
+  });
+  
   const timer_s_interval = (time = 4000) => {
     clear_all_timer();
     timer.value = setTimeout(() => {
@@ -321,12 +328,6 @@ export const details_main = (router,route) => {
           break;
       }
     })  
-  });
-  // // 监听顶部刷新功能
-  const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, (params)=>{
-    mid = params.mid
-    csid = params.csid
-    detail_init()
   });
   onUnmounted(() => {
     clear_all_timer();
