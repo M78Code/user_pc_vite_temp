@@ -79,9 +79,13 @@ let mitt_list = [];
   }
 };
 
-
+// 设置列表滚动条位置
+mitt_list=[
+  useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop).off
+]
 onUnmounted(() => {
-  mitt_list.forEach(i => i());
+  // 设置列表滚动条位置
+  mitt_list.forEach(i=>i())
   // this.debounce_throttle_cancel(this.on_bootom);
   // this.debounce_throttle_cancel(this.emit_on_scroll);
   // this.debounce_throttle_cancel(this.update_list_card_offset);
@@ -130,6 +134,13 @@ const on_bootom = lodash.throttle(() => {
   useMittEmit(MITT_TYPES.EMIT_LIST_ON_SCROLL);
 }, 3000);
 /**
+ * @Description 更新列表卡片偏移量
+ * @param {undefined} undefined
+ */
+ const update_list_card_offset = lodash.throttle((e) => {
+  MatchListCard.set_card_show_level(e);
+}, 50);
+/**
  * @Description 滚动条滚动事件
  * @param {object} e 滚动事件
  * @param {undefined} undefined
@@ -143,10 +154,9 @@ const on_scroll = (e) => {
   // 设置列表滚动条scrollTop
   MatchListScrollClass.set_scroll_top(scrollTop);
   // 更新列表卡片偏移量
-  lodash.throttle(() => {
-    MatchListCard.set_card_show_level(scrollTop);
-  }, 300)
+  update_list_card_offset(scrollTop);
 };
+
 
 /**
  * @Description 滚动高度改变事件(容器高度变化回调函数)
