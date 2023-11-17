@@ -192,7 +192,7 @@
                 <template v-else>
                   <div v-for="item in 3" :key="item.oid" class="item">
                     <div class='num'>
-                      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" />
+                      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock2.svg`" />
 
                     </div>
                   </div>
