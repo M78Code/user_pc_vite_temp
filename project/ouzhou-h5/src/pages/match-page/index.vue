@@ -5,51 +5,64 @@
   <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
   <!--二级赛事列表-->
   <div class="match-list-page">
-    <match-container v-if="curTab === 0 || isClickDetail && curTab === 1" />
+    <match-container v-if="state.curTab === 0 || state.isClickDetail && state.curTab === 1" />
     <MatchFirstStep v-else @leagueChange="onLeagueChange" />
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue"
+import { onMounted, reactive  } from "vue"
 import tabDate from './tab-date/tab-date.vue';
 import MatchFirstStep from "./match-first-step.vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { IconWapper } from 'src/components/icon'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
-//是否点击联赛详情
-const isClickDetail = ref(false)
 
-const curTab = ref(0)
-
-const curDate = ref('')
-
-const curLeague = ref({})
+const state = reactive({
+  isClickDetail: false,  //是否点击联赛详情
+  curTab: 0,
+  curDate: '',
+  curLeague: {},
+  curArea: '',
+  curFilterDate: ''
+})
 
 const onTabChange = e => {
-  curTab.value = e
+  state.curTab = e
 }
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
+  state.curLeague = e
   console.log('onChangeDate', e)
 }
 
 const onMatchDateChange = e => {
   console.log('onMatchDateChange', e)
-  curDate.value = e
+  state.curDate = e
 }
 const onLeagueChange = (league, game) => {
   console.log('onLeagueChange', e)
-  isClickDetail.value = true
-  curLeague.value = league
+  state.isClickDetail = true
+  state.curLeague = league
 }
 
 const onChangeArea = e => {
   console.log('onChangeArea', e)
+  state.curArea = e
+}
+
+const getAreaLeaguesData = () => {
+  const params = {
+    area: state.curArea,
+    date: state.curFilterDate
+  }
+  // 后续调用新接口
+
+  
 }
 
 const goback = () => {
-  isClickDetail.value = false
+  state.isClickDetail = false
 }
 
 </script>

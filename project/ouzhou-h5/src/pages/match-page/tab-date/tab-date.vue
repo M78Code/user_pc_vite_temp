@@ -182,8 +182,7 @@ const areaListChange = (item,index) => {
     const move_index = areaList.findIndex((t, _index) => _index === index);
     scrollRefArea.value.scrollTo(move_index - 2, "start-force");
     area_tab_index.value = index;
-    emit("changeArea", item.val);
-
+    emit("changeArea", item);
 }
 </script>
   
