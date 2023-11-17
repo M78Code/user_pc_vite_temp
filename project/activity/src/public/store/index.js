@@ -4,33 +4,33 @@
  * @Description: 持久化数据入口
  */
 //socket
-import websocket from "src/public/store/module/websocket/websocket.js";
+import websocket from "project/activity/src/public/store/module/websocket/websocket.js";
 //global
-import global from "src/public/store/module/global/global.js";
+import global from "project/activity/src/public/store/module/global/global.js";
 // 用户信息
-import user from "src/public/store/module/user/index.js";
+import user from "project/activity/src/public/store/module/user/index.js";
 //投注记录
-import bet_record from "src/public/store/module/bet_record/bet_record.js";
+import bet_record from "project/activity/src/public/store/module/bet_record/bet_record.js";
 // 投注列表
-import betting_list from "src/public/store/module/betting_list/betting_list.js";
+import betting_list from "project/activity/src/public/store/module/betting_list/betting_list.js";
 //搜索
-import search from "src/public/store/module/search/search.js";
+import search from "project/activity/src/public/store/module/search/search.js";
 //布局相关
-import layout from "src/public/store/module/layout/layout.js";
+import layout from "project/activity/src/public/store/module/layout/layout.js";
 //联赛
-import filter from "src/public/store/module/filter/filter_store";
+import filter from "project/activity/src/public/store/module/filter/filter_store";
 // 赔率转换
-import odds_conversion from "src/public/store/module/odds_conversion/odds_conversion.js";
+import odds_conversion from "project/activity/src/public/store/module/odds_conversion/odds_conversion.js";
 // 菜单
-import main_menu from "src/public/store/module/main_menu/main_menu.js";
+import main_menu from "project/activity/src/public/store/module/main_menu/main_menu.js";
 // 赛事详情
-import match_details from "src/public/store/module/match_details/index";
+import match_details from "project/activity/src/public/store/module/match_details/index";
 //语言
-import languages from "src/public/store/module/languages/languages.js"
+import languages from "project/activity/src/public/store/module/languages/languages.js"
 //主题
-import theme from "src/public/store/module/theme/theme.js";
+import theme from "project/activity/src/public/store/module/theme/theme.js";
 // 聊天室
-import chatroom from "src/public/store/module/chatroom/chatroom.js";
+import chatroom from "project/activity/src/public/store/module/chatroom/chatroom.js";
 
 /*
  * If not building with SSR mode, you can

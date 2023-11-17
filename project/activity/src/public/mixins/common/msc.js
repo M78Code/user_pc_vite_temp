@@ -3,7 +3,8 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 国际化比赛阶段比分转换工具
  */
-import details from "src/public/utils/detailsClass/details.js"
+import details from "project/activity/src/public/utils/detailsClass/details.js"
+import utils from 'project/activity/src/public/utils/utils'
 export default {
 
   data() {
@@ -321,7 +322,7 @@ export default {
 
       let _home_score = ""
       let _away_score = ""
-      if (this.$utils.get_match_status(match.ms)) {
+      if (utils.get_match_status(match.ms)) {
 
         let key = "S1"
         _home_score = "0"
@@ -363,7 +364,7 @@ export default {
 
       let _home_score = ""
       let _away_score = ""
-      if (this.$utils.get_match_status(match.ms)) {
+      if (utils.get_match_status(match.ms)) {
         let key = "S1"
         _home_score = "0"
         _away_score = "0"
@@ -473,7 +474,7 @@ export default {
         //网球当前局得分
         if (csid == 5) {
           match.score = this.yabo_common.msc_array_obj(match.msc);
-          let is_zero = this.$utils.get_match_status(match.ms);
+          let is_zero = utils.get_match_status(match.ms);
           details.init_score(match.score, ['S103'], is_zero);
         }
 

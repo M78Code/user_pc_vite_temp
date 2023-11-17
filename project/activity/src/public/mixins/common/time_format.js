@@ -6,7 +6,7 @@
 import LanguageStore from 'project/activity/src/public/store/module/languages/languages';
 import GlobalStore from 'project/activity/src/public/store/module/global/global';
 import licia_format from 'licia-es/format';
-
+import utils from 'project/activity/src/public/utils/utils'
 export default {
   computed: {
     lang: function() {
@@ -26,7 +26,7 @@ export default {
     formatTime(timestamp, fmt) {
       try {
           // const date = new Date(parseInt(timestamp))
-      const date = new Date(this.$utils.format_time_zone_millisecond(parseInt(timestamp)))
+      const date = new Date(utils.format_time_zone_millisecond(parseInt(timestamp)))
       let ret;
       let opt = {
         "Y+": fmt.lastIndexOf("Y") - fmt.indexOf("Y") == 3 ? date.getFullYear().toString() : date.getFullYear().toString().substr(2, 2),        // 年
@@ -171,7 +171,7 @@ export default {
     },
     utc_to_gmt_no_8_ms2(value) {
       if (!value) { return '' }
-      let time = this.$utils.format_time_zone_millisecond(parseInt(value));
+      let time = format_time_zone_millisecond(parseInt(value));
       let [y, m, d, h, mm, s] = this.format_date_base(time)
       return `${h}:${mm}:${s}`;
     },

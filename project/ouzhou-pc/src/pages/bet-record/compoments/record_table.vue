@@ -459,6 +459,11 @@ const matchType = (type, langCode=UserCtr.lang) => {
   }
   return res;
 }
+/**
+ * 投注状态
+ * @param orderStatus
+ * @returns {string}
+ */
 const order_status = (orderStatus) => {
   let str = ''
   switch (parseInt(orderStatus)) {
@@ -486,6 +491,10 @@ const changePage = (arv) => {
   console.log(1111111111, arv)
   emit('itemFilter', { page: current })
 }
+/**
+ * 复制id
+ * @param data
+ */
 const hand_copy = (data) => {
   // copyToClipboard(data)
   GlobalSwitchClass.set_tip_show_state(true)
