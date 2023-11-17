@@ -6,7 +6,7 @@
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div v-if="details_show_btn" class="warp">
     <div class="settle-btn" @click="fetch_early_settle_detail">
-      <span>Cashout Details</span>
+      <span>{{ i18n_t('early.list1') }}</span>
       <icon-wapper :name="detail_show_info ? 'icon-triangle' : 'icon-triangle1'" />
     </div>
       <!-- 滑块 -->
@@ -17,10 +17,10 @@
                 <!-- 单号、日期 -->
                 <p>
                   <label class="number"  @click="copy">
-                    50658wa4e8r748237443
+                    {{ item.preOrderNo }}
                     <img :src="compute_local_project_file_path('/image/svg/copy.svg')" alt=""  style="width:0.1rem" />
                   </label> 
-                  <span>27/06 21:41</span>
+                  <span>{{formatTime(+item.createTime, 'mm/DD HH:MM')}}</span>
                 </p>
                 <!-- 结算本金  item.orderStatus == 2(注单被取消) -->
                 <p><label>{{ item.remainingBetAmount ? i18n_t('early.list7') : i18n_t('early.list2') }}：</label> <span>{{ item.orderStatus == 2 ? '0.00' : (+item.preBetAmount).toFixed(2) }}</span></p>
@@ -43,7 +43,7 @@ import { i18n_t, compute_local_project_file_path } from 'src/core/index.js'
 import { IconWapper } from 'src/components/icon'
 import { ref, computed, onMounted } from 'vue'
 import { Platform } from "quasar";
-
+import { formatTime } from 'src/core/format/index.js'
 const props = defineProps({
   item_data: {
     type: Object
@@ -129,12 +129,11 @@ template {
     }
   }
   .settle-btn {
-    font-size: 0.14rem;
     padding-top: 0.1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.18rem;
+    font-size: 0.16rem;
     line-height: 0.4rem;
     border-bottom: 1px solid var(--q-gb-bg-c-18);
     i {
