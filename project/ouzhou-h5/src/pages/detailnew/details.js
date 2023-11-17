@@ -298,10 +298,29 @@ export const details_main = (router,route) => {
       mst_timer.value = null;
     }
   };
+  let message_fun = null
   onMounted(() => {
     loading.value = true;
-      detail_init();
-      // timer_s_interval(4000);
+    detail_init();
+    const { mid, csid } = route.params;
+    // 增加监听接受返回的监听函数 
+    message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
+    console.error('cmd:',cmd,data);
+      switch (cmd) {
+        //赔率盘口变更
+        case 'C105':
+        //   get_matchDetail_getMatchOddsInfo({
+        //    mcid: 0,
+        //    cuid: cuid.value,
+        //    mid,
+        //    newUser: 0,
+        //  },true);
+          break;
+      
+        default:
+          break;
+      }
+    })  
   });
   // // 监听顶部刷新功能
   const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, (params)=>{
@@ -309,35 +328,11 @@ export const details_main = (router,route) => {
     csid = params.csid
     detail_init()
   });
-    //todo mitt 触发ws更新
-  const {off:off_ws} = useMittOn(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,(params)=>{
-    return
-    switch (params.type) {
-      case "oddinfo":
-      const { mid, csid } = route.params;
-       get_matchDetail_getMatchOddsInfo({
-        mcid: 0,
-        cuid: cuid.value,
-        mid,
-        newUser: 0,
-      },true);
-        break;
-    
-      default:
-        break;
-    }
-  })
-  // 增加监听接受返回的监听函数 
-const message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
-  console.error('cmd:',cmd,data);
-})
-
   onUnmounted(() => {
     clear_all_timer();
     refreshOff()
-    off_ws()
     // 组件销毁时销毁监听函数
-  ws_message_listener.ws_remove_message_listener(message_fun)
+    ws_message_listener.ws_remove_message_listener(message_fun)
   });
   return {
      detail_store,
