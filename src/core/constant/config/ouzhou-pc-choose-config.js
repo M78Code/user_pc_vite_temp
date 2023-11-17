@@ -25,9 +25,9 @@ export default {
       {first_hpid: "173", second_hpid: "172"},
     ],
     "7": [
-      {first_hpid: "153", second_hpid: "172"},
-      {first_hpid: "153", second_hpid: "173"},
-      {first_hpid: "172", second_hpid: "173"},
+      {first_hpid: "153", second_hpid: "182"},
+      {first_hpid: "153", second_hpid: "181"},
+      {first_hpid: "181", second_hpid: "182"},
     ],
     "9": [
       {first_hpid: "153", second_hpid: "173"},
@@ -45,9 +45,9 @@ export default {
       {first_hpid: "244", second_hpid: "243"},
     ],
     "4": [
-      {first_hpid: "242", second_hpid: "244"},
-      {first_hpid: "242", second_hpid: "243"},
-      {first_hpid: "244", second_hpid: "243"},
+      {first_hpid: "1", second_hpid: "2"},
+      {first_hpid: "1", second_hpid: "4"},
+      {first_hpid: "2", second_hpid: "4"},
     ],
     "15": [
       {first_hpid: "1", second_hpid: "2"},
@@ -76,5 +76,25 @@ export default {
     ],
     "12": [
       {first_hpid: "153", second_hpid: "2"},
-    ]
+    ],
+    "100": [
+      {first_hpid: "30002", second_hpid: "30001"},
+      {first_hpid: "30002", second_hpid: "30003"},
+      {first_hpid: "30003", second_hpid: "30001"},
+    ],
+    "101": [
+      {first_hpid: "30002", second_hpid: "30001"},
+      {first_hpid: "30002", second_hpid: "30003"},
+      {first_hpid: "30003", second_hpid: "30001"},
+    ],
+    "102": [
+      {first_hpid: "30002", second_hpid: "30001"},
+      {first_hpid: "30002", second_hpid: "30003"},
+      {first_hpid: "30003", second_hpid: "30001"},
+    ],
+    "103": [
+      {first_hpid: "30002", second_hpid: "30001"},
+      {first_hpid: "30002", second_hpid: "30003"},
+      {first_hpid: "30003", second_hpid: "30001"},
+    ],
   }
