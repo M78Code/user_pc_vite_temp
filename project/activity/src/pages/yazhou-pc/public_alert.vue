@@ -7,8 +7,8 @@
 <template>
   <q-dialog v-model="isShow">
     <div class="dialog_content">
-      <div class="alert-wrap">
-        <img src="~public/image/wwwassets/yabo/image/logout_notice.png" alt="" width="100%">
+      <!-- <div class="alert-wrap">
+        <img src="~public/yazhou-pc/image/image/logout_notice.png" alt="" width="100%">
 
         <div class="row items-center relative-position">
           <div class="text">{{$root.$t("login.login_out_dear_user")}}</div>
@@ -22,11 +22,12 @@
           </ul>
           <div class="btn" @click="confirm">{{$root.$t("login.logout_alert_close")}}</div>
         </div>
-      </div>
+      </div> -->
     </div>
   </q-dialog>
 </template>
 <script>
+import utils from 'project/activity/src/public/utils/utils'
 export default {
   name: 'Alert',
   props: {
@@ -69,7 +70,7 @@ export default {
     },
     confirm(){
       if (this.isMaintaining) {
-        this.$utils.redirect_router('/activity_aegis');
+        utils.redirect_router('/activity_aegis');
       }
       this.isShow = false;
       this.alertText = "";

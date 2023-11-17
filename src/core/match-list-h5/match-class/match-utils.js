@@ -8,7 +8,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 class MatchUtils {
 
   /**
-   * @description 赛事归类
+   * @description 赛事归类开赛、未开赛
    * @param {*} list 赛事数据
    */
   handler_match_classify_by_ms (list) {
@@ -45,9 +45,7 @@ class MatchUtils {
    * @param {*} list 赛事数据
    */
   handler_match_classify_by_csid (list) {
-    const csid_list = list.map(l => {
-      return l.csid
-    })
+    const csid_list = list.map(l => l.csid)
     const result_csids = lodash.uniq(csid_list)
     const csid_matchs = []
     result_csids.forEach(csid => {
@@ -57,8 +55,23 @@ class MatchUtils {
     return csid_matchs
   }
 
+   /**
+   * @description 赛事联赛归类 
+   * @param {*} list 赛事数据
+   */
+   handler_match_classify_by_tid (list) {
+    const tid_list = list.map(l => l.tid)
+    const result_tids = lodash.uniq(tid_list)
+    const tids_matchs = []
+    result_tids.forEach(tid => {
+      const cur_tid_arr = list.filter(item => item.tid === tid)
+      cur_tid_arr.length > 0 && tids_matchs.push(...cur_tid_arr)
+    })
+    return tids_matchs
+  }
+
   /**
-   * @description 赛事未开赛标题
+   * @description 赛事未开赛标题 or 球种显示
    * @param {*} i 赛事下标
    * @returns 
    */
@@ -119,18 +132,19 @@ class MatchUtils {
   } 
 
   /**
-   * @description 是否展示联赛标题
+   * @description 元数据 是否展示联赛标题   
    * @param {*} i 赛事下标
-   * @returns 
+   * @returns Boolean 
    */
   get_match_is_show_league (i, mids)  {
     // 当前赛事
     const match = BaseData.resolve_base_info_by_mid(mids[i])
     let is_show_league = false
+    if (!match) return false
     if (i > 0) {
       const prev_match = BaseData.resolve_base_info_by_mid(mids[i - 1])
        // 上一个赛事对象
-      is_show_league = i === 0 ? true : match.tid !== prev_match.tid
+      is_show_league = prev_match && i === 0 ? true : match.tid !== prev_match.tid
     } else {
       is_show_league = true
     }
@@ -226,7 +240,7 @@ class MatchUtils {
       if (result.length >= 20) return true
       if (csid == 1 &&  csid_obj[key] < 11) {
         result.push(t)
-      } else {
+      } else if (csid != 1) {
         if (csid_obj[key] < 6) result.push(t)
       }
     })

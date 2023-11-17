@@ -136,7 +136,8 @@ const toggleLeftDrawer = () => {
   width: 100%;
   // padding: 0 15px 0 15px;
   justify-content: space-between;
-  color: rgba(255, 255, 255, 1);
+  //color: rgba(255, 255, 255, 1);
+  color: var(--q-gb-t-c-14);
   background: url('./img/top_bg.png') no-repeat;
   background-size: cover;
   .navigation{
@@ -159,14 +160,14 @@ const toggleLeftDrawer = () => {
       height: 12px;
     }
     input {
-      border: 1px solid #ffffff;
+      border: 1px solid #ffffff; 
       border-radius: 20px;
       width: 132px;
       height: 30px;
       padding-left: 30px;
-      background: #ff8b33;
+      background: #FF7000;
       outline: none;
-      color: #fff;
+      color: var(--q-gb-t-c-14);
     }
     ::-webkit-input-placeholder {
       color: #ffffff;

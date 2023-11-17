@@ -8,7 +8,7 @@
     <!-- 滚动区域 -->
     <div
       class="list-scrollbar router_scroll_layout"
-      ref="area"
+      ref="area_ref"
       @scroll="on_scroll"
     >
       <div class="v-scroll-content relative-position">
@@ -59,7 +59,8 @@ const scrollHeight = ref(0);
 const area_height = ref(0);
 const is_bootom_height = ref(0);
 
-const area_obj = ref('area')
+const area_ref = ref('area')
+let mitt_list = [];
 
 
 /**
@@ -70,26 +71,32 @@ const area_obj = ref('area')
  */
  const set_scrollTop = (top, type) => {
   if (type == "inc") {
-    area_obj.value.scrollTop += top;
+    area_ref.value.scrollTop += top;
   } else if (type == "dec") {
-    area_obj.value.scrollTop -= top;
+    area_ref.value.scrollTop -= top;
   } else {
-    area_obj.value.scrollTop = top;
+    area_ref.value.scrollTop = top;
   }
 };
 
 // 设置列表滚动条位置
-useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop);
+mitt_list=[
+  useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop).off
+]
 onUnmounted(() => {
   // 设置列表滚动条位置
-  useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop).off();
+  mitt_list.forEach(i=>i())
   // this.debounce_throttle_cancel(this.on_bootom);
   // this.debounce_throttle_cancel(this.emit_on_scroll);
   // this.debounce_throttle_cancel(this.update_list_card_offset);
 });
 onMounted(() => {
-  area_height.value = area_obj.value.offsetHeight;
+  area_height.value = area_ref.value.offsetHeight;
   is_mounted.value = true;
+  // 设置列表滚动条位置
+  mitt_list = [
+    useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop).off,
+  ]
   // let { status, height } = this.get_retain_scroll_obj;
   // if (status) {
   //   nextTick(() => {
@@ -127,6 +134,13 @@ const on_bootom = lodash.throttle(() => {
   useMittEmit(MITT_TYPES.EMIT_LIST_ON_SCROLL);
 }, 3000);
 /**
+ * @Description 更新列表卡片偏移量
+ * @param {undefined} undefined
+ */
+ const update_list_card_offset = lodash.throttle((e) => {
+  MatchListCard.set_card_show_level(e);
+}, 50);
+/**
  * @Description 滚动条滚动事件
  * @param {object} e 滚动事件
  * @param {undefined} undefined
@@ -140,22 +154,16 @@ const on_scroll = (e) => {
   // 设置列表滚动条scrollTop
   MatchListScrollClass.set_scroll_top(scrollTop);
   // 更新列表卡片偏移量
-  update_list_card_offset();
+  update_list_card_offset(scrollTop);
 };
-/**
- * @Description 更新列表卡片偏移量
- * @param {undefined} undefined
- */
-const update_list_card_offset = lodash.throttle(() => {
-  MatchListCard.set_card_show_level();
-}, 50);
+
 
 /**
  * @Description 滚动高度改变事件(容器高度变化回调函数)
  * @param {undefined} undefined
  */
 const scroll_height_change = () => {
-  scrollHeight.value = area_obj.value.scrollHeight;
+  scrollHeight.value = area_ref.value.scrollHeight;
   is_bootom_height.value = scrollHeight.value - area_height.value - 500;
   has_thumb.value = scrollHeight.value > area_height.value;
 };

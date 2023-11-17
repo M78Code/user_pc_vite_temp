@@ -168,7 +168,7 @@ export default {
       }
     },
     /**
-     * @deprecated  联赛藏 状态
+     * @deprecated  联赛收藏状态
      */
     league_collect_state () {
       return MatchCollect.get_league_collect_state(this.match_of_list.tid)
@@ -221,8 +221,11 @@ export default {
     },
      // 获取联赛赛事数量
     get_ball_seed_league_count () {
-      const { tid } = this.match_of_list
-      return lodash.get(MatchResponsive.ball_seed_league_count.value, `tid_${tid}`, 1)
+      const { warehouse_type = '' } = this.match_of_list
+      const key = MatchResponsive.get_league_count_key(this.match_of_list)
+      const defalut_count = lodash.get(MatchResponsive.ball_seed_league_count.value, key, 1)
+      const other_count = lodash.get(MatchResponsive.ball_other_seed_league_count.value, key, 1)
+      return warehouse_type ? other_count : defalut_count
     },
     // 是否有角球
     get_corner_kick () {
@@ -361,9 +364,9 @@ export default {
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      const { csid, is_virtual = false, start_flag = '' }  = this.match_of_list
-      MatchFold.set_ball_seed_match_fold(csid, start_flag)
-      if (is_virtual) return
+      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' }  = this.match_of_list
+      MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
+      if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list(0, 2)
       MatchMeta.get_match_base_hps_by_mids()
     },
@@ -371,11 +374,11 @@ export default {
      * @description 联赛折叠
      */
     handle_league_fold () {
-      const { tid, is_virtual = false }  = this.match_of_list
+      const { tid, is_virtual = false, warehouse_type = '' }  = this.match_of_list
       // 首页热门，详情页，不需要用到折叠
       if (is_hot.value || is_detail.value) return;
-      MatchFold.set_league_fold(tid)
-      if (is_virtual) return
+      MatchFold.set_league_fold(this.match_of_list)
+      if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list(0, 2)
       MatchMeta.get_match_base_hps_by_mids()
     },

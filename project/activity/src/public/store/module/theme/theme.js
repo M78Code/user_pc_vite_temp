@@ -4,7 +4,7 @@
  * @Description: 项目主题设置相关
  */
 import $class from  "licia-es/$class"
-import setTheme from "src/public/utils/theme/theme.js"
+import setTheme from "project/activity/src/public/utils/theme/theme.js"
 
 export default {
   state: {
