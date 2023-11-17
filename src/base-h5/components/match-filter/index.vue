@@ -855,7 +855,7 @@ if (type.value == 30) {
     height: 0.3rem;
     line-height: 0.3rem;
     padding-left: 0.2rem;
-    padding-right: 0.6rem;
+    padding-right: 0.61rem;
     font-size: 0.14rem;
   }
 

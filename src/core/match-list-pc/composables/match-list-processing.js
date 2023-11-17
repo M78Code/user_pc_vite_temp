@@ -262,7 +262,9 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 	all_league_list.push(...lodash.get(match_list, "livedata", []));
 	all_league_list.push(...lodash.get(match_list, "nolivedata", []));
 	deal_with_list_data(all_league_list)
-	// MatchListData.set_list(match_list)
+	if(Array.isArray(match_list)){ //有时候是 {}
+		MatchListData.set_list(match_list)
+	}
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,

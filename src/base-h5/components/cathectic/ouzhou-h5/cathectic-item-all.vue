@@ -7,13 +7,13 @@
     <!-- 加载中 -->
     <!-- <loading v-if="is_loading" /> -->
     <scroll ref="myScroll" :on-pull="onPull">
-      <!-- 未结算 cashout 按钮 1期隐藏 -->
+      <!-- 未结算 提前结算按钮 1期隐藏 -->
       <!-- <div v-if="UserCtr.user_info.settleSwitch == 1 && BetRecordClass.selected === 0 && !lodash.isEmpty(BetRecordClass.list_data)" 
       :class="['cashout', 'unsellteCashout', BetRecordClass.is_early ? 'active': '']"
-      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)">{{ i18n_t('early.btn2') }}</div> -->
-      <!-- BetRecordClass.bet_record_version -->
+      @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)"
+      >{{ i18n_t('early.btn2') }}</div> -->
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-      <!-- 已结算筛选按钮 -->
+      <!-- 已结算筛选、提前结算按钮 -->
       <div class="settled-select flex" v-if="BetRecordClass.selected === 1">
           <div class="select flex">
             <span :class="{'active': sort_active === 2}" @click="sortChange(2)">{{ i18n_t('bet_record.settle_time') }}</span>
@@ -98,6 +98,8 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(timer.value)
   useMitt && useMitt()
+  // 初始化BetRecordClass状态
+  BetRecordClass.init_core()
 })
 
 /**
@@ -124,7 +126,7 @@ const init_data = (_index) => {
 // 根据索引获取当前接口的api和params
 const init_params_api = (_index) => {
   let params = {}
-  let url_api = new Promise();
+  let url_api = null;
   switch (_index) {
     case 0:
       params = {

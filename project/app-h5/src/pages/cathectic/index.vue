@@ -20,7 +20,6 @@
       <div class="content-m" ref="record_box">
         <!-- 未结注单(未结算、预约中、已失效)、已结算注单 -->
         <cathectic-item-all />
-        <!-- <component :is="tabs[BetRecordClass.selected].componentName"></component> -->
       </div>
     </div>
   </template>
@@ -32,14 +31,10 @@
   import { onMounted, onUnmounted, ref, shallowRef, computed, provide, watch, nextTick } from 'vue'
   import lodash from 'lodash'
   import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-  import store from 'src/store-redux/index.js'
   import UserCtr from "src/core/user-config/user-ctr.js";
   import { i18n_t } from "src/boot/i18n.js";
   import { compute_css_variables } from "src/core/css-var/index.js"
-  
-  let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
-  const store_cathectic = ref(cathecticReducer)
-  
+    
   // 延时器
   const timer_1 = ref(null)
   // 待确认中的提前结算单
@@ -63,23 +58,12 @@
   
   
   
-  // let unsubscribe = store.subscribe(() => {
-  //     up_store_data()
-  // })
-  
-  // const up_store_data = () => {
-  //     // console.error('更新数据');
-  // }
-  
   //判断该商户是否有权限预约投注
   const authorityFlag = computed(() => {
     const bookBet = lodash.get(UserCtr, 'user_info.configVO.bookBet')
     return bookBet == 1
   })
-  // watch(() => unsubscribe, () =>{
-  //   console.error( store_cathectic);
-  // })
-  
+
   onMounted(() => {
     height_calc()
     // TODO: 后续修改调整
@@ -123,9 +107,6 @@
     clearTimeout(timer_1.value)
     timer_1.value = null
   }
-  onUnmounted(() => {
-    store.dispatch({ type: "SET_MAIN_ITEM", data: 0 })
-  })
   </script>
   
   <style lang="scss" scoped>

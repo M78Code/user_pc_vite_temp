@@ -13,32 +13,12 @@ const mi_400_obj = ref([]);
 const mi_500_obj = ref([]);
 const vr_menu_obj = ref([]);
 
-set_init();
 resolve_mew_menu_res();
 
 watch(MenuData.menu_data_version, () => {
     resolve_mew_menu_res();
 })
 
-function set_init() {
-    let mif = "",
-        rootf = "";
-    if (MenuData.menu_root == 1) {
-        mif = 1;
-        rootf = 1;
-    } else {
-        mif = 400;
-        rootf = 400;
-    }
-    const { mi = mif, root = rootf } = MenuData.mid_menu_result;
-    let obj = { mi, root };
-    if (MenuData.menu_root == 400) {
-        return handle_click_menu_mi_400({ ...obj, guanjun: "guanjun" });
-    } else if (MenuData.menu_root == 1) {
-        let sports = menu_mi.value == 1 ? "quanbu-gunqiu" : "common";
-        handle_click_menu_mi_1({ ...obj, sports });
-    }
-}
 /**
  *全部 数量计算 滚球
  */
@@ -215,6 +195,7 @@ function handle_click_menu_mi_400(detail = {}) {
 }
 
 function set_menu_config(obj = {}) {
+    console.error('asdad')
     // 设置 中间 菜单输出
     MenuData.set_mid_menu_result(obj);
     // 设置   请求  列表结构  API 参数的  值

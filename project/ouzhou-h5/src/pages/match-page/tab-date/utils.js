@@ -69,10 +69,10 @@ const sportImg = [
  * @returns 
  */
 export const farmatSportImg = (mi) =>{
-    const voidNum = 10,
-        cardinal = (2587-43*voidNum)/sportImg.length,
-        index = sportImg.findIndex((n)=>{return n == mi}),
-        y = index*cardinal+(index)*voidNum;
+    const voidNum = 10,//图片上下间距
+        cardinal = (2587-43*voidNum)/sportImg.length,//单个高度
+        index = sportImg.findIndex((n)=>{return n == mi}),//目前为止
+        y = index*cardinal+(index)*voidNum;//移动距离
     return index>0?-y:index == 0?0:cardinal;
 }
 /**

@@ -39,16 +39,18 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { EMIT_SHOW_ALERT_CMD } from 'project/activity/src/public/utils/http/emit_cmd.js';
+
 // 退出登录通知-中文
-const logout_notice =   require('public/image/wwwassets/yabo/image/logout_notice.png');
+const logout_notice =   require('public/yazhou-pc/image/image/logout_notice.png');
 // 退出登录通知-英文
-const logout_notice_en = require('public/image/wwwassets/yabo/image/logout_notice_en.png');
+const logout_notice_en = require('public/yazhou-pc/image/image/logout_notice_en.png');
 // 退出登录通知-越南语
-const logout_notice_vi = require('public/image/wwwassets/yabo/image/logout_notice_vi.png');
+const logout_notice_vi = require('public/yazhou-pc/image/image/logout_notice_vi.png');
 // 退出登录通知-泰语
-const logout_notice_th = require('public/image/wwwassets/yabo/image/logout_notice_th.png');
+const logout_notice_th = require('public/yazhou-pc/image/image/logout_notice_th.png');
 // 退出登录通知-马来语
-const logout_notice_ma = require('public/image/wwwassets/yabo/image/logout_notice_en.png');
+const logout_notice_ma = require('public/yazhou-pc/image/image/logout_notice_en.png');
 
 
 export default {
@@ -72,7 +74,7 @@ export default {
   created() {
   	// 用户登录失效时,直接弹出失效框
     this.is_show = this.vx_get_is_invalid;
-    this.$root.$on(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.show_alert);
+    this.$root.$on(EMIT_SHOW_ALERT_CMD, this.show_alert);
     this.$root.$on('domain_error_alert', this.domain_error_alert);
     if (window.frames.length == parent.frames.length) {
       console.log('非内嵌')
@@ -164,7 +166,7 @@ export default {
     }
   },
   destroyed() {
-    this.$root.$off(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.show_alert);
+    this.$root.$off(EMIT_SHOW_ALERT_CMD, this.show_alert);
     this.$root.$off('domain_error_alert', this.domain_error_alert);
   }
 };
