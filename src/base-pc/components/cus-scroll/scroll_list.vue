@@ -79,10 +79,12 @@ const area_obj = ref('area')
 };
 
 // 设置列表滚动条位置
-useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop);
+const mitt_list=[
+useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop).off
+]
 onUnmounted(() => {
   // 设置列表滚动条位置
-  useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop).off();
+  mitt_list.forEach(i=>i())
   // this.debounce_throttle_cancel(this.on_bootom);
   // this.debounce_throttle_cancel(this.emit_on_scroll);
   // this.debounce_throttle_cancel(this.update_list_card_offset);
@@ -140,14 +142,14 @@ const on_scroll = (e) => {
   // 设置列表滚动条scrollTop
   MatchListScrollClass.set_scroll_top(scrollTop);
   // 更新列表卡片偏移量
-  update_list_card_offset();
+  update_list_card_offset(scrollTop);
 };
 /**
  * @Description 更新列表卡片偏移量
  * @param {undefined} undefined
  */
-const update_list_card_offset = lodash.throttle(() => {
-  MatchListCard.set_card_show_level();
+const update_list_card_offset = lodash.throttle((e) => {
+  MatchListCard.set_card_show_level(e);
 }, 50);
 
 /**
