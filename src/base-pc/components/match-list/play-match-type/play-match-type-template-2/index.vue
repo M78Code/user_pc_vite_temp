@@ -11,9 +11,12 @@
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
     <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
-      <div class="active" @click.stop="show_list = !show_list">
-        {{ $t(`${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
+      <div class="active flex flex-start items-center" @click.stop="show_list = !show_list">
+        <div>
+          {{ $t(`${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
           $t(`${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
+        </div>
+        <div class="yb-icon-arrow"></div>
       </div>
       <div class="choose-list" v-show="show_list">
         <div class="choose-list-item" v-for="item in choose_config[card_style_obj.csid || '1']"
@@ -122,6 +125,11 @@ function handle_hpid_choose(item) {
     cursor: pointer;
     .active {
       color: #ff7000;
+      .yb-icon-arrow {
+        color: #8A8986;
+        margin-left: 10px;
+        transform: rotate(90deg);
+      }
     }
     .choose-list {
       position: absolute;

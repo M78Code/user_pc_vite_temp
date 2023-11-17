@@ -54,6 +54,9 @@ template {
   min-height: 4rem;
   border-radius: 0.1rem;
   background-color: var(--q-gb-bg-c-15);
+  opacity: 0;
+  animation: opacityAnimate 1.5s linear;
+  animation-fill-mode: forwards;
   img {
     width: 1.8rem;
     height: 1.8rem;
@@ -64,4 +67,12 @@ template {
   }
 }
 
+@keyframes opacityAnimate {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>

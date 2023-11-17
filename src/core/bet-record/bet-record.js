@@ -2,6 +2,7 @@ import { ref } from "vue"
 import lodash from "lodash"
 import { t } from "src/boot/i18n.js";
 import {useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
+import { format_balance } from 'src/core/format/index.js'
 
 export const bet_result = {
   "2": t("bet_record.bet_no_status02"), //'走水',
@@ -85,6 +86,40 @@ export const calc_text = (data_b) => {
       break
     default:
       break
+  }
+  return { text, color }
+}
+
+// 已结算 => 注单状态
+export const calc_text_settle = (data_b) => {
+  let text = ''
+  switch (data_b.orderStatus) {
+    case '0':
+    case '1':
+      text = t('bet_record.successful_betting')
+      break;
+    case '2':
+      text = t('bet_record.invalid_bet')
+      break
+    case '3':
+      text = t('bet_record.confirming')
+      break
+    case '4':
+      text =  t('bet.bet_err')
+      break
+    default:
+      break
+  }
+  return text
+}
+
+// 已结算 => 结算金额
+export const calc_amount_settle = (data_b) => {
+  let text = ''
+  let color = 'black'
+  text = `${outcome[data_b.outcome]} ${format_balance(data_b.profitAmount)}${t('common.unit')}`
+  if(data_b.outcome == 4 || data_b.outcome == 5) {
+    color = ''
   }
   return { text, color }
 }
