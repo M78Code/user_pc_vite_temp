@@ -5,11 +5,11 @@
 <template>
   <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
   <section class="match-play-page">
-    <div class="match-item" v-for="mid, index in MatchMeta.match_mids" :key="mid">
-     <template v-if="get_match_item(mid)">
+    <div class="match-item" v-for="item, index in play_matchs" :key="item.mid">
+     <template v-if="item">
        <MatchContainerMainTemplate1
         :i="index"
-        :match_of_list="get_match_item(mid)">
+        :match_of_list="item">
       </MatchContainerMainTemplate1>
      </template>
     </div>
@@ -24,9 +24,12 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
 
-const get_match_item = (mid) => {
-  return MatchDataBaseH5.get_quick_mid_obj(mid)
-}
+const props = defineProps({
+  play_matchs: {
+    type: Array,
+    default: () => []
+  }
+})
 
 </script>
  

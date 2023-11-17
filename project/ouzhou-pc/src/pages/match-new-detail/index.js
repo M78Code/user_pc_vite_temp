@@ -10,12 +10,20 @@ import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list } from "src/api";
 import { useRouter } from "vue-router";
 // import store from "src/store-redux-vuex/index.js";
-import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index"; 
-import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
+import {
+  MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
+  MenuData,
+  UserCtr,
+} from "src/core/index";
+import {
+  filter_odds_func,
+  handle_course_data,
+  format_mst_data,
+} from "src/core/utils/matches_list.js";
 
-import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
-import { LayOutMain_pc } from "src/core/"
-import lodash_ from 'lodash'
+import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
+import { LayOutMain_pc } from "src/core/";
+import lodash_ from "lodash";
 
 export function usedetailData(route) {
   const router = useRouter();
@@ -34,41 +42,47 @@ export function usedetailData(route) {
 
   const tabList = ref([]);
 
-  const show_close_thehand = ref(false)  // 是否显示无数据图标
+  const show_close_thehand = ref(false); // 是否显示无数据图标
 
- const matchDetailList = ref([])
+  const matchDetailList = ref([]);
 
   let timer = "";
   let mst_timer = "";
   // let state = store.getState();
 
-  const { get_detail_category, get_detail_list, get_detail_data ,getMatchDetailByTournamentId} =
-    api_match_list; // 接口
+  const {
+    get_detail_category,
+    get_detail_list,
+    get_detail_data,
+    getMatchDetailByTournamentId,
+  } = api_match_list; // 接口
 
   //const userInfo = state.userReducer.userInfo; // 用户数据
-  const {user_info} = UserCtr; // 用户数据
+  const { user_info } = UserCtr; // 用户数据
 
-  const current_id = ref() // 赛事id
+  const current_id = ref(); // 赛事id
 
-  let sportId =1, mid=2858623,tid
+  let sportId = 1,
+    mid = 2858623,
+    tid;
 
   // 监听分类切换数据
   watch(current_key, (val) => {
     get_match_detail(val);
   });
-    // 监听分类切换数据
-    // watch(()=>route.query, (val) => {
-    //   console.log(11111111,val)
-    //   // todo
-    //   // sportId = val.sportId
-    //   // mid = val.mid
-    //   current_id.value = val.mid
-    // },
-    // {immediate:true}
-    // );
+  // 监听分类切换数据
+  // watch(()=>route.query, (val) => {
+  //   console.log(11111111,val)
+  //   // todo
+  //   // sportId = val.sportId
+  //   // mid = val.mid
+  //   current_id.value = val.mid
+  // },
+  // {immediate:true}
+  // );
 
   //  根据分类id 过滤数据
-  const get_match_detail  = (value) => {
+  const get_match_detail = (value) => {
     const plays = category_list.value.find(
       (item) => item.orderNo == value
     ).plays;
@@ -76,22 +90,19 @@ export function usedetailData(route) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
       }
-      
     }
     let list = all_list.value.filter((item) =>
       plays.includes(Number(item.hpid))
     );
     if (list.length > 0) {
       for (const item of list) {
-        item.expanded = all_list_toggle[item.hpid]
+        item.expanded = all_list_toggle[item.hpid];
       }
-      list = list.filter(i=>i.hpn)
+      list = list.filter((i) => i.hpn);
     }
-    detail_list.value = list ||[];
-   
-    show_close_thehand.value = list.length==0
-    //存取玩法集数据到数据仓库 MatchDataWarehouseInstance.get_quick_mid_obj(mid)获取存到数据仓库的基础详情数据
-    MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(mid),detail_list.value)
+    detail_list.value = list || [];
+
+    show_close_thehand.value = list.length == 0;
 
     setTimeout(() => {
       get_all_hl_item();
@@ -117,7 +128,7 @@ export function usedetailData(route) {
    */
   const init = async () => {
     // all_list_toggle = {}
-     detail_loading.value = true;
+    detail_loading.value = true;
     await get_category();
     get_detail();
     await get_detail_lists();
@@ -128,77 +139,72 @@ export function usedetailData(route) {
   const get_detail = async () => {
     try {
       const params = {
-        mid:mid,
+        mid: mid,
         cuid: user_info.userId,
         t: new Date().getTime(),
       };
       detail_loading.value = true;
       const res = await get_detail_data(params);
-       // 空赛事数据跳转回首页
+      // 空赛事数据跳转回首页
       if (lodash_.isEmpty(res.data)) {
         router.push({
           name: "home",
         });
-        return
+        return;
       }
 
-     
-      getMatchDetailList(res.data)
+      getMatchDetailList(res.data);
       detail_loading.value = false;
-      detail_info.value ={...detail_info.value,...res.data}
-      detail_info.value['course'] = handle_course_data(detail_info.value);
+      detail_info.value = { ...detail_info.value, ...res.data };
+      detail_info.value["course"] = handle_course_data(detail_info.value);
 
-      LayOutMain_pc.set_oz_show_right(detail_info.value.ms>0)  // 显示右侧
+      LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
       //存取赛事详情基础信息
-      MatchDataWarehouseInstance.set_match_details(detail_info.value,[])
+      MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
       useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       use_polling_mst(detail_info.value);
     } catch (error) {
-      console.error('get_detail_data', error)
-
+      console.error("get_detail_data", error);
     }
   };
 
-    /**
+  /**
    * 获取联赛赛事列表
    */
-    const getMatchDetailList = async (data) => {
-      try {
-        const params = {
-          tId: data.tid,
-          t: new Date().getTime(),
-        };
-        const res = await getMatchDetailByTournamentId(params);
-        matchDetailList.value = res.data
-      } catch (error) {
-        console.error('getMatchDetailByTournamentId', error)
-      }
-    };
+  const getMatchDetailList = async (data) => {
+    try {
+      const params = {
+        tId: data.tid,
+        t: new Date().getTime(),
+      };
+      const res = await getMatchDetailByTournamentId(params);
+      matchDetailList.value = res.data;
+    } catch (error) {
+      console.error("getMatchDetailByTournamentId", error);
+    }
+  };
 
-  
   /**
    * @name 开赛时间自动加1
-   * @param {*} t 
+   * @param {*} t
    */
-  const use_polling_mst = payload => {
+  const use_polling_mst = (payload) => {
     if (Number(payload.mst) <= 0 || payload.ms !== 1) {
-    
-      return 
+      return;
     }
     // payload.mst = Number(payload.mst)+10
     mst_timer = setInterval(() => {
-      
-      if (payload.csid==1) {
-        payload.mst++
-      }else if (payload.csid==2) {
+      if (payload.csid == 1) {
+        payload.mst++;
+      } else if (payload.csid == 2) {
         if (Number(payload.mst) == 1) {
           clearInterval(mst_timer);
         }
-        payload.mst--
+        payload.mst--;
       }
-      payload.mstValue = format_mst_data(payload.mst)
-    }, 1000)
-  }
+      payload.mstValue = format_mst_data(payload.mst);
+    }, 1000);
+  };
   /**
    * 获取赛事tabs数据
    */
@@ -210,7 +216,7 @@ export function usedetailData(route) {
         t: new Date().getTime(),
       };
       const res = await get_detail_category(params);
-      category_list.value =res.data || [];
+      category_list.value = res.data || [];
       const list = res.data.filter((i) => i.marketName);
 
       tabList.value = list.map((item) => ({
@@ -218,7 +224,7 @@ export function usedetailData(route) {
         value: item.orderNo,
       }));
     } catch (error) {
-      console.error('get_detail_category', error)
+      console.error("get_detail_category", error);
     }
   };
   /**
@@ -235,49 +241,52 @@ export function usedetailData(route) {
       };
       const res = await get_detail_list(params);
       all_list.value = res.data || [];
-       all_list.value.forEach(item=>item.expanded = true)
-       detail_loading.value = false;
+      all_list.value.forEach((item) => (item.expanded = true));
+      detail_loading.value = false;
       current_key.value = current_key.value
         ? current_key.value
         : tabList.value[0].value;
-        get_match_detail(current_key.value);
+      get_match_detail(current_key.value);
+
+      //存取玩法集数据到数据仓库 MatchDataWarehouseInstance.get_quick_mid_obj(mid)获取存到数据仓库的基础详情数据
+      MatchDataWarehouseInstance.set_match_details(
+        MatchDataWarehouseInstance.get_quick_mid_obj(mid),
+        all_list.value
+      );
     } catch (error) {
-      console.error('get_detail_list', error)
+      console.error("get_detail_list", error);
     }
   };
 
   onMounted(() => {
-    sportId = route.params.csid
-    mid = route.params.mid
-    tid = route.params.tid
-    current_id.value = route.params.mid
-     LayOutMain_pc.set_oz_show_right(true)  // 显示右侧
-
+    sportId = route.params.csid;
+    mid = route.params.mid;
+    tid = route.params.tid;
+    current_id.value = route.params.mid;
+    LayOutMain_pc.set_oz_show_right(true); // 显示右侧
     init();
-    timer = setInterval(async () => {
-      await get_category();
-      await get_detail_lists();
-    }, 5000);
   });
   //todo mitt 触发ws更新
-  const {off} = useMittOn(MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,(res)=>{
-  })
+  const { off } = useMittOn(
+    MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,
+    (res) => {}
+  );
   onUnmounted(() => {
-    off()
+    off();
     clearInterval(timer);
     clearInterval(mst_timer);
   });
   //  赛事切换刷新数据
-  const refresh = ()=>{
-    all_list_toggle = {}
-    detail_list.value = []
-    sportId = route.params.csid
-    mid = route.params.mid
-    tid = route.params.tid 
-    current_id.value = route.params.mid
-   current_id.value = mid
-   init();
-  }
+  const refresh = () => {
+    all_list_toggle = {};
+    detail_list.value = [];
+    sportId = route.params.csid;
+    mid = route.params.mid;
+    tid = route.params.tid;
+    current_id.value = route.params.mid;
+    current_id.value = mid;
+    init();
+  };
 
   return {
     tabList,
@@ -289,13 +298,12 @@ export function usedetailData(route) {
     refresh,
     get_match_detail,
 
-
     sportId,
     all_hl_item,
     init,
     show_close_thehand,
     matchDetailList,
     current_id,
-    refresh
+    refresh,
   };
 }

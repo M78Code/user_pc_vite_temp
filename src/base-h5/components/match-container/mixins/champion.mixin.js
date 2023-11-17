@@ -58,14 +58,14 @@ export default {
      * @description 球种折叠
      */
     handle_ball_seed_fold() {
-      MatchFold.set_ball_seed_match_fold(this.match_of_list.csid)
+      MatchFold.set_ball_seed_match_fold(this.match_of_list)
     },
     /**
      * @description 联赛折叠
      */
     handle_league_fold() {
       const { tid, csid } = this.match_of_list
-      MatchFold.set_league_fold(tid, csid)
+      MatchFold.set_league_fold(this.match_of_list)
     },
 
     /**

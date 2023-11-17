@@ -120,7 +120,8 @@ onMounted(() => {
     text-transform: capitalize;
     // color: #FF7000;
     background: #FF7000;
-    color: #fff;
+    //color: #fff;
+    color: var(--q-gb-t-c-14);
     position: relative;
     border-radius: 15px;
     padding: 4px 10px;
