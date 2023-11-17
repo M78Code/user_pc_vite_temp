@@ -81,6 +81,8 @@ const deal_with_list_data = (data) => {
 	// if (MenuData.is_kemp()) {
 	//   MatchListData.set_list(mid_arr)
 	// }
+	match_list_handle_set(mid_arr)
+
 	MatchListData.set_list(mid_arr)
 }
 /**
@@ -256,9 +258,11 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collect, backend_run }) => {
 	is_show_hot.value = false;
-	console.log('lockie-3', match_list);
-	match_list_handle_set(match_list)
-	MatchListData.set_list(match_list)
+	let all_league_list = [];
+	all_league_list.push(...lodash.get(match_list, "livedata", []));
+	all_league_list.push(...lodash.get(match_list, "nolivedata", []));
+	deal_with_list_data(all_league_list)
+	// MatchListData.set_list(match_list)
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,

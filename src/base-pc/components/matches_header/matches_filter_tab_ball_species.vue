@@ -2,26 +2,25 @@
   <div class="current-filter-wrap">
     <div class="current-filter-list" @scroll="on_scroll">
       <!-- 常规体育 -->
-      <div
-        class="current-filter-tab"
-        v-for="(item, index) in mi_100_arr" :key="index"
-      >
-        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked: current_choose_tab == item.mi }">
-          <div class="filter-tab-item">
-            <div class="filter-icon">
-              <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mi"  size="24px" class="icon" />
-              <div class="filter-count">{{ item.ct || 0 }}</div>
+      <template v-for="(item, index) in mi_100_arr" :key="index">
+        <div class="current-filter-tab" v-if=" item.ct > 0 " >
+          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked: current_choose_tab == item.mi }">
+            <div class="filter-tab-item">
+              <div class="filter-icon">
+                <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mi"  size="24px" class="icon" />
+                <div class="filter-count">{{ item.ct || 0 }}</div>
+              </div>
+              <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
+                {{  BaseData.menus_i18n_map[item.mif] || "" }}
+              </div>
             </div>
-            <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-              {{  BaseData.menus_i18n_map[item.mif] || "" }}
-            </div>
+            <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
           </div>
-          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
+          <div class="filter-tab-split-line"></div>
         </div>
-        <div class="filter-tab-split-line"></div>
-      </div>
+      </template>
       <!-- 电竞 -->
-      <div
+      <!-- <div
         class="current-filter-tab"
         v-for="(item, index) in mi_2000_arr" :key="index"
       >
@@ -38,7 +37,7 @@
           <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
         </div>
         <div class="filter-tab-split-line"></div>
-      </div>
+      </div> -->
        <!-- vr -->
        <!-- <div
         class="current-filter-tab"
@@ -102,7 +101,6 @@ const show_right_btn = ref(false);
 // const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
 
 onMounted(() => {
-  console.error('BaseData',BaseData)
   area_obj = document.querySelector('.current-filter-list');
   area_obj_wrap = document.querySelector('.current-filter-wrap');
   if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
@@ -115,7 +113,9 @@ onMounted(() => {
     current_choose_tab.value = mi_100_arr.value[0].mi
   } else {
     // 默认选中当前第一个tab
-    current_choose_tab.value = 101
+    current_choose_tab.value = 1011
+    handle_click_menu_mi_1({mi:1011,mif:101})
+    return
   }
 
   handle_click_menu_mi_1(mi_100_arr.value[0])

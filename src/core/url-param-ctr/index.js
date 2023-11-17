@@ -238,7 +238,7 @@ const url_param_ctr_init = (vue_that)=>{
       to_corresponding_router_app_h5(vue_that, search_params);
       break;
     case 'ouzhou-h5':
-    
+      window.history.replaceState('', '', url);
       break;
     case 'yazhou-pc':
     

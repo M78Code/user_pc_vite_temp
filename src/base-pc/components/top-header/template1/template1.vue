@@ -42,45 +42,29 @@ export default defineComponent({
     const userRouter = useRouter()
     const route = useRoute()
     const navList = ref([
-      { label: i18n_t("ouzhou.match.home"), id:1, name: 'home' },
-      { label: i18n_t("menu.match_playing"), id:2, name: 'in_play' },
-      { label: i18n_t("common.betting_record"), id: 3, name: 'bet_record' },
+      { label: i18n_t("ouzhou.match.home"), id:0, name: 'home' },
+      { label: i18n_t("menu.match_playing"), id:1, name: 'in_play' },
+      { label: i18n_t("common.betting_record"), id: 102, name: 'bet_record' },
     ]);
     const nav_click = (item = {}) => {
-      //页面中间头部导航显示处理
-      MenuData.set_router_root_lv_1(item.id)
-      switch (item.id) {
-        case 1:
-          MenuData.set_menu_root(0);  
-          // 默认设置 fetured
-          MenuData.set_router_root_lv_2(1001)
-          break;
-        case 2:
-          MenuData.set_menu_root(1); 
-          break;
-        case 3:
-         
-          break;
+    
+     
+      // 默认设置 fetured
+      if(item.id == 0){
+        let obj = {
+          root: 1,
+          filter_tab: 1001, //
+        }
+        MenuData.set_mid_menu_result(obj)
       }
-      userRouter.push({name: item.name})
-      MenuData.set_menu_data_version() 
-      // let state = store.getState()
-      // // 获取最新的 数据
-      // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu)
-      // // 修改菜单数据
-      // redux_menu.menu_root = item.id
 
-      // // in play 默认足球
-      // if (item.id == 2) {
-      //   redux_menu.mid_tab_menu_type = 101
-      // }
-      // // 存储
-      // store.dispatch({
-      //   type: 'SETREDUXMENU',
-      //   data: redux_menu
-      // })
+      MenuData.set_menu_root(item.id); 
+
+      //页面中间头部导航显示处理
+      userRouter.push({name: item.name})
 
     };
+
     return {
       logo,
       navList,
