@@ -68,7 +68,13 @@ class MenuData {
     };
     // 左侧菜单的 root 节点   root ：0 首页  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000  202 左侧菜单今日 203 左侧菜单早盘 102 投注记录
     this.menu_root = 0;
-  
+    // 滚球 盘数量总计
+    this.fetch_filter = {  //过来大菜单下的方法
+        is_filter:false,//过滤模式 筛选联赛
+        euid:undefined,
+        csid:undefined,//球种的赛选 球种ID
+        cuid:undefined,
+    };
     // 滚球 盘数量总计
     this.menu_root_count = {
       mi_1: 0,
@@ -98,7 +104,6 @@ class MenuData {
       list_filter_date: false, // 日期 菜单
       esports_header: false, //电竞 菜单
     };
-
     // 中间 菜单的 点击之后的 列表请求 参数 配置
     this.match_list_api_config = {
       match_list: {},
@@ -150,8 +155,32 @@ class MenuData {
   }
 
   // 设置一级菜单id
-  set_menu_root(val) {
-    this.menu_root = val
+  /**
+   * root 节点   root ：0 首页  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000  202 左侧菜单今日 203 左侧菜单早盘 102 投注记录
+   * @param {*} val 节点ID
+   * @param {*} is_fetch  是否立刻更新菜单 意味这立刻请求列表接口
+   */
+  set_menu_root(val,is_fetch=false) {
+    this.menu_root = val;
+    is_fetch()&&this.set_menu_data_version()
+  }
+  /**
+    * 设置请求参数 包括球种 日期 联赛 等等 euid 
+    * {
+    *   is_filter:ture,
+    *   euid:"",
+    *   jif:""
+    * }
+    * @param {Object} params  要设置的参数 包括 euid 球种 日期 联赛 等等  
+    * @param {Boolean} is_merge  是否深度合并参数 保持之前的参数 替换新参数
+    */
+  set_fetch_filter(params={},is_merge=false){
+    if(is_merge){
+      lodash.merge(this.mid_menu_result,params)
+    }else{
+      this.fetch_filter=params;
+    }
+    this.set_menu_data_version()
   }
   
   // 设置 欧洲版头部配置信息
@@ -191,8 +220,8 @@ class MenuData {
     this._tid=setTimeout(() => {
       console.error('进来了几次',this);
       useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)//列表滚动到顶部
       this.menu_data_version.value = Date.now()
-
       nextTick(()=>{
         SessionStorage.set('menu_pc',this)
       })

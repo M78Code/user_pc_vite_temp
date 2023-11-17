@@ -4,7 +4,7 @@
 <template>
     <div style="display: none;">{{ MatchDataBaseFiveLeagueH5.data_version.version }}</div>
     <section class="match-play-page">
-      <div class="match-item" v-for="item, index in fiveLeagues_Matches" :key="mid">
+      <div class="match-item" v-for="item, index in fiveLeagues_Matches" :key="item.mid">
        <template v-if="item">
          <MatchContainerMainTemplate1
           :i="index"
@@ -30,4 +30,10 @@ const props = defineProps({
 })
 </script>
    
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .match-play-page{
+    :deep(.match-header){
+      display: none;
+    }
+  }
+</style>

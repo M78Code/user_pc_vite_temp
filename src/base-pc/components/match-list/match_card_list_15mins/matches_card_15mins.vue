@@ -81,7 +81,7 @@
 <style lang="scss" scoped>
   .sport {
     height: 100%;
-    width: 260px;
+    width: 250px;
   }
   .competing-time {
     display: flex;

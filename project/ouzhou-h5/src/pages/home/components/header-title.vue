@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="title">{{ title }}</div>
+  <div class="title" @click.stop>{{ title }}</div>
 </template>
  
 <script setup>

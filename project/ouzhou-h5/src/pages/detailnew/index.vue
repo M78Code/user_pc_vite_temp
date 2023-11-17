@@ -223,7 +223,8 @@ export default {
   }
   .match-detail-tab {
     height: 50px;
-    background: #ffffff;
+    //background: #ffffff;
+    background: var(--q-gb-bg-c-15);
   }
   .match-detail-odds-scroll {
     overflow-x: hidden;

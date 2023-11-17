@@ -158,7 +158,8 @@ onMounted(() => {
   }
 }
 .odds-wrap {
-  background: #ffffff;
+  //background: #ffffff;
+  background: var(--q-gb-bg-c-15);
   box-sizing: border-box;
 
   .odds-hpn {
