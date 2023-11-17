@@ -52,7 +52,6 @@ import MatchListOuZhou from './components/match-list-ouzhou.vue'
 
 import { PROJECT_NAME } from "src/core/index.js"
 
-
 // 次要玩法描述组件
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";
 
@@ -89,10 +88,10 @@ onMounted(() => {
   on_listeners();
 
   // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
-    console.log('cmd:',cmd,data);
-    console.log('12313131231');
-  })
+  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
+    console.log('wswswswswswsws-cmd:', cmd, data)
+    MatchMeta.handle_ws_directive(cmd)
+  }, 200))
   
 })
 
@@ -141,6 +140,7 @@ const clear_timer = () => {
 
 onUnmounted(() => {
   // 组件销毁时销毁监听函数
+  message_fun = null
   ws_message_listener.ws_remove_message_listener(message_fun)
 })
 

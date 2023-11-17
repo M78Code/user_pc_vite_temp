@@ -82,8 +82,8 @@ class MatchMeta {
 
     this.params_md = md
 
-    // 刷新页面 二级菜单丢失， 暂时放在这里 获取真实数据
-    // this.get_target_match_data()
+    // // 刷新页面 二级菜单丢失， 暂时放在这里 获取真实数据
+    this.get_target_match_data()
 
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
@@ -175,7 +175,7 @@ class MatchMeta {
     // 元数据不作为最终渲染数据 所以不走虚拟计算
     // 元数据只作用域切换菜单时快速显示， 最终显示还是根据接口来
     this.match_mids = lodash.uniq(mids.slice(0, 20))
-    this.set_match_mids(result_mids.slice(0, 20), match_list.slice(0, 20), false)
+    this.set_match_mids(result_mids.slice(0, 20), match_list.slice(0, 20))
   }
 
   /**
@@ -721,7 +721,7 @@ class MatchMeta {
     this.set_page_match_empty_status(false)
 
   }
-     
+
   /**
    * @description 元数据 处理 设置 match_mids
    * @param { mids } 全量 赛事 mids 
@@ -741,7 +741,6 @@ class MatchMeta {
       MatchResponsive.set_ball_seed_league_count(t)
       // is_show_ball_title 和顺序有关 得放在最终赋值处
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
-      // console.log('is_show_ball_title: ', is_show_ball_title)
       return { ...t, is_show_ball_title }
     })
 
@@ -828,6 +827,22 @@ class MatchMeta {
 
 
   /**
+   * @description ws 指令处理
+   * @param {*} cmd 
+   */
+  handle_ws_directive (cmd) {
+    // 调用 matchs  接口
+    if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
+      this.get_target_match_data()
+    }
+    // 调用 mids  接口
+    if (['C303', 'C114'].includes(cmd)) {
+      this.get_match_base_hps_by_mids()
+    }
+  }
+
+
+  /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 
    * @param { type } 接口请求时， 以接口数据为准， 反之已上一次的数据为准 避免赔率闪动
@@ -851,6 +866,7 @@ class MatchMeta {
    */
   handle_submit_warehouse(list) {
     const Base_warehouse  = this.get_base_warehouse()
+    Base_warehouse.clear()
     // 设置仓库渲染数据
     Base_warehouse.set_list(list)
     // 获取赛事赔率

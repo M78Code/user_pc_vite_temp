@@ -15,8 +15,8 @@ import tabDate from './tab-date/tab-date.vue';
 import MatchFirstStep from "./match-first-step.vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { IconWapper } from 'src/components/icon'
-
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+
 //是否点击联赛详情
 const isClickDetail = ref(false)
 
