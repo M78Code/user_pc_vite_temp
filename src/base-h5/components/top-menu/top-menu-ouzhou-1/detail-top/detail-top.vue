@@ -44,7 +44,7 @@
 <script setup>
 import { nextTick, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useMittEmit, MITT_TYPES } from "src/core";
+import { useMittEmit, MITT_TYPES } from "src/core/index";
 import { MatchDataWarehouse_H5_Detail_Common,MatchDataWarehouse_H5_List_Common } from 'src/core/index'
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
@@ -112,6 +112,7 @@ function change_active(item, index) {
 }
 /**
  * @description: 刷新
+ * @param {{ mid: string, csid: string, tid: string }} params
  * @return {*}
  */
 const refresh = (params = {}) => {

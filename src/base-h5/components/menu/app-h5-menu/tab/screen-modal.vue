@@ -29,17 +29,23 @@
       >
         <!-- 输入框的扩大镜图片 -->
         <template v-slot:prepend>
-          <span
+          <img
+            class="search-icon"
             :class="[`icon-search ${get_y0_suffix}`, { 'input-without-word': !input_text.length }]"
-            @click.stop.prevent.self="get_search_result"
-          ></span>
+            :src="compute_local_project_file_path('/image/list/league-search-icon.svg')"
+             @click.stop.prevent.self="get_search_result"
+            alt=""
+          />
         </template>
         <template v-slot:append>
-          <span
-            @click.stop.prevent.self="clear_search"
-            v-show="input_text.length > 0"
+          <img
+             v-show="input_text.length > 0"
             :class="{ 'input-without-word': !input_text.length }"
-          ></span>
+            class="clear-icon"
+            :src="compute_local_project_file_path('/image/list/league-close-icon.svg')"
+            @click.stop.prevent.self="clear_search"
+            alt=""
+          />
         </template>
       </q-input>
       <div class="content" v-if="list_data.length>0">
@@ -136,6 +142,7 @@ import { api_search } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 无网络展示组件
 import NoData from "src/base-h5/components/common/no-data.vue";
+import {compute_local_project_file_path} from 'src/core';
 defineOptions({
   name: "screen-modal" // 设置组件名称
 });
