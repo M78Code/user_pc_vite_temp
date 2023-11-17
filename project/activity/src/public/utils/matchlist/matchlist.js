@@ -3,6 +3,7 @@
  * @Date: 2021-08-22 09:31:03
  * @Description: 赛事列表相关公共方法
  */
+import _ from 'lodash';
 
 const matchlist = {
   // 列表滚动条scrollTop
