@@ -139,16 +139,19 @@ const changeDatetab = (item, index) => {
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
+   
+    // //根据时间筛选列表
+    // if (!item?.val) {
+    //     // 设置菜单对应源数据
+    //     MatchMeta.set_origin_match_data()
+    // } else {
+    //     //根据时间筛选列表
+    //     MatchMeta.filter_match_by_time(item.val)
+    // }
     MenuData.set_current_lv1_menu(item.type?'3':'2');
     MenuData.set_menu_mi(current_menu_mi.value);
-    //根据时间筛选列表
-    if (!item?.val) {
-        // 设置菜单对应源数据
-        MatchMeta.set_origin_match_data()
-    } else {
-        //根据时间筛选列表
-        MatchMeta.filter_match_by_time(item.val)
-    }
+    // 获取数据
+    MatchMeta.set_origin_match_data(item?.val ? item.val : '')
     emit("changeDate", item.val);
 };
 onMounted(() => {

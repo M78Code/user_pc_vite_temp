@@ -525,7 +525,8 @@ onBeforeUnmount(() => {
 		top: 20px;
 		width: 12px;
 		height: 12px;
-		color: #fff;
+		//color: #fff;
+		color: var(--q-gb-t-c-14);
 	}
 
 	input {
@@ -536,13 +537,15 @@ onBeforeUnmount(() => {
 		padding-left: 30px;
 		background: #CE5B00;
 		outline: none;
-		color: #fff;
+		//color: #fff;
+		color: var(--q-gb-t-c-14);
 		margin-right: 6px;
 		font-weight: 500;
 	}
 
 	::-webkit-input-placeholder {
-		color: #ffffff;
+		//color: #ffffff;
+		color: var(--q-gb-t-c-14);
 		font-size: 14px;
 		padding-left: 5px;
 	}
@@ -550,13 +553,15 @@ onBeforeUnmount(() => {
 	.clear_value {
 		position: absolute;
 		top: 20px;
-		color: #fff;
+		//color: #fff;
+		color: var(--q-gb-t-c-14);
 		font-size: 14px;
 		left: 290px;
 	}
 
 	.close_btn {
-		color: #fff;
+		//color: #fff;
+		color: var(--q-gb-t-c-14);
 		opacity: .8;
 		font-size: 14px;
 	}
@@ -597,7 +602,8 @@ onBeforeUnmount(() => {
 
 		&.active {
 			background-color: #FF7000;
-			color: #fff;
+			//color: #fff;
+			color: var(--q-gb-t-c-14);
 		}
 
 	}

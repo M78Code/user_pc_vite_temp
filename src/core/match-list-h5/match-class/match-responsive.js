@@ -16,6 +16,8 @@ class MatchResponsive {
     this.ball_seed_play_methods = ref({})
     // 联赛对应的数量
     this.ball_seed_league_count = ref({})
+    // 其他仓库联赛对应的数量
+    this.ball_other_seed_league_count = ref({})
   }
 
   /**
@@ -58,10 +60,10 @@ class MatchResponsive {
 
   /**
    * @description 设置联赛对应的数量
-   * @param {string} tid 
+   * @param { match } 赛事对象 
    */
-  set_ball_seed_league_count (tid) {
-    const key = `tid_${tid}`
+  set_ball_seed_league_count (match) {
+    const key = this.get_league_count_key(match)
     if (this.ball_seed_league_count.value[key]) {
       this.ball_seed_league_count.value[key]++
     } else {
@@ -75,6 +77,36 @@ class MatchResponsive {
    */
   clear_ball_seed_league_count () {
     this.ball_seed_league_count.value = {}
+  }
+
+  /**
+   * @description 设置联赛对应的数量
+   * @param { match } 赛事对象 
+   */
+  set_other_ball_seed_league_count (match) {
+    const key = this.get_league_count_key(match)
+    if (this.ball_other_seed_league_count.value[key]) {
+      this.ball_other_seed_league_count.value[key]++
+    } else {
+      Object.assign(this.ball_other_seed_league_count.value, {
+        [key]: 1
+      })
+    }
+  }
+  /**
+   * @description 清除联赛对应的数量
+   */
+  clear_other_ball_seed_league_count () {
+    this.ball_other_seed_league_count.value = {}
+  }
+
+  /**
+   * @description 联赛key
+   */
+  get_league_count_key (match) {
+    const { tid, warehouse_type = '' } = match
+    const key = warehouse_type ? `${warehouse_type}_tid_${tid}` : `tid_${tid}`
+    return key
   }
 }
 

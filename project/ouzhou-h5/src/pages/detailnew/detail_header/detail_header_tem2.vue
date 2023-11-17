@@ -64,7 +64,7 @@ import { onMounted, ref, toRef, watch } from "vue";
 import lodash from "lodash";
 import { api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
-// import EMITTER from  "src/global/mitt.js" // import {mitt*} from "src/core/index.js"
+import { useMittOn,MITT_TYPES } from "src/core/index.js"
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -124,7 +124,7 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
   /**
   * @Description:获取动画播放地址
   * @Author Cable
-  * @param {object} match  赛事信息
+  * @param {{mid:string,type:"Animation"}} params  赛事信息 type的其他可选值暂不清楚
   * @param {function} callback  回调函数
   */
   const get_animation_url = (params)=>{
@@ -172,11 +172,17 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
   })
 }
 onMounted(() => {
-  setTimeout(() => {
+  // setTimeout(() => {
     get_animation_url({
       mid: props.get_match_detail.mid,
       type: "Animation",
     });
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS,(param)=>{
+      get_animation_url({
+        mid:param.mid,
+        type: "Animation"
+      })
+    })
     set_scoew_icon_list(props.get_match_detail);
     // EMITTER.on("detail_refresh", () => {
     //   get_animation_url({
@@ -184,7 +190,7 @@ onMounted(() => {
     //     type: "Animation",
     //   });
     // });
-  }, 10);
+  // }, 10);
 });
 </script>
   

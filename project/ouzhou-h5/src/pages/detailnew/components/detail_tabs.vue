@@ -84,7 +84,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 .match-detail-tabs {
   height: 50px;
-  background: #FFFFFF;
+  //background: #FFFFFF;
+  background: var(--q-gb-bg-c-15);
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -120,7 +121,8 @@ onMounted(() => {
     text-transform: capitalize;
     // color: #FF7000;
     background: #FF7000;
-    color: #fff;
+    //color: #fff;
+    color: var(--q-gb-t-c-14);
     position: relative;
     border-radius: 15px;
     padding: 4px 10px;
