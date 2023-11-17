@@ -30,4 +30,10 @@ const props = defineProps({
 })
 </script>
    
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .match-play-page{
+    :deep(.match-header){
+      display: none;
+    }
+  }
+</style>

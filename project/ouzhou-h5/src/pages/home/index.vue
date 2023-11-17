@@ -24,9 +24,9 @@
               <FeaturedMatches :featured_matches="featured_matches" />
             </template>
             <!-- 赛事列表 -->
-           <template v-if="MatchMeta.match_mids.length > 0">
+           <template v-if="play_matchs.length > 0">
               <HeaderTitle title="In-Play"></HeaderTitle>
-              <MatchPlay />
+              <MatchPlay :play_matchs="play_matchs" />
            </template>
             <!-- 特色赛事 -->
             <!-- <template v-if="featured_matches.length > 0">
@@ -103,10 +103,10 @@ const get_ouzhou_home_data = async () => {
     return match
   })
   // 滚球赛事
-  // play_matchs.value = dataList.map(t => {
-  //   const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-  //   return match
-  // })
+  play_matchs.value = dataList.map(t => {
+    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
+    return match
+  })
   // 热门赛事
   featured_matches.value = hots.map(t => {
     const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
@@ -124,10 +124,13 @@ const get_ouzhou_home_data = async () => {
  */
 const got_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
+  const mids = []
   five_league_match.value = list.map(t => {
-    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid) || t
+    mids.push(t.mid)
+    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid) || t
     return match
   })
+  MatchMeta.get_match_base_hps_by_mids(mids.toString())
 }
 
 // 国家赛事
@@ -209,6 +212,7 @@ const on_update = (val) => {
 .home-page{
   height: 100%;
   overflow: hidden;
+  padding-bottom: 56px;
   .header_tabs{
     border-bottom: 2px solid #FF7000;
     :deep(.q-tabs--dense){

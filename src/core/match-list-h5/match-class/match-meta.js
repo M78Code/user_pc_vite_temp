@@ -44,7 +44,12 @@ class MatchMeta {
     // 日期
     this.params_md = ''
     // 赛事仓库
-    this.common_match_base = null
+    this.warehouse_type = ''
+    // 其他仓库的全量赛事
+    this.other_match_mids = []
+    this.other_complete_matchs = []
+    // 其他仓库的全量赛事mids
+    this.other_complete_mids = []
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -78,7 +83,7 @@ class MatchMeta {
     this.params_md = md
 
     // 刷新页面 二级菜单丢失， 暂时放在这里 获取真实数据
-    this.get_target_match_data()
+    // this.get_target_match_data()
 
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
@@ -261,12 +266,14 @@ class MatchMeta {
     // 初始化赛事折叠
     MatchFold.set_match_mid_fold_obj(match)
 
+    const fold_key = MatchFold.get_fold_key(match)
+
     //  初始化全部球种折叠状态
-    if (!(`csid_${csid}` in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(csid)
+    if (!(fold_key in MatchFold.ball_seed_csid_fold_obj.value)) MatchFold.set_ball_seed_csid_fold_obj(fold_key)
     // 进行中
-    if (!(`csid_${csid}` in MatchFold.progress_csid_fold_obj.value) && [1,110].includes(+ms)) MatchFold.set_progress_csid_fold_obj(csid)
+    if (!(fold_key in MatchFold.progress_csid_fold_obj.value) && [1,110].includes(+ms)) MatchFold.set_progress_csid_fold_obj(fold_key)
     // 未开赛
-    if (!(`csid_${csid}` in MatchFold.not_begin_csid_fold_obj.value) && [1,110].includes(+ms)) MatchFold.set_not_begin_csid_fold_obj(csid)
+    if (!(fold_key in MatchFold.not_begin_csid_fold_obj.value) && [1,110].includes(+ms)) MatchFold.set_not_begin_csid_fold_obj(fold_key)
 
     // 获取模板默认高度
     const template_config = this.get_match_default_template_config(csid)
@@ -486,11 +493,12 @@ class MatchMeta {
     MatchDataBaseHotsH5.set_list(hots)
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
+    let match_list = []
     if (length > 0) {
-      const match_list = MatchUtils.get_home_in_play_data(dataList)
+      match_list = MatchUtils.get_home_in_play_data(dataList)
       this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
     }
-    return { p15_list, hots, dataList }
+    return { p15_list, hots, dataList: match_list }
   }
 
   /**
@@ -536,11 +544,11 @@ class MatchMeta {
   }
 
   /**
-   * @description 获取四大联赛列表
+   * @description 获取五大联赛列表
    */
   async get_five_leagues_list () {
     // 四大联赛 tid 写死 西甲 320 英超 180 意甲 239 德甲 276 法甲 79
-    // 只有足球 euid 40203
+    // 欧洲版首页五大联赛板块 只查滚球 euid 40203
     // 热门 type 12
     const filterData = {}
     const max = 5
@@ -559,6 +567,7 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     list.forEach(item => {
       const { tid } = item
+      item.warehouse_type = 'five_league'
       if (!filterData[tid]) {
         filterData[tid] = [item]
       } else if (filterData[tid].length < max) {
@@ -566,8 +575,7 @@ class MatchMeta {
       }
     })
     const results = Object.values(filterData).flat()
-    // console.log('get_five_leagues_list', list)
-    this.handler_match_list_data({ list: results, base: MatchDataBaseFiveLeagueH5 })
+    this.handler_match_list_data({ list: results, warehouse: 'five_league' })
     return results
   }
 
@@ -602,7 +610,8 @@ class MatchMeta {
       target_mids = this.match_mids.filter(t => t !== mid)
     }
     this.match_mids = target_mids
-    MatchDataBaseH5.upd_data_version()
+    const Base_warehouse  = this.get_base_warehouse()
+    Base_warehouse.upd_data_version()
   }
 
    /**
@@ -618,9 +627,9 @@ class MatchMeta {
 
     const target_list = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
 
-    const custom_match_mids = target_list.map(t => {
-      return t.mid
-    })
+    const custom_match_mids = target_list.map(t => t.mid)
+
+    this.complete_matchs = target_list
     this.complete_mids = lodash.uniq(custom_match_mids)
     this.match_mids = lodash.uniq(custom_match_mids)
 
@@ -631,7 +640,8 @@ class MatchMeta {
       this.match_assistance_operations(t)
     })
     // 不需要调用赔率接口
-    MatchDataBaseH5.set_list(target_list)
+    const Base_warehouse  = this.get_base_warehouse()
+    Base_warehouse.set_list(target_list)
   }
 
   /**
@@ -640,22 +650,31 @@ class MatchMeta {
    * @param { type } 是否获取赔率
    * @param { is_virtual } 是否走虚拟计算
    * @param { is_classify } 是否进行开赛、未开赛归类
+   * @param { warehouse } 仓库类型 示例 因欧洲版首页同时存在2个类别赛事， 折叠、收藏 不能相互影响
    */
   handler_match_list_data(config) {
-    const { list, type = 1, is_virtual = true, is_classify = false,  base = MatchDataBaseH5 } = config
 
-    // 设置仓库
-    this.common_match_base = base
+    const { list, type = 1, is_virtual = true, is_classify = false, warehouse = '' } = config
+
+    this.warehouse_type = warehouse
 
     // 清除联赛下得赛事数量
-    MatchResponsive.clear_ball_seed_league_count()
+    if (['five_league'].includes(warehouse)) {
+      MatchResponsive.clear_other_ball_seed_league_count()
+    } else {
+      MatchResponsive.clear_ball_seed_league_count()
+    }
 
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
     // 赛事全量数据
     const match_list = list.map((match, index) => {
       // 设置联赛下的赛事数量， 不能是虚拟计算过后得
-      MatchResponsive.set_ball_seed_league_count(match.tid)
+      if (['five_league'].includes(warehouse)) {
+        MatchResponsive.set_other_ball_seed_league_count(match)
+      } else {
+        MatchResponsive.set_ball_seed_league_count(match)
+      }
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, list.map(t => t.mid))
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)
@@ -680,12 +699,17 @@ class MatchMeta {
     }
     const result_mids = target_data.map(t => t.mid)
    
-    this.complete_matchs = target_data
-    this.complete_mids = lodash.uniq(result_mids)
+    if (['five_league'].includes(warehouse)) {
+      this.other_complete_matchs = target_data
+      this.other_complete_mids = lodash.uniq(result_mids)
+    } else {
+      this.complete_matchs = target_data
+      this.complete_mids = lodash.uniq(result_mids)
+    }
 
    
     if (!is_virtual) {
-      this.match_mids = lodash.uniq(result_mids)
+      if (!['five_league'].includes(warehouse)) this.match_mids = lodash.uniq(result_mids)
       // 欧洲版首页热门赛事
       this.on_submit_matchs(type, match_list.filter((t) => t.mid)) 
     } else {
@@ -705,17 +729,16 @@ class MatchMeta {
    */
   set_match_mids (mids = [], match_list = [], is_compute = true) {
 
-    this.complete_mids = mids
-
     // 清除联赛下得赛事数量
     MatchResponsive.clear_ball_seed_league_count()
 
     // 赛事归类开赛、未开赛
     const target_data = this.is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list
     // 过滤赛事 
+    this.complete_mids = mids
     this.complete_matchs = target_data.map((t, index) => {
       // 设置联赛下的赛事数量， 不能是虚拟计算过后得
-      MatchResponsive.set_ball_seed_league_count(t.tid)
+      MatchResponsive.set_ball_seed_league_count(t)
       // is_show_ball_title 和顺序有关 得放在最终赋值处
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
       // console.log('is_show_ball_title: ', is_show_ball_title)
@@ -751,9 +774,9 @@ class MatchMeta {
     const match_datas = VirtualList.compute_current_page_render_list(scroll_top)
 
     // 当前渲染的 mids
-    this.match_mids = match_datas.map(t => {
-      return t.mid
-    })
+    if (!['five_league'].includes(this.warehouse_type)) {
+      this.match_mids = match_datas.map(t =>  t.mid)
+    }
     
     this.on_submit_matchs(type, match_datas)
   
@@ -761,15 +784,16 @@ class MatchMeta {
 
   /**
    * @description 获取赛事赔率
+   * @param { mids } mids
    */
-  async get_match_base_hps_by_mids () {
-    if (this.match_mids.length < 1) return
+  async get_match_base_hps_by_mids (mids = []) {
+    if (this.match_mids.length < 1 && mids.length < 1) return
     const match_mids = this.match_mids.join(',')
     // 冠军不需要调用
     if (MenuData.is_export()) return
     // 竞足409 不需要euid
     const params = {
-      mids: match_mids,
+      mids: mids ? mids : match_mids,
       cuid: UserCtr.get_uid(),
       sort: PageSourceData.sort_type,
       euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
@@ -809,15 +833,16 @@ class MatchMeta {
    * @param { type } 接口请求时， 以接口数据为准， 反之已上一次的数据为准 避免赔率闪动
    */
   handle_update_match_info(list, type) {
+    const Base_warehouse  = this.get_base_warehouse()
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       MatchResponsive.get_ball_seed_methods(t)
-      const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
+      const match = Base_warehouse.get_quick_mid_obj(t.mid)
       const target = type === 'cover' ? Object.assign({}, match, t) : Object.assign({}, t, match)
       return target
     })
     // 设置仓库渲染数据
-    MatchDataBaseH5.set_list(list)
+    Base_warehouse.set_list(list)
   }
 
   /**
@@ -825,10 +850,23 @@ class MatchMeta {
    * @param { list } 赛事数据
    */
   handle_submit_warehouse(list) {
+    const Base_warehouse  = this.get_base_warehouse()
     // 设置仓库渲染数据
-    MatchDataBaseH5.set_list(list)
+    Base_warehouse.set_list(list)
     // 获取赛事赔率
     this.get_match_base_hps_by_mids()
+  }
+  /**
+   * @description 获取仓库
+   * @param { type } 仓库类型， 取值为赛事  warehouse_type
+   */
+  get_base_warehouse (type = '') {
+    const source = type ? type : this.warehouse_type
+    const config = {
+      // 五大联赛仓库
+      'five_league': MatchDataBaseFiveLeagueH5
+    }
+    return source ? config[source] : MatchDataBaseH5
   }
 }
 
