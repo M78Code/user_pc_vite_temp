@@ -106,7 +106,7 @@ const handler_match_container_scroll = lodash.debounce(($ev) => {
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - prev_scroll.value) >= 500) {
     prev_scroll.value = scrollTop
     MatchMeta.compute_page_render_list($ev.target.scrollTop, 2)
-    if (!is_export) get_match_base_hps()
+    if (!is_export.value) get_match_base_hps()
   }
 }, 100)
 

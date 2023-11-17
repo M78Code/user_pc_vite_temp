@@ -706,7 +706,6 @@ class MatchMeta {
       this.complete_matchs = target_data
       this.complete_mids = lodash.uniq(result_mids)
     }
-
    
     if (!is_virtual) {
       if (!['five_league'].includes(warehouse)) this.match_mids = lodash.uniq(result_mids)
@@ -792,7 +791,7 @@ class MatchMeta {
     if (MenuData.is_export()) return
     // 竞足409 不需要euid
     const params = {
-      mids: mids ? mids : match_mids,
+      mids: mids.length > 0 ? mids : match_mids,
       cuid: UserCtr.get_uid(),
       sort: PageSourceData.sort_type,
       euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),

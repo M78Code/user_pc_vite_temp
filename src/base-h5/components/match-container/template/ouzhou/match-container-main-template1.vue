@@ -1295,7 +1295,7 @@ export default {
     }
 
     .counting-down-up-container {
-      width: 1rem;
+      // width: 1rem;
       height: .14rem;
       :deep(.counting-down-wrap){
         width: auto !important;

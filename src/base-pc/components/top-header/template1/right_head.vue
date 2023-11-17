@@ -9,7 +9,8 @@
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
         <q-input borderless rounded @focus="show_search" v-model="text" label-color="primary"
-          placeholder="Enter league or team" :class="is_focus ? 'change_width' : ''">
+          placeholder="Enter league or team" :class="is_focus ? 'change_width' : ''"
+				  @keyup.enter="get_search_data(text)">
           <template v-slot:prepend>
             <i class="icon-search q-icon c-icon" size="10px"></i>
           </template>
@@ -111,6 +112,7 @@ import { api_account } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";;
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
+import { get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 
 export default defineComponent({
   name: "RightHead",
@@ -160,11 +162,6 @@ export default defineComponent({
           key: 'hy',
           language: 'Korean',
         }]
-    // watch(() => route.path, (newVal) => {
-    //   is_search.value = newVal=='/search'
-    // },
-    //   { immediate: true }
-    // )
     const settingData = ref([{
           title: 'Odds Display',
           index: 'DEC',
@@ -178,9 +175,61 @@ export default defineComponent({
           index: 'EURO',
           params: ['EURO', 'ASIA']
         }])
-    onMounted(() => {
-      compute_userInfo();
-    });
+    //监听输入框内容改变，并搜索
+    watch(
+      () => text.value,
+      (val) => {
+        let trimVal = val.trim();
+        get_search_data(0, 1, trimVal);
+      }
+    )
+    
+    /**
+     * @description 搜索
+     * pramas
+     * index: tab 下标
+     * sport_id: 球类id
+     * keyword搜索的关键字
+     */
+    const search_data = ref([]);
+    let sport_kind_id = null;
+    const show_hot = ref(true);
+    const tabIndex = ref(0);
+    const show_history = ref(true);
+    const uid = UserCtr.get_uid();
+    const get_search_data = (index = 0, sport_id = 1, keyword) => {
+      show_history.value = false;
+      show_hot.value = false;
+      tabIndex.value = index;
+      sport_kind_id = sport_id;
+      if (keyword) {
+        text.value = keyword
+      }
+      let params = {
+        cuid: uid,
+        keyword: text.value,
+        searchSportType: sport_id || 1,
+        pageNumber: 1,
+        rows: 200,
+        isPc: true
+      }
+      if (!text.value) {
+        show_history.value = true;
+        show_hot.value = true;
+        search_data.value = [];
+        return;
+      }
+      get_search_result(params).then(res => {
+        if (res.code === '200') {
+          search_data.value = res.data.data;
+          console.log('res', res.data.data);
+          // 搜索前清空会话仓库数据
+          sessionStorage.removeItem('search_txt');
+        }
+      }).catch((e) => {
+        console.log(e);
+      });
+    }
     /**
      * 是否显示搜索组件 default: false
      * 路径: project_path\src\store\module\search.js
@@ -220,27 +269,29 @@ export default defineComponent({
     /** 搜索热推赛事 */
     const search_hot_push = ref(new SearchHotPush());
 
-    /** 保存显示搜索组件状态 */
-    const set_search_status = (data) => (store.dispatch({
-      type: "SET_SEARCH_STATUS",
-      data,
-    }))
-
     /** 展开搜索 */
     function show_search() {
-      // if (!globalAccessConfig.get_searchSwitch()) {
-      // if (!globalAccessConfig.config.searchSwitch) {
-      //   return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
-      // }
       is_focus.value = true;
-      SearchPCClass.set_search_isShow(true);
+      if(!SearchPCClass.search_isShow) {
+        SearchPCClass.set_search_isShow(true);
+      }
     }
-
-    /** 初始化 */
-    // function init() {
-    //   set_search_status(false);
-    // }
-    // onMounted(init);
+    
+    onMounted(() => {
+      compute_userInfo();
+      if(is_focus.value && SearchPCClass.search_isShow) {
+            // console.log(111);
+        document.addEventListener('click', function hide_rezult(e) {
+          e.stopPropagation();
+          if(e.target.className != 'q-field__native q-placeholder' || e.target.className != 'serach-wrap column') {
+            // console.log(22222);
+            SearchPCClass.set_search_isShow(false);
+            is_focus.value = false;
+          }
+          // console.log('e', e.target);
+        })
+      }
+    });
 
     return {
       text, 
@@ -261,10 +312,11 @@ export default defineComponent({
       format_balance,
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX,
-      is_focus
+      is_focus,
+      get_search_data
     };
   
-}
+  }
 });
 </script>
 <style lang="scss" scoped>
@@ -415,10 +467,10 @@ export default defineComponent({
     color:#FFFFFF
   }
 }
-.change_width {
-  width: 500px;
-  transform: translateX(-300px);
-}
+// .change_width {
+//   width: 500px;
+//   transform: translateX(-300px);
+// }
 .search-click .s-input {
   width: 500px;
   &:deep(.q-field) {
