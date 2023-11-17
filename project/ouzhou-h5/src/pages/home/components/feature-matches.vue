@@ -148,11 +148,13 @@ const get_amtch_bg_image = (csid) => {
       padding: 0px 5px 0;
       justify-content: space-between;
       > span.active{
-        color: #fff;
+        //color: #fff;
+        color: var(--q-gb-t-c-14);
         border-radius: 2px;
         background: #FF7000;
         > span > span {
-          color: #fff;
+          //color: #fff;
+          color: var(--q-gb-t-c-14);
         }
       }
       > span {
