@@ -330,7 +330,7 @@ const submit_handle = type => {
         "deviceType": BetData.deviceType,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
         "currencyCode": "CNY",  // 币种
         "deviceImei": "",   // 设备imei码，只有手机有，没有不添加
-        "fpId": "",  // 指纹id 
+        "fpId": "",  // 指纹55555555id 
         "openMiltSingle": milt_single,  // 是否为多个单关 0:1个 1:多个
         "preBet": pre_type,  // 1 预约  0 不预约
         seriesOrders: []
@@ -399,7 +399,7 @@ const submit_handle = type => {
                         break;
                 }
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-                BetViewDataClass.set_bet_order_status(status)
+                BetViewDataClass.set_bet_order_status(2)
             }else{
                 BetViewDataClass.set_orderNo_bet_obj(orderDetailRespList)
                 BetViewDataClass.set_orderNo_bet_single_obj(seriesOrderRespList)
@@ -437,15 +437,18 @@ const submit_handle = type => {
             WsMan.skt_send_bat_handicap_odds(obj);
             // 通知页面更新 
         }else{
-            // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-            //     code: res.code,
-            //     msg: res.message
-            // })
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
+                code: res.code,
+                msg: res.message
+            })
             // 获取限额失败的信息
             BetData.set_bet_before_message({
                 code: res.code,
                 msg: res.message
             })
+            setTimeout(()=>{
+                BetData.set_bet_before_message({})
+            },10000)
         }
     })
 }

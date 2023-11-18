@@ -18,13 +18,12 @@
             <span>{{ item.oddFinally }}</span>
           </div>
           <p class="list">
-            <template v-if="data_b.seriesType == '3' && item.sportName">[{{item.sportName}}]</template>
-            <template v-if="item.sportId == 1011 || item.sportId == 1002">{{item.batchNo}}</template>
-            <template v-else>{{item.matchInfo}}</template>
+            <span>{{item.playName}}</span>
           </p>
-          <div class="list score">
-            <!-- <p>{{item.marketValue}}</p> -->
-            <!-- <span>赢</span> -->
+          <!-- 结算页面显示 -->
+          <div class="list score" v-if="BetRecordClass.selected == 3">
+            <p>{{item.settleScore}}</p>
+            <span :class="calc_item_bet_result(item).color">{{calc_item_bet_result(item).text}}</span>
           </div>
           <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
           <span class="info">
@@ -94,7 +93,7 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
-import { default as BetRecordClass, calc_text, outcome } from "src/core/bet-record/bet-record.js";
+import { default as BetRecordClass, calc_text, outcome, bet_result } from "src/core/bet-record/bet-record.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { formatTime, format_money2, format_balance } from 'src/core/format/index.js'
 
@@ -108,7 +107,6 @@ let props = defineProps({
     type: Object
   }
 })
-
 
 const show_data_orderVOS = computed(() => {
   // orderVOS 长度大于3 且按钮是收起状态, 隐藏多于3条的
@@ -170,6 +168,18 @@ const toggle_box = () => {
     return { text, color }
   }
 
+  // 串关每一项的输赢
+  const calc_item_bet_result = (item) => {
+    let text = ''
+    let color = 'red'
+    text = bet_result[item.betResult]
+    if(item.betResult == 3 || item.betResult == 6) {
+      // 输、输半
+      color = 'black'
+    }
+    return { text, color }
+  }
+
 
 </script>
 
@@ -201,7 +211,7 @@ template {
       .top {
         display: flex;
         justify-content: space-between;
-        font-size: 0.16rem;
+        font-size: 0.15rem;
         font-weight: bold;
         position: relative;
         padding-left: 0.14rem;
@@ -221,12 +231,6 @@ template {
         &.score {
           display: flex;
           justify-content: space-between;
-
-          span {
-            color: var(--q-gb-bg-c-13)
-          }
-
-          ;
         }
       }
 

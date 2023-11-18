@@ -10,7 +10,7 @@
         <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(items.marketId)">删</div>
+                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(items.marketId)"></span>
                   <div class="nonebox4-content-left-info"> 
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>

@@ -141,9 +141,9 @@ class MenuData {
       ], 
       // 收藏
       favouritse_tab: [
-        { label: "In-Play", value: 5001 },
-        { label: "To Day", value: 5002 },
-        { label: "Early", value: 5003 }
+        { label: "In-Play", value: 3001 },
+        { label: "To Day", value: 3002 },
+        { label: "Early", value: 3003 }
       ],
       inplay:{
         title: 'In-Play',
@@ -980,6 +980,14 @@ class MenuData {
   */
   is_mix(mi) {
     return this._is_cur_mi(6, mi)
+  }
+
+  /**
+   * 是否为首页
+   *  mi [number|string] 要比对的值
+  */
+  is_home(mi) {
+    return this._is_cur_mi(0, mi)
   }
 }
 
