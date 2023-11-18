@@ -240,7 +240,7 @@ const toggleLeftDrawer = () => {
   align-items: center;
   padding: 0 15px;
   font-size: 12px;
-  color:#C2C2C2;
+  color:var(--q-gb-t-c-3);
   background: url('./img/top_bg.png') no-repeat;
   background-size: cover;
   height: 0.5rem;

@@ -202,8 +202,8 @@ const set_ref_data_bet_money = () => {
     margin: 0 1px;
     background: var(--q-gb-bg-c-1);
     &.money-span3{
-      background: var(--q-gb-bg-c-12);
-      border-left: 2px solid var(--q-gb-bg-c-12);
+      background: var(--q-gb-bg-c-1);
+      border-left: 2px solid var(--q-gb-bd-c-1);
       
     }
   }

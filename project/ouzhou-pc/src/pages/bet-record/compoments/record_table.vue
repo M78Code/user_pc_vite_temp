@@ -570,7 +570,7 @@ const hand_copy = (data) => {
 
   &:deep(.q-table td) {
 
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid var(--q-gb-bd-c-2);
 
   }
 

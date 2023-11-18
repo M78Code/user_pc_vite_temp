@@ -228,7 +228,7 @@ const  showBtn = ref(props.is_show)
         height: 14px;
         top: 111px;
         right: 0;
-        background-color: #e2e2e2;
+        background-color: var(--q-gb-bd-c-2);
     }
     ::v-deep .q-tab__indicator{
             display: none;

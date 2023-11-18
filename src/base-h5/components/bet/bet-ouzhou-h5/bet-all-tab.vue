@@ -22,7 +22,7 @@
 
 <style lang="scss" scoped>
     .del-info-dui{
-      color: var(--q-gb-t-c-14);
+      color: var(--q-gb-t-c-2);
       width: 0.15rem;
       height: 0.15rem;
       background: var(--q-gb-t-c-11);
