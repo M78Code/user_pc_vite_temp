@@ -129,7 +129,7 @@
   }
   .nonebox4-content{
       width: 100%;
-      background: var(--q-gb-t-c-14);
+      background: var(--q-gb-bd-c-2);
       padding: 10px;
       padding: 0.15rem;
   }
@@ -144,7 +144,7 @@
       width: 100%;
   }
   .nonebox4-content-left-content-xian{
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-4);
       font-size: 0.12rem;
       width: 0.1rem;
       margin-right: 0.15rem;
@@ -158,7 +158,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-11);
+      color: var(--q-gb-t-c-1);
   }
   .nonebox4-content-right{
     display: flex;
