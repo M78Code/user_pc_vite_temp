@@ -16,8 +16,21 @@
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { MenuData } from "src/core/index.js";
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
+const emitters = ref({})
+onMounted(() => {
+  emitters.value = {
+    emitters_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
+      MatchMeta.set_origin_match_data()
+    }).off 
+  }
+})
+onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x());
+})
 /**
  * 球种点击
  * @param {*} mi 
