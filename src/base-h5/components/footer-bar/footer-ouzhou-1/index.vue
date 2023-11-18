@@ -68,20 +68,22 @@ const jump_page = (item) => {
   .arc {
     display: inline-block;
     position: absolute;
-    width: 52px;
-    height: 18px;
+    width: 62px;
+    height: 62px;
     top: -17px;
-    left: 160px;
-    background-image: url($SCSSPROJECTPATH+'/image/footer/arc.png');
-    background-size: 54px 18px;
+    left: 50%;
+    margin-left: -31px;
     z-index: 0;
+    background: #ffffff;
+    overflow: hidden;
+    border-radius: 50%;
   }
 
   .footer_menu_item {
     flex: 1;
     height: 54px;
     padding: 9px 0 13px 0;
-
+    position: relative;
     // 图标样式
     .item_img {
       width: 20px;
@@ -94,11 +96,12 @@ const jump_page = (item) => {
     // 中间大图标样式
     .item_img.home_page {
       position: absolute;
-      top: -9px;
-      left: 156px;
-      width: 64px;
-      height: 64px;
-      background-size: 64px 64px !important;
+      top: -14px;
+      left: 50%;
+      margin-left: -28px;
+      width: 56px;
+      height: 56px;
+      background-size: 56px 56px !important;
       background-image: url($SCSSPROJECTPATH+"/image/footer/unselect_home_page.png");
     }
 
@@ -127,10 +130,11 @@ const jump_page = (item) => {
 
   .footer_menu_item.active {
     .item_img.home_page {
-      width: 54px !important;
-      height: 54px !important;
-      left: 160px !important;
-      background-size: 54px 54px !important;
+      width: 56px !important;
+      height: 56px !important;
+      left: 50%;
+      margin-left: -28px;
+      background-size: 56px 56px !important;
       background-image: url($SCSSPROJECTPATH+'/image/footer/home_page.png');
     }
 
