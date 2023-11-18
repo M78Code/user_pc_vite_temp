@@ -16,7 +16,7 @@ import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import {update_collect_data, mx_collect_count} from "./composables/match-list-collect.js";
 import ws_composable_fn from "./composables/match-list-ws.js";
-import use_featch_fn from "./composables/match-list-featch.js";
+import {api_bymids} from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
 import process_composable_fn from './composables/match-list-processing.js'
 import { set_base_data_init } from './match-list-metadata.js';
@@ -30,7 +30,6 @@ import { match_list_handle_set } from './match-handle-data.js'
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
 const { show_mids_change, ws_destroyed } = ws_composable_fn();
-const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
 // 数据请求状态
 const load_data_state = ref("loading");

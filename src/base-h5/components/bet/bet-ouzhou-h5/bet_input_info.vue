@@ -152,10 +152,12 @@ const set_ref_data_bet_money = () => {
             width: 2px;
             height: 14px;
             border-radius: 2px;
-            background: var(--q-gb-t-c-11);
+            background: var(--q-gb-bg-c-1);
         }
         .input_amount{
-            color:#1A1A1A;
+            //color:#1A1A1A ;
+            color: var(--q-gb-t-c-4);
+            
         }
     }
     .money_input_cursor{

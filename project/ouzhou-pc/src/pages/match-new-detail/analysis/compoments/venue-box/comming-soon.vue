@@ -64,7 +64,7 @@ watch(
   
   align-items: center;
 //   justify-content: space-between;
-  color:#ffffff;
+  color:var(--q-gb-t-c-1);
   .content-item{
     width: 40%;
     max-height: 100%;

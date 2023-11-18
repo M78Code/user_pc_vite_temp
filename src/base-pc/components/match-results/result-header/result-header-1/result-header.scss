@@ -119,7 +119,8 @@
           &:hover,
           &:focus {
             // border-color: var(--q-gb-bd-c-13) !important;
-            border-color:#ff7000 ;
+            // border-color:#ff7000;
+            border-color:var(--q-gb-bd-c-1);
           }
         }
       }
@@ -140,7 +141,8 @@
             // background-color:#ff7000;
             border: none;
             &:before {
-              border-color: #ff7000;
+              // border-color: #ff7000;
+              border-color: var(--q-gb-bd-c-1);
             }
           }
         }

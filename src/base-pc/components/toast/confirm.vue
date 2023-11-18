@@ -132,7 +132,7 @@ function confirm() {
     cursor: pointer;
     font-size: 14px;
     margin: 0 auto;
-    background: #FF7000 !important;
+    background: var(--q-gb-bg-c-1) !important;
   }
 
   .close {
