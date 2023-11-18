@@ -185,14 +185,12 @@ export default {
       match_list_card_key_arr.value =
         MatchListCardDataClass.match_list_card_key_arr;
     };
-    onMounted(async () => {
+    onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
 
       mounted_fn();
-      const { mins15_list= [], featured_list= [] } = await init_home_matches();
-      matches_15mins_list.value = mins15_list
-      matches_featured_list.value = featured_list
+      
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
@@ -208,8 +206,14 @@ export default {
       proxy?.$forceUpdate();
     });
 
-    watch(MenuData.menu_data_version, () => {
-      is_show_Modlue.value = MenuData.menu_root == 0 && ![1002].includes(MenuData.router_root_lv_2.value)
+    watch(MenuData.menu_data_version, async () => {
+      console.log(MenuData.menu_root, 'MenuData.menu_root')
+      is_show_Modlue.value = MenuData.is_home() && ![1002].includes(MenuData.router_root_lv_2.value)
+      if (MenuData.is_home()) {
+        const { mins15_list= [], featured_list= [] } = await init_home_matches();
+        matches_15mins_list.value = mins15_list
+        matches_featured_list.value = featured_list
+      }
     },
     { immediate: true }
     );
