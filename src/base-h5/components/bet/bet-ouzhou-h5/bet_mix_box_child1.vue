@@ -8,7 +8,7 @@
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(0)">删</div>
+                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(0)"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>
@@ -17,11 +17,22 @@
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                            <div v-if="type == 2" class="content-right-duo"></div>
-                            <div v-else-if="type == 3" class="content-right-shao"></div>
+                            
                             <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
                         </div>
                     </div>
+                    <!--红色箭头-->
+                      <div class="top">
+                        <div class="jiantou one"></div>
+                        <div class="jiantou two"></div>
+                        <div class="jiantou three"></div>
+                      </div>
+                      <!--绿色箭头-->
+                      <div class="top">
+                        <div class="jiantou onegreen"></div>
+                        <div class="jiantou twogreen"></div>
+                        <div class="jiantou threegreen"></div>
+                      </div>
                   </div>
               </div>
           </div>
@@ -41,10 +52,37 @@
   </script>
   
   <style lang="scss" scoped>
-  .nonebox4-content-left-content-text-one-tit{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .jiantou{
+    width: 0;
+    height: 0;
+    border: 5px solid;
+    position: relative;
+  }
+  .one{
+    border-color: rgba(255, 70, 70, .3) transparent transparent transparent;
+  }
+  .two{
+    border-color: rgba(255, 70, 70, .6) transparent transparent transparent;
+  }
+  .three{
+    border-color: rgba(255, 70, 70, 1) transparent transparent transparent;
+  }
+  .onegreen{
+    border-color: rgba(23, 164, 20, 1) transparent transparent transparent;
+  }
+  .twogreen{
+    border-color: rgba(23, 164, 20, .6) transparent transparent transparent;
+  }
+  .threegreen{
+    border-color: rgba(23, 164, 20, .3) transparent transparent transparent;
+  }
+  .jiantou::after{
+    content: "";
+    position: absolute;
+    top: -11px;
+    left: -9px;
+    border: 9px solid;
+    border-color: white transparent transparent transparent;
   }
   .content-right-duo{
     display: inline-block;
@@ -100,7 +138,7 @@
       color: #000;
   }
   .nonebox4-content-left-content{
-      height: 70px;
+      min-height: 70px;
       display: flex;
       margin-top: 5px;
       width: 100%;

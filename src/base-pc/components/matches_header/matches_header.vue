@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result.filter_tab }}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{ MenuData.is_collect}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -8,9 +8,18 @@
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">All Matches</div>
 				<div v-else class="matches_tab" >
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
-						:class="{ 'checked': item.value == MenuData.router_root_lv_2.value }">
+						:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
 						{{ item.label }}
 					</div>
+					<!-- 点击联赛后出现的时间筛选 -->
+					<!-- <div>
+						Next 24 Hours
+					</div>
+					<div>
+						<div v-for="item in timer_filter_list">
+							{{ item }}
+						</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -29,6 +38,7 @@ import { MenuData, useMittOn,MITT_TYPES } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 
 const tab_list = ref([])
+const timer_filter_list = ref([]);
 // 获取当前header展示背景图
 const current_ball_type = ref(630)
 // 头部高度 包含 teb切换
@@ -52,8 +62,9 @@ onUnmounted(()=>{
 
 // 设置 头部信息配置
 const set_tab_list = (news_) =>{
-	// debugger
+	console.error('sssss')
 	tab_list.value = []
+	timer_filter_list.value = [];
 	// 首页
 	if(news_ == 0 ){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
@@ -78,13 +89,14 @@ const set_tab_list = (news_) =>{
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'favouritse_tab', [])  
 	}
 
-	// console.log(tab_list.value[0],'tab_list.value[0]')
 	if (tab_list.value.length) {
 		checked_current_tab(tab_list.value[0])
 	}
+	timer_filter_list.value = MenuData.ouzhou_time_list;
 }
 
 const checked_current_tab = payload => {
+	console.error('sss')
 	// 判断头部高度
 	if ([1001,1002,4002].includes(payload.value*1)) {
 			match_list_top.value = '80px'
@@ -95,12 +107,24 @@ const checked_current_tab = payload => {
 	}
 	MenuData.router_root_lv_2.value = payload.value*1
 	is_Top_Events.value = [1002].includes(payload.value*1)
-
+	console.log('payload', payload);
 	let obj = {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
 	}
-	// MenuData.set_mid_menu_result(obj)
+	// 收藏切换tab
+	if(MenuData.is_collect){
+		if( payload.value == 3001){
+			obj.current_mi = 1011
+		}
+		if( payload.value == 3002){
+			obj.current_mi = 1012
+		}
+		if( payload.value == 3003){
+			obj.current_mi = 1013
+		}
+	}
+	MenuData.set_mid_menu_result(obj)
 }
 
 

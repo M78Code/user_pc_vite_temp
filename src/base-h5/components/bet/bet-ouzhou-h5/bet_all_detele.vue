@@ -6,7 +6,7 @@
 <template>
   <div class="bet-all-detele">
     <div class="del-info" @click.stop="clear">
-      <div class="del-info-icon">删</div>
+      <span class="icon-delete del-info-icon"></span>
       <div class="del-info-name">{{ $t('bet.delete_all')}}</div>
     </div>
     <div class="del-info">
@@ -19,7 +19,8 @@
         </div>
       </div>
 
-      <div class="del-info-dui">√</div>
+      <!-- <div class="del-info-dui">√</div> -->
+      <span class="icon-sort_settle_time del-info-dui"></span>
     </div>
   </div>
 </template>
@@ -112,9 +113,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.1rem;
+      font-size: 0.15rem;
       border-radius: 50%;
       margin-left: 0.12rem;
+      margin-top: 0.02rem;
     }
     .del-info-name{
       margin-left: 0.15rem;
