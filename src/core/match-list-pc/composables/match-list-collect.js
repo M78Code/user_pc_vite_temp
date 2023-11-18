@@ -1,9 +1,9 @@
 import { ref } from "vue";
 import lodash from 'lodash';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { UserCtr, t, PageSourceData } from "src/core/index.js";
+import { UserCtr, t, PageSourceData, MenuData } from "src/core/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import { api_common } from "src/api/index.js";
+import { api_common, api_match } from "src/api/index.js";
 
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 // 前端控制是否禁用收藏功能   ENABLE_COLLECT_API
@@ -273,7 +273,8 @@ const mx_collect = ({ type = "match", match, match_index }) => {
   // 前端关    后台开       >关
   // 前端关    后台关       >关
   if (!enable_collect_api.value || !collect_switch.value) {
-    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+    // 临时注释，参数可能又问题 会return
+    // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
   }
   if (MenuData.is_kemp()) {
     type = "champion";
