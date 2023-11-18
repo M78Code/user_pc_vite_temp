@@ -162,7 +162,7 @@ class MenuData {
    */
   set_menu_root(val,is_fetch=false) {
     this.menu_root = val;
-    is_fetch()&&this.set_menu_data_version()
+    is_fetch&&this.set_menu_data_version()
   }
   /**
     * 设置请求参数 包括球种 日期 联赛 等等 euid 
