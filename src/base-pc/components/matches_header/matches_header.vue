@@ -23,7 +23,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_collect || is_Top_Events"  />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_collect || MenuData.is_home_to_event()"  />
 		<MatchesDateTab v-if="MenuData.is_left_today() || MenuData.is_left_zaopan()" />
 	</div>
 </template>
@@ -43,9 +43,6 @@ const timer_filter_list = ref([]);
 const current_ball_type = ref(630)
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px')
-
-// top events显示变量
-const is_Top_Events = ref(false)
 
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 
@@ -96,7 +93,6 @@ const set_tab_list = (news_) =>{
 }
 
 const checked_current_tab = payload => {
-	console.error('sss')
 	// 判断头部高度
 	if ([1001,1002,4002].includes(payload.value*1)) {
 			match_list_top.value = '80px'
@@ -106,7 +102,6 @@ const checked_current_tab = payload => {
 			match_list_top.value = '146px'
 	}
 	MenuData.router_root_lv_2.value = payload.value*1
-	is_Top_Events.value = [1002].includes(payload.value*1)
 	console.log('payload', payload);
 	let obj = {
 		...MenuData.mid_menu_result,

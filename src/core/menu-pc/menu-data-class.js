@@ -899,6 +899,13 @@ class MenuData {
     }
     return this.menu_root == mi
   }
+  //内部方法
+  _is_cur_root_l2(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.router_root_lv_2.value == mi
+  }
   /**
    * 是否选中了 热门
    * mi [number|string] 要比对的值
@@ -988,6 +995,14 @@ class MenuData {
   */
   is_home(mi) {
     return this._is_cur_mi(0, mi)
+  }
+
+  /**
+   * 是否为首页 top events
+   *  mi [number|string] 要比对的值
+  */
+  is_home_to_event(mi) {
+    return this._is_cur_root_l2(1002, mi)
   }
 }
 

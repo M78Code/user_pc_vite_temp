@@ -220,7 +220,7 @@ export default {
 
     watch(MenuData.menu_data_version, async () => {
       console.log(MenuData.menu_root, 'MenuData.menu_root')
-      is_show_Modlue.value = MenuData.is_home() && ![1002].includes(MenuData.router_root_lv_2.value)
+      is_show_Modlue.value = MenuData.is_home() && !MenuData.is_home_to_event()
     },
     { immediate: true }
     );
