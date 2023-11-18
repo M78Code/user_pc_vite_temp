@@ -387,7 +387,7 @@ export default {
         .c-bet-item {
           &.active {
             .play-name {
-              color: #ffffff;
+              color: var(--q-gb-t-c-1);
             }
           }
         }

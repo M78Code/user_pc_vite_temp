@@ -173,8 +173,8 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--q-gb-bg-c-14);
-    background: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-2);
+    background: var(--q-gb-bg-c-1);
     border-radius: 50%;
 }
 .nonebox4-first-left-text {

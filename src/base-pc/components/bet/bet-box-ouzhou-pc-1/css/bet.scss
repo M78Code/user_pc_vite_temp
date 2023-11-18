@@ -219,10 +219,11 @@
 }
 
 .text-white{
-    color: #fff;
+    color: var(--q-gb-t-c-1);
 }
 .text-ff7{
-    color: #ff7000;
+    // color: #ff7000;
+    color: var(--q-gb-t-c-2);
 }
 .text-009{
     color: #0094FF;

@@ -882,7 +882,7 @@ export const utils = {
     //调用接口数据
     axios_api(params).then(res => {
       clearTimeout(timer);
-      let code = lodash.get(res,'data.code');
+      let code = lodash.get(res,'data.code') || lodash.get(res,'code');
       if(error_codes.includes(code)){
         if(loop_count++>=(max_loop-1)){
           if(fun_catch){

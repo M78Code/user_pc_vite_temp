@@ -181,7 +181,7 @@ export default {
     padding: 7px 12px;
     background: #3c3f4c;
     border-radius: 2px;
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     line-height: 12px;
     &.active {
       background: var(--qq--yb-text-color1);
@@ -196,7 +196,7 @@ export default {
   align-items: center;
   justify-content: flex-end;
   .pager-wrap {
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     :deep(.q-pagination) {
       .q-btn {
         margin: 0 5px;

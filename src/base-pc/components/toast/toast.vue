@@ -73,7 +73,7 @@ const show_toast = (msg, delay = 2000) => {
 .q-card {
   background: rgba(0, 0, 0, 0.8);
   border-radius: 6px;
-  color: #fff;
+  color: var(--q-gb-t-c-1);
   font-size: 12px;
 }
 </style>

@@ -97,12 +97,11 @@ import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import store from 'src/store-redux/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
-const { mx_collect } = useMatchListMx();
+import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
 
 const props = defineProps({
   card_style_obj: {

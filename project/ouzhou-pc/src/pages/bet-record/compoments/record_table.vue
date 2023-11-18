@@ -595,11 +595,11 @@ const hand_copy = (data) => {
     left: 50%;
     width: 1430px;
     transform: translate(-50%, 0);
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-4);
     box-shadow: 0 -4px 8px #f5f5f5;
 
     :deep(.q-pagination .q-btn-item.q-btn--standard) {
-      background-color: #ff7000 !important;
+      background-color: var(--q-gb-bg-c-1) !important;
     }
   }
 
@@ -615,7 +615,7 @@ const hand_copy = (data) => {
 
   &:hover {
     &:before {
-      color: #FF7000;
+      color: var(--q-gb-t-c-2);
     }
   }
 }

@@ -253,7 +253,7 @@ export default defineComponent({
       line-height: 38px;
       cursor: pointer;
       &:hover {
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
     }
     .tabs-line {

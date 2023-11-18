@@ -241,7 +241,7 @@ export default {
 .calendar-wrap {
   position: absolute;
   z-index: 999;
-  background: #fff;
+  background: var(--q-gb-bg-c-4);
   border: 1px solid #d1d1d1;
   border-radius: 4px;
   color: #17191d;
@@ -258,7 +258,7 @@ export default {
     transform: rotate(45deg);
     top: -4px;
     left: 164px;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-4);
     border: 1px solid #d1d1d1;
     z-index: 1;
   }
@@ -268,7 +268,7 @@ export default {
     width: 30px;
     top: 0;
     left: 155px;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-4);
     z-index: 2;
   }
   .option-wrap {
@@ -349,15 +349,15 @@ export default {
         line-height: 24px;
         border-radius: 2px;
         &.active {
-          color: #fff;
-          background-color: #FF7000;
+          color: var(--q-gb-t-c-1);
+          background-color: var(--q-gb-bg-c-1);
         }
       }
     }
     .border1 {
       border-bottom: 1px solid #d1d1d1;
       .bg {
-        background: #fff;
+        background: var(--q-gb-bg-c-4);
         width: 7px;
         height: 2px;
         position: absolute;

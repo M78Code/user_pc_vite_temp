@@ -55,14 +55,14 @@
   
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import BaseData from "src/core/base-data/base-data.js";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
 // 菜单配置
 import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
-const popular = ([101, 102, 105])
+const popular = ([101, 102])
 const menu = [
   101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,
   114, 104, 106, 118,
@@ -71,6 +71,7 @@ const menu = [
 const left_menu_list = ref(menu)
 const menu_type = ref("")
 const router = useRouter();
+const route = useRoute();
 
 onMounted(() => {
   // init()
@@ -78,13 +79,15 @@ onMounted(() => {
   // jump_func()
 })
 
-
+// favouritse
 const go_to_favouritse = () => {
-  router.push({
-    path: '/conming_soon',
-    query: {}
-  })
-
+  MenuData.set_menu_root(301)
+  let mid_config = {
+    ...MenuData.mid_menu_result,
+    collect: 'inplay', // 滚球 inplay 早盘 early  今日 today
+    mid_menu_mi: '101', // 当前选中的赛种id
+  }
+  MenuData.set_mid_menu_result(mid_config)
 }
 /**
  * 
@@ -93,6 +96,10 @@ const go_to_favouritse = () => {
  * @returns {undefind} 无返回值
  */
 const jump_func = (payload,type) => {
+   // 点击菜单的时候如果在详情页应跳转出来先
+  if (route.name=='details') {
+    router.push('/home')
+  }
   let obj = {
     lv1_mi : payload,
     has_mid_menu: true, // 有中间菜单
@@ -101,7 +108,7 @@ const jump_func = (payload,type) => {
   menu_type.value = type
 
   //太多了 后续做优化
-  MenuData.set_menu_root(202)
+  MenuData.set_menu_root(202, true)
   MenuData.set_left_menu_result(obj)
   MenuData.set_menu_current_mi(obj.lv2_mi)
 

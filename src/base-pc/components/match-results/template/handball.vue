@@ -292,7 +292,7 @@ export default {
           color: #666;
         }
         &.item-both {
-          color: #FF7000;
+          color: var(--q-gb-t-c-2);
         }
       }
     }

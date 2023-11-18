@@ -195,7 +195,7 @@ const get_animation_url = () => {
 
 <style lang="scss" scoped>
 .box-bc {
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
 }
 .iframe_box {
   width: 100%;

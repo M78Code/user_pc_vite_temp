@@ -66,7 +66,7 @@ class MenuData {
       lv2_mi: "", // 二级菜单 波胆  角球 等其他玩法
       has_mid_menu: true,
     };
-    // 左侧菜单的 root 节点   root ：0 首页  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000  202 左侧菜单今日 203 左侧菜单早盘 102 投注记录
+    // 左侧菜单的 root 节点   root ：0 首页  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000  202 左侧菜单今日 203 左侧菜单早盘 102 投注记录 301 收藏
     this.menu_root = 0;
     // 滚球 盘数量总计
     this.fetch_filter = {  //过来大菜单下的方法
@@ -138,19 +138,29 @@ class MenuData {
         { label: 'Matches', value: 4001 },
         { label: 'League', value: 4002 },
       ], 
+      // 收藏
+      favouritse_tab: [
+        { label: "In-Play", value: 5001 },
+        { label: "To Day", value: 5002 },
+        { label: "Early", value: 5003 }
+      ],
       inplay:{
         title: 'In-Play',
         name: 'All Matches'
       }
     }
+    //  1001 fetured  10002 top events 4001 Matches 4002 League
+    this.router_root_lv_2 = ref(1001)
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
-
+  set_fetch_filter(){}
   // 设置终极菜单id
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
     // 菜单数据缓存
     // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    //宽度请求变化 因为请求参数是在这里触发的
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     this.set_match_list_api_config()
   }
 
@@ -160,58 +170,9 @@ class MenuData {
    * @param {*} val 节点ID
    * @param {*} is_fetch  是否立刻更新菜单 意味这立刻请求列表接口
    */
-  set_menu_root(val,is_fetch=false) {
+  set_menu_root(val) {
     this.menu_root = val;
-    is_fetch&&this.set_menu_data_version()
-  }
-  /**
-    * 设置请求参数 包括球种 日期 联赛 等等 euid 
-    * {
-    *   is_filter:ture,
-    *   euid:"",
-    *   jif:""
-    * }
-    * @param {Object} params  要设置的参数 包括 euid 球种 日期 联赛 等等  
-    * @param {Boolean} is_merge  是否深度合并参数 保持之前的参数 替换新参数
-    */
-  set_fetch_filter(params={},is_merge=false){
-    if(is_merge){
-      lodash.merge(this.mid_menu_result,params)
-    }else{
-      this.fetch_filter=params;
-    }
-    this.set_menu_data_version()
-  }
-  
-  // 设置 欧洲版头部配置信息
-  set_ouzhou_filter_config(obj) {
-    this.ouzhou_filter_config = {
-      ... this.ouzhou_filter_config,
-      ...obj,
-    }
-  }
-
-  // 设置左侧菜单id
-  set_left_menu_mi(val) {
-    this.left_menu_mi.value = val
-  }
-
-  // 设置 菜单的 router_root 节点
-  set_router_root_lv_1(val) {
-    this.router_root_lv_1 = val
-    this.router_root.value = val
-    // 首页 滚球 设置 menu_root 1
-    if([1,2].includes(val*1)){
-      this.set_menu_root(1)
-    }
-    this.router_root_version.value = Date.now()
-    
-  }
-  // 设置 菜单的 router_root 节点
-  //  1001 fetured  10002 top events   // 4001 matches  4002 langue 
-  set_router_root_lv_2(val) {
-    this.router_root_lv_2 = val
-    this.router_root_version.value = Date.now()
+    this.set_menu_data_version();
   }
 
   // 设置 菜单的版本变化
@@ -438,7 +399,7 @@ class MenuData {
     //     version: Date.now(),
     //   };
     // }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // if ([2, 3].includes(Number(this.menu_root))) {
     //   // 角球
     //   if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -496,7 +457,7 @@ class MenuData {
     };
     console.error( this.menu_root, "MENUDATA.set_mid_menu_result-------",JSON.stringify(this.mid_menu_result),  obj );
     // this.menu_root=obj.root;
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏
     this.set_menu_data_version();
     this.set_multi_column();
@@ -615,8 +576,6 @@ class MenuData {
     if (!session_info) {
       return;
     }
-    console.warn('session_info', session_info);
-
     if (Object.keys(session_info).length) {
       const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root } = session_info;
 

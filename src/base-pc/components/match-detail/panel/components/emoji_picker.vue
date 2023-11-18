@@ -640,7 +640,7 @@
   position: absolute;
   right: 20px;
   bottom: 20px;
-  background: #fff;
+  background: var(--q-gb-bg-c-4);
   padding: 10px 20px 4px 20px;
   border-radius: 6px;
 }
