@@ -4,16 +4,15 @@
       <div v-show="get_match_detail.csid" :class="['sport_bg', `${ get_sports_bg(get_match_detail.csid) }`]"></div>
       <div class="match-detail-time">
         <div>
-          <span class="match-detail-time-label">{{get_match_detail.course}} 
+          <span class="match-detail-time-label">
 
             <span v-if="get_match_detail.ms != 110">{{get_match_detail.mstValue}} {{get_match_detail.mstValueTime}}</span>
           </span>
           <q-badge v-if="get_match_detail.mng == 1" text-color="white" label="N" />
         </div>
         <div class="match-detail-time-collect" @click="collect_click">
-          <!-- <img :src="is_collect ? '~assets/images/detail/collected.png' : '~assets/images/detail/collect.png'" alt="" /> -->
           <img v-if="is_collect"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"   alt="" />
-          <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"  alt="" />
+          <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect.png`"  alt="" />
         </div>
       </div>
       <div class="match-detail-score">
@@ -49,10 +48,10 @@
 
 <script setup>
 import { defineComponent, onMounted, ref, computed, toRef, watch } from "vue";
-import { api_match } from "src/api/index.js";
-// import { detail_module } from "src/project-ouzhou/stores/detail";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
-import _ from "lodash";
+import { api_match,api_common } from "src/api/index.js";
+import MatchCollect from 'src/core/match-collect'
+import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core";
+// import UserCtr from 'src/core/user-config/user-ctr.js'
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -107,7 +106,7 @@ const bg_img = ref({
 
 })
 const detail_store = ref(null);
-let is_collect = ref(false);
+let is_collect = ref(MatchCollect.get_match_collect_state(props.get_match_detail));
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -141,7 +140,7 @@ const get_sports_bg = (csid) => {
   return `sports_bg${ num }`
 }
 const set_basketball_score_icon_list = () => {
-  if (_.get(props.get_match_detail, 'mle') == '17') {
+  if (lodash.get(props.get_match_detail, 'mle') == '17') {
     basketball_score_icon_list.value = [
       {
         msc_key: "S2"
@@ -199,7 +198,15 @@ const set_scoew_icon_list = (new_value) => {
  *@return {*}
  */
 const collect_click = () => {
-  is_collect.value = !is_collect.value
+  api_common.add_or_cancel_match({
+        mid:props.get_match_detail.mid,
+        cf: is_collect.value ? 0 : 1,
+        cuid: UserCtr.get_cuid()
+      }).then(res => {
+        if (res.code != 200) return
+        is_collect.value = !is_collect.value
+      })
+ 
 }
 setTimeout(() => {
   // console.log("get_match_detail_MatchInfo", props.get_match_detail);
@@ -251,7 +258,7 @@ setTimeout(() => {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      align-items: center;
+      position:relative;
       .match-detail-time-label {
         color: #8a8986;
         padding-right: 10px;
@@ -264,6 +271,9 @@ setTimeout(() => {
       .match-detail-time-collect {
         width: 14px;
         height: 14px;
+        position:absolute;
+        z-index:2;
+        right:0;
         img {
           width: 14px;
           height: 14px;
