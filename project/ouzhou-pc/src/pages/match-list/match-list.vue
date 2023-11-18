@@ -34,7 +34,7 @@
       <scroll-list v-if="menu_config.menu_root_show_shoucang != 300">
         <!-- <template v-slot:before> -->
           <!-- 头部15 Mins模块 -->
-          <div v-show="matches_15mins_list.length && is_show_modlue" class="match-list-item">
+          <div v-show="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
             <CurrentMatchTitle
               :title_value="'15 Mins'"
               :show_more_icon="false"
@@ -42,7 +42,7 @@
             <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
           </div>
           <!-- 头部Featured Matches模块 -->
-          <div v-show="matches_featured_list.length && is_show_modlue" class="match-list-item">
+          <div v-show="matches_featured_list.length && MenuData.is_featured()" class="match-list-item">
             <CurrentMatchTitle
               :title_value="'Featured Matches'"
               :show_more_icon="false"
@@ -88,7 +88,7 @@
         :style="compute_css_obj('pc-img-loading')"
       ></div>
     </div>
-    <ConmingSoon v-show="coom_soon_state" />
+    <!-- <ConmingSoon v-show="coom_soon_state" /> -->
   </div>
 </template>
 <script>
@@ -174,11 +174,9 @@ export default {
 
     const match_list_card_key_arr = ref([]);
 
-    const coom_soon_state = ref(false);
+    // const coom_soon_state = ref(false);
 
     const match_list_top = ref("76px");
-
-    const is_show_modlue = ref(true)
 
     const { proxy } = getCurrentInstance();
 
@@ -219,13 +217,6 @@ export default {
       }
     }
 
-    watch(MenuData.menu_data_version, async () => {
-      console.log(MenuData.menu_root, 'MenuData.menu_root')
-      is_show_modlue.value = !MenuData.is_featured()
-    },
-    { immediate: true }
-    );
-
     return {
       menu_config,
       MatchListData,
@@ -241,10 +232,10 @@ export default {
       compute_css_obj,
       MatchListCardDataClass,
       load_data_state,
-      coom_soon_state,
+      // coom_soon_state,
       match_list_top,
-      is_show_modlue,
-      match_list_card
+      match_list_card,
+      MenuData
     };
   },
 };
