@@ -172,7 +172,7 @@ const set_ref_data_bet_money = () => {
 .betting_await{
     padding: 0 12px;
     height: 39px;
-    background: var(--q-gb-t-c-14);
+    background: var(--gb-bg-c-2);
 
 }
 .flex_input{

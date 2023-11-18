@@ -135,7 +135,7 @@
   }
   .nonebox4-content-left-title{
       font-size: 13px;
-      color: #000;
+      color: var(--q-gb-t-c-13);
   }
   .nonebox4-content-left-content{
       min-height: 70px;
