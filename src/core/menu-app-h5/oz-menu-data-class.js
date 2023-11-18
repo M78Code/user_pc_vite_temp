@@ -109,6 +109,29 @@ class MenuData {
     useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
 
   }
+  /**
+   * 收藏
+   * @param {*} mid 
+   * @returns 
+   */
+  get_menu_lvmi_list_only(mid){
+    let menu_lv_mi_lsit = [];
+    this.menu_list.forEach(item => {
+      (item.sl || {}).find(obj=>{
+        // 菜单id最后一位为顶级菜单的id
+        if(obj.mi.substr(obj.mi.length-1,1) == mid){
+          menu_lv_mi_lsit.push(obj)
+        }
+      })
+    })
+    menu_lv_mi_lsit = menu_lv_mi_lsit.map((item)=>{
+      return {
+        ...item,
+        mi:item.mi.slice(0,3)
+      }
+    })
+    return menu_lv_mi_lsit
+  }
   //设置赛果参数
   set_result_menu_api_params(val){
     this.result_menu_api_params = val

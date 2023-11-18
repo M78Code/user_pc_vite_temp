@@ -144,14 +144,22 @@ const play_name_obj = computed(() => {
   return play_name_obj
 })
 
-is_collect.value = Boolean (lodash.get(props, 'match.mf'))
+is_collect.value = Boolean(lodash.get(props, 'match.mf'))
 
 /**
  * @Description 赛事收藏 
 */
 const collect = () => {
   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
+  //前端修改收藏状态
+  is_collect.value = !is_collect.value
 }
+
+// 监听收藏变化
+watch(props.match.mf, (n) => {
+  console.log('nnn', n);
+  is_collect.value = Boolean(n)
+})
 
 //进球特效防抖
 // hide_home_goal = this.debounce(hide_home_goal,5000);
