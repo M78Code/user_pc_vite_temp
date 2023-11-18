@@ -32,7 +32,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
     flex-direction: column;
     align-items: center;
     padding-top: 200px;
-    background: #FFFFFF;
+    background: var(--q-gb-bg-c-4);
     box-sizing: border-box;
     img {
       width: 60px;

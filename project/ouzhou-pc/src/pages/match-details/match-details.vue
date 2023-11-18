@@ -284,7 +284,7 @@ let back_to_timer =null
     align-items: center;
     height: 190px;
     background-size: cover !important;
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     .info-upd {
       z-index: 90;
       justify-content: center;
@@ -305,7 +305,7 @@ let back_to_timer =null
       cursor: pointer;
       &:hover {
         background: rgba(31, 33, 41, 0.8);
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
     }
   }
