@@ -33,7 +33,7 @@ defineProps({
   align-items: center;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: var(--q-gb-bg-c-4);
 }.la-line-scale, .la-line-scale>div {
   position: relative;
   -webkit-box-sizing: border-box;
@@ -42,7 +42,7 @@ defineProps({
 }.la-line-scale {
   display: block;
   font-size: 0;
-  color: #FF7000;
+  color: var(--q-gb-t-c-2);
 }.la-line-scale.la-dark {
   color: #333;
 }.la-line-scale>div {

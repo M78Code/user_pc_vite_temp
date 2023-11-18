@@ -490,7 +490,7 @@ onUnmounted(() => {
   height: 314px;
 
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
 
   z-index: 2;
   display: flex;

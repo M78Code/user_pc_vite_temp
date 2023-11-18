@@ -66,7 +66,6 @@ const get_init_data = () =>{
     emits('changeMenu',dataList()[0]?.mi)
 }
 onMounted(()=>{
-    get_init_data();
     useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
 })
 onUnmounted(()=>{
@@ -138,7 +137,8 @@ const on_change_play = (item) => {
                     height: 8px;
                     bottom: -4px;
                     border-radius: 50%;
-                    background: linear-gradient(180deg, #FF7000 0%, #FF9440 50%);
+                    //background: linear-gradient(180deg, #FF7000 0%, #FF9440 50%);
+                    background: var(--q-gb-bg-lg-8);
                 }
 
                 .label {

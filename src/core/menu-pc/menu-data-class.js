@@ -142,13 +142,15 @@ class MenuData {
       favouritse_tab: [
         { label: "In-Play", value: 5001 },
         { label: "To Day", value: 5002 },
-        { label: "Early", value: 5002 }
+        { label: "Early", value: 5003 }
       ],
       inplay:{
         title: 'In-Play',
         name: 'All Matches'
       }
     }
+    //  1001 fetured  10002 top events 4001 Matches 4002 League
+    this.router_root_lv_2 = ref(1001)
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
   set_fetch_filter(){}

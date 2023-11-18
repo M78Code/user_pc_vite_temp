@@ -30,10 +30,20 @@
             </div>
             <div class="nonebox4-fourth-num">
                 <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
-                <div class="nonebox4-fourth-num-sun" data-number='x'>{{ i18n_t('app_h5.bet.delete')}}</div>
+                <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div>
                 <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
             </div>
         </div>
+        
+<!--        <div class="keyboard-new ">
+            <ul class="keyboard-number">
+                <li v-for="item of keyboardData.numbers" :key="item.label" class="number-item">{{ item.label }}</li>
+            </ul>
+            <ul class="keyboard-other">
+                <li v-for="item of keyboardData.others" :key="item.label">{{ item.label }}</li>
+            </ul>
+        </div>-->
+        
     </div>
 
   </div>
@@ -47,6 +57,27 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr, i18n_t } from "src/core/index.js";
 import lodash_ from 'lodash'
 
+const keyboardData = {
+    numbers: [
+        { label: '1', value: '1' },
+        { label: '2', value: '2' },
+        { label: '3', value: '3' },
+        { label: '4', value: '4' },
+        { label: '5', value: '5' },
+        { label: '6', value: '6' },
+        { label: '7', value: '7' },
+        { label: '8', value: '8' },
+        { label: '9', value: '9' },
+        { label: '0', value: '0' },
+        { label: '.', value: '.' },
+        { label: '00', value: '10' },
+    ],
+    others: [
+        { label: i18n_t('bet.max'), value: '' },
+        { label: i18n_t('app_h5.bet.delete'), value: '' },
+        { label: i18n_t('bet.pack_up'), value: '' },
+    ]
+}
 
 const active_index = ref(BetData.active_index)
 const money = ref('') //用户输入金额
@@ -390,5 +421,24 @@ onUnmounted(() => {
 .del-key {
   // background: url('../../../assets/images/bet/bet_key_delect.png') no-repeat 50%;
   background-size: 23px 14px;
+}
+
+
+.keyboard-new{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    &-number{
+        display: grid;
+        grid-template-rows: repeat(4, 1fr);
+        grid-template-columns: repeat(3,1fr);
+        align-items: center;
+        justify-items: center;
+    }
+    &-other{
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: 1fr;
+    }
 }
 </style>

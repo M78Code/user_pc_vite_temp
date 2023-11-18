@@ -102,7 +102,7 @@ body {
       .content-wrap {
         background-color: var(--q-gb-bg-c-22);
         .content {
-          color: #fff;
+          color: var(--q-gb-t-c-1);
         }
         .yb-icon-triangle:before {
           background-color: var(--q-gb-bg-c-22);
@@ -118,19 +118,19 @@ body {
   .c-match-video {
     background-color: var(--q-gb-bg-c-14);
     .head-info {
-      color: #fff;
+      color: var(--q-gb-t-c-1);
       .info-time,
       .info-both {
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
       .info-data {
         span {
-          color: #fff !important;
+          color: var(--q-gb-t-c-1) !important;
         }
       }
     }
     .more-info {
-      color: #fff;
+      color: var(--q-gb-t-c-1);
       .scroll-arrow {
         &.active {
           i {

@@ -151,7 +151,7 @@
       width: 300px;
       height: 140px;
       display: inline-block;
-      background: #FFFFFF;
+      background: var(--q-gb-bg-c-4);
       padding-top: 8px;
       box-sizing: border-box;
       position: relative;
@@ -271,18 +271,21 @@
               margin-right: 8px;
             }
             &:last-child {
-              color: #FF7000;
+              // color: #FF7000;
+              color:var(--q-gb-t-c-2);
             }
           }
         }
         .checked {
-          background: #FF7000;
-          color: #FFFFFF;
+          background: var(--q-gb-bg-c-1);
+          // color: #FFFFFF;
+          color:var(--q-gb-t-c-1);
           span {
-            color: #FFFFFF !important;
+            // color: #FFFFFF !important;
+            color:var(--q-gb-t-c-1);
           }
           &:hover {
-            background: #FF7000;
+            background: var(--q-gb-bg-c-1);
           }
         }
       }

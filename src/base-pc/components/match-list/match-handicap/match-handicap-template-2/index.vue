@@ -12,13 +12,13 @@
       <div 
         class="handicap-col-ouzhou" 
         v-for="(col, col_index) in handicap_list" 
-        :key="col_index" 
+        :key="()=>Math.random()" 
         :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
       >
         <div 
           :class="['bet-item-wrap-ouzhou', deal_width_handicap_ols(col.ols).length ===2 && 'bet-item-wrap-ouzhou-bigger']" 
           v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
-          :key="ol_index">
+          :key="ol_data._hpid+'_'+ol_data._ot">
           <!-- 投注项组件 -->
           <bet-item @update_score="update_score" :active_score="active_score" v-if="is_mounted && ol_data && ol_data._hpid && ol_data.ov"  :ol_data="ol_data" />
         </div>

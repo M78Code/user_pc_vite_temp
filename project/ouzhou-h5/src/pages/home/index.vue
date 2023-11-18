@@ -189,7 +189,8 @@ onUnmounted(() => {
         font-weight: 600;
       }
       .q-tab--active .q-tab__label{
-        color: #FF7000;
+        //color: #FF7000;
+        color: var(--q-gb-t-c-1);
       }
       .q-tab__indicator{
         height: 3px;

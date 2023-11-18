@@ -121,7 +121,7 @@ body {
                 cursor: pointer;
                 .bet-row-1,
                 .bet-row-2 {
-                  color: #ffffff !important;
+                  color: var(--q-gb-t-c-1) !important;
                 }
               }
             }
@@ -336,7 +336,7 @@ body {
               background: var(--qq--theme-bg-lose);
               border: 1px solid var(--qq--theme-bd-lose);
               border-radius: 4px;
-              color: #ffffff;
+              color: var(--q-gb-t-c-1);
               padding: 0px 3px 0px 3px;
             }
           }
@@ -347,7 +347,7 @@ body {
               background: var(--qq--theme-bg-win);
               border: 1px solid var(--qq--theme-bd-win);
               border-radius: 4px;
-              color: #ffffff;
+              color: var(--q-gb-t-c-1);
               padding: 0px 3px 0px 3px;
             }
           }
@@ -417,7 +417,7 @@ body {
     }
     .book-record-submit {
       background-image: linear-gradient(225deg, var(--qq--background-gradient-color-1-s) 0%, var(--qq--background-gradient-color-1-e) 100%);
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
     }
   }
 }

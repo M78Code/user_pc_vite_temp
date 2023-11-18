@@ -32,21 +32,23 @@
 
 
       <!-- 第一个弹窗的内容 -->
-      <!-- <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
-        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)"> -->
-          <!-- 单关投注项列表 -->
-          <!-- <bet-mix-box-child7></bet-mix-box-child7>
+      <!--      
+      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
+        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)"> &ndash;&gt;
+          &lt;!&ndash; 单关投注项列表 &ndash;&gt;
+          <bet-mix-box-child7></bet-mix-box-child7>
           <bet-collusion-input1></bet-collusion-input1>
-      </div> -->
+      </div>
+      -->
 
       <!-- 第二个弹窗内容 -->
-      <!-- <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
-        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)"> -->
-          <!-- 列表 -->
-          <!-- <bet-mix-box-child8></bet-mix-box-child8> -->
-          <!-- 结果框 -->
-          <!-- <bet-collusion-input2></bet-collusion-input2>
-      </div> -->
+<!--      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
+        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
+          &lt;!&ndash; 列表 &ndash;&gt;
+          <bet-mix-box-child8></bet-mix-box-child8>
+          &lt;!&ndash; 结果框 &ndash;&gt; 
+          <bet-collusion-input2></bet-collusion-input2>
+      </div>-->
 
 
       <!-- 中间可滚动区域 -->
@@ -184,8 +186,8 @@ import betMixBoxChild7 from './bet_mix_box_child7.vue';
 import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
 import betInfoList from "./bet_info_list.vue";
-import bevisBettedStatus from "./bevis-betted_status.vue"
-import bevisBettedButton from "./bevis-betted-button.vue"
+import bevisBettedStatus from "./bevis/bevis-betted_status.vue"
+import bevisBettedButton from "./bevis/bevis-betted-button.vue"
 import bevisBettedConfig from "./bevis/bevis-betted-config.vue"
 
 

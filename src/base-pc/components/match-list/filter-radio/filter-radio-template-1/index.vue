@@ -75,8 +75,8 @@ function check_change (value) {
           width: 6px;
           height: 4px;
           top: 4px;
-          border-top: 2px solid #ffffff;
-          border-right: 2px solid #ffffff;
+          border-top: 2px solid var(--q-gb-bd-c-3);
+          border-right: 2px solid var(--q-gb-bd-c-3);
           transform: rotate(135deg);
         }
       }
