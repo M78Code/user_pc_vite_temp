@@ -377,7 +377,7 @@ export default {
 }
 .gif-text {
   white-space: nowrap;
-  color: #ff7000;
+  color: var(--q-gb-t-c-2);
   padding-left: 3px;
   animation: 1s text-flash linear infinite normal;
 }

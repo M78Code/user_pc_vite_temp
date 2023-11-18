@@ -59,7 +59,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 <style lang="scss" scoped>
 .analysis-team {
   margin-bottom: 10px;
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
   display: flex;
   padding: 14px 0 0 20px;
   box-sizing: border-box;
@@ -94,7 +94,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
       span {
         font-size: 20px;
         line-height: 22px;
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
         font-weight: 400;
       }
     }
@@ -146,7 +146,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 .analysis-bottom {
   margin-bottom: 10px;
   height: 150px;
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
   padding: 14px 0 0 20px;
   box-sizing: border-box;
   // background-image: url("src/assets/images/keno.png");

@@ -108,7 +108,7 @@ function match_list_all_params() {
         }
         apiType = 2
         api_name = api_params.other.colloet
-        if ([1, 500, 300, 2000].includes(Number(root))) {
+        if ([1, 500, 300, 2000].includes(Number(menu_root))) {
             api_name = api_params[root].colloet
         }
     }
@@ -212,7 +212,9 @@ function match_list_all_params() {
 
     return config
 }
-
+export function get_collet_match_list_params(){
+    return {}
+}
 //请求 参数的说明
 //     begin_request:
 //       "是否发起请求 默认 true ，如果有联赛层级的菜单需要在联赛点击 ,赛种点击不生效。也就是中间列表 如果存在多层菜单，非最终一层菜单点击是不发起请求的",

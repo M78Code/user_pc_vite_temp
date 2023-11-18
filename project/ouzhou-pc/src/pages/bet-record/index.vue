@@ -62,7 +62,7 @@ onActivated(() => {
   .record-page-main {
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
+    background-color: var(--q-gb-bg-c-4);
     //  margin: 0 200px;
   }
 }

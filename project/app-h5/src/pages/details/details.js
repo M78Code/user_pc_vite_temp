@@ -431,7 +431,7 @@ export const details_main = () => {
    * @type {MITT.RefreshDetailsCallback}
    */
   const initEvent = (param) => {
-    state_data.refresh = param.refresh || false
+    state_data.refresh = param?.refresh || false
     // get_uid为空时循环检测进行拉取逻辑处理
     if (UserCtr.uid || state_data.init_event_timer_count > 30) {
       // 请求接口数据
