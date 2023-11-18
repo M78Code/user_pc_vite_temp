@@ -237,7 +237,7 @@ onMounted(() => {
 .odds-wrap {
   background: #FFFFFF;
   box-sizing: border-box;
-  border-bottom: 1px solid #FF7000;
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
 
   .odds-hpn {
     display: block;
@@ -306,12 +306,12 @@ onMounted(() => {
 }
 
 .tem4-active {
-  background-color: #FF7000;
-  color: #FFFFFF;
+  background-color: var(--q-gb-bg-c-1);
+  color: var(--q-gb-t-c-1);
 
   &:hover {
-    background: #ff7000 !important;
-    color: #ffffff;
+    background: var(--q-gb-bg-c-1) !important;
+    color: var(--q-gb-t-c-1);
 
   }
 }
@@ -319,7 +319,7 @@ onMounted(() => {
 .bottom-height {
   height: 150px;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: var(--q-gb-bg-c-4);
 }
 
 .detail-loading {
