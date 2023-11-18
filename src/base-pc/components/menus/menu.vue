@@ -80,10 +80,11 @@ onMounted(() => {
 
 
 const go_to_favouritse = () => {
-  router.push({
-    path: '/conming_soon',
-    query: {}
-  })
+  MenuData.set_is_collect(true)
+  // router.push({
+  //   path: '/conming_soon',
+  //   query: {}
+  // })
 
 }
 /**
