@@ -18,7 +18,9 @@
       "which_team": "哪支球队",
       "keno_lottery": "基诺彩票",
       "exciting_different": "令人兴奋且与众不同",
-      "close_handicap": "关闭让分盘"
+      "close_handicap": "关闭让分盘",
+      "betting":"投注",
+      "event_analysis":"赛事分析"
      },
      "bet": {
          "place_bet": "下注"

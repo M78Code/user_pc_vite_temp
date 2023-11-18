@@ -18,7 +18,9 @@
         "which_team": "Which team will",
         "keno_lottery": "keno lottery",
         "exciting_different": "Exciting and different",
-        "close_handicap": "Close the Handicap"
+        "close_handicap": "Close the Handicap",
+        "betting":"Betting",
+        "event_analysis":"Event Analysis"
     },
     "bet": {
         "place_bet": "Place Bet"

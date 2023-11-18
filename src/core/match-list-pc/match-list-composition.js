@@ -130,7 +130,6 @@ export function fetch_match_list(is_socket = false, cut) {
 		/**返回数据处理************/
 		api && api(_params)
 			.then((res) => {
-
 				// 组件和路由不匹配 菜单id不匹配aa
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
@@ -178,12 +177,10 @@ export function fetch_match_list(is_socket = false, cut) {
 	if (match_list_debounce_cache && match_list_debounce_cache["ENABLED"]) {
 		let info = match_list_debounce_cache.can_send_request(_params);
 		if (info.can_send) {
-
 			//直接发请求    单次数 请求的方法
 			send_match_list_request();
 		} else {
 			// 记录timer
-
 			current_hash_code = 0;
 			clearTimeout(axios_debounce_timer2);
 			axios_debounce_timer2 = setTimeout(() => {

@@ -93,6 +93,7 @@ export default {
         })
         // 获取base64数据
         function getBase64(imgUrl) {
+     
             window.URL = window.URL || window.webkitURL;
             var xhr = new XMLHttpRequest();
             xhr.open("get", imgUrl, true);
