@@ -203,7 +203,7 @@ border-bottom: 1px solid #e2e2e2;
     right: 5%;
     width: 90%;
     height: 2px;
-    background: #ff7000;
+    background: var(--q-gb-bg-c-1);
   }
 }
 

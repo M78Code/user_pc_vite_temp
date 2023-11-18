@@ -388,7 +388,7 @@ export default{
 }
 
 .active-nav {
-  color: #ff7000;
+  color: var(--q-gb-t-c-2);
   background-color: #626262;
 }
 

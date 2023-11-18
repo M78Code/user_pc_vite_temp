@@ -34,9 +34,12 @@ const set_bet_show = () => {
         width: 100%;
         height: 54px;
         background: #3B3B3B;
-        border-top: 3px solid #FF7000;
-        border-left: 1px solid #FF7000;
-        border-right: 1px solid #FF7000;
+        // border-top: 3px solid #FF7000;
+        // border-left: 1px solid #FF7000;
+        // border-right: 1px solid #FF7000;
+        border-top: 3px solid var(--q-gb-bd-c-1);
+        border-left: 1px solid var(--q-gb-bd-c-1);
+        border-right: 1px solid var(--q-gb-bd-c-1);
         padding: 0 12px;
         .bet-content{
             height: 100%;
@@ -44,15 +47,15 @@ const set_bet_show = () => {
         .bet-count{
             height: 22px;
             padding: 0 6px;
-            background: #FF7000;
+            background: var(--q-gb-bg-c-1);
             border-radius: 50%;
             min-width: 22px;
-            color: #fff;
+            color: var(--q-gb-t-c-1);
             font-weight: 700;
             font-size: 14px;
         }
         .bet-slip{
-            color: #FFFFFF;
+            color: var(--q-gb-t-c-1);
             font-weight: 500;
             font-size: 14px;
             margin-left: 6px;
@@ -60,14 +63,14 @@ const set_bet_show = () => {
         .bet-money{
             font-weight: 500;
             font-size: 16px;
-            color: #FF7000;
+            color: var(--q-gb-t-c-2);
             margin-right: 10px;
             font-family: "DIN";
         }
         .bet-state{
             width: 28px;
             height: 28px;
-            background: #FFFFFF;
+            background: var(--q-gb-bg-c-4);
             opacity: 0.2;
             position: relative;
             cursor: pointer;
