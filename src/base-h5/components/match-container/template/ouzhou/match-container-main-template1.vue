@@ -13,13 +13,13 @@
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown disable flat outline  style="color: #FF7000"  padding="0" label="Match (Regular Time)" 
+            <q-btn-dropdown flat outline  style="color: #FF7000"  padding="0" :label="i18n_t(`ouzhou.match.play_map.${select_play}`)" 
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
                    :class="{active: select_play === item.hpid}" clickable v-close-popup >
                   <q-item-section>
-                    <q-item-label>{{ item.hpn }}</q-item-label>
+                    <q-item-label>{{ i18n_t(`ouzhou.match.play_map.${item.hpid}`) }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -335,8 +335,6 @@ export default {
     const on_select_play = (item) => {
       select_play.value = item.hpid
       MatchResponsive.set_match_hpid(item.hpid)
-      // const length = lodash.get(item.hl[0].ol, 'length', 3)
-      // score_length.value = length
     }
 
     return { 
