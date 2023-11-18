@@ -398,7 +398,7 @@ const ref_data = reactive({
         cursor: pointer;
         .bet-row-1,
         .bet-row-2 {
-          color: #ffffff !important;
+          color: var(--q-gb-t-c-1) !important;
         }
       }
     }

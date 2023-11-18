@@ -45,7 +45,7 @@ export default {
   align-items: center;
   height: 30px;
   border-radius: 30px;
-  color: #FFFFFF;
+  color: var(--q-gb-t-c-1);
   background: rgba(0, 0, 0, 0.4);
   .item {
     height: 30px;

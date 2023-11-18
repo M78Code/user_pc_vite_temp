@@ -149,6 +149,8 @@ class MenuData {
         name: 'All Matches'
       }
     }
+    //  1001 fetured  10002 top events 4001 Matches 4002 League
+    this.router_root_lv_2 = ref(1001)
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
   set_fetch_filter(){}

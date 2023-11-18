@@ -95,7 +95,7 @@ onMounted(compute_colse_tips_time)
     }
 
     .content-wrap {
-        color: #fff;
+        color: var(--q-gb-t-c-1);
         padding: 2px 3px;
         border-radius: 3px;
         border-top-left-radius: 0;

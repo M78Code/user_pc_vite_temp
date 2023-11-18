@@ -146,7 +146,7 @@ export default {
       }
     }
     .match_time-text {
-      color: #fff;
+      color: var(--q-gb-t-c-1);
       margin: 0 22px;
       display: flex;
       font-size: 12px;

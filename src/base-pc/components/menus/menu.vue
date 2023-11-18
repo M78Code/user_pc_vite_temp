@@ -55,7 +55,7 @@
   
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import BaseData from "src/core/base-data/base-data.js";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
@@ -71,6 +71,7 @@ const menu = [
 const left_menu_list = ref(menu)
 const menu_type = ref("")
 const router = useRouter();
+const route = useRoute();
 
 onMounted(() => {
   // init()
@@ -102,6 +103,10 @@ const go_to_favouritse = () => {
  * @returns {undefind} 无返回值
  */
 const jump_func = (payload,type) => {
+   // 点击菜单的时候如果在详情页应跳转出来先
+  if (route.name=='details') {
+    router.push('/home')
+  }
   let obj = {
     lv1_mi : payload,
     has_mid_menu: true, // 有中间菜单

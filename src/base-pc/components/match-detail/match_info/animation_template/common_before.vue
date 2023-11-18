@@ -222,7 +222,7 @@ export default {
     box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.3);
     font-size: 14px;
     .match_time-text {
-      color: #fff;
+      color: var(--q-gb-t-c-1);
     }
 
     /* ************** 赛前信息面板 *************** -S */
@@ -239,7 +239,7 @@ export default {
         display: flex;
         align-items: center;
         height: 46px;
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
       .match_time {
         display: block;

@@ -792,7 +792,7 @@ export default {
     .match_score {
       margin-left: 4px;
       font-size: 16px;
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
       font-weight: 700;
     }
   }

@@ -53,12 +53,7 @@ function useMitt(type, callback){
 }
 /**
  * 使用 mitt emit方法
- * @param {keyof MittType} type MITT_TYPES事件类型
- * @param {Object} [param] 事件传递的参数
- * @example 
- * import { useMittEmit, MITT_TYPES } from "src/core/index";
- * useMittEmit(MITT_TYPES.EMIT_KEY)
- * useMittEmit(MITT_TYPES.EMIT_KEY,{key:value})
+ *
  */
 function useMittEmit(type, param) {
   // console.error("mitt----------useMittEmit-----   :", type,param);

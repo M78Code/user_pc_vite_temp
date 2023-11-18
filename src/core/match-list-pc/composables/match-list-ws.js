@@ -3,7 +3,7 @@ import lodash from 'lodash'
 
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
-import use_featch_fn from "./match-list-featch.js";
+import {api_bymids} from "./match-list-featch.js";
 // import { fetch_match_list } from '../match-list-composition.js'
 import {utils } from 'src/core/index.js';
 //  订阅所需 赛事ID
@@ -19,8 +19,6 @@ const load_data_state = ref('data');
 // 订阅所需 盘口ID
 const skt_hpid = ref("");
 let message_fun = null;
-const { api_bymids } = use_featch_fn();
-
 
 const ws_c8_subscribe = () => {
 	let match_list = [];

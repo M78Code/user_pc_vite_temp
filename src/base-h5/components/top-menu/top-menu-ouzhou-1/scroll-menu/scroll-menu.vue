@@ -63,7 +63,6 @@ const get_init_data = () =>{
     MenuData.set_current_lv1_menu(props.menu_type);
     MenuData.set_menu_mi(dataList()[0]?.mi);
     playValue.value = dataList()[0]?.mi;
-    emits('changeMenu',dataList()[0]?.mi)
 }
 onMounted(()=>{
     get_init_data();
@@ -138,7 +137,8 @@ const on_change_play = (item) => {
                     height: 8px;
                     bottom: -4px;
                     border-radius: 50%;
-                    background: linear-gradient(180deg, #FF7000 0%, #FF9440 50%);
+                    //background: linear-gradient(180deg, #FF7000 0%, #FF9440 50%);
+                    background: var(--q-gb-bg-lg-8);
                 }
 
                 .label {

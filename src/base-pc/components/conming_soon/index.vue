@@ -44,7 +44,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #FFFFFF;
+    background: var(--q-gb-bg-c-4);
     box-sizing: border-box;
   }
   .coming_soon_img {
@@ -93,7 +93,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
     .current_match_title {
         font-size: 18px;
         font-weight: 500;
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
         margin-bottom: 21px;
         height: 48px;
         line-height: 48px;

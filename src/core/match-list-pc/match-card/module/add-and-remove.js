@@ -5,7 +5,7 @@ import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardData from "./match-list-card-data-class";
-import use_featch_fn from '../../composables/match-list-featch.js'
+import {league_list_obj} from '../../composables/match-list-featch.js'
 import { PageSourceData } from 'src/core/index.js';
 
 
@@ -15,10 +15,7 @@ const MenuData = {
     is_show_hot: false,
   },
 };
-
 const { page_source, route_name } = PageSourceData;
-const { league_list_obj } = use_featch_fn();
-
 /**
  * @Description 移除一场联赛
  * @param {number} remove_tid 移除的联赛ID
