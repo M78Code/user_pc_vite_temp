@@ -225,6 +225,7 @@ export default defineComponent({
           console.log('res', res.data.data);
           // 搜索前清空会话仓库数据
           sessionStorage.removeItem('search_txt');
+          useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE,'result')
         }
       }).catch((e) => {
         console.log(e);

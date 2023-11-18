@@ -128,6 +128,15 @@ watch(
   },
   { deep: true }
 );
+
+onMounted(()=>{
+    useMitton(MITT_TYPES.EMIT_SET_SEARCH_CHANGE,ssss)
+})
+
+const ssss = (val)=>{
+  show_type.value = val
+}
+
 /** 保存显示搜索组件状态 */
 const set_search_status = (data) =>{
   SearchPCClass.set_search_isShow(data)
