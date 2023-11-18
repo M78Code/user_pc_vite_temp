@@ -194,7 +194,7 @@ const tabClick = (item) => {
     margin-right: 10px;
     span{
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       &:nth-child(1){
         color:#FFAC01;
         display: inline-block;
@@ -206,7 +206,7 @@ const tabClick = (item) => {
     margin-left: 10px;
     span{
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       &:nth-child(2){
         color:#5881f7;
         display: inline-block;

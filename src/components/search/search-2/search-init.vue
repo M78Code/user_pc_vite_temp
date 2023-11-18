@@ -100,7 +100,7 @@
 </template>
   
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 import search from "src/core/search-class/search.js"
@@ -207,8 +207,19 @@ function init() {
     get_hot_search();
     get_history();
 }
+const get_props = (props) => {
+    console.log('props', props);
+    // keyword.value = props.text
+    // search_type.value = props.type
+}
 /** 钩子触发 */
-onMounted(init)
+onMounted(() => {
+    init()
+    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
+})
+onUnmounted(() => {
+    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
+})
 
 </script>
   

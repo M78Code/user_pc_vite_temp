@@ -112,7 +112,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-right{
     display: flex;

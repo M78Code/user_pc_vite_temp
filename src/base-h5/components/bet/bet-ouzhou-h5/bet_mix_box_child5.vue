@@ -86,7 +86,7 @@
     font-size: 0.14rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-1);

@@ -271,7 +271,7 @@ export default{
 
       .leagal-time {
         background-color: #d9d9d9;
-        color: #1a1a1a;
+        color: var(--q-gb-t-c-5);
         padding: 2px 10px;
       }
     }
@@ -279,7 +279,7 @@ export default{
     .match-detail-head-name {
       font-size: 13px;
       line-height: 18px;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       opacity: 0.6;
     }
 
@@ -287,7 +287,7 @@ export default{
       font-weight: 500;
       font-size: 18px;
       line-height: 25px;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       margin-top: 6px;
     }
 
@@ -379,7 +379,7 @@ export default{
   line-height: 45px;
 
   &:hover {
-    background-color: #939393;
+    background-color: var(--q-gb-bg-c-7);
   }
 }
 
@@ -412,7 +412,7 @@ export default{
   }
 }
 .match-name-list {
-  background-color: #7b7b7b;
+  background-color: var(--q-gb-bg-c-8);
   width: 75%;
   z-index: 1000;
   margin-top: -10px;
