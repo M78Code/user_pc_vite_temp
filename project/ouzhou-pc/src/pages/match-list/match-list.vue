@@ -191,9 +191,7 @@ export default {
 
       mounted_fn();
       const { mins15_list= [], featured_list= [] } = await init_home_matches();
-      console.log(mins15_list, featured_list, 'objobjobjobjobj', MenuData.menu_root)
       matches_15mins_list.value = mins15_list
-      console.log(matches_15mins_list.value)
       matches_featured_list.value = featured_list
       MatchListCardDataClass_match_list_card_key_arr();
     });
