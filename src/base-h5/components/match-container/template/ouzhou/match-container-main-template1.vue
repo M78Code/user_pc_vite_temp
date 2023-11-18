@@ -13,13 +13,13 @@
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown disable flat outline  style="color: #FF7000"  padding="0" label="Match (Regular Time)" 
+            <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="i18n_t(`ouzhou.match.play_map.${select_play}`)" 
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
                    :class="{active: select_play === item.hpid}" clickable v-close-popup >
                   <q-item-section>
-                    <q-item-label>{{ item.hpn }}</q-item-label>
+                    <q-item-label>{{ i18n_t(`ouzhou.match.play_map.${item.hpid}`) }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -290,6 +290,258 @@ export default {
     const select_play = ref('1')
     const score_length = ref(3)
     const hps_play_data = ref([])
+    const sports_play_data = {
+      "1" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.1'),
+          hpid: '1',
+          csid: '1'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.2'),
+          hpid: '2',
+          csid: '1'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.4'),
+          hpid: '4',
+          csid: '1'
+        },
+      ],
+      "2" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.37'),
+          hpid: '37',
+          csid: '2'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.38'),
+          hpid: '38',
+          csid: '2'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.39'),
+          hpid: '39',
+          csid: '2'
+        },
+      ],
+      "5" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.153'),
+          hpid: '153',
+          csid: '5'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.155'),
+          hpid: '155',
+          csid: '5'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.202'),
+          hpid: '202',
+          csid: '5'
+        }
+      ],
+      "10" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.153'),
+          hpid: '153',
+          csid: '5'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.172'),
+          hpid: '172',
+          csid: '5'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.173'),
+          hpid: '173',
+          csid: '5'
+        },
+      ],
+      "8" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.153'),
+          hpid: '153',
+          csid: '8'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.172'),
+          hpid: '172',
+          csid: '8'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.173'),
+          hpid: '173',
+          csid: '8'
+        },
+      ],
+      "7" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.153'),
+          hpid: '153',
+          csid: '7'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.181'),
+          hpid: '181',
+          csid: '7'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.182'),
+          hpid: '182',
+          csid: '7'
+        },
+      ],
+      "9" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.153'),
+          hpid: '153',
+          csid: '9'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.172'),
+          hpid: '172',
+          csid: '9'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.173'),
+          hpid: '173',
+          csid: '9'
+        },
+      ],
+      "13" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.153'),
+          hpid: '153',
+          csid: '13'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.172'),
+          hpid: '172',
+          csid: '13'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.173'),
+          hpid: '173',
+          csid: '13'
+        },
+      ],
+      "3" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.242'),
+          hpid: '242',
+          csid: '3'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.243'),
+          hpid: '243',
+          csid: '3'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.244'),
+          hpid: '244',
+          csid: '3'
+        },
+      ],
+      "4" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.1'),
+          hpid: '1',
+          csid: '4'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.2'),
+          hpid: '2',
+          csid: '4'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.4'),
+          hpid: '4',
+          csid: '4'
+        },
+      ],
+      "15" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.1'),
+          hpid: '1',
+          csid: '15'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.2'),
+          hpid: '2',
+          csid: '15'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.4'),
+          hpid: '4',
+          csid: '15'
+        },
+      ],
+      "6" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.37'),
+          hpid: '37',
+          csid: '6'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.38'),
+          hpid: '38',
+          csid: '6'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.39'),
+          hpid: '39',
+          csid: '6'
+        },
+      ],
+      "11" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.1'),
+          hpid: '1',
+          csid: '11'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.2'),
+          hpid: '2',
+          csid: '11'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.4'),
+          hpid: '4',
+          csid: '11'
+        },
+      ],
+      "16" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.1'),
+          hpid: '1',
+          csid: '16'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.2'),
+          hpid: '2',
+          csid: '16'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.4'),
+          hpid: '4',
+          csid: '16'
+        },
+      ],
+      "12" : [
+        {
+          label: i18n_t('ouzhou.match.play_map.2'),
+          hpid: '2',
+          csid: '12'
+        },
+        {
+          label: i18n_t('ouzhou.match.play_map.153'),
+          hpid: '153',
+          csid: '12'
+        }
+      ]
+    }
 
     // 是否显示球种标题
     const show_sport_title = computed(() => {
@@ -319,13 +571,13 @@ export default {
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {
-      let target_hps = []
+      // let target_hps = []
       const { csid } = ctx.match_of_list
-      target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
-      hps_play_data.value = target_hps || []
+      // target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
+      hps_play_data.value = sports_play_data[csid] || []
     }
 
-    watch(() => ctx.match_of_list.hps, () => {
+    watch(() => ctx.match_of_list?.hps, () => {
       const { is_show_league } = ctx.match_of_list
       if (!is_show_league) return
       get_hps_play_data()
@@ -335,8 +587,6 @@ export default {
     const on_select_play = (item) => {
       select_play.value = item.hpid
       MatchResponsive.set_match_hpid(item.hpid)
-      // const length = lodash.get(item.hl[0].ol, 'length', 3)
-      // score_length.value = length
     }
 
     return { 
@@ -480,7 +730,7 @@ export default {
       bottom: 1px;
       background: #fff;
       &.collapsed{
-        background: #e2e2e2;
+        background: var(--q-gb-bg-c-6);
       }
     }
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
@@ -1220,6 +1470,7 @@ export default {
   .timer-wrapper-c {
     height: 100%;
     color: #999;
+    flex: 1;
     .counting-down-wrap{
       font-size: 13px;
     }
@@ -1283,6 +1534,7 @@ export default {
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    flex: 1;
 
     .favorite-icon {
       position: relative;
@@ -1297,6 +1549,8 @@ export default {
     .counting-down-up-container {
       // width: 1rem;
       height: .14rem;
+      display: flex;
+      flex: 1;
       :deep(.counting-down-wrap){
         width: auto !important;
         .title-space-1{

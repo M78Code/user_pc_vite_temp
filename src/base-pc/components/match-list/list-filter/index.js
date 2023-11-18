@@ -4,6 +4,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import BaseData from "src/core/base-data/base-data.js";
+import { functions } from "lodash";
 
 const current_menu = ref({});
 const mi_100_arr = ref([]);
@@ -60,24 +61,48 @@ function handle_click_menu_mi_pre_process() {
  * 解析菜单数据
  */
 function resolve_mew_menu_res() {
-    if (MenuData.menu_root == 500) {
+    console.error('resolve_mew_menu_res')
+
+    if(MenuData.menu_root == 0 && MenuData.is_top_events()){
+        resolve_mew_menu_res_mi_5000()
+    }else if (MenuData.menu_root == 500) {
         //热门
         resolve_mew_menu_res_mi_500();
-    } else if (MenuData.menu_root == 1) {
+    } else if ([1,301].includes(MenuData.menu_root*1) || ([2,3].includes(MenuData.menu_root) && MenuData.is_collect*1)) {
+        let type = 1
+        if(MenuData.is_collect){
+            if( MenuData.mid_menu_result.filter_tab  == 3002){
+                type = 2
+            }
+            if( MenuData.mid_menu_result.filter_tab  == 3003){
+                type = 3
+            }
+        }
         //滚球  常规 +电竞
-        resolve_mew_menu_res_mi_100_2000();
+        resolve_mew_menu_res_mi_100_2000(type);
     } else if (MenuData.menu_root == 400) {
         // 冠军
         resolve_mew_menu_res_mi_400();
     }
 }
+function resolve_mew_menu_res_mi_5000() {
+    let mi_5000_list = {};
+    let mi_5000_all = []
+    // 热门赛种
+    mi_5000_list = BaseData.mew_menu_list_res.find(item => item.mi == 5000) || {}
+    // top _events 
+    mi_5000_all = mi_5000_list.sl || [];
+    mi_100_arr.value = mi_5000_all.filter(item => item.mif == (item.mi - 5000 + 100) )
+}
+
 /**
  * 解析 新接口返回值     常规 +电竞
  */
-function resolve_mew_menu_res_mi_100_2000() {
+function resolve_mew_menu_res_mi_100_2000(type) {
     //过滤常规球类
     let mi_100_list = [];
     let mi_2000_list = [];
+  
     // 遍历 新菜单数据
     BaseData.mew_menu_list_res.map((x) => {
         // 拿到 基础赛种 id
@@ -85,7 +110,7 @@ function resolve_mew_menu_res_mi_100_2000() {
         //常规体育
         if (BaseData.left_menu_base_mi_arr.includes(mif)) {
             // 滚球对象
-            let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
+            let item = (x["sl"] || []).find((y) => y.mi == `${mif}${type}`) || {};
             item.mif = mif;
             mi_100_list.push(item);
         }
@@ -97,8 +122,11 @@ function resolve_mew_menu_res_mi_100_2000() {
             mi_2000_arr.value.push(item);
         }
     });
+   
     //常规体育
     mi_100_arr.value = mi_100_list;
+    // 热门赛种
+    mi_5000_arr.value = mi_5000_list.sl || [];
     //电竞
     mi_2000_arr.value = mi_2000_list;
     //  VR  体育的
@@ -197,7 +225,11 @@ function handle_click_menu_mi_400(detail = {}) {
 function set_menu_config(obj = {}) {
     console.error('asdad')
     // 设置 中间 菜单输出
-    MenuData.set_mid_menu_result(obj);
+    const obj_config = {
+        ...MenuData.mid_menu_result,
+        ...obj
+    }
+    MenuData.set_mid_menu_result(obj_config);
     // 设置   请求  列表结构  API 参数的  值
     // MenuData.set_match_list_api_config(obj);
     // 设置终极菜单id

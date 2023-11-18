@@ -41,6 +41,9 @@
             "1": "Winner",
             "2": "Total Goals",
             "4": "HDP",
+            "17": "1st Half - 1x2",
+            "18": "1st Half - O/U",
+            "19": "1st Half - O/U",
             "37": "Winner",
             "38": "Total Points",
             "39": "HDP",
@@ -52,7 +55,10 @@
             "202": "Total Frames",
             "242": "Winner",
             "243": "HDP",
-            "244": "Total Goals"
+            "244": "Total Goals",
+            "30001": "Map Handicap",
+            "30002": "Match Winner",
+            "30003": "Total Maps"
           }
     },
     "setting_menu": {

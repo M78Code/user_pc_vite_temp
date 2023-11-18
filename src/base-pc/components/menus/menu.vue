@@ -74,20 +74,28 @@ const router = useRouter();
 const route = useRoute();
 
 onMounted(() => {
-  // init()
-  left_menu_list.value = BaseData.left_menu_base_mi_arr;
-  // jump_func()
+   //菜单无数据兼容
+  if(BaseData.left_menu_base_mi_arr.length>0){
+    left_menu_list.value = BaseData.left_menu_base_mi_arr;
+  }
 })
 
 // favouritse
 const go_to_favouritse = () => {
+  
+  MenuData.set_is_collect(true)
   MenuData.set_menu_root(301)
+
   let mid_config = {
     ...MenuData.mid_menu_result,
-    collect: 'inplay', // 滚球 inplay 早盘 early  今日 today
-    mid_menu_mi: '101', // 当前选中的赛种id
+    filter_tab: 3001, // 滚球 3001 早盘 3002  今日 3003
+    current_mi: 1011, // 当前选中的赛种id
   }
   MenuData.set_mid_menu_result(mid_config)
+
+  nextTick(()=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
+  })
 }
 /**
  * 
@@ -109,6 +117,7 @@ const jump_func = (payload,type) => {
 
   //太多了 后续做优化
   MenuData.set_menu_root(202, true)
+  MenuData.set_is_collect(false)
   MenuData.set_left_menu_result(obj)
   MenuData.set_menu_current_mi(obj.lv2_mi)
 

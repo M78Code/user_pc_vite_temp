@@ -80,6 +80,7 @@ class MatchCollect {
     const match_collect = lodash.get(this.match_mid_collect_obj.value, `${match_key}.match_collect`, false)
     return match_collect
   }
+
   /**
    * @description 获取 赛事 收藏数据
    * @returns 

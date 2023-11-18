@@ -311,7 +311,7 @@ export default {
       hps_play_data.value = target_hps
     }
 
-    watch(() => ctx.match_of_list.hps, () => {
+    watch(() => ctx.match_of_list?.hps, () => {
       const { is_show_league } = ctx.match_of_list
       if (!is_show_league) return
       get_hps_play_data()
@@ -466,7 +466,7 @@ export default {
       bottom: 1px;
       background: #fff;
       &.collapsed{
-        background: #e2e2e2;
+        background: var(--q-gb-bg-c-6);
       }
     }
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */

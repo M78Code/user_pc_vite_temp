@@ -72,7 +72,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
     padding-top: 10px;
     box-sizing: border-box;
     border-bottom: 2px solid var(--q-gb-bd-c-1);
-    background: linear-gradient(270deg, #9C9C9C 0.04%, #3B3B3B 99.96%);
+    background: var(--q-gb-bg-lg-8);
     position: relative;
 
     .header_banner {

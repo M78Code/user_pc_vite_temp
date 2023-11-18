@@ -599,7 +599,7 @@ export default defineComponent({
   }
 
   .size-color-wit {
-    color: var(--q-gb-t-c-14);
+    color: var(--q-gb-t-c-2);
   }
 
   .details-bg5 {

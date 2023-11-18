@@ -362,12 +362,12 @@ onBeforeUnmount(() => {
   @Supports (-webkit-mask: none) and (not (caret-color: red)) {
     input {
       //color: #FFB001;
-      color: var(--q-gb-t-c-12);
+      color: var(--q-gb-t-c-1);
     }
 
     input::first-line {
       //color: #FFB001;
-      color: var(--q-gb-t-c-12);
+      color: var(--q-gb-t-c-1);
       width: 0.03rem;
     }
   }

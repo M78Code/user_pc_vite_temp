@@ -214,7 +214,7 @@ export default{
 
 <style lang="scss" scoped>
 .detail-page {
-  background: #e2e2e2;
+  background: var(--q-gb-bg-c-6);
   display: flex;
   width: 100%;
   padding-bottom: 50px;
@@ -236,7 +236,7 @@ export default{
     line-height: 40px;
     font-size: 14px;
     overflow: hidden;
-    background: linear-gradient(to right, #3b3b3b, #9c9c9c);
+    background: var(--q-gb-bg-lg-5);
     display: flex;
     justify-content: space-between;
 
@@ -262,11 +262,7 @@ export default{
     height: 80px;
 
     padding: 15px 0 16px 14px;
-    background: linear-gradient(
-      90.05deg,
-      rgba(255, 255, 255, 0.81) 0.04%,
-      rgba(204, 204, 204, 0.6) 99.96%
-    );
+    background: var(--q-gb-bg-lg-4);
 
     .detail-head-leagal {
       display: flex;
