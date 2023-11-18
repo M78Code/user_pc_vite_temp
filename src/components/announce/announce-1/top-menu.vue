@@ -80,7 +80,7 @@ function sub_click(item, index) {
         height: 14px;
         top: 111px;
         right: 0;
-        background-color: #e2e2e2;
+        background-color: var(--q-gb-bg-c-6);
     }
         ::v-deep .q-tab__indicator{
             display: none;

@@ -204,11 +204,11 @@ onMounted(() => {});
         min-height: 45px;
         line-height: 45px;
         //  border-top: 1px solid #E2E2E2;
-        border-left: 1px solid #e2e2e2;
-        border-bottom: 1px solid #e2e2e2;
+        border-left: 1px solid var(--q-gb-bd-c-2);
+        border-bottom: 1px solid var(--q-gb-bd-c-2);
 
         &:hover {
-            background: #fff1e6;
+            background:var(--q-gb-bg-c-5);
         }
     }
 
@@ -219,7 +219,7 @@ onMounted(() => {});
 
 // 两列展示最后一列为左边的数据的话应给加一个有边框
 .temp-right {
-    border-right: 1px solid #e2e2e2;
+    border-right: 1px solid var(--q-gb-bd-c-2);
     margin-right: -1px;
 }
 
@@ -227,7 +227,7 @@ onMounted(() => {});
     margin-left: -1px;
 
     & > div:first-child {
-        border-top: 1px solid #e2e2e2;
+        border-top: 1px solid var(--q-gb-bd-c-2);
     }
 }
 

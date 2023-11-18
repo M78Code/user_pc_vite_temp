@@ -115,7 +115,7 @@ function collect(){
   width: 100%;
   height: 100%;
   background: #F5F5F5;
-  border-bottom: 1px solid #e2e2e2;
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
   font-weight: 500;
   cursor: pointer;
 
