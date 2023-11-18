@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref,watch } from "vue";
+import { defineComponent, onMounted, ref,watch, onUnmounted } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
 import store from "src/store-redux/index.js";
@@ -276,22 +276,22 @@ export default defineComponent({
         SearchPCClass.set_search_isShow(true);
       }
     }
+    function hide_search(e) {
+      if(is_focus.value && SearchPCClass.search_isShow) {
+        if(e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column') {
+            SearchPCClass.set_search_isShow(false);
+            is_focus.value = false;
+          } 
+      }
+    }
     
     onMounted(() => {
       compute_userInfo();
-      if(is_focus.value && SearchPCClass.search_isShow) {
-            // console.log(111);
-        document.addEventListener('click', function hide_rezult(e) {
-          e.stopPropagation();
-          if(e.target.className != 'q-field__native q-placeholder' || e.target.className != 'serach-wrap column') {
-            // console.log(22222);
-            SearchPCClass.set_search_isShow(false);
-            is_focus.value = false;
-          }
-          // console.log('e', e.target);
-        })
-      }
+        document.addEventListener('click', (e) => hide_search(e))
     });
+    onUnmounted(() => {
+      document.removeEventListener('click', hide_search)
+    })
 
     return {
       text, 
@@ -463,10 +463,10 @@ export default defineComponent({
     color:#FFFFFF
   }
 }
-// .change_width {
-//   width: 500px;
-//   transform: translateX(-300px);
-// }
+.change_width {
+  width: 500px;
+  transform: translateX(-300px);
+}
 .search-click .s-input {
   width: 500px;
   &:deep(.q-field) {
