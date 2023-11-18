@@ -2,18 +2,22 @@ import mitt from "mitt";
 import * as MITT_TYPES_PROJECT from "base_path/core/mitt/mitt-keys.js";
  
 import * as MITT_TYPES_DEFAULT from "./mitt-keys";
+import { onUnmounted } from "vue";
 
 /** @type {MittType} */
 const MITT_TYPES = Object.assign({}, MITT_TYPES_DEFAULT, MITT_TYPES_PROJECT);
 const emitter = new mitt();
 /**
- * 使用 mitt on方法
+ * 使用 mitt on方法, 组件卸载时调用off()取消监听 ,若在setup作用域内可使用 useMitt(type,callback) 函数
  * @param {keyof MittType} type MITT_TYPES事件类型
  * @param {(params?)=>void} callback 事件触发时的回调函数
- * @returns {MITT.UseMittOnResult}
+ * @returns {MITT.UseMittOnResult} { off(), emit() }
  * @example 
  * import { useMittOn, MITT_TYPES } from "src/core/index";
- * useMittOn(MITT_TYPES.EMIT_KEY,(param?)=>void)
+ * const {off} = useMittOn(MITT_TYPES.EMIT_KEY,(param?)=>void)
+ * // 组件卸载时调用off() 取消事件监听
+ * @description 该函数新旧版进行不兼容的重构, 以下旧写法已经废弃.
+ * @example useMittOn(type,callback).off;
  */
 function useMittOn(type,callback) {
  
@@ -34,7 +38,18 @@ function useMittOn(type,callback) {
       emit:()=>{},
     }
   }
-
+}
+/** mitt on方法的setup 组合式函数封装, 仅限vue setup作用域期间调用, 函数内注册onUnmounted钩子移除mitt监听
+ * @param {keyof MittType} type MITT_TYPES事件类型
+ * @param {(params?)=>void} callback 事件触发时的回调函数
+ * @returns {MITT.UseMittOnResult}
+ * @example 
+ * import { useMitt, MITT_TYPES } from "src/core/index";
+ * useMitt(MITT_TYPES.EMIT_KEY,(param?)=>{})
+ */
+function useMitt(type, callback){
+  const {off} = useMittOn(type,callback)
+  onUnmounted(off)
 }
 /**
  * 使用 mitt emit方法
@@ -99,41 +114,50 @@ function useMittEmit(type, param) {
  
 /**
  * 批量  生成 事件监听 和 取消 事件监听     事件监听  生成器 
- * @param {*} event_pairs  事件 配置对象数组
- * @returns 
+ * @param {Array<{type: keyof MittType,callback: ()=>void}>} event_pairs  事件 配置对象数组
+ * @returns { MITT.UseMittEmitterGeneratorResult } { emitters_off() } 批量取消挂载的事件监听
+ * @example
+ * import { MITT_TYPES, useMittEmitterGenerator } from "src/core/index.js";
+ * const { emitters_off } = useMittEmitterGenerator([
+ *  {
+ *    type: MITT_TYPES.EMIT_KEY,
+ *    callback: ()=>{}
+ *  }
+ * ])
+ * onUnmounted(emitters_off);
  */
 
-const useMittEmitterGenerator =(event_pairs)=>{
+const useMittEmitterGenerator = (event_pairs) => {
   //挂载点 
-  let emitters={}
+  let emitters = {}
 
 
   // 添加相应监听事件
-const emitters_on=()=>{
-  event_pairs.map((item,i)=>{
-    let { type, callback} =item
-    if(!callback){
-      callback=()=>{}
-    }
+  const emitters_on = () => {
+    event_pairs.map((item, i) => {
+      let { type, callback } = item
+      if (!callback) {
+        callback = () => { }
+      }
 
-    emitters[`emitter_${   randomstring() }`] =  useMittOn(type, callback ).off 
-  })
+      emitters[`emitter_${randomstring()}`] = useMittOn(type, callback).off
+    })
 
+  }
+  // 执行 
+  emitters_on()
+
+  // 移除相应监听事件
+  const emitters_off = () => {
+    Object.values(emitters).map((x) => x());
+  }
+
+
+
+  return { emitters, emitters_off }
 }
-// 执行 
-emitters_on()
-
- // 移除相应监听事件
-  const emitters_off=()=>{
-     Object.values( emitters).map((x) => x());
-}
-
- 
-
-  return  { emitters,   emitters_off }
-}
 
 
 
 
-export { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES };
+export { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES,useMitt };
