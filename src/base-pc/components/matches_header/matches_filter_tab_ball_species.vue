@@ -4,17 +4,17 @@
       <!-- 常规体育 -->
       <template v-for="(item, index) in mi_100_arr" :key="index">
         <div class="current-filter-tab" v-if=" item.ct > 0 " >
-          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked: current_choose_tab == item.mi }">
+          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
             <div class="filter-tab-item">
               <div class="filter-icon">
-                <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mi"  size="24px" class="icon" />
-                <div class="filter-count">{{ item.ct || 0 }}</div>
+                <sport_icon :sport_id="compute_sport_id(item.mif)" :status="MenuData.mid_menu_result.current_mi == item.mi"  size="24px" class="icon" />
+                <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
               </div>
-              <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-                {{  BaseData.menus_i18n_map[item.mif] || "" }} {{item.mi}}
+              <div :class="{ checked_text: MenuData.mid_menu_result.current_mi == item.mi }" class="label-text">
+                {{  BaseData.menus_i18n_map[item.mif] || "" }}
               </div>
             </div>
-            <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
+            <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" src="../../../assets/images/mask_group.png" alt="">
           </div>
           <div class="filter-tab-split-line"></div>
         </div>
@@ -86,8 +86,6 @@ import { compute_sport_id } from 'src/core/constant/index.js'
 let area_obj = null;
 let area_obj_wrap = null;
 let for_count
-// 默认选中当前第一个tab
-let current_choose_tab = ref(101);
 // 滚动定时器
 let interval_id = null;
 
@@ -110,13 +108,8 @@ onMounted(() => {
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
 
-  console.error('current_mi',current_mi)
-  if (current_mi) {
+  if (!current_mi) {
     // 默认选中当前第一个tab
-    current_choose_tab.value = current_mi
-  } else {
-    // 默认选中当前第一个tab
-    current_choose_tab.value = 1011
     handle_click_menu_mi_1({mi:1011,mif:101})
     return
   }
@@ -150,7 +143,6 @@ const filter_min_mi_300 = (originalArray)=>{
 
  
 const choose_filter_tab = (item) => {
-  current_choose_tab.value = item.mi;
   // 获取最新的 数据
   handle_click_menu_mi_1(item)
 };
