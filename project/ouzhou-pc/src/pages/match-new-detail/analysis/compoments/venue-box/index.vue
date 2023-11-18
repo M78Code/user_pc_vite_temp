@@ -96,7 +96,11 @@ watch(
   (val) => {
     // 有动画优先播放动画
     if (val.mvs > -1) {
-    tab_click('animal')
+      animal_key.value = false
+      setTimeout(() => {
+        tab_click('animal')
+      }, 100);
+    // tab_click('animal')
    }else{
     animal_key.value = false;
      score_key.value = true;
