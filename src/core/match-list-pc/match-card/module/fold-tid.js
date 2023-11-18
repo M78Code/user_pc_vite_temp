@@ -22,7 +22,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
 		// 设置联赛容器卡片是否折叠
 		league_container_card_obj.is_league_fold = click_card_obj.is_league_fold;
 		// 设置联赛容器卡片是否显示
-		league_container_card_obj.is_show_card = !click_card_obj.is_league_fold;
+		league_container_card_obj.is_show_card = !click_card_obj.is_league_fold
 		// 根据折叠状态设置联赛标题卡片高度 联赛标题卡片高度有折叠和未折叠两种状态
 		if (click_card_obj.is_league_fold) {
 			// 联赛折叠
