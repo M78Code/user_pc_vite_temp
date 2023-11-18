@@ -60,7 +60,7 @@ export default defineConfig({
   build: {
     outDir ,
     rollupOptions: {
-      // external: ["vue"],
+      external: ["vue3-draggable-resizable"],
       input: {
 
       index: path.resolve(__dirname, `../../project/${project}/index.html`),
