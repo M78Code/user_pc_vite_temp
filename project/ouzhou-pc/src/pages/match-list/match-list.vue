@@ -34,7 +34,7 @@
       <scroll-list v-if="menu_config.menu_root_show_shoucang != 300">
         <!-- <template v-slot:before> -->
           <!-- 头部15 Mins模块 -->
-          <div v-show="matches_15mins_list.length && is_show_Modlue" class="match-list-item">
+          <div v-show="matches_15mins_list.length && is_show_modlue" class="match-list-item">
             <CurrentMatchTitle
               :title_value="'15 Mins'"
               :show_more_icon="false"
@@ -42,7 +42,7 @@
             <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
           </div>
           <!-- 头部Featured Matches模块 -->
-          <div v-show="matches_featured_list.length && is_show_Modlue" class="match-list-item">
+          <div v-show="matches_featured_list.length && is_show_modlue" class="match-list-item">
             <CurrentMatchTitle
               :title_value="'Featured Matches'"
               :show_more_icon="false"
@@ -178,7 +178,7 @@ export default {
 
     const match_list_top = ref("76px");
 
-    const is_show_Modlue = ref(true)
+    const is_show_modlue = ref(true)
 
     const { proxy } = getCurrentInstance();
 
@@ -211,7 +211,8 @@ export default {
     });
 
     const get_data_info = async () => {
-      if (MenuData.is_home()) {
+      // 判断是不是首页下的 featured 页面
+      if (MenuData.is_featured()) {
         const { mins15_list= [], featured_list= [] } = await init_home_matches();
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = featured_list
@@ -220,7 +221,7 @@ export default {
 
     watch(MenuData.menu_data_version, async () => {
       console.log(MenuData.menu_root, 'MenuData.menu_root')
-      is_show_Modlue.value = MenuData.is_home() && ![1002].includes(MenuData.router_root_lv_2.value)
+      is_show_modlue.value = !MenuData.is_featured()
     },
     { immediate: true }
     );
@@ -242,7 +243,7 @@ export default {
       load_data_state,
       coom_soon_state,
       match_list_top,
-      is_show_Modlue,
+      is_show_modlue,
       match_list_card
     };
   },
