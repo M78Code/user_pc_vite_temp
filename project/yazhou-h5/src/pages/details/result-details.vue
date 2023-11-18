@@ -52,7 +52,7 @@ import analysisFootballMatches from "src/base-h5/components/details/analysis-mat
 import basketballMatchAnalysis from "src/base-h5/components/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";
 // 赛果详情骨架屏
 import SResult from "src/base-h5/components/skeleton/match-result.vue" 
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMitt, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -147,23 +147,23 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
         get_match_list(params);
       }
     })
-     
-  onMounted(() => {
+  //使用setup 组合式函数钩子, 移除onMounted生命周期钩子
+  // onMounted(() => {
     // 默认加载赛事详情页面接口getMatchDetail
     get_match_detail_info()
     // 监听调用赛事详情页面接口
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info);
-    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show);
+    useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info);
+    useMitt(MITT_TYPES.EMIT_ANA_SHOW,ana_show);
 
-    useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
+    useMitt(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
       skeleton.list = true
     });
 
-    useMittOn(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
+    useMitt(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
       skeleton.changeTab = true
     });
-
-  }) 
+    
+  // }) 
     // ...mapMutations([
     //   // 三角状态
     //   "set_sanjiao_is_bool",
@@ -295,18 +295,10 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
     is_dialog_details.value = bool;
   }
   // 监听是否下拉联赛列表
-  const { off: change_bool_off } =  useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, change_bool);
-  // 清除监听下拉联赛列表
-  onUnmounted(change_bool_off)
-
+  useMitt(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, change_bool);
   onUnmounted(() => {
-    // 清除刷新详情页;
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).off;
     // 组件销毁时设置vuex的值为空对象
     // set_detail_data({})
-    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).off
-    useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING).off
-    useMittOn(MITT_TYPES.EMIT_CHANGE_TAB).off
     // set_event_list([])
   }) 
 </script>
