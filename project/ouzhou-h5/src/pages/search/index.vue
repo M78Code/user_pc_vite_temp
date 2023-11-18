@@ -526,7 +526,7 @@ onBeforeUnmount(() => {
 		width: 12px;
 		height: 12px;
 		//color: #fff;
-		color: var(--q-gb-t-c-14);
+		color: var(--q-gb-t-c-2);
 	}
 
 	input {
@@ -538,14 +538,14 @@ onBeforeUnmount(() => {
 		background: #CE5B00;
 		outline: none;
 		//color: #fff;
-		color: var(--q-gb-t-c-14);
+		color: var(--q-gb-t-c-2);
 		margin-right: 6px;
 		font-weight: 500;
 	}
 
 	::-webkit-input-placeholder {
 		//color: #ffffff;
-		color: var(--q-gb-t-c-14);
+		color: var(--q-gb-t-c-2);
 		font-size: 14px;
 		padding-left: 5px;
 	}
@@ -554,14 +554,14 @@ onBeforeUnmount(() => {
 		position: absolute;
 		top: 20px;
 		//color: #fff;
-		color: var(--q-gb-t-c-14);
+		color: var(--q-gb-t-c-2);
 		font-size: 14px;
 		left: 290px;
 	}
 
 	.close_btn {
 		//color: #fff;
-		color: var(--q-gb-t-c-14);
+		color: var(--q-gb-t-c-2);
 		opacity: .8;
 		font-size: 14px;
 	}
@@ -603,7 +603,7 @@ onBeforeUnmount(() => {
 		&.active {
 			background-color: #FF7000;
 			//color: #fff;
-			color: var(--q-gb-t-c-14);
+			color: var(--q-gb-t-c-2);
 		}
 
 	}
@@ -613,7 +613,8 @@ onBeforeUnmount(() => {
 		position: unset;
 	}		
 	.color {
-		color: #FF7000;
+		//color: #FF7000;
+		color: var(--q-gb-t-c-1);
 	}
 }
 
@@ -657,7 +658,8 @@ li {
 			margin-left: 8px;
 		}
 		.red {
-			color: #FF7000;
+			//color: #FF7000;
+			color: var(--q-gb-t-c-1);
 		}
 	}
 }
@@ -695,7 +697,8 @@ li {
 	.middle_info_tab {
 		font-size: 12px;
 		font-weight: 600;
-		color: #FF7000;
+		//color: #FF7000;
+		color: var(--q-gb-t-c-1);
 	}
 }
 
