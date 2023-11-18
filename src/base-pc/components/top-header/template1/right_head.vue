@@ -62,8 +62,8 @@
               </div>
               </q-item-section>
             </q-item>
-            <!--国际化语言-->
-            <q-item clickable  @click="onExpend">
+            <!--国际化语言   暂时隐藏-->
+            <!-- <q-item clickable  @click="onExpend">
               <q-item-section class="personal-content">
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
@@ -71,9 +71,9 @@
                 </div>
                 <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
               </q-item-section>
-            </q-item>
-            <q-separator />
-            <q-item  v-show="visible">
+            </q-item> -->
+            <!-- <q-separator /> -->
+            <!-- <q-item  v-show="visible">
               <q-slide-transition >
                 <q-item-section>
                   <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
@@ -82,9 +82,9 @@
                   </div>
                 </q-item-section>
               </q-slide-transition>
-            </q-item>
+            </q-item> -->
             <!--国际化语言结束-->
-            <q-item>
+            <!-- <q-item>
               <q-item-section>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
@@ -94,7 +94,7 @@
                 </div>  
               </div> 
               </q-item-section>
-            </q-item>
+            </q-item> -->
           </q-list>
       </q-menu>
     </div>

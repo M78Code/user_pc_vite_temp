@@ -150,6 +150,8 @@ const change_current_menu = (item) => {
   // 设置菜单对应源数据
   emits('isLeftDrawer');
 
+  MatchMeta.set_origin_match_data()
+
   // MenuData.set_menu_lv2_mi(item.mi+''+2)
 
   // 当前页面不做跳转

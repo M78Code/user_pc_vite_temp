@@ -63,9 +63,9 @@ const get_init_data = () =>{
     MenuData.set_current_lv1_menu(props.menu_type);
     MenuData.set_menu_mi(dataList()[0]?.mi);
     playValue.value = dataList()[0]?.mi;
-    emits('changeMenu',dataList()[0]?.mi)
 }
 onMounted(()=>{
+    get_init_data();
     useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
 })
 onUnmounted(()=>{

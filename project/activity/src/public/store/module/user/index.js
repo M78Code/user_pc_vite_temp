@@ -89,6 +89,7 @@ export default {
         },
         //设置用户信息
         set_user({ commit }, { token, view, finish_callback }) {
+            console.log(11111)
             let userInfo = window.vue.$store.getters.get_user;
             // 获取用户基本信息
             if (view) {

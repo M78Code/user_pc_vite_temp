@@ -627,9 +627,9 @@ class BaseData {
       // let res = await api_base_data.get_base_data({});
       res && await this.set_base_data_res(res);
       //  元数据加载完成 
-      this.is_emit && useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
-
-      this.is_emit = false
+      if (this.is_emit) {
+        useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+      }
       this.base_data_version.value = Date.now();
     } catch (error) {
       console.error("获取 元数据接口 error", error);

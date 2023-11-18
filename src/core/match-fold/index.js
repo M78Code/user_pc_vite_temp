@@ -149,7 +149,6 @@ class MatchFold {
     const fold_obj = lodash.get(this.match_mid_fold_obj.value, `${key}`)
     if (!fold_obj) return console.error('折叠操作：该赛事未初始化')
     Object.assign(fold_obj, { ...obj })
-    // console.log(this.match_mid_fold_obj.value)
   }
   /**
    * @description 获取折叠对象的key
