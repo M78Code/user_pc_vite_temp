@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="true">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{ MenuData.is_collect}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<!-- <div v-show="true">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{ MenuData.is_collect}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div> -->
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -12,14 +12,14 @@
 						{{ item.label }}
 					</div>
 					<!-- 点击联赛后出现的时间筛选 -->
-					<div>
+					<!-- <div>
 						Next 24 Hours
 					</div>
 					<div>
 						<div v-for="item in timer_filter_list">
 							{{ item }}
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
