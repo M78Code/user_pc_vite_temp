@@ -2,7 +2,6 @@
   <!--赛事玩法模板-->
   <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
-  {{ match_style_obj }}
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
     v-if="match_style_obj.is_show_card"
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;

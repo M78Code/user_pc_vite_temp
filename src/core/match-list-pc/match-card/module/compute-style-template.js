@@ -312,7 +312,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		return style_obj;
 	}
 	style_obj.csid = match.csid;
-	// style_obj.is_show_card = false;
+	style_obj.is_show_card = true;
 
 	if (template_id == 1) {
 		let obj = compute_style_template_by_matchinfo_template0_zuqiu(

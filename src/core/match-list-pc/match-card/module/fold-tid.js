@@ -42,10 +42,10 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
 			// 设置联赛容器卡片高度
 			if (league_container_card_obj.load_data_status == "loaded") {
 				league_container_card_obj.card_total_height =
-					league_container_card_obj.card_total_height_back;
+				league_container_card_obj.card_total_height_back;
 			} else {
 				league_container_card_obj.load_data_status = "loading";
-				league_container_card_obj.card_total_height = 200;
+				league_container_card_obj.card_total_height = league_container_card_obj.card_total_height_back;
 			}
 		}
 		// 计算所有卡片偏移量 和列表总高度
