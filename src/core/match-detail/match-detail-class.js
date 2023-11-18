@@ -437,6 +437,6 @@ export default class MatchDetailCtr {
    * `mmp` 赛事阶段  
   */
   handler_details_ws_cmd(cmd){
-    return ["C101"].includes(cmd)
+    return ["C101","C102","C104","109","C801","C302"].includes(cmd)
   }
 }

@@ -165,7 +165,7 @@ export default {
       mounted_fn();
     });
     onUnmounted(() => {
-      // handle_destroyed()
+       handle_destroyed()
     })
     return {
       menu_config,

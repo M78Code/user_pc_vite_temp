@@ -61,7 +61,7 @@
     width: 100%;
     padding-top: 10px;
     box-sizing: border-box;
-    border-bottom: 2px solid #FF7000;
+    border-bottom: 2px solid var(--q-gb-bd-c-1);
     background: linear-gradient(270deg, #9C9C9C 0.04%, #3B3B3B 99.96%);
     position: relative;
 

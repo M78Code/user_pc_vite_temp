@@ -182,7 +182,7 @@ const tab_click = (type) => {
   // background: #ffffff;
   margin-bottom: 10px;
   .analysis-top {
-    background: #ffffff;
+    background: var(--q-gb-bg-c-4);
     height: 40px;
     display: flex;
     justify-content: space-between;

@@ -5,7 +5,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { virtual_sport_format } from 'src/core/format/module/format-match.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import collect_composable_fn from "./match-list-collect.js";
+import {mx_collect_count, set_collect_count} from "./match-list-collect.js";
 import virtual_composable_fn from './match-list-virtual.js'
 import use_featch_fn from "./match-list-featch.js";
 import ws_composable_fn from "./match-list-ws.js";
@@ -13,7 +13,6 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
-const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const { show_mids_change } = ws_composable_fn();
 const { api_bymids, set_league_list_obj } = use_featch_fn();
