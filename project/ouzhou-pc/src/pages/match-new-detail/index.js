@@ -264,6 +264,7 @@ export function usedetailData(route) {
     tid = route.params.tid;
     current_id.value = route.params.mid;
     LayOutMain_pc.set_oz_show_right(true); // 显示右侧
+    LayOutMain_pc.set_oz_show_left(true);// 显示菜单
     init();
   });
   //todo mitt 触发ws更新

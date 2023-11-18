@@ -59,7 +59,7 @@ const scrollHeight = ref(0);
 const area_height = ref(0);
 const is_bootom_height = ref(0);
 
-const area_ref = ref('area')
+const area_ref = ref(null)
 let mitt_list = [];
 
 
@@ -70,6 +70,7 @@ let mitt_list = [];
  * @param {undefined} undefined
  */
  const set_scrollTop = (top, type) => {
+  if (!area_ref.value) return;
   if (type == "inc") {
     area_ref.value.scrollTop += top;
   } else if (type == "dec") {
@@ -80,9 +81,6 @@ let mitt_list = [];
 };
 
 // 设置列表滚动条位置
-mitt_list=[
-  useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop).off
-]
 onUnmounted(() => {
   // 设置列表滚动条位置
   mitt_list.forEach(i=>i())

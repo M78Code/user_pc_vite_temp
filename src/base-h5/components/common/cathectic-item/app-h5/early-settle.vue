@@ -9,7 +9,7 @@
   <!-- 提前兑换按钮 -->
   <div class="early-settle" v-if="calc_show">
     <div class="early-button">
-      <button @click="submit_click">
+      <button @click="submit_click" :class="{'disabled-btn': status == 1 || status == 5}">
         <!-- 暂停提前结算 -->
         <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template>
         <!-- 提前结算 -->
@@ -358,14 +358,8 @@ template {
       line-height: 0.4rem;
       font-size: 0.16rem;
       border-radius: 0.1rem;
-      &.cancel {
-        background-color: transparent;
-        color: var(--q-gb-bg-c-6);
-      }
-      &.change {
-        background-color: transparent;
-        color: var(--q-gb-bg-c-12);
-        line-height: 0.5rem;
+      &.disabled-btn {
+        background-color: var(--q-gb-bg-c-9);
       }
       span {
         font-size: 0.14rem;

@@ -26,7 +26,7 @@
         -->
         <div v-else>
           <bet-after-status v-if="!!BetData.is_bet_single"></bet-after-status>
-          <bevisBetedStatus v-else></bevisBetedStatus>
+          <bevisBettedStatus v-else></bevisBettedStatus>
         </div>
       </div>
 
@@ -57,8 +57,13 @@
             <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
           </div>
           <div v-else>
-            <!-- 串关投注项列表 -->
-            <bet-conflict-tips v-for="(item,index) in BetData.bet_s_list" :item="item" :key='index'></bet-conflict-tips>
+            <!--
+                ** 串关投注项列表 样式更改
+                原来 --  bet-conflict-tips
+                现在 --  bevisBettedConfig
+                 <bet-conflict-tips v-for="(item,index) in BetData.bet_s_list" :item="item" :key='index'></bet-conflict-tips>
+            -->
+            <bevisBettedConfig v-for="(item,index) in BetData?.bet_s_list ?? []" :item="item" :key='index'></bevisBettedConfig>
           </div>
       </div>
 
@@ -160,8 +165,11 @@
 
         </div>
 
-        <!--投注后的 确定按钮 -->
-        <div v-else @click="set_clear()" class="nonebox4-sub">{{ i18n_t('app_h5.bet.confirm')}}</div>
+      <!--投注后的 确定按钮 -->
+      <!--<div v-else @click="set_clear()" class="nonebox4-sub">{{ i18n_t('app_h5.bet.confirm')}}</div>-->
+
+      <!-- 投注按钮 -->
+      <bevisBettedButton @bindClick="set_clear()" v-else></bevisBettedButton>
 
     </div>
   </div>
@@ -176,7 +184,9 @@ import betMixBoxChild7 from './bet_mix_box_child7.vue';
 import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
 import betInfoList from "./bet_info_list.vue";
-import bevisBetedStatus from "./bevis-beted_status.vue"
+import bevisBettedStatus from "./bevis-betted_status.vue"
+import bevisBettedButton from "./bevis-betted-button.vue"
+import bevisBettedConfig from "./bevis/bevis-betted-config.vue"
 
 
 import betMixShow from './bet_mix_show3.vue';
@@ -188,6 +198,8 @@ import betConflictTips from './bet-conflict-tips.vue'
 import betCollusionInput from './bet-collusion-input.vue'
 import betCollusionInput1 from './bet-collusion-input1.vue'
 import betCollusionInput2 from './bet-collusion-input2.vue'
+
+
 
 
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -211,7 +223,7 @@ const tips_msg = ref('失效')  // 提示信息
 let bet_show_single = ref(true)  // 单关显示
 const get_bet_status = ref(0) // 投注状态
 const btn_show = ref(0) // 投注状态2
-const max_height1 = ref(150) // 投注赛事高度
+const max_height1 = ref(160) // 投注赛事高度
 const max_other_height1 = ref(300)
 const get_mix_bet_flag = ref(false) // 最小投注开关
 const exist_code = ref(555)

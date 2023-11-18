@@ -55,10 +55,10 @@
 </template>
   
 <script setup>
-import { ref, reactive, watch, onBeforeUnmount ,nextTick} from 'vue'
+import { ref, reactive, watch, onBeforeUnmount ,nextTick, onMounted} from 'vue'
 import { useRouter } from 'vue-router'
 
-import { project_name, i18n_t } from 'src/core/index.js';
+import { project_name, i18n_t, useMittEmit } from 'src/core/index.js';
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 import store from "src/store-redux/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
@@ -76,6 +76,7 @@ const props = defineProps({
         default: ''
     }
 })
+
 
 const emit = defineEmits(['update:show_type'])
 const update_show_type = (data) => emit('update:show_type', data)

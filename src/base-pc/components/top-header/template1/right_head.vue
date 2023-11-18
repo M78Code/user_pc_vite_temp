@@ -36,8 +36,8 @@
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
-      <q-menu style="background:#fff;border-radius:2px;">
-          <q-list class="personal-list" style="min-width: 280px;">
+      <q-menu style="background:#fff;border-radius:2px;box-shadow:0 0 4px 2px rgb(0 0 0 / 10%)">
+          <q-list style="min-width: 280px;">
             <q-item clickable @click="goto_announcement">
               <q-item-section>
                 <div class="flex title">
@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref,watch } from "vue";
+import { defineComponent, onMounted, ref,watch, onUnmounted } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
 import store from "src/store-redux/index.js";
@@ -225,6 +225,7 @@ export default defineComponent({
           console.log('res', res.data.data);
           // 搜索前清空会话仓库数据
           sessionStorage.removeItem('search_txt');
+          useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE,'result')
         }
       }).catch((e) => {
         console.log(e);
@@ -276,22 +277,22 @@ export default defineComponent({
         SearchPCClass.set_search_isShow(true);
       }
     }
+    function hide_search(e) {
+      if(is_focus.value && SearchPCClass.search_isShow) {
+        if(e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column') {
+            SearchPCClass.set_search_isShow(false);
+            is_focus.value = false;
+          } 
+      }
+    }
     
     onMounted(() => {
       compute_userInfo();
-      if(is_focus.value && SearchPCClass.search_isShow) {
-            // console.log(111);
-        document.addEventListener('click', function hide_rezult(e) {
-          e.stopPropagation();
-          if(e.target.className != 'q-field__native q-placeholder' || e.target.className != 'serach-wrap column') {
-            // console.log(22222);
-            SearchPCClass.set_search_isShow(false);
-            is_focus.value = false;
-          }
-          // console.log('e', e.target);
-        })
-      }
+        document.addEventListener('click', (e) => hide_search(e))
     });
+    onUnmounted(() => {
+      document.removeEventListener('click', hide_search)
+    })
 
     return {
       text, 
@@ -463,10 +464,10 @@ export default defineComponent({
     color:#FFFFFF
   }
 }
-// .change_width {
-//   width: 500px;
-//   transform: translateX(-300px);
-// }
+.change_width {
+  width: 500px;
+  transform: translateX(-300px);
+}
 .search-click .s-input {
   width: 500px;
   &:deep(.q-field) {

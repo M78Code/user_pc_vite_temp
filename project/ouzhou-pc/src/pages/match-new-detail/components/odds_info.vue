@@ -12,7 +12,7 @@
         <!-- 赛事玩法名称 -->
         <template v-slot:header>
           <div style="width:100%;line-height: 35px;font-weight: 500;">
-            {{ item.hpn }}
+            {{ item.hpn }}++{{ item.hpt }}
             <span v-if="item.hps">({{ item.hps.split('|')[1] }})</span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
             <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
@@ -33,8 +33,8 @@
                         <template v-if="ol.otd === opt.otd">
                           <div v-show="!item.hl[0].hs" :class="{ 'tem4': true, 'tem4-active': ol.oid == current_ol.oid }"
                             @click="betItemClick(item.hl[0], ol)">
-                            <span :style="{ color: ol.oid == current_ol.oid ? '#ffffff' : '#ff7000' }" >{{ ol.on }}</span>
-                            <span v-if="ol.ov" >{{Math.floor(ol.ov /1000) /100  }} </span>
+                            <span :style="{ color: '#1a1a1a' }" >{{ ol.on }}</span>
+                            <span >{{ol.ov? Math.floor(ol.ov /1000) /100:''  }} </span>
                             <!-- <span>{{ sun_ov(ol) }}</span> -->
 
                           </div>
@@ -47,11 +47,6 @@
 
                     </div>
                   </template>
-                </div>
-              </template>
-              <template v-else>
-                <div v-for="ol in item.hl" :key="ol.hid">
-                  <!-- <div>{{ ol.hv }}</div> -->
                 </div>
               </template>
 
@@ -242,7 +237,7 @@ onMounted(() => {
 .odds-wrap {
   background: #FFFFFF;
   box-sizing: border-box;
-  border-bottom: 1px solid #FF7000;
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
 
   .odds-hpn {
     display: block;
@@ -289,12 +284,29 @@ onMounted(() => {
   padding: 0 20px;
   display: flex;
   font-weight: 500;
-  justify-content: space-between;
+  // justify-content: center;
   color: #1A1A1A;
   //  border-top: 1px solid #E2E2E2;
   border-left: 1px solid #E2E2E2;
   border-bottom: 1px solid #E2E2E2;
   cursor: pointer;
+  span{
+    &:nth-child(1){
+      width: 50%;
+      display: block;
+      text-align: right;
+      margin-right: 10px;
+      overflow: hidden;
+    }
+    &:nth-child(2){
+      overflow: hidden;
+      width: 50%;
+      min-width: 100px;
+      display: block;
+      text-align: left;
+      color:#FF7000
+    }
+  }
 
   &:hover {
     background: #FFF1E6;
@@ -303,12 +315,12 @@ onMounted(() => {
 }
 
 .tem4-active {
-  background-color: #FF7000;
-  color: #FFFFFF;
+  background-color: var(--q-gb-bg-c-1);
+  color: var(--q-gb-t-c-1);
 
   &:hover {
-    background: #ff7000 !important;
-    color: #ffffff;
+    background: var(--q-gb-bg-c-1) !important;
+    color: var(--q-gb-t-c-1);
 
   }
 }
@@ -316,7 +328,7 @@ onMounted(() => {
 .bottom-height {
   height: 150px;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: var(--q-gb-bg-c-4);
 }
 
 .detail-loading {
