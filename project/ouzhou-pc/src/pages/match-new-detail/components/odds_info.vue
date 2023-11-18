@@ -12,7 +12,7 @@
         <!-- 赛事玩法名称 -->
         <template v-slot:header>
           <div style="width:100%;line-height: 35px;font-weight: 500;">
-            {{ item.hpn }}++{{ item.hpt }}
+            {{ item.hpn }}
             <span v-if="item.hps">({{ item.hps.split('|')[1] }})</span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
             <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
@@ -34,8 +34,12 @@
                           <div v-show="!item.hl[0].hs" :class="{ 'tem4': true, 'tem4-active': ol.oid == current_ol.oid }"
                             @click="betItemClick(item.hl[0], ol)">
                             <span :style="{ color: '#1a1a1a' }" >{{ ol.on }}</span>
-                            <span >{{ol.ov? Math.floor(ol.ov /1000) /100:''  }} </span>
-                            <!-- <span>{{ sun_ov(ol) }}</span> -->
+                            
+                            <span  v-if="ol.ov">
+                              <bet-item :key="`bet_4_${ol.hild}`" :ol_data="ol">
+                              </bet-item>
+                             </span>
+                            <span v-else></span>
 
                           </div>
                           <div  class="tem4"  style="justify-content: center;align-items: center;width:100%" v-show="item.hl[0].hs">
@@ -82,6 +86,7 @@ import { onMounted, ref, computed,inject} from "vue";
 import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import template5 from './template5.vue'
 import commonTemplate from './common-template.vue'
+import betItem from "./bet-item-list-new-data.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 
 
