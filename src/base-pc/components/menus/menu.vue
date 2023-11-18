@@ -74,9 +74,10 @@ const router = useRouter();
 const route = useRoute();
 
 onMounted(() => {
-  // init()
-  left_menu_list.value = BaseData.left_menu_base_mi_arr;
-  // jump_func()
+   //菜单无数据兼容
+  if(BaseData.left_menu_base_mi_arr.length>0){
+    left_menu_list.value = BaseData.left_menu_base_mi_arr;
+  }
 })
 
 // favouritse

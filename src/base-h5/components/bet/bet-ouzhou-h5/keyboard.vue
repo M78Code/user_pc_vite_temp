@@ -296,11 +296,12 @@ onUnmounted(() => {
   box-sizing: border-box;
   line-height: 46px;
   text-align: center;
-  background: var(--q-gb-t-c-14);
+  background: var(--q-bg-c-2);
 }
 .key-cell {
   &:first-child { // 左侧第一排MAX的样式
-    background: var(--q-gb-t-c-6);
+    background: var(--q-gb-bd-c-1);
+    color: var(--q-gb-t-c-4);
   }
   &:last-child {
     margin-right: 0;

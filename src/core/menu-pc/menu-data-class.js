@@ -155,7 +155,7 @@ class MenuData {
       { label:i18n_t('ouzhou.filter.select_time.24h'), title:'25小时', value: 24 }, 
       { label:i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
       { label:i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
-    ],
+    ]
     //  1001 fetured  10002 top events 4001 Matches 4002 League
     this.router_root_lv_2 = ref(1001) // 这个去掉 不能用 
     this.init()
@@ -893,6 +893,11 @@ class MenuData {
   }
 
   // 是否是 top_events
+  is_featured() {
+    return this.mid_menu_result.filter_tab == 1001
+  }
+
+  // 是否是 top_events
   is_top_events() {
     return this.mid_menu_result.filter_tab == 1002
   }
@@ -995,6 +1000,7 @@ class MenuData {
   is_home(mi) {
     return this._is_cur_mi(0, mi)
   }
+
 }
 
 export default new MenuData();

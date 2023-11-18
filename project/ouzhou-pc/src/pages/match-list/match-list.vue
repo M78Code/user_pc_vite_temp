@@ -34,7 +34,7 @@
       <scroll-list v-if="menu_config.menu_root_show_shoucang != 300">
         <!-- <template v-slot:before> -->
           <!-- 头部15 Mins模块 -->
-          <div v-show="matches_15mins_list.length && is_show_Modlue" class="match-list-item">
+          <div v-show="matches_15mins_list.length && is_show_modlue" class="match-list-item">
             <CurrentMatchTitle
               :title_value="'15 Mins'"
               :show_more_icon="false"
@@ -42,7 +42,7 @@
             <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
           </div>
           <!-- 头部Featured Matches模块 -->
-          <div v-show="matches_featured_list.length && is_show_Modlue" class="match-list-item">
+          <div v-show="matches_featured_list.length && is_show_modlue" class="match-list-item">
             <CurrentMatchTitle
               :title_value="'Featured Matches'"
               :show_more_icon="false"
@@ -130,6 +130,7 @@ import {
   LayOutMain_pc,
 } from "src/core";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { useMittOn,MITT_TYPES } from "src/core/index.js"
 import "./match_list.scss";
 import {
   init_home_matches
@@ -177,9 +178,11 @@ export default {
 
     const match_list_top = ref("76px");
 
-    const is_show_Modlue = ref(true)
+    const is_show_modlue = ref(true)
 
     const { proxy } = getCurrentInstance();
+
+    let mitt_list = null
 
     const MatchListCardDataClass_match_list_card_key_arr = () => {
       match_list_card_key_arr.value =
@@ -188,13 +191,14 @@ export default {
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-
+      get_data_info()
+	    mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,get_data_info).off ]
       mounted_fn();
-      
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
       handle_destroyed()
+	    mitt_list.forEach(item => item());
     });
     onActivated(()=>{
       LayOutMain_pc.set_oz_show_right(false);
@@ -206,14 +210,18 @@ export default {
       proxy?.$forceUpdate();
     });
 
-    watch(MenuData.menu_data_version, async () => {
-      console.log(MenuData.menu_root, 'MenuData.menu_root')
-      is_show_Modlue.value = MenuData.is_home() && ![1002].includes(MenuData.router_root_lv_2.value)
-      if (MenuData.is_home()) {
+    const get_data_info = async () => {
+      // 判断是不是首页下的 featured 页面
+      if (MenuData.is_featured()) {
         const { mins15_list= [], featured_list= [] } = await init_home_matches();
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = featured_list
       }
+    }
+
+    watch(MenuData.menu_data_version, async () => {
+      console.log(MenuData.menu_root, 'MenuData.menu_root')
+      is_show_modlue.value = !MenuData.is_featured()
     },
     { immediate: true }
     );
@@ -235,7 +243,7 @@ export default {
       load_data_state,
       coom_soon_state,
       match_list_top,
-      is_show_Modlue,
+      is_show_modlue,
       match_list_card
     };
   },

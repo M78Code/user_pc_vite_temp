@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="true">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -42,9 +42,6 @@ const tab_list = ref([])
 const current_ball_type = ref(630)
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px')
-
-// top events显示变量
-const is_Top_Events = ref(false)
 
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 
@@ -100,7 +97,6 @@ const checked_current_tab = payload => {
 	} else {
 			match_list_top.value = '146px'
 	}
-	MenuData.router_root_lv_2.value = payload.value*1
 
 	console.log('payload', payload);
 	let obj = {

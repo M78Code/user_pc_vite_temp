@@ -8,51 +8,113 @@
 <template>
   
     <div class="collect-wap">
-      <NoData class="data-get-empty2" which='comingSoon' height='400'></NoData>
+      <!-- tab 切换 -->
+      <div class="header_tabs">
+        <q-tabs v-model="tabValue" dense class="bg-grey-3" align="justify" narrow-indicator @update:modelValue="on_update">
+          <q-tab v-for="(item,index) in tabData" :key="index" :name="item.val" :label="item.label" />
+          <!-- <q-tab name="today" :label="`${i18n_t('ouzhou.match.top_events')}`" /> -->
+          <!-- <q-tab name="top_events" :label="`${i18n_t('ouzhou.match.top_events')}`" /> -->
+        </q-tabs>
+      </div>
+      <scroll-list menu_type="50000" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
+      <!-- <NoData class="data-get-empty2" which='comingSoon' height='400'></NoData> -->
       <!-- 收藏 -->
-      <!-- <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/>
+      <!-- <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/> -->
       <div class="match-container">
           <match-container />
-      </div> -->
+      </div>
     </div>
 </template>
 <script setup>
-import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
+// import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 
 
-import { watch, onMounted, onBeforeMount, reactive, nextTick } from "vue";
-import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import setectLeague from 'src/base-h5/components/setect-league/index.vue'
-import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
-import matchContainer from "src/base-h5/components/match-list/index.vue";
+import { ref, onMounted, reactive } from "vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
-import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
-import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
-import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
-
-
-const inner_height = window.innerHeight;  // 视口高度
+import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
+import matchContainer from "src/base-h5/components/match-list/index.vue";
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({})
 const state = reactive({
-  select_dialog: false,
+  current_mi:'',//默认赛种
+  slideMenu_sport: [], // 赛种
 })
-
-const selectFinishHandle = (val) => {
-  console.log('选择完成')
-  state.select_dialog = false
+const tabValue = ref(1);
+const tabData = reactive([
+  {
+    name:"inplay",
+    label:"In-Play",
+    val:1,
+  },
+  {
+    name:"today",
+    label:"Today",
+    val:2,
+  },
+  {
+    name:"early",
+    label:"Early",
+    val:3,
+  }
+]);
+/**
+ * tabs 切换
+ * @param {*} val 
+ */
+const on_update = (val) => {
+  state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
+  MenuData.set_current_lv1_menu(val)
+  if(state.slideMenu_sport?.[0])changeMenu(state.slideMenu_sport?.[0])
 }
 /**
  * 球种点击
  * @param {*} mi 
  */
-const changeMenu = (mi) =>{
+const changeMenu = (item) =>{
+  state.current_mi = item.mi;
+  MenuData.set_menu_mi(item.mi)
   MatchMeta.get_collect_match()
 }
+onMounted(()=>{
+  on_update(tabData[0].val)
+})
 </script>
 <style scoped lang="scss">
 .collect-wap {
   width: 100%;
   height: calc(100% - 106px);
+  .header_tabs{
+    border-bottom: 2px solid #FF7000;
+    :deep(.q-tabs--dense){
+      .scroll--mobile{
+        height: 50px;
+        background: #fff;
+        padding: 0 10px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: right;
+        .q-tab{
+          flex: none;
+        }
+        .q-ripple{
+          display: none;
+        }
+      }
+      .q-tab__label{
+        color: #8A8986;
+        text-transform: capitalize;
+        font-weight: 600;
+      }
+      .q-tab--active .q-tab__label{
+        //color: #FF7000;
+        color: var(--q-gb-t-c-1);
+      }
+      .q-tab__indicator{
+        height: 3px;
+        background: #FF7000;
+      }
+    }
+  }
   .data-get-empty2{
     :deep(.no_data_img){
       width: 140px;
