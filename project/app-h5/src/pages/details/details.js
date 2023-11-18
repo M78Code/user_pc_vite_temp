@@ -8,12 +8,12 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss ,LOCAL_PROJECT_FILE_PREFIX,MenuData} from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/core/index";
 import { SessionStorage } from "src/core/utils/index.js"
 
 export const details_main = () => {
-const router = useRouter();
-const route = useRoute();
+  const router = useRouter();
+  const route = useRoute();
   // 详情初始化接口数据处理
 
   const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
@@ -27,7 +27,7 @@ const route = useRoute();
   const get_info_show = ref(false)
   let state_data = reactive({
     //切换浏览器页面 获取最新的盘口数据
-    refresh:false,
+    refresh: false,
     // 切换赛事时，重置玩法集请求次数计数
     get_category_list_req_count: 0,
     // refs['fixedHeight']
@@ -128,7 +128,7 @@ const route = useRoute();
     // 设置玩法集固定
     get_tab_fix: "get_tab_fix",// TODO: 待处理
     // 赛果标识
-    get_menu_type:lodash.get(MenuData,'top_menu_title.mi'),
+    get_menu_type: lodash.get(MenuData, 'top_menu_title.mi'),
     // 获取列表页当前选中时间
     get_current_menu: "get_current_menu",// TODO: 待处理
     // 是否从直播进入详情
@@ -205,20 +205,20 @@ const route = useRoute();
     if (configValue != 1 || eventSwitch != 1 || !state_data.get_event_list.length) {
       return "";
     }
-    
+
 
     // 主题后缀
     const suffix_theme = UserCtr.theme.includes("night") ? "2" : "";
     // y0后缀
     const suffix_y0 = UserCtr.theme.includes("_y0") ? "_y0" : "";
- 
+
     return `img:${LOCAL_PROJECT_FILE_PREFIX}/image/svg/details/replay${suffix_theme}.svg`;
   });
-  
-// 监听数据仓库版本号变更后更新数据
-watch(() => MatchDataWarehouseInstance.data_version.version, () => {
-  state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
-})
+
+  // 监听数据仓库版本号变更后更新数据
+  watch(() => MatchDataWarehouseInstance.data_version.version, () => {
+    state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
+  })
   // // 刷新页面时获取当前玩法集ID
   // onMounted(() => {
   //   console.error(route);
@@ -420,13 +420,20 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
   };
 
 
-  //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetail)
-  // refresh为刷新页面 切换网页页面触发获取最新盘口信息
-  const initEvent = (refresh=false) => {
-    state_data.refresh = refresh
+  /** 赛事详情页面接口(/v1/m/matchDetail/getMatchDetail)
+   * refresh为刷新页面 切换网页页面触发获取最新盘口信息
+   * 
+   * @example
+   * useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, initEvent),
+   * @description
+   * 欧洲版改造MITT_TYPES.EMIT_REFRESH_DETAILS事件param传递了赛事信息, 与refresh参数冲突
+   * 进行兼容性改动 (refresh=false) => ({refresh = false})
+   * @type {MITT.RefreshDetailsCallback}
+   */
+  const initEvent = (param) => {
+    state_data.refresh = param.refresh || false
     // get_uid为空时循环检测进行拉取逻辑处理
     if (UserCtr.uid || state_data.init_event_timer_count > 30) {
-      
       // 请求接口数据
       get_match_details({
         // 赛事id
@@ -465,26 +472,26 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
    * @param {String} event_code 事件code
    */
   const get_football_replay = (event_code) => {
-      if ([sport_id.value, lodash.get(state_data.detail_data, 'csid')].includes('1')) {
-        const params = {
-          mid: route.params.mid,
-          device: 'H5',
-          eventCode: event_code
-        }
-        api_analysis.post_playback_video_url(params)
-            .then(res => {
-              if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
-                state_data.get_event_list = res.data.eventList
-                // 场景1: 头部刷新按钮触发时调接口返回数据存操作类
-                matchDetailCtr.value.set_playback_video_list(res.data.eventList)
-              }
-            })
-            .catch(err => {
-              console.error(err)
-            })
-            .finally(() => {
-            })
+    if ([sport_id.value, lodash.get(state_data.detail_data, 'csid')].includes('1')) {
+      const params = {
+        mid: route.params.mid,
+        device: 'H5',
+        eventCode: event_code
       }
+      api_analysis.post_playback_video_url(params)
+        .then(res => {
+          if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
+            state_data.get_event_list = res.data.eventList
+            // 场景1: 头部刷新按钮触发时调接口返回数据存操作类
+            matchDetailCtr.value.set_playback_video_list(res.data.eventList)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+        .finally(() => {
+        })
+    }
   };
   /**
    * 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
@@ -508,15 +515,15 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
             // 数据传入数据仓库
             MatchDataWarehouseInstance.set_match_details(res_data)
             //如果是切换tab页
-            if(state_data.refresh){
+            if (state_data.refresh) {
               //获取玩法集 
               get_odds_list()
               //获取盘口
-              useMittEmit(MITT_TYPES.EMIT_REF_API,(true))
-            } 
+              useMittEmit(MITT_TYPES.EMIT_REF_API, (true))
+            }
             // 球种ID
             sport_id.value = res_data.csid
-            if (params.init) {get_football_replay(0)}
+            if (params.init) { get_football_replay(0) }
           } else {
             // 赛事下发999后, 显示空空如也
             state_data.skeleton.details = true
@@ -606,8 +613,8 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
       .then(({ data }) => {
         if (!data || data.length == 0) {
           // set_toast({
-            // #TODO IMIT
-            // txt: t("bet_record.bet_match_tishi"),
+          // #TODO IMIT
+          // txt: t("bet_record.bet_match_tishi"),
           // });
 
           sessionStorage.setItem("match_list_ofdetails", "");
@@ -655,7 +662,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
               (item) => item.id == SessionStorage.get("DETAIL_TAB_ID")
             );
             // 找不到就赋值为玩法集第一项
-            if (!set_details_item_flag) { 
+            if (!set_details_item_flag) {
               matchDetailCtr.value.category_tab_click(res_data[0]);
             }
           } else {
@@ -697,7 +704,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
           }
         });
     };
-    
+
     const get_category_list_debounce = axios_debounce_cache.get_category_list
     if (get_category_list_debounce && get_category_list_debounce['ENABLED']) {
       let info = get_category_list_debounce.can_send_request(params);
@@ -909,7 +916,7 @@ watch(() => MatchDataWarehouseInstance.data_version.version, () => {
       useMittOn(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, set_native_detail_data),
       useMittOn(MITT_TYPES.EMIT_ANA_SHOW, ana_show),
       // // 0号模板点击收起的时候，要调整滚动距离
-      useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, set_details_scroll), 
+      useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, set_details_scroll),
       useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, loading_list),
       useMittOn(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED, tab_changed_handle),
       useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE, get_odds_list),
