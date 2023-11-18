@@ -149,12 +149,12 @@ const get_amtch_bg_image = (csid) => {
       justify-content: space-between;
       > span.active{
         //color: #fff;
-        color: var(--q-gb-t-c-14);
+        color: var(--q-gb-t-c-2);
         border-radius: 2px;
         background: #FF7000;
         > span > span {
           //color: #fff;
-          color: var(--q-gb-t-c-14);
+          color: var(--q-gb-t-c-2);
         }
       }
       > span {
@@ -166,7 +166,8 @@ const get_amtch_bg_image = (csid) => {
         border-radius: 3px;
         > span {
           > span {
-            color: #FF7000;
+            //color: #FF7000;
+            color: var(--q-gb-t-c-1);
             font-weight: 500;
           }
         }

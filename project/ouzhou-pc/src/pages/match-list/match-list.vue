@@ -141,7 +141,7 @@ const {
   show_refresh_mask,
   collect_count,
   is_show_hot,
-  on_refresh,
+  on_refresh,handle_destroyed
 } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
@@ -196,7 +196,7 @@ export default {
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
-      // handle_destroyed()
+      handle_destroyed()
     });
     onActivated(()=>{
       LayOutMain_pc.set_oz_show_right(false);

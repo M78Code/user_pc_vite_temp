@@ -96,7 +96,8 @@ const set_old_submit = (ol) => {
     justify-items: center;
     width: 100%;
     span.active{
-      color: #fff;
+      //color: #fff;
+      color: var(--q-gb-t-c-2);
       background: #FF7000;
       border-radius: 2px;
       .hpn{
@@ -107,7 +108,8 @@ const set_old_submit = (ol) => {
     > span {
       flex: 1;
       font-size: 15px;
-      color: #FF7000;
+      //color: #FF7000;
+      color: var(--q-gb-t-c-1);
       text-align: center;
       font-weight: 500;
       height: v-bind(height);

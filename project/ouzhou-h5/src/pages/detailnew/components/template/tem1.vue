@@ -75,11 +75,11 @@ onMounted(() => {});
       .is-active {
         background: #ff7000;
         //color: #fff;
-        color: var(--q-gb-t-c-14);
+        color: var(--q-gb-t-c-2);
         .ol-on {
           .ol-ov {
             //color: #fff;
-            color: var(--q-gb-t-c-14);
+            color: var(--q-gb-t-c-2);
           }
         }
       }
@@ -122,7 +122,8 @@ onMounted(() => {});
         height: 50px;
         line-height: 50px;
         font-weight: 500;
-        color: #FF7000;
+        //color: #FF7000;
+        color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
         .temp1_ol-on-text {
@@ -138,7 +139,7 @@ onMounted(() => {});
       .is-active {
         background: #FF7000;
         //color: #fff;
-        color: var(--q-gb-t-c-14);
+        color: var(--q-gb-t-c-2);
         .temp1_ol-on-text {
             padding-right: 5px;
             font-weight: 500;

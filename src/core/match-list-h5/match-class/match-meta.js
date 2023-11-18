@@ -81,10 +81,8 @@ class MatchMeta {
     }
 
     this.params_md = md
-
     // // 刷新页面 二级菜单丢失， 暂时放在这里 获取真实数据
     this.get_target_match_data()
-
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
 

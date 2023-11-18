@@ -1,13 +1,15 @@
 <template>
   <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)" >
-
+   
     <!-- 赛事信息 -->
     <div class="collect-box flex items-center justify-between">
       <div class="left-info-box flex items-center flex-start">
         <!-- 是否收藏 -->
-        <div>
-          <i class="icon-star q-icon c-icon"></i>
+        <div @click.stop="collect"
+          v-if="GlobalAccessConfig.get_collectSwitch()">
+          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
         </div>
+
         <!-- 比赛进程 -->
         <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
         periodColor="gray" />
@@ -69,7 +71,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
 import { useRouter } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
-
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const router = useRouter()
 const props = defineProps({
@@ -143,6 +145,14 @@ const play_name_obj = computed(() => {
 })
 
 is_collect.value = Boolean (lodash.get(props, 'match.mf'))
+
+/**
+ * @Description 赛事收藏 
+*/
+const collect = () => {
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
+}
+
 //进球特效防抖
 // hide_home_goal = this.debounce(hide_home_goal,5000);
 // hide_away_goal = this.debounce(hide_away_goal,5000);
@@ -238,6 +248,13 @@ onUnmounted(() => {
     .icon-star {
       margin-top: -3px;
       margin-right: 14px;
+      cursor: pointer;
+      &::before {
+        color: var(--q-gb-bg-c-8);
+      }
+      &.active::before {
+        color: var(--q-gb-bd-c-12);
+      }
     }
     .bet-num {
       margin-left: 12px;

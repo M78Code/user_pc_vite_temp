@@ -350,7 +350,7 @@ export default {
         border-radius: 2px;
         &.active {
           color: #fff;
-          background-color: #FF7000;
+          background-color: var(--q-gb-bg-c-1);
         }
       }
     }
