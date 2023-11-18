@@ -63,7 +63,7 @@ function handle_click_menu_mi_pre_process() {
 function resolve_mew_menu_res() {
     console.error('resolve_mew_menu_res')
 
-    if(MenuData.menu_root == 0 && MenuData.is_top_events()){
+    if(MenuData.is_top_events()){
         resolve_mew_menu_res_mi_5000()
     }else if (MenuData.menu_root == 500) {
         //热门
@@ -92,7 +92,10 @@ function resolve_mew_menu_res_mi_5000() {
     mi_5000_list = BaseData.mew_menu_list_res.find(item => item.mi == 5000) || {}
     // top _events 
     mi_5000_all = mi_5000_list.sl || [];
-    mi_100_arr.value = mi_5000_all.filter(item => item.mif == (item.mi - 5000 + 100) )
+    mi_100_arr.value = mi_5000_all.map(item => {
+        item.mif = (item.mi - 5000 + 100)
+        return item
+    } )
 }
 
 /**
@@ -125,8 +128,6 @@ function resolve_mew_menu_res_mi_100_2000(type) {
    
     //常规体育
     mi_100_arr.value = mi_100_list;
-    // 热门赛种
-    mi_5000_arr.value = mi_5000_list.sl || [];
     //电竞
     mi_2000_arr.value = mi_2000_list;
     //  VR  体育的

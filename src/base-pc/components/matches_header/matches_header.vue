@@ -89,6 +89,12 @@ const set_tab_list = (news_) =>{
 }
 
 const checked_current_tab = payload => {
+
+	let obj = {
+		...MenuData.mid_menu_result,
+		filter_tab: payload.value*1,
+	}
+
 	// 判断头部高度
 	if ([1001,4002].includes(payload.value*1)) {
 			match_list_top.value = '80px'
@@ -98,11 +104,16 @@ const checked_current_tab = payload => {
 			match_list_top.value = '146px'
 	}
 
-	console.log('payload', payload);
-	let obj = {
-		...MenuData.mid_menu_result,
-		filter_tab: payload.value*1,
+	// 点击热门赛种 切换到 500
+	if ([1002].includes(payload.value*1)) {
+		MenuData.set_menu_root(500)
+		obj.current_mi = 5001
 	}
+	// 还原top_event热门赛种 和 常规赛事的切换
+	if (1001 == payload.value) {
+		MenuData.set_menu_root(0)
+	}
+
 	// 收藏切换tab
 	if(MenuData.is_collect){
 		if( payload.value == 3001){
@@ -115,6 +126,7 @@ const checked_current_tab = payload => {
 			obj.current_mi = 1013
 		}
 	}
+
 	MenuData.set_mid_menu_result(obj)
 }
 

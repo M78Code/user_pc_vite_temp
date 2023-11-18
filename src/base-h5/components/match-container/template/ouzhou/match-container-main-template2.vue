@@ -311,7 +311,7 @@ export default {
       hps_play_data.value = target_hps
     }
 
-    watch(() => ctx.match_of_list.hps, () => {
+    watch(() => ctx.match_of_list?.hps, () => {
       const { is_show_league } = ctx.match_of_list
       if (!is_show_league) return
       get_hps_play_data()

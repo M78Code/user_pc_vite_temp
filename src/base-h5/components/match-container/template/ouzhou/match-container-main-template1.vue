@@ -575,10 +575,9 @@ export default {
       const { csid } = ctx.match_of_list
       // target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
       hps_play_data.value = sports_play_data[csid] || []
-      console.log('get_hps_play_data', hps_play_data.value)
     }
 
-    watch(() => ctx.match_of_list.hps, () => {
+    watch(() => ctx.match_of_list?.hps, () => {
       const { is_show_league } = ctx.match_of_list
       if (!is_show_league) return
       get_hps_play_data()
