@@ -49,6 +49,7 @@ export default defineComponent({
     const nav_click = (item = {}) => {
     
       MenuData.set_menu_root(item.id); 
+      MenuData.set_is_collect(false)
       // 首页点击 首页需要 重新显示首页内容 
       if(route.name == 'home'){
         useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,item.id)

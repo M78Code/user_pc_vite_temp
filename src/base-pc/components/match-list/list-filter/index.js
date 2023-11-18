@@ -197,7 +197,11 @@ function handle_click_menu_mi_400(detail = {}) {
 function set_menu_config(obj = {}) {
     console.error('asdad')
     // 设置 中间 菜单输出
-    MenuData.set_mid_menu_result(obj);
+    const obj_config = {
+        ...MenuData.mid_menu_result,
+        ...obj
+    }
+    MenuData.set_mid_menu_result(obj_config);
     // 设置   请求  列表结构  API 参数的  值
     // MenuData.set_match_list_api_config(obj);
     // 设置终极菜单id
