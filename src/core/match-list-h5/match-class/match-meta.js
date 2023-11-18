@@ -451,7 +451,7 @@ class MatchMeta {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
     // 获取赛 事收藏状态 该接口还没发到试玩
-    // MatchCollect.get_collect_match_data()
+    MatchCollect.get_collect_match_data()
     this.handler_match_list_data({ list: list, is_classify })
   }
 
@@ -477,14 +477,31 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取缓存的欧洲首页赛事
+   * @returns 
+   */
+  get_default_ouzhou_home_data ()  {
+    const res = localStorage.getItem('ouzhou_home_data') && JSON.parse(localStorage.getItem('ouzhou_home_data'))
+    return this.handle_ouzhou_home_data(res)
+  }
+
+  /**
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_data () {
     const res = await api_match_list.get_home_matches({ type: 1 })
+    return this.handle_ouzhou_home_data(res)
+  }
+
+  /**
+   * @description 处理欧洲版首页热门赛事
+   */
+  handle_ouzhou_home_data (res) {
+    if (!res || +res.code !== 200) return { p15_list: [], hots: [], dataList: [] }
+    localStorage.setItem('ouzhou_home_data', JSON.stringify(res))
     const p15 = lodash.get(res, 'data.p15', [])
     const hots = lodash.get(res, 'data.hots', [])
     const dataList = lodash.get(res, 'data.dataList', [])
-    if (+res.code !== 200) return { p15_list: [], hots: [], dataList: [] }
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
     MatchDataBasel5minsH5.set_list(p15_list)
@@ -574,7 +591,7 @@ class MatchMeta {
       }
     })
     const results = Object.values(filterData).flat()
-    this.handler_match_list_data({ list: results, warehouse: MatchDataBaseFiveLeagueH5 })
+    this.handler_match_list_data({ list: results, warehouse: MatchDataBaseFiveLeagueH5, type: 2, is_virtual: false })
     return results
   }
 
@@ -714,9 +731,9 @@ class MatchMeta {
       // 欧洲版首页热门赛事
       const arr_data = match_list.filter((t) => t.mid)
       // 不获取赔率
-      if (type === 2) return this.handle_update_match_info({ list: arr_data })
+      if (type === 2) return this.handle_update_match_info({ list: arr_data, warehouse })
       // 获取赔率
-      if (type === 1) return this.handle_submit_warehouse({ list: arr_data })
+      if (type === 1) return this.handle_submit_warehouse({ list: arr_data, warehouse })
     } else {
       // 计算所需渲染数据
       this.compute_page_render_list({ scrollTop: 0, type }) 
@@ -783,7 +800,7 @@ class MatchMeta {
 
     // 重置元数据计算流程
     MatchResponsive.set_is_compute_origin(false)
-    
+
     // 不获取赔率
     if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse })
 
@@ -805,7 +822,7 @@ class MatchMeta {
    * @description 获取赛事赔率
    * @param { mids } mids
    */
-  async get_match_base_hps_by_mids (mids = []) {
+  async get_match_base_hps_by_mids (mids = [], warehouse) {
     if (this.match_mids.length < 1 && mids.length < 1) return
     const match_mids = this.match_mids.join(',')
     // 冠军不需要调用
@@ -830,7 +847,7 @@ class MatchMeta {
     if (+code !== 200) return
     const list = MatchPage.get_obj(data)
     // 设置仓库渲染数据
-    this.handle_update_match_info({ list, type: 'cover' })
+    this.handle_update_match_info({ list, type: 'cover', warehouse })
   }
 
   /**
@@ -852,10 +869,10 @@ class MatchMeta {
    * @description 更新对应赛事
    * @param { list } 赛事数据 
    * @param { type } 接口请求时， 以接口数据为准， 反之已上一次的数据为准 避免赔率闪动
+   * @param { warehouse } 仓库类型
    */
   handle_update_match_info(config) {
     let { list = [], type = '',  warehouse = MatchDataBaseH5 } = config
-
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       // MatchResponsive.get_ball_seed_methods(t)
@@ -870,6 +887,7 @@ class MatchMeta {
   /**
    * @description 提交更新仓库
    * @param { list } 赛事数据
+   * @param { warehouse } 仓库类型
    */
   handle_submit_warehouse(config) {
     const { list = [], warehouse = MatchDataBaseH5 } = config

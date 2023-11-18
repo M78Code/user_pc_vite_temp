@@ -117,6 +117,7 @@ class MenuData {
    * 请求赛事列表
    */
   get_match_render_list(){
+    console.log(3333333333333333)
     if (this.is_results()) return MatchMeta.get_results_match()
     if(!['1','2','3','6'].includes(this.current_lv_1_menu_i))return;
     // 清除赛事折叠信息
