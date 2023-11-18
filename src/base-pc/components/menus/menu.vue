@@ -88,7 +88,7 @@ const go_to_favouritse = () => {
   let mid_config = {
     ...MenuData.mid_menu_result,
     filter_tab: 3001, // 滚球 3001 早盘 3002  今日 3003
-    current_mi: '101', // 当前选中的赛种id
+    current_mi: 1011, // 当前选中的赛种id
   }
   MenuData.set_mid_menu_result(mid_config)
 

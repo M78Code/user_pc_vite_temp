@@ -60,12 +60,22 @@ function handle_click_menu_mi_pre_process() {
  * 解析菜单数据
  */
 function resolve_mew_menu_res() {
+    console.error('resolve_mew_menu_res')
     if (MenuData.menu_root == 500) {
         //热门
         resolve_mew_menu_res_mi_500();
-    } else if (MenuData.menu_root == 1) {
+    } else if ([1,301].includes(MenuData.menu_root*1) || ([2,3].includes(MenuData.menu_root) && MenuData.is_collect*1)) {
+        let type = 1
+        if(MenuData.is_collect){
+            if( MenuData.mid_menu_result.filter_tab  == 3002){
+                type = 2
+            }
+            if( MenuData.mid_menu_result.filter_tab  == 3003){
+                type = 3
+            }
+        }
         //滚球  常规 +电竞
-        resolve_mew_menu_res_mi_100_2000();
+        resolve_mew_menu_res_mi_100_2000(type);
     } else if (MenuData.menu_root == 400) {
         // 冠军
         resolve_mew_menu_res_mi_400();
@@ -74,7 +84,7 @@ function resolve_mew_menu_res() {
 /**
  * 解析 新接口返回值     常规 +电竞
  */
-function resolve_mew_menu_res_mi_100_2000() {
+function resolve_mew_menu_res_mi_100_2000(type) {
     //过滤常规球类
     let mi_100_list = [];
     let mi_2000_list = [];
@@ -85,7 +95,7 @@ function resolve_mew_menu_res_mi_100_2000() {
         //常规体育
         if (BaseData.left_menu_base_mi_arr.includes(mif)) {
             // 滚球对象
-            let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
+            let item = (x["sl"] || []).find((y) => y.mi == `${mif}${type}`) || {};
             item.mif = mif;
             mi_100_list.push(item);
         }
@@ -97,6 +107,7 @@ function resolve_mew_menu_res_mi_100_2000() {
             mi_2000_arr.value.push(item);
         }
     });
+    console.error('ssaaaa',type,mi_100_list)
     //常规体育
     mi_100_arr.value = mi_100_list;
     //电竞

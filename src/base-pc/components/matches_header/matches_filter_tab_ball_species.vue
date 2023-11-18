@@ -11,7 +11,7 @@
                 <div class="filter-count">{{ item.ct || 0 }}</div>
               </div>
               <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-                {{  BaseData.menus_i18n_map[item.mif] || "" }}
+                {{  BaseData.menus_i18n_map[item.mif] || "" }} {{item.mi}}
               </div>
             </div>
             <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
@@ -76,7 +76,6 @@
 </template>
 
 <script setup>
-import _ from "lodash"
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
@@ -106,10 +105,12 @@ onMounted(() => {
   if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
     show_right_btn.value = true;
   }
-  console.error('sss')
+ 
 
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
+
+  console.error('current_mi',current_mi)
   if (current_mi) {
     // 默认选中当前第一个tab
     current_choose_tab.value = current_mi
