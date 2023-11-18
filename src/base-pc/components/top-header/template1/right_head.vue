@@ -62,8 +62,8 @@
               </div>
               </q-item-section>
             </q-item>
-            <!--国际化语言-->
-            <q-item clickable  @click="onExpend">
+            <!--国际化语言   暂时隐藏-->
+            <!-- <q-item clickable  @click="onExpend">
               <q-item-section class="personal-content">
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
@@ -71,9 +71,9 @@
                 </div>
                 <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
               </q-item-section>
-            </q-item>
-            <q-separator />
-            <q-item  v-show="visible">
+            </q-item> -->
+            <!-- <q-separator /> -->
+            <!-- <q-item  v-show="visible">
               <q-slide-transition >
                 <q-item-section>
                   <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
@@ -82,9 +82,9 @@
                   </div>
                 </q-item-section>
               </q-slide-transition>
-            </q-item>
+            </q-item> -->
             <!--国际化语言结束-->
-            <q-item>
+            <!-- <q-item>
               <q-item-section>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
@@ -94,7 +94,7 @@
                 </div>  
               </div> 
               </q-item-section>
-            </q-item>
+            </q-item> -->
           </q-list>
       </q-menu>
     </div>
@@ -180,56 +180,16 @@ export default defineComponent({
       () => text.value,
       (val) => {
         let trimVal = val.trim();
-        get_search_data(0, 1, trimVal);
+        get_search_data(trimVal);
       }
     )
     
-    /**
-     * @description 搜索
-     * pramas
-     * index: tab 下标
-     * sport_id: 球类id
-     * keyword搜索的关键字
-     */
-    const search_data = ref([]);
-    let sport_kind_id = null;
-    const show_hot = ref(true);
-    const tabIndex = ref(0);
-    const show_history = ref(true);
-    const uid = UserCtr.get_uid();
-    const get_search_data = (index = 0, sport_id = 1, keyword) => {
-      show_history.value = false;
-      show_hot.value = false;
-      tabIndex.value = index;
-      sport_kind_id = sport_id;
-      if (keyword) {
-        text.value = keyword
-      }
-      let params = {
-        cuid: uid,
-        keyword: text.value,
-        searchSportType: sport_id || 1,
-        pageNumber: 1,
-        rows: 200,
-        isPc: true
-      }
-      if (!text.value) {
-        show_history.value = true;
-        show_hot.value = true;
-        search_data.value = [];
-        return;
-      }
-      get_search_result(params).then(res => {
-        if (res.code === '200') {
-          search_data.value = res.data.data;
-          console.log('res', res.data.data);
-          // 搜索前清空会话仓库数据
-          sessionStorage.removeItem('search_txt');
-          useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE,'result')
-        }
-      }).catch((e) => {
-        console.log(e);
-      });
+    // 传递搜索状态
+    const get_search_data = (val) => {
+      useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+        type: 'result',
+        text: val || text.value
+      })
     }
     /**
      * 是否显示搜索组件 default: false
@@ -359,7 +319,7 @@ export default defineComponent({
   transition: all 0.25s;
   justify-content: space-between;
   &.active{
-    color: #FF7000;
+    color: var(--q-gb-t-c-2);
     background: #FFF1E6;
   }
   > span {
@@ -374,7 +334,7 @@ export default defineComponent({
   }
 }
 .language_item:hover{
-  color: #FF7000;
+  color: var(--q-gb-t-c-2);
   background: #FFF1E6;
 }
 .arrow{
@@ -432,7 +392,7 @@ export default defineComponent({
       color: #8A8986;
       &.active{
         color: #000;
-        background: #fff;
+        background: var(--q-gb-bg-c-4);
         border-radius: 20px;
       }
     }
@@ -440,7 +400,7 @@ export default defineComponent({
       position: absolute;
       top: 0;
       border-radius: 20px;
-      border: 1px solid #FF7000;
+      border: 1px solid var(--q-gb-bd-c-1);
       transition: all 0.25s;
     }
   }
@@ -461,7 +421,7 @@ export default defineComponent({
     height: 40px;
   }
   :deep(.q-field__native) {
-    color:#FFFFFF
+    color:var(--q-gb-t-c-1)
   }
 }
 .change_width {
@@ -479,7 +439,7 @@ export default defineComponent({
   font-size: 14px;
   cursor: pointer;
   &::before {
-    color: #ffffff;
+    color: var(--q-gb-t-c-1);
   }
 }
 </style>

@@ -106,7 +106,7 @@ export default {
     .box{
       text-align: center;
       margin: auto;
-      color: #fff;
+      color: var(--q-gb-t-c-1);
       opacity: 0.7;
       .txt{
         margin-top: 10px;

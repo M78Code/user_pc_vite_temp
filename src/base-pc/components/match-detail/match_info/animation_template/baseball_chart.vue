@@ -98,7 +98,7 @@
           background: #c1c4c7;
           margin-right: 10px;
           &.is_get {
-            background: #FF7000;
+            background: var(--q-gb-bg-c-1);
           }
           &:last-child {
             margin-right: 0;
@@ -127,7 +127,7 @@
           height: 14px;
           background: #c1c4c7;
           &.is_get {
-            background: #FF7000;
+            background: var(--q-gb-bg-c-1);
           }
           &:nth-child(odd) {
             margin-right: 3px;
@@ -154,7 +154,7 @@
         flex: 1;
         margin-right: 5px;
         &.is_get {
-          background: #FF7000;
+          background: var(--q-gb-bg-c-1);
         }
         &:last-child {
           margin-right: 0;

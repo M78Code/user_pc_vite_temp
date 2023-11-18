@@ -56,7 +56,7 @@ const set_confirm = () => {
 <style scoped lang="scss">
 .bet-footer {
     width: 100%;
-    background: #fff;
+    background: var(--q-gb-bg-c-4);
     border-top: 0.5px solid #E4E4E4;
 
     .bet-content {

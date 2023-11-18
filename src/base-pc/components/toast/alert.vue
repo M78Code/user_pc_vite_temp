@@ -181,7 +181,7 @@ function confirm() {
 
   .items-center {
     padding: 12px 0 20px;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-1);
     position: relative;
     top: -27px;
     border-radius: 0 0 8px 8px;

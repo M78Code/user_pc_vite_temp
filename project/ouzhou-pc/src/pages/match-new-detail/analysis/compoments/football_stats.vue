@@ -119,7 +119,7 @@ const tab = ref("mails");
 <style lang="scss" scoped>
 .detail-tab {
   // height: 272px;
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
   padding-bottom: 15px;
   margin-bottom: 10px;
 }

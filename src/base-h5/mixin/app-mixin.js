@@ -121,7 +121,7 @@ export default {
      * @description 元数据请求回来 初始化赛事加载
      */
     init_match_callback () {
-      MatchMeta.set_origin_match_data()
+      // MatchMeta.set_origin_match_data()
     },
     /** 触发切网络api域名动作
      * @description:

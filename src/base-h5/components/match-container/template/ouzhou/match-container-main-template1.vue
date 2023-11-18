@@ -1218,6 +1218,7 @@ export default {
   .timer-wrapper-c {
     height: 100%;
     color: #999;
+    flex: 1;
     .counting-down-wrap{
       font-size: 13px;
     }
@@ -1281,6 +1282,7 @@ export default {
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    flex: 1;
 
     .favorite-icon {
       position: relative;
@@ -1295,6 +1297,8 @@ export default {
     .counting-down-up-container {
       // width: 1rem;
       height: .14rem;
+      display: flex;
+      flex: 1;
       :deep(.counting-down-wrap){
         width: auto !important;
         .title-space-1{

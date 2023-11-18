@@ -158,15 +158,15 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--q-gb-bg-c-14);
-    background: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-2);
+    background: var(--q-gb-bg-c-1);
     border-radius: 50%;
 }
 .nonebox4-first-left-text {
     margin-left: 0.05rem;
     display: flex;
     font-size: 14px;
-    color: var(--q-gb-bd-c-1);
+    color: var(--q-gb-t-c-14);
 }
 .nonebox4-first-right {
     display: flex;
@@ -188,7 +188,7 @@ onUnmounted(() => {
     font-size: 18px;
     font-weight: bold;
     margin-right: 4px;
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-1);
 }
 .nonebox4-first-right-window-img {
     display: flex;
@@ -240,9 +240,9 @@ onUnmounted(() => {
   border-width: 1px 1px 0 1px;
   //border-style: solid;
   position: relative;
-  background: var(--q-gb-t-c-18);
+  background: var(--q-gb-bg-c-12);
   padding: 0 0.15rem !important;
-  border-top: 5px solid var(--q-gb-t-c-11);
+  border-top: 5px solid var(--q-gb-bd-c-1);
 
   &::after {
     content: "";

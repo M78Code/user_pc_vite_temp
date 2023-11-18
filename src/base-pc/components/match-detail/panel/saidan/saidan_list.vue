@@ -228,7 +228,7 @@ export default {
     margin-bottom: 10px;
     .item-top {
       &::before {
-        background: #FF7000;
+        background: var(--q-gb-bg-c-1);
       }
     }
     /**中间内容*/
@@ -279,13 +279,13 @@ export default {
       .win {
         background: var(--qq--theme-bg-win);
         border: 1px solid var(--qq--theme-bd-win);
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
       }
       /**输图标样式*/   
       .lose {
         background: var(--qq--theme-bg-lose);
         border: 1px solid var(--qq--theme-bd-lose);
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
       }
     }
     .head_name {
@@ -462,7 +462,7 @@ export default {
       text-align: center;
       line-height: 32px;
       font-size: 12px;
-      color: #FFFFFF; 
+      color: var(--q-gb-t-c-1); 
     }
   }
   .toast {
@@ -475,7 +475,7 @@ export default {
     text-align: center;
     line-height: 36px;
     transform: translate(-50%, -50%);
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     background-color: #414655;
   }
   .color-0{
