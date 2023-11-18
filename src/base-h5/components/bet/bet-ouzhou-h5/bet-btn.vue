@@ -3,17 +3,17 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="bet_content_bottom">
-    <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
-    <p class="place_bet"  @click="place_bet" v-if="!BetData.bet_before_message">
-      <span>{{$t('bet_record.bet_val')}}</span> 
-      <span class="right_amount">{{BetData.bet_amount}}</span>
-    </p>
-    <p v-else class="place_bet"  @click="place_bet">
-      <span>{{BetData.bet_before_message.msg}}</span> 
-    </p>
+  <div>
+    <div class="tip">{{BetData.bet_before_message.msg}}</div>
+    <div class="bet_content_bottom">
+      <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
+      <p class="place_bet"  @click="place_bet">
+        <span>{{$t('bet_record.bet_val')}}</span> 
+        <span class="right_amount">{{BetData.bet_amount}}</span>  
+      </p>
+    </div>
   </div>
-  <div style="display: none;">{{ BetData.bet_before_message }}</div>
+  <!-- <div>{{ BetData.bet_before_message }}</div> -->
 </template>
 
 <script setup>
@@ -33,12 +33,19 @@ const pack_up = (val) => {
 </script>
 
 <style lang="scss" scoped>
+.tip{
+  color: var(--q-gb-bg-c-8);
+  text-align: center;
+  margin-top: 0.2rem;
+  font-size: 0.13rem;
+  margin-right: 0.2rem;
+}
 .bet_content_bottom{
-    height: 0.9rem;
+    height: 0.5rem;
     display: flex;
     align-items: center;
     text-align: center;
-    // margin-top: 26px;
+    margin-bottom: 0.2rem;
    .bet_cancel{
       width: 100px;
       line-height: 0.3rem;
