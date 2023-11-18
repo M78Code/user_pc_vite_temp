@@ -89,14 +89,14 @@ onMounted(async () => {
   MenuData.set_current_lv1_menu(1);
   MenuData.set_menu_mi('101');
   get_ouzhou_home_data()
-  got_five_league_matchs()
+  // got_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
     console.log('wswswswswswsws-cmd:', cmd, data)
     get_ouzhou_home_data()
-    got_five_league_matchs()
+    // got_five_league_matchs()
   }, 200))
 })
 

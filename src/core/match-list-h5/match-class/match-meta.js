@@ -575,7 +575,7 @@ class MatchMeta {
       }
     })
     const results = Object.values(filterData).flat()
-    this.handler_match_list_data({ list: results, warehouse: 'five_league' })
+    // this.handler_match_list_data({ list: results, warehouse: 'five_league' })
     return results
   }
 
@@ -656,7 +656,7 @@ class MatchMeta {
 
     const { list, type = 1, is_virtual = true, is_classify = false, warehouse = '' } = config
 
-    this.warehouse_type = warehouse
+    // if (warehouse) this.warehouse_type = warehouse
 
     // 清除联赛下得赛事数量
     if (['five_league'].includes(warehouse)) {
@@ -848,15 +848,16 @@ class MatchMeta {
    */
   handle_update_match_info(list, type) {
     const Base_warehouse  = this.get_base_warehouse()
+    console.log('Base_warehouse', Base_warehouse)
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       MatchResponsive.get_ball_seed_methods(t)
-      const match = Base_warehouse.get_quick_mid_obj(t.mid)
+      const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       const target = type === 'cover' ? Object.assign({}, match, t) : Object.assign({}, t, match)
       return target
     })
     // 设置仓库渲染数据
-    Base_warehouse.set_list(list)
+    MatchDataBaseH5.set_list(list)
   }
 
   /**
@@ -865,9 +866,9 @@ class MatchMeta {
    */
   handle_submit_warehouse(list) {
     const Base_warehouse  = this.get_base_warehouse()
-    Base_warehouse.clear()
+    // MatchDataBaseH5.clear()
     // 设置仓库渲染数据
-    Base_warehouse.set_list(list)
+    MatchDataBaseH5.set_list(list)
     // 获取赛事赔率
     this.get_match_base_hps_by_mids()
   }
@@ -876,6 +877,7 @@ class MatchMeta {
    * @param { type } 仓库类型， 取值为赛事  warehouse_type
    */
   get_base_warehouse (type = '') {
+    console.log('this.warehouse_type:', this.warehouse_type)
     const source = type ? type : this.warehouse_type
     const config = {
       // 五大联赛仓库

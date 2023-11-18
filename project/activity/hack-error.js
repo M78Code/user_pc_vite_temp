@@ -7,6 +7,7 @@ import "project/activity/src/public/utils/menuClass/menu_calss.js"
 class HackError {
     constructor() {
         this.dateFormat();
+        this.windowVue();
     }
 
     dateFormat() {
@@ -28,6 +29,11 @@ class HackError {
             }
             return fmt;
         }
+    }
+
+    windowVue() {
+        window.vue = window.vue || {}
+
     }
 }
 

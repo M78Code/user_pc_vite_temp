@@ -125,7 +125,6 @@ const filter_20_match = (data)=>{
       if(result.length >= 10){
         break;
       }
-      console.log('resultt', sport_counts, result);
     }
     
     return result;
@@ -147,7 +146,6 @@ export const init_home_matches = async () => {
       let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
       //过滤前20条数据
       sort_list = filter_20_match(sort_list);
-      console.log(res.dataList, sort_list, 'sort_list');
       // 将球种排序
       MatchDataWarehouse_PC_List_Common.set_list(sort_list);
       MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
