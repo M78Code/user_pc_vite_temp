@@ -11,6 +11,15 @@
 						:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
 						{{ item.label }}
 					</div>
+					<!-- 点击联赛后出现的时间筛选 -->
+					<div>
+						Next 24 Hours
+					</div>
+					<div>
+						<div v-for="item in timer_filter_list">
+							{{ item }}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -29,6 +38,7 @@ import { MenuData, useMittOn,MITT_TYPES } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 
 const tab_list = ref([])
+const timer_filter_list = ref([]);
 // 获取当前header展示背景图
 const current_ball_type = ref(630)
 // 头部高度 包含 teb切换
@@ -54,6 +64,7 @@ onUnmounted(()=>{
 const set_tab_list = (news_) =>{
 	console.error('sssss')
 	tab_list.value = []
+	timer_filter_list.value = [];
 	// 首页
 	if(news_ == 0 ){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
@@ -78,10 +89,10 @@ const set_tab_list = (news_) =>{
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'favouritse_tab', [])  
 	}
 
-	// console.log(tab_list.value[0],'tab_list.value[0]')
 	if (tab_list.value.length) {
 		checked_current_tab(tab_list.value[0])
 	}
+	timer_filter_list.value = MenuData.ouzhou_time_list;
 }
 
 const checked_current_tab = payload => {
@@ -96,7 +107,7 @@ const checked_current_tab = payload => {
 	}
 	MenuData.router_root_lv_2.value = payload.value*1
 	is_Top_Events.value = [1002].includes(payload.value*1)
-
+	console.log('payload', payload);
 	let obj = {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
