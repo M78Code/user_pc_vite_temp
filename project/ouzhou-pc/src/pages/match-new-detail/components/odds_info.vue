@@ -12,7 +12,7 @@
         <!-- 赛事玩法名称 -->
         <template v-slot:header>
           <div style="width:100%;line-height: 35px;font-weight: 500;">
-            {{ item.hpn }}
+            {{ item.hpn }}++{{ item.hpt }}
             <span v-if="item.hps">({{ item.hps.split('|')[1] }})</span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
             <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
@@ -34,7 +34,7 @@
                           <div v-show="!item.hl[0].hs" :class="{ 'tem4': true, 'tem4-active': ol.oid == current_ol.oid }"
                             @click="betItemClick(item.hl[0], ol)">
                             <span :style="{ color: '#1a1a1a' }" >{{ ol.on }}</span>
-                            <span v-if="ol.ov" >{{Math.floor(ol.ov /1000) /100  }} </span>
+                            <span >{{ol.ov? Math.floor(ol.ov /1000) /100:''  }} </span>
                             <!-- <span>{{ sun_ov(ol) }}</span> -->
 
                           </div>
@@ -284,7 +284,7 @@ onMounted(() => {
   padding: 0 20px;
   display: flex;
   font-weight: 500;
-  justify-content: center;
+  // justify-content: center;
   color: #1A1A1A;
   //  border-top: 1px solid #E2E2E2;
   border-left: 1px solid #E2E2E2;
@@ -292,9 +292,18 @@ onMounted(() => {
   cursor: pointer;
   span{
     &:nth-child(1){
+      width: 50%;
+      display: block;
+      text-align: right;
       margin-right: 10px;
+      overflow: hidden;
     }
     &:nth-child(2){
+      overflow: hidden;
+      width: 50%;
+      min-width: 100px;
+      display: block;
+      text-align: left;
       color:#FF7000
     }
   }
