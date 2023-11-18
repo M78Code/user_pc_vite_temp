@@ -290,7 +290,7 @@ li{
     width: 240px !important;
     height: calc(100vh - 76px);
     overflow-y: auto;
-    background: $menu-bc-color !important;
+    background: var(--q-gb-bg-c-2) !important;
     // &:deep(.q-drawer){
     //         background:$menu-bc-color!important;
     //         top:76px !important;
@@ -346,7 +346,7 @@ li{
       font-weight: 600;
       letter-spacing: 0px;
       text-align: left;
-      color: #ff7000;
+      color: var(--q-gb-t-c-2);
       padding: 12px 0 1px 20px;
       margin: 0;
     }
@@ -360,7 +360,7 @@ li{
         font-weight: 400;
         letter-spacing: 0px;
         text-align: left;
-        color: #C2C2C2;
+        color: var(--q-gb-t-c-3);
         cursor: pointer;
         transition: .03s;
         .icon{

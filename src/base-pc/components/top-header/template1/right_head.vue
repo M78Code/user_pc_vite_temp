@@ -36,8 +36,8 @@
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
-      <q-menu style="background:#fff;border-radius:2px;">
-          <q-list class="personal-list" style="min-width: 280px;">
+      <q-menu style="background:#fff;border-radius:2px;box-shadow:0 0 4px 2px rgb(0 0 0 / 10%)">
+          <q-list style="min-width: 280px;">
             <q-item clickable @click="goto_announcement">
               <q-item-section>
                 <div class="flex title">
@@ -225,6 +225,7 @@ export default defineComponent({
           console.log('res', res.data.data);
           // 搜索前清空会话仓库数据
           sessionStorage.removeItem('search_txt');
+          useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE,'result')
         }
       }).catch((e) => {
         console.log(e);

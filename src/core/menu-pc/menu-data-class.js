@@ -66,7 +66,7 @@ class MenuData {
       lv2_mi: "", // 二级菜单 波胆  角球 等其他玩法
       has_mid_menu: true,
     };
-    // 左侧菜单的 root 节点   root ：0 首页  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000  202 左侧菜单今日 203 左侧菜单早盘 102 投注记录
+    // 左侧菜单的 root 节点   root ：0 首页  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000  202 左侧菜单今日 203 左侧菜单早盘 102 投注记录 301 收藏
     this.menu_root = 0;
     // 滚球 盘数量总计
     this.fetch_filter = {  //过来大菜单下的方法
@@ -138,6 +138,12 @@ class MenuData {
         { label: 'Matches', value: 4001 },
         { label: 'League', value: 4002 },
       ], 
+      // 收藏
+      favouritse_tab: [
+        { label: "In-Play", value: 5001 },
+        { label: "To Day", value: 5002 },
+        { label: "Early", value: 5002 }
+      ],
       inplay:{
         title: 'In-Play',
         name: 'All Matches'
@@ -568,8 +574,6 @@ class MenuData {
     if (!session_info) {
       return;
     }
-    console.warn('session_info', session_info);
-
     if (Object.keys(session_info).length) {
       const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root } = session_info;
 

@@ -101,7 +101,7 @@ function handle_hpid_choose(item) {
   height: 40px;
   line-height: 40px;
   text-align: left;
-  border-bottom: 1px solid #ff7000;
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
   background-color: #fff;
   padding: 0 16px 0 20px;
   color: #1A1A1A;
@@ -125,7 +125,7 @@ function handle_hpid_choose(item) {
     position: relative;
     cursor: pointer;
     .active {
-      color: #ff7000;
+      color: var(--q-gb-bg-c-1) ;
       .yb-icon-arrow {
         color: #8A8986;
         margin-left: 10px;
@@ -140,7 +140,7 @@ function handle_hpid_choose(item) {
       line-height: 40px;
       padding: 12px 0;
       border-radius: 2px;
-      background: #FFF;
+      background: var(--q-gb-bg-c-4);
       box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
       z-index: 99;
 
@@ -149,12 +149,12 @@ function handle_hpid_choose(item) {
         height: 40px;
 
         &:hover {
-          background-color: #fff1e6;
+          background-color: var(--q-gb-bg-c-5);
         }
       }
 
       div {
-        border-bottom: 1px solid #E2E2E2;
+        border-bottom: 1px solid var(--q-gb-bd-c-2);
 
         &:last-child {
           border-bottom: none;
