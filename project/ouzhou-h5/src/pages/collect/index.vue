@@ -69,9 +69,9 @@ const on_update = (val) => {
  * 球种点击
  * @param {*} mi 
  */
-const changeMenu = (mi) =>{
-  state.current_mi = mi;
-  MenuData.set_menu_mi(mi)
+const changeMenu = (item) =>{
+  state.current_mi = item.mi;
+  MenuData.set_menu_mi(item.mi)
 }
 onMounted(()=>{
   on_update(tabData[0].val)
