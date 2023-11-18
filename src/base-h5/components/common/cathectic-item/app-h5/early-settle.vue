@@ -9,7 +9,7 @@
   <!-- 提前兑换按钮 -->
   <div class="early-settle" v-if="calc_show">
     <div class="early-button">
-      <button @click="submit_click" :class="{'disabled-btn': status == 1 || status == 5}">
+      <button @click="submit_click" :class="{'disabled-btn': status == 4 || status == 5}">
         <!-- 暂停提前结算 -->
         <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template>
         <!-- 提前结算 -->
@@ -27,7 +27,7 @@
       <!-- <button class="change"> 金额有变更 </button>
       <button class="cancel"> 取消 </button> -->
     </div>
-    <!-- 调整金额滑块 -->
+    <!-- 调整金额滑块，暂时隐藏 -->
     <template style="display: none;">
       <q-slide-transition>
         <div v-show="slider_show" class="slider-wrap">
