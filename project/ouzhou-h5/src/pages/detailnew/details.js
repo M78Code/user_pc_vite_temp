@@ -5,9 +5,10 @@ import {
   MatchDetailCalss,
   MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,
   useMittOn,
+  useMitt,
   MITT_TYPES,
   utils
-} from "src/core";
+} from "src/core/index";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
 export const details_main = (router,route) => {
@@ -26,6 +27,7 @@ export const details_main = (router,route) => {
   const change_header_fix = ref(null);
   const header_fix = ref(null);
   const fixedHeight = ref(null);
+  
   //初次加载
   const  init = ref(false)
   // 切换tab
@@ -294,7 +296,7 @@ export const details_main = (router,route) => {
     });
   };
   /** 监听顶部刷新功能 */
-  const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, (params)=>{
+  useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS, (params)=>{
     mid = params.mid
     csid = params.csid
     detail_init()
@@ -329,7 +331,6 @@ export const details_main = (router,route) => {
   });
   onUnmounted(() => {
     clear_all_timer();
-    refreshOff()
     // 组件销毁时销毁监听函数
     ws_message_listener.ws_remove_message_listener(message_fun)
     message_fun = null
