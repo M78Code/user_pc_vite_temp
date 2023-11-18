@@ -241,7 +241,7 @@ const computed_process_name = computed(() => {
     props.show_page == "match-list" &&
     process_name.indexOf("第") == 0
   ) {
-    return process_name.replace(" ", "<br/>");
+    return process_name
   } else {
     return process_name;
   }
