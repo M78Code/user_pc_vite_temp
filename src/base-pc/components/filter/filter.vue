@@ -552,7 +552,7 @@ const set_botton_top = () => {
 
 .country-name {
     font-size: 14px;
-    color: #fff;
+    color: var(--q-gb-t-c-1);
 }
 
 .no-data {
@@ -638,7 +638,7 @@ const set_botton_top = () => {
         line-height: 36px;
         text-align: center;
         font-size: 14px;
-        color: #fff;
+        color: var(--q-gb-t-c-1);
         background: var(--q-gb-bg-c-1);
         cursor: pointer;
         margin: 0 10px;
@@ -654,7 +654,7 @@ const set_botton_top = () => {
         color: #99a3b1;
 
         &:hover {
-            color: #fff;
+            color: var(--q-gb-t-c-1);
         }
     }
 
@@ -664,7 +664,7 @@ const set_botton_top = () => {
 
         &:hover {
             background-color: #272a33;
-            color: #fff;
+            color: var(--q-gb-t-c-1);
         }
     }
 

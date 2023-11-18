@@ -45,7 +45,7 @@ export default {
   border-radius: 30px;
   color: var(--q-analysis-color-3);
   border: 0.5px solid var(--qq--yb-border-color9);
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
   overflow: hidden;
   width: auto;
   box-sizing: border-box;

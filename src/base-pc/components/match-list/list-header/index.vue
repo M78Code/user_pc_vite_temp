@@ -558,7 +558,7 @@ function on_change_list_type (type) {
       border-radius: 11px;
       background-color: skyblue;
       padding: 2px 8px 2px 12px;
-      color: #fff;
+      color: var(--q-gb-t-c-1);
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -568,7 +568,7 @@ function on_change_list_type (type) {
       .icon-arrow {
         transform: rotate(-90deg);
         &::before {
-          color: #fff;
+          color: var(--q-gb-t-c-1);
         }
       }
     }

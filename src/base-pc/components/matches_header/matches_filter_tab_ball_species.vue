@@ -214,7 +214,7 @@ onBeforeUnmount(() => {
   width: 100%;
   padding-right: 20px;
   height: 56px;
-  background: #FFFFFF;
+  background: var(--q-gb-bg-c-4);
   padding-left: 18.25px;
   box-sizing: border-box;
   overflow-x: auto;
@@ -272,7 +272,7 @@ onBeforeUnmount(() => {
     font-weight: 500;
     letter-spacing: 0px;
     display: flex;
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     justify-content: center;
     align-content: center;
     z-index: 2;
@@ -336,7 +336,7 @@ onBeforeUnmount(() => {
   }
 }
 .prev-btn, .next-btn {
-  background: #FFFFFF;
+  background: var(--q-gb-bg-c-4);
   width: 16px;
   height: 55px;
   display: flex;

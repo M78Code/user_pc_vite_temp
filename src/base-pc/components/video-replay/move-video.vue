@@ -671,7 +671,7 @@ const play_video = () => {
   }
 
   .icon-del:before {
-    color: #fff;
+    color: var(--q-gb-t-c-1);
   }
 }
 

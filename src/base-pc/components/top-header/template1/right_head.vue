@@ -392,7 +392,7 @@ export default defineComponent({
       color: #8A8986;
       &.active{
         color: #000;
-        background: #fff;
+        background: var(--q-gb-bg-c-4);
         border-radius: 20px;
       }
     }
@@ -421,7 +421,7 @@ export default defineComponent({
     height: 40px;
   }
   :deep(.q-field__native) {
-    color:#FFFFFF
+    color:var(--q-gb-t-c-1)
   }
 }
 .change_width {
@@ -439,7 +439,7 @@ export default defineComponent({
   font-size: 14px;
   cursor: pointer;
   &::before {
-    color: #ffffff;
+    color: var(--q-gb-t-c-1);
   }
 }
 </style>

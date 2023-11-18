@@ -233,7 +233,7 @@ $q-page-container-background: #E2E2E2;    //容器背景颜色
 }
 
 .text-white{
-  color: #fff;
+  color: var(--q-gb-t-c-1);
 }
 .text-ff7{
   color: var(--q-gb-t-c-2);
@@ -368,12 +368,12 @@ li{
         }
         &:hover{
           font-weight: 500;
-          color: #fff;
+          color: var(--q-gb-t-c-1);
           background: #4B4B4B;
         }
         &.menu_checked{
           font-weight: 500;
-          color: #fff;
+          color: var(--q-gb-t-c-1);
           background: #4B4B4B;
         }
       }

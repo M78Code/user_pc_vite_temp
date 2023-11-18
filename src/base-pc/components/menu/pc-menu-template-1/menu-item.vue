@@ -360,7 +360,7 @@ const lv_2_click_wapper_3 = (lv2_mi) => {
 
       .bet-single-count {
         border-radius: 10px;
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
         width: 20px;
         height: 20px;
         line-height: 20px;
@@ -407,7 +407,7 @@ const lv_2_click_wapper_3 = (lv2_mi) => {
       position: absolute;
       top: 6px;
       width: 100%;
-      background: #fff;
+      background: var(--q-gb-bg-c-4);
       border: 2px solid #ff781d;
       border-radius: 5px;
 
@@ -433,7 +433,7 @@ const lv_2_click_wapper_3 = (lv2_mi) => {
       .triangle,
       .triangle1 {
         position: absolute;
-        background: #fff;
+        background: var(--q-gb-bg-c-4);
         border: 2px solid #ff781d;
         border-top: 0;
         border-left: 0;

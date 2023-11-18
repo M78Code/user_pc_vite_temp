@@ -8,20 +8,20 @@
     background: var(--q-gb-bg-c-11);
     border: 0.5px solid var(--q-gb-bd-c-8);
     .icon-add:before {
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
     }
     &:hover {
       background: var(--q-gb-bg-c-18);
       .keyboard-btn-add,
       .keyboard-btn-text {
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
       }
     }
     &.key-btn-click {
       background: var(--q-gb-bg-c-2);
       .keyboard-btn-add,
       .keyboard-btn-text {
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
       }
     }
 
@@ -41,10 +41,10 @@
     &:hover {
       background: var(--q-gb-bg-c-1);
       .icon-plus:before {
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
       }
       .keyboard-btn-text {
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
       }
     }
   }

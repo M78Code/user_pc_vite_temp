@@ -182,7 +182,7 @@ onMounted(get_list)
 .announce-content {
     width: 100%;
     height: 100%;
-    background: #fff;
+    background: var(--q-gb-bg-c-4);
 
     .main-page {
         color: #5a6074;

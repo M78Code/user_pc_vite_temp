@@ -101,7 +101,7 @@ function handle_hpid_choose(item) {
   line-height: 40px;
   text-align: left;
   border-bottom: 1px solid var(--q-gb-bd-c-1);
-  background-color: #fff;
+  background-color: var(--q-gb-bg-c-4);
   padding: 0 16px 0 20px;
   color: #1A1A1A;
   font-size: 13px;

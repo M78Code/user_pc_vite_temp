@@ -86,7 +86,7 @@
             padding-left: 16px;
           }
           .tabs-item {
-            color: #fff;
+            color: var(--q-gb-t-c-1);
             font-weight: 400;
             min-width: 60px;
             height: 24px;
@@ -98,10 +98,10 @@
             &:hover {
               border: 0.5px solid #2cb2ff;
               background-color: rgba($color: #2cb2ff, $alpha: 0.06);
-              color: #fff;
+              color: var(--q-gb-t-c-1);
             }
             &.active {
-              color: #fff;
+              color: var(--q-gb-t-c-1);
               font-weight: 600;
               background-image: var(--q-gb-bg-lg-16);
               border: none;
@@ -211,7 +211,7 @@
           background-image: var(--q-gb-bg-c-20);
           border: 1px solid var(--q-gb-bd-c-8) !important;
           i {
-            color: #fff;
+            color: var(--q-gb-t-c-1);
             &::before {
               color: var(--q-match-resluts-t-c-3) !important;
             }
@@ -286,12 +286,12 @@
             .highlight,
             .item-label,
             .bet_handicap {
-              color: #ffffff !important;
+              color: var(--q-gb-t-c-1) !important;
               .color {
-                color: #fff !important;
+                color: var(--q-gb-t-c-1) !important;
               }
               .ellipsis-wrap {
-                color: #ffffff !important;
+                color: var(--q-gb-t-c-1) !important;
               }
             }
           }
@@ -412,7 +412,7 @@
               }
               .active {
                 .on-text {
-                  color: #fff;
+                  color: var(--q-gb-t-c-1);
                 }
               }
             }
@@ -528,16 +528,16 @@
       }
       /*  比分扳 */
       .head-info {
-        color: #fff;
+        color: var(--q-gb-t-c-1);
         /* 倒计时 */
         .process-name,
         .c-match-date {
-          color: #ffffff;
+          color: var(--q-gb-t-c-1);
         }
       
         /* 隐藏按钮 */
         .hide-btn {
-          color: #fff;
+          color: var(--q-gb-t-c-1);
           &:hover {
             background: rgba(31, 33, 41, 0.8);
           }
@@ -595,7 +595,7 @@
         .os-1 {
           .active {
             .bet_handicap {
-              color: #fff !important;
+              color: var(--q-gb-t-c-1) !important;
             }
           }
           &:hover {
@@ -605,7 +605,7 @@
             }
             .c-bet-item.active {
               .bet_handicap {
-                color: #fff !important;
+                color: var(--q-gb-t-c-1) !important;
               }
             }
           }
@@ -632,7 +632,7 @@
         background: transparent;
         border: 1px solid var(--q-gb-bd-c-8);
   
-        color: #fff;
+        color: var(--q-gb-t-c-1);
         .score-tips {
           color: var(--q-gb-t-c-1);
         }
@@ -666,7 +666,7 @@
         background: transparent;
         border: 1px solid var(--q-gb-bd-c-8);
   
-        color: #fff;
+        color: var(--q-gb-t-c-1);
         .item-title {
           background: var(--q-gb-bg-lg-17);
           border-bottom: 1px solid var(--q-gb-bd-c-8);
@@ -875,11 +875,11 @@
     .basketball-after {
       .time-node,
       .common-score {
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
       .info-data {
         span {
-          color: #fff !important;
+          color: var(--q-gb-t-c-1) !important;
         }
       }
       .score {
@@ -921,7 +921,7 @@
       .info-both {
         .info-data {
           span {
-            color: #fff;
+            color: var(--q-gb-t-c-1);
           }
         }
         .mmp-active {
@@ -932,7 +932,7 @@
   
     /*  比分板 */
     .more-info {
-      color: #fff !important;
+      color: var(--q-gb-t-c-1) !important;
       .time-node {
         .current_color {
           color: var(--q-gb-t-c-16);
@@ -1006,9 +1006,9 @@
       }
       &:hover {
         background: #535766 !important;
-        color: #fff !important;
+        color: var(--q-gb-t-c-1) !important;
         .icon-go_top:before {
-          color: #fff !important;
+          color: var(--q-gb-t-c-1) !important;
         }
       }
     }
@@ -1036,7 +1036,7 @@
           color: var(--q-gb-t-c-4);
         }
         .q-message-text-content--sent {
-          color: #fff;
+          color: var(--q-gb-t-c-1);
         }
         .q-message-text--sent {
           background-color: #2ab980;
@@ -1084,12 +1084,12 @@
               &.win {
                 background: var(--q-gb-bg-c-16);
                 border: 1px solid var(--q-gb-bd-c-9);
-                color: #ffffff;
+                color: var(--q-gb-t-c-1);
               }
               &.lose {
                 background: var(--q-gb-bg-c-5);
                 border: 1px solid var(--q-gb-bd-c-1);
-                color: #ffffff;
+                color: var(--q-gb-t-c-1);
               }
             }
             .text-win {
@@ -1325,7 +1325,7 @@
       background-image: var(--qq--chatroom-icon-9);//todo `url(${preffix}/image/yabo/theme01/img/svg/show_order02.svg)`,
     }
     .emoji-picker {
-      background-color: #fff;
+      background-color: var(--q-gb-bg-c-4);
       border: 1px solid #d9d9d9;
     }
     .btn-normal-user-input {
@@ -1348,7 +1348,7 @@
             var(--q-gb-bg-c-17) 100%
           );
           box-shadow: 0px 2px 4px 0px rgb(61 114 250 / 50%);
-          color: #fff;
+          color: var(--q-gb-t-c-1);
         }
       }
     }

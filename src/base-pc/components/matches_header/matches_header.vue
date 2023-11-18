@@ -139,7 +139,7 @@ const checked_current_tab = payload => {
 	.current_match_title {
 		font-size: 18px;
 		font-weight: 500;
-		color: #FFFFFF;
+		color: var(--q-gb-t-c-1);
 		margin-bottom: 21px;
 		height: 20px;
 		&.all_matches{
@@ -147,7 +147,7 @@ const checked_current_tab = payload => {
 		}
 	}
 	.match_all_matches{
-		color: #FFFFFF;
+		color: var(--q-gb-t-c-1);
 		font-family: "PingFang SC";
 		font-size: 18px;
 		font-weight: 500;

@@ -60,7 +60,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
       }
 
       .text-active {
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
 
       .menu-inline {
