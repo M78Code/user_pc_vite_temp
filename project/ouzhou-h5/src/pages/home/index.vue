@@ -89,15 +89,15 @@ onMounted(async () => {
   MenuData.set_current_lv1_menu(1);
   MenuData.set_menu_mi('101');
   get_ouzhou_home_data()
-  // got_five_league_matchs()
+  get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
     console.log('wswswswswswsws-cmd:', cmd, data)
-    get_ouzhou_home_data()
-    // got_five_league_matchs()
-  }, 200))
+    // get_ouzhou_home_data()
+    // get_five_league_matchs()
+  }, 1000))
 })
 
 // 获取首页数据
@@ -128,7 +128,7 @@ const get_ouzhou_home_data = async () => {
 /**
  * @description 获取五大联赛赛事   不放  match 仓库
  */
-const got_five_league_matchs = async () => {
+const get_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
   const mids = []
   five_league_match.value = list.map(t => {
