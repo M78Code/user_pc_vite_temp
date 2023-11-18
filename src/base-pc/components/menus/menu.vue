@@ -78,13 +78,15 @@ onMounted(() => {
   // jump_func()
 })
 
-
+// favouritse
 const go_to_favouritse = () => {
-  router.push({
-    path: '/conming_soon',
-    query: {}
-  })
-
+  MenuData.set_menu_root(301)
+  let mid_config = {
+    ...MenuData.mid_menu_result,
+    collect: 'inplay', // 滚球 inplay 早盘 early  今日 today
+    mid_menu_mi: '101', // 当前选中的赛种id
+  }
+  MenuData.set_mid_menu_result(mid_config)
 }
 /**
  * 
