@@ -60,7 +60,7 @@
 </template>
   
 <script setup>
-import { onMounted, ref, toRef, watch } from "vue";
+import { onMounted, ref, toRef, watch,onUnmounted } from "vue";
 import lodash from "lodash";
 import { api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
@@ -171,18 +171,14 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
     
   })
 }
+const {off} = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS,(param)=>{get_animation_url({mid:param.mid, type: "Animation" })})         
+onUnmounted(off)            
 onMounted(() => {
   // setTimeout(() => {
     get_animation_url({
       mid: props.get_match_detail.mid,
       type: "Animation",
     });
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS,(param)=>{
-      get_animation_url({
-        mid:param.mid,
-        type: "Animation"
-      })
-    })
     set_scoew_icon_list(props.get_match_detail);
     // EMITTER.on("detail_refresh", () => {
     //   get_animation_url({
