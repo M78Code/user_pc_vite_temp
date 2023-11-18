@@ -66,7 +66,6 @@ const get_init_data = () =>{
     emits('changeMenu',dataList()[0]?.mi)
 }
 onMounted(()=>{
-    get_init_data();
     useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
 })
 onUnmounted(()=>{
