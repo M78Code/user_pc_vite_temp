@@ -153,7 +153,6 @@ const on_update = (val) => {
 }
 
 onUnmounted(() => {
-  emitters()
   // 组件销毁时销毁监听函数
   ws_message_listener.ws_remove_message_listener(message_fun)
   message_fun = null
