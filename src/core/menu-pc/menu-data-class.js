@@ -140,9 +140,9 @@ class MenuData {
       ], 
       // 收藏
       favouritse_tab: [
-        { label: "In-Play", value: 5001 },
-        { label: "To Day", value: 5002 },
-        { label: "Early", value: 5003 }
+        { label: "In-Play", value: 3001 },
+        { label: "To Day", value: 3002 },
+        { label: "Early", value: 3003 }
       ],
       inplay:{
         title: 'In-Play',
