@@ -80,6 +80,19 @@ function match_list_all_params() {
     // 前端关    后台开       >关
     // 前端关    后台关       >关
     const enable_collect_api = window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.ENABLE_COLLECT_API;
+    // type === "collect"
+    if (is_collect) {
+        // 前端开    后台开       >开
+        // 前端开    后台关       >关
+        // 前端关    后台开       >关
+        // 前端关    后台关       >关
+        if (!enable_collect_api || !GlobalAccessConfig.get_collectSwitch()) {
+            return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+        }
+        apiType = 2
+        api_name = api_params[menu_root] ? api_params[menu_root].colloet : api_params.other.colloet
+    }
+   
     let config = {
         is_collect,
         root: menu_root,
@@ -93,18 +106,7 @@ function match_list_all_params() {
             },
         }
     }
-    // type === "collect"
-    if (is_collect) {
-        // 前端开    后台开       >开
-        // 前端开    后台关       >关
-        // 前端关    后台开       >关
-        // 前端关    后台关       >关
-        if (!enable_collect_api || !GlobalAccessConfig.get_collectSwitch()) {
-            return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
-        }
-        apiType = 2
-        api_name = api_params[menu_root].colloet||api_params.other.colloet
-    }
+   
    
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${menu_current_mi}`] || {};
@@ -194,7 +196,6 @@ function match_list_all_params() {
             bymids: {},
         }
     }
-    console.log('mid_menu_result2',config.match_list, config.match_list.params)
 
     lodash.merge(
         config.match_list,
@@ -232,7 +233,6 @@ export function get_collet_match_list_params(){
 function get_match_list_params() {
     //侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     let params = match_list_all_params();
-    console.log('match_list_all_params',params)
     // MenuData.set_match_list_api_config(params)
     return params
 }

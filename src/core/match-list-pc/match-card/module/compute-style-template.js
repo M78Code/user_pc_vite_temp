@@ -309,7 +309,6 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	};
 	// 如果没有赛事信息
 	if (!match || !match.mid) {
-		console.log('asdasdasdasdasdsa', match);
 		return style_obj;
 	}
 	style_obj.csid = match.csid;

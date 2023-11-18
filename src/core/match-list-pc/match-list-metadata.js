@@ -237,7 +237,6 @@ function set_base_data_init() {
 		matchs_list,
 	);
 	handle_match_list_request_when_ok(matchs_list, false, true, true);
-	console.log('matchs_list', matchs_list);
 
 	let ts1 = Date.now();
 	let mids_arr = [];

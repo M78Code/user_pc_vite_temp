@@ -17,9 +17,9 @@
     <div class="body-info">
       <div>
         <p>
-          {{ i18n_t('app_h5.cathectic.bets') }}:
-          {{Item.sportName}}:
-          <template v-if="data_b.seriesType != '3' && Item.matchType != 4">{{ i18n_t(`matchtype.${Item.matchType}`) }}</template>
+          {{ i18n_t('app_h5.cathectic.bets') }}:{{Item.sportName}}:<template v-if="data_b.seriesType != '3' && Item.matchType != 4">
+            {{ i18n_t(`matchtype.${Item.matchType}`) }}
+          </template>
         </p>
         <p>{{Item.playName}} - {{i18n_t(`odds.${Item.marketType}`)}}</p>
       </div>
@@ -85,7 +85,6 @@
 </template>
 
 <script setup>
-import lodash from 'lodash'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { default as BetRecordClass, calc_text, outcome } from "src/core/bet-record/bet-record.js";
 import { i18n_t } from "src/boot/i18n.js";;
@@ -95,20 +94,8 @@ import { formatTime, format_money2, format_balance } from 'src/core/format/index
 let props = defineProps({
     data_b: {
       type: Object
-    },
-    data_value: {
-      type: Object
-    },
-    main_item: {
-      type: [String, Number],
     }
   })
-  //按钮名字
-  let btn_text = ref('')
-  //按钮图标的方向
-  let direction = ref('')
-  //是否展开
-  let box_bool = ref('')
 
   const Item = computed(() => {
     return props.data_b.orderVOS[0] || []
@@ -157,54 +144,6 @@ let props = defineProps({
     return { text, color }
   }
 
-
-  onMounted(() => {
-    rules_normal();
-    rules_a();
-    rules_b();
-    rules_c()
-  })
-
-  const rules_normal = () => {
-      [btn_text, direction, box_bool] = [
-        // i18n_t("bet_record.pack_up"),
-        "",
-        false
-      ];
-    }
-    // 串关并且长度大于等于3,默认收起,展示一条;
-  const rules_a = () => {
-      if (props.data_b.orderVOS.length >= 3)
-        [btn_text, direction, box_bool] = [
-          i18n_t("bet_record.pack_down"),
-          "down",
-          true
-        ];
-    }
-
-  const rules_b = () => {
-      if (props.data_b.orderVOS.length <= 2) toggle_rule_a();
-    }
-  const rules_c = () => {
-      if (props.data_b.orderVOS.length >= 3) toggle_rule_b();
-    }
-    //小于2个时都展开
-  const toggle_rule_a = () => {
-      lodash.map(props.data_b.orderVOS, (item, index) => {
-        item.isBoolean = true;
-        return item;
-      });
-    }
-    //大于等于3个时，第一个和第二个展开
-  const toggle_rule_b = () => {
-      lodash.map(data_b.orderVOS, (item, index) => {
-        item.isBoolean = false;
-        if (index == 0 || index == 1) {
-          item.isBoolean = true;
-        }
-        return item;
-      });
-    }
 </script>
 
 <style lang="scss" scoped>

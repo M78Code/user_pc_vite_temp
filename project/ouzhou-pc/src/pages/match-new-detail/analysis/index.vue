@@ -146,7 +146,7 @@ const get_detail_info = (mid)=>{
       font-size: 14px;
       line-height: 16px;
       text-transform: capitalize;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
     }
     .analysis-top-l{
       display: flex;
@@ -174,7 +174,7 @@ justify-content: center;
 align-items: center;
 background: var(--q-gb-bg-c-4);
 // padding-bottom: 10px;
-border-bottom: 1px solid #e2e2e2;
+border-bottom: 1px solid var(--q-gb-bd-c-2);
 }
 .tabs-item {
   // margin-right: 40px;
@@ -184,7 +184,7 @@ border-bottom: 1px solid #e2e2e2;
   font-size: 14px;
   line-height: 20px;
   text-transform: capitalize;
-  color: #1a1a1a;
+  color: var(--q-gb-t-c-5);
   cursor: pointer;
 }
 .is-active {
@@ -192,7 +192,7 @@ border-bottom: 1px solid #e2e2e2;
   font-size: 14px;
   line-height: 20px;
   text-transform: capitalize;
-  color: #1a1a1a;
+  color: var(--q-gb-t-c-5);
   position: relative;
 
   &::before {

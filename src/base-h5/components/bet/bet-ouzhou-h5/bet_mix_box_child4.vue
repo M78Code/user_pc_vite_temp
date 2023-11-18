@@ -24,11 +24,25 @@
                       <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
-                    <div>
+                    <div class="flex">
+                      <div>
                         <div class="nonebox4-content-right">
                            <div class="nonebox4-content-right-profit">{{item.oddsValues}}</div>
                         </div>
                         <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}</div>
+                      </div>
+                      <!--红色箭头-->
+                      <div class="top">
+                        <div class="jiantou one"></div>
+                        <div class="jiantou two"></div>
+                        <div class="jiantou three"></div>
+                      </div>
+                      <!--绿色箭头-->
+                      <div class="top">
+                        <div class="jiantou onegreen"></div>
+                        <div class="jiantou twogreen"></div>
+                        <div class="jiantou threegreen"></div>
+                      </div>
                     </div>
                   </div>
               </div>
@@ -55,6 +69,42 @@
   </script>
   
   <style lang="scss" scoped>
+  .jiantou{
+    width: 0;
+    height: 0;
+    border: 5px solid;
+    position: relative;
+  }
+  .one{
+    border-color: rgba(255, 70, 70, .3) transparent transparent transparent;
+  }
+  .two{
+    border-color: rgba(255, 70, 70, .6) transparent transparent transparent;
+  }
+  .three{
+    border-color: rgba(255, 70, 70, 1) transparent transparent transparent;
+  }
+  .onegreen{
+    border-color: rgba(23, 164, 20, 1) transparent transparent transparent;
+  }
+  .twogreen{
+    border-color: rgba(23, 164, 20, .6) transparent transparent transparent;
+  }
+  .threegreen{
+    border-color: rgba(23, 164, 20, .3) transparent transparent transparent;
+  }
+  .jiantou::after{
+    content: "";
+    position: absolute;
+    top: -11px;
+    left: -9px;
+    border: 9px solid;
+    border-color: white transparent transparent transparent;
+  }
+  .top{
+    margin-top: 4px;
+    margin-left: 4px;
+  }
   .red-color{
     color: var(--q-gb-bd-c-8) !important;
   }
@@ -77,7 +127,7 @@
     font-weight: bold;
   }
   .total-left{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
     font-size: 0.15rem;
   }
   .total{
@@ -102,11 +152,11 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
-    color: var(--q-gb-bg-c-8);
+    color: var(--q-gb-t-c-3);
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-1);
@@ -123,28 +173,28 @@
   .nonebox4-content-left-info{
     display: flex;
     justify-content: space-between;
-    width: calc(100% - 0.25rem);
+    width: 100%;
   }
   .nonebox4-content{
       width: 100%;
-      background: var(--q-gb-t-c-14);
+      background: var(--q-gb-bg-c-2);
       padding: 10px;
       padding: 0.15rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
-      color: #000;
+      color: var(--q-gb-t-c-13);
   }
   .nonebox4-content-left-content{
       height: 70px;
-      display: flex;
+      //display: flex;
       margin-top: 5px;
       width: 100%;
   }
   .nonebox4-content-left-content-xian{
       width: 0.15rem;
       height: 0.15rem;
-      border: 1px solid var(--q-gb-bg-c-12);
+      border: 1px solid var(--q-gb-bd-c-1);
       border-radius: 50%;
       margin-right: 0.15rem;
       margin-top: 0.06rem;
@@ -152,7 +202,7 @@
   .nonebox4-content-left-content-nei{
       width: 0.1rem;
       height: 0.1rem;
-      background: var(--q-gb-bg-c-12);
+      background: var(--q-gb-bg-c-1);
       border-radius: 50%;
       margin: calc(50% - 0.05rem) calc(50% - 0.05rem);
   }
@@ -170,7 +220,7 @@
   .nonebox4-content-right-bot{
     font-size: 0.12rem;
     font-weight: bold;
-    color: var(--q-gb-bg-c-12);
+    color: var(--q-gb-t-c-1);
   }
   </style>
   
