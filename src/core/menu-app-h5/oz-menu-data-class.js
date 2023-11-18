@@ -94,7 +94,7 @@ class MenuData {
     //   }
     // });
     //正常取热门球种 3
-    top_events_list = menu_list
+    top_events_list = top_events_list
     .filter((n)=>{return +n.mi-4900 < this.conventionalType})
     .map((item)=>{
       return {
@@ -104,7 +104,6 @@ class MenuData {
         csid:`${+item.mi-5000}`
       }
     });
-    console.log(top_events_list)
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
     useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
