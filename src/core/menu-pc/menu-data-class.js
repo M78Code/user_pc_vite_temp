@@ -157,7 +157,7 @@ class MenuData {
       { label:i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
     ],
     //  1001 fetured  10002 top events 4001 Matches 4002 League
-    this.router_root_lv_2 = ref(1001)
+    this.router_root_lv_2 = ref(1001) // 这个去掉 不能用 
     this.init()
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
@@ -891,6 +891,12 @@ class MenuData {
   is_esports_champion() {
     return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
   }
+
+  // 是否是 top_events
+  is_top_events() {
+    return this.mid_menu_result.filter_tab == 1002
+  }
+
   //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
   //内部方法
   _is_cur_mi(mi, param) {
