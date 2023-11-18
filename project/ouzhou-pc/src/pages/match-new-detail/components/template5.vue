@@ -130,7 +130,7 @@ onMounted(() => {
 }
 
 .temp5-hv {
-  background-color: #f5f5f5;
+  // background-color: #f5f5f5;
   color: #1a1a1a;
   font-size: 14px;
   font-weight: 500;
