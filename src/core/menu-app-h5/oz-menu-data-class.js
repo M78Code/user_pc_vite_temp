@@ -35,6 +35,8 @@ class MenuData {
     this.destroy = () => {
       this.update && this.update.cancel()
     }
+    //----------------------------------- 常规球种 --------------------------------------//
+    this.conventionalType = 103; //默认300  一期只上足球篮球
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = 0;
@@ -64,7 +66,7 @@ class MenuData {
    */
   set_init_menu_list(){
     //常规球种
-    const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300});
+    const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<this.conventionalType});
     //热门球种
     let top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     //热门球种不存在取常规球种  1
@@ -92,7 +94,9 @@ class MenuData {
     //   }
     // });
     //正常取热门球种 3
-    top_events_list = top_events_list.map((item)=>{
+    top_events_list = top_events_list
+    .filter((n)=>{return +n.mi-4900 < this.conventionalType})
+    .map((item)=>{
       return {
         ...item,
         mi:`${+item.mi-4900}`,
