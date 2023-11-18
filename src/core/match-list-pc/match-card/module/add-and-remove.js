@@ -68,7 +68,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
     if (!MatchListCardData.is_run_card_function) {
       return;
     }
-
+    console.log('mids_arr', mids_arr);
     mids_arr.forEach((mid) => {
       // 原来的样式数据
       let old_match_style_obj = MatchListCardData.all_card_obj[mid+'_'];
