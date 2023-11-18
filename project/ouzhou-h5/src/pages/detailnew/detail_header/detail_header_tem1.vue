@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { defineComponent, onMounted, ref, computed, toRef, watch } from "vue";
+import { onMounted, ref, computed, toRef, watch,onUnmounted } from "vue";
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
 import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core";
@@ -106,7 +106,7 @@ const bg_img = ref({
 
 })
 const detail_store = ref(null);
-let is_collect = ref(MatchCollect.get_match_collect_state(props.get_match_detail));
+let is_collect = ref(sessionStorage.getItem("is_collect") || MatchCollect.get_match_collect_state(props.get_match_detail));
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -205,6 +205,7 @@ const collect_click = () => {
       }).then(res => {
         if (res.code != 200) return
         is_collect.value = !is_collect.value
+        sessionStorage.setItem("is_collect", is_collect.value);
       })
  
 }
@@ -213,6 +214,9 @@ setTimeout(() => {
   set_scoew_icon_list(props.get_match_detail);
   set_basketball_score_icon_list();
 }, 200);
+onUnmounted(()=>{
+  sessionStorage.removeItem("is_collect") 
+})
 </script>
 
 <style lang="scss" scoped>
