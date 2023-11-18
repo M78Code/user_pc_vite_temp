@@ -143,7 +143,7 @@ function collect(){
       position: absolute;
       right: 13px;
       font-weight: 600;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       span {
         display: flex;
         height: 100%;
