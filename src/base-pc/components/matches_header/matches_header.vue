@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result.filter_tab }}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="true">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -49,7 +49,7 @@ onUnmounted(()=>{
 
 // 设置 头部信息配置
 const set_tab_list = (news_) =>{
-	// debugger
+	console.error('sssss')
 	tab_list.value = []
 	// 首页
 	if(news_ == 0 ){
@@ -95,7 +95,7 @@ const checked_current_tab = payload => {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1
 	}
-	// MenuData.set_mid_menu_result(obj)
+	MenuData.set_mid_menu_result(obj)
 }
 
 
