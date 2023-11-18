@@ -138,6 +138,12 @@ class MenuData {
         { label: 'Matches', value: 4001 },
         { label: 'League', value: 4002 },
       ], 
+      // 收藏
+      favouritse_tab: [
+        { label: "In-Play", value: 5001 },
+        { label: "To Day", value: 5002 },
+        { label: "Early", value: 5002 }
+      ],
       inplay:{
         title: 'In-Play',
         name: 'All Matches'

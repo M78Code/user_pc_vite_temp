@@ -68,6 +68,13 @@ const set_tab_list = (news_) =>{
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
+
+	// 收藏
+	if (MenuData.is_collect) {
+		matches_header_title.value = "Favouritse"
+		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'favouritse_tab', [])  
+	}
+
 	// console.log(tab_list.value[0],'tab_list.value[0]')
 	if (tab_list.value.length) {
 		checked_current_tab(tab_list.value[0])
