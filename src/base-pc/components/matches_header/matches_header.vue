@@ -89,7 +89,6 @@ const checked_current_tab = payload => {
 		filter_tab: payload.value*1
 	}
 	// MenuData.set_mid_menu_result(obj)
-	MenuData.set_fetch_filter(obj)
 }
 
 

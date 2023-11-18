@@ -145,7 +145,7 @@ class MenuData {
     }
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
-
+  set_fetch_filter(){}
   // 设置终极菜单id
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
