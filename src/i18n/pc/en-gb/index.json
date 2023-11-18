@@ -34,7 +34,24 @@
             "matches": "Matches",
             "featured": "Featured",
             "top_events": "Top Events",
-            "home": "Home"
+            "home": "Home",
+            "play_map": {
+                "1": "Winner",
+                "2": "Total Goals",
+                "4": "HDP",
+                "37": "Winner",
+                "38": "Total Points",
+                "39": "HDP",
+                "153": "Winner",
+                "155": "HDP",
+                "172": "HDP", 
+                "173": "Total Points", 
+                "181": "HDP", 
+                "202": "Total Frames",
+                "242": "Winner",
+                "243": "HDP",
+                "244": "Total Goals"
+              }
         },
         "no_data": {
             "coming_soon": "Coming Soon"
