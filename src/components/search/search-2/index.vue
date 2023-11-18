@@ -132,15 +132,6 @@ watch(
 const set_search_status = (data) =>{
   SearchPCClass.set_search_isShow(data)
 }
-onMounted(() => {
-
-  mitt_list = [
-    useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, show_search_rezult()).off
-  ]
-  window.addEventListener('resize', on_resize)
-  set_sports_list()
-})
-
 
 function show_search_rezult(bool) {
   search_isShow.value = bool
@@ -221,6 +212,14 @@ function on_resize() {
   search_width.value = LayOutMain_pc.layout_search_width
   main_width.value = LayOutMain_pc.layout_main_width + 'px'
 }
+onMounted(() => {
+  mitt_list = [
+    useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, show_search_rezult).off
+  ]
+  window.addEventListener('resize', on_resize)
+  set_sports_list()
+})
+
 onUnmounted(() => {
   mitt_list.forEach(i => i());
   window.removeEventListener('resize', on_resize)

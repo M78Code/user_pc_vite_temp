@@ -27,19 +27,19 @@
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">
         <q-separator />
-        <div class="match-detail-tabs" v-if="['1','2'].includes(match_detail.csid)">
+        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail.csid)">
           <div
             :class="[{ 'tab-active': tab == 'betting' }, 'tabs-item']"
             @click="tabChange('betting')"
           >
-            <span class="tab-text">Betting</span>
+            <span class="tab-text">{{ i18n_t("ouzhou.detail.betting") }}</span>
           </div>
           <div style="color: #E2E2E2">|</div>
           <div
             :class="[{ 'tab-active': tab == 'event_analysis' }, 'tabs-item']"
             @click="tabChange('event_analysis')"
           >
-            <span class="tab-text">Event Analysis</span>
+            <span class="tab-text">{{ i18n_t("ouzhou.detail.event_analysis") }}</span>
           </div>
         </div>
         <div class="match-detail-line"></div>
@@ -223,7 +223,8 @@ export default {
   }
   .match-detail-tab {
     height: 50px;
-    background: #ffffff;
+    //background: #ffffff;
+    background: var(--q-gb-bg-c-15);
   }
   .match-detail-odds-scroll {
     overflow-x: hidden;

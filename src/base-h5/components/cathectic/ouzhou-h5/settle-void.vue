@@ -6,7 +6,6 @@
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="settle-void" @touchmove.prevent>
-    <!-- <div class="img-s" :style="compute_css_obj('no-record')"></div> -->
     <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
     <p>{{i18n_t('common.no_data')}}</p>
   </div>
@@ -29,6 +28,9 @@ template {
   align-items: center;
   min-height: 4rem;
   border-radius: 0.1rem;
+  opacity: 0;
+  animation: opacityAnimate 1.5s linear;
+  animation-fill-mode: forwards;
   img {
     width: 2.4rem;
     height: 2.4rem;
@@ -37,5 +39,12 @@ template {
     font-size: 0.16rem;
   }
 }
-
+@keyframes opacityAnimate {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>

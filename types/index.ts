@@ -17,7 +17,7 @@ namespace TYPES {
     mo: number,
     ctt: number,
     mp: number,
-    /** 赛事ID */
+    /** 球类ID */
     csid: string,
     ms: number,
     cmec: string,
@@ -33,6 +33,7 @@ namespace TYPES {
     mlet: string,
     mhid: string,
     mrmc: string,
+    /** 赛事ID */
     mid: string,
     mess: number,
     mmp: string,
@@ -54,4 +55,14 @@ namespace TYPES {
     tn: string,
     msc: Array<String>,
   }
+}
+
+/** 复用注释 */ declare namespace MATCH {
+  /** 球类ID */ export interface csid {
+    /** 球类ID */ csid: string
+  }
+  /** 赛事ID */ export interface mid {
+    /** 赛事ID */ mid: string
+  }
+  /** 联赛ID */ export interface tid { tid: string }
 }

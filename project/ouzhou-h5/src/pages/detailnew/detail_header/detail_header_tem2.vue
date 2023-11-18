@@ -64,8 +64,7 @@ import { onMounted, ref, toRef, watch } from "vue";
 import lodash from "lodash";
 import { api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
-import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/index.js"
-// import EMITTER from  "src/global/mitt.js" // import {mitt*} from "src/core/index.js"
+import { useMittOn,MITT_TYPES } from "src/core/index.js"
 const props = defineProps({
   get_match_detail: {
     type: Object,

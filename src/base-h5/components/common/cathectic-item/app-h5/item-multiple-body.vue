@@ -65,7 +65,7 @@
         <!-- 在已结算页 -->
         <p v-else class="acount">
           <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
-          <span>{{format_money2(data_b.backAmount)}}{{ i18n_t('common.unit') }}</span>
+          <span :class="[calc_amount_settle(data_b).color]">{{ calc_amount_settle(data_b).text }}</span>
         </p>
       </template>
       <p>
@@ -77,9 +77,13 @@
             <template v-else-if="[4].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.canceled')}}</template>
             <template v-else>{{i18n_t('pre_record.booking')}}</template>
           </span>
-          <!-- 未结算、已结算页 -->
-          <span v-else :class="calc_text(data_b).color"> 
+          <!-- 未结算页 -->
+          <span v-else-if="BetRecordClass.selected === 0"> 
             {{ calc_text(data_b).text }} 
+          </span>
+          <!-- 已结算页 -->
+          <span v-else> 
+            {{ calc_text_settle(data_b) }} 
           </span>
         </template>
       </p>
@@ -90,7 +94,7 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
-import { default as BetRecordClass, calc_text } from "src/core/bet-record/bet-record.js";
+import { default as BetRecordClass, calc_text, calc_text_settle, calc_amount_settle } from "src/core/bet-record/bet-record.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { formatTime, format_money2 } from 'src/core/format/index.js'
 
@@ -120,6 +124,7 @@ const show_data_orderVOS = computed(() => {
     return item;
   });
 })
+
 
 //切换是否展开
 const toggle_box = () => {

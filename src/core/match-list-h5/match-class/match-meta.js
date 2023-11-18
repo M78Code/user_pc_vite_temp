@@ -82,8 +82,8 @@ class MatchMeta {
 
     this.params_md = md
 
-    // 刷新页面 二级菜单丢失， 暂时放在这里 获取真实数据
-    // this.get_target_match_data()
+    // // 刷新页面 二级菜单丢失， 暂时放在这里 获取真实数据
+    this.get_target_match_data()
 
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
@@ -175,7 +175,7 @@ class MatchMeta {
     // 元数据不作为最终渲染数据 所以不走虚拟计算
     // 元数据只作用域切换菜单时快速显示， 最终显示还是根据接口来
     this.match_mids = lodash.uniq(mids.slice(0, 20))
-    this.set_match_mids(result_mids.slice(0, 20), match_list.slice(0, 20), false)
+    this.set_match_mids(result_mids.slice(0, 20), match_list.slice(0, 20))
   }
 
   /**
@@ -575,7 +575,7 @@ class MatchMeta {
       }
     })
     const results = Object.values(filterData).flat()
-    this.handler_match_list_data({ list: results, warehouse: 'five_league' })
+    // this.handler_match_list_data({ list: results, warehouse: 'five_league' })
     return results
   }
 
@@ -656,7 +656,7 @@ class MatchMeta {
 
     const { list, type = 1, is_virtual = true, is_classify = false, warehouse = '' } = config
 
-    this.warehouse_type = warehouse
+    // if (warehouse) this.warehouse_type = warehouse
 
     // 清除联赛下得赛事数量
     if (['five_league'].includes(warehouse)) {
@@ -706,7 +706,6 @@ class MatchMeta {
       this.complete_matchs = target_data
       this.complete_mids = lodash.uniq(result_mids)
     }
-
    
     if (!is_virtual) {
       if (!['five_league'].includes(warehouse)) this.match_mids = lodash.uniq(result_mids)
@@ -721,7 +720,7 @@ class MatchMeta {
     this.set_page_match_empty_status(false)
 
   }
-     
+
   /**
    * @description 元数据 处理 设置 match_mids
    * @param { mids } 全量 赛事 mids 
@@ -741,7 +740,6 @@ class MatchMeta {
       MatchResponsive.set_ball_seed_league_count(t)
       // is_show_ball_title 和顺序有关 得放在最终赋值处
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
-      // console.log('is_show_ball_title: ', is_show_ball_title)
       return { ...t, is_show_ball_title }
     })
 
@@ -793,7 +791,7 @@ class MatchMeta {
     if (MenuData.is_export()) return
     // 竞足409 不需要euid
     const params = {
-      mids: mids ? mids : match_mids,
+      mids: mids.length > 0 ? mids : match_mids,
       cuid: UserCtr.get_uid(),
       sort: PageSourceData.sort_type,
       euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
@@ -828,21 +826,38 @@ class MatchMeta {
 
 
   /**
+   * @description ws 指令处理
+   * @param {*} cmd 
+   */
+  handle_ws_directive (cmd) {
+    // 调用 matchs  接口
+    if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
+      this.get_target_match_data()
+    }
+    // 调用 mids  接口
+    if (['C303', 'C114'].includes(cmd)) {
+      this.get_match_base_hps_by_mids()
+    }
+  }
+
+
+  /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 
    * @param { type } 接口请求时， 以接口数据为准， 反之已上一次的数据为准 避免赔率闪动
    */
   handle_update_match_info(list, type) {
     const Base_warehouse  = this.get_base_warehouse()
+    console.log('Base_warehouse', Base_warehouse)
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       MatchResponsive.get_ball_seed_methods(t)
-      const match = Base_warehouse.get_quick_mid_obj(t.mid)
+      const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
       const target = type === 'cover' ? Object.assign({}, match, t) : Object.assign({}, t, match)
       return target
     })
     // 设置仓库渲染数据
-    Base_warehouse.set_list(list)
+    MatchDataBaseH5.set_list(list)
   }
 
   /**
@@ -851,8 +866,9 @@ class MatchMeta {
    */
   handle_submit_warehouse(list) {
     const Base_warehouse  = this.get_base_warehouse()
+    // MatchDataBaseH5.clear()
     // 设置仓库渲染数据
-    Base_warehouse.set_list(list)
+    MatchDataBaseH5.set_list(list)
     // 获取赛事赔率
     this.get_match_base_hps_by_mids()
   }
@@ -861,6 +877,7 @@ class MatchMeta {
    * @param { type } 仓库类型， 取值为赛事  warehouse_type
    */
   get_base_warehouse (type = '') {
+    console.log('this.warehouse_type:', this.warehouse_type)
     const source = type ? type : this.warehouse_type
     const config = {
       // 五大联赛仓库

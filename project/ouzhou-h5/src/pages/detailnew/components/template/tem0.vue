@@ -139,7 +139,8 @@ onMounted(() => {});
   .temp0-ol {
     display: grid;
     .temp0_ol_on {
-      background: #ffffff;
+      //background: #ffffff;
+      background: var(--q-gb-bg-c-15);
       .temp0_ol_ov {
         border: 1px solid #F5F5F5;
         border-width: 1px 1px 0 1px;

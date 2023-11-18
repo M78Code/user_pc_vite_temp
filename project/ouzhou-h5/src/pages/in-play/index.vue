@@ -16,6 +16,8 @@
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { MenuData } from "src/core/index.js";
+import { onMounted } from 'vue';
+
 /**
  * 球种点击
  * @param {*} mi 

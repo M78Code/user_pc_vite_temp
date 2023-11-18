@@ -84,10 +84,8 @@ export default defineComponent({
 .header-main {
   width: 100%;
   height: 68px;
-
-
-  background-color: #FF7000;
-
+  // background-color: #FF7000;
+  background-color: var(--q-gb-t-c-16);
   .header-content {
     display: flex;
     align-items: center;
@@ -122,8 +120,10 @@ export default defineComponent({
         // background-color: #d45d00;
 
         .header-nav-title {
-          border-bottom: 2px solid #ffffff;
-          color:#ffffff;
+          // border-bottom: 2px solid #ffffff;
+          // color:#ffffff;
+          border-bottom: 2px solid var(--q-gb-bd-c-13);
+          color:var(--q-gb-t-c-18);
         }
       }
     }
@@ -132,8 +132,10 @@ export default defineComponent({
       background-color: #d45d00;
 
       .header-nav-title {
-        border-bottom: 2px solid #ffffff;
-        color:#ffffff;
+        // border-bottom: 2px solid #ffffff;
+        // color:#ffffff;
+        border-bottom: 2px solid var(--q-gb-bd-c-13);
+        color:var(--q-gb-t-c-18);
         font-weight: 500;
       }
     }
