@@ -81,9 +81,6 @@ let mitt_list = [];
 };
 
 // 设置列表滚动条位置
-mitt_list=[
-  useMittOn(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, set_scrollTop).off
-]
 onUnmounted(() => {
   // 设置列表滚动条位置
   mitt_list.forEach(i=>i())
