@@ -68,11 +68,11 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
-    color: var(--q-gb-bg-c-8);
+    color: var(--q-gb-t-c-3);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -126,7 +126,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-11);
+      color: var(--q-gb-t-c-1);
   }
   .nonebox4-content-right{
     display: flex;

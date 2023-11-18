@@ -66,7 +66,7 @@
 import { ref, reactive, onMounted, onUnmounted, defineComponent,watch, defineProps } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
-import { useMittOn, MITT_TYPES } from 'src/core/mitt';
+import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { LayOutMain_pc, utils } from 'src/core/index.js'
 // 搜索输入框组件
@@ -214,6 +214,9 @@ function set_sports_tab_index(index) {
   }
   sports_tab_index.value = index_
   search_csid.value = sports_list[index_].id
+  // useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+  //     tab_index: index
+  // })
 }
 
 
