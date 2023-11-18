@@ -13,8 +13,8 @@
     <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
       <div class="active flex flex-start items-center" @click.stop="show_list = !show_list">
         <div>
-          {{ $t(`${card_style_obj.csid}_${current_csid_hpids.first_hpid}`) }} & {{
-          $t(`${card_style_obj.csid}_${current_csid_hpids.second_hpid}`) }}
+          {{ i18n_t(`ouzhou.match.play_map.${item.first_hpid}`) }} & {{
+            i18n_t(`ouzhou.match.play_map.${item.second_hpid}`) }}
         </div>
         <div class="yb-icon-arrow"></div>
       </div>
@@ -23,9 +23,8 @@
           @click.stop="handle_hpid_choose(item)" :class="{
             active: JSON.stringify(current_csid_hpids) == JSON.stringify(item)
           }">
-          {{ $t(`${card_style_obj.csid}_${item.first_hpid}`) }} & {{
-            $t(`${card_style_obj.csid}_${item.second_hpid}`) }}
-
+          {{ i18n_t(`ouzhou.match.play_map.${item.first_hpid}`) }} & {{
+            i18n_t(`ouzhou.match.play_map.${item.second_hpid}`) }}
         </div>
       </div>
     </div>
