@@ -138,7 +138,6 @@ onMounted(()=>{
 const change_status = (pramas)=>{
   show_type.value = pramas.type
   search_text.value = pramas.text
-  console.log('sss',pramas);
 }
 
 /** 保存显示搜索组件状态 */

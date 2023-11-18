@@ -97,13 +97,13 @@
   }
   .nonebox4-content{
       width: 100%;
-      background: var(--q-gb-t-c-14);
+      background: var(--q-gb-bg-c-2);
       padding: 10px;
       padding: 0.15rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
-      color: #000;
+      color: var(--q-gb-t-c-13);
   }
   .nonebox4-content-left-content{
       height: 70px;

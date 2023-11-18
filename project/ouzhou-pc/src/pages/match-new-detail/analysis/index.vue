@@ -174,7 +174,7 @@ justify-content: center;
 align-items: center;
 background: var(--q-gb-bg-c-4);
 // padding-bottom: 10px;
-border-bottom: 1px solid #e2e2e2;
+border-bottom: 1px solid var(--q-gb-bd-c-2);
 }
 .tabs-item {
   // margin-right: 40px;

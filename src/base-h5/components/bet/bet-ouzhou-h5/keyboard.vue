@@ -287,7 +287,7 @@ onUnmounted(() => {
   -webkit-overflow-scrolling: touch;
   font-size: 0.18rem;
   font-weight: 600;
-  color: var(--q-gb-bg-c-3);
+  color: var(--q-gb-bg-c-13);
   font-family: "DIN";
   border-top: 1px solid var(--q-gb-t-c-5)
 }
