@@ -437,10 +437,10 @@ const submit_handle = type => {
             WsMan.skt_send_bat_handicap_odds(obj);
             // 通知页面更新 
         }else{
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-                code: res.code,
-                msg: res.message
-            })
+            // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
+            //     code: res.code,
+            //     msg: res.message
+            // })
             // 获取限额失败的信息
             BetData.set_bet_before_message({
                 code: res.code,
