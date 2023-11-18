@@ -66,7 +66,7 @@ const pack_up = (val) => {
       width: 2.17rem;
       // height: 46px;
       border-radius: 2px;
-      background: var(--q-gb-bg-c-12);
+      background: var(--q-gb-bg-c-1);
       color:  var(--q-gb-bg-c-15);
       .right_amount{
         font-family: DIN;

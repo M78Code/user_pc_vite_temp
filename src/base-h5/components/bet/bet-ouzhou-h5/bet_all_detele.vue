@@ -106,10 +106,10 @@
 }
 
     .del-info-dui{
-      color: var(--q-gb-t-c-11) !important;
+      color: var(--q-gb-t-c-2);
       width: 0.15rem;
       height: 0.15rem;
-      //background: var(--q-gb-t-c-11);
+      background: var(--q-gb-t-c-1);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -120,11 +120,10 @@
     }
     .del-info-name{
       margin-left: 0.15rem;
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-bg-c-4);
     }
     .del-info-icon{
-      color: var(--q-gb-t-c-18);
-      margin-top: 0.02rem;
+      color: var(--q-gb-bg-c-4);
     }
     .del-info{
       display: flex;
@@ -134,6 +133,6 @@
       display: flex;
       justify-content: space-between;
       padding: 0.15rem;
-      background: var(--q-gb-t-c-6);
+      background: var(--q-gb-bg-c-10);
     }
 </style>
