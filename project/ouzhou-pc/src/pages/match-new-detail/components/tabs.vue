@@ -55,12 +55,12 @@ const tab_click = (item) => {
 .match-search {
     .search-top {
         height: 50px;
-        background-color: #ffffff;
+        background-color: var(--q-gb-bg-c-4);
         // border-radius: 4px;
         display: flex;
         align-items: center;
         padding-left: 10px;
-        border-bottom: 1px solid #FF7000;
+        border-bottom: 1px solid var(--q-gb-bd-c-1);
     }
 
     .btn-group {
@@ -90,15 +90,15 @@ const tab_click = (item) => {
             }
 
             .btn-group-item-ls-active {
-                background-color: #FF7000;
-                border: 1px solid #FF7000;
-                color: #ffffff;
+                background-color: var(--q-gb-bg-c-1);
+                border: 1px solid var(--q-gb-bd-c-1);
+                color: var(--q-gb-t-c-1);
                 font-weight: 500;
             }
 
             &:hover {
                 .btn-group-item-ls {
-                    border: 1px solid #FF7000;
+                    border: 1px solid var(--q-gb-bd-c-1);
                 }
             }
 

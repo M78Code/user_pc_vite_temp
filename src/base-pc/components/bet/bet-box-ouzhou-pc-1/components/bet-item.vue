@@ -186,7 +186,8 @@ const set_delete = () => {
             cursor: pointer;
 
             &:hover {
-                border: 1px solid #FF7000;
+                // border: 1px solid #FF7000;
+                border: 1px solid var(--q-gb-bd-c-1);
             }
             &.disabled{
                 background: #A4A4A4;

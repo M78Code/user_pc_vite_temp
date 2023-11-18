@@ -7,7 +7,7 @@ import { i18n_t, i18n } from "src/boot/i18n.js";
 import { ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
 
@@ -507,7 +507,7 @@ class BaseData {
         }
       });
       // 重置默认数据
-      this.left_menu_base_mi_arr = left_menu;
+      this.left_menu_base_mi_arr =  left_menu;
 
       this.sports_mi = sports_mi;
 
