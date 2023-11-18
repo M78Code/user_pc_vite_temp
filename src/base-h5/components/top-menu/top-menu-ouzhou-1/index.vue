@@ -160,14 +160,15 @@ const toggleLeftDrawer = () => {
       height: 12px;
     }
     input {
-      border: 1px solid #ffffff; 
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 20px;
       width: 132px;
       height: 30px;
       padding-left: 30px;
-      background: #FF7000;
       outline: none;
       color: var(--q-gb-t-c-14);
+      border: none;
+      box-shadow: 0 0 0 .5px #ffffff;
     }
     ::-webkit-input-placeholder {
       color: #ffffff;
