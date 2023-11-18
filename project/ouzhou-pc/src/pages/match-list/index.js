@@ -8,6 +8,7 @@ import {
 import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 
 export const playingMethods_15 = [
   {
@@ -140,25 +141,30 @@ export const init_home_matches = async () => {
     let mins15_list = []
     let featured_list = []
     await get_home_matches(params).then((res) => {
-      // 处理返回数据 将扁平化数组更改为页面适用数据
-      MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
-      MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
-      let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
-      //过滤前20条数据
-      sort_list = filter_20_match(sort_list);
-      // 将球种排序
-      MatchDataWarehouse_PC_List_Common.set_list(sort_list);
-      MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-        sort_list,
-      );
-      //获取15mins 数据
-      mins15_list = filter_15mins_func(
-        MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
-      );
-      // 获取matches_featured
-      featured_list = filter_featured_list(
-        MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
-      );
+      try {
+        MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'),false)
+        // 处理返回数据 将扁平化数组更改为页面适用数据
+        MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
+        MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
+        let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
+        //过滤前20条数据
+        sort_list = filter_20_match(sort_list);
+        // 将球种排序
+        MatchDataWarehouse_PC_List_Common.set_list(sort_list);
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+          sort_list,
+        );
+        //获取15mins 数据
+        mins15_list = filter_15mins_func(
+          MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
+        );
+        // 获取matches_featured
+        featured_list = filter_featured_list(
+          MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+        );
+      } catch (error) {
+          
+      }
     });
     return {
         mins15_list,
