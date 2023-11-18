@@ -241,7 +241,7 @@ onBeforeUnmount(() => {
   color: #8a8986;
   &.checked{
     .filter-count{
-      background: #FF7000;
+      background: var(--q-gb-t-c-2);
     }
   }
 }

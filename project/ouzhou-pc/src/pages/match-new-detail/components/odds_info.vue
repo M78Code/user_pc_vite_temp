@@ -240,7 +240,7 @@ onMounted(() => {
 
 
 .odds-wrap {
-  background: #FFFFFF;
+  background: var(--q-gb-bg-c-4);
   box-sizing: border-box;
   border-bottom: 1px solid var(--q-gb-bd-c-1);
 
@@ -280,7 +280,7 @@ onMounted(() => {
 
 .temp-simple {
   margin-left: -1px;
-  background: #FFFFFF;
+  background: var(--q-gb-bg-c-4);
 }
 
 .tem4 {

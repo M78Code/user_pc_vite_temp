@@ -261,7 +261,7 @@ export default {
         height: 100%;
         background: url($SCSSPROJECTPATH + "/image/common/virtual/live_bai.svg") no-repeat;
         background-position: center center;
-        background-color: #FF7000;
+        background-color: var(--q-gb-bg-c-1);
         border-radius: 0 4px 4px 0;
       }
     }

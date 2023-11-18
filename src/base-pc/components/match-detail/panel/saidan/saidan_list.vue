@@ -228,7 +228,7 @@ export default {
     margin-bottom: 10px;
     .item-top {
       &::before {
-        background: #FF7000;
+        background: var(--q-gb-bg-c-1);
       }
     }
     /**中间内容*/

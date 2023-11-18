@@ -63,6 +63,7 @@ import { MatchProcessFullVersionWapper as matchProcess } from "src/components/ma
 import store from "src/store-redux/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
+import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 
 import loadData from "src/components/load_data/load_data.vue"
 
@@ -97,7 +98,17 @@ const { searchReducer } = store.getState()
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
-const keyword = ref(searchReducer.keyword)
+
+onMounted(() => {
+    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
+})
+const search_type = ref(null)
+const keyword = ref('')
+const get_props = (props) => {
+    keyword.value = props.text
+    search_type.value = props.type
+    console.log('yyy', keyword.value);
+}
 // 监听搜索关键词改变
 watch(
     () => keyword.value,
@@ -114,13 +125,12 @@ watch(
  * 获取搜索类型 default: 1
  * 路径: project_path\src\store\module\search.js
  */
-const search_type = ref(searchReducer.search_type)
-const unsubscribe = store.subscribe(() => {
-    const { searchReducer: new_searchReducer } = store.getState();
-    keyword.value = new_searchReducer.keyword
-    search_type.value = new_searchReducer.search_type
-})
-onBeforeUnmount(unsubscribe)
+// const unsubscribe = store.subscribe(() => {
+//     const { searchReducer: new_searchReducer } = store.getState();
+//     keyword.value = new_searchReducer.keyword
+//     search_type.value = new_searchReducer.search_type
+// })
+// onBeforeUnmount(unsubscribe)
 
 /** 设置搜索联赛关键字 */
 const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
@@ -170,6 +180,7 @@ const timer = ref(null)
  * @return {Undefined} Undefined
  */
 function get_search_result(keyword, is_loading) {
+    console.log('keyword', keyword, keyword.value);
     if (!keyword) {
         update_show_type('init')
         return

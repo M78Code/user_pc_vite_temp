@@ -72,7 +72,7 @@ function match_list_all_params() {
     let apiType = 1;
      // 父级euid
     let euid = ''
-    let api_name = api_params.other.match;
+    let api_name = api_params[menu_root]?.match ||api_params.other.match
     // 前端控制是否禁用收藏功能
     // 前端配置写死，世界杯后删除
     // 前端开    后台开       >开
@@ -80,9 +80,6 @@ function match_list_all_params() {
     // 前端关    后台开       >关
     // 前端关    后台关       >关
     const enable_collect_api = window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.ENABLE_COLLECT_API;
-    if ([1, 500, 300, 400, 2000].includes(Number(menu_root))) {
-        api_name = api_params[menu_root]?.match
-    }
     let config = {
         is_collect,
         root: menu_root,
@@ -96,7 +93,6 @@ function match_list_all_params() {
             },
         }
     }
-
     // type === "collect"
     if (is_collect) {
         // 前端开    后台开       >开
@@ -107,10 +103,7 @@ function match_list_all_params() {
             return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
         }
         apiType = 2
-        api_name = api_params.other.colloet
-        if ([1, 500, 300, 2000].includes(Number(menu_root))) {
-            api_name = api_params[root].colloet
-        }
+        api_name = api_params[menu_root].colloet||api_params.other.colloet
     }
    
     // 当前 pid 和 orpt
@@ -120,7 +113,7 @@ function match_list_all_params() {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
             // 娱乐下只有冠军 直接写死
-            euid = menu_root == 3 ? '3020212' : '3020112'
+            euid = [3,203].includes(menu_root)  ? '3020212' : '3020112'
         } else {
             euid = get_mid_for_euid(menu_current_mi)
         }

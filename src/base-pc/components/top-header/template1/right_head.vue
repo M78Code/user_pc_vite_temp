@@ -319,7 +319,7 @@ export default defineComponent({
   transition: all 0.25s;
   justify-content: space-between;
   &.active{
-    color: #FF7000;
+    color: var(--q-gb-t-c-2);
     background: #FFF1E6;
   }
   > span {
@@ -334,7 +334,7 @@ export default defineComponent({
   }
 }
 .language_item:hover{
-  color: #FF7000;
+  color: var(--q-gb-t-c-2);
   background: #FFF1E6;
 }
 .arrow{
@@ -400,7 +400,7 @@ export default defineComponent({
       position: absolute;
       top: 0;
       border-radius: 20px;
-      border: 1px solid #FF7000;
+      border: 1px solid var(--q-gb-bd-c-1);
       transition: all 0.25s;
     }
   }

@@ -105,6 +105,8 @@ let sports_list = reactive([])
 const sports_tab_index = ref(0)
 /** 搜索球种 */
 const search_csid = ref(1)
+// 搜索关键字
+const search_text = ref('')
 
 let search_width = ref(LayOutMain_pc.layout_search_width + 'px')
 let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
@@ -135,6 +137,7 @@ onMounted(()=>{
 
 const change_status = (pramas)=>{
   show_type.value = pramas.type
+  search_text.value = pramas.text
   console.log('sss',pramas);
 }
 
