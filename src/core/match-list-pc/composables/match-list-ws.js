@@ -116,7 +116,7 @@ const refresh_c8_subscribe = () => {
 		 * @Description 可视赛事ID改变
 		 * @param {undefined} undefined
 		 */
-const show_mids_change = lodash.throttle(() => {
+const show_mids_change = lodash.debounce(() => {
 	// 列表没加载完 不执行
 	if (load_data_state.value != "data") {
 		return;
@@ -124,7 +124,7 @@ const show_mids_change = lodash.throttle(() => {
 	// 重新订阅C8
 	refresh_c8_subscribe();
 	api_bymids({ is_show_mids_change: true })
-}, 3000)
+}, 1000)
 
 
 const ws_destroyed = () => {
