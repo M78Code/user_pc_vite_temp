@@ -105,7 +105,7 @@ const details_refresh = () => {
   }
   else if (curr_tab === 'bet') {
     // 刷新 盘口赔率信息 延时的原因是 刷新页面有可能先执行了详情接口 盘口接口没有拉倒数据刷新  加一个参数变量判断是否是刷新页面的变量 refresh
-    useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS,(true))
+    useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS, { refresh: true })
     //   useMittEmit(MITT_TYPES.EMIT_REF_API,(true))
   }
   else if (curr_tab === 'match_analysis') {
