@@ -185,7 +185,7 @@
     .shadow-box {
       width: 10px;
       height: 44px;
-      background: linear-gradient(270deg, #D9D9D9 0%, rgba(217, 217, 217, 0) 100%);
+      background: var(--q-gb-bg-lg-12);
       opacity: 0.1;
     }
   }

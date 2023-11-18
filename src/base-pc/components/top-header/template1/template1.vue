@@ -67,10 +67,10 @@ export default defineComponent({
 
       //页面中间头部导航显示处理
       userRouter.push({name: item.name})
-      // 触发设置matches头部信息
-      nextTick(()=>{
-        useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, item.id)
-      })
+      // // 触发设置matches头部信息
+      // nextTick(()=>{
+      //   useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, item.id)
+      // })
     };
 
     return {

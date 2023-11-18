@@ -673,8 +673,6 @@ class MatchMeta {
 
     const { list, type = 1, is_virtual = true, is_classify = false, warehouse = MatchDataBaseH5 } = config
 
-    if (this.is_other_warehouse(warehouse.name_code)) console.log('1111111111111111111111111111:', warehouse.name_code)
-
     // 清除联赛下得赛事数量
     if (this.is_other_warehouse(warehouse.name_code)) {
       MatchResponsive.clear_other_ball_seed_league_count()

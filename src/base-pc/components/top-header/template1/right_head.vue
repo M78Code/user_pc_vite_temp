@@ -320,7 +320,7 @@ export default defineComponent({
   justify-content: space-between;
   &.active{
     color: var(--q-gb-t-c-2);
-    background: #FFF1E6;
+    background:var(--q-gb-bg-c-5);
   }
   > span {
     display: flex;
@@ -335,7 +335,7 @@ export default defineComponent({
 }
 .language_item:hover{
   color: var(--q-gb-t-c-2);
-  background: #FFF1E6;
+  background:var(--q-gb-bg-c-5);
 }
 .arrow{
   width: 18px;
@@ -376,7 +376,7 @@ export default defineComponent({
     height: 30px;
     display: flex;
     align-items: center;
-    background: #E2E2E2;
+    background: var(--q-gb-bg-c-6);
     border-radius: 20px;
     justify-content: space-between;
     margin-right: 16px;

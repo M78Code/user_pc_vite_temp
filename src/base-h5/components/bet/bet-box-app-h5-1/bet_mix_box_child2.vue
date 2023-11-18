@@ -422,7 +422,7 @@ onUnmounted(() => {
   justify-content: space-between;
   padding: 0 0.3rem;
   border-radius: 0.7rem;
-  color: var(--q-gb-t-c-14);
+  color: var(--q-gb-t-c-1);
   font-size: 0.14rem;
 }
 .yb-info-hui{
@@ -452,7 +452,7 @@ background: var(--q-gb-t-c-3) !important;
 }
 .bet-mix-box-child2 {
   .used-money {
-    color: var(--q-gb-t-c-14);
+    color: var(--q-gb-t-c-2);
   }
 
   .err-msg3 {
@@ -478,7 +478,7 @@ background: var(--q-gb-t-c-3) !important;
   -webkit-overflow-scrolling: touch;
   border-radius: 24px 24px 0 0;
   //border: 1px solid;
-  background-color: var(--q-gb-t-c-14);
+  background-color: var(--q-bg-c-2);
   ;
 
   .yb_pl14 {

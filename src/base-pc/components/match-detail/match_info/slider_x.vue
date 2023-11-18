@@ -172,7 +172,7 @@ export default {
   display: flex;
   position: relative;
   .arrow-left, .arrow-right {
-    background: linear-gradient(270deg, #000000 0%, rgba(0, 0, 0, 0.2) 100%);
+    background: var(--q-gb-bg-lg-10);
     width: 30px;
     height: 30px;
     margin-top: -15px;
