@@ -217,7 +217,6 @@ export default {
         if(result.length >= 20){
           break;
         }
-        console.log('resultt', sport_counts, result);
       }
       
       return result;
