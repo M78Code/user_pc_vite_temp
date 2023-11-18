@@ -78,7 +78,8 @@ setTimeout(() => {
           width: 100%;
         }
         .detail-home-info-score-text {
-          color: #FF7000;
+          //color: #FF7000;
+          color: var(--q-gb-t-c-1);
           font-size: 18px;
         }
       }
@@ -106,7 +107,8 @@ setTimeout(() => {
           width: 100%;
         }
         .detail-away-info-score-text {
-          color: #FF7000;
+          //color: #FF7000;
+          color: var(--q-gb-t-c-1);
           font-size: 18px;
         }
       }

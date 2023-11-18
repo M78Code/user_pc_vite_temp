@@ -241,7 +241,7 @@ const tab = ref("mails");
       }
 
       .dot-h {
-        background-color: #ff7000;
+        background-color: var(--q-gb-bg-c-1);
       }
 
       .dot-h-r {
