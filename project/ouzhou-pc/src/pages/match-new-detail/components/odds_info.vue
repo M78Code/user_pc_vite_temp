@@ -33,7 +33,7 @@
                         <template v-if="ol.otd === opt.otd">
                           <div v-show="!item.hl[0].hs" :class="{ 'tem4': true, 'tem4-active': ol.oid == current_ol.oid }"
                             @click="betItemClick(item.hl[0], ol)">
-                            <span :style="{ color: ol.oid == current_ol.oid ? '#ffffff' : '#ff7000' }" >{{ ol.on }}</span>
+                            <span :style="{ color: '#1a1a1a' }" >{{ ol.on }}</span>
                             <span v-if="ol.ov" >{{Math.floor(ol.ov /1000) /100  }} </span>
                             <!-- <span>{{ sun_ov(ol) }}</span> -->
 
@@ -47,11 +47,6 @@
 
                     </div>
                   </template>
-                </div>
-              </template>
-              <template v-else>
-                <div v-for="ol in item.hl" :key="ol.hid">
-                  <!-- <div>{{ ol.hv }}</div> -->
                 </div>
               </template>
 
@@ -289,12 +284,20 @@ onMounted(() => {
   padding: 0 20px;
   display: flex;
   font-weight: 500;
-  justify-content: space-between;
+  justify-content: center;
   color: #1A1A1A;
   //  border-top: 1px solid #E2E2E2;
   border-left: 1px solid #E2E2E2;
   border-bottom: 1px solid #E2E2E2;
   cursor: pointer;
+  span{
+    &:nth-child(1){
+      margin-right: 10px;
+    }
+    &:nth-child(2){
+      color:#FF7000
+    }
+  }
 
   &:hover {
     background: #FFF1E6;

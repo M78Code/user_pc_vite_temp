@@ -151,6 +151,8 @@ class MenuData {
     this.menu_current_mi = mi
     // 菜单数据缓存
     // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    //宽度请求变化 因为请求参数是在这里触发的
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     this.set_match_list_api_config()
   }
 
@@ -389,7 +391,7 @@ class MenuData {
     //     version: Date.now(),
     //   };
     // }
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // if ([2, 3].includes(Number(this.menu_root))) {
     //   // 角球
     //   if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -447,7 +449,7 @@ class MenuData {
     };
     console.error( this.menu_root, "MENUDATA.set_mid_menu_result-------",JSON.stringify(this.mid_menu_result),  obj );
     // this.menu_root=obj.root;
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏
     this.set_menu_data_version();
     this.set_multi_column();
