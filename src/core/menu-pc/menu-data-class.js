@@ -137,6 +137,7 @@ class MenuData {
       sport_tab: [
         { label: 'Matches', value: 4001 },
         { label: 'League', value: 4002 },
+        { label: 'Next 24 Hours', value: 4003 },
       ], 
       // 收藏
       favouritse_tab: [
