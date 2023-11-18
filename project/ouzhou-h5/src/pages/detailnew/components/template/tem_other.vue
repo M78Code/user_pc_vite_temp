@@ -137,11 +137,12 @@ onMounted(() => {
         border: 1px solid #F5F5F5;
         border-width: 1px 1px 0 1px;
         //background: #fff;
-        background: var(--q-gb-t-c-14);
+        background: var(--q-gb-t-c-2);
         height: 50px;
         line-height: 50px;
         font-weight: 500;
-        color: #FF7000;
+        //color: #FF7000;
+        color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
         .ol-on-text {
@@ -157,7 +158,7 @@ onMounted(() => {
       .is-active {
         background: #FF7000;
         //color: #fff;
-        color: var(--q-gb-t-c-14);
+        color: var(--q-gb-t-c-2);
         .ol-on-text {
             padding-right: 5px;
             font-weight: 500;

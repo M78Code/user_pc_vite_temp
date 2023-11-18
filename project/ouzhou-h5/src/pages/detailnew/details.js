@@ -6,6 +6,7 @@ import {
   MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,
   useMittOn,
   MITT_TYPES,
+  utils
 } from "src/core";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
@@ -25,6 +26,8 @@ export const details_main = (router,route) => {
   const change_header_fix = ref(null);
   const header_fix = ref(null);
   const fixedHeight = ref(null);
+  //初次加载
+  const  init = ref(false)
   // 切换tab
   const tabChange = (item) => {
     tab.value = item;
@@ -180,29 +183,44 @@ export const details_main = (router,route) => {
    *@param {obj} params 请求参数
    *@return {obj}
    */
-  const get_matchDetail_getMatchOddsInfo = (params,init=false) => {
+  const get_matchDetail_getMatchOddsInfo = (params) => {
     //赛果页面调用赛果玩法详情接口
     // match_odds_info.value = get_match_odds_info.value;
-    api_match_list.get_detail_list(params).then((res) => {
-      // setTimeout(() => {
-        
-      // }, 1000);
-      get_match_odds_info.value = res.data;
-      if (tab_selected_obj.value.marketName) {
-        detail_tabs_change(tab_selected_obj.value);
-      } else {
-        match_odds_info.value = res.data;
+       //接口调用
+       let obj_ = {
+        // axios api对象
+        axios_api: api_match_list.get_detail_list,
+        // axios api对象参数
+        params: params,
+        // 唯一key值
+        key: 'details',
+        error_codes: ['0401038'],
+        // axios中then回调方法
+        fun_then: res => {
+          get_match_odds_info.value = res.data;
+          if (tab_selected_obj.value.marketName) {
+            detail_tabs_change(tab_selected_obj.value);
+          } else {
+            match_odds_info.value = res.data;
+          }
+          MatchDataWarehouseInstance.set_match_details(
+            MatchDataWarehouseInstance.get_quick_mid_obj(params.mid),
+            match_odds_info.value
+          );
+          // 第一次加载显示进度条
+           loading.value = false;
+  
+        },
+        // axios中catch回调方法
+        fun_catch: e => {
+          console.log(e)
+        },
+        // 最大循环调用次数(异常时会循环调用),默认3次
+        max_loop: init.value ? 3 : 1,
+        // 异常调用时延时时间,毫秒数,默认1000
+        timers: 1100
       }
-      MatchDataWarehouseInstance.set_match_details(
-        MatchDataWarehouseInstance.get_quick_mid_obj(params.mid),
-        match_odds_info.value
-      );
-      // 第一次加载显示进度条
-       loading.value = !init;
-    }).catch((err)=>console.log(err))
-
-    // get_match_odds_info.value = get_match_odds_info_mock.data;
-    // match_odds_info.value = get_match_odds_info_mock.data
+      utils.axios_api_loop(obj_) 
   };
 
   /**
@@ -223,7 +241,7 @@ export const details_main = (router,route) => {
         cuid: cuid.value,
         mid:params.mid,
         newUser: 0,
-      },true);
+      });
     }).catch((err)=>console.log(err))
   };
   /**
@@ -231,40 +249,34 @@ export const details_main = (router,route) => {
    *@param {obj} params 请求参数
    *@return {obj}
    */
-  const get_matchDetail_MatchInfo = (params) => {
-    api_match_list.get_detail_data(params).then((res) => {
-      const res_data = lodash.get(res, "data");
-      if (res_data && res_data.mhid) {
-        match_detail.value = res_data;
-        match_detail.value.course =
-          lodash.get(res_data, "ms") == 110
-            ? "Soon"
-            : courseData[lodash.get(res_data, "csid")][
-                lodash.get(res_data, "mmp")
-              ] || "";
-        match_detail.value.mstValueTime = format_mst_data(match_detail.value);
-        use_polling_mst(match_detail.value);
-      } else {
-        clear_all_timer();
-        router.replace("/");
-      }
-      // detail_store.get_detail_params
-      MatchDataWarehouseInstance.set_match_details(match_detail.value, []);
-      // console.log("get_matchDetail_MatchInfo", res);
-      const { mid, csid } = route.params;
-      get_category_list_info({
-        sportId: csid,
-        mid,
-      });
-    });
-
-    // mock Start
-    // match_detail.value = get_match_detail_mock.data;
-    // match_detail.value.course = (get_match_detail_mock.data.ms === 110) ? 'Soon' : courseData[match_detail.value.csid][match_detail.value.mmp];
-    // match_detail.value.mstValue = format_mst_data(match_detail.value.mst);
-    // use_polling_mst(match_detail.value)
-    // mock end
-  };
+  const get_matchDetail_MatchInfo = lodash.debounce((params) => {
+      api_match_list.get_detail_data(params).then((res) => {
+        const res_data = lodash.get(res, "data");
+        if (res_data && res_data.mhid) {
+          match_detail.value = res_data;
+          match_detail.value.course =
+            lodash.get(res_data, "ms") == 110
+              ? "Soon"
+              : courseData[lodash.get(res_data, "csid")][
+                  lodash.get(res_data, "mmp")
+                ] || "";
+          match_detail.value.mstValueTime = format_mst_data(match_detail.value);
+          use_polling_mst(match_detail.value);
+        } else {
+          clear_all_timer();
+          router.replace("/");
+        }
+        // detail_store.get_detail_params
+        MatchDataWarehouseInstance.set_match_details(match_detail.value, []);
+        //初次调用成功后 赋值init未false
+        // console.log("get_matchDetail_MatchInfo", res);
+        const { mid, csid } = route.params;
+        get_category_list_info({
+          sportId: csid,
+          mid,
+        });
+      })
+    } ,1000) 
   /** 
    * @var mid 用于detail_init函数初始化的赛事id 
    * @var csid 用于detail_init函数初始化的csid 
@@ -287,14 +299,7 @@ export const details_main = (router,route) => {
     csid = params.csid
     detail_init()
   });
-  
-  const timer_s_interval = (time = 4000) => {
-    clear_all_timer();
-    timer.value = setTimeout(() => {
-      detail_init();
-      timer_s_interval();
-    }, time);
-  };
+
   const clear_all_timer = () => {
     if (timer.value) {
       clearTimeout(timer.value);
@@ -308,25 +313,18 @@ export const details_main = (router,route) => {
   let message_fun = null
   onMounted(() => {
     loading.value = true;
+    init.value = true;
     detail_init();
     const { mid, csid } = route.params;
     // 增加监听接受返回的监听函数 
     message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
-    console.error('cmd:',cmd,data);
-      switch (cmd) {
-        //赔率盘口变更
-        case 'C105':
-        //   get_matchDetail_getMatchOddsInfo({
-        //    mcid: 0,
-        //    cuid: cuid.value,
-        //    mid,
-        //    newUser: 0,
-        //  },true);
-          break;
-      
-        default:
-          break;
-      }
+    let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
+    console.error(flag,'flag','cmd:',cmd,data);
+    //如果ms mmp变更了 就手动调用ws
+    if(flag){
+      init.value = false
+      detail_init();
+    }   
     })  
   });
   onUnmounted(() => {

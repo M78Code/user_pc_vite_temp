@@ -507,7 +507,7 @@ class BaseData {
         }
       });
       // 重置默认数据
-      this.left_menu_base_mi_arr =  left_menu;
+      this.left_menu_base_mi_arr = BUILD_VERSION ? [101,102] :left_menu  ;
 
       this.sports_mi = sports_mi;
 

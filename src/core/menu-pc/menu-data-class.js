@@ -574,8 +574,6 @@ class MenuData {
     if (!session_info) {
       return;
     }
-    console.warn('session_info', session_info);
-
     if (Object.keys(session_info).length) {
       const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root } = session_info;
 

@@ -59,12 +59,12 @@ import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
-const { mx_collect } = useMatchListMx();
+import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
+
 const props = defineProps({
   card_style_obj: {
     type: Object,
