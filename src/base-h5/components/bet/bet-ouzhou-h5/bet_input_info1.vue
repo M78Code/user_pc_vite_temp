@@ -160,7 +160,8 @@ const set_ref_data_bet_money = () => {
             background: var(--q-gb-t-c-11);
         }
         .input_amount{
-            color:#1A1A1A;
+            //color:#1A1A1A;
+            color: var(--q-gb-t-c-4);
         }
     }
     .money_input_cursor{

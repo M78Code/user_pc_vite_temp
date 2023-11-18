@@ -120,8 +120,8 @@ class MenuData {
     if (this.is_results()) return MatchMeta.get_results_match()
     if(!['1','2','3','6'].includes(this.current_lv_1_menu_i))return;
     // 清除赛事折叠信息
-    MatchDataBaseH5.init()
-    MatchFold.clear_fold_info()
+    // MatchDataBaseH5.init()
+    // MatchFold.clear_fold_info()
     // 赛果不走元数据， 直接拉取接口
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return
