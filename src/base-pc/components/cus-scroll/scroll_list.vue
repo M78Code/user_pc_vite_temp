@@ -70,6 +70,7 @@ let mitt_list = [];
  * @param {undefined} undefined
  */
  const set_scrollTop = (top, type) => {
+  if (!area_ref.value) return;
   if (type == "inc") {
     area_ref.value.scrollTop += top;
   } else if (type == "dec") {

@@ -101,7 +101,7 @@ const jump_func = (payload,type) => {
   menu_type.value = type
 
   //太多了 后续做优化
-  MenuData.set_menu_root(202)
+  MenuData.set_menu_root(202, true)
   MenuData.set_left_menu_result(obj)
   MenuData.set_menu_current_mi(obj.lv2_mi)
 

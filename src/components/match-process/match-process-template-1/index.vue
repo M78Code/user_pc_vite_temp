@@ -241,7 +241,8 @@ const computed_process_name = computed(() => {
     props.show_page == "match-list" &&
     process_name.indexOf("第") == 0
   ) {
-    return process_name.replace(" ", "<br/>");
+    //欧洲版，不用换行
+    return props.date_show_type === 'inline' ? process_name : process_name.replace(" ", "<br/>");
   } else {
     return process_name;
   }

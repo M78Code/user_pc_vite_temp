@@ -29,11 +29,14 @@
          "all_sports": "全部"
      },
      "match": {
-         "favorites": "收藏",
-         "matches": "赛事",
-         "featured": "精选",
-         "top_events": "热门赛事",
-         "home": "首页"
+        "favorites": "收藏",
+        "matches": "赛事",
+        "featured": "精选",
+        "top_events": "热门赛事",
+        "home": "首页",
+        "play_map": {
+          "1": "独赢"
+        }
      },
      "no_data": {
          "coming_soon": "即将推出"

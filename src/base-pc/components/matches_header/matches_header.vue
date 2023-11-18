@@ -38,7 +38,6 @@ const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 
 let mitt_list = null
 onMounted(()=>{
-	console.error('MenuData.menu_root',MenuData.menu_root)
 	set_tab_list(MenuData.menu_root)
 	mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_tab_list).off ]
 })
@@ -89,7 +88,7 @@ const checked_current_tab = payload => {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1
 	}
-	MenuData.set_mid_menu_result(obj)
+	// MenuData.set_mid_menu_result(obj)
 }
 
 
