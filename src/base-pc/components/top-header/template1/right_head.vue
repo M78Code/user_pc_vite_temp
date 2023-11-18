@@ -180,56 +180,16 @@ export default defineComponent({
       () => text.value,
       (val) => {
         let trimVal = val.trim();
-        get_search_data(0, 1, trimVal);
+        get_search_data(trimVal);
       }
     )
     
-    /**
-     * @description 搜索
-     * pramas
-     * index: tab 下标
-     * sport_id: 球类id
-     * keyword搜索的关键字
-     */
-    const search_data = ref([]);
-    let sport_kind_id = null;
-    const show_hot = ref(true);
-    const tabIndex = ref(0);
-    const show_history = ref(true);
-    const uid = UserCtr.get_uid();
-    const get_search_data = (index = 0, sport_id = 1, keyword) => {
-      show_history.value = false;
-      show_hot.value = false;
-      tabIndex.value = index;
-      sport_kind_id = sport_id;
-      if (keyword) {
-        text.value = keyword
-      }
-      let params = {
-        cuid: uid,
-        keyword: text.value,
-        searchSportType: sport_id || 1,
-        pageNumber: 1,
-        rows: 200,
-        isPc: true
-      }
-      if (!text.value) {
-        show_history.value = true;
-        show_hot.value = true;
-        search_data.value = [];
-        return;
-      }
-      get_search_result(params).then(res => {
-        if (res.code === '200') {
-          search_data.value = res.data.data;
-          console.log('res', res.data.data);
-          // 搜索前清空会话仓库数据
-          sessionStorage.removeItem('search_txt');
-          useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE,'result')
-        }
-      }).catch((e) => {
-        console.log(e);
-      });
+    // 传递搜索状态
+    const get_search_data = (val) => {
+      useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+        type: 'result',
+        text: val || text.value
+      })
     }
     /**
      * 是否显示搜索组件 default: false

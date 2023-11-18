@@ -130,11 +130,12 @@ watch(
 );
 
 onMounted(()=>{
-    useMitton(MITT_TYPES.EMIT_SET_SEARCH_CHANGE,ssss)
+  useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, change_status)
 })
 
-const ssss = (val)=>{
-  show_type.value = val
+const change_status = (pramas)=>{
+  show_type.value = pramas.type
+  console.log('sss',pramas);
 }
 
 /** 保存显示搜索组件状态 */
