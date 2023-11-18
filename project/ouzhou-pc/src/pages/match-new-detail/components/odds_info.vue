@@ -292,8 +292,8 @@ onMounted(() => {
   // justify-content: center;
   color: #1A1A1A;
   //  border-top: 1px solid #E2E2E2;
-  border-left: 1px solid #E2E2E2;
-  border-bottom: 1px solid #E2E2E2;
+  border-left: 1px solid var(--q-gb-bd-c-2);
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
   cursor: pointer;
   span{
     &:nth-child(1){
@@ -314,7 +314,7 @@ onMounted(() => {
   }
 
   &:hover {
-    background: #FFF1E6;
+    background:var(--q-gb-bg-c-5);
     ;
   }
 }

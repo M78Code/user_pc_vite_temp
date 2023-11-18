@@ -55,7 +55,10 @@
             "202": "Total Frames",
             "242": "Winner",
             "243": "HDP",
-            "244": "Total Goals"
+            "244": "Total Goals",
+            "30001": "Map Handicap",
+            "30002": "Match Winner",
+            "30003": "Total Maps"
           }
     },
     "setting_menu": {

@@ -74,7 +74,6 @@ const set_home_loading_time_record = (status) => {
 const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
   // 计算赛事卡片
   // 重新计算赛事样式
-
   MatchListCardClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(
     mids_arr
   );
@@ -106,7 +105,8 @@ const set_league_list_obj = (val={}) => {
    * @Description 获取前12场展开的赛事mid
    * @returns {array} mids 前12场赛事id
    */
-const get_first_unfold_mids = (league_list_obj) => {
+const get_first_unfold_mids = () => {
+  
   let mids = [];
   // 展开的赛事数量计数  用于计数首次加载列表 只展开前12场赛事
   let unfold_match_count = 0;

@@ -8,9 +8,9 @@
       <div class="leagues-wrap" :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
         <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
           <!-- 联赛是否收藏 -->
-          <div @click.stop="mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
+          <div @click.stop="collect"
             class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch">
-            <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
+            <i class="icon-star q-icon c-icon" :class="(card_style_obj.league_obj.tf || is_collect) && 'active'"></i>
           </div>
         </div>
         <!-- 联赛名称 -->
@@ -63,7 +63,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
-import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
+import { mx_collect } from "src/core/match-list-pc/composables/match-list-collect.js";
 
 const props = defineProps({
   card_style_obj: {
@@ -79,6 +79,7 @@ const csid = lodash.get(props.card_style_obj, 'league_obj.csid')
 let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
+const is_collect = ref(false);
 // 获取菜单类型
 if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
@@ -101,6 +102,12 @@ function set_fold() {
   MatchListCardData.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(props.card_style_obj)
 }
 
+function collect(){
+  mx_collect({ type: 'leagues', match: props.card_style_obj.league_obj });
+  // 前端控制收藏状态
+  is_collect.value = !is_collect.value;
+}
+
 </script>
 <style lang="scss">
 .ouzhou-match-league {
@@ -108,7 +115,7 @@ function set_fold() {
   width: 100%;
   height: 100%;
   background: #F5F5F5;
-  border-bottom: 1px solid #e2e2e2;
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
   font-weight: 500;
   cursor: pointer;
 
@@ -137,6 +144,15 @@ function set_fold() {
         display: flex;
         height: 100%;
         align-items: center;
+      }
+    }
+    
+    .icon-star{
+      &::before {
+        color: var(--q-gb-bg-c-8);
+      }
+      &.active::before {
+        color: var(--q-gb-bd-c-12);
       }
     }
 }

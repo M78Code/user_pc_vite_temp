@@ -26,9 +26,11 @@ import ServerTime from 'src/core/server-time/server-time.js';
 // import filterHeader from 'src/core/filter-header/filter-header.js'
 import get_match_list_params from './match-list-params.js'
 import { match_list_handle_set } from './match-handle-data.js'
+import { mx_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
-const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
+const { mx_use_list_res, mx_list_res } = process_composable_fn();
+
 const { show_mids_change, ws_destroyed } = ws_composable_fn();
 const { load_video_resources } = pre_load_video
 // 数据请求状态
