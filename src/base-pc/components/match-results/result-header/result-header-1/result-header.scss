@@ -130,7 +130,7 @@
           color: #999;
         }
         .check-wrap {
-          background:#fff ; // var(--qq--bg-check-wrap)
+          background:var(--q-gb-bg-c-4) ; // var(--qq--bg-check-wrap)
           border: 1px solid  #d1d5d8  !important; //var(--qq--bd-check-wrap)
           &:hover {
             // border-color: var(--q-gb-bd-c-13) !important;
@@ -249,7 +249,7 @@
         background: #666666;
         border-radius: 6px;
         white-space: nowrap;
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
         padding: 4px 6px;
         transition: all 0.3s linear;
       }

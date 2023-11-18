@@ -151,7 +151,7 @@
       width: 300px;
       height: 140px;
       display: inline-block;
-      background: #FFFFFF;
+      background: var(--q-gb-bg-c-4);
       padding-top: 8px;
       box-sizing: border-box;
       position: relative;

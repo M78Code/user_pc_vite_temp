@@ -408,7 +408,7 @@ onUnmounted(clear_timer)
             height: 22px;
             line-height: 22px;
             padding: 0 12px;
-            color: #ffffff;
+            color: var(--q-gb-t-c-1);
             border: none;
             border-radius: 26px;
 

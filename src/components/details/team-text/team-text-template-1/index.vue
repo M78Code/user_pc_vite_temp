@@ -57,7 +57,7 @@ export default defineComponent({
 .base-header-font {
   position: relative;
   font-size: 0.12rem;
-  color: #FFFFFF;
+  color: var(--q-gb-t-c-1);
   letter-spacing: 0;
   top: 0.12rem;
 }

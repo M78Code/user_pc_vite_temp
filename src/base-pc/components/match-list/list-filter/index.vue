@@ -291,7 +291,7 @@ import { compute_css_obj } from "src/core/index.js";
         padding-right: 3px;
       }
       .text-active {
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
       .menu-inline {
         display: inline-block;

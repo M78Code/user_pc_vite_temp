@@ -451,7 +451,7 @@ export default {
     background: #1f2129;
     .match-date {
       display: flex;
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
       .count_down {
         align-items: center;
         justify-content: center;
@@ -527,7 +527,7 @@ export default {
       flex: 1;
       align-items: center;
       min-width: 1px;
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
       height: 28px;
       overflow: hidden;
     }

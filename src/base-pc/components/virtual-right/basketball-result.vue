@@ -76,7 +76,7 @@ export default {
     border-radius: 14px;
     margin: auto;
     margin-bottom: 10px;
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     &.end {
       background-color: #5e88a7;
     }
@@ -188,7 +188,7 @@ export default {
       height: 40px;
       background-color: rgba(23, 25, 29, 0.9);
       font-size: 20px;
-      color: #fff;
+      color: var(--q-gb-t-c-1);
       margin: 0 4px;
     }
   }

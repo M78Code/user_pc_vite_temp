@@ -310,7 +310,7 @@ function handle_click_menu_mi_500(mi) {
         padding-right: 3px;
       }
       .text-active {
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
       .name-margin-left {
         margin-left: 5px;
