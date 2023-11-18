@@ -179,7 +179,7 @@ const set_ref_data_bet_money = () => {
 .size_14{
     font-size: 14px;
     font-weight: 400;
-    color: var(--q-gb-t-c-3);
+    color: var(--q-gb-t-c-4);
 }
 .margin_left_4{
     margin-left: 4px;
@@ -188,7 +188,7 @@ const set_ref_data_bet_money = () => {
 .size_16{
     font-size: 0.17rem;
     font-weight: 700;
-    color: var(--q-gb-bg-c-3);
+    color: var(--q-gb-t-c-4);
 }
 .color_ff700{
     color: var(--q-gb-t-c-1);
