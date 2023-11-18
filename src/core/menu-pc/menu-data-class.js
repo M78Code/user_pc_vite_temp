@@ -163,7 +163,6 @@ class MenuData {
   }
 
   init() {
-    console.log(i18n_t('ouzhou'), 1123123123123);
   }
   set_fetch_filter(){}
   // 设置终极菜单id

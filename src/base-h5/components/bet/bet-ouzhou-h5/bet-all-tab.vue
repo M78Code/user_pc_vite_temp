@@ -25,7 +25,7 @@
       color: var(--q-gb-t-c-2);
       width: 0.15rem;
       height: 0.15rem;
-      background: var(--q-gb-t-c-11);
+      background: var(--q-gb-t-c-18);
       display: flex;
       align-items: center;
       justify-content: center;

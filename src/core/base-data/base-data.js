@@ -628,7 +628,11 @@ class BaseData {
       res && await this.set_base_data_res(res);
       //  元数据加载完成 
       if (this.is_emit) {
-        useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+        let timer = setTimeout(() => {
+          useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+          clearTimeout(timer)
+          timer = null
+        }, 1000)
       }
       this.base_data_version.value = Date.now();
     } catch (error) {
