@@ -969,6 +969,14 @@ class MenuData {
   is_mix(mi) {
     return this._is_cur_mi(6, mi)
   }
+
+  /**
+   * 是否为首页
+   *  mi [number|string] 要比对的值
+  */
+  is_home(mi) {
+    return this._is_cur_mi(0, mi)
+  }
 }
 
 export default new MenuData();
