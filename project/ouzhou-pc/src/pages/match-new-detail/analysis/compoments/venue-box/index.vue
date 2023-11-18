@@ -94,9 +94,18 @@ const show_type = ref('');
 watch(
   () => props.detail_info,
   (val) => {
+    // 有动画优先播放动画
+    if (val.mvs > -1) {
+      animal_key.value = false
+      setTimeout(() => {
+        tab_click('animal')
+      }, 100);
+    // tab_click('animal')
+   }else{
     animal_key.value = false;
-    score_key.value = true;
-    show_type.value = ''
+     score_key.value = true;
+     show_type.value = ''
+   }
   }
 );
 
