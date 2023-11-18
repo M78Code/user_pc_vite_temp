@@ -374,13 +374,13 @@ export default {
           } else {
             // 否则就通知首页导航取消小红点提示
             // window.opener.postMessage({name: 'cancelActivityDot', dotHide: 1}, '*');
-            alert('cancelActivityDot')
+            // alert('cancelActivityDot')
           }
         } else {
           // 如果当前有可领取任务，也发送通知去更新小红点
           if (ids && this.activityObj.period == 2 && this.taskIds != '') {
             // window.opener.postMessage({name: 'cancelActivityDot', dotHide: 0}, '*');
-            alert('cancelActivityDot')
+            // alert('cancelActivityDot')
           }
         }
       }).catch(err => {

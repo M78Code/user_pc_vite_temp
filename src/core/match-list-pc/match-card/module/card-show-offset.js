@@ -129,7 +129,6 @@ export const set_card_show_level = (scroll_top = 0) => {
     }
     // 上一个赛事卡片对象
     let pre_match_card_obj
-    console.log('match_list_card_key_arr', MatchListCardData.match_list_card_key_arr);
     MatchListCardData.match_list_card_key_arr.forEach(card_key => {
       let card_obj = MatchListCardData.all_card_obj[card_key]
       // 设置卡片偏移量  顶部偏移量等于上一个卡片 的底部偏移量， 底部偏移量等于自定顶部偏移量加自身高度
@@ -152,7 +151,6 @@ export const set_card_show_level = (scroll_top = 0) => {
         }
         let mids_arr = card_obj.mids.split(',')
         // 遍历所有赛事卡片
-        console.log('match_card_obj', mids_arr);
 
         mids_arr.forEach( mid => {
           let match_card_obj = MatchListCardData.all_card_obj[mid+'_']

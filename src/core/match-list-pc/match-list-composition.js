@@ -72,7 +72,7 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 * @param  {boolean} cut   是否 切换右侧详情  true 不切换
 * @param {Object} params 其他参数
 */
-function fetch_match_list(is_socket = false, cut) {
+export function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
@@ -130,7 +130,6 @@ function fetch_match_list(is_socket = false, cut) {
 		/**返回数据处理************/
 		api && api(_params)
 			.then((res) => {
-
 				// 组件和路由不匹配 菜单id不匹配aa
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
@@ -178,12 +177,10 @@ function fetch_match_list(is_socket = false, cut) {
 	if (match_list_debounce_cache && match_list_debounce_cache["ENABLED"]) {
 		let info = match_list_debounce_cache.can_send_request(_params);
 		if (info.can_send) {
-
 			//直接发请求    单次数 请求的方法
 			send_match_list_request();
 		} else {
 			// 记录timer
-
 			current_hash_code = 0;
 			clearTimeout(axios_debounce_timer2);
 			axios_debounce_timer2 = setTimeout(() => {
@@ -197,7 +194,6 @@ function fetch_match_list(is_socket = false, cut) {
 		send_match_list_request();
 	}
 };
-
 
 function handle_destroyed() {
 	clearTimeout(axios_debounce_timer);
@@ -503,5 +499,6 @@ export default function () {
 		check_match_last_update_time,
 		mounted_fn,
 		mx_collect,
+		fetch_match_list,
 	}
 };

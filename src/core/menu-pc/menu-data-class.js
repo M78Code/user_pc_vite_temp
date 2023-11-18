@@ -145,7 +145,7 @@ class MenuData {
     }
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
-
+  set_fetch_filter(){}
   // 设置终极菜单id
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
@@ -160,58 +160,9 @@ class MenuData {
    * @param {*} val 节点ID
    * @param {*} is_fetch  是否立刻更新菜单 意味这立刻请求列表接口
    */
-  set_menu_root(val,is_fetch=false) {
+  set_menu_root(val) {
     this.menu_root = val;
-    is_fetch&&this.set_menu_data_version()
-  }
-  /**
-    * 设置请求参数 包括球种 日期 联赛 等等 euid 
-    * {
-    *   is_filter:ture,
-    *   euid:"",
-    *   jif:""
-    * }
-    * @param {Object} params  要设置的参数 包括 euid 球种 日期 联赛 等等  
-    * @param {Boolean} is_merge  是否深度合并参数 保持之前的参数 替换新参数
-    */
-  set_fetch_filter(params={},is_merge=false){
-    if(is_merge){
-      lodash.merge(this.mid_menu_result,params)
-    }else{
-      this.fetch_filter=params;
-    }
-    this.set_menu_data_version()
-  }
-  
-  // 设置 欧洲版头部配置信息
-  set_ouzhou_filter_config(obj) {
-    this.ouzhou_filter_config = {
-      ... this.ouzhou_filter_config,
-      ...obj,
-    }
-  }
-
-  // 设置左侧菜单id
-  set_left_menu_mi(val) {
-    this.left_menu_mi.value = val
-  }
-
-  // 设置 菜单的 router_root 节点
-  set_router_root_lv_1(val) {
-    this.router_root_lv_1 = val
-    this.router_root.value = val
-    // 首页 滚球 设置 menu_root 1
-    if([1,2].includes(val*1)){
-      this.set_menu_root(1)
-    }
-    this.router_root_version.value = Date.now()
-    
-  }
-  // 设置 菜单的 router_root 节点
-  //  1001 fetured  10002 top events   // 4001 matches  4002 langue 
-  set_router_root_lv_2(val) {
-    this.router_root_lv_2 = val
-    this.router_root_version.value = Date.now()
+    this.set_menu_data_version();
   }
 
   // 设置 菜单的版本变化
