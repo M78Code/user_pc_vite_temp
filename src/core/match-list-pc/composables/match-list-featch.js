@@ -300,7 +300,7 @@ const api_bymids = (
         }
         // 如果是第一次加载设置数据加载状态
         if (is_league_first) {
-          load_data_state.value = "data";
+          // load_data_state.value = "data";
         }
         // 回调函数
         if (callback) {
@@ -311,7 +311,7 @@ const api_bymids = (
         set_home_loading_time_record("err");
         // 如果是第一次加载设置数据加载状态
         if (is_league_first) {
-          load_data_state.value = "data";
+          // load_data_state.value = "data";
         }
         // 展开联赛数据加载状态
         let league_load_status = "";
