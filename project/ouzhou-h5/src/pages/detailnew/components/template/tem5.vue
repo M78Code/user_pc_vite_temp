@@ -201,7 +201,7 @@ onMounted(() => {
       .is-active {
         background: #ff7000;
         //color: #fff;
-        color: var(--q-gb-t-c-14);
+        color: var(--q-gb-t-c-2);
         .ol-on-text {
           padding-right: 5px;
           font-weight: 500;
@@ -242,12 +242,12 @@ onMounted(() => {
   .temp-active {
     background-color: #ff7000;
     //color: #ffffff;
-    color: var(--q-gb-t-c-14);
+    color: var(--q-gb-t-c-2);
 
     &:hover {
       background: #ff7000 !important;
       //olor: #ffffff;
-      color: var(--q-gb-t-c-14);
+      color: var(--q-gb-t-c-2);
     }
   }
 

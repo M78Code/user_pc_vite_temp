@@ -267,12 +267,12 @@ function getCurState (hipo) {
         }
 
         .c-bet-item.active {
-          background: var(--q-gb-bg-c-17);
+          background: var(--q-gb-bg-c-1);
           .handicap-value, .handicap-value-text {
             color: #ffe2cc;
           }
           .odds {
-            color: var(--q-gb-bg-c-11);
+            color: var(--q-gb-t-c-1);
           }
 
         }
@@ -282,7 +282,7 @@ function getCurState (hipo) {
         }
 
         .odds {
-            color: var(--q-gb-bg-c-17);
+            color: var(--q-gb-t-c-2);
             font-weight: 500;
             font-size: 14px;
         }

@@ -154,8 +154,8 @@ const on_update = (val) => {
 
 onUnmounted(() => {
   // 组件销毁时销毁监听函数
-  message_fun = null
   ws_message_listener.ws_remove_message_listener(message_fun)
+  message_fun = null
 })
 
 </script>
@@ -189,7 +189,8 @@ onUnmounted(() => {
         font-weight: 600;
       }
       .q-tab--active .q-tab__label{
-        color: #FF7000;
+        //color: #FF7000;
+        color: var(--q-gb-t-c-1);
       }
       .q-tab__indicator{
         height: 3px;
