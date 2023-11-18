@@ -34,7 +34,7 @@
       <scroll-list v-if="menu_config.menu_root_show_shoucang != 300">
         <!-- <template v-slot:before> -->
           <!-- 头部15 Mins模块 -->
-          <div v-show="matches_15mins_list.length && menu_root === 0" class="match-list-item">
+          <div v-show="matches_15mins_list.length && is_show_Modlue" class="match-list-item">
             <CurrentMatchTitle
               :title_value="'15 Mins'"
               :show_more_icon="false"
@@ -42,7 +42,7 @@
             <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
           </div>
           <!-- 头部Featured Matches模块 -->
-          <div v-show="matches_featured_list.length && menu_root === 0" class="match-list-item">
+          <div v-show="matches_featured_list.length && is_show_Modlue" class="match-list-item">
             <CurrentMatchTitle
               :title_value="'Featured Matches'"
               :show_more_icon="false"
@@ -141,7 +141,7 @@ const {
   show_refresh_mask,
   collect_count,
   is_show_hot,
-  on_refresh,
+  on_refresh,handle_destroyed
 } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
@@ -177,7 +177,7 @@ export default {
 
     const match_list_top = ref("76px");
 
-    const menu_root = ref(0)
+    const is_show_Modlue = ref(true)
 
     const { proxy } = getCurrentInstance();
 
@@ -196,7 +196,7 @@ export default {
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
-      // handle_destroyed()
+      handle_destroyed()
     });
     onActivated(()=>{
       LayOutMain_pc.set_oz_show_right(false);
@@ -209,7 +209,7 @@ export default {
     });
 
     watch(MenuData.menu_data_version, () => {
-      menu_root.value = MenuData.menu_root
+      is_show_Modlue.value = MenuData.menu_root == 0 && ![1002].includes(MenuData.router_root_lv_2.value)
     },
     { immediate: true }
     );
@@ -231,7 +231,7 @@ export default {
       load_data_state,
       coom_soon_state,
       match_list_top,
-      menu_root,
+      is_show_Modlue,
       match_list_card
     };
   },

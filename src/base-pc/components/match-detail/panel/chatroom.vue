@@ -1402,7 +1402,7 @@ export default {
           }
         }
         .q-message-text-content {
-          color: #fff;
+          color: var(--q-gb-t-c-1);
         }
         .q-message-container {
           > div {
@@ -1427,7 +1427,7 @@ export default {
     height: 24px;
     line-height: 24px;
     padding: 0 10px 0 14px;
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     border-radius: 14px;
     .inner-content {
       display: flex;

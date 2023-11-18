@@ -30,6 +30,7 @@
 
   const clear = () =>{
     BetData.set_clear_bet_info()
+    useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   }
 
   const dropbtnName = () =>{

@@ -347,7 +347,7 @@ export default {
             top: -6px;
             transform: translateX(-50%);
             border: 1px solid var(--q-gb-bg-c-13);
-            background: #fff;
+            background: var(--q-gb-bg-c-4);
             border-radius: 50%;
             display: flex;
             justify-content: center;

@@ -90,8 +90,8 @@ onMounted(() => {
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
     console.log('wswswswswswsws-cmd:', cmd, data)
-    MatchMeta.handle_ws_directive(cmd)
-  }, 200))
+    // MatchMeta.handle_ws_directive(cmd)
+  }, 1000))
   
 })
 
@@ -140,8 +140,8 @@ const clear_timer = () => {
 
 onUnmounted(() => {
   // 组件销毁时销毁监听函数
-  message_fun = null
   ws_message_listener.ws_remove_message_listener(message_fun)
+  message_fun = null
 })
 
 

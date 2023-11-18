@@ -182,7 +182,7 @@ onMounted(get_list)
 .announce-content {
     width: 100%;
     height: 100%;
-    background: #fff;
+    background: var(--q-gb-bg-c-4);
 
     .main-page {
         color: #5a6074;
@@ -203,7 +203,7 @@ onMounted(get_list)
             justify-content: space-between;
             align-items: center;
             padding: 8px 30px;
-            border-bottom: 1px solid #ff7000;
+            border-bottom: 1px solid var(--q-gb-bd-c-1);
         }
         .announce-title{
             font-size: 16px;
@@ -212,7 +212,7 @@ onMounted(get_list)
         }
         .announce-allbtn{
             padding: 2px 12px;
-            border: 0.5px solid #ff7000;
+            border: 0.5px solid var(--q-gb-bd-c-1);
             border-radius: 12px;
             background: none;
         }

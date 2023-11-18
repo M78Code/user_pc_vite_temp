@@ -9,6 +9,9 @@ class MatchResponsive {
     this.init()
   }
   init () {
+    // 是否元数据计算
+    this.is_compute_origin = ref(false)
+    // 赛事默认 hpid
     this.match_hpid = ref('1')
     // 球种对应的数量
     this.ball_seed_count = ref({})
@@ -18,6 +21,14 @@ class MatchResponsive {
     this.ball_seed_league_count = ref({})
     // 其他仓库联赛对应的数量
     this.ball_other_seed_league_count = ref({})
+  }
+
+  /**
+   * @description 设置是否计算元数据
+   * @param {Boolean} val
+   */
+  set_is_compute_origin (val) {
+    this.is_compute_origin.value = val
   }
 
   /**

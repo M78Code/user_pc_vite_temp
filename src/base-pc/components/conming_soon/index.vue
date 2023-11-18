@@ -44,7 +44,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #FFFFFF;
+    background: var(--q-gb-bg-c-4);
     box-sizing: border-box;
   }
   .coming_soon_img {
@@ -71,7 +71,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
     width: 100%;
     padding-top: 10px;
     box-sizing: border-box;
-    border-bottom: 2px solid #FF7000;
+    border-bottom: 2px solid var(--q-gb-bd-c-1);
     background: linear-gradient(270deg, #9C9C9C 0.04%, #3B3B3B 99.96%);
     position: relative;
 
@@ -93,7 +93,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
     .current_match_title {
         font-size: 18px;
         font-weight: 500;
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
         margin-bottom: 21px;
         height: 48px;
         line-height: 48px;

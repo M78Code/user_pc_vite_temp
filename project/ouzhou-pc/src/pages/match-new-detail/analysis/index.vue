@@ -130,7 +130,7 @@ const get_detail_info = (mid)=>{
 .analysis-body {
   // background: #ffffff;
   .analysis-top {
-    background: #ffffff;
+    background: var(--q-gb-bg-c-4);
     height: 40px;
     display: flex;
     justify-content: space-between;
@@ -172,7 +172,7 @@ height: 50px;
 display: flex;
 justify-content: center;
 align-items: center;
-background: #ffffff;
+background: var(--q-gb-bg-c-4);
 // padding-bottom: 10px;
 border-bottom: 1px solid #e2e2e2;
 }
@@ -203,7 +203,7 @@ border-bottom: 1px solid #e2e2e2;
     right: 5%;
     width: 90%;
     height: 2px;
-    background: #ff7000;
+    background: var(--q-gb-bg-c-1);
   }
 }
 

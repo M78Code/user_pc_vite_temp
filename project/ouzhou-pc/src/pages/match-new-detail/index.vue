@@ -311,7 +311,7 @@ export default{
 
   .match-detail-tab {
     height: 50px;
-    background: #ffffff;
+    background: var(--q-gb-bg-c-4);
   }
 }
 
@@ -378,7 +378,7 @@ export default{
 .card-item {
   cursor: pointer;
   height: 45px;
-  color: #ffffff;
+  color: var(--q-gb-t-c-1);
   text-align: center;
   line-height: 45px;
 
@@ -388,7 +388,7 @@ export default{
 }
 
 .active-nav {
-  color: #ff7000;
+  color: var(--q-gb-t-c-2);
   background-color: #626262;
 }
 
