@@ -63,14 +63,17 @@ import {
     reactive,
     watch,
     onMounted,
+    onUnmounted,
     defineEmits
 } from "vue";
 import { dateWeekMatchesFormat ,farmatSportImg } from './utils';
 import { MenuData } from "src/core/";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
 
+const emitters = ref({})
 const route = useRoute();
 const sportId = route.query.sportId;
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
@@ -79,6 +82,7 @@ const tabModel = ref(false);//下拉框
 const dateIndex = ref(0);//下拉框选择
 const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
+const menu_time = ref('')
 let second_tab_index = ref(0);//单日选择
 let area_tab_index = ref(0);//地区选择
 const current_menu_mi = ref("101");
@@ -103,6 +107,7 @@ const selectOptions = reactive([
 ]);
 
 const curSelectedOption = ref(selectOptions[0])
+
 /**
  * tab点击
  * @param {*} name 
@@ -139,6 +144,7 @@ const changeDatetab = (item, index) => {
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
     MenuData.set_date_time(item.val, item.type);
+    menu_time.value = item?.val
    
     // //根据时间筛选列表
     // if (!item?.val) {
@@ -151,11 +157,15 @@ const changeDatetab = (item, index) => {
     MenuData.set_current_lv1_menu(item.type?'3':'2');
     MenuData.set_menu_mi(current_menu_mi.value);
     // 获取数据
-    MatchMeta.set_origin_match_data(item?.val ? item.val : '')
+    MatchMeta.set_origin_match_data(menu_time.value)
     emit("changeDate", item.val);
 };
 onMounted(() => {
     setDefaultData('101');//默认足球
+})
+
+onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x());
 })
 /**
  * 默认请求今日数据
@@ -167,7 +177,7 @@ const setDefaultData = (val) => {
     // MenuData.set_menu_mi(mi);
     //球种改变设置今日
     MenuData.set_date_time(week[0].val);
-    changeDatetab(week[0], 0)
+    menu_time.value = week[0]
 }
 watch(() => MenuData.menu_mi.value, () => {
     setDefaultData(MenuData.menu_mi.value)

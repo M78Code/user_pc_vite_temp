@@ -538,7 +538,7 @@ const get_unsettle_tickets_count_config = () => {
 
       .bet-single-count {
         border-radius: 10px;
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
         width: 20px;
         height: 20px;
         line-height: 20px;
@@ -585,7 +585,7 @@ const get_unsettle_tickets_count_config = () => {
       position: absolute;
       top: 6px;
       width: 100%;
-      background: #fff;
+      background: var(--q-gb-bg-c-4);
       border: 2px solid #ff781d;
       border-radius: 5px;
 
@@ -611,7 +611,7 @@ const get_unsettle_tickets_count_config = () => {
       .triangle,
       .triangle1 {
         position: absolute;
-        background: #fff;
+        background: var(--q-gb-bg-c-4);
         border: 2px solid #ff781d;
         border-top: 0;
         border-left: 0;
@@ -644,7 +644,7 @@ const get_unsettle_tickets_count_config = () => {
 
 .bet-bg-tooltip {
   background: #a3afbf;
-  color: #ffffff;
+  color: var(--q-gb-t-c-1);
   border-radius: 2px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }

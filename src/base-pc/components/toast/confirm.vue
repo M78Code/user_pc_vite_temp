@@ -90,7 +90,7 @@ function confirm() {
 
   .items-center {
     padding: 3px 0 20px;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-4);
     position: relative;
     border-radius: 4px;
     width: 280px;
@@ -127,7 +127,7 @@ function confirm() {
     width: 184px;
     height: 36px;
     line-height: 36px;
-    color: #ffffff;
+    color: var(--q-gb-t-c-1);
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;

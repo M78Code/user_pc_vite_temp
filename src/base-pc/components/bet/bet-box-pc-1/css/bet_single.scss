@@ -115,7 +115,7 @@
             &.up-red {
               .odds-value {
                 background: #FF4040;
-                color: #FFFFFF;
+                color: var(--q-gb-t-c-1);
               }
             }
 
@@ -123,13 +123,13 @@
             &.down-green {
               .odds-value {
                 background: #64C258;
-                color: #FFFFFF;
+                color: var(--q-gb-t-c-1);
               }
             }
           }
           /*  赔率无效样式 */
           .invalid {
-            color: #FFFFFF;
+            color: var(--q-gb-t-c-1);
             background: var(--qq--theme-bg-invalid);
               border: var(--qq--theme-bd-invalid);
             padding: 2px 3px;
@@ -317,7 +317,7 @@
           .bet-input-close {
             .icon-failure:before {
               opacity: 0.9;
-              color: #FFFFFF;
+              color: var(--q-gb-t-c-1);
             }
             &:hover {
               .icon-failure:before {
@@ -477,7 +477,7 @@
             height: auto;
             .icon-failure:before {
               opacity: 0.9;
-              color: #FFFFFF;
+              color: var(--q-gb-t-c-1);
             }
             &:hover {
               .icon-failure:before {
@@ -675,20 +675,20 @@
               &.up-red {
                 .odds-value {
                   background: #FF4040;
-                  color: #ffffff;
+                  color: var(--q-gb-t-c-1);
                 }
               }
               /*  绿降样式 */
               &.down-green {
                 .odds-value {
                   background: #64C258;
-                  color: #ffffff;
+                  color: var(--q-gb-t-c-1);
                 }
               }
             }
             /*  赔率无效样式 */
             .invalid {
-              color: #FFFFFF;
+              color: var(--q-gb-t-c-1);
               background: var(--qq--theme-bg-invalid);
               border: var(--qq--theme-bd-invalid);
               padding: 2px 3px;
@@ -829,14 +829,14 @@ body {
               &.up-red {
                 .odds-value {
                   background: #FF4040;
-                  color: #FFFFFF;
+                  color: var(--q-gb-t-c-1);
                 }
               }
               /*  赔率下降时的样式 */
               &.down-green {
                 .odds-value {
                   background: #50c042;
-                  color: #FFFFFF;
+                  color: var(--q-gb-t-c-1);
                 }
               }
             }
@@ -920,7 +920,7 @@ body {
       /**联赛名称**/
       .bet-league-name {
         font-size: 12px;
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
         font-weight: 500;
       }
       /**投注项删除按钮**/
@@ -974,7 +974,7 @@ body {
           display: block;
           word-break: break-all;
           line-height: 1;
-          color: #FFFFFF;
+          color: var(--q-gb-t-c-1);
           label {
             margin-left: 5px;
             word-break: break-word;
@@ -992,7 +992,7 @@ body {
       .bet-play-game {
         display: flex;
         align-items: flex-start;
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
         word-break: break-word;
         .bet-play-text {
           line-height: 1.3;
@@ -1011,7 +1011,7 @@ body {
         text-align: right;
         .odds-value {
           font-size: 16px;
-          color: #FFFFFF;
+          color: var(--q-gb-t-c-1);
           font-weight: 700;
           span {
             position: relative;
@@ -1031,7 +1031,7 @@ body {
         }
         .invalid {
           font-size: 14px;
-          color: #FFFFFF;
+          color: var(--q-gb-t-c-1);
           background: #E93D3D;
           padding: 2px 5px;
           border-radius: 2px;
@@ -1073,7 +1073,7 @@ body {
           width: 68px;
           .icon-add:before {
             font-size: 16px;
-            color: #FFFFFF;
+            color: var(--q-gb-t-c-1);
             font-weight: 700;
           }
           &:hover {
@@ -1082,7 +1082,7 @@ body {
             .keyboard-btn-add,
             .keyboard-btn-text {
               font-size: 16px;
-              color: #FFFFFF;
+              color: var(--q-gb-t-c-1);
               font-weight: 700;
             }
           }
@@ -1091,16 +1091,16 @@ body {
             .keyboard-btn-add,
             .keyboard-btn-text {
               font-size: 16px;
-              color: #FFFFFF;
+              color: var(--q-gb-t-c-1);
               font-weight: 700;
             }
           }
           .keyboard-btn-text {
             font-size: 16px;
-            color: #FFFFFF;
+            color: var(--q-gb-t-c-1);
             .text-disable {
               font-size: 16px;
-              color: #FFFFFF;
+              color: var(--q-gb-t-c-1);
               font-weight: 700;
             }
           }
@@ -1110,12 +1110,12 @@ body {
             background: #515151;
             .icon-plus:before {
               font-size: 16px;
-              color: #FFFFFF;
+              color: var(--q-gb-t-c-1);
               font-weight: 700;
             }
             .keyboard-btn-text {
               font-size: 16px;
-              color: #FFFFFF;
+              color: var(--q-gb-t-c-1);
               font-weight: 700;
             }
           }
@@ -1155,7 +1155,7 @@ body {
           border: 0;
           background-color:var(--q-gb-t-c-16);
           &::before {
-            border-color: #fff;
+            border-color: var(--q-gb-bd-c-3);
           }
         }
       }
@@ -1209,7 +1209,7 @@ body {
         color: #64C258;
       }
       .bet-league-name {
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
       }
       .bet-against {
         font-size: 12px;
@@ -1227,7 +1227,7 @@ body {
       }
       .bet-play-text {
         font-size: 14px;
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
         .bet-handicap-name {
           color: #--q-gb-t-c-7;
         }
@@ -1235,7 +1235,7 @@ body {
         .bet-match-playing {
           margin-right: 5px;
           margin-top: 2px;
-          color: #FFFFFF;
+          color: var(--q-gb-t-c-1);
         }
       }
 
@@ -1243,7 +1243,7 @@ body {
         margin-top: 5px;
         margin-bottom: 10px;
         padding-right: 5px;
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
         font-size: 14px;
         font-weight: bold;
         word-break: break-all;
@@ -1257,7 +1257,7 @@ body {
           top: 10px;
           font-size: 14px;
           font-weight: 500;
-          color: #FFFFFF;
+          color: var(--q-gb-t-c-1);
           border-radius: 2px;
           span {
             position: relative;
@@ -1269,30 +1269,30 @@ body {
           .odds-value {
             padding: 1px 5px;
             background: #E93D3D;
-            color: #FFFFFF;
+            color: var(--q-gb-t-c-1);
           }
         }
         &.down-green {
           .odds-value {
             padding: 1px 5px;
             background: #50C042;
-            color: #FFFFFF;
+            color: var(--q-gb-t-c-1);
           }
         }
       }
 
       .bet-win {
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
       }
       .black-money-text {
         color: var(--q-gb-t-c-164);
         font-weight: 600;
       }
       .money-text {
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
       }
       .bet-win-money {
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
         .bet-addition {
           color: var(--q-gb-t-c-164);
           font-weight: 600;

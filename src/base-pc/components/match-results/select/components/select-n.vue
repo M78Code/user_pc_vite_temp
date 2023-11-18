@@ -138,7 +138,7 @@ const selectSport = (item) => {
     position: absolute;
     left: 0;
     z-index: 1;
-    background: #fff;
+    background: var(--q-gb-bg-c-4);
     border-bottom: 1px solid #d0d8de;
     .item {
       width: 100%;

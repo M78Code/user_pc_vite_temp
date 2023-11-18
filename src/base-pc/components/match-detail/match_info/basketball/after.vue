@@ -469,7 +469,7 @@ export default {
     // line-height: 40px;
     .match-date {
       display: flex;
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
       .no_cuntdowm {
         :deep(.c-match-date) {
           display: none;
@@ -515,7 +515,7 @@ export default {
       flex: 1;
       align-items: center;
       min-width: 1px;
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
       height: 28px;
       overflow: hidden;
     }

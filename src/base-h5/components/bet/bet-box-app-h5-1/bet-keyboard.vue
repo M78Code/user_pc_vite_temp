@@ -390,7 +390,7 @@ onUnmounted(() => {
   box-sizing: border-box;
   line-height: 54px;
   text-align: center;
-  border: 1px solid #E9E9E9;
+  border: 1px solid var(--q-gb-bd-c-10);
   background: #ffffff0D;
 }
 

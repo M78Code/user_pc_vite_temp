@@ -10,14 +10,15 @@
   </div>
 </template>
 <script setup>
-import { onMounted, reactive  } from "vue"
+import { onMounted, reactive, onUnmounted, ref  } from "vue"
 import tabDate from './tab-date/tab-date.vue';
 import MatchFirstStep from "./match-first-step.vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { IconWapper } from 'src/components/icon'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
 
-
+const emitters = ref({})
 const state = reactive({
   isClickDetail: false,  //是否点击联赛详情
   curTab: 0,
@@ -25,6 +26,17 @@ const state = reactive({
   curLeague: {},
   curArea: '',
   curFilterDate: ''
+})
+
+onMounted(() => {
+  emitters.value = {
+    emitters_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
+      MatchMeta.set_origin_match_data()
+    }).off 
+  }
+})
+onUnmounted(() => {
+  Object.values(emitters.value).map((x) => x());
 })
 
 const onTabChange = e => {

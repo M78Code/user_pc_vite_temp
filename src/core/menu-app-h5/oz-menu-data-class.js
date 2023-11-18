@@ -10,9 +10,9 @@ import lodash_ from "lodash";
 import { ref } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
 import { MITT_TYPES,useMittEmit } from "src/core/mitt/index.js" 
-import MatchFold from 'src/core/match-fold';
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { BUILD_VERSION } = BUILD_VERSION_CONFIG;
 const menu_type_config = {
   1: 1,
   2: 3,
@@ -36,7 +36,7 @@ class MenuData {
       this.update && this.update.cancel()
     }
     //----------------------------------- 常规球种 --------------------------------------//
-    this.conventionalType = 103; //默认300  一期只上足球篮球
+    this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = 0;
@@ -109,6 +109,29 @@ class MenuData {
     useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
 
   }
+  /**
+   * 收藏
+   * @param {*} mid 
+   * @returns 
+   */
+  get_menu_lvmi_list_only(mid){
+    let menu_lv_mi_lsit = [];
+    this.menu_list.forEach(item => {
+      (item.sl || {}).find(obj=>{
+        // 菜单id最后一位为顶级菜单的id
+        if(obj.mi.substr(obj.mi.length-1,1) == mid){
+          menu_lv_mi_lsit.push(obj)
+        }
+      })
+    })
+    menu_lv_mi_lsit = menu_lv_mi_lsit.map((item)=>{
+      return {
+        ...item,
+        mi:item.mi.slice(0,3)
+      }
+    })
+    return menu_lv_mi_lsit
+  }
   //设置赛果参数
   set_result_menu_api_params(val){
     this.result_menu_api_params = val
@@ -120,8 +143,8 @@ class MenuData {
     if (this.is_results()) return MatchMeta.get_results_match()
     if(!['1','2','3','6'].includes(this.current_lv_1_menu_i))return;
     // 清除赛事折叠信息
-    MatchDataBaseH5.init()
-    MatchFold.clear_fold_info()
+    // MatchDataBaseH5.init()
+    // MatchFold.clear_fold_info()
     // 赛果不走元数据， 直接拉取接口
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return

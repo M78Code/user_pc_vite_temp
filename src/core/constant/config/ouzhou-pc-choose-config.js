@@ -7,7 +7,7 @@ export default {
     "2": [
       {first_hpid: "37", second_hpid: "38"},
       {first_hpid: "37", second_hpid: "39"},
-      {first_hpid: "38", second_hpid: "38"},
+      {first_hpid: "38", second_hpid: "39"},
     ],
     "5": [
       {first_hpid: "153", second_hpid: "202"},

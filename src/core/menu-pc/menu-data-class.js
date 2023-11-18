@@ -11,7 +11,7 @@ import {
 } from "src/core/index.js"
 
 import STANDARD_KEY from "src/core/standard-key";
-import { LayOutMain_pc } from "src/core/index.js";
+import { LayOutMain_pc, i18n_t } from "src/core/index.js";
 import { nextTick, ref } from "vue";
 import lodash, { includes } from 'lodash';
 import BaseData from "src/core/base-data/base-data.js"
@@ -137,19 +137,33 @@ class MenuData {
       sport_tab: [
         { label: 'Matches', value: 4001 },
         { label: 'League', value: 4002 },
+        // { label: 'Next 24 Hours', value: 4003 },
       ], 
       // 收藏
       favouritse_tab: [
-        { label: "In-Play", value: 5001 },
-        { label: "To Day", value: 5002 },
-        { label: "Early", value: 5002 }
+        { label: "In-Play", value: 3001 },
+        { label: "To Day", value: 3002 },
+        { label: "Early", value: 3003 }
       ],
       inplay:{
         title: 'In-Play',
         name: 'All Matches'
       }
     }
+    this.ouzhou_time_list = [
+      { label:i18n_t('ouzhou.filter.select_time.12h'), title:'12小时', value: 12 }, 
+      { label:i18n_t('ouzhou.filter.select_time.24h'), title:'25小时', value: 24 }, 
+      { label:i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
+      { label:i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
+    ],
+    //  1001 fetured  10002 top events 4001 Matches 4002 League
+    this.router_root_lv_2 = ref(1001)
+    this.init()
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
+  }
+
+  init() {
+    console.log(i18n_t('ouzhou'), 1123123123123);
   }
   set_fetch_filter(){}
   // 设置终极菜单id
@@ -885,6 +899,13 @@ class MenuData {
     }
     return this.menu_root == mi
   }
+  //内部方法
+  _is_cur_root_l2(mi, param) {
+    if (param) {
+      return mi == param
+    }
+    return this.router_root_lv_2.value == mi
+  }
   /**
    * 是否选中了 热门
    * mi [number|string] 要比对的值
@@ -966,6 +987,22 @@ class MenuData {
   */
   is_mix(mi) {
     return this._is_cur_mi(6, mi)
+  }
+
+  /**
+   * 是否为首页
+   *  mi [number|string] 要比对的值
+  */
+  is_home(mi) {
+    return this._is_cur_mi(0, mi)
+  }
+
+  /**
+   * 是否为首页 top events
+   *  mi [number|string] 要比对的值
+  */
+  is_home_to_event(mi) {
+    return this._is_cur_root_l2(1002, mi)
   }
 }
 

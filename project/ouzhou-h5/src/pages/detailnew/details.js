@@ -332,6 +332,7 @@ export const details_main = (router,route) => {
     refreshOff()
     // 组件销毁时销毁监听函数
     ws_message_listener.ws_remove_message_listener(message_fun)
+    message_fun = null
   });
   return {
      detail_store,
