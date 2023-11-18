@@ -63,6 +63,8 @@ import { MatchProcessFullVersionWapper as matchProcess } from "src/components/ma
 import store from "src/store-redux/index.js";
 import details from "src/core/match-list-pc/details-class/details.js"
 import search from "src/core/search-class/search.js"
+import { get_search_result } from "src/api/module/search/index.js";
+import { UserCtr } from "src/core/";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 
 import loadData from "src/components/load_data/load_data.vue"
@@ -78,12 +80,8 @@ const props = defineProps({
     }
 })
 
-
 const emit = defineEmits(['update:show_type'])
 const update_show_type = (data) => emit('update:show_type', data)
-
-/** 国际化 */
-
 
 /** 数据加载状态 */
 const load_data_state = ref('data')
@@ -92,22 +90,16 @@ let res_list = reactive([])
 
 const router = useRouter()
 
-/** stroe仓库 */
-const { searchReducer } = store.getState()
 /**
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
 
-onMounted(() => {
-    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
-})
 const search_type = ref(null)
 const keyword = ref('')
 const get_props = (props) => {
     keyword.value = props.text
     search_type.value = props.type
-    console.log('yyy', keyword.value);
 }
 // 监听搜索关键词改变
 watch(
@@ -116,28 +108,10 @@ watch(
         if (search_type.value == 2) {
             update_show_type('none')
         } else {
-            get_search_result(res.substr(5))
+            _get_search_result(res, true)
         }
     }
 )
-
-/**
- * 获取搜索类型 default: 1
- * 路径: project_path\src\store\module\search.js
- */
-// const unsubscribe = store.subscribe(() => {
-//     const { searchReducer: new_searchReducer } = store.getState();
-//     keyword.value = new_searchReducer.keyword
-//     search_type.value = new_searchReducer.search_type
-// })
-// onBeforeUnmount(unsubscribe)
-
-/** 设置搜索联赛关键字 */
-const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
-/** 设置搜索状态 */
-const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
-/** 设置搜索类型 */
-const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
 
 /**
  * @Description:点击联赛搜索
@@ -169,7 +143,7 @@ const scrollRef = ref(null)
 function match_click(match) {
     search.result_scroll = scrollRef.value.getScrollPosition()
     search.insert_history(match.name)
-    details.on_go_detail(match, keyword.value.substr(5),router)
+    details.on_go_detail(match, keyword.value, router)
     set_search_status(false)
 }
 
@@ -179,8 +153,7 @@ const timer = ref(null)
  * @param {string} keyword 搜索关键字
  * @return {Undefined} Undefined
  */
-function get_search_result(keyword, is_loading) {
-    console.log('keyword', keyword, keyword.value);
+function _get_search_result(keyword, is_loading) {
     if (!keyword) {
         update_show_type('init')
         return
@@ -189,12 +162,20 @@ function get_search_result(keyword, is_loading) {
     if (is_loading) {
         load_data_state.value = 'loading'
     }
+    let params = {
+        keyword,
+        cuid: UserCtr.get_uid(),
+        pageNumber:1,
+        rows:200,
+        isPc:true,
+        searchSportType: props.search_csid
+    }
     //调用接口获取获取搜索结果数据
-    search.get_search_result(keyword, props.search_csid).then(res => {
-        const { state, list } = res
+    get_search_result(params).then(res => {
         update_show_type('result')
-        load_data_state.value = state
-        res_list = list
+        load_data_state.value = 'data'
+        res_list = search.get_result_data(res)
+        // console.log('res', res_list);
         let _ref_scroll = scrollRef.value;
         timer.value = setTimeout(() => {
             // 如果是从详情页返回
@@ -210,19 +191,23 @@ function get_search_result(keyword, is_loading) {
         })
     })
 }
+onMounted(() => {
+    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
+})
 onBeforeUnmount(() => {
     if (timer.value) {
         clearTimeout(timer.value)
         timer.value = null
     }
+    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
 })
 
 // 监听搜索球种变化
 watch(
     () => props.search_csid,
     () => {
-        const keword = keyword.value.substr(5)
-        get_search_result(keword, true)
+        const keword = keyword.value.trim()
+        _get_search_result(keword, true)
     }
 )
 
