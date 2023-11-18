@@ -213,16 +213,16 @@ onMounted(() => {});
 }
 
 .temp-active {
-  background: #ff7000;
-  color: #ffffff;
+  background: var(--q-gb-bg-c-1);
+  color: var(--q-gb-t-c-1);
 
   &:hover {
-    background: #ff7000 !important;
-    color: #ffffff;
+    background: var(--q-gb-bg-c-1) !important;
+    color: var(--q-gb-t-c-1);
   }
 
   .temp-on {
-    color: #ffffff !important;
+    color: var(--q-gb-t-c-1) !important;
     // margin-left: 10px;
   }
 }
