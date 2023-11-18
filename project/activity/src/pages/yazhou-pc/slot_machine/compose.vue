@@ -192,6 +192,9 @@ import * as api_activity from "project/activity/src/pages/yazhou-pc/api/index";
 import slider from "project/activity/src/pages/yazhou-pc/slot_machine/slider.vue"
 import lottery from "project/activity/src/pages/yazhou-pc/slot_machine/lottery.vue"
 import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
+import silver_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/silver_card.png";
+import gold_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/gold_card.png";
+import diamond_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/diamond_card.png";
 
 // 生成随机数
 const random = function(minNum,maxNum){
@@ -236,19 +239,19 @@ export default {
         '1':{
           type:1,
           name:'白银奖券',
-          img: require('public/image/activity_imgs/imgs/slot_machine/silver_card.png'),
+          img: silver_card,
           key:'silver'
         },
         '2':{
           type:2,
           name:'黄金奖券',
-          img: require('public/image/activity_imgs/imgs/slot_machine/gold_card.png'),
+          img: gold_card,
           key:'gold'
         },
         '3':{
           type:3,
           name:'钻石奖券',
-          img: require('public/image/activity_imgs/imgs/slot_machine/diamond_card.png'),
+          img: diamond_card,
           key:'diamond'
         },
       }
