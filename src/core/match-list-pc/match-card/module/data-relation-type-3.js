@@ -253,7 +253,7 @@
         if(!is_ws_call){
           Object.assign(all_card_obj[card_key],fold_template)
           all_card_obj[card_key].is_league_fold = is_league_fold
-          all_card_obj[card_key].is_show_card = true
+          all_card_obj[card_key].is_show_card = false
           // 设置赛事数据加载状态
           all_card_obj[card_key].load_data_status = is_league_fold ?'loading' : 'loaded'
         }else{

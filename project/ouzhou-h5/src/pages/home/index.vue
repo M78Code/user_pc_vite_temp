@@ -147,8 +147,8 @@ const on_update = (val) => {
     MenuData.set_menu_mi('101');
     get_ouzhou_home_data()
   } else {
-    state.current_mi = MenuData.top_events_list[0].mi;
-    MatchMeta.get_top_events_match(MenuData.top_events_list[0].csid)
+    state.current_mi = MenuData.top_events_list?.[0]?.mi;
+    MatchMeta.get_top_events_match(MenuData.top_events_list?.[0]?.csid)
   }
 }
 

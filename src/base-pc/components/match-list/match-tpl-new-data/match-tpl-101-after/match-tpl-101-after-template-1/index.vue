@@ -21,7 +21,6 @@
       :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
       <!-- 图片资源有问题，先用文字替代  -->
       <div :style="compute_css_obj({ key: 'pc-home-score-board' })">
-        比分
       </div>
     </div>
   </div>
@@ -179,13 +178,14 @@ onMounted(() => {
 }
 
 .score-board {
-  // width: 16px;
-  // height: 12px;
   cursor: pointer;
-  background-size: 100%;
   text-align: center;
   margin-left: auto;
-
+  >div {
+    width: 16px;
+    height: 12px;
+    background-size: 100%;
+  }
   &:hover {
     color: var(--q-gb-bg-c-17);
   }

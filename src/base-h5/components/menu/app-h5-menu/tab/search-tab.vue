@@ -40,7 +40,7 @@
         </div>
     </div>
 </template>
-  
+
 <script setup>
 import { ref } from "vue";
 import search from "./img/search.svg";
@@ -60,27 +60,33 @@ const props = defineProps({
             {
                 name: "欧冠",
                 val: 1,
+                tid: '352541568130764801',
                 img: ""
             },
             {
                 name: "英超",
                 val: 2,
-                img: ""
+                img: "",
+                tid: '471,401,412,460,475',
+
             },
             {
                 name: "意甲",
                 val: 3,
+                tid: '324',
                 img: ""
             },
             {
                 name: "西甲",
                 val: 4,
-                img: ""
+                img: "",
+                tid: '927'
             },
             {
                 name: "法甲",
                 val: 5,
-                img: ""
+                img: "",
+                tid: '269'
             },
             {
                 name: "中超",
@@ -100,7 +106,7 @@ const league_data = ref([])
 
 /**
  * 选中的数据
- * @param {*} val 
+ * @param {*} val
  */
 const select_change = (value) => {
     // drawerRight = !drawerRight
@@ -108,7 +114,7 @@ const select_change = (value) => {
 }
 /**
  * 选中事件
- * @param {*} val 
+ * @param {*} val
  */
 const changeTab = (val,i,event) => {
     console.log(`${props.dataList[val].name}-${val}`)
@@ -204,7 +210,7 @@ function key_down(event) {
                 margin-top: -2px;
             }
         }
-    
+
     }
 }
 .screenModal{
