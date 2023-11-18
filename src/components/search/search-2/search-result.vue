@@ -130,7 +130,6 @@ function league_click(league) {
             csid: props.search_csid
         }
     })
-    set_search_type(2)
     set_click_keyword(league.league_name)
 }
 
@@ -174,6 +173,11 @@ function _get_search_result(keyword, is_loading) {
     get_search_result(params).then(res => {
         update_show_type('result')
         load_data_state.value = 'data'
+        const { bowling, league, team } = res.data.data
+        if(!res.data.data || (!bowling && !league && !team)) {
+            load_data_state.value = ''
+            return
+        }
         res_list = search.get_result_data(res)
         // console.log('res', res_list);
         let _ref_scroll = scrollRef.value;
