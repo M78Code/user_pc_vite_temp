@@ -62,7 +62,7 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 // 菜单配置
 import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
-const popular = ([101, 102, 105])
+const popular = ([101, 102])
 const menu = [
   101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,
   114, 104, 106, 118,
