@@ -240,7 +240,7 @@ onUnmounted(() => {
   border-width: 1px 1px 0 1px;
   //border-style: solid;
   position: relative;
-  background: var(--q-gb-bg-c-12);
+  background: var(--q-gb-bg-c-1);
   padding: 0 0.15rem !important;
   border-top: 5px solid var(--q-gb-bd-c-1);
 

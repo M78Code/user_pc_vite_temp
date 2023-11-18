@@ -99,7 +99,7 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
     padding-left: 0.08rem;
   }
   .nonebox4-content-left-content-text-three{
@@ -135,7 +135,7 @@
   }
   .nonebox4-content-left-title{
       font-size: 13px;
-      color: #000;
+      color: var(--q-gb-t-c-13);
   }
   .nonebox4-content-left-content{
       min-height: 70px;

@@ -147,7 +147,7 @@ const checked_current_tab = payload => {
 	padding-top: 10px;
 	box-sizing: border-box;
 	border-bottom: 2px solid var(--q-gb-bd-c-1);
-	background: linear-gradient(270deg, #9C9C9C 0.04%, #3B3B3B 99.96%);
+	background: var(--q-gb-bg-lg-8);
 	position: relative;
 
 	.header_banner {
@@ -193,7 +193,7 @@ const checked_current_tab = payload => {
 			height: 28px;
 			font-size: 16px;
 			font-weight: 500;
-			color: #C2C2C2;
+			color: var(--q-gb-t-c-3);
 			margin-right: 40px;
 			cursor: pointer;
 			// border-bottom: 3px solid red;

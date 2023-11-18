@@ -170,6 +170,7 @@ function get_hot_search() {
 function get_history() {
     search.get_history(data => {
         histroy_data.value = data
+        histroy_data.value = histroy_data.value.slice(0, 3)
     })
 
 }

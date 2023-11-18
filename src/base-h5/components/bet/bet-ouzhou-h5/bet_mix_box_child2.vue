@@ -68,11 +68,11 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
-    color: var(--q-gb-bg-c-8);
+    color: var(--q-gb-t-c-3);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -97,13 +97,13 @@
   }
   .nonebox4-content{
       width: 100%;
-      background: var(--q-gb-t-c-14);
+      background: var(--q-gb-bg-c-2);
       padding: 10px;
       padding: 0.15rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
-      color: #000;
+      color: var(--q-gb-t-c-13);
   }
   .nonebox4-content-left-content{
       height: 70px;
@@ -126,7 +126,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-11);
+      color: var(--q-gb-t-c-1);
   }
   .nonebox4-content-right{
     display: flex;

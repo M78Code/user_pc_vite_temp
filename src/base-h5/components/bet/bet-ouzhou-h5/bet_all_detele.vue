@@ -102,7 +102,7 @@
   display: block;
 }
 .dropdown-content-che{
-  color: var(--q-gb-t-c-11) !important;
+  color: var(--q-gb-t-c-1) !important;
 }
 
     .del-info-dui{

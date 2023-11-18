@@ -141,13 +141,13 @@ const common_td_list = ref(
         // background: #FF7000;  
         background: var(--q-gb-bg-c-1);
         div {
-            color: #FFE2CC;
+            color: var(--q-gb-t-c-4);
         }
 
         &:hover {
             // background: #FF7000;
             background: var(--q-gb-bg-c-1);
-            color: #FFE2CC;
+            color: var(--q-gb-t-c-4);
         }
 
         .common {
