@@ -283,7 +283,8 @@ onUnmounted(()=>{
       height: 19px;
       line-height: 19px;
       font-weight: 400;
-      color: rgba(61, 59, 55, 1);
+      //color: rgba(61, 59, 55, 1);
+      color:var(--q-gb-t-c-6)
     }
   }
 
