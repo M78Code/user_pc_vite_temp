@@ -30,7 +30,7 @@
             </div>
             <div class="nonebox4-fourth-num">
                 <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
-                <div class="nonebox4-fourth-num-sun" data-number='x'>{{ i18n_t('app_h5.bet.delete')}}</div>
+                <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div>
                 <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
             </div>
         </div>
@@ -124,6 +124,7 @@ watch(() => active_index, (new_) => {
 
 // 点击键盘
 const _handleKeyPress = (e) => {
+    console.log(e,"这边是触发的事件")
   e.preventDefault();
   if (e.target.className.includes("shadow-show")) { return }; // 置灰的按钮不能再点击
   let num = e.target.dataset.number;
