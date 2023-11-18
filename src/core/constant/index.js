@@ -15,6 +15,7 @@ export  *  from './config/methods.js'
 export  *  from './config/play-mapping.js'
 export  *  from './config/status_code_map.js'
 export  *  from './config/timely_score.js'
+export  *  from './config/ouzhou-h5-sports-play-config'
 
 
  

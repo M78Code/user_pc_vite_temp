@@ -75,7 +75,6 @@ const deal_with_list_data = (data) => {
 			mid_arr.push(mid_info)
 		})
 	})
-	console.log('deal_with_list_data',data)
 	// if (MenuData.is_kemp()) {
 	//   MatchListData.set_list(mid_arr)
 	// }
@@ -91,7 +90,6 @@ const deal_with_list_data = (data) => {
  * @return {undefined} undefined
  */
 const mx_list_res = (data, backend_run, cut, collect) => {
-	console.log('mx_list_res',data)
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
 	// 将全量数据接口 切割成含有mid元素的对象数组
@@ -170,7 +168,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		
 
 		// 计算列表卡片样式
-		console.log('lockie-1', res_data);
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
@@ -205,7 +202,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				// 	tid: first_league.tid,
 				// 	sportId: first_league.csid,
 				// };
-				console.log('进来了几次1');
 				//触发右侧详情更新
 				// useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
 				callback_func = () => {

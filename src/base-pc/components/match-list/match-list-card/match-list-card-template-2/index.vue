@@ -1,16 +1,20 @@
 <!-- 欧洲版 主列表页面 -->
 <template>
-  <div class="list-card-wrap v-scroll-item relative-position" :class="{
-    'matc-type-card': [
-      'sport_title',
-      'play_title',
-      'no_start_title',
-    ].includes(card_type),
-  }" :style="`height:${card_style_obj?.card_total_height}px  !important;
-  width:${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)
-  }px  !important;${card_style}`">
+  <div 
+    class="list-card-wrap v-scroll-item relative-position" 
+    :class="{
+      'matc-type-card': [
+        'sport_title',
+        'play_title',
+        'no_start_title',
+      ].includes(card_type),
+    }" 
+    :style="`height:${card_style_obj?.card_total_height}px  !important;
+    width:${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)
+    }px  !important;${card_style}`"
+    v-if="card_style_obj.is_show_card"
+  >
     <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }}</div>
-
     <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
       <!-- 赛事状态 | 赛种类型 -->
       <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(
@@ -95,6 +99,7 @@ const mids_arr = computed(() => {
   }
   return mids_arr;
 });
+
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(()=>{

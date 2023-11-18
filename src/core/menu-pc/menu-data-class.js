@@ -303,7 +303,6 @@ class MenuData {
     ) {
       val = "match_list";
     }
-    console.error('this.menu_root',this.menu_root)
     // const { jinri_zaopan, guanjun } = obj
     let text = 'match-today-common'
     // 今日
@@ -313,6 +312,10 @@ class MenuData {
     // 早盘
     if ([3,203].includes(this.menu_root *1)) {
       text = 'match-early-common'
+    }
+    // 早盘
+    if (this.is_collect) {
+      text = 'match-collect'
     }
     // 常规赛种下的冠军
     // if (guanjun == 'common-guanjun') {

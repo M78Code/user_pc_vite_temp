@@ -45,6 +45,7 @@ const PAGE_SOURCE_POOL_PC =  [
   'match-collect' ,//收藏
   'match-esports' ,//电竞
   'match-vr' ,// vr
+  'match-collect', // 收藏
   "virtual_details"// vr 详情
 ]
 
