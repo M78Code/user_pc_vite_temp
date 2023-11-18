@@ -1295,12 +1295,18 @@ export default {
     }
 
     .counting-down-up-container {
-      width: 1rem;
+      // width: 1rem;
       height: .14rem;
       :deep(.counting-down-wrap){
         width: auto !important;
         .title-space-1{
           font-size: 13px;
+        }
+        .counting{
+          max-width: 40px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
 

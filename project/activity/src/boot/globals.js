@@ -16,7 +16,6 @@ import * as error_mapping from "project/activity/src/public/config/mapping/error
 import * as yabo_common from "project/activity/src/public/mixins/common/common.js";
 import * as virtual_common from "project/activity/src/public/mixins/common/virtual_common.js";
 // 该文件再 bet_item_mixin.js, bet_item_mixin.js 中使用由于最小投注单元会导致引入次数过多,因此暂时提出为公共的
-import gloable_mixin from "project/activity/src/public/mixins/betting/index.js";
 // 导入自定义高精度计算工具js
 import math from "project/activity/src/boot/mathjs"
 // import userCtr from 'project/activity/src/public/utils/user/userCtr.js';
@@ -276,8 +275,6 @@ export default async (app) => {//app, router, store,
     right: '3.5px',
     cursor: 'pointer'
   }
-
-  app.mixin(gloable_mixin);
   /** 指令  **************************/
 
   app.directive('img', {

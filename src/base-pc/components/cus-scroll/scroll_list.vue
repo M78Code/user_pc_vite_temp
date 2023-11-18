@@ -8,7 +8,7 @@
     <!-- 滚动区域 -->
     <div
       class="list-scrollbar router_scroll_layout"
-      ref="area"
+      ref="area_ref"
       @scroll="on_scroll"
     >
       <div class="v-scroll-content relative-position">
@@ -59,7 +59,7 @@ const scrollHeight = ref(0);
 const area_height = ref(0);
 const is_bootom_height = ref(0);
 
-const area_obj = ref('area')
+const area_ref = ref('area')
 let mitt_list = [];
 
 
@@ -71,11 +71,11 @@ let mitt_list = [];
  */
  const set_scrollTop = (top, type) => {
   if (type == "inc") {
-    area_obj.value.scrollTop += top;
+    area_ref.value.scrollTop += top;
   } else if (type == "dec") {
-    area_obj.value.scrollTop -= top;
+    area_ref.value.scrollTop -= top;
   } else {
-    area_obj.value.scrollTop = top;
+    area_ref.value.scrollTop = top;
   }
 };
 
@@ -91,7 +91,7 @@ onUnmounted(() => {
   // this.debounce_throttle_cancel(this.update_list_card_offset);
 });
 onMounted(() => {
-  area_height.value = area_obj.value.offsetHeight;
+  area_height.value = area_ref.value.offsetHeight;
   is_mounted.value = true;
   // 设置列表滚动条位置
   mitt_list = [
@@ -163,7 +163,7 @@ const on_scroll = (e) => {
  * @param {undefined} undefined
  */
 const scroll_height_change = () => {
-  scrollHeight.value = area_obj.value.scrollHeight;
+  scrollHeight.value = area_ref.value.scrollHeight;
   is_bootom_height.value = scrollHeight.value - area_height.value - 500;
   has_thumb.value = scrollHeight.value > area_height.value;
 };

@@ -24,9 +24,9 @@
               <FeaturedMatches :featured_matches="featured_matches" />
             </template>
             <!-- 赛事列表 -->
-           <template v-if="MatchMeta.match_mids.length > 0">
+           <template v-if="play_matchs.length > 0">
               <HeaderTitle title="In-Play"></HeaderTitle>
-              <MatchPlay />
+              <MatchPlay :play_matchs="play_matchs" />
            </template>
             <!-- 特色赛事 -->
             <!-- <template v-if="featured_matches.length > 0">
@@ -34,7 +34,7 @@
               <FeaturedMatches :featured_matches="featured_matches" />
             </template> -->
             <!-- 5大联赛 -->
-            <template v-if="leagues_matchs.length > 0">
+            <template v-if="five_league_match.length > 0">
               <HeaderTitle title="Top Leagues"></HeaderTitle>
               <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
             </template>
@@ -54,9 +54,9 @@
 </template>
  
 <script setup> 
-import { onMounted, ref ,reactive } from "vue";
+import { onMounted, ref ,reactive, onUnmounted } from "vue";
 import { watch } from "vue";
-
+import lodash from 'lodash'
 import TimeEvents from './components/time-events.vue'
 import HeaderTitle from './components/header-title.vue'
 import MatchLeagues from './components/match-leagues.vue'
@@ -65,12 +65,12 @@ import MatchPlay from './components/match-play.vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
-import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
-
+let message_fun = null
 const play_matchs = ref([])
 const time_events = ref([])
 const featured_matches = ref([])
@@ -83,7 +83,6 @@ const state = reactive({
  */
 const changeMenu = (item) =>{
   state.current_mi = item.mi;
-  console.log("热门球种csid",item.csid)
   MatchMeta.get_top_events_match(item.csid)
 }
 onMounted(async () => {
@@ -92,6 +91,13 @@ onMounted(async () => {
   get_ouzhou_home_data()
   got_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
+    console.log('wswswswswswsws-cmd:', cmd, data)
+    get_ouzhou_home_data()
+    got_five_league_matchs()
+  }, 200))
 })
 
 // 获取首页数据
@@ -103,10 +109,10 @@ const get_ouzhou_home_data = async () => {
     return match
   })
   // 滚球赛事
-  // play_matchs.value = dataList.map(t => {
-  //   const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-  //   return match
-  // })
+  play_matchs.value = dataList.map(t => {
+    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
+    return match
+  })
   // 热门赛事
   featured_matches.value = hots.map(t => {
     const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
@@ -124,71 +130,14 @@ const get_ouzhou_home_data = async () => {
  */
 const got_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
+  const mids = []
   five_league_match.value = list.map(t => {
-    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid) || t
+    mids.push(t.mid)
+    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid) || t
     return match
   })
+  MatchMeta.get_match_base_hps_by_mids(mids.toString())
 }
-
-// 国家赛事
-const leagues_matchs = ref([{
-  national: 'Germany',
-  nationalIcon: de_img,
-  visible: true,
-  children: [{
-    isCollect: false,
-    value: '6',
-    title: 'Liga de primera división'
-  }, {
-    isCollect: false,
-    value: '8',
-    title: 'Liga de primera división'
-  }]
-}, {
-  national: 'Denmark',
-  nationalIcon: dk_img,
-  visible: false,
-  children: [{
-    isCollect: false,
-    value: '6',
-    title: 'Liga de primera división'
-  }, {
-    isCollect: false,
-    value: '8',
-    title: 'Liga de primera división'
-  }, {
-    isCollect: false,
-    value: '8',
-    title: 'Liga de primera división'
-  }]
-}, {
-  national: 'Belgium',
-  nationalIcon: be_img,
-  visible: false,
-  children: [{
-    isCollect: false,
-    value: '6',
-    title: 'Liga de primera división'
-  }, {
-    isCollect: false,
-    value: '8',
-    title: 'Liga de primera división'
-  }]
-}, {
-  national: 'France',
-  nationalIcon: fr_img,
-  visible: false,
-  children: [{
-    isCollect: false,
-    value: '6',
-    title: 'Liga de primera división'
-  }, {
-    isCollect: false,
-    value: '8',
-    title: 'Liga de primera división'
-  }]
-}])
-
 
 const tabValue = ref('featured');
 // tabs 切换
@@ -203,12 +152,19 @@ const on_update = (val) => {
   }
 }
 
+onUnmounted(() => {
+  // 组件销毁时销毁监听函数
+  message_fun = null
+  ws_message_listener.ws_remove_message_listener(message_fun)
+})
+
 </script>
  
 <style scoped lang="scss">
 .home-page{
   height: 100%;
   overflow: hidden;
+  padding-bottom: 56px;
   .header_tabs{
     border-bottom: 2px solid #FF7000;
     :deep(.q-tabs--dense){

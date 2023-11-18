@@ -47,9 +47,7 @@ class SearchPCDataClass {
    * @return {*}
    */
   set_search_isShow(flag) {
-    nextTick(() =>
-      useMittEmit(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, flag)
-    );
+    useMittEmit(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, flag)
     this.search_isShow = flag;
     this.update();
   }

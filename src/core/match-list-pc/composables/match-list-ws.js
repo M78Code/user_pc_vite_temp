@@ -4,6 +4,7 @@ import lodash from 'lodash'
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import use_featch_fn from "./match-list-featch.js";
+// import { fetch_match_list } from '../match-list-composition.js'
 import {utils } from 'src/core/index.js';
 //  订阅所需 赛事ID
 
@@ -94,7 +95,14 @@ const ws_c8_subscribe = () => {
 };
 const refresh_c8_subscribe = () => {
 	message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
-		console.log('cmd:',cmd,data);
+		// 调用 matches  接口
+		if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
+			// fetch_match_list()
+		}
+		// 调用 mids  接口
+		if (['C303', 'C114'].includes(cmd)) {
+			api_bymids()
+		}
 	})
 	// if (this.SCMD_C8) {
 	// 	const skt_mid_obj = ws_c8_subscribe();
@@ -102,6 +110,8 @@ const refresh_c8_subscribe = () => {
 	// 	 this.SCMD_C8(skt_mid_obj);
 	// }
 };
+
+
 /**
 		 * @Description 可视赛事ID改变
 		 * @param {undefined} undefined

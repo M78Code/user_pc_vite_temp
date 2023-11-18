@@ -122,7 +122,8 @@ const tabClick = (item) => {
 <style lang="scss" scoped>
 .detail-tab {
   // height: 272px;
-  background: #ffffff;
+  //background: #ffffff;
+  background: var(--q-gb-bg-c-15);
   padding-bottom: 15px;
 }
 

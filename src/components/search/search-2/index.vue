@@ -10,10 +10,10 @@
     <div
       v-show="route.params.video_size != 1"
       class="serach-wrap column"
-      :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
-      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
+      :style="{ right: `${search_width}px`, paddingRight: `${utils.is_iframe ? 10 : 14}px`}"
+      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': utils.is_iframe }"
     >
-      <search-input v-model:show_type="show_type" />
+      <!-- <search-input v-model:show_type="show_type" /> -->
       <!-- 遮罩层样式.bottom-wrap -->
       <div class="bottom-wrap col search-result relative-position">
         <!-- 球类导航 -->
@@ -63,12 +63,12 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, defineComponent,watch } from "vue";
+import { ref, reactive, onMounted, onUnmounted, defineComponent,watch, defineProps } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
-import store from "src/store-redux/index.js";
+import { LayOutMain_pc, utils } from 'src/core/index.js'
 // 搜索输入框组件
 import searchInput from "./search-input.vue"
 // 搜索初始化组件
@@ -87,22 +87,15 @@ import { api_search } from "src/api/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-// import { component_symbol, need_register_props } from "src/components/search/config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({})
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
-
-/** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe);
 /** 左侧列表显示形式 normal：展开 mini：收起 */
-const main_menu_toggle = ref(MenuData.main_menu_toggle)
+const main_menu_toggle = ref('')
 
 /** 显示类型 */
 const show_type = ref('init')
@@ -113,14 +106,11 @@ const sports_tab_index = ref(0)
 /** 搜索球种 */
 const search_csid = ref(1)
 
-const search_width = ref(LayOutMain_pc.layout_search_width)
-// let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
-
+let search_width = ref(LayOutMain_pc.layout_search_width + 'px')
+let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
+let mitt_list = []
 /* 路由对象 */
 const route = useRoute();
-
-/** stroe仓库 */
-const { searchReducer, layoutReducer, globalReducer } = store.getState();
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
@@ -142,10 +132,10 @@ watch(
 const set_search_status = (data) =>{
   SearchPCClass.set_search_isShow(data)
 }
-const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) => {
+
+function show_search_rezult(bool) {
   search_isShow.value = bool
-})
-onUnmounted(off)
+} 
 
 const click_fun = () => set_search_status(false);
 // TODO:
@@ -163,7 +153,6 @@ const click_fun = () => set_search_status(false);
 */
 const is_unfold_multi_column = ref(LayOutMain_pc.is_unfold_multi_column)
 
-onMounted(() => window.addEventListener('resize', on_resize))
 
 
 // const unsubscribe = store.subscribe(() => {
@@ -200,7 +189,6 @@ function set_sports_list() {
     sports_list = []
   });
 }
-onMounted(set_sports_list)
 
 /**
  * @Description 设置球种tab选中索引
@@ -222,9 +210,20 @@ function on_resize() {
   LayOutMain_pc.set_layout_main_width()
   LayOutMain_pc.set_layout_search_width()
   search_width.value = LayOutMain_pc.layout_search_width
-  // main_width.value = LayOutMain_pc.layout_main_width + 'px'
+  main_width.value = LayOutMain_pc.layout_main_width + 'px'
 }
-onUnmounted(() => window.removeEventListener('resize', on_resize))
+onMounted(() => {
+  mitt_list = [
+    useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, show_search_rezult).off
+  ]
+  window.addEventListener('resize', on_resize)
+  set_sports_list()
+})
+
+onUnmounted(() => {
+  mitt_list.forEach(i => i());
+  window.removeEventListener('resize', on_resize)
+})
 
 </script>
 <script>
@@ -248,10 +247,11 @@ export default defineComponent({
 
 .serach-wrap {
   position: absolute;
-  top: 0;
-  left: 0px;
+  top: 10px;
+  left: 240px;
   bottom: 0;
   z-index: 999;
+  min-width: 1445px;
 
   &.iframe {
     top: 50px !important;

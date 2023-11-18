@@ -72,7 +72,7 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 * @param  {boolean} cut   是否 切换右侧详情  true 不切换
 * @param {Object} params 其他参数
 */
-function fetch_match_list(is_socket = false, cut) {
+export function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
@@ -197,7 +197,6 @@ function fetch_match_list(is_socket = false, cut) {
 		send_match_list_request();
 	}
 };
-
 
 function handle_destroyed() {
 	clearTimeout(axios_debounce_timer);
@@ -503,5 +502,6 @@ export default function () {
 		check_match_last_update_time,
 		mounted_fn,
 		mx_collect,
+		fetch_match_list,
 	}
 };
