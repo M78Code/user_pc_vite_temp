@@ -81,8 +81,8 @@ const set_confirm = () => {
         width: 240px;
         height: 46px;
         border-radius: 2px;
-        background: #ff7000;
-        color: #fff;
+        background: var(--q-gb-bg-c-1) ;
+        color: var(--q-gb-t-c-1);
     }
 
     .bet-state {

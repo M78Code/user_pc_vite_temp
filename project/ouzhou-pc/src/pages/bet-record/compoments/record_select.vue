@@ -165,7 +165,7 @@ div.q-menu {
 
   &:deep(.q-checkbox__inner) {
     font-size: 30px;
-    color: #ff7000;
+    color: var(--q-gb-t-c-2);
   }
 
 }
@@ -193,8 +193,8 @@ div.q-menu {
     width: 79px;
     height: 28px;
     line-height: 28px;
-    background-color: #FF7000;
-    color: #ffffff;
+    background-color: var(--q-gb-bg-c-1);
+    color: var(--q-gb-t-c-1);
     border-radius: 2px;
     text-align: center;
     cursor: pointer;
@@ -262,16 +262,16 @@ div.q-menu {
     }
 
     .btn-group-item-ls-active {
-      background-color: #FFFFFF;
-      border: 1px solid #FF7000;
+      background-color: var(--q-gb-bg-c-4);
+      border: 1px solid var(--q-gb-bd-c-1);
       margin-left: -1px;
       margin-right: -1px;
     }
 
     &:hover {
       .btn-group-item-ls {
-        background-color: #FFFFFF;
-        border: 1px solid #FF7000;
+        background-color: var(--q-gb-bg-c-4);
+        border: 1px solid var(--q-gb-bd-c-1);
         margin-left: -1px;
         margin-right: -1px;
 

@@ -120,12 +120,12 @@ onMounted(() => {
 }
 
 .temp-active {
-  background-color: #ff7000;
-  color: #ffffff !important;
+  background-color: var(--q-gb-bg-c-1);
+  color: var(--q-gb-t-c-1) !important;
 
   &:hover {
-    background: #ff7000 !important;
-    color: #ffffff;
+    background: var(--q-gb-bg-c-1) !important;
+    color: var(--q-gb-t-c-1);
   }
 }
 
@@ -137,7 +137,7 @@ onMounted(() => {
 }
 
 .temp_grid_item {
-  color: #ff7000;
+  color: var(--q-gb-t-c-2);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;

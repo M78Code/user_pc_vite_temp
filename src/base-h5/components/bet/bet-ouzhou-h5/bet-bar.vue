@@ -11,7 +11,7 @@
     <div v-show="false">{{ userData.user_version }}</div>
     <div class="nonebox4-first">
         <div class="nonebox4-first-left">
-            <div class="nonebox4-first-left-img">1</div>
+            <div class="nonebox4-first-left-img">{{BetData.bet_single_list.length}}</div>
             <div class="nonebox4-first-left-text">{{i18n_t("bet.bet_record")}}</div>
         </div>
         <div class="nonebox4-first-right">
@@ -158,15 +158,15 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--q-gb-bg-c-14);
-    background: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-2);
+    background: var(--q-gb-bg-c-1);
     border-radius: 50%;
 }
 .nonebox4-first-left-text {
     margin-left: 0.05rem;
     display: flex;
     font-size: 14px;
-    color: var(--q-gb-bd-c-1);
+    color: var(--q-gb-t-c-14);
 }
 .nonebox4-first-right {
     display: flex;

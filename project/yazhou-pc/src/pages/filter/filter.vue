@@ -627,7 +627,7 @@ const set_botton_top = () => {
 
     .all-count {
         font-size: 14px;
-        color: #FF7000;
+        color: var(--q-gb-t-c-2);
         margin-left: 10px;
     }
 
@@ -638,8 +638,8 @@ const set_botton_top = () => {
         line-height: 36px;
         text-align: center;
         font-size: 14px;
-        color: #fff;
-        background: #FF7000;
+        color: var(--q-gb-t-c-1);
+        background: var(--q-gb-bg-c-1);
         cursor: pointer;
         margin: 0 10px;
         border-radius: 4px;

@@ -85,7 +85,7 @@ export default defineComponent({
   width: 100%;
   height: 68px;
   // background-color: #FF7000;
-  background-color: var(--q-gb-t-c-16);
+  background-color: var(--q-gb-bg-c-1);
   .header-content {
     display: flex;
     align-items: center;
@@ -112,7 +112,7 @@ export default defineComponent({
       font-weight: 500;
       font-size: 16px;
       line-height: 68px;
-      color: #ffe2cc;
+      color: var(--q-gb-t-c-4);
       font-weight: 500;
       cursor: pointer;
 
@@ -129,7 +129,7 @@ export default defineComponent({
     }
 
     .active-nav {
-      background-color: #d45d00;
+      background-color: var(--q-gb-bg-c-3);
 
       .header-nav-title {
         // border-bottom: 2px solid #ffffff;

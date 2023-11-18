@@ -151,13 +151,13 @@ const show_quick_amount = state => {
     display: flex;
     align-itemss: center;
     transition: .3s;
-    caret-color:#FF7000;
+    caret-color:var(--q-gb-t-c-2) ;
      
     &:focus,&:focus-visible{
         transition: .02s;
         outline: none;   
        // padding-left: 14px;
-        border: 0.5px solid #FF7000;
+        border: 0.5px solid var(--q-gb-bd-c-1);
         box-shadow: 0px 1px 4px rgba(255, 112, 0, 0.1)
     }
     &::-webkit-input-placeholder {/*Chrome/Safari*/
