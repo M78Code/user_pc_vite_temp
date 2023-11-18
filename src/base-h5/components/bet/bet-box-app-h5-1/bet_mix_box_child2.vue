@@ -26,7 +26,7 @@
         -->
         <div v-else>
           <bet-after-status v-if="!!BetData.is_bet_single"></bet-after-status>
-          <bevisBetedStatus v-else></bevisBetedStatus>
+          <bevisBettedStatus v-else></bevisBettedStatus>
         </div>
       </div>
 
@@ -160,8 +160,11 @@
 
         </div>
 
-        <!--投注后的 确定按钮 -->
-        <div v-else @click="set_clear()" class="nonebox4-sub">{{ i18n_t('app_h5.bet.confirm')}}</div>
+      <!--投注后的 确定按钮 -->
+      <!--<div v-else @click="set_clear()" class="nonebox4-sub">{{ i18n_t('app_h5.bet.confirm')}}</div>-->
+
+      <!-- 投注按钮 -->
+      <bevisBettedButton @bindClick="set_clear()" v-else></bevisBettedButton>
 
     </div>
   </div>
@@ -176,8 +179,8 @@ import betMixBoxChild7 from './bet_mix_box_child7.vue';
 import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
 import betInfoList from "./bet_info_list.vue";
-import bevisBetedStatus from "./bevis-beted_status.vue"
-
+import bevisBettedStatus from "./bevis-betted_status.vue"
+import bevisBettedButton from "./bevis-betted-button.vue"
 
 import betMixShow from './bet_mix_show3.vue';
 import keyBoard from './/bet-keyboard.vue';
@@ -188,6 +191,8 @@ import betConflictTips from './bet-conflict-tips.vue'
 import betCollusionInput from './bet-collusion-input.vue'
 import betCollusionInput1 from './bet-collusion-input1.vue'
 import betCollusionInput2 from './bet-collusion-input2.vue'
+
+
 
 
 import BetData from "src/core/bet/class/bet-data-class.js";
