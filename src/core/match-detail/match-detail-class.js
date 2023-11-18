@@ -429,4 +429,14 @@ export default class MatchDetailCtr {
     this.first_details_item = val
     this.set_details_data_version()  
   }
+  /**
+   * @description:详情WS推送指令  只需要关注ms mmp字段的变化
+   * @param {{*}} 
+   * @return {boolean}
+   *  * `ms` 赛事状态 0:未开赛 1:赛事进行中  2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
+   * `mmp` 赛事阶段  
+  */
+  handler_details_ws_cmd(cmd){
+    return ["C101"].includes(cmd)
+  }
 }

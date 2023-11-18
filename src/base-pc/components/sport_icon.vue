@@ -84,7 +84,7 @@
     400:68, //冠军
   } // 0 - 54个  
   // 足球 - 棒球 10   射击= 类似棒球 20  击剑 30  摔跤 40  英雄联盟上面那个 50 
-
+  
   const props = defineProps({
     // 球种 ID
     sport_id: [Number, String],
@@ -108,9 +108,22 @@
       type: Boolean,
       default: () => false,
     },
+    // 是否展示灰色图标
+    color_type:{
+      type: String,
+      default: () => "",
+    },
   })
 
   const icon_styles = computed(() => {
+    //欧洲版是灰色图标
+    if(props.color_type === 'gray_ball'){
+      Object.keys(sport_number).forEach(key => {
+        sport_number[key] = sport_number[key] + 1;
+        }
+      )
+    }
+
     //雪碧图样式 计算方式参考备注文件
     let number =  sport_number[props.sport_id]
     // 如果是未选中状态Y轴坐标下移一位

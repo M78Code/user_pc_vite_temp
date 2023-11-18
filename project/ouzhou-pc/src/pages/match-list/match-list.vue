@@ -110,7 +110,7 @@ import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
 // import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
-// import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 
@@ -191,9 +191,7 @@ export default {
 
       mounted_fn();
       const { mins15_list= [], featured_list= [] } = await init_home_matches();
-      console.log(mins15_list, featured_list, 'objobjobjobjobj', MenuData.menu_root)
       matches_15mins_list.value = mins15_list
-      console.log(matches_15mins_list.value)
       matches_featured_list.value = featured_list
       MatchListCardDataClass_match_list_card_key_arr();
     });
@@ -233,7 +231,8 @@ export default {
       load_data_state,
       coom_soon_state,
       match_list_top,
-      menu_root
+      menu_root,
+      match_list_card
     };
   },
 };
