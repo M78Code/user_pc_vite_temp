@@ -203,7 +203,7 @@ function confirm() {
       display: block;
       width: 34px;
       height: 3px;
-      background-image: linear-gradient(-45deg, #ffeac0 0%, #fffaef 100%);
+      background-image: var(--q-gb-bg-lg-13);
       position: absolute;
       top: 37px;
       border-radius: 2px;
@@ -227,7 +227,7 @@ function confirm() {
     li::before {
       content: "";
       display: block;
-      background-image: linear-gradient(-45deg, #848484 0%, #cbcbcb 100%);
+      background-image: var(--q-gb-bg-lg-14);
       width: 5px;
       height: 5px;
       position: absolute;

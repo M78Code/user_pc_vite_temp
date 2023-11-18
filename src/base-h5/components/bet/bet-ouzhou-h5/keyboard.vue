@@ -287,7 +287,7 @@ onUnmounted(() => {
   -webkit-overflow-scrolling: touch;
   font-size: 0.18rem;
   font-weight: 600;
-  color: var(--q-gb-bg-c-3);
+  color: var(--q-gb-bg-c-13);
   font-family: "DIN";
   border-top: 1px solid var(--q-gb-t-c-5)
 }
@@ -296,11 +296,12 @@ onUnmounted(() => {
   box-sizing: border-box;
   line-height: 46px;
   text-align: center;
-  background: var(--q-gb-t-c-14);
+  background: var(--q-bg-c-2);
 }
 .key-cell {
   &:first-child { // 左侧第一排MAX的样式
-    background: var(--q-gb-t-c-6);
+    background: var(--q-gb-bd-c-1);
+    color: var(--q-gb-t-c-4);
   }
   &:last-child {
     margin-right: 0;

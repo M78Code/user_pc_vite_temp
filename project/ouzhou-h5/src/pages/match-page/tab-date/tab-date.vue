@@ -68,7 +68,7 @@ import {
 } from "vue";
 import { dateWeekMatchesFormat ,farmatSportImg } from './utils';
 import { MenuData } from "src/core/";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";

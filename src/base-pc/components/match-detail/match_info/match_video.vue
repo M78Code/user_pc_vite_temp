@@ -275,7 +275,7 @@ export default {
     padding: 0 45px 0 10px;
     z-index: 12;
     pointer-events: none;
-    background: linear-gradient(0deg, rgba(102, 102, 102, 0.0001) 0.99%, rgba(0, 0, 0, 0.4) 85.31%);
+    background: var(--q-gb-bg-lg-11);
     .replay-info {
       font-weight: 400;
       font-size: 12px;
