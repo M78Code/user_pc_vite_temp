@@ -73,7 +73,7 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig 
 
 import "../match-list/match_list.scss";
 
-const { mounted_fn, load_data_state, collect_count, is_show_hot, on_refresh } = useMatchListMx();
+const { mounted_fn, handle_destroyed,load_data_state, collect_count, is_show_hot, on_refresh } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
     components: {
@@ -109,7 +109,7 @@ export default {
             MatchListCardDataClass_match_list_card_key_arr()
         });
         onUnmounted(() => {
-            // handle_destroyed()
+             handle_destroyed()
         })
         onActivated(() => {
             LayOutMain_pc.set_oz_show_right(true)

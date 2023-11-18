@@ -14,7 +14,7 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import collect_composable_fn from "./composables/match-list-collect.js";
+import {update_collect_data, mx_collect_count} from "./composables/match-list-collect.js";
 import ws_composable_fn from "./composables/match-list-ws.js";
 import use_featch_fn from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
@@ -29,7 +29,6 @@ import { match_list_handle_set } from './match-handle-data.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
-const { update_collect_data, mx_collect_count, collect_count, mx_collect } = collect_composable_fn();
 const { show_mids_change, ws_destroyed } = ws_composable_fn();
 const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
@@ -59,7 +58,7 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 	tid_match_list = setTimeout(() => {
 		fetch_match_list()
 	}, 80);
-}).off
+})
 // watch(() => MenuData.match_list_version.value, () => {
 // 	clearTimeout(tid_match_list)
 // 	tid_match_list = setTimeout(() => {
@@ -74,6 +73,7 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 */
 export function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
+	console.log('get_match_list_params',match_list_params)
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -457,8 +457,13 @@ function check_match_last_update_time() {
 function emit_site_tab_active() {
 	fetch_match_list(true);
 };
-export default function () {
 
+function get_collect_match_list(){
+	get_collet_match_list_params()
+
+}
+export default function () {
+	console.log('jiffy-2')
 	/**
 	 * @Description 设置数据加载状态
 	 * @param {string} 数据加载状态
@@ -489,7 +494,6 @@ export default function () {
 		is_loading,
 		match_tpl_component,
 		show_refresh_mask,
-		collect_count,
 		is_show_hot,
 		load_data_state,
 		on_go_top,
@@ -498,7 +502,6 @@ export default function () {
 		set_load_data_state,
 		check_match_last_update_time,
 		mounted_fn,
-		mx_collect,
-		fetch_match_list,
+		fetch_match_list,handle_destroyed
 	}
 };

@@ -251,7 +251,7 @@ export default {
 #v-tooltip {
   position: fixed;
   transform: translateX(-50%);
-  color: #fff;
+  color: var(--q-gb-t-c-1);
   background-color: rgba(0, 0, 0, 0.8);
   padding: 0 5px;
   height: 22px;
