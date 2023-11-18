@@ -289,7 +289,6 @@
         Object.assign(league_title_card_obj,fold_template)
         league_container_card_obj.load_data_status = 'loading'
       }
-      
       if(league_container_card_obj.is_show_card){
         // 卡片显示  还原卡片总高度
         league_container_card_obj.card_total_height = league_container_card_obj.card_total_height_back

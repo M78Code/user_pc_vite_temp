@@ -10,7 +10,6 @@
   width:${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)
   }px  !important;${card_style}`">
     <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }}</div>
-
     <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
       <!-- 赛事状态 | 赛种类型 -->
       <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(
@@ -95,6 +94,8 @@ const mids_arr = computed(() => {
   }
   return mids_arr;
 });
+console.log('mids_arr', mids_arr);
+
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(()=>{
