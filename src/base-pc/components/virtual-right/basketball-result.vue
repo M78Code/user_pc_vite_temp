@@ -112,8 +112,8 @@ export default {
         border: 1px solid #e4e4e4;
         border-radius: 50%;
         &.active {
-          background-color: #FF7000;
-          border: 1px solid #FF7000;
+          background-color: var(--q-gb-bg-c-1);
+          border: 1px solid var(--q-gb-bd-c-1);
         }
       }
       .line {
@@ -122,7 +122,7 @@ export default {
         background-color: #e4e4e4;
         .inner-line {
           height: 100%;
-          background-color: #FF7000;
+          background-color: var(--q-gb-bg-c-1);
         }
       }
     }

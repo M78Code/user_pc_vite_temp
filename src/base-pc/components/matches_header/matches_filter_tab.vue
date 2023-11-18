@@ -174,7 +174,7 @@
     left: 50%;
     display: none;
     margin-left: -4px;
-    background: #FF7000;
+    background: var(--q-gb-bg-c-1);
     clip-path: circle(50% at 50% 100%);
   }
   .prev-btn-box, .next-btn-box {

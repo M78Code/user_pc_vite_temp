@@ -410,7 +410,7 @@ const set_route_url = () => {
 
       .bet-single-count {
         border-radius: 10px;
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
         width: 20px;
         height: 20px;
         line-height: 20px;
@@ -457,7 +457,7 @@ const set_route_url = () => {
       position: absolute;
       top: 6px;
       width: 100%;
-      background: #fff;
+      background: var(--q-gb-bg-c-4);
       border: 2px solid #ff781d;
       border-radius: 5px;
 
@@ -483,7 +483,7 @@ const set_route_url = () => {
       .triangle,
       .triangle1 {
         position: absolute;
-        background: #fff;
+        background: var(--q-gb-bg-c-4);
         border: 2px solid #ff781d;
         border-top: 0;
         border-left: 0;

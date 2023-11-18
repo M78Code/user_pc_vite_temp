@@ -123,7 +123,8 @@ const selectSport = (item) => {
     border: 1px solid #d0d8de;
     cursor: pointer;
     &:hover {
-      border: 1px solid #ff7000;
+      // border: 1px solid #ff7000;
+      border: 1px solid var(--q-gb-bd-c-1);
     }
   }
   .select-input {
