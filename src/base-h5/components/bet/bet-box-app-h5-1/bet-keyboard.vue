@@ -5,47 +5,46 @@
 
 <template>
   <div class="keyboard yb_pb6" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
-    <div class="nonebox4-fourth">
-        <div class="nonebox4-fourth-a">
-            <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
-        </div>
-        <!--
-        <div class="nonebox4-fourth-a">
-            <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
-                <div class="nonebox4-fourth-num-sun" data-number='4'>4</div>
-                <div class="nonebox4-fourth-num-sun" data-number='7'>7</div>
-                <div class="nonebox4-fourth-num-sun" data-number='0'>0</div>
-            </div>
-            <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun" data-number='2'>2</div>
-                <div class="nonebox4-fourth-num-sun" data-number='5'>5</div>
-                <div class="nonebox4-fourth-num-sun" data-number='8'>8</div>
-                <div class="nonebox4-fourth-num-sun" data-number='.'>.</div>
-            </div>
-            <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun" data-number='3'>3</div>
-                <div class="nonebox4-fourth-num-sun" data-number='6'>6</div>
-                <div class="nonebox4-fourth-num-sun" data-number='9'>9</div>
-                <div class="nonebox4-fourth-num-sun" data-number='10'>00</div>
-            </div>
-            <div class="nonebox4-fourth-num">
-                <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
-                <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div>
-                <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
-            </div>
-        </div>
-        -->
-        <ul class="keyboard-box">
-            <li v-for="item of test" :key="item.value"
-                :style="`grid-area: ${item.area}`"
-                :data-number="item.value"
-                class="keyboard-box-item">
-                {{item.label }}
-            </li>
-        </ul>
-    </div>
-
+      <div class="nonebox4-fourth">
+          <div class="nonebox4-fourth-a">
+              <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
+          </div>
+          <!--
+          <div class="nonebox4-fourth-a">
+              <div class="nonebox4-fourth-num">
+                  <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='4'>4</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='7'>7</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='0'>0</div>
+              </div>
+              <div class="nonebox4-fourth-num">
+                  <div class="nonebox4-fourth-num-sun" data-number='2'>2</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='5'>5</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='8'>8</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='.'>.</div>
+              </div>
+              <div class="nonebox4-fourth-num">
+                  <div class="nonebox4-fourth-num-sun" data-number='3'>3</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='6'>6</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='9'>9</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='10'>00</div>
+              </div>
+              <div class="nonebox4-fourth-num">
+                  <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
+              </div>
+          </div>
+          -->
+          <ul class="keyboard-box">
+              <li v-for="item of test" :key="item.value"
+                  :style="`grid-area: ${item.area}`"
+                  :data-number="item.value"
+                  class="keyboard-box-item">
+                  {{item.label }}
+              </li>
+          </ul>
+      </div>
   </div>
 </template>
   
@@ -73,21 +72,21 @@ const ref_data = reactive({
 })
 
 const test = [
-  {label: '1', value: '1', area: 'one'},
-  {label: '2', value: '2', area: 'two'},
-  {label: '3', value: '3', area: 'three'},
-  {label: '4', value: '4', area: 'four'},
-  {label: '5', value: '5', area: 'five'},
-  {label: '6', value: '6', area: 'six'},
-  {label: '7', value: '7', area: 'seven'},
-  {label: '8', value: '8', area: 'eight'},
-  {label: '9', value: '9', area: 'nine'},
-  {label: '0', value: '0', area: 'zero'},
-  {label: '.', value: '.', area: 'drop'},
-  {label: '00', value: '10', area: 'ten'},
-  {label: i18n_t('bet.max'), value: 'max', area: 'max'},
-  {label: i18n_t('app_h5.bet.delete'), value: 'x', area: 'delete'},
-  {label: i18n_t('bet.pack_up'), value: 'shouqi', area: 'cancel'},
+    {label: '1', value: '1', area: 'one'},
+    {label: '2', value: '2', area: 'two'},
+    {label: '3', value: '3', area: 'three'},
+    {label: '4', value: '4', area: 'four'},
+    {label: '5', value: '5', area: 'five'},
+    {label: '6', value: '6', area: 'six'},
+    {label: '7', value: '7', area: 'seven'},
+    {label: '8', value: '8', area: 'eight'},
+    {label: '9', value: '9', area: 'nine'},
+    {label: '0', value: '0', area: 'zero'},
+    {label: '.', value: '.', area: 'drop'},
+    {label: '00', value: '10', area: 'ten'},
+    {label: i18n_t('bet.max'), value: 'max', area: 'max'},
+    {label: i18n_t('app_h5.bet.delete'), value: 'x', area: 'delete'},
+    {label: i18n_t('bet.pack_up'), value: 'shouqi', area: 'cancel'},
 ]
 
 const shou = (item,evnet) => {
