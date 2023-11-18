@@ -14,7 +14,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot()"  />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_collect"  />
 		<MatchesDateTab v-if="MenuData.is_left_today() || MenuData.is_left_zaopan()" />
 	</div>
 </template>
