@@ -12,7 +12,7 @@
         <!-- 赛事玩法名称 -->
         <template v-slot:header>
           <div style="width:100%;line-height: 35px;font-weight: 500;">
-            {{ item.hpn }}
+            {{ item.hpn }}+++{{ item.hpt }}
             <span v-if="item.hps">({{ item.hps.split('|')[1] }})</span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
             <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
@@ -33,10 +33,10 @@
                         <template v-if="ol.otd === opt.otd">
                           <div v-show="!item.hl[0].hs" :class="{ 'tem4': true, 'tem4-active': ol.oid == current_ol.oid }"
                             @click="betItemClick(item.hl[0], ol)">
-                            <span :style="{ color: '#1a1a1a' }" >{{ ol.on }}</span>
+                            <span >{{ ol.on }}</span>
                             
                             <span  v-if="ol.ov">
-                              <bet-item :key="`bet_4_${ol.hild}`" :ol_data="ol">
+                              <bet-item :key="`bet_4_${ol.hild}`" :ol_data="ol" :current_ol="current_ol">
                               </bet-item>
                              </span>
                             <span v-else></span>
@@ -109,7 +109,7 @@ const props = defineProps({
   },
 })
 const mouse_in = ref(false)
-const current_ol = ref({})
+const current_ol = ref({oid:''})
 const emit = defineEmits(['change'])
 
  let all_hl_item = inject('all_hl_item')
@@ -161,7 +161,6 @@ const sun_ol = (ol, item) => {
     obj[key] = [...obj[key], ...list]
     result = [...obj[key], ...result]
   }
-  console.log(11111111,result)
   return result
 }
 //  投注项点击投注,
@@ -302,6 +301,7 @@ onMounted(() => {
       text-align: right;
       margin-right: 10px;
       overflow: hidden;
+      color: #1a1a1a;
     }
     &:nth-child(2){
       overflow: hidden;
@@ -321,7 +321,17 @@ onMounted(() => {
 
 .tem4-active {
   background-color: var(--q-gb-bg-c-1);
-  color: var(--q-gb-t-c-1);
+  span{
+    &:nth-child(1){
+      width: 50%;
+      display: block;
+      text-align: right;
+      margin-right: 10px;
+      overflow: hidden;
+      color: var(--q-gb-t-c-14);
+    }
+  }
+
 
   &:hover {
     background: var(--q-gb-bg-c-1) !important;

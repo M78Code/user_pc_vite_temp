@@ -99,7 +99,8 @@ onMounted(() => {});
         border-right: 0;
       }
       .is-active {
-        background: #ff7000;
+        //background: #ff7000;
+        background-color: var(--q-gb-bg-c-1);
         //color: #fff;
         color: var(--q-gb-t-c-2);
         .ol-on {
@@ -127,7 +128,8 @@ onMounted(() => {});
         height: 50px;
         line-height: 50px;
         font-weight: 500;
-        color: #ff7000;
+        //color: #ff7000;
+        color: var(--q-gb-t-c-1);
       }
     }
   }
@@ -139,12 +141,11 @@ onMounted(() => {});
   .temp0-ol {
     display: grid;
     .temp0_ol_on {
-      //background: #ffffff;
-      background: var(--q-gb-bg-c-15);
+      background-color: var(--q-gb-bg-c-2);
       .temp0_ol_ov {
         border: 1px solid #F5F5F5;
         border-width: 1px 1px 0 1px;
-        background: #fff;
+        background-color: var(--q-gb-bg-c-2);
         height: 50px;
         line-height: 50px;
         font-weight: 500;
@@ -163,7 +164,8 @@ onMounted(() => {});
         border-bottom: 1px solid #F5F5F5;
       }
       .is-active {
-        background: #FF7000;
+        //background: #FF7000;
+        background-color: var(--q-gb-bg-c-1);
         //color: #fff;
         color: var(--q-gb-t-c-2);
         .temp0_ol-on-text {

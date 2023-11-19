@@ -17,6 +17,7 @@ import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { IconWapper } from 'src/components/icon'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import BaseData from 'src/core/base-data/base-data.js'
 
 const emitters = ref({})
 const state = reactive({
@@ -29,11 +30,12 @@ const state = reactive({
 })
 
 onMounted(() => {
-  MatchMeta.set_origin_match_data()
-  // emitters.value = {
-  //   emitters_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
-  //     MatchMeta.set_origin_match_data()
-  //   }).off 
+  // 元数据有缓存的情况下 立即执行 set_origin_match_data 能拿到数据， 没数据的情况下拿不到则掉接口
+  // if (BaseData.is_emit) {
+  //   MatchMeta.set_origin_match_data()
+  //   BaseData.set_is_emit(false)
+  // } else {
+  //   MatchMeta.get_target_match_data({})
   // }
 })
 onUnmounted(() => {
@@ -85,13 +87,13 @@ const goback = () => {
 
   .match-list-container {
     height: 100%;
-    background: #fff !important;
+    background-color: var(--q-gb-bg-c-2) !important;
 
     :deep(.scroll-wrapper) {
-      background: #fff !important;
+      background-color: var(--q-gb-bg-c-2) !important;
 
       .s-w-item {
-        background: #fff !important;
+        background-color: var(--q-gb-bg-c-2) !important;
       }
     }
   }
