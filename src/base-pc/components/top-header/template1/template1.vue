@@ -28,8 +28,6 @@ import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import { LayOutMain_pc,MenuData,useMittEmit,MITT_TYPES  } from "src/core/"
-import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
-// import store from "src/store-redux-vuex/redux_menu";
 
 export default defineComponent({
   name: "TopHeaderTemplate1",
@@ -55,6 +53,7 @@ export default defineComponent({
       // 首页点击 首页需要 重新显示首页内容 
       if(route.name == 'home'){
         useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,item.id)
+        // useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,item.id)
       }
       // 默认设置 fetured
       if(item.id == 0){

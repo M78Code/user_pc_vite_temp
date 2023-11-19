@@ -38,7 +38,7 @@
             </div>
 
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1" @click="set_delete">
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`" alt=""/>
+                <span class="icon-delete"></span>
             </div>
 
             <div class="bet-delete bet-icon" v-else>
@@ -116,7 +116,8 @@ const set_bet_money = obj => {
 }
 
 const set_delete = () => {
-
+    document.getElementsByClassName("bet-list")[0].style.display = "none"
+    BetData.set_bet_state_show(!BetData.bet_state_show)
 }
 
 </script>
@@ -173,13 +174,13 @@ const set_delete = () => {
     .bet-bet-money {
         width: 100%;
         padding: 10px 12px;
-        background: #F5F5F5;
+        background: var(--q-gb-bg-c-15);
 
         .bet-money-li {
             width: 76px;
             height: 30px;
-            border: 0.5px solid #A4A4A4;
-            background: #fff;
+            border: 0.5px solid var(--q-gb-bd-c-5);
+            background: var(--q-gb-bg-c-4);
             color: #505050;
             border-radius: 2px;
             transition: .3s;
@@ -190,7 +191,7 @@ const set_delete = () => {
                 border: 1px solid var(--q-gb-bd-c-1);
             }
             &.disabled{
-                background: #A4A4A4;
+                background: var(--q-gb-bg-c-19);
             }
         }
     }

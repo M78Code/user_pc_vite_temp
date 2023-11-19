@@ -383,7 +383,7 @@ const submit_handle = type => {
                         break;
                 }
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-                BetViewDataClass.set_bet_order_status(2)
+                BetViewDataClass.set_bet_order_status(status)
             }else{
                 BetViewDataClass.set_orderNo_bet_obj(orderDetailRespList)
                 BetViewDataClass.set_orderNo_bet_single_obj(seriesOrderRespList)
@@ -427,7 +427,8 @@ const submit_handle = type => {
 }
 
 // 设置错误信息 
-const set_error_message_config = (obj ={}) => {
+const set_error_message_config = (res ={}) => {
+    
     if(BetData.deviceType == 2){
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
             code: res.code,
@@ -436,8 +437,8 @@ const set_error_message_config = (obj ={}) => {
     }else{
         // 获取限额失败的信息
         BetData.set_bet_before_message({
-            code: res.code,
-            msg: res.message
+            code: obj.code,
+            msg: obj.message
         })
 
         setTimeout(()=>{

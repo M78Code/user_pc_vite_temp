@@ -305,17 +305,20 @@ export default {
       const hps = ctx.match_of_list.hps
       const hpid = MatchResponsive.match_hpid.value
       const hps_item = hps && hps.find(t => t.hpid == hpid)
-
       const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: score_length.value }, () => '{}'))
 
       let ol_data = undefined
       if (ol && ol[0] && ol[0].otd) {
         ol.sort((a, b) => a.otd - b.otd)
-        ol_data = ol.map(t => t.ot)
+        ol_data = ol.map(t => {
+          if (t.ot === 'Under' || t.ot === 'Over') {
+            return t.ot === 'Under' ? i18n_t('analysis_football_matches.small_ball') : i18n_t('analysis_football_matches.big_ball')
+          } else {
+            return t.ot
+          }
+        })
       }
-
       const result = ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
-
       score_length.value = lodash.get(result, 'length')
 
       return result

@@ -249,6 +249,7 @@ const api_bymids = (
     // HTTP拉取最新信息合并
     api(params)
       .then((res) => {
+        console.log('resresres', JSON.parse(JSON.stringify(res)));
         set_home_loading_time_record("ok");
         // 组件和路由不匹配
         // if (page_source == "details" && page_source != "details") return;

@@ -226,7 +226,7 @@ onUnmounted(()=>{
     min-height: 100px;
     padding: 15px 14px 0 14px;
     line-height: 23px;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-2);
     // background: linear-gradient(
     //   90.05deg,
     //   rgba(255, 255, 255, 0.81) 0.04%,
@@ -264,7 +264,7 @@ onUnmounted(()=>{
       align-items: center;
       position:relative;
       .match-detail-time-label {
-        color: #8a8986;
+        color: var(--q-gb-t-c-3);
         padding-right: 10px;
         font-size: 15px;
         font-weight: 500;
@@ -293,7 +293,8 @@ onUnmounted(()=>{
         font-size: 15px;
       }
       .match-detail-num {
-        color: #ff7000;
+        //color: #ff7000;
+        color: var(--q-gb-t-c-1);
         font-weight: 500;;
         font-size: 15px;
       }
@@ -345,7 +346,8 @@ onUnmounted(()=>{
         width: 100vw;
         left: -14px;
         height: 1px;
-        background: #F5F5F5;
+        //background: #F5F5F5;
+        background-color: var(--q-gb-bg-c-10);
       }
     }
     .match-detail-bet-or-event {
