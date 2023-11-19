@@ -23,7 +23,7 @@
                 }"
             >
                 <span v-show="value[0].hs">
-                    <bet-item :ol_data="value[0]"> </bet-item>
+                    <bet-item :ol_data="value[0]"  :current_ol="current_ol"> </bet-item>
                 </span>
                 <div
                     style="text-align: center; width: 100%"
@@ -47,9 +47,8 @@
                     @click="betItemClick(key, o)"
                 >
                     <span v-show="!o.hs">
-                        <bet-item :key="`bet_0_${o.hild}`" :ol_data="o">
+                        <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol">
                         </bet-item>
-                        <!-- {{ Math.floor(o.ov / 1000) / 100 }} -->
                     </span>
                     <div style="text-align: center; width: 100%" v-show="o.hs">
                         <img

@@ -104,7 +104,7 @@
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
-    color: var(--q-gb-t-c-4);
+    color: var(--q-gb-t-c-3);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -118,6 +118,7 @@
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
+    color: var(--q-gb-t-c-4);
     font-size: 0.18rem;
     font-weight: 600;
     display: flex;

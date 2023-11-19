@@ -94,7 +94,6 @@ const routes = [
     name: "rule",
     component: () => import("../pages/rule/index.vue"),
   },
-
   // // 每日成长任务
   // {
   //   path: '/activity',
@@ -126,6 +125,12 @@ const routes = [
   //   },
   //   component: () => import(`../pages/test/index.vue`),
   // },
+  {
+    path: '/:catchAll(.*)*',
+    redirect: {
+      name: 'home'
+    },
+  }
 ];
 
 export default routes;

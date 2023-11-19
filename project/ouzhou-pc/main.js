@@ -32,6 +32,9 @@ import useDirective from "src/directives/index.js"
 import App from "./App.vue";
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
+import Vue3DraggableResizable from 'vue3-draggable-resizable' //拖拽组件
+import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
+
 const app = createApp(App);
 app.config.globalProperties.lodash = lodash;
 app.config.globalProperties.i18n_t = i18n_t;
@@ -44,6 +47,7 @@ app.config.globalProperties.$filters = filters;
 useDirective(app)
 console.log(app,'app');
 app.use(i18n);
+app.use(Vue3DraggableResizable);
 app.use(router);
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here

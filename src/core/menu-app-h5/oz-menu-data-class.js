@@ -39,7 +39,7 @@ class MenuData {
     this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
-    this.current_lv_2_menu_i = 0;
+    this.current_lv_2_menu_i = '1012';
     this.current_lv_2_menu_mi = ref('0');
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
@@ -140,7 +140,6 @@ class MenuData {
    * 请求赛事列表
    */
   get_match_render_list(){
-    console.log(3333333333333333)
     if (this.is_results()) return MatchMeta.get_results_match()
     if(!['1','2','3','6'].includes(this.current_lv_1_menu_i))return;
     // 清除赛事折叠信息

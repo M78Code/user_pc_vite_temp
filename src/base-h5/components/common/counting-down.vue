@@ -490,7 +490,10 @@ onUnmounted(() => {
   }
 
   .counting, .special {
+    color: var(--q-gb-t-c-4);
     //color: #5A6074;
+    font-size: 0.14rem;
+    font-weight: 500;
   }
 
   .mar-l5 {
