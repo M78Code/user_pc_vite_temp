@@ -113,7 +113,7 @@ const get_amtch_bg_image = (csid) => {
       }
       > span {
         > span {
-          color: #1A1A1A;
+          color: var(--q-gb-t-c-4);
           font-weight: 500;
         }
       }
@@ -121,7 +121,7 @@ const get_amtch_bg_image = (csid) => {
     .game-name{
       height: 48px;
       padding: 0 10px;
-      color: #1A1A1A;
+      color: var(--q-gb-t-c-4);
       margin-bottom: 4px;
       border-bottom: 1px solid rgba(0,0,0,0.1);
       > div {

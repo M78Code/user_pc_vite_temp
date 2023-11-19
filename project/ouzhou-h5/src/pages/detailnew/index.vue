@@ -201,7 +201,7 @@ export default {
     height: 45px;
     line-height: 45px;
     font-size: 16px;
-    color: #1a1a1a;
+    color: var(--q-gb-t-c-4);
     background-color: var(--q-gb-bg-c-2);
     .tab-active {
       color: #ff7000;

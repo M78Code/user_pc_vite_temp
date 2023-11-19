@@ -63,7 +63,7 @@ onMounted(() => {
     line-height: 20px;
     width: auto;
     text-transform: capitalize;
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-4);
     cursor: pointer;
 
   }

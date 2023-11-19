@@ -90,7 +90,7 @@ onMounted(() => {});
     .item2 {
       min-height: 50px;
       height: 50px;
-      border: 1px solid #F5F5F5;
+     border: 1px solid var(--q-gb-bd-c-10);
       border-width: 1px 0 0 0;
       &:nth-child(2n) {
         margin-right: 0;
