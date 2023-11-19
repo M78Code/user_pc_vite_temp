@@ -8,7 +8,7 @@
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(0)"></span>
+                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>
@@ -22,13 +22,13 @@
                         </div>
                     </div>
                     <!--红色箭头-->
-                      <div class="top">
+                      <div class="top" style="display:none">
                         <div class="jiantou one"></div>
                         <div class="jiantou two"></div>
                         <div class="jiantou three"></div>
                       </div>
                       <!--绿色箭头-->
-                      <div class="top">
+                      <div class="top" style="display:none">
                         <div class="jiantou onegreen"></div>
                         <div class="jiantou twogreen"></div>
                         <div class="jiantou threegreen"></div>
@@ -43,12 +43,18 @@
   <script setup>
   import { compute_value_by_cur_odd_type } from "src/core/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
+  import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
 
   const props = defineProps({
     items:{}
   })
 
   const type = 2;//1:不涨也不少    2：增长     3：减少
+  const del=()=>{
+    BetData.bet_list_remove(0)
+    BetData.set_clear_bet_info()
+    useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  }
   </script>
   
   <style lang="scss" scoped>

@@ -31,7 +31,7 @@
                 </template>
                 <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
                     :data-card-key="card_key" :class="`card_key   ${card_key}`">
-                    <match-list-card :card_key="card_key" use_component_key="MatchListCard_2" />
+                    <match-list-card :card_key="card_key"/>
                 </div>
                 <template v-slot:after>
                     <div style="height:15px"></div>
@@ -183,7 +183,7 @@ export default {
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: #cccccc;
+        background-color: var(--q-gb-bg-c-11);
         border-radius: 4px;
     }
 }

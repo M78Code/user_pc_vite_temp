@@ -25,5 +25,6 @@ const props = defineProps({
   padding-left: 15px;
   font-weight: 600;
   background: #E2E2E2;
+  color: var(--q-gb-t-c-4);
 }
 </style>

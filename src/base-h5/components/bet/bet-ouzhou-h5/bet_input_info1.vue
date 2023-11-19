@@ -11,14 +11,9 @@
        </div>
        <div class="info_right size_14">
         <div class="content-b" @click.stop="input_click(item, index, $event)">
-            <!-- <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+            <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">Limts {{ ref_data.min_money }}-{{ ref_data.max_money }}</span> -->
-
-
-            <span class="money-span" v-if="BetData.active_index == index " ref="money_span_single" :style="{ opacity:  '1' }"></span>
-            <span v-if="item.money" class="yb_fontsize20 money-number" @click.stop="input_click(item,index,$event)">{{ item.money }}</span>
-            <span v-show="!item.money">{{ i18n_t('app_h5.bet.limit')}}{{ set_min_max_money(item.id,'min_money') }}-{{ set_min_max_money(item.id,'max_money')  }}</span>
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">Limts {{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
           
           </div>
           
