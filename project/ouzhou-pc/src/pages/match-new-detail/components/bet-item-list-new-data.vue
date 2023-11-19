@@ -7,7 +7,10 @@
       odds_state,
       `csid${ol_data.csid}`,
       odds_lift,
-      { 'show-odds-icon': odds_state != 'seal' },
+      {
+        'show-odds-icon': odds_state != 'seal',
+        'active-odds-icon': ol_data.oid == current_ol.oid,
+      },
     ]"
     @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
@@ -44,22 +47,21 @@
     >
       <div v-if="odds_state == 'seal'" class="lock" />
       <div v-else class="odds-arrows-wrap">
-        <span :class="{
-          'default':true,
-          'up':odds_lift=='up',
-          'down':odds_lift=='down',
-          'active':ol_data.oid==current_ol.oid
-          
-
-        }" > {{ ol_data.ov / 100000 }}</span>
-        <div
-      
-        v-if="odds_state != 'seal'"
-      >
-        <!-- 红升、绿降 -->
-        <div class="odds-icon odds-up"></div>
-        <div class="odds-icon odds-down"></div>
-      </div>
+        <span
+          :class="{
+            default: true,
+            up: odds_lift == 'up',
+            down: odds_lift == 'down',
+            active: ol_data.oid == current_ol.oid,
+          }"
+        >
+          {{ ol_data.ov / 100000 }}</span
+        >
+        <div v-if="odds_state != 'seal'">
+          <!-- 红升、绿降 -->
+          <div class="odds-icon odds-up"></div>
+          <div class="odds-icon odds-down"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -68,13 +70,10 @@
 <script setup>
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
-import lodash from 'lodash'
-import {
-  get_odds_active,
-  utils,
-} from "src/core/index.js";
-import { format_odds_value } from 'src/core/format/module/format-odds.js';
-import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+import lodash from "lodash";
+import { get_odds_active, utils } from "src/core/index.js";
+import { format_odds_value } from "src/core/format/module/format-odds.js";
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
@@ -96,7 +95,8 @@ const props = defineProps({
     type: [Object, Array],
     default: () => {},
   },
-  current_ol: {  // 当前选中的数据
+  current_ol: {
+    // 当前选中的数据
     type: [Object, Array],
     default: () => {},
   },
@@ -127,25 +127,28 @@ onMounted(() => {
 // 监听玩法ID变化 取消赔率升降
 // watch(props.ol_data._hpid, () => {
 //   clear_odds_lift()
-// }) 
+// })
 
 // 监听oid 取消赔率升降
 // watch(props.ol_data.oid, () => {
 //   clear_odds_lift()
-// })  
+// })
 
 // 监听投注项赔率变化
-watch(()=>props.ol_data.ov, (cur, old) => {
-  console.log(111111111111)
-  // 赔率值处理
-  format_odds(cur, 1);
-  if (props.ol_data) {
-    let { _mhs, _hs, os } = props.ol_data;
-    odds_state.value = get_odds_state(_mhs, _hs, os);
+watch(
+  () => props.ol_data.ov,
+  (cur, old) => {
+    console.log(111111111111);
+    // 赔率值处理
+    format_odds(cur, 1);
+    if (props.ol_data) {
+      let { _mhs, _hs, os } = props.ol_data;
+      odds_state.value = get_odds_state(_mhs, _hs, os);
+    }
+    // 红升绿降变化
+    set_odds_lift(cur, old);
   }
-  // 红升绿降变化
-  set_odds_lift(cur, old);
-})  
+);
 
 /**
  * 赔率转换
@@ -160,12 +163,12 @@ const format_odds = () => {
   let hsw = props.ol_data._hsw;
   let match_odds_info = compute_value_by_cur_odd_type(
     ov / 100000,
-    obv / 100000 || '',
-    hsw || '',
+    obv / 100000 || "",
+    hsw || "",
     1
   );
-  console.log('match_odds_info', props.ol_data);
-  match_odds.value = format_odds_value(match_odds_info,props.ol_data.csid);
+  console.log("match_odds_info", props.ol_data);
+  match_odds.value = format_odds_value(match_odds_info, props.ol_data.csid);
 };
 
 /**
@@ -258,14 +261,14 @@ const get_odds_state = (mhs, hs, os) => {
  * @return {undefined} undefined  组装投注项的数据
  */
 const bet_click_ol = () => {
-  const {oid,_hid,_hn,_mid } = props.ol_data
+  const { oid, _hid, _hn, _mid } = props.ol_data;
   let params = {
     oid, // 投注项id ol_obj
-    _hid, // hl_obj 
-    _hn,  // hn_obj
-    _mid,  //赛事id mid_obj
-  }
-  set_bet_obj_config(params,{})
+    _hid, // hl_obj
+    _hn, // hn_obj
+    _mid, //赛事id mid_obj
+  };
+  set_bet_obj_config(params, {});
 };
 
 onUnmounted(() => {
@@ -292,19 +295,31 @@ onUnmounted(() => {
     }
   }
 }
+.active-odds-icon{
+  .odds-up {
+      background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg")
+        no-repeat 100% !important;
+        transform: rotate(180deg);
+    }
+    .odds-down {
+      background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg")
+        no-repeat 100% !important;
+    }
+
+}
 .odds-arrows-wrap {
   position: relative;
-  .up{
-    color:#17a414 !important;
+  .up {
+    color: #17a414 !important;
   }
-  .down{
-    color:#ff4646 !important
+  .down {
+    color: #ff4646 !important;
   }
-  .default{
-    color:#ff7000
+  .default {
+    color: #ff7000;
   }
-  .active{
-    color:#ffffff !important
+  .active {
+    color: #ffffff !important;
   }
 }
 .odds-icon {
@@ -317,10 +332,10 @@ onUnmounted(() => {
   display: none;
 }
 .odds-up {
-  background: url($SCSSPROJECTPATH+"/image/svg/up.svg") no-repeat 100%;
+  background: url($SCSSPROJECTPATH + "/image/svg/up.svg") no-repeat 100%;
 }
 .odds-down {
-  background: url($SCSSPROJECTPATH+"/image/svg/down.svg") no-repeat 100%;
+  background: url($SCSSPROJECTPATH + "/image/svg/down.svg") no-repeat 100%;
 }
 .lock {
   width: 12px;
