@@ -153,7 +153,7 @@
   }
 
   .checked {
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-5);
     font-weight: 500;
     font-size: 13px;
   }

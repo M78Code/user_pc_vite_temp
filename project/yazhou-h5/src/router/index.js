@@ -104,6 +104,12 @@ const router = createRouter({
     //   name: "router_url",
     //   component: () => import("../layouts/router.vue"),
     // }
+    {
+      path: '/:catchAll(.*)*',
+      redirect: {
+        name: 'matchList'
+      },
+    }
   ],
 });
 

@@ -60,7 +60,7 @@ export default defineConfig({
   build: {
     outDir ,
     rollupOptions: {
-      // external: ["vue"],
+      // external: ["vue3-draggable-resizable"],
       input: {
 
       index: path.resolve(__dirname, `../../project/${project}/index.html`),
@@ -70,9 +70,9 @@ export default defineConfig({
       output: {
         // Provide global variables to use in the UMD build
         // Add external deps here
-        // globals: {
-        //   // vue: "Vue",
-        // },
+        globals: {
+          // "vue3-draggable-resizable": "vue3-draggable-resizable",
+        },
       },
     },
   },

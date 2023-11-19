@@ -90,8 +90,10 @@ if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
  * @Description 设置联赛折叠
 */
 function set_fold() {
+  console.log('asdasdasfafasf', props.card_style_obj.is_league_fold ,11, ([2, 3].includes(menu_config.menu_root) ,22, menu_config.is_export()));
+
   // 如果当前联赛是折叠的 并且是今日、早盘  调用bymids接口拉数据
-  if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_export())) {
+  if (props.card_style_obj.is_league_fold ) {
     // 设置赛事基础数据
     MatchListCardData.set_match_basic_data(props.card_style_obj)
     let params = {
@@ -143,7 +145,7 @@ function collect(){
       position: absolute;
       right: 13px;
       font-weight: 600;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       span {
         display: flex;
         height: 100%;

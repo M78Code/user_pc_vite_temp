@@ -44,7 +44,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
       font-weight: 500;
       line-height: 19px;
       letter-spacing: 0px;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
     }
   }
 

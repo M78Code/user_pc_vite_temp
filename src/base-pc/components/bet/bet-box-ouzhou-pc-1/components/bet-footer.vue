@@ -74,7 +74,7 @@ const set_confirm = () => {
         width: 160px;
         height: 46px;
         border-radius: 2px;
-        color: #1A1A1A;
+        color: var(--q-gb-t-c-5);
     }
 
     .bet-place-bet {
