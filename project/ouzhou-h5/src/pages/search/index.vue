@@ -569,7 +569,7 @@ onBeforeUnmount(() => {
 }
 
 .content {
-	color: #1A1A1A;
+	color: var(--q-gb-t-c-4);
 	padding-top: 50px;
 }
 
@@ -584,7 +584,7 @@ onBeforeUnmount(() => {
 	position: fixed;
 	width: 100%;
 	z-index: 1;
-	color: #1A1A1A;
+	color: var(--q-gb-t-c-4);
 	.tab {
 		background-color: var(--q-gb-bg-c-2);
 		border-radius: 40px;

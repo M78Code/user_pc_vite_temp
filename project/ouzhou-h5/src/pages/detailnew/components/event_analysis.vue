@@ -241,7 +241,7 @@ setTimeout(() => {
         .circle {
           .number {
             font-weight: bold;
-            color: #1a1a1a;
+            color: var(--q-gb-t-c-4);
           }
         }
       }
