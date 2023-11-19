@@ -483,7 +483,9 @@ class MenuData {
    */
     set_is_collect(is_collect) {
       this.is_collect=is_collect
-      useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+      if (is_collect) {
+        useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+      }
     }
   /**
    * 定义中间菜单    点击 输出 请求  列表结构  API 参数的   模板
