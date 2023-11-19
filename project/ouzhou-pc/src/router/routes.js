@@ -126,6 +126,12 @@ const routes = [
   //   },
   //   component: () => import(`../pages/test/index.vue`),
   // },
+  {
+    path: '/:catchAll(.*)*',
+    redirect: {
+      name: 'home'
+    },
+  }
 ];
 
 export default routes;
