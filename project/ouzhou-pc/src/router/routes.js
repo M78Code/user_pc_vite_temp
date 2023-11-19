@@ -94,7 +94,6 @@ const routes = [
     name: "rule",
     component: () => import("../pages/rule/index.vue"),
   },
-  { path: '/:pathMatch(.*)*', name: 'NotFound',  redirect: { name: "home" } },
   // // 每日成长任务
   // {
   //   path: '/activity',
