@@ -490,7 +490,7 @@ class BaseData {
       // 左侧菜单id
       menu_info.forEach((item) => {
         // vr300 冠军400 2000 电竞 500热门
-        if (Number(item.mi) < 500) {
+        if (Number(item.mi) < 300) {
           // 过滤 商户 屏蔽的赛种数据
           if (!this.filterSport_arr.includes(item.mi)) {
             left_menu.push(Number(item.mi));
@@ -508,7 +508,7 @@ class BaseData {
         }
       });
       // 重置默认数据
-      this.left_menu_base_mi_arr = BUILD_VERSION ? [101,102] :left_menu  ;
+      this.left_menu_base_mi_arr = left_menu  ;
 
       this.sports_mi = sports_mi;
 
