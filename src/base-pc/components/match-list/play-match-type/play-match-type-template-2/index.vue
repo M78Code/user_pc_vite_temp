@@ -1,7 +1,7 @@
 <template>
   <!-- 滚球盘 标题-->
-  <!-- @click="MatchListCardData[cur_title_info.func_name](card_style_obj)" -->
-  <div class="play-match-type-2">
+  
+  <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
     <div class="left-box">
       <sport_icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
         :sport_id="card_style_obj.csid" size="18px" class="icon" color_type="gray_ball" />
@@ -100,6 +100,7 @@ function handle_hpid_choose(item) {
   line-height: 39px;
   height: 40px;
   line-height: 40px;
+  cursor: pointer;
   text-align: left;
   border-bottom: 1px solid var(--q-gb-bd-c-1);
   background-color: var(--q-gb-bg-c-4);
