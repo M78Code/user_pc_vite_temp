@@ -160,7 +160,7 @@ const set_change_bet_single = () => {
 
     /** 串关按钮不可用*/
     &.bet-series-disabled {
-      background: #f0f5fc;
+      background: var(--q-gb-bg-c-21);
       color: rgba(45, 45, 45, 0.3);
       border: 1px solid #e4ebf1;
       border-radius: 4px;

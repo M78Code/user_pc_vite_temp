@@ -33,7 +33,7 @@ const set_bet_show = () => {
     .bet-title{
         width: 100%;
         height: 54px;
-        background: #3B3B3B;
+        background: var(--q-gb-bg-c-20);
         // border-top: 3px solid #FF7000;
         // border-left: 1px solid #FF7000;
         // border-right: 1px solid #FF7000;
@@ -87,7 +87,7 @@ const set_bet_show = () => {
             &::before{
                 width: 12px;
                 height: 2px;
-                background: #3B3B3B;
+                background: var(--q-gb-bg-c-20);
                 content: '';
                 position: absolute;
                 top: 50%;
@@ -98,7 +98,7 @@ const set_bet_show = () => {
             &::after{
                 width: 12px;
                 height: 2px;
-                background: #3B3B3B;
+                background: var(--q-gb-bg-c-20);
                 content: '';
                 position: absolute;
                 top: 50%;

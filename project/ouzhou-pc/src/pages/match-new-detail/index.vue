@@ -252,7 +252,7 @@ export default{
         width: 2px;
         height: 20px;
         top: 9px;
-        background-color: #d9d9d9;
+        background-color: var(--q-gb-bg-c-10);
       }
     }
   }
@@ -270,7 +270,7 @@ export default{
       align-items: center;
 
       .leagal-time {
-        background-color: #d9d9d9;
+        background-color: var(--q-gb-bg-c-10);
         color: var(--q-gb-t-c-5);
         padding: 2px 10px;
       }
@@ -323,7 +323,7 @@ export default{
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
+    background-color: var(--q-gb-bg-c-11);
     border-radius: 4px;
   }
 }
@@ -385,7 +385,7 @@ export default{
 
 .active-nav {
   color: var(--q-gb-t-c-2);
-  background-color: #626262;
+  background-color: var(--q-gb-bg-c-9);
 }
 
 .route_btn {
@@ -423,7 +423,7 @@ export default{
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
+    background-color: var(--q-gb-bg-c-11);
     border-radius: 4px;
   }
 }

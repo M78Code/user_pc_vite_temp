@@ -10,7 +10,11 @@ import lodash_ from "lodash";
 import { ref } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { MITT_TYPES,useMittEmit } from "src/core/mitt/index.js" 
+import {
+  useMittEmit,
+  MITT_TYPES,
+  SessionStorage,
+} from "src/core/index.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { BUILD_VERSION } = BUILD_VERSION_CONFIG;
 const menu_type_config = {
@@ -39,7 +43,7 @@ class MenuData {
     this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
-    this.current_lv_2_menu_i = '1012';
+    this.current_lv_2_menu_i = '';
     this.current_lv_2_menu_mi = ref('0');
     this.menu_lv_mi_lsit = []
     // 赛果 日期/赛中
@@ -65,10 +69,14 @@ class MenuData {
    * 初始化
    */
   set_init_menu_list(){
+    
+    let menu_list = [],
+        top_events_list = [];
+    const session_info = SessionStorage.get("menu-h5");
     //常规球种
-    const menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<this.conventionalType});
+    menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<this.conventionalType});
     //热门球种
-    let top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
+    top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {
@@ -106,8 +114,11 @@ class MenuData {
     });
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
+    if(session_info){
+      this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
+      this.menu_mi.value = session_info.menu_mi;
+    }
     useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
-
   }
   /**
    * 收藏
@@ -168,6 +179,9 @@ class MenuData {
     this.menu_mi.value = mi;
     this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
     this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
+    SessionStorage.set("menu-h5",{
+      menu_mi:mi
+    });
     this.update()
   }
   // 设置二级菜单 id

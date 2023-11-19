@@ -18,7 +18,7 @@
         </div>
         <div class="yb-icon-arrow"></div>
       </div>
-      <div class="choose-list" v-show="show_list">
+      <div class="choose-list" v-if='show_list'>
         <div class="choose-list-item" v-for="item in choose_config[card_style_obj.csid || '1']"
           @click.stop="handle_hpid_choose(item)" :class="{
             active: JSON.stringify(current_csid_hpids) == JSON.stringify(item)
@@ -34,7 +34,7 @@
 <script setup>
 import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
 import sport_icon from "src/base-pc/components/sport_icon.vue";
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
 import MenuData from 'src/core/menu-pc/menu-data-class.js'
@@ -43,7 +43,7 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { t } from "src/core/index.js";
+import { t, useEventListener } from "src/core/index.js";
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
@@ -53,7 +53,15 @@ const props = defineProps({
   },
 })
 const show_list = ref(false)
+watch(show_list, (v) => {
+  if (v) {
+    window.addEventListener('click', () => {
+      show_list.value = false
+    }, { once: true })
+  }
+})
 const cur_title_info = computed(() => {
+  console.log('props.card_style_obj;', props.card_style_obj);
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
   let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
   let title_obj = {
@@ -81,13 +89,13 @@ const cur_title_info = computed(() => {
   };
   return title_obj[card_type];
 })
-
 const current_csid_hpids = ref(MatchListCardDataClass.get_csid_current_hpids(props.card_style_obj.csid))
 function handle_hpid_choose(item) {
   show_list.value = false
   current_csid_hpids.value = item
   MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid, item)
 }
+
 </script>
 <style lang="scss" scoped>
 .play-match-type-2 {
@@ -105,13 +113,16 @@ function handle_hpid_choose(item) {
   padding: 0 16px 0 20px;
   color: var(--q-gb-t-c-5);
   font-size: 13px;
+
   .left-box {
     display: flex;
     align-items: center;
   }
+
   .match-number {
     margin-left: 5px;
   }
+
   .icon {
     width: 16px;
     height: 16;
@@ -123,45 +134,47 @@ function handle_hpid_choose(item) {
     font-weight: 500;
     position: relative;
     cursor: pointer;
+
     .active {
-      color: var(--q-gb-bg-c-1) ;
+      color: var(--q-gb-bg-c-1);
+
       .yb-icon-arrow {
         color: #8A8986;
         margin-left: 10px;
         transform: rotate(90deg);
       }
     }
-    .choose-list {
-      position: absolute;
-      right: 0;
-      top: 41px;
-      min-width: 300px;
-      line-height: 40px;
-      padding: 12px 0;
-      border-radius: 2px;
-      background: var(--q-gb-bg-c-4);
-      box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
-      z-index: 99;
+  }
 
-      &-item {
-        padding: 0 16px;
-        height: 40px;
+  .choose-list {
+    position: absolute;
+    right: 0;
+    top: 41px;
+    min-width: 300px;
+    line-height: 40px;
+    padding: 12px 0;
+    border-radius: 2px;
+    background: var(--q-gb-bg-c-4);
+    box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
+    z-index: 99;
 
-        &:hover {
-          background-color: var(--q-gb-bg-c-5);
-        }
+    &-item {
+      padding: 0 16px;
+      height: 40px;
+
+      &:hover {
+        background-color: var(--q-gb-bg-c-5);
       }
+    }
 
-      div {
-        border-bottom: 1px solid var(--q-gb-bd-c-2);
+    div {
+      border-bottom: 1px solid var(--q-gb-bd-c-2);
 
-        &:last-child {
-          border-bottom: none;
-        }
+      &:last-child {
+        border-bottom: none;
       }
     }
   }
-
 }
 </style>
  

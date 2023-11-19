@@ -125,8 +125,8 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
   .analysis-btn-box {
     width: 48%;
     height: 48px;
-    background: #ffdec5;
-    border: 1px solid #ffdec5;
+    background: var(--q-gb-bg-c-14);
+    border: 1px solid var(--q-gb-bd-c-4);
     border-radius: 4px;
     display: flex;
     align-items: center;
