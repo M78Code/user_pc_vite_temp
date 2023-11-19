@@ -42,6 +42,7 @@
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
+import BetRecordWs from "src/core/bet-record/bet-record-ws.js";
 import { itemSimpleBody, itemMultipleBody, earlySettle, earlySettledDetail, cancelReserve } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
@@ -62,6 +63,7 @@ const is_limit = ref(false)
 //需要查绚提前结算金额的订单集合
 const orderNumberItemList = ref([])
 let useMitt = null
+let wsObj = null
 
 // 延时器
 const timer = ref(null)
@@ -73,6 +75,8 @@ onMounted(() => {
   useMitt = useMittOn(MITT_TYPES.EMIT_BET_RECORD_SELECTED_CHANGE, function (val) {
     init_data(val)
   }).off;
+  // ws监听
+  wsObj = new BetRecordWs()
 })
 
 onUnmounted(() => {
@@ -80,6 +84,9 @@ onUnmounted(() => {
   useMitt && useMitt()
   // 初始化BetRecordClass状态
   BetRecordClass.init_core()
+  // 取消ws监听
+  wsObj && wsObj.destroy()
+  wsObj = null
 })
 
 /**
@@ -100,7 +107,7 @@ const init_data = (_index) => {
       if (document.visibilityState == 'visible') {
         check_early_order()
       }
-    }, 10000)
+    }, 5000)
   }
 }
 // 根据索引获取当前接口的api和params
