@@ -372,35 +372,17 @@ export default class MatchDataBaseWS
    * @description: WS命令C106逻辑处理
    * @param {Object} ws_obj ws数据
    */
-  C106(ws_obj){
+  C106(ws_obj = {}){
     // C106盘口/投注项
-    // {
-    //   "cd": {
-    //     "hls": [
-    //       {
-    //           "hid": "1315918111111426050",
-    //           "hpid": "4",
-    //           "hs": 0,
-    //           "mid": "1422839",
-    //           "hn": 1,
-    //           "hps": "S1|2:1",
-    //           "ol": [
-    //             {
-    //                 "obv": "205000",
-    //                 "oid": "1315918126340943874",
-    //                 "os": 1,
-    //                 "ot": "1",
-    //                 "ov": "205000"
-    //               }
-    //           ]
-    //         }
-    //     ],
-    //     "mid": "1422839"
-    //   },
-    //   "cmd": "C106",
-    //   "ctsp": "1600152527052",
-    //   "ld": "0af5033320200915144846729c7f4853"
-    // }
+    if(ws_obj.cd){
+      // ws命令数据信息
+      let cd_obj = lodash.get(ws_obj,'cd');
+      // 赛事标识
+      let mid = lodash.get(ws_obj,'cd.mid');
+      // 实时时间歘
+      let ctsp = lodash.get(ws_obj,'ctsp');
+    }
+
     this.C105(ws_obj);
   }
 
