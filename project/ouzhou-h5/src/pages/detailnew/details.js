@@ -103,8 +103,9 @@ export const details_main = (router,route) => {
     tab_selected_obj.value = tab_item;
     const { plays } = tab_item;
     const m_plays = [];
-    let arr = lodash.cloneDeep(get_match_odds_info.value);
-    console.log(arr, "arr");
+    //取缓存中盘口的数据 后续ws推送数据 存数据到缓存 todo
+    let arr = JSON.parse(sessionStorage.getItem("match_oddinfo"));
+    if(arr.length == 0) return
     const list = arr?.filter((item) => {
       let play = item.topKey;
       let topKeyArr = item.topKey.split("-");
@@ -114,7 +115,7 @@ export const details_main = (router,route) => {
       m_plays.push(Number(play));
       return plays.includes(Number(play));
     });
-    match_odds_info.value = [...list];
+    MatchDataWarehouseInstance.value.set_match_details(getMidInfo(route.params.mid),[...list]);
   };
   const startY = ref(0);
   const scroller_scroll_top = ref(0);
@@ -210,8 +211,8 @@ export const details_main = (router,route) => {
           } else {
             match_odds_info.value = res.data;
           }
-          MatchDataWarehouseInstance.value.set_match_details(getMidInfo(params.mid),match_odds_info.value);
-          match_odds_info.value = getMidInfo(params.mid).odds_info
+          sessionStorage.setItem("match_oddinfo",JSON.stringify(res.data))
+          MatchDataWarehouseInstance.value.set_match_details(getMidInfo(params.mid),res.data);
           // 第一次加载显示进度条
            loading.value = false;
   
@@ -235,7 +236,7 @@ export const details_main = (router,route) => {
      (val, oldval) => {
        console.log('data_version',val.version);
        if (val.version) {
-        lodash.debounce(()=>{update_data(mid.value)},300);
+        update_data(route.params.mid)
        }
      },
      { deep: true }
@@ -245,12 +246,13 @@ export const details_main = (router,route) => {
   * @param {*} val  mid参数
   * @return {*}
   */
-  const update_data = (val) => {
+  const update_data = (val)=> {
     if(!val) return
-    match_detail.value = getMidInfo(params.mid)
-    match_odds_info.value = lodash.get(getMidInfo(params.mid),'odds_info')
+    match_detail.value = getMidInfo(val)
+    console.log(match_detail.value,'match_detail.value');
+    match_odds_info.value = lodash.get(getMidInfo(val),'odds_info')
  
-  };
+  }
   /**
    * @description: 从仓库获取获取赛事信息
    * @param {*} mid
@@ -363,7 +365,7 @@ export const details_main = (router,route) => {
     //如果ms mmp变更了 就手动调用ws
     if(flag){
       init.value = false
-      detail_init();
+      // detail_init();
     }   
     })  
   });

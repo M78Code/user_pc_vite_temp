@@ -236,12 +236,12 @@ setTimeout(() => {
         justify-content: center;
         align-items: center;
         .text-span {
-          color: #8a8986;
+          color: var(--q-gb-t-c-3);
         }
         .circle {
           .number {
             font-weight: bold;
-            color: #1a1a1a;
+            color: var(--q-gb-t-c-4);
           }
         }
       }
@@ -250,7 +250,7 @@ setTimeout(() => {
       padding-top: 20px;
       .progress-title {
         text-align: center;
-        color: #8A8986;
+        color: var(--q-gb-t-c-3);
         display: flex;
         padding: 0 20px;
         justify-content: space-between;

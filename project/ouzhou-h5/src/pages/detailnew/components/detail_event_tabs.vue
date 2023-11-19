@@ -39,12 +39,11 @@ onMounted(() => {
 <style lang="scss" scoped>
 .match-detail-tabs {
   height: 50px;
-  //background: #FFFFFF;
-  background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-2);
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  border-bottom: 1px solid #FF7000;
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
   &::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }
@@ -64,7 +63,7 @@ onMounted(() => {
     line-height: 20px;
     width: auto;
     text-transform: capitalize;
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-4);
     cursor: pointer;
 
   }
@@ -75,7 +74,8 @@ onMounted(() => {
     line-height: 20px;
     text-transform: capitalize;
     // color: #FF7000;
-    background: #FF7000;
+    //background: #FF7000;
+    background-color: var(--q-gb-bg-c-1);
     //color: #fff;
     color: var(--q-gb-t-c-2); 
     position: relative;
@@ -93,7 +93,8 @@ onMounted(() => {
     // }
     .match-detail-line {
       height: 1px;
-      background: #FF7000;
+      //background: #FF7000;
+      background-color: var(--q-gb-bg-c-1);
       position: fixed;
       width: 100vw;
     }

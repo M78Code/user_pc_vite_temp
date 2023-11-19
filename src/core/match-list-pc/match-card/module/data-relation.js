@@ -90,9 +90,11 @@ const set_match_list_mapping_relation_obj_type = () => {
   // 欧洲版也不区分赛种 且需要一个新的计算逻辑 但是因为接口结构不一样 所以需要有两套计算逻辑
   // 但是需要区分滚球全部和单球种
   if (PROJECT_NAME == 'ouzhou-pc') {
+    //MenuData.menu_root 为0是首页 不能用！menu_root判断
     if (
       (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) 
       || ["today", "early", "bet",'match-play-common', 'match-collect'].includes(page_source)
+      // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
       || !MenuData.menu_root
     ) {
       type = 9

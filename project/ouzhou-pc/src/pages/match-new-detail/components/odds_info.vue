@@ -12,7 +12,7 @@
         <!-- 赛事玩法名称 -->
         <template v-slot:header>
           <div style="width:100%;line-height: 35px;font-weight: 500;">
-            {{ item.hpn }}
+            {{ item.hpn }}+++{{ item.hpt }}
             <span v-if="item.hps">({{ item.hps.split('|')[1] }})</span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
             <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
@@ -226,7 +226,7 @@ onMounted(() => {
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
+    background-color: var(--q-gb-bg-c-11);
     border-radius: 4px;
   }
 
@@ -262,7 +262,7 @@ onMounted(() => {
     // line-height: 26px;
 
     .odds-title-li {
-      background: #F5F5F5;
+      background: var(--q-gb-bg-c-15);
 
       .handicap-value-text {
         display: inline-block;

@@ -38,7 +38,7 @@ const props = defineProps({
  
 <style scoped lang="scss">
 .top_leagues_page{
-  background: #fff;
+  background-color: var(--q-gb-bg-c-2);
   :deep(.collapse_page){
     &:not(:last-child){
       border-bottom: 10px solid #F1F1F1;
@@ -47,7 +47,7 @@ const props = defineProps({
       height: 50px;
       font-size: 16px;
       font-weight: 500;
-      border-bottom: 1px solid #FF7000;
+      border-bottom: 1px solid var(--q-gb-bd-c-1);
       .national_icon{
         width: 24px;
         height: 15px;
