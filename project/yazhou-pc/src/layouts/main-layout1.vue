@@ -58,7 +58,7 @@
 </template>
 <script setup>
 import { ref, computed,onBeforeUnmount,watch } from "vue";
-import Vue3DraggableResizable from 'vue3-draggable-resizable' //拖拽组件
+
 import { useRoute } from "vue-router";
 import "./main-layout.js"; //初始化数据
 

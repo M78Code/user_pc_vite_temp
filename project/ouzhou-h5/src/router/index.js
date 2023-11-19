@@ -146,12 +146,6 @@ const router = createRouter({
         },
       ],
     },
-    {
-      path: "/:catchAll(.*)*",
-      redirect: {
-        name: "matchList",
-      },
-    },
     //搜索
     {
       path: "/search",
@@ -159,6 +153,12 @@ const router = createRouter({
       component: () => import("../pages/search/index.vue"),
       meta: {
         keepAlive: true, // 需要缓存
+      },
+    },
+    {
+      path: "/:catchAll(.*)*",
+      redirect: {
+        name: "matchList",
       },
     },
   ],

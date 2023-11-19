@@ -60,9 +60,9 @@ DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697972059806-online"
  
 //----------------------------------欧洲版-H5  ouzhou-h5 8-------------------------------------------
 // 测试环境  
-//DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699000607498-test";
+// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1700370302578-test";
 // 试玩环境  
-// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1700306375010-shiwan";
+DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1700306375010-shiwan";
 // 生产环境
 // DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1699003368156-online";
 
