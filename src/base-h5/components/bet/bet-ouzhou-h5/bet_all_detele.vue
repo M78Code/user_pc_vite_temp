@@ -86,7 +86,7 @@
 }
  
 .dropdown-content a {
-  color: var(--q-gb-t-c-18);
+  color: var(--q-gb-t-c-12);
     text-decoration: none;
     display: block;
     margin: 0 0.2rem;
