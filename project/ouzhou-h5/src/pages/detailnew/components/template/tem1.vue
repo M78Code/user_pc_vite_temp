@@ -114,12 +114,11 @@ onMounted(() => {});
   .temp1-ol {
     display: grid;
     .temp1_ol_on {
-      //background: #ffffff;
-      background: var(--q-gb-bg-c-15);
+      background-color: var(--q-gb-bg-c-2);
       .temp1_ol_ov {
         border: 1px solid #F5F5F5;
         border-width: 1px 1px 0 1px;
-        background: #fff;
+        background-color: var(--q-gb-bg-c-2);
         height: 50px;
         line-height: 50px;
         font-weight: 500;

@@ -89,8 +89,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .odds-wrap {
-  //background: #ffffff;
-  background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-2);
   box-sizing: border-box;
 
   .odds-hpn {
@@ -131,13 +130,11 @@ onMounted(() => {
       }
     }
     .ol_on {
-      //background: #ffffff;
-      background: var(--q-gb-bg-c-15);
+      background-color: var(--q-gb-bg-c-2);
       .ol_ov {
         border: 1px solid #F5F5F5;
         border-width: 1px 1px 0 1px;
-        //background: #fff;
-        background: var(--q-gb-t-c-2);
+        background-color: var(--q-gb-bg-c-2);
         height: 50px;
         line-height: 50px;
         font-weight: 500;

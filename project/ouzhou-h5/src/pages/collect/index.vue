@@ -85,7 +85,7 @@ onMounted(()=>{
     :deep(.q-tabs--dense){
       .scroll--mobile{
         height: 50px;
-        background: #fff;
+        background-color: var(--q-gb-bg-c-2);
         padding: 0 10px;
         background-repeat: no-repeat;
         background-size: contain;
@@ -126,7 +126,7 @@ onMounted(()=>{
     overflow: hidden;
     overflow-y: auto;
     .match-list-container{
-      background: #fff !important;
+      background-color: var(--q-gb-bg-c-2) !important;
     }
 }
 </style>

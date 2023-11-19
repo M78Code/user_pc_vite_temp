@@ -55,7 +55,7 @@ setTimeout(() => {
   
 <style lang="scss" scoped>
 .detail_header_tem0 {
-  background: #fff;
+  background-color: var(--q-gb-bg-c-2);
   .detail-header-score {
     display: flex;
     padding: 0 8px;

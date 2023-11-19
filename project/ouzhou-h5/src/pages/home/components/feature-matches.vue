@@ -85,7 +85,7 @@ const get_amtch_bg_image = (csid) => {
     overflow: hidden;
     flex-shrink: 0;
     padding-top: 3px;
-    background: #fff;
+    background-color: var(--q-gb-bg-c-2);
     margin-right: 10px;
     border-radius: 3px;
     background-repeat: no-repeat;
