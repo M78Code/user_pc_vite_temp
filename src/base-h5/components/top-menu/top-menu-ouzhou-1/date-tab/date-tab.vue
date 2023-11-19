@@ -1,6 +1,6 @@
 <template>
     <div class="date-tab">
-        <section>{{currentSlideValue}}
+        <section>
             <div v-for="item in dateList" :key="item.val" class="time-list-item">
                 <div @click="time_tab(item)" :class="[{ 'time_active': defaultVal == item.val }, 'item-text']">{{ item.name }}
                 </div>

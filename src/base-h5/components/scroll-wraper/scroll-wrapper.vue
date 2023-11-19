@@ -54,18 +54,20 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
 import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
-import { use_defer_render } from "src/core/match-list-h5/match-class/match-hooks.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from 'src/core'
 import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_export, is_collect } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
   is_goto_top_random: Number,
 })
+
+const defer_render = use_defer_render()
 
 const store_state = store.getState();
 // 调试信息
