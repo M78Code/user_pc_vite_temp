@@ -4,12 +4,12 @@
 -->
 <template>
   <div>
-    <div class="tip">{{BetData.bet_before_message.msg}}</div>
+    <span class="tip">{{BetData.bet_before_message.msg}}</span>
     <div class="bet_content_bottom">
       <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
       <p class="place_bet"  @click="place_bet">
         <span>{{$t('bet_record.bet_val')}}</span> 
-        <span class="right_amount">{{BetData.bet_amount}}</span>  
+        <span class="right_amount">{{BetData.bet_amount}}</span> 
       </p>
     </div>
   </div>

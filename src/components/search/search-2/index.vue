@@ -16,22 +16,6 @@
       <!-- <search-input v-model:show_type="show_type" /> -->
       <!-- 遮罩层样式.bottom-wrap -->
       <div class="bottom-wrap col search-result relative-position">
-        <!-- 球类导航 -->
-        <!-- <div
-          class="sports-tab"
-          @click.stop
-        >
-          <tab
-            :list="sports_list"
-            :is_show_btn="true"
-            tab_name_key="sportName"
-            :padding="10"
-            @onclick="set_sports_tab_index"
-            :currentIndex="sports_tab_index"
-            ref="tab"
-          />
-        </div> -->
-        
         <div class="sports-tab" ref="tab">
           <div v-for="(item, index) in sports_list" :key="item.id" @click="set_sports_tab_index(index)"
             :class="['tab', sports_tab_index === index ? 'active' : '']">{{ item.sportName }}</div>
@@ -295,25 +279,6 @@ export default defineComponent({
       min-height: 400px;
       overflow: hidden;
     }
-
-    // :deep(.sports-tab) {
-    //   position: absolute;
-    //   top: 0;
-    //   left: 0;
-    //   width: 100%;
-    //   height: 50px;
-    //   padding: 10px 0 0 20px;
-    //   z-index: 999;
-    //   /* 修改此值  需注意是否被滚球倒计时遮挡 */
-    //   background-color: var(--q-gb-bg-c-11);
-    //   border-bottom: 1px solid var(--q-header-search-color-5);
-
-    //   .tab-item {
-    //     height: 38px;
-    //     line-height: 40px;
-    //     padding: 0 10px;
-    //   }
-    // }
   }
 
   .search-result {

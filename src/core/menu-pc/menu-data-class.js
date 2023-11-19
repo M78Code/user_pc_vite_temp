@@ -156,8 +156,9 @@ class MenuData {
       { label:i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
       { label:i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
     ]
-    //  1001 fetured  10002 top events 4001 Matches 4002 League
-    this.router_root_lv_2 = ref(1001) // 这个去掉 不能用 
+    // 15mins 与 featured-matched 投注选项保存字段
+    this.current_check_betId = ref(null)
+
     this.init()
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
@@ -483,7 +484,9 @@ class MenuData {
    */
     set_is_collect(is_collect) {
       this.is_collect=is_collect
-      useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+      if (is_collect) {
+        useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+      }
     }
   /**
    * 定义中间菜单    点击 输出 请求  列表结构  API 参数的   模板

@@ -81,11 +81,11 @@ onMounted(()=>{
   width: 100%;
   height: calc(100% - 106px);
   .header_tabs{
-    border-bottom: 2px solid #FF7000;
+    border-bottom: 2px solid var(--q-gb-bd-c-1);
     :deep(.q-tabs--dense){
       .scroll--mobile{
         height: 50px;
-        background: #fff;
+        background-color: var(--q-gb-bg-c-2);
         padding: 0 10px;
         background-repeat: no-repeat;
         background-size: contain;
@@ -126,7 +126,7 @@ onMounted(()=>{
     overflow: hidden;
     overflow-y: auto;
     .match-list-container{
-      background: #fff !important;
+      background-color: var(--q-gb-bg-c-2) !important;
     }
 }
 </style>

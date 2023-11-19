@@ -8,11 +8,12 @@
 				:no_data_msg2="i18n_t('search.null2')" />
 		</div>
 		<!-- 滚动区域 -->
-	<q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
-		<div class="serach-background" @click.stop>
-			
-			<!-- 搜索展示 -->
-				<div class="content">
+		<q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
+			<div class="serach-background" @click.stop>
+
+				<!-- 搜索展示 -->
+				<div class="content" v-if="(search_data?.teamH5 && search_data?.teamH5.length > 0) ||
+			(search_data?.league && search_data?.league.length > 0)">
 					<ul class="list">
 						<div class="title">View all soccer</div>
 						<!-- 滚球 -->
@@ -69,7 +70,7 @@
 								<div class="color">COMPETITIONS</div>
 							</div>
 							<li v-for="(item, index) in search_data?.league" :key="index"
-								@click="default_method_jump(item.leagueName, item.matchList[index])">
+								@click="league_click(item)">
 								<div class="list_top">
 									<span v-html="red_color(item.leagueName)"></span><img
 										:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
@@ -117,7 +118,7 @@
 							<div class="middle_info_tab diff">
 								<div class="color">TEAMS</div>
 							</div>
-							<li v-for="(item, index) in search_data?.teamH5" :key="index" @click="default_method_jump(item.name, item)">
+							<li v-for="(item, index) in search_data?.teamH5" :key="index" @click="match_click(item)">
 								<div v-if="item.tn">
 									<div class="list_top">
 										<span v-html="red_color(item.tn)"></span><img
@@ -164,47 +165,9 @@
 						</div>
 					</ul>
 				</div>
-                <!-- <div style="height:70px"></div>
-                赛种
-                <div class="type-item" :class="{ active: type.is_active, inplay: type.is_inplay }"
-                    v-for="(type, type_index) in res_list" :key="type_index">
-                    <div class="type-wrap" @click="type.is_active = !type.is_active">
-                        <div class="line"></div>
-                        <div class="type-name">
-                            {{ type.type_name }}
-                        </div>
-                    </div>
-                    联赛
-                    <div class="league-item" :class="{ active: league.is_active }"
-                        v-for="(league, league_index) in type.children" :key="league_index">
-                        <div class="league-wrap" @click="league.is_active = !league.is_active">
-                            <div class="name-wrap" @click.stop="league_click(league)">
-                                <div class="league-name">{{ league.league_name }}</div>
-                                <div class="league-total">{{ league.league_total }}</div>
-                            </div>
-                            <div class="yb-icon-arrow" v-if="league.league_total > 3"></div>
-                        </div>
-                        赛事
-                        <div class="match-item" :class="{ 'hide-match': match_index > 2 }"
-                            v-for="(match, match_index) in league.children" :key="match_index">
-                            <div class="text-wrap">
-                                <div class="team" @click="match_click(match)">{{ match.mhn }}&ensp;v&ensp;{{ match.man }}
-                                </div>
-                            </div>
-                            <div class="text-wrap">
-                                <match-process :match="match" show_page="match-list" :rows="1" />
-                                <div class="score" v-if="type.is_inplay">{{ match.msc.S1.home }}-{{ match.msc.S1.away }}
-                                </div>
-                            </div>
-                        </div>
-                        点点点
-                        <div class="point-wrap" v-if="league.league_total > 3 && !league.is_active">
-                            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/point.svg`">
-                        </div>
-                    </div>
-	                </div> -->
-	            </div>
+			</div>
 		</q-scroll-area>
+		<div v-show="load_data_state != 'data'" class="middle_info_tab diff">No results found. please try a different search term.</div>
 	</div>
 </template>
   
@@ -226,7 +189,6 @@ import { api_common, api_match_list } from "src/api/index.js";
 import { compute_value_by_cur_odd_type } from "src/core/index.js";
 
 import loadData from "src/components/load_data/load_data.vue"
-
 const props = defineProps({
 	show_type: {
 		type: String,
@@ -258,11 +220,7 @@ const get_props = (props) => {
 watch(
 	() => keyword.value,
 	(res) => {
-		if (search_type.value == 2) {
-			update_show_type('none')
-		} else {
-			_get_search_result(res, true)
-		}
+		_get_search_result(res, true)
 	}
 )
 
@@ -283,7 +241,6 @@ function league_click(league) {
 			csid: props.search_csid
 		}
 	})
-	set_click_keyword(league.league_name)
 }
 
 const scrollRef = ref(null)
@@ -359,12 +316,12 @@ function _get_search_result(keyword, is_loading) {
 /**
  * @description 获取赛事赔率
  */
- let match_mid_Arr = [];
+let match_mid_Arr = [];
 const get_match_base_hps_by_mids = async () => {
 	if (!(search_data.value?.teamH5 && search_data.value?.teamH5.length > 0) &&
-			!(search_data.value?.league && search_data.value?.league.length > 0) && 
-			!(search_data.value?.bowling && search_data.value?.bowling.length > 0) 
-			) return;
+		!(search_data.value?.league && search_data.value?.league.length > 0) &&
+		!(search_data.value?.bowling && search_data.value?.bowling.length > 0)
+	) return;
 	// 拿到所有滚球，联赛，队伍 mid
 	search_data.value?.teamH5.forEach((item, index) => {
 		match_mid_Arr.push(item.mid)
@@ -389,24 +346,24 @@ const get_match_base_hps_by_mids = async () => {
 	};
 	// 获取所有搜索结果的赔率信息
 	await api_common.get_match_base_info_by_mids(params).then((res) => {
-		if(res.code === '200') {
+		if (res.code === '200') {
 			const { data } = res;
 			// 使用获得比分的 mid 和搜索结果的 mid 做比较，将赔率信息返回给搜索结果
-			for(let i = 0; i < data.length; i++) {
-				for(let j = 0; j < search_data.value.teamH5.length; j++) {
-					if(data[i].mid === search_data.value.teamH5[j].mid) {
+			for (let i = 0; i < data.length; i++) {
+				for (let j = 0; j < search_data.value.teamH5.length; j++) {
+					if (data[i].mid === search_data.value.teamH5[j].mid) {
 						search_data.value.teamH5[j] = data[i]
 					}
 				}
-				for(let k = 0; k < search_data.value.league.length; k++) {
+				for (let k = 0; k < search_data.value.league.length; k++) {
 					search_data.value.league[k].matchList.forEach((item, index) => {
-						if(data[i].mid === item.mid) {
+						if (data[i].mid === item.mid) {
 							search_data.value.league[k].matchList[index] = data[i]
 						}
 					})
 				}
-				for(let l = 0; l < search_data.value.bowling.length; l++) {
-					if(data[i].mid === search_data.value.bowling[l].mid) {
+				for (let l = 0; l < search_data.value.bowling.length; l++) {
+					if (data[i].mid === search_data.value.bowling[l].mid) {
 						search_data.value.bowling[l] = data[i]
 					}
 				}
@@ -424,7 +381,7 @@ const red_color = (item) => {
 
 // 显示的赔率
 const get_odd_os = (ov) => {
-  return  compute_value_by_cur_odd_type(ov,'','',props.search_csid)
+	return compute_value_by_cur_odd_type(ov, '', '', props.search_csid)
 }
 
 onMounted(() => {
@@ -650,45 +607,49 @@ watch(
 	// 搜索结果
 	.content {
 		color: #1A1A1A;
+
 		.title {
 			height: 50px;
 			line-height: 50px;
 			font-size: 18px;
 			font-weight: 500;
-    	background-color: #e2e2e2;
+			background-color: #e2e2e2;
 		}
+
 		.list {
 			margin-top: 0;
-    	background-color: #e2e2e2;
+			background-color: #e2e2e2;
 		}
-		.middle_info_tab {
-				padding: 9px 18px;
-				display: flex;
-				border-bottom: 1px solid #FF7000;
-				background-color: #fff;
-				font-size: 14px;
-				font-weight: 500;
-				overflow-x: scroll;
-				position: fixed;
-				width: 100%;
-				z-index: 1;
-				color: #1A1A1A;
+	}
+}
 
-				&.diff {
-					padding: 9px 0 9px 20px;
-					position: unset;
-					overflow: auto;
-				}		
-				.color {
-					color: #FF7000;
-					// color: var(--q-gb-t-c-1);
-				}
-			}
+.middle_info_tab {
+	padding: 9px 18px;
+	display: flex;
+	border-bottom: 1px solid #FF7000;
+	background-color: #fff;
+	font-size: 14px;
+	font-weight: 500;
+	overflow-x: scroll;
+	position: fixed;
+	width: 100%;
+	z-index: 1;
+	color: #1A1A1A;
+
+	&.diff {
+		padding: 9px 0 9px 20px;
+		position: unset;
+		overflow: auto;
+	}
+
+	.color {
+		color: #FF7000;
+		// color: var(--q-gb-t-c-1);
 	}
 }
 
 li {
-	padding: 14px 10px;
+	padding: 13px 20px;
 	background-color: #fff;
 	// border-radius: 6px;
 	font-size: 14px;
@@ -719,21 +680,24 @@ li {
 			color: red;
 			margin: 0 5px;
 		}
+
 		.lock {
 			width: 16px;
 			height: 16px;
 		}
+
 		.center {
 			margin-left: 8px;
 		}
+
 		.red {
 			color: #FF7000;
 			// color: var(--q-gb-t-c-1);
 		}
 	}
 }
+
 .flex_1 {
 	flex: 1;
-}
-</style>
+}</style>
   

@@ -132,8 +132,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .odds-wrap {
-  //background: #ffffff;
-  background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-2);
   box-sizing: border-box;
 
   .odds-hpn {
@@ -146,7 +145,7 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     .odds-hpn-text {
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-4);
       font-weight: 500;
     }
     img {
@@ -162,8 +161,9 @@ onMounted(() => {
     // line-height: 26px;
 
     .odds-title-li {
-      background: #f5f5f5;
-      color: #1a1a1a;
+      //background: #f5f5f5;
+      background-color: var(--q-gb-bg-c-10);
+      color: var(--q-gb-t-c-4);
       font-size: 12px;
       height: 30px;
       line-height: 30px;
@@ -175,16 +175,15 @@ onMounted(() => {
     display: none;
   }
   .ol_on {
-      //background: #ffffff;
-      background: var(--q-gb-bg-c-15);
+      background-color: var(--q-gb-bg-c-2);
       .o_hv {
-        color: #1a1a1a;
+        color: var(--q-gb-t-c-4);
         padding-right: 5px;
       }
       .ol_ov {
-        border: 1px solid #f5f5f5;
+       border: 1px solid var(--q-gb-bd-c-10);
         border-width: 1px 1px 0 0;
-        background: #fff;
+        background-color: var(--q-gb-bg-c-2);
         height: 50px;
         line-height: 50px;
         font-weight: 500;
@@ -195,7 +194,7 @@ onMounted(() => {
         .ol-on-text {
           font-weight: 500;
           padding-right: 5px;
-          color: #1a1a1a;
+          color: var(--q-gb-t-c-4);
           overflow: hidden;
         }
       }
@@ -207,7 +206,7 @@ onMounted(() => {
         .ol-on-text {
           padding-right: 5px;
           font-weight: 500;
-          color: #1a1a1a;
+          color: var(--q-gb-t-c-4);
         }
       }
     }
@@ -225,7 +224,7 @@ onMounted(() => {
       line-height: 50px;
       //  border-top: 1px solid #E2E2E2;
       border-left: 1px solid #F5F5F5;
-      border-bottom: 1px solid #F5F5F5;
+      border-bottom: 1px solid var(--q-gb-bd-c-10);
     }
 
     & > div:last-child {
@@ -248,7 +247,7 @@ onMounted(() => {
     color: var(--q-gb-t-c-2);
 
     &:hover {
-      background: #ff7000 !important;
+      background: var(--q-gb-bd-c-1) !important;
       //olor: #ffffff;
       color: var(--q-gb-t-c-2);
     }

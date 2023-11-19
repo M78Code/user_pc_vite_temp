@@ -32,7 +32,7 @@ import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js"
 const props = defineProps({
     menu_type: {
         type: String,
-        default: "2"
+        default: MenuData.menu_type.value
     },
     is_show_badge:{
         type: Boolean,
@@ -61,6 +61,7 @@ const scrollRef = ref(null);
 const get_init_data = () =>{
     leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
+    // MenuData.menu_mi.value || 
     MenuData.set_menu_mi(dataList()[0]?.mi);
     playValue.value = dataList()[0]?.mi;
 }

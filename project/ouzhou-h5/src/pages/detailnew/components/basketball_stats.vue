@@ -122,8 +122,7 @@ const tabClick = (item) => {
 <style lang="scss" scoped>
 .detail-tab {
   // height: 272px;
-  //background: #ffffff;
-  background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-2);
   padding-bottom: 15px;
 }
 
@@ -145,7 +144,7 @@ const tabClick = (item) => {
   font-size: 14px;
   line-height: 20px;
   text-transform: capitalize;
-  color: #1a1a1a;
+  color: var(--q-gb-t-c-4);
   cursor: pointer;
 }
 
@@ -154,7 +153,7 @@ const tabClick = (item) => {
   font-size: 14px;
   line-height: 20px;
   text-transform: capitalize;
-  color: #1a1a1a;
+  color: var(--q-gb-t-c-4);
   position: relative;
 
   &::before {
@@ -247,7 +246,7 @@ const tabClick = (item) => {
     margin-right: 10px;
     span{
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-4);
       &:nth-child(1){
         color:#FFAC01;
         display: inline-block;
@@ -259,7 +258,7 @@ const tabClick = (item) => {
     margin-left: 10px;
     span{
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-4);
       &:nth-child(2){
         color:#5881f7;
         display: inline-block;

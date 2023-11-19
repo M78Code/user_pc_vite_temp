@@ -62,8 +62,8 @@ export default {
     time_str(new_){
       if((new_?new_:'').length!=(this.time_str_old?this.time_str_old:'').length){
         this.time_str_old = (new_?new_:'');
-      }
-    },
+    }
+  },
     // 监测是否重新设置时间
     "tconfig.time": {
       handler(new_, old_) {
@@ -87,7 +87,11 @@ export default {
       const that = this;
       if (that.tconfig.step) {
         if (!that.timer || that.replay) {
-          // clearInterval(that.timer);
+          clearInterval(that.timer);
+          //启动定时器
+          that.timer = setInterval(()=>{
+            that.set_date_time();
+          }, that.tconfig.timer_ms);
           // 设置格式化时间
           if (that.tconfig.time_format) {
             that.time_str = that.tconfig.time_format(
