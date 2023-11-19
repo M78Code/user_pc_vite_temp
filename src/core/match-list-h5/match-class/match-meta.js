@@ -553,9 +553,10 @@ class MatchMeta {
     }
     const params = this.get_base_params(euid)
     const res = await api_common.get_collect_matches(params)
+    MatchCollect.get_collect_match_data()
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list, is_virtual: false })
+    this.handler_match_list_data({ list: list})
   }
 
   /**
