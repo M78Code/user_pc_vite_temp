@@ -161,7 +161,7 @@ const changeDatetab = (item, index) => {
     emit("changeDate", item.val);
 };
 onMounted(() => {
-    setDefaultData('101');//默认足球
+    setDefaultData(MenuData.menu_mi.value || '101');//默认足球
 })
 
 onUnmounted(() => {
@@ -172,9 +172,9 @@ onUnmounted(() => {
  * @param {*} mi 
  */
 const setDefaultData = (val) => {
-    if(val) current_menu_mi.value = val;
     MenuData.set_current_lv1_menu(2);
-    // MenuData.set_menu_mi(mi);
+    // MenuData.set_menu_mi(val);
+    current_menu_mi.value = val;
     //球种改变设置今日
     MenuData.set_date_time(week[0].val);
     menu_time.value = week[0]
