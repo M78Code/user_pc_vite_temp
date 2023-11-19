@@ -437,8 +437,8 @@ const set_error_message_config = (res ={}) => {
     }else{
         // 获取限额失败的信息
         BetData.set_bet_before_message({
-            code: obj.code,
-            msg: obj.message
+            code: res.code,
+            msg: res.message
         })
 
         setTimeout(()=>{

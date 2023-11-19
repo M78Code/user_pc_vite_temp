@@ -246,7 +246,7 @@ export default defineComponent({
     }
     function hide_search(e) {
       if(is_focus.value && SearchPCClass.search_isShow) {
-        if(e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active') {
+        if(e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible' && e.target.className != 'windows desktop landscape') {
           SearchPCClass.set_search_isShow(false);
           is_focus.value = false;
           text.value = ''
@@ -256,15 +256,20 @@ export default defineComponent({
     const get_props = (props) => {
       text.value = props.text
     }
+    const get_width = (props) => {
+      is_focus.value = props.focus
+    }
     
     onMounted(() => {
       compute_userInfo();
       document.addEventListener('click', (e) => hide_search(e))
       useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width)
     });
     onUnmounted(() => {
       document.removeEventListener('click', hide_search)
       useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width).off()
     })
 
     return {
