@@ -53,6 +53,11 @@
     time = await UserCtr.get_system_time()
     update_time(time)
 
+    let obj = {
+      label: MenuData.mid_menu_result.md,
+      type: MenuData.menu_root == 202 ? 2 : 3
+    }
+    handle_click_menu_mi_3_date(obj)
   })
 
   /**

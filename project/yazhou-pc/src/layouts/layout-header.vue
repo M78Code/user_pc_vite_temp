@@ -10,7 +10,8 @@
     <div :class="['header-item item2 row items-center', { 'search-off': !globalAccessConfig.get_activitySwitch() }]"
       :style="SearchPCClass.search_isShow ? 'z-index:900;' : ''">
       <!-- 搜索 -->
-      <header-search />
+        <!--<header-search />-->
+        <bevisHeaderSearch></bevisHeaderSearch>
       <!-- 公告滚动组件 -->
       <marquee-cst v-if='!SearchPCClass.search_isShow' @navigate="navigate" />
       <!-- 占位盒子 -->
@@ -38,6 +39,9 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 /** 组件 */
 import siteHeader from 'src/base-pc/components/site-header/site-header.vue'
 import headerSearch from 'src/base-pc/components/site-header/header-search.vue'
+
+import bevisHeaderSearch from "src/base-pc/components/site-header/bevis/bevis-header-search.vue"
+
 import marqueeCst from "src/base-pc/components/marquee/marquee-cst.vue";
 import headerSelect from 'src/base-pc/components/site-header/header-select.vue'
 // import timer from "src/base-pc/components/site-header/timer.vue"
@@ -530,6 +534,12 @@ const set_show_login_popup = (data) => store.dispatch({
 })
 </script>
 
-<!-- <style lang="scss" scoped>
+<style lang="scss" scoped>
+.yb-layout-margin-header{
+    height: 100px;
+}
+</style>
+<!--
+ <style lang="scss" scoped>
 @import 'src/base-pc/components/site-header/site-header.scss';
-</style> -->
+</style>-->

@@ -407,7 +407,7 @@ class MatchMeta {
     if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return
+    if (length < 1) return this.set_page_match_empty_status(true);
     this.handler_match_list_data({ list: list, type: 2 })
   }
 
@@ -681,6 +681,7 @@ class MatchMeta {
       MatchResponsive.clear_ball_seed_league_count()
     }
     const length = lodash.get(list, 'length', 0)
+    console.log('handler_match_list_data', list.length)
     if (length < 1) return this.set_page_match_empty_status(true);
     // // 重置折叠对象
     // MatchFold.clear_fold_info()
