@@ -75,7 +75,8 @@ onMounted(() => {
     line-height: 20px;
     text-transform: capitalize;
     // color: #FF7000;
-    background: #FF7000;
+    //background: #FF7000;
+    background-color: var(--q-gb-bg-c-1);
     //color: #fff;
     color: var(--q-gb-t-c-2); 
     position: relative;
@@ -93,7 +94,8 @@ onMounted(() => {
     // }
     .match-detail-line {
       height: 1px;
-      background: #FF7000;
+      //background: #FF7000;
+      background-color: var(--q-gb-bg-c-1);
       position: fixed;
       width: 100vw;
     }

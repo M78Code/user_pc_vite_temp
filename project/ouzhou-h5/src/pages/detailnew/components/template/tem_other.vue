@@ -156,7 +156,8 @@ onMounted(() => {
         border-bottom: 1px solid #F5F5F5;
       }
       .is-active {
-        background: #FF7000;
+        //background: #FF7000;
+        background-color: var(--q-gb-bg-c-1);
         //color: #fff;
         color: var(--q-gb-t-c-2);
         .ol-on-text {

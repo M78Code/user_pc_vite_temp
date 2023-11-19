@@ -165,7 +165,8 @@ const tabClick = (item) => {
     right: 5%;
     width: 90%;
     height: 2px;
-    background: #ff7000;
+    //background: #ff7000;
+    background-color: var(--q-gb-bg-c-1);
   }
 }
 
@@ -213,7 +214,7 @@ const tabClick = (item) => {
 
   .detail-statsic-title {
     text-align: center;
-    color: #8a8986;
+    color: var(--q-gb-t-c-3);
   }
 
   .detail-statsic-chart {
@@ -235,7 +236,7 @@ const tabClick = (item) => {
   }
 
   .detail-slider-title {
-    color: #8A8986;
+    color: var(--q-gb-t-c-3);
   }
 
 }
@@ -283,7 +284,8 @@ const tabClick = (item) => {
       }
 
       .dot-h {
-        background-color: #ff7000;
+        //background-color: #ff7000;
+        background-color: var(--q-gb-bg-c-1);
       }
 
       .dot-h-r {

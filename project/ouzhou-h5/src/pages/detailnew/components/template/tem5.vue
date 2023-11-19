@@ -188,7 +188,8 @@ onMounted(() => {
         height: 50px;
         line-height: 50px;
         font-weight: 500;
-        color: #ff7000;
+        //color: #ff7000;
+        color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
         .ol-on-text {
@@ -199,7 +200,8 @@ onMounted(() => {
         }
       }
       .is-active {
-        background: #ff7000;
+        //background: #ff7000;
+        background-color: var(--q-gb-bg-c-1);
         //color: #fff;
         color: var(--q-gb-t-c-2);
         .ol-on-text {
@@ -240,7 +242,8 @@ onMounted(() => {
   }
 
   .temp-active {
-    background-color: #ff7000;
+    //background-color: #ff7000;
+    background-color: var(--q-gb-bg-c-1);
     //color: #ffffff;
     color: var(--q-gb-t-c-2);
 
