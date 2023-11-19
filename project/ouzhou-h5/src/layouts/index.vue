@@ -190,6 +190,7 @@ if (UserCtr.get_user_token()) {
 }
 </script>
 <style lang="scss" scoped>
+
 .bar-top{
   position: relative;
     display: flex;
@@ -243,6 +244,16 @@ if (UserCtr.get_user_token()) {
     overflow: hidden;
     // margin-top: 50px;
     padding-top: 0 !important;
+    :deep(.q-drawer-container){
+      .q-drawer__backdrop {
+        background-color: rgba(56, 55, 50, 0.6) !important;
+        filter: blur(5px);
+      }
+      .q-drawer__opener{
+        display: none;
+        z-index: -1;
+      }
+    }
   }
 
   /* ************** 悬浮按钮 ************** -E */
