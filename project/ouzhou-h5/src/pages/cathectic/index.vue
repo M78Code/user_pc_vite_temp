@@ -27,7 +27,7 @@
   import { api_betting } from "src/api/index.js";
   import cathecticItemAll from "src/base-h5/components/cathectic/ouzhou-h5/cathectic-item-all.vue"
   import daysSelect from "src/base-h5/components/cathectic/ouzhou-h5/days-select.vue"
-  import { onMounted,  ref, provide } from 'vue'
+  import { onMounted, onUnmounted,  ref, provide } from 'vue'
   import { i18n_t } from "src/boot/i18n.js";
   import {compute_local_project_file_path} from "src/core/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
@@ -64,6 +64,11 @@
         provided_.value = data
       } 
     })
+  })
+
+  onUnmounted(() => {
+    // 离开路由时，如果有ws监听实例，取消监听
+    BetRecordClass.ws_ctr && BetRecordClass.ws_ctr.destroy()
   })
   
   const change_record = (key) => {

@@ -74,25 +74,25 @@
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div style="display: flex;flex-direction: row; flex: 1">
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">1</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">X</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">2</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
 							</div>
@@ -124,25 +124,25 @@
 								<p>{{ (new Date(+i.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div style="display: flex;flex-direction: row; flex: 1">
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">1</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">X</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">2</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
 							</div>
@@ -170,25 +170,25 @@
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div style="display: flex;flex-direction: row; flex: 1">
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">1</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">X</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">2</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
 							</div>
@@ -756,6 +756,9 @@ li {
 				font-weight: bold;
 			}
 		}
+	}
+	.flex_1 {
+		flex: 1;
 	}
 }
 </style>

@@ -176,7 +176,7 @@ const getOn = (match_info, o) => {
 const active = ref(1);
 
 onMounted(() => {
-  console.log(11111111, props.match_info);
+  // console.log(11111111, props.match_info);
 });
 </script>
 
