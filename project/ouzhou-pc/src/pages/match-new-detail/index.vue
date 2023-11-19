@@ -214,7 +214,7 @@ export default{
 
 <style lang="scss" scoped>
 .detail-page {
-  background: #e2e2e2;
+  background: var(--q-gb-bg-c-6);
   display: flex;
   width: 100%;
   padding-bottom: 50px;
@@ -236,7 +236,7 @@ export default{
     line-height: 40px;
     font-size: 14px;
     overflow: hidden;
-    background: linear-gradient(to right, #3b3b3b, #9c9c9c);
+    background: var(--q-gb-bg-lg-5);
     display: flex;
     justify-content: space-between;
 
@@ -262,11 +262,7 @@ export default{
     height: 80px;
 
     padding: 15px 0 16px 14px;
-    background: linear-gradient(
-      90.05deg,
-      rgba(255, 255, 255, 0.81) 0.04%,
-      rgba(204, 204, 204, 0.6) 99.96%
-    );
+    background: var(--q-gb-bg-lg-4);
 
     .detail-head-leagal {
       display: flex;
@@ -275,7 +271,7 @@ export default{
 
       .leagal-time {
         background-color: #d9d9d9;
-        color: #1a1a1a;
+        color: var(--q-gb-t-c-5);
         padding: 2px 10px;
       }
     }
@@ -283,7 +279,7 @@ export default{
     .match-detail-head-name {
       font-size: 13px;
       line-height: 18px;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       opacity: 0.6;
     }
 
@@ -291,7 +287,7 @@ export default{
       font-weight: 500;
       font-size: 18px;
       line-height: 25px;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       margin-top: 6px;
     }
 
@@ -383,7 +379,7 @@ export default{
   line-height: 45px;
 
   &:hover {
-    background-color: #939393;
+    background-color: var(--q-gb-bg-c-7);
   }
 }
 
@@ -416,7 +412,7 @@ export default{
   }
 }
 .match-name-list {
-  background-color: #7b7b7b;
+  background-color: var(--q-gb-bg-c-8);
   width: 75%;
   z-index: 1000;
   margin-top: -10px;

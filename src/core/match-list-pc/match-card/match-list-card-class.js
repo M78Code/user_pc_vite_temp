@@ -218,9 +218,7 @@ class MatchListCardInfo {
    * 这里注意  单个赛事增删  不用遍历循环全部 的 数据
    * bymids接口拉取数据或者 ws推送改变赛事盘口变更
    */
-  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(
-    mids_arr
-  ) {
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(mids_arr) {
     recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(
       mids_arr
     );

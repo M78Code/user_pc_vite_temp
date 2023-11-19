@@ -36,7 +36,7 @@ export default {
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
     // 组件是否加载完成
     const is_mounted = ref(true);
-
+    console.log('进来了几次');
     // 显示部分dom ID
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
     onMounted(() => {
@@ -69,7 +69,7 @@ export default {
 <style lang="scss" scoped>
 .c-match-card {
   overflow: hidden;
-  border-bottom: 1px solid #e2e2e2;
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
 
   .test {
     position: absolute;

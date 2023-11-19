@@ -253,7 +253,7 @@
         if(!is_ws_call){
           Object.assign(all_card_obj[card_key],fold_template)
           all_card_obj[card_key].is_league_fold = is_league_fold
-          all_card_obj[card_key].is_show_card = false
+          all_card_obj[card_key].is_show_card = !is_league_fold
           // 设置赛事数据加载状态
           all_card_obj[card_key].load_data_status = is_league_fold ?'loading' : 'loaded'
         }else{
@@ -289,7 +289,6 @@
         Object.assign(league_title_card_obj,fold_template)
         league_container_card_obj.load_data_status = 'loading'
       }
-      
       if(league_container_card_obj.is_show_card){
         // 卡片显示  还原卡片总高度
         league_container_card_obj.card_total_height = league_container_card_obj.card_total_height_back

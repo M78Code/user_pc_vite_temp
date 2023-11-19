@@ -317,7 +317,7 @@ const set_clear = () => {
   justify-content: space-between;
   padding: 0 0.3rem;
   border-radius: 0.7rem;
-  color: var(--q-gb-t-c-14);
+  color: var(--q-gb-t-c-2);
   font-size: 0.14rem;
 }
 .yb-info-hui{
@@ -347,7 +347,7 @@ background: var(--q-gb-t-c-3) !important;
 }
 .bet-mix-box-child2 {
   .used-money {
-    color: var(--q-gb-t-c-14);
+    color: var(--q-gb-t-c-2);
   }
 
   .err-msg3 {
@@ -370,7 +370,7 @@ background: var(--q-gb-t-c-3) !important;
   overflow: hidden;
   width: 100%;
   -webkit-overflow-scrolling: touch;
-  background-color: var(--q-gb-t-c-14);
+  background-color: var(--q-gb-t-c-2);
 
   .yb_pl14 {
     margin-right: 0.01rem;

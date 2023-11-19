@@ -34,7 +34,7 @@ const pack_up = (val) => {
 
 <style lang="scss" scoped>
 .tip{
-  color: var(--q-gb-bg-c-8);
+  color: var(--q-gb-t-c-3);
   text-align: center;
   margin-top: 0.2rem;
   font-size: 0.13rem;

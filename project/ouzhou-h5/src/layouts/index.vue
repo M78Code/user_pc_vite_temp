@@ -14,7 +14,7 @@
       <!-- 投注框 -->
       <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
       
-       <bet-bar class="bar-top" v-if="is_show"></bet-bar>>
+       <bet-bar class="bar-top" v-if="is_show"></bet-bar>
       <FooterWapper />
 
     </q-page-container>
