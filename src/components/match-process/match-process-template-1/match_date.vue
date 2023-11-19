@@ -33,7 +33,6 @@
         :date_show_type="date_show_type"
       />
     </template>
-
     <!-- 滚球(ms:1) -->
     <template v-if="get_match_status(match.ms, [110])">
       <!-- 计时器  -->

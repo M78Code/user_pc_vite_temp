@@ -11,9 +11,7 @@
 </template>
 
 <script setup>
-import {onMounted,ref} from 'vue'
 import { compute_local_project_file_path } from 'src/core/'
-const is_detail = ref(false)
 
 const arr_const = [
      {
@@ -61,20 +59,12 @@ const arr_const = [
 ]
 
 const props = defineProps({
-    // which: {
-    //     type: String,
-    //     required: true
-    // },
-    // height: {
-    //     required: true
-    // },
     code:{
         type: Number,
         required: true
     }
 })
 
-// onMounted(init)
 
 </script>
 
