@@ -8,16 +8,14 @@ const router = createRouter({
 
 // 全局路由守卫
 router.beforeEach((to, from, next) => {
-  // console.log(to, from)
+  // 没有路由 跳转到首页
+  if (!to.name) {
+    return next('/home')
+  }
   if (to.meta.title) {
     document.title = `${to.meta.title}`;
   }
   next()
-})
-
-router.afterEach((to, from) => {
-  // console.log(to, from)
-  console.log('afterEach')
 })
 
 export default router
