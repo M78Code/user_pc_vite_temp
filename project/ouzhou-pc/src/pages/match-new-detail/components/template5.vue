@@ -49,7 +49,6 @@
                     <span v-show="!o.hs">
                         <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol">
                         </bet-item>
-                        <!-- {{ Math.floor(o.ov / 1000) / 100 }} -->
                     </span>
                     <div style="text-align: center; width: 100%" v-show="o.hs">
                         <img
