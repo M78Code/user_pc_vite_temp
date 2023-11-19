@@ -11,7 +11,7 @@
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
     <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
-      <div class="active flex flex-start items-center" @click.stop="show_list = !show_list">
+      <div class="active flex flex-start items-center" @click.stop="handle_click">
         <div>
           {{ i18n_t(`ouzhou.match.play_map.${current_csid_hpids.first_hpid}`) }} & {{
             i18n_t(`ouzhou.match.play_map.${current_csid_hpids.second_hpid}`) }}
@@ -53,13 +53,14 @@ const props = defineProps({
   },
 })
 const show_list = ref(false)
-watch(show_list, (v) => {
-  if (v) {
+function handle_click() {
+  show_list.value = !show_list.value
+  if (show_list.value) {
     window.addEventListener('click', () => {
       show_list.value = false
     }, { once: true })
   }
-})
+}
 const cur_title_info = computed(() => {
   console.log('props.card_style_obj;', props.card_style_obj);
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
