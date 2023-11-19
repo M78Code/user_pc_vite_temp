@@ -127,7 +127,6 @@
         cus_tid = `${league_obj.tid}_${league_repeat_count_obj[league_obj.tid]}`
         // 赛事ID数组
         let mids_arr = league_obj.mids.split(',')
-        console.log('league_obj', league_obj);
         match_status_type_match_count += mids_arr.length
         // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
         if(league_obj.csid != pre_match_csid){
