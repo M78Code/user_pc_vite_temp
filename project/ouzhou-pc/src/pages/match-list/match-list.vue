@@ -59,7 +59,6 @@
         >
           <match-list-card
             :card_key="card_key"
-            use_component_key="MatchListCard_2"
           />
         </div>
         <template v-slot:after>
