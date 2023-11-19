@@ -450,7 +450,7 @@ class MatchMeta {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
     // 获取赛 事收藏状态 该接口还没发到试玩
-    MatchCollect.get_collect_match_data()
+    if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data()
     this.handler_match_list_data({ list: list, is_classify })
   }
 
@@ -502,10 +502,10 @@ class MatchMeta {
     const hots = lodash.get(res, 'data.hots', [])
     const dataList = lodash.get(res, 'data.dataList', [])
     // 15分钟玩法赛事数据
-    const p15_list = this.assemble_15_minute_data(p15)
+    const p15_list = this.assemble_15_minute_data(p15.slice(0, 4))
     MatchDataBasel5minsH5.set_list(p15_list)
     // 热门赛事数据
-    MatchDataBaseHotsH5.set_list(hots)
+    MatchDataBaseHotsH5.set_list(hots.slice(0, 4))
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []

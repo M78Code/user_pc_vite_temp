@@ -10,6 +10,8 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 
 class MatchCollect {
   constructor () {
+    // 是否获取过收藏
+    this.is_get_collect = false
     // 联赛收藏对象
     this.league_tid_collect_obj = ref({})
     // 赛事收藏对象
@@ -94,6 +96,7 @@ class MatchCollect {
         this.clear_collect_info()
         const data = lodash.get(res,'data');
         Object.assign(this.match_collect_obj, { ...data })
+        this.set_is_get_collect(true)
         MatchMeta.complete_matchs.forEach(match => {
           requestAnimationFrame(() => {
             this.handle_collect_state(match)
@@ -145,6 +148,14 @@ class MatchCollect {
     this.league_tid_collect_obj.value = {}
     this.match_mid_collect_obj.value = {}
     this.match_collect_obj = { 1: [], 2: [], 3: [] }
+  }
+
+  /**
+   * @description 设置是否获取过收藏
+   * @param {} val 
+   */
+  set_is_get_collect (val) {
+    this.is_get_collect = val
   }
 }
 
