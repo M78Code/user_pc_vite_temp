@@ -91,7 +91,7 @@ const props = defineProps({
         padding: 0 12px;
         font-size: 14px;
         font-weight: 400;
-        color: #1A1A1A;
+        color: var(--q-gb-t-c-4);
         > div {
           height: 21px;
           white-space: nowrap;

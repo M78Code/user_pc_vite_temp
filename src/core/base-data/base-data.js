@@ -216,7 +216,6 @@ class BaseData {
     return Promise.all([p1, p2, p3, p4, p5]).then((res) => {
       localStorage.setItem('base_data', JSON.stringify(res))
       const base_data = localStorage.getItem('base_data')
-      this.is_emit = true
       !base_data && this.handle_base_data(res)
     }).catch((err) => {
       this.set_default_base_data()
@@ -226,7 +225,6 @@ class BaseData {
 
   // 从缓存读取默认数据
   set_default_base_data () {
-    this.is_emit = false
     const base_data = localStorage.getItem('base_data')
     const res = base_data && JSON.parse(base_data)
     res && this.handle_base_data(res)
@@ -629,11 +627,11 @@ class BaseData {
     try {
       // let res = await api_base_data.get_base_data({});
       res && await this.set_base_data_res(res);
-      //  元数据加载完成 
-      if (!this.is_emit) {
+      // 元数据加载完成 useMittEmit 大部分情况执行这里时， 页面的 useMittOn 还没注册就不会触发
+      if (this.is_emit) {
         useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+        this.set_is_emit = false
       }
-      this.is_emit = false
       this.base_data_version.value = Date.now();
     } catch (error) {
       console.error("获取 元数据接口 error", error);
@@ -743,6 +741,10 @@ class BaseData {
     //  Object.assign(obj,VrMiConfig)
 
     this.mi_info_map = obj;
+  }
+
+  set_is_emit (val) {
+    this.is_emit = val
   }
   /**
    * 菜单id 到 联赛 id 到 赛事ID 的 映射关系

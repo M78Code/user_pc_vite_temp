@@ -400,12 +400,11 @@ export default {
           color: #333;
           font-size: 14px;
           margin-left: 5px;
-          display: none;
         }
       }
       .q-ripple{
         display: none;
-        }
+      }
       }
     }
   }
@@ -985,9 +984,11 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 500;
-            color: #8a8986;
+            //color: #8a8986;
+            color: var(--q-gb-t-c-4);
             &.visiting {
-              color: #8a8986;
+              //color: #8a8986;
+              color: var(--q-gb-t-c-3);
             }
           }
         }
@@ -1122,7 +1123,7 @@ export default {
 /* **************日期********************** -S*/
 .date-container {
   width: 100%;
-  color: #999;
+  color: var(--q-gb-t-c-3);
   display: flex;
   align-items: center;
   font-size: 14px;

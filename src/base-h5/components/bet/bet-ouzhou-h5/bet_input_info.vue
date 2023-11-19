@@ -134,7 +134,7 @@ const set_ref_data_bet_money = () => {
         width: 152px;
         height: 44px;
         box-shadow: 0px 1px 4px 0px #FF70001A;
-        border: 0.5px solid var(--q-gb-t-c-18);
+        border: 0.5px solid var(--q-gb-bd-c-12);
         padding-left: 6px;
         background: var(--q-gb-t-c-2);
         caret-color: var(--q-gb-bd-c-1);

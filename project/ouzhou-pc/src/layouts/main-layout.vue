@@ -36,10 +36,9 @@
 
 
     <Vue3DraggableResizable v-model:x="BetData.bet_box_draggable.x" v-model:y="BetData.bet_box_draggable.y"
-      v-model:active="BetData.bet_box_draggable.isActive" :draggable="true" :resizable="false" parent="#parent"
+      v-model:active="BetData.bet_box_draggable.isActive" :draggable="true" :resizable="false" :parent="true"
       v-if="BetData.bet_box_draggable.show">
       <div class="ty-bet-box">
-        <!-- {{BetData.bet_box_draggable}} -->
         <bet-box-wapper use_component_key="BetBoxOuZhouPC_1" />
       </div>
     </Vue3DraggableResizable>
@@ -47,7 +46,7 @@
 </template>
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
-import Vue3DraggableResizable from 'vue3-draggable-resizable' //拖拽组件
+
 import { useRoute } from "vue-router";
 import { LayOutMain_pc, UserCtr } from "src/core/index.js";
 

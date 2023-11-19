@@ -12,14 +12,11 @@
       <div class="header_tabs">
         <q-tabs v-model="tabValue" dense class="bg-grey-3" align="justify" narrow-indicator @update:modelValue="on_update">
           <q-tab v-for="(item,index) in tabData" :key="index" :name="item.val" :label="item.label" />
-          <!-- <q-tab name="today" :label="`${i18n_t('ouzhou.match.top_events')}`" /> -->
-          <!-- <q-tab name="top_events" :label="`${i18n_t('ouzhou.match.top_events')}`" /> -->
         </q-tabs>
       </div>
       <scroll-list menu_type="50000" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
       <!-- <NoData class="data-get-empty2" which='comingSoon' height='400'></NoData> -->
       <!-- 收藏 -->
-      <!-- <scroll-menu menu_type="1" :is_show_badge="false"  v-if="MenuData.menu_list.length" @changeMenu="changeMenu"/> -->
       <div class="match-container">
           <match-container />
       </div>
@@ -30,7 +27,7 @@
 
 
 import { ref, onMounted, reactive } from "vue";
-import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
+import { i18n_t, MenuData } from "src/core/index.js";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -43,17 +40,17 @@ const tabValue = ref(1);
 const tabData = reactive([
   {
     name:"inplay",
-    label:"In-Play",
+    label:i18n_t("menu_itme_name.inplay"),
     val:1,
   },
   {
     name:"today",
-    label:"Today",
+    label:i18n_t("menu_itme_name.today"),
     val:2,
   },
   {
     name:"early",
-    label:"Early",
+    label:i18n_t("menu_itme_name.early"),
     val:3,
   }
 ]);
@@ -88,7 +85,7 @@ onMounted(()=>{
     :deep(.q-tabs--dense){
       .scroll--mobile{
         height: 50px;
-        background: #fff;
+        background-color: var(--q-gb-bg-c-2);
         padding: 0 10px;
         background-repeat: no-repeat;
         background-size: contain;
@@ -101,7 +98,7 @@ onMounted(()=>{
         }
       }
       .q-tab__label{
-        color: #8A8986;
+        color: var(--q-gb-t-c-3);
         text-transform: capitalize;
         font-weight: 600;
       }
@@ -111,7 +108,8 @@ onMounted(()=>{
       }
       .q-tab__indicator{
         height: 3px;
-        background: #FF7000;
+        //background: #FF7000;
+        background-color: var(--q-gb-bg-c-1);
       }
     }
   }
@@ -128,7 +126,7 @@ onMounted(()=>{
     overflow: hidden;
     overflow-y: auto;
     .match-list-container{
-      background: #fff !important;
+      background-color: var(--q-gb-bg-c-2) !important;
     }
 }
 </style>

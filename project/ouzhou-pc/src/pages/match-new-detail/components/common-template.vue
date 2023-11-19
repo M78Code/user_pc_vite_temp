@@ -24,7 +24,8 @@
           {{ o.ott }} <span>{{ o.on }} </span>
         </div>
         <div v-show="!match_info.hl[0].hs">
-          {{ Math.floor(o.ov / 1000) / 100 }}
+          <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
+          <!-- {{ Math.floor(o.ov / 1000) / 100 }} -->
         </div>
         <div
           style="text-align: center; width: 100%"
@@ -94,7 +95,7 @@
                 :style="{ color: '#ff7000' }"
                 style="font-weight: 500"
               >
-                <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"> </bet-item>
+                <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
               </div>
 
               <div style="text-align: center; width: 100%" v-show="item.hs">
@@ -175,7 +176,7 @@ const getOn = (match_info, o) => {
 const active = ref(1);
 
 onMounted(() => {
-  console.log(11111111, props.match_info);
+  // console.log(11111111, props.match_info);
 });
 </script>
 
