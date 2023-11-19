@@ -283,7 +283,8 @@ export default {
   methods: {
     //热门推荐计算准确时间
     cur_timer() {
-      let timer = Number(this.match.mst);
+      //防止时间变成NaN
+      let timer = Number(this.match.mst || 0); 
       // C01赛事使用mstrc字段数据
       let mstrc = lodash.get(this.match, "mstrc");
       if (lodash.get(this.match, "cds") == "C01" && mstrc) {
