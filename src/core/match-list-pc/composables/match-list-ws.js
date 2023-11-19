@@ -99,7 +99,7 @@ const refresh_c8_subscribe = () => {
 		}
 		// 调用 mids  接口
 		if (['C303', 'C114'].includes(cmd)) {
-			api_bymids()
+			// api_bymids()
 		}
 	})
 	// if (this.SCMD_C8) {
