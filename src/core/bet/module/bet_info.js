@@ -135,7 +135,12 @@ export const get_bet_amount = async obj => {
   }
 
 }
-
+/**
+ * 
+ * @param {TYPES.MatchDetail} item 
+ * @param {*} obj_hp 
+ * @param {TYPES.Hl} obj_hl 
+ */
 export const bet_click = (item,obj_hp,obj_hl) =>{
   // console.error(item,'item')
   // console.error(obj_hp,'obj_hp')

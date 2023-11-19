@@ -117,7 +117,7 @@ export default class MatchDataBaseWS
 
   /**
    * @description: WS命令C101逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C101(ws_obj){
     // >>>>C101 赛事状态
@@ -147,7 +147,7 @@ export default class MatchDataBaseWS
   
   /**
    * @description: WS命令C102逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C102(ws_obj){
     // >>>>C102 赛事事件
@@ -194,7 +194,7 @@ export default class MatchDataBaseWS
   
   /**
    * @description: WS命令C103逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C103(ws_obj){
     // C103赛事比分
@@ -238,7 +238,7 @@ export default class MatchDataBaseWS
 
   /**
    * @description: WS命令C104逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C104(ws_obj){
     // C104赛事级别盘口状态
@@ -273,7 +273,7 @@ export default class MatchDataBaseWS
 
   /**
    * @description: WS命令C105逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap<TYPES.WS.C105>} ws_obj ws数据
    */
   C105(ws_obj){
     // C105盘口/投注项
@@ -511,7 +511,7 @@ export default class MatchDataBaseWS
   
   /**
    * @description: WS命令C302逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C302(ws_obj){
     // C302滚球新赛事通知
@@ -543,7 +543,7 @@ export default class MatchDataBaseWS
 
   /**
    * @description: WS命令C303逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C303(ws_obj){
     // C303滚球新赛事通知
@@ -578,7 +578,7 @@ export default class MatchDataBaseWS
 
   /**
    * @description: WS命令C304逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C304(ws_obj){
     // C304主副盘变更
@@ -611,7 +611,7 @@ export default class MatchDataBaseWS
 
   /**
    * @description: WS命令C801逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C801(ws_obj){
     // C801倒计时补充
@@ -674,7 +674,7 @@ export default class MatchDataBaseWS
 
   /**
    * @description: WS命令C901逻辑处理
-   * @param {Object} ws_obj ws数据
+   * @param {WS.DataWrap} ws_obj ws数据
    */
   C901(ws_obj){
     // C901关盘补充
