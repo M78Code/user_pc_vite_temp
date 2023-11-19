@@ -74,25 +74,25 @@
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div style="display: flex;flex-direction: row; flex: 1">
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">1</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">X</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">2</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
 							</div>
@@ -124,25 +124,25 @@
 								<p>{{ (new Date(+i.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div style="display: flex;flex-direction: row; flex: 1">
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">1</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">X</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">2</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
 							</div>
@@ -170,25 +170,25 @@
 								<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 							</div>
 							<div style="display: flex;flex-direction: row; flex: 1">
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">1</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">X</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
-								<div style="flex: 1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+								<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 									<div class="center">2</div>
 									<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 								</div>
-								<div style="flex: 1" v-else>
+								<div class="flex_1" v-else>
 									<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 								</div>
 							</div>
@@ -577,7 +577,7 @@ onBeforeUnmount(() => {
 	padding: 9px 18px;
 	display: flex;
 	border-bottom: 1px solid #FF7000;
-	background-color: #fff;
+	background-color: var(--q-gb-bg-c-2);
 	font-size: 14px;
 	font-weight: 500;
 	overflow-x: scroll;
@@ -586,7 +586,7 @@ onBeforeUnmount(() => {
 	z-index: 1;
 	color: #1A1A1A;
 	.tab {
-		background-color: #FFf;
+		background-color: var(--q-gb-bg-c-2);
 		border-radius: 40px;
 		text-align: center;
 		font-size: 12px;
@@ -602,7 +602,8 @@ onBeforeUnmount(() => {
 		}
 
 		&.active {
-			background-color: #FF7000;
+			//background-color: #FF7000;
+			background-color: var(--q-gb-bg-c-1);
 			//color: #fff;
 			color: var(--q-gb-t-c-2);
 		}
@@ -622,7 +623,7 @@ onBeforeUnmount(() => {
 li {
 	margin-bottom: 8px;
 	padding: 14px 10px;
-	background-color: #fff;
+	background-color: var(--q-gb-bg-c-2);
 	// border-radius: 6px;
 	font-size: 14px;
 
@@ -644,7 +645,7 @@ li {
 		}
 
 		div p:last-child {
-			color: #8A8986;
+			color: var(--q-gb-t-c-3);
 		}
 
 		.middle {
@@ -720,7 +721,7 @@ li {
 	margin: 0 auto 0.18rem;
 	font-size: 0.14rem;
 	border-radius: 6px;
-	background-color: #fff;
+	background-color: var(--q-gb-bg-c-2);
 
 	.text-bol {
 		font-size: 0.14rem;
@@ -756,6 +757,9 @@ li {
 				font-weight: bold;
 			}
 		}
+	}
+	.flex_1 {
+		flex: 1;
 	}
 }
 </style>

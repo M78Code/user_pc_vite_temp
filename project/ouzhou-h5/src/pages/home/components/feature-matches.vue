@@ -85,7 +85,7 @@ const get_amtch_bg_image = (csid) => {
     overflow: hidden;
     flex-shrink: 0;
     padding-top: 3px;
-    background: #fff;
+    background-color: var(--q-gb-bg-c-2);
     margin-right: 10px;
     border-radius: 3px;
     background-repeat: no-repeat;
@@ -98,7 +98,7 @@ const get_amtch_bg_image = (csid) => {
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
-      color: #8A8986;
+      color: var(--q-gb-t-c-3);
       .name{
         width: 160px;
         white-space: nowrap;
@@ -151,7 +151,8 @@ const get_amtch_bg_image = (csid) => {
         //color: #fff;
         color: var(--q-gb-t-c-2);
         border-radius: 2px;
-        background: #FF7000;
+        //background: #FF7000;
+        background-color: var(--q-gb-bg-c-1);
         > span > span {
           //color: #fff;
           color: var(--q-gb-t-c-2);
@@ -162,7 +163,7 @@ const get_amtch_bg_image = (csid) => {
         flex: 1;
         flex-shrink: 0;
         text-align: center;
-        color: #8A8986;
+        color: var(--q-gb-t-c-3);
         border-radius: 3px;
         > span {
           > span {

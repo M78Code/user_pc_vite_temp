@@ -132,8 +132,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .odds-wrap {
-  //background: #ffffff;
-  background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-2);
   box-sizing: border-box;
 
   .odds-hpn {
@@ -175,8 +174,7 @@ onMounted(() => {
     display: none;
   }
   .ol_on {
-      //background: #ffffff;
-      background: var(--q-gb-bg-c-15);
+      background-color: var(--q-gb-bg-c-2);
       .o_hv {
         color: #1a1a1a;
         padding-right: 5px;
@@ -184,11 +182,12 @@ onMounted(() => {
       .ol_ov {
         border: 1px solid #f5f5f5;
         border-width: 1px 1px 0 0;
-        background: #fff;
+        background-color: var(--q-gb-bg-c-2);
         height: 50px;
         line-height: 50px;
         font-weight: 500;
-        color: #ff7000;
+        //color: #ff7000;
+        color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
         .ol-on-text {
@@ -199,7 +198,8 @@ onMounted(() => {
         }
       }
       .is-active {
-        background: #ff7000;
+        //background: #ff7000;
+        background-color: var(--q-gb-bg-c-1);
         //color: #fff;
         color: var(--q-gb-t-c-2);
         .ol-on-text {
@@ -240,7 +240,8 @@ onMounted(() => {
   }
 
   .temp-active {
-    background-color: #ff7000;
+    //background-color: #ff7000;
+    background-color: var(--q-gb-bg-c-1);
     //color: #ffffff;
     color: var(--q-gb-t-c-2);
 

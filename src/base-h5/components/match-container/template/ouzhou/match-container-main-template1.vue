@@ -1123,7 +1123,7 @@ export default {
 /* **************日期********************** -S*/
 .date-container {
   width: 100%;
-  color: #999;
+  color: var(--q-gb-t-c-3);
   display: flex;
   align-items: center;
   font-size: 14px;

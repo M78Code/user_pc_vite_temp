@@ -38,7 +38,7 @@ const props = defineProps({
  
 <style scoped lang="scss">
 .top_leagues_page{
-  background: #fff;
+  background-color: var(--q-gb-bg-c-2);
   :deep(.collapse_page){
     &:not(:last-child){
       border-bottom: 10px solid #F1F1F1;
