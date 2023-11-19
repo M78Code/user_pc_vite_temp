@@ -3,22 +3,23 @@
  * @Date: 2020-09-10 12:18:36
  * @Description: 项目主题设置相关
  */
+import { reactive } from 'vue';
 import $class from  "licia-es/$class"
 import setTheme from "project/activity/src/public/utils/theme/theme.js"
 
-export default {
-  state: {
+const state = reactive({
     // 主题
     theme: '',
+})
 
-  },
+export default {
   getters: {
     /**
      * @description: 获取主题
      * @param {Object} state 操作句柄
      * @return {undefined} undefined
      */
-    get_theme(state) {
+    get_theme() {
       return state.theme;
     },
 
@@ -48,7 +49,7 @@ export default {
      * @param {String} type 主题类型
      * @return {undefined} undefined
      */
-    set_theme(state, obj){
+    set_theme(obj){
       const { user_id, theme } = obj
 
 

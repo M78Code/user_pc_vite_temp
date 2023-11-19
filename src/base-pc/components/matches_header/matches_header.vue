@@ -34,7 +34,7 @@ import lodash_ from "lodash"
 
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
-import { MenuData, useMittOn,MITT_TYPES } from "src/core/index.js"
+import { MenuData, useMittOn,MITT_TYPES, useMittEmit } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 
 const tab_list = ref([])
@@ -97,11 +97,11 @@ const checked_current_tab = payload => {
 
 	// 判断头部高度
 	if ([1001,4002].includes(payload.value*1)) {
-			match_list_top.value = '80px'
+		match_list_top.value = '80px'
 	} else if([4001].includes(payload.value*1)){
-			match_list_top.value = '134px'
+		match_list_top.value = '134px'
 	} else {
-			match_list_top.value = '146px'
+		match_list_top.value = '146px'
 	}
 
 	// 点击热门赛种 切换到 500
@@ -112,6 +112,7 @@ const checked_current_tab = payload => {
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
+        useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
 	}
 
 	// 收藏切换tab
@@ -125,6 +126,7 @@ const checked_current_tab = payload => {
 		if( payload.value == 3003){
 			obj.current_mi = 1013
 		}
+		MenuData.set_menu_current_mi(obj.current_mi)
 	}
 
 	MenuData.set_mid_menu_result(obj)
