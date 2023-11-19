@@ -256,7 +256,7 @@ const jumpRules = () => {
             height: 30px;
             display: flex;
             align-items: center;
-            background: #E2E2E2;
+            background: var(--q-gb-bg-c-6);
             border-radius: 20px;
             justify-content: space-between;
             > span {

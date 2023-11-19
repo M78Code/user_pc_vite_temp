@@ -74,7 +74,6 @@ useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
 */
 export function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
-	console.log('get_match_list_params',match_list_params)
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -344,7 +343,6 @@ function get_hot_match_list(backend_run = false) {
 					// 调用bymids接口
 					api_bymids({ is_first_load: true });
 					// 切换右侧赛事
-					console.log('match_list', match_list);
 					let first_match = match_list[0];
 					// let params = {
 					// 	media_type: "auto",
@@ -448,7 +446,6 @@ function check_match_last_update_time() {
 		}
 	});
 	if (mids.length > 0) {
-		console.log('进来了几次1');
 		api_bymids({ mids });
 	}
 };

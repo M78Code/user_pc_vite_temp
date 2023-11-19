@@ -66,9 +66,9 @@ import {
     onUnmounted,
     defineEmits
 } from "vue";
-import { dateWeekMatchesFormat ,farmatSportImg } from './utils';
+import { dateWeekMatchesFormat ,farmatSportImg } from '../utils';
 import { MenuData } from "src/core/";
-// import dayjs from "dayjs";
+import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -288,8 +288,8 @@ const areaListChange = (item,index) => {
         position: absolute;
         top: 50px;
         right: 0;
-        background: url("./menu_list_top_background_icon.png") no-repeat;
         background-size: cover;
+        background: url($SCSSPROJECTPATH+"/image/list/league_bg.png") no-repeat;
     }
 
     // 七天时间tabs样式

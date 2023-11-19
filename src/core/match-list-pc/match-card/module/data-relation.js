@@ -92,7 +92,7 @@ const set_match_list_mapping_relation_obj_type = () => {
   if (PROJECT_NAME == 'ouzhou-pc') {
     if (
       (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) 
-      || ["today", "early", "bet",'match-play-common'].includes(page_source)
+      || ["today", "early", "bet",'match-play-common', 'match-collect'].includes(page_source)
       || !MenuData.menu_root
     ) {
       type = 9
@@ -100,6 +100,7 @@ const set_match_list_mapping_relation_obj_type = () => {
       type = 8
     }
   }
+  console.log('type', type);
   return   type
 };
 

@@ -105,7 +105,8 @@ const set_league_list_obj = (val={}) => {
    * @Description 获取前12场展开的赛事mid
    * @returns {array} mids 前12场赛事id
    */
-const get_first_unfold_mids = (league_list_obj) => {
+const get_first_unfold_mids = () => {
+  
   let mids = [];
   // 展开的赛事数量计数  用于计数首次加载列表 只展开前12场赛事
   let unfold_match_count = 0;
@@ -148,7 +149,6 @@ const api_bymids = (
   },
   callback
 ) => {
-  console.log('进来了几次1');
   let panduan_1 = MenuData.is_vr();
   let panduan_2 = ["details", "video"].includes(PageSourceData.page_source);
   let first_load_time;
@@ -171,6 +171,7 @@ const api_bymids = (
   else if (is_show_mids_change) {
     mids = MatchListScrollClass.show_mids;
   }
+
   // 是否用户切换菜单 第一次调用bymids接口
   if (is_league_first || is_first_load) {
     first_load_time = new Date().getTime();
@@ -299,7 +300,7 @@ const api_bymids = (
         }
         // 如果是第一次加载设置数据加载状态
         if (is_league_first) {
-          load_data_state.value = "data";
+          // load_data_state.value = "data";
         }
         // 回调函数
         if (callback) {
@@ -310,7 +311,7 @@ const api_bymids = (
         set_home_loading_time_record("err");
         // 如果是第一次加载设置数据加载状态
         if (is_league_first) {
-          load_data_state.value = "data";
+          // load_data_state.value = "data";
         }
         // 展开联赛数据加载状态
         let league_load_status = "";

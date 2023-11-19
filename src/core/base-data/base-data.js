@@ -4,7 +4,7 @@
 // 虚拟球种 menu_id 规则 ：30000 +对应球种 id   csid  30000 + 1001 =31001   VR足球
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
 import { i18n_t, i18n } from "src/boot/i18n.js";
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
@@ -215,7 +215,9 @@ class BaseData {
     // 等待以上4个接口同时请求完成再通知列表获取
     return Promise.all([p1, p2, p3, p4, p5]).then((res) => {
       localStorage.setItem('base_data', JSON.stringify(res))
-      this.handle_base_data(res)
+      const base_data = localStorage.getItem('base_data')
+      this.is_emit = true
+      !base_data && this.handle_base_data(res)
     }).catch((err) => {
       this.set_default_base_data()
       console.error('err:', '元数据接口请求超时')
@@ -224,6 +226,7 @@ class BaseData {
 
   // 从缓存读取默认数据
   set_default_base_data () {
+    this.is_emit = false
     const base_data = localStorage.getItem('base_data')
     const res = base_data && JSON.parse(base_data)
     res && this.handle_base_data(res)
@@ -627,9 +630,10 @@ class BaseData {
       // let res = await api_base_data.get_base_data({});
       res && await this.set_base_data_res(res);
       //  元数据加载完成 
-      if (this.is_emit) {
+      if (!this.is_emit) {
         useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
       }
+      this.is_emit = false
       this.base_data_version.value = Date.now();
     } catch (error) {
       console.error("获取 元数据接口 error", error);

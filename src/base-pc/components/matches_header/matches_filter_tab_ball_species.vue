@@ -281,7 +281,7 @@ onBeforeUnmount(() => {
 }
 .checked_text {
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--q-gb-t-c-5);
   &::before {
     content: '';
     font-weight: 500;
@@ -324,7 +324,7 @@ onBeforeUnmount(() => {
   .shadow-box {
     width: 10px;
     height: 55px;
-    background: linear-gradient(270deg, #D9D9D9 0%, rgba(217, 217, 217, 0) 100%);
+    background: var(--q-gb-bg-lg-12);
     opacity: 0.1;
   }
 }

@@ -123,7 +123,7 @@
     white-space: nowrap;
   }
   .union-name {
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-5);
     font-size: 14px;
     margin-bottom: 8px;
     font-family: "Roboto";

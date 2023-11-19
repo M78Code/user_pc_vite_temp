@@ -198,7 +198,7 @@ const tab_click = (type) => {
       font-size: 14px;
       line-height: 16px;
       text-transform: capitalize;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
     }
     .analysis-top-l {
       display: flex;
