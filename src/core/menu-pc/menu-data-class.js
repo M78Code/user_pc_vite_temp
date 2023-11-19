@@ -156,8 +156,9 @@ class MenuData {
       { label:i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
       { label:i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
     ]
-    //  1001 fetured  10002 top events 4001 Matches 4002 League
-    this.router_root_lv_2 = ref(1001) // 这个去掉 不能用 
+    // 15mins 与 featured-matched 投注选项保存字段
+    this.current_check_betId = ref(null)
+
     this.init()
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
