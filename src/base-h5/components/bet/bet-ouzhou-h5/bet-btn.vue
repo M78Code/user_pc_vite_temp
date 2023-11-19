@@ -54,9 +54,10 @@ const pack_up = (val) => {
       font-size: 0.15rem;
       font-weight: 400;
       letter-spacing: 0px;
-      border: 0.5px solid var(--q-gb-t-c-5);
+      border: 0.5px solid var(--q-gb-bd-c-12);
       margin: 0 0.2rem 0 0.2rem;
       line-height: 0.4rem;
+      color: var(--q-gb-t-c-4);
     }
     .place_bet{
       font-family: "DIN";
@@ -67,7 +68,7 @@ const pack_up = (val) => {
       // height: 46px;
       border-radius: 2px;
       background: var(--q-gb-bg-c-1);
-      color:  var(--q-gb-bg-c-15);
+      color:  var(--q-gb-t-c-2);
       .right_amount{
         font-family: DIN;
         font-size: 0.2rem;

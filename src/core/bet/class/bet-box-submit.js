@@ -427,7 +427,8 @@ const submit_handle = type => {
 }
 
 // 设置错误信息 
-const set_error_message_config = (obj ={}) => {
+const set_error_message_config = (res ={}) => {
+    
     if(BetData.deviceType == 2){
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
             code: res.code,
