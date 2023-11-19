@@ -554,9 +554,10 @@ class MatchMeta {
     const params = this.get_base_params(euid)
     const res = await api_common.get_collect_matches(params)
     MatchCollect.get_collect_match_data()
+    this.match_mids = []
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list})
+    this.handler_match_list_data({ list: list, is_virtual: false })
   }
 
   /**
@@ -679,7 +680,6 @@ class MatchMeta {
     } else {
       MatchResponsive.clear_ball_seed_league_count()
     }
-
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
     // // 重置折叠对象
@@ -725,13 +725,18 @@ class MatchMeta {
     }
 
     if (!is_virtual) {
-      if (this.is_other_warehouse(warehouse.name_code)) this.match_mids = lodash.uniq(result_mids)
+      this.match_mids = lodash.uniq(result_mids)
+      // if (this.is_other_warehouse(warehouse.name_code)) this.match_mids = lodash.uniq(result_mids)
       // 欧洲版首页热门赛事
       const arr_data = match_list.filter((t) => t.mid)
-      // 不获取赔率
-      if (type === 2) return this.handle_update_match_info({ list: arr_data, warehouse })
-      // 获取赔率
-      if (type === 1) return this.handle_submit_warehouse({ list: arr_data, warehouse })
+      if (type === 2){
+        // 不获取赔率
+        this.handle_update_match_info({ list: arr_data, warehouse })
+      } else if (type === 1) {
+        // 获取赔率
+        this.handle_submit_warehouse({ list: arr_data, warehouse })
+      }
+      
     } else {
       // 计算所需渲染数据
       this.compute_page_render_list({ scrollTop: 0, type }) 
@@ -798,7 +803,6 @@ class MatchMeta {
 
     // 重置元数据计算流程
     MatchResponsive.set_is_compute_origin(false)
-
     // 不获取赔率
     if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse })
 
