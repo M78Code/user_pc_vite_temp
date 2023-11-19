@@ -2,7 +2,7 @@
 	<div class="matches_header_wrap">
 		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
-			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
+			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: current_ball_type})"></div>
 			<div class="matches-title">
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">All Matches</div>
@@ -29,17 +29,18 @@
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted } from 'vue';
+import { ref,onMounted,onUnmounted, watch } from 'vue';
 import lodash_ from "lodash"
-
+import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import { MenuData, useMittOn,MITT_TYPES, useMittEmit } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 const tab_list = ref([])
 // 获取当前header展示背景图
-const current_ball_type = ref(630)
+const current_ball_type = ref(0)
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px')
 
@@ -53,6 +54,7 @@ onMounted(()=>{
 
 onUnmounted(()=>{
 	mitt_list.forEach(item => item());
+	current_ball_type.value = 0
 })
 
 
@@ -63,16 +65,19 @@ const set_tab_list = (news_) =>{
 	if(news_ == 0 ){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
 		matches_header_title.value = "Matches"
+		// current_ball_type.value = 0
 	}
 	// 滚球
 	if( news_ == 1 ){
 		matches_header_title.value = "In Play"
    		match_list_top.value = '146px'
+		// current_ball_type.value = 1
 	}
 	
 	// 左侧菜单
 	if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'sport_tab', [])  
+		// current_ball_type.value = 1
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
@@ -81,6 +86,7 @@ const set_tab_list = (news_) =>{
 	if (MenuData.is_collect) {
 		matches_header_title.value = "Favouritse"
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'favouritse_tab', [])  
+		// current_ball_type.value = 1
 	}
 
 	if (tab_list.value.length) {
@@ -94,7 +100,6 @@ const checked_current_tab = payload => {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
 	}
-
 	// 判断头部高度
 	if ([1001,4002].includes(payload.value*1)) {
 		match_list_top.value = '80px'
@@ -128,13 +133,24 @@ const checked_current_tab = payload => {
 		}
 		MenuData.set_menu_current_mi(obj.current_mi)
 	}
-
+	// get_sport_banner()
 	MenuData.set_mid_menu_result(obj)
 }
-
-
-
-
+watch(MatchListCardDataClass.list_version, (list_version) => {
+	if (MenuData.mid_menu_result.filter_tab !== 1001) {
+		get_sport_banner();
+	}
+});
+// 监听球种导航变化 切换精灵图
+const get_sport_banner = () => {
+	let arr = MatchListCardDataClass.match_list_card_key_arr
+	if (arr.length) {
+		let length = arr[0].split("_").length
+		let sport_id = arr[0].split("_")[length - 1]
+		current_ball_type.value = sport_id
+	// console.log(sport_id, 'MenuData.mid_menu_result')
+	}
+}
 </script>
 
 <style lang="scss" scoped>
