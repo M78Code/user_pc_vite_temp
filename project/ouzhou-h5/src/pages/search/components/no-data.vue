@@ -71,7 +71,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .no-data {
     .title {
-        color: #1A1A1A;
+        color: var(--q-gb-t-c-4);
         font-size: 16px;
     }
 }

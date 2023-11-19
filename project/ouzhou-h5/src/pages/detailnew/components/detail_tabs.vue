@@ -108,7 +108,7 @@ onMounted(() => {
     padding: 0 10px;
     white-space: nowrap;
     text-transform: capitalize;
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-4);
     cursor: pointer;
 
   }

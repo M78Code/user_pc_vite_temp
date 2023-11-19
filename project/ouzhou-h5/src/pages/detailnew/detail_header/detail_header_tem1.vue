@@ -346,7 +346,8 @@ onUnmounted(()=>{
         width: 100vw;
         left: -14px;
         height: 1px;
-        background: #F5F5F5;
+        //background: #F5F5F5;
+        background-color: var(--q-gb-bg-c-10);
       }
     }
     .match-detail-bet-or-event {

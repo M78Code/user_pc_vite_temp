@@ -236,7 +236,7 @@ export default{
     line-height: 40px;
     font-size: 14px;
     overflow: hidden;
-    background: var(--q-gb-bg-lg-5);
+    background: linear-gradient(to right, #3B3B3B, #9C9C9C);
     display: flex;
     justify-content: space-between;
 

@@ -175,7 +175,7 @@ onMounted(() => {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      color: #1A1A1A;
+      color: var(--q-gb-t-c-4);
       font-weight: 500;
     }
     .odds-hpn-down-icon {
