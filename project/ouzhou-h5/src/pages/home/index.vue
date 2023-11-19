@@ -88,33 +88,45 @@ const changeMenu = (item) =>{
 onMounted(async () => {
   MenuData.set_current_lv1_menu(1);
   MenuData.set_menu_mi('101');
+  set_default_home_data()
   get_ouzhou_home_data()
-  // got_five_league_matchs()
+  get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
     console.log('wswswswswswsws-cmd:', cmd, data)
-    get_ouzhou_home_data()
-    // got_five_league_matchs()
-  }, 200))
+    // get_ouzhou_home_data()
+    // get_five_league_matchs()
+  }, 1000))
 })
+
+// 设置默认数据
+const set_default_home_data = () => {
+  const res = MatchMeta.get_default_ouzhou_home_data()
+  handle_ouzhou_home_data(res)
+}
 
 // 获取首页数据
 const get_ouzhou_home_data = async () => {
-  const { p15_list, hots, dataList } = await MatchMeta.get_ouzhou_home_data()
+  const res = await MatchMeta.get_ouzhou_home_data()
+  handle_ouzhou_home_data(res)
+}
+
+const handle_ouzhou_home_data = (res) => {
+  const { p15_list, hots, dataList } = res
   // 15 分
-  time_events.value = p15_list.map(t => {
+  if (p15_list.length > 0) time_events.value = p15_list.map(t => {
     const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
     return match
   })
   // 滚球赛事
-  play_matchs.value = dataList.map(t => {
+  if (dataList.length > 0) play_matchs.value = dataList.map(t => {
     const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
     return match
   })
   // 热门赛事
-  featured_matches.value = hots.map(t => {
+  if (hots.length > 0) featured_matches.value = hots.map(t => {
     const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     return {
@@ -126,17 +138,17 @@ const get_ouzhou_home_data = async () => {
 }
 
 /**
- * @description 获取五大联赛赛事   不放  match 仓库
+ * @description 获取五大联赛赛事
  */
-const got_five_league_matchs = async () => {
+const get_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
   const mids = []
   five_league_match.value = list.map(t => {
     mids.push(t.mid)
-    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid) || t
+    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid) || t
     return match
   })
-  MatchMeta.get_match_base_hps_by_mids(mids.toString())
+  MatchMeta.get_match_base_hps_by_mids(mids.toString(), MatchDataBaseFiveLeagueH5)
 }
 
 const tabValue = ref('featured');
@@ -147,15 +159,15 @@ const on_update = (val) => {
     MenuData.set_menu_mi('101');
     get_ouzhou_home_data()
   } else {
-    state.current_mi = MenuData.top_events_list[0].mi;
-    MatchMeta.get_top_events_match(MenuData.top_events_list[0].csid)
+    state.current_mi = MenuData.top_events_list?.[0]?.mi;
+    MatchMeta.get_top_events_match(MenuData.top_events_list?.[0]?.csid)
   }
 }
 
 onUnmounted(() => {
   // 组件销毁时销毁监听函数
-  message_fun = null
   ws_message_listener.ws_remove_message_listener(message_fun)
+  message_fun = null
 })
 
 </script>
@@ -189,7 +201,8 @@ onUnmounted(() => {
         font-weight: 600;
       }
       .q-tab--active .q-tab__label{
-        color: #FF7000;
+        //color: #FF7000;
+        color: var(--q-gb-t-c-1);
       }
       .q-tab__indicator{
         height: 3px;

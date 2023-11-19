@@ -34,7 +34,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #FFFFFF;
+    background: var(--q-gb-bg-c-4);
     box-sizing: border-box;
   }
   .coming_soon_img {
@@ -48,7 +48,7 @@
     font-weight: 500;
     line-height: 18.75px;
     letter-spacing: 0px;
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-5);
   }
 
 .matches_header_wrap {
@@ -61,8 +61,8 @@
     width: 100%;
     padding-top: 10px;
     box-sizing: border-box;
-    border-bottom: 2px solid #FF7000;
-    background: linear-gradient(270deg, #9C9C9C 0.04%, #3B3B3B 99.96%);
+    border-bottom: 2px solid var(--q-gb-bd-c-1);
+    background: var(--q-gb-bg-lg-8);
     position: relative;
 
     .header_banner {
@@ -83,7 +83,7 @@
     .current_match_title {
         font-size: 18px;
         font-weight: 500;
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
         margin-bottom: 21px;
         height: 48px;
         line-height: 48px;

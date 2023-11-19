@@ -1,0 +1,260 @@
+import { i18n_t } from "src/core/index.js"
+
+// KEY = 球种
+// VALUE = {
+//  label = 多语言 赛果 玩法,
+//  hpid  = 赛果 玩法 id,
+//  csid  = 球种 id  
+// }
+export const sports_play_data = {
+    "1" : [ 
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '1',
+        csid: '1'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '2',
+        csid: '1'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '4',
+        csid: '1'
+      },
+    ],
+    "2" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.37'),
+        hpid: '37',
+        csid: '2'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.38'),
+        hpid: '38',
+        csid: '2'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.39'),
+        hpid: '39',
+        csid: '2'
+      },
+    ],
+    "5" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.153'),
+        hpid: '153',
+        csid: '5'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.155'),
+        hpid: '155',
+        csid: '5'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.202'),
+        hpid: '202',
+        csid: '5'
+      }
+    ],
+    "10" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.153'),
+        hpid: '153',
+        csid: '5'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.172'),
+        hpid: '172',
+        csid: '5'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.173'),
+        hpid: '173',
+        csid: '5'
+      },
+    ],
+    "8" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.153'),
+        hpid: '153',
+        csid: '8'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.172'),
+        hpid: '172',
+        csid: '8'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.173'),
+        hpid: '173',
+        csid: '8'
+      },
+    ],
+    "7" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.153'),
+        hpid: '153',
+        csid: '7'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.181'),
+        hpid: '181',
+        csid: '7'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.182'),
+        hpid: '182',
+        csid: '7'
+      },
+    ],
+    "9" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.153'),
+        hpid: '153',
+        csid: '9'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.172'),
+        hpid: '172',
+        csid: '9'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.173'),
+        hpid: '173',
+        csid: '9'
+      },
+    ],
+    "13" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.153'),
+        hpid: '153',
+        csid: '13'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.172'),
+        hpid: '172',
+        csid: '13'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.173'),
+        hpid: '173',
+        csid: '13'
+      },
+    ],
+    "3" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.242'),
+        hpid: '242',
+        csid: '3'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.243'),
+        hpid: '243',
+        csid: '3'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.244'),
+        hpid: '244',
+        csid: '3'
+      },
+    ],
+    "4" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '1',
+        csid: '4'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '2',
+        csid: '4'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '4',
+        csid: '4'
+      },
+    ],
+    "15" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '1',
+        csid: '15'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '2',
+        csid: '15'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '4',
+        csid: '15'
+      },
+    ],
+    "6" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.37'),
+        hpid: '37',
+        csid: '6'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.38'),
+        hpid: '38',
+        csid: '6'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.39'),
+        hpid: '39',
+        csid: '6'
+      },
+    ],
+    "11" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '1',
+        csid: '11'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '2',
+        csid: '11'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '4',
+        csid: '11'
+      },
+    ],
+    "16" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '1',
+        csid: '16'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '2',
+        csid: '16'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '4',
+        csid: '16'
+      },
+    ],
+    "12" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '2',
+        csid: '12'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.153'),
+        hpid: '153',
+        csid: '12'
+      }
+    ]
+  }

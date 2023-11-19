@@ -4,7 +4,8 @@
 -->
 <template>
   <div class="bet_content_bottom">
-    <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p>
+    <p class="bet_cancel"  @click.self="set_retain_selection">{{$t('bet.save')}}</p>
+    <!-- <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p> -->
     <p class="place_bet" @click.self="pack_up">
       <span>{{$t('bet.understand')}}</span>
     </p>
@@ -13,12 +14,20 @@
 
 <script setup>
 import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 
 const pack_up = (val) => {
   // TODO: 临时调试用
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   // BetData.set_clear_bet_info()
   // BetViewDataClass.set_clear_bet_view_config()
+}
+// 保留投注项
+const set_retain_selection = () => {
+    BetViewDataClass.set_bet_order_status(1)
+    setTimeout(() => {
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+    }, 200);
 }
 </script>
 
@@ -49,7 +58,7 @@ const pack_up = (val) => {
       width: 2.17rem;
       // height: 46px;
       border-radius: 2px;
-      background: var(--q-gb-bg-c-12);
+      background: var(--q-gb-bg-c-1);
       color:  var(--q-gb-bg-c-15);
       .right_amount{
         font-family: DIN;

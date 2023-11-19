@@ -13,13 +13,13 @@
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown disable flat outline  style="color: #FF7000"  padding="0" label="Match (Regular Time)" 
+            <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="i18n_t(`ouzhou.match.play_map.${select_play}`)" 
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
                    :class="{active: select_play === item.hpid}" clickable v-close-popup >
                   <q-item-section>
-                    <q-item-label>{{ item.hpn }}</q-item-label>
+                    <q-item-label>{{ i18n_t(`ouzhou.match.play_map.${item.hpid}`) }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -257,6 +257,8 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import { sports_play_data } from 'src/core/constant/index.js'
+
 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
@@ -290,6 +292,7 @@ export default {
     const select_play = ref('1')
     const score_length = ref(3)
     const hps_play_data = ref([])
+   
 
     // 是否显示球种标题
     const show_sport_title = computed(() => {
@@ -319,13 +322,13 @@ export default {
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {
-      let target_hps = []
+      // let target_hps = []
       const { csid } = ctx.match_of_list
-      target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
-      hps_play_data.value = target_hps || []
+      // target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
+      hps_play_data.value = sports_play_data[csid] || []
     }
 
-    watch(() => ctx.match_of_list.hps, () => {
+    watch(() => ctx.match_of_list?.hps, () => {
       const { is_show_league } = ctx.match_of_list
       if (!is_show_league) return
       get_hps_play_data()
@@ -335,8 +338,6 @@ export default {
     const on_select_play = (item) => {
       select_play.value = item.hpid
       MatchResponsive.set_match_hpid(item.hpid)
-      // const length = lodash.get(item.hl[0].ol, 'length', 3)
-      // score_length.value = length
     }
 
     return { 
@@ -480,7 +481,7 @@ export default {
       bottom: 1px;
       background: #fff;
       &.collapsed{
-        background: #e2e2e2;
+        background: var(--q-gb-bg-c-6);
       }
     }
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
@@ -1220,6 +1221,7 @@ export default {
   .timer-wrapper-c {
     height: 100%;
     color: #999;
+    flex: 1;
     .counting-down-wrap{
       font-size: 13px;
     }
@@ -1283,6 +1285,7 @@ export default {
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    flex: 1;
 
     .favorite-icon {
       position: relative;
@@ -1297,6 +1300,8 @@ export default {
     .counting-down-up-container {
       // width: 1rem;
       height: .14rem;
+      display: flex;
+      flex: 1;
       :deep(.counting-down-wrap){
         width: auto !important;
         .title-space-1{

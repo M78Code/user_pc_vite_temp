@@ -67,7 +67,8 @@ const props = defineProps({
         display: flex;
         align-items: center;
         font-size: 14px;
-        color: #FF7000;
+        //color: #FF7000;
+        color: var(--q-gb-t-c-1);
         font-weight: 500;
         padding: 0 12px;
         height: 21px;

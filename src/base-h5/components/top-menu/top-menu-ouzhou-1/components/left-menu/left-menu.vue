@@ -10,17 +10,19 @@
     <q-list>
       <q-item-label header class="q-list-content">
         <!-- Esports---VR Sports 电竞  VR-->
-        <div class="sports-genre">
-          <div class="item" :class="[
-            item.className,
-            // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj(item)">
-            <sport-icon size="20" :sport_id="item.mi" />
-            <div>{{ BaseData.menus_i18n_map[item.mi]}}</div>
+        <template v-if="sportsGenre.length">
+          <div class="sports-genre">
+            <div class="item" :class="[
+              item.className,
+              // { active: meta_data_store.current_menu.mi == item.mi },
+            ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj(item)">
+              <sport-icon size="20" :sport_id="item.mi" />
+              <div>{{ BaseData.menus_i18n_map[item.mi]}}</div>
+            </div>
           </div>
-        </div>
-        <!-- 分割线 -->
-        <div class="segmentation"></div>
+          <!-- 分割线 -->
+          <div class="segmentation"></div>
+        </template>
         <!-- POPULAR 热门赛事-->
         <div class="popular">
           <h5>{{ i18n_t("ouzhou.menu.popular") }}</h5>
@@ -73,8 +75,8 @@ const leftDataList = ref([]);
  * vr 电竞
  */
 const sportsGenre = reactive([
-  { name: i18n_t("menu_itme_name.esports"), className: "esports", mi: "2000",route: '/esports'},
-  { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
+  // { name: i18n_t("menu_itme_name.esports"), className: "esports", mi: "2000",route: '/esports'},
+  // { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
 ])
 /**
  * 默认所有球种
@@ -147,6 +149,8 @@ const change_current_menu = (item) => {
   setPopularSort(item.mi);
   // 设置菜单对应源数据
   emits('isLeftDrawer');
+
+  MatchMeta.set_origin_match_data()
 
   // MenuData.set_menu_lv2_mi(item.mi+''+2)
 
@@ -279,7 +283,8 @@ onUnmounted(()=>{
       height: 19px;
       line-height: 19px;
       font-weight: 400;
-      color: rgba(61, 59, 55, 1);
+      //color: rgba(61, 59, 55, 1);
+      color:var(--q-gb-t-c-6)
     }
   }
 

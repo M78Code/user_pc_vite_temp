@@ -56,7 +56,7 @@ const set_confirm = () => {
 <style scoped lang="scss">
 .bet-footer {
     width: 100%;
-    background: #fff;
+    background: var(--q-gb-bg-c-4);
     border-top: 0.5px solid #E4E4E4;
 
     .bet-content {
@@ -74,15 +74,15 @@ const set_confirm = () => {
         width: 160px;
         height: 46px;
         border-radius: 2px;
-        color: #1A1A1A;
+        color: var(--q-gb-t-c-5);
     }
 
     .bet-place-bet {
         width: 240px;
         height: 46px;
         border-radius: 2px;
-        background: #ff7000;
-        color: #fff;
+        background: var(--q-gb-bg-c-1) ;
+        color: var(--q-gb-t-c-1);
     }
 
     .bet-state {

@@ -164,11 +164,12 @@ function iframe_check() {
     // 内嵌版的场景
     if (DEFAULT_VERSION_NAME != "zhuanye") {
       // 非专业版时跳转到专业版 ，兼容旧代码，生产运维实际已解析指向到同一个地方
+      
       let url = location.href;
       url = url.replace("-bw3.", ".");
       url = url.replace("-bw2.", ".");
       if (location.href == url) {
-        router.push({ name: "error404" });
+        location.href = url;
       } else {
         location.href = url;
       }
@@ -251,7 +252,7 @@ export default {
 #v-tooltip {
   position: fixed;
   transform: translateX(-50%);
-  color: #fff;
+  color: var(--q-gb-t-c-1);
   background-color: rgba(0, 0, 0, 0.8);
   padding: 0 5px;
   height: 22px;

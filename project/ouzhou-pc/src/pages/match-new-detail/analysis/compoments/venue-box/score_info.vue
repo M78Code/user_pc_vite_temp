@@ -441,7 +441,7 @@ onMounted(() => {});
 
 <style lang="scss" scoped>
 .box-bc {
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
   margin-bottom: 10px;
 
   &:deep(.q-table) {

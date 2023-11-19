@@ -100,12 +100,13 @@
 </template>
   
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 import search from "src/core/search-class/search.js"
 import store from "src/store-redux/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
+import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 
 const props = defineProps({
     show_type: {
@@ -130,14 +131,13 @@ watch(
     }
 )
 
-const set_click_keyword = (data) => store.dispatch({
-    type: 'SET_CLICK_KEYWORD',
-    data
-})
-const set_search_type = (data) => store.dispatch({
-    type: 'SET_SEARCH_TYPE',
-    data
-})
+const set_click_keyword = (keyword) => {
+    useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+        type: 'result',
+        text: keyword
+    })
+}
+
 /**
  * @Description:点击搜索关键词
  * @param {string} keyword 点击的关键词
@@ -149,7 +149,6 @@ function click_keyword(keyword, is_insert_history) {
     if (is_insert_history) {
         search.insert_history(keyword)
     }
-    set_search_type(1)
     set_click_keyword(keyword);
 }
 
@@ -170,6 +169,7 @@ function get_hot_search() {
 function get_history() {
     search.get_history(data => {
         histroy_data.value = data
+        histroy_data.value = histroy_data.value.slice(0, 3)
     })
 
 }
@@ -207,8 +207,19 @@ function init() {
     get_hot_search();
     get_history();
 }
+const get_props = (props) => {
+    console.log('props', props);
+    // keyword.value = props.text
+    // search_type.value = props.type
+}
 /** 钩子触发 */
-onMounted(init)
+onMounted(() => {
+    init()
+    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
+})
+onUnmounted(() => {
+    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
+})
 
 </script>
   

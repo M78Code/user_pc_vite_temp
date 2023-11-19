@@ -111,7 +111,7 @@ const tabClick = (item) => {
 <style lang="scss" scoped>
 .detail-tab {
   // height: 272px;
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
   padding-bottom: 15px;
   &:deep(.q-slider__track) {
      border-radius: 0;
@@ -194,7 +194,7 @@ const tabClick = (item) => {
     margin-right: 10px;
     span{
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       &:nth-child(1){
         color:#FFAC01;
         display: inline-block;
@@ -206,7 +206,7 @@ const tabClick = (item) => {
     margin-left: 10px;
     span{
       font-weight: 500;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       &:nth-child(2){
         color:#5881f7;
         display: inline-block;
@@ -231,7 +231,7 @@ const tabClick = (item) => {
       }
 
       .dot-h {
-        background-color: #ff7000;
+        background-color: var(--q-gb-bg-c-1);
       }
 
       .dot-h-r {

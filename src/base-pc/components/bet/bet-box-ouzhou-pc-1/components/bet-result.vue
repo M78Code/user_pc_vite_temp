@@ -40,7 +40,7 @@ const props = defineProps({
                 color: #8A8986;
             }
             .bet-money{
-                color: #1A1A1A;
+                color: var(--q-gb-t-c-5);
                 height: 12px;
             }
         }

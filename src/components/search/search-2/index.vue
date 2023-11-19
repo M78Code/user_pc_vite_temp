@@ -66,7 +66,7 @@
 import { ref, reactive, onMounted, onUnmounted, defineComponent,watch, defineProps } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
-import { useMittOn, MITT_TYPES } from 'src/core/mitt';
+import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { LayOutMain_pc, utils } from 'src/core/index.js'
 // 搜索输入框组件
@@ -105,6 +105,8 @@ let sports_list = reactive([])
 const sports_tab_index = ref(0)
 /** 搜索球种 */
 const search_csid = ref(1)
+// 搜索关键字
+const search_text = ref('')
 
 let search_width = ref(LayOutMain_pc.layout_search_width + 'px')
 let main_width = ref(LayOutMain_pc.layout_main_width + 'px')
@@ -128,6 +130,16 @@ watch(
   },
   { deep: true }
 );
+
+onMounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, change_status)
+})
+
+const change_status = (pramas)=>{
+  show_type.value = pramas.type
+  search_text.value = pramas.text
+}
+
 /** 保存显示搜索组件状态 */
 const set_search_status = (data) =>{
   SearchPCClass.set_search_isShow(data)
@@ -202,6 +214,9 @@ function set_sports_tab_index(index) {
   }
   sports_tab_index.value = index_
   search_csid.value = sports_list[index_].id
+  // useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+  //     tab_index: index
+  // })
 }
 
 

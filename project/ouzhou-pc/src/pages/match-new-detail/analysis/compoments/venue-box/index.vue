@@ -182,7 +182,7 @@ const tab_click = (type) => {
   // background: #ffffff;
   margin-bottom: 10px;
   .analysis-top {
-    background: #ffffff;
+    background: var(--q-gb-bg-c-4);
     height: 40px;
     display: flex;
     justify-content: space-between;
@@ -198,7 +198,7 @@ const tab_click = (type) => {
       font-size: 14px;
       line-height: 16px;
       text-transform: capitalize;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
     }
     .analysis-top-l {
       display: flex;

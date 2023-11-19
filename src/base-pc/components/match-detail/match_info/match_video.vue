@@ -209,7 +209,7 @@ export default {
       background-color: rgba(0, 0, 0, 0.8);
       padding: 9px 28px;
       font-size: 12px;
-      color: #fff;
+      color: var(--q-gb-t-c-1);
     }
     .yb-icon-triangle {
       position: absolute;
@@ -275,12 +275,12 @@ export default {
     padding: 0 45px 0 10px;
     z-index: 12;
     pointer-events: none;
-    background: linear-gradient(0deg, rgba(102, 102, 102, 0.0001) 0.99%, rgba(0, 0, 0, 0.4) 85.31%);
+    background: var(--q-gb-bg-lg-11);
     .replay-info {
       font-weight: 400;
       font-size: 12px;
       line-height: 14px;
-      color: #FFFFFF;
+      color: var(--q-gb-t-c-1);
       position: absolute;
       left: 50%;
       top: 15px;
@@ -314,7 +314,7 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 0 10px 0 6px;
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     font-size: 12px;
     align-items: center;
     background: rgba(51, 51, 51, 0.4);
@@ -396,13 +396,13 @@ export default {
         font-weight: 700;
         font-size: 14px;
         line-height: 14px;
-        color: #fff;
+        color: var(--q-gb-t-c-1);
       }
       .event-team, .event-name {
         font-weight: 400;
         font-size: 12px;
         line-height: 14px;
-        color: #fff;
+        color: var(--q-gb-t-c-1);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

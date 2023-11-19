@@ -132,25 +132,29 @@ const common_td_list = ref(
         }
 
         .common {
-            color: #FF7000;
+            // color: #FF7000;
+            color: var(--q-gb-t-c-2);
         }
     }
 
     .checked {
-        background: #FF7000;
-
+        // background: #FF7000;  
+        background: var(--q-gb-bg-c-1);
         div {
-            color: #FFE2CC;
+            color: var(--q-gb-t-c-4);
         }
 
         &:hover {
-            background: #FF7000;
-            color: #FFE2CC;
+            // background: #FF7000;
+            background: var(--q-gb-bg-c-1);
+            color: var(--q-gb-t-c-4);
         }
 
         .common {
-            background: #FF7000;
-            color: #FFFFFF;
+            // background: #FF7000;
+            background: var(--q-gb-bg-c-1);
+            // color: #FFFFFF;
+            color: var(--q-gb-t-c-1);
         }
     }
 }
@@ -182,8 +186,8 @@ const common_td_list = ref(
             font-weight: 500;
             line-height: 48px;
             letter-spacing: 0px;
-            color: #FF7000;
-
+            // color: #FF7000;
+            color: var(--q-gb-t-c-2);
             &:hover {
                 background: rgba(255, 112, 0, 0.1);
             }
@@ -200,12 +204,16 @@ const common_td_list = ref(
         }
 
         .checked {
-            background: #FF7000;
-            color: #FFFFFF;
+            // background: #FF7000;
+            // color: #FFFFFF;
+            background: var(--q-gb-bg-c-1);
+            color: var(--q-gb-t-c-1) ;
 
             &:hover {
-                background: #FF7000;
-                color: #FFFFFF;
+                // background: #FF7000;
+                // color: #FFFFFF;
+                background: var(--q-gb-bg-c-1);
+                color: var(--q-gb-t-c-1) ;
             }
         }
     }

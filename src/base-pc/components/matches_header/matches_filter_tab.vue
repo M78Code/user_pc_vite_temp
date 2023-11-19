@@ -119,7 +119,7 @@
     align-items: center;
     width: 100%;
     height: 44px;
-    background: #FFFFFF;
+    background: var(--q-gb-bg-c-4);
     padding: 0px 18.25px;
     position: relative;
   }
@@ -127,7 +127,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    background: #FFFFFF;
+    background: var(--q-gb-bg-c-4);
     box-sizing: border-box;
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -153,7 +153,7 @@
   }
 
   .checked {
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-5);
     font-weight: 500;
     font-size: 13px;
   }
@@ -174,7 +174,7 @@
     left: 50%;
     display: none;
     margin-left: -4px;
-    background: #FF7000;
+    background: var(--q-gb-bg-c-1);
     clip-path: circle(50% at 50% 100%);
   }
   .prev-btn-box, .next-btn-box {
@@ -185,12 +185,12 @@
     .shadow-box {
       width: 10px;
       height: 44px;
-      background: linear-gradient(270deg, #D9D9D9 0%, rgba(217, 217, 217, 0) 100%);
+      background: var(--q-gb-bg-lg-12);
       opacity: 0.1;
     }
   }
   .prev-btn, .next-btn {
-    background: #FFFFFF;
+    background: var(--q-gb-bg-c-4);
     width: 16px;
     height: 44px;
     display: flex;

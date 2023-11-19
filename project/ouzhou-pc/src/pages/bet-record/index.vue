@@ -45,7 +45,7 @@ onActivated(() => {
 <style lang="scss" scoped>
 .cont {
   min-height: 100vh;
-  background-color: #E2E2E2;
+  background-color: var(--q-gb-bg-c-6);
 }
 
 .header {
@@ -56,13 +56,13 @@ onActivated(() => {
   // width: 100vw;
   width: 100%;
   height: calc(100vh - 78px);
-  background-color: #e2e2e2;
+  background-color: var(--q-gb-bg-c-6);
   margin: 0 auto;
 
   .record-page-main {
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
+    background-color: var(--q-gb-bg-c-4);
     //  margin: 0 200px;
   }
 }

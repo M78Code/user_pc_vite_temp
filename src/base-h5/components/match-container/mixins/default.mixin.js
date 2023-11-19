@@ -223,9 +223,9 @@ export default {
     get_ball_seed_league_count () {
       const { warehouse_type = '' } = this.match_of_list
       const key = MatchResponsive.get_league_count_key(this.match_of_list)
-      const defalut_count = lodash.get(MatchResponsive.ball_seed_league_count.value, key, 1)
+      const default_count = lodash.get(MatchResponsive.ball_seed_league_count.value, key, 1)
       const other_count = lodash.get(MatchResponsive.ball_other_seed_league_count.value, key, 1)
-      return warehouse_type ? other_count : defalut_count
+      return warehouse_type ? other_count : default_count
     },
     // 是否有角球
     get_corner_kick () {
@@ -367,7 +367,7 @@ export default {
       const { csid, is_virtual = false, start_flag = '', warehouse_type = '' }  = this.match_of_list
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
-      MatchMeta.compute_page_render_list(0, 2)
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2 })
       MatchMeta.get_match_base_hps_by_mids()
     },
     /**
@@ -379,7 +379,7 @@ export default {
       if (is_hot.value || is_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
-      MatchMeta.compute_page_render_list(0, 2)
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2 })
       MatchMeta.get_match_base_hps_by_mids()
     },
     /**

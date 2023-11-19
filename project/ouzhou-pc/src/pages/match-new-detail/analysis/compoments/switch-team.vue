@@ -59,7 +59,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 <style lang="scss" scoped>
 .analysis-team {
   margin-bottom: 10px;
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
   display: flex;
   padding: 14px 0 0 20px;
   box-sizing: border-box;
@@ -94,7 +94,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
       span {
         font-size: 20px;
         line-height: 22px;
-        color: #ffffff;
+        color: var(--q-gb-t-c-1);
         font-weight: 400;
       }
     }
@@ -103,7 +103,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
     padding-left: 15px;
     width: 50%;
     height: 50px;
-    background: linear-gradient(90deg, #c1e9ff 7.46%, #00b2ff 98.4%);
+    background: var(--q-gb-bg-lg-6);
     clip-path: polygon(0 1%, 100% 1%, 95% 100%, 0% 100%);
     margin-right: -5px;
   }
@@ -113,7 +113,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
     justify-content: flex-end;
     width: 50%;
     height: 50px;
-    background: linear-gradient(90deg, #ff5f5f 3.55%, #ffd0c1 148.94%);
+    background: var(--q-gb-bg-lg-7);
     clip-path: polygon(5% 0, 100% 1%, 100% 100%, 0 98%);
   }
 }
@@ -146,7 +146,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 .analysis-bottom {
   margin-bottom: 10px;
   height: 150px;
-  background: #ffffff;
+  background: var(--q-gb-bg-c-4);
   padding: 14px 0 0 20px;
   box-sizing: border-box;
   // background-image: url("src/assets/images/keno.png");
@@ -173,10 +173,10 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
     margin-top: 26px;
     width: 90px;
     height: 29px;
-    border: 0.5px solid #ff7000;
+    border: 0.5px solid var(--q-gb-bd-c-1);
     border-radius: 20px;
     background: rgba(255, 112, 0, 0.02);
-    color: #ff7000;;
+    color: var(--q-gb-t-c-2);;
     display: flex;
     align-items: center;
     justify-content: center;

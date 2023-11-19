@@ -4,17 +4,17 @@
       <!-- 常规体育 -->
       <template v-for="(item, index) in mi_100_arr" :key="index">
         <div class="current-filter-tab" v-if=" item.ct > 0 " >
-          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked: current_choose_tab == item.mi }">
+          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
             <div class="filter-tab-item">
               <div class="filter-icon">
-                <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mi"  size="24px" class="icon" />
-                <div class="filter-count">{{ item.ct || 0 }}</div>
+                <sport_icon :sport_id="compute_sport_id(item.mif)" :status="MenuData.mid_menu_result.current_mi == item.mi"  size="24px" class="icon" />
+                <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
               </div>
-              <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
+              <div :class="{ checked_text: MenuData.mid_menu_result.current_mi == item.mi }" class="label-text">
                 {{  BaseData.menus_i18n_map[item.mif] || "" }}
               </div>
             </div>
-            <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
+            <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" src="../../../assets/images/mask_group.png" alt="">
           </div>
           <div class="filter-tab-split-line"></div>
         </div>
@@ -76,7 +76,6 @@
 </template>
 
 <script setup>
-import _ from "lodash"
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
@@ -87,8 +86,6 @@ import { compute_sport_id } from 'src/core/constant/index.js'
 let area_obj = null;
 let area_obj_wrap = null;
 let for_count
-// 默认选中当前第一个tab
-let current_choose_tab = ref(101);
 // 滚动定时器
 let interval_id = null;
 
@@ -106,16 +103,13 @@ onMounted(() => {
   if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
     show_right_btn.value = true;
   }
-  console.error('sss')
+ 
 
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
-  if (current_mi) {
+
+  if (!current_mi) {
     // 默认选中当前第一个tab
-    current_choose_tab.value = current_mi
-  } else {
-    // 默认选中当前第一个tab
-    current_choose_tab.value = 1011
     handle_click_menu_mi_1({mi:1011,mif:101})
     return
   }
@@ -149,7 +143,6 @@ const filter_min_mi_300 = (originalArray)=>{
 
  
 const choose_filter_tab = (item) => {
-  current_choose_tab.value = item.mi;
   // 获取最新的 数据
   handle_click_menu_mi_1(item)
 };
@@ -214,7 +207,7 @@ onBeforeUnmount(() => {
   width: 100%;
   padding-right: 20px;
   height: 56px;
-  background: #FFFFFF;
+  background: var(--q-gb-bg-c-4);
   padding-left: 18.25px;
   box-sizing: border-box;
   overflow-x: auto;
@@ -241,7 +234,7 @@ onBeforeUnmount(() => {
   color: #8a8986;
   &.checked{
     .filter-count{
-      background: #FF7000;
+      background: var(--q-gb-t-c-2);
     }
   }
 }
@@ -272,7 +265,7 @@ onBeforeUnmount(() => {
     font-weight: 500;
     letter-spacing: 0px;
     display: flex;
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     justify-content: center;
     align-content: center;
     z-index: 2;
@@ -288,7 +281,7 @@ onBeforeUnmount(() => {
 }
 .checked_text {
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--q-gb-t-c-5);
   &::before {
     content: '';
     font-weight: 500;
@@ -331,12 +324,12 @@ onBeforeUnmount(() => {
   .shadow-box {
     width: 10px;
     height: 55px;
-    background: linear-gradient(270deg, #D9D9D9 0%, rgba(217, 217, 217, 0) 100%);
+    background: var(--q-gb-bg-lg-12);
     opacity: 0.1;
   }
 }
 .prev-btn, .next-btn {
-  background: #FFFFFF;
+  background: var(--q-gb-bg-c-4);
   width: 16px;
   height: 55px;
   display: flex;

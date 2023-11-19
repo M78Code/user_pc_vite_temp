@@ -10,7 +10,7 @@
         <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(items.marketId)">删</div>
+                  <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(items.marketId)"></span>
                   <div class="nonebox4-content-left-info"> 
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>
@@ -68,11 +68,11 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
-    color: var(--q-gb-bg-c-8);
+    color: var(--q-gb-t-c-3);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -82,7 +82,7 @@
     font-size: 0.16rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-12);
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
@@ -97,13 +97,13 @@
   }
   .nonebox4-content{
       width: 100%;
-      background: var(--q-gb-t-c-14);
+      background: var(--q-gb-bg-c-2);
       padding: 10px;
       padding: 0.15rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
-      color: #000;
+      color: var(--q-gb-t-c-13);
   }
   .nonebox4-content-left-content{
       height: 70px;
@@ -126,7 +126,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-11);
+      color: var(--q-gb-t-c-1);
   }
   .nonebox4-content-right{
     display: flex;

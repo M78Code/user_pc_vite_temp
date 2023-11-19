@@ -33,9 +33,13 @@
                         <template v-if="ol.otd === opt.otd">
                           <div v-show="!item.hl[0].hs" :class="{ 'tem4': true, 'tem4-active': ol.oid == current_ol.oid }"
                             @click="betItemClick(item.hl[0], ol)">
-                            <span :style="{ color: ol.oid == current_ol.oid ? '#ffffff' : '#ff7000' }" >{{ ol.on }}</span>
-                            <span v-if="ol.ov" >{{Math.floor(ol.ov /1000) /100  }} </span>
-                            <!-- <span>{{ sun_ov(ol) }}</span> -->
+                            <span :style="{ color: '#1a1a1a' }" >{{ ol.on }}</span>
+                            
+                            <span  v-if="ol.ov">
+                              <bet-item :key="`bet_4_${ol.hild}`" :ol_data="ol">
+                              </bet-item>
+                             </span>
+                            <span v-else></span>
 
                           </div>
                           <div  class="tem4"  style="justify-content: center;align-items: center;width:100%" v-show="item.hl[0].hs">
@@ -47,11 +51,6 @@
 
                     </div>
                   </template>
-                </div>
-              </template>
-              <template v-else>
-                <div v-for="ol in item.hl" :key="ol.hid">
-                  <!-- <div>{{ ol.hv }}</div> -->
                 </div>
               </template>
 
@@ -87,6 +86,7 @@ import { onMounted, ref, computed,inject} from "vue";
 import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import template5 from './template5.vue'
 import commonTemplate from './common-template.vue'
+import betItem from "./bet-item-list-new-data.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 
 
@@ -240,9 +240,9 @@ onMounted(() => {
 
 
 .odds-wrap {
-  background: #FFFFFF;
+  background: var(--q-gb-bg-c-4);
   box-sizing: border-box;
-  border-bottom: 1px solid #FF7000;
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
 
   .odds-hpn {
     display: block;
@@ -251,7 +251,7 @@ onMounted(() => {
     line-height: 40px;
     height: 40px;
     margin-left: 16px;
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-5);
 
   }
 
@@ -269,7 +269,7 @@ onMounted(() => {
         display: inline-block;
         height: 30px;
         line-height: 30px;
-        color: #1A1A1A;
+        color: var(--q-gb-t-c-5);
         opacity: 0.6;
         font-size: 12px;
 
@@ -280,7 +280,7 @@ onMounted(() => {
 
 .temp-simple {
   margin-left: -1px;
-  background: #FFFFFF;
+  background: var(--q-gb-bg-c-4);
 }
 
 .tem4 {
@@ -289,26 +289,43 @@ onMounted(() => {
   padding: 0 20px;
   display: flex;
   font-weight: 500;
-  justify-content: space-between;
-  color: #1A1A1A;
+  // justify-content: center;
+  color: var(--q-gb-t-c-5);
   //  border-top: 1px solid #E2E2E2;
-  border-left: 1px solid #E2E2E2;
-  border-bottom: 1px solid #E2E2E2;
+  border-left: 1px solid var(--q-gb-bd-c-2);
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
   cursor: pointer;
+  span{
+    &:nth-child(1){
+      width: 50%;
+      display: block;
+      text-align: right;
+      margin-right: 10px;
+      overflow: hidden;
+    }
+    &:nth-child(2){
+      overflow: hidden;
+      width: 50%;
+      min-width: 100px;
+      display: block;
+      text-align: left;
+      color:#FF7000
+    }
+  }
 
   &:hover {
-    background: #FFF1E6;
+    background:var(--q-gb-bg-c-5);
     ;
   }
 }
 
 .tem4-active {
-  background-color: #FF7000;
-  color: #FFFFFF;
+  background-color: var(--q-gb-bg-c-1);
+  color: var(--q-gb-t-c-1);
 
   &:hover {
-    background: #ff7000 !important;
-    color: #ffffff;
+    background: var(--q-gb-bg-c-1) !important;
+    color: var(--q-gb-t-c-1);
 
   }
 }
@@ -316,7 +333,7 @@ onMounted(() => {
 .bottom-height {
   height: 150px;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: var(--q-gb-bg-c-4);
 }
 
 .detail-loading {

@@ -23,7 +23,7 @@
 <style lang="scss" scoped>
   .bet-info{
     padding: 0.1rem 0.15rem;
-    background: var(--q-gb-t-c-14);
+    background: var(--q-gb-bg-c-2);
     font-size: 0.13rem;
   }
   .bet-info-view{
@@ -32,7 +32,7 @@
   }
   .bet-info-left{
     font-size: 0.16rem;
-    color: var(--q-gb-bg-c-12);
+    color: var(--q-gb-t-c-1);
     font-weight: bold;
     margin-top: 0.05rem;
   }

@@ -59,6 +59,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from 'src/core'
 import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_export, is_collect } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
@@ -105,7 +107,7 @@ const handler_match_container_scroll = lodash.debounce(($ev) => {
   const scrollTop = $ev.target.scrollTop
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - prev_scroll.value) >= 500) {
     prev_scroll.value = scrollTop
-    MatchMeta.compute_page_render_list($ev.target.scrollTop, 2)
+    MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2 })
     if (!is_export.value) get_match_base_hps()
   }
 }, 100)
@@ -184,7 +186,7 @@ const goto_top = () => {
 // 是否虚拟计算逻辑
 const get_is_static = () => {
   const route = useRoute()
-  return is_kemp.value || is_collect.value || route?.name === 'collect'
+  return is_kemp.value || is_collect.value || route?.name === 'collect' || MatchResponsive.is_compute_origin.value
 }
 // 计算每个赛事id 对应的 容器高度 top 值
 const get_match_top_by_mid1 = (mid) => {

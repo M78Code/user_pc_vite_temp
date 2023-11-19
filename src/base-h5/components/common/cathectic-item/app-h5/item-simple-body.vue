@@ -17,9 +17,9 @@
     <div class="body-info">
       <div>
         <p>
-          {{ i18n_t('app_h5.cathectic.bets') }}:
-          {{Item.sportName}}:
-          <template v-if="data_b.seriesType != '3' && Item.matchType != 4">{{ i18n_t(`matchtype.${Item.matchType}`) }}</template>
+          {{ i18n_t('app_h5.cathectic.bets') }}:{{Item.sportName}}:<template v-if="data_b.seriesType != '3' && Item.matchType != 4">
+            {{ i18n_t(`matchtype.${Item.matchType}`) }}
+          </template>
         </p>
         <p>{{Item.playName}} - {{i18n_t(`odds.${Item.marketType}`)}}</p>
       </div>
@@ -38,9 +38,10 @@
       <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
       <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
+      <!-- 可赢额、结算 -->
       <template>
         <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
-        <!-- 在未结算页 -->
+        <!-- 非已结算页 -->
         <p v-if="BetRecordClass.selected !== 3" class="acount">
           <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
           <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
@@ -53,12 +54,13 @@
             <span>{{format_money2(data_b.maxWinAmount)}}{{ i18n_t('common.unit') }}</span>
           </template>
         </p>
-        <!-- 在已结算页 -->
+        <!-- 已结算页 -->
         <p v-else class="acount">
           <label>{{ i18n_t('app_h5.cathectic.settle') }}：</label> 
           <span :class="[calc_amount_settle(data_b).color]">{{ calc_amount_settle(data_b).text }}</span>
         </p>
       </template>
+      <!-- 注单状态： -->
       <p>
         <label>{{ i18n_t('app_h5.cathectic.bet_status') }}：</label> 
         <template>
@@ -83,30 +85,17 @@
 </template>
 
 <script setup>
-import lodash from 'lodash'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { default as BetRecordClass, calc_text, calc_text_settle, calc_amount_settle } from "src/core/bet-record/bet-record.js";
+import { default as BetRecordClass, calc_text, outcome } from "src/core/bet-record/bet-record.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { project_name } from 'src/core'
-import { formatTime, format_money2 } from 'src/core/format/index.js'
+import { formatTime, format_money2, format_balance } from 'src/core/format/index.js'
 
 let props = defineProps({
     data_b: {
       type: Object
-    },
-    data_value: {
-      type: Object
-    },
-    main_item: {
-      type: [String, Number],
     }
   })
-  //按钮名字
-  let btn_text = ref('')
-  //按钮图标的方向
-  let direction = ref('')
-  //是否展开
-  let box_bool = ref('')
 
   const Item = computed(() => {
     return props.data_b.orderVOS[0] || []
@@ -121,53 +110,40 @@ let props = defineProps({
     }
   }
 
-  onMounted(() => {
-    rules_normal();
-    rules_a();
-    rules_b();
-    rules_c()
-  })
+  // 已结算 => 注单状态
+  const calc_text_settle = (data_b) => {
+    let text = ''
+    switch (data_b.orderStatus) {
+      case '0':
+      case '1':
+        text = i18n_t('bet_record.successful_betting')
+        break;
+      case '2':
+        text = i18n_t('bet_record.invalid_bet')
+        break
+      case '3':
+        text = i18n_t('bet_record.confirming')
+        break
+      case '4':
+        text =  i18n_t('bet.bet_err')
+        break
+      default:
+        break
+    }
+    return text
+  }
 
-  const rules_normal = () => {
-      [btn_text, direction, box_bool] = [
-        // i18n_t("bet_record.pack_up"),
-        "",
-        false
-      ];
+  // 已结算 => 结算金额
+  const calc_amount_settle = (data_b) => {
+    let text = ''
+    let color = 'black'
+    text = `${outcome[data_b.outcome]} ${format_balance(data_b.profitAmount)}${i18n_t('common.unit')}`
+    if(data_b.outcome == 4 || data_b.outcome == 5) {
+      color = ''
     }
-    // 串关并且长度大于等于3,默认收起,展示一条;
-  const rules_a = () => {
-      if (props.data_b.orderVOS.length >= 3)
-        [btn_text, direction, box_bool] = [
-          i18n_t("bet_record.pack_down"),
-          "down",
-          true
-        ];
-    }
+    return { text, color }
+  }
 
-  const rules_b = () => {
-      if (props.data_b.orderVOS.length <= 2) toggle_rule_a();
-    }
-  const rules_c = () => {
-      if (props.data_b.orderVOS.length >= 3) toggle_rule_b();
-    }
-    //小于2个时都展开
-  const toggle_rule_a = () => {
-      lodash.map(props.data_b.orderVOS, (item, index) => {
-        item.isBoolean = true;
-        return item;
-      });
-    }
-    //大于等于3个时，第一个和第二个展开
-  const toggle_rule_b = () => {
-      lodash.map(data_b.orderVOS, (item, index) => {
-        item.isBoolean = false;
-        if (index == 0 || index == 1) {
-          item.isBoolean = true;
-        }
-        return item;
-      });
-    }
 </script>
 
 <style lang="scss" scoped>

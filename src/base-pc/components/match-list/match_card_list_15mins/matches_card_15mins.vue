@@ -92,7 +92,7 @@
     margin-right: 5px;
   }
   .matches-time {
-    color: #FF7000;
+    color: var(--q-gb-t-c-2);
     font-size: 14px;
     font-weight: 500;
     display: flex;
@@ -123,7 +123,7 @@
     white-space: nowrap;
   }
   .union-name {
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-5);
     font-size: 14px;
     margin-bottom: 8px;
     font-family: "Roboto";
@@ -168,17 +168,17 @@
         margin-right: 7px;
       }
       &:last-child {
-        color: #FF7000;
+        color: var(--q-gb-t-c-2);
       }
     }
     .checked {
-      background: #FF7000;
-      color: #FFFFFF;
+      background: var(--q-gb-bg-c-1);
+      color: var(--q-gb-t-c-1);
       span {
-        color: #FFFFFF;
+        color: var(--q-gb-t-c-1);
       }
       &:hover {
-        background: #FF7000;
+        background: var(--q-gb-bg-c-1);
       }
     }
   }

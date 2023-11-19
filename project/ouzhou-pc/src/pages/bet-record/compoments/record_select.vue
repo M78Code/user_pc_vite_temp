@@ -145,18 +145,18 @@ const search = () => {
 <style lang="scss">
 div.q-menu {
   box-shadow: 0 1px 5px #0003, 0 2px 2px #00000024, 0 3px 1px -2px #0000001f;
-  background: #fff;
+  background: var(--q-gb-bg-c-4);
 }
 </style>
 <style lang="scss" scoped>
 .bg-white {
-  background: #ffffff !important;
+  background: var(--q-gb-bg-c-4) !important;
   border: 1px solid blue;
 }
 
 .record-select {
   margin-top: 10px;
-  background-color: #FFFFFF;
+  background-color: var(--q-gb-bg-c-4);
 
   &:deep(.q-btn) {
     font-size: 12px;
@@ -165,7 +165,7 @@ div.q-menu {
 
   &:deep(.q-checkbox__inner) {
     font-size: 30px;
-    color: #ff7000;
+    color: var(--q-gb-t-c-2);
   }
 
 }
@@ -193,8 +193,8 @@ div.q-menu {
     width: 79px;
     height: 28px;
     line-height: 28px;
-    background-color: #FF7000;
-    color: #ffffff;
+    background-color: var(--q-gb-bg-c-1);
+    color: var(--q-gb-t-c-1);
     border-radius: 2px;
     text-align: center;
     cursor: pointer;
@@ -222,7 +222,7 @@ div.q-menu {
 
     // max-width: 240px;
     &:deep(.q-field) {
-      border: 1px solid #e2e2e2;
+      border: 1px solid var(--q-gb-bd-c-2);
       border-radius: 4px;
     }
 
@@ -236,7 +236,7 @@ div.q-menu {
 .btn-group {
   height: 34px;
   //width: 330px;
-  background: #E2E2E2;
+  background: var(--q-gb-bg-c-6);
   border-radius: 16px;
   box-sizing: border-box;
   display: flex;
@@ -262,16 +262,16 @@ div.q-menu {
     }
 
     .btn-group-item-ls-active {
-      background-color: #FFFFFF;
-      border: 1px solid #FF7000;
+      background-color: var(--q-gb-bg-c-4);
+      border: 1px solid var(--q-gb-bd-c-1);
       margin-left: -1px;
       margin-right: -1px;
     }
 
     &:hover {
       .btn-group-item-ls {
-        background-color: #FFFFFF;
-        border: 1px solid #FF7000;
+        background-color: var(--q-gb-bg-c-4);
+        border: 1px solid var(--q-gb-bd-c-1);
         margin-left: -1px;
         margin-right: -1px;
 

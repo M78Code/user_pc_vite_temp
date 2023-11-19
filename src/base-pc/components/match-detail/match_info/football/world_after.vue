@@ -377,7 +377,7 @@ export default {
 }
 .gif-text {
   white-space: nowrap;
-  color: #ff7000;
+  color: var(--q-gb-t-c-2);
   padding-left: 3px;
   animation: 1s text-flash linear infinite normal;
 }
@@ -437,7 +437,7 @@ export default {
     background: #1f2129;
     .match-date {
       display: flex;
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
       .count_down {
         align-items: center;
         justify-content: center;
@@ -513,7 +513,7 @@ export default {
       flex: 1;
       align-items: center;
       min-width: 1px;
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
       height: 28px;
       overflow: hidden;
     }

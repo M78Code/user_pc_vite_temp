@@ -219,16 +219,17 @@
 }
 
 .text-white{
-    color: #fff;
+    color: var(--q-gb-t-c-1);
 }
 .text-ff7{
-    color: #ff7000;
+    // color: #ff7000;
+    color: var(--q-gb-t-c-2);
 }
 .text-009{
     color: #0094FF;
 }
 .text-1a1{
-    color: #1a1a1a;
+    color: var(--q-gb-t-c-5);
 }
 .text-8a8{
     color: #8a8a8a;

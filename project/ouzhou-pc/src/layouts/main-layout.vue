@@ -3,7 +3,7 @@
   <div class="page-main full-height" :style="page_style" id="parent">
     <div :style="{ height: LayOutMain_pc.layout_top_height }">
       <!-- 搜索 -->
-      <search-wapper />
+      <!-- <search-wapper /> -->
       <!-- 页面头部容器-->
       <layout-header />
     </div>
@@ -39,7 +39,6 @@
       v-model:active="BetData.bet_box_draggable.isActive" :draggable="true" :resizable="false" parent="#parent"
       v-if="BetData.bet_box_draggable.show">
       <div class="ty-bet-box">
-        <!-- {{BetData.bet_box_draggable}} -->
         <bet-box-wapper use_component_key="BetBoxOuZhouPC_1" />
       </div>
     </Vue3DraggableResizable>
@@ -47,7 +46,7 @@
 </template>
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
-import Vue3DraggableResizable from 'vue3-draggable-resizable' //拖拽组件
+
 import { useRoute } from "vue-router";
 import { LayOutMain_pc, UserCtr } from "src/core/index.js";
 

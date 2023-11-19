@@ -5,18 +5,15 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { virtual_sport_format } from 'src/core/format/module/format-match.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import collect_composable_fn from "./match-list-collect.js";
+import {mx_collect_count, set_collect_count} from "./match-list-collect.js";
 import virtual_composable_fn from './match-list-virtual.js'
-import use_featch_fn from "./match-list-featch.js";
-import ws_composable_fn from "./match-list-ws.js";
+import {api_bymids, set_league_list_obj} from "./match-list-featch.js";
+import {show_mids_change} from "./match-list-ws.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
-const { mx_collect_count, set_collect_count } = collect_composable_fn();
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
-const { show_mids_change } = ws_composable_fn();
-const { api_bymids, set_league_list_obj } = use_featch_fn();
 const route = useRoute()
 const vx_filter_select_obj = ref([])
 
@@ -77,13 +74,11 @@ const deal_with_list_data = (data) => {
 			mid_arr.push(mid_info)
 		})
 	})
-
 	// if (MenuData.is_kemp()) {
 	//   MatchListData.set_list(mid_arr)
 	// }
-	match_list_handle_set(mid_arr)
-
 	MatchListData.set_list(mid_arr)
+	match_list_handle_set(mid_arr)
 }
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
@@ -107,6 +102,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		all_league_list.push(...lodash.get(res_data, "data", []));
 	}
 	deal_with_list_data(all_league_list);
+	// 设置数据仓库 联赛列表对象
+	set_league_list_obj(res_data)
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
 		// 设置收藏数量
@@ -167,11 +164,9 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				data: {}
 			})
 		}
-		// 设置数据仓库 联赛列表对象
-		set_league_list_obj(res_data)
+		
 
 		// 计算列表卡片样式
-		console.log('lockie-1', res_data);
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
@@ -206,7 +201,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				// 	tid: first_league.tid,
 				// 	sportId: first_league.csid,
 				// };
-				console.log('进来了几次1');
 				//触发右侧详情更新
 				// useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, params);
 				callback_func = () => {
@@ -225,9 +219,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				callback_func
 			);
 		}
-
-
-
 	} else if (!backend_run) {
 		let delay = 10000;
 		if (sessionStorage.getItem("is_select_time")) {
@@ -241,12 +232,12 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				clearTimeout(hot_match_list_timeout);
 			}
 		}, delay);
+		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+			res_data,
+		);
 	} else {
 		load_data_state.value = "empty";
-		// 设置数据仓库 联赛列表对象
-		set_league_list_obj(res_data);
 		console.log('lockie-2');
-
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
@@ -406,13 +397,9 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	}
 };
 
-const process_composable_fn = () => {
-	return {
+export  {
 		// 处理服务器返回的 列表 数据 ---滚球
-		mx_use_list_res,
+	mx_use_list_res,
 		// 处理服务器返回的 列表 数据 ---联赛结构
 		mx_list_res
-
-	}
 }
-export default process_composable_fn

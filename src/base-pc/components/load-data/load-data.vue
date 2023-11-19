@@ -322,7 +322,7 @@ const no_user_event = () => {
     border-radius: 10px;
 
     .loading-text {
-      color: #ffffff;
+      color: var(--q-gb-t-c-1);
     }
   }
 
@@ -402,10 +402,10 @@ const no_user_event = () => {
         padding: 0 15px;
         text-align: center;
         line-height: 28px;
-        color: #fff;
+        color: var(--q-gb-t-c-1);
         font-size: 13px;
         border-radius: 17px;
-        background-image: linear-gradient(270deg, #ff7000 0%, #ff7000 100%);
+        background-image: var(--q-gb-bg-lg-9);
       }
     }
   }

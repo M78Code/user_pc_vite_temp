@@ -127,17 +127,17 @@ const set_ref_data_bet_money = () => {
 .bet_input_info{
     height: 68px;
     padding-left: 0.7rem;
-    background: var(--q-gb-t-c-6);
+    background: var(--q-gb-bg-c-10);
     padding: 0 0.15rem;
 
     .info_right{
         width: 152px;
         height: 44px;
         box-shadow: 0px 1px 4px 0px #FF70001A;
-        border: 0.5px solid var(--q-gb-t-c-11);
+        border: 0.5px solid var(--q-gb-t-c-18);
         padding-left: 6px;
-        background: var(--q-gb-t-c-13);
-        caret-color: var(--q-gb-t-c-11);
+        background: var(--q-gb-t-c-2);
+        caret-color: var(--q-gb-bd-c-1);
         font-family: DIN;
         font-size: 20px;
         font-weight: 500;
@@ -152,10 +152,12 @@ const set_ref_data_bet_money = () => {
             width: 2px;
             height: 14px;
             border-radius: 2px;
-            background: var(--q-gb-t-c-11);
+            background: var(--q-gb-bg-c-1);
         }
         .input_amount{
-            color:#1A1A1A;
+            //color:#1A1A1A ;
+            color: var(--q-gb-t-c-4);
+            
         }
     }
     .money_input_cursor{
@@ -177,7 +179,7 @@ const set_ref_data_bet_money = () => {
 .size_14{
     font-size: 14px;
     font-weight: 400;
-    color: var(--q-gb-bg-c-8);
+    color: var(--q-gb-t-c-4);
 }
 .margin_left_4{
     margin-left: 4px;
@@ -186,10 +188,10 @@ const set_ref_data_bet_money = () => {
 .size_16{
     font-size: 0.17rem;
     font-weight: 700;
-    color: var(--q-gb-bg-c-3);
+    color: var(--q-gb-t-c-4);
 }
 .color_ff700{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-1);
 }
 .huise{
     color: #8A8986 !important;
@@ -200,8 +202,8 @@ const set_ref_data_bet_money = () => {
     margin: 0 1px;
     background: var(--q-gb-bg-c-1);
     &.money-span3{
-      background: var(--q-gb-bg-c-12);
-      border-left: 2px solid var(--q-gb-bg-c-12);
+      background: var(--q-gb-bg-c-1);
+      border-left: 2px solid var(--q-gb-bd-c-1);
       
     }
   }
