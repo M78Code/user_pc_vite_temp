@@ -42,13 +42,15 @@
       -->
 
       <!-- 第二个弹窗内容 -->
-<!--      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
+      <!--
+      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
           &lt;!&ndash; 列表 &ndash;&gt;
           <bet-mix-box-child8></bet-mix-box-child8>
           &lt;!&ndash; 结果框 &ndash;&gt; 
           <bet-collusion-input2></bet-collusion-input2>
-      </div>-->
+      </div>
+      -->
 
 
       <!-- 中间可滚动区域 -->
@@ -70,7 +72,7 @@
       </div>
 
       <!-- 投注详情 不论成功失败都会显示 -->
-<!--      <betInfoList v-if="get_bet_status != 1"></betInfoList>-->
+      <!--<betInfoList v-if="get_bet_status != 1"></betInfoList>-->
 
       <!-- 串关输入框 -->
       <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">

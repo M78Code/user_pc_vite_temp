@@ -5,7 +5,8 @@ import lodash from 'lodash'
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import {api_bymids} from "./match-list-featch.js";
 // import { fetch_match_list } from '../match-list-composition.js'
-import {utils } from 'src/core/index.js';
+import {utils,useMittEmit,MITT_TYPES } from 'src/core/index.js';
+
 //  订阅所需 赛事ID
 
 const skt_mid = ref({});
@@ -92,14 +93,16 @@ const ws_c8_subscribe = () => {
 	return _skt_mid_obj;
 };
 const refresh_c8_subscribe = () => {
+	ws_destroyed()//先取消之前的订阅 不然重复了咋办
 	message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
 		// 调用 matches  接口
 		if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
+			useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
 			// fetch_match_list()
 		}
 		// 调用 mids  接口
 		if (['C303', 'C114'].includes(cmd)) {
-			api_bymids()
+			// api_bymids()
 		}
 	})
 	// if (this.SCMD_C8) {
@@ -124,28 +127,22 @@ const show_mids_change = lodash.debounce(() => {
 	api_bymids({ is_show_mids_change: true })
 }, 1000)
 
-
 const ws_destroyed = () => {
 	ws_message_listener.ws_remove_message_listener(message_fun)
 }
-
-const ws_composable_fn = () => {
-	return {
-		// 订阅所需  赛事ID
-		skt_mid,
-		// ** WS 相关 *********************************/
-		socket_name,
-		// 可视区域赛事ID
-		show_mids,
-		// 是否静默运行(socket、refresh按钮)
-		backend_run,
-		// 订阅所需 盘口id
-		skt_hpid,
-		refresh_c8_subscribe,
-		ws_destroyed,
-		// 可视区域id变更
-		show_mids_change,
-	}
+export {
+	// 订阅所需  赛事ID
+	skt_mid,
+	// ** WS 相关 *********************************/
+	socket_name,
+	// 可视区域赛事ID
+	show_mids,
+	// 是否静默运行(socket、refresh按钮)
+	backend_run,
+	// 订阅所需 盘口id
+	skt_hpid,
+	refresh_c8_subscribe,
+	ws_destroyed,
+	// 可视区域id变更
+	show_mids_change,
 }
-
-export default ws_composable_fn
