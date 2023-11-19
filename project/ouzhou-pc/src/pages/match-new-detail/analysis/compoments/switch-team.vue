@@ -103,7 +103,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
     padding-left: 15px;
     width: 50%;
     height: 50px;
-    background: linear-gradient(90deg, #c1e9ff 7.46%, #00b2ff 98.4%);
+    background: var(--q-gb-bg-lg-6);
     clip-path: polygon(0 1%, 100% 1%, 95% 100%, 0% 100%);
     margin-right: -5px;
   }
@@ -113,7 +113,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
     justify-content: flex-end;
     width: 50%;
     height: 50px;
-    background: linear-gradient(90deg, #ff5f5f 3.55%, #ffd0c1 148.94%);
+    background: var(--q-gb-bg-lg-7);
     clip-path: polygon(5% 0, 100% 1%, 100% 100%, 0 98%);
   }
 }

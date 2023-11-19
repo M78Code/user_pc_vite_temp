@@ -251,7 +251,7 @@ onMounted(() => {
     line-height: 40px;
     height: 40px;
     margin-left: 16px;
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-5);
 
   }
 
@@ -269,7 +269,7 @@ onMounted(() => {
         display: inline-block;
         height: 30px;
         line-height: 30px;
-        color: #1A1A1A;
+        color: var(--q-gb-t-c-5);
         opacity: 0.6;
         font-size: 12px;
 
@@ -290,10 +290,10 @@ onMounted(() => {
   display: flex;
   font-weight: 500;
   // justify-content: center;
-  color: #1A1A1A;
+  color: var(--q-gb-t-c-5);
   //  border-top: 1px solid #E2E2E2;
-  border-left: 1px solid #E2E2E2;
-  border-bottom: 1px solid #E2E2E2;
+  border-left: 1px solid var(--q-gb-bd-c-2);
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
   cursor: pointer;
   span{
     &:nth-child(1){
@@ -314,7 +314,7 @@ onMounted(() => {
   }
 
   &:hover {
-    background: #FFF1E6;
+    background:var(--q-gb-bg-c-5);
     ;
   }
 }

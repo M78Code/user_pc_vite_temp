@@ -3,6 +3,7 @@
   <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
+    v-if="match_style_obj.is_show_card"
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;
         width:${LayOutMain_pc.oz_layout_content - LayOutMain_pc.oz_right_width - LayOutMain_pc.oz_left_width}px  !important;`">
     <!--改成101用来打包调试-->
@@ -35,7 +36,7 @@ export default {
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
     // 组件是否加载完成
     const is_mounted = ref(true);
-
+    console.log('进来了几次');
     // 显示部分dom ID
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
     onMounted(() => {
@@ -68,7 +69,7 @@ export default {
 <style lang="scss" scoped>
 .c-match-card {
   overflow: hidden;
-  border-bottom: 1px solid #e2e2e2;
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
 
   .test {
     position: absolute;

@@ -166,7 +166,7 @@ onUnmounted(() => {
     margin-left: 0.05rem;
     display: flex;
     font-size: 14px;
-    color: var(--q-gb-t-c-14);
+    color: var(--q-gb-t-c-2);
 }
 .nonebox4-first-right {
     display: flex;
@@ -242,7 +242,7 @@ onUnmounted(() => {
   position: relative;
   background: var(--q-gb-bg-c-12);
   padding: 0 0.15rem !important;
-  border-top: 5px solid var(--q-gb-bd-c-1);
+  border-top: 5px solid var(--q-gb-bg-c-1);
 
   &::after {
     content: "";

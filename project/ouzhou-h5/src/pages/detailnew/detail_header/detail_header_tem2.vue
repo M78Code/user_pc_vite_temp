@@ -60,7 +60,7 @@
 </template>
   
 <script setup>
-import { onMounted, ref, toRef, watch } from "vue";
+import { onMounted, ref, toRef, watch,onUnmounted } from "vue";
 import lodash from "lodash";
 import { api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";

@@ -133,8 +133,8 @@ onMounted(() => {});
         height: 45px;
         line-height: 45px;
         //  border-top: 1px solid #E2E2E2;
-        border-left: 1px solid #e2e2e2;
-        border-bottom: 1px solid #e2e2e2;
+        border-left: 1px solid var(--q-gb-bd-c-2);
+        border-bottom: 1px solid var(--q-gb-bd-c-2);
     }
 
     & > div:last-child {
@@ -146,7 +146,7 @@ onMounted(() => {});
     margin-left: -1px;
 
     & > div:first-child {
-        border-top: 1px solid #e2e2e2;
+        border-top: 1px solid var(--q-gb-bd-c-2);
     }
 }
 
@@ -162,7 +162,7 @@ onMounted(() => {});
 
 .temp5-hv {
     // background-color: #f5f5f5;
-    color: #1a1a1a;
+    color: var(--q-gb-t-c-5);
     font-size: 14px;
     font-weight: 500;
 }
@@ -174,7 +174,7 @@ onMounted(() => {});
     cursor: pointer;
 
     &:hover {
-        background: #fff1e6;
+        background:var(--q-gb-bg-c-5);
     }
 }
 

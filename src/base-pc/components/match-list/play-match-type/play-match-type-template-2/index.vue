@@ -103,7 +103,7 @@ function handle_hpid_choose(item) {
   border-bottom: 1px solid var(--q-gb-bd-c-1);
   background-color: var(--q-gb-bg-c-4);
   padding: 0 16px 0 20px;
-  color: #1A1A1A;
+  color: var(--q-gb-t-c-5);
   font-size: 13px;
   .left-box {
     display: flex;

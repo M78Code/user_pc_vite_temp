@@ -8,7 +8,7 @@
     <div v-show="false">{{ SearchPCClass.update_time }}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <q-input borderless rounded @focus="show_search" v-model="text" label-color="primary"
+        <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
           placeholder="Enter league or team" :class="is_focus ? 'change_width' : ''"
 				  @keyup.enter="get_search_data(text)">
           <template v-slot:prepend>
@@ -112,7 +112,6 @@ import { api_account } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";;
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
-import { get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 
 export default defineComponent({
   name: "RightHead",
@@ -208,7 +207,7 @@ export default defineComponent({
       userRouter.push("/match_results")
     }
     const onExpend = () => {
-            visible.value = !visible.value
+      visible.value = !visible.value
     }
 
     // 切换语言
@@ -320,7 +319,7 @@ export default defineComponent({
   justify-content: space-between;
   &.active{
     color: var(--q-gb-t-c-2);
-    background: #FFF1E6;
+    background:var(--q-gb-bg-c-5);
   }
   > span {
     display: flex;
@@ -335,7 +334,7 @@ export default defineComponent({
 }
 .language_item:hover{
   color: var(--q-gb-t-c-2);
-  background: #FFF1E6;
+  background:var(--q-gb-bg-c-5);
 }
 .arrow{
   width: 18px;
@@ -376,7 +375,7 @@ export default defineComponent({
     height: 30px;
     display: flex;
     align-items: center;
-    background: #E2E2E2;
+    background: var(--q-gb-bg-c-6);
     border-radius: 20px;
     justify-content: space-between;
     margin-right: 16px;

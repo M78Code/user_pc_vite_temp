@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="true">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="`background-position:0 -${current_ball_type}px`"></div>
 			<div class="matches-title">
@@ -8,13 +8,22 @@
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">All Matches</div>
 				<div v-else class="matches_tab" >
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
-						:class="{ 'checked': item.value == MenuData.router_root_lv_2.value }">
+						:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
 						{{ item.label }}
 					</div>
+					<!-- 点击联赛后出现的时间筛选 -->
+					<!-- <div>
+						Next 24 Hours
+						<div>
+							<div v-for="item in MenuData.ouzhou_time_list" :key="item.value">
+								{{ item.title }}
+							</div>
+						</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_collect || is_Top_Events"  />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_collect || MenuData.is_top_events()"  />
 		<MatchesDateTab v-if="MenuData.is_left_today() || MenuData.is_left_zaopan()" />
 	</div>
 </template>
@@ -34,9 +43,6 @@ const current_ball_type = ref(630)
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px')
 
-// top events显示变量
-const is_Top_Events = ref(false)
-
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 
 let mitt_list = null
@@ -52,7 +58,6 @@ onUnmounted(()=>{
 
 // 设置 头部信息配置
 const set_tab_list = (news_) =>{
-	console.error('sssss')
 	tab_list.value = []
 	// 首页
 	if(news_ == 0 ){
@@ -78,28 +83,50 @@ const set_tab_list = (news_) =>{
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'favouritse_tab', [])  
 	}
 
-	// console.log(tab_list.value[0],'tab_list.value[0]')
 	if (tab_list.value.length) {
 		checked_current_tab(tab_list.value[0])
 	}
 }
 
 const checked_current_tab = payload => {
+
+	let obj = {
+		...MenuData.mid_menu_result,
+		filter_tab: payload.value*1,
+	}
+
 	// 判断头部高度
-	if ([1001,1002,4002].includes(payload.value*1)) {
+	if ([1001,4002].includes(payload.value*1)) {
 			match_list_top.value = '80px'
 	} else if([4001].includes(payload.value*1)){
 			match_list_top.value = '134px'
 	} else {
 			match_list_top.value = '146px'
 	}
-	MenuData.router_root_lv_2.value = payload.value*1
-	is_Top_Events.value = [1002].includes(payload.value*1)
 
-	let obj = {
-		...MenuData.mid_menu_result,
-		filter_tab: payload.value*1,
+	// 点击热门赛种 切换到 500
+	if ([1002].includes(payload.value*1)) {
+		MenuData.set_menu_root(500)
+		obj.current_mi = 5001
 	}
+	// 还原top_event热门赛种 和 常规赛事的切换
+	if (1001 == payload.value) {
+		MenuData.set_menu_root(0)
+	}
+
+	// 收藏切换tab
+	if(MenuData.is_collect){
+		if( payload.value == 3001){
+			obj.current_mi = 1011
+		}
+		if( payload.value == 3002){
+			obj.current_mi = 1012
+		}
+		if( payload.value == 3003){
+			obj.current_mi = 1013
+		}
+	}
+
 	MenuData.set_mid_menu_result(obj)
 }
 
@@ -120,7 +147,7 @@ const checked_current_tab = payload => {
 	padding-top: 10px;
 	box-sizing: border-box;
 	border-bottom: 2px solid var(--q-gb-bd-c-1);
-	background: linear-gradient(270deg, #9C9C9C 0.04%, #3B3B3B 99.96%);
+	background: var(--q-gb-bg-lg-8);
 	position: relative;
 
 	.header_banner {
@@ -166,7 +193,7 @@ const checked_current_tab = payload => {
 			height: 28px;
 			font-size: 16px;
 			font-weight: 500;
-			color: #C2C2C2;
+			color: var(--q-gb-t-c-3);
 			margin-right: 40px;
 			cursor: pointer;
 			// border-bottom: 3px solid red;
