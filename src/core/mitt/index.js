@@ -6,7 +6,9 @@ import { onUnmounted } from "vue";
 
 /** @type {MittType} */
 const MITT_TYPES = Object.assign({}, MITT_TYPES_DEFAULT, MITT_TYPES_PROJECT);
-const emitter = new mitt();
+// const emitter = new mitt(); // 使用new疑似错误写法
+const emitter = mitt();
+
 /**
  * 使用 mitt on方法, 组件卸载时调用off()取消监听 ,若在setup作用域内可使用 useMitt(type,callback) 函数
  * @param {keyof MittType} type MITT_TYPES事件类型
@@ -53,7 +55,12 @@ function useMitt(type, callback){
 }
 /**
  * 使用 mitt emit方法
- *
+ * @param {keyof MittType} type MITT_TYPES事件类型
+ * @param {Object} [param] 事件传递的参数
+ * @example 
+ * import { useMittEmit, MITT_TYPES } from "src/core/index";
+ * useMittEmit(MITT_TYPES.EMIT_KEY)
+ * useMittEmit(MITT_TYPES.EMIT_KEY,{key:value})
  */
 function useMittEmit(type, param) {
   // console.error("mitt----------useMittEmit-----   :", type,param);
