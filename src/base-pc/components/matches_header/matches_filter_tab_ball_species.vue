@@ -281,7 +281,7 @@ onBeforeUnmount(() => {
 }
 .checked_text {
   font-weight: 500;
-  color: #1a1a1a;
+  color: var(--q-gb-t-c-5);
   &::before {
     content: '';
     font-weight: 500;

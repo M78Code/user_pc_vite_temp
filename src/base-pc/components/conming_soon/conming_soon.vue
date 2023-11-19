@@ -48,7 +48,7 @@
     font-weight: 500;
     line-height: 18.75px;
     letter-spacing: 0px;
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-5);
   }
 
 .matches_header_wrap {
