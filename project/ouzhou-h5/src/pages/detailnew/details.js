@@ -3,7 +3,7 @@ import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
 import { onMounted, ref, watch, onUnmounted } from "vue";
 import {
   MatchDetailCalss,
-  MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,
+  MatchDataWarehouse_H5_Detail_Common,
   useMittOn,
   useMitt,
   MITT_TYPES,
@@ -27,6 +27,7 @@ export const details_main = (router,route) => {
   const change_header_fix = ref(null);
   const header_fix = ref(null);
   const fixedHeight = ref(null);
+  const  MatchDataWarehouseInstance =ref(MatchDataWarehouse_H5_Detail_Common)
 
   /** @type {Promise<any>} 用于控制detail_init加载顺序的Promise */
   let loadingQueue;
@@ -209,10 +210,8 @@ export const details_main = (router,route) => {
           } else {
             match_odds_info.value = res.data;
           }
-          MatchDataWarehouseInstance.set_match_details(
-            MatchDataWarehouseInstance.get_quick_mid_obj(params.mid),
-            match_odds_info.value
-          );
+          MatchDataWarehouseInstance.value.set_match_details(getMidInfo(params.mid),match_odds_info.value);
+          match_odds_info.value = getMidInfo(params.mid).odds_info
           // 第一次加载显示进度条
            loading.value = false;
   
@@ -228,7 +227,38 @@ export const details_main = (router,route) => {
       }
       utils.axios_api_loop(obj_) 
   };
-
+  /*
+   **监听数据仓库版本号
+   */
+   watch(
+     () => MatchDataWarehouseInstance.value.data_version,
+     (val, oldval) => {
+       console.log('data_version',val.version);
+       if (val.version) {
+        lodash.debounce(()=>{update_data(mid.value)},300);
+       }
+     },
+     { deep: true }
+    );
+  /**
+  * @description: 通过mid获取从仓库获取最新的数据
+  * @param {*} val  mid参数
+  * @return {*}
+  */
+  const update_data = (val) => {
+    if(!val) return
+    match_detail.value = getMidInfo(params.mid)
+    match_odds_info.value = lodash.get(getMidInfo(params.mid),'odds_info')
+ 
+  };
+  /**
+   * @description: 从仓库获取获取赛事信息
+   * @param {*} mid
+   * @return {*} 赛事详情
+   */
+  const getMidInfo = (mid)=>{
+   return  MatchDataWarehouseInstance.value.get_quick_mid_obj(mid)
+  }
   /**
    *@description 获取详情页面玩法集接口(/v1/m/category/getCategoryList)
    *@param {obj} params 请求参数
@@ -278,7 +308,7 @@ export const details_main = (router,route) => {
         router.replace("/");
       }
       // detail_store.get_detail_params
-      MatchDataWarehouseInstance.set_match_details(match_detail.value, []);
+      MatchDataWarehouseInstance.value.set_match_details(match_detail.value, []);
     })
     //初次调用成功后 赋值init未false
     const { mid, csid } = route.params;
@@ -327,15 +357,15 @@ export const details_main = (router,route) => {
     init.value = true;
     const { mid, csid } = route.params;
     // 增加监听接受返回的监听函数 
-    message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-      let flag = MatchDetailCalss.handler_details_ws_cmd(cmd)
-      console.error(flag, 'flag', 'cmd:', cmd, data);
-      //如果ms mmp变更了 就手动调用ws
-      if (flag) {
-        init.value = false
-        detail_init();
-      }
-    })
+    message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
+    let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
+    // console.error(flag,'flag','cmd:',cmd,data);
+    //如果ms mmp变更了 就手动调用ws
+    if(flag){
+      init.value = false
+      detail_init();
+    }   
+    })  
   });
   onUnmounted(() => {
     clear_all_timer();
@@ -343,6 +373,9 @@ export const details_main = (router,route) => {
     ws_message_listener.ws_remove_message_listener(message_fun)
     message_fun = null
   });
+  watch(()=>match_odds_info.value,(val)=>{
+    console.log(val,'val');
+  })
   return {
      detail_store,
      match_odds_info,
@@ -360,6 +393,7 @@ export const details_main = (router,route) => {
      header_fix,
      fixedHeight,
      changeHeader,
+     MatchDataWarehouseInstance,
      tabChange,
      detail_event_tabs_change,
      detail_scrolling,

@@ -22,11 +22,11 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 const emitters = ref({})
 onMounted(() => {
-  emitters.value = {
-    emitters_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
-      MatchMeta.set_origin_match_data()
-    }).off 
-  }
+  // emitters.value = {
+  //   emitters_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
+  //     MatchMeta.set_origin_match_data()
+  //   }).off 
+  // }
 })
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());

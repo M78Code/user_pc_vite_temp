@@ -400,12 +400,11 @@ export default {
           color: #333;
           font-size: 14px;
           margin-left: 5px;
-          display: none;
         }
       }
       .q-ripple{
         display: none;
-        }
+      }
       }
     }
   }

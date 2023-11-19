@@ -190,7 +190,7 @@ export default {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
       get_data_info()
-	    mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,get_data_info).off ]
+	    mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES,get_data_info).off ]
       mounted_fn();
       MatchListCardDataClass_match_list_card_key_arr();
     });
@@ -210,11 +210,11 @@ export default {
 
     const get_data_info = async () => {
       // 判断是不是首页下的 featured 页面
-      if (MenuData.is_featured()) {
+      // if (MenuData.is_featured()) {
         const { mins15_list= [], featured_list= [] } = await init_home_matches();
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = featured_list
-      }
+      // }
     }
 
     return {
