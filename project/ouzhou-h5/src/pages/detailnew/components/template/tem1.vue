@@ -102,7 +102,7 @@ onMounted(() => {});
         height: 50px;
         line-height: 50px;
         font-weight: 500;
-        color: #ff7000;
+        color: var(--q-gb-t-c-1);
       }
     }
   }

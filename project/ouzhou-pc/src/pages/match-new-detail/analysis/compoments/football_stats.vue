@@ -148,7 +148,7 @@ const tab = ref("mails");
     height: 6px;
     width: 6px;
     border-radius: 50%;
-    background-color: #ffac01;
+    background-color: var(--q-gb-bg-c-12);
     margin-right: 10px;
   }
 
@@ -157,7 +157,7 @@ const tab = ref("mails");
     height: 6px;
     width: 6px;
     border-radius: 50%;
-    background-color: #5881f7;
+    background-color: var(--q-gb-bg-c-13);
     margin-left: 10px;
   }
 }
@@ -245,7 +245,7 @@ const tab = ref("mails");
       }
 
       .dot-h-r {
-        background-color: #5881f7;
+        background-color: var(--q-gb-bg-c-13);
       }
     }
 

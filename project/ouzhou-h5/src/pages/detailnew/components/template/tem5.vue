@@ -247,7 +247,7 @@ onMounted(() => {
     color: var(--q-gb-t-c-2);
 
     &:hover {
-      background: #ff7000 !important;
+      background: var(--q-gb-bd-c-1) !important;
       //olor: #ffffff;
       color: var(--q-gb-t-c-2);
     }
