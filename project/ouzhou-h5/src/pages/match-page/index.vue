@@ -11,8 +11,8 @@
 </template>
 <script setup>
 import { onMounted, reactive, onUnmounted, ref  } from "vue"
-import tabDate from './tab-date/tab-date.vue';
-import MatchFirstStep from "./match-first-step.vue";
+import tabDate from './components/tab-date.vue';
+import MatchFirstStep from "./components/match-first-step.vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { IconWapper } from 'src/components/icon'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -29,11 +29,12 @@ const state = reactive({
 })
 
 onMounted(() => {
-  emitters.value = {
-    emitters_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
-      MatchMeta.set_origin_match_data()
-    }).off 
-  }
+  MatchMeta.set_origin_match_data()
+  // emitters.value = {
+  //   emitters_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
+  //     MatchMeta.set_origin_match_data()
+  //   }).off 
+  // }
 })
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());
@@ -45,21 +46,17 @@ const onTabChange = e => {
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
   state.curLeague = e
-  console.log('onChangeDate', e)
 }
 
 const onMatchDateChange = e => {
-  console.log('onMatchDateChange', e)
   state.curDate = e
 }
 const onLeagueChange = (league, game) => {
-  console.log('onLeagueChange', e)
   state.isClickDetail = true
   state.curLeague = league
 }
 
 const onChangeArea = e => {
-  console.log('onChangeArea', e)
   state.curArea = e
 }
 
@@ -114,7 +111,7 @@ const goback = () => {
     position: absolute;
     top: 0;
     right: 0;
-    background: url("./menu_list_top_background_icon.png") no-repeat;
+    background: url($SCSSPROJECTPATH+"/image/list/league_bg.png") no-repeat;
     background-size: cover;
   }
 }
