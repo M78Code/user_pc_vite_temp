@@ -89,8 +89,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .odds-wrap {
-  //background: #ffffff;
-  background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-2);
   box-sizing: border-box;
 
   .odds-hpn {
@@ -103,7 +102,7 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     .odds-hpn-text {
-      color: #1A1A1A;
+      color: var(--q-gb-t-c-4);
       font-weight: 500;
     }
     img {
@@ -120,24 +119,23 @@ onMounted(() => {
 
     .odds-title-li {
       
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-4);
       font-size: 12px;
       
       // margin-bottom: 10px;
       .odds-title-li-text {
-        background: #f5f5f5;
+        //background: #f5f5f5;
+        background-color: var(--q-gb-bg-c-10);
         height: 30px;
         line-height: 30px;
       }
     }
     .ol_on {
-      //background: #ffffff;
-      background: var(--q-gb-bg-c-15);
+      background-color: var(--q-gb-bg-c-2);
       .ol_ov {
-        border: 1px solid #F5F5F5;
+       border: 1px solid var(--q-gb-bd-c-10);
         border-width: 1px 1px 0 1px;
-        //background: #fff;
-        background: var(--q-gb-t-c-2);
+        background-color: var(--q-gb-bg-c-2);
         height: 50px;
         line-height: 50px;
         font-weight: 500;
@@ -148,12 +146,12 @@ onMounted(() => {
         .ol-on-text {
             font-weight: 500;
             padding-right: 5px;
-            color: #1A1A1A;
+            color: var(--q-gb-t-c-4);
             overflow: hidden;
         }
       }
       .ol_ov:nth-last-child(1) {
-        border-bottom: 1px solid #F5F5F5;
+        border-bottom: 1px solid var(--q-gb-bd-c-10);
       }
       .is-active {
         //background: #FF7000;
@@ -163,7 +161,7 @@ onMounted(() => {
         .ol-on-text {
             padding-right: 5px;
             font-weight: 500;
-            color: #1A1A1A;
+            color: var(--q-gb-t-c-4);
         }
       }
     }

@@ -182,7 +182,7 @@ onUnmounted(() => {
     :deep(.q-tabs--dense){
       .scroll--mobile{
         height: 50px;
-        background: #fff;
+        background-color: var(--q-gb-bg-c-2);
         padding: 0 10px;
         background-repeat: no-repeat;
         background-image:url($SCSSPROJECTPATH + "/image/list/mask_group.png");
@@ -229,11 +229,11 @@ onUnmounted(() => {
           position: relative;
           .match-list-container{
             height: 100%;
-            background: #fff !important;
+            background-color: var(--q-gb-bg-c-2) !important;
             :deep(.scroll-wrapper){
-              background: #fff !important;
+              background-color: var(--q-gb-bg-c-2) !important;
               .s-w-item{
-                background: #fff !important;
+                background-color: var(--q-gb-bg-c-2) !important;
               }
             }
           }

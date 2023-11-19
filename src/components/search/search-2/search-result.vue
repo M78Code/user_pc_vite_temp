@@ -688,7 +688,7 @@ watch(
 }
 
 li {
-	padding: 14px 10px;
+	padding: 13px 20px;
 	background-color: #fff;
 	// border-radius: 6px;
 	font-size: 14px;

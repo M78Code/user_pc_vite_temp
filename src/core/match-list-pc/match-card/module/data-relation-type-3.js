@@ -20,6 +20,7 @@
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {get_match_template_id} from '../../match-handle-data.js'
     import {set_new_league_fold} from  "./fold-tid.js"
+    import { utils } from 'src/core/utils/module/utils.js';
     import {
       ouzhou_match_status_title_card_template,
       ouzhou_league_title_template,
@@ -126,6 +127,7 @@
         cus_tid = `${league_obj.tid}_${league_repeat_count_obj[league_obj.tid]}`
         // 赛事ID数组
         let mids_arr = league_obj.mids.split(',')
+        console.log('league_obj', league_obj);
         match_status_type_match_count += mids_arr.length
         // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
         if(league_obj.csid != pre_match_csid){
@@ -139,7 +141,7 @@
             // 卡片索引
             card_index,
             // 球种名称
-            csna:league_obj.csna,
+            csna: utils.csid_to_sport_name(league_obj.csid),
             // 球种ID
             csid:league_obj.csid,
           }

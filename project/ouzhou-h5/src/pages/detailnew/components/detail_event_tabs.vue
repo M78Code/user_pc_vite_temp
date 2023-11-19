@@ -39,8 +39,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .match-detail-tabs {
   height: 50px;
-  //background: #FFFFFF;
-  background: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-2);
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -64,7 +63,7 @@ onMounted(() => {
     line-height: 20px;
     width: auto;
     text-transform: capitalize;
-    color: #1A1A1A;
+    color: var(--q-gb-t-c-4);
     cursor: pointer;
 
   }

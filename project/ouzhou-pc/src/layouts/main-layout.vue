@@ -36,7 +36,7 @@
 
 
     <Vue3DraggableResizable v-model:x="BetData.bet_box_draggable.x" v-model:y="BetData.bet_box_draggable.y"
-      v-model:active="BetData.bet_box_draggable.isActive" :draggable="true" :resizable="false" parent="#parent"
+      v-model:active="BetData.bet_box_draggable.isActive" :draggable="true" :resizable="false" :parent="true"
       v-if="BetData.bet_box_draggable.show">
       <div class="ty-bet-box">
         <bet-box-wapper use_component_key="BetBoxOuZhouPC_1" />
