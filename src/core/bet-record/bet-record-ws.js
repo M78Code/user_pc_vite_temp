@@ -17,7 +17,6 @@ export default class BetRecordWs {
         }
         // 设置动态监听方法(多实例使用)
         this.message_fun = (obj) => {
-            console.log('ws', obj);
             this.r_ws_msg(obj);
         }
         // 增加ws消息监听
