@@ -12,6 +12,9 @@ class SearchPCDataClass {
   update = debounce(() => {
     this.update_time.value = Date.now();
   }, 10);
+  hostList = void(0);
+  sportList = void(0);
+  searchHistory = void (0);
 
   /**
    * @description: 设置搜索关键字
@@ -61,6 +64,35 @@ class SearchPCDataClass {
   set_search_type(type) {
     this.search_type = type;
     this.update();
+  }
+  /**
+   * 设置热门搜索列表
+   * */
+  set_search_hotlist(payload){
+    this.hostList = payload ?? []
+    this.update()
+  }
+  /**
+   * 设置运动搜索类型列表
+   * */
+  set_search_sport(payloda){
+    this.sportList = payloda ?? []
+    this.update()
+  }
+  set_search_history(history){
+    this.searchHistory = history ?? []
+    this.update()
+  }
+  add_history(history){
+    if(!this.searchHistory) this.searchHistory = []
+    this.searchHistory.push(history)
+    this.update()
+  }
+  clear_history(){
+    this.searchHistory = []
+  }
+  deletion_history_one(keyword){
+    this.searchHistory = this.searchHistory.filter(item=> item.keyword === keyword )
   }
 }
 const SearchPCClass = new SearchPCDataClass();
