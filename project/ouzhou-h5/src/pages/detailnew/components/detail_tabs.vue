@@ -119,7 +119,7 @@ onMounted(() => {
     line-height: 20px;
     text-transform: capitalize;
     // color: #FF7000;
-    background: #FF7000;
+    background: var(--q-gb-bg-c-1);
     //color: #fff;
     color: var(--q-gb-t-c-2);
     position: relative;

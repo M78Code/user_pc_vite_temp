@@ -81,7 +81,7 @@ onMounted(()=>{
   width: 100%;
   height: calc(100% - 106px);
   .header_tabs{
-    border-bottom: 2px solid #FF7000;
+    border-bottom: 2px solid var(--q-gb-bd-c-1);
     :deep(.q-tabs--dense){
       .scroll--mobile{
         height: 50px;
