@@ -59,6 +59,7 @@ export default class MatchDataBase
 
     // 初始化对象数据
     this._init_obj();
+    this.test_str = {a: 'asdasdad'}
   }
   
   /**
@@ -141,8 +142,8 @@ export default class MatchDataBase
     this.cache_match={
       '23432234':{mmp:111111111111,ms:222222222}
     };
-    // 数据版本更新参数
-    this.data_version =  reactive({ version: '123'}),
+    // 数据版本更新参数 reactive({ version: '123'})
+    this.data_version = { version: '123'} ,
     // 所有投注项动态数据时间更新
     this.cache_oid={
     };
