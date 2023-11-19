@@ -1,0 +1,178 @@
+<script setup name="bevis-header-search">
+import {IconWapper} from 'src/components/icon/index.js'
+import { TabWapper } from "src/components/common/tab"
+import bevisSearchList from "./bevis-search-list.vue"
+
+import { get_hot_search, get_search_sport, get_history_search, insert_history, get_remove_search_history } from "src/api/module/search"
+
+import { ref, onMounted, watch } from "vue"
+import {SearchPCClass, compute_local_project_file_path} from 'src/core/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js"
+
+const img_search_icon = compute_local_project_file_path('/image/svg/search-icon.svg')
+const img_search_icon_y0 = compute_local_project_file_path('/image/svg/y0-search-icon.svg')
+
+const SearchWapperRef = ref(null)
+const SearchWapperRefKey = ref(0)
+
+const current_index = ref(0)
+
+const ShowSearch = function (toggle){
+    SearchPCClass.set_search_isShow(toggle)
+    if(toggle) _getSearchHistory()
+    ++SearchWapperRefKey.value
+}
+
+/**
+ * 获取人们搜索
+ * get_hot_search
+ * */
+const _getHotList = function (){
+    get_hot_search().then(({data})=>{
+        SearchPCClass.set_search_hotlist(data)
+    })
+}
+const _getSportList = function (){
+    get_search_sport().then(({data})=>{
+        SearchPCClass.set_search_sport(data)
+    })
+}
+
+/**
+ * 以下搜索历史记录相关
+ * */
+
+const _getSearchHistory = function (){
+    get_history_search({
+        cuid: UserCtr.get_uid(),
+        isPc: 1
+    }).then(({data})=>{
+        SearchPCClass.set_search_history(data)
+    })
+}
+const _addSearchHistory = function (keyword = SearchPCClass.keyword){
+    insert_history({
+        keyword,
+        cuid: UserCtr.get_uid(),
+        pageNumber: 1,
+        rows: 200,
+        isPc: true,
+        searchSportType: 1
+    }).then(()=>{
+        SearchPCClass.add_history({
+            cuid: UserCtr.get_uid(),
+            id: "",
+            isPc: null,
+            keyword
+        })
+    })
+}
+const _deleteSearchHistory = function (keyword){
+    get_remove_search_history({
+        keyword,
+        cuid: UserCtr.get_uid()
+    }).then(()=>{
+        SearchPCClass.deletion_history_one(keyword)
+    })
+}
+
+onMounted(()=>{
+    _getSportList()
+    _getHotList()
+})
+</script>
+
+<template>
+    <nav class="search-wapper" ref="searchWapperRef" :key="SearchWapperRefKey">
+        <div class="search-placeholder-box cursorPointer" v-if="!SearchPCClass.search_isShow" @click.stop="ShowSearch(true)">
+            <p>请输入联赛名或球队名....</p>
+            <icon-wapper class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(UserCtr.theme) ? `img:${img_search_icon}` : `img:${img_search_icon_y0}`" size="14px"></icon-wapper>
+        </div>
+        <div class="search-history-box" v-else>
+            <div class="inputBox">
+                <icon-wapper class="icon" :name="`img:${img_search_icon_y0}`" size="14px"></icon-wapper>
+                <input type="text" placeholder="请输入联赛名或球队名" v-model="SearchPCClass.keyword" @keyup.enter="_addSearchHistory"/>
+                <p class="cursorPointer" @click.self.stop="ShowSearch(false)">|&nbsp;&nbsp;关闭</p>
+            </div>
+            <div class="historyBox">
+<!--                <TabWapper :list="SearchPCClass.sportList" @onclick="tab_click" is_show_line :currentIndex="current_index" :padding="15"
+                           :hasActivity="hasActivity" :line_width="36" name="sportName"></TabWapper>-->
+                <bevisSearchList v-if="(SearchPCClass?.searchHistory || []).length" kind="history"
+                                 :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
+                <bevisSearchList v-if="(SearchPCClass?.hostList || []).length" kind="hot"
+                                 :list="SearchPCClass?.hostList ?? []" @Search="_addSearchHistory" />
+            </div>
+        </div>
+    </nav>
+</template>
+
+<style scoped lang="scss">
+.cursorPointer{
+    cursor: pointer;
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+.search-wapper {
+    width: 220px;
+    height: 100%;
+    position: relative;
+
+    .search-placeholder-box {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid var(--q-site-header-color-9);
+        padding: 0 16px;
+        box-sizing: border-box;
+
+        > p {
+            margin: 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+
+    .search-history-box{
+        position: relative;
+        height: 100%;
+        .inputBox{
+            width: 1200px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            z-index: 999;
+            padding: 0 24px;
+            box-sizing: border-box;
+            >input{
+                flex: 1;
+                margin: 0 16px;
+                border: none;
+                height: 80%;
+                &:focus-visible{
+                    outline: none;
+                }
+            }
+            >p{
+                margin: 0;
+            }
+        }
+        .historyBox{
+            width: 1200px;
+            min-height: 320px;
+            position: absolute;
+            background: #fff;
+            top: 100%;
+            left: 0;
+            z-index: 999;
+            padding: 16px 24px;
+            box-sizing: border-box;
+        }
+    }
+}
+</style>

@@ -2,7 +2,6 @@ import { ref } from "vue"
 import lodash from "lodash"
 import { t } from "src/boot/i18n.js";
 import {useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
-import BetRecordWs from './bet-record-ws.js'
 
 export const bet_result = {
   "2": t("bet_record.bet_no_status02"), //'走水',
@@ -110,8 +109,6 @@ const filter_early_list = (list_data, bol) => {
 class BetRecord {
   constructor() {
     this.init_core()
-    // 设置ws数据通信实例
-    this.ws_ctr = new BetRecordWs();
   }
   init_core() {
     // 0 未结算 1 预约中 2 已失效 3 已结算
