@@ -118,6 +118,7 @@ const checked_current_tab = payload => {
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
     	useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
+		current_ball_type.value = 0
 	}
 
 	// 收藏切换tab
