@@ -204,12 +204,12 @@ export default {
     color: var(--q-gb-t-c-4);
     background-color: var(--q-gb-bg-c-2);
     .tab-active {
-      color: #ff7000;
+      color: var(--q-gb-t-c-1);
       
       .tab-text {
         display: inline-block;
         font-weight: 500;
-        border-bottom: 3px solid #ff7000;
+        border-bottom: 3px solid var(--q-gb-bd-c-1);
       }
     }
     .tabs-item {
