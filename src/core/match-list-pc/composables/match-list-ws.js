@@ -93,6 +93,7 @@ const ws_c8_subscribe = () => {
 	return _skt_mid_obj;
 };
 const refresh_c8_subscribe = () => {
+	ws_destroyed()//先取消之前的订阅 不然重复了咋办
 	message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
 		// 调用 matches  接口
 		if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
