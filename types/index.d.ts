@@ -1,6 +1,6 @@
 import { Ref as _Ref } from "vue"
 import _lodash from 'lodash'
-import WsCmdEnum from "src/core/data-warehouse/ws/ws-ctr/ws-cmd-type"
+import { WsCmdEnum } from "src/core/data-warehouse/ws/ws-ctr/ws-cmd-type"
 export {}
 
 declare global {
