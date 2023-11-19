@@ -24,7 +24,7 @@
     </div>
 </template>
 <script setup>
-import { ref ,computed } from "vue"
+import { ref } from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 // import { MenuData  } from "src/core/";
@@ -77,6 +77,14 @@ const on_change_play = (item,index) => {
     // const index = dataList.value.findIndex(n=>n.mi == item.mi);
     scrollRef.value.scrollTo(index-2, 'start-force')
 }
+
+const reset = () => {
+    scrollRef.value.scrollTo(0, 'start-force')
+}
+
+defineExpose({
+    reset
+})
 
 </script>
   
