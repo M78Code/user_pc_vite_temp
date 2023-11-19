@@ -55,6 +55,7 @@ export default defineComponent({
       // 首页点击 首页需要 重新显示首页内容 
       if(route.name == 'home'){
         useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,item.id)
+        // useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,item.id)
       }
       // 默认设置 fetured
       if(item.id == 0){
