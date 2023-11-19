@@ -577,7 +577,7 @@ onBeforeUnmount(() => {
 	padding: 9px 18px;
 	display: flex;
 	border-bottom: 1px solid #FF7000;
-	background-color: #fff;
+	background-color: var(--q-gb-bg-c-2);
 	font-size: 14px;
 	font-weight: 500;
 	overflow-x: scroll;
@@ -586,7 +586,7 @@ onBeforeUnmount(() => {
 	z-index: 1;
 	color: #1A1A1A;
 	.tab {
-		background-color: #FFf;
+		background-color: var(--q-gb-bg-c-2);
 		border-radius: 40px;
 		text-align: center;
 		font-size: 12px;
@@ -602,7 +602,8 @@ onBeforeUnmount(() => {
 		}
 
 		&.active {
-			background-color: #FF7000;
+			//background-color: #FF7000;
+			background-color: var(--q-gb-bg-c-1);
 			//color: #fff;
 			color: var(--q-gb-t-c-2);
 		}
@@ -622,7 +623,7 @@ onBeforeUnmount(() => {
 li {
 	margin-bottom: 8px;
 	padding: 14px 10px;
-	background-color: #fff;
+	background-color: var(--q-gb-bg-c-2);
 	// border-radius: 6px;
 	font-size: 14px;
 
@@ -644,7 +645,7 @@ li {
 		}
 
 		div p:last-child {
-			color: #8A8986;
+			color: var(--q-gb-t-c-3);
 		}
 
 		.middle {
@@ -720,7 +721,7 @@ li {
 	margin: 0 auto 0.18rem;
 	font-size: 0.14rem;
 	border-radius: 6px;
-	background-color: #fff;
+	background-color: var(--q-gb-bg-c-2);
 
 	.text-bol {
 		font-size: 0.14rem;
