@@ -119,7 +119,8 @@ export default {
      touchend,
      touchstart,
      detail_tabs_change,
-     changeHeader
+     changeHeader,
+     MatchDataWarehouseInstance
     } = details_main(router,route)
     return{
       detail_store,
@@ -145,7 +146,8 @@ export default {
       touchstart,
       detail_tabs_change,
       changeHeader,
-      mid
+      mid,
+      MatchDataWarehouseInstance
      }
   } 
 }
