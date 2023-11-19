@@ -90,8 +90,8 @@ export default {
           clearInterval(that.timer);
           //启动定时器
           that.timer = setInterval(()=>{
-            this.set_date_time();
-          }, this.tconfig.timer_ms);
+            that.set_date_time();
+          }, that.tconfig.timer_ms);
           // 设置格式化时间
           if (that.tconfig.time_format) {
             that.time_str = that.tconfig.time_format(
