@@ -5,9 +5,10 @@ import {
   MatchDetailCalss,
   MatchDataWarehouse_H5_Detail_Common,
   useMittOn,
+  useMitt,
   MITT_TYPES,
   utils
-} from "src/core";
+} from "src/core/index";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
 export const details_main = (router,route) => {
@@ -27,6 +28,10 @@ export const details_main = (router,route) => {
   const header_fix = ref(null);
   const fixedHeight = ref(null);
   const  MatchDataWarehouseInstance =ref(MatchDataWarehouse_H5_Detail_Common)
+
+  /** @type {Promise<any>} 用于控制detail_init加载顺序的Promise */
+  let loadingQueue;
+
   //初次加载
   const  init = ref(false)
   // 切换tab
@@ -179,6 +184,7 @@ export const details_main = (router,route) => {
       }
     }
   };
+
   /**
    *@description // 调用: /v1/m/matchDetail/getMatchOddsInfoPB接口 //赛果页面调用赛果玩法详情接口
    *@param {obj} params 请求参数
@@ -242,7 +248,7 @@ export const details_main = (router,route) => {
   const update_data = (val) => {
     if(!val) return
     match_detail.value = getMidInfo(params.mid)
-    match_odds_info.value = getMidInfo(params.mid).odds_info
+    match_odds_info.value = lodash.get(getMidInfo(params.mid),'odds_info')
  
   };
   /**
@@ -276,38 +282,41 @@ export const details_main = (router,route) => {
   };
   /**
    *@description 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-   *@param {obj} params 请求参数
+   *@param {{mid,cuid}} params 请求参数
    *@return {obj}
    */
-  const get_matchDetail_MatchInfo = lodash.debounce((params) => {
-      api_match_list.get_detail_data(params).then((res) => {
-        const res_data = lodash.get(res, "data");
-        if (res_data && res_data.mhid) {
-          match_detail.value = res_data;
-          match_detail.value.course =
-            lodash.get(res_data, "ms") == 110
-              ? "Soon"
-              : courseData[lodash.get(res_data, "csid")][
-                  lodash.get(res_data, "mmp")
-                ] || "";
-          match_detail.value.mstValueTime = format_mst_data(match_detail.value);
-          use_polling_mst(match_detail.value);
-        } else {
-          clear_all_timer();
-          router.replace("/");
-        }
-        // detail_store.get_detail_params
-        MatchDataWarehouseInstance.value.set_match_details(match_detail.value, []);
-        console.log(MatchDataWarehouseInstance.value,'MatchDataWarehouseInstance');
-        //初次调用成功后 赋值init未false
-        // console.log("get_matchDetail_MatchInfo", res);
-        const { mid, csid } = route.params;
-        get_category_list_info({
-          sportId: csid,
-          mid,
-        });
-      })
-    } ,1000) 
+  let get_matchDetail_MatchInfo = (params)=>{
+    /** 节流思路或许应该换成立即发送, 而后一定时间内忽略请求意图 */
+    get_matchDetail_MatchInfo = lodash.debounce(getMatchDetailMatchInfo,450)
+    getMatchDetailMatchInfo(params)
+  }
+  function getMatchDetailMatchInfo(params) {
+    api_match_list.get_detail_data(params).then((res) => {
+      const res_data = lodash.get(res, "data");
+      if (res_data && res_data.mhid) {
+        match_detail.value = res_data;
+        match_detail.value.course =
+          lodash.get(res_data, "ms") == 110
+            ? "Soon"
+            : courseData[lodash.get(res_data, "csid")][
+            lodash.get(res_data, "mmp")
+            ] || "";
+        match_detail.value.mstValueTime = format_mst_data(match_detail.value);
+        use_polling_mst(match_detail.value);
+      } else {
+        clear_all_timer();
+        router.replace("/");
+      }
+      // detail_store.get_detail_params
+      MatchDataWarehouseInstance.value.set_match_details(match_detail.value, []);
+    })
+    //初次调用成功后 赋值init未false
+    const { mid, csid } = route.params;
+    get_category_list_info({
+      sportId: csid,
+      mid,
+    });
+  }
   /** 
    * @var mid 用于detail_init函数初始化的赛事id 
    * @var csid 用于detail_init函数初始化的csid 
@@ -324,10 +333,11 @@ export const details_main = (router,route) => {
       cuid: cuid.value,
     });
   };
+  detail_init();
   /** 监听顶部刷新功能 */
-  const { off :refreshOff } = useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, (params)=>{
-    mid = params.mid
-    csid = params.csid
+  useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS, (params)=>{
+    mid = params.mid,csid = params.csid
+    loading.value = true
     detail_init()
   });
 
@@ -345,7 +355,6 @@ export const details_main = (router,route) => {
   onMounted(() => {
     loading.value = true;
     init.value = true;
-    detail_init();
     const { mid, csid } = route.params;
     // 增加监听接受返回的监听函数 
     message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
@@ -360,7 +369,6 @@ export const details_main = (router,route) => {
   });
   onUnmounted(() => {
     clear_all_timer();
-    refreshOff()
     // 组件销毁时销毁监听函数
     ws_message_listener.ws_remove_message_listener(message_fun)
     message_fun = null

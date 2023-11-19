@@ -225,15 +225,7 @@ const get_query_bet_amount_esports_or_vr = () => {
             // })
 
         } else {
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-                code: res.code,
-                msg: res.message
-            })
-            // 获取限额失败的信息
-            BetData.set_bet_before_message({
-                code: res.code,
-                msg: res.message
-            })
+            set_error_message_config(res)
         }
     })
 }
@@ -261,15 +253,7 @@ const get_query_bet_amount_pre = () => {
             BetData.set_bet_appoint_obj(latestMarketInfo)
 
         } else {
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-                code: res.code,
-                msg: res.message
-            })
-            // 获取限额失败的信息
-            BetData.set_bet_before_message({
-                code: res.code,
-                msg: res.message
-            })
+            set_error_message_config(res)
         }
     })
 }
@@ -437,34 +421,29 @@ const submit_handle = type => {
             WsMan.skt_send_bat_handicap_odds(obj);
             // 通知页面更新 
         }else{
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-                code: res.code,
-                msg: res.message
-            })
-            // 获取限额失败的信息
-            BetData.set_bet_before_message({
-                code: res.code,
-                msg: res.message
-            })
-            setTimeout(()=>{
-                BetData.set_bet_before_message({})
-            },10000)
+            set_error_message_config(res)
         }
     })
 }
 
 // 设置错误信息 
 const set_error_message_config = (obj ={}) => {
-    // if()
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-        code: res.code,
-        msg: res.message
-    })
-    // 获取限额失败的信息
-    BetData.set_bet_before_message({
-        code: res.code,
-        msg: res.message
-    })
+    if(BetData.deviceType == 2){
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
+            code: res.code,
+            msg: res.message
+        })
+    }else{
+        // 获取限额失败的信息
+        BetData.set_bet_before_message({
+            code: res.code,
+            msg: res.message
+        })
+
+        setTimeout(()=>{
+            BetData.set_bet_before_message({})
+        },10000)
+    }
 }
 
 // 选择投注项数据 
@@ -472,7 +451,6 @@ const set_error_message_config = (obj ={}) => {
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('s',UserCtr)
     // console.log('投注项需要数据', params, 'other', other);
     // 切换投注状态
     BetViewDataClass.set_bet_order_status(1)
@@ -597,7 +575,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 获取限额 常规
         get_query_bet_amount_common(bet_obj)
     }
-
+    set_market_id_to_ws()
 }
 
 // h5 投注选择 数据仓库
@@ -625,17 +603,31 @@ const h5_match_data_switch = match_data_type => {
     return query
 }
 
-// 获取盘口值 附加值
-const get_handicap = ol_obj => {
-    // 需要显示主客队名称的 玩法id
-    // 直接显示投注项 [1, 7, 367, 344, 68, 14, 8, 9, 17, 341, 368, 342, 369, 344, 68, 14, 23, 21, 22, 12, 24, 76, 104, 340, 359]
-    // 展示用的 + 投注项  
+// 根据当前的投注项 获取对应的赔率变化ws
+const set_market_id_to_ws = () => {
+    console.error('set_market_id_to_ws')
+    let hid = []
+    let mid = []
+    let obj = {}
+    let bet_list = []
+    // 单关
+    if(BetData.is_bet_single){
+        bet_list = lodash_.get( BetData,'bet_single_list')
+    }else{
+        bet_list = lodash_.get( BetData,'bet_s_list')
+    }
+    // 获取盘口id
+    hid = bet_list.map(item => item.marketId)
+    // 获取赛事id
+    mid = bet_list.map(item => item.matchId)
 
-    let playId = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 351, 347]
-    // 直接显示投注项
-    return playId.includes(Number(ol_obj._hpid))
+    obj.hid = hid.join(',')
+    obj.mid = mid.join(',')
+    // 用户赔率分组
+    obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
+    WsMan.skt_send_bat_handicap_odds(obj);
 }
-1
+
 // 设置投注后的数据内容
 const set_orderNo_bet_obj = order_no_list => {
     let order_list = order_no_list.map( item => {
@@ -653,6 +645,18 @@ const set_orderNo_bet_obj = order_no_list => {
     })
     BetViewDataClass.set_orderNo_bet_obj(order_list)
 }
+
+// 获取盘口值 附加值
+const get_handicap = ol_obj => {
+    // 需要显示主客队名称的 玩法id
+    // 直接显示投注项 [1, 7, 367, 344, 68, 14, 8, 9, 17, 341, 368, 342, 369, 344, 68, 14, 23, 21, 22, 12, 24, 76, 104, 340, 359]
+    // 展示用的 + 投注项  
+
+    let playId = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 351, 347]
+    // 直接显示投注项
+    return playId.includes(Number(ol_obj._hpid))
+}
+
 // 是否显示基准分 
 const get_mark_score = ol_obj => {
     // 显示基准分

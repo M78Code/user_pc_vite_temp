@@ -119,9 +119,10 @@ export default {
     },
     /**
      * @description 元数据请求回来 初始化赛事加载
+     * @remarks: 不能在这注册， 每个页面都会调用， 这里拿不到 路由信息 
      */
     init_match_callback () {
-      // MatchMeta.set_origin_match_data()
+      MatchMeta.set_origin_match_data()
     },
     /** 触发切网络api域名动作
      * @description:

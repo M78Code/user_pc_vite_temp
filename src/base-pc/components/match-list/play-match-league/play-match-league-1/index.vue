@@ -47,7 +47,7 @@
 <script setup>
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import lodash from 'lodash';
-import { ref, computed } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 import sprite_img from "src/core/server-img/sprite-img/index.js"
 import BaseData from "src/core/base-data/base-data.js"
 import { t, compute_css_obj } from "src/core/index.js";
@@ -105,14 +105,26 @@ function set_fold() {
   }
   MatchListCardData.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(props.card_style_obj)
 }
-
+var timer;
 function collect(){
   mx_collect({ type: 'leagues', match: props.card_style_obj.league_obj });
   // 前端控制收藏状态
   is_collect.value = !is_collect.value;
   console.log('is_collect.value', is_collect.value);
-  
+
+  let params = {
+    mids: props.card_style_obj.league_obj.mids.split(','),
+    inner_param: 1
+  };
+  // 收藏后先这样刷新列表数据，后面再优化
+  setTimeout(()=>{
+    timer = useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params)    
+  }, 1000)
 }
+
+onUnmounted(()=>{
+  clearTimeout(timer)
+})
 
 </script>
 <style lang="scss">

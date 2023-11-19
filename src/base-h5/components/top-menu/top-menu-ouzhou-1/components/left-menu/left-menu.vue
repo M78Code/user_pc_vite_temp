@@ -150,7 +150,9 @@ const change_current_menu = (item) => {
   // 设置菜单对应源数据
   emits('isLeftDrawer');
 
+  // 避免多次 触发数据获取方法， 以下只在 matchList 页面才触发； 其他情景由 matchList 页面自己驱动
   MatchMeta.set_origin_match_data()
+  // if (route.name === 'matchList') MatchMeta.set_origin_match_data()
 
   // MenuData.set_menu_lv2_mi(item.mi+''+2)
 

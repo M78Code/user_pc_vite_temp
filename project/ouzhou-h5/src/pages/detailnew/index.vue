@@ -89,7 +89,6 @@ export default {
     detail_event_tabs,
     odds_info,
     loading_page,
-    loading_page,
     event_analysis
   },
   setup(ctx){
