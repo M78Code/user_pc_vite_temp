@@ -149,7 +149,6 @@ class MatchMeta {
    * @param { mids } 赛事 mids
    */
   get_origin_match_by_mids(mids) {
-
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
     // 显示空数据页面
