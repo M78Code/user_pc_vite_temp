@@ -112,6 +112,7 @@ const checked_current_tab = payload => {
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
+		
 	}
 
 	// 收藏切换tab
