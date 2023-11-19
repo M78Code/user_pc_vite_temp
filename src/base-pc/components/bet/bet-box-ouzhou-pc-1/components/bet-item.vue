@@ -38,7 +38,7 @@
             </div>
 
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1" @click="set_delete">
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`" alt=""/>
+                <span class="icon-delete"></span>
             </div>
 
             <div class="bet-delete bet-icon" v-else>
@@ -116,7 +116,8 @@ const set_bet_money = obj => {
 }
 
 const set_delete = () => {
-
+    document.getElementsByClassName("bet-list")[0].style.display = "none"
+    BetData.set_bet_state_show(!BetData.bet_state_show)
 }
 
 </script>
