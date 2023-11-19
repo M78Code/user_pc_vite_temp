@@ -97,12 +97,12 @@ const set_confirm = () => {
             letter-spacing: 0px;
 
             &.bet-error {
-                background: #FFEDED;
+                background: var(--q-gb-bg-c-16);
                 color: #FF4646;
             }
 
             &.bet-success {
-                background: #EDF9EC;
+                background: var(--q-gb-bg-c-17);
                 color: #4FC140;
             }
         }

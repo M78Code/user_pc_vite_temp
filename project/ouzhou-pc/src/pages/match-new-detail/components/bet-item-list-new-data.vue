@@ -309,16 +309,16 @@ onUnmounted(() => {
 .odds-arrows-wrap {
   position: relative;
   .up {
-    color: #17a414 !important;
+    color: var(--q-gb-t-c-6) !important;
   }
   .down {
-    color: #ff4646 !important;
+    color: var(--q-gb-t-c-7) !important;
   }
   .default {
-    color: #ff7000;
+    color: var(--q-gb-t-c-2);
   }
   .active {
-    color: #ffffff !important;
+    color: var(--q-gb-t-c-1) !important;
   }
 }
 .odds-icon {
