@@ -74,7 +74,6 @@ const set_home_loading_time_record = (status) => {
 const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
   // 计算赛事卡片
   // 重新计算赛事样式
-  console.log('mids_arr',mids_arr)
   MatchListCardClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(
     mids_arr
   );
@@ -150,7 +149,6 @@ const api_bymids = (
   },
   callback
 ) => {
-  console.log('进来了几次1');
   let panduan_1 = MenuData.is_vr();
   let panduan_2 = ["details", "video"].includes(PageSourceData.page_source);
   let first_load_time;
@@ -173,6 +171,7 @@ const api_bymids = (
   else if (is_show_mids_change) {
     mids = MatchListScrollClass.show_mids;
   }
+
   // 是否用户切换菜单 第一次调用bymids接口
   if (is_league_first || is_first_load) {
     first_load_time = new Date().getTime();

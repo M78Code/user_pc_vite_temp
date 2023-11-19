@@ -10,7 +10,7 @@
           <!-- 联赛是否收藏 -->
           <div @click.stop="collect"
             class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch">
-            <i class="icon-star q-icon c-icon" :class="(card_style_obj.league_obj.tf || is_collect) && 'active'"></i>
+            <i class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
           </div>
         </div>
         <!-- 联赛名称 -->
@@ -80,6 +80,8 @@ let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 const is_collect = ref(false);
+//第一次进页面时，收藏从接口获取状态，后续点击前端控制
+is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
 // 获取菜单类型
 if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
@@ -88,8 +90,10 @@ if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
  * @Description 设置联赛折叠
 */
 function set_fold() {
+  console.log('asdasdasfafasf', props.card_style_obj.is_league_fold ,11, ([2, 3].includes(menu_config.menu_root) ,22, menu_config.is_export()));
+
   // 如果当前联赛是折叠的 并且是今日、早盘  调用bymids接口拉数据
-  if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_export())) {
+  if (props.card_style_obj.is_league_fold ) {
     // 设置赛事基础数据
     MatchListCardData.set_match_basic_data(props.card_style_obj)
     let params = {
@@ -106,6 +110,8 @@ function collect(){
   mx_collect({ type: 'leagues', match: props.card_style_obj.league_obj });
   // 前端控制收藏状态
   is_collect.value = !is_collect.value;
+  console.log('is_collect.value', is_collect.value);
+  
 }
 
 </script>
@@ -139,7 +145,7 @@ function collect(){
       position: absolute;
       right: 13px;
       font-weight: 600;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
       span {
         display: flex;
         height: 100%;

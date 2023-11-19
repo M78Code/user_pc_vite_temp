@@ -75,7 +75,7 @@
     font-weight: bold;
   }
   .total-left{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
     font-size: 0.15rem;
   }
   .total{
@@ -86,7 +86,7 @@
     font-size: 0.14rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-1);
@@ -182,7 +182,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-11);
+      color: var(--q-gb-t-c-18);
   }
   .nonebox4-content-right{
     display: flex;

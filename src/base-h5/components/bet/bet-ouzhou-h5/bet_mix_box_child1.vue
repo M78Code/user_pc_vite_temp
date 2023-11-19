@@ -99,18 +99,18 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-18);
     padding-left: 0.08rem;
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
-    color: var(--q-gb-bg-c-8);
+    color: var(--q-gb-t-c-4);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   .nonebox4-content-left-content-text-two{
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-15);
     font-size: 0.16rem;
   }
   .text-two-span{
@@ -158,7 +158,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-4);
   }
   .nonebox4-content-right{
     display: flex;
