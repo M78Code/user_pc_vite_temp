@@ -44,7 +44,14 @@
     >
       <div v-if="odds_state == 'seal'" class="lock" />
       <div v-else class="odds-arrows-wrap">
-        <span :style="{color:odds_lift=='up'?'#17a414':odds_lift=='down'?'#ff4646':'#ff7000'}"> {{ ol_data.ov / 100000 }}</span>
+        <span :class="{
+          'default':true,
+          'up':odds_lift=='up',
+          'down':odds_lift=='down',
+          'active':ol_data.oid==current_ol.oid
+          
+
+        }" > {{ ol_data.ov / 100000 }}</span>
         <div
       
         v-if="odds_state != 'seal'"
@@ -86,6 +93,10 @@ let timer_obj = {};
 
 const props = defineProps({
   ol_data: {
+    type: [Object, Array],
+    default: () => {},
+  },
+  current_ol: {  // 当前选中的数据
     type: [Object, Array],
     default: () => {},
   },
@@ -283,6 +294,18 @@ onUnmounted(() => {
 }
 .odds-arrows-wrap {
   position: relative;
+  .up{
+    color:#17a414 !important;
+  }
+  .down{
+    color:#ff4646 !important
+  }
+  .default{
+    color:#ff7000
+  }
+  .active{
+    color:#ffffff !important
+  }
 }
 .odds-icon {
   width: 10px;

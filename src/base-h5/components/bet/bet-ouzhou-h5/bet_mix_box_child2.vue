@@ -82,7 +82,7 @@
     font-size: 0.16rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-12);
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{

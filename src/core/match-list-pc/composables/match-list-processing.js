@@ -8,13 +8,12 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import {mx_collect_count, set_collect_count} from "./match-list-collect.js";
 import virtual_composable_fn from './match-list-virtual.js'
 import {api_bymids, set_league_list_obj} from "./match-list-featch.js";
-import ws_composable_fn from "./match-list-ws.js";
+import {show_mids_change} from "./match-list-ws.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
-const { show_mids_change } = ws_composable_fn();
 const route = useRoute()
 const vx_filter_select_obj = ref([])
 
@@ -398,13 +397,9 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	}
 };
 
-const process_composable_fn = () => {
-	return {
+export  {
 		// 处理服务器返回的 列表 数据 ---滚球
-		mx_use_list_res,
+	mx_use_list_res,
 		// 处理服务器返回的 列表 数据 ---联赛结构
 		mx_list_res
-
-	}
 }
-export default process_composable_fn

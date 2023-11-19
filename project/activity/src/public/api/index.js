@@ -16,6 +16,7 @@ import * as api_results from "./module/results/results.js"; //bruce
 import * as api_virtual from "./module/virtual/index.js";  //bruce
 import * as api_analysis from "./module/analysis/analysis.js"; //bruce
 import * as api_chatroom from "./module/chatroom/index.js"; //bruce
+import * as api_admin from "./module/admin/index.js";  
 
 export {
   // 公共API接口定义
@@ -42,4 +43,6 @@ export {
   api_analysis,
   // 聊天室相关
   api_chatroom,
+  // h5 迁移过来的
+  api_admin
 };

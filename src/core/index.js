@@ -26,6 +26,7 @@ import { i18n, loadLanguageAsync, map_lang, t, i18n_t } from "src/boot/i18n.js";
 import {
   useMittOn,
   useMittEmit,
+  useMitt,
   useMittEmitterGenerator,
   MITT_TYPES,
 } from "src/core/mitt/index.js";
@@ -277,6 +278,7 @@ export {
   i18n_t,
   // emit相关
   useMittOn,
+  useMitt,
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,

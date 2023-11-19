@@ -1,8 +1,7 @@
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import ws_composable_fn from "./composables/match-list-ws.js";
+import {show_mids_change} from "./composables/match-list-ws.js";
 
-const { show_mids_change } = ws_composable_fn();
 class MatchListScrollClass {
   constructor() {
     this.init()
