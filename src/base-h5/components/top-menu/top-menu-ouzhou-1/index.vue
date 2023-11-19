@@ -224,15 +224,6 @@ const toggleLeftDrawer = () => {
       margin-right: 5px;
     }
   }
-  :deep(.q-drawer-container){
-    .q-drawer__backdrop {
-      background-color: rgba(56, 55, 50, 0.6) !important;
-      filter: blur(5px);
-    }
-    .q-drawer__opener{
-      display: none;
-    }
-  }
 }
 .top_header,.top_header_rule{
   height: 100%;
