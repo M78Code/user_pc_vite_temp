@@ -89,6 +89,7 @@ export default {
         },
         //设置用户信息
         set_user({ commit }, { token, view, finish_callback }) {
+            debugger;
             let userInfo = window.vue.$store.getters.get_user;
             // 获取用户基本信息
             if (view) {
@@ -314,7 +315,7 @@ export default {
 
     mutations: {
         //保存用户id
-        set_uuid(state, uuid_str) {
+        set_uuid(uuid_str) {
             if (uuid_str) {
                 state.uuid = uuid_str;
             } else {
@@ -333,16 +334,16 @@ export default {
             localStorage.setItem("unique_uuid", state.uuid);
         },
         //保存用户信息
-        set_user(state, data) {
+        set_user(data) {
             state.user = data;
             state.is_invalid = false;
         },
         //更新用户余额
-        set_user_balance(state, balance) {
+        set_user_balance(balance) {
             state.user.balance = balance;
         },
         //设置用户余额是否展示状态
-        set_show_balance(state, val) {
+        set_show_balance(val) {
             state.show_balance = val;
         },
         //  清除用户token
@@ -359,7 +360,7 @@ export default {
             state.user = '';
         },
         //保存用户token
-        set_user_token(state, token) {
+        set_user_token(token) {
             if (state.user) {
                 Object.assign(state.user, { token });
             } else {
@@ -367,23 +368,23 @@ export default {
             }
         },
         // 设置登录弹窗状态
-        set_show_login_popup(state, val) {
+        set_show_login_popup(val) {
             state.show_login_popup = Object.assign(state.show_login_popup, val)
         },
         //保存token状态（是否失效）
-        set_is_invalid(state, val) {
+        set_is_invalid(val) {
             state.is_invalid = val;
         },
         //设置用户是否长时间未操作
-        set_is_user_no_handle(state, val) {
+        set_is_user_no_handle(val) {
             state.is_user_no_handle = val;
         },
         // 是否首次登录
-        set_is_new_user(state, val) {
+        set_is_new_user(val) {
             state.is_new_user = val;
         },
         //更新用户信息
-        set_user_assign(state, obj) {
+        set_user_assign(obj) {
             if (state.user && obj) {
                 Object.assign(state.user, obj);
             }
