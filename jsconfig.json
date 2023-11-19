@@ -3,9 +3,9 @@
     "baseUrl": "./",
     "types": ["./types/index.d.ts"],
     "paths": {
-      "@/*":["src/*"],
+      // "@/*":["src/*"],
       "src/*":["src/*"],
-      "base_path/*":["src/base-h5/*", "src/base-pc/*"]
+      "base_path/*":["src/base-h5/*", "src/base-pc/*"],
     }
   }
 }
