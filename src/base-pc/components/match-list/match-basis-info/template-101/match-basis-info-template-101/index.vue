@@ -7,7 +7,7 @@
         <!-- 是否收藏 -->
         <div @click.stop="collect"
           v-if="GlobalAccessConfig.get_collectSwitch()">
-          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
+          <div  class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
         </div>
 
         <!-- 比赛进程 -->
@@ -72,6 +72,7 @@ import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
 import { useRouter } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import { compute_css_obj } from 'src/core/server-img/index.js'
 
 const router = useRouter()
 const props = defineProps({
@@ -252,17 +253,12 @@ onUnmounted(() => {
 .basic-wrap {
   padding: 10px 10px;
   .collect-box {
-    margin-bottom: 7px;
-    .icon-star {
-      margin-top: -3px;
-      margin-right: 14px;
+    .collect-start {
+      width: 14px;
+      height: 14px;
       cursor: pointer;
-      &::before {
-        color: var(--q-gb-bg-c-8);
-      }
-      &.active::before {
-        color: var(--q-gb-bd-c-12);
-      }
+      margin-right: 11px;
+      background-size: 100% 100%;
     }
     .bet-num {
       margin-left: 12px;

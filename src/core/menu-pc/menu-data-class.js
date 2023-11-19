@@ -425,7 +425,7 @@ class MenuData {
     // }
     // 设置全屏
     this.set_multi_column();
-    console.error('set_left_menu_result',JSON.stringify(obj),this.menu_root)
+    // console.error('set_left_menu_result',JSON.stringify(obj),this.menu_root)
     this.set_menu_data_version();
     // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
   }
@@ -470,7 +470,7 @@ class MenuData {
       ...obj,
       version: Date.now(),
     };
-    console.error( this.menu_root, "MENUDATA.set_mid_menu_result-------",JSON.stringify(this.mid_menu_result),  obj );
+    // console.error( this.menu_root, "MENUDATA.set_mid_menu_result-------",JSON.stringify(this.mid_menu_result),  obj );
     // this.menu_root=obj.root;
     // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏
@@ -484,7 +484,9 @@ class MenuData {
    */
     set_is_collect(is_collect) {
       this.is_collect=is_collect
-      useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+      if (is_collect) {
+        useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+      }
     }
   /**
    * 定义中间菜单    点击 输出 请求  列表结构  API 参数的   模板
@@ -670,7 +672,7 @@ class MenuData {
     // store.dispatch("set_unfold_multi_column", this.is_multi_column);
     // console.warn('this.is_multi_column ',this.is_multi_column )
 
-    console.error(  "MENUDATA.set_mid_menu_result-------",this.menu_root,);
+    // console.error(  "MENUDATA.set_mid_menu_result-------",this.menu_root,);
   }
   /**
    * 获取 当前 左侧菜单赛种的 名字

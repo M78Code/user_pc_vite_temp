@@ -43,7 +43,7 @@ onMounted(() => {
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  border-bottom: 1px solid #FF7000;
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
   &::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }

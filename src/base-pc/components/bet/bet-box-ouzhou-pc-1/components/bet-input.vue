@@ -122,7 +122,7 @@ const show_quick_amount = state => {
 <style scoped lang="scss">
 .bet-input-focus{
     position: relative;
-    background: #FFF6F0;
+    background: var(--q-gb-bg-c-18);
     transition: .3s;
     &:after{
          //width: 1px;

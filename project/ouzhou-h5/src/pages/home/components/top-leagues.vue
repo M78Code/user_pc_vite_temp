@@ -47,7 +47,7 @@ const props = defineProps({
       height: 50px;
       font-size: 16px;
       font-weight: 500;
-      border-bottom: 1px solid #FF7000;
+      border-bottom: 1px solid var(--q-gb-bd-c-1);
       .national_icon{
         width: 24px;
         height: 15px;

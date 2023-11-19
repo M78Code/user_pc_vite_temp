@@ -305,17 +305,20 @@ export default {
       const hps = ctx.match_of_list.hps
       const hpid = MatchResponsive.match_hpid.value
       const hps_item = hps && hps.find(t => t.hpid == hpid)
-
       const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: score_length.value }, () => '{}'))
 
       let ol_data = undefined
       if (ol && ol[0] && ol[0].otd) {
         ol.sort((a, b) => a.otd - b.otd)
-        ol_data = ol.map(t => t.ot)
+        ol_data = ol.map(t => {
+          if (t.ot === 'Under' || t.ot === 'Over') {
+            return t.ot === 'Under' ? i18n_t('analysis_football_matches.small_ball') : i18n_t('analysis_football_matches.big_ball')
+          } else {
+            return t.ot
+          }
+        })
       }
-
       const result = ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
-
       score_length.value = lodash.get(result, 'length')
 
       return result
@@ -400,11 +403,12 @@ export default {
           color: #333;
           font-size: 14px;
           margin-left: 5px;
+          display: none;
         }
       }
       .q-ripple{
         display: none;
-      }
+        }
       }
     }
   }
@@ -984,11 +988,9 @@ export default {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: 500;
-            //color: #8a8986;
-            color: var(--q-gb-t-c-4);
+            color: #8a8986;
             &.visiting {
-              //color: #8a8986;
-              color: var(--q-gb-t-c-3);
+              color: #8a8986;
             }
           }
         }
@@ -1123,7 +1125,7 @@ export default {
 /* **************日期********************** -S*/
 .date-container {
   width: 100%;
-  color: var(--q-gb-t-c-3);
+  color: #999;
   display: flex;
   align-items: center;
   font-size: 14px;

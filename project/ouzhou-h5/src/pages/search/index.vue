@@ -576,7 +576,7 @@ onBeforeUnmount(() => {
 .middle_info_tab {
 	padding: 9px 18px;
 	display: flex;
-	border-bottom: 1px solid #FF7000;
+	border-bottom: 1px solid var(--q-gb-bd-c-1);
 	background-color: var(--q-gb-bg-c-2);
 	font-size: 14px;
 	font-weight: 500;

@@ -183,7 +183,7 @@ export default {
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: #cccccc;
+        background-color: var(--q-gb-bg-c-11);
         border-radius: 4px;
     }
 }
