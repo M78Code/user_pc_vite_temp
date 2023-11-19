@@ -1,7 +1,7 @@
 <template>
   <!-- 滚球盘 标题-->
-  <!-- @click="MatchListCardData[cur_title_info.func_name](card_style_obj)" -->
-  <div class="play-match-type-2">
+  
+  <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
     <div class="left-box">
       <sport_icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
         :sport_id="card_style_obj.csid" size="18px" class="icon" color_type="gray_ball" />
@@ -11,7 +11,7 @@
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
     <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
-      <div class="active flex flex-start items-center" @click.stop="show_list = !show_list">
+      <div class="active flex flex-start items-center" @click.stop="handle_click">
         <div>
           {{ i18n_t(`ouzhou.match.play_map.${current_csid_hpids.first_hpid}`) }} & {{
             i18n_t(`ouzhou.match.play_map.${current_csid_hpids.second_hpid}`) }}
@@ -53,13 +53,14 @@ const props = defineProps({
   },
 })
 const show_list = ref(false)
-watch(show_list, (v) => {
-  if (v) {
+function handle_click() {
+  show_list.value = !show_list.value
+  if (show_list.value) {
     window.addEventListener('click', () => {
       show_list.value = false
     }, { once: true })
   }
-})
+}
 const cur_title_info = computed(() => {
   console.log('props.card_style_obj;', props.card_style_obj);
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
@@ -107,6 +108,7 @@ function handle_hpid_choose(item) {
   line-height: 39px;
   height: 40px;
   line-height: 40px;
+  cursor: pointer;
   text-align: left;
   border-bottom: 1px solid var(--q-gb-bd-c-1);
   background-color: var(--q-gb-bg-c-4);

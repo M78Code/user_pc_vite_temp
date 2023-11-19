@@ -22,11 +22,15 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------亚洲版-PC-重构版本 	yazhou-pc -4------------------------------------------
 // 测试环境  
-// DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697801228987-test";
+// DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1700379923616-test";
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697770590787-shiwan";
 // 生产环境
+<<<<<<< HEAD
 // DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1697972059806-online"
+=======
+DEV_TARGET_VERSION = "project_4-652ccfacfeffd80f0fcda107-1700379404859-online"
+>>>>>>> 5dc5d405adfdef001776036a130d89177508cf26
 
 //----------------------------------分割线  复刻版-H5-KYAPP  app-h5  5 -------------------------------------------
 // 测试环境  

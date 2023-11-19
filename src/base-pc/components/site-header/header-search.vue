@@ -77,13 +77,18 @@ const { searchReducer, menuReducer } = store.getState();
 const search_hot_push = ref(new SearchHotPush());
 
 /** 保存显示搜索组件状态 */
-const set_search_status = (data) => (store.dispatch({
-  type: "SET_SEARCH_STATUS",
-  data,
-}))
+// const set_search_status = (data) => (store.dispatch({
+//   type: "SET_SEARCH_STATUS",
+//   data,
+// }))
+
+const set_search_status = (flag)=>{
+    SearchPCClass.set_search_isShow(flag)
+}
 
 /** 展开搜索 */
 function show_search() {
+    console.log("asdfashdfu")
   // if (!globalAccessConfig.get_searchSwitch()) {
   if (!globalAccessConfig.config.searchSwitch) {
     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
