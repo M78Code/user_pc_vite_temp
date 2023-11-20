@@ -16,23 +16,24 @@
       v-show="show_left_btn"
       @click="click_move('left')"
     >
-      <img src="../../../../assets/images/next_arrow.png" alt="">
+      <img :style="compute_css_obj({key: 'pc-home-matches-left'})" alt="">
     </div>
     <div
       class="more-btn right"
       v-show="show_right_btn"
       @click="click_move('right')"
     >
-      <img src="../../../../assets/images/next_arrow.png" alt="">
+      <img :style="compute_css_obj({key: 'pc-home-matches-left'})" alt="">
     </div>
   </div>
 </template>
 <script setup>
-import { defineComponent, onMounted, onBeforeUnmount, ref, defineProps } from "vue";
+import { defineComponent, onMounted, onBeforeUnmount, ref, defineProps, watch } from "vue";
+import { compute_css_obj } from 'src/core/server-img/index.js'
   const props = defineProps({
     is_show_btn: {
-      type: [ Boolean ],
-      default: () => {},
+      type: Boolean,
+      default: () => true,
     }
   })
   // 是否显示左边按钮
@@ -87,9 +88,14 @@ import { defineComponent, onMounted, onBeforeUnmount, ref, defineProps } from "v
     }, 15);
   };
 
+  watch(() => props.is_show_btn, () => {
+    // console.log(props.is_show_btn, "props.is_show_btn")
+    show_right_btn.value = props.is_show_btn;
+  },{immediate: true })
+
   onMounted(() => {
     area_obj = document.querySelector('.content');
-    show_right_btn.value = props.is_show_btn;
+    // show_right_btn.value = props.is_show_btn;
   }); 
 
   onBeforeUnmount(() => {
@@ -144,15 +150,15 @@ import { defineComponent, onMounted, onBeforeUnmount, ref, defineProps } from "v
     justify-content: center;
     cursor: pointer;
     img {
-      width: 6.5px;
-      height: 10px;
+      width: 100%;
+      height: 100%;
     }
     &.left {
       left: 0;
-      transform: rotate(180deg);
     }
     &.right {
       right: 0;
+      transform: rotate(180deg);
     }
   }
 }

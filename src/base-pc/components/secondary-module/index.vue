@@ -128,4 +128,7 @@ function close_page(value) {
     padding: 0 !important;
 }
 }
+::v-deep.q-tab-panel{
+  padding: 0 ;
+}
 </style>

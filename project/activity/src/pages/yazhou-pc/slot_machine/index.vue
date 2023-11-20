@@ -66,12 +66,12 @@
             <!-- 重置 -->
             <p class="resetBtn" >
               <template>
-                <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/reset_btn_top.png" alt="">
-                <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/reset_btn_top_gray.png" alt="">
+                <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top.png" alt="">
+                <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top_gray.png" alt="">
               </template>
               <template>
-                <img @click="resetSlot" class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/reset_btn_btm.png" alt="">
-                <img class="btm" v-else src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/reset_btn_btm_gray.png" alt="">
+                <img @click="resetSlot" class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm.png" alt="">
+                <img class="btm" v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm_gray.png" alt="">
               </template>
 
               <span>{{_.get(currentSlotData[currentSlotIndex], `resetTicketNumber`)}}张{{_.get(currentSlotData[currentSlotIndex], `resetTicketName`)}}</span>
@@ -80,19 +80,19 @@
             <p v-if="!_.get(currentSlotData[currentSlotIndex], 'beforeGameResult') || !is_init" class="startScreen" >
               <template>
                 <!-- 置灰按钮 -->
-                <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/start_btn_top_gray.png" alt="">
-                <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/start_btn_top.png" alt="">
+                <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top_gray.png" alt="">
+                <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top.png" alt="">
               </template>
               <template>
-                <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/start_btn_btm_gray.png" alt="">
-                <img @click="start('start')" class="btm" v-else src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/start_btn_btm.png" alt="">
+                <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm_gray.png" alt="">
+                <img @click="start('start')" class="btm" v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png" alt="">
               </template>
               <span>{{_.get(currentSlotData[currentSlotIndex], 'lotteryNum')}}张{{_.get(currentSlotData[currentSlotIndex], 'ticketName')}}</span>
             </p>
             <!-- 确认领取 -->
             <p v-else class="confirm" >
-              <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/confirm_btn_top.png" alt="">
-              <img @click="start('confirm')" class="btm" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/start_btn_btm.png" alt="">
+              <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/confirm_btn_top.png" alt="">
+              <img @click="start('confirm')" class="btm" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png" alt="">
             </p>
           </div>
           <!-- 摇杆 -->
@@ -100,8 +100,8 @@
             <img :src="(`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1}/0${rocker_anim_index}.png`)" alt="">
           </div>
           <!-- 老虎机周围的装饰 -->
-          <img class="goldmoney" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/goldmoney.png" alt="">
-          <img class="footbaler" src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/footbaler.png" alt="">
+          <img class="goldmoney" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/goldmoney.png" alt="">
+          <img class="footbaler" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/footbaler.png" alt="">
           <!-- 彩灯 -->
           <span v-for="(item, index) in 26"
           :key="index"
@@ -116,7 +116,7 @@
         <div class="switch_slots" v-if="currentSlotData.length">
           <p @click="switch_slots(index)" v-for="(item, index) in currentSlotData" :key="index">
             <img v-if="currentSlotIndex == index && index < 3" :src="(`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`)" />
-            <img v-else src="~public/yazhou-pc/image/activity_imgs/imgs/slot_machine/grey_rocker.png" />
+            <img v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/grey_rocker.png" />
             <span :class="currentSlotIndex == index ? 'active': ''">
               <span>{{item.slotName}}</span>
               <br>
@@ -172,7 +172,7 @@
       <q-layout view="Lhh lpR fff" container class="history">
         <img
           class="close"
-          src="~public/yazhou-pc/image/activity_imgs/imgs/dialog_close.png"
+          src="~public/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
           alt=""
           @click="gameHistory = false"
           width="30px"
@@ -297,12 +297,12 @@
       </div>
     </div>
     <!-- 背景音循环 -->
-    <audio src="/public/yazhou-pc/image/activity_imgs/imgs/slot_machine/media/slot_bg_loop.mp3" ref="slot_bg_loop" autoplay loop />
+    <audio src="/public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/slot_bg_loop.mp3" ref="slot_bg_loop" autoplay loop />
     <!-- 开始滚动按钮按下 -->
-    <audio src="/public/yazhou-pc/image/activity_imgs/imgs/slot_machine/media/start_btn.mp3" ref="audioStart"></audio>
+    <audio src="/public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/start_btn.mp3" ref="audioStart"></audio>
     <!-- 摇杆 -->
-    <audio src="/public/yazhou-pc/image/activity_imgs/imgs/slot_machine/media/after_start_btn.mp3" ref="afterAudioStart"></audio>
-    <audio src="/public/yazhou-pc/image/activity_imgs/imgs/slot_machine/media/showCard.mp3" ref="showCard"></audio>
+    <audio src="/public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/after_start_btn.mp3" ref="afterAudioStart"></audio>
+    <audio src="/public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3" ref="showCard"></audio>
     <Toast v-if="showToast" :text="$t('common.limited')" />
   </div>
 </template>
@@ -1054,7 +1054,7 @@ export default {
     }
   }
   .slot_machine_content {
-    background: url("public/yazhou-pc/image/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg") no-repeat top
+    background: url("public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg") no-repeat top
       center;
     background-size: 105%;
     margin-top: 80px;
@@ -1589,7 +1589,7 @@ export default {
     .content_title {
       width: 260px;
       height: 62px;
-      background-image: url("~public/yazhou-pc/image/activity_imgs/imgs/title_bg.svg");
+      background-image: url("~public/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;

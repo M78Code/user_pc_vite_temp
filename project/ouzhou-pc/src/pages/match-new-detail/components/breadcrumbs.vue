@@ -6,7 +6,7 @@
 <template>
   <div class="detail-bread">
     <div class="detail-bread-item " style="cursor: pointer;" @click="jumpTo">
-      <span >{{ detail_info.csna }}</span>
+      <span >{{ breadCrumbs_firstOne() }}</span>
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
     </div>
     <div class="detail-bread-item">
@@ -35,18 +35,16 @@ const bread_list = ref([])
 const last_label = computed(() => {
   return `${props.detail_info.mhn} vs ${props.detail_info.man}`
 })
-watch(() => route.path, (newVal) => {
-  //  console.log(111111111111111,route)
-},
-  { immediate: true }
-)
+
+const breadCrumbs_firstOne = function (){
+    let firstOneName = ''
+    let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
+    firstOneName = ['home','in_play','bet_record'].includes(history[1].name) ? history[1].title : props.detail_info.csna
+    return firstOneName
+}
 
 const jumpTo = ()=>{
-// console.log(111111,route)
- 
-  router.push({
-    name:'home'
-  })
+  router.go(-1)
 }
 
 
