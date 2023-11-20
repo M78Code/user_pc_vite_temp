@@ -28,7 +28,7 @@ const state = reactive({
     is_new_user: false
 })
 
-export default {
+const userStore =  {
     getters: {
         get_uid() {
             // 当用户未登录时返回时空uuid, 当用户登录时返回userId
@@ -80,17 +80,16 @@ export default {
 
     actions: {
         //设置用户id
-        set_uuid({ commit }, uuid_str) {
+        set_uuid(uuid_str) {
             commit("set_uuid", uuid_str);
         },
         //清除用户id
-        clear_uuid({ commit }) {
+        clear_uuid() {
             commit("clear_uuid");
         },
         //设置用户信息
-        set_user({ commit }, { token, view, finish_callback }) {
-            console.log(11111)
-            let userInfo = window.vue.$store.getters.get_user;
+        set_user({ token, view, finish_callback }) {
+            let userInfo = userStore.getters.get_user;
             // 获取用户基本信息
             if (view) {
                 let reload_flg = false;
@@ -270,42 +269,42 @@ export default {
             }
         },
         //更新用户余额
-        set_user_balance({ commit }, balance) {
+        set_user_balance(balance) {
             commit("set_user_balance", balance);
         },
         //设置用户余额是否展示状态
-        set_show_balance({ commit }, val) {
+        set_show_balance(val) {
             commit("set_show_balance", val);
         },
         //  清除用户信息
-        clear_user({ commit }) {
+        clear_user() {
             commit("clear_user");
         },
         //  清除用户token
-        clear_user_token({ commit }) {
+        clear_user_token() {
             commit("clear_user_token");
         },
         //  设置登录弹窗状态
-        set_show_login_popup({ commit }, val) {
+        set_show_login_popup(val) {
             commit("set_show_login_popup", val);
         },
         //保存token状态（是否失效）
-        set_is_invalid({ commit }, val) {
+        set_is_invalid(val) {
             commit("set_is_invalid", val);
         },
         //更新用户信息
-        set_user_assign({ commit }, val) {
+        set_user_assign(val) {
             commit("set_user_assign", val);
         },
         //设置用户是否长时间未操作
-        set_is_user_no_handle({ commit }, val) {
+        set_is_user_no_handle(val) {
             commit("set_is_user_no_handle", val);
         },
         // 是否首次登录
-        set_is_new_user({ commit }, val) {
+        set_is_new_user(val) {
             commit("set_is_new_user", val);
         },
-        set_user_bet_prefer({ commit }, val) {
+        set_user_bet_prefer(val) {
             let userInfo = _.cloneDeep(window.vue.$store.getters.get_user);
             userInfo.userBetPrefer = val;
             BaseUserInfo.set(userInfo);
@@ -391,3 +390,17 @@ export default {
         }
     }
 };
+
+/**
+ * mutation commit
+ * @param {*} flag 
+ * @param  {...any} args 
+ * @returns 
+ */
+function commit(flag, ...args) {
+    return userStore.mutations[flag].apply(null, ...args);
+}
+
+
+export default userStore;
+

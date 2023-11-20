@@ -60,8 +60,8 @@ const get_init_data = () =>{
     leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
     // MenuData.menu_mi.value || 
-    MenuData.set_menu_mi(dataList()[0]?.mi);
-    playValue.value = dataList()[0]?.mi;
+    MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
+    playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
 }
 onMounted(()=>{
     get_init_data();

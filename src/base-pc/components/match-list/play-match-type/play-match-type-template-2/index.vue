@@ -141,7 +141,7 @@ function handle_hpid_choose(item) {
       color: var(--q-gb-bg-c-1);
 
       .yb-icon-arrow {
-        color: #8A8986;
+        color: var(--q-gb-t-c-8);
         margin-left: 10px;
         transform: rotate(90deg);
       }

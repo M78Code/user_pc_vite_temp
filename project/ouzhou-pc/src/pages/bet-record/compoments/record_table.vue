@@ -503,7 +503,7 @@ const hand_copy = (data) => {
 
 <style lang="scss" scoped>
 .time{
-  color: #8A8986;
+  color: var(--q-gb-t-c-8);
 }
 .detail-options {
   width: 100%;
@@ -532,19 +532,19 @@ const hand_copy = (data) => {
       height: 24px;
       font-size: 12px;
       border-radius: 20px;
-      color: #8A8986;
-      border: 1px solid #8A8986;
+      color: var(--q-gb-t-c-8);
+      border: 1px solid var(--q-gb-t-c-8);
 
       &.win-color {
-        color: #FF4646;
-        border: 1px solid #FF4646;
+        color: var(--q-gb-t-c-7);
+        border: 1px solid var(--q-gb-t-c-7);
       }
     }
   }
 }
 
 .win-color {
-  color: #FF4646
+  color: var(--q-gb-t-c-7)
 }
 
 .no-data-icon {
@@ -606,7 +606,7 @@ const hand_copy = (data) => {
 }
 
 .datails-order {
-  color: #8a8986;
+  color: var(--q-gb-t-c-8);
 }
 
 .copy {

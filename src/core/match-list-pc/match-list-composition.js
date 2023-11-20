@@ -194,9 +194,7 @@ export function fetch_match_list(is_socket = false, cut) {
 };
 
 function handle_destroyed() {
-	clearTimeout(axios_debounce_timer);
-	clearTimeout(axios_debounce_timer2);
-	clearInterval(check_match_last_update_timer_id);
+	
 	// 销毁 ws message通信
 	ws_destroyed();
 	for (let key in timer_obj.value) {
@@ -208,16 +206,23 @@ function handle_destroyed() {
 	}
 	mitt_list.forEach(i => i());
 	timer_obj.value = {};
+	clearTimeout(axios_debounce_timer);
+	clearTimeout(axios_debounce_timer2);
+	clearInterval(check_match_last_update_timer_id);
+	check_match_last_update_timer_id = null;
+	axios_debounce_timer2 = null;
+	axios_debounce_timer = null;
+	hot_match_list_timeout = null;
 }
 function init_page_when_base_data_first_loaded() {
 	// 元数据 
 	set_base_data_init();
 	//释放试图 
 	load_data_state.value = 'data'
-	check_match_last_update_timer_id = setInterval(
-		check_match_last_update_time(),
-		30000
-	);
+	// check_match_last_update_timer_id = setInterval(
+	// 	check_match_last_update_time(),
+	// 	30000
+	// );
 }
 function mounted_fn() {
 	// fetch_match_list();

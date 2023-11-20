@@ -276,7 +276,7 @@ export default defineComponent({
 
     :deep(.serach-background) {
       background-color: var(--q-gb-bg-c-11);
-      min-height: 400px;
+      // min-height: 400px;
       overflow: hidden;
     }
   }
@@ -300,7 +300,7 @@ export default defineComponent({
 	font-weight: 500;
 	width: 100%;
 	z-index: 1;
-	color: #1A1A1A;
+	color: var(--q-gb-t-c-5);
 	.tab {
 		background-color: #FFf;
 		border-radius: 40px;

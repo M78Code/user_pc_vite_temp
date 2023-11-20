@@ -171,7 +171,7 @@ export default {
     let params_obj = new URLSearchParams(location.search)
     this.is_maintaining = this.get_user.maintaining
     // 方便调试, 先放出来正常的活动页面吧
-    // this.is_maintaining = false;
+    this.is_maintaining = false;
     if(act){
       // 返回到场馆的 历史记录
       if (!location.search.includes('keep_url')) {

@@ -59,6 +59,7 @@ class MenuData {
 
 
     //----------------------------------- 收藏 --------------------------------------//
+    this.collect_id = '';//收藏id 
     this.collect_list = []
   }
 
@@ -116,7 +117,7 @@ class MenuData {
     });
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
-    if(session_info){
+    if(session_info){//取session球种id
       this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
       this.menu_mi.value = session_info.menu_mi;
     }
@@ -192,6 +193,21 @@ class MenuData {
     this.current_lv_2_menu_i = val
     this.current_lv_2_menu_mi.value = val
     this.menu_csid = val*1 - 100
+  }
+  /**
+   * 设置收藏id 特殊处理
+   * @param {*} val 
+   */
+  set_collect_id(val){
+    this.collect_id = val;
+  }
+  /**
+   * 清除默认球种
+   */
+  clear_menu_id(){
+    this.current_lv_2_menu_i = "";
+    this.menu_mi.value = "";
+    this.collect_id = "";
   }
   /**
    * 设置时间 并且设置时间请求参数
@@ -297,7 +313,7 @@ class MenuData {
     if (param) {
       return mi == param
     }
-    return this.menu_type == mi
+    return this.menu_type.value == mi
   }
   /**
    * 是否选中了 热门
@@ -375,8 +391,8 @@ class MenuData {
    * 是否选中了收藏
    *  mi [number|string] 要比对的值
   */
-   is_collect(mi) {
-    return this._is_cur_mi(50000, mi)
+   is_collect() {
+    return this.collect_id == 50000;
   }
 }
 export default new MenuData();

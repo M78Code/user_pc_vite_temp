@@ -127,7 +127,7 @@ const common_td_list = ref(
         }
 
         div {
-            color: #8A8986;
+            color: var(--q-gb-t-c-8);
             margin-right: 5px;
         }
 
