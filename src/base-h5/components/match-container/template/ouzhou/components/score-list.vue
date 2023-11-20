@@ -9,6 +9,8 @@
         v-for="s in score_data" 
         :key="s.oid"
         :odd_item="s"
+        :mhs="mhs"
+        :item_hs="item_hs"
         :match_id="match_info.id"
         :csid="match_info.csid"
         :show_hpn="show_hpn"></OddItem>
@@ -47,6 +49,8 @@ const props = defineProps({
 })
 
 const ol_info = ref({})
+const mhs = ref(0)
+const item_hs = ref(0)
 const active_score = ref('')
 
 // 赔率数据
@@ -54,6 +58,8 @@ const score_data = computed(() => {
   const hps = props.match_info.hps
   const hpid = MatchResponsive.match_hpid.value
   const hps_item = hps && hps.find(t => t.hpid == hpid)
+  mhs.value = lodash.get(props.match_info, 'mhs', 1)
+  item_hs.value = lodash.get(hps_item, 'hl[0].hs', 1)
   const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: props.score_length }, (i) => { return {  oid: i } }))
   return ol.sort((a, b) => a.otd - b.otd)
 })
