@@ -4,7 +4,7 @@
     <!-- 左侧菜单 -->
     <div class="menu-nav-li">
       <ul class="menu-list menu-favouritse">
-        <li class="f-s-c" @click="go_to_favouritse">
+        <li class="f-s-c" @click="go_to_favouritse" :class="MenuData.is_collect ?'active':''">
           <i class="icon-star q-icon c-icon icon"></i>
           {{ i18n_t("ouzhou.menu.collect") }}
         </li>
