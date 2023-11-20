@@ -50,6 +50,10 @@
             <FeaturedMatches :matches_featured_list="matches_featured_list" />
           </div>
         <!-- </template> -->
+
+        <!-- 滚球标题 -->
+        <In-Play :match_count="total_match_count" />
+
         <div
           v-for="card_key in match_list_card_key_arr"
           :key="card_key"
@@ -122,6 +126,7 @@ import {
   GlobalAccessConfig,
 } from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
+import InPlay from "src/base-pc/components/match-list/match_in_play.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";
 import FeaturedMatches from "src/base-pc/components/match-list/featured_matches/featured_matches_card.vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
@@ -164,6 +169,7 @@ export default {
     MatchCardList15Mins,
     MatchesHeader,
     ConmingSoon,
+    InPlay
   },
   setup() {
     // 15分钟赛事数据
@@ -173,12 +179,15 @@ export default {
 
     const match_list_card_key_arr = ref([]);
 
+     // 赛事数量
+     const total_match_count = ref(0)
+
     // const coom_soon_state = ref(false);
 
     const match_list_top = ref("76px");
 
     const { proxy } = getCurrentInstance();
-
+    
     let mitt_list = null
 
     const MatchListCardDataClass_match_list_card_key_arr = () => {
@@ -207,10 +216,12 @@ export default {
       proxy?.$forceUpdate();
     });
 
+   
     const get_data_info = async () => {
       // 判断是不是首页下的 featured 页面
       // if (MenuData.is_featured()) {
-        const { mins15_list= [], featured_list= [] } = await init_home_matches();
+        const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
+        total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = featured_list
       // }
@@ -234,7 +245,8 @@ export default {
       // coom_soon_state,
       match_list_top,
       match_list_card,
-      MenuData
+      MenuData,
+      total_match_count
     };
   },
 };
