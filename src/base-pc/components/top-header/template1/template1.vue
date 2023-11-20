@@ -18,9 +18,7 @@
           <right_head />
         </div>
         <!-- 弹窗 -->
-      <div>
-         <secondaryModule></secondaryModule>
-      </div>
+      
       </div>
     </div>
   </div>
@@ -32,12 +30,11 @@ import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import { LayOutMain_pc,MenuData,useMittEmit,MITT_TYPES  } from "src/core/"
-import secondaryModule from 'src/base-pc/components/secondary-module/index.vue'
+
 export default defineComponent({
   name: "TopHeaderTemplate1",
   components: {
     right_head,
-    secondaryModule
   },
   props: {},
   setup(props, context) {

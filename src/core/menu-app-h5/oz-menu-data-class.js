@@ -116,7 +116,7 @@ class MenuData {
     });
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
-    if(session_info){
+    if(session_info){//取session球种id
       this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
       this.menu_mi.value = session_info.menu_mi;
     }
@@ -192,6 +192,13 @@ class MenuData {
     this.current_lv_2_menu_i = val
     this.current_lv_2_menu_mi.value = val
     this.menu_csid = val*1 - 100
+  }
+  /**
+   * 清除默认球种
+   */
+  clear_menu_id(){
+    this.current_lv_2_menu_i = "";
+    this.menu_mi.value = "";
   }
   /**
    * 设置时间 并且设置时间请求参数

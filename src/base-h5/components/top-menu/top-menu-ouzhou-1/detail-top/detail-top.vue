@@ -173,9 +173,8 @@ const refresh = (params = {}) => {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-
     // flex: 1;
-    .detail-selec-nav {
+    .detail-select-nav {
       margin: 0 auto;
 
       .btn-label {

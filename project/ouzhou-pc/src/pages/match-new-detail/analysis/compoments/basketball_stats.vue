@@ -154,7 +154,7 @@ const tabClick = (item) => {
 
   .detail-statsic-title {
     text-align: center;
-    color: #8a8986;
+    color: var(--q-gb-t-c-8);
   }
 
   .detail-statsic-chart {
@@ -176,7 +176,7 @@ const tabClick = (item) => {
   }
 
   .detail-slider-title {
-    color: #8A8986;
+    color: var(--q-gb-t-c-8);
   }
 
 }
