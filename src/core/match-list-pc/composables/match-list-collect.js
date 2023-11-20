@@ -214,10 +214,11 @@ const mx_collect_leagues = (match, is_champion) => {
       
       if ( code == 200 && data == 1) {
         match.tf = cur_collect_state;
+        //更新常规赛事不同分类的联赛收藏状态 并 获取所有同联赛下的赛事ID
         let mids_arr = MatchListCard.update_league_collect_data_and_get_mids(
           match.tid,
           cur_collect_state
-        );
+        )||[];
         //跟新原数据联赛收藏状态
         // MatchListData.set_league_list_collect(
         //   match.tid,
