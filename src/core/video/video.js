@@ -40,7 +40,7 @@ export default {
   api_get_match_info(mid,route,callback){
     let params = {
       mid,
-      cuid: UserCtr.get_cuid()
+      cuid: UserCtr.get_uid()
     };
     let api_ = null;
     // 判断是电竞还是其他赛种，区分接口
