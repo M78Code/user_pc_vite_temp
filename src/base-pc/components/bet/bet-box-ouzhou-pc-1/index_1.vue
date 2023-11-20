@@ -9,7 +9,7 @@
       <!-- 单关 投注 -->
       <template v-if="BetData.is_bet_single">
         <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionId">
-            <betItem :items="item" :key="index" />
+            <betItem :items="item" :key="index" :index="index" />
         </div>
       </template>
 

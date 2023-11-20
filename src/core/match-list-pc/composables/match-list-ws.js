@@ -9,6 +9,7 @@ import { useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_PC_List_Common } 
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 
 function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
+	let mids = []
 	let message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
 		// 赛事新增
 		if (["C109"].includes(cmd)) {
@@ -21,24 +22,27 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 		if (["C104"].includes(cmd)) {
 			// mhs === 2 为关盘
 			if (data.mhs == 2) {
-				socket_remove_match(data.cd);
+				socket_remove_match(data.cd, MatchListData);
 			}
 		}
-		// 调用 mids  接口
+		// 调用 mids  接口 303是盘口赔率变更
 		if (["C303", "C114"].includes(cmd)) {
-			api_bymids({});
+			api_bymids({ mids }, null, MatchListData);
 		}
 	})
 	return {
-		set_inactive_mids(show_mids = []) {
-			MatchListData.set_inactive_mids(show_mids)
+		set_inactive_mids(_mids = []) {
+			MatchListData.set_inactive_mids(_mids)
 		},
-		set_active_mids: (mids = []) => {
-			MatchListData.set_active_mids(mids)
+		set_active_mids: (_mids = []) => {
+			mids = _mids;
+			MatchListData.set_active_mids(_mids)
 		},
 		// 将新的可视区域赛事id 设置为活跃
 		ws_destroyed: () => {
+			mids = null;
 			ws_message_listener.ws_remove_message_listener(message_fun)
+			MatchListData.clear()//清除数仓数据
 		}
 	}
 }
