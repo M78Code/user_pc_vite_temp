@@ -419,7 +419,6 @@ export default class MatchDataBaseWS
         this.match_ctr.match_upd_time_ret_change(match);
 
         this.match_ctr.upd_data_version();
-        console.log(1111111111111111)
       }
     }
   }

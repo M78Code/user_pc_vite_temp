@@ -64,7 +64,7 @@ const active_score = ref('')
 
 // 赔率数据
 const score_data = computed(() => {
-  if (!props.is_change) return
+  // if (!props.is_change) return []
   const hps = props.match_info.hps
   const hpid = MatchResponsive.match_hpid.value
   const hps_item = hps && hps.find(t => t.hpid == hpid)
@@ -82,46 +82,14 @@ const score_data = computed(() => {
     align-items: center;
     justify-items: center;
     width: 100%;
-    span.active{
-      //color: #fff;
-      color: var(--q-gb-t-c-2);
-      background: #FF7000;
-      border-radius: 2px;
-      .hpn{
-        position: relative;
-        top: 1px;
-      }
-    }
-    > span {
-      flex: 1;
-      font-size: 15px;
-      //color: #FF7000;
-      color: var(--q-gb-t-c-1);
-      text-align: center;
-      font-weight: 500;
+    :deep(.odd-item){
       height: v-bind(height);
-      line-height: v-bind(height);
-      .hpn{
-        color: #8A8986
-      }
     }
     .lock{
       width: 16px;
       height: 16px;
       position: relative;
       top: 2px;
-    }
-    .item{
-      &.up{
-        color: #FF4646;
-      }
-      &.down{
-        color: #17A414;
-      }
-      .hps_img{
-        width: 6px;
-        height: 10px;
-      }
     }
   }
 </style>
