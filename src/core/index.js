@@ -8,6 +8,7 @@ const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 //通用
 
 import lodash from "lodash";
+import { ref } from "vue";
 
 // import { useRouter, useRoute } from 'vue-router';
 // const router = useRouter();
@@ -131,9 +132,9 @@ import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
  * PC  数据仓库 常规赛事   通用列表
  */
 
-const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
+const MatchDataWarehouse_PC_List_Common = ref(new MatchDataBase({
   name_code: "MatchDataWarehouse_PC_List_Common",
-});
+})).value;
 
 /**
  * 欧洲版 PC/H5 数据仓库 15mins 顶部列表
@@ -241,7 +242,6 @@ const MatchListH5DetailMiddleware = new MatchListDetailMiddleware()
  */
 
 import LayOutMain_pc from "src/core/layout/index.js";
-import { reactive } from "vue";
 
 /**
  * CSS 变量
