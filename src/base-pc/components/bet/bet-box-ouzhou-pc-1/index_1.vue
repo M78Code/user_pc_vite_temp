@@ -9,7 +9,7 @@
       <!-- 单关 投注 -->
       <template v-if="BetData.is_bet_single">
         <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionId">
-            <betItem :items="item" :key="index" />
+            <betItem :items="item" :key="index" :index="index" />
         </div>
       </template>
 
@@ -38,6 +38,6 @@ import betFooter from "./components/bet-footer.vue"  // 投注底部信息
   }
 
   .bet-box-content{
-    background: var(--q-gb-bg-c-11);
+    background: var(--q-gb-bg-c-4);
   }
 </style>

@@ -267,10 +267,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		template_id = 1;
 	}
 	// 赛事列表模板配置
-	let template_config =
-		MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`][
-			"match_template_config"
-		] || {};
+	let template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
 
 	// 赛事样式对象
 	let style_obj = {

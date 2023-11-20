@@ -45,7 +45,7 @@ const set_retain_selection = () => {
       line-height: 0.3rem;
       border-radius: 2px;
       font-family: "Roboto";
-      font-size: 0.15rem;
+      font-size: 0.13rem;
       font-weight: 400;
       letter-spacing: 0px;
       border: 0.5px solid var(--q-gb-t-c-5);

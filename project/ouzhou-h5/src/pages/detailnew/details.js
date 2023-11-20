@@ -377,9 +377,6 @@ export const details_main = (router,route) => {
     ws_message_listener.ws_remove_message_listener(message_fun)
     message_fun = null
   });
-  watch(()=>match_odds_info.value,(val)=>{
-    console.log(val,'val');
-  })
   return {
      detail_store,
      match_odds_info,

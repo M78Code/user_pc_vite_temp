@@ -1,39 +1,36 @@
 /**
- *  欧洲版 足球 赔率模板 101号
+ *  欧洲版 冰球 赔率模板 106号
  */
 import * as TemplateCommon from "./template-common.js"
 
 // , { empty: 1 } 空模板
- // 欧洲版 足球 赔率模板 全量赔率
- export const template_108={
+ // 欧洲版 冰球 赔率模板 全量赔率
+ export const template_106={
   main_handicap_list: [
     {
-      _hpid: 1,
       ols: [
-        { _hpid: 1, ot: "1" },
-        { _hpid: 1, ot: "X" },
-        { _hpid: 1, ot: "2" },
+        {  _hpid: 1, ot: '1' },
+        {  _hpid: 1, ot: '2' },
+        {  _hpid: 1, ot: 'X' },
       ],
     },
     {
-      _hpid: 4, ols: [{ _hpid: 4, ot: "1" }, { _hpid: 4, ot: "2" }],
-    },
-    {
-      _hpid: 2, ols: [{ _hpid: 2, ot: "Over" }, { _hpid: 2, ot: "Under" }],
-    },
-    {
-      _hpid: 17,
       ols: [
-        { _hpid: 17, ot: "1" },
-        { _hpid: 17, ot: "2" },
-        { _hpid: 17, ot: "X" },
+        {  _hpid: 4, ot: '1' },
+        {  _hpid: 4, ot: '2' },
       ],
     },
     {
-      _hpid: 19, ols: [{ _hpid: 19, ot: "1" }, { _hpid: 19, ot: "2" }],
+      ols: [
+        {  _hpid: 2, ot: 'Over' },
+        {  _hpid: 2, ot: 'Under' },
+      ],
     },
     {
-      _hpid: 18, ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }],
+      ols: [
+        {  _hpid: 15, ot: 'Odd' },
+        {  _hpid: 15, ot: 'Even' },
+      ],
     },
   ],
 }
@@ -44,7 +41,7 @@ import * as TemplateCommon from "./template-common.js"
 // 用于 拿取当前 用户选择的赔率模板
 // 这里传入的 是我们的玩法id
 export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
-  let odds_list =  TemplateCommon.get_current_odds_list(template_108.main_handicap_list, { first_hpid, second_hpid })
+  let odds_list =  TemplateCommon.get_current_odds_list(template_106.main_handicap_list, { first_hpid, second_hpid })
   return odds_list
 }
 

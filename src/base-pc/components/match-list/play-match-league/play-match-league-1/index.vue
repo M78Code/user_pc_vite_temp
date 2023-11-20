@@ -78,6 +78,7 @@ const props = defineProps({
 const csid = lodash.get(props.card_style_obj, 'league_obj.csid')
 let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
+console.log('match_tpl_info', data_tpl_id, 11);
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 const is_collect = ref(false);
 //第一次进页面时，收藏从接口获取状态，后续点击前端控制
@@ -90,8 +91,6 @@ if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
  * @Description 设置联赛折叠
 */
 function set_fold() {
-  console.log('asdasdasfafasf', props.card_style_obj.is_league_fold ,11, ([2, 3].includes(menu_config.menu_root) ,22, menu_config.is_export()));
-
   // 如果当前联赛是折叠的 并且是今日、早盘  调用bymids接口拉数据
   if (props.card_style_obj.is_league_fold ) {
     // 设置赛事基础数据
@@ -132,7 +131,7 @@ onUnmounted(()=>{
   display: flex;
   width: 100%;
   height: 100%;
-  background: #F5F5F5;
+  background: var(--q-gb-bg-c-15);
   border-bottom: 1px solid var(--q-gb-bd-c-2);
   font-weight: 500;
   cursor: pointer;

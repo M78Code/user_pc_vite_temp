@@ -20,7 +20,7 @@
           v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
           :key="ol_data._hpid+'_'+ol_data._ot">
           <!-- 投注项组件 -->
-          <bet-item @update_score="update_score" :active_score="active_score" v-if="is_mounted && ol_data && ol_data._hpid && ol_data.ov"  :ol_data="ol_data" />
+          <bet-item @update_score="update_score" :active_score="active_score" :ol_data="ol_data" />
         </div>
       </div>
     </div>
@@ -67,7 +67,6 @@ const props = defineProps({
     default: () => false,
   }
 })
-
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
@@ -102,6 +101,8 @@ function deal_width_handicap_ols(payload) {
     // 获取投注项内容 
     return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
   })
+console.log('sdfsdgfsfgdsfgg', payload);
+
   return new_ols
 }
 
@@ -274,7 +275,6 @@ function getCurState (hipo) {
           .odds {
             color: var(--q-gb-t-c-1);
           }
-
         }
 
         div {
@@ -286,6 +286,12 @@ function getCurState (hipo) {
             color: var(--q-gb-t-c-2);
             font-weight: 500;
             font-size: 14px;
+            &.up {
+              color: var(--q-gb-t-c-7);
+            }
+            &.down {
+              color: var(--q-gb-t-c-10);
+            }
         }
     }
 </style>

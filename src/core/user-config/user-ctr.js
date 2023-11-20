@@ -6,7 +6,7 @@
  *  商户相关
  */
 // #TODO 等后续get_server_file_path、http、infoUpload和pako_pb公共模块开发后再替换
-import { ref } from "vue";
+import { ref,nextTick } from "vue";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
@@ -24,13 +24,16 @@ import lodash from "lodash";
 import axios from "axios";
 import { uid } from 'quasar';
 import { i18n_t, i18n } from "..";
-import BaseData from 'src/core/base-data/base-data.js'
+
+import STANDARD_KEY from "src/core/standard-key";
+const user_key = STANDARD_KEY.get("user_info");
 
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
   constructor() {
     this.init();
+    this.set_user_info_refresh()
   }
   /**
    * 初始化
@@ -109,6 +112,9 @@ class UserCtr {
     this.user_version = ref('0')
     this.update = (v) => {
       this.user_version.value = v || Date.now()
+      nextTick(()=>{
+        SessionStorage.set(user_key,this)
+      })
     }
     this.callbackUrl = ''
     //电竞图片地址 
@@ -127,6 +133,20 @@ class UserCtr {
 
   }
   
+  // 刷新后 获取缓存数据
+  set_user_info_refresh() {
+    // 获取数据缓存
+    let session_info = SessionStorage.get(user_key);
+    if (!session_info) {
+      return;
+    }
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        this[item] = session_info[item]
+      }
+    }
+  }
+
   // 角球开关盘标识
   set_corner_oc_change (val) {
     this.corner_oc_change = val

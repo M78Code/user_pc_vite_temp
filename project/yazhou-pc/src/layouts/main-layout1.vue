@@ -3,7 +3,7 @@
   <div class="page-main full-height" :style="page_style" id="parent">
     <div :style="{ height: LayOutMain_pc.layout_top_height  }">
       <!-- 搜索 -->
-      <search-wapper />
+      <!--<search-wapper />-->
       <!-- 页面头部容器-->
       <layout-header />
     </div>

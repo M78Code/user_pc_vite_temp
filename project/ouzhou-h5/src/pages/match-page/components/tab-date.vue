@@ -48,7 +48,7 @@
                             <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
                                 <div @click="areaListChange(item, index)" class="week" :class="area_tab_index == index ? 'active' : ''">
                                     <span>
-                                        <span>{{ item }}</span>
+                                        <span>{{ item.introduction }}</span>
                                     </span>
                                     <span class="border_right"></span>
                                 </div>
@@ -71,7 +71,6 @@ import { MenuData } from "src/core/";
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
 
 const emitters = ref({})
 const route = useRoute();
@@ -89,21 +88,20 @@ const current_menu_mi = ref("101");
 const week = dateWeekMatchesFormat();
 // 七天时间
 // 地区集合
-const areaList = reactive([
-    "Europ",
-    "Africa",
-    "Asia",
-    "North America",
-    "South America",
-    "Oceania",
-]);
+const props = defineProps({
+    areaList: {
+        type: Array,
+        default: () => [],
+        required: true
+    },
+})
 
 // 下拉选
 const selectOptions = reactive([
-    { label: "Next 12 Hours", time: "12hours", timestamp: dayjs().add(12, 'hour').valueOf() }, //12小时后的时间戳
-    { label: "Next 24 Hours", time: "24hours", timestamp: dayjs().add(24, 'hour').valueOf() },
-    { label: "3 Day", time: "3day", timestamp: dayjs().add(3, 'day').valueOf() },
-    { label: "7 Day", time: "7day", timestamp: dayjs().add(7, 'day').valueOf() },
+    { label: "Next 12 Hours", time: "12hours", timestamp: 12 }, //12小时后的时间戳
+    { label: "Next 24 Hours", time: "24hours", timestamp: 24 },
+    { label: "3 Day", time: "3day", timestamp: 72 },
+    { label: "7 Day", time: "7day", timestamp: 168 },
 ]);
 
 const curSelectedOption = ref(selectOptions[0])
@@ -143,7 +141,7 @@ const changeDatetab = (item, index) => {
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
-    MenuData.set_date_time(item.val, item.type);
+    // MenuData.set_date_time(item.val, item.type);
     menu_time.value = item?.val
    
     // //根据时间筛选列表
@@ -176,7 +174,7 @@ const setDefaultData = (val) => {
     // MenuData.set_menu_mi(val);
     current_menu_mi.value = val;
     //球种改变设置今日
-    MenuData.set_date_time(week[0].val);
+    // MenuData.set_date_time(week[0].val);
     menu_time.value = week[0]
 }
 watch(() => MenuData.menu_mi.value, () => {
@@ -189,10 +187,10 @@ watch(() => MenuData.menu_mi.value, () => {
  */
 const areaListChange = (item,index) => {
     tabModel.value = false;
-    const move_index = areaList.findIndex((t, _index) => _index === index);
+    const move_index = props.areaList.findIndex((t, _index) => _index === index);
     scrollRefArea.value.scrollTo(move_index - 2, "start-force");
     area_tab_index.value = index;
-    emit("changeArea", item);
+    emit("changeArea", item.id);
 }
 </script>
   

@@ -88,6 +88,9 @@ export const get_history = (params, config = {}, url = "/v1/w/matchDetail/getVis
 //添加近期关注
 export const add_visit_history = (params, config = {}, url = "/v1/w/matchDetail/addVisitHistory") => http.get(`${prefix}${url}`, params)
 
+
+//查询热门推荐
+export const get_hots = (params, config = {}, url = "/v1/m/hotUlikeRecommendationPB?isHot=101") => http.get(`${prefix}${url}`, params)
  
 //查询热门推荐---电竞
 export const get_hots_es = (params, config = {}, url = "/v1/w/hotEsportsMatches") => http.get(`${prefix}${url}`, params)

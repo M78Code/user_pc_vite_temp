@@ -256,5 +256,39 @@ export const sports_play_data = {
         hpid: '153',
         csid: '12'
       }
-    ]
+    ],
+    "90" : [ 
+      {
+        label: i18n_t('ouzhou.match.play_map.1'),
+        hpid: '1',
+        csid: '1'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.2'),
+        hpid: '2',
+        csid: '1'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.4'),
+        hpid: '4',
+        csid: '1'
+      },
+    ],
+    "91" : [
+      {
+        label: i18n_t('ouzhou.match.play_map.37'),
+        hpid: '37',
+        csid: '2'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.38'),
+        hpid: '38',
+        csid: '2'
+      },
+      {
+        label: i18n_t('ouzhou.match.play_map.39'),
+        hpid: '39',
+        csid: '2'
+      },
+    ],
   }

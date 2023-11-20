@@ -24,7 +24,7 @@
           <div class="row secondary_obj">
             <p
               class="secondary_name"
-              :class="item.id === active_tab ? 'active' :'' "
+              :class="item.id === LayOutMain_pc.layout_secondary_active ? 'active' :'' "
               v-for="item in list_data"
               :key="item.id"
               @click="active_change(item.id)"
@@ -34,7 +34,7 @@
         </header>
         <!-- 内容 -->
         <section>
-          <q-tab-panels v-model="active_tab" animated>
+          <q-tab-panels v-model="LayOutMain_pc.layout_secondary_active" animated>
           <!-- 公告 -->
             <q-tab-panel name="announcement">
               <announce></announce>
@@ -57,13 +57,12 @@
 <script setup>
 import { LayOutMain_pc } from "src/core/index.js";
 import { compute_local_project_file_path } from "src/core/index.js";
-import { ref, reactive } from "vue";
+import { ref, reactive,toRef, toRefs } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import rule from "src/base-pc/components/rule/index.vue";
 import announce from "src/base-pc/components/announce/index.vue";
 import matchResults from "src/base-pc/components/results/match-results.vue";
-//激活的tab
-const active_tab = ref("announcement");
+
 //数据列表
 const list_data = reactive([
   { id: "announcement", name: "Announcement" },
@@ -76,7 +75,7 @@ const list_data = reactive([
  * @return {}
  */
 function active_change(value) {
-  active_tab.value = value;
+ 
 }
 /**
  * @description: 关闭弹窗
@@ -91,7 +90,7 @@ function close_page(value) {
 <style lang="scss">
 .secondary_module .q-dialog__inner .dialog_content {
   min-width: 1200px !important;
-  background: #fff;
+  background: var(--q-gb-t-c-1);
   .header {
     padding: 10px;
     width: 100%;
@@ -101,15 +100,15 @@ function close_page(value) {
     .top_tit {
       font-size: 18px;
       -color: var(--q-gb-t-c-1);
-      color: #fff;
+      color: var(--q-gb-t-c-1);
     }
     .secondary_obj {
-      color: #c2c2c2;
+      color: var(--q-gb-t-c-3);
       .secondary_name {
         margin-right: 30px;
       }
       .active {
-        color: #ff7000;
+        color: var(--q-gb-t-c-2);
         position: relative;
         &::before {
           content: "";
@@ -117,7 +116,7 @@ function close_page(value) {
           display: inline-block;
           width: 54px;
           height: 2px;
-          background: #ff7000;
+          background: var(--q-gb-bg-c-1);
           bottom: -8px;
           left: 0;
         }

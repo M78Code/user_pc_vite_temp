@@ -34,7 +34,6 @@ class MenuData {
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash_.debounce(() => {
       that.update_time.value = Date.now();
-      console.error('update_time',this)
     }, 16);
     //提供销毁函数
     this.destroy = () => {
@@ -51,7 +50,7 @@ class MenuData {
     // 赛果 日期/赛中
     this.result_menu_api_params = {}
     //赛事列表 日期
-    this.menu_match_date_params= {}
+    // this.menu_match_date_params= {}
     this.menu_list = []; //常规球种 101...
     this.top_events_list = []; //热门球种
     this.menu_mi = ref(''); //常规球种选中
@@ -214,22 +213,22 @@ class MenuData {
    * @param {*} time 
    * @param {*} type  0今日 1早盘
    */
-  set_date_time(time,type){
-    this.data_time = time;
-    this.set_menu_match_date(type)
-  }
+  // set_date_time(time,type){
+  //   this.data_time = time;
+  //   this.set_menu_match_date(type)
+  // }
 
-  // 设置时间请求参数
-  set_menu_match_date(type){
-    //2 今日  3早盘
-    let menu_mi =  this.menu_mi.value?`${this.menu_mi.value}${!type? 2 : 3}`:'0';
-    let params = {
-      md: this.data_time ,
-      euid: this.get_euid(menu_mi),
-      type: !type? 3 : 4, //
-    }
-    this.menu_match_date_params = params
-  }
+  // // 设置时间请求参数
+  // set_menu_match_date(type){
+  //   //2 今日  3早盘
+  //   let menu_mi =  this.menu_mi.value?`${this.menu_mi.value}${!type? 2 : 3}`:'0';
+  //   let params = {
+  //     md: this.data_time ,
+  //     euid: this.get_euid(menu_mi),
+  //     type: !type? 3 : 4, //
+  //   }
+  //   this.menu_match_date_params = params
+  // }
   // 设置收藏列表
   set_collect_list (list) {
     this.collect_list = list

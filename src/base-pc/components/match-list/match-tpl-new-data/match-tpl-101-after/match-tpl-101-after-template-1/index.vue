@@ -5,7 +5,7 @@
     <div class="basic-col"
       :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
       <!-- 比赛进程 -->
-      <basis-info101 v-if="match" :match="match" show_type="all" />
+      <basis-info101 :match="match" show_type="all" />
     </div>
     <!-- 竖线 -->
     <div class="vertical-line"></div>
@@ -14,7 +14,7 @@
       <icon-box :match="match"></icon-box>
     </div>
     <!-- 投注信息 -->
-    <match-handicap v-if="match" :handicap_list="handicap_list" :match="match" use_component_key="MatchHandicap2" />
+    <match-handicap :handicap_list="handicap_list" :match="match" use_component_key="MatchHandicap2" />
     <!-- 比分板 -->
     <div v-tooltip="{ content: t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
@@ -67,8 +67,9 @@ watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
     const csid = lodash.get(props.match, 'csid')
     //获取欧洲要显示的数据
     const tpl_id = get_ouzhou_data_tpl_id(csid)
-    //101 数据模板 却是对应不同的数据模板ID 所以要重新取
+    //101 视图模板 却是对应不同的数据模板ID 所以要重新取
     match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
+    console.log('asdaffsdfnjdgnd', match_tpl_info);
     //获取要展示的赔率数据
     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
   }
