@@ -114,6 +114,7 @@ import { loadLanguageAsync } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
+import {  LayOutMain_pc } from 'src/core/index.js'
 
 export default defineComponent({
   name: "RightHead",
@@ -212,7 +213,8 @@ export default defineComponent({
     }
     //赛果
     const goto_results = () => {
-      userRouter.push("/match_results")
+      LayOutMain_pc.set_layout_secondary_dialog()
+      // userRouter.push("/match_results")
     }
     const onExpend = () => {
       visible.value = !visible.value
@@ -456,5 +458,9 @@ export default defineComponent({
   &::before {
     color: var(--q-gb-t-c-1);
   }
+}
+.dialog_box{
+  height: 100%;
+  width: 100%;
 }
 </style>
