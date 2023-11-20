@@ -9,6 +9,7 @@ import {
   PROJECT_NAME,
   SessionStorage,
 } from "src/core/index.js"
+const menu_key = STANDARD_KEY.get("menu_pc");
 
 import STANDARD_KEY from "src/core/standard-key";
 import { LayOutMain_pc, i18n_t } from "src/core/index.js";
@@ -196,7 +197,7 @@ class MenuData {
       useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)//列表滚动到顶部
       this.menu_data_version.value = Date.now()
       nextTick(()=>{
-        SessionStorage.set('menu_pc',this)
+        SessionStorage.set(menu_key,this)
       })
     }, 20);
   }
@@ -588,7 +589,6 @@ class MenuData {
   // 获取数据缓存 ，用于刷新
   get_new_data() {
     // 获取菜单数据缓存
-    const menu_key = STANDARD_KEY.get("menu_pc");
     let session_info = SessionStorage.get(menu_key);
     if (!session_info) {
       return;
@@ -737,7 +737,7 @@ class MenuData {
     // 菜单数据缓存
     useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
     nextTick(()=>{
-      SessionStorage.set('menu_pc',this)
+      SessionStorage.set(menu_key,this)
     })
   }
 
