@@ -133,7 +133,7 @@ const set_bet_money = obj => {
 const set_delete = () => {
     // document.getElementsByClassName("bet-list")[0].style.display = "none"
     // BetData.set_bet_state_show(!BetData.bet_state_show)
-    BetData.delete_bet_info(props.index)
+    BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
 }
 
 </script>
