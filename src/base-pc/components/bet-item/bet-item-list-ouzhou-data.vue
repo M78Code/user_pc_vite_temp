@@ -45,7 +45,7 @@
     >
       <div v-if="odds_state == 'seal'" class="lock"
       :style="compute_css_obj({key: 'pc-home-lock'})"></div>
-      <span v-else>
+      <span v-else-if="ol_data.ov">
         {{ ol_data.ov / 100000 }}
       </span>
       <div
@@ -150,7 +150,7 @@ watch(() => props.ol_data.ov, (cur, old) => {
   }
   // 红升绿降变化
   set_odds_lift(cur, old);
-})  
+}, { deep: true })  
 
 /**
  * 赔率转换
@@ -169,7 +169,6 @@ const format_odds = () => {
     hsw || '',
     1
   );
-  console.log('match_odds_info', props.ol_data);
   match_odds.value = format_odds_value(match_odds_info,props.ol_data.csid);
 };
 
