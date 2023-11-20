@@ -38,7 +38,7 @@ const props = defineProps({
   // 默认展示个数
   score_length: {
     type: Number,
-    default: () => 3
+    default: () => 0
   },
   // 赛事信息
   match_info: {
@@ -70,7 +70,8 @@ const score_data = computed(() => {
   const hps_item = hps && hps.find(t => t.hpid == hpid)
   mhs.value = lodash.get(props.match_info, 'mhs', 1)
   item_hs.value = lodash.get(hps_item, 'hl[0].hs', 1)
-  const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: props.score_length }, (i) => { return {  oid: i } }))
+  const ol_length = hpid === '1' ? 3 : 2
+  const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: ol_length }, (i) => { return {  oid: i } }))
   return ol.sort((a, b) => a.otd - b.otd)
 })
 
