@@ -9,7 +9,7 @@
         <header class="header">
           <div class="row items-center justify-between top_tit">
             <p>personal</p>
-            <p>
+            <p @click="isShowclick">
              <img :src="compute_local_project_file_path('/image/svg/close.svg')"/>
             </p>
           </div>
@@ -24,7 +24,8 @@
         
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="mails">
-   mails
+            <!--公告-->
+            <AnnounceWapper></AnnounceWapper>  
           </q-tab-panel>
 
           <q-tab-panel name="alarms">
@@ -46,6 +47,7 @@ movies
 import { LayOutMain_pc } from "src/core/index.js";
 import { compute_local_project_file_path } from "src/core/index.js";
 import { ref,reactive } from "vue";
+import { AnnounceWapper } from 'src/components/announce'
 const layout_secondary_dialog = ref();
 const tab = ref('mails')
 const list_data = reactive([
@@ -53,8 +55,13 @@ const list_data = reactive([
     {id:"alarms",name:'Results'},
     {id:"movies",name:'Sports rules'},
 ])
+
+const isShowclick = () => {
+  LayOutMain_pc.set_layout_secondary_dialog()
+}
+
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .secondary_module .q-dialog__inner .dialog_content{
   min-width: 1200px !important;
   background: #fff;
@@ -87,5 +94,8 @@ const list_data = reactive([
         }
     }
   }
+}
+::v-deep.q-tab-panel{
+  padding: 0 ;
 }
 </style>
