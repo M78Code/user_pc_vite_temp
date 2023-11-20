@@ -7,8 +7,8 @@
   <!-- 提前兑换按钮 -->
   <div class="early-settle" v-if="calc_show">
     <div class="early-tips row">
-      <p>Cashout Amount Included Stake</p>
-      <span v-if="status == 2 || status == 3">Only For Full Cashout</span>
+      <p>{{ i18n_t('early.info1') }}</p>
+      <span v-if="status == 2 || status == 3">{{ i18n_t('early.info3') }}</span>
     </div>
     <div class="early-button">
       <button @click="submit_click" :class="{'confirm': status == 2 || status == 3, 'success': status == 4}">
@@ -136,23 +136,23 @@ watch(() => queryorderpresettleconfirm_data.value, (_new) => {
     // 设置哪些注单处于确认中的状态
     if (Array.isArray(_new) && BetRecordClass.select == 0) {
       _new.forEach((item) => {
-      if (item.orderNo == props.item_data.orderNo && item.preSettleOrderStatus == 0) {
-        status.value = 3
-        front_settle_amount.value = item.frontSettleAmount
-      }
-    });
+        if (item.orderNo == props.item_data.orderNo && item.preSettleOrderStatus == 0) {
+          status.value = 3
+          front_settle_amount.value = item.frontSettleAmount
+        }
+      });
   }
 }, { immediate: true })
 
 onMounted(() => {
+  // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示
   ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
-  // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示，
   if (ordervos_.hs != 0) {
     status.value = 5;
   }
 
+  // 剩余的金额小于最低限额时，只支持全额结算
   if (is_only_fullbet.value) {
-    // 剩余的金额小于最低限额时，只支持全额结算
     status.value = 6;
   }
 
@@ -174,8 +174,8 @@ onMounted(() => {
     //四舍五入至小数点第二位
     expected_profit.value =  Math.round(_maxCashout * _percentage * 100) / 100
   }).off;
-
-  // 处理ws订单状态推送 (并没有推送事件源？)
+ 
+  // 处理ws订单状态推送
   mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
   mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
 })
