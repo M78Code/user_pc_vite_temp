@@ -90,7 +90,7 @@ function close_page(value) {
 <style lang="scss">
 .secondary_module .q-dialog__inner .dialog_content {
   min-width: 1200px !important;
-  background: #fff;
+  background: var(--q-gb-t-c-1);
   .header {
     padding: 10px;
     width: 100%;
@@ -100,15 +100,15 @@ function close_page(value) {
     .top_tit {
       font-size: 18px;
       -color: var(--q-gb-t-c-1);
-      color: #fff;
+      color: var(--q-gb-t-c-1);
     }
     .secondary_obj {
-      color: #c2c2c2;
+      color: var(--q-gb-t-c-3);
       .secondary_name {
         margin-right: 30px;
       }
       .active {
-        color: #ff7000;
+        color: var(--q-gb-t-c-2);
         position: relative;
         &::before {
           content: "";
@@ -116,7 +116,7 @@ function close_page(value) {
           display: inline-block;
           width: 54px;
           height: 2px;
-          background: #ff7000;
+          background: var(--q-gb-bg-c-1);
           bottom: -8px;
           left: 0;
         }

@@ -167,7 +167,7 @@
   .filter-tab-split-line {
     width: 1px;
     height: 12px;
-    background: #D9D9D9;
+    background: var(--q-gb-bg-c-10);
     margin: 0 16px;
   }
 

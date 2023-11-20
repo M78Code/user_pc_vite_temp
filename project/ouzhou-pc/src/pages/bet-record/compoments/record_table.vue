@@ -596,7 +596,7 @@ const hand_copy = (data) => {
     width: 1430px;
     transform: translate(-50%, 0);
     background-color: var(--q-gb-bg-c-4);
-    box-shadow: 0 -4px 8px #f5f5f5;
+    box-shadow: 0 -4px 8px var(--q-gb-bg-c-15);
 
     :deep(.q-pagination .q-btn-item.q-btn--standard) {
       background-color: var(--q-gb-bg-c-1) !important;

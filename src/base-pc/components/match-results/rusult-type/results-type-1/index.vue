@@ -338,7 +338,7 @@ export default {
     :deep( .tbale-body) {
       color: #17191d;
       .active {
-        background: #e4ebf1;
+        background: var(--q-gb-bd-c-7);
         position: sticky;
         position: -webkit-sticky;
         top: 0;

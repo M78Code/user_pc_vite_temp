@@ -264,7 +264,7 @@ onMounted(init)
         cursor: pointer;
 
         &:hover {
-            color: #FF7000;
+            color: var(--q-gb-t-c-2);
             background-color: #262933;
 
             .yb-icon-arrow:before {

@@ -45,7 +45,7 @@
         <!-- </template> -->
 
         <!-- 滚球标题 -->
-        <In-Play :match_count="total_match_count" v-show="MenuData.is_home()" />
+        <In-Play :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
           :class="`card_key_${card_key}`">
@@ -111,7 +111,8 @@ import FeaturedMatches from "src/base-pc/components/match-list/featured_matches/
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import "./match_list.scss";
 import {
-  init_home_matches
+  init_home_matches,
+  get_featurd_list
 } from "./index"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 
@@ -196,11 +197,15 @@ export default {
     const get_data_info = async () => {
       // 判断是不是首页下的 featured 页面
       // if (MenuData.is_featured()) {
-      const { mins15_list = [], featured_list = [], match_count = 0 } = await init_home_matches();
-   
-      total_match_count.value = match_count;
-      matches_15mins_list.value = mins15_list
-      matches_featured_list.value = featured_list
+        const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
+        console.log(mins15_list,'mins15_list')
+        set_active_mids(mins15_list.map(i=>i.mid))
+        set_active_mids_hot(featured_list.map(i=>i.mid))
+        total_match_count.value = match_count;
+        matches_15mins_list.value = mins15_list
+        matches_featured_list.value = await get_featurd_list()
+        // const res = await get_featurd_list()
+        
       // }
     }
 
