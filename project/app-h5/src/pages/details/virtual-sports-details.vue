@@ -464,7 +464,7 @@ export default defineComponent({
   overflow: auto;
   // 根据APP复刻版最新的ui 设置背景色为#F8F9FA
   // background-color: var(--q-gb-bg-c-15);
-  background-color: #F8F9FA; //#TODO css var
+  background-color: #F8F9FA; //#TODO: css var
   // background: var(--q-gb-bg-c-19); //夜间版#0E1014 
 }
 /*  头部 */
