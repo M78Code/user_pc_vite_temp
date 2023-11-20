@@ -78,6 +78,8 @@
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象
     let no_start_to_card_key_arr = ['no_start_title']
+    // 赛种ID 到卡片key的 映射对象
+    let csid_to_card_key_obj = {}
     // 所有卡片列表
     let match_list_card_key_arr = []
     // 所有卡片样式对象
@@ -116,11 +118,13 @@
     match_status_type_arr.forEach(match_status_type => {
       // 已开赛、未开赛的赛事数量计算
       let match_status_type_match_count = 0
-
+  
      
       // 遍历联赛列表
       let league_list = lodash.get(all_league_obj,match_status_type,[])
       league_list.forEach( (league_obj,league_index) => {
+        let csid_key = 'csid_'+league_obj.csid
+        csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []
         league_repeat_count_obj[league_obj.tid] = league_repeat_count_obj[league_obj.tid] || 0
         // 生成自定义联赛ID
         league_repeat_count_obj[league_obj.tid]++
@@ -134,6 +138,7 @@
           card_key = `sport_title_${league_obj.csid}`
           card_index += 1
           match_list_card_key_arr.push(card_key)
+          csid_to_card_key_obj[csid_key].push(card_key)
           // 打入球种标题卡片特征
           all_card_obj[card_key] = {
             ...ouzhou_sport_title_card_template,
@@ -155,7 +160,6 @@
           card_index += 1
           card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
           match_list_card_key_arr.push(card_key)
-
           // 打入已开赛、未开赛标题卡片特征
           all_card_obj[card_key] = {
             ...ouzhou_match_status_title_card_template,
@@ -176,7 +180,7 @@
         card_index += 1
         card_key = `league_title_${cus_tid}`
         match_list_card_key_arr.push(card_key)
-
+        csid_to_card_key_obj[csid_key].push(card_key)
         if(match_status_type == 'livedata'){
           // 已开赛 到卡片key的 映射对象
           play_to_card_key_arr.push(card_key)
@@ -218,6 +222,7 @@
         card_index += 1
         card_key = `league_container_${cus_tid}`
         match_list_card_key_arr.push(card_key)
+        csid_to_card_key_obj[csid_key].push(card_key)
         all_league_container_keys_arr.push(card_key)
 
         if(match_status_type == 'livedata'){
@@ -273,6 +278,7 @@
     MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象
         all_card_obj,
+        csid_to_card_key_obj,
         play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
         no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
         //卡片key列表
