@@ -34,6 +34,7 @@
             </div>
             <div class="text-right ol-on">
               <span class="ol-ov">{{ get_oddv(ol_item.ov/100000) }}</span>
+              <olStatus :item_ol_data="ol_item" :active="ol_item?.oid == active" />
             </div>
           </div>
           <!-- 主程序 end -->
@@ -50,6 +51,7 @@
 
 <script setup>
 import { onMounted, ref, computed } from "vue";
+import olStatus from "../ol_status.vue";
 // import { storage_bet_info } from 'src/public/utils/bet/bet_info.js'
 // import EMITTER from  "src/global/mitt.js"
 const emit = defineEmits(["bet_click_"]);

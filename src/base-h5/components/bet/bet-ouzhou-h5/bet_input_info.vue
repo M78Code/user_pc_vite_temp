@@ -132,7 +132,7 @@ const set_ref_data_bet_money = () => {
 
     .info_right{
         width: 152px;
-        height: 44px;
+        height: 42px;
         box-shadow: 0px 1px 4px 0px #FF70001A;
         border: 0.5px solid var(--q-gb-bd-c-12);
         padding-left: 6px;
@@ -177,7 +177,7 @@ const set_ref_data_bet_money = () => {
     align-items: center;
 }
 .size_14{
-    font-size: 14px;
+    font-size: 0.11rem;
     font-weight: 400;
     color: var(--q-gb-t-c-4);
 }
@@ -186,7 +186,7 @@ const set_ref_data_bet_money = () => {
     font-family: "DIN";
 }
 .size_16{
-    font-size: 0.17rem;
+    font-size: 0.14rem;
     font-weight: 700;
     color: var(--q-gb-t-c-4);
 }

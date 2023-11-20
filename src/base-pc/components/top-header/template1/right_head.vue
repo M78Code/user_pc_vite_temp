@@ -38,7 +38,7 @@
       </q-avatar>
       <q-menu style="background:#fff;border-radius:2px;box-shadow:0 0 4px 2px rgb(0 0 0 / 10%)">
           <q-list style="min-width: 280px;">
-            <q-item clickable @click="goto_announcement">
+            <q-item clickable @click="goto_secondary_module('announcement')">
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
@@ -46,7 +46,7 @@
                 </div>
               </q-item-section>
             </q-item>
-            <q-item clickable @click="goto_results">
+            <q-item clickable @click="goto_secondary_module('results')">
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
@@ -54,7 +54,7 @@
                 </div>
               </q-item-section>
             </q-item>
-            <q-item clickable>
+            <q-item clickable @click="goto_secondary_module('sportsrules')">
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
@@ -201,15 +201,9 @@ export default defineComponent({
     const compute_userInfo = () => {};
     // 搜索
     const change_input = () => {}
-    //公告
-    const goto_announcement = () => {
-      LayOutMain_pc.set_layout_secondary_dialog()
-      BetData.set_bet_box_draggable({show:false})
-      // userRouter.push("/announce")
-    }
-    //赛果
-    const goto_results = () => {
-      LayOutMain_pc.set_layout_secondary_dialog()
+    //赛果 || 公告 || 体育规则
+    const goto_secondary_module = (value) => {
+      LayOutMain_pc.set_layout_secondary_dialog(value)
       BetData.set_bet_box_draggable({show:false})
       // userRouter.push("/match_results")
     }
@@ -288,8 +282,7 @@ export default defineComponent({
       settingData,
       visible,
       is_search,
-      goto_results,
-      goto_announcement,
+      goto_secondary_module,
       format_balance,
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX,
