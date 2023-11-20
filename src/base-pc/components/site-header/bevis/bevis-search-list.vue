@@ -84,7 +84,7 @@ p{
             transform: translateY(-50%);
             width: 3px;
             height: 12px;
-            background: #ff7000;
+            background: var(--q-gb-bg-c-1);
         }
     }
 
@@ -102,7 +102,7 @@ p{
             }
         }
         &:hover {
-            color: #ff7000;
+            color: var(--q-gb-t-c-2);
         }
     }
 }

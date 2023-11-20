@@ -3,10 +3,9 @@
 <template>
 	<div class="result-wrap">
 		<!-- 滚动区域 -->
-		<q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
-			<div class="serach-background" @click.stop  v-if="(search_data?.team && search_data?.team.length > 0) ||
-			(search_data?.league && search_data?.league.length > 0)">
-
+		<q-scroll-area v-if="(search_data?.team && search_data?.team.length > 0) ||
+			(search_data?.league && search_data?.league.length > 0) || (search_data?.bowling && search_data?.bowling.length > 0)" class="fit rule-scroll-area" ref="scrollRef">
+			<div class="serach-background" @click.stop>
 				<!-- 搜索展示 -->
 				<div class="content">
 					<ul class="list">
@@ -174,13 +173,16 @@
 				</div>
 			</div>
 		</q-scroll-area>
-		<div v-show="load_data_state != 'data'" class="middle_info_tab diff">No results found. please try a different search term.</div>
+		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
+			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)" class="middle_info_tab diff">No results found. please try a different search term.</div>
+		<!--   -->
 	</div>
 </template>
   
 <script setup>
 import { ref, reactive, watch, onBeforeUnmount, nextTick, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
 import { get_search_result } from "src/api/module/search/index.js";
@@ -275,7 +277,7 @@ const timer = ref(null)
 const load_data_state = ref('data')
 /** 搜索结果数据 */
 const search_data = ref([])
-function _get_search_result(keyword, is_loading) {
+const _get_search_result = lodash.throttle((keyword, is_loading) => {
 	if (!keyword) {
 		update_show_type('init')
 		return
@@ -318,7 +320,7 @@ function _get_search_result(keyword, is_loading) {
 			}
 		})
 	})
-}
+}, 500)
 
 
 /**
@@ -614,7 +616,7 @@ watch(
 
 	// 搜索结果
 	.content {
-		color: #1A1A1A;
+		color: var(--q-gb-t-c-5);
 
 		.title {
 			height: 50px;
@@ -642,7 +644,7 @@ watch(
 	position: fixed;
 	width: 100%;
 	z-index: 1;
-	color: #1A1A1A;
+	color: var(--q-gb-t-c-5);
 
 	&.diff {
 		padding: 9px 0 9px 20px;
@@ -681,7 +683,7 @@ li {
 		}
 
 		div p:last-child {
-			color: #8A8986;
+			color: var(--q-gb-t-c-8);
 		}
 
 		.middle {

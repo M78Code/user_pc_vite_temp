@@ -166,7 +166,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
       font-weight: 400;
       font-size: 16px;
       line-height: 19px;
-      color: #8a8986;
+      color: var(--q-gb-t-c-8);
     }
   }
   .analysis-bottom-btn {

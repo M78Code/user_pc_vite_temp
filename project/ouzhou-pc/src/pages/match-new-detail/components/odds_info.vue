@@ -301,7 +301,7 @@ onMounted(() => {
       text-align: right;
       margin-right: 10px;
       overflow: hidden;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
     }
     &:nth-child(2){
       overflow: hidden;
@@ -309,7 +309,7 @@ onMounted(() => {
       min-width: 100px;
       display: block;
       text-align: left;
-      color:#FF7000
+      color:var(--q-gb-t-c-2)
     }
   }
 

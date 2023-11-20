@@ -165,7 +165,7 @@ export default {
       }
     }
     &::before{
-      color: #fff;
+      color: var(--q-gb-t-c-1);
     }
   }
   /*  提示内容 */
@@ -188,7 +188,7 @@ export default {
           padding: 6px 28px;
           font-size: 12px;
           background-color: rgba(0,0,0,0.8);
-          color: #fff;
+          color: var(--q-gb-t-c-1);
         }
         .yb-icon-triangle {
           position: absolute;
@@ -332,7 +332,7 @@ export default {
     }
     .footbal {
       padding: 0 10px;
-      color: #fff;
+      color: var(--q-gb-t-c-1);
       font-size: 14px;
       &.yb-flex-direction{
         flex-direction: column;
@@ -356,7 +356,7 @@ export default {
 
   /*  倒计时 */
   .time-wrap {
-    color: #fff;
+    color: var(--q-gb-t-c-1);
     margin-top: 20px;
     height: 32px;
     display: flex;
@@ -374,7 +374,7 @@ export default {
 .test-data {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
+  color: var(--q-gb-t-c-1);
   z-index: 100;
   width: 100%;
   font-size: 13px;

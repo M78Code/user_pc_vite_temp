@@ -736,7 +736,6 @@ class MenuData {
 
     // 菜单数据缓存
     useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
-
     nextTick(()=>{
       SessionStorage.set('menu_pc',this)
     })

@@ -69,8 +69,8 @@ function sub_click(item, index) {
 .top-menu-content {
     height: 50px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
-    background: var(--q-gb-bg-c-1);
-    color: var(--q-gb-t-c-6);
+    background: var(--q-gb-bg-c-4);
+    color: var(--q-gb-t-c-8);
     &:after {
         content: "";
         position: absolute;
@@ -95,7 +95,7 @@ function sub_click(item, index) {
         }
         &.active {
             font-weight: 600;
-            color: var(--q-gb-t-c-6);
+            color: var(--q-gb-t-c-5);
         }
     }
 
