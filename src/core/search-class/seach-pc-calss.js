@@ -89,12 +89,10 @@ class SearchPCDataClass {
   set_search_hotList(payload){
     this.hotSearchList = payload ?? []
     this.set__hotList()
-    this.update()
   }
   set_search_pushList(payload){
     this.hotPushList = payload ?? []
     this.set__hotList()
-    this.update()
   }
   /**
    * 设置运动搜索类型列表
@@ -114,9 +112,11 @@ class SearchPCDataClass {
   }
   clear_history(){
     this.searchHistory = []
+    this.update()
   }
   deletion_history_one(keyword){
     this.searchHistory = this.searchHistory.filter(item=> item.keyword === keyword )
+    this.update()
   }
 }
 const SearchPCClass = new SearchPCDataClass();

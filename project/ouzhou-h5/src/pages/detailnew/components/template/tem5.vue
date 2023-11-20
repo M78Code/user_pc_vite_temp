@@ -49,7 +49,7 @@
             @click="go_betting( o)">
             <span class="o_hv">{{ o.on || key }}</span>
             <span>{{ get_oddv(o?.ov/100000) }}</span>
-            <olStatus :item_ol_data="o" />
+            <olStatus :item_ol_data="o" :active="o.oid == active" />
           </div>
         </template>
     
@@ -194,6 +194,7 @@ onMounted(() => {
         color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
+        align-items:center;
         .ol-on-text {
           font-weight: 500;
           padding-right: 5px;
