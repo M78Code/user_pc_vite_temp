@@ -283,7 +283,7 @@ const refresh = (params = {}) => {
         line-height: 45px;
         display: flex;
         justify-content: center;
-        background: var(--q-gb-bg-c-9);
+        background: var(--q-gb-bg-c-16);
         width: 100vw;
 
         .item_team_name {
