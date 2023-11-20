@@ -30,8 +30,8 @@
     </div> -->
     <div class="h-right">
       <div class="user-info">
-        <span style="font-weight: 500;color:#ffffff">  {{ format_balance(UserCtr.balance) }} </span>
-        <span style="font-size: 14px;font-weight: 400;opacity: 0.8;">{{ UserCtr.user_info.nickName }}</span>
+        <span class="user-balance">  {{ format_balance(UserCtr.balance) }} </span>
+        <span class="user-name">{{ UserCtr.user_info.nickName }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
@@ -304,7 +304,22 @@ export default defineComponent({
     flex-direction: column;
     align-items: flex-end;
     margin-right: 10px;
-    font-family: "DIN";
+    color: var(--q-gb-t-c-1);
+    padding-top: 2px;
+    .user-balance{
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 19px;
+      letter-spacing: 0px;
+      text-align: right;
+    }
+    .user-name{
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      letter-spacing: 0px;
+      text-align: right;
+    }
   }
 }
 .q-item{

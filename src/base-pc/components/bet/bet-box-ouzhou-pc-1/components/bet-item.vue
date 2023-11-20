@@ -20,10 +20,10 @@
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
                 <div class="f-c-c bet-money">
                     <div class="show_img" v-if="items.red_green" >
-                        <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
+                        <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
                         <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
                     </div>
-                    <span class="font14 font700 mr-10" :class="{'red_up':items.red_green == 'red_up','green_down':items.red_green == 'green_down'}">
+                    <span class="font14 font700 mr-10" :class="{'red_up':items.red_green == 'green_down','green_down':items.red_green == 'red_up'}">
                         {{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}
                     </span>
                     <BetInput :items="items" />
@@ -74,7 +74,8 @@ import mathJs from 'src/core/bet/common/mathjs.js'
 import BetInput from "./bet-input.vue"  // 投注输入框
 
 const props = defineProps({
-    items:{}
+    items:{},
+    index:{}
 })
 
 
@@ -122,6 +123,7 @@ const set_bet_money = obj => {
 const set_delete = () => {
     // document.getElementsByClassName("bet-list")[0].style.display = "none"
     // BetData.set_bet_state_show(!BetData.bet_state_show)
+    BetData.delete_bet_info(props.index)
 }
 
 </script>
@@ -219,10 +221,10 @@ const set_delete = () => {
         line-height: 12px;
     }
     .red_up{
-        color: var(--q-gb-t-c-6);
+        color: var(--q-gb-t-c-7);
     }
     .green_down{
-        color: var(--q-gb-t-c-7);
+        color: var(--q-gb-t-c-6);
     }
     .show_img{
         width:12px;
