@@ -304,7 +304,6 @@ class UserCtr {
   }
 
   async get_user_info(token, callback) {
-    return
     let res = await api_account.get_user_info({
       token,
     });
