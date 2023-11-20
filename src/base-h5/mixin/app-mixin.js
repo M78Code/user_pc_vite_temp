@@ -182,7 +182,7 @@ export default {
           MITT_TYPES.EMIT_ALLOW_INIT_LOAD,
           this.handle_init_load
         ).off,
-        emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off
+        // emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off
       };
     },
     // 移除相应监听事件

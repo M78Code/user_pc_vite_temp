@@ -65,7 +65,8 @@ import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match
 import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
 import OZ_MenuData_App_h5 from "src/core/menu-app-h5/oz-menu-data-class.js";
 
- 
+import {ref } from 'vue' 
+
 let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
 // if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
 //   MenuData = MenuData_App_h5
@@ -140,25 +141,25 @@ const MatchDataWarehouse_PC_List_Common = ref(new MatchDataBase({
  * 欧洲版 PC/H5 数据仓库 15mins 顶部列表
  */
 
-const MatchDataWarehouse_ouzhou_PC_l5mins_List_Common = new MatchDataBase({
+const MatchDataWarehouse_ouzhou_PC_l5mins_List_Common = ref(new MatchDataBase({
   name_code: "MatchDataWarehouse_ouzhou_PC_l5mins_List_Common",
-});
+})).value;
 
 /**
  * 欧洲版 PC/H5 数据仓库 五大联赛 仓库
  */
 
-const MatchDataWarehouse_ouzhou_PC_five_league_List_Common = new MatchDataBase({
+const MatchDataWarehouse_ouzhou_PC_five_league_List_Common = ref(new MatchDataBase({
   name_code: "MatchDataWarehouse_ouzhou_PC_five_league_List_Common",
-});
+})).value;
 
 /**
  * 欧洲版 PC/H5 数据仓库 热推 顶部列表
  */
 
-const MatchDataWarehouse_ouzhou_PC_hots_List_Common = new MatchDataBase({
+const MatchDataWarehouse_ouzhou_PC_hots_List_Common = ref(new MatchDataBase({
   name_code: "MatchDataWarehouse_ouzhou_PC_hots_List_Common",
-});
+})).value;
 
 /**
  * 欧洲版 PC/H5 数据仓库 通用列表
@@ -193,10 +194,10 @@ const MatchDataWarehouse_PC_Detail_Common = new MatchDataBase({
 /**
  * H5  数据仓库 常规赛事   通用列表
  */
-const MatchDataWarehouse_H5_List_Common = new MatchDataBase({
+const MatchDataWarehouse_H5_List_Common = ref(new MatchDataBase({
   name_code: "MatchDataWarehouse_H5_List_Common",
   set_list_to_obj: 1,
-});
+})).value;
 
 /**
  * H5  数据仓库  常规赛事  通用详情

@@ -3,6 +3,7 @@
 -->
 
 <template>
+  <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
   <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 -->
     <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
@@ -63,6 +64,7 @@ import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type,LOCAL
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
