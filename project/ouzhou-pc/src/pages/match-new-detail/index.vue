@@ -32,8 +32,10 @@
             v-if="detail_info.mng"
           />
           <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
-            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}</span
-          >
+<!--            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}-->
+            {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}
+          </span>
+
         </div>
         <div>
           <q-expansion-item
@@ -113,7 +115,7 @@ import analysis from "./analysis/index.vue";
 import tabs from "./components/tabs.vue";
 import breadcrumbs from "./components/breadcrumbs.vue";
 import { usedetailData } from "./index";
-import { formatTime } from 'src/core/format/index.js'
+import { formatTime, format_M_D_PC } from 'src/core/format/index.js'
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
 export default{

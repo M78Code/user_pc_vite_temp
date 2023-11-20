@@ -7,7 +7,7 @@
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_secondary_dialog}}</div>
+    <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_secondary_dialog}}</div>
     <div class="flex full-content">
       <!-- 左侧 菜单 -->
       <div class="layout_main_left" :style="`width:${LayOutMain_pc.oz_left_width}px`" v-if="LayOutMain_pc.oz_show_left">

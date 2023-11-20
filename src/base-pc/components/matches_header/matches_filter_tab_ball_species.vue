@@ -231,7 +231,7 @@ onBeforeUnmount(() => {
   position: relative;
   align-items: center;
   font-size: 13px;
-  color: #8a8986;
+  color: var(--q-gb-t-c-8);
   &.checked{
     .filter-count{
       background: var(--q-gb-t-c-2);

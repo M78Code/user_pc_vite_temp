@@ -62,7 +62,7 @@ export const get_min_max_money = (item_list, seriesType, callback) => {
     }
     let parm = {};
     // 设置用户Id
-    let userId = UserCtr.get_cuid()
+    let userId = UserCtr.get_uid()
     if (userId) {
       parm.userId = userId;
     }
