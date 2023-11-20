@@ -164,7 +164,7 @@
     span {
       font-size: 14px;
       &:first-child {
-        color: #8A8986;
+        color: var(--q-gb-t-c-8);
         margin-right: 7px;
       }
       &:last-child {
