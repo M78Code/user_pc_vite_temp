@@ -47,7 +47,7 @@ const select_index = (index) => {
   }
   .fous {
     font-weight: 500;
-    color: #1a1a1a;
+    color: var(--q-gb-t-c-5);
   }
 }
 </style>

@@ -176,7 +176,7 @@
           font-weight: 400;
           line-height: 14px;
           letter-spacing: 0px;
-          color: #8A8986;
+          color: var(--q-gb-t-c-8);
         }
         .matches_time {
           display: flex;
@@ -186,7 +186,7 @@
           font-weight: 500;
           span {
             &:first-child {
-              color: #8A8986;
+              color: var(--q-gb-t-c-8);
               margin-right: 4px;
               font-family: DIN;
               font-size: 12px;
@@ -267,7 +267,7 @@
           }
           span {
             &:first-child {
-              color: #8A8986;
+              color: var(--q-gb-t-c-8);
               margin-right: 8px;
             }
             &:last-child {

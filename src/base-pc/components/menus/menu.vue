@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-
+    <div v-show="false">{{ BaseData.base_data_version }}</div>
     <div class="menu-nav-line" />
 
     <div class="menu-nav-li">
@@ -29,7 +29,7 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
-        <template v-for="item in left_menu_list" :key="item">
+        <template v-for="item in BaseData.left_menu_base_mi" :key="item">
           <li class="f-s-c" :class="{ 'menu_checked': MenuData.lv1_mi  == item.mi&&menu_type=='1' }" v-if="item.ct" @click="jump_func(item,'1')">
             <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
@@ -73,6 +73,7 @@ onMounted(() => {
    //菜单无数据兼容
   if(BaseData.left_menu_base_mi.length>0){
     left_menu_list.value = BaseData.left_menu_base_mi;
+    console.log(' BaseData.left_menu_base_mi',  BaseData.left_menu_base_mi);
   }
 })
 
@@ -99,18 +100,18 @@ const go_to_favouritse = () => {
  * @description 点击菜单item 存储当前菜单信息
  * @returns {undefind} 无返回值
  */
-const jump_func = (payload,type) => {
+const jump_func = (payload ={},type) => {
    // 点击菜单的时候如果在详情页应跳转出来先
   if (route.name=='details') {
     router.push('/home')
   }
   let obj = {
-    lv1_mi : payload,
+    lv1_mi : payload.mi,
     has_mid_menu: true, // 有中间菜单
-    lv2_mi: payload +''+ 2, // 二级菜单id
+    lv2_mi: payload.mi +''+ 2, // 二级菜单id
   }
   menu_type.value = type
-
+console.error('sss')
   //太多了 后续做优化
   MenuData.set_menu_root(202, true)
   MenuData.set_is_collect(false)
@@ -124,7 +125,7 @@ const jump_func = (payload,type) => {
   MenuData.set_mid_menu_result(mid_config)
 
   nextTick(()=>{
-    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload)
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
   })
   
 }

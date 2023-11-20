@@ -90,7 +90,7 @@ class MatchCollect {
   get_collect_match_data () {
     api_common.get_new_collect_matches({
       matchType: 0,
-      cuid: UserCtr.get_cuid()
+      cuid: UserCtr.get_uid()
     }).then(res => {
       if(lodash.get(res,'code') == 200){
         this.clear_collect_info()
