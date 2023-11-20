@@ -276,7 +276,7 @@ export default defineComponent({
 
     :deep(.serach-background) {
       background-color: var(--q-gb-bg-c-11);
-      min-height: 400px;
+      // min-height: 400px;
       overflow: hidden;
     }
   }

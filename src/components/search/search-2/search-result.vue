@@ -116,7 +116,7 @@
 							</div>
 						</div>
 						<!-- 搜索 队伍 -->
-						<div v-show="search_data?.team && search_data.team?.length > 0" style="margin-bottom: 10px;">
+						<div v-show="search_data?.team && search_data.team?.length > 0">
 							<div @click="expand_team = !expand_team">
 								<div class="middle_info_tab diff">
 									<div class="color">TEAMS</div>
@@ -627,7 +627,7 @@ watch(
 		}
 
 		.list {
-			margin-top: 0;
+			margin: 0 auto;
 			background-color: #e2e2e2;
 		}
 	}
