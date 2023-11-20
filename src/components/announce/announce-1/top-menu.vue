@@ -5,9 +5,8 @@
         <q-tabs class="fit rule-scroll-area">
             <q-tab class="cursor-pointer" v-for="(item, index) in data" :key="index" @click="tabs_click(item, index)">
                 <div class="top-menu-title"
-                    :class="{ active: tab_index == index, 'no-subtab': !item.subtab || item.subtab.length == 0 }">
-                    <span class="reads" v-show="item.isShuf == 0">*</span> 
-                    <div>{{ item.title }}</div>
+                    :class="{ active: tab_index == index, topmenutitles:tab_index == index, 'no-subtab': !item.subtab || item.subtab.length == 0 }">        
+                    <div>{{ item.type }}</div>
                 </div>
                 <!-- top菜单列表 -->
                 <div class="top-menu-list" :class="tab_index == index && 'active'">
@@ -50,7 +49,6 @@ const sub_index = ref(0)
 function tabs_click(item, index) {
     tab_index.value = index;
     sub_index.value = 0;
-    item.isShuf = 1
     emits("tabs_click", item, index);
 }
 /**
@@ -100,6 +98,8 @@ function sub_click(item, index) {
             color: var(--q-gb-t-c-6);
         }
     }
+
+    
     .top-menu-list {
         overflow: hidden;
         max-height: 0px;
@@ -124,12 +124,21 @@ function sub_click(item, index) {
             }
         }
     }
-    .reads{
-        position: absolute;
-        color: red;
-        top: 10px;
-        right: 5px;
-    }
 }
+      .topmenutitles::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 0rem;
+        left: 50%;
+        top: 90%;
+        transform: translate(-50%, 0);
+        background: #ffb001;
+      }
+      
+    
+    
 </style>
   
