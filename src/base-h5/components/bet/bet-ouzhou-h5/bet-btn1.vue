@@ -15,6 +15,7 @@
 <script setup>
 import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
+import BetData from "src/core/bet/class/bet-data-class.js";
 
 const pack_up = (val) => {
   // TODO: 临时调试用
@@ -24,6 +25,7 @@ const pack_up = (val) => {
 }
 // 保留投注项
 const set_retain_selection = () => {
+    BetData.set_bet_amount(0)
     BetViewDataClass.set_bet_order_status(1)
     setTimeout(() => {
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
