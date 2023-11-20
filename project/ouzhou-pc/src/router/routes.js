@@ -44,7 +44,15 @@ const routes = [
           keepAlive: true, // 需要缓存
         },
       },
-     
+      // 搜索
+      {
+        path: "/search/:keyword/:time?",
+        name: "search",
+        component: () => import(`../pages/test/index.vue`),
+          meta: {
+            keepAlive: true // 需要缓存
+          }
+      },
       {
         path: "/details/:mid/:tid/:csid",
         name: "details",
