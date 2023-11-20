@@ -6,7 +6,6 @@
  */
 
 import _ from 'lodash';
-
 import courseData from 'src/core/global/course.js'
 import match_play from 'src/core/global/match_os.js';
 
