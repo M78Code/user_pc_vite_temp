@@ -616,7 +616,7 @@ watch(
 
 	// 搜索结果
 	.content {
-		color: #1A1A1A;
+		color: var(--q-gb-t-c-5);
 
 		.title {
 			height: 50px;
@@ -644,7 +644,7 @@ watch(
 	position: fixed;
 	width: 100%;
 	z-index: 1;
-	color: #1A1A1A;
+	color: var(--q-gb-t-c-5);
 
 	&.diff {
 		padding: 9px 0 9px 20px;
@@ -683,7 +683,7 @@ li {
 		}
 
 		div p:last-child {
-			color: #8A8986;
+			color: var(--q-gb-t-c-8);
 		}
 
 		.middle {

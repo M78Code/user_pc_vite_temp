@@ -1,5 +1,5 @@
 <!--
- * @Author: land land@itcom888.com
+ * 早盘，今日赛事页面
 -->
 <template>
   <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>

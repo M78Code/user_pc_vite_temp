@@ -167,7 +167,7 @@ const show_quick_amount = state => {
         font-size: 12px;
         display: flex;
         align-itemss: center;
-        color: #8A8986;
+        color: var(--q-gb-t-c-8);
     }
     &::-moz-placeholder {/*Firefox*/
         font-family: 'PingFang SC';
@@ -176,7 +176,7 @@ const show_quick_amount = state => {
         font-size: 12px;
         display: flex;
         align-itemss: center;
-        color: #8A8986;
+        color: var(--q-gb-t-c-8);
     }
     &::-ms-input-placeholder {/*IE*/
         font-family: 'PingFang SC';
@@ -185,7 +185,7 @@ const show_quick_amount = state => {
         font-size: 12px;
         display: flex;
         align-itemss: center;
-        color: #8A8986;
+        color: var(--q-gb-t-c-8);
     }
 }
 input::-webkit-outer-spin-button,

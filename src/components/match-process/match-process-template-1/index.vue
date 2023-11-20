@@ -395,6 +395,6 @@ onUnmounted(() => {
 }
 
 .process-name.gray-color {
-  color: #8A8986;
+  color: var(--q-gb-t-c-8);
 }
 </style>

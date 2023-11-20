@@ -98,12 +98,12 @@ const set_confirm = () => {
 
             &.bet-error {
                 background: var(--q-gb-bg-c-16);
-                color: #FF4646;
+                color: var(--q-gb-t-c-7);
             }
 
             &.bet-success {
                 background: var(--q-gb-bg-c-17);
-                color: #4FC140;
+                color: var(--q-gb-t-c-10);
             }
         }
     }

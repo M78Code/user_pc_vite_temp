@@ -30,21 +30,30 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/i
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const props = defineProps({
+  // 容器高度
   height: {
     type: String,
     default: () => '58px'
   },
+  // 默认展示个数
   score_length: {
     type: Number,
     default: () => 3
   },
+  // 赛事信息
   match_info: {
     type: Object,
     default: () => {}
   },
+  // 是否显示 玩法 前缀
   show_hpn: {
     type: Boolean,
     default: () => false
+  },
+  // 是否需要跟随切换玩法变化
+  is_change: {
+    type: Boolean,
+    default: () => true
   }
 })
 
@@ -55,6 +64,7 @@ const active_score = ref('')
 
 // 赔率数据
 const score_data = computed(() => {
+  if (!props.is_change) return
   const hps = props.match_info.hps
   const hpid = MatchResponsive.match_hpid.value
   const hps_item = hps && hps.find(t => t.hpid == hpid)
