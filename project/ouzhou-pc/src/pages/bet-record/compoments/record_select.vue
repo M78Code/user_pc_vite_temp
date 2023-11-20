@@ -136,6 +136,8 @@ const search = () => {
     .join('-')
   params.beginTime = new Date(beginTime).getTime() - 28800000
   params.endTime = new Date(endTime).getTime() + 57599000
+  params.timeType = undefined
+  current_time.value = undefined
   emit('itemFilter', params)
 }
 

@@ -742,5 +742,17 @@ this.bet_appoint_ball_head= null */
     this.bet_before_message = val 
     this.set_bet_data_class_version()
   }
+
+  // 投注项赔率变动
+  set_bet_c106_change( obj={} ) {
+    let mid = lodash_.get(obj,'mid')
+    let hls = lodash_.get(obj,'hls')
+    if(this.is_bet_single){
+      let obj = this.bet_single_list.find(item => item.matchId == mid) || {}
+      if(obj.matchId){
+        console.error('obj',obj)
+      }
+    }
+  }
 }
 export default new BetData();

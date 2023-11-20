@@ -132,7 +132,7 @@
   }
   .total{
     padding: 0.15rem;
-    background: var(--q-gb-t-c-6);
+    background: var(--q-gb-bg-c-17);
     display: flex;
     justify-content: space-between;
     font-size: 0.14rem;

@@ -107,7 +107,7 @@ export default class MatchDataBase
     this.mids_ation = [];
     this.match_list = []
     // 所有赛事列表数据转obj对象
-    this.list_to_obj = {
+    this.list_to_obj = reactive({ 
       // 页面显示赛事投注项对象
       ol_obj:{},
       // 页面显示赛事盘口对象
@@ -116,7 +116,7 @@ export default class MatchDataBase
       hn_obj:{},
       // 页面显示赛事赛事对象
       mid_obj:{},
-    };
+    });
     // 赛事基本信息需要同步的时间
     this.MATCH_UPD_TIME_KEYS = ['mst','mc','mf','mct','ms','mhs','mess','mmp','mms','mat','mvs','tf','msc'];
       // mst: 赛事进行时间
