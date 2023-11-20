@@ -21,6 +21,8 @@ class MatchResponsive {
     this.ball_seed_league_count = ref({})
     // 其他仓库联赛对应的数量
     this.ball_other_seed_league_count = ref({})
+    // 投注项
+    this.odd_item_info = ref({})
   }
 
   /**
@@ -118,6 +120,22 @@ class MatchResponsive {
     const { tid, warehouse_type = '' } = match
     const key = warehouse_type ? `${warehouse_type}_tid_${tid}` : `tid_${tid}`
     return key
+  }
+
+  /**
+   * @description 设置投注项赔率
+   */
+  set_odd_item_info (item) {
+    const { oid, ov } = item
+    const key = `oid_${oid}`
+    this.odd_item_info.value[key] = Number(ov)
+  }
+
+  /**
+   * @description 清除投注项赔率
+   */
+  clear_odd_item_info () {
+    this.odd_item_info.value = {}
   }
 }
 

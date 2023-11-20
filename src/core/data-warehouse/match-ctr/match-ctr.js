@@ -57,6 +57,8 @@ export default class MatchDataBase
     // 使用类型:类表-list,赛事详情-match,赛果-result
     this.type = '';
 
+    this.str = { a: '123131' }
+
     // 初始化对象数据
     this._init_obj();
     this.test_str = {a: 'asdasdad'}
