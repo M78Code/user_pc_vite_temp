@@ -99,18 +99,18 @@ const go_to_favouritse = () => {
  * @description 点击菜单item 存储当前菜单信息
  * @returns {undefind} 无返回值
  */
-const jump_func = (payload,type) => {
+const jump_func = (payload ={},type) => {
    // 点击菜单的时候如果在详情页应跳转出来先
   if (route.name=='details') {
     router.push('/home')
   }
   let obj = {
-    lv1_mi : payload,
+    lv1_mi : payload.mi,
     has_mid_menu: true, // 有中间菜单
-    lv2_mi: payload +''+ 2, // 二级菜单id
+    lv2_mi: payload.mi +''+ 2, // 二级菜单id
   }
   menu_type.value = type
-
+console.error('sss')
   //太多了 后续做优化
   MenuData.set_menu_root(202, true)
   MenuData.set_is_collect(false)
@@ -124,7 +124,7 @@ const jump_func = (payload,type) => {
   MenuData.set_mid_menu_result(mid_config)
 
   nextTick(()=>{
-    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload)
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
   })
   
 }
