@@ -331,13 +331,11 @@ export function usedetailData(route) {
     detail_info,
     refresh,
     get_match_detail,
-
     sportId,
     all_hl_item,
     init,
     show_close_thehand,
     matchDetailList,
     current_id,
-    refresh,
   };
 }
