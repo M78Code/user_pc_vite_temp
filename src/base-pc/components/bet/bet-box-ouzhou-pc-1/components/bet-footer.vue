@@ -57,7 +57,7 @@ const set_confirm = () => {
 .bet-footer {
     width: 100%;
     background: var(--q-gb-bg-c-4);
-    border-top: 0.5px solid #E4E4E4;
+    border-top: 0.5px solid var(--q-gb-bd-c-6);
 
     .bet-content {
         width: 100%;
@@ -70,7 +70,7 @@ const set_confirm = () => {
     }
 
     .bet-bet-cancel {
-        border: 0.5px solid #A4A4A4;
+        border: 0.5px solid var(--q-gb-bd-c-5);
         width: 160px;
         height: 46px;
         border-radius: 2px;

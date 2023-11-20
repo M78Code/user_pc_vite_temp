@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import { SessionStorage } from "src/core/index.js";
-import { MenuData } from "src/core/";
+import { MenuData , SessionStorage} from "src/core/";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [

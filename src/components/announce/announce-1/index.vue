@@ -1,9 +1,9 @@
 <!-- @Description: 公告页面 -->
 <template>
     <div class="announce-wrap">
-        <simple-header :title="i18n_t('common.notice')">
+        <!-- <simple-header :title="i18n_t('common.notice')"> -->
             <!-- <span>{{ i18n_t('common.notice') }}</span> -->
-        </simple-header>
+        <!-- </simple-header> -->
         <div class="announce-content">
             <!-- 头部菜单开始 -->
             <top-menu :data="announce_title" @tabs_click="tabs_click"  />
@@ -166,7 +166,6 @@ onMounted(() => {
     .main-page {
         color: #5a6074;
         padding-top: 14px;
-        padding-bottom: 80px;
         :deep(.load-data-wrap ) {
             height: 75vh !important;
 
