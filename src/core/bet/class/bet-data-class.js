@@ -2,6 +2,7 @@ import { PageSourceData, fileds_map_common } from "src/core/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { ref } from "vue"
 import lodash_ from "lodash"
 
@@ -21,8 +22,8 @@ class BetData {
     this.bet_is_accept = false;
     // 接受更好赔率规则
     this.better_rules_show = false
-    // 押注信息列表
-    this.bet_list = [];
+    // 押注信息列表 投注项id
+    this.bet_oid_list = [];
     // 押注扁平化对象扁平
     // this.bet_obj = {};
     // 串关投注列表
@@ -390,7 +391,21 @@ this.bet_appoint_ball_head= null */
       LayOutMain_pc.set_layout_left_show('bet_list')
     }
 
+    // 设置投注项id 页面选中
+    set_bet_oid_list()
+
     this.set_bet_data_class_version()
+  }
+
+  // 设置投注项id 页面选中
+  set_bet_oid_list(){
+    let list_query = []
+    if(this.is_bet_single){
+      list_query = this.bet_single_list.map(item => item.playOptionsId)
+    }else{
+      list_query = this.bet_s_list.map(item => item.playOptionsId)
+    }
+    this.set_bet_oid_list = list_query
   }
 
   /*
@@ -743,14 +758,65 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
   }
 
+  // ws推送 更新赔率数据
+  set_ws_message_bet_info(obj,index){
+    this.bet_single_list[index] = obj
+    this.set_bet_data_class_version()
+    console.error('sss',obj)
+  }
+
   // 投注项赔率变动
   set_bet_c106_change( obj={} ) {
+    // ws 每次推送的 mid只有一个 
     let mid = lodash_.get(obj,'mid')
-    let hls = lodash_.get(obj,'hls')
-    if(this.is_bet_single){
-      let obj = this.bet_single_list.find(item => item.matchId == mid) || {}
-      if(obj.matchId){
-        console.error('obj',obj)
+    // 多盘口
+    let hls = lodash_.get(obj,'hls',[])
+    // 投注项赛事id
+    let mid_list = []
+    // 投注项盘口id
+    let market_list = []
+    // 单关 切 有投注项
+    if(this.is_bet_single && this.bet_single_list.length){
+      // 获取单关下的赛事id 多个（单关合并）
+      mid_list = this.bet_single_list.map(item => item.matchId) || []
+      // 投注项中有 推送的数据 那么就会对盘口和投注项id进行比对筛选 
+      if( mid_list.includes(mid)){
+        // 投注项盘口id 多个（单关合并）
+        market_list = this.bet_single_list.map(item => item.marketId) || []
+        // 获取ws推送中的 盘口项 进行筛选匹配
+        // 对比盘口和投注项
+        hls.forEach(item => {
+          if(market_list.includes(item.hid)){
+            // 查询投注项中的 投注项id
+            let ol_obj = this.bet_single_list.find(obj => obj.marketId == item.hid) || {}
+            let ol_obj_index = this.bet_single_list.findIndex(obj => obj.marketId == item.hid) || 0
+            // 查询ws投注项 中 匹配到的投注项id 
+            let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
+            // WS推送中包含 投注项中的投注项内容
+            if(ws_ol_obj.ov){
+              let time_out = null
+              // "odds": item.odds,  // 赔率 万位
+              // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
+              //  红升绿降
+              ol_obj.red_green = 'red_up'
+              if(ol_obj.odds > ws_ol_obj.ov ){
+                ol_obj.red_green = 'green_down'
+              }
+              // 重新设置赔率
+              ol_obj.odds = ws_ol_obj.ov*1
+              ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, '', '', ol_obj.sportId)
+              // 更新投注项内容
+              this.set_ws_message_bet_info(ol_obj,ol_obj_index)
+
+              clearTimeout(time_out)
+              // 5秒后清除 红升绿降
+              time_out = setTimeout(()=>{
+                ol_obj.red_green = ''
+                this.set_ws_message_bet_info(ol_obj,ol_obj_index)
+              },5000)
+            }
+          }
+        })
       }
     }
   }

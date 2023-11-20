@@ -55,7 +55,7 @@
             active: ol_data.oid == current_ol.oid,
           }"
         >
-          {{ ol_data.ov / 100000 }}</span
+          {{ match_odds }}</span
         >
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
@@ -74,7 +74,7 @@ import lodash from "lodash";
 import { get_odds_active, utils } from "src/core/index.js";
 import { format_odds_value } from "src/core/format/module/format-odds.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
+import { compute_value_by_cur_odd_type } from "src/core/index.js"
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 const is_mounted = ref(true);
@@ -117,52 +117,20 @@ const score = computed(() => {
   return score;
 });
 
-onMounted(() => {
-  // 异步设置组件是否挂载完成
-  setTimeout(() => {
-    is_mounted.value = true;
-  });
-});
-
-// 监听玩法ID变化 取消赔率升降
-// watch(props.ol_data._hpid, () => {
-//   clear_odds_lift()
-// })
-
-// 监听oid 取消赔率升降
-// watch(props.ol_data.oid, () => {
-//   clear_odds_lift()
-// })
-
-// 监听投注项赔率变化
-watch(
-  () => props.ol_data.ov,
-  (cur, old) => {
-    // 赔率值处理
-    format_odds(cur, 1);
-    if (props.ol_data) {
-      let { _mhs, _hs, os } = props.ol_data;
-      odds_state.value = get_odds_state(_mhs, _hs, os);
-    }
-    // 红升绿降变化
-    set_odds_lift(cur, old);
-  }
-);
-
 /**
  * 赔率转换
  * @param  {number} ov - 赔率值
  * @param  {number} obv - 断档赔率值
  * @return {undefined} undefined
  */
-const format_odds = () => {
+ const format_odds = () => {
   let ov = lodash.get(props.ol_data, "ov");
   let obv = lodash.get(props.ol_data, "obv");
   // 列表取 hsw
   let hsw = props.ol_data._hsw;
   let match_odds_info = compute_value_by_cur_odd_type(
-    ov / 100000,
-    obv / 100000 || "",
+    ov,
+    obv || "",
     hsw || "",
     1
   );
@@ -171,12 +139,53 @@ const format_odds = () => {
 };
 
 /**
+ * @description 获得最新的盘口状态
+ * @param  {number} mhs  赛事级 0：开 1：封 2：关 11：锁
+ * @param  {number} hs   盘口级 0：开 1：封 2：关 11：锁
+ * @param  {number} os  投注项级 1：开 2：封 3：关 4：锁
+ * @return {undefined} undefined
+ */
+ const get_odds_state = (mhs, hs, os) => {
+  let _active = get_odds_active(mhs, hs, os);
+  let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
+  let state = "";
+  const STATE = {
+    // 封盘
+    2: "seal",
+    // 关盘
+    3: "close",
+  };
+  if (!id) {
+    state = "disable";
+  } else if (STATE[_active]) {
+    state = STATE[_active];
+  } else {
+    let selected_class;
+    state = selected_class ? "active" : "normal";
+  }
+  // 当赔率对应的欧赔小于1.01时 ！！！！！！！！！！！！！！！！并且当前不在关盘状态，强制转换成封盘的状态 对盘口加锁
+  return is_odds_seal() && _active !== 3 ? "seal" : state;
+};
+
+/**
+ * 当赔率对应的欧赔小于1.01时，强制转换成封盘的状态 对盘口加锁
+ * @return {boolean}
+ */
+ const is_odds_seal = () => {
+  let ov = lodash.get(props.ol_data, "ov");
+  let obv = lodash.get(props.ol_data, "obv");
+  let _odds = ov || obv;
+  return _odds < 101000;
+};
+
+
+/**
  * 设置赔率升降
  * @param  {number} cur - 当前赔率值
  * @param  {number} old - 上次赔率值
  * @return {undefined} undefined
  */
-const set_odds_lift = (cur, old) => {
+ const set_odds_lift = (cur, old) => {
   let _odds_lift = "";
 
   if (
@@ -208,6 +217,41 @@ const set_odds_lift = (cur, old) => {
   }
 };
 
+
+onMounted(() => {
+  // 异步设置组件是否挂载完成
+  setTimeout(() => {
+    is_mounted.value = true;
+  });
+});
+
+// 监听玩法ID变化 取消赔率升降
+// watch(props.ol_data._hpid, () => {
+//   clear_odds_lift()
+// })
+
+// 监听oid 取消赔率升降
+// watch(props.ol_data.oid, () => {
+//   clear_odds_lift()
+// })
+
+// 监听投注项赔率变化
+watch(
+  () => props.ol_data.ov,
+  (cur, old) => {
+    // 赔率值处理
+    format_odds(cur, 1);
+    if (props.ol_data) {
+      let { _mhs, _hs, os } = props.ol_data;
+      odds_state.value = get_odds_state(_mhs, _hs, os);
+    }
+    // 红升绿降变化
+    set_odds_lift(cur, old);
+  },
+  {immediate:true}
+);
+
+
 /**
  * 取消赔率升降
  */
@@ -215,45 +259,6 @@ const clear_odds_lift = () => {
   odds_lift.value = "";
 };
 
-/**
- * 当赔率对应的欧赔小于1.01时，强制转换成封盘的状态 对盘口加锁
- * @return {boolean}
- */
-const is_odds_seal = () => {
-  let ov = lodash.get(props.ol_data, "ov");
-  let obv = lodash.get(props.ol_data, "obv");
-  let _odds = ov || obv;
-  return _odds < 101000;
-};
-
-/**
- * @description 获得最新的盘口状态
- * @param  {number} mhs  赛事级 0：开 1：封 2：关 11：锁
- * @param  {number} hs   盘口级 0：开 1：封 2：关 11：锁
- * @param  {number} os  投注项级 1：开 2：封 3：关 4：锁
- * @return {undefined} undefined
- */
-const get_odds_state = (mhs, hs, os) => {
-  let _active = get_odds_active(mhs, hs, os);
-  let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
-  let state = "";
-  const STATE = {
-    // 封盘
-    2: "seal",
-    // 关盘
-    3: "close",
-  };
-  if (!id) {
-    state = "disable";
-  } else if (STATE[_active]) {
-    state = STATE[_active];
-  } else {
-    let selected_class;
-    state = selected_class ? "active" : "normal";
-  }
-  // 当赔率对应的欧赔小于1.01时 ！！！！！！！！！！！！！！！！并且当前不在关盘状态，强制转换成封盘的状态 对盘口加锁
-  return is_odds_seal() && _active !== 3 ? "seal" : state;
-};
 
 /**
  * @description 投注项点击

@@ -49,7 +49,7 @@
             @click="go_betting( o)">
             <span class="o_hv">{{ o.on || key }}</span>
             <span>{{ get_oddv(o?.ov/100000) }}</span>
-            <olStatus :item_ol_data="o" />
+            <olStatus :item_ol_data="o" :active="o.oid == active" />
           </div>
         </template>
     
@@ -60,13 +60,10 @@
       <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="ol_on">
         <div
           @click="go_betting(ol)"
-          :class="[{ 'is-active': ol.oid == active }, 'ol_ov']"
-        >
+          :class="[{ 'is-active': ol.oid == active }, 'ol_ov']" >
           <span class="ol-on-text">{{ ol.on }}</span>
-          <span
-            class="ol-ov-text"
-            >{{ get_oddv(ol.ov/100000) }}</span
-          >
+          <span class="ol-ov-text">{{ get_oddv(ol.ov/100000) }}</span>
+          <olStatus :item_ol_data="ol" :active="ol.oid == active" />
         </div>
       </div>
     </template>
@@ -194,6 +191,7 @@ onMounted(() => {
         color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
+        align-items:center;
         .ol-on-text {
           font-weight: 500;
           padding-right: 5px;
@@ -226,7 +224,7 @@ onMounted(() => {
       height: 50px;
       line-height: 50px;
       //  border-top: 1px solid #E2E2E2;
-      border-left: 1px solid #F5F5F5;
+      border-left: 1px solid var(--q-gb-bg-c-15);
       border-bottom: 1px solid var(--q-gb-bd-c-10);
     }
 
@@ -239,7 +237,7 @@ onMounted(() => {
     margin-left: -1px;
 
     & > div:first-child {
-      border-top: 1px solid #F5F5F5;
+      border-top: 1px solid var(--q-gb-bg-c-15);
     }
   }
 
@@ -259,7 +257,7 @@ onMounted(() => {
   .temp5-hv {
     // background-color: #f5f5f5;
     color: #484848;
-    border-right: 1px solid #F5F5F5;
+    border-right: 1px solid var(--q-gb-bg-c-15);
   }
 
   .temp_grid_item {

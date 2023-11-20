@@ -403,7 +403,6 @@ class Http {
         this.axios_instance = axios.create();
         clearInterval(this.request_count_timer);
         this.request_count_timer = setInterval(() => {
-            console.log("this.request_count=" + this.request_count);
             if (window.wslog && window.wslog.sendMsg) {
                 window.wslog.sendMsg("HTTP-S:", { request_count: this.request_count });
             }

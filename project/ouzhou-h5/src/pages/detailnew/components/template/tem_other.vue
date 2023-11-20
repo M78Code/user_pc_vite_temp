@@ -13,9 +13,7 @@
       <template v-if="item_data.title && item_data.title.length > 0 && item_data.title.length < 3">
         <div v-for="opt in item_data.title" :key="opt.otd" class="odds-title-li">
           <div class="odds-title-li-text" v-if="![0, 1, 3, 5, 7, 10].includes(item_data.hpt)">
-            <span>{{
-              opt.osn
-            }}</span>
+            <span>{{opt.osn}}</span>     
           </div>
           
           <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="ol_on">
@@ -26,6 +24,7 @@
                   <!-- {{ (ol.ov/100000).toFixed(2) }} -->
                   <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
                   <span class="ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
+                  <olStatus :item_ol_data="ol" :active="ol.oid == active" />
               </div>
             </template>
           </div>
@@ -37,6 +36,7 @@
           <div @click="go_betting(ol)" :class="[{ 'is-active': ol?.oid == active }, 'ol_ov']" >
               <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
               <span class="ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
+              <olStatus :item_ol_data="ol" :active="ol?.oid == active" />
           </div>
         </div>
       </template>
@@ -48,6 +48,7 @@
 import { onMounted, ref, computed } from "vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 // import EMITTER from  "src/global/mitt.js"
+import olStatus from "../ol_status.vue";
 const emit = defineEmits(["bet_click_"])
 const props = defineProps({
   item_data: {
