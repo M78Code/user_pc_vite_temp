@@ -8,32 +8,52 @@ import * as TemplateCommon from "./template-common.js"
  export const template_108={
   main_handicap_list: [
     {
-      _hpid: 1,
+      _hpid: 37,
       ols: [
-        { _hpid: 1, ot: "1" },
-        { _hpid: 1, ot: "X" },
-        { _hpid: 1, ot: "2" },
+        { _hpid: 37, ot: '1', class: 'no-handicap' },
+        { _hpid: 37, ot: '2', class: 'no-handicap' },
+        { _hpid: 37, ot: 'X', class: 'no-handicap' },
       ],
     },
     {
-      _hpid: 4, ols: [{ _hpid: 4, ot: "1" }, { _hpid: 4, ot: "2" }],
+      _hpid: 39,
+      ols: [
+        { _hpid: 39, ot: '1' },
+        { _hpid: 39, ot: '2' },
+        { empty:1}
+      ],
     },
     {
-      _hpid: 2, ols: [{ _hpid: 2, ot: "Over" }, { _hpid: 2, ot: "Under" }],
+      _hpid: 38,
+      ols: [
+        { _hpid: 38, ot: 'Over' },
+        { _hpid: 38, ot: 'Under' },
+        { empty:1}
+      ],
     },
     {
       _hpid: 17,
       ols: [
-        { _hpid: 17, ot: "1" },
-        { _hpid: 17, ot: "2" },
-        { _hpid: 17, ot: "X" },
+        { _hpid: 17, ot: '1' },
+        { _hpid: 17, ot: '2' },
+        { _hpid: 17, ot: 'X' },
       ],
     },
     {
-      _hpid: 19, ols: [{ _hpid: 19, ot: "1" }, { _hpid: 19, ot: "2" }],
+      _hpid: 19,
+      ols: [
+        { _hpid: 19, ot: '1' },
+        { _hpid: 19, ot: '2' },
+        { empty:1}
+      ],
     },
     {
-      _hpid: 18, ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }],
+      _hpid: 18,
+      ols: [
+        { _hpid: 18, ot: 'Over' },
+        { _hpid: 18, ot: 'Under' },
+        { },
+      ],
     },
   ],
 }
