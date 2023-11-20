@@ -150,6 +150,7 @@ class LayOutMain {
   set_layout_secondary_dialog() { 
     this.layout_secondary_dialog = !this.layout_secondary_dialog
     console.log('LayOutMain_pc',this.layout_secondary_dialog)
+    this.set_layout_version()
   }
   /** 设置当前路由页面 */
   set_layout_current_path(route) {

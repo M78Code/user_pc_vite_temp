@@ -31,8 +31,6 @@ import { MenuData  } from "src/core/";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
 const props = defineProps({
     menu_type: {
-        type: String,
-        default: MenuData.menu_type.value
     },
     is_show_badge:{
         type: Boolean,

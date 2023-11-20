@@ -114,6 +114,7 @@ import { loadLanguageAsync } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
+import BetData from 'src/core/bet/class/bet-data-class.js';
 import {  LayOutMain_pc } from 'src/core/index.js'
 
 export default defineComponent({
@@ -214,6 +215,7 @@ export default defineComponent({
     //赛果
     const goto_results = () => {
       LayOutMain_pc.set_layout_secondary_dialog()
+      BetData.set_bet_box_draggable({show:false})
       // userRouter.push("/match_results")
     }
     const onExpend = () => {
