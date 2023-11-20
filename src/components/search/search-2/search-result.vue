@@ -71,7 +71,7 @@
 							</div>
 							<div v-show="expand_league">
 								<li v-for="(item, index) in search_data?.league" :key="index"
-								@click="match_click(item)">
+								@click="league_click(item)">
 									<div class="list_top">
 										<span v-html="red_color(item.leagueName)"></span><img
 											:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
@@ -250,7 +250,7 @@ function bowling_click(match) {
 
 const scrollRef = ref(null)
 /**
- * @Description:点击联赛/队伍搜索
+ * @Description:点击队伍搜索
  * @param {object} match 点击的赛事
  * @return {undefined} undefined
  */
@@ -259,6 +259,23 @@ function match_click(match) {
 	search.insert_history(match.name)
 	const { mid, tid, csid } = match.matchList[0]
 	router.push(`/details/${mid}/${tid}/${csid}`)
+	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		type: 'width',
+		focus: false
+	})
+}
+
+/**
+ * @Description:点击联赛搜索
+ * @param {object} match 点击的赛事
+ * @return {undefined} undefined
+ */
+function league_click(match) {
+	if(!match) return;
+	search.insert_history(match.name)
+	const { csid } = match.matchList[0]
+	router.push(`/search/${keyword.value}?csid=${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		type: 'width',

@@ -50,6 +50,15 @@ const routes = [
         name: "details",
         component: () => import('../pages/match-new-detail/index.vue')
       },
+      // 搜索
+      {
+        path: "/search/:keyword/:csid",
+        name: "search",
+        component: () => import('../pages/search/index.vue'),
+        meta: {
+          keepAlive: true, // 需要缓存
+        }
+      },
       {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
         name: "video",
