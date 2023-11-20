@@ -277,7 +277,7 @@ const timer = ref(null)
 const load_data_state = ref('data')
 /** 搜索结果数据 */
 const search_data = ref([])
-const _get_search_result = lodash.throttle((keyword, is_loading) => {
+const _get_search_result = lodash.debounce((keyword, is_loading) => {
 	if (!keyword) {
 		update_show_type('init')
 		return
