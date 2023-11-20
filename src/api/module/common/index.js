@@ -78,7 +78,7 @@ export const get_match_base_info_by_mids = (params, config, url = "/v1/m/getMatc
 export const get_esports_match_by_mids = (params, config, url = "/v1/m/esportsMatchInfoByMids") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_esports_match_by_mids', type: 2});
 
 // 更新菜单数量
-export const get_menu_match_total = (params, config, url="/v1/m/menu/queryNumPB") => {
+export const get_menu_match_total = (params, config, url="/v1/m/menu/queryNum") => {
   params.sys = 3; //系统（1.panda-H5菜单  2.panda老PC-菜单 3.188菜单  4-新版PC菜单）
   return http.get(`${prefix}${url}`, params, config);
 };

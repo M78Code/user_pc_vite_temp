@@ -39,7 +39,7 @@ const last_label = computed(() => {
 const breadCrumbs_firstOne = function (){
     let firstOneName = ''
     let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
-    firstOneName = ['home','in_play','bet_record'].includes(history[1].name) ? history[1].title : props.detail_info.csna
+    firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.title : props.detail_info.csna
     return firstOneName
 }
 
