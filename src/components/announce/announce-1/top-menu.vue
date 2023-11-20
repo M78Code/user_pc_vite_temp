@@ -76,7 +76,7 @@ function sub_click(item, index) {
         position: absolute;
         width: 100%;
         height: 14px;
-        top: 111px;
+        top: 50px;
         right: 0;
         background-color: var(--q-gb-bg-c-6);
     }

@@ -30,7 +30,7 @@ const props = defineProps({
 <style scoped lang="scss">
     .bet-result{
         width: 99px;
-        border-left: 0.5px solid #E4E4E4;
+        border-left: 0.5px solid var(--q-gb-bd-c-6);
         padding-left: 16px;
         .bet-result-info{
             height: 30px;
