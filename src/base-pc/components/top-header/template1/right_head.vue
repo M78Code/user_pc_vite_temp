@@ -15,10 +15,9 @@
             <i class="icon-search q-icon c-icon" size="10px"></i>
           </template>
           <template v-slot:append>
-            <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
+            <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="($event) => {$event.currentTarget.parentElement.previousElementSibling.firstElementChild.blur()}, text = ''"></i>
           </template>
         </q-input>
-        <!-- <input type="text" @compositionstart="test" @compositionend="finish"> -->
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
@@ -184,12 +183,6 @@ export default defineComponent({
         get_search_data(trimVal);
       }
     )
-    const test = () => {
-      console.log('正在输入中');
-    }
-    const finish = () => {
-      console.log('输入完成');
-    }
     
     // 传递搜索状态
     const get_search_data = (val) => {
@@ -292,9 +285,7 @@ export default defineComponent({
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX,
       is_focus,
-      get_search_data,
-      test,
-      finish
+      get_search_data
     };
   
   }
