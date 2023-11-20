@@ -471,6 +471,9 @@
           sessionStorage.clear();
           localStorage.clear();
         }
+        // 清除缓存的参数
+        SEARCH_PARAMS.init_param_del(['clearcache']);
+
         //计算token
         let token =
           sessionStorage.getItem("token") || url_search.get("token") || "";
