@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="h-right">
-    <div v-show="false">{{ SearchPCClass.update_time }}</div>
+    <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
         <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
