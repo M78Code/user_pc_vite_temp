@@ -28,7 +28,7 @@ class MatchMeta {
 
   init () {
     // 当前页面数据mids集合
-    this.match_mids = []
+    this.match_mids = ref([])
     // 早盘下的 mids
     this.zaopan_mids = []
     // 联赛 id 对应的 mids
@@ -46,6 +46,8 @@ class MatchMeta {
     this.other_complete_matchs = []
     // 其他仓库的全量赛事mids
     this.other_complete_mids = []
+    // 版本号
+    this.match_meta_version = ref(0)
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -657,8 +659,6 @@ class MatchMeta {
       target_mids = this.match_mids.filter(t => t !== mid)
     }
     this.match_mids = target_mids
-    const Base_warehouse  = this.get_base_warehouse()
-    Base_warehouse.upd_data_version()
   }
 
    /**
@@ -688,8 +688,7 @@ class MatchMeta {
       this.match_assistance_operations(t)
     })
     // 不需要调用赔率接口
-    const Base_warehouse  = this.get_base_warehouse()
-    Base_warehouse.set_list(target_list)
+    MatchDataBaseH5.set_list(target_list)
   }
 
   /**

@@ -683,6 +683,7 @@ init(){
       this.list_serialized_match_obj(this.match_list);
       // 列表数据同步到快捷操作对象中
       this._list_to_obj_fun(this.match_list,this.list_to_obj)
+      // this.mids_ation = list.map(t => t.mid)
       // ws命令赛事订阅
       this.ws_ctr.scmd_c8();
       this.upd_data_version();
