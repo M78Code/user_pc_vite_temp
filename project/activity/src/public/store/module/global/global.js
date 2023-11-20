@@ -78,7 +78,7 @@ const state = reactive({
   var_event_i18n: [],
 })
 
-export default {
+const globalStore = {
   getters: {
     //获取列表滚动数
     get_retain_scroll_obj() {
@@ -154,23 +154,23 @@ export default {
   },
   actions: {
     //设置保存的滚动数据
-    set_retain_scroll_obj({ commit }, obj) {
+    set_retain_scroll_obj(obj) {
       commit("set_retain_scroll_obj", obj);
     },
     //全局开关
-    set_global_switch({ commit }, switch_obj) {
+    set_global_switch(switch_obj) {
       commit("set_global_switch", switch_obj);
     },
     //是否展开多列玩法
-    set_unfold_multi_column({ commit }, status) {
+    set_unfold_multi_column(status) {
       commit("set_unfold_multi_column", status);
     },
     //设置非常规菜单选择（搜索关键词点击）
-    set_menu_special_choose({ commit }, val) {
+    set_menu_special_choose(val) {
       commit("set_menu_special_choose", val);
     },
     //设置服务器时间
-    set_remote_server_time({ commit }, payload) {
+    set_remote_server_time(payload) {
       api_common.get_server_time().then((res) => {
         let code = _.get(res, "data.code");
         if (code == 200) {
@@ -181,92 +181,92 @@ export default {
       });
     },
     //初始化盘口偏好
-    set_init_odd({ commit }) {
+    set_init_odd() {
       commit("set_init_odd");
     },
     // 设置上次盘口偏好
-    set_pre_odd({ commit }, pre_odds) {
+    set_pre_odd(pre_odds) {
       commit("set_pre_odd", pre_odds);
     },
     // 设置盘口偏好
-    set_cur_odd({ commit }, cur_odds) {
+    set_cur_odd(cur_odds) {
       if (cur_odds) {
         commit("set_cur_odd", cur_odds);
       }
     },
     //初始化列表排序
-    set_init_match_sort({ commit }) {
+    set_init_match_sort() {
       commit("set_init_match_sort");
     },
     // 设置列表排序
-    set_match_sort({ commit }, match_sort) {
+    set_match_sort(match_sort) {
       commit("set_match_sort", match_sort);
     },
 
     //设置版本名称
-    set_version_name({ commit }, version_name) {
+    set_version_name(version_name) {
       commit("set_version_name", version_name);
     },
     //初始化设置版本名称
-    init_version_name({ commit }) {
+    init_version_name() {
       commit("init_version_name");
     },
     //设置网站是否处于后台运行中
-    set_vue_hidden_run({ commit }, status) {
+    set_vue_hidden_run(status) {
       commit("set_vue_hidden_run", status);
     },
     //设置全局点击事件
-    set_global_click({ commit }) {
+    set_global_click() {
       commit("set_global_click");
     },
     //设置catch错误数据
-    set_error_data({ commit }, data) {
+    set_error_data(data) {
       commit("set_error_data", data);
     },
     //设置显示列表状态
-    set_is_show_banner({ commit }, data) {
+    set_is_show_banner(data) {
       commit("set_is_show_banner", data);
     },
     //设置滚动时显示列表状态
-    set_is_roll_show_banner({ commit }, data) {
+    set_is_roll_show_banner(data) {
       commit("set_is_roll_show_banner", data);
     },
     //设置是否完成引导页
-    set_is_first_introduce_write({ commit }, data) {
+    set_is_first_introduce_write(data) {
       commit("set_is_first_introduce_write", data);
     },
     //设置视频是否展开状态
-    set_is_fold_status({ commit }, data) {
+    set_is_fold_status(data) {
       commit("set_is_fold_status", data);
     },
     //设置视频是否展开状态
-    set_var_event_i18n({ commit }, data) {
+    set_var_event_i18n(data) {
       commit("set_var_event_i18n", data);
     },
     //设置专业新手状态
-    set_version({ commit }, data) {
+    set_version(data) {
       commit("set_version", data);
     },
   },
   mutations: {
     //设置保存的滚动数据
-    set_retain_scroll_obj(state, obj) {
+    set_retain_scroll_obj(obj) {
       Object.assign(state.retain_scroll_obj, obj);
     },
     //全局开关
-    set_global_switch(state, switch_obj) {
+    set_global_switch(switch_obj) {
       Object.assign(state.global_switch, switch_obj);
     },
     //是否展开多列玩法
-    set_unfold_multi_column(state, status) {
+    set_unfold_multi_column(status) {
       state.is_unfold_multi_column = status;
     },
     //设置非常规菜单选择（搜索关键词点击）
-    set_menu_special_choose(state, val) {
+    set_menu_special_choose(val) {
       state.menu_special_choose = val;
     },
     //初始化盘口偏好
-    set_init_odd(state) {
+    set_init_odd() {
       let pre_odds = localStorage.getItem("pre_odds") || state.odds.cur_odds;
       let cur_odds = localStorage.getItem("cur_odds") || state.odds.cur_odds;
 
@@ -276,16 +276,16 @@ export default {
       state.odds = { pre_odds, cur_odds };
     },
     // 设置上次盘口偏好
-    set_var_event_i18n(state, data) {
+    set_var_event_i18n(data) {
       state.var_event_i18n = data;
     },
     // 设置上次盘口偏好
-    set_pre_odd(state, pre_odds) {
+    set_pre_odd(pre_odds) {
       localStorage.setItem("pre_odds", pre_odds);
       state.odds.pre_odds = pre_odds;
     },
     // 设置盘口偏好
-    set_cur_odd(state, cur_odds) {
+    set_cur_odd(cur_odds) {
       BaseUserInfo.assign({ userMarketPrefer: cur_odds });
       localStorage.setItem("cur_odds", cur_odds);
       state.odds.cur_odds = cur_odds;
@@ -297,12 +297,12 @@ export default {
       // state.match_sort = match_sort
     },
     //设置列表排序
-    set_match_sort(state, match_sort) {
+    set_match_sort(match_sort) {
       localStorage.setItem("match_sort", match_sort);
       state.match_sort = match_sort;
     },
     //设置服务器时间
-    set_remote_server_time(state, remote_time) {
+    set_remote_server_time(remote_time) {
       state.timestamp = {
         remote_time,
         local_time: new Date().getTime(),
@@ -316,7 +316,7 @@ export default {
      * @return:
      * @Date 2020/04/11 09:22:10
      */
-    set_version_name(state, version_name) {
+    set_version_name(version_name) {
       state.version_name = version_name;
       localStorage.setItem("version_name", version_name);
     },
@@ -327,7 +327,7 @@ export default {
      * @return:
      * @Date 2020/04/11 09:22:10
      */
-    init_version_name(state) {
+    init_version_name() {
       let version_name = localStorage.getItem("version_name");
       if (!version_name) {
         version_name = env_version_name;
@@ -336,15 +336,15 @@ export default {
       state.version_name = version_name;
     },
     //设置网站是否处于后台运行中
-    set_vue_hidden_run(state, status) {
+    set_vue_hidden_run(status) {
       state.vue_hidden_run = status;
     },
     //设置全局点击事件
-    set_global_click(state) {
+    set_global_click() {
       state.global_click++;
     },
     //设置catch错误数据
-    set_error_data(state, data) {
+    set_error_data(data) {
       if (data == "delete") {
         state.error_data = "";
       } else {
@@ -356,30 +356,45 @@ export default {
         state.error_data += "\n" + data.site + "\n" + error;
       }
     },
-    set_v_result_number_c_page(state, v) {
+    set_v_result_number_c_page(v) {
       state.v_result_number_c_page = v;
     },
     //设置显示列表状态
-    set_is_show_banner(state, data) {
+    set_is_show_banner(data) {
       state.is_show_banner = data;
     },
     //设置滚动时显示列表状态
-    set_is_roll_show_banner(state, data) {
+    set_is_roll_show_banner(data) {
       state.is_roll_show_banner = data;
     },
     //设置是否完成引导页
-    set_is_first_introduce_write(state, data) {
+    set_is_first_introduce_write(data) {
       state.is_first_introduce_write = data;
     },
     //设置视频是否展开状态
-    set_is_fold_status(state, status) {
+    set_is_fold_status(status) {
       state.is_fold_status = status;
     },
 
     //设置专业新手状态
-    set_version(state, status) {
+    set_version(status) {
       state.version_now = status;
       localStorage.setItem("version_now", status);
     },
   },
 };
+
+/**
+ * mutation commit
+ * @param {*} flag 
+ * @param  {...any} args 
+ * @returns 
+ */
+function commit(flag, ...args) {
+  return globalStore.mutations[flag].apply(null, ...args);
+}
+
+
+
+export default globalStore;
+

@@ -334,10 +334,10 @@ template {
     padding: 0 0.14rem;
     margin: 0.1rem 0;
     p {
-      color: var(--q-gb-bg-c-8);
+      color: var(--q-gb-bg-c-14);
     }
     span {
-      color: var(--q-gb-bg-c-12);
+      color: var(--q-gb-bg-c-1);
     }
   }
   .early-button {
@@ -347,8 +347,8 @@ template {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      background-color: var(--q-gb-bg-c-14);
-      border: 1px solid var(--q-gb-bg-c-12);
+      background-color: var(--q-gb-bg-c-7);
+      border: 1px solid var(--q-gb-bg-c-1);
       width: 100%;
       height: 0.5rem;
       line-height: 0.5rem;
@@ -356,22 +356,25 @@ template {
       border-radius: 0.5rem;
       position: relative;
       &.confirm {
-        background-color: var(--q-gb-bg-c-12);
+        background-color: var(--q-gb-bg-c-1);
         color: var(--q-gb-bg-c-15);
         i.amount {
           color: var(--q-gb-bg-c-15);
         }
       }
       &.success {
-        background-color: var(--q-gb-bg-c-18);
+        background-color: var(--q-gb-bg-c-5);
         color: var(--q-gb-bg-c-2);
-        border-color: var(--q-gb-bg-c-18);
+        border-color: var(--q-gb-bg-c-5);
+        span{
+          color: var(--q-gb-bg-c-13);
+        }
         i.amount {
-          color: var(--q-gb-bg-c-12);
+          color: var(--q-gb-bg-c-1);
         }
       }
       i.amount {
-        color: var(--q-gb-bg-c-12);
+        color: var(--q-gb-bg-c-1);
         margin-left: 0.16rem;
       }
       img.load {

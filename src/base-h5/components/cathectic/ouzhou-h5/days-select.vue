@@ -63,18 +63,18 @@ onUnmounted(() => {
         top: 0.5rem;
         background: var(--q-gb-bg-c-15);
         padding: 0 0.1rem;
-        box-shadow: 2px 2px 4px var(--q-gb-bg-c-8);
+        box-shadow: 2px 2px 4px var(--q-gb-bg-c-9);
         li {
             font-size: 0.14rem;
             line-height: 2.5;
             text-wrap: nowrap;
             padding: 0 0.08rem;
-            border-bottom: 1px solid var(--q-gb-bg-c-11);
+            border-bottom: 1px solid var(--q-gb-bg-c-9);
             &:last-child {
                 border-bottom: none;
             }
             &.active {
-                color: var(--q-gb-bg-c-12);
+                color: var(--q-gb-bg-c-1);
             }
         }
     }
