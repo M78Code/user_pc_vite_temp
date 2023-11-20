@@ -12,7 +12,7 @@
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
     <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
-      <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
+      <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
       <!-- 临时调试用 -->
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">
         展开联赛
@@ -28,10 +28,12 @@
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <load-data :state="'data'">
+    <load-data :state="'data'" :style="{
+        width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+      }">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
-      <scroll-list v-if="menu_config.menu_root_show_shoucang != 300">
+      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
         <!-- <template v-slot:before> -->
           <!-- 头部15 Mins模块 -->
           <div v-show="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
@@ -70,6 +72,9 @@
             </div>
           </div>
         </template>
+        <ConmingSoon v-show="MenuData.is_top_events()" :style="{
+        width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+      }" />
       </scroll-list>
     </load-data>
 
@@ -87,7 +92,6 @@
         :style="compute_css_obj('pc-img-loading')"
       ></div>
     </div>
-    <!-- <ConmingSoon v-show="coom_soon_state" /> -->
   </div>
 </template>
 <script>
@@ -112,24 +116,14 @@ import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
-
-import menu_config from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, compute_css_obj } from "src/core/index.js";
-import {
-  MatchDataWarehouse_PC_List_Common as MatchListData,
-  GlobalAccessConfig,
-} from "src/core/index.js";
+import { PageSourceData, compute_css_obj,LayOutMain_pc,MenuData,useMittOn,MITT_TYPES ,  MatchDataWarehouse_PC_List_Common as MatchListData,
+  GlobalAccessConfig,} from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";
 import FeaturedMatches from "src/base-pc/components/match-list/featured_matches/featured_matches_card.vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
-import {
-  LayOutMain_pc,
-} from "src/core";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { useMittOn,MITT_TYPES } from "src/core/index.js"
 import "./match_list.scss";
 import {
   init_home_matches
@@ -217,7 +211,6 @@ export default {
     }
 
     return {
-      menu_config,
       MatchListData,
       show_refresh_mask,
       collect_count,
@@ -234,7 +227,8 @@ export default {
       // coom_soon_state,
       match_list_top,
       match_list_card,
-      MenuData
+      MenuData,
+      LayOutMain_pc
     };
   },
 };
