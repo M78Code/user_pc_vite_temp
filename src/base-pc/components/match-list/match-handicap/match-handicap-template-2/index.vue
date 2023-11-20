@@ -274,17 +274,23 @@ function getCurState (hipo) {
           .odds {
             color: var(--q-gb-t-c-1);
           }
-
         }
 
         div {
-            color: var(--q-gb-bd-c-4);
+            color: var(--q-gb-bg-c-7);
+            font-size: 14px;
         }
 
         .odds {
             color: var(--q-gb-t-c-2);
             font-weight: 500;
             font-size: 14px;
+            &.up {
+              color: var(--q-gb-t-c-7);
+            }
+            &.down {
+              color: var(--q-gb-t-c-10);
+            }
         }
     }
 </style>

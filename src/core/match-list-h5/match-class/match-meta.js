@@ -491,6 +491,32 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取欧洲版联赛数量统计
+   */
+  async get_ouzhou_leagues_data (config) {
+    const {area, date} = config
+    const mid = MenuData.current_lv_2_menu_i
+    let mid_list = lodash.get(MenuData,'collect_list')
+    let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
+    let euid = ''
+    if(mid == 0){
+      // 根据 菜单id 获取euid
+      mid_list.forEach(item => {
+        if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
+          euid += BaseData.mi_euid_map_res[item.mi].h + ','
+        }
+      })
+    }else{
+      euid = MenuData.get_euid(mid+''+lv1_mi)
+    }
+    const params = this.get_base_params(euid)
+    const res = await api_match_list.get_leagues_list({
+      sportId: params.euid,
+      selectionHour: date
+    })
+  }
+
+  /**
    * @description 处理欧洲版首页热门赛事
    */
   handle_ouzhou_home_data (res) {

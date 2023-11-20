@@ -104,7 +104,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .match-tpl-101 {
-  background: var(--q-gb-bg-c-11);
+  background: var(--q-gb-bg-c-4);
 
   .vertical-line {
     width: 1px;

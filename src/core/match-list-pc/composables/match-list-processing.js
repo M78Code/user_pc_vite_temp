@@ -8,7 +8,6 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import {mx_collect_count, set_collect_count} from "./match-list-collect.js";
 import virtual_composable_fn from './match-list-virtual.js'
 import {api_bymids, set_league_list_obj} from "./match-list-featch.js";
-import {show_mids_change} from "./match-list-ws.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -178,7 +177,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			// 静默拉取列表 设置数据加载状态
 			load_data_state.value = "data";
 			// 更新可视区域赛事盘口数据
-			show_mids_change();
+			useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
 			let first_league = all_league_list[0];
 			let mids = first_league.mids.split(",");
 			let params = {
@@ -292,7 +291,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 		}
 	} else {
 		// 更新可视区域赛事盘口数据
-		show_mids_change();
+		useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
 	}
 	// 首次拉列表调用bymids 拉取所有赛事盘口数据
 	if (

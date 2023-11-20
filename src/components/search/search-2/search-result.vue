@@ -3,10 +3,9 @@
 <template>
 	<div class="result-wrap">
 		<!-- 滚动区域 -->
-		<q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scrollRef">
-			<div class="serach-background" @click.stop  v-if="(search_data?.team && search_data?.team.length > 0) ||
-			(search_data?.league && search_data?.league.length > 0)">
-
+		<q-scroll-area v-if="(search_data?.team && search_data?.team.length > 0) ||
+			(search_data?.league && search_data?.league.length > 0) || (search_data?.bowling && search_data?.bowling.length > 0)" class="fit rule-scroll-area" ref="scrollRef">
+			<div class="serach-background" @click.stop>
 				<!-- 搜索展示 -->
 				<div class="content">
 					<ul class="list">
@@ -72,7 +71,7 @@
 							</div>
 							<div v-show="expand_league">
 								<li v-for="(item, index) in search_data?.league" :key="index"
-								@click="match_click(item)">
+								@click="league_click(item)">
 									<div class="list_top">
 										<span v-html="red_color(item.leagueName)"></span><img
 											:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
@@ -117,7 +116,7 @@
 							</div>
 						</div>
 						<!-- 搜索 队伍 -->
-						<div v-show="search_data?.team && search_data.team?.length > 0" style="margin-bottom: 10px;">
+						<div v-show="search_data?.team && search_data.team?.length > 0">
 							<div @click="expand_team = !expand_team">
 								<div class="middle_info_tab diff">
 									<div class="color">TEAMS</div>
@@ -174,13 +173,16 @@
 				</div>
 			</div>
 		</q-scroll-area>
-		<div v-show="load_data_state != 'data'" class="middle_info_tab diff">No results found. please try a different search term.</div>
+		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
+			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)" class="middle_info_tab diff">No results found. please try a different search term.</div>
+		<!--   -->
 	</div>
 </template>
   
 <script setup>
 import { ref, reactive, watch, onBeforeUnmount, nextTick, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
 import { get_search_result } from "src/api/module/search/index.js";
@@ -248,7 +250,7 @@ function bowling_click(match) {
 
 const scrollRef = ref(null)
 /**
- * @Description:点击联赛/队伍搜索
+ * @Description:点击队伍搜索
  * @param {object} match 点击的赛事
  * @return {undefined} undefined
  */
@@ -257,6 +259,23 @@ function match_click(match) {
 	search.insert_history(match.name)
 	const { mid, tid, csid } = match.matchList[0]
 	router.push(`/details/${mid}/${tid}/${csid}`)
+	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		type: 'width',
+		focus: false
+	})
+}
+
+/**
+ * @Description:点击联赛搜索
+ * @param {object} match 点击的赛事
+ * @return {undefined} undefined
+ */
+function league_click(match) {
+	if(!match) return;
+	search.insert_history(match.name)
+	const { csid } = match.matchList[0]
+	router.push(`/search/${keyword.value}?csid=${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		type: 'width',
@@ -275,7 +294,7 @@ const timer = ref(null)
 const load_data_state = ref('data')
 /** 搜索结果数据 */
 const search_data = ref([])
-function _get_search_result(keyword, is_loading) {
+const _get_search_result = lodash.debounce((keyword, is_loading) => {
 	if (!keyword) {
 		update_show_type('init')
 		return
@@ -318,7 +337,7 @@ function _get_search_result(keyword, is_loading) {
 			}
 		})
 	})
-}
+}, 500)
 
 
 /**
@@ -614,7 +633,7 @@ watch(
 
 	// 搜索结果
 	.content {
-		color: #1A1A1A;
+		color: var(--q-gb-t-c-5);
 
 		.title {
 			height: 50px;
@@ -625,7 +644,7 @@ watch(
 		}
 
 		.list {
-			margin-top: 0;
+			margin: 0 auto;
 			background-color: #e2e2e2;
 		}
 	}
@@ -642,7 +661,7 @@ watch(
 	position: fixed;
 	width: 100%;
 	z-index: 1;
-	color: #1A1A1A;
+	color: var(--q-gb-t-c-5);
 
 	&.diff {
 		padding: 9px 0 9px 20px;
@@ -681,7 +700,7 @@ li {
 		}
 
 		div p:last-child {
-			color: #8A8986;
+			color: var(--q-gb-t-c-8);
 		}
 
 		.middle {

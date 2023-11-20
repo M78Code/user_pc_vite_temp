@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-
+    <div v-show="false">{{ BaseData.base_data_version }}</div>
     <div class="menu-nav-line" />
 
     <div class="menu-nav-li">
@@ -29,7 +29,7 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
-        <template v-for="item in left_menu_list" :key="item">
+        <template v-for="item in BaseData.left_menu_base_mi" :key="item">
           <li class="f-s-c" :class="{ 'menu_checked': MenuData.lv1_mi  == item.mi&&menu_type=='1' }" v-if="item.ct" @click="jump_func(item,'1')">
             <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
@@ -73,6 +73,7 @@ onMounted(() => {
    //菜单无数据兼容
   if(BaseData.left_menu_base_mi.length>0){
     left_menu_list.value = BaseData.left_menu_base_mi;
+    console.log(' BaseData.left_menu_base_mi',  BaseData.left_menu_base_mi);
   }
 })
 
