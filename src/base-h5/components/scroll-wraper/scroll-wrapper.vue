@@ -13,9 +13,9 @@
         'static': get_is_static() 
       }]"
       :style="{ 'height': get_is_static() ? 'auto' : `${VirtualList.container_total_height}px`}">
-      <template v-if="MatchMeta.match_mids.length > 0" >
-        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
-          :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
+      <template v-if="match_meta.match_mids.length > 0" >
+        <div v-for="(match_mid, index) in match_meta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
+          :class="['s-w-item', {last: index == match_meta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->
           <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
@@ -67,8 +67,8 @@ const props = defineProps({
 })
 
 const defer_render = use_defer_render()
-
 const store_state = store.getState();
+
 // 调试信息
 let test = ref('')
 let prev_frame_time = ref(0)
@@ -81,9 +81,14 @@ let scroll_frame_timer = null
 const prev_scroll = ref(0)
 const max_height = ref(false)
 // 赛事mids
-const match_mids = ref([])
 const scroll_timer = ref(0)
 const emitters = ref({})
+
+const match_meta = ref(MatchMeta)
+
+const match_mids = computed(() => {
+  return match_meta.value?.match_mids
+})
 
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';

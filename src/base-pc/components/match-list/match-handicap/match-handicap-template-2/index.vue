@@ -67,7 +67,6 @@ const props = defineProps({
     default: () => false,
   }
 })
-
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 // 赛事模板宽度
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
@@ -102,6 +101,8 @@ function deal_width_handicap_ols(payload) {
     // 获取投注项内容 
     return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
   })
+console.log('sdfsdgfsfgdsfgg', payload);
+
   return new_ols
 }
 

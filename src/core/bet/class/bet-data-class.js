@@ -405,7 +405,7 @@ this.bet_appoint_ball_head= null */
     }else{
       list_query = this.bet_s_list.map(item => item.playOptionsId)
     }
-    this.set_bet_oid_list = list_query
+    this.bet_oid_list = list_query
   }
 
   /*
@@ -762,7 +762,22 @@ this.bet_appoint_ball_head= null */
   set_ws_message_bet_info(obj,index){
     this.bet_single_list[index] = obj
     this.set_bet_data_class_version()
-    console.error('sss',obj)
+  }
+
+  // 删除投注项
+  // oid 投注项id  index 投注项下标
+  set_delete_bet_info(oid,index) {
+    if(this.is_bet_single){
+      this.bet_single_list.splice(index,1)
+    }else{
+      this.bet_s_list.splice(index,1)
+    }
+    // 获取oid在投注项id集合中的位置
+    let index_ = this.bet_oid_list.findIndex(item => item == oid) || -1
+    if(index_ != -1){
+      this.bet_oid_list.splice(index_,1)
+    }
+    this.set_bet_data_class_version()
   }
 
   // 投注项赔率变动

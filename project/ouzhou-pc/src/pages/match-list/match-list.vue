@@ -152,7 +152,7 @@ export default {
     const matches_15mins_list = ref([]);
     // 热推数据
     const matches_featured_list = ref([]);
-    const { ws_destroyed: ws_destroyed_common } = use_match_list_ws()
+    const { ws_destroyed: ws_destroyed_common, set_active_mids } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
     
     // 赛事数量

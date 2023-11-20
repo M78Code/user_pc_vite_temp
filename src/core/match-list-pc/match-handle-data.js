@@ -104,6 +104,8 @@ export function get_ouzhou_data_tpl_id (csid) {
             return 102;
         case 5:
             return 109;
+        case 6:
+            return 120;
         case 7:
         case 10:
         case 8:
