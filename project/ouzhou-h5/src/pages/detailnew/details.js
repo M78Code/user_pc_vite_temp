@@ -105,7 +105,7 @@ export const details_main = (router,route) => {
     const m_plays = [];
     //取缓存中盘口的数据 后续ws推送数据 存数据到缓存 todo
     let arr = JSON.parse(sessionStorage.getItem("match_oddinfo"));
-    if(arr.length == 0) return
+    if(arr?.length == 0) return
     const list = arr?.filter((item) => {
       let play = item.topKey;
       let topKeyArr = item.topKey.split("-");
@@ -115,7 +115,9 @@ export const details_main = (router,route) => {
       m_plays.push(Number(play));
       return plays.includes(Number(play));
     });
-    MatchDataWarehouseInstance.value.set_match_details(getMidInfo(route.params.mid),[...list]);
+    if(list){
+      MatchDataWarehouseInstance.value.set_match_details(getMidInfo(route.params.mid),[...list]);
+    }
   };
   const startY = ref(0);
   const scroller_scroll_top = ref(0);
