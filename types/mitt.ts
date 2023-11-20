@@ -23,6 +23,6 @@ declare namespace MITT {
     refresh: boolean
   }
   /** EMIT_REFRESH_DETAILS 事件的回调函数签名 */
-  type RefreshDetailsCallback = (param: MATCH.mid | MATCH.csid | MATCH.tid | Refresh) => void
+  type RefreshDetailsCallback = (param: K.mid | K.csid | K.tid | Refresh) => void
 }
 
