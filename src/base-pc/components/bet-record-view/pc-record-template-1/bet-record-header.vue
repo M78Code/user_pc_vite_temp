@@ -157,7 +157,7 @@ const set_menu_back = val => {
     &.bet-series-disabled {
       background: var(--q-gb-bg-c-21);
       color: rgba(45, 45, 45, 0.3);
-      border: 1px solid #e4ebf1;
+      border: 1px solid var(--q-gb-bd-c-7);
       border-radius: 4px;
     }
   }

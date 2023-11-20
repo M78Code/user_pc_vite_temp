@@ -203,7 +203,9 @@ export default defineComponent({
     const change_input = () => {}
     //公告
     const goto_announcement = () => {
-      userRouter.push("/announce")
+      LayOutMain_pc.set_layout_secondary_dialog()
+      BetData.set_bet_box_draggable({show:false})
+      // userRouter.push("/announce")
     }
     //赛果
     const goto_results = () => {

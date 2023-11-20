@@ -144,7 +144,7 @@ const show_quick_amount = state => {
     width: 130px;
     height: 34px;
     background: none;
-    border: 0.5px solid #A4A4A4;
+    border: 0.5px solid var(--q-gb-bd-c-5);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     padding: 0 8px;
