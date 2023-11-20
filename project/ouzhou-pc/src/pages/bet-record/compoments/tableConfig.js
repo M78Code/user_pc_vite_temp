@@ -75,7 +75,7 @@ export function useGetOrderList () {
         page: 1,
         size: 50,
         userId: userInfo.userId,
-        timeType: 1,
+        // timeType: 1,
         ...obj
       }
       let res = await get_order_list(params)

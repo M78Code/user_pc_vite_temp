@@ -124,7 +124,7 @@ const show_mids_change = lodash.debounce(() => {
 	}
 	// 重新订阅C8
 	refresh_c8_subscribe();
-	api_bymids({ is_show_mids_change: true })
+	// api_bymids({ is_show_mids_change: true })
 }, 1000)
 
 const ws_destroyed = () => {
