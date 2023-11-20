@@ -34,7 +34,6 @@ class MenuData {
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash_.debounce(() => {
       that.update_time.value = Date.now();
-      console.error('update_time',this)
     }, 16);
     //提供销毁函数
     this.destroy = () => {

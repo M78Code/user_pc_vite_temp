@@ -392,7 +392,7 @@ this.bet_appoint_ball_head= null */
     }
 
     // 设置投注项id 页面选中
-    set_bet_oid_list()
+    this.set_bet_oid_list()
 
     this.set_bet_data_class_version()
   }

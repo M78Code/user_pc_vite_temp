@@ -29,7 +29,7 @@ class MatchMeta {
 
   init () {
     // 当前页面数据mids集合
-    this.match_mids = []
+    this.match_mids = ref([])
     // 早盘下的 mids
     this.zaopan_mids = []
     // 联赛 id 对应的 mids
@@ -47,6 +47,8 @@ class MatchMeta {
     this.other_complete_matchs = []
     // 其他仓库的全量赛事mids
     this.other_complete_mids = []
+    // 版本号
+    this.match_meta_version = ref(0)
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -516,14 +518,14 @@ class MatchMeta {
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
     // ws 订阅
-    const p_15_mids = p15_list.map(t => t.mid)
-    p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
+    // const p_15_mids = p15_list.map(t => t.mid)
+    // p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
     MatchDataBasel5minsH5.set_list(p15_list)
     // 热门赛事数据
     MatchDataBaseHotsH5.set_list(hots)
     // ws 订阅
-    const hots_mids = p15_list.map(t => t.mid)
-    hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
+    // const hots_mids = p15_list.map(t => t.mid)
+    // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []
@@ -645,8 +647,6 @@ class MatchMeta {
       target_mids = this.match_mids.filter(t => t !== mid)
     }
     this.match_mids = target_mids
-    const Base_warehouse  = this.get_base_warehouse()
-    Base_warehouse.upd_data_version()
   }
 
    /**
@@ -676,8 +676,7 @@ class MatchMeta {
       this.match_assistance_operations(t)
     })
     // 不需要调用赔率接口
-    const Base_warehouse  = this.get_base_warehouse()
-    Base_warehouse.set_list(target_list)
+    MatchDataBaseH5.set_list(target_list)
   }
 
   /**
@@ -918,7 +917,7 @@ class MatchMeta {
       return target
     })
     // ws 订阅
-    warehouse.set_active_mids(this.match_mids)
+    // warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
     warehouse.set_list(list)
   }
@@ -931,7 +930,7 @@ class MatchMeta {
   handle_submit_warehouse(config) {
     const { list = [], warehouse = MatchDataBaseH5 } = config
     // ws 订阅
-    warehouse.set_active_mids(this.match_mids)
+    // warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
     warehouse.set_list(list)
     // 获取赛事赔率
@@ -939,4 +938,4 @@ class MatchMeta {
   }
 }
 
-export default new MatchMeta()
+export default ref(new MatchMeta()).value
