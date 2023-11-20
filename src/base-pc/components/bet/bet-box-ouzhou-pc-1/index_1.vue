@@ -38,6 +38,6 @@ import betFooter from "./components/bet-footer.vue"  // 投注底部信息
   }
 
   .bet-box-content{
-    background: var(--q-gb-bg-c-11);
+    background: var(--q-gb-bg-c-4);
   }
 </style>

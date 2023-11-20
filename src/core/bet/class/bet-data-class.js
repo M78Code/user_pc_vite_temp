@@ -22,8 +22,8 @@ class BetData {
     this.bet_is_accept = false;
     // 接受更好赔率规则
     this.better_rules_show = false
-    // 押注信息列表
-    this.bet_list = [];
+    // 押注信息列表 投注项id
+    this.bet_oid_list = [];
     // 押注扁平化对象扁平
     // this.bet_obj = {};
     // 串关投注列表
@@ -391,7 +391,21 @@ this.bet_appoint_ball_head= null */
       LayOutMain_pc.set_layout_left_show('bet_list')
     }
 
+    // 设置投注项id 页面选中
+    set_bet_oid_list()
+
     this.set_bet_data_class_version()
+  }
+
+  // 设置投注项id 页面选中
+  set_bet_oid_list(){
+    let list_query = []
+    if(this.is_bet_single){
+      list_query = this.bet_single_list.map(item => item.playOptionsId)
+    }else{
+      list_query = this.bet_s_list.map(item => item.playOptionsId)
+    }
+    this.set_bet_oid_list = list_query
   }
 
   /*

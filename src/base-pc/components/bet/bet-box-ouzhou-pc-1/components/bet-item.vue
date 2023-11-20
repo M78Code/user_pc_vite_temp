@@ -23,7 +23,7 @@
                         <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
                         <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
                     </div>
-                    <span class="font14 font700 mr-10" :class="{'red_up':items.red_green == 'green_down','green_down':items.red_green == 'red_up'}">
+                    <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'green_down','green-down':items.red_green == 'red_up'}">
                         {{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}
                     </span>
                     <BetInput :items="items" />
@@ -230,10 +230,13 @@ const set_delete = () => {
         width: 76%;
         line-height: 12px;
     }
-    .red_up{
+    .bet-odds-value{
+        color: var(--q-gb-t-c-2);
+    }
+    .red-up{
         color: var(--q-gb-t-c-7);
     }
-    .green_down{
+    .green-down{
         color: var(--q-gb-t-c-6);
     }
     .show_img{
