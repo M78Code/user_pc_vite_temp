@@ -54,7 +54,7 @@
         <!-- </template> -->
 
         <!-- 滚球标题 -->
-        <In-Play :match_count="total_match_count" v-show="MenuData.is_home()" />
+        <In-Play :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
         <div
           v-for="card_key in match_list_card_key_arr"
