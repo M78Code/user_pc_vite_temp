@@ -15,6 +15,7 @@
         :key="()=>Math.random()" 
         :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
       >
+      {{ handicap_list }}
         <div 
           :class="['bet-item-wrap-ouzhou', deal_width_handicap_ols(col.ols).length ===2 && 'bet-item-wrap-ouzhou-bigger']" 
           v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"

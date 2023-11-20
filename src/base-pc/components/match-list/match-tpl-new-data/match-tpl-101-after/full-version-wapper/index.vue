@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <component :is="use_component_key"   :mid="mid"  />
+    <component :is="use_component_key" :mid="mid" :match="match" />
   </div>
 </template>
 <script>
@@ -28,9 +28,11 @@ export default {
   },
   props: {
     mid: {
-    
       default: ''
     },
+    match: {
+      default: {}
+    }
   },
   
 };
