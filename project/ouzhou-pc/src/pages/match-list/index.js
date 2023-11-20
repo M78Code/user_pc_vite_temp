@@ -86,7 +86,7 @@ export const filter_15mins_func = payload => {
       item['mstValue'] = !is_timer.includes(item.csid) ? format_mst_data(item.mst) : '';
     })
   
-    return payload.slice(0, 4);
+    return payload.slice(0, 5);
 }
 
 export const filter_featured_list = payload => {
