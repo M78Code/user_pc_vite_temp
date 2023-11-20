@@ -3,146 +3,43 @@ import lodash from 'lodash'
 
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
-import {api_bymids} from "./match-list-featch.js";
+import { api_bymids } from "./match-list-featch.js";
 // import { fetch_match_list } from '../match-list-composition.js'
-import {utils,useMittEmit,MITT_TYPES } from 'src/core/index.js';
+import { useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_PC_List_Common } from 'src/core/index.js';
+import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 
-//  订阅所需 赛事ID
-
-const skt_mid = ref({});
-//  可视区域赛事ID
-const show_mids = ref([]);
-// ** WS 相关 *********************************/
-const socket_name = ref("match_list");
-// 是否静默运行(socket、refresh按钮)
-const backend_run = ref(false);
-const load_data_state = ref('data');
-// 订阅所需 盘口ID
-const skt_hpid = ref("");
-let message_fun = null;
-
-const ws_c8_subscribe = () => {
-	let match_list = [];
-	show_mids.value.forEach((mid) => {
-		let match = MatchListData.list_to_obj.mid_obj[mid+'_'];
-		if (match) {
-			match_list.push(match);
+function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
+	let message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+		// 赛事新增
+		if (["C109"].includes(cmd)) {
+			const { cd = [] } = data;
+			if (cd.length < 1) return;
+			const item = cd.find((t) => t.csid == MenuData.menu_csid);
+			if (item) useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE);
 		}
-	});
-	if (match_list.length == 0) return;
-	let _skt_mid_obj = utils.ws_c8_obj_format(match_list);
-	match_list.map((match) => {
-		let match_c8 = null;
-		match.hpsPns &&
-			match.hpsPns.map((item) => {
-				match_c8 = _skt_mid_obj[match.mid];
-				if (match_c8) {
-					if (match.data_tpl_id == 18) {
-						match_c8.hpids.push("*");
-					} else {
-						match_c8.hpids.push(item.hpid);
-					}
-				}
-			});
-		if (match.cosCorner) {
-			_.forEach(["113", "114", "111", "119", "121", "122"], (item) => {
-				if (!match_c8.hpids.includes(item)) {
-					match_c8.hpids.push(item);
-				}
-			});
-			// match_c8.hpids.push(...[113,114,111,119,121,122]); // 角球玩法
-		}
-		if (match.cosOvertime) {
-			// 加时赛玩法
-			_.forEach(["126", "128", "127", "129", "130", "332"], (item) => {
-				if (!match_c8.hpids.includes(item)) {
-					match_c8.hpids.push(item);
-				}
-			});
-			// match_c8.hpids.push(...[126,128,127,129,130,332]);
-		}
-		if (match.cosPenalty) {
-			// 点球大战玩法
-			_.forEach(["333", "335", "334"], (item) => {
-				if (!match_c8.hpids.includes(item)) {
-					match_c8.hpids.push(item);
-				}
-			});
-			// match_c8.hpids.push(...[1333,335,334]);
-		}
-		if (match.cosPromotion) {
-			// 晋级赛玩法
-			_.forEach(["135", "136"], (item) => {
-				if (!match_c8.hpids.includes(item)) {
-					match_c8.hpids.push(item);
-				}
-			});
-			// match_c8.hpids.push(...[135,136]);
-		}
-		if (match.cosPunish) {
-			// 罚牌玩法
-			_.forEach(["310", "306", "307", "311", "308", "309"], (item) => {
-				if (!match_c8.hpids.includes(item)) {
-					match_c8.hpids.push(item);
-				}
-			});
-			// match_c8.hpids.push(...[310,306,307,311,308,309]);
-		}
-	});
-	// console.log(`===22222====专业版订阅的赛事=============skt_mid_obj:${JSON.stringify(_skt_mid_obj)}`);
-	return _skt_mid_obj;
-};
-const refresh_c8_subscribe = () => {
-	ws_destroyed()//先取消之前的订阅 不然重复了咋办
-	message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
-		// 调用 matches  接口
-		if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
-			// useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
-			// fetch_match_list()
+		// 调用 matchs  接口
+		if (["C104"].includes(cmd)) {
+			// mhs === 2 为关盘
+			if (data.mhs == 2) {
+				socket_remove_match(data.cd);
+			}
 		}
 		// 调用 mids  接口
-		if (['C303', 'C114'].includes(cmd)) {
-			// api_bymids()
+		if (["C303", "C114"].includes(cmd)) {
+			api_bymids({});
 		}
 	})
-	// if (this.SCMD_C8) {
-	// 	const skt_mid_obj = ws_c8_subscribe();
-	// 	// 订阅赛事
-	// 	 this.SCMD_C8(skt_mid_obj);
-	// }
-};
-
-
-/**
-		 * @Description 可视赛事ID改变
-		 * @param {undefined} undefined
-		 */
-const show_mids_change = lodash.debounce(() => {
-	// 列表没加载完 不执行
-	if (load_data_state.value != "data") {
-		return;
+	return {
+		set_inactive_mids(show_mids = []) {
+			MatchListData.set_inactive_mids(show_mids)
+		},
+		set_active_mids: (mids = []) => {
+			MatchListData.set_active_mids(mids)
+		},
+		// 将新的可视区域赛事id 设置为活跃
+		ws_destroyed: () => {
+			ws_message_listener.ws_remove_message_listener(message_fun)
+		}
 	}
-	// 重新订阅C8
-	refresh_c8_subscribe();
-	// api_bymids({ is_show_mids_change: true })
-}, 1000)
-
-const ws_destroyed = () => {
-	ws_message_listener.ws_remove_message_listener(message_fun)
 }
-export {
-	// 订阅所需  赛事ID
-	skt_mid,
-	// ** WS 相关 *********************************/
-	socket_name,
-	// 可视区域赛事ID
-	show_mids,
-	// 是否静默运行(socket、refresh按钮)
-	backend_run,
-	// 订阅所需 盘口id
-	skt_hpid,
-	refresh_c8_subscribe,
-	ws_destroyed,
-	// 可视区域id变更
-	show_mids_change,
-}
+export default use_match_list_ws;

@@ -457,7 +457,7 @@ const set_route_url = () => {
       top: 6px;
       width: 100%;
       background: var(--q-gb-bg-c-4);
-      border: 2px solid #ff781d;
+      border: 2px solid var(--q-gb-bd-c-8);
       border-radius: 5px;
 
       .content {
@@ -474,7 +474,7 @@ const set_route_url = () => {
         .row-1 {
           margin-bottom: 10px;
           font-size: 14px;
-          color: #ff781d;
+          color: var(--q-gb-bd-c-8);
           font-weight: bold;
         }
       }
@@ -483,7 +483,7 @@ const set_route_url = () => {
       .triangle1 {
         position: absolute;
         background: var(--q-gb-bg-c-4);
-        border: 2px solid #ff781d;
+        border: 2px solid var(--q-gb-bd-c-8);
         border-top: 0;
         border-left: 0;
         width: 15px;

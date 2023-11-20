@@ -137,6 +137,7 @@
     overflow-x: auto;
     flex-wrap: nowrap;
     white-space: nowrap;
+    height: 100%;
     &::-webkit-scrollbar {
       display: none;
     }

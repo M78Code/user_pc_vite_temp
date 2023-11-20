@@ -5,7 +5,7 @@
     <div class="basic-col"
       :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
       <!-- 比赛进程 -->
-      <basis-info101 v-if="match" :match="match" show_type="all" />
+      <basis-info101 :match="match" show_type="all" />
     </div>
     <!-- 竖线 -->
     <div class="vertical-line"></div>
@@ -14,7 +14,7 @@
       <icon-box :match="match"></icon-box>
     </div>
     <!-- 投注信息 -->
-    <match-handicap v-if="match" :handicap_list="handicap_list" :match="match" use_component_key="MatchHandicap2" />
+    <match-handicap :handicap_list="handicap_list" :match="match" use_component_key="MatchHandicap2" />
     <!-- 比分板 -->
     <div v-tooltip="{ content: t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
@@ -104,7 +104,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .match-tpl-101 {
-  background: var(--q-gb-bg-c-11);
+  background: var(--q-gb-bg-c-4);
 
   .vertical-line {
     width: 1px;

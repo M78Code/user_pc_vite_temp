@@ -70,6 +70,7 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData, compute_css_obj, LayOutMain_pc } from 'src/core/index.js';
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/core/index.js";
+import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 
 import "../match-list/match_list.scss";
 
@@ -96,7 +97,7 @@ export default {
             has_mid_menu: true,
         });
         MenuData.set_menu_root(1)
-
+        const {ws_destroyed}= use_match_list_ws(MatchListData)
         const match_list_card_key_arr = ref([])
         const { proxy } = getCurrentInstance()
         const MatchListCardDataClass_match_list_card_key_arr = () => {
@@ -109,6 +110,7 @@ export default {
             MatchListCardDataClass_match_list_card_key_arr()
         });
         onUnmounted(() => {
+            ws_destroyed()
              handle_destroyed()
         })
         onActivated(() => {

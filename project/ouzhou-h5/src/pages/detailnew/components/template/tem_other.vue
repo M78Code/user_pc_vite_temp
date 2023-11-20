@@ -26,6 +26,7 @@
                   <!-- {{ (ol.ov/100000).toFixed(2) }} -->
                   <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
                   <span class="ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
+                  <olStatus :item_ol_data="ol" :active="ol.oid == active" />
               </div>
             </template>
           </div>
@@ -37,6 +38,7 @@
           <div @click="go_betting(ol)" :class="[{ 'is-active': ol?.oid == active }, 'ol_ov']" >
               <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
               <span class="ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
+              <olStatus :item_ol_data="ol" :active="ol?.oid == active" />
           </div>
         </div>
       </template>
@@ -48,6 +50,7 @@
 import { onMounted, ref, computed } from "vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 // import EMITTER from  "src/global/mitt.js"
+import olStatus from "../ol_status.vue";
 const emit = defineEmits(["bet_click_"])
 const props = defineProps({
   item_data: {
@@ -143,6 +146,7 @@ onMounted(() => {
         color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
+        align-items:center;
         .ol-on-text {
             font-weight: 500;
             padding-right: 5px;

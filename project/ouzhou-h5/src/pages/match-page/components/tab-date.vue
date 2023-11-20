@@ -71,7 +71,6 @@ import { MenuData } from "src/core/";
 import dayjs from "dayjs";
 import { useRoute } from "vue-router";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
 
 const emitters = ref({})
 const route = useRoute();
@@ -142,7 +141,7 @@ const changeDatetab = (item, index) => {
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     second_tab_index.value = index;
-    MenuData.set_date_time(item.val, item.type);
+    // MenuData.set_date_time(item.val, item.type);
     menu_time.value = item?.val
    
     // //根据时间筛选列表
@@ -175,7 +174,7 @@ const setDefaultData = (val) => {
     // MenuData.set_menu_mi(val);
     current_menu_mi.value = val;
     //球种改变设置今日
-    MenuData.set_date_time(week[0].val);
+    // MenuData.set_date_time(week[0].val);
     menu_time.value = week[0]
 }
 watch(() => MenuData.menu_mi.value, () => {

@@ -24,11 +24,15 @@
     </div>
 </template>
 <script setup>
+import lodash from 'lodash'
 import { onMounted, ref ,onUnmounted} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData  } from "src/core/";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
+import { sports_play_data } from 'src/core/constant/index.js'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 const props = defineProps({
     menu_type: {
     },
@@ -83,6 +87,10 @@ const on_change_play = (item) => {
     scrollRef.value.scrollTo(index-2, 'start-force')
     // MenuData.get_match_render_list();
     emits('changeMenu',item.mi)
+    const csid = MenuData.menu_csid
+    const hpid = lodash.get(sports_play_data, `[${csid}][0].hpid`, '1')
+    console.log(hpid)
+    MatchResponsive.set_match_hpid(hpid)
 }
 
 </script>

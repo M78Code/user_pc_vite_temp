@@ -1,0 +1,54 @@
+<template>
+  <!-- 红升icon -->
+  <img class="hps_img" v-if="is_up" :src="active ? ouzhou_white_up : ouzhou_hps_down" alt="" />
+  <!-- 绿降icon -->
+  <img class="hps_img" v-if="is_down" :src="active ? ouzhou_white_down : ouzhou_hps_up" alt="" />
+</template>
+<script setup>
+import { ref, watch } from "vue";
+import {
+  odd_lock_ouzhou,
+  ouzhou_hps_up,
+  ouzhou_hps_down,
+  ouzhou_white_down,
+  ouzhou_white_up
+} from "src/base-h5/core/utils/local-image.js";
+const props = defineProps({
+  item_ol_data: {
+    type: Object,
+    default: () => {},
+  },
+  active: {
+    type: Boolean,
+    default: false,
+  },
+});
+const is_up = ref(true);
+const is_down = ref(false);
+const active_score = ref("");
+
+watch(
+  () => props.item_ol_data?.ov,
+  (a, b) => {
+    is_up.value = a > b;
+    is_down.value = a < b;
+    reset_status();
+  }
+);
+
+const reset_status = () => {
+  let timer = setTimeout(() => {
+    is_up.value = false;
+    is_down.value = false;
+    clearTimeout(timer);
+    timer = null;
+  }, 5000);
+};
+</script>
+<style scoped>
+.hps_img {
+  width: 6px;
+  height: 10px;
+  margin-left:4px;
+}
+</style>

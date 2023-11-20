@@ -23,7 +23,7 @@
           <span class="odds-title-li-text">{{ opt.osn }}</span>
         </div>
       </div>
-      <div
+      <div 
         v-for="(value, key) in matchInfo"
         :key="key"
         class="temp_grid ol_on"
@@ -49,8 +49,10 @@
             @click="go_betting( o)">
             <span class="o_hv">{{ o.on || key }}</span>
             <span>{{ get_oddv(o?.ov/100000) }}</span>
+            <olStatus :item_ol_data="o" :active="o.oid == active" />
           </div>
         </template>
+    
       </div>
     </template>
 
@@ -73,6 +75,7 @@
 
 <script setup>
 import { onMounted, ref, computed } from "vue";
+import olStatus from "../ol_status.vue";
 const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
@@ -191,6 +194,7 @@ onMounted(() => {
         color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
+        align-items:center;
         .ol-on-text {
           font-weight: 500;
           padding-right: 5px;

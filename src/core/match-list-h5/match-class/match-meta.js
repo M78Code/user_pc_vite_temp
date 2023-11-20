@@ -515,9 +515,15 @@ class MatchMeta {
     const dataList = lodash.get(res, 'data.dataList', [])
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
+    // ws 订阅
+    const p_15_mids = p15_list.map(t => t.mid)
+    p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
     MatchDataBasel5minsH5.set_list(p15_list)
     // 热门赛事数据
     MatchDataBaseHotsH5.set_list(hots)
+    // ws 订阅
+    const hots_mids = p15_list.map(t => t.mid)
+    hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []
@@ -864,6 +870,13 @@ class MatchMeta {
   }
 
   /**
+   * @description 删除赛事
+   */
+  handle_remove_match (data) {
+
+  }
+
+  /**
    * @description ws 指令处理
    * @param {*} cmd 
    */
@@ -874,16 +887,18 @@ class MatchMeta {
       const { cd = [] } = data
       if (cd.length < 1) return
       const item = cd.find(t => t.csid == MenuData.menu_csid)
-      console.log(11111)
       if (item) this.get_target_match_data({})
     }
     // 调用 matchs  接口
-    if (['C901', 'C801', 'C302', 'C104'].includes(cmd)) {
-      this.get_target_match_data({})
+    if (['C104'].includes(cmd)) {
+      // mhs === 2 为关盘
+      if (data.mhs == 2) {
+        this.handle_remove_match(data)
+      }
     }
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
-      this.get_match_base_hps_by_mids()
+      // this.get_match_base_hps_by_mids()
     }
   }
 
@@ -902,6 +917,8 @@ class MatchMeta {
       const target = type === 'cover' ? Object.assign({}, match, t) : Object.assign({}, t, match)
       return target
     })
+    // ws 订阅
+    warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
     warehouse.set_list(list)
   }
@@ -913,6 +930,8 @@ class MatchMeta {
    */
   handle_submit_warehouse(config) {
     const { list = [], warehouse = MatchDataBaseH5 } = config
+    // ws 订阅
+    warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
     warehouse.set_list(list)
     // 获取赛事赔率
