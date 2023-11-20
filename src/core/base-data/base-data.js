@@ -112,7 +112,8 @@ class BaseData {
       101, 102, 2000, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,
       114, 104, 106, 118, 400, 300,
     ];
-
+    // 左侧菜单数据
+    this.left_menu_base_mi = []
     // 电子竞技
     this.sports_mi = [2100, 2101, 2103, 2102];
 
@@ -489,7 +490,8 @@ class BaseData {
     if (menu_info.length) {
       const left_menu = [],
         esport_menu = [],
-        sports_mi = [];
+        sports_mi = [],
+        left_menu_mi = []
       // 左侧菜单id
       menu_info.forEach((item) => {
         // vr300 冠军400 2000 电竞 500热门
@@ -497,6 +499,14 @@ class BaseData {
           // 过滤 商户 屏蔽的赛种数据
           if (!this.filterSport_arr.includes(item.mi)) {
             left_menu.push(Number(item.mi));
+            // 计算菜单数量列表
+            if(item.sl){
+              let total = item.sl.reduce((cur,obj)=> {
+                return cur + Number(obj.ct)
+              },0)
+             item.ct = total
+            }
+            left_menu_mi.push(item)
           }
         }
 
@@ -512,6 +522,7 @@ class BaseData {
       });
       // 重置默认数据
       this.left_menu_base_mi_arr = left_menu  ;
+      this.left_menu_base_mi = left_menu_mi  ;
 
       this.sports_mi = sports_mi;
 
