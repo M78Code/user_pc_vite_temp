@@ -5,10 +5,12 @@ import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+
 export default {
     data() {
       return {
-        init_load: false  
+        init_load: false,
       }
     },
     created () {
@@ -16,7 +18,7 @@ export default {
         url_param_ctr_init(this);
         MenuData.get_new_data()
         this.init_process() 
-        
+       useMittOn(MITT_TYPES.EMIT_SET_BET_WS_C106_CHANGE,this.set_bet_c106_change())
     },
     watch: {
       '$route'(to, from) {
@@ -73,8 +75,12 @@ export default {
             this.init_load = true;
           });
         AllDomain.run();
+        }
+      },
+      // 投注项赔率变动
+      set_bet_c106_change( obj={} ) {
+        console.error('set_bet_c106_change',obj)
+        BetData.set_bet_c106_change(obj)
       }
-          
-    }
-  },
+    },
 }
