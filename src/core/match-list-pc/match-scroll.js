@@ -1,6 +1,5 @@
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import {show_mids_change} from "./composables/match-list-ws.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, } from 'src/core/index.js';
 
 class MatchListScrollClass {
@@ -37,7 +36,7 @@ class MatchListScrollClass {
       MatchListData.set_inactive_mids(this.show_mids)
       // 将新的可视区域赛事id 设置为活跃
       MatchListData.set_active_mids(mids)
-      show_mids_change()
+      this.show_mids_change()
     }
     this.show_mids = mids
   }
@@ -50,7 +49,7 @@ class MatchListScrollClass {
     mid = String(mid)
     if(!this.show_mids.includes(mid)){
       this.show_mids.push(mid)
-      show_mids_change()
+      this.show_mids_change()
     }
   }
   /**
@@ -63,7 +62,7 @@ class MatchListScrollClass {
     let index = this.show_mids.findIndex(item => item == mid)
     if(index > -1){
       this.show_mids.splice(index,1)
-      show_mids_change()
+      this.show_mids_change()
     }
   }
   /**
@@ -78,8 +77,8 @@ class MatchListScrollClass {
    * @param {undefined} undefined
   */
   show_mids_change(){
-    
-    lodash.debounce(useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE), 400, { leading: true, trailing: true })
+    useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
+    // lodash.debounce(useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE), 400, { leading: true, trailing: true })
     //生产 bymids限蘋目前设置每秒3次， 滚动节流不能超过1秒3次  滚动产生的bymids调用不走全局节流逻辑
     // lodash.debounce(useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE), 400, { leading: true, trailing: true })
   }
