@@ -30,8 +30,13 @@
      
        <!-- 足球分析页图表 -->
       <foot-ball-stats v-if="detail_info.csid==1" :detail_info="detail_info" :score_list="score_list" />
-       <!-- 篮球分析页图表 -->
-       <basket-ball-stats  v-if="detail_info.csid==2" :detail_info="detail_info" :score_list="score_list" />
+     <!-- 2篮球、5网、9排球、10羽毛球 -->
+       <basket-ball-stats  v-if="['2','5','9','10'].includes(lodash_.get(detail_info,'csid'))" :detail_info="detail_info" :score_list="score_list" />
+
+       <!-- 4冰、6美足、5网、7斯诺克、9排球、10羽毛球 -->
+    <!-- <template v-if="['4','6','5','7','9','10'].includes(lodash_.get(detail_info,'csid'))">
+      <more :match_info="detail_info" />
+    </template> -->
 
       </div>
       <!-- 选择哪队会赢组件 -->
@@ -46,6 +51,7 @@ import { onMounted, onUnmounted,ref,computed,watch } from "vue";
 
  import FootBallStats from './compoments/football_stats.vue'
  import BasketBallStats from './compoments/basketball_stats.vue'
+
 import switchTeam from './compoments/switch-team.vue'
 
 import venueBox from './compoments/venue-box/index.vue'
