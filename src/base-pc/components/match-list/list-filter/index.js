@@ -224,7 +224,6 @@ function handle_click_menu_mi_400(detail = {}) {
 }
 
 function set_menu_config(obj = {}) {
-    console.error('asdad')
     // 设置 中间 菜单输出
     const obj_config = {
         ...MenuData.mid_menu_result,

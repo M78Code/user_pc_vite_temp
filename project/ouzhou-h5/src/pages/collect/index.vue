@@ -75,6 +75,7 @@ const changeMenu = (item) =>{
   MatchMeta.get_collect_match()
 }
 onMounted(()=>{
+  MenuData.set_collect_id(50000);
   on_update(tabData[0].val)
 })
 </script>

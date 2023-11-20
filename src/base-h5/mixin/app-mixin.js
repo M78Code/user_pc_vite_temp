@@ -183,7 +183,6 @@ export default {
           this.handle_init_load
         ).off,
         emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off,
-        emitter_5: useMittOn(MITT_TYPES.EMIT_SET_BET_WS_C106_CHANGE,this.set_bet_c106_change()).off,
 
         // emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off
       };
@@ -206,10 +205,6 @@ export default {
     unbind_debounce_throttle() {
       this.resetApiDemo.cancel && this.resetApiDemo.cancel();
     },
-    // 投注项赔率变动
-    set_bet_c106_change( obj={} ) {
-      console.error('ssss',obj)
-      BetData.set_bet_c106_change(obj)
-    }
+   
   },
 };

@@ -1,6 +1,6 @@
 import { api_match_list } from "src/api/index.js";
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
-import { onMounted, ref, watch, onUnmounted } from "vue";
+import { onMounted, ref, watch, onUnmounted, toRaw } from "vue";
 import {
   MatchDetailCalss,
   MatchDataWarehouse_H5_Detail_Common,
@@ -312,7 +312,7 @@ export const details_main = (router,route) => {
         router.replace("/");
       }
       // detail_store.get_detail_params
-      MatchDataWarehouseInstance.value.set_match_details(match_detail.value, []);
+      MatchDataWarehouseInstance.value.set_match_details(toRaw(match_detail.value), []);
     })
     //初次调用成功后 赋值init未false
     const { mid, csid } = route.params;
