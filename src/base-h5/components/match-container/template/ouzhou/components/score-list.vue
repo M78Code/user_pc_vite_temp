@@ -9,6 +9,8 @@
         v-for="s in score_data" 
         :key="s.oid"
         :odd_item="s"
+        :mhs="mhs"
+        :item_hs="item_hs"
         :match_id="match_info.id"
         :csid="match_info.csid"
         :show_hpn="show_hpn"></OddItem>
@@ -28,32 +30,46 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/i
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const props = defineProps({
+  // 容器高度
   height: {
     type: String,
     default: () => '58px'
   },
+  // 默认展示个数
   score_length: {
     type: Number,
     default: () => 3
   },
+  // 赛事信息
   match_info: {
     type: Object,
     default: () => {}
   },
+  // 是否显示 玩法 前缀
   show_hpn: {
     type: Boolean,
     default: () => false
+  },
+  // 是否需要跟随切换玩法变化
+  is_change: {
+    type: Boolean,
+    default: () => true
   }
 })
 
 const ol_info = ref({})
+const mhs = ref(0)
+const item_hs = ref(0)
 const active_score = ref('')
 
 // 赔率数据
 const score_data = computed(() => {
+  if (!props.is_change) return
   const hps = props.match_info.hps
   const hpid = MatchResponsive.match_hpid.value
   const hps_item = hps && hps.find(t => t.hpid == hpid)
+  mhs.value = lodash.get(props.match_info, 'mhs', 1)
+  item_hs.value = lodash.get(hps_item, 'hl[0].hs', 1)
   const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: props.score_length }, (i) => { return {  oid: i } }))
   return ol.sort((a, b) => a.otd - b.otd)
 })

@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="h-right">
-    <div v-show="false">{{ SearchPCClass.update_time }}</div>
+    <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
         <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
@@ -18,7 +18,6 @@
             <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
           </template>
         </q-input>
-        <!-- <input type="text" @compositionstart="test" @compositionend="finish"> -->
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
@@ -114,6 +113,8 @@ import { loadLanguageAsync } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
+import BetData from 'src/core/bet/class/bet-data-class.js';
+import {  LayOutMain_pc } from 'src/core/index.js'
 
 export default defineComponent({
   name: "RightHead",
@@ -184,12 +185,6 @@ export default defineComponent({
         get_search_data(trimVal);
       }
     )
-    const test = () => {
-      console.log('正在输入中');
-    }
-    const finish = () => {
-      console.log('输入完成');
-    }
     
     // 传递搜索状态
     const get_search_data = (val) => {
@@ -212,7 +207,9 @@ export default defineComponent({
     }
     //赛果
     const goto_results = () => {
-      userRouter.push("/match_results")
+      LayOutMain_pc.set_layout_secondary_dialog()
+      BetData.set_bet_box_draggable({show:false})
+      // userRouter.push("/match_results")
     }
     const onExpend = () => {
       visible.value = !visible.value
@@ -245,8 +242,11 @@ export default defineComponent({
       }
     }
     function hide_search(e) {
+      const target_class_list = ['q-field__native q-placeholder', 'serach-wrap column', 'sports-tab', 'tab', 'tab active', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible', 'windows desktop landscape', 'icon-close'];
       if(is_focus.value && SearchPCClass.search_isShow) {
-        if(e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible' && e.target.className != 'windows desktop landscape') {
+        console.log('e', e.target.className);
+        if(!target_class_list.includes(e.target.className)) {
+          // e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible' && e.target.className != 'windows desktop landscape' && e.target.className != 'icon-close'
           SearchPCClass.set_search_isShow(false);
           is_focus.value = false;
           text.value = ''
@@ -292,9 +292,7 @@ export default defineComponent({
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX,
       is_focus,
-      get_search_data,
-      test,
-      finish
+      get_search_data
     };
   
   }
@@ -409,7 +407,7 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       transition: all 0.25s;
-      color: #8A8986;
+      color: var(--q-gb-t-c-8);
       &.active{
         color: #000;
         background: var(--q-gb-bg-c-4);
@@ -461,5 +459,9 @@ export default defineComponent({
   &::before {
     color: var(--q-gb-t-c-1);
   }
+}
+.dialog_box{
+  height: 100%;
+  width: 100%;
 }
 </style>

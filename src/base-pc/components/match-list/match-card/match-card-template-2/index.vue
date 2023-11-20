@@ -7,16 +7,16 @@
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;
         width:${LayOutMain_pc.oz_layout_content - LayOutMain_pc.oz_right_width - LayOutMain_pc.oz_left_width}px  !important;`">
     <!--改成101用来打包调试-->
-    <component :is="`MatchTpl${101}After`" :mid="mid" />
+    <component :is="`MatchTpl${101}After`" :match="get_match_item(mid)" :mid="mid" />
     <!-- {{ `MatchTpl${101}After` }} -->
   </div>
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc } from "src/core/index.js";
+import { LayOutMain_pc, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 
 // // // 玩法模板 101 欧洲版
 import { MatchTpl101AfterFullVersionWapper as MatchTpl101After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-101-after/index.js";
@@ -34,9 +34,12 @@ export default {
   setup(props) {
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
+    const get_match_item = (mid) => {
+      return  MatchListData.get_quick_mid_obj(mid)
+    }
+
     // 组件是否加载完成
     const is_mounted = ref(true);
-    console.log('进来了几次');
     // 显示部分dom ID
     // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
     onMounted(() => {
@@ -54,6 +57,7 @@ export default {
       LayOutMain_pc,
       MatchListCardData,
       MatchListCardDataClass,
+      get_match_item,
     }
   }
 }

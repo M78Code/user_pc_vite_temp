@@ -34,13 +34,15 @@ class MenuData {
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash_.debounce(() => {
       that.update_time.value = Date.now();
+      console.error('update_time',this)
     }, 16);
     //提供销毁函数
     this.destroy = () => {
       this.update && this.update.cancel()
     }
+    // 菜单赛种对应的赛种id
+    this.menu_csid = 0
     //----------------------------------- 常规球种 --------------------------------------//
-    this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
@@ -74,7 +76,7 @@ class MenuData {
         top_events_list = [];
     const session_info = SessionStorage.get("menu-h5");
     //常规球种
-    menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<this.conventionalType});
+    menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<300});
     //热门球种
     top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     //热门球种不存在取常规球种  1
@@ -114,7 +116,7 @@ class MenuData {
     });
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
-    if(session_info){
+    if(session_info){//取session球种id
       this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
       this.menu_mi.value = session_info.menu_mi;
     }
@@ -182,12 +184,21 @@ class MenuData {
     SessionStorage.set("menu-h5",{
       menu_mi:mi
     });
+    this.menu_csid = mi*1 - 100
     this.update()
   }
   // 设置二级菜单 id
   set_menu_lv2_mi(val){
     this.current_lv_2_menu_i = val
     this.current_lv_2_menu_mi.value = val
+    this.menu_csid = val*1 - 100
+  }
+  /**
+   * 清除默认球种
+   */
+  clear_menu_id(){
+    this.current_lv_2_menu_i = "";
+    this.menu_mi.value = "";
   }
   /**
    * 设置时间 并且设置时间请求参数

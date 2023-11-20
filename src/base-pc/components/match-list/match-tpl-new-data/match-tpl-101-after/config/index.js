@@ -6,6 +6,10 @@ export  const need_register_props = {
     type: String | Number,
     default: null,
   },
+  match: {
+    type: [ Object ],
+    default: () => {}
+  }
 }
 
 

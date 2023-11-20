@@ -356,7 +356,7 @@ class MatchMeta {
     const current_lv_1_menu_i = lodash.get(MenuData, 'current_lv_1_menu_i')
     const type = MenuData.menu_id_map(current_lv_1_menu_i) ? MenuData.menu_id_map(current_lv_1_menu_i) : current_lv_1_menu_i
     return {
-      cuid: UserCtr.get_cuid(), // 508895784655200024
+      cuid: UserCtr.get_uid(), // 508895784655200024
       euid: euid ? euid : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
       // 一级菜单筛选类型 1滚球 2 今日 3早盘 400冠军  6串关
       type,
@@ -377,7 +377,7 @@ class MatchMeta {
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     const res = await api_common.post_match_full_list({
       euid,
-      "cuid": UserCtr.get_cuid(),
+      "cuid": UserCtr.get_uid(),
       "type": 100,
       "sort": PageSourceData.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
@@ -448,7 +448,6 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
-    // 获取赛 事收藏状态 该接口还没发到试玩
     if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data()
     this.handler_match_list_data({ list: list, is_classify })
   }
@@ -465,7 +464,7 @@ class MatchMeta {
       apiType: 1,
       orpt: -1,
       csid,
-      cuid: UserCtr.get_cuid(),
+      cuid: UserCtr.get_uid(),
     }
     api_match.post_fetch_match_list(params).then((res) => {
       if (+res.code !== 200) return
@@ -492,6 +491,32 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取欧洲版联赛数量统计
+   */
+  async get_ouzhou_leagues_data (config) {
+    const {area, date} = config
+    const mid = MenuData.current_lv_2_menu_i
+    let mid_list = lodash.get(MenuData,'collect_list')
+    let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
+    let euid = ''
+    if(mid == 0){
+      // 根据 菜单id 获取euid
+      mid_list.forEach(item => {
+        if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
+          euid += BaseData.mi_euid_map_res[item.mi].h + ','
+        }
+      })
+    }else{
+      euid = MenuData.get_euid(mid+''+lv1_mi)
+    }
+    const params = this.get_base_params(euid)
+    const res = await api_match_list.get_leagues_list({
+      sportId: params.euid,
+      selectionHour: date
+    })
+  }
+
+  /**
    * @description 处理欧洲版首页热门赛事
    */
   handle_ouzhou_home_data (res) {
@@ -501,10 +526,10 @@ class MatchMeta {
     const hots = lodash.get(res, 'data.hots', [])
     const dataList = lodash.get(res, 'data.dataList', [])
     // 15分钟玩法赛事数据
-    const p15_list = this.assemble_15_minute_data(p15.slice(0, 4))
+    const p15_list = this.assemble_15_minute_data(p15)
     MatchDataBasel5minsH5.set_list(p15_list)
     // 热门赛事数据
-    MatchDataBaseHotsH5.set_list(hots.slice(0, 4))
+    MatchDataBaseHotsH5.set_list(hots)
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []
@@ -551,9 +576,9 @@ class MatchMeta {
       euid = MenuData.get_euid(mid+''+lv1_mi)
     }
     const params = this.get_base_params(euid)
+    this.match_mids = []
     const res = await api_common.get_collect_matches(params)
     MatchCollect.get_collect_match_data()
-    this.match_mids = []
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     this.handler_match_list_data({ list: list, is_virtual: false })
@@ -680,7 +705,7 @@ class MatchMeta {
       MatchResponsive.clear_ball_seed_league_count()
     }
     const length = lodash.get(list, 'length', 0)
-    console.log('handler_match_list_data', list.length)
+    
     if (length < 1) return this.set_page_match_empty_status(true);
     // // 重置折叠对象
     // MatchFold.clear_fold_info()
@@ -726,7 +751,6 @@ class MatchMeta {
 
     if (!is_virtual) {
       this.match_mids = lodash.uniq(result_mids)
-      // if (this.is_other_warehouse(warehouse.name_code)) this.match_mids = lodash.uniq(result_mids)
       // 欧洲版首页热门赛事
       const arr_data = match_list.filter((t) => t.mid)
       if (type === 2){
@@ -775,7 +799,6 @@ class MatchMeta {
     is_compute ? this.compute_page_render_list({ scrollTop: 0 }) : this.handle_update_match_info({ list: this.complete_matchs })
 
   }
-
 
   /**
    * @description 计算所需渲染数据
@@ -857,8 +880,17 @@ class MatchMeta {
    * @param {*} cmd 
    */
   handle_ws_directive ({ cmd = '', data = {} }) {
+    console.log(cmd, data)
+    // 赛事新增
+    if (['C109'].includes(cmd)) {
+      const { cd = [] } = data
+      if (cd.length < 1) return
+      const item = cd.find(t => t.csid == MenuData.menu_csid)
+      console.log(11111)
+      if (item) this.get_target_match_data({})
+    }
     // 调用 matchs  接口
-    if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
+    if (['C901', 'C801', 'C302', 'C104'].includes(cmd)) {
       this.get_target_match_data({})
     }
     // 调用 mids  接口

@@ -12,7 +12,7 @@
         <!-- 赛事玩法名称 -->
         <template v-slot:header>
           <div style="width:100%;line-height: 35px;font-weight: 500;">
-            {{ item.hpn }}+++{{ item.hpt }}
+            {{ item.hpn }}
             <span v-if="item.hps">({{ item.hps.split('|')[1] }})</span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
             <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
@@ -301,7 +301,7 @@ onMounted(() => {
       text-align: right;
       margin-right: 10px;
       overflow: hidden;
-      color: #1a1a1a;
+      color: var(--q-gb-t-c-5);
     }
     &:nth-child(2){
       overflow: hidden;
@@ -309,7 +309,7 @@ onMounted(() => {
       min-width: 100px;
       display: block;
       text-align: left;
-      color:#FF7000
+      color:var(--q-gb-t-c-2)
     }
   }
 

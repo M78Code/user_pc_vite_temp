@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/index";
 import { MatchDataWarehouse_H5_Detail_Common,MatchDataWarehouse_H5_List_Common } from 'src/core/index'
@@ -173,9 +173,8 @@ const refresh = (params = {}) => {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-
     // flex: 1;
-    .detail-selec-nav {
+    .detail-select-nav {
       margin: 0 auto;
 
       .btn-label {

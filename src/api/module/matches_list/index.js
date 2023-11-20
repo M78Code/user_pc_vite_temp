@@ -26,6 +26,9 @@ export const get_detail_list = (params, config={}, url = "/yewu11/v1/w/matchDeta
 //获取注单历史
 export const get_order_list = (params, config={}, url = "/yewu12/order/betRecord/getOrderList") => http.post(url, params);
 
+//获取联赛数量统计
+export const get_leagues_list = (params, config={}, url = "/yewu11/v3/european/getLeagues") => http.post(url, params);
+
 //详情页获取玩法详情数据(新)
 export const get_detail_data = (params, config={}, url = "/yewu11/v1/w/matchDetail/getMatchDetail") => http.get(url, params);
 
