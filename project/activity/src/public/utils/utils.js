@@ -1123,5 +1123,37 @@ const utils = {
         }
         return counting_time_;
     },
+    /**
+   * @description: 删除当前url中的指定参数
+   * @param {*} key_arr
+   * @return {*} url
+   */
+    remove_url_param(key_arr) {
+        let url_search = new URLSearchParams(location.search);
+        // 删除  api
+        if (key_arr) {
+            key_arr.forEach(key => {
+                url_search.delete(key)
+            });
+        }
+        // 旧的哈希  兼容   #/home?rdm=1660636891118 这种形式处理
+        let old_hash = location.hash;
+        // 新的 哈希
+        let new_hash = "";
+        if (!old_hash) {
+            new_hash = "";
+        } else {
+            if (old_hash.includes("?")) {
+                new_hash = old_hash.split("?")[0];
+            } else {
+                // '#/home'
+                new_hash = old_hash;
+            }
+        }
+        // 新的 搜索参数
+        let new_search = url_search.toString();
+        // 新的 url
+        return location.origin + "?" + new_search + new_hash;
+    },
 };
 export default utils;
