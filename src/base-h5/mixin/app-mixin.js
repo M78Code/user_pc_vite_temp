@@ -185,6 +185,7 @@ export default {
         emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off,
         emitter_5: useMittOn(MITT_TYPES.EMIT_SET_BET_WS_C106_CHANGE,this.set_bet_c106_change()).off,
 
+        // emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off
       };
     },
     // 移除相应监听事件

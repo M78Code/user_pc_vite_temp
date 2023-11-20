@@ -75,7 +75,6 @@ class MatchMeta {
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
-    
     // 设置 元数据计算 流程
     MatchResponsive.set_is_compute_origin(true)
 
@@ -488,7 +487,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_data () {
-    const res = await api_match_list.get_home_matches({ type: 1 })
+    const res = await api_match_list.get_home_matches({ type: 1, sort: 2 })
     return this.handle_ouzhou_home_data(res)
   }
 
@@ -857,7 +856,7 @@ class MatchMeta {
    * @description ws 指令处理
    * @param {*} cmd 
    */
-  handle_ws_directive (cmd) {
+  handle_ws_directive ({ cmd = '', data = {} }) {
     // 调用 matchs  接口
     if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
       this.get_target_match_data({})

@@ -33,7 +33,7 @@
           </div>
         </div>
         <!-- 犯规条 篮球赛事才有 -->
-        <div class="detail-score-more">
+        <div class="detail-score-more" v-if="detail_info.csid==2">
           <div class="row justify-center">
             <div class="score-more-title"> 
               <span>{{ score_list['S111']['home']+'%'}}</span>
@@ -70,8 +70,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref,watch } from "vue";
 import lodash from "lodash"
+import {allBallObj} from '../compoments/venue-box/score_config'
 const props =  defineProps({
   detail_info: {  // 赛事详情
     type: Object,
@@ -82,24 +83,16 @@ const props =  defineProps({
     default: () => {}
   },
 })
-
+let sliderList = ref([])
 
 const value = ref(50);
 const standard = ref(15)
-const sliderList = ref([
-  {
-    title: `2 ${i18n_t("common.score")}`,
-    value_key:'S107'
-  },
-  {
-    title: `3 ${i18n_t("common.score")}`,
-    value_key:'S108'
-  },
-  {
-    title: i18n_t("common.foul"),
-    value_key:'S106'
-  },
-])
+
+watch(
+  () => props.detail_info.csid,
+  (csid) => {
+    sliderList.value = allBallObj[csid]
+  },{immediate:true})
 
 const tab = ref("mails");
 
