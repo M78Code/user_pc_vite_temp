@@ -152,7 +152,6 @@ export function usedetailData(route) {
         });
         return;
       }
-
       getMatchDetailList(res.data);
       detail_loading.value = false;
       detail_info.value = { ...detail_info.value, ...res.data };
@@ -160,6 +159,7 @@ export function usedetailData(route) {
 
       LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
       //存取赛事详情基础信息
+      console.log(detail_info.value,'detail_info.value')
       MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
       useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       use_polling_mst(detail_info.value);
@@ -258,13 +258,46 @@ export function usedetailData(route) {
     }
   };
 
+  /**
+   * @description: 通过mid获取从仓库获取最新的数据
+   * @param {*} val  mid参数
+   * @return {*}
+   */
+  const update_data = (val) => {
+    if (!val) return;
+    detail_info.value = getMidInfo(val);
+    all_list.value = lodash_.get(getMidInfo(val), "odds_info");
+  };
+  /**
+   * @description: 从仓库获取获取赛事信息
+   * @param {*} mid
+   * @return {*} 赛事详情
+   */
+  const getMidInfo = (mid) => {
+    return MatchDataWarehouseInstance.get_quick_mid_obj(mid);
+  };
+
+  /*
+   **监听数据仓库版本号
+   */
+  watch(
+    () => MatchDataWarehouseInstance.data_version,
+    (val, oldval) => {
+      console.log("data_version", val.version);
+      if (val.version) {
+        update_data(route.params.mid);
+      }
+    },
+    { deep: true }
+  );
+
   onMounted(() => {
     sportId = route.params.csid;
     mid = route.params.mid;
     tid = route.params.tid;
     current_id.value = route.params.mid;
     LayOutMain_pc.set_oz_show_right(true); // 显示右侧
-    LayOutMain_pc.set_oz_show_left(true);// 显示菜单
+    LayOutMain_pc.set_oz_show_left(true); // 显示菜单
     init();
   });
   //todo mitt 触发ws更新
