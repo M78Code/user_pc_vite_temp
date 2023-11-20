@@ -383,7 +383,7 @@ const submit_handle = type => {
                         break;
                 }
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
-                BetViewDataClass.set_bet_order_status(2)
+                BetViewDataClass.set_bet_order_status(status)
             }else{
                 BetViewDataClass.set_orderNo_bet_obj(orderDetailRespList)
                 BetViewDataClass.set_orderNo_bet_single_obj(seriesOrderRespList)

@@ -88,13 +88,13 @@ const goback = () => {
 
   .match-list-container {
     height: 100%;
-    background: #fff !important;
+    background-color: var(--q-gb-bg-c-2) !important;
 
     :deep(.scroll-wrapper) {
-      background: #fff !important;
+      background-color: var(--q-gb-bg-c-2) !important;
 
       .s-w-item {
-        background: #fff !important;
+        background-color: var(--q-gb-bg-c-2) !important;
       }
     }
   }

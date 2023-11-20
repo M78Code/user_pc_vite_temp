@@ -48,9 +48,9 @@
           </div>
           <div class="detail-slider-line" v-if="score_list[item.value_key]">
             <q-slider readonly reverse :model-value="score_list[item.value_key].percentage" :min="0" :max="50" track-color="basic-bg-track" track-size="5px" color="amber-7"
-              :thumb-size="0" style="margin-right:6px" />
+              :thumb-size="'0'" style="margin-right:6px" />
             <q-slider readonly :model-value="score_list[item.value_key].away_percentage" :min="0" :max="50" track-color="basic-bg-track" track-size="5px" color="indigo-12"
-              :thumb-size="0" />
+              :thumb-size="'0'" />
           </div>
         </div>
       </div>
@@ -148,7 +148,7 @@ const tab = ref("mails");
     height: 6px;
     width: 6px;
     border-radius: 50%;
-    background-color: #ffac01;
+    background-color: var(--q-gb-bg-c-12);
     margin-right: 10px;
   }
 
@@ -157,7 +157,7 @@ const tab = ref("mails");
     height: 6px;
     width: 6px;
     border-radius: 50%;
-    background-color: #5881f7;
+    background-color: var(--q-gb-bg-c-13);
     margin-left: 10px;
   }
 }
@@ -245,7 +245,7 @@ const tab = ref("mails");
       }
 
       .dot-h-r {
-        background-color: #5881f7;
+        background-color: var(--q-gb-bg-c-13);
       }
     }
 

@@ -64,6 +64,9 @@ import {
   unfold_all_league,
   recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie,
 } from "./module/fold-tid.js";
+import {
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie
+} from './module/fold-csid.js';
 import { test_log_data } from "./module/test-log.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./module/data-relation.js";
 import {
@@ -222,6 +225,10 @@ class MatchListCardInfo {
     recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(
       mids_arr
     );
+  }
+  // 球种折叠
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(click_card_obj) {
+    recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(click_card_obj)
   }
   /**
    * @Description 移除一场赛事

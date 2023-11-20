@@ -12,7 +12,7 @@
         'active-odds-icon': ol_data.oid == current_ol.oid,
       },
     ]"
-    @click.stop="bet_click_ol"
+   
     :id="`list-${ol_data.oid}`"
   >
     <!-- 盘口 -->
@@ -138,7 +138,6 @@ onMounted(() => {
 watch(
   () => props.ol_data.ov,
   (cur, old) => {
-    console.log(111111111111);
     // 赔率值处理
     format_odds(cur, 1);
     if (props.ol_data) {
@@ -167,7 +166,7 @@ const format_odds = () => {
     hsw || "",
     1
   );
-  console.log("match_odds_info", props.ol_data);
+ 
   match_odds.value = format_odds_value(match_odds_info, props.ol_data.csid);
 };
 
@@ -260,16 +259,16 @@ const get_odds_state = (mhs, hs, os) => {
  * @description 投注项点击
  * @return {undefined} undefined  组装投注项的数据
  */
-const bet_click_ol = () => {
-  const { oid, _hid, _hn, _mid } = props.ol_data;
-  let params = {
-    oid, // 投注项id ol_obj
-    _hid, // hl_obj
-    _hn, // hn_obj
-    _mid, //赛事id mid_obj
-  };
-  set_bet_obj_config(params, {});
-};
+// const bet_click_ol = () => {
+//   const { oid, _hid, _hn, _mid } = props.ol_data;
+//   let params = {
+//     oid, // 投注项id ol_obj
+//     _hid, // hl_obj
+//     _hn, // hn_obj
+//     _mid, //赛事id mid_obj
+//   };
+//   set_bet_obj_config(params, {});
+// };
 
 onUnmounted(() => {
   // 清除定时器
@@ -310,16 +309,16 @@ onUnmounted(() => {
 .odds-arrows-wrap {
   position: relative;
   .up {
-    color: #17a414 !important;
+    color: var(--q-gb-t-c-6) !important;
   }
   .down {
-    color: #ff4646 !important;
+    color: var(--q-gb-t-c-7) !important;
   }
   .default {
-    color: #ff7000;
+    color: var(--q-gb-t-c-2);
   }
   .active {
-    color: #ffffff !important;
+    color: var(--q-gb-t-c-1) !important;
   }
 }
 .odds-icon {

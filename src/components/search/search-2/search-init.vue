@@ -5,7 +5,6 @@
         class="wrap-init"
         @click.stop
     >
-        <div style="height:50px"></div>
         <div
             class="init-wrap "
             v-if="histroy_data.length > 0"
@@ -207,19 +206,8 @@ function init() {
     get_hot_search();
     get_history();
 }
-const get_props = (props) => {
-    console.log('props', props);
-    // keyword.value = props.text
-    // search_type.value = props.type
-}
 /** 钩子触发 */
-onMounted(() => {
-    init()
-    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
-})
-onUnmounted(() => {
-    useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
-})
+onMounted(init)
 
 </script>
   

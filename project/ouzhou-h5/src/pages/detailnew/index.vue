@@ -201,14 +201,15 @@ export default {
     height: 45px;
     line-height: 45px;
     font-size: 16px;
-    color: #1a1a1a;
-    background: #fff;
+    color: var(--q-gb-t-c-4);
+    background-color: var(--q-gb-bg-c-2);
     .tab-active {
-      color: #ff7000;
+      color: var(--q-gb-t-c-1);
+      
       .tab-text {
         display: inline-block;
         font-weight: 500;
-        border-bottom: 3px solid #ff7000;
+        border-bottom: 3px solid var(--q-gb-bd-c-1);
       }
     }
     .tabs-item {
@@ -224,8 +225,7 @@ export default {
   }
   .match-detail-tab {
     height: 50px;
-    //background: #ffffff;
-    background: var(--q-gb-bg-c-15);
+    background-color: var(--q-gb-bg-c-2);
   }
   .match-detail-odds-scroll {
     overflow-x: hidden;
@@ -256,7 +256,7 @@ export default {
   // }
 }
 .bg_fff {
-  background: #fff;
+  background-color: var(--q-gb-bg-c-2);
 }
 .overflow_hidden {
   // overflow: hidden;

@@ -18,6 +18,7 @@
             <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
           </template>
         </q-input>
+        <!-- <input type="text" @compositionstart="test" @compositionend="finish"> -->
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
@@ -109,7 +110,8 @@ import store from "src/store-redux/index.js";
 import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account } from 'src/api/index';
-import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";;
+import { loadLanguageAsync } from "src/core/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
 
@@ -182,6 +184,12 @@ export default defineComponent({
         get_search_data(trimVal);
       }
     )
+    const test = () => {
+      console.log('正在输入中');
+    }
+    const finish = () => {
+      console.log('输入完成');
+    }
     
     // 传递搜索状态
     const get_search_data = (val) => {
@@ -238,19 +246,30 @@ export default defineComponent({
     }
     function hide_search(e) {
       if(is_focus.value && SearchPCClass.search_isShow) {
-        if(e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column') {
-            SearchPCClass.set_search_isShow(false);
-            is_focus.value = false;
-          } 
+        if(e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible' && e.target.className != 'windows desktop landscape') {
+          SearchPCClass.set_search_isShow(false);
+          is_focus.value = false;
+          text.value = ''
+        } 
       }
+    }
+    const get_props = (props) => {
+      text.value = props.text
+    }
+    const get_width = (props) => {
+      is_focus.value = props.focus
     }
     
     onMounted(() => {
       compute_userInfo();
-        document.addEventListener('click', (e) => hide_search(e))
+      document.addEventListener('click', (e) => hide_search(e))
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width)
     });
     onUnmounted(() => {
       document.removeEventListener('click', hide_search)
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width).off()
     })
 
     return {
@@ -273,7 +292,9 @@ export default defineComponent({
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX,
       is_focus,
-      get_search_data
+      get_search_data,
+      test,
+      finish
     };
   
   }
