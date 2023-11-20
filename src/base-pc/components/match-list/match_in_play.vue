@@ -22,7 +22,7 @@
 <style lang="scss" scoped>
 .in-play {
   font-weight: 500;
-  color: #1A1A1A;
+  color: var(--q-gb-t-c-5);
   font-size: 18px;
   margin-bottom: 10px;
   margin-top: 24px;

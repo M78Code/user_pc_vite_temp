@@ -459,7 +459,7 @@ export default defineComponent({
 .search-click .s-input {
   width: 500px;
   &:deep(.q-field) {
-    background-color: #CE5B00 !important;
+    background-color: var(--q-gb-bg-c-22) !important;
   }
 }
 .icon-search,

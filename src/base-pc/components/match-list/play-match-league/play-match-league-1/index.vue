@@ -132,7 +132,7 @@ onUnmounted(()=>{
   display: flex;
   width: 100%;
   height: 100%;
-  background: #F5F5F5;
+  background: var(--q-gb-bg-c-15);
   border-bottom: 1px solid var(--q-gb-bd-c-2);
   font-weight: 500;
   cursor: pointer;

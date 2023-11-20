@@ -224,7 +224,7 @@ onMounted(() => {
       height: 50px;
       line-height: 50px;
       //  border-top: 1px solid #E2E2E2;
-      border-left: 1px solid #F5F5F5;
+      border-left: 1px solid var(--q-gb-bg-c-15);
       border-bottom: 1px solid var(--q-gb-bd-c-10);
     }
 
@@ -237,7 +237,7 @@ onMounted(() => {
     margin-left: -1px;
 
     & > div:first-child {
-      border-top: 1px solid #F5F5F5;
+      border-top: 1px solid var(--q-gb-bg-c-15);
     }
   }
 
@@ -257,7 +257,7 @@ onMounted(() => {
   .temp5-hv {
     // background-color: #f5f5f5;
     color: #484848;
-    border-right: 1px solid #F5F5F5;
+    border-right: 1px solid var(--q-gb-bg-c-15);
   }
 
   .temp_grid_item {
