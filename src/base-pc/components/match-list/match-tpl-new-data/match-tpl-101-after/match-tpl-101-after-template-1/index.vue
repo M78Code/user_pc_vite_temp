@@ -59,7 +59,7 @@ let match = MatchListData.list_to_obj.mid_obj[props.mid + '_'];
 let match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, 'template_101_config.width_config', {})
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
 let handicap_list = ref([]);
-watch(() => [MatchListData.data_version.version,MatchListCardDataClass.list_version], (new_value, old_value) => {
+watch(() => [MatchListData.data_version.version,MatchListCardDataClass.list_version.value], (new_value, old_value) => {
   match = MatchListData.list_to_obj.mid_obj[props.mid + '_'];
   if (match) {
     const csid = lodash.get(match, 'csid')
