@@ -1,5 +1,5 @@
 <script setup name="bevis-search-list">
-import {defineProps, defineEmits} from "vue"
+import {defineProps, defineEmits, inject} from "vue"
 
 import {IconWapper} from 'src/components/icon/index.js'
 
@@ -22,7 +22,8 @@ const formatKind = function (kind){
 }
 
 const emits = defineEmits(['Search'])
-
+const ClearHistories = inject('ClearHistories')
+const ChangeShowHotListData = inject('ChangeShowHotListData')
 const bindSearch = function ({ keyWord }){
     emits('Search', keyWord)
 }
@@ -30,17 +31,22 @@ const bindSearch = function ({ keyWord }){
 const bindDelete = function ({ keyword }){
     emits('Delete',keyword)
 }
+
+const bindTips = function (){
+    ( props.kind === 'history' && ClearHistories() ) || ( props.kind === 'hot' && ChangeShowHotListData() )
+}
+
 </script>
 
 <template>
     <dl class="list">
         <dt>
             <p>{{ formatKind(kind).title }}</p>
-            <p class="cursorPointer">{{ formatKind(kind).tips }}</p>
+            <p class="cursorPointer" @click="bindTips">{{ formatKind(kind).tips }}</p>
         </dt>
         <dd v-for="(item,index) of list" :key="item.id" class="cursorPointer" @click="bindSearch(item)">
             <p>{{ ++index }}&nbsp;&nbsp;{{ item?.keyWord ?? item?.keyword }}</p>
-            <IconWapper v-if="kind === 'history'" name="icon-del" size="8px" @click="bindDelete(item)"></IconWapper>
+            <IconWapper v-if="kind === 'history'" class="delete-icon" name="icon-del" size="8px" @click="bindDelete(item)"></IconWapper>
         </dd>
     </dl>
 </template>
@@ -90,9 +96,15 @@ p{
         display: flex;
         align-items: center;
         justify-content: space-between;
+        .delete-icon{
+            &:hover{
+                transform: scale(1.5);
+            }
+        }
         &:hover {
             color: #ff7000;
         }
     }
 }
+
 </style>
