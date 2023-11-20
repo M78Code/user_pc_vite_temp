@@ -780,18 +780,26 @@ this.bet_appoint_ball_head= null */
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
             if(ws_ol_obj.ov){
+              let time_out = null
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
-              // 绿升红降
-              ol_obj.red_green = 'green_up'
+              //  红升绿降
+              ol_obj.red_green = 'red_up'
               if(ol_obj.odds > ws_ol_obj.ov ){
-                ol_obj.red_green = 'red_down'
+                ol_obj.red_green = 'green_down'
               }
               // 重新设置赔率
               ol_obj.odds = ws_ol_obj.ov*1
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, '', '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
+
+              clearTimeout(time_out)
+              // 5秒后清除 红升绿降
+              time_out = setTimeout(()=>{
+                ol_obj.red_green = ''
+                this.set_ws_message_bet_info(ol_obj,ol_obj_index)
+              },5000)
             }
           }
         })

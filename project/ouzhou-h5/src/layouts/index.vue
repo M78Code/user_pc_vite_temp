@@ -14,7 +14,7 @@
       <!-- 投注框 -->
       <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
       
-       <bet-bar class="bar-top" v-if="is_show"></bet-bar>
+       <bet-bar class="bar-top" v-if="tou_show"></bet-bar>
       <FooterWapper />
 
     </q-page-container>
@@ -31,6 +31,7 @@ import {
   onUnmounted,
   defineAsyncComponent,
   nextTick,
+  watch
 } from "vue";
 
 
@@ -41,7 +42,7 @@ import { TopMenuWapper } from "src/base-h5/components/top-menu/"
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import { FooterWapper } from "src/base-h5/components/footer-bar/"
 
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router'
 
 import { api_common } from "src/api/index.js";
 import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
@@ -50,6 +51,17 @@ const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")
 );
 
+var tou_show = ref(true)
+
+let routerPath = ref<String>('')
+const route = useRoute()
+watch(() => route.path,newRoute => {
+  if(newRoute == '/home' || newRoute == '/inplay' || newRoute == '/match'){
+    tou_show.value = true
+  }else{
+    tou_show.value = false
+  }
+})
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 
@@ -57,22 +69,12 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import "./index.scss"
 
 const inner_height = window.innerHeight;  // 视口高度
-const route = useRoute();
+
 let lastTouchEnd = ref(0)
 // 是否展示左侧菜单
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
-
-//判断是否显示最下面那个
-const is_show = () =>{
-  if(route.path == '/home' || route.path == '/inplay' || route.path == '/match'){
-    return true
-  }else{
-    return false
-  }
-}
-
 /**
  * @description: touchstart事件方法体
  */

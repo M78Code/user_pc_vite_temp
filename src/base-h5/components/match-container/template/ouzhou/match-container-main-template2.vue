@@ -298,7 +298,7 @@ export default {
       const target_item = hps_play_data.value.find(t => t.hpid == hpid)
       const target_ol = lodash.get(target_item, 'hl[0].ol')
       score_length.value = lodash.get(target_ol, 'length', 3)
-
+      
       const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: score_length.value }, () => '{}'))
 
       return ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
