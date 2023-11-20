@@ -15,7 +15,9 @@ const routes = [
         name: "home",
         component: () => import('../pages/match-list/match-list.vue'),
         meta: {
-          keepAlive: true, // 需要缓存
+          keepAlive: true, // 需要缓存,
+          title: '首页',
+          needRemember: true
         },
       },
       //滚球
@@ -25,6 +27,8 @@ const routes = [
         component: () => import('../pages/scroll-ball/index.vue'), 
         meta: {
           keepAlive: true, // 需要缓存
+          title: '滚球',
+          needRemember: true
         },
       },
       //投注记录
@@ -34,6 +38,8 @@ const routes = [
         component: () => import('../pages/bet-record/index.vue'),
         meta: {
           keepAlive: true, // 需要缓存
+          title: '投注记录',
+          needRemember: true
         },
       },
       {
@@ -44,19 +50,19 @@ const routes = [
           keepAlive: true, // 需要缓存
         },
       },
-      // 搜索
-      {
-        path: "/search/:keyword/:time?",
-        name: "search",
-        component: () => import(`../pages/test/index.vue`),
-          meta: {
-            keepAlive: true // 需要缓存
-          }
-      },
       {
         path: "/details/:mid/:tid/:csid",
         name: "details",
         component: () => import('../pages/match-new-detail/index.vue')
+      },
+      // 搜索
+      {
+        path: "/search/:keyword/:csid",
+        name: "search",
+        component: () => import('../pages/search/index.vue'),
+        meta: {
+          keepAlive: true, // 需要缓存
+        }
       },
       {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
