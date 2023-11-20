@@ -6,13 +6,14 @@
 import { reactive } from 'vue';
 import $class from  "licia-es/$class"
 import setTheme from "project/activity/src/public/utils/theme/theme.js"
+import userStore from '../user';
 
 const state = reactive({
     // 主题
     theme: '',
 })
 
-export default {
+const themeStore = {
   getters: {
     /**
      * @description: 获取主题
@@ -32,9 +33,9 @@ export default {
      * @param {String} type 主题类型
      * @return {undefined} undefined
      */
-    set_theme({commit, rootGetters}, type){
+    set_theme(type){
       const theme_obj = {
-        user_id: rootGetters.get_user.userId,
+        user_id: userStore.getters.get_user().userId,
         theme: type
       }
       sessionStorage.setItem("theme", type);
@@ -84,3 +85,15 @@ export default {
     }
   }
 };
+
+/**
+ * mutation commit
+ * @param {*} flag 
+ * @param  {...any} args 
+ * @returns 
+ */
+function commit(flag, ...args) {
+  return themeStore.mutations[flag].apply(null, ...args);
+}
+
+export default themeStore;

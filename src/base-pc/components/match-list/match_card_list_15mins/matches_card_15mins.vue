@@ -1,10 +1,3 @@
-<!--
- * @Author: lockie
- * @Date: 2023-07-01 13:38:48
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-17 14:45:30
- * @FilePath: \user-pc-vue3\src\components\match_list\match_card_list_15mins\matches_card_15mins.vue
--->
 <template>
   <div class="sport">
     <div class="competing-time">
@@ -164,7 +157,7 @@
     span {
       font-size: 14px;
       &:first-child {
-        color: #8A8986;
+        color: var(--q-gb-t-c-8);
         margin-right: 7px;
       }
       &:last-child {

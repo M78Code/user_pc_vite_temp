@@ -97,7 +97,6 @@ const getData = (item,date) =>{
     MatchMeta.get_results_match()
 }
 onMounted(()=>{
-    
     VirtualList.set_is_show_ball(false)
     MenuData.set_current_lv1_menu(28)
     switchHandle()

@@ -15,6 +15,7 @@ export class WsRev {
    * @return:
    */
   static ws_rev_msg(ws,json_data) {
+    // console.error('sws_rev_msgs,',ws,json_data)
     switch (json_data.cmd) {
       case WsCmd.S_CMD_HEART_BEAT:
         // 心跳包直接不处理

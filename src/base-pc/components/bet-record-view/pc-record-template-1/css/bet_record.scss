@@ -155,11 +155,11 @@ body {
               .bet-pre-handle {
                 .bet-pre-info {
                   &:before {
-                    color: #8D8F94;
+                    color: var(--q-gb-t-c-9);
                   }
                   &:hover {
                     &:before {
-                      color: #8D8F94;
+                      color: var(--q-gb-t-c-9);
                     }
                   }
                 }

@@ -253,6 +253,7 @@ onUnmounted(() => {
 .basic-wrap {
   padding: 10px 10px;
   .collect-box {
+    margin-bottom: 7px;
     .collect-start {
       width: 14px;
       height: 14px;
@@ -291,11 +292,11 @@ onUnmounted(() => {
       margin-top: 4px;
     }
     &.kedui-item {
-      color: var(--q-gb-bd-c-4);
+      color: var(--q-gb-bg-c-19);
     }
     .score {
       font-weight: 500;
-      color: var(--q-gb-bg-c-1);
+      color: var(--q-gb-bg-c-2);
     }
   }
 }

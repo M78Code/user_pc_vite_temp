@@ -1,5 +1,5 @@
 <!--
- * @Author: land land@itcom888.com
+ * 早盘，今日赛事页面
 -->
 <template>
   <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
@@ -49,6 +49,10 @@ const onTabChange = e => {
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
   state.curLeague = e
+  MatchMeta.get_ouzhou_leagues_data({
+    date: state.curLeague,
+    area: state.curArea
+  })
 }
 
 const onMatchDateChange = e => {
@@ -61,6 +65,10 @@ const onLeagueChange = (league, game) => {
 
 const onChangeArea = e => {
   state.curArea = e
+  MatchMeta.get_ouzhou_leagues_data({
+    date: state.curLeague,
+    area: state.curArea
+  })
 }
 
 const getAreaLeaguesData = () => {

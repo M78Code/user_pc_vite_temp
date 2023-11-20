@@ -73,7 +73,8 @@
                 {{ calc_text_item(item).text }} 
               </span>
             </span>
-            <div class="line"></div>
+            <!-- 单关不需要下划线 -->
+            <div v-if="data_b.seriesType != '1'" class="line"></div>
           </div>
         </div>
       </template>
@@ -173,10 +174,11 @@ template {
 }
 .item-body {
   .item-header {
-    line-height: 0.5rem;
+    line-height: 0.42rem;
     padding-left: 0.12rem;
-    font-size: 0.18rem;
-    border-bottom: 1px solid var(--q-gb-bg-c-18);
+    font-size: 0.16rem;
+    border-bottom: 1px solid var(--q-gb-bg-c-9);
+    color: var(--q-gb-bg-c-13);
   }
 
   .item-main {
@@ -195,7 +197,7 @@ template {
         position: relative;
         .top-info {
           justify-content: space-between;
-          font-size: 0.16rem;
+          font-size: 0.14rem;
           font-weight: bold;
           padding-left: 0.2rem;
           p {
@@ -215,10 +217,10 @@ template {
           transform: translateY(-50%);
         }
         &.gray-icon i.q-icon::before {
-            color: var(--q-gb-bg-c-6);
+            color: var(--q-gb-bg-c-14);
           }
         span {
-          color: var(--q-gb-bg-c-6);
+          color: var(--q-gb-bg-c-14);
           font-weight: normal;
           font-size: 0.14rem;
         }
@@ -228,7 +230,7 @@ template {
         margin-left: 0.04rem;
         border-left: 1px dashed var(--q-gb-bg-c-9);
         &.gray-icon {
-          border-left-color: var(--q-gb-bg-c-6);
+          border-left-color: var(--q-gb-bg-c-14);
         }
         &.error {
           border-left-color: red;
@@ -247,13 +249,13 @@ template {
           };
         }
         .oddfinally {
-          color: var(--q-gb-bg-c-12)
+          color: var(--q-gb-bg-c-1)
         }
       }
 
       .info {
         font-size: 0.12rem;
-        color: var(--q-gb-bg-c-6);
+        color: var(--q-gb-bg-c-14);
         padding-bottom: 0.1rem;
         justify-content: space-between;
         align-items: center;
@@ -264,7 +266,7 @@ template {
       }
       .line {
         height: 1px;
-        background: var(--q-gb-bg-c-18);
+        background: var(--q-gb-bg-c-9);
         margin-bottom: 0.1rem;
       }
     }
@@ -295,16 +297,16 @@ template {
   }
 
   .gray {
-    color: var(--q-gb-bg-c-6);
+    color: var(--q-gb-bg-c-3);
   }
   .orange {
-    color:  var(--q-gb-bg-c-12);
+    color:  var(--q-gb-bg-c-1);
   }
   .red {
-    color: var(--q-gb-bg-c-12);
+    color: red;
   }
   .black {
-    color: var(--q-gb-bg-c-1);
+    color: var(--q-gb-bg-c-13);
   }
 }
 </style>

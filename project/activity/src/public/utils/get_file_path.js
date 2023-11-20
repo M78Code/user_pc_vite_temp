@@ -23,11 +23,6 @@ const e_sport_csids = [101,100,102,103];
     if(_.toString(path).indexOf('http') == 0){
       return path
     }
-    // // 电竞菜单下如果type没有传值，默认为2
-    // let _menutype = _.get(window,'vue.$store.getters.get_menu_type')
-    // if (_menutype == 3000 && !type) {
-    //   type = 2
-    // }
     // 电竞图片域名模式
     if(e_sport_csids.includes(1*csid)){
       return `${window.env.config.e_sports.domain_img}/${path}`;
