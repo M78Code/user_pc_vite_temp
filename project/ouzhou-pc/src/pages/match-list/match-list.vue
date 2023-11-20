@@ -152,7 +152,7 @@ export default {
     const matches_15mins_list = ref([]);
     // 热推数据
     const matches_featured_list = ref([]);
-    const { ws_destroyed: ws_destroyed_common } = use_match_list_ws()
+    const { ws_destroyed: ws_destroyed_common, set_active_mids } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
     
     // 赛事数量
@@ -200,7 +200,6 @@ export default {
         const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
         console.log(mins15_list,'mins15_list')
         set_active_mids(mins15_list.map(i=>i.mid))
-        set_active_mids_hot(featured_list.map(i=>i.mid))
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = await get_featurd_list()

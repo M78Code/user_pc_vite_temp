@@ -89,7 +89,6 @@ const on_change_play = (item) => {
     emits('changeMenu',item.mi)
     const csid = MenuData.menu_csid
     const hpid = lodash.get(sports_play_data, `[${csid}][0].hpid`, '1')
-    console.log(hpid)
     MatchResponsive.set_match_hpid(hpid)
 }
 
