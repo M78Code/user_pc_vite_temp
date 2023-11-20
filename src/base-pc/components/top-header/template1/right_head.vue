@@ -413,7 +413,7 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       transition: all 0.25s;
-      color: #8A8986;
+      color: var(--q-gb-t-c-8);
       &.active{
         color: #000;
         background: var(--q-gb-bg-c-4);

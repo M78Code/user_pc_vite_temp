@@ -332,7 +332,7 @@ export default {
       api_common.add_or_cancel_tournament({
         tid,
         cf: league_collect ? 0 : 1,
-        cuid: UserCtr.get_cuid()
+        cuid: UserCtr.get_uid()
       }).then(res => {
         if (+res.code !== 200) return
       })
@@ -351,7 +351,7 @@ export default {
       api_common.add_or_cancel_match({
         mid,
         cf: match_state ? 0 : 1,
-        cuid: UserCtr.get_cuid()
+        cuid: UserCtr.get_uid()
       }).then(res => {
         if (+res.code !== 200) return
       })
