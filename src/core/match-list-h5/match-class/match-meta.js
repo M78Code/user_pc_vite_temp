@@ -501,10 +501,10 @@ class MatchMeta {
     const hots = lodash.get(res, 'data.hots', [])
     const dataList = lodash.get(res, 'data.dataList', [])
     // 15分钟玩法赛事数据
-    const p15_list = this.assemble_15_minute_data(p15.slice(0, 4))
+    const p15_list = this.assemble_15_minute_data(p15)
     MatchDataBasel5minsH5.set_list(p15_list)
     // 热门赛事数据
-    MatchDataBaseHotsH5.set_list(hots.slice(0, 4))
+    MatchDataBaseHotsH5.set_list(hots)
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []
