@@ -72,33 +72,33 @@ import { default as BetRecordClass, calc_text} from "src/core/bet-record/bet-rec
 <style lang="scss" scoped>
 .item-footer {
   height: 0.5rem;
-  background: var(--q-gb-bg-c-18);
+  background: var(--q-gb-bg-c-5);
   .result-p {
     line-height: 0.12rem;
   }
   .top-p {
     margin-bottom: -0.02rem;
     min-height: 0.18rem;
-    color: var(--q-gb-bg-c-8);
+    color: var(--q-gb-bg-c-3);
   }
   .money-p {
-    color: var(--q-gb-bg-c-1);
+    color: var(--q-gb-bg-c-13);
   }
   .green {
     color: green;
   }
 
-.gray {
-    color: var(--q-gb-bg-c-6);
+  .gray {
+    color: var(--q-gb-bg-c-3);
   }
   .orange {
-    color:  var(--q-gb-bg-c-12);
+    color:  var(--q-gb-bg-c-1);
   }
   .red {
-    color: var(--q-gb-bg-c-12);
+    color: var(--q-gb-bg-c-1);
   }
   .black {
-    color: var(--q-gb-bg-c-1);
+    color: var(--q-gb-bg-c-13);
   }
 }
 </style>

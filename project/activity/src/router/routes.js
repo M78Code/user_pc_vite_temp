@@ -3,9 +3,9 @@ const routes = [
   {
     path: '/project/activity/index.html',
     component: () => import('project/activity/src/layouts/MainLayout.vue'),
-    redirect: '',
+    redirect: '/project/activity/index.html',
     children: [
-      { path: '', component: () => import('project/activity/src/pages/IndexPage.vue') }
+      { path: '/project/activity/index.html', component: () => import('project/activity/src/pages/IndexPage.vue') }
     ]
   },
 

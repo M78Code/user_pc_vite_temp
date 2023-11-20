@@ -305,7 +305,8 @@ template {
     height: 0.46rem;
     padding: 0.04rem;
     border-radius: 0.46rem;
-    background-color: var(--q-gb-bg-c-18);
+    background-color: var(--q-gb-bg-c-5);
+    color: var(--q-gb-bg-c-14);
     align-items: center;
     span {
       height: 0.38rem;
@@ -315,15 +316,16 @@ template {
       border-radius: 0.5rem;
       padding: 0 0.14rem;
       &.active {
+        color: var(--q-gb-bg-c-13);
         background-color: var(--q-gb-bg-c-15);
-        border: 1px solid var(--q-gb-bg-c-12);
+        border: 1px solid var(--q-gb-bg-c-18);
       }
     }
   }
 }
 .date-header {
   margin-top: 0.1rem;
-  height: 0.4rem;
+  height: 0.3rem;
   align-items: center;
   padding: 0 0.14rem;
   justify-content: space-between;
@@ -333,12 +335,13 @@ template {
   }
   .settled-date {
     font-size: 0.14rem;
-    color: var(--q-gb-bg-c-6);
+    color: var(--q-gb-bg-c-14);
     span {
       font-weight: bold;
       margin-right: 0.06rem;
+      color: var(--q-gb-bg-c-12);
       &.oringe {
-        color: var(--q-gb-bg-c-12);
+        color: var(--q-gb-bg-c-1);
         margin-right: 0;
       }
     }
@@ -352,11 +355,11 @@ template {
     width: 1rem;
     text-align: center;
     border-radius: 0.5rem;
-    border: 1px solid var(--q-gb-bg-c-8);
+    border: 1px solid var(--q-gb-bg-c-14);
     &.active {
       color: var(--q-gb-bg-c-15);
-      background-color: var(--q-gb-bg-c-12);
-      border-color: var(--q-gb-bg-c-12);
+      background-color: var(--q-gb-bg-c-1);
+      border-color: var(--q-gb-bg-c-1);
     }
     &.unsellteCashout {
       position: absolute;

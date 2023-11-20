@@ -15,7 +15,7 @@ const state = reactive({
   lang_change: false // 标识语言是否被改变
 })
 
-export default {
+const langStore = {
   getters: {
     //(获取语言)
     get_lang() {
@@ -32,21 +32,21 @@ export default {
   },
   actions: {
     //设置语言
-    set_lang({commit}, key){
+    set_lang(key){
       commit("set_lang", key);
     },
     //初始化语言
-    init_lang({ commit }, default_lang) {
+    init_lang(default_lang) {
       commit("init_lang", default_lang);
     },
     //设置语言变化
-    set_lang_change({ commit }, lang_change) {
+    set_lang_change(lang_change) {
       commit("set_lang_change", lang_change);
     }
   },
   mutations: {
      //设置语言
-    set_lang(state, key){
+    set_lang(key){
       sessionStorage.setItem('lang',key);
       // 设置永久持久化语言信息
       localStorage.setItem('lang',key);
@@ -54,7 +54,7 @@ export default {
       BaseUserInfo.assign({languageName: key});
     },
      //初始化语言
-    init_lang(state, default_lang){
+    init_lang(default_lang){
       let key = sessionStorage.getItem('lang');
       if(key)
       {
@@ -66,8 +66,21 @@ export default {
       }
     },
      //设置语言变化
-    set_lang_change(state, lang_change) {
+    set_lang_change(lang_change) {
       state.lang_change = lang_change;
     }
   }
 };
+
+/**
+ * mutation commit
+ * @param {*} flag 
+ * @param  {...any} args 
+ * @returns 
+ */
+function commit(flag, ...args) {
+  return langStore.mutations[flag].apply(null, ...args);
+}
+
+
+export default langStore;

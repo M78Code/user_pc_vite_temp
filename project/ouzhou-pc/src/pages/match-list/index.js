@@ -140,12 +140,14 @@ export const init_home_matches = async () => {
     };
     let mins15_list = []
     let featured_list = []
+    let match_count = 0;
     await get_home_matches(params).then((res) => {
       try {
         MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'),false)
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
         MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
+        match_count = res.dataList.length || 0;
         let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
         //过滤前20条数据
         sort_list = filter_20_match(sort_list);
@@ -169,5 +171,6 @@ export const init_home_matches = async () => {
     return {
         mins15_list,
         featured_list,
+        match_count
     }
 };

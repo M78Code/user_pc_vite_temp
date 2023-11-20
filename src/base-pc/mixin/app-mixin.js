@@ -3,9 +3,9 @@ import { SessionStorage,enter_params } from "src/core/index.js";
 import { loadLanguageAsync, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass,MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 export default {
     data() {
@@ -18,7 +18,6 @@ export default {
         url_param_ctr_init(this);
         MenuData.get_new_data()
         this.init_process() 
-       useMittOn(MITT_TYPES.EMIT_SET_BET_WS_C106_CHANGE,this.set_bet_c106_change())
     },
     watch: {
       '$route'(to, from) {
@@ -66,6 +65,7 @@ export default {
             // 设置设备类型 2 pc
             BetData.set_device_type(2);
             BetViewDataClass.init();
+            BetWsMessage.init()
             // 布局初始化
             LayOutMain_pc.init();
             //赛事详情类参数初始化
@@ -77,10 +77,6 @@ export default {
         AllDomain.run();
         }
       },
-      // 投注项赔率变动
-      set_bet_c106_change( obj={} ) {
-        console.error('set_bet_c106_change',obj)
-        BetData.set_bet_c106_change(obj)
-      }
+      
     },
 }
