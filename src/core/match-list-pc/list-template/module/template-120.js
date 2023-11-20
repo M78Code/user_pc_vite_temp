@@ -20,7 +20,6 @@ import * as TemplateCommon from "./template-common.js"
       ols: [
         { _hpid: 39, ot: '1' },
         { _hpid: 39, ot: '2' },
-        { empty:1}
       ],
     },
     {
@@ -28,7 +27,6 @@ import * as TemplateCommon from "./template-common.js"
       ols: [
         { _hpid: 38, ot: 'Over' },
         { _hpid: 38, ot: 'Under' },
-        { empty:1}
       ],
     },
     {
@@ -44,7 +42,6 @@ import * as TemplateCommon from "./template-common.js"
       ols: [
         { _hpid: 19, ot: '1' },
         { _hpid: 19, ot: '2' },
-        { empty:1}
       ],
     },
     {

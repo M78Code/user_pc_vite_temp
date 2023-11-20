@@ -20,10 +20,10 @@
           </div>
         </div>
         <div class="club-name">
-          <span>{{ item.mhn }}</span><span class="din_font">{{ _.get(item.msc, 'S1', {}).home || 0 }}</span>
+          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1', {}).home || 0 }}</span>
         </div>
         <div class="union-name">
-          <span>{{ item.man }}</span><span class="din_font">{{ _.get(item.msc, 'S1', {}).away || 0 }}</span>
+          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1', {}).away || 0 }}</span>
         </div>
         <div class="odds_box">
           <div class="top-line"></div>

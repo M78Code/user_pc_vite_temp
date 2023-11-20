@@ -18,21 +18,18 @@ import * as TemplateCommon from "./template-common.js"
       ols: [
         {  _hpid: 4, ot: '1' },
         {  _hpid: 4, ot: '2' },
-        { empty:1}
       ],
     },
     {
       ols: [
         {  _hpid: 2, ot: 'Over' },
         {  _hpid: 2, ot: 'Under' },
-        { empty:1}
       ],
     },
     {
       ols: [
         {  _hpid: 15, ot: 'Odd' },
         {  _hpid: 15, ot: 'Even' },
-        { empty:1}
       ],
     },
   ],
