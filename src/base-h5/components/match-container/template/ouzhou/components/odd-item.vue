@@ -3,7 +3,8 @@
 -->
 
 <template>
-  <div :class="['odd-item', {active: is_active }]" @click="set_old_submit">
+  <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
+  <div :class="['odd-item', {active: BetData.bet_oid_list.includes(odd_item.oid) }]" @click="set_old_submit">
     <!-- 锁 -->
     <img v-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
     <!-- 是否显示赔率 -->
@@ -22,6 +23,7 @@
 </template>
  
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
@@ -109,7 +111,7 @@ const get_icon = (type) => {
 const set_old_submit = () => {
   const ol = props.odd_item
   if (ol.os !== 1) return
-  MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
+  // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
   const {oid,_hid,_hn,_mid } = ol
   let params = {
     oid, // 投注项id ol_obj
