@@ -1,19 +1,15 @@
-import { ref } from "vue";
 import lodash from 'lodash'
 
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import { addWsMessageListener } from "src/core/utils/module/ws-message.js";
 import { api_bymids } from "./match-list-featch.js";
 // import { fetch_match_list } from '../match-list-composition.js'
 import { useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_PC_List_Common } from 'src/core/index.js';
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
-const bymids = lodash.debounce((mids, MatchListData) => {
-	api_bymids({ mids }, null, MatchListData)
-}, 300);
 function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 	let mids = []
 	console.log('use_match_list_ws', MatchListData.name_code, mids)
-	let message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+	let remove_fun = addWsMessageListener(lodash.debounce((cmd, data) => {
 		// 赛事新增
 		if (["C109"].includes(cmd)) {
 			const { cd = [] } = data;
@@ -30,10 +26,9 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 		}
 		// 调用 mids  接口 303是盘口赔率变更
 		if (["C303", "C114"].includes(cmd)) {
-			console.log('bymids', MatchListData.name_code,Date.now())
-			mids.length && bymids(mids, MatchListData)
+			api_bymids({ mids, is_show_mids_change: MatchListData.name_code == 'MatchDataWarehouse_PC_List_Common' }, null, MatchListData)
 		}
-	})
+	}), 300)
 	return {
 		set_inactive_mids(_mids = []) {
 			MatchListData.set_inactive_mids(_mids)
@@ -46,7 +41,7 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 		ws_destroyed: () => {
 			mids = null;
 			console.log('ws_destroyed')
-			ws_message_listener.ws_remove_message_listener(message_fun)
+			remove_fun && remove_fun()
 			MatchListData.clear()//清除数仓数据
 		}
 	}
