@@ -23,65 +23,6 @@ const props = defineProps({
     },
 })
 
-// 国家赛事
-// const leagues_matchs = ref([{
-//     national: 'Germany',
-//     nationalIcon: de_img,
-//     visible: true,
-//     children: [{
-//         isCollect: false,
-//         value: '6',
-//         title: 'Liga de primera división'
-//     }, {
-//         isCollect: false,
-//         value: '8',
-//         title: 'Liga de primera división'
-//     }]
-// }, {
-//     national: 'Denmark',
-//     nationalIcon: dk_img,
-//     visible: false,
-//     children: [{
-//         isCollect: false,
-//         value: '6',
-//         title: 'Liga de primera división'
-//     }, {
-//         isCollect: false,
-//         value: '8',
-//         title: 'Liga de primera división'
-//     }, {
-//         isCollect: false,
-//         value: '8',
-//         title: 'Liga de primera división'
-//     }]
-// }, {
-//     national: 'Belgium',
-//     nationalIcon: be_img,
-//     visible: false,
-//     children: [{
-//         isCollect: false,
-//         value: '6',
-//         title: 'Liga de primera división'
-//     }, {
-//         isCollect: false,
-//         value: '8',
-//         title: 'Liga de primera división'
-//     }]
-// }, {
-//     national: 'France',
-//     nationalIcon: fr_img,
-//     visible: false,
-//     children: [{
-//         isCollect: false,
-//         value: '6',
-//         title: 'Liga de primera división'
-//     }, {
-//         isCollect: false,
-//         value: '8',
-//         title: 'Liga de primera división'
-//     }]
-// }])
-
 const onLeagueChange = (league, game) => {
     console.log('league, game: ', league, game);
     emit('leagueChange', league, game)
