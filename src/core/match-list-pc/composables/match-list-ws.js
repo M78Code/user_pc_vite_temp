@@ -28,7 +28,7 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 		if (["C303", "C114"].includes(cmd)) {
 			api_bymids({ mids, is_show_mids_change: MatchListData.name_code == 'MatchDataWarehouse_PC_List_Common' }, null, MatchListData)
 		}
-	}), 300)
+	}, 300))
 	return {
 		set_inactive_mids(_mids = []) {
 			MatchListData.set_inactive_mids(_mids)
