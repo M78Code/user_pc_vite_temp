@@ -131,7 +131,8 @@ import FeaturedMatches from "src/base-pc/components/match-list/featured_matches/
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import "./match_list.scss";
 import {
-  init_home_matches
+  init_home_matches,
+  get_featurd_list
 } from "./index"
 
 const {
@@ -217,7 +218,9 @@ export default {
         const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
-        matches_featured_list.value = featured_list
+        matches_featured_list.value = await get_featurd_list()
+        // const res = await get_featurd_list()
+        
       // }
     }
 
