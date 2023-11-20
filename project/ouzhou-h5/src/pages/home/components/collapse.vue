@@ -66,7 +66,7 @@ import { onMounted, ref } from 'vue'
     justify-content: space-between;
     .left{
       display: flex;
-      align-items: center;
+      align-items: baseline;
     }
     .line{
       display: none;

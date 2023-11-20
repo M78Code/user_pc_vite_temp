@@ -5,7 +5,8 @@
       {{ $t('menu.match_play') }}
     </div>
     <!-- 赛事数量 -->
-    <span class="match-number">{{ match_count }} ></span>
+    <!-- 先隐藏了 -->
+    <!-- <span class="match-number">{{ match_count }} ></span> -->
   </div>
 </template>
 

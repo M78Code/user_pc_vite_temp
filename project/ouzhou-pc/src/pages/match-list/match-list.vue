@@ -122,7 +122,8 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, compute_css_obj,LayOutMain_pc,MenuData,useMittOn,MITT_TYPES ,  MatchDataWarehouse_PC_List_Common as MatchListData,
+import { PageSourceData, compute_css_obj,LayOutMain_pc,MenuData,useMittOn,MITT_TYPES , MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, 
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common,
   GlobalAccessConfig,} from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import InPlay from "src/base-pc/components/match-list/match_in_play.vue";
@@ -173,7 +174,9 @@ export default {
     const matches_featured_list = ref([]);
 
     const match_list_card_key_arr = ref([]);
-   const {ws_destroyed,set_active_mids}= use_match_list_ws(MatchListData)
+   const {ws_destroyed,set_active_mids}= use_match_list_ws(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
+   const {ws_destroyed:ws_destroyed_hot,set_active_mids:set_active_mids_hot}= use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common)
+
      // 赛事数量
      const total_match_count = ref(0)
 
@@ -199,6 +202,7 @@ export default {
     });
     onUnmounted(() => {
       ws_destroyed()
+      ws_destroyed_hot()
       handle_destroyed();
 	    mitt_list.forEach(item => item());
     });
@@ -215,7 +219,9 @@ export default {
       // 判断是不是首页下的 featured 页面
       // if (MenuData.is_featured()) {
         const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
-        set_active_mids(mins15_list.concat(featured_list).map((i)=>i.mid))
+        console.log(mins15_list,'mins15_list')
+        set_active_mids(mins15_list.map(i=>i.mid))
+        set_active_mids_hot(featured_list.map(i=>i.mid))
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = featured_list
@@ -225,7 +231,6 @@ export default {
     }
 
     return {
-      MatchListData,
       show_refresh_mask,
       collect_count,
       is_show_hot,
