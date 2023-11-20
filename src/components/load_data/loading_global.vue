@@ -47,7 +47,7 @@ export default {
 }.la-line-scale {
   display: block;
   font-size: 0;
-  color: #FF7000;
+  color: var(--q-gb-t-c-2);
 }.la-line-scale.la-dark {
   color: #333;
 }.la-line-scale>div {

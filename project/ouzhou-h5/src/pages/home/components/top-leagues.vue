@@ -4,20 +4,20 @@
 
 <template>
   <div class="top_leagues_page">
-    <collapse v-for="item, index in leagues_matchs" :key="index" :title="item.national" v-model="item.visible">
+    <collapse v-for="item, index in leaguesMatchs" :key="index" :title="item.nameText">
       <!-- 图片 -->
       <template v-slot:title_icon>
-        <img class="national_icon" :src="item.nationalIcon" alt="">
+        <img class="national_icon" :src="no_collect_ouzhou" alt="">
       </template>
       <!-- 右侧 -->
       <template v-slot:title_right>
-        <span v-show="!item.visible">{{ item.children.length }}</span>
+        <span>{{ item.num }}</span>
       </template>
       <template v-slot:content>
-        <div class="game" v-for="game, index in item.children" :key="index">
+        <!-- <div class="game" v-for="game, index in item.children" :key="index">
           <span> <img :src="no_collect_ouzhou" alt=""> {{ game.title }} </span>
           <span>{{ game.value }}</span>
-        </div>
+        </div> -->
       </template> 
     </collapse>
   </div>
@@ -27,7 +27,7 @@
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import collapse from "./collapse.vue"
 const props = defineProps({
-  leagues_matchs: {
+  leaguesMatchs: {
     type: Array,
     default: () => [],
     required: true
@@ -49,8 +49,8 @@ const props = defineProps({
       font-weight: 500;
       border-bottom: 1px solid var(--q-gb-bd-c-1);
       .national_icon{
-        width: 24px;
-        height: 15px;
+        width: 14px;
+        height: 14px;
         margin-right: 10px;
       }
     }

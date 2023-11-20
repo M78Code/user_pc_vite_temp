@@ -285,7 +285,7 @@ onUnmounted(() => {
 .keyboard {
   height: 185px;
   -webkit-overflow-scrolling: touch;
-  font-size: 0.18rem;
+  font-size: 0.16rem;
   font-weight: 600;
   color: var(--q-gb-bg-c-13);
   font-family: "DIN";

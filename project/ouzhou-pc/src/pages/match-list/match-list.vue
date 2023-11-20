@@ -4,10 +4,7 @@
  * @Description: 赛事主列表页
 -->
 <template>
-  <div
-    class="yb-match-list full-height relative-position"
-    :data-version="MatchListCardDataClass.list_version"
-  >
+  <div class="yb-match-list full-height relative-position" :data-version="MatchListCardDataClass.list_version">
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
@@ -24,48 +21,35 @@
         打印数据
       </div>
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
-      length--- 
+      length---
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
     <load-data :state="'data'" :style="{
-        width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-      }">
+      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+    }">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
       <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
         <!-- <template v-slot:before> -->
-          <!-- 头部15 Mins模块 -->
-          <div v-show="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
-            <CurrentMatchTitle
-              :title_value="'15 Mins'"
-              :show_more_icon="false"
-            />
-            <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
-          </div>
-          <!-- 头部Featured Matches模块 -->
-          <div v-show="matches_featured_list.length && MenuData.is_featured()" class="match-list-item">
-            <CurrentMatchTitle
-              :title_value="'Featured Matches'"
-              :show_more_icon="false"
-            />
-            <FeaturedMatches :matches_featured_list="matches_featured_list" />
-          </div>
+        <!-- 头部15 Mins模块 -->
+        <div v-if="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
+          <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
+          <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
+        </div>
+        <!-- 头部Featured Matches模块 -->
+        <div v-if="matches_featured_list.length && MenuData.is_featured()" class="match-list-item">
+          <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
+          <FeaturedMatches :matches_featured_list="matches_featured_list" />
+        </div>
         <!-- </template> -->
 
         <!-- 滚球标题 -->
-        <In-Play :match_count="total_match_count" v-show="MenuData.is_home()" />
+        <In-Play :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
-        <div
-          v-for="card_key in match_list_card_key_arr"
-          :key="card_key"
-          :card_key="card_key"
-          :data-card-key="card_key"
-          :class="`card_key_${card_key}`"
-        >
-          <match-list-card
-            :card_key="card_key"
-          />
+        <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
+          :class="`card_key_${card_key}`">
+          <match-list-card :card_key="card_key" />
         </div>
         <template v-slot:after>
           <div style="height: 15px"></div>
@@ -77,29 +61,22 @@
           </div>
         </template>
         <ConmingSoon v-show="MenuData.is_top_events()" :style="{
-        width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-      }" />
+          width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+        }" />
       </scroll-list>
     </load-data>
 
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
-    <div
-      v-show="show_refresh_mask"
-      class="refresh-mask absolute-full yb-flex-center"
-      :style="{ top: '36px' }"
-    >
+    <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{ top: '36px' }">
       <!-- <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{top:get_is_show_banner && get_is_roll_show_banner ? '156px' : '36px'}"> -->
-      <div
-        class="img-loading custom-format-img-loading"
-        :style="compute_css_obj('pc-img-loading')"
-      ></div>
+      <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
   </div>
 </template>
 <script>
-import { onMounted,onActivated, onUnmounted, ref, watch, getCurrentInstance } from "vue";
+import { onMounted, onActivated, onUnmounted, ref, watch, getCurrentInstance } from "vue";
 import { IconWapper } from "src/components/icon";
 import LoadData from "src/components/load_data/load_data.vue";
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
@@ -122,8 +99,11 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, compute_css_obj,LayOutMain_pc,MenuData,useMittOn,MITT_TYPES ,  MatchDataWarehouse_PC_List_Common as MatchListData,
-  GlobalAccessConfig,} from "src/core/index.js";
+import {
+  PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common,
+  GlobalAccessConfig,
+} from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import InPlay from "src/base-pc/components/match-list/match_in_play.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";
@@ -131,7 +111,8 @@ import FeaturedMatches from "src/base-pc/components/match-list/featured_matches/
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import "./match_list.scss";
 import {
-  init_home_matches
+  init_home_matches,
+  get_featurd_list
 } from "./index"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 
@@ -141,7 +122,7 @@ const {
   show_refresh_mask,
   collect_count,
   is_show_hot,
-  on_refresh,handle_destroyed
+  on_refresh, handle_destroyed
 } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
@@ -171,18 +152,18 @@ export default {
     const matches_15mins_list = ref([]);
     // 热推数据
     const matches_featured_list = ref([]);
-
+    const { ws_destroyed: ws_destroyed_common } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
-   const {ws_destroyed,set_active_mids}= use_match_list_ws(MatchListData)
-     // 赛事数量
-     const total_match_count = ref(0)
+    
+    // 赛事数量
+    const total_match_count = ref(0)
 
     // const coom_soon_state = ref(false);
 
     const match_list_top = ref("76px");
 
     const { proxy } = getCurrentInstance();
-    
+
     let mitt_list = null
 
     const MatchListCardDataClass_match_list_card_key_arr = () => {
@@ -193,16 +174,18 @@ export default {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
       get_data_info()
-	    mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES,get_data_info).off ]
+      mitt_list = [useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, get_data_info).off]
       mounted_fn();
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
       ws_destroyed()
+      ws_destroyed_hot()
+      ws_destroyed_common()
       handle_destroyed();
-	    mitt_list.forEach(item => item());
+      mitt_list.forEach(item => item());
     });
-    onActivated(()=>{
+    onActivated(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
     })
@@ -215,17 +198,18 @@ export default {
       // 判断是不是首页下的 featured 页面
       // if (MenuData.is_featured()) {
         const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
-        set_active_mids(mins15_list.concat(featured_list).map((i)=>i.mid))
+        console.log(mins15_list,'mins15_list')
+        set_active_mids(mins15_list.map(i=>i.mid))
+        set_active_mids_hot(featured_list.map(i=>i.mid))
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
-        matches_featured_list.value = featured_list
-
+        matches_featured_list.value = await get_featurd_list()
+        // const res = await get_featurd_list()
         
       // }
     }
 
     return {
-      MatchListData,
       show_refresh_mask,
       collect_count,
       is_show_hot,
@@ -273,6 +257,7 @@ export default {
   left: 200px;
   z-index: 99999;
   display: flex;
+
   .fold-btn {
     border: 1px solid #ccc;
     font-size: 16px;
@@ -280,12 +265,15 @@ export default {
     padding: 5px;
   }
 }
+
 .match-list-item {
   margin-bottom: 24px;
 }
+
 .scroll {
   overflow-y: scroll;
   padding-right: 3px;
+
   /* 火狐滚动条无法自定义宽度，只能通过此属性使滚动条宽度变细 */
   &::-webkit-scrollbar {
     width: 4px;

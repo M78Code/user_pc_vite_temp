@@ -1,8 +1,10 @@
 <template>
-  <!-- 红升icon -->
-  <img class="hps_img" v-if="is_up" :src="active ? ouzhou_white_up : ouzhou_hps_down" alt="" />
-  <!-- 绿降icon -->
-  <img class="hps_img" v-if="is_down" :src="active ? ouzhou_white_down : ouzhou_hps_up" alt="" />
+  <span>
+    <!-- 红升icon -->
+    <img class="hps_img" v-if="is_up" :src="active ? ouzhou_white_up : ouzhou_hps_down" alt="" />
+    <!-- 绿降icon -->
+    <img class="hps_img" v-if="is_down" :src="active ? ouzhou_white_down : ouzhou_hps_up" alt="" />
+  </span>
 </template>
 <script setup>
 import { ref, watch } from "vue";

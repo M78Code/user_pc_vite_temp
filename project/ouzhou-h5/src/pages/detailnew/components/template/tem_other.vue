@@ -13,9 +13,7 @@
       <template v-if="item_data.title && item_data.title.length > 0 && item_data.title.length < 3">
         <div v-for="opt in item_data.title" :key="opt.otd" class="odds-title-li">
           <div class="odds-title-li-text" v-if="![0, 1, 3, 5, 7, 10].includes(item_data.hpt)">
-            <span>{{
-              opt.osn
-            }}</span>
+            <span>{{opt.osn}}</span>     
           </div>
           
           <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="ol_on">
@@ -146,7 +144,6 @@ onMounted(() => {
         color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
-        align-items:center;
         .ol-on-text {
             font-weight: 500;
             padding-right: 5px;

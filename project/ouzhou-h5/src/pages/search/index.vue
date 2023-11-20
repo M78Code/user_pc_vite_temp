@@ -15,14 +15,20 @@
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<div class="middle_info_tab">EXAMPLE SEARCHES</div>
-			<ul class="list1">
-				<li v-for="(item, index) in history_data" :key="item.cuid" @click="get_search_data(0, 1, item.keyword)">
-					{{ item.keyword }}<img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
+			<!-- 球类 tabs -->
+			<div class="middle_info_tab" ref="tab_growp">
+				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
+					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+			</div>
+			<ul class="list1" v-show="history_data && history_data.length > 0">
+				<li v-for="(item, index) in history_data" :key="item.cuid">
+					<span style="display: inline-block; width: 90%;" @click="get_search_data(0, 1, item.keyword)">{{ item.keyword }}</span><span @click="_delete_history_search(item.keyword)">x</span>
 				</li>
+				<li class="del" @click="_delete_history_search|('')">Clear Search History</li>
 			</ul>
 
 			<!-- 热门搜索 -->
-			<div class='searchHot' v-show="show_hot && 
+			<div class='searchHot' :class="[show_history ? '' : 'mt50']" v-show="show_hot && 
 				(hot_list && hot_list.length > 0) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) ||
@@ -222,7 +228,7 @@ import { UserCtr, compute_local_project_file_path, utils, compute_img_url, Searc
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
-import { get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
+import { get_delete_history_search, get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 import { api_search } from 'src/api/';
 import { compute_value_by_cur_odd_type } from "src/core/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
@@ -486,6 +492,15 @@ const get_odd_os = (ov) => {
   return  compute_value_by_cur_odd_type(ov,'','',sport_kind_id)
 }
 
+// 删除单个历史
+const _delete_history_search = (keyword) => {
+	get_delete_history_search({
+		keyword,
+		cuid: uid
+	})
+	get_history()
+}
+
 onMounted(() => {
 	get_hot_search();
 	get_history();
@@ -671,9 +686,18 @@ li {
 	padding-top: 50px;
 
 	li {
-		border-radius: 6px;
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 0;
+		border-radius: 6px 0px 0px 0;
+	}
+
+	.del {
+		width: 100%;
+		background-color: #fff; 
+		text-align: center;
+		color: #8A8986;
+		font-size: 14px;
 	}
 
 	img {
@@ -761,6 +785,9 @@ li {
 	.flex_1 {
 		flex: 1;
 	}
+}
+.mt50 {
+	margin-top: 50px;
 }
 </style>
   

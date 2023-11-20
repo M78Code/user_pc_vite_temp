@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['match-detail-container', {'bg_fff': tab == 'event_analysis'}, { 'overflow_hidden': match_detail.mvs > -1 }]"
+    :class="['match-detail-container', {'bg_fff': tab == 'event_analysis'}, { 'overflow_hidden': match_detail?.mvs > -1 }]"
     @touchstart.passive="touchstart"
     @scroll="detail_scrolling"
     @touchmove.passive="touchmove"

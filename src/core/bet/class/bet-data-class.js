@@ -22,8 +22,8 @@ class BetData {
     this.bet_is_accept = false;
     // 接受更好赔率规则
     this.better_rules_show = false
-    // 押注信息列表
-    this.bet_list = [];
+    // 押注信息列表 投注项id
+    this.bet_oid_list = [];
     // 押注扁平化对象扁平
     // this.bet_obj = {};
     // 串关投注列表
@@ -391,7 +391,21 @@ this.bet_appoint_ball_head= null */
       LayOutMain_pc.set_layout_left_show('bet_list')
     }
 
+    // 设置投注项id 页面选中
+    this.set_bet_oid_list()
+
     this.set_bet_data_class_version()
+  }
+
+  // 设置投注项id 页面选中
+  set_bet_oid_list(){
+    let list_query = []
+    if(this.is_bet_single){
+      list_query = this.bet_single_list.map(item => item.playOptionsId)
+    }else{
+      list_query = this.bet_s_list.map(item => item.playOptionsId)
+    }
+    this.set_bet_oid_list = list_query
   }
 
   /*
@@ -780,18 +794,26 @@ this.bet_appoint_ball_head= null */
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
             if(ws_ol_obj.ov){
+              let time_out = null
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
-              // 绿升红降
-              ol_obj.red_green = 'green_up'
+              //  红升绿降
+              ol_obj.red_green = 'red_up'
               if(ol_obj.odds > ws_ol_obj.ov ){
-                ol_obj.red_green = 'red_down'
+                ol_obj.red_green = 'green_down'
               }
               // 重新设置赔率
               ol_obj.odds = ws_ol_obj.ov*1
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, '', '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
+
+              clearTimeout(time_out)
+              // 5秒后清除 红升绿降
+              time_out = setTimeout(()=>{
+                ol_obj.red_green = ''
+                this.set_ws_message_bet_info(ol_obj,ol_obj_index)
+              },5000)
             }
           }
         })

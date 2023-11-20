@@ -19,6 +19,7 @@ import { useMittEmit, MITT_TYPES,project_name, MenuData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
 } from 'src/core'
+import { configureStore } from '@reduxjs/toolkit';
 
 class MatchMeta {
 
@@ -495,27 +496,14 @@ class MatchMeta {
   /**
    * @description 获取欧洲版联赛数量统计
    */
-  async get_ouzhou_leagues_data (config) {
-    const {area, date} = config
-    const mid = MenuData.current_lv_2_menu_i
-    let mid_list = lodash.get(MenuData,'collect_list')
-    let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
-    let euid = ''
-    if(mid == 0){
-      // 根据 菜单id 获取euid
-      mid_list.forEach(item => {
-        if(BaseData.mi_euid_map_res[item.mi] && BaseData.mi_euid_map_res[item.mi].h){
-          euid += BaseData.mi_euid_map_res[item.mi].h + ','
-        }
-      })
-    }else{
-      euid = MenuData.get_euid(mid+''+lv1_mi)
-    }
-    const params = this.get_base_params(euid)
+  async get_ouzhou_leagues_data (date) {
     const res = await api_match_list.get_leagues_list({
-      sportId: params.euid,
+      sportId: Number(MenuData.menu_csid),
+      // sportId: 1,
       selectionHour: date
     })
+    const list = lodash.get(res, 'data', [])
+    return list
   }
 
   /**
