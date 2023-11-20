@@ -30,13 +30,14 @@ const state = reactive({
 })
 
 onMounted(() => {
-  // 元数据有缓存的情况下 立即执行 set_origin_match_data 能拿到数据， 没数据的情况下拿不到则掉接口
-  // if (BaseData.is_emit) {
-  //   MatchMeta.set_origin_match_data()
-  //   BaseData.set_is_emit(false)
-  // } else {
-  //   MatchMeta.get_target_match_data({})
-  // }
+  BaseData.is_emit && MatchMeta.set_origin_match_data()
+  emitters.value = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
+      if (!BaseData.is_emit) {
+        MatchMeta.set_origin_match_data({})
+      }
+    }).off
+  }
 })
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());

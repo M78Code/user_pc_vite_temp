@@ -259,7 +259,6 @@ import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import { sports_play_data } from 'src/core/constant/index.js'
 
-
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -293,7 +292,6 @@ export default {
     const score_length = ref(3)
     const hps_play_data = ref([])
    
-
     // 是否显示球种标题
     const show_sport_title = computed(() => {
       const { is_show_ball_title } = ctx.match_of_list

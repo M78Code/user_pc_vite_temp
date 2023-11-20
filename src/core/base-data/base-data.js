@@ -122,7 +122,7 @@ class BaseData {
     this.menu_type_old_or_new = "new";
 
     // 是否通知元数据处理完成
-    this.is_emit = true
+    this.is_emit = false
   }
   /**
    * 初始化数据
@@ -214,9 +214,9 @@ class BaseData {
     });
     // 等待以上4个接口同时请求完成再通知列表获取
     return Promise.all([p1, p2, p3, p4, p5]).then((res) => {
-      localStorage.setItem('base_data', JSON.stringify(res))
       const base_data = localStorage.getItem('base_data')
       !base_data && this.handle_base_data(res)
+      localStorage.setItem('base_data', JSON.stringify(res))
     }).catch((err) => {
       this.set_default_base_data()
       console.error('err:', '元数据接口请求超时')
@@ -226,8 +226,11 @@ class BaseData {
   // 从缓存读取默认数据
   set_default_base_data () {
     const base_data = localStorage.getItem('base_data')
-    const res = base_data && JSON.parse(base_data)
-    res && this.handle_base_data(res)
+    if (base_data) {
+      const res = JSON.parse(base_data)
+      this.set_is_emit(true)
+      this.handle_base_data(res)
+    }
   }
 
   // 元数据处理
@@ -628,9 +631,8 @@ class BaseData {
       // let res = await api_base_data.get_base_data({});
       res && await this.set_base_data_res(res);
       // 元数据加载完成 useMittEmit 大部分情况执行这里时， 页面的 useMittOn 还没注册就不会触发
-      if (this.is_emit) {
+      if (!this.is_emit) {
         useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
-        this.set_is_emit = false
       }
       this.base_data_version.value = Date.now();
     } catch (error) {
