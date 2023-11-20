@@ -12,7 +12,10 @@ class SearchPCDataClass {
   update = debounce(() => {
     this.update_time.value = Date.now();
   }, 10);
-  hostList = void(0);
+  hotListKind = 'search';
+  showHotList = [];   // 热门展示列表
+  hotSearchList = void (0);   // 热搜
+  hotPushList = void (0);   // 热推
   sportList = void(0);
   searchHistory = void (0);
 
@@ -54,6 +57,7 @@ class SearchPCDataClass {
       useMittEmit(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, flag)
     );
     this.search_isShow = flag;
+    if(!flag) this.keyword = ''
     this.update();
   }
   /**
@@ -68,8 +72,28 @@ class SearchPCDataClass {
   /**
    * 设置热门搜索列表
    * */
-  set_search_hotlist(payload){
-    this.hostList = payload ?? []
+  changeHotListKind(){
+    this.hotListKind = this.hotListKind === 'search' ? "push" : "search";
+    this.set__hotList()
+  }
+  set__hotList(){
+    if(this.hotListKind === 'search' && !!this.hotSearchList){
+      this.showHotList = this.hotSearchList
+    }
+    if(this.hotListKind === 'search' && !!this.hotPushList){
+      this.showHotList = this.hotPushList
+    }
+    this.update()
+  }
+
+  set_search_hotList(payload){
+    this.hotSearchList = payload ?? []
+    this.set__hotList()
+    this.update()
+  }
+  set_search_pushList(payload){
+    this.hotPushList = payload ?? []
+    this.set__hotList()
     this.update()
   }
   /**
