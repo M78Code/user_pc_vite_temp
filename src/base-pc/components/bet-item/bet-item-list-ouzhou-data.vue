@@ -34,6 +34,7 @@
     <!-- 赔率 -->
     <div
       class="odds"
+      :class="[odds_lift]"
       :style="
         [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
           +ol_data._hpid
@@ -130,12 +131,12 @@ onMounted(() => {
 });
 
 // 监听玩法ID变化 取消赔率升降
-watch(props.ol_data._hpid, () => {
+watch(() => props.ol_data._hpid, () => {
   clear_odds_lift()
 }) 
 
 // 监听oid 取消赔率升降
-watch(props.ol_data.oid, () => {
+watch(() => props.ol_data.oid, () => {
   clear_odds_lift()
 })  
 
