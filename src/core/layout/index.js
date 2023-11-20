@@ -154,7 +154,7 @@ class LayOutMain {
   /** 设置当前路由页面 */
   set_layout_current_path(route) {
     this.layout_current_path = route
-    this. ()
+    this.set_layout_version()
   }
 
   // 设置左侧显示内容
