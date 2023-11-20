@@ -75,7 +75,7 @@
                           <span>[{{marketType(item.marketType, props.row.langCode)}}]</span>                      </span>
                       <div>
                         <span>{{ item.marketValue }}</span>
-                        <span style="margin-left:15px;color:#ff7000">{{ item.oddFinally }}</span>
+                        <span style="margin-left:15px;color:#ff7000">@{{ item.oddFinally }}</span>
                       </div>
 
                       <div class="play-type settle-score" v-if="current_tab === 'settled' && item.settleScore">
