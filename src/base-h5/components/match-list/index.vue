@@ -31,14 +31,10 @@ import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
-
-import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
+import { PROJECT_NAME, MatchDataWarehouse_H5_List_Common } from "src/core/index.js"
 
 // yazhou-h5 赛事列表
 import MatchList1 from './components/match-list1.vue'
@@ -46,11 +42,8 @@ import MatchList1 from './components/match-list1.vue'
 import MatchList2 from './components/match-list2.vue'
 // ouzhou-h5 赛事列表
 import MatchList3 from './components/match-list3.vue'
-
-import MatchListOuZhou from './components/match-list-ouzhou.vue'
-
-import { PROJECT_NAME, MatchDataWarehouse_H5_List_Common } from "src/core/index.js"
-
+// 无网络展示组件
+import NoData from "src/base-h5/components/common/no-data.vue"; 
 // 次要玩法描述组件
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";
 
@@ -68,7 +61,6 @@ let timer_super = null
 let timer = ref(null)
 let subscription_timer = null
 
-
 // TODO: 下面需要替换
 const invok_source = ref('')
 const ws_invoke_key = ref('match_main')
@@ -76,7 +68,6 @@ const match_is_empty = ref(false)
 const window_scrolly = ref(0)
 const match_list_wrapper_height = ref(0)
 const is_collcte_page = ref(false)
-let message_fun = null
 
 onMounted(() => {
   // 页面css变量植入
@@ -86,18 +77,12 @@ onMounted(() => {
   // 绑定相关事件监听
   on_listeners();
 
-  // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
-    MatchMeta.handle_ws_directive({ cmd, data })
-  }, 1000))
-  
 })
 
 const config = {
   'app-h5': MatchList2,
   'yazhou-h5': MatchList1,
   'ouzhou-h5': MatchList3,
-  // 'ouzhou-h5': MatchListOuZhou
 }
 
 const target_com = computed(() => {
@@ -135,13 +120,6 @@ const clear_timer = () => {
     timer = null;
   }
 };
-
-onUnmounted(() => {
-  // 组件销毁时销毁监听函数
-  ws_message_listener.ws_remove_message_listener(message_fun)
-  message_fun = null
-})
-
 
 </script>
  

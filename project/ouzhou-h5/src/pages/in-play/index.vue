@@ -1,16 +1,13 @@
 <!--
- * @Author: rise
- * @Date: 2023-11-07 16:16:01
- * @LastEditors: rise
- * @LastEditTime: 2023-11-07 17:49:29
- * @Description:  
+ * 滚球页面
 -->
+
 <template>
-    <scroll-menu menu_type="1" @changeMenu="changeMenu"/>
-    <!-- 赛事列表 -->
-    <div class="match_page">
-      <MatchContainer />
-    </div>
+  <scroll-menu menu_type="1" @changeMenu="changeMenu"/>
+  <!-- 赛事列表 -->
+  <div class="match_page">
+    <MatchContainer />
+  </div>
 </template>
 <script setup>
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
@@ -20,20 +17,33 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
 const emitters = ref({})
+let message_fun = null
+
 onMounted(() => {
+  // 元数据 有缓存得情况下获取数据
   BaseData.is_emit && MatchMeta.set_origin_match_data()
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
+      // 元数据无缓冲得情况
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data({})
       }
     }).off
   }
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
+    MatchMeta.handle_ws_directive({ cmd, data })
+  }, 1000))
   
 })
 onUnmounted(() => {
+  // 组件销毁时销毁监听函数
+  ws_message_listener.ws_remove_message_listener(message_fun)
+  message_fun = null
   Object.values(emitters.value).map((x) => x());
 })
 /**
