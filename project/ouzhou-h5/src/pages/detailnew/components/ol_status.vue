@@ -1,8 +1,8 @@
 <template>
   <!-- 红升icon -->
-  <img class="hps_img" v-if="is_up" :src="active ? ouzhou_hps_down_active : ouzhou_hps_down" alt="" />
+  <img class="hps_img" v-if="is_up" :src="active ? ouzhou_white_up : ouzhou_hps_down" alt="" />
   <!-- 绿降icon -->
-  <img class="hps_img" v-if="is_down" :src="active ? ouzhou_hps_up_active : ouzhou_hps_up" alt="" />
+  <img class="hps_img" v-if="is_down" :src="active ? ouzhou_white_down : ouzhou_hps_up" alt="" />
 </template>
 <script setup>
 import { ref, watch } from "vue";
@@ -10,8 +10,8 @@ import {
   odd_lock_ouzhou,
   ouzhou_hps_up,
   ouzhou_hps_down,
-  ouzhou_hps_up_active,
-  ouzhou_hps_down_active
+  ouzhou_white_down,
+  ouzhou_white_up
 } from "src/base-h5/core/utils/local-image.js";
 const props = defineProps({
   item_ol_data: {

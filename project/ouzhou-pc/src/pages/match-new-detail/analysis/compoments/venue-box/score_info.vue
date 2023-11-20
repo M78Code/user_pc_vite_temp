@@ -26,25 +26,13 @@
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
             <div>
               <div v-if="!col.icon">
-                <span
-                  :style="{
-                    'line-height': '30px',
-                    color: ['p', 't'].includes(col.field)
-                      ? '#ff7000'
-                      : '#8A8986',
-                  }"
-                  v-if="col.field !== 'name'"
-                  >{{ col.label }}</span
-                >
+                <span v-if="col.field !== 'name'"
+                  :style="{ 'line-height': '30px', color: ['p', 't'].includes(col.field) ? '#ff7000' : '#8A8986' }">
+                    {{ col.label }}
+                </span>
                 <div v-else style="color: #8a8986">
-                  <span style="margin-right: 6px">{{
-                    detail_info.course
-                  }}</span>
-                  <span>
-                    {{
-                      detail_info.mst <= 0 ? "00:00" : detail_info.mstValue
-                    }}</span
-                  >
+                  <span style="margin-right: 6px">{{detail_info.course}}</span>
+                  <span>{{detail_info.mst <= 0 ? "00:00" : detail_info.mstValue}}</span>
                 </div>
               </div>
 
@@ -82,14 +70,10 @@
             <span>{{ props.row.set }}</span>
           </q-td>
           <q-td key="t" :props="props">
-            <span style="font-weight: 500; color: #ff7000">{{
-              props.row.t
-            }}</span>
+            <span style="font-weight: 500; color: #ff7000">{{props.row.t}}</span>
           </q-td>
           <q-td key="p" :props="props">
-            <span style="font-weight: 500; color: #ff7000">{{
-              props.row.p
-            }}</span>
+            <span style="font-weight: 500; color: #ff7000">{{props.row.p}}</span>
           </q-td>
         </q-tr>
       </template>

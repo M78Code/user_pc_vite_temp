@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { PageSourceData } from "src/core/index.js";
@@ -16,6 +16,7 @@ import * as api_websocket from "src/api/module/socket/socket_api.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import { match_list_handle_set } from '../match-handle-data'
 const { page_source } = PageSourceData;
+
 
 /**
  * @Description 删除赛事数据 卡片
@@ -144,7 +145,7 @@ const api_bymids = (
     is_first_load,
     is_show_mids_change,
     is_league_first,
-    mids,
+    mids=[],
     inner_param,
   },
   callback

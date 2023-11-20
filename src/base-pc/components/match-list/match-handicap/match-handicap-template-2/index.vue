@@ -274,7 +274,6 @@ function getCurState (hipo) {
           .odds {
             color: var(--q-gb-t-c-1);
           }
-
         }
 
         div {
@@ -286,6 +285,12 @@ function getCurState (hipo) {
             color: var(--q-gb-t-c-2);
             font-weight: 500;
             font-size: 14px;
+            &.up {
+              color: var(--q-gb-t-c-7);
+            }
+            &.down {
+              color: var(--q-gb-t-c-10);
+            }
         }
     }
 </style>

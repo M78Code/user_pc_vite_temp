@@ -22,7 +22,7 @@ class MatchResponsive {
     // 其他仓库联赛对应的数量
     this.ball_other_seed_league_count = ref({})
     // 投注项
-    this.odd_item_info = ref({})
+    this.active_odd = ref('')
   }
 
   /**
@@ -122,20 +122,12 @@ class MatchResponsive {
     return key
   }
 
-  /**
-   * @description 设置投注项赔率
-   */
-  set_odd_item_info (item) {
-    const { oid, ov } = item
-    const key = `oid_${oid}`
-    this.odd_item_info.value[key] = Number(ov)
+  set_active_odd (val) {
+    this.active_odd.value = val
   }
 
-  /**
-   * @description 清除投注项赔率
-   */
-  clear_odd_item_info () {
-    this.odd_item_info.value = {}
+  clear_active_odd () {
+    this.active_odd.value = ''
   }
 }
 

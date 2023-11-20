@@ -97,7 +97,6 @@ class AxiosHttp {
     clearInterval(this.request_count_timer);
     //每分钟上报 请求次数
     this.request_count_timer = setInterval(() => {
-      console.log("this.request_count=" + this.request_count);
       wslog.send_msg("HTTP-S:", { request_count: this.request_count });
       this.request_count = 0;
     }, 60 * 1000);

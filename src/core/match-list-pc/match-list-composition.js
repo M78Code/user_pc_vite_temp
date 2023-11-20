@@ -15,7 +15,6 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import {update_collect_data, mx_collect_count} from "./composables/match-list-collect.js";
-import {show_mids_change,ws_destroyed} from "./composables/match-list-ws.js";
 import {api_bymids} from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
 import {mx_use_list_res, mx_list_res} from './composables/match-list-processing.js'
@@ -196,7 +195,6 @@ export function fetch_match_list(is_socket = false, cut) {
 function handle_destroyed() {
 	
 	// 销毁 ws message通信
-	ws_destroyed();
 	for (let key in timer_obj.value) {
 		clearTimeout(timer_obj.value[key]);
 	}
@@ -250,7 +248,10 @@ function mounted_fn() {
 		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off,
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match).off,
-		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change).off,
+		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
+			// 重新订阅C8
+			api_bymids({ is_show_mids_change: true })
+		}, 1000)).off,
 		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded).off,
 	]
 	
@@ -360,7 +361,7 @@ function get_hot_match_list(backend_run = false) {
 					// this.regular_events_set_match_details_params(null, params);
 				} else {
 					// 更新可视区域赛事盘口数据
-					show_mids_change();
+					useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
 				}
 				// 计算赛事卡片
 				MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
@@ -506,3 +507,6 @@ export default function () {
 		fetch_match_list,handle_destroyed
 	}
 };
+export {
+	socket_remove_match
+}
