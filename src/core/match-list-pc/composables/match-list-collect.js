@@ -219,13 +219,13 @@ const mx_collect_leagues = (match, is_champion) => {
           cur_collect_state
         );
         //跟新原数据联赛收藏状态
-        MatchListData.set_league_list_collect(
-          match.tid,
-          cur_collect_state,
-          [1, 3].includes(
-            MatchListCard.get_match_list_mapping_relation_obj_type()
-          )
-        );
+        // MatchListData.set_league_list_collect(
+        //   match.tid,
+        //   cur_collect_state,
+        //   [1, 3].includes(
+        //     MatchListCard.get_match_list_mapping_relation_obj_type()
+        //   )
+        // );
         mids_arr.forEach((mid) => {
           let match_item = MatchListData.list_to_obj.mid_obj[mid + '_'] || {};
           match_item.tf = cur_collect_state;
@@ -258,6 +258,7 @@ const mx_collect_leagues = (match, is_champion) => {
       mx_collect_count();
     })
     .catch((err) => {
+      console.error(err)
       useMittEmit(
         MITT_TYPES.EMIT_SHOW_TOAST_CMD,
         t("common.collect_toast")
