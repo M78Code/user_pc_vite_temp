@@ -5,10 +5,11 @@ import lodash from 'lodash'
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import {api_bymids} from "./match-list-featch.js";
 // import { fetch_match_list } from '../match-list-composition.js'
-import {utils,useMittEmit,MITT_TYPES } from 'src/core/index.js';
+import {utils,useMittEmit,MITT_TYPES, MenuData } from 'src/core/index.js';
+import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 
 //  订阅所需 赛事ID
-
+const { socket_remove_match } = useMatchListMx
 const skt_mid = ref({});
 //  可视区域赛事ID
 const show_mids = ref([]);
@@ -95,14 +96,23 @@ const ws_c8_subscribe = () => {
 const refresh_c8_subscribe = () => {
 	ws_destroyed()//先取消之前的订阅 不然重复了咋办
 	message_fun = ws_message_listener.ws_add_message_listener((cmd,data)=>{
-		// 调用 matches  接口
-		if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
-			// useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
-			// fetch_match_list()
+		// 赛事新增
+		if (["C109"].includes(cmd)) {
+			const { cd = [] } = data;
+			if (cd.length < 1) return;
+			const item = cd.find((t) => t.csid == MenuData.menu_csid);
+			if (item) useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE);
+		}
+		// 调用 matchs  接口
+		if (["C104"].includes(cmd)) {
+			// mhs === 2 为关盘
+			if (data.mhs == 2) {
+				socket_remove_match(data.cd);
+			}
 		}
 		// 调用 mids  接口
-		if (['C303', 'C114'].includes(cmd)) {
-			// api_bymids()
+		if (["C303", "C114"].includes(cmd)) {
+			api_bymids();
 		}
 	})
 	// if (this.SCMD_C8) {
