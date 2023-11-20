@@ -133,6 +133,7 @@ import "./match_list.scss";
 import {
   init_home_matches
 } from "./index"
+import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 
 const {
   mounted_fn,
@@ -172,7 +173,7 @@ export default {
     const matches_featured_list = ref([]);
 
     const match_list_card_key_arr = ref([]);
-
+   const {ws_destroyed,set_active_mids}= use_match_list_ws(MatchListData)
      // 赛事数量
      const total_match_count = ref(0)
 
@@ -197,7 +198,8 @@ export default {
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
-      handle_destroyed()
+      ws_destroyed()
+      handle_destroyed();
 	    mitt_list.forEach(item => item());
     });
     onActivated(()=>{
@@ -209,15 +211,16 @@ export default {
       MatchListCardDataClass_match_list_card_key_arr();
       proxy?.$forceUpdate();
     });
-
-   
     const get_data_info = async () => {
       // 判断是不是首页下的 featured 页面
       // if (MenuData.is_featured()) {
         const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
+        set_active_mids(mins15_list.concat(featured_list).map((i)=>i.mid))
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = featured_list
+
+        
       // }
     }
 

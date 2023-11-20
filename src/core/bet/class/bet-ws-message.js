@@ -54,11 +54,11 @@ class BetWsMessage {
   }
   // 赛事订阅盘口赔率变更 修改投注项变更
   MSG_C105(obj) {
-    BetData.set_bet_c106_change(obj)
+    BetData.set_bet_c106_change(obj.cd)
   }
   // 投注项变更
   MSG_C106(obj) {
-    BetData.set_bet_c106_change(obj)
+    BetData.set_bet_c106_change(obj.cd)
   }
 }
 
