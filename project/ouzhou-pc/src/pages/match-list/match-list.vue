@@ -179,8 +179,6 @@ export default {
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
-      ws_destroyed()
-      ws_destroyed_hot()
       ws_destroyed_common()
       handle_destroyed();
       mitt_list.forEach(item => item());
@@ -199,8 +197,6 @@ export default {
       // if (MenuData.is_featured()) {
         const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
         console.log(mins15_list,'mins15_list')
-        set_active_mids(mins15_list.map(i=>i.mid))
-        set_active_mids_hot(featured_list.map(i=>i.mid))
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = await get_featurd_list()
