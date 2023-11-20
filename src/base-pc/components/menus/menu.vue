@@ -10,13 +10,13 @@
         </li>
       </ul>
     </div>
-    <div v-show="false">{{ BaseData.base_data_version }}</div>
+    <div v-show="false">{{ BaseData.base_data_version }}-{{MenuData.menu_data_version}}-{{MenuData.left_menu_result.lv1_mi}}</div>
     <div class="menu-nav-line" />
 
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.popular") }}</p>
       <ul class="menu-list">
-        <li class="f-s-c" :class="{ 'menu_checked': MenuData.lv1_mi == item&&menu_type=='0' }" v-for="item in popular" :key="item"
+        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi == item && MenuData.left_menu_result.menu_type==0 }" v-for="item in popular" :key="item"
           @click="jump_func(item,'0')">
           <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item] || "" }}
@@ -30,7 +30,7 @@
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
         <template v-for="item in BaseData.left_menu_base_mi" :key="item">
-          <li class="f-s-c" :class="{ 'menu_checked': MenuData.lv1_mi  == item.mi&&menu_type=='1' }" v-if="item.ct" @click="jump_func(item,'1')">
+          <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }" v-if="item.ct" @click="jump_func(item,'1')">
             <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
           </li>
@@ -64,18 +64,8 @@ import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
 const popular = ([101, 102])
 
-const left_menu_list = ref([])
-const menu_type = ref("")
 const router = useRouter();
 const route = useRoute();
-
-onMounted(() => {
-   //菜单无数据兼容
-  if(BaseData.left_menu_base_mi.length>0){
-    left_menu_list.value = BaseData.left_menu_base_mi;
-    console.log(' BaseData.left_menu_base_mi',  BaseData.left_menu_base_mi);
-  }
-})
 
 // favouritse
 const go_to_favouritse = () => {
@@ -109,9 +99,8 @@ const jump_func = (payload ={},type) => {
     lv1_mi : payload.mi,
     has_mid_menu: true, // 有中间菜单
     lv2_mi: payload.mi +''+ 2, // 二级菜单id
+    menu_type: type, // 左侧热门或者赛种
   }
-  menu_type.value = type
-console.error('sss')
   //太多了 后续做优化
   MenuData.set_menu_root(202, true)
   MenuData.set_is_collect(false)

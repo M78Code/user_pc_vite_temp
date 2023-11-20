@@ -142,6 +142,7 @@ watch(() => props.ol_data.oid, () => {
 
 // 监听投注项赔率变化
 watch(() => props.ol_data.ov, (cur, old) => {
+  console.log(cur, old, 'curold')
   // 赔率值处理
   format_odds(cur, 1);
   if (props.ol_data) {

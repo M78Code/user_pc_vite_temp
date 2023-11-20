@@ -1325,8 +1325,8 @@
       background-image: var(--qq--chatroom-icon-9);//todo `url(${preffix}/image/yabo/theme01/img/svg/show_order02.svg)`,
     }
     .emoji-picker {
-      background-color: #fff;
-      border: 1px solid #d9d9d9;
+      background-color: var(--q-gb-bg-c-4);
+      border: 1px solid var(--q-gb-bg-c-10);
     }
     .btn-normal-user-input {
       .tips {

@@ -463,10 +463,11 @@
 
       try {
         //解析URL参数
-        let url_search = SEARCH_PARAMS.init_param;
+        let url_search = new URLSearchParams(location.search || location.hash);
         // 获取清除缓存参数
         let clearcache = url_search.get("clearcache");
         if (clearcache == "1") {
+          console.error('获取清除缓存参数')
           // 清除缓存sessionStorage和localStorage
           sessionStorage.clear();
           localStorage.clear();
