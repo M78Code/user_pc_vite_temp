@@ -5,6 +5,7 @@
  * 
  */
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js";
+import {  useMittEmit, MITT_TYPES } from  "src/core/mitt"
 export default class MatchDataBaseWS
 {
   /**
@@ -376,10 +377,8 @@ export default class MatchDataBaseWS
     if(ws_obj.cd){
       // ws命令数据信息
       let cd_obj = lodash.get(ws_obj,'cd');
-      // 赛事标识
-      let mid = lodash.get(ws_obj,'cd.mid');
-      // 实时时间歘
-      let ctsp = lodash.get(ws_obj,'ctsp');
+      // 通知投注项 赔率更新
+      useMittEmit(MITT_TYPES.EMIT_SET_BET_WS_C106_CHANGE,cd_obj)
     }
 
     this.C105(ws_obj);
@@ -418,6 +417,9 @@ export default class MatchDataBaseWS
         // 数据同步逻辑
         this.match_ctr.assign_with(match, cd_obj);
         this.match_ctr.match_upd_time_ret_change(match);
+
+        this.match_ctr.upd_data_version();
+        console.log(1111111111111111)
       }
     }
   }

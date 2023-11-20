@@ -3,9 +3,10 @@ import {IconWapper} from 'src/components/icon/index.js'
 import { TabWapper } from "src/components/common/tab"
 import bevisSearchList from "./bevis-search-list.vue"
 
-import { get_hot_search, get_search_sport, get_history_search, insert_history, get_remove_search_history } from "src/api/module/search"
+import { get_hot_search, get_hot_push, get_search_sport, get_history_search, insert_history,
+    get_remove_search_history, get_delete_history_search } from "src/api/module/search"
 
-import { ref, onMounted, watch } from "vue"
+import { ref, onMounted, provide } from "vue"
 import {SearchPCClass, compute_local_project_file_path} from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js"
 
@@ -22,14 +23,21 @@ const ShowSearch = function (toggle){
     if(toggle) _getSearchHistory()
     ++SearchWapperRefKey.value
 }
-
+const ChangeShowHotListData = function (){
+    SearchPCClass.changeHotListKind()
+}
 /**
- * 获取人们搜索
- * get_hot_search
+ * @_getHotSearch 热门搜索
+ * @_getHotPush 热门推荐
  * */
-const _getHotList = function (){
+const _getHotSearch = function (){
     get_hot_search().then(({data})=>{
-        SearchPCClass.set_search_hotlist(data)
+        SearchPCClass.set_search_hotList(data)
+    })
+}
+const _getHotPush = function (){
+    get_hot_push().then(({data})=>{
+        SearchPCClass.set_search_pushList(data)
     })
 }
 const _getSportList = function (){
@@ -40,6 +48,10 @@ const _getSportList = function (){
 
 /**
  * 以下搜索历史记录相关
+ * @_addSearchHistory 增加搜索历史记录
+ * @_deleteSearchHistory 删除单条历史记录
+ * @
+ * 查
  * */
 
 const _getSearchHistory = function (){
@@ -50,7 +62,7 @@ const _getSearchHistory = function (){
         SearchPCClass.set_search_history(data)
     })
 }
-const _addSearchHistory = function (keyword = SearchPCClass.keyword){
+const _addSearchHistory = function (keyword){
     insert_history({
         keyword,
         cuid: UserCtr.get_uid(),
@@ -75,10 +87,19 @@ const _deleteSearchHistory = function (keyword){
         SearchPCClass.deletion_history_one(keyword)
     })
 }
+const _clearSearchHistory = function (){
+    get_delete_history_search().then(()=>{
+        SearchPCClass.clear_history()
+    })
+}
+
+provide('ClearHistories',_clearSearchHistory)
+provide('ChangeShowHotListData',ChangeShowHotListData)
 
 onMounted(()=>{
     _getSportList()
-    _getHotList()
+    _getHotSearch()
+    _getHotPush()
 })
 </script>
 
@@ -91,7 +112,7 @@ onMounted(()=>{
         <div class="search-history-box" v-else>
             <div class="inputBox">
                 <icon-wapper class="icon" :name="`img:${img_search_icon_y0}`" size="14px"></icon-wapper>
-                <input type="text" placeholder="请输入联赛名或球队名" v-model="SearchPCClass.keyword" @keyup.enter="_addSearchHistory"/>
+                <input type="text" placeholder="请输入联赛名或球队名" v-model="SearchPCClass.keyword" @keyup.enter="_addSearchHistory(SearchPCClass.keyword)"/>
                 <p class="cursorPointer" @click.self.stop="ShowSearch(false)">|&nbsp;&nbsp;关闭</p>
             </div>
             <div class="historyBox">
@@ -99,8 +120,8 @@ onMounted(()=>{
                            :hasActivity="hasActivity" :line_width="36" name="sportName"></TabWapper>-->
                 <bevisSearchList v-if="(SearchPCClass?.searchHistory || []).length" kind="history"
                                  :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
-                <bevisSearchList v-if="(SearchPCClass?.hostList || []).length" kind="hot"
-                                 :list="SearchPCClass?.hostList ?? []" @Search="_addSearchHistory" />
+                <bevisSearchList v-if="(SearchPCClass?.showHotList || []).length" kind="hot"
+                                 :list="SearchPCClass?.showHotList ?? []" @Search="_addSearchHistory" />
             </div>
         </div>
     </nav>

@@ -5,9 +5,8 @@
 -->
 
 <template>
-  <!-- :style="`transform: translateY(${translateY / 100}rem)`" -->
   <div class="scroll-wrapper" @scroll="handler_match_container_scroll">
-    <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
+    <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
     <div  :class="['scroll-i-con', {high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
         detail_list: is_detail, simple: standard_edition == 1,
@@ -67,6 +66,8 @@ const props = defineProps({
   is_goto_top_random: Number,
 })
 
+// const match_ctr = ref(MatchDataBaseH5)
+
 const defer_render = use_defer_render()
 
 const store_state = store.getState();
@@ -86,6 +87,10 @@ const match_mids = ref([])
 const scroll_timer = ref(0)
 const emitters = ref({})
 
+// watch(() => match_ctr.value.str.a, () => {
+//   console.log(` match_ctr.st: `,  match_ctr.st)
+// })
+
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
@@ -93,11 +98,21 @@ onMounted(() => {
   emitters.value = {
     emitter: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, update_max_height).off,
   }
+
+  // setTimeout(() => {
+  //   MatchDataBaseH5.str.a = '8888888888888'
+  // }, 3000)
 })
 
 const get_match_item = (mid) => {
   return MatchDataBaseH5.get_quick_mid_obj(mid)
 }
+
+// const match_item = computed(() => {
+//   return (mid) => {
+//     return MatchDataBaseH5.get_quick_mid_obj(mid)
+//   }
+// })
 
 const get_index_f_data_source = (mid) => {
   return lodash.findIndex(MatchMeta.match_mids, { mid });

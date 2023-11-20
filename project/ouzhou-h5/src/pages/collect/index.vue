@@ -14,7 +14,7 @@
           <q-tab v-for="(item,index) in tabData" :key="index" :name="item.val" :label="item.label" />
         </q-tabs>
       </div>
-      <scroll-list menu_type="50000" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
+      <scroll-list ref="scrollListRef" menu_type="50000" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
       <!-- <NoData class="data-get-empty2" which='comingSoon' height='400'></NoData> -->
       <!-- 收藏 -->
       <div class="match-container">
@@ -37,6 +37,7 @@ const state = reactive({
   slideMenu_sport: [], // 赛种
 })
 const tabValue = ref(1);
+const scrollListRef = ref(null)
 const tabData = reactive([
   {
     name:"inplay",
@@ -62,6 +63,7 @@ const on_update = (val) => {
   state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
   MenuData.set_current_lv1_menu(val)
   if(state.slideMenu_sport?.[0])changeMenu(state.slideMenu_sport?.[0])
+  if(scrollListRef.value) scrollListRef.value.reset()
 }
 /**
  * 球种点击

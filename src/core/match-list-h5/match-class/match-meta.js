@@ -75,7 +75,6 @@ class MatchMeta {
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
-    
     // 设置 元数据计算 流程
     MatchResponsive.set_is_compute_origin(true)
 
@@ -407,7 +406,7 @@ class MatchMeta {
     if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return
+    if (length < 1) return this.set_page_match_empty_status(true);
     this.handler_match_list_data({ list: list, type: 2 })
   }
 
@@ -488,7 +487,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_data () {
-    const res = await api_match_list.get_home_matches({ type: 1 })
+    const res = await api_match_list.get_home_matches({ type: 1, sort: 2 })
     return this.handle_ouzhou_home_data(res)
   }
 
@@ -502,10 +501,10 @@ class MatchMeta {
     const hots = lodash.get(res, 'data.hots', [])
     const dataList = lodash.get(res, 'data.dataList', [])
     // 15分钟玩法赛事数据
-    const p15_list = this.assemble_15_minute_data(p15.slice(0, 4))
+    const p15_list = this.assemble_15_minute_data(p15)
     MatchDataBasel5minsH5.set_list(p15_list)
     // 热门赛事数据
-    MatchDataBaseHotsH5.set_list(hots.slice(0, 4))
+    MatchDataBaseHotsH5.set_list(hots)
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []
@@ -681,6 +680,7 @@ class MatchMeta {
       MatchResponsive.clear_ball_seed_league_count()
     }
     const length = lodash.get(list, 'length', 0)
+    console.log('handler_match_list_data', list.length)
     if (length < 1) return this.set_page_match_empty_status(true);
     // // 重置折叠对象
     // MatchFold.clear_fold_info()
@@ -856,7 +856,7 @@ class MatchMeta {
    * @description ws 指令处理
    * @param {*} cmd 
    */
-  handle_ws_directive (cmd) {
+  handle_ws_directive ({ cmd = '', data = {} }) {
     // 调用 matchs  接口
     if (['C901', 'C801', 'C302', 'C109', 'C104'].includes(cmd)) {
       this.get_target_match_data({})

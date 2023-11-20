@@ -10,7 +10,7 @@
           <!-- 联赛是否收藏 -->
           <div @click.stop="collect"
             class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch">
-            <i class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
+            <div class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
           </div>
         </div>
         <!-- 联赛名称 -->
@@ -165,13 +165,12 @@ onUnmounted(()=>{
       }
     }
     
-    .icon-star{
-      &::before {
-        color: var(--q-gb-bg-c-8);
-      }
-      &.active::before {
-        color: var(--q-gb-bd-c-12);
-      }
+    .collect-start {
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      background-size: 100%;
     }
+
 }
 </style>

@@ -1,6 +1,7 @@
 <!--
  * @Description: 列表页主内容
 -->
+
 <template>
   <div :class="['match-list-container', { empty_page: match_is_empty }]" :style="page_style">
 
@@ -37,8 +38,6 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
-import { is_hot, is_collect } from 'src/base-h5/mixin/menu.js'
-
 import NoData from "src/base-h5/components/common/no-data.vue"; // 无网络展示组件
 
 // yazhou-h5 赛事列表
@@ -50,7 +49,7 @@ import MatchList3 from './components/match-list3.vue'
 
 import MatchListOuZhou from './components/match-list-ouzhou.vue'
 
-import { PROJECT_NAME } from "src/core/index.js"
+import { PROJECT_NAME, MatchDataWarehouse_H5_List_Common } from "src/core/index.js"
 
 // 次要玩法描述组件
 import SecondaryDescription from "src/base-h5/components/match-list/components/secondary-description.vue";
@@ -89,8 +88,7 @@ onMounted(() => {
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
-    console.log('wswswswswswsws-cmd:', cmd, data)
-    // MatchMeta.handle_ws_directive(cmd)
+    MatchMeta.handle_ws_directive({ cmd, data })
   }, 1000))
   
 })

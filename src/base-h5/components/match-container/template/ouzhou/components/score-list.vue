@@ -5,11 +5,17 @@
 <template>
   <div class="score-list">
     <template v-if="score_data.length > 0">
-      <span v-for="s in score_data" :key="s" @click="set_old_submit(s)" :class="{active: active_score === `${match_info.id}${s.oid}` }">
-        <span v-if="s.os === 1"> <span class="hpn" v-if="show_hpn">{{ get_item_hpn(s) }}</span> {{ get_odd_os(s.ov) }}</span>
-        <img v-else class="lock" :src="odd_lock_ouzhou" alt="lock">
-      </span>
+      <OddItem 
+        v-for="s in score_data" 
+        :key="s.oid"
+        :odd_item="s"
+        :mhs="mhs"
+        :item_hs="item_hs"
+        :match_id="match_info.id"
+        :csid="match_info.csid"
+        :show_hpn="show_hpn"></OddItem>
     </template>
+     <!-- 锁 -->
     <template v-else>
       <span v-for="s, index in score_data.length" :key="index"><img class="lock" :src="odd_lock_ouzhou" alt="lock"></span>
     </template>
@@ -18,9 +24,9 @@
  
 <script setup>
 import { computed, ref } from 'vue'
+import OddItem from './odd-item.vue'
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
-import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
-import { compute_value_by_cur_odd_type } from "src/core/index.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const props = defineProps({
@@ -42,6 +48,9 @@ const props = defineProps({
   }
 })
 
+const ol_info = ref({})
+const mhs = ref(0)
+const item_hs = ref(0)
 const active_score = ref('')
 
 // 赔率数据
@@ -49,43 +58,11 @@ const score_data = computed(() => {
   const hps = props.match_info.hps
   const hpid = MatchResponsive.match_hpid.value
   const hps_item = hps && hps.find(t => t.hpid == hpid)
+  mhs.value = lodash.get(props.match_info, 'mhs', 1)
+  item_hs.value = lodash.get(hps_item, 'hl[0].hs', 1)
   const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: props.score_length }, (i) => { return {  oid: i } }))
   return ol.sort((a, b) => a.otd - b.otd)
 })
-
-// 显示的赔率
-const get_odd_os = (ov) => {
-  return  compute_value_by_cur_odd_type(ov,'','',props.match_info.csid)
-}
-
-const get_item_hpn = (s) => {
-  return s.ot
-}
-
-const set_old_submit = (ol) => {
-  if (ol.os !== 1) return
-  active_score.value = `${props.match_info.id}${ol.oid}`
-  const {oid,_hid,_hn,_mid } = ol
-  let params = {
-    oid, // 投注项id ol_obj
-    _hid, // hl_obj 
-    _hn,  // hn_obj
-    _mid,  //赛事id mid_obj
-  }
-  let other = {
-    is_detail: false,
-    // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
-    // 根据赛事纬度判断当前赛事属于 那种投注类型
-    bet_type: 'common_bet',
-    // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
-    device_type: 1,  
-    // 数据仓库类型
-    match_data_type: "h5_list", // h5_detail
-  }
-  console.log('score-list.vue ',params)
-  set_bet_obj_config(params,other)
-}
-
 
 </script>
  
@@ -123,6 +100,18 @@ const set_old_submit = (ol) => {
       height: 16px;
       position: relative;
       top: 2px;
+    }
+    .item{
+      &.up{
+        color: #FF4646;
+      }
+      &.down{
+        color: #17A414;
+      }
+      .hps_img{
+        width: 6px;
+        height: 10px;
+      }
+    }
   }
-}
 </style>
