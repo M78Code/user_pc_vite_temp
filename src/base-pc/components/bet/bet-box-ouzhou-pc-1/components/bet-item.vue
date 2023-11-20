@@ -66,10 +66,11 @@
 <script setup>
 
 import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit } from "src/core/"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr } from "src/core/"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import mathJs from 'src/core/bet/common/mathjs.js'
+import lodash_ from "lodash"
 
 import BetInput from "./bet-input.vue"  // 投注输入框
 
@@ -78,13 +79,22 @@ const props = defineProps({
     index:{}
 })
 
-
 const ref_data = reactive({
     show_money: false, // 显示快捷金额
     max_money: 0, // 最大限额
+    money_list: [],
 })
 
 onMounted(()=>{
+    // 单关 单注默认显示快捷金额
+    if(BetData.is_bet_single){
+        const { max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${props.items.playOptionsId}`, {})
+        ref_data.show_money = true
+        ref_data.max_money = max_money
+        let money_list = lodash_.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
+        money_list.max = 'MAX'
+        ref_data.money_list = money_list
+    }
     useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).on
 })
 
