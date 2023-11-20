@@ -125,17 +125,21 @@
   }
   .total-right{
     font-weight: bold;
+    margin-left: 0.05rem;
   }
   .total-left{
     color: var(--q-gb-t-c-18);
     font-size: 0.15rem;
+    margin-left: 0.05rem;
+    font-weight: bold;
   }
   .total{
-    padding: 0.15rem;
+    padding: 0.1rem;
     background: var(--q-gb-bg-c-17);
     display: flex;
     justify-content: space-between;
     font-size: 0.14rem;
+    height: 40px;
   }
   .content-right-duo{
     display: inline-block;
@@ -215,6 +219,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
+      padding: 0 0.1rem;
   }
   .nonebox4-content-right{
     text-align: right;

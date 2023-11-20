@@ -120,7 +120,7 @@
     font-size: 0.13rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-3);
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
@@ -163,9 +163,10 @@
       width: calc(100% - 0.85rem);
   }
   .nonebox4-content-right-profit{
-      font-size: 0.16rem;
+      font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-4);
+      color: var(--q-gb-t-c-1);
+      padding: 0 0.15rem;
   }
   .nonebox4-content-right{
     display: flex;
