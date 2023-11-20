@@ -10,27 +10,18 @@
             <!-- 头部菜单结束 -->
             <q-scroll-area class="announce-area" visible>
                 <div class="main-page">
-                    <div class="announce-header">
-                    <div class="announce-title">
-                        {{ current_title }}
-                    </div>
-                        <button class="announce-allbtn" @click="readall">Read All</button>
-                    </div>
-                    <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
-                        <div class="ann-title" v-show="index == 0">[{{ item.noticeTypeName }}]</div>
+                    <div class="announce-title">{{ current_title }}</div>
+                    <div class="ann-item" v-for="(item, i) of class_lists" :key="i">
+                        <div class="ann-title" >[{{ item.noticeTypeName }}]</div>
                         <div class="ann-content"> 
-                            <span class="reads" v-show="item.isShuf == 1">*</span> 
                             {{ item.sendTime }} {{ item.context }}
                         </div>
                         <div class="ann-time">
-                        <div>
                             {{ timestr(item.sendTimeOther) }}
-                        </div>
-                        <button class="announce-btn" @click="read(item)">Read</button>
                         </div>
                     </div>
                     <load-data state="notice-empty" :no_data_msg="i18n_t('common.notice_no_data')"
-                        v-if="lodash.get(announce_list, 'length', 0) <= 0 && loadd_finish"></load-data>
+                        v-if="lodash.get(class_lists, 'length', 0) <= 0 && loadd_finish"></load-data>
                 </div>
             </q-scroll-area>
         </div>
@@ -63,7 +54,8 @@ let res_list = reactive([])
 /** 左侧菜单 */
 let announce_title = ref([])
 /** 大列表 */
-let announce_list = ref([])
+// let announce_list = ref([])
+let class_lists = ref([])
 /** 全部分类数据 */
 let class_list = reactive([])
 /** 当前标题 */
@@ -72,18 +64,7 @@ const current_title = ref('')
 const index = ref(0)
 /** 接口请求完成 */
 const loadd_finish = ref(false)
-const readalls = ref(true)
 
-const readall = () => {
-    announce_list.value = announce_list.value.map(ls=>{
-        ls.isShuf = 0
-        return ls
-    })
-}
-
-const read = (data) => {
-    data.isShuf = 0
-}
 
 /**
 * @Description:切换菜单
@@ -93,10 +74,8 @@ const read = (data) => {
 */
 function tabs_click(item, i) {
     index.value = i;
-    current_title.value = announce_title.value[i].type;
-    announce_list.value = i
-        ? class_list[i - 1].mtl
-        : res_list;
+    current_title.value = class_list[i].nen;
+    class_lists.value =  class_list[i].mtl;
 }
 /**
 * @Description:时间戳转字符串时间格式
@@ -137,37 +116,36 @@ function timestr(time1) {
 */
 function get_list() {
     api_home.post_announce_list().then((res) => {
-        console.error('post_announce_list res', res);
         let code = lodash.get(res, "code");
         const data = lodash.get(res, "data");
         if (code == 200 && data) {
-            data.nt.unshift({
-                id: 0,
-                type: i18n_t('common.all_notice'),
-                isShuf: 0,
-            });
-            for (let i in data.nt) {
-                data.nt[i].title = data.nt[i].type;
-            }
+            // data.nt.unshift({
+            //     id: 0,
+            //     type: i18n_t('common.all_notice'),
+            // });
+            // for (let i in data.nt) {
+            //     data.nt[i].title = data.nt[i].type;
+            // }
             announce_title.value = data.nt; //左侧菜单
-            announce_title.value =  announce_title.value.map((item) => {
-                return Object.assign(item,{isShuf:0})
-            })
             class_list = data.nl; //分类
+            class_lists.value = class_list[0].mtl
             res_list = data.nb;
-            announce_list.value = data.nb; //大列表
+            // announce_list.value = data.nb; //大列表
             current_title.value = data.nt[0].type || "";
         }
     }).finally(() => loadd_finish.value = true)
 }
 /** 钩子触发 */
-onMounted(get_list)
+onMounted(() => {
+    get_list()
+})
 </script>
 
 <style lang="scss" scoped>
 .announce-area{
     width: 100%;
     height: 100%;
+    padding-top: 14px;
 }
 .announce-wrap {
     width: 100%;
@@ -187,7 +165,7 @@ onMounted(get_list)
     .main-page {
         color: #5a6074;
         padding-top: 14px;
-
+        padding-bottom: 80px;
         :deep(.load-data-wrap ) {
             height: 75vh !important;
 
@@ -198,23 +176,12 @@ onMounted(get_list)
             }
         }
 
-        .announce-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 30px;
-            border-bottom: 1px solid var(--q-gb-bd-c-1);
-        }
         .announce-title{
             font-size: 16px;
             color: #191c24;
             font-weight: 600;
-        }
-        .announce-allbtn{
-            padding: 2px 12px;
-            border: 0.5px solid var(--q-gb-bd-c-1);
-            border-radius: 12px;
-            background: none;
+            padding: 8px 30px;
+            border-bottom: 1px solid var(--q-gb-bd-c-1);
         }
         .announce-btn{
             padding: 2px 15.5px;
@@ -227,11 +194,6 @@ onMounted(get_list)
             border-bottom: 1px solid #d0d8de;
             margin: 5px 0;
             padding:0px 30px;
-            .reads{
-                position: absolute;
-                left: 20px;
-                color: red;
-            }
             .ann-title {
                 color: #191c24;
                 font-weight: 600;

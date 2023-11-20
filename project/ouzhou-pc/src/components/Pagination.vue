@@ -276,7 +276,7 @@ export default defineComponent({
   font-size: 12px;
   z-index: 1100;
   margin-right: 10px;
-  background-color: #ffffff;
+  background-color: var(--q-gb-bg-c-4);
   box-shadow: 0px -4px 8px #F5F5F5;
 
   .pagination-select {

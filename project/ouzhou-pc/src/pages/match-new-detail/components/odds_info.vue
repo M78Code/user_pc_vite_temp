@@ -226,7 +226,7 @@ onMounted(() => {
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
+    background-color: var(--q-gb-bg-c-11);
     border-radius: 4px;
   }
 
@@ -262,7 +262,7 @@ onMounted(() => {
     // line-height: 26px;
 
     .odds-title-li {
-      background: #F5F5F5;
+      background: var(--q-gb-bg-c-15);
 
       .handicap-value-text {
         display: inline-block;

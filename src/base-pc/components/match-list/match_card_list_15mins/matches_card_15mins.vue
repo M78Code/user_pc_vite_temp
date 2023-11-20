@@ -37,10 +37,10 @@
 
   import { onMounted, ref, watch } from 'vue';
   import _ from 'lodash';
-  import MatchListOuzhouClass from 'src/core/match-list-pc/match-ouzhou-list.js'
   import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
   // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
   import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+  import { MenuData } from "src/core/index.js"
 
   const props = defineProps({
     current_tab: {
@@ -48,7 +48,7 @@
       default: () => {},
     },
   });
-  const current_check_betId = ref(MatchListOuzhouClass.current_check_betId.value);
+  const current_check_betId = ref(MenuData.current_check_betId.value);
   const ols = ref([])
 
   onMounted(() => {
@@ -58,15 +58,15 @@
 
   // // 监听 当前投注项ID的变化
   watch(
-      MatchListOuzhouClass.current_check_betId,
+    MenuData.current_check_betId,
       () => {
-        current_check_betId.value= MatchListOuzhouClass.current_check_betId.value
+        current_check_betId.value= MenuData.current_check_betId.value
       },
     )
 
   // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
   const checked_current_td = payload => {
-    MatchListOuzhouClass.current_check_betId.value = payload.ol.oid
+    MenuData.current_check_betId.value = payload.ol.oid
     let params = {
       oid: payload.ol.oid, // 投注项id ol_obj
       _hid: payload.hps.hid, // hl_obj 

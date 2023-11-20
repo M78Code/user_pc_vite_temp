@@ -196,7 +196,7 @@ const cancel_operate = () =>{
 <style lang="scss" scoped>
 /**预约投注遮罩*/
 .mask-appointment {
-  background: #F0F5FC !important;
+  background: var(--q-gb-bg-c-21) !important;
   position: absolute;
   width: 100%;
   height: 100%;

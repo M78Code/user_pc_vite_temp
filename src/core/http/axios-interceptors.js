@@ -55,6 +55,7 @@ const requestHook = {
     //请求语言
     config.headers["lang"] = LocalStorage.get(lang_key); // 语言调整
     config.headers["checkId"] = `pc-${requestId}-${(UserCtr.get_uid()).replace(/-/g, "")}-${Date.now()}`;
+    config.time = new Date().getTime();
     // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
     if (SessionStorage.get(STANDARD_KEY.get("pb"))) {
       if (endsWith(config.url, "PB")) {
@@ -281,6 +282,7 @@ function match_fix_mst(match, http_data) {
   if (match && match.ms && match.mess == 1) {
     // 对进行中的赛事,并且处于倒计时状态的赛事进行修正
     let csid = parseInt(match.csid);
+    console.log('match.mst', http_data.data.ts_http);
     let mst = parseInt(match.mst);
     // 转换成秒
     let mm = parseInt(time_m / 1000);
