@@ -69,7 +69,6 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
     // type 早盘 今日 对赛种进行拼接
     let current_menu = left_menu_result.lv1_mi +''+ type
     let menu_root = 20 + '' + type
-
     // 设置当前的一级菜单类型
     MenuData.set_menu_root(menu_root)
     // 设置      中间 菜单输出

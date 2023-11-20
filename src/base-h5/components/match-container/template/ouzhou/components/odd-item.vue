@@ -3,10 +3,12 @@
 -->
 
 <template>
-  <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
+  <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
   <span :class="['odd-item', {active: active_score === `${match_id}_${odd_item.oid}` }]" @click="set_old_submit">
+    <!-- 锁 -->
+    <img v-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
     <!-- 是否显示赔率 -->
-    <span v-if="odd_item.os === 1" :class="['item',  { 'up': is_up,  'down': is_down}]"> 
+    <span v-else :class="['item',  { 'up': is_up,  'down': is_down}]"> 
       <!-- 赔率 -->
       <span class="hpn" v-if="show_hpn">{{ get_item_hpn(odd_item) }}</span> {{ get_odd_os(odd_item) }} 
       <!-- 红升icon -->
@@ -14,8 +16,6 @@
       <!-- 绿降icon -->
       <img class="hps_img" v-if="is_down" :src="ouzhou_hps_down" alt="">
     </span>
-    <!-- 锁 -->
-    <img v-else class="lock" :src="odd_lock_ouzhou" alt="lock">
   </span>
 </template>
  
@@ -42,6 +42,16 @@ const props = defineProps({
   match_id: {
     type: Number,
     default: () => 1
+  },
+  // 盘口状态
+  item_hs: {
+    type: Number,
+    default: () => 0
+  },
+  // 赛事状态
+  mhs: {
+    type: Number,
+    default: () => 0
   }
 })
 
@@ -53,17 +63,7 @@ const active_score = ref('')
 watch(() => props.odd_item?.ov, (a,b) => {
   is_up.value = a > b
   is_down.value = a < b
-})
-
-onMounted(() => {
-  const key = `oid_${props.odd_item.oid}`
-  const old_ov = MatchResponsive.odd_item_info.value[key]
-  if (props.odd_item && props.odd_item.os === 1 && old_ov) {
-    is_up.value = old_ov < props.odd_item.ov
-    is_down.value = old_ov > props.odd_item.ov
-    reset_status()
-  }
-  props.odd_item.ov && MatchResponsive.set_odd_item_info(props.odd_item)
+  reset_status()
 })
 
 const reset_status = () => {
@@ -83,6 +83,11 @@ const get_odd_os = (s) => {
 const get_item_hpn = (s) => {
   return s.ot
 }
+
+// 是否锁盘
+const is_lock = computed(() => {
+  return props.odd_item.os != 1 || props.item_hs == 1 || props.mhs == 1
+})
 
 const set_old_submit = () => {
   const ol = props.odd_item
@@ -136,9 +141,15 @@ const set_old_submit = () => {
   .item{
     &.up{
       color: #FF4646;
+      > img {
+        transform: rotateX(-180deg);
+      }
     }
     &.down{
       color: #17A414;
+      > img {
+        transform: rotateX(-180deg);
+      }
     }
     .hps_img{
       width: 6px;

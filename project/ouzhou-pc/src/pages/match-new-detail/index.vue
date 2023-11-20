@@ -29,7 +29,7 @@
             alt=""
             srcset=""
             style="margin: 0 10px; height: 14px"
-            v-if="sportId == 1"
+            v-if="detail_info.mng"
           />
           <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
 <!--            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}-->
