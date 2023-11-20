@@ -278,7 +278,8 @@ function getCurState (hipo) {
         }
 
         div {
-            color: var(--q-gb-bd-c-4);
+            color: var(--q-gb-bg-c-7);
+            font-size: 14px;
         }
 
         .odds {
