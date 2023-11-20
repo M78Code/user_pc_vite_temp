@@ -65,8 +65,6 @@ import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match
 import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
 import OZ_MenuData_App_h5 from "src/core/menu-app-h5/oz-menu-data-class.js";
 
-import {ref } from 'vue' 
-
 let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
 // if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
 //   MenuData = MenuData_App_h5
