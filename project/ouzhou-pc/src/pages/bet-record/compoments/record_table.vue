@@ -268,7 +268,7 @@ watch(() => props.current_tab, (newVal) => {
       align: 'center',
       field: 'return'
     }
-    handle_fetch_order_list({ orderStatus: 1 })
+    handle_fetch_order_list({ orderStatus: 1, timeType: 1 })
   } else {
     columns.value[5] = {
       name: 'highestWin',

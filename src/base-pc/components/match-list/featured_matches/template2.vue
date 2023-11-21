@@ -5,7 +5,7 @@
   <div class="drag-scroll relative-position">
     <!-- 滚动区域 -->
     <div class="hide-scrollbar">
-      <div class="content" @scroll="on_scroll">
+      <div class="content" @scroll="on_scroll" ref="content">
         <slot></slot>
         <div style="min-width: 40px" v-show="has_scroll"></div>
       </div>
@@ -42,6 +42,9 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
   const show_right_btn = ref(true);
   // 是否有滚动条
   const has_scroll = ref(false);
+
+  const content = ref()
+
   //定时器
   let timer = null;
   //定时器
@@ -59,8 +62,8 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
     } else {
       show_left_btn.value = false;
     }
-    if (!area_obj) return;
-    if (scrollLeft == area_obj?.scrollWidth - area_obj?.clientWidth) {
+    if (!content.value) return;
+    if (scrollLeft == content.value?.scrollWidth - content.value?.clientWidth) {
       show_right_btn.value = false;
     } else {
       show_right_btn.value = true;
@@ -71,7 +74,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
   // type  left左移   right右移
   const click_move = (type) => {
     clearInterval(interval_id);
-    let scrollLeft = area_obj?.scrollLeft;
+    let scrollLeft = content.value?.scrollLeft;
     for_count = 0;
     // 滚动动画
     interval_id = setInterval(() => {
@@ -84,7 +87,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
       } else {
         scrollLeft += 15;
       }
-      area_obj.scrollLeft = scrollLeft;
+      content.value.scrollLeft = scrollLeft;
     }, 15);
   };
 
@@ -94,7 +97,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
   },{immediate: true })
 
   onMounted(() => {
-    area_obj = document.querySelector('.content');
+    // area_obj = document.querySelector('.content');
     // show_right_btn.value = props.is_show_btn;
   }); 
 

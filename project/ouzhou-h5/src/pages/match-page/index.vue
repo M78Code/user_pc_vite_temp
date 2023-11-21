@@ -37,7 +37,12 @@ onMounted(() => {
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data({})
       }
-    }).off
+    }).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
+      if (state.curTab) {
+        onChangeDate(12)
+      }
+    })
   }
 })
 onUnmounted(() => {
@@ -54,7 +59,7 @@ const onTabChange = e => {
 const onChangeDate = e => {
   state.curLeague = e
   MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-    console.log('onChangeDate', res)
+    if (!res.length) return
     state.leagueData = res
     onChangeArea(res[0].id)
   })
@@ -71,7 +76,10 @@ const onLeagueChange = (league, game) => {
 const onChangeArea = e => {
   state.curArea = e
   const arr = state.leagueData.find(i => i.id === e)['tournamentList']
-  arr.forEach(i => i.visible = true)
+  arr.forEach(i => {
+    i.visible = true
+    i.tid = i.id
+  })
   state.leagueAreaData = arr
 }
 

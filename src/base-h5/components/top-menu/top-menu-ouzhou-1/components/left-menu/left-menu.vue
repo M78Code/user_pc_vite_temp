@@ -65,7 +65,7 @@ import { MenuData } from 'src/core/';
 import { useRouter,useRoute } from "vue-router";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { LocalStorage } from "src/core/index.js";
-import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
+import { useMittOn,useMittEmit,MITT_TYPES } from "src/core/mitt/index.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 const router = useRouter();
 const route = useRoute();
@@ -150,6 +150,7 @@ const change_current_menu = (item) => {
   setPopularSort(item.mi);
   // 设置菜单对应源数据
   emits('isLeftDrawer');
+  useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE);
 
   // 避免多次 触发数据获取方法， 以下只在 matchList 页面才触发； 其他情景由 matchList 页面自己驱动
   MatchMeta.set_origin_match_data()

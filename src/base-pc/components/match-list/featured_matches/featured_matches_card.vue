@@ -9,7 +9,7 @@
   <div class="featured-matched-card-wrap">
     <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
     <template2 :is_show_btn="matches_featured_list.length >= 4">
-      <div class="featured-matched-card" v-for="(item, index) in matches_featured_list" :key="item.tid"
+      <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in matches_featured_list" :key="item.tid"
         :class="{ 'margin-box': index != matches_featured_list.length - 1 }">
         <div class="right-top-img" :style="`background-position:0 -${current_ball_type(item.csid)}px`"></div>
         <div class="matches_description">
@@ -25,7 +25,7 @@
         <div class="union-name">
           <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1', {}).away || 0 }}</span>
         </div>
-        <div class="odds_box">
+        <div class="odds_box" v-if="item.current_ol?.length">
           <div class="top-line"></div>
           <div class="odds_item" v-for="option in item.current_ol[0]?.ol"
             @click="checked_current_td({ payload: item, hps: item.current_ol[0], ol: option })"
@@ -44,6 +44,7 @@ import { ref, watch,onBeforeUnmount } from 'vue';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import template2 from './template2.vue';
 import { MenuData } from "src/core/index.js"
+import { useRouter } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common } from 'src/core'
 const props = defineProps({
@@ -52,6 +53,7 @@ const props = defineProps({
     default: () => [],
   }
 })
+const router = useRouter();
 const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common)
 set_active_mids(props.matches_featured_list.map(i => i.mid))
 onBeforeUnmount(() => {
@@ -135,6 +137,18 @@ const checked_current_td = payload => {
   set_bet_obj_config(params, {})
 }
 
+const toJump = (item)=>{
+   
+    router.push({
+        name: "details",
+        params: {
+          mid: item.mid,
+          tid: item.tid,
+          csid: item.csid,
+        },
+      });
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -151,6 +165,7 @@ const checked_current_td = payload => {
     padding-top: 8px;
     box-sizing: border-box;
     position: relative;
+    cursor: pointer;
 
     .right-top-img {
       position: absolute;
