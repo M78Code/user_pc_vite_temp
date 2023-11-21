@@ -5,8 +5,12 @@
       ol_data.class,
       `csid${ol_data.csid}`,
       odds_lift,
-      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : ''
-    ]" @click.stop="bet_click_ol" :id="`list-${ol_data.oid}`">
+      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
+      odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) &&  'can-hover'
+    ]"
+    @click.stop="bet_click_ol"
+    :id="`list-${ol_data.oid}`"
+  >
     <!-- 盘口 -->
     <div v-if="odds_state != 'seal'" :class="[
       'handicap-value',
