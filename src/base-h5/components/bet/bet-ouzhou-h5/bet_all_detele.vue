@@ -122,5 +122,6 @@
       justify-content: space-between;
       padding: 0.15rem;
       background: var(--q-gb-bg-c-10);
+      height: 0.4rem;
     }
 </style>

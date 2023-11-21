@@ -30,7 +30,7 @@
     }">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
-      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300">
+      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length">
         <!-- <template v-slot:before> -->
         <!-- 头部15 Mins模块 -->
         <div v-if="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">

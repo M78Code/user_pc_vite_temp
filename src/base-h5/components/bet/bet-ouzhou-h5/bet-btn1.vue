@@ -49,7 +49,7 @@ const set_retain_selection = () => {
       font-weight: 400;
       letter-spacing: 0px;
       border: 0.5px solid var(--q-gb-t-c-5);
-      margin: 0 0.2rem 0 0.2rem;
+      margin: 0 0.1rem 0 0.1rem;
       line-height: 0.4rem;
     }
     .place_bet{
@@ -57,7 +57,7 @@ const set_retain_selection = () => {
       font-size: 0.14rem;
       font-weight: 500;
       line-height: 0.4rem;
-      width: 2.17rem;
+      width: 2.37rem;
       // height: 46px;
       border-radius: 2px;
       background: var(--q-gb-bg-c-1);
