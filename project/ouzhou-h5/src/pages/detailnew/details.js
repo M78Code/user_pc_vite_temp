@@ -23,6 +23,7 @@ export const details_main = (router,route) => {
   const loading = ref(false);
   const detail_event_tabs_value = ref({ label: "Match", id: 1 });
   const timer = ref(null);
+  /** @type {Ref<NodeJS.Timeout>} */
   const mst_timer = ref(null);
   const tab_selected_obj = ref({});
   const change_header_fix = ref(null);
@@ -58,6 +59,10 @@ export const details_main = (router,route) => {
     mst_timer.value = setInterval(() => {
       if (t.csid == 2) {
         t.mst--;
+        if(t.mst<0){
+          t.mst = 0
+          clearInterval(mst_timer.value)
+        }
       } else {
         t.mst++;
       }
