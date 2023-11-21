@@ -27,7 +27,7 @@ import { ref, onUnmounted } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
 import { compute_local_project_file_path } from 'src/core/index.js'
 import { i18n_t } from "src/boot/i18n.js";
-import store from "src/store-redux/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 //国际化
 
@@ -59,6 +59,7 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
         text: () => orderno
       })
       clipboard.on('success', () => {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.copy_suc"))
         // h5嵌入时Safari阻止弹窗
         if (!Platform.is.safari) {
           try {
