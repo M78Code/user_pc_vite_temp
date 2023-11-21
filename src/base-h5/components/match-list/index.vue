@@ -11,13 +11,12 @@
 
     <template v-else>
       <!-- 非收藏页 -->
-      <NoData class="data-get-empty1" v-if='match_is_empty && !is_collcte_page' which='noMatch' height='400'></NoData>
+      <NoData class="data-get-empty1" v-if='match_is_empty && !is_collect' which='noMatch' height='400'></NoData>
+
       <!-- 收藏页 -->
-      <NoData class="data-get-empty2" v-else-if='match_is_empty && is_collcte_page' :which='menu_type === 28 ? "noMatch" : "comingSoon"' height='400'></NoData>
-      <!--
-        bevis 修改
-        46949 【SIT】【H5新版复刻】【H5】虚拟体育列表页无数据返回，页面展示空白
-      -->
+      <NoData class="data-get-empty2" v-else-if='match_is_empty && is_collect' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
+      
+      <!-- bevis 修改 46949 【SIT】【H5新版复刻】【H5】虚拟体育列表页无数据返回，页面展示空白 -->
       <NoData class="data-get-empty2" v-else :which='menu_type === 28 ? "noMatch" : "comingSoon"' height='400'></NoData>
     </template>
 
@@ -35,6 +34,7 @@ import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { PROJECT_NAME, MatchDataWarehouse_H5_List_Common } from "src/core/index.js"
+import { is_collect, menu_type } from 'src/base-h5/mixin/menu.js'
 
 // yazhou-h5 赛事列表
 import MatchList1 from './components/match-list1.vue'

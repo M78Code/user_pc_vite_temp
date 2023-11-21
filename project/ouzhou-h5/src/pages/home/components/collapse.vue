@@ -67,6 +67,12 @@ import { onMounted, ref } from 'vue'
     .left{
       display: flex;
       align-items: baseline;
+      span {
+        width: 3rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
     }
     .line{
       display: none;

@@ -291,4 +291,60 @@ export const sports_play_data = {
         csid: '2'
       },
     ],
-  }
+}
+
+export const sports_play_title = {
+  "1" : [ 
+    {
+      hpid: '1',
+      label: '全场独赢',
+      ol: [
+        { ot: '1', title: "主胜" },
+        { ot: 'X', title: "平局" },
+        { ot: '2', title: "客胜"}
+      ]
+    },
+    {
+      hpid: '2',
+      label: '全场大小',
+      ol: [
+        { ot: 'Over', title: "主队总分" },
+        { ot: 'Under', title: "客队总分" },
+      ]
+    },
+    {
+      hpid: '4',
+      label: '全场让球',
+      ol: [
+        { ot: '1', title: "主队让球" },
+        { ot: '2', title: "客队让球" },
+      ]
+    },
+  ],
+  "2" : [
+    {
+      hpid: '37',
+      label: '全场独赢',
+      ol: [
+        { ot: '1', title: "主胜" },
+        { ot: '2', title: "客胜"}
+      ]
+    },
+    {
+      hpid: '38',
+      label: '全场总分',
+      ol: [
+        { ot: 'Over', title: "主队总分" },
+        { ot: 'Under', title: "客队总分" },
+      ]
+    },
+    {
+      hpid: '39',
+      label: '全场让球',
+      ol: [
+        { ot: '1', title: "主队让球" },
+        { ot: '2', title: "客队让球" },
+      ]
+    },
+  ],
+}

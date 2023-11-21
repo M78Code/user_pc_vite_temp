@@ -26,7 +26,7 @@
                 </MatchContainerMainTemplate3>
               </template>
               <!-- 赛果玩法 -->
-              <template v-else-if="is_results && is_kemp">
+              <template v-else-if="is_kemp">
                 <MatchContainerMainTemplate6
                   :i="index"
                   :match_of_list="match_item">

@@ -1,18 +1,8 @@
 <template>
-  <div
-    v-if="is_mounted && odds_state != 'close'"
-    class="c-bet-item yb-flex-center relative-position yb-family-odds"
-    :class="[
-      ol_data.class,
-      odds_state,
-      `csid${ol_data.csid}`,
-      odds_lift,
-      {
-        'show-odds-icon': odds_state != 'seal',
-        'active-odds-icon': ol_data.oid == current_ol.oid,
-      },
+  <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
+    :class="[ ol_data.class, odds_state, `csid${ol_data.csid}`, odds_lift,
+      { 'show-odds-icon': odds_state != 'seal', 'active-odds-icon': ol_data.oid == current_ol.oid, },
     ]"
-   
     :id="`list-${ol_data.oid}`"
   >
     <!-- 盘口 -->
@@ -35,28 +25,12 @@
     </div> -->
 
     <!-- 赔率 -->
-    <div
-      class="odds"
-      :style="
-        [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
-          +ol_data._hpid
-        ) && utils.is_iframe
-          ? 'flex:1.5'
-          : ''
-      "
-    >
+    <div class="odds" :style=" [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes( +ol_data._hpid ) && utils.is_iframe ? 'flex:1.5' : '' ">
       <div v-if="odds_state == 'seal'" class="lock" />
       <div v-else class="odds-arrows-wrap">
-        <span
-          :class="{
-            default: true,
-            up: odds_lift == 'up',
-            down: odds_lift == 'down',
-            active: ol_data.oid == current_ol.oid,
-          }"
-        >
-          {{ match_odds }}</span
-        >
+        <span :class="{ default: true, up: odds_lift == 'up', down: odds_lift == 'down', active: ol_data.oid == current_ol.oid }">
+          {{ numberRetain(match_odds) }}
+        </span>
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
           <div class="odds-icon odds-up"></div>
@@ -76,6 +50,7 @@ import { format_odds_value } from "src/core/format/module/format-odds.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
 import { compute_value_by_cur_odd_type } from "src/core/index.js"
 import menu_config from "src/core/menu-pc/menu-data-class.js";
+import { formatMoney, numberRetain } from 'src/core/format/index.js'
 
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
