@@ -96,7 +96,7 @@ export const filter_featured_list = payload => {
       item['course'] = handle_course_data(item);
       item['mstValue'] = !is_timer.includes(item.csid) ? format_mst_data(item.mst) : '';
     })
-    return payload;
+    return payload.slice(0, 5);
 }
 
 const filter_20_match = (data)=>{
