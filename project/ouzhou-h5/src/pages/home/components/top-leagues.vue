@@ -7,25 +7,26 @@
     <collapse v-for="item, index in leaguesMatchs" :key="index" :title="item.nameText">
       <!-- 图片 -->
       <template v-slot:title_icon>
-        <img class="national_icon" :src="no_collect_ouzhou" alt="">
+        <img class="national_icon" :src="league_collect_state(item) ? have_collect_ouzhou : no_collect_ouzhou" alt="" @click.stop="handle_match_collect(item)">
       </template>
       <!-- 右侧 -->
       <template v-slot:title_right>
         <span>{{ item.num }}</span>
       </template>
-      <template v-slot:content>
-        <!-- <div class="game" v-for="game, index in item.children" :key="index">
-          <span> <img :src="no_collect_ouzhou" alt=""> {{ game.title }} </span>
-          <span>{{ game.value }}</span>
-        </div> -->
-      </template> 
     </collapse>
   </div>
 </template>
  
 <script setup>
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import { MenuData } from "src/core/index.js"
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { UserCtr } from  "src/core"
 import collapse from "./collapse.vue"
+import MatchCollect from 'src/core/match-collect'
+import { api_common } from "src/api/index.js";
+
+
 const props = defineProps({
   leaguesMatchs: {
     type: Array,
@@ -34,6 +35,24 @@ const props = defineProps({
   }
 })
 
+const league_collect_state = (value) => {
+  return MatchCollect.get_league_collect_state(value.tid)
+}
+
+const handle_match_collect = (value) => {
+  const { tid } = value
+  const league_collect = MatchCollect.get_league_collect_state(tid)
+  api_common.add_or_cancel_tournament({
+    tid,
+    cf: league_collect ? 0 : 1,
+    cuid: UserCtr.get_uid()
+  }).then(res => {
+    if (+res.code !== 200) return
+  })
+  // 收藏页手动处理数据
+  MenuData.is_collect() && MatchMeta.set_collect_match(value, 1)
+  MatchCollect.handle_league_collect_state(tid)
+}
 </script>
  
 <style scoped lang="scss">

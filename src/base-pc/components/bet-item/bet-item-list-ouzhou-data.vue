@@ -47,9 +47,14 @@
       <span v-else-if="ol_data.ov">
         {{ (ol_data.ov / 100000).toFixed(2) }}
       </span>
+      <div>
+        
+      </div>
+      <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
         <div class="odds-icon" v-if="odds_lift=='up'" :style="compute_css_obj({key: 'pc-home-arrow-up'})"></div>
         <div class="odds-icon" v-if="odds_lift=='down'" :style="compute_css_obj({key: 'pc-home-arrow-down'})"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -312,11 +317,12 @@ onUnmounted(() => {
   width: 6px;
   height: 10px;
   margin-left: 4px;
-  // position: absolute;
-  // left: -1px;
-  // top: -6px;
   overflow: hidden;
-  background-size: 100%;
+  background-size: 100% 100%;
+  display: none;
+  position: absolute;
+  left: 0px;
+  top: -5px;
 }
 .lock {
   width: 14px;
