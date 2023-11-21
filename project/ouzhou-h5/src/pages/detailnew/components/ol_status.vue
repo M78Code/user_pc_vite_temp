@@ -25,7 +25,7 @@ const props = defineProps({
     default: false,
   },
 });
-const is_up = ref(true);
+const is_up = ref(false);
 const is_down = ref(false);
 const active_score = ref("");
 
