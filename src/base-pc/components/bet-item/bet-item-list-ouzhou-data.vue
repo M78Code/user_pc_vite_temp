@@ -1,4 +1,5 @@
 <template>
+  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div
     v-if="is_mounted && odds_state != 'close'"
     class="c-bet-item yb-flex-center relative-position yb-family-odds"
@@ -7,13 +8,14 @@
       `csid${ol_data.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
-      active_score === `${ol_data._mid}${ol_data.oid}` ? 'active' : ''
+      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : ''
     ]"
     @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
   >
     <!-- 盘口 -->
     <div
+      v-if="odds_state != 'seal'"
       :class="[
         'handicap-value',
         {
@@ -25,12 +27,9 @@
         },
       ]"
     >
-      <span class="handicap-more" v-show="ol_data.onbl"
-        >{{ ol_data.onbl }}&nbsp;</span
-      >
-      <div class="handicap-value-text">{{ score }} {{ ol_data.onb }}</div>
+      <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
+      <div class="handicap-value-text">{{ score }} <span v-show="ol_data._hpid != 1">{{ ol_data.onb }}</span></div>
     </div>
-
     <!-- 赔率 -->
     <div
       class="odds"
@@ -46,7 +45,7 @@
       <div v-if="odds_state == 'seal'" class="lock"
       :style="compute_css_obj({key: 'pc-home-lock'})"></div>
       <span v-else-if="ol_data.ov">
-        {{ ol_data.ov / 100000 }}
+        {{ (ol_data.ov / 100000).toFixed(2) }}
       </span>
       <div
         class="odds-arrows-wrap"
@@ -279,6 +278,7 @@ const get_odds_state = (mhs, hs, os) => {
  * @return {undefined} undefined  组装投注项的数据
  */
 const bet_click_ol = () => {
+  if(!props.ol_data._oid)return
   const {oid,_hid,_hn,_mid } = props.ol_data
   let params = {
     oid, // 投注项id ol_obj
@@ -328,12 +328,12 @@ onUnmounted(() => {
   width: 6px;
   height: 10px;
   margin-left: 4px;
-  // position: absolute;
-  // left: -1px;
-  // top: -6px;
   overflow: hidden;
-  background-size: 100%;
+  background-size: 100% 100%;
   display: none;
+  position: absolute;
+  left: 0px;
+  top: -5px;
 }
 .lock {
   width: 14px;
@@ -349,8 +349,6 @@ onUnmounted(() => {
 /*  盘口样式 */
 .handicap-value {
   line-height: 34px;
-  flex: 1;
-  text-align: right;
   height: 34px;
   white-space: nowrap;
   &.style2 {
@@ -372,7 +370,12 @@ onUnmounted(() => {
 
 /*  赔率样式 */
 .odds {
-  flex: 1;
+  height: 34px;
+  line-height: 34px;
+  justify-content: center;
+}
+.c-bet-item {
+  justify-content: center !important;
 }
 .odds.hv {
   justify-content: flex-start !important;

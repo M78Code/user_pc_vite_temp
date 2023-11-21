@@ -161,7 +161,7 @@ class VirtualList {
       if (match.mid) accrual_height += match_height
     })
     // 是否到底了
-    const flag = accrual_height >= this.container_total_height || match_datas.length < 17
+    const flag = accrual_height >= this.container_total_height || match_datas.length < 17 || MatchMeta.complete_matchs.length < 17
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, flag);
 
     return match_datas
