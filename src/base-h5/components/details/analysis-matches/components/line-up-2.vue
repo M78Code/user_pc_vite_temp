@@ -1036,16 +1036,16 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core'
             width: 100%;
             text-align: left;
             font-size: 0.12rem;
-            color: #303442; //#TODO css var
+            color: #303442; //#TODO: css var
           }
           .position-name{
             font-size: 0.10rem;
-            color: #AFB3C8; //#TODO css var
+            color: #AFB3C8; //#TODO: css var
           }
         }
 
         .end-btn{
-          color: #179CFF !important; //#TODO css var
+          color: #179CFF !important; //#TODO: css var
           justify-content: flex-end;
           text-align: right;
           width: 0.21rem;

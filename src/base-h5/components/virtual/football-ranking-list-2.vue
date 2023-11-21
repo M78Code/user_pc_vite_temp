@@ -71,7 +71,7 @@ watch(() => props.tid, () => {
 .ranking_list {
   // padding-top: 0.04rem;
   background-color: var(--q-gb-bg-c-15);
-  color: #303442; // #TODO css var
+  color: #303442; // #TODO: css var
   padding: 0 .09rem;
   .navigation-title {
 
