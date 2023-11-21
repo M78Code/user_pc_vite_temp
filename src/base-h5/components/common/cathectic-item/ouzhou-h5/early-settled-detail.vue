@@ -43,6 +43,7 @@ import { i18n_t, compute_local_project_file_path } from 'src/core/index.js'
 import { IconWapper } from 'src/components/icon'
 import { ref, computed, onMounted } from 'vue'
 import { Platform } from "quasar";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import { formatTime } from 'src/core/format/index.js'
 const props = defineProps({
   item_data: {
@@ -93,6 +94,7 @@ const copy = (evt) => {
     text: () => orderno
   })
   clipboard.on('success', () => {
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.copy_suc"))
     // h5嵌入时Safari阻止弹窗
     if (!Platform.is.safari) {
       try {

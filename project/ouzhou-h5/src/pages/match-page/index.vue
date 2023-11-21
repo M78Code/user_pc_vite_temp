@@ -5,7 +5,7 @@
   <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate" @changeArea="onChangeArea" :areaList="state.leagueData"/>
   <!--二级赛事列表-->
   <div class="match-list-page">
-    <match-container v-if="state.curTab === 0 || state.isClickDetail && state.curTab === 1" />
+    <MatchContainer v-if="state.curTab === 0 || state.isClickDetail && state.curTab === 1" />
     <MatchFirstStep v-else @leagueChange="onLeagueChange" :leaguesMatchs="state.leagueAreaData"/>
   </div>
 </template>
@@ -37,6 +37,11 @@ onMounted(() => {
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data({})
       }
+    }).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
+      if (state.curTab) {
+        onChangeDate(12)
+      }
     }).off
   }
 })
@@ -54,7 +59,7 @@ const onTabChange = e => {
 const onChangeDate = e => {
   state.curLeague = e
   MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-    console.log('onChangeDate', res)
+    if (!res.length) return
     state.leagueData = res
     onChangeArea(res[0].id)
   })
@@ -71,9 +76,11 @@ const onLeagueChange = (league, game) => {
 const onChangeArea = e => {
   state.curArea = e
   const arr = state.leagueData.find(i => i.id === e)['tournamentList']
-  arr.forEach(i => i.visible = true)
+  arr.forEach(i => {
+    i.visible = true
+    i.tid = i.id
+  })
   state.leagueAreaData = arr
-  console.log('onChangeArea', state.leagueAreaData)
 }
 
 const goback = () => {

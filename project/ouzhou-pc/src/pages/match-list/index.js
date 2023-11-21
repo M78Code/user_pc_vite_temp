@@ -96,7 +96,7 @@ export const filter_featured_list = payload => {
       item['course'] = handle_course_data(item);
       item['mstValue'] = !is_timer.includes(item.csid) ? format_mst_data(item.mst) : '';
     })
-    return payload;
+    return payload.slice(0, 5);
 }
 
 const filter_20_match = (data)=>{
@@ -130,6 +130,34 @@ const filter_20_match = (data)=>{
     }
     
     return result;
+}
+
+// 新规则：足球15 ，篮球5
+const filter_20_match_new = (data)=>{
+  const result = [];
+  // 足球最多15个
+  const max_football_count = 15;
+  let football_count = 0;
+  // 别的球种5个
+  const max_other_count = 5;
+
+  const football_csid = '1';
+  const basketball_csid = '2';
+
+  for(const item of data){
+    if(item.csid === football_csid && football_count < max_football_count){
+      result.push(item);
+      football_count++;
+    }else if(item.csid === basketball_csid && result.length < 20){
+      result.push(item);
+    }
+    // 大于20条时，跳出循环
+    if(result.length >= 20){
+      break;
+    }
+  }
+  
+  return result;
 }
 
 export const get_featurd_list = async () => {
@@ -166,7 +194,7 @@ export const init_home_matches = async () => {
         match_count = res.dataList.length || 0;
         let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
         //过滤前20条数据
-        sort_list = filter_20_match(sort_list);
+        sort_list = filter_20_match_new(sort_list);
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(sort_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(

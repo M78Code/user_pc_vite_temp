@@ -2,8 +2,7 @@
 	<div class='search-container'>
 		<!-- 头部搜索 -->
 		<div class="top_info_search">
-			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" v-model="input_value"
-				@keyup.enter="get_search_data(input_value)" />
+			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" v-model="input_value" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
 			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt=""
 				class="clear_value"
@@ -11,7 +10,7 @@
 			<span class="close_btn" @click="to_home">Close</span>
 		</div>
 		<!-- 搜索 历史 -->
-		<div class="content" v-show="(show_history && history_data.length &&
+		<div class="content" v-show="(show_history && history_data &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<div class="middle_info_tab">EXAMPLE SEARCHES</div>
@@ -22,19 +21,19 @@
 			</div>
 			<ul class="list1" v-show="history_data && history_data.length > 0">
 				<li v-for="(item, index) in history_data" :key="item.cuid">
-					<span style="display: inline-block; width: 90%;" @click="get_search_data(0, 1, item.keyword)">{{ item.keyword }}</span><span @click="_delete_history_search(item.keyword)">x</span>
+					<span style="display: inline-block; width: 95%;" @click="get_search_data(0, 1, item.keyword)">{{ item.keyword }}</span><span @click="_delete_history_search(item.keyword)">x</span>
 				</li>
-				<li class="del" @click="_delete_history_search|('')">Clear Search History</li>
+				<li class="del" @click="_delete_history_search('')">Clear Search History</li>
 			</ul>
 
 			<!-- 热门搜索 -->
-			<div class='searchHot' :class="[show_history ? '' : 'mt50']" v-show="show_hot && 
+			<div class='searchHot' :class="[(history_data.length > 0) ? '' : 'mt50']" v-show="show_hot && 
 				(hot_list && hot_list.length > 0) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) ||
 				!input_value">
 				<div class="q-mx-md">
-					<div class="text-bol half-border-bottom">SEARCHHot</div>
+					<div class="text-bol half-border-bottom">HOT</div>
 					<!-- 热门内容 -->
 					<div class="row">
 						<div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index"
@@ -223,7 +222,8 @@
 	</div>
 </template>
 <script setup>
-import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
+import lodash from 'lodash'
+import { onMounted, ref, watch, onUnmounted } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import router from "../../router";
@@ -234,6 +234,7 @@ import { compute_value_by_cur_odd_type } from "src/core/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
+import { text } from 'licia/$property';
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
@@ -248,6 +249,8 @@ let go_detail_or_result_timer;
 
 const clear_value = () => {
 	input_value.value = '';
+	get_history()
+	get_hot_search()
 }
 const to_home = () => {
 	router.push('/')
@@ -265,8 +268,8 @@ const get_history = () => {
 	}
 	get_history_search(params).then(res => {
 		let data = lodash.get(res, "data") || [];
+		history_data.value = data;
 		if (data.length > 0) {
-			history_data.value = data;
 			show_history.value = true;
 		}
 	});
@@ -290,7 +293,8 @@ const red_color = (item) => {
  */
 const search_data = ref([]);
 let sport_kind_id = null;
-const get_search_data = (index = 0, sport_id = 1, keyword) => {
+const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
+	// console.log('111');
 	show_history.value = false;
 	show_hot.value = false;
 	tabIndex.value = index;
@@ -300,6 +304,12 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	if (keyword) {
 		input_value.value = keyword
 	}
+	if (!input_value.value) {
+		show_history.value = true;
+		show_hot.value = true;
+		search_data.value = [];
+		return;
+	}
 	let params = {
 		cuid: uid,
 		device: 'v2_h5_st',
@@ -307,15 +317,11 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 		searchSportType: sport_id || 1,
 		isPc: false
 	}
-	if (!input_value.value) {
-		show_history.value = true;
-		show_hot.value = true;
-		search_data.value = [];
-		return;
-	}
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
+			// 插入搜索历史
+			get_insert_history({keyword})
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_txt');
 			get_match_base_hps_by_mids()
@@ -323,7 +329,7 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	}).catch((e) => {
 		console.log(e);
 	});
-}
+}, 500)
 
 //监听输入框内容改变，并搜索
 watch(
@@ -361,8 +367,6 @@ function default_method_jump(name, item) {
 		//set_goto_detail_matchid(item.matchList[0].mid);
 	}
 
-	get_insert_history({ word: item ? name : '', }).then(({ data }) => { })
-
 	// 手机键盘收起动画完成后才跳转
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = setTimeout(() => {
@@ -383,8 +387,6 @@ function suggestion_bowling_click(item) {
 		item_name = item.name
 	}
 
-	get_insert_history({ word: item ? item_name : '', }).then(({ data }) => { })
-
 	// 手机键盘收起动画完成后才跳转
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = setTimeout(() => {
@@ -404,7 +406,6 @@ function go_detail_or_reslut(item) {
 			name: 'match_result',
 			params: {
 				mid: item.mid ? item.mid : item.matchList[0].mid,
-				index: '0'
 			},
 			query: {
 				search_term: get_search_txt
@@ -413,7 +414,12 @@ function go_detail_or_reslut(item) {
 	} else {
 		router.push({
 			name: 'category',
-			params: { mid: item.mid },
+			params: { 
+				mid: item.mid,
+				tid: item.tid,
+				csid: item.csid,
+				mcid: item.mcid,
+			},
 			query: { search_term: get_search_txt }
 		})
 	}
@@ -497,8 +503,9 @@ const _delete_history_search = (keyword) => {
 	get_delete_history_search({
 		keyword,
 		cuid: uid
+	}).then(() => {
+		get_history()
 	})
-	get_history()
 }
 
 onMounted(() => {
@@ -513,9 +520,10 @@ onMounted(() => {
 	}
 })
 
-onBeforeUnmount(() => {
+onUnmounted(() => {
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = null
+	text.value = ''
 })
 </script>
 <style lang="scss" scoped>
@@ -657,6 +665,7 @@ li {
 
 		div p:first-child {
 			font-size: 14px;
+			margin-right: 10px;
 		}
 
 		div p:last-child {
@@ -682,14 +691,19 @@ li {
 }
 
 .list1 {
-	padding: 10px;
-	padding-top: 50px;
+	margin: 10px;
+	margin-top: 50px;
+	border-radius: 6px;
 
 	li {
-		display: flex;
-		justify-content: space-between;
 		margin-bottom: 0;
-		border-radius: 6px 0px 0px 0;
+	}
+	li:first-child {
+		border-radius: 6px 6px 0px 0px;
+	}
+	
+	li:last-child {
+		border-radius: 0px 0px 6px 6px;
 	}
 
 	.del {
@@ -718,8 +732,6 @@ li {
 }
 
 .teams {
-
-
 	.middle_info_tab {
 		font-size: 12px;
 		font-weight: 600;
@@ -782,9 +794,9 @@ li {
 			}
 		}
 	}
-	.flex_1 {
-		flex: 1;
-	}
+}
+.flex_1 {
+	flex: 1;
 }
 .mt50 {
 	margin-top: 50px;
