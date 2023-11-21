@@ -108,6 +108,7 @@
   })
 
   const icon_styles = computed(() => {
+    console.log(props.sport_id)
     //雪碧图样式 计算方式参考备注文件
     let number =  sport_number[props.sport_id]
     // 如果是未选中状态Y轴坐标下移一位

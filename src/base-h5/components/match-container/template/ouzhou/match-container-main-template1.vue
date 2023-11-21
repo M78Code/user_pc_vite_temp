@@ -476,7 +476,8 @@ export default {
       bottom: 1px;
       background: #fff;
       &.collapsed{
-        background: var(--q-gb-bg-c-6);
+        background: #e1e1e1;
+        // background: var(--q-gb-bg-c-6);
       }
     }
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
