@@ -67,7 +67,33 @@
          "announcement": "Announcement",
          "results": "Results",
          "sport_rules": "Sport Rules"
-        }
+        },
+        "search": {
+            "change": "Change",
+            "clear_search_history": "Clear history",
+            "league": "League",
+            "null1": "No data",
+            "null2": "Try another word",
+            "other": "Other Searches",
+            "search_hot": "Popular Searches",
+            "search_play": "Search Markets",
+            "search_record": "History",
+            "search_sports": "Search Sports",
+            "team": "Team",
+            "placeholder": "Enter league or team",
+            "close": "Close",
+            "view_all_match": "View all soccer",
+            "underway": "UNDERWAY",
+            "no_search_rezult": "No results found. please try a different search term."
+        },
+        "15minutes_bet_col": [
+            "Start~14:59",
+            "15:00~29:59",
+            "30:00~1H",
+            "2H Start~59:59",
+            "2H 60:00~74:59",
+            "2H 75:00~FT"
+        ]
     },
     "analysis": {
         "age": "age",

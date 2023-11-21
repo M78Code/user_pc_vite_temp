@@ -7,7 +7,9 @@ import {
   useMittOn,
   useMitt,
   MITT_TYPES,
-  utils
+  utils,
+  UserCtr,
+  MatchDataWarehouse_H5_List_Common
 } from "src/core/index";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
@@ -18,11 +20,12 @@ export const details_main = (router,route) => {
   const match_detail = ref({});
   const category_list = ref([]);
   const tab = ref("betting");
-  const cuid = ref("");
+  const cuid = ref(UserCtr.get_uid());
   const scroller_height = ref(0);
   const loading = ref(false);
   const detail_event_tabs_value = ref({ label: "Match", id: 1 });
   const timer = ref(null);
+  /** @type {Ref<NodeJS.Timeout>} */
   const mst_timer = ref(null);
   const tab_selected_obj = ref({});
   const change_header_fix = ref(null);
@@ -58,6 +61,10 @@ export const details_main = (router,route) => {
     mst_timer.value = setInterval(() => {
       if (t.csid == 2) {
         t.mst--;
+        if(t.mst<0){
+          t.mst = 0
+          clearInterval(mst_timer.value)
+        }
       } else {
         t.mst++;
       }
@@ -217,8 +224,8 @@ export const details_main = (router,route) => {
           sessionStorage.setItem("match_oddinfo",JSON.stringify(res.data))
           MatchDataWarehouseInstance.value.set_match_details(getMidInfo(params.mid),res.data);
           // 第一次加载显示进度条
-           loading.value = false;
-  
+          if(init.value){
+            loading.value = false}
         },
         // axios中catch回调方法
         fun_catch: e => {
@@ -358,6 +365,7 @@ export const details_main = (router,route) => {
   };
   let message_fun = null
   onMounted(() => {
+    MatchDataWarehouse_H5_List_Common.set_active_mids([])
     loading.value = true;
     init.value = true;
     const { mid, csid } = route.params;
@@ -366,8 +374,24 @@ export const details_main = (router,route) => {
     let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
     // console.error(flag,'flag','cmd:',cmd,data);
     //如果ms mmp变更了 就手动调用ws
+    
     if(flag){
       init.value = false
+      switch (cmd) {
+        case "C303":
+          lodash.debounce(()=>{
+            get_matchDetail_getMatchOddsInfo({
+              mcid: 0,
+              cuid: cuid.value,
+              mid:route.params.mid,
+              newUser: 0,
+            });
+          },300)
+          break;
+      
+        default:
+          break;
+      }
       // detail_init();
     }   
     })  

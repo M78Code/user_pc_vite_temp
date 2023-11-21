@@ -226,4 +226,45 @@ const tab_click = (type) => {
     }
   }
 }
+
+
+.stage-13,.stage-14,.stage-15,
+.stage-302,.stage-16,.stage-303{
+  //color: var(--qq--yb-text-color1) !important;
+  color: rgb(255, 112, 0) !important;
+}
+
+
+
+.stage-13 {
+  span {
+    &:nth-child(1) {
+      color: var(--qq--yb-text-color1);
+    }
+  }
+}
+.stage-14,
+.stage-301 {
+  span {
+    &:nth-child(2) {
+      color: var(--qq--yb-text-color1);
+    }
+  }
+}
+.stage-15,
+.stage-302 {
+  span {
+    &:nth-child(3) {
+      color: var(--qq--yb-text-color1);
+    }
+  }
+}
+.stage-16,
+.stage-303 {
+  span {
+    &:nth-child(4) {
+      color: var(--qq--yb-text-color1);
+    }
+  }
+}
 </style>

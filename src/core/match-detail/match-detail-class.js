@@ -435,8 +435,11 @@ export default class MatchDetailCtr {
    * @return {boolean}
    *  * `ms` 赛事状态 0:未开赛 1:赛事进行中  2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
    * `mmp` 赛事阶段  
+   * 赛事结束标志 mmp=999 || ms = "比赛结束"  mhs=2 关盘 移除赛事 
+   * `mhs` 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘 ,11:锁盘状态）
+   * c303  拉取所有数据 
   */
   handler_details_ws_cmd(cmd){
-    return ["C101","C102","C104","109","C302"].includes(cmd)
+    return ["C101","C102","C104","C109","C302","C303"].includes(cmd)
   }
 }

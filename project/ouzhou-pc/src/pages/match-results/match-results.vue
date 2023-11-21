@@ -40,6 +40,7 @@
         :results_params="results_params"
         :input_radio="input_radio"
         :is_bowls="is_bowls"
+        :locale="locale"
         v-model:is_show="is_show"
       ></result-header>
       <!-- 筛选条件 E-->
@@ -122,6 +123,7 @@ const {
   results_params,
   is_bowls,
   is_show,
+  locale,
   //函数
   get_tr_detail,
   change_sort,

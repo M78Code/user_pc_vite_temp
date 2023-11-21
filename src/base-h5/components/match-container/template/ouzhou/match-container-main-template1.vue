@@ -2,7 +2,7 @@
  * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div :class="['match-container']" 
+  <div class="match-container component match-container-main-template1" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 体育类别 -->
@@ -262,7 +262,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
-
+import lodash from 'lodash'
 import default_mixin from '../../mixins/default.mixin.js'
 
 export default {
@@ -300,7 +300,7 @@ export default {
     const get_match_panel = computed(() => {
       const { csid, hps } = ctx.match_of_list
       // debugger
-      const hpid = MatchResponsive.match_hpid.value
+      const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
       const plays = sports_play_title[csid]
       const play_item = plays.find(t => t.hpid === hpid)
       let target = []
@@ -348,6 +348,7 @@ export default {
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
       select_play.value = item.hpid
+      console.log(csid)
       // const plays = sports_play_title[csid]
       // const play_item = plays.find(t => t.hpid === item.hpid)
       // const ol = play_item.ol
@@ -357,7 +358,7 @@ export default {
       // })
       // match_panel.value = play_item
       // const odds_data = []
-      MatchResponsive.set_match_hpid(item.hpid)
+      MatchResponsive.set_match_hpid(item.hpid, csid)
     }
 
     return { 

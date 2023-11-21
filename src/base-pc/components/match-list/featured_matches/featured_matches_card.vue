@@ -7,9 +7,10 @@
 -->
 <template>
   <div class="featured-matched-card-wrap">
+    <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
     <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
     <template2 :is_show_btn="matches_featured_list.length >= 4">
-      <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in matches_featured_list" :key="item.tid"
+      <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in col_ols_data" :key="item.tid"
         :class="{ 'margin-box': index != matches_featured_list.length - 1 }">
         <div class="right-top-img" :style="`background-position:0 -${current_ball_type(item.csid)}px`"></div>
         <div class="matches_description">
@@ -20,42 +21,37 @@
           </div>
         </div>
         <div class="club-name">
-          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1', {}).home || 0 }}</span>
+          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1.home') }}</span>
         </div>
         <div class="union-name">
-          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1', {}).away || 0 }}</span>
+          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1.away') }}</span>
         </div>
-        <div class="odds_box" v-if="item.current_ol?.length">
+        <div class="odds_box">
           <div class="top-line"></div>
-          <div class="odds_item" v-for="option in item.current_ol[0]?.ol"
-            @click="checked_current_td({ payload: item, hps: item.current_ol[0], ol: option })"
-            :class="{ checked: option.oid == current_check_betId }" :key="option.oid">
-            <!-- 赔率返回的是十万位的 因此需要除算 -->
-            <span>{{ option.ot }}</span><span>{{ Math.floor(option.ov / 1000) / 100 }}</span>
+          <div class="odds_item" v-for="ol_data in item.ols">
+            <betItem :ol_data="ol_data"></betItem>
           </div>
         </div>
       </div>
     </template2>
   </div>
 </template>
-
 <script setup>
-import { ref, watch,onBeforeUnmount } from 'vue';
+import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
+import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
+import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
+import { get_hots_odds_list } from 'src/core/match-list-pc/list-template/module/template-101.js'
+import { ref, watch, onBeforeUnmount, computed } from 'vue';
+import { api_details } from 'src/api';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import template2 from './template2.vue';
 import { MenuData } from "src/core/index.js"
 import { useRouter } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
-import { MatchDataWarehouse_ouzhou_PC_hots_List_Common } from 'src/core'
-const props = defineProps({
-  matches_featured_list: {
-    type: [Array],
-    default: () => [],
-  }
-})
+import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, UserCtr } from 'src/core'
+const matches_featured_list = ref([])
 const router = useRouter();
 const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common)
-set_active_mids(props.matches_featured_list.map(i => i.mid))
 onBeforeUnmount(() => {
   ws_destroyed()
 })
@@ -103,6 +99,21 @@ const sport_ball = {
   103: 1,
 }
 
+const get_featurd_list = async () => {
+  let params = {
+    isHot: 1,
+    cuid: UserCtr.get_uid()
+  }
+  let res = await api_details.get_hots(params)
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.data);
+  // 获取matches_featured
+  // featured_list = filter_featured_list(
+  //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+  // );
+  set_active_mids(res.data.map(i => i.mid))
+  matches_featured_list.value = MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+}
+get_featurd_list()
 //const current_ball_type = computed((csid = 0) => {
 //  console.error("sssssssssss",csid)
 //  return sport_ball[csid] || 0
@@ -123,6 +134,29 @@ watch(
     current_check_betId.value = MenuData.current_check_betId.value
   },
 )
+const col_ols_data = computed(() => {
+  return matches_featured_list.value.map((match) => {
+    try {
+      let { hn, mid } = match;
+      let handicap_type = hn || 1
+      const many_obj = get_match_to_map_obj(match); //非坑位对象
+      const hn_obj = lodash.get(MatchDataWarehouse_ouzhou_PC_hots_List_Common, "list_to_obj.hn_obj", {})
+      console.log(get_hots_odds_list(), 'get_hots_odds_list()')
+      match.ols = get_hots_odds_list().map(item => {
+        // 投注项数据拼接
+        // 投注项数据拼接
+        let hn_obj_config = MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
+        // 获取投注项内容 
+        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+
+      })
+    } catch (e) {
+      console.error('deal_width_handicap_ols', e)
+      return []
+    }
+    return match
+  })
+})
 
 // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
 const checked_current_td = payload => {
@@ -137,16 +171,16 @@ const checked_current_td = payload => {
   set_bet_obj_config(params, {})
 }
 
-const toJump = (item)=>{
-   
-    router.push({
-        name: "details",
-        params: {
-          mid: item.mid,
-          tid: item.tid,
-          csid: item.csid,
-        },
-      });
+const toJump = (item) => {
+
+  router.push({
+    name: "details",
+    params: {
+      mid: item.mid,
+      tid: item.tid,
+      csid: item.csid,
+    },
+  });
 }
 
 </script>
@@ -325,4 +359,5 @@ const toJump = (item)=>{
   .margin-box {
     margin-right: 10px;
   }
-}</style>
+}
+</style>

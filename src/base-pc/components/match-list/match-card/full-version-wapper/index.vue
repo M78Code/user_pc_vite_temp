@@ -1,7 +1,5 @@
 <template>
   <div>
-    
- 
     <component :is="use_component_key"  :mid="mid" />
   </div>
 </template>

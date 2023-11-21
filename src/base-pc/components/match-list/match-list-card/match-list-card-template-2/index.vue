@@ -1,15 +1,15 @@
 <!-- 欧洲版 主列表页面 -->
 <template>
   <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }}</div>
-  <div 
-    class="list-card-wrap v-scroll-item relative-position" 
+  <div
+    class="list-card-wrap v-scroll-item relative-position"
     :class="{
       'matc-type-card': [
         'sport_title',
         'play_title',
         'no_start_title',
       ].includes(card_type),
-    }" 
+    }"
     :style="`height:${card_style_obj?.card_total_height}px  !important;
     width:${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)
     }px  !important;${card_style}`"

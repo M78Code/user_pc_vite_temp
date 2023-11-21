@@ -519,9 +519,12 @@ class BaseData {
           esport_menu.push(obj);
         }
       });
-      // 重置默认数据
+      /**
+       *  一期只有足球篮球  暂定
+       *  重置默认数据
+       */
       this.left_menu_base_mi_arr = left_menu ;
-      this.left_menu_base_mi = left_menu_mi  ;
+      this.left_menu_base_mi = left_menu_mi;
 
       this.sports_mi = sports_mi;
 

@@ -81,7 +81,6 @@ const routes = [
       //       },
     ],
   },
- 
   //赛事分析
   {
     path: "/analysis_header/:csid/:mid/:euid",
