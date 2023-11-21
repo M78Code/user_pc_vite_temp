@@ -12,7 +12,7 @@
     <div class="union-name">
       {{ current_tab.man }}
     </div>
-    <div class="odds-box din_font">
+    <div class="odds-box din_font" v-if="current_tab.current_ol.length">
       <div class="odds-box-item" 
         v-for="item in (current_tab.current_ol[0] || {}).ol || []" 
         :key="item.oid"
@@ -42,7 +42,7 @@
     },
   });
   const current_check_betId = ref(MenuData.current_check_betId.value);
-  const ols = ref([])
+  // const ols = ref([])
 
   onMounted(() => {
     // ols.value = get_15mins_odds_list().ols

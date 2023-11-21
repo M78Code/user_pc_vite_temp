@@ -13,6 +13,13 @@
             <div class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
           </div>
         </div>
+          <!-- 联赛图标 -->
+          <div class="league-icon-wrap">
+            <span class="soprts_id_icon"
+            v-if="menu_config.is_export()"
+            :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
+          <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
+        </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
           <div class="absolute-full">
@@ -31,8 +38,7 @@
             v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
             :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
             <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
-              {{ item_title.ot }}
-
+              {{ item_title.otb }}
             </div>
           </div>
       </div>
@@ -127,6 +133,7 @@ onUnmounted(()=>{
 
 </script>
 <style lang="scss">
+
 .ouzhou-match-league {
   display: flex;
   width: 100%;
@@ -135,15 +142,22 @@ onUnmounted(()=>{
   border-bottom: 1px solid var(--q-gb-bd-c-2);
   font-weight: 500;
   cursor: pointer;
+  .league-icon-wrap {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      line-height: 18px;
 
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   .leagues-wrap {
     padding-left: 5px;
     display: flex;
     justify-content: flex-start;
-
-    .leagues-name {
-      margin-top: 3px;
-    }
+    align-items: center;
   }
 
   .tr-match-head {

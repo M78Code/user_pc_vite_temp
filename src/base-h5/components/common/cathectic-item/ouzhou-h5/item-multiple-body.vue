@@ -277,7 +277,7 @@ template {
     .btn_style {
       width: 1.3rem;
       line-height: 0.3rem;
-      background: var(--q-gb-bg-c-18);
+      background: var(--q-gb-bg-c-9);
       text-align: center;
       border-radius: 0.5rem;
     }
