@@ -149,7 +149,7 @@
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
-												v-if="item?.matchList[0]?.hps?.[0]?.hl.length > 0 && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="lodash.get(item,'matchList[0].hps[0].hl.length' ) > 0 && lodash.get(item,'matchList[0].hps[0].hl[0].ol[1].ov' ) && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div class="center">X</div>
 												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
@@ -185,6 +185,7 @@ import { useRouter } from 'vue-router'
 import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
+import PageSourceData from "src/core/page-source/page-source.js";
 import { get_search_result } from "src/api/module/search/index.js";
 import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/core/";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
@@ -273,10 +274,11 @@ function match_click(match) {
  */
 function league_click(match) {
 	if(!match) return;
-	search.insert_history(match.name)
+	search.insert_history(match.leagueName)
 	const { csid } = match.matchList[0]
-	router.push(`/search/${keyword.value}?csid=${csid}`)
+	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
+	PageSourceData.set_route_name('search')
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		type: 'width',
 		focus: false

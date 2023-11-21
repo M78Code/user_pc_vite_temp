@@ -46,7 +46,7 @@
         :date_show_type="date_show_type"
         class="date-wrap"
       />
-      
+
     <!-- </template> -->
   </template>
   </div>
@@ -168,7 +168,12 @@ const computed_process_name = computed(() => {
   let csid = lodash.get(props, 'match.csid')
   let mmp = lodash.get(props, 'match.mmp')
   let mle = lodash.get(props, 'match.mle')
+  console.log("test-csid",csid)
+  console.log("test-mmp",mmp)
+  console.log("test-mle",mle)
   let process_name = get_mmp_name(csid, mmp) || "";
+  console.log(process_name,'test--')
+  console.log(props.date_show_type,'test--')
   // 即将开赛
   if (lodash.get(props, 'match.ms') == 110) {
     process_name = i18n_t("common.match_soon");

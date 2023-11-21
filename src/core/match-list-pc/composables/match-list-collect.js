@@ -206,13 +206,14 @@ const mx_collect_leagues = (match, is_champion) => {
     };
   }
   api_match
-    .post_collect_leagues(_params)
-    .then((res) => {
-      let code = lodash.get(res, "code");
-      let data = lodash.get(res, "data");
-      console.log('ddd', res, data, code);
+    .post_collect_leagues(_params);
+    // .then((res) => {
+      // let code = lodash.get(res, "code");
+      // let data = lodash.get(res, "data");
+      // console.log('ddd', res, data, code);
       
-      if ( code == 200 && data == 1) {
+      // if ( code == 200 && data == 1) {
+        // 不等接口，先更新收藏状态
         match.tf = cur_collect_state;
         //更新常规赛事不同分类的联赛收藏状态 并 获取所有同联赛下的赛事ID
         let mids_arr = MatchListCard.update_league_collect_data_and_get_mids(
@@ -249,22 +250,22 @@ const mx_collect_leagues = (match, is_champion) => {
             }
           }
         });
-      } else {
-        useMittEmit(
-          MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-          t("common.collect_toast")
-        );
-      }
+      // } else {
+      //   useMittEmit(
+      //     MITT_TYPES.EMIT_SHOW_TOAST_CMD,
+      //     t("common.collect_toast")
+      //   );
+      // }
       // 获取列表最新的收藏数量
       mx_collect_count();
-    })
-    .catch((err) => {
-      console.error(err)
-      useMittEmit(
-        MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-        t("common.collect_toast")
-      );
-    });
+    // })
+    // .catch((err) => {
+    //   console.error(err)
+    //   useMittEmit(
+    //     MITT_TYPES.EMIT_SHOW_TOAST_CMD,
+    //     t("common.collect_toast")
+    //   );
+    // });
 };
 
 /**

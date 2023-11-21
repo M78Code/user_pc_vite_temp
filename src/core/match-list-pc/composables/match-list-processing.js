@@ -13,7 +13,6 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
-const route = useRoute()
 const vx_filter_select_obj = ref([])
 
 
@@ -247,6 +246,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  * @description 当接口状态为成功且有数据时 调用此方法
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collect, backend_run }) => {
+	console.log('231312321');
 	is_show_hot.value = false;
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(match_list, "livedata", []));
@@ -255,6 +255,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 	if(Array.isArray(match_list)){ //有时候是 {}
 		MatchListData.set_list(match_list)
 	}
+	console.log('dasdasdasdasd', match_list);
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
@@ -389,6 +390,7 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 		// 格式化
 		match_list = virtual_sport_format(match_list);
 	}
+	console.log('match_list', match_list, data);
 	if (code == 200 && match_list) {
 		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, collect, backend_run });
 	} else {

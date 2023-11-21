@@ -180,40 +180,17 @@
       </div>
     </div>
     <load-data :state="load_data_state" color="light">
-      <q-scroll-area
-        ref="scrollArea"
-        class="rule-scroll-area"
-        :style="{ height: '100%',color:'red' }"
-      >
+      <q-scroll-area ref="scrollArea" class="rule-scroll-area" :style="{ height: '100%',color:'red' }">
         <div class="tbale-body">
-          <template v-for="(item, index) in results_list"    :key="index">
-            <div
-              class="table-tr-td"
-              :class="{ active: index == activeIndex }"
-              @click="get_tr_detail(item, index)"
-           
-            >
+          <template v-for="(item, index) in results_list" :key="index">
+            <div class="table-tr-td" :class="{ active: index == activeIndex }" @click="get_tr_detail(item, index)">
               <!-- 日期 -->
               <div class="table-col">
-                <div
-                  class="browser"
-                  :class="{ del: index == activeIndex }"
-                ></div>
+                <div class="browser" :class="{ del: index == activeIndex }" ></div>
                 <div class="time-wrap">
-                  <div>
-                    {{
-                      formatTime(
-                        item.matchTime,
-                        lang == "vi" ? "hh:MM dd/mm/yyyy" : "yyyy-mm-dd hh:MM"
-                      )
-                    }}
-                  </div>
-                  <div
-                    class="match-stage"
-                    :class="item.matchStatus == 1 ? 'roll' : 'cancel'"
-                    v-if="
-                      format_mmp(item.matchPeriodId, item.matchStatus) != ''
-                    "
+                  <div> {{ formatTime( item.matchTime, lang == "vi" ? "hh:MM dd/mm/yyyy" : "yyyy-mm-dd hh:MM" ) }} </div>
+                  <div class="match-stage" :class="item.matchStatus == 1 ? 'roll' : 'cancel'"
+                    v-if=" format_mmp(item.matchPeriodId, item.matchStatus) != '' "
                   >
                     {{ format_mmp(item.matchPeriodId, item.matchStatus) }}
                   </div>
@@ -224,11 +201,7 @@
                 <!-- <img v-img="[lodash.get(item,'iconUrl')]" class="playback-logo" alt="" v-if="item.playBack"> -->
                 <!-- 如果返回精彩回放就显示这个icon -->
                 <div class="playback-logo" v-if="item.playBack&&show_play_back"></div>
-                <img
-                  v-img="[lodash.get(item, 'iconUrl')]"
-                  class="tournament-logo"
-                  alt=""
-                />
+                <img v-img="[lodash.get(item, 'iconUrl')]" class="tournament-logo" alt=""/>
                 <span class="ellipsis-line-2">{{ item.tournamentName }}</span>
               </div>
               <!-- 赛事 -->
@@ -240,13 +213,7 @@
               <div class="table-col">
                 <!-- 黄牌上 -->
                 <div>
-                  <div>
-                    {{
-                      item.matchStatus == 1
-                        ? lodash.get(item, "scoreResult.S14.home", "")
-                        : lodash.get(item, "scoreResult.S14.home", "-")
-                    }}
-                  </div>
+                  <div>{{ item.matchStatus == 1 ? lodash.get(item, "scoreResult.S14.home", "") : lodash.get(item, "scoreResult.S14.home", "-")}}</div>
                   <div>{{ lodash.get(item, "scoreResult.S14.away", "-") }}</div>
                 </div>
               </div>
@@ -498,27 +465,13 @@
                 </div>
               </div>
             </div>
-            <div
-              v-if="index == activeIndex"
-              class="wrap-load"
-            >
+            <div v-if="index == activeIndex" class="wrap-load">
               <div class="tab_change_content"  v-if="item.playBack&&show_play_back">
-                <tabs
-                  :value="current_events_type"
-                  :tabs="tab_list"
-                  @click="change_video_history_list"
-                >
-                </tabs>
+                <tabs :value="current_events_type" :tabs="tab_list" @click="change_video_history_list"></tabs>
               </div>
               <!-- 精彩回放视频滚动列表 -->
-              <div
-                class="play_back_event"
-                v-if="item.playBack&&show_play_back"
-              >
-                <slider-x
-                  ref="drag_scroll"
-                  v-if="item.playBack && results_playback_list.length"
-                >
+              <div class="play_back_event" v-if="item.playBack&&show_play_back">
+                <slider-x ref="drag_scroll" v-if="item.playBack && results_playback_list.length">
                   <template v-for="(slotProps,index) in results_playback_list" :key="index">
                     <div class="video-history-item"  @click="handle_item_click(slotProps)">
                       <div class="video-history-item_bg" :style="`background:url(${slotProps.fragmentPic}); background-size: cover;`">
@@ -550,7 +503,7 @@
                   <div
                     class="table-tr-detail"
                     v-if="list.posrList.length"
-                    
+
                   >
                     <div class="tr-detail-title">{{ list.playName }}</div>
                     <div class="tr-detail-item">
