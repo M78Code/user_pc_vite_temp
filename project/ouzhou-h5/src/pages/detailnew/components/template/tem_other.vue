@@ -33,7 +33,7 @@
             <span>{{ opt.osn }}</span>
           </div>
 
-          <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="ol_on">
+          <div v-for="ol in item_data.hl[0].ol.filter((i)=>i.os !=3)" :key="ol?.oid" class="ol_on">
             <template v-if="ol?.otd === opt?.otd">
               <!-- <div>{{ ol.on }}</div> -->
 
@@ -43,14 +43,14 @@
               >
                 <!-- {{ (ol.ov/100000).toFixed(2) }} -->
 
-                <template v-if="ol.os == 1">
+                <template v-if="ol?.os == 1">
                   <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
                   <span class="ol-ov-text">{{
                     get_oddv(ol?.ov / 100000)
                   }}</span>
                   <olStatus :item_ol_data="ol" :active="ol.oid == active" />
                 </template>
-                <span v-if="ol.os == 2"
+                <span v-if="ol?.os == 2"
                   ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
                 /></span>
               </div>
@@ -60,17 +60,17 @@
       </template>
 
       <template v-else>
-        <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="ol_on">
+        <div v-for="ol in item_data.hl[0].ol.filter((i)=>i.os !=3)" :key="ol?.oid" class="ol_on">
           <div
             @click="go_betting(ol)"
             :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']"
           >
-            <template v-if="ol.os == 1">
+            <template v-if="ol?.os == 1">
               <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
               <span class="ol-ov-text">{{ get_oddv(ol?.ov / 100000) }}</span>
               <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
             </template>
-            <span v-if="ol.os == 2"
+            <span v-if="ol?.os == 2"
               ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
             /></span>
           </div>

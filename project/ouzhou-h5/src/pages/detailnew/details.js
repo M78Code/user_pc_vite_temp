@@ -7,7 +7,8 @@ import {
   useMittOn,
   useMitt,
   MITT_TYPES,
-  utils
+  utils,
+  MatchDataWarehouse_H5_List_Common
 } from "src/core/index";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
@@ -217,8 +218,8 @@ export const details_main = (router,route) => {
           sessionStorage.setItem("match_oddinfo",JSON.stringify(res.data))
           MatchDataWarehouseInstance.value.set_match_details(getMidInfo(params.mid),res.data);
           // 第一次加载显示进度条
-           loading.value = false;
-  
+          if(init.value){
+            loading.value = false}
         },
         // axios中catch回调方法
         fun_catch: e => {
@@ -358,6 +359,7 @@ export const details_main = (router,route) => {
   };
   let message_fun = null
   onMounted(() => {
+    MatchDataWarehouse_H5_List_Common.set_active_mids([])
     loading.value = true;
     init.value = true;
     const { mid, csid } = route.params;
@@ -366,8 +368,24 @@ export const details_main = (router,route) => {
     let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
     // console.error(flag,'flag','cmd:',cmd,data);
     //如果ms mmp变更了 就手动调用ws
+    
     if(flag){
       init.value = false
+      switch (cmd) {
+        case "C303":
+          lodash.debounce(()=>{
+            get_matchDetail_getMatchOddsInfo({
+              mcid: 0,
+              cuid: cuid.value,
+              mid:route.params.mid,
+              newUser: 0,
+            });
+          },300)
+          break;
+      
+        default:
+          break;
+      }
       // detail_init();
     }   
     })  
