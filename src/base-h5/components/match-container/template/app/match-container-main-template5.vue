@@ -2,7 +2,7 @@
  * @Description:  app-h5   新手版 
 -->
 <template>
-  <div :style="{ marginTop: is_hot ? '0' : '' }" class="match-container" :class="{ collect: isCollectMenuTab }">
+  <div :style="{ marginTop: is_hot ? '0' : '' }" class="match-container component match-container-main-template5" :class="{ collect: isCollectMenuTab }">
     <template v-if="match">
       <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
       <!-- 未开赛标题  -->

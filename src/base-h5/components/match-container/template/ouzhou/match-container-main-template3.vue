@@ -2,7 +2,7 @@
  * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div :class="['match-container m-3']" 
+  <div class="match-container m-3 component match-container-main-template3" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match">
       
