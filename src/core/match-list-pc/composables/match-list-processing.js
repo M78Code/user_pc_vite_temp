@@ -13,7 +13,6 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
-const route = useRoute()
 const vx_filter_select_obj = ref([])
 
 
