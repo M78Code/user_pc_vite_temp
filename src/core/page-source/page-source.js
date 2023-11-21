@@ -43,9 +43,9 @@ const PAGE_SOURCE_POOL_PC =  [
   'match-early-common' , //早盘 常规
   'match-fliter' ,//筛选
   'match-collect' ,//收藏
+  'match-search' ,//收藏
   'match-esports' ,//电竞
   'match-vr' ,// vr
-  'match-collect', // 收藏
   "virtual_details"// vr 详情
 ]
 

@@ -1,8 +1,8 @@
 <template>
   <div class="matches-card-list-wrap">
     <template2 :is_show_btn="matches_15mins_list.length >= 4">
-		<div class="matches-card-list" v-for="(item, index) in matches_15mins_list" :key="item.id" @click="jump_to_details(item)">
-			<MatchesCard15Mins :current_tab="item" />
+		<div class="matches-card-list" v-for="(item, index) in matches_15mins_list" :key="item.id">
+			<MatchesCard15Mins :current_tab="get_match_info(item)" @click="jump_to_details(get_match_info(item))" />
 			<div class="split-line" v-show="index != matches_15mins_list.length - 1"></div>
 		</div>
     </template2>
@@ -20,11 +20,11 @@ const {ws_destroyed,set_active_mids}= use_match_list_ws(MatchDataWarehouse_ouzho
 const router = useRouter()
 const props = defineProps({
 	matches_15mins_list: {
-		type: [ Object, Array ],
+		type: [ Array ],
 		default: () => [],
 	}
 })
-set_active_mids(props.matches_15mins_list.map(i => i.mid))
+set_active_mids(JSON.parse(JSON.stringify(props.matches_15mins_list)))
 
 const jump_to_details = (item) => {
   const { tid, csid } = item;
@@ -37,6 +37,10 @@ const jump_to_details = (item) => {
       csid: csid
     }
   })
+}
+
+const get_match_info = (mid) => {
+	return MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_obj(mid)
 }
 
 onBeforeUnmount(()=>{

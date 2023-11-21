@@ -81,7 +81,6 @@ const odds_state = computed(() => {
     return get_odds_state(_mhs, _hs, os);
   }
 });
-console.log('odds_state', odds_state, odds_state.value)
 // 赔率值
 const match_odds = ref("");
 // 赔率升降 up:上升 down:下降

@@ -185,6 +185,7 @@ import { useRouter } from 'vue-router'
 import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
+import PageSourceData from "src/core/page-source/page-source.js";
 import { get_search_result } from "src/api/module/search/index.js";
 import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/core/";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
@@ -273,11 +274,11 @@ function match_click(match) {
  */
 function league_click(match) {
 	if(!match) return;
-	search.insert_history(match.name)
+	search.insert_history(match.leagueName)
 	const { csid } = match.matchList[0]
-  console.log('asdasdasdasdasdas', keyword.value, csid);
-	router.push(`/search/${keyword.value}?csid=${csid}`)
+	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
+	PageSourceData.set_route_name('search')
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		type: 'width',
 		focus: false

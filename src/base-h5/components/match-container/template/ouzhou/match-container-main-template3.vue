@@ -251,7 +251,7 @@ export default {
     const get_match_panel = computed(() => {
      
       const hps = ctx.match_of_list.hps
-      const hpid = MatchResponsive.match_hpid.value
+      const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
       const hps_item = hps.find(t => t.hpid == hpid)
 
       const target_item = hps_play_data.value.find(t => t.hpid == hpid)

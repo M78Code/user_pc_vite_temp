@@ -35,28 +35,28 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span class="table-name">{{ props.row.name }}</span>
+            <span :class="[`stage-${detail_info.mmp}`,'table-name']">{{ props.row.name }}</span>
           </q-td>
           <q-td key="q1" :props="props">
-            <span>{{ props.row.q1 }}</span>
+            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q1 }}</span>
           </q-td>
           <q-td key="q2" :props="props">
-            <span>{{ props.row.q2 }}</span>
+            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q2 }}</span>
           </q-td>
           <q-td key="ht" :props="props">
-            <span>{{ props.row.ht }}</span>
+            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.ht }}</span>
           </q-td>
           <q-td key="q3" :props="props">
-            <span>{{ props.row.q3 }}</span>
+            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q3 }}</span>
           </q-td>
           <q-td key="q4" :props="props">
-            <span>{{ props.row.q4 }}</span>
+            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q4 }}</span>
           </q-td>
           <q-td key="q5" :props="props">
-            <span>{{ props.row.q5 }}</span>
+            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q5 }}</span>
           </q-td>
           <q-td key="set" :props="props">
-            <span>{{ props.row.set }}</span>
+            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.set }}</span>
           </q-td>
           <q-td key="t" :props="props">
             <span style="font-weight: 500; color: #ff7000">{{props.row.t}}</span>
@@ -73,7 +73,7 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import { sport_columns, socre_dict } from "./score_config";
-import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX, stage_dict} from 'src/core/index.js';
 import _ from "lodash";
 
 const props = defineProps({
@@ -458,4 +458,11 @@ onMounted(() => {});
   display: inline-block;
   text-overflow: ellipsis;
 }
+
+
+//.stage-13,.stage-14,.stage-15,
+//.stage-302,.stage-16,.stage-303{
+//  //color: var(--qq--yb-text-color1) !important;
+//  color: rgb(255, 112, 0) !important;
+//}
 </style>
