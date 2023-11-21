@@ -28,7 +28,7 @@
         <div class="odds_box" v-if="item.current_ol?.length">
           <div class="top-line"></div>
           <div class="odds_item" v-for="option in item.current_ol[0]?.ol"
-            @click="checked_current_td({ payload: item, hps: item.current_ol[0], ol: option })"
+            @click.stop="checked_current_td({ payload: item, hps: item.current_ol[0], ol: option })"
             :class="{ checked: option.oid == current_check_betId }" :key="option.oid">
             <!-- 赔率返回的是十万位的 因此需要除算 -->
             <span>{{ option.ot }}</span><span>{{ Math.floor(option.ov / 1000) / 100 }}</span>

@@ -17,7 +17,7 @@
       <div class="odds-box-item" 
         v-for="item in (current_tab.current_ol[0] || {}).ol || []" 
         :key="item.oid"
-        @click="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
+        @click.stop="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
         :class="{checked: BetData.bet_oid_list.includes(item.oid) }"
       >
         <span>{{ item.onb }}</span>
@@ -62,6 +62,7 @@
       _hn: payload.hps.hn,  // hn_obj
       _mid: payload.payload.mid  //赛事id mid_obj
     }
+    console.log(params, 'params', payload)
     set_bet_obj_config(params,{})
   }
   

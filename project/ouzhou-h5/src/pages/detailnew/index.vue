@@ -156,7 +156,7 @@ export default {
 <style lang="scss" scoped>
 .match-detail-container {
   background: #F1F1F1;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 50px - 54px );
   width: 100%;
   // height: 100%;
   -webkit-overflow-scrolling: touch;

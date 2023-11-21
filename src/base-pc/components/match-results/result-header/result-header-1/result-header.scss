@@ -76,19 +76,20 @@
             .btn-item  {
               .radio-checked {
                 // background-image: none;
-                border: var(--q-match-result-boreder-2);
+                //border: var(--q-match-result-boreder-2);
+                border: 1px solid #383C44;;
                 border-radius: 50%;
               }
             }
           }
           .y-checkbox {
             // background-image: none;
-            border: var(--q-match-result-boreder-2);
+            -border: var(--q-match-result-boreder-2);
             border-radius: 2px;
           }
           .q-scrollarea {
-            border-left: var(--q-match-result-boreder-2);
-            border-right: var(--q-match-result-boreder-2);
+            -border-left: var(--q-match-result-boreder-2);
+            -border-right: var(--q-match-result-boreder-2);
           }
           .wrap-item {
             // border: none;
