@@ -25,12 +25,12 @@
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <load-data :state="'data'" :style="{
+    <load-data v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length" :state="'data'" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
-      <scroll-list v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length">
+      <scroll-list>
         <!-- <template v-slot:before> -->
         <!-- 头部15 Mins模块 -->
         <div v-if="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
@@ -60,12 +60,11 @@
             </div>
           </div>
         </template>
-        <ConmingSoon v-show="MenuData.is_top_events()" :style="{
-          width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-        }" />
       </scroll-list>
     </load-data>
-
+    <ConmingSoon v-show="MenuData.is_top_events() || !match_list_card_key_arr.length" :is_nodata="MenuData.is_top_events()" :style="{
+      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+    }" />
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
