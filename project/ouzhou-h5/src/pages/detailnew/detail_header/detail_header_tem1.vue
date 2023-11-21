@@ -209,6 +209,7 @@ const collect_click = () => {
       })
  
 }
+//#TODO: 
 setTimeout(() => {
   // console.log("get_match_detail_MatchInfo", props.get_match_detail);
   set_scoew_icon_list(props.get_match_detail);

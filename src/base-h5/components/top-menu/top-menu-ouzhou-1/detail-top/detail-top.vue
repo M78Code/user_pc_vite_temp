@@ -115,7 +115,10 @@ function change_active(item, index) {
  * @param {{ mid: string, csid: string, tid: string }} params
  * @return {*}
  */
-const refresh = (params = {}) => {
+const refresh = (params) => {
+  if(params instanceof Event){
+    params = route.params
+  }
   refresh_is_active.value = true;
   useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS,params)
   refresh_is_active.value = false;
