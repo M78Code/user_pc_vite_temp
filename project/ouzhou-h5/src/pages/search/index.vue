@@ -22,19 +22,19 @@
 			</div>
 			<ul class="list1" v-show="history_data && history_data.length > 0">
 				<li v-for="(item, index) in history_data" :key="item.cuid">
-					<span style="display: inline-block; width: 90%;" @click="get_search_data(0, 1, item.keyword)">{{ item.keyword }}</span><span @click="_delete_history_search(item.keyword)">x</span>
+					<span style="display: inline-block; width: 95%;" @click="get_search_data(0, 1, item.keyword)">{{ item.keyword }}</span><span @click="_delete_history_search(item.keyword)">x</span>
 				</li>
-				<li class="del" @click="_delete_history_search|('')">Clear Search History</li>
+				<li class="del" @click="_delete_history_search('')">Clear Search History</li>
 			</ul>
 
 			<!-- 热门搜索 -->
-			<div class='searchHot' :class="[show_history ? '' : 'mt50']" v-show="show_hot && 
+			<div class='searchHot' :class="[(history_data.length > 0) ? '' : 'mt50']" v-show="show_hot && 
 				(hot_list && hot_list.length > 0) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) ||
 				!input_value">
 				<div class="q-mx-md">
-					<div class="text-bol half-border-bottom">SEARCHHot</div>
+					<div class="text-bol half-border-bottom">popular searches</div>
 					<!-- 热门内容 -->
 					<div class="row">
 						<div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index"
@@ -223,6 +223,7 @@
 	</div>
 </template>
 <script setup>
+import lodash from 'lodash'
 import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
@@ -248,6 +249,8 @@ let go_detail_or_result_timer;
 
 const clear_value = () => {
 	input_value.value = '';
+	get_history()
+	get_hot_search()
 }
 const to_home = () => {
 	router.push('/')
@@ -290,7 +293,7 @@ const red_color = (item) => {
  */
 const search_data = ref([]);
 let sport_kind_id = null;
-const get_search_data = (index = 0, sport_id = 1, keyword) => {
+const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	show_history.value = false;
 	show_hot.value = false;
 	tabIndex.value = index;
@@ -316,6 +319,8 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
+			// 插入搜索历史
+			get_insert_history({keyword})
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_txt');
 			get_match_base_hps_by_mids()
@@ -323,7 +328,7 @@ const get_search_data = (index = 0, sport_id = 1, keyword) => {
 	}).catch((e) => {
 		console.log(e);
 	});
-}
+}, 500)
 
 //监听输入框内容改变，并搜索
 watch(
@@ -361,8 +366,6 @@ function default_method_jump(name, item) {
 		//set_goto_detail_matchid(item.matchList[0].mid);
 	}
 
-	get_insert_history({ word: item ? name : '', }).then(({ data }) => { })
-
 	// 手机键盘收起动画完成后才跳转
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = setTimeout(() => {
@@ -382,8 +385,6 @@ function suggestion_bowling_click(item) {
 	} else {
 		item_name = item.name
 	}
-
-	get_insert_history({ word: item ? item_name : '', }).then(({ data }) => { })
 
 	// 手机键盘收起动画完成后才跳转
 	clearTimeout(go_detail_or_result_timer)
@@ -682,14 +683,19 @@ li {
 }
 
 .list1 {
-	padding: 10px;
-	padding-top: 50px;
+	margin: 10px;
+	margin-top: 50px;
+	border-radius: 6px;
 
 	li {
-		display: flex;
-		justify-content: space-between;
 		margin-bottom: 0;
-		border-radius: 6px 0px 0px 0;
+	}
+	li:first-child {
+		border-radius: 6px 6px 0px 0px;
+	}
+	
+	li:last-child {
+		border-radius: 0px 0px 6px 6px;
 	}
 
 	.del {
@@ -718,8 +724,6 @@ li {
 }
 
 .teams {
-
-
 	.middle_info_tab {
 		font-size: 12px;
 		font-weight: 600;
