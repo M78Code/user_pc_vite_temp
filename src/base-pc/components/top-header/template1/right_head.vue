@@ -10,7 +10,7 @@
       <div class="s-input s-input-click">
         <div style="display: flex;">
           <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
-            placeholder="Enter league or team" :class="is_focus ? 'change_width' : ''"
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" :class="is_focus ? 'change_width' : ''"
             @keyup.enter="get_search_data(text)">
             <template v-slot:prepend>
               <i class="icon-search q-icon c-icon" size="10px"></i>
@@ -19,7 +19,7 @@
               <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
             </template>
           </q-input>
-          <span v-show="is_focus" class="btn" @click="$router.push('/')">Close</span>
+          <span v-show="is_focus" class="btn" @click="$router.push('/')">{{ i18n_t('ouzhou.search.close') }}</span>
         </div>
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
