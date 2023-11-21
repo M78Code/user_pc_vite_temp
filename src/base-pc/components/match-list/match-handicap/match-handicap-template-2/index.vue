@@ -88,7 +88,7 @@ onMounted(() => {
   //   is_mounted.value = true
   // })
 })
-let many_obj = get_match_to_map_obj(props.match.mid)
+let many_obj = get_match_to_map_obj(props.match)
 
 function deal_width_handicap_ols(payload) {
   let { hn, mid } = props.match
