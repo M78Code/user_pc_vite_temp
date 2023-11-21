@@ -101,8 +101,6 @@ function deal_width_handicap_ols(payload) {
     // 获取投注项内容 
     return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
   })
-console.log('sdfsdgfsfgdsfgg', payload);
-
   return new_ols
 }
 
