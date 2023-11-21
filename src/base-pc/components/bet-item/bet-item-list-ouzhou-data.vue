@@ -319,7 +319,6 @@ onUnmounted(() => {
   margin-left: 4px;
   overflow: hidden;
   background-size: 100% 100%;
-  display: none;
   position: absolute;
   left: 0px;
   top: -5px;
