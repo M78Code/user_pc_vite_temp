@@ -149,7 +149,7 @@
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
-												v-if="item?.matchList[0]?.hps?.[0]?.hl.length > 0 && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="lodash.get(item,'matchList[0].hps[0].hl.length' ) > 0 && lodash.get(item,'matchList[0].hps[0].hl[0].ol[1].ov' ) && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div class="center">X</div>
 												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
@@ -275,6 +275,7 @@ function league_click(match) {
 	if(!match) return;
 	search.insert_history(match.name)
 	const { csid } = match.matchList[0]
+  console.log('asdasdasdasdasdas', keyword.value, csid);
 	router.push(`/search/${keyword.value}?csid=${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {

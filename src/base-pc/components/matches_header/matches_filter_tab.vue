@@ -29,7 +29,7 @@
 
 <script setup>
   import { ref,onMounted } from 'vue';
-  import { UserCtr,MenuData} from 'src/core/index.js'
+  import { UserCtr,MenuData, i18n_t} from 'src/core/index.js'
   import { handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { format_M_D_PC } from "src/core/format"
 
@@ -71,7 +71,7 @@
         let date_time = new Date(this.setHours(12, 0, 0, 0)).getTime()
         return {
           label: date_time,
-          value: i == 0 ? 'Tomorrow' : `${format_M_D_PC(date_time)}`,
+          value: i == 0 ? i18n_t('ouzhou.match.tomorrow') : `${format_M_D_PC(date_time)}`,
           type: 3
         };
     }
@@ -85,7 +85,7 @@
 
   const update_time = (time) => {
 
-    let arr = [{label:'',value:'Today',type:2},...dateWeekFormat(new Date(time))];
+    let arr = [{label:'',value: i18n_t('ouzhou.match.today'),type:2},...dateWeekFormat(new Date(time))];
 
     current_filter_list.value = arr
   }

@@ -42,7 +42,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
-                  <div>Announcement</div>
+                  <div>{{ i18n_t('ouzhou.set.announcement')}}</div>
                 </div>
               </q-item-section>
             </q-item>
@@ -50,7 +50,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
-                  <div>Results</div>
+                  <div>{{ i18n_t('ouzhou.set.results')}}</div>
                 </div>
               </q-item-section>
             </q-item>
@@ -58,7 +58,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
-                  <div>Sport Rules</div>
+                  <div>{{ i18n_t('ouzhou.set.sport_rules')}}</div>
               </div>
               </q-item-section>
             </q-item>
@@ -240,9 +240,7 @@ export default defineComponent({
     function hide_search(e) {
       const target_class_list = ['q-field__native q-placeholder', 'serach-wrap column', 'sports-tab', 'tab', 'tab active', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible', 'windows desktop landscape', 'icon-close'];
       if(is_focus.value && SearchPCClass.search_isShow) {
-        console.log('e', e.target.className);
         if(!target_class_list.includes(e.target.className)) {
-          // e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible' && e.target.className != 'windows desktop landscape' && e.target.className != 'icon-close'
           SearchPCClass.set_search_isShow(false);
           is_focus.value = false;
           text.value = ''
