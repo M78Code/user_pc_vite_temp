@@ -1216,7 +1216,6 @@ export const useGetResultConfig = () => {
     ipt_search,
     changePage,
     input_radio,
-    
     sub_search,
     hideSelect,
     input_focus,
