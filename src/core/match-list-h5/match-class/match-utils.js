@@ -230,6 +230,7 @@ class MatchUtils {
     const result = []
     match_data.some(t => {
       const { csid } = t
+      if (![1, 2].includes(+csid)) return
       t.is_virtual = true
       const key = `csid_${csid}`
       if (csid_obj[key]) {
@@ -238,7 +239,7 @@ class MatchUtils {
         csid_obj[key] = 1
       }
       if (result.length >= 20) return true
-      if (csid == 1 &&  csid_obj[key] < 11) {
+      if (csid == 1 &&  csid_obj[key] < 16) {
         result.push(t)
       } else if (csid != 1) {
         if (csid_obj[key] < 6) result.push(t)

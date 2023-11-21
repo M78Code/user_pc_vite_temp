@@ -7,7 +7,6 @@
       ol_data.class,
       `csid${ol_data.csid}`,
       odds_lift,
-      { 'show-odds-icon': odds_state != 'seal' },
       BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : ''
     ]"
     @click.stop="bet_click_ol"
