@@ -977,9 +977,9 @@ export default {
         .score-punish {
           width: 0.12rem;
           height: 0.14rem;
-          color: var(--q-gb-t-c-18);
+          color: var(--q-gb-t-c-2);
           flex-shrink: 0;
-          background: var(--q-color-com-bg-color-43);
+          background: var(--q-match-fs-color-13);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -988,7 +988,7 @@ export default {
           margin-left: 0.04rem;
 
           &.yellow {
-            background: var(--q-color-com-bg-color-23);
+            background: var(--q-gb-t-c-18);
           }
 
           &.flash {
