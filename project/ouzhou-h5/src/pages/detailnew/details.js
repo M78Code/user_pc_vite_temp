@@ -14,6 +14,7 @@ import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 export const details_main = (router,route) => {
   const detail_store = ref(MatchDetailCalss); //todo
   const match_odds_info = ref([]);
+  /** @type {Ref<TYPES.MatchDetail>} */
   const match_detail = ref({});
   const category_list = ref([]);
   const tab = ref("betting");
