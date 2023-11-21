@@ -9,14 +9,8 @@
     <!-- 视频画中画组件 -->
     <!-- <moveVideo></moveVideo> -->
     <p class="font_match_results">12222</p>
-    <simple-header
-      @refresh="sub_search"
-      :data_loaded="refresh_finish"
-      :title="i18n_t('common.amidithion')"
-      >1
-      <!-- 赛果 -->
-      <!-- <span>{{ i18n_t("common.amidithion") }}</span> -->
-    </simple-header>
+    <!-- 赛果 -->
+    <simple-header @refresh="sub_search" :data_loaded="refresh_finish" :title="i18n_t('common.amidithion')"></simple-header>
 
     <!-- 中间内容 S-->
     <div class="main_wrap">
@@ -31,7 +25,7 @@
         :isSelectConfirm="isSelectConfirm"
         v-model:dateValue="model"
         :ipt_search="ipt_search"
-        :sub_search="sub_search"
+        @refresh="sub_search"
         :api_league_type="api_league_type"
         :select_submit="select_submit"
         :hideSelect="hideSelect"
@@ -40,6 +34,7 @@
         :results_params="results_params"
         :input_radio="input_radio"
         :is_bowls="is_bowls"
+        :cancel="cancel"
         v-model:is_show="is_show"
       ></result-header>
       <!-- 筛选条件 E-->
@@ -113,7 +108,6 @@ const {
   is_sortUp,
   activeIndex,
   reset_pagination,
-  sub_search,
   startTimeShow,
   showSelectTime,
   model,
@@ -122,6 +116,7 @@ const {
   results_params,
   is_bowls,
   is_show,
+  cancel,
   //函数
   get_tr_detail,
   change_sort,
@@ -132,7 +127,15 @@ const {
   isSelectConfirm,
   ipt_search,
   select_submit,
-  input_radio
+  input_radio,
+  // xinzen
+  sub_search,
+  hideSelect,
+  input_focus,
+  input_blur,
+  champion_sport_type_filter,
+  search_hot,
+  highlights_input_radio,
 } = useGetResultConfig();
 
 onMounted(() => {

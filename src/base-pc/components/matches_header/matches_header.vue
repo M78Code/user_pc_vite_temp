@@ -5,7 +5,7 @@
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: current_ball_type})"></div>
 			<div class="matches-title">
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
-				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">All Matches</div>
+				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
 				<div v-else class="matches_tab" >
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
 						:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
@@ -64,12 +64,12 @@ const set_tab_list = (news_) =>{
 	// 首页
 	if(news_ == 0 ){
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
-		matches_header_title.value = "Matches"
+		matches_header_title.value = i18n_t('ouzhou.match.matches')
 		// current_ball_type.value = 0
 	}
 	// 滚球
 	if( news_ == 1 ){
-		matches_header_title.value = "In Play"
+		matches_header_title.value = i18n_t('ouzhou.match.inplay')
    		match_list_top.value = '146px'
 		// current_ball_type.value = 1
 	}
@@ -84,7 +84,8 @@ const set_tab_list = (news_) =>{
 
 	// 收藏
 	if (MenuData.is_collect) {
-		matches_header_title.value = "Favouritse"
+		console.error(MenuData);
+		matches_header_title.value = i18n_t('ouzhou.menu.collect')
 		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'favouritse_tab', [])  
 		// current_ball_type.value = 1
 	}

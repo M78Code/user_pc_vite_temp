@@ -42,7 +42,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
-                  <div>Announcement</div>
+                  <div>{{ i18n_t('ouzhou.set.announcement')}}</div>
                 </div>
               </q-item-section>
             </q-item>
@@ -50,7 +50,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
-                  <div>Results</div>
+                  <div>{{ i18n_t('ouzhou.set.results')}}</div>
                 </div>
               </q-item-section>
             </q-item>
@@ -58,7 +58,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
-                  <div>Sport Rules</div>
+                  <div>{{ i18n_t('ouzhou.set.sport_rules')}}</div>
               </div>
               </q-item-section>
             </q-item>

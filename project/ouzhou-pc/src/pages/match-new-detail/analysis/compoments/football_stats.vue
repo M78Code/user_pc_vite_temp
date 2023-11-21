@@ -27,11 +27,11 @@
               <span>{{ score_list[item.value_key].home }}</span>
               <q-knob
                 readonly
-                reverse 
+                reverse
                 v-model="score_list[item.value_key].percentage"
                 size="50px"
                 :thickness="0.4"
-                color="amber-7" 
+                color="amber-7"
                 :track-color="score_list[item.value_key].percentage==0?'grey-3':'indigo-12'"
                 class="q-ma-md"
               />

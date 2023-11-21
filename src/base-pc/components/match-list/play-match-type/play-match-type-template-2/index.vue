@@ -62,7 +62,6 @@ function handle_click() {
   }
 }
 const cur_title_info = computed(() => {
-  console.log('props.card_style_obj;', props.card_style_obj);
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
   let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
   let title_obj = {

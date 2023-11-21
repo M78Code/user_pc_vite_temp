@@ -35,7 +35,7 @@
             </template> -->
             <!-- 5大联赛 -->
             <template v-if="five_league_match.length > 0">
-              <HeaderTitle title="Top Leagues"></HeaderTitle>
+              <HeaderTitle :title="`${i18n_t('ouzhou.match.top_leagues')}`"></HeaderTitle>
               <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
             </template>
           </section>
@@ -219,7 +219,7 @@ onUnmounted(() => {
         padding: 0;
         overflow: hidden;
         .section-content{
-          height: calc(100% - 52px);
+          height: calc(100% - 0px);
           overflow-y: auto;
           position: relative;
         }
