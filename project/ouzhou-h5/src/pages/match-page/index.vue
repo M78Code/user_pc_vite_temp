@@ -42,7 +42,7 @@ onMounted(() => {
       if (state.curTab) {
         onChangeDate(12)
       }
-    })
+    }).off
   }
 })
 onUnmounted(() => {
