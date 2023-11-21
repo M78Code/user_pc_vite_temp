@@ -37,7 +37,12 @@ onMounted(() => {
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data({})
       }
-    }).off
+    }).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
+      if (state.curTab) {
+        onChangeDate(12)
+      }
+    })
   }
 })
 onUnmounted(() => {

@@ -398,6 +398,7 @@ const areaListChange = (item,index) => {
 
         :deep(.q-virtual-scroll__content) {
             border-bottom: 10px solid #E2E2E2;
+            min-height: 100%;
         }
     }
 
