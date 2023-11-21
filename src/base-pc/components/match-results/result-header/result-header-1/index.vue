@@ -211,7 +211,10 @@ const props = defineProps({
   },
   sport_id:{
     type:String
-  }
+  },
+  locale:{
+    type:String
+  },
 });
   const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
