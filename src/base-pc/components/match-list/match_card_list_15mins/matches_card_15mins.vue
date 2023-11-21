@@ -1,5 +1,6 @@
 <template>
   <div class="sport">
+    <div v-show="false">{{ BetData.bet_data_class_version }}</div>
     <div class="competing-time">
       <sport_icon :size="'12px'" :status="true" :sport_id="current_tab.csid" class="sport-icon" />
       <div class="matches-time">
@@ -17,9 +18,9 @@
         v-for="item in (current_tab.current_ol[0] || {}).ol || []" 
         :key="item.oid"
         @click="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
-        :class="{checked: item.oid == current_check_betId }"
+        :class="{checked: BetData.bet_oid_list.includes(item.oid) }"
       >
-        <span>{{ item.ot }}</span>
+        <span>{{ item.onb }}</span>
         <span>{{ Math.floor(item.ov / 1000) / 100 }}</span>
       </div>
     </div>
@@ -29,9 +30,9 @@
 <script setup>
 
   import { onMounted, ref, watch } from 'vue';
-  import _ from 'lodash';
   import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
   // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
+  import BetData from "src/core/bet/class/bet-data-class.js";
   import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
   import { MenuData } from "src/core/index.js"
 
@@ -43,11 +44,6 @@
   });
   const current_check_betId = ref(MenuData.current_check_betId.value);
   // const ols = ref([])
-
-  onMounted(() => {
-    // ols.value = get_15mins_odds_list().ols
-    // console.log(ols.value, 'get_15mins_odds_list', props)
-  })
 
   // // 监听 当前投注项ID的变化
   watch(
