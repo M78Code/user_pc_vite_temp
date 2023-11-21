@@ -32,7 +32,6 @@
             :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
             <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
               {{ item_title.otb }}
-              {{ csid }}
             </div>
           </div>
       </div>
