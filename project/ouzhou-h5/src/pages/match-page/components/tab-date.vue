@@ -181,6 +181,10 @@ watch(() => MenuData.menu_mi.value, () => {
     setDefaultData(MenuData.menu_mi.value)
 }, { immediate: true })
 
+watch(() => props.areaList, () => {
+    areaListChange(props.areaList[0], 0)
+})
+
 /**
  * 地区选择tab
  * @param {*} index 

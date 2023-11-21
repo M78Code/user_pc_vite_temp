@@ -499,10 +499,11 @@ class MatchMeta {
    */
   async get_ouzhou_leagues_data (date) {
     const res = await api_match_list.get_leagues_list({
-      sportId: Number(MenuData.menu_csid),
+      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
       // sportId: 1,
       selectionHour: date
     })
+    MatchCollect.get_collect_match_data()
     const list = lodash.get(res, 'data', [])
     return list
   }
