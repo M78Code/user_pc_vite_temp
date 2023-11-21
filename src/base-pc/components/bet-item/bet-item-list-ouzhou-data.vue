@@ -1,4 +1,5 @@
 <template>
+  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div
     v-if="is_mounted && odds_state != 'close'"
     class="c-bet-item yb-flex-center relative-position yb-family-odds"
@@ -7,7 +8,7 @@
       `csid${ol_data.csid}`,
       odds_lift,
       { 'show-odds-icon': odds_state != 'seal' },
-      active_score === `${ol_data._mid}${ol_data.oid}` ? 'active' : ''
+      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : ''
     ]"
     @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
@@ -28,7 +29,6 @@
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
       <div class="handicap-value-text">{{ score }}{{ ol_data._hpid }} <span v-show="ol_data._hpid != 1">{{ ol_data.onb }}</span></div>
     </div>
-
     <!-- 赔率 -->
     <div
       class="odds"
