@@ -5,20 +5,9 @@
 -->
 <template>
   <div class="box-bc">
-   
-    <q-table
-      :rows="data"
-      separator="none"
-      :columns="columns"
-      row-key="name"
-      hide-pagination
-      :table-header-style="{
-        backgroundColor: '#F1F1F1',
-        height: '28px',
-        color: '#8A8986',
-        fontSize: '13px',
-        fontWeight: 500,
-      }"
+
+    <q-table :rows="data" separator="none" :columns="columns" row-key="name" hide-pagination
+      :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
     >
       <!-- 头部插槽 足球用 -->
       <template v-slot:header="props">
