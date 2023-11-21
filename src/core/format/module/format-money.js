@@ -82,7 +82,26 @@ export const format_money3 = function (num) {
   }
 };
 
-
+export const formatMoney = function (num,bit = 2){
+    try {
+        num = (num || 0).toString();
+        let result = "";
+        let [num1, num2 = "00"] = num.split(".");
+        num2 = num2.padEnd(2, "0").slice(0,2);
+        while (num1.length > 3) {
+            result = "," + num1.slice(-3) + result;
+            num1 = num1.slice(0, num1.length - 3);
+        }
+        if (!!num1) {
+            num1 = num1 + result;
+        }
+        let str = num.includes(".") ? num1 + "." + num2 : num1
+        return str
+    } catch (error) {
+        console.error(error);
+        return "";
+    }
+}
 
 
 

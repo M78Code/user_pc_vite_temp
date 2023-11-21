@@ -88,6 +88,7 @@ export default {
       if (that.tconfig.step) {
         if (!that.timer || that.replay) {
           clearInterval(that.timer);
+          that.timer = null;
           //启动定时器
           that.timer = setInterval(()=>{
             that.set_date_time();

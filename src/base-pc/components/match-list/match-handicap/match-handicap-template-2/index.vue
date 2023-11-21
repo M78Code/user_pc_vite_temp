@@ -9,10 +9,10 @@
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
-      <div class="handicap-col-ouzhou" v-for="(col, col_index) in col_ols_data" :key="col_index"
+      <div class="handicap-col-ouzhou" v-for="(col, col_index) in col_ols_data" :key="col._hpid + col_index"
         :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
         <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
-          v-for="(ol_data, ol_index) in (col.ols)" :key="ol_data._hpid + '_' + ol_data._ot">
+          v-for="(ol_data, ol_index) in (col.ols)" :key="ol_index + '_' + ol_data._hpid + '_' + ol_data._ot">
           <!-- 投注项组件 -->
           <bet-item @update_score="update_score" :active_score="active_score" :ol_data="ol_data" />
         </div>
@@ -85,7 +85,7 @@ const col_ols_data = computed(() => {
         // 投注项数据拼接
         let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
         // 获取投注项内容 
-        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
       })
       return col
     })
@@ -98,7 +98,15 @@ const col_ols_data = computed(() => {
 const cur_esports_mode = ref(BetData.cur_esports_mode);
 function deal_width_handicap_ols(payload, many_obj) {
   let { hn, mid } = props.match
-
+  /*let handicap_type = hn || 1
+  const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
+  let new_ols = payload.map(item => {
+    if (item.empty) { return }
+    // 投注项数据拼接
+    let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
+    // 获取投注项内容 
+    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+  })*/
 
   let new_ols = payload
   return new_ols

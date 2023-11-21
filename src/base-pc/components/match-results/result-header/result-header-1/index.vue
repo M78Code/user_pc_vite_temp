@@ -150,7 +150,7 @@
           <span class="cursor-pointer"></span>
         </div>
         <!-- 搜索 -->
-        <div class="search-btn" @click="sub_search">
+        <div class="search-btn" @click="sub_search()">
           {{ i18n_t("results.search") }}
         </div>
       </div>
@@ -173,7 +173,6 @@ import {
 } from "src/core/index.js";
 import lodash from "lodash"
 const {
-  sub_search,
   //函数
   get_serverTime,
 
@@ -211,6 +210,9 @@ const props = defineProps({
     type: Function,
   },
   ipt_search:{
+    type: Function,
+  },
+  sub_search:{
     type: Function,
   },
   input_radio:{
