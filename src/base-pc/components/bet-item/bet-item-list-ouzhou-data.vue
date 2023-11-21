@@ -283,10 +283,7 @@ const bet_click_ol = () => {
 
 onUnmounted(() => {
   // 清除定时器
-  for (const key in timer_obj) {
-    clearTimeout(timer_obj[key]);
-    timer_obj[key] = null;
-  }
+  clearTimeout(tid)
 });
 </script>
 
