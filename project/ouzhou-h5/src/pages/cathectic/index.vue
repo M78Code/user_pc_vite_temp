@@ -89,6 +89,7 @@
     display: block;
   }
   .content-warp {
+    height: 100%;
     background-color: var(--q-gb-bg-c-15);
   }
   .second-header {
@@ -115,7 +116,7 @@
     };
   }
   .content-m {
-    height: calc(100vh - 1.46rem);
+    height: 100%;
     background-color: var(--q-gb-bg-c-10);
   }
   </style>

@@ -176,7 +176,9 @@ onUnmounted(() => {
 .home-page{
   height: 100%;
   overflow: hidden;
-  padding-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  // padding-bottom: 56px;
   .header_tabs{
     border-bottom: 2px solid var(--q-gb-bd-c-1);
     :deep(.q-tabs--dense){
@@ -212,7 +214,8 @@ onUnmounted(() => {
     }
   }
   .home_content{
-    height: calc(100% - 106px);
+    flex: 1;
+    height: 0;
     .q-tab-panels{
       height: 100%;
       .q-tab-panel{

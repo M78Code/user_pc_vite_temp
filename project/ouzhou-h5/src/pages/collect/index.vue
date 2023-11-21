@@ -78,7 +78,10 @@ onMounted(()=>{
 <style scoped lang="scss">
 .collect-wap {
   width: 100%;
-  height: calc(100% - 106px);
+  // height: calc(100% - 106px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .header_tabs{
     border-bottom: 2px solid var(--q-gb-bd-c-1);
     :deep(.q-tabs--dense){
@@ -121,7 +124,10 @@ onMounted(()=>{
 }
 
 .match-container{
-    height: calc(100% - 1.21rem);
+    // height: calc(100% - 1.71rem);
+    // height: calc(100% - 1.21rem);
+    height: 0;
+    flex: 1;
     overflow: hidden;
     overflow-y: auto;
     .match-list-container{

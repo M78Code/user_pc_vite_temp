@@ -19,7 +19,7 @@ export const details_main = (router,route) => {
   const match_detail = ref({});
   const category_list = ref([]);
   const tab = ref("betting");
-  const cuid = ref("");
+  const cuid = ref(UserCtr.get_uid());
   const scroller_height = ref(0);
   const loading = ref(false);
   const detail_event_tabs_value = ref({ label: "Match", id: 1 });
