@@ -5,13 +5,13 @@
         <!-- 详情页面包屑 -->
         <breadcrumbs :detail_info="detail_info || {}" />
         <div class="bread-right">
-          <img
+          <!-- <img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_top.png`"
             alt=""
             srcset=""
             class="signal"
             @click="go_analyse"
-          />
+          /> -->
           <img
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/detail_fresh.png`"
             alt=""
