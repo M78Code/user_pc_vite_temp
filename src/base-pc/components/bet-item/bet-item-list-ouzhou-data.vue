@@ -25,9 +25,7 @@
         },
       ]"
     >
-      <span class="handicap-more" v-show="ol_data.onbl"
-        >{{ ol_data.onbl }}&nbsp;</span
-      >
+      <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
       <div class="handicap-value-text">{{ score }} {{ ol_data.onb }}</div>
     </div>
 
