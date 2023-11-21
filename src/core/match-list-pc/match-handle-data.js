@@ -162,9 +162,9 @@ export function get_main_score(match) {
    * @param {Array} key_arr 需要获取的值key ["hpsBold","hpsOvertime"]等
    * @return {undefined} undefined
    */
-export function get_match_to_map_obj(mid, key_arr) {
+export function get_match_to_map_obj(match, key_arr) {
     let map_obj = {}
-    const match=MatchListData.get_quick_mid_obj(mid)
+    // const match=MatchListData.get_quick_mid_obj(mid)
     if (lodash.get(match, 'mid')) {
         try {
             // 需要解析的投注项赛事基础数据的路径
