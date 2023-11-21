@@ -129,26 +129,27 @@ class MenuData {
 
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
     this.ouzhou_filter_config = {
-       // 首页
+       // 首页   i18n_t('ouzhou.match.featured')    i18n_t('ouzhou.match.top_events')
       home_tab: [
-        { label: 'Featured', value: 1001 },
-        { label: 'Top Events', value: 1002 },
+        { label: '特色', value: 1001 },
+        { label: '热门赛事', value: 1002 },
       ],
-      // 左侧菜单
+      // 左侧菜单 i18n_t('ouzhou.match.matches')  i18n_t('ouzhou.match.top_leagues'
       sport_tab: [
-        { label: 'Matches', value: 4001 },
-        { label: 'League', value: 4002 },
+        { label: '赛事', value: 4001 },
+        { label: '热门联赛', value: 4002 },
         // { label: 'Next 24 Hours', value: 4003 },
       ], 
-      // 收藏
+      // 收藏 i18n_t('ouzhou.match.inplay')  i18n_t('ouzhou.match.today')  i18n_t('ouzhou.match.early')
       favouritse_tab: [
-        { label: "In-Play", value: 3001 },
-        { label: "To Day", value: 3002 },
-        { label: "Early", value: 3003 }
+        { label: '滚球', value: 3001 },
+        { label: '今天', value: 3002 },
+        { label: '早期', value: 3003 }
       ],
+      // i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
       inplay:{
-        title: 'In-Play',
-        name: 'All Matches'
+        title: '滚球',
+        name: '所有赛事'
       }
     }
     this.ouzhou_time_list = [

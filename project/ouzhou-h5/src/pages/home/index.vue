@@ -35,7 +35,7 @@
             </template> -->
             <!-- 5大联赛 -->
             <template v-if="five_league_match.length > 0">
-              <HeaderTitle title="Top Leagues"></HeaderTitle>
+              <HeaderTitle :title="`${i18n_t('ouzhou.match.top_leagues')}`"></HeaderTitle>
               <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
             </template>
           </section>
