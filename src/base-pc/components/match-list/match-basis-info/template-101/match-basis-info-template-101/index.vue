@@ -1,6 +1,6 @@
 <template>
   <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)" >
-   
+
     <!-- 赛事信息 -->
     <div class="collect-box flex items-center justify-between">
       <div class="left-info-box flex items-center flex-start">
@@ -20,7 +20,7 @@
         <div class="yb-icon-arrow"></div>
       </div>
     </div>
-     <!-- 主队信息 --> 
+     <!-- 主队信息 -->
      <div class="row-item">
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -36,23 +36,23 @@
     <div class="row-item kedui-item">
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div 
-            class="team-name away ellipsis allow-user-select" 
-            :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}" 
+          <div
+            class="team-name away ellipsis allow-user-select"
+            :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
         </div>
       </div>
       <!-- 主比分 -->
-      <div 
-        class="score" 
-        :key="lodash.get(match, 'mid')" 
-        v-if="show_type == 'all'" 
+      <div
+        class="score"
+        :key="lodash.get(match, 'mid')"
+        v-if="show_type == 'all'"
         v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}"
       >
         {{lodash.get(match,`msc_obj.S1.away`)}}
       </div>
     </div>
-   
+
 
   </div>
 </template>
