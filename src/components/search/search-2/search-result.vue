@@ -276,7 +276,6 @@ function league_click(match) {
 	if(!match) return;
 	search.insert_history(match.leagueName)
 	const { csid } = match.matchList[0]
-	console.log('matchmatch',match);
 	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	PageSourceData.set_route_name('search')
