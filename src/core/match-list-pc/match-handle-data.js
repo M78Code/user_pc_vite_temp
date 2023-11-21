@@ -97,7 +97,7 @@ export function get_match_template_id({ csid }) {
  * @returns 数据模板id
  * @description 获取欧洲版 不同球种的数据模板id
  */
-export function get_ouzhou_data_tpl_id (csid) {
+export function get_ouzhou_data_tpl_id(csid) {
     switch (Number(csid)) {
         case 1:
             return 101
@@ -119,7 +119,7 @@ export function get_ouzhou_data_tpl_id (csid) {
             return 119;
         default:
             return 101;
-      }
+    }
 }
 
 
@@ -162,9 +162,9 @@ export function get_main_score(match) {
    * @param {Array} key_arr 需要获取的值key ["hpsBold","hpsOvertime"]等
    * @return {undefined} undefined
    */
-export function get_match_to_map_obj(mid, key_arr) {
+export function get_match_to_map_obj(match, key_arr) {
     let map_obj = {}
-    const match=MatchListData.get_quick_mid_obj(mid)
+    // const match=MatchListData.get_quick_mid_obj(mid)
     if (lodash.get(match, 'mid')) {
         try {
             // 需要解析的投注项赛事基础数据的路径
@@ -188,7 +188,7 @@ export function get_match_to_map_obj(mid, key_arr) {
             hps_key_arr.forEach(hps_key_str => {
                 // 设置投注项赛事列表数据
                 hps_data_arr = lodash.get(match, hps_key_str)
-                if (!hps_data_arr||!Array.isArray(hps_data_arr)) {
+                if (!hps_data_arr || !Array.isArray(hps_data_arr)) {
                     return
                 }
                 switch (hps_key_str) {
@@ -219,6 +219,7 @@ export function get_match_to_map_obj(mid, key_arr) {
                                                 // 遍历投注项数据
                                                 item3.ol.forEach(item4 => {
                                                     // 处理ot是小数的情况,进行数据修正
+                                                    if (!item4) return;
                                                     let ot = '';
                                                     if (item4.ot && item4.ot.includes('.')) {
                                                         ot = item4.ot.replace('.', '-');
@@ -273,6 +274,7 @@ export function get_match_to_map_obj(mid, key_arr) {
                                             if (lodash.get(item3, 'ol.length')) {
                                                 // 遍历投注项数据
                                                 item3.ol.forEach(item4 => {
+                                                    if (!item4) return;
                                                     // 处理ot是小数的情况,进行数据修正
                                                     let ot = '';
                                                     if (item4.ot && item4.ot.includes('.')) {
@@ -280,7 +282,7 @@ export function get_match_to_map_obj(mid, key_arr) {
                                                     } else {
                                                         ot = item4.ot;
                                                     }
-                                                   
+
                                                     // 设置非坑位信息
                                                     if (!item3.hn) {
                                                         let _hn = `${match.mid}_${item2.hpid}_1_${ot}`;
@@ -320,7 +322,7 @@ export function get_match_to_map_obj(mid, key_arr) {
 /*额外给赛事添加对象*/
 export function match_list_handle_set(match_list) {
     if (Object.prototype.toString.call(match_list) == '[object Array]')
-    match_list.forEach(match => {
-        match.tpl_id = get_match_template_id(match)
-    })
+        match_list.forEach(match => {
+            match.tpl_id = get_match_template_id(match)
+        })
 }

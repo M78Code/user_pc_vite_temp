@@ -1,31 +1,39 @@
-<!--
- * @Author: nico
- * @Date: 2023-05-17 14:13:55
- * @Description: 即将推出页面
--->
 <template>
 <div style="height:100%">
   <!-- <MatchesHeader /> -->
   <div class="coming_soon_wrap">
-    <div class="coming_soon_box">
+    <div class="coming_soon_box" v-if="props.is_nodata">
       <img class="coming_soon_img" :src="coming_soon" alt="">
       <div class="description">{{ i18n_t("ouzhou.no_data.coming_soon") }}</div>
+    </div>
+    <div class="coming_soon_box" v-else>
+      <img class="no-data-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/no-data.svg`" alt="" srcset="">
+      <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{i18n_t('common.no_data')}}</div>
     </div>
   </div>
     </div>
 </template>
   
 <script setup>
- import coming_soon from 'src/assets/images/conming_soons.png';
-//  import MatchesHeader from "src/components/matches_header/matches_header.vue";
+import coming_soon from 'src/assets/images/conming_soons.png';
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+
+const props = defineProps({
+  is_nodata: {
+    type: Boolean,
+    default: false
+  }
+})
+
+
 </script>
   
 <style lang="scss" scoped>
   .coming_soon_wrap {
     width: 100%;
     height: 100%;
-    padding-right: 7px;
     box-sizing: border-box;
+    margin-top: 8px;
   }
   .coming_soon_box {
     width: 100%;
