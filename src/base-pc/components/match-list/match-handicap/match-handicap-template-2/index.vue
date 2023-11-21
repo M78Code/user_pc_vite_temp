@@ -67,7 +67,7 @@ const props = defineProps({
     default: () => false,
   }
 })
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match)
 // 赛事模板宽度
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 let MatchListDataInfo = MatchListData
