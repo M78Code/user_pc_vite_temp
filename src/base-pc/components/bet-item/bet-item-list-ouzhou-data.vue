@@ -82,8 +82,7 @@ const odds_state = ref("");
 const match_odds = ref("");
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
-// 是否红升绿降中
-let odds_lift_show = false;
+
 
 const emit = defineEmits(['update_score'])
 
@@ -129,15 +128,11 @@ onMounted(() => {
   // });
 });
 
-// 监听玩法ID变化 取消赔率升降
-watch(() => props.ol_data._hpid, () => {
+// 监听oid 取消赔率升降
+// 监听玩法ID变化 取消赔率升降 
+watch(() => [props.ol_data._hpid, props.ol_data.oid], () => {
   clear_odds_lift()
 }) 
-
-// 监听oid 取消赔率升降
-watch(() => props.ol_data.oid, () => {
-  clear_odds_lift()
-})  
 
 // 监听投注项赔率变化
 watch(() => props.ol_data.ov, (cur, old) => {
@@ -148,7 +143,6 @@ watch(() => props.ol_data.ov, (cur, old) => {
     let { _mhs, _hs, os } = props.ol_data;
     odds_state.value = get_odds_state(_mhs, _hs, os);
   }
-  
   // 红升绿降变化
   set_odds_lift(cur, old);
 }, { deep: true })  
@@ -181,7 +175,6 @@ let tid;
  * @return {undefined} undefined
  */
 const set_odds_lift = (cur, old) => {
-  let _odds_lift = "";
   if (
     odds_state.value != "lock" &&
     odds_state.value != "seal" &&
@@ -190,32 +183,22 @@ const set_odds_lift = (cur, old) => {
   ) {
   
     if (cur > old) {
-      _odds_lift = "up";
+      odds_lift.value  = "up";
     } else if (cur < old) {
-      _odds_lift = "down";
+      odds_lift.value  = "down";
     }
-  }
-      odds_lift_show = true;
-      odds_lift.value = _odds_lift;
-    // if (_odds_lift && !odds_lift_show) {
-      /**清除定时器 */
-      // if (timer_obj["odds_lift"]) {
-      //   clearTimeout(timer_obj["odds_lift"]);
-      //   timer_obj["odds_lift"] = null;
-      //   timer_obj["odds_lift"] = 
-      clearTimeout(tid)
+    clearTimeout(tid)
       tid=setTimeout(() => {
         odds_lift.value = "";
-        odds_lift_show = false;
       }, 3000);
-    // }
-  // }
+  }
 };
 
 /**
  * 取消赔率升降
  */
 const clear_odds_lift = () => {
+  clearTimeout(tid)
   odds_lift.value = "";
 };
 
@@ -301,10 +284,7 @@ const bet_click_ol = () => {
 
 onUnmounted(() => {
   // 清除定时器
-  for (const key in timer_obj) {
-    clearTimeout(timer_obj[key]);
-    timer_obj[key] = null;
-  }
+  clearTimeout(tid)
 });
 </script>
 

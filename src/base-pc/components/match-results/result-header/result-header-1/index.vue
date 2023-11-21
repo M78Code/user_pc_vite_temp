@@ -154,6 +154,9 @@ import {
 import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
+  cancel:{
+    type:String
+  },
   dateValue:{
     type:Object
   },
@@ -227,9 +230,9 @@ const  showBtn = ref(props.is_show)
 function refresh() {
   emit("refresh")
 }
-</script >
+</script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 @import "./result-header.scss";
 .top-menu-content {
     height: 50px;
@@ -483,7 +486,7 @@ function refresh() {
   }
 
   /* ************** 日期、单选框、搜索 *************** -E */
-  .q_data{
+  .q-date__view{
     background: #ffffff;
   }
 }
