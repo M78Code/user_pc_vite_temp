@@ -195,7 +195,6 @@ export default {
       // 判断是不是首页下的 featured 页面
       // if (MenuData.is_featured()) {
         const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
-        console.log(mins15_list,'mins15_list')
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
         matches_featured_list.value = await get_featurd_list()

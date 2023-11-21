@@ -10,30 +10,16 @@ import * as TemplateCommon from "./template-common.js"
     {
       _hpid: 1,
       ols: [
-        { _hpid: 1, ot: "1" },
-        { _hpid: 1, ot: "X" },
-        { _hpid: 1, ot: "2" },
+        { _hpid: 1, otb: "主胜" , ot: "1"},
+        { _hpid: 1, otb: "平局" , ot: 'X'},
+        { _hpid: 1, otb: "客胜" , ot: '2'},
       ],
     },
     {
-      _hpid: 4, ols: [{ _hpid: 4, ot: "1" }, { _hpid: 4, ot: "2" }],
+      _hpid: 4, ols: [{ _hpid: 4, otb: '主队让球', ot: "1" }, { _hpid: 4, otb: '客队让球', ot: "2" }],
     },
     {
-      _hpid: 2, ols: [{ _hpid: 2, ot: "Over" }, { _hpid: 2, ot: "Under" }],
-    },
-    {
-      _hpid: 17,
-      ols: [
-        { _hpid: 17, ot: "1" },
-        { _hpid: 17, ot: "2" },
-        { _hpid: 17, ot: "X" },
-      ],
-    },
-    {
-      _hpid: 19, ols: [{ _hpid: 19, ot: "1" }, { _hpid: 19, ot: "2" }],
-    },
-    {
-      _hpid: 18, ols: [{ _hpid: 18, ot: "Over" }, { _hpid: 18, ot: "Under" }],
+      _hpid: 2, ols: [{ _hpid: 2, otb: '全场大小', ot: "Over" }, { _hpid: 2, otb: '全场大小', ot: "Under" }],
     },
   ],
 }
