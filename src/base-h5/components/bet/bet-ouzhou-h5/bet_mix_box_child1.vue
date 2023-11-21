@@ -138,7 +138,7 @@
       width: 100%;
       background: var(--q-gb-bd-c-2);
       padding: 10px;
-      padding: 0.05rem 0.1rem;
+      padding: 0.05rem 0.15rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;

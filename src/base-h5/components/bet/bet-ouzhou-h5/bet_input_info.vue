@@ -6,7 +6,7 @@
         <div class="size_14">
            
             <span>{{$t('bet.total_win2')}}</span>
-            <span class="margin_left_4">{{}} </span>
+            <span class="margin_left_4">&thinsp;{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span>
         </div>
        </div>
        <div class="info_right size_14">
@@ -29,6 +29,7 @@ import { onMounted, onUnmounted, reactive,ref } from "vue"
 import {MITT_TYPES,useMittOn } from "src/core/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
+import { format_currency } from 'src/core/format/index.js'
 
 const props = defineProps({
     item: {
@@ -47,6 +48,7 @@ const input_click = (item,index,evnet) => {
   BetData.set_bet_keyboard_show(true)
   BetData.set_active_index(index)
 }
+
 
 // 光标
 const money_span = ref(null)
