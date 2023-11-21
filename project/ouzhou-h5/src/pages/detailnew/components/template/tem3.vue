@@ -4,6 +4,7 @@
  * @Description: 模板id= --用于无盘口&2个/多个投注项玩法
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp3 mx-10 box-style">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
@@ -20,7 +21,7 @@
           <div
             @click="go_betting(ol_item)"
             :class="[
-              { 'is-active': ol_item.oid == active },
+              { 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) },
               'ol_ov',
               'play-box-style',
               'details_color',
@@ -33,14 +34,14 @@
               </span>
             </div>
             <div class="text-right ol-on">
-              <template v-if="ol.os == 1">
+              <template v-if="ol_item.os == 1">
                 <span class="ol-ov">{{ get_oddv(ol_item.ov / 100000) }}</span>
                 <olStatus
                   :item_ol_data="ol_item"
-                  :active="ol_item?.oid == active"
+                  :active="BetData.bet_oid_list.includes(ol_item?.oid )"
                 />
               </template>
-              <span v-if="ol.os == 2"
+              <span v-if="ol_item.os == 2"
                 ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
               /></span>
             </div>
@@ -58,6 +59,7 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
 import olStatus from "../ol_status.vue";
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
@@ -79,6 +81,7 @@ const get_oddv = (num) => {
   return num.toString().replace(re, "$1");
 };
 const go_betting = (data) => {
+  if(data.os == 2) return
   emit("bet_click_", data);
   // storage_bet_info(payload)
   // EMITTER.emit("show_bet_dialog", true)
