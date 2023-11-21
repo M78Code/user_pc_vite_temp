@@ -282,7 +282,6 @@ function match_fix_mst(match, http_data) {
   if (match && match.ms && match.mess == 1) {
     // 对进行中的赛事,并且处于倒计时状态的赛事进行修正
     let csid = parseInt(match.csid);
-    console.log('match.mst', http_data.data.ts_http);
     let mst = parseInt(match.mst);
     // 转换成秒
     let mm = parseInt(time_m / 1000);
