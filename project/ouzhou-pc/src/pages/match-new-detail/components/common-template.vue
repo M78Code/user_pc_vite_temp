@@ -48,53 +48,17 @@
       >
         <template v-for="(o, index) in item.ol" :key="index">
           <div v-if="o && o.oid">
-            <div
-              :class="[
-                current_ol && current_ol.oid == o.oid ? 'temp-active' : '',
-                'temp',
-                item.ol.length % 2 !== 0 &&
-                index == item.ol.length - 1 &&
-                columnNum == 2
-                  ? 'temp-right'
-                  : '',
-              ]"
-              @click="betItemClick(item, o)"
+            <div :class="[current_ol && current_ol.oid == o.oid ? 'temp-active' : '', 'temp',
+                item.ol.length % 2 !== 0 && index == item.ol.length - 1 && columnNum == 2 ? 'temp-right' : '',
+              ]" @click="betItemClick(item, o)"
             >
               <!-- hpt 为1  不需要给颜色 -->
-              <div
-                style="
-                  font-weight: 500;
-                  display: flex;
-                  align-items: center;
-                  width: 100%;
-                "
-                v-show="!item.hs"
-              >
-                <span class="oid-width" :title="o.ott">
-                  {{ o.ott }}
-                </span>
-
-                <span
-                  v-if="
-                    [0].includes(match_info.hpt) && match_info.title.length > 0
-                  "
-                  v-html="getOn(match_info, o)"
-                ></span>
-                <span
-                  v-else
-                  :style="{
-                    color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',
-                  }"
-                  class="temp-on oid-width"
-                  >{{ o.on }}</span
-                >
+              <div style="font-weight: 500;display: flex;align-items: center;width: 100%;" v-show="!item.hs">
+                <span class="oid-width" :title="o.ott">{{ o.ott }}</span>
+                <span v-if="[0].includes(match_info.hpt) && match_info.title.length > 0" v-html="getOn(match_info, o)"></span>
+                <span v-else :style="{color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',}" class="temp-on oid-width">{{ o.on }}</span>
               </div>
-              <div
-                v-show="!item.hs"
-                class="temp-on"
-                :style="{ color: '#ff7000' }"
-                style="font-weight: 500"
-              >
+              <div v-show="!item.hs" class="temp-on" :style="{ color: '#ff7000' }" style="font-weight: 500">
                 <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
               </div>
 
