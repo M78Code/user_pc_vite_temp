@@ -103,6 +103,16 @@ export const formatMoney = function (num,bit = 2){
     }
 }
 
+/**
+ * javascript number.toFixed() 方法会丢失精度
+ * 解决数字保留两位 丢失精度问题
+* */
+export const numberRetain = function (formatNumber,bit = 2){
+    if(!formatNumber.toString().includes('.')) return formatNumber
+    let [integerPart, decimalPart = ''] = formatNumber.toString().split('.')
+    decimalPart = decimalPart.length ? decimalPart.slice(0,2) : ''
+    return integerPart + '.' + decimalPart
+}
 
 
 
