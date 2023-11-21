@@ -73,7 +73,6 @@ const onChangeArea = e => {
   const arr = state.leagueData.find(i => i.id === e)['tournamentList']
   arr.forEach(i => i.visible = true)
   state.leagueAreaData = arr
-  console.log('onChangeArea', state.leagueAreaData)
 }
 
 const goback = () => {

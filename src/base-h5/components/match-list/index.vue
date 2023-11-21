@@ -70,7 +70,6 @@ const match_list_wrapper_height = ref(0)
 const is_collcte_page = ref(false)
 
 onMounted(() => {
-  console.log(is_collect.value)
   // 页面css变量植入
   page_style.value = compute_css_variables({ category: 'component', module: 'match' })
   // 移除相关事件监听
