@@ -219,7 +219,7 @@ onUnmounted(() => {
         padding: 0;
         overflow: hidden;
         .section-content{
-          height: calc(100% - 52px);
+          height: calc(100% - 0px);
           overflow-y: auto;
           position: relative;
         }

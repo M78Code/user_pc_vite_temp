@@ -1,18 +1,18 @@
 
-  <!-- <div class="top-menu-content"> -->
+  
+<template>
+<div>
+  <div class="top-menu-content">
         <!-- 体育 -->
         <!-- <span class="label">{{ i18n_t("results.sport") }}</span> -->
-        <!-- <Select-Wrapper
+        <Select-Wrapper
           :sportType="sport"
           :options="sport_type"
           :isChampion="0"
           use_component_key="Select_n"
         ></Select-Wrapper>
-      </div> -->
-<template>
-  
-  
-      <div class="search-header">
+      </div>
+    <div class="search-header">
     <div class="wrap-select">
       
       <!-- 冠军球种才展示这个下拉选择框 -->
@@ -112,28 +112,6 @@
             <span>{{ i18n_t("video.video_event_history") }}</span>
           </div>
         </div>
-        <!-- highlight -->
-        <div class="date-time-choice" v-if="Number(sport_id) < 17">
-          <!-- 仅虚拟赛事不能查询滚球 -->
-          <div
-            v-if="!results_params.isVirtualSport"
-            class="checkbox"
-            @click="input_radio"
-          >
-            <fliter-checkbox :checked="is_bowls" />
-            <!-- 滚球 -->
-            <span>highlight</span>
-          </div>
-          <div
-            class="checkbox"
-            v-if="results_params.sportType == '1' && show_play_back"
-            @click="highlights_input_radio"
-          >
-            <fliter-checkbox :checked="is_highlights" />
-            <!-- 精彩回放筛选 -->
-            <span>{{ i18n_t("video.video_event_history") }}</span>
-          </div>
-        </div>
       </div>
       <div class="match-resultstips-wrap">
         <!-- 提示语 -->
@@ -150,11 +128,13 @@
           <span class="cursor-pointer"></span>
         </div>
         <!-- 搜索 -->
-        <div class="search-btn" @click="sub_search()">
+        <div class="search-btn" @click="refresh()">
           {{ i18n_t("results.search") }}
         </div>
       </div>
     </div>
+  </div>
+
   </div>
 </template>
 <script setup>
@@ -164,7 +144,7 @@ import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
+
 import {
   i18n_t,
   useMittEmit,
@@ -172,17 +152,11 @@ import {
   MITT_TYPES,
 } from "src/core/index.js";
 import lodash from "lodash"
-const {
-  //函数
-  get_serverTime,
-
-} = useGetResultConfig();
-
-onMounted(() => {
-  get_serverTime();
-});
-
+const emit = defineEmits(['refresh'])
 const props = defineProps({
+  cancel:{
+    type:String
+  },
   dateValue:{
     type:Object
   },
@@ -210,9 +184,6 @@ const props = defineProps({
     type: Function,
   },
   ipt_search:{
-    type: Function,
-  },
-  sub_search:{
     type: Function,
   },
   input_radio:{
@@ -251,9 +222,17 @@ const confirmDate=()=>{
 }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)
-</script >
 
-<style  lang="scss" scoped>
+/**
+* @description: 
+* @return {}
+*/
+function refresh() {
+  emit("refresh")
+}
+</script>
+
+<style lang="scss" scoped>
 @import "./result-header.scss";
 .top-menu-content {
     height: 50px;
@@ -507,7 +486,7 @@ const  showBtn = ref(props.is_show)
   }
 
   /* ************** 日期、单选框、搜索 *************** -E */
-  .q_data{
+  .q-date__view{
     background: #ffffff;
   }
 }

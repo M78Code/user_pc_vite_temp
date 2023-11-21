@@ -1,4 +1,3 @@
-
 <!--
  * @Author: cooper
  * @Date: 2023-05-19 15:13:55
@@ -7,73 +6,135 @@
 <template>
   <div class="match-detail-odds">
     <div v-for="item in matchDetail" :key="item.topKey" class="odds-wrap">
-      <q-expansion-item v-model="item.expanded" :expand-icon-toggle="false" :hide-expand-icon="true" expand-separator :default-opened="true"
-        :header-style="{ backgroundColor: '#ffffff', height: '50px' }">
+      <q-expansion-item
+        v-model="item.expanded"
+        :expand-icon-toggle="false"
+        :hide-expand-icon="true"
+        expand-separator
+        :default-opened="true"
+        :header-style="{ backgroundColor: '#ffffff', height: '50px' }"
+      >
         <!-- 赛事玩法名称 -->
         <template v-slot:header>
-          <div style="width:100%;line-height: 35px;font-weight: 500;">
+          <div style="width: 100%; line-height: 35px; font-weight: 500">
             {{ item.hpn }}
-            <span v-if="item.hps">
-              ({{ item.hps.split('|')[1] }})
-            </span>
+            <span v-if="item.hps"> ({{ item.hps.split("|")[1] }}) </span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
-            <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon"
-                  :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" >
+            <img
+              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
+              alt=""
+              srcset=""
+              class="expand-icon"
+              :style="{
+                transform: item.expanded ? 'rotate(0deg)' : 'rotate(180deg)',
+              }"
+            />
           </div>
         </template>
         <q-card>
           <q-card-section>
             <!-- 详情页玩法名称 -->
-            <div class="odds-title" :style="{ gridTemplateColumns: columnTotal(item) }">
+            <div
+              class="odds-title"
+              :style="{ gridTemplateColumns: columnTotal(item) }"
+            >
               <template v-if="item.title && item.title.length > 0">
-                <span v-if="[5].includes(item.hpt)" class="odds-title-li"></span>
-                <div v-for="opt in item.title" :key="opt.otd" class="odds-title-li">
-                  <span v-if="![0, 1, 2, 3, 7, 10].includes(item.hpt)" class="handicap-value-text">{{ opt.osn }}</span>
+                <span
+                  v-if="[5].includes(item.hpt)"
+                  class="odds-title-li"
+                ></span>
+                <div
+                  v-for="opt in item.title"
+                  :key="opt.otd"
+                  class="odds-title-li"
+                >
+                  <span
+                    v-if="![0, 1, 2, 3, 7, 10].includes(item.hpt)"
+                    class="handicap-value-text"
+                    >{{ opt.osn }}</span
+                  >
                   <!-- 模板4 -->
-                  <template v-if="[4,6].includes(item.hpt)">
+                  <template v-if="[4, 6].includes(item.hpt)&&sun_ol(item.hl[0].ol, item).length>0">
                     <div class="temp-simple">
-                      <div v-for="ol in sun_ol(item.hl[0].ol, item)" :key="ol.oid">
-                        <template v-if="ol.otd === opt.otd">
-                          <div v-show="!item.hl[0].hs" :class="{ 'tem4': true, 'tem4-active': ol.oid == current_ol.oid }"
-                            @click="betItemClick(item.hl[0], ol)">
+                      <div
+                        v-for="ol in sun_ol(item.hl[0].ol, item)"
+                        :key="ol.oid"
+                      >
+                        <template v-if="ol.otd === opt.otd||ol._otd === opt.otd">
+                          <div
+                            v-show="!item.hl[0].hs"
+                            :class="{
+                              tem4: true,
+                              'tem4-active': ol.oid == current_ol.oid,
+                            }"
+                            @click="betItemClick(item.hl[0], ol)"
+                          >
                             <span>{{ ol.on }}</span>
 
                             <span v-if="ol.ov">
-                              <bet-item :key="`bet_4_${ol.hild}`" :ol_data="ol" :current_ol="current_ol">
+                              <bet-item
+                                :key="`bet_4_${ol.hild}`"
+                                :ol_data="ol"
+                                :current_ol="current_ol"
+                              >
                               </bet-item>
-                             </span>
+                            </span>
                             <span v-else></span>
                           </div>
-                          <div  class="tem4"  style="justify-content: center;align-items: center;width:100%" v-show="item.hl[0].hs">
-                            <img class="vector" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`" alt="" >
+                          <div
+                            class="tem4"
+                            style="
+                              justify-content: center;
+                              align-items: center;
+                              width: 100%;
+                            "
+                            v-show="item.hl[0].hs"
+                          >
+                            <img
+                              class="vector"
+                              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
+                              alt=""
+                            />
                           </div>
-
                         </template>
                       </div>
-
                     </div>
                   </template>
                 </div>
               </template>
-
             </div>
             <!-- 公共模板 -->
-            <common-template v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt)" :match_info="item" :current_ol="current_ol"
-              @betItemClick="betItemClick" />
+            <common-template
+              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt)"
+              :match_info="item"
+              :current_ol="current_ol"
+              @betItemClick="betItemClick"
+            />
             <!-- 模板5 -->
-            <template5 v-if=[5].includes(item.hpt) :match_info="item.hl" :current_ol="current_ol"
-              @betItemClick="betItemClick" />
+            <template5
+              v-if="[5].includes(item.hpt)"
+              :match_info="item.hl"
+              :hpid="item.hpid"
+              :current_ol="current_ol"
+              @betItemClick="betItemClick"
+            />
           </q-card-section>
         </q-card>
       </q-expansion-item>
     </div>
     <!-- 详情页有数据时展示白色底部 -->
-    <div  v-if="!show_close_thehand"  class="bottom-height"></div>
+    <div v-if="!show_close_thehand" class="bottom-height"></div>
     <!-- 无数据时展示无盘口的数据提示 -->
     <div v-else class="close_thehand_icap">
       <div>
-      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/close_the_handicap.png`" alt="" srcset="">
-      <div style="text-align: center;color:#A1A3A5;font-weight: 500;">{{ i18n_t("ouzhou.detail.close_handicap") }}</div>
+        <img
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/close_the_handicap.png`"
+          alt=""
+          srcset=""
+        />
+        <div style="text-align: center; color: #a1a3a5; font-weight: 500">
+          {{ i18n_t("ouzhou.detail.close_handicap") }}
+        </div>
       </div>
     </div>
 
@@ -84,140 +145,140 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed,inject} from "vue";
-import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
-import template5 from './template5.vue'
-import commonTemplate from './common-template.vue'
+import { onMounted, ref, computed, inject } from "vue";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import template5 from "./template5.vue";
+import commonTemplate from "./common-template.vue";
 import betItem from "./bet-item-list-new-data.vue";
-import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
-
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
 
 const props = defineProps({
   matchDetail: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   detail_info: {
     type: Object,
-    default: () => { }
+    default: () => {},
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   show_close_thehand: {
     type: Boolean,
-    default: false
+    default: false,
   },
-})
-const mouse_in = ref(false)
-const current_ol = ref({oid:''})
-const emit = defineEmits(['change'])
+});
+const mouse_in = ref(false);
+const current_ol = ref({ oid: "" });
+const emit = defineEmits(["change"]);
 
- let all_hl_item = inject('all_hl_item')
+let all_hl_item = inject("all_hl_item");
 
 const columnTotal = (item) => {
   let total;
   if (item.title.length > 0) {
-    total = [5].includes(item.hpt) ? item.title.length + 1 : item.title.length
+    total = [5].includes(item.hpt) ? item.title.length + 1 : item.title.length;
   } else {
-    total = 2
+    total = 2;
   }
-  return `repeat(${total}, 1fr)`
-}
+  return `repeat(${total}, 1fr)`;
+};
 
-  //  计算赔率变化
-const sun_ov = (ol)=>{
- 
- 
-  if (all_hl_item.value.length>0&&ol) {
- 
-    const obj = all_hl_item.value.find(item=>item.oid==ol.oid)
-
+//  计算赔率变化
+const sun_ov = (ol) => {
+  if (all_hl_item.value.length > 0 && ol) {
+    const obj = all_hl_item.value.find((item) => item.oid == ol.oid);
   }
-
-}
+};
 //  模板4 数据处理
 const sun_ol = (ol, item) => {
-  let maxCount = 0
-  const obj = {}
-  let itemList = []
-  let result = []
+  let maxCount = 0;
+  const obj = {};
+  let itemList = [];
+  let result = [];
+  let other_odd = ol.filter((i) => i.otd === -1);
+
   item.title.forEach((opt, index) => {
-    itemList = ol.filter(i => i.otd === opt.otd)
-    obj[opt.otd] = itemList
+    itemList = ol.filter((i) => i.otd === opt.otd);
+    obj[opt.otd] = itemList;
     if (itemList.length > maxCount) {
-      maxCount = itemList.length   // 获取最大值那一列的数量
+      maxCount = itemList.length; // 获取最大值那一列的数量
     }
   });
   for (const key in obj) {
-    let ele = obj[key]
-    let list = []
+    let ele = obj[key];
+    let list = [];
     if (ele.length !== maxCount) {
       // 列数不够的话添加假数据
       for (let index = 0; index < maxCount - ele.length; index++) {
-         list.push({ otd: Number(key), on: '', oid: key + '-' + index })
-
+        list.push({ otd: Number(key), on: "", oid: key + "-" + index });
       }
     }
-    obj[key] = [...obj[key], ...list]
-    result = [...obj[key], ...result]
+   
+    obj[key] = [...obj[key], ...list];
+    if (key == item.title[item.title.length - 1].otd) {
+      if (other_odd.length > 0) {
+        obj[key].push(other_odd[0])
+      }
+    }
+    result = [...result,...obj[key]];
   }
-  return result
-}
+
+  // 其他
+  result[result.length-1]._otd = item.title[item.title.length-1].otd
+   console.log(11111, result);
+  return result;
+};
 //  投注项点击投注,
 const betItemClick = (item, ol) => {
-  
   if (item.hs) {
-    return
+    return;
   }
   if (ol.cds) {
-    current_ol.value = ol
+    current_ol.value = ol;
     let params = {
-    oid: ol.oid, // 投注项id ol_obj
-    _hid: ol._hid, // hl_obj 
-    _hn: ol._hn,  // hn_obj
-    _mid: ol._mid,  //赛事id mid_obj
+      oid: ol.oid, // 投注项id ol_obj
+      _hid: ol._hid, // hl_obj
+      _hn: ol._hn, // hn_obj
+      _mid: ol._mid, //赛事id mid_obj
+    };
+    console.log("odds_info.vue", ol, params);
+    let other = {
+      is_detail: true,
+      // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+      // 根据赛事纬度判断当前赛事属于 那种投注类型
+      bet_type: "common_bet",
+      // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+      device_type: 2,
+      // 数据仓库类型
+      match_data_type: "pc_detail", // h5_detail
+    };
+    set_bet_obj_config(params, other);
   }
-  console.log("odds_info.vue", ol, params);
-  let other = {
-    is_detail: true,
-    // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
-    // 根据赛事纬度判断当前赛事属于 那种投注类型
-    bet_type: 'common_bet',
-    // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
-    device_type: 2, 
-    // 数据仓库类型
-    match_data_type: "pc_detail", // h5_detail
-  }
-  set_bet_obj_config(params,other)
+};
 
-  }
-}
-
-onMounted(() => {
-
-});
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
-
 .match-detail-odds {
   height: calc(100vh - 248px);
   overflow-y: auto;
   overflow-x: hidden;
   margin-right: -4px;
   position: relative;
-  :deep(.close_thehand_icap){
+  :deep(.close_thehand_icap) {
     width: 100%;
     height: 100%;
     background-color: white;
   }
-  :deep(.close_thehand_icap>div){
-  position: absolute;
-  left: 50%;
-  top: 10%;
-  transform: translate(-50%,0);
+  :deep(.close_thehand_icap > div) {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, 0);
   }
   :deep(.q-card__section--vert) {
     padding: 0px;
@@ -232,13 +293,10 @@ onMounted(() => {
     border-radius: 4px;
   }
 
-  :deep(.q-focus-helper){
- display: none;
+  :deep(.q-focus-helper) {
+    display: none;
   }
-
-
 }
-
 
 .odds-wrap {
   background: var(--q-gb-bg-c-4);
@@ -253,7 +311,6 @@ onMounted(() => {
     height: 40px;
     margin-left: 16px;
     color: var(--q-gb-t-c-5);
-
   }
 
   .odds-title {
@@ -273,7 +330,6 @@ onMounted(() => {
         color: var(--q-gb-t-c-5);
         opacity: 0.6;
         font-size: 12px;
-
       }
     }
   }
@@ -296,8 +352,8 @@ onMounted(() => {
   border-left: 1px solid var(--q-gb-bd-c-2);
   border-bottom: 1px solid var(--q-gb-bd-c-2);
   cursor: pointer;
-  span{
-    &:nth-child(1){
+  span {
+    &:nth-child(1) {
       width: 50%;
       display: block;
       text-align: right;
@@ -305,26 +361,25 @@ onMounted(() => {
       overflow: hidden;
       color: var(--q-gb-t-c-5);
     }
-    &:nth-child(2){
+    &:nth-child(2) {
       overflow: hidden;
       width: 50%;
       min-width: 100px;
       display: block;
       text-align: left;
-      color:var(--q-gb-t-c-2)
+      color: var(--q-gb-t-c-2);
     }
   }
 
   &:hover {
-    background:var(--q-gb-bg-c-5);
-    ;
+    background: var(--q-gb-bg-c-5);
   }
 }
 
 .tem4-active {
   background-color: var(--q-gb-bg-c-1);
-  span{
-    &:nth-child(1){
+  span {
+    &:nth-child(1) {
       width: 50%;
       display: block;
       text-align: right;
@@ -334,11 +389,9 @@ onMounted(() => {
     }
   }
 
-
   &:hover {
     background: var(--q-gb-bg-c-1) !important;
     color: var(--q-gb-t-c-1);
-
   }
 }
 
@@ -354,16 +407,17 @@ onMounted(() => {
   left: 50%;
   transform: translate(-50%, 0);
 }
-.expand-icon{
+.expand-icon {
   height: 9px;
   float: right;
   margin-top: 12px;
 }
 
 .vector {
-    width: 16px;
-    height: 16px;
-  }
+  width: 16px;
+  height: 16px;
+}
 
-.expand-mouse-in{}
+.expand-mouse-in {
+}
 </style>
