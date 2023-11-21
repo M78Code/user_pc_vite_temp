@@ -63,7 +63,18 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useGetItem } from "./bet_item_hooks.js";
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 import { compute_css_obj } from 'src/core/server-img/index.js'
-
+// 定时器对象
+let timer_obj = {};
+const props = defineProps({
+  ol_data: {
+    type: [Object, Array],
+    default: () => { },
+  },
+  active_score: {
+    type: String,
+    default: () => { }
+  }
+});
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
@@ -82,18 +93,7 @@ const odds_lift = ref("");
 const emit = defineEmits(['update_score'])
 
 
-// 定时器对象
-let timer_obj = {};
-const props = defineProps({
-  ol_data: {
-    type: [Object, Array],
-    default: () => { },
-  },
-  active_score: {
-    type: String,
-    default: () => { }
-  }
-});
+
 
 
 const {
