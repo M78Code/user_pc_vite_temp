@@ -7,7 +7,7 @@
     @touchend.passive="touchend"
   >
     <loading_page v-show="loading" />
-    <div v-if="match_detail.mvs > -1">
+    <div v-if="match_detail?.mvs > -1">
       <detail_header_tem2 :get_match_detail="match_detail" />
     </div>
     <div v-else class="mini-header-container">
@@ -55,7 +55,7 @@
         <q-tab-panel name="betting">
           <!-- 玩法模板 -->
           <div ref="fixedHeight" class="match-detail-odds-scroll"
-            :class="[match_detail.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
+            :class="[match_detail?.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
             <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail" :loading="loading"/>
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->
@@ -156,7 +156,7 @@ export default {
 <style lang="scss" scoped>
 .match-detail-container {
   background: #F1F1F1;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 50px - 54px );
   width: 100%;
   // height: 100%;
   -webkit-overflow-scrolling: touch;

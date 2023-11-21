@@ -280,6 +280,10 @@ class MatchMeta {
     // 虚拟列表计算
     VirtualList.set_match_mid_map_base_info(match, template_config.match_template_config)
 
+    // 球种 默认玩法 
+    
+    MatchResponsive.reset_match_hpid_by_csid(csid)
+
   }
 
   /**
@@ -576,10 +580,10 @@ class MatchMeta {
     const params = this.get_base_params(euid)
     this.match_mids = []
     const res = await api_common.get_collect_matches(params)
-    MatchCollect.get_collect_match_data()
+    MatchCollect.get_collect_match_data(true)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list, is_virtual: false })
+    this.handler_match_list_data({ list: list, is_virtual: false, is_collect: true })
   }
 
   /**
@@ -640,15 +644,17 @@ class MatchMeta {
    */
   set_collect_match (match, type) {
     const { mid, tid } = match
-    let target_mids = []
+    let target_matchs = []
     if (type === 1) {
-      const matchs = this.complete_matchs.filter(t => t.tid === tid)
-      const mids = matchs.map(item => item.mid)
-      target_mids = this.match_mids.filter(t => !mids.includes(t))
+      target_matchs = this.complete_matchs.filter(t => t.tid !== tid)
+      // const mids = matchs.map(item => item.mid)
+      // target_matchs = this.match_mids.filter(t => !mids.includes(t))
     } else {
-      target_mids = this.match_mids.filter(t => t !== mid)
+      target_matchs = this.complete_matchs.filter(t => t.mid !== mid)
     }
-    this.match_mids = target_mids
+    // this.match_mids = target_mids
+    console.log(target_matchs)
+    this.handler_match_list_data({ list: target_matchs, is_virtual: false, is_collect: true, type: 2 })
   }
 
    /**
@@ -691,7 +697,7 @@ class MatchMeta {
    */
   handler_match_list_data(config) {
 
-    const { list, type = 1, is_virtual = true, is_classify = false, warehouse = MatchDataBaseH5 } = config
+    const { list = [], type = 1, is_virtual = true, is_classify = false, warehouse = MatchDataBaseH5, is_collect = false } = config
 
     // 清除联赛下得赛事数量
     if (this.is_other_warehouse(warehouse.name_code)) {
@@ -712,6 +718,7 @@ class MatchMeta {
       } else {
         MatchResponsive.set_ball_seed_league_count(match)
       }
+
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, list.map(t => t.mid))
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)

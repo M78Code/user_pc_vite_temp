@@ -35,7 +35,7 @@
         <!-- 犯规条 篮球赛事才有 -->
         <div class="detail-score-more" v-if="detail_info.csid==2">
           <div class="row justify-center">
-            <div class="score-more-title"> 
+            <div class="score-more-title">
               <span>{{ score_list['S111']['home']+'%'}}</span>
               <span>{{ score_list['S110']['home'] }}</span>
             </div>

@@ -309,6 +309,7 @@ export default defineComponent({
 		flex-shrink: 0;
 		padding: 6px 20px;
     cursor: pointer;
+    margin-right: 10px;
 
 		&:last-child {
 			margin-right: 0;

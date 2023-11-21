@@ -64,6 +64,7 @@ let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data
 let handicap_list = ref([]);
 watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
   if (props.match) {
+    console.log(props.match,"props.match")
     const csid = lodash.get(props.match, 'csid')
     //获取欧洲要显示的数据
     const tpl_id = get_ouzhou_data_tpl_id(csid)

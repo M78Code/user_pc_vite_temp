@@ -497,7 +497,7 @@ class BaseData {
         // vr300 冠军400 2000 电竞 500热门
         if (Number(item.mi) < 118 ) {
           // 过滤 商户 屏蔽的赛种数据
-          if (!this.filterSport_arr.includes(item.mi) && ['101','102'].includes(item.mi)) {
+          if (!this.filterSport_arr.includes(item.mi)) {
             left_menu.push(Number(item.mi));
             // 计算菜单数量列表
             if(item.sl){
@@ -519,9 +519,12 @@ class BaseData {
           esport_menu.push(obj);
         }
       });
-      // 重置默认数据
-      this.left_menu_base_mi_arr = BUILD_VERSION ? [101,102] :left_menu  ;
-      this.left_menu_base_mi = left_menu_mi  ;
+      /**
+       *  一期只有足球篮球  暂定
+       *  重置默认数据
+       */
+      this.left_menu_base_mi_arr = left_menu ;
+      this.left_menu_base_mi = left_menu_mi;
 
       this.sports_mi = sports_mi;
 

@@ -865,11 +865,12 @@ export default {
   */
   get_video_refer(mid,callback){
     let refer_url = lodash.get(window.BUILDIN_CONFIG.DOMAIN_RESULT,"live_domains[0]")
+   
     // let refer_url = "https://prolivepc.sportxxx13ky.com"
-    if(refer_url){
-      callback(this.join_video_url(mid,refer_url))
-      return
-    }
+    // if(refer_url){
+    //   callback(this.join_video_url(mid,refer_url))
+    //   return
+    // }
     api_details.post_video_refer().then( res => {
       refer_url = lodash.get(res, "data.referUrl")
       if (!refer_url) {

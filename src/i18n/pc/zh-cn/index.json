@@ -21,19 +21,26 @@
       "close_handicap": "当前赛事盘口已全部关闭"
      },
      "bet": {
-         "place_bet": "下注"
+         "place_bet": "投注"
      },
      "menu": {
          "collect": "收藏",
-         "popular": "热门",
+         "popular": "经常访问",
          "all_sports": "全部"
      },
      "match": {
         "favorites": "收藏",
         "matches": "赛事",
-        "featured": "精选",
+        "featured": "特色",
         "top_events": "热门赛事",
-        "home": "首页",
+        "top_leagues": "热门联赛",
+        "all_matches": "所有赛事",
+        "15_mins": "15分钟",
+        "inplay": "滚球",
+        "home": "体育投注",
+        "today": "今天",
+        "early": "早期",
+        "tomorrow": "明天",
         "play_map": {
           "1": "全场独赢",
           "2": "全场大小",
@@ -60,7 +67,13 @@
         }
      },
      "no_data": {
-         "coming_soon": "即将推出"
+         "coming_soon": "即将推出",
+         "no_data": "暂无数据"
+     },
+     "set": {
+      "announcement": "公告",
+      "results": "赛果",
+      "sport_rules": "体育规则"
      },
      "filter": {
       "part": "部分",
@@ -72,7 +85,33 @@
         "84h": "七天以内"
       },
       "empty": "该时间内暂无赛事!"
-    }
+    },
+    "search": {
+      "change": "换一换",
+      "clear_search_history": "清除历史记录",
+      "league": "联赛",
+      "null1": "搜索结果为空",
+      "null2": "换个词搜索试试吧",
+      "other": "其他搜索",
+      "search_hot": "热门搜索",
+      "search_play": "搜玩法",
+      "search_record": "搜索历史",
+      "search_sports": "搜球类",
+      "team": "球队",
+      "placeholder": "请输入联赛或队伍",
+      "close": "关闭",
+      "view_all_match": "查看所有比赛",
+      "underway": "进行中",
+      "no_search_rezult": "没有发现结果。请尝试另一个搜索词。"
+    },
+    "15minutes_bet_col": [
+      "开场~14:59",
+      "15:00~29:59",
+      "30:00~半场",
+      "下半场开始~59:59",
+      "下半场 60:00~74:59",
+      "下半场 75:00~全场"
+    ]
   },
   "analysis": {
     "age": "年龄",
