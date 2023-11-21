@@ -47,7 +47,7 @@ onBeforeUnmount(()=>{
 <style lang="scss" scoped>
 	.matches-card-list-wrap {
 		background: var(--q-gb-bg-lg-1);
-		padding: 25px 12px;
+		padding: 25px 12px 13px 12px;
 		box-sizing: border-box;
 		width: 100%;
 		height: 150px;
