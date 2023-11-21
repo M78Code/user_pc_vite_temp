@@ -7,7 +7,7 @@
       <!-- 页面头部容器-->
       <layout-header />
     </div>
-    <div style="display: none;"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}</div>
+    <div v-show="false"> {{ LayOutMain_pc.layout_version }}-{{ BetData.bet_data_class_version }}-{{LayOutMain_pc.layout_secondary_dialog}}</div>
     <div class="flex full-content">
       <!-- 左侧 菜单 -->
       <div class="layout_main_left" :style="`width:${LayOutMain_pc.oz_left_width}px`" v-if="LayOutMain_pc.oz_show_left">
@@ -34,6 +34,7 @@
     <confirm-components />
     <alert-components />
 
+    <secondaryModule></secondaryModule>
 
     <Vue3DraggableResizable v-model:x="BetData.bet_box_draggable.x" v-model:y="BetData.bet_box_draggable.y"
       v-model:active="BetData.bet_box_draggable.isActive" :draggable="true" :resizable="false" :parent="true"
@@ -56,6 +57,7 @@ import layoutRight from "./layout-right.vue";
 import toastComponents from "src/base-pc/components/toast/toast.vue";
 import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
+import secondaryModule from 'src/base-pc/components/secondary-module/index.vue'
 import { BetBoxWapper } from "src/base-pc/components/bet";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'

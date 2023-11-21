@@ -9,9 +9,9 @@
       <span class="icon-delete del-info-icon"></span>
       <div class="del-info-name">{{ $t('bet.delete_all')}}</div>
     </div>
-    <div class="del-info">
     <div>{{$t('bet.bet')}}</div>
-      <div class="dropdown" style="display:none">
+    <div class="del-info" style="display:none">
+      <div class="dropdown">
         <button class="dropbtn">{{BetData.is_bet_single?$t('bet.bet'):$t('bet.kushikatsu')}}</button>
         <div class="dropdown-content">
           <a href="#" :class="BetData.is_bet_single?'dropdown-content-che':''" @click.stop="set_is_bet_single(true)">{{$t('bet.bet')}}</a>
@@ -122,5 +122,6 @@
       justify-content: space-between;
       padding: 0.15rem;
       background: var(--q-gb-bg-c-10);
+      height: 0.4rem;
     }
 </style>

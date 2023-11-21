@@ -4,7 +4,7 @@ import { TabWapper } from "src/components/common/tab"
 import bevisSearchList from "./bevis-search-list.vue"
 
 import { get_hot_search, get_hot_push, get_search_sport, get_history_search, insert_history,
-    get_remove_search_history, get_delete_history_search } from "src/api/module/search"
+    get_remove_search_history, get_delete_history_search, get_search_result } from "src/api/module/search"
 
 import { ref, onMounted, provide } from "vue"
 import {SearchPCClass, compute_local_project_file_path} from 'src/core/index.js'
@@ -50,8 +50,8 @@ const _getSportList = function (){
  * 以下搜索历史记录相关
  * @_addSearchHistory 增加搜索历史记录
  * @_deleteSearchHistory 删除单条历史记录
- * @
- * 查
+ * @_clearSearchHistory 清空历史记录
+ *
  * */
 
 const _getSearchHistory = function (){
@@ -78,6 +78,8 @@ const _addSearchHistory = function (keyword){
             keyword
         })
     })
+
+    _querySearchResults()
 }
 const _deleteSearchHistory = function (keyword){
     get_remove_search_history({
@@ -90,6 +92,18 @@ const _deleteSearchHistory = function (keyword){
 const _clearSearchHistory = function (){
     get_delete_history_search().then(()=>{
         SearchPCClass.clear_history()
+    })
+}
+const _querySearchResults = function (keyword){
+    get_search_result({
+        keyword,
+        cuid: UserCtr.get_uid(),
+        pageNumber: 1,
+        rows: 200,
+        isPc: true,
+        searchSportType: 1
+    }).then(()=>{
+
     })
 }
 
@@ -105,6 +119,7 @@ onMounted(()=>{
 
 <template>
     <nav class="search-wapper" ref="searchWapperRef" :key="SearchWapperRefKey">
+        <span v-show="false">{{ SearchPCClass.update_time }}</span>
         <div class="search-placeholder-box cursorPointer" v-if="!SearchPCClass.search_isShow" @click.stop="ShowSearch(true)">
             <p>请输入联赛名或球队名....</p>
             <icon-wapper class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(UserCtr.theme) ? `img:${img_search_icon}` : `img:${img_search_icon_y0}`" size="14px"></icon-wapper>
@@ -116,12 +131,13 @@ onMounted(()=>{
                 <p class="cursorPointer" @click.self.stop="ShowSearch(false)">|&nbsp;&nbsp;关闭</p>
             </div>
             <div class="historyBox">
-<!--                <TabWapper :list="SearchPCClass.sportList" @onclick="tab_click" is_show_line :currentIndex="current_index" :padding="15"
-                           :hasActivity="hasActivity" :line_width="36" name="sportName"></TabWapper>-->
-                <bevisSearchList v-if="(SearchPCClass?.searchHistory || []).length" kind="history"
+            <!--
+            <TabWapper :list="SearchPCClass.sportList" @onclick="tab_click" is_show_line :currentIndex="current_index" :padding="15"
+                       :hasActivity="hasActivity" :line_width="36" name="sportName"></TabWapper>
+            -->
+                <bevisSearchList v-show="(SearchPCClass?.searchHistory || []).length" kind="history"
                                  :list="SearchPCClass?.searchHistory ?? []" @Delete="_deleteSearchHistory" />
-                <bevisSearchList v-if="(SearchPCClass?.showHotList || []).length" kind="hot"
-                                 :list="SearchPCClass?.showHotList ?? []" @Search="_addSearchHistory" />
+                <bevisSearchList kind="hot" :list="SearchPCClass?.showHotList ?? []" @Search="_addSearchHistory" />
             </div>
         </div>
     </nav>

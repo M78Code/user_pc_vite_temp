@@ -11,7 +11,7 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap?items.handicap:items.home}}</div> <span class="text-one-span">0.25</span></div>
                       <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
                     </div>
@@ -109,7 +109,7 @@
     padding-left: 0.08rem;
   }
   .nonebox4-content-left-content-text-three{
-    font-size: 0.16rem;
+    font-size: 0.13rem;
     color: var(--q-gb-t-c-3);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -117,15 +117,15 @@
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-15);
-    font-size: 0.16rem;
+    font-size: 0.13rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-3);
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
     color: var(--q-gb-t-c-4);
-    font-size: 0.18rem;
+    font-size: 0.15rem;
     font-weight: 600;
     display: flex;
   }
@@ -138,7 +138,7 @@
       width: 100%;
       background: var(--q-gb-bd-c-2);
       padding: 10px;
-      padding: 0.15rem;
+      padding: 0.05rem 0.1rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
@@ -165,7 +165,8 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-4);
+      color: var(--q-gb-t-c-1);
+      padding: 0 0.15rem;
   }
   .nonebox4-content-right{
     display: flex;

@@ -22,7 +22,7 @@
       </div> -->
       <!-- 分析页动画 -->
       <div v-if="!lodash_.isEmpty(score_list)&&detail_info.ms>0">
-    <div class="tabs-wrap">
+    <div class="tabs-wrap"  v-if="['1','2','5','9','10'].includes(lodash_.get(detail_info,'csid'))" >
       <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
         :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
       </span>

@@ -373,14 +373,6 @@ export default class MatchDataBaseWS
    * @param {Object} ws_obj ws数据
    */
   C106(ws_obj = {}){
-    // C106盘口/投注项
-    if(ws_obj.cd){
-      // ws命令数据信息
-      let cd_obj = lodash.get(ws_obj,'cd');
-      // 通知投注项 赔率更新
-      useMittEmit(MITT_TYPES.EMIT_SET_BET_WS_C106_CHANGE,cd_obj)
-    }
-
     this.C105(ws_obj);
   }
 
@@ -419,7 +411,6 @@ export default class MatchDataBaseWS
         this.match_ctr.match_upd_time_ret_change(match);
 
         this.match_ctr.upd_data_version();
-        console.log(1111111111111111)
       }
     }
   }

@@ -18,7 +18,7 @@
           <div>{{ item.man}}</div>
         </div>
         <template v-if="item">
-          <ScoreList :match_info="item" :score_length="3" height="39" :show_hpn="true" />
+          <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" />
         </template>
       </div>
     </section>
@@ -100,7 +100,7 @@ const props = defineProps({
         }
       }
       :deep(.score-list) {
-         > span {
+         .odd-item {
           height: 39px;
           line-height: 39px;
          }

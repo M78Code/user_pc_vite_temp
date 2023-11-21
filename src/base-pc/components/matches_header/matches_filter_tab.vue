@@ -137,6 +137,7 @@
     overflow-x: auto;
     flex-wrap: nowrap;
     white-space: nowrap;
+    height: 100%;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -154,7 +155,7 @@
     position: relative;
     align-items: center;
     font-size: 13px;
-    color: #8A8986;
+    color: var(--q-gb-t-c-8);
   }
 
   .checked {
@@ -166,7 +167,7 @@
   .filter-tab-split-line {
     width: 1px;
     height: 12px;
-    background: #D9D9D9;
+    background: var(--q-gb-bg-c-10);
     margin: 0 16px;
   }
 

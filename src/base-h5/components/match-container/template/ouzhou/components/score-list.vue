@@ -30,21 +30,30 @@ import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/i
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const props = defineProps({
+  // 容器高度
   height: {
     type: String,
     default: () => '58px'
   },
+  // 默认展示个数
   score_length: {
     type: Number,
-    default: () => 3
+    default: () => 0
   },
+  // 赛事信息
   match_info: {
     type: Object,
     default: () => {}
   },
+  // 是否显示 玩法 前缀
   show_hpn: {
     type: Boolean,
     default: () => false
+  },
+  // 是否需要跟随切换玩法变化
+  is_change: {
+    type: Boolean,
+    default: () => true
   }
 })
 
@@ -55,12 +64,14 @@ const active_score = ref('')
 
 // 赔率数据
 const score_data = computed(() => {
+  // if (!props.is_change) return []
   const hps = props.match_info.hps
   const hpid = MatchResponsive.match_hpid.value
   const hps_item = hps && hps.find(t => t.hpid == hpid)
   mhs.value = lodash.get(props.match_info, 'mhs', 1)
   item_hs.value = lodash.get(hps_item, 'hl[0].hs', 1)
-  const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: props.score_length }, (i) => { return {  oid: i } }))
+  const ol_length = hpid === '1' ? 3 : 2
+  const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: ol_length }, (i) => { return {  oid: i } }))
   return ol.sort((a, b) => a.otd - b.otd)
 })
 
@@ -72,46 +83,14 @@ const score_data = computed(() => {
     align-items: center;
     justify-items: center;
     width: 100%;
-    span.active{
-      //color: #fff;
-      color: var(--q-gb-t-c-2);
-      background: #FF7000;
-      border-radius: 2px;
-      .hpn{
-        position: relative;
-        top: 1px;
-      }
-    }
-    > span {
-      flex: 1;
-      font-size: 15px;
-      //color: #FF7000;
-      color: var(--q-gb-t-c-1);
-      text-align: center;
-      font-weight: 500;
+    :deep(.odd-item){
       height: v-bind(height);
-      line-height: v-bind(height);
-      .hpn{
-        color: #8A8986
-      }
     }
     .lock{
       width: 16px;
       height: 16px;
       position: relative;
       top: 2px;
-    }
-    .item{
-      &.up{
-        color: #FF4646;
-      }
-      &.down{
-        color: #17A414;
-      }
-      .hps_img{
-        width: 6px;
-        height: 10px;
-      }
     }
   }
 </style>

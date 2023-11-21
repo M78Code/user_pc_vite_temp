@@ -3,27 +3,31 @@
 -->
 
 <template>
-  <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
-  <span :class="['odd-item', {active: active_score === `${match_id}_${odd_item.oid}` }]" @click="set_old_submit">
+  <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
+  <div :class="['odd-item', {active: BetData.bet_oid_list.includes(odd_item.oid) }]" @click="set_old_submit">
     <!-- 锁 -->
     <img v-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
     <!-- 是否显示赔率 -->
-    <span v-else :class="['item',  { 'up': is_up,  'down': is_down}]"> 
+    <div v-else :class="['odd',  { 'up': is_up,  'down': is_down}]"> 
       <!-- 赔率 -->
-      <span class="hpn" v-if="show_hpn">{{ get_item_hpn(odd_item) }}</span> {{ get_odd_os(odd_item) }} 
-      <!-- 红升icon -->
-      <img class="hps_img" v-if="is_up" :src="ouzhou_hps_up" alt="">
-      <!-- 绿降icon -->
-      <img class="hps_img" v-if="is_down" :src="ouzhou_hps_down" alt="">
-    </span>
-  </span>
+        <span v-if="csid != 1" class="title">{{ odd_item.onb }}</span>
+        <span>
+          <span class="hpn" v-if="show_hpn">{{ get_item_hpn(odd_item) }}</span> {{ get_odd_os(odd_item) }} 
+          <!-- 绿升icon -->
+          <img class="hps_img" v-if="is_up" :src="get_icon('up')" alt="">
+          <!-- 红降icon -->
+          <img class="hps_img" v-if="is_down" :src="get_icon('down')" alt="">
+        </span>
+    </div>
+  </div>
 </template>
  
 <script setup>
-import { computed, onMounted, ref, watch, watchEffect } from 'vue'
+import BetData from "src/core/bet/class/bet-data-class.js";
+import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down } from 'src/base-h5/core/utils/local-image.js'
+import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down, ouzhou_white_up } from 'src/base-h5/core/utils/local-image.js'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type } from "src/core/index.js"
 
 const props = defineProps({
@@ -36,7 +40,7 @@ const props = defineProps({
     default: () => false
   },
   csid: {
-    type: String,
+    type: [String, Number],
     default: () => '1'
   },
   match_id: {
@@ -58,12 +62,17 @@ const props = defineProps({
 const is_up = ref(false)
 const is_down = ref(false)
 const old_ov = ref(0)
-const active_score = ref('')
+
+const is_active = computed(() => {
+  return MatchResponsive.active_odd.value === `${props.match_id}_${props.odd_item.oid}`
+})
 
 watch(() => props.odd_item?.ov, (a,b) => {
-  is_up.value = a > b
-  is_down.value = a < b
-  reset_status()
+  if ( a != b ) {
+    is_up.value = a > b
+    is_down.value = a < b
+    reset_status()
+  }
 })
 
 const reset_status = () => {
@@ -89,10 +98,20 @@ const is_lock = computed(() => {
   return props.odd_item.os != 1 || props.item_hs == 1 || props.mhs == 1
 })
 
+const get_icon = (type) => {
+  let img_src = ''
+  if (type === 'up'){
+    img_src = is_active.value ? ouzhou_white_up : ouzhou_hps_up
+  } else {
+    img_src = is_active.value ? ouzhou_white_up : ouzhou_hps_down
+  }
+  return img_src
+}
+
 const set_old_submit = () => {
   const ol = props.odd_item
   if (ol.os !== 1) return
-  active_score.value = `${props.match_id}_${ol.oid}`
+  // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
   const {oid,_hid,_hn,_mid } = ol
   let params = {
     oid, // 投注项id ol_obj
@@ -114,18 +133,21 @@ const set_old_submit = () => {
   set_bet_obj_config(params,other)
 }
 
+onUnmounted(() => {
+  MatchResponsive.clear_active_odd()
+})
+
 </script>
  
 <style scoped lang="scss">
 .odd-item {
   flex: 1;
   font-size: 15px;
-  //color: #FF7000;
   color: var(--q-gb-t-c-1);
-  text-align: center;
   font-weight: 500;
-  height: v-bind(height);
-  line-height: v-bind(height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &.active{
     color: var(--q-gb-t-c-2);
     background: #FF7000;
@@ -134,20 +156,43 @@ const set_old_submit = () => {
       position: relative;
       top: 1px;
     }
+    .odd.up{
+      color: #fff;
+       img {
+        transform: rotateX(0deg);
+      }
+    }
+    .odd.down{
+      color: #fff;
+      img {
+        transform: rotateX(180deg);
+      }
+    }
   }
   .hpn{
     color: #8A8986
   }
-  .item{
+  .odd{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .title{
+      color: #8A8986;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
     &.up{
       color: #FF4646;
-      > img {
+      img {
         transform: rotateX(-180deg);
       }
     }
     &.down{
       color: #17A414;
-      > img {
+      img {
         transform: rotateX(-180deg);
       }
     }
@@ -160,7 +205,6 @@ const set_old_submit = () => {
     width: 16px;
     height: 16px;
     position: relative;
-    top: 2px;
   }
 }
 </style>

@@ -133,9 +133,16 @@ export default {
     },
     //销毁计时器
     clear() {
-      this.timer = false;
+      if(this.timer){
+        clearInterval(this.timer);
+        this.timer = false;
+      }
     }
-  }
+  },
+  // 销毁前，清除定时器
+  beforeDestroy() {
+    this.clear();
+  },
 };
 </script>
 <style scoped>

@@ -276,7 +276,7 @@ export default defineComponent({
 
     :deep(.serach-background) {
       background-color: var(--q-gb-bg-c-11);
-      min-height: 400px;
+      // min-height: 400px;
       overflow: hidden;
     }
   }
@@ -294,15 +294,15 @@ export default defineComponent({
 	padding: 9px 20px;
   margin-top: 12px;
 	display: flex;
-	border-bottom: 1px solid #FF7000;
-	background-color: #fff;
+	border-bottom: 1px solid var(--q-gb-bd-c-1);
+	background-color: var(--q-gb-bg-c-4);
 	font-size: 14px;
 	font-weight: 500;
 	width: 100%;
 	z-index: 1;
-	color: #1A1A1A;
+	color: var(--q-gb-t-c-5);
 	.tab {
-		background-color: #FFf;
+		background-color: var(--q-gb-bg-c-4);
 		border-radius: 40px;
 		text-align: center;
 		font-size: 12px;
@@ -315,8 +315,8 @@ export default defineComponent({
 		}
 
 		&.active {
-			background-color: #FF7000;
-			color: #fff;
+			background-color: var(--q-gb-bg-c-1);
+			color: var(--q-gb-t-c-1);
 		}
 
 	}

@@ -220,12 +220,12 @@ export default {
     }
     .match-home,
     .match-away {
-      border-bottom: 6px solid #e7eaee !important;
+      border-bottom: 6px solid var(--q-gb-bd-c-9) !important;
     }
   }
   .two_num_zero .get_gray {
     color: #2d2d2d !important;
-    border-bottom: 6px solid #e7eaee !important;
+    border-bottom: 6px solid var(--q-gb-bd-c-9) !important;
   }
 }
 .theme02 {
@@ -236,12 +236,12 @@ export default {
     }
     .match-home,
     .match-away {
-      border-bottom: 6px solid #3b3b3b !important;
+      border-bottom: 6px solid var(--q-gb-bd-c-10) !important;
     }
   }
   .two_num_zero .get_gray {
     color: #b8b8b8 !important;
-    border-bottom: 6px solid #3b3b3b !important;
+    border-bottom: 6px solid var(--q-gb-bd-c-10) !important;
   }
 }
 </style>

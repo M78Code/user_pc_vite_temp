@@ -231,7 +231,7 @@ onBeforeUnmount(() => {
   position: relative;
   align-items: center;
   font-size: 13px;
-  color: #8a8986;
+  color: var(--q-gb-t-c-8);
   &.checked{
     .filter-count{
       background: var(--q-gb-t-c-2);
@@ -296,7 +296,7 @@ onBeforeUnmount(() => {
 .filter-tab-split-line {
   width: 1px;
   height: 12px;
-  background: #d9d9d9;
+  background: var(--q-gb-bg-c-10);
   margin: 0 16px;
   position: relative;
   top: 12px;

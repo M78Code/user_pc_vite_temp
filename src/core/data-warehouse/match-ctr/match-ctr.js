@@ -107,7 +107,7 @@ export default class MatchDataBase
     this.mids_ation = [];
     this.match_list = []
     // 所有赛事列表数据转obj对象
-    this.list_to_obj = {
+    this.list_to_obj = reactive({ 
       // 页面显示赛事投注项对象
       ol_obj:{},
       // 页面显示赛事盘口对象
@@ -116,7 +116,7 @@ export default class MatchDataBase
       hn_obj:{},
       // 页面显示赛事赛事对象
       mid_obj:{},
-    };
+    });
     // 赛事基本信息需要同步的时间
     this.MATCH_UPD_TIME_KEYS = ['mst','mc','mf','mct','ms','mhs','mess','mmp','mms','mat','mvs','tf','msc'];
       // mst: 赛事进行时间
@@ -143,8 +143,8 @@ export default class MatchDataBase
     this.cache_match={
       '23432234':{mmp:111111111111,ms:222222222}
     };
-    // 数据版本更新参数
-    this.data_version =  reactive({ version: '123'}),
+    // 数据版本更新参数 reactive({ version: '123'})
+    this.data_version = { version: '123'} ,
     // 所有投注项动态数据时间更新
     this.cache_oid={
     };
@@ -683,6 +683,8 @@ init(){
       this.list_serialized_match_obj(this.match_list);
       // 列表数据同步到快捷操作对象中
       this._list_to_obj_fun(this.match_list,this.list_to_obj)
+      // set_active_mids 报错 DOMException: Failed to execute 'postMessage' on 'Window': Response object could not be clone 先放在这
+      this.mids_ation = list.map(t => t.mid)
       // ws命令赛事订阅
       this.ws_ctr.scmd_c8();
       this.upd_data_version();

@@ -24,15 +24,17 @@
     </div>
 </template>
 <script setup>
+import lodash from 'lodash'
 import { onMounted, ref ,onUnmounted} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData  } from "src/core/";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
+import { sports_play_data } from 'src/core/constant/index.js'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+
 const props = defineProps({
     menu_type: {
-        type: String,
-        default: MenuData.menu_type.value
     },
     is_show_badge:{
         type: Boolean,
@@ -62,8 +64,8 @@ const get_init_data = () =>{
     leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
     // MenuData.menu_mi.value || 
-    MenuData.set_menu_mi(dataList()[0]?.mi);
-    playValue.value = dataList()[0]?.mi;
+    MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
+    playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
 }
 onMounted(()=>{
     get_init_data();
@@ -85,6 +87,9 @@ const on_change_play = (item) => {
     scrollRef.value.scrollTo(index-2, 'start-force')
     // MenuData.get_match_render_list();
     emits('changeMenu',item.mi)
+    const csid = MenuData.menu_csid
+    const hpid = lodash.get(sports_play_data, `[${csid}][0].hpid`, '1')
+    MatchResponsive.set_match_hpid(hpid)
 }
 
 </script>

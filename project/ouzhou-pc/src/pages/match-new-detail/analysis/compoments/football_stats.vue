@@ -168,7 +168,7 @@ const tab = ref("mails");
 
   .detail-statsic-title {
     text-align: center;
-    color: #8a8986;
+    color: var(--q-gb-t-c-8);
   }
 
   .detail-statsic-chart {
@@ -193,7 +193,7 @@ const tab = ref("mails");
   }
 
   .detail-slider-title {
-    color: #8A8986;
+    color: var(--q-gb-t-c-8);
   }
 
 }

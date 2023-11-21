@@ -1,9 +1,9 @@
 <!-- @Description: 公告页面 -->
 <template>
     <div class="announce-wrap">
-        <simple-header :title="i18n_t('common.notice')">
+        <!-- <simple-header :title="i18n_t('common.notice')"> -->
             <!-- <span>{{ i18n_t('common.notice') }}</span> -->
-        </simple-header>
+        <!-- </simple-header> -->
         <div class="announce-content">
             <!-- 头部菜单开始 -->
             <top-menu :data="announce_title" @tabs_click="tabs_click"  />
@@ -12,9 +12,10 @@
                 <div class="main-page">
                     <div class="announce-title">{{ current_title }}</div>
                     <div class="ann-item" v-for="(item, i) of class_lists" :key="i">
-                        <div class="ann-title" >[{{ item.noticeTypeName }}]</div>
+                        <!-- <div class="ann-title" >[{{ item.noticeTypeName }}]</div> -->
                         <div class="ann-content"> 
-                            {{ item.sendTime }} {{ item.context }}
+                            <!-- {{ item.sendTime }}  -->
+                            {{ item.context }}
                         </div>
                         <div class="ann-time">
                             {{ timestr(item.sendTimeOther) }}
@@ -165,7 +166,6 @@ onMounted(() => {
     .main-page {
         color: #5a6074;
         padding-top: 14px;
-        padding-bottom: 80px;
         :deep(.load-data-wrap ) {
             height: 75vh !important;
 

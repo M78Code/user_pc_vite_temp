@@ -201,7 +201,7 @@ const collect_click = () => {
   api_common.add_or_cancel_match({
         mid:props.get_match_detail.mid,
         cf: is_collect.value ? 0 : 1,
-        cuid: UserCtr.get_cuid()
+        cuid: UserCtr.get_uid()
       }).then(res => {
         if (res.code != 200) return
         is_collect.value = !is_collect.value

@@ -18,7 +18,6 @@
             <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
           </template>
         </q-input>
-        <!-- <input type="text" @compositionstart="test" @compositionend="finish"> -->
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
@@ -31,15 +30,15 @@
     </div> -->
     <div class="h-right">
       <div class="user-info">
-        <span style="font-weight: 500;color:#ffffff">  {{ format_balance(UserCtr.balance) }} </span>
-        <span style="font-size: 14px;font-weight: 400;opacity: 0.8;">{{ UserCtr.user_info.nickName }}</span>
+        <span class="user-balance">  {{ format_balance(UserCtr.balance) }} </span>
+        <span class="user-name">{{ UserCtr.user_info.nickName }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
       <q-menu style="background:#fff;border-radius:2px;box-shadow:0 0 4px 2px rgb(0 0 0 / 10%)">
           <q-list style="min-width: 280px;">
-            <q-item clickable @click="goto_announcement">
+            <q-item clickable @click="goto_secondary_module('announcement')">
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
@@ -47,7 +46,7 @@
                 </div>
               </q-item-section>
             </q-item>
-            <q-item clickable @click="goto_results">
+            <q-item clickable @click="goto_secondary_module('results')">
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
@@ -55,7 +54,7 @@
                 </div>
               </q-item-section>
             </q-item>
-            <q-item clickable>
+            <q-item clickable @click="goto_secondary_module('sportsrules')">
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
@@ -114,6 +113,8 @@ import { loadLanguageAsync } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
+import BetData from 'src/core/bet/class/bet-data-class.js';
+import {  LayOutMain_pc } from 'src/core/index.js'
 
 export default defineComponent({
   name: "RightHead",
@@ -184,12 +185,6 @@ export default defineComponent({
         get_search_data(trimVal);
       }
     )
-    const test = () => {
-      console.log('正在输入中');
-    }
-    const finish = () => {
-      console.log('输入完成');
-    }
     
     // 传递搜索状态
     const get_search_data = (val) => {
@@ -206,13 +201,11 @@ export default defineComponent({
     const compute_userInfo = () => {};
     // 搜索
     const change_input = () => {}
-    //公告
-    const goto_announcement = () => {
-      userRouter.push("/announce")
-    }
-    //赛果
-    const goto_results = () => {
-      userRouter.push("/match_results")
+    //赛果 || 公告 || 体育规则
+    const goto_secondary_module = (value) => {
+      LayOutMain_pc.set_layout_secondary_dialog(value)
+      BetData.set_bet_box_draggable({show:false})
+      // userRouter.push("/match_results")
     }
     const onExpend = () => {
       visible.value = !visible.value
@@ -245,8 +238,11 @@ export default defineComponent({
       }
     }
     function hide_search(e) {
+      const target_class_list = ['q-field__native q-placeholder', 'serach-wrap column', 'sports-tab', 'tab', 'tab active', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible', 'windows desktop landscape', 'icon-close'];
       if(is_focus.value && SearchPCClass.search_isShow) {
-        if(e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible' && e.target.className != 'windows desktop landscape') {
+        console.log('e', e.target.className);
+        if(!target_class_list.includes(e.target.className)) {
+          // e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible' && e.target.className != 'windows desktop landscape' && e.target.className != 'icon-close'
           SearchPCClass.set_search_isShow(false);
           is_focus.value = false;
           text.value = ''
@@ -286,15 +282,12 @@ export default defineComponent({
       settingData,
       visible,
       is_search,
-      goto_results,
-      goto_announcement,
+      goto_secondary_module,
       format_balance,
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX,
       is_focus,
-      get_search_data,
-      test,
-      finish
+      get_search_data
     };
   
   }
@@ -311,7 +304,22 @@ export default defineComponent({
     flex-direction: column;
     align-items: flex-end;
     margin-right: 10px;
-    font-family: "DIN";
+    color: var(--q-gb-t-c-1);
+    padding-top: 2px;
+    .user-balance{
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 19px;
+      letter-spacing: 0px;
+      text-align: right;
+    }
+    .user-name{
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      letter-spacing: 0px;
+      text-align: right;
+    }
   }
 }
 .q-item{
@@ -409,7 +417,7 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       transition: all 0.25s;
-      color: #8A8986;
+      color: var(--q-gb-t-c-8);
       &.active{
         color: #000;
         background: var(--q-gb-bg-c-4);
@@ -451,7 +459,7 @@ export default defineComponent({
 .search-click .s-input {
   width: 500px;
   &:deep(.q-field) {
-    background-color: #CE5B00 !important;
+    background-color: var(--q-gb-bg-c-22) !important;
   }
 }
 .icon-search,
@@ -461,5 +469,9 @@ export default defineComponent({
   &::before {
     color: var(--q-gb-t-c-1);
   }
+}
+.dialog_box{
+  height: 100%;
+  width: 100%;
 }
 </style>

@@ -13,9 +13,9 @@
         'static': get_is_static() 
       }]"
       :style="{ 'height': get_is_static() ? 'auto' : `${VirtualList.container_total_height}px`}">
-      <template v-if="MatchMeta.match_mids.length > 0" >
-        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
-          :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
+      <template v-if="match_meta.match_mids.length > 0" >
+        <div v-for="(match_mid, index) in match_meta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
+          :class="['s-w-item', {last: index == match_meta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->
           <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
@@ -66,11 +66,9 @@ const props = defineProps({
   is_goto_top_random: Number,
 })
 
-// const match_ctr = ref(MatchDataBaseH5)
-
 const defer_render = use_defer_render()
-
 const store_state = store.getState();
+
 // 调试信息
 let test = ref('')
 let prev_frame_time = ref(0)
@@ -83,13 +81,14 @@ let scroll_frame_timer = null
 const prev_scroll = ref(0)
 const max_height = ref(false)
 // 赛事mids
-const match_mids = ref([])
 const scroll_timer = ref(0)
 const emitters = ref({})
 
-// watch(() => match_ctr.value.str.a, () => {
-//   console.log(` match_ctr.st: `,  match_ctr.st)
-// })
+const match_meta = ref(MatchMeta)
+
+const match_mids = computed(() => {
+  return match_meta.value?.match_mids
+})
 
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';
@@ -98,21 +97,12 @@ onMounted(() => {
   emitters.value = {
     emitter: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, update_max_height).off,
   }
-
-  // setTimeout(() => {
-  //   MatchDataBaseH5.str.a = '8888888888888'
-  // }, 3000)
 })
 
 const get_match_item = (mid) => {
   return MatchDataBaseH5.get_quick_mid_obj(mid)
 }
 
-// const match_item = computed(() => {
-//   return (mid) => {
-//     return MatchDataBaseH5.get_quick_mid_obj(mid)
-//   }
-// })
 
 const get_index_f_data_source = (mid) => {
   return lodash.findIndex(MatchMeta.match_mids, { mid });

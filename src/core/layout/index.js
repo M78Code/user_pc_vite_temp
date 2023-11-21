@@ -85,7 +85,10 @@ class LayOutMain {
      this.oz_right_width = 407
     // 区域大小
     this.oz_layout_content = 1430
-
+    //公告 赛果 体育规则 弹出框
+    this.layout_secondary_dialog = false
+    //公告 赛果 体育规则 当前进入的模块
+    this.layout_secondary_active = ''
     // ------------------------------------------ 欧洲版 pc 专用 --------------------------------------------------------------------------------------------
   }
 
@@ -143,6 +146,12 @@ class LayOutMain {
     if(this.is_iframe) {
       this.layout_search_width = 390
     }
+  }
+  /** 公告 赛果 体育规则 弹出框设置 */
+  set_layout_secondary_dialog(value='announcement') { 
+    this.layout_secondary_dialog = !this.layout_secondary_dialog
+    this.layout_secondary_active = value
+    this.set_layout_version()
   }
   /** 设置当前路由页面 */
   set_layout_current_path(route) {

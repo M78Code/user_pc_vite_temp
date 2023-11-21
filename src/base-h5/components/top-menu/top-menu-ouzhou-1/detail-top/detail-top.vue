@@ -176,9 +176,8 @@ const refresh = (params) => {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-
     // flex: 1;
-    .detail-selec-nav {
+    .detail-select-nav {
       margin: 0 auto;
 
       .btn-label {
@@ -287,7 +286,7 @@ const refresh = (params) => {
         line-height: 45px;
         display: flex;
         justify-content: center;
-        background: var(--q-gb-bg-c-9);
+        background: var(--q-gb-bg-c-16);
         width: 100vw;
 
         .item_team_name {

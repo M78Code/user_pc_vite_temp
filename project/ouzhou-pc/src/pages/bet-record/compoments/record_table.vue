@@ -75,7 +75,7 @@
                           <span>[{{marketType(item.marketType, props.row.langCode)}}]</span>                      </span>
                       <div>
                         <span>{{ item.marketValue }}</span>
-                        <span style="margin-left:15px;color:#ff7000">{{ item.oddFinally }}</span>
+                        <span style="margin-left:15px;color:#ff7000">@{{ item.oddFinally }}</span>
                       </div>
 
                       <div class="play-type settle-score" v-if="current_tab === 'settled' && item.settleScore">
@@ -503,7 +503,7 @@ const hand_copy = (data) => {
 
 <style lang="scss" scoped>
 .time{
-  color: #8A8986;
+  color: var(--q-gb-t-c-8);
 }
 .detail-options {
   width: 100%;
@@ -532,19 +532,19 @@ const hand_copy = (data) => {
       height: 24px;
       font-size: 12px;
       border-radius: 20px;
-      color: #8A8986;
-      border: 1px solid #8A8986;
+      color: var(--q-gb-t-c-8);
+      border: 1px solid var(--q-gb-t-c-8);
 
       &.win-color {
-        color: #FF4646;
-        border: 1px solid #FF4646;
+        color: var(--q-gb-t-c-7);
+        border: 1px solid var(--q-gb-t-c-7);
       }
     }
   }
 }
 
 .win-color {
-  color: #FF4646
+  color: var(--q-gb-t-c-7)
 }
 
 .no-data-icon {
@@ -596,7 +596,7 @@ const hand_copy = (data) => {
     width: 1430px;
     transform: translate(-50%, 0);
     background-color: var(--q-gb-bg-c-4);
-    box-shadow: 0 -4px 8px #f5f5f5;
+    box-shadow: 0 -4px 8px var(--q-gb-bg-c-15);
 
     :deep(.q-pagination .q-btn-item.q-btn--standard) {
       background-color: var(--q-gb-bg-c-1) !important;
@@ -606,7 +606,7 @@ const hand_copy = (data) => {
 }
 
 .datails-order {
-  color: #8a8986;
+  color: var(--q-gb-t-c-8);
 }
 
 .copy {

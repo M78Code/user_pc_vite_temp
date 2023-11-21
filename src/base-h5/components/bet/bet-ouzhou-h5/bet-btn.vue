@@ -32,10 +32,10 @@ const pack_up = (val) => {
 
 <style lang="scss" scoped>
 .tip{
-  color: var(--q-gb-bd-c-8);
+  color: var(--q-gb-bd-c-4);
   text-align: center;
-  margin-top: 0.2rem;
-  font-size: 0.13rem;
+  margin-top: 0.25rem;
+  font-size: 0.15rem;
   margin-right: 0.2rem;
   width: 100%;
 }
@@ -50,7 +50,7 @@ const pack_up = (val) => {
       line-height: 0.3rem;
       border-radius: 2px;
       font-family: "Roboto";
-      font-size: 0.15rem;
+      font-size: 0.13rem;
       font-weight: 400;
       letter-spacing: 0px;
       border: 0.5px solid var(--q-gb-bd-c-12);
@@ -60,7 +60,7 @@ const pack_up = (val) => {
     }
     .place_bet{
       font-family: "DIN";
-      font-size: 0.14rem;
+      font-size: 0.12rem;
       font-weight: 500;
       line-height: 0.4rem;
       width: 2.17rem;
@@ -70,7 +70,7 @@ const pack_up = (val) => {
       color:  var(--q-gb-t-c-2);
       .right_amount{
         font-family: DIN;
-        font-size: 0.2rem;
+        font-size: 0.16rem;
         margin-left: 6px;
       }
     }

@@ -226,7 +226,7 @@
                     </div>
                     <!-- 右边盘口组件 -->
                     <template v-if="match_of_list">
-                      <ScoreList :match_info="match_of_list" :score_length="score_length"></ScoreList>
+                      <ScoreList :match_info="match_of_list"></ScoreList>
                     </template>
                   </div>
                 </div>
@@ -258,7 +258,6 @@ import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import { sports_play_data } from 'src/core/constant/index.js'
-
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -289,7 +288,6 @@ export default {
   },
   setup (ctx) {
     const select_play = ref('1')
-    const score_length = ref(3)
     const hps_play_data = ref([])
    
     // 是否显示球种标题
@@ -299,12 +297,11 @@ export default {
     })
     // 玩法
     const get_match_panel = computed(() => {
-     
-      const hps = ctx.match_of_list.hps
+      const { csid, hps } = ctx.match_of_list
       const hpid = MatchResponsive.match_hpid.value
       const hps_item = hps && hps.find(t => t.hpid == hpid)
-      const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: score_length.value }, () => '{}'))
-
+      const ol_length = hpid === '1' ? 3 : 2
+      const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: ol_length }, () => '{}'))
       let ol_data = undefined
       if (ol && ol[0] && ol[0].otd) {
         ol.sort((a, b) => a.otd - b.otd)
@@ -317,8 +314,6 @@ export default {
         })
       }
       const result = ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
-      score_length.value = lodash.get(result, 'length')
-
       return result
     })
     // 计算有玩法的hps
@@ -344,7 +339,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, score_length
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play
     }
   }
 }

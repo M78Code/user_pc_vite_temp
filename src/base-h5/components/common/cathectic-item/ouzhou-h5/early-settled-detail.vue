@@ -122,9 +122,9 @@ template {
       line-height: 3;
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid var(--q-gb-bg-c-18);
+      border-bottom: 1px solid var(--q-gb-bg-c-5);
       label.number {
-        color: var(--q-gb-bg-c-12);
+        color: var(--q-gb-bg-c-1);
       }
     }
   }
@@ -135,7 +135,7 @@ template {
     align-items: center;
     font-size: 0.16rem;
     line-height: 0.4rem;
-    border-bottom: 1px solid var(--q-gb-bg-c-18);
+    border-bottom: 1px solid var(--q-gb-bg-c-5);
     i {
       font-size: 0.24rem;
     }
