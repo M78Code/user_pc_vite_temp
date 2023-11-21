@@ -20,7 +20,7 @@
         @click="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
         :class="{checked: BetData.bet_oid_list.includes(item.oid) }"
       >
-        <span>{{ item.ot }}</span>
+        <span>{{ item.onb }}</span>
         <span>{{ Math.floor(item.ov / 1000) / 100 }}</span>
       </div>
     </div>
