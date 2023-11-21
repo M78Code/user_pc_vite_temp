@@ -6,7 +6,7 @@
             <q-tab class="cursor-pointer" v-for="(item, index) in data" :key="index" @click="tabs_click(item, index)">
                 <div class="top-menu-title"
                     :class="{ active: tab_index == index, topmenutitles:tab_index == index, 'no-subtab': !item.subtab || item.subtab.length == 0 }">        
-                    <div>{{ item.type }}</div>
+                    <div>{{ item.nen }}</div>
                 </div>
                 <!-- top菜单列表 -->
                 <div class="top-menu-list" :class="tab_index == index && 'active'">

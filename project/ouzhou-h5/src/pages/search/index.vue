@@ -2,8 +2,7 @@
 	<div class='search-container'>
 		<!-- 头部搜索 -->
 		<div class="top_info_search">
-			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" v-model="input_value"
-				@keyup.enter="get_search_data(input_value)" />
+			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" v-model="input_value" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
 			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt=""
 				class="clear_value"
@@ -235,6 +234,7 @@ import { compute_value_by_cur_odd_type } from "src/core/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
+import { text } from 'licia/$property';
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
@@ -294,6 +294,7 @@ const red_color = (item) => {
 const search_data = ref([]);
 let sport_kind_id = null;
 const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
+	// console.log('111');
 	show_history.value = false;
 	show_hot.value = false;
 	tabIndex.value = index;
@@ -522,6 +523,7 @@ onMounted(() => {
 onUnmounted(() => {
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = null
+	text.value = ''
 })
 </script>
 <style lang="scss" scoped>
