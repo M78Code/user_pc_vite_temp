@@ -31,7 +31,7 @@
         :isSelectConfirm="isSelectConfirm"
         v-model:dateValue="model"
         :ipt_search="ipt_search"
-        :sub_search="sub_search"
+        @refresh="sub_search"
         :api_league_type="api_league_type"
         :select_submit="select_submit"
         :hideSelect="hideSelect"
@@ -113,7 +113,6 @@ const {
   is_sortUp,
   activeIndex,
   reset_pagination,
-  sub_search,
   startTimeShow,
   showSelectTime,
   model,
@@ -132,7 +131,15 @@ const {
   isSelectConfirm,
   ipt_search,
   select_submit,
-  input_radio
+  input_radio,
+  // xinzen
+  sub_search,
+  hideSelect,
+  input_focus,
+  input_blur,
+  champion_sport_type_filter,
+  search_hot,
+  highlights_input_radio,
 } = useGetResultConfig();
 
 onMounted(() => {
