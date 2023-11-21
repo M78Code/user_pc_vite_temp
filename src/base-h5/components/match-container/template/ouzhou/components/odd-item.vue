@@ -110,7 +110,7 @@ const get_icon = (type) => {
 
 const set_old_submit = () => {
   const ol = props.odd_item
-  if (ol.os !== 1) return
+  if (is_lock.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
   const {oid,_hid,_hn,_mid } = ol
   let params = {

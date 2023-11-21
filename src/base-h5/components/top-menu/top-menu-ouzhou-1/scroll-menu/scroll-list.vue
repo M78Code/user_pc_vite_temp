@@ -10,7 +10,7 @@
         <header class="ball_tab">
             <q-virtual-scroll ref="scrollRef" v-if="menuList" :items="menuList"
                 virtual-scroll-horizontal v-slot="{ item, index }">
-                <div @click="on_change_play(item,index)"
+                <div v-if="+item.mi < MenuData.conventionalType" @click="on_change_play(item,index)"
                     :key="index" dense clickable :class="['play_item', { active: item.mi === current_mi }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === current_mi" :sport_id="item.mi" />
@@ -27,7 +27,7 @@
 import { ref } from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
-// import { MenuData  } from "src/core/";
+import { MenuData  } from "src/core/";
 const emits = defineEmits(['changeMenu']);
 const props = defineProps({
     menu_type: {

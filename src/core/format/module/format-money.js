@@ -110,7 +110,7 @@ export const formatMoney = function (num,bit = 2){
 export const numberRetain = function (formatNumber,bit = 2){
     if(!formatNumber.toString().includes('.')) return formatNumber
     let [integerPart, decimalPart = ''] = formatNumber.toString().split('.')
-    decimalPart = decimalPart.length ? decimalPart.slice(0,2) : ''
+    decimalPart = decimalPart.length ? decimalPart.slice(0,bit) : ''
     return integerPart + '.' + decimalPart
 }
 

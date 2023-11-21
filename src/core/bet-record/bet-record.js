@@ -55,7 +55,7 @@ export const calc_text = (data_b) => {
           }
           break;
         }
-        let betresult = data_b.orderVOS[0].betResult
+        let betresult = data_b.orderVOS[0]?.betResult || ''
         if (betresult == 13 || betresult == 16) {
           text = t('bet_record.invalid')
         } else {

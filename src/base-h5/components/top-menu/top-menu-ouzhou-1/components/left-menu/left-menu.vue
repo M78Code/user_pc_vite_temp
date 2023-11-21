@@ -66,6 +66,7 @@ import { useRouter,useRoute } from "vue-router";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { LocalStorage } from "src/core/index.js";
 import { useMittOn,useMittEmit,MITT_TYPES } from "src/core/mitt/index.js" 
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 const router = useRouter();
 const route = useRoute();
 
@@ -159,6 +160,8 @@ const change_current_menu = (item) => {
 
   // 当前页面不做跳转
   // MenuData.set_current_lv1_menu(2);
+  // 重置所选 球种默认玩法 hpid
+  MatchResponsive.reset_match_hpid_by_csid()
   if(route.name != "matchList"){
     //跳转今日列表
     router.push({name: 'matchList'})
