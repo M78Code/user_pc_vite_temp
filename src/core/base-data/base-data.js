@@ -497,7 +497,7 @@ class BaseData {
         // vr300 冠军400 2000 电竞 500热门
         if (Number(item.mi) < 118 ) {
           // 过滤 商户 屏蔽的赛种数据
-          if (!this.filterSport_arr.includes(item.mi)) {
+          if (!this.filterSport_arr.includes(item.mi) && ['101','102'].includes(item.mi)) {
             left_menu.push(Number(item.mi));
             // 计算菜单数量列表
             if(item.sl){
@@ -509,7 +509,6 @@ class BaseData {
             left_menu_mi.push(item)
           }
         }
-
         // 设置电竞竞技的菜单
         let obj = dianjing_sublist().find((page) => page.mi == item.mi) || {};
 
