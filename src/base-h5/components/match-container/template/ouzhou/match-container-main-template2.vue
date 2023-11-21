@@ -255,7 +255,7 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
-
+import lodash from 'lodash'
 import default_mixin from '../../mixins/default.mixin.js'
 
 export default {
@@ -292,7 +292,7 @@ export default {
     const get_match_panel = computed(() => {
      
       const hps = ctx.match_of_list.hps
-      const hpid = MatchResponsive.match_hpid.value
+      const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
       const hps_item = hps.find(t => t.hpid == hpid)
 
       const target_item = hps_play_data.value.find(t => t.hpid == hpid)
