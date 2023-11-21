@@ -9,16 +9,10 @@
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="row no-wrap">
       <!-- 玩法列表 -->
-      <div 
-        class="handicap-col-ouzhou" 
-        v-for="(col, col_index) in handicap_list" 
-        :key="()=>Math.random()" 
-        :style="{ 'width': match_list_tpl_size.bet_width + 'px' }"
-      >
-        <div 
-          :class="['bet-item-wrap-ouzhou', deal_width_handicap_ols(col.ols).length ===2 && 'bet-item-wrap-ouzhou-bigger']" 
-          v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)"
-          :key="ol_data._hpid+'_'+ol_data._ot">
+      <div class="handicap-col-ouzhou" v-for="(col, col_index) in col_ols_data" :key="() => Math.random()"
+        :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
+        <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
+          v-for="(ol_data, ol_index) in (col.ols)" :key="ol_data._hpid + '_' + ol_data._ot">
           <!-- 投注项组件 -->
           <bet-item @update_score="update_score" :active_score="active_score" :ol_data="ol_data" />
         </div>
@@ -28,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import lodash from 'lodash';
 
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
@@ -38,7 +32,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import {get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
+import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 
 const props = defineProps({
   // 盘口列表
@@ -49,7 +43,7 @@ const props = defineProps({
   // 赛事
   match: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
   // 是否显示比分
   is_show_score: {
@@ -67,40 +61,46 @@ const props = defineProps({
     default: () => false,
   }
 })
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match)
 // 赛事模板宽度
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 let MatchListDataInfo = MatchListData
 const active_score = ref('')
-const update_score = (res)=>{
+const update_score = (res) => {
   active_score.value = res;
 }
 watch(() => MatchListData.data_version.version, () => {
   MatchListDataInfo = MatchListData
-  many_obj = get_match_to_map_obj(props.match.mid); //非坑位对象
+
+})
+const col_ols_data = computed(() => {
+  try {
+    let { hn, mid } = props.match
+    let handicap_type = hn || 1
+    const many_obj = get_match_to_map_obj(props.match); //非坑位对象
+    const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
+    return lodash.cloneDeep(props.handicap_list || []).map(col => {
+      col.ols = col.ols.map(item => {
+        if (item.empty) { return }
+        // 投注项数据拼接
+        let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
+        // 获取投注项内容 
+        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+      })
+      return col
+    })
+  } catch (e) {
+    console.error('deal_width_handicap_ols', e)
+    return []
+  }
 })
 // 组件是否已挂载
-const is_mounted = ref(true);
 const cur_esports_mode = ref(BetData.cur_esports_mode);
-onMounted(() => {
-  // 异步设置组件是否挂载完成
-  // setTimeout(() => {
-  //   is_mounted.value = true
-  // })
-})
-let many_obj = get_match_to_map_obj(props.match.mid)
-
-function deal_width_handicap_ols(payload) {
+function deal_width_handicap_ols(payload, many_obj) {
   let { hn, mid } = props.match
-  let handicap_type = hn || 1
-  const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
-  let new_ols = payload.map(item => {
-    if (item.empty) { return }
-    // 投注项数据拼接
-    let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
-    // 获取投注项内容 
-    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
-  })
+
+
+  let new_ols = payload
   return new_ols
 }
 
@@ -127,7 +127,7 @@ function deal_width_handicap_ols(payload) {
 /**
  * @description 获取5分钟玩法时的类名，滚球时不需要背景色，早盘时需要背景色
  */
-function get_5min_classname () {
+function get_5min_classname() {
   let className = ''
   if (
     props.other_play && ['hps5Minutes'].includes(props.match.play_current_key) // 5分钟玩法
@@ -218,7 +218,7 @@ function get_bet_style(col_index, length, ol_data) {
  * @param {hipo} 盘口是否支持 0不支持 1支持  
  * @return {undefined} undefined
  */
-function getCurState (hipo) {
+function getCurState(hipo) {
   if (cur_esports_mode.value) {
     //判断盘口是否支持
     return hipo == 1
@@ -241,55 +241,64 @@ function getCurState (hipo) {
     }
   }
 }
+
 .c-match-handicap-ouzhou {
   .row {
     height: 100%;
   }
 }
-::v-deep.bet-item-wrap-ouzhou  {
-        display: flex;
-        width: 78px;
-        height: 48px;
-        border-radius: 2px;
-        justify-content: center;
-        align-items: center;
-        cursor: default;
-        .c-bet-item {
-          cursor: pointer;
-        }
-        .c-bet-item:hover {
-            background: rgba(255, 112, 0, 0.1);
-        }
-        
-        &.bet-item-wrap-ouzhou-bigger {
-          width: 133px;
-        }
 
-        .c-bet-item.active {
-          background: var(--q-gb-bg-c-1);
-          .handicap-value, .handicap-value-text {
-            color: var(--q-gb-t-c-4);
-          }
-          .odds {
-            color: var(--q-gb-t-c-1);
-          }
-        }
+::v-deep.bet-item-wrap-ouzhou {
+  display: flex;
+  width: 78px;
+  height: 48px;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
 
-        div {
-            color: var(--q-gb-bg-c-7);
-            font-size: 14px;
-        }
+  .c-bet-item {
+    cursor: pointer;
+  }
 
-        .odds {
-            color: var(--q-gb-t-c-2);
-            font-weight: 500;
-            font-size: 14px;
-            &.up {
-              color: var(--q-gb-t-c-7);
-            }
-            &.down {
-              color: var(--q-gb-t-c-10);
-            }
-        }
+  .c-bet-item:hover {
+    background: rgba(255, 112, 0, 0.1);
+  }
+
+  &.bet-item-wrap-ouzhou-bigger {
+    width: 133px;
+  }
+
+  .c-bet-item.active {
+    background: var(--q-gb-bg-c-1);
+
+    .handicap-value,
+    .handicap-value-text {
+      color: var(--q-gb-t-c-4);
     }
+
+    .odds {
+      color: var(--q-gb-t-c-1);
+    }
+  }
+
+  div {
+    color: var(--q-gb-bg-c-7);
+    font-size: 14px;
+  }
+
+  .odds {
+    color: var(--q-gb-t-c-2);
+    font-weight: 500;
+    font-size: 14px;
+
+    &.up {
+      color: var(--q-gb-t-c-7);
+    }
+
+    &.down {
+      color: var(--q-gb-t-c-10);
+    }
+  }
+}
 </style>
