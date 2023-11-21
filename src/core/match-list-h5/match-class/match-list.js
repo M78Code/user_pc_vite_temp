@@ -87,7 +87,7 @@ class matchListClass {
     }
 
     mmp_map_title = r;
-    return r;
+    return typeof r === 'string' ? r : '';
   }
   /**
    * @description: 赛事进行中

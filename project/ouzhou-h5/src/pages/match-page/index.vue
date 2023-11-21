@@ -5,7 +5,7 @@
   <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate" @changeArea="onChangeArea" :areaList="state.leagueData"/>
   <!--二级赛事列表-->
   <div class="match-list-page">
-    <match-container v-if="state.curTab === 0 || state.isClickDetail && state.curTab === 1" />
+    <MatchContainer v-if="state.curTab === 0 || state.isClickDetail && state.curTab === 1" />
     <MatchFirstStep v-else @leagueChange="onLeagueChange" :leaguesMatchs="state.leagueAreaData"/>
   </div>
 </template>
@@ -36,6 +36,11 @@ onMounted(() => {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data({})
+      }
+    }).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
+      if (state.curTab) {
+        onChangeDate(12)
       }
     }).off
   }

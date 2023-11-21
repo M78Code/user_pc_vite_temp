@@ -522,9 +522,9 @@ class MatchMeta {
     // ws 订阅
     // const p_15_mids = p15_list.map(t => t.mid)
     // p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
-    MatchDataBasel5minsH5.set_list(p15_list)
+    MatchDataBasel5minsH5.set_list(p15_list.slice(0, 5))
     // 热门赛事数据
-    MatchDataBaseHotsH5.set_list(hots)
+    MatchDataBaseHotsH5.set_list(hots.slice(0, 5))
     // ws 订阅
     // const hots_mids = p15_list.map(t => t.mid)
     // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
