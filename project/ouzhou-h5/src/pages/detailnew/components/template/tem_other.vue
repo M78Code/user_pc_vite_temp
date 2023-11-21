@@ -4,27 +4,55 @@
  * @Description: 模板id= --用于无盘口&2个/多个投注项玩法
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp3 mx-10 box-style">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
     <!-- os: 1开 2封 3隐藏不显示不占地方-->
     <!-- 按ol循环，不考虑按tittle循环-->
-    <div :style="{ gridTemplateColumns: columnTotal(item_data) }" class="odds-title">
-      <template v-if="item_data.title && item_data.title.length > 0 && item_data.title.length < 3">
-        <div v-for="opt in item_data.title" :key="opt.otd" class="odds-title-li">
-          <div class="odds-title-li-text" v-if="![0, 1, 3, 5, 7, 10].includes(item_data.hpt)">
-            <span>{{opt.osn}}</span>     
+    <div
+      :style="{ gridTemplateColumns: columnTotal(item_data) }"
+      class="odds-title"
+    >
+      <template
+        v-if="
+          item_data.title &&
+          item_data.title.length > 0 &&
+          item_data.title.length < 3
+        "
+      >
+        <div
+          v-for="opt in item_data.title"
+          :key="opt.otd"
+          class="odds-title-li"
+        >
+          <div
+            class="odds-title-li-text"
+            v-if="![0, 1, 3, 5, 7, 10].includes(item_data.hpt)"
+          >
+            <span>{{ opt.osn }}</span>
           </div>
-          
+
           <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="ol_on">
             <template v-if="ol?.otd === opt?.otd">
               <!-- <div>{{ ol.on }}</div> -->
-              
-              <div @click="go_betting(ol)" :class="[{ 'is-active': ol?.oid == active }, 'ol_ov']" >
-                  <!-- {{ (ol.ov/100000).toFixed(2) }} -->
+
+              <div
+                @click="go_betting(ol)"
+                :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']"
+              >
+                <!-- {{ (ol.ov/100000).toFixed(2) }} -->
+
+                <template v-if="ol.os == 1">
                   <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
-                  <span class="ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
+                  <span class="ol-ov-text">{{
+                    get_oddv(ol?.ov / 100000)
+                  }}</span>
                   <olStatus :item_ol_data="ol" :active="ol.oid == active" />
+                </template>
+                <span v-if="ol.os == 2"
+                  ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
+                /></span>
               </div>
             </template>
           </div>
@@ -33,10 +61,18 @@
 
       <template v-else>
         <div v-for="ol in item_data.hl[0].ol" :key="ol?.oid" class="ol_on">
-          <div @click="go_betting(ol)" :class="[{ 'is-active': ol?.oid == active }, 'ol_ov']" >
+          <div
+            @click="go_betting(ol)"
+            :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']"
+          >
+            <template v-if="ol.os == 1">
               <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
-              <span class="ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
-              <olStatus :item_ol_data="ol" :active="ol?.oid == active" />
+              <span class="ol-ov-text">{{ get_oddv(ol?.ov / 100000) }}</span>
+              <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
+            </template>
+            <span v-if="ol.os == 2"
+              ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
+            /></span>
           </div>
         </div>
       </template>
@@ -47,9 +83,11 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
+import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 // import EMITTER from  "src/global/mitt.js"
 import olStatus from "../ol_status.vue";
-const emit = defineEmits(["bet_click_"])
+const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
     type: Object,
@@ -65,15 +103,16 @@ const props = defineProps({
 // }
 
 const go_betting = (data) => {
+  if(data.os == 2) return 
   emit("bet_click_", data);
   // storage_bet_info(payload)
   // EMITTER.emit("show_bet_dialog", true)
-}
+};
 // 处理赔率截取两位小数点
 const get_oddv = (num) => {
   const re = /([0-9]+\.[0-9]{2})[0-9]*/;
   return num.toString().replace(re, "$1");
-}
+};
 const columnTotal = (item) => {
   let total;
   if (item.title.length > 0) {
@@ -112,17 +151,15 @@ onMounted(() => {
     }
   }
   .odds-title {
-    
     display: grid;
     text-align: center;
     // height: 36px;
     // line-height: 26px;
 
     .odds-title-li {
-      
       color: var(--q-gb-t-c-4);
       font-size: 12px;
-      
+
       // margin-bottom: 10px;
       .odds-title-li-text {
         //background: #f5f5f5;
@@ -134,7 +171,7 @@ onMounted(() => {
     .ol_on {
       background-color: var(--q-gb-bg-c-2);
       .ol_ov {
-       border: 1px solid var(--q-gb-bd-c-10);
+        border: 1px solid var(--q-gb-bd-c-10);
         border-width: 1px 1px 0 1px;
         background-color: var(--q-gb-bg-c-2);
         height: 50px;
@@ -145,10 +182,10 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         .ol-on-text {
-            font-weight: 500;
-            padding-right: 5px;
-            color: var(--q-gb-t-c-4);
-            overflow: hidden;
+          font-weight: 500;
+          padding-right: 5px;
+          color: var(--q-gb-t-c-4);
+          overflow: hidden;
         }
       }
       .ol_ov:nth-last-child(1) {
@@ -160,9 +197,9 @@ onMounted(() => {
         //color: #fff;
         color: var(--q-gb-t-c-2);
         .ol-on-text {
-            padding-right: 5px;
-            font-weight: 500;
-            color: var(--q-gb-t-c-4);
+          padding-right: 5px;
+          font-weight: 500;
+          color: var(--q-gb-t-c-4);
         }
       }
     }
@@ -171,5 +208,10 @@ onMounted(() => {
     display: none;
   }
 }
+.lock {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 2px;
+}
 </style>
-
