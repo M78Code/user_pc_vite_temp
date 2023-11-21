@@ -84,7 +84,6 @@ const props = defineProps({
 const csid = lodash.get(props.card_style_obj, 'league_obj.csid')
 let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
-console.log('match_tpl_info', data_tpl_id, 11);
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 const is_collect = ref(false);
 //第一次进页面时，收藏从接口获取状态，后续点击前端控制

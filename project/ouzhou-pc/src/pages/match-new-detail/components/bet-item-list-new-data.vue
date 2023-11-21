@@ -29,7 +29,7 @@
       <div v-if="odds_state == 'seal'" class="lock" />
       <div v-else class="odds-arrows-wrap">
         <span :class="{ default: true, up: odds_lift == 'up', down: odds_lift == 'down', active: ol_data.oid == current_ol.oid }">
-          {{ formatMoney(match_odds) }}
+          {{ numberRetain(match_odds) }}
         </span>
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
@@ -50,7 +50,7 @@ import { format_odds_value } from "src/core/format/module/format-odds.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
 import { compute_value_by_cur_odd_type } from "src/core/index.js"
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { formatMoney } from 'src/core/format/index.js'
+import { formatMoney, numberRetain } from 'src/core/format/index.js'
 
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘

@@ -286,6 +286,11 @@
     "bet_max_booked_odds": "已为最高预约赔率值，请重新调整"
   },
   "bet_record": {
+    "pagination": {
+      "np": "条/页",
+      "go": "跳转至",
+      "page": "页"
+    },
     "date": "日期",
     "bet_time": "投注时间",
     "bets_forehead": "投注额",

@@ -25,7 +25,7 @@
         <div class="union-name">
           <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1', {}).away || 0 }}</span>
         </div>
-        <div class="odds_box">
+        <div class="odds_box" v-if="item.current_ol?.length">
           <div class="top-line"></div>
           <div class="odds_item" v-for="option in item.current_ol[0]?.ol"
             @click="checked_current_td({ payload: item, hps: item.current_ol[0], ol: option })"

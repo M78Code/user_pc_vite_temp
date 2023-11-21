@@ -34,7 +34,9 @@
       </div>
       <div class="key-cell" data-num=".">.</div>
       <div class="key-cell" data-num="0">0</div>
-      <div class="key-cell del-key" data-num="x">删</div>
+      <div class="key-cell del-key" data-num="x">
+        <span class="icon-delete"></span>
+      </div>
     </div>
   </div>
 </template>

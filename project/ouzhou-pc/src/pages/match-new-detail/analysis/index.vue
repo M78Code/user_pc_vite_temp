@@ -83,6 +83,7 @@ onMounted(()=>{
 
 // 获取数据
 const get_detail_info = (mid)=>{
+  console.log(MatchDataWarehouseInstance.get_quick_mid_obj(mid),"MatchDataWarehouseInstance.get_quick_mid_obj(mid)")
   detail_info.value = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
 
 }

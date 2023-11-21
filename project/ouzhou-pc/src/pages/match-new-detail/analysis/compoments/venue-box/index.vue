@@ -11,7 +11,10 @@
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
           <sport_icon :sport_id="detail_info.csid" :status="false" size="18px" class="icon" style="margin:0 10px"/>
-          <span class="analysis-top-txt">{{ detail_info.tn }}</span>
+          <!--<span class="analysis-top-txt">{{ detail_info.tn }}</span>-->
+          <span class="home-vs-away">{{ detail_info.mhn }} </span>
+          <span class="match-detail-head-name m-10">v</span>
+          <span class="home-vs-away">{{ detail_info.man }}</span>
         </div>
         <div class="analysis-top-right">
            <!-- 动画图标 -->

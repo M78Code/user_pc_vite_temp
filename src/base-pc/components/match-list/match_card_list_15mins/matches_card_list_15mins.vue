@@ -1,7 +1,7 @@
 <template>
   <div class="matches-card-list-wrap">
     <template2 :is_show_btn="matches_15mins_list.length >= 4">
-		<div class="matches-card-list" v-for="(item, index) in matches_15mins_list" :key="item.id">
+		<div class="matches-card-list" v-for="(item, index) in matches_15mins_list" :key="item.id" @click="jump_to_details(item)">
 			<MatchesCard15Mins :current_tab="item" />
 			<div class="split-line" v-show="index != matches_15mins_list.length - 1"></div>
 		</div>
@@ -14,8 +14,10 @@ import template2 from 'src/base-pc/components/match-list/featured_matches/templa
 import MatchesCard15Mins from './matches_card_15mins.vue';
 import {onBeforeUnmount} from 'vue'
 import {MatchDataWarehouse_ouzhou_PC_l5mins_List_Common} from 'src/core'
+import { useRouter } from 'vue-router';
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 const {ws_destroyed,set_active_mids}= use_match_list_ws(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
+const router = useRouter()
 const props = defineProps({
 	matches_15mins_list: {
 		type: [ Object, Array ],
@@ -23,6 +25,20 @@ const props = defineProps({
 	}
 })
 set_active_mids(props.matches_15mins_list.map(i => i.mid))
+
+const jump_to_details = (item) => {
+  const { tid, csid } = item;
+  //比分板跳转到详情页
+  router.push({
+    name: 'details',
+    params: {
+      mid: item.mid,
+      tid: tid,
+      csid: csid
+    }
+  })
+}
+
 onBeforeUnmount(()=>{
 	ws_destroyed()
 })
@@ -40,6 +56,7 @@ onBeforeUnmount(()=>{
 		.matches-card-list {
 			display: flex;
 			align-items: center;
+			cursor: pointer;
 		}
 		.split-line {
 			flex-shrink: 0;

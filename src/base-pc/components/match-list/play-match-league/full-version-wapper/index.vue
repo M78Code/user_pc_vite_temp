@@ -11,7 +11,6 @@ let {
   components_keys,
   registered_component_key,
 } = wapper_config;
-console.log('use_component_key', use_component_key);
 export default {
   inheritAttrs: false,
   //   components:  wapper_config.all_components,
