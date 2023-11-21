@@ -25,19 +25,19 @@
           </template> -->
         </q-select>
         <span style="color:#8A8986">
-          N/P
+          {{ i18n_t('bet_record.pagination.np') }}
           <!-- 条/页 -->
         </span>
       </div>
 
       <div class="pagination-link">
         <span>
-          GO
+          {{ i18n_t('bet_record.pagination.go') }}
           <!-- 跳转至 -->
         </span>
         <input class="go-input" type="text" v-model="goPage" @blur="goToPage(goPage)" @keyup.enter="goToPage(goPage)" :max="max" />
         <span style="color:#8A8986">
-          page
+          {{ i18n_t('bet_record.pagination.page') }}
           <!-- 页 -->
         </span>
       </div>

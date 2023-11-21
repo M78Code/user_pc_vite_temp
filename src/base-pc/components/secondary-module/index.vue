@@ -99,7 +99,6 @@ function close_page(value) {
       center / cover;
     .top_tit {
       font-size: 18px;
-      -color: var(--q-gb-t-c-1);
       color: var(--q-gb-t-c-1);
     }
     .secondary_obj {

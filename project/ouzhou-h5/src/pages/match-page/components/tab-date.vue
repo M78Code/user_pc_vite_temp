@@ -180,6 +180,10 @@ watch(() => MenuData.menu_mi.value, () => {
     setDefaultData(MenuData.menu_mi.value)
 }, { immediate: true })
 
+watch(() => props.areaList, () => {
+    areaListChange(props.areaList[0], 0)
+})
+
 /**
  * 地区选择tab
  * @param {*} index 
@@ -396,6 +400,7 @@ const areaListChange = (item,index) => {
         :deep(.q-virtual-scroll__content) {
             border-bottom: 10px solid #E2E2E2;
             width: 100%;
+            min-height: 100%;
         }
     }
 
