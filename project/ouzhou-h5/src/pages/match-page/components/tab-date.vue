@@ -95,7 +95,6 @@ const props = defineProps({
         required: true
     },
 })
-
 // 下拉选
 const selectOptions = reactive([
     { label: "Next 12 Hours", time: "12hours", timestamp: 12 }, //12小时后的时间戳
@@ -391,9 +390,12 @@ const areaListChange = (item,index) => {
     .tabs,
     .date_time {
         background-color: rgba(255, 255, 255, 1);
-
+        :deep(.scroll) {
+            width: 100%;
+        }
         :deep(.q-virtual-scroll__content) {
             border-bottom: 10px solid #E2E2E2;
+            width: 100%;
         }
     }
 
