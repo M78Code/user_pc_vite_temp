@@ -11,7 +11,7 @@
 			<span class="close_btn" @click="to_home">Close</span>
 		</div>
 		<!-- 搜索 历史 -->
-		<div class="content" v-show="(show_history && history_data.length &&
+		<div class="content" v-show="(show_history && history_data &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<div class="middle_info_tab">EXAMPLE SEARCHES</div>
@@ -34,7 +34,7 @@
 				!(search_data.league && search_data.league.length > 0) ||
 				!input_value">
 				<div class="q-mx-md">
-					<div class="text-bol half-border-bottom">popular searches</div>
+					<div class="text-bol half-border-bottom">HOT</div>
 					<!-- 热门内容 -->
 					<div class="row">
 						<div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index"
@@ -224,7 +224,7 @@
 </template>
 <script setup>
 import lodash from 'lodash'
-import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
+import { onMounted, ref, watch, onUnmounted } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import router from "../../router";
@@ -268,8 +268,8 @@ const get_history = () => {
 	}
 	get_history_search(params).then(res => {
 		let data = lodash.get(res, "data") || [];
+		history_data.value = data;
 		if (data.length > 0) {
-			history_data.value = data;
 			show_history.value = true;
 		}
 	});
@@ -303,18 +303,18 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	if (keyword) {
 		input_value.value = keyword
 	}
+	if (!input_value.value) {
+		show_history.value = true;
+		show_hot.value = true;
+		search_data.value = [];
+		return;
+	}
 	let params = {
 		cuid: uid,
 		device: 'v2_h5_st',
 		keyword: input_value.value,
 		searchSportType: sport_id || 1,
 		isPc: false
-	}
-	if (!input_value.value) {
-		show_history.value = true;
-		show_hot.value = true;
-		search_data.value = [];
-		return;
 	}
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
@@ -405,7 +405,6 @@ function go_detail_or_reslut(item) {
 			name: 'match_result',
 			params: {
 				mid: item.mid ? item.mid : item.matchList[0].mid,
-				index: '0'
 			},
 			query: {
 				search_term: get_search_txt
@@ -414,7 +413,12 @@ function go_detail_or_reslut(item) {
 	} else {
 		router.push({
 			name: 'category',
-			params: { mid: item.mid },
+			params: { 
+				mid: item.mid,
+				tid: item.tid,
+				csid: item.csid,
+				mcid: item.mcid,
+			},
 			query: { search_term: get_search_txt }
 		})
 	}
@@ -498,8 +502,9 @@ const _delete_history_search = (keyword) => {
 	get_delete_history_search({
 		keyword,
 		cuid: uid
+	}).then(() => {
+		get_history()
 	})
-	get_history()
 }
 
 onMounted(() => {
@@ -514,7 +519,7 @@ onMounted(() => {
 	}
 })
 
-onBeforeUnmount(() => {
+onUnmounted(() => {
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = null
 })
@@ -658,6 +663,7 @@ li {
 
 		div p:first-child {
 			font-size: 14px;
+			margin-right: 10px;
 		}
 
 		div p:last-child {
@@ -786,9 +792,9 @@ li {
 			}
 		}
 	}
-	.flex_1 {
-		flex: 1;
-	}
+}
+.flex_1 {
+	flex: 1;
 }
 .mt50 {
 	margin-top: 50px;
