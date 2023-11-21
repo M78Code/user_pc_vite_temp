@@ -263,14 +263,10 @@ function getCurState(hipo) {
   border-radius: 2px;
   justify-content: center;
   align-items: center;
-  cursor: default;
 
-  .c-bet-item {
+  .c-bet-item.can-hover:hover {
+    background: var(--q-gb-t-c-4);
     cursor: pointer;
-  }
-
-  .c-bet-item:hover {
-    background: rgba(255, 112, 0, 0.1);
   }
 
   &.bet-item-wrap-ouzhou-bigger {
@@ -278,7 +274,7 @@ function getCurState(hipo) {
   }
 
   .c-bet-item.active {
-    background: var(--q-gb-bg-c-1);
+    background: var(--q-gb-bg-c-1) !important;
 
     .handicap-value,
     .handicap-value-text {

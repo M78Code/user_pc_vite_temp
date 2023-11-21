@@ -5,20 +5,9 @@
 -->
 <template>
   <div class="box-bc">
-   
-    <q-table
-      :rows="data"
-      separator="none"
-      :columns="columns"
-      row-key="name"
-      hide-pagination
-      :table-header-style="{
-        backgroundColor: '#F1F1F1',
-        height: '28px',
-        color: '#8A8986',
-        fontSize: '13px',
-        fontWeight: 500,
-      }"
+
+    <q-table :rows="data" separator="none" :columns="columns" row-key="name" hide-pagination
+      :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
     >
       <!-- 头部插槽 足球用 -->
       <template v-slot:header="props">
@@ -109,6 +98,7 @@ const columns = ref([]);
 //   足球篮球
 const get_base_data = (val) => {
   const detail_info = props.detail_info;
+  console.log(detail_info,"detail_info")
   const list = [
     {
       name: detail_info["mhn"],
@@ -156,19 +146,21 @@ const get_score_result = (list, val) => {
         t: val.S1 ? val?.S1[item.key] : 0, // 全场
       };
     } else if (detail_info.csid == 2) {
+      // 48282 【SIT】【欧洲版二期】【PC】篮球详情页比分版未到的赛事阶段比分不需要展示
       return {
         name: item.name,
-        q1: val.S19 ? val.S19[item.key] : 0, // Q1
-        q2: val.S20 ? val?.S20[item.key] : 0, // Q2
-        ht: val.S2 ? val?.S2[item.key] : 0, // 半场
-        q3: val.S21 ? val?.S21[item.key] : 0, //Q3
-        q4: val.S22 ? val?.S22[item.key] : 0, // Q4
-        t: val.S1 ? val?.S1[item.key] : 0, // 全场
+        q1: val.S19 ? val.S19[item.key] : '', // Q1
+        q2: val.S20 ? val?.S20[item.key] : '', // Q2
+        ht: val.S2 ? val?.S2[item.key] : '', // 半场
+        q3: val.S21 ? val?.S21[item.key] : '', //Q3
+        q4: val.S22 ? val?.S22[item.key] : '', // Q4
+        t: val.S1 ? val?.S1[item.key] : '', // 全场
       };
     } else {
       return {};
     }
   });
+  console.log(result,"detail_info--")
   return result;
 };
 
@@ -411,6 +403,8 @@ watch(
 watch(
   () => props.score_list,
   (val) => {
+    console.log(props.score_list,"props.score_list")
+    console.log(props.detail_info,"props.score_list")
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
     get_base_data(val);

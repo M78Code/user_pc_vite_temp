@@ -114,6 +114,7 @@
             <template5
               v-if="[5].includes(item.hpt)"
               :match_info="item.hl"
+              :hpid="item.hpid"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
             />

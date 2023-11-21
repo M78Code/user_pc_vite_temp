@@ -11,7 +11,7 @@
             <q-scroll-area class="announce-area" visible>
                 <div class="main-page">
                     <div class="announce-title">{{ current_title }}</div>
-                    <div class="ann-item" v-for="(item, i) of class_lists" :key="i">
+                    <div class="ann-item" v-for="(item, i) of class_list_ary" :key="i">
                         <!-- <div class="ann-title" >[{{ item.noticeTypeName }}]</div> -->
                         <div class="ann-content"> 
                             <!-- {{ item.sendTime }}  -->
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <load-data state="notice-empty" :no_data_msg="i18n_t('common.notice_no_data')"
-                        v-if="lodash.get(class_lists, 'length', 0) <= 0 && loadd_finish"></load-data>
+                        v-if="lodash.get(class_list_ary, 'length', 0) <= 0 && loadd_finish"></load-data>
                 </div>
             </q-scroll-area>
         </div>
@@ -56,7 +56,7 @@ let res_list = reactive([])
 let announce_title = ref([])
 /** 大列表 */
 // let announce_list = ref([])
-let class_lists = ref([])
+let class_list_ary = ref([])
 /** 全部分类数据 */
 let class_list = reactive([])
 /** 当前标题 */
@@ -75,8 +75,8 @@ const loadd_finish = ref(false)
 */
 function tabs_click(item, i) {
     index.value = i;
-    current_title.value = class_list[i].nen;
-    class_lists.value =  class_list[i].mtl;
+    current_title.value = announce_title.value[i].nen;
+    class_list_ary.value =  announce_title.value[i].mtl;
 }
 /**
 * @Description:时间戳转字符串时间格式
@@ -127,12 +127,13 @@ function get_list() {
             // for (let i in data.nt) {
             //     data.nt[i].title = data.nt[i].type;
             // }
-            announce_title.value = data.nt; //左侧菜单
+            // announce_title.value = data.nt; //左侧菜单
             class_list = data.nl; //分类
-            class_lists.value = class_list[0].mtl
+            announce_title.value = class_list.filter(item => item.mtl.length > 0)
+            class_list_ary.value = announce_title.value[0].mtl
             res_list = data.nb;
             // announce_list.value = data.nb; //大列表
-            current_title.value = data.nt[0].type || "";
+            current_title.value = announce_title.value[0].nen || "";
         }
     }).finally(() => loadd_finish.value = true)
 }

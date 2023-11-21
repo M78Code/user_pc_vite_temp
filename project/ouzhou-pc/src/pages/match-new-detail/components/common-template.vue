@@ -99,7 +99,7 @@ const columnNum = ref(0); // 获取当前分成几列展示
 const columnTotal = (item) => {
   let total;
   const { match_info } = props;
-  if (match_info.title.length > 0 && match_info.hpt !== 0) {
+  if (match_info.title.length > 0 && ![0,3].includes (match_info.hpt)) {
     if (match_info.hpt === 10) {
       total = 3;
     } else {

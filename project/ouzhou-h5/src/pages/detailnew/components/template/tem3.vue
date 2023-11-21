@@ -4,6 +4,7 @@
  * @Description: 模板id= --用于无盘口&2个/多个投注项玩法
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp3 mx-10 box-style">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
@@ -20,7 +21,7 @@
           <div
             @click="go_betting(ol_item)"
             :class="[
-              { 'is-active': ol_item.oid == active },
+              { 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) },
               'ol_ov',
               'play-box-style',
               'details_color',
@@ -33,8 +34,16 @@
               </span>
             </div>
             <div class="text-right ol-on">
-              <span class="ol-ov">{{ get_oddv(ol_item.ov/100000) }}</span>
-              <olStatus :item_ol_data="ol_item" :active="ol_item?.oid == active" />
+              <template v-if="ol_item.os == 1">
+                <span class="ol-ov">{{ get_oddv(ol_item.ov / 100000) }}</span>
+                <olStatus
+                  :item_ol_data="ol_item"
+                  :active="BetData.bet_oid_list.includes(ol_item?.oid )"
+                />
+              </template>
+              <span v-if="ol_item.os == 2"
+                ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
+              /></span>
             </div>
           </div>
           <!-- 主程序 end -->
@@ -50,14 +59,16 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
 import olStatus from "../ol_status.vue";
+import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
 // import { storage_bet_info } from 'src/public/utils/bet/bet_info.js'
 // import EMITTER from  "src/global/mitt.js"
 const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
-    type: Object || Array
+    type: Object || Array,
   },
   active: {
     type: Number,
@@ -68,8 +79,9 @@ const props = defineProps({
 const get_oddv = (num) => {
   const re = /([0-9]+\.[0-9]{2})[0-9]*/;
   return num.toString().replace(re, "$1");
-}
+};
 const go_betting = (data) => {
+  if(data.os == 2) return
   emit("bet_click_", data);
   // storage_bet_info(payload)
   // EMITTER.emit("show_bet_dialog", true)
@@ -92,7 +104,7 @@ onMounted(() => {});
     .item2 {
       min-height: 50px;
       height: 50px;
-     border: 1px solid var(--q-gb-bd-c-10);
+      border: 1px solid var(--q-gb-bd-c-10);
       border-width: 1px 0 0 0;
       &:nth-child(2n) {
         margin-right: 0;
@@ -171,5 +183,10 @@ onMounted(() => {});
   &:after {
   }
 }
+.lock {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 2px;
+}
 </style>
-

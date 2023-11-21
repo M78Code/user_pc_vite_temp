@@ -12,7 +12,7 @@
             class="temp_grid"
             :class="{ temp_grid: true }"
         >
-            <div class="temp5-hv">{{ key }}</div>
+            <div class="temp5-hv">{{ key>0&&hpid==39?'+'+key:key }}</div>
             <div
                 v-if="value.length == 1"
                 style="width: 200%"
@@ -76,6 +76,10 @@ const props = defineProps({
     current_ol: {
         type: Object,
         default: () => {},
+    },
+    hpid: {
+        type: String,
+        default: '',
     },
 });
 const matchInfo = computed(() => {
