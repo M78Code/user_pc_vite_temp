@@ -6,6 +6,7 @@
 import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
 import { MenuData, get_match_status, PageSourceData, PROJECT_NAME } from 'src/core/index.js'
 import BaseData from "src/core/base-data/base-data.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 
 /**
    * @Description  根据菜单ID 获取一个菜单对象
@@ -104,6 +105,8 @@ export function get_ouzhou_data_tpl_id (csid) {
             return 102;
         case 5:
             return 109;
+        case 6:
+            return 120;
         case 7:
         case 10:
         case 8:
@@ -161,6 +164,7 @@ export function get_main_score(match) {
    */
 export function get_match_to_map_obj(match, key_arr) {
     let map_obj = {}
+    // const match=MatchListData.get_quick_mid_obj(mid)
     if (lodash.get(match, 'mid')) {
         try {
             // 需要解析的投注项赛事基础数据的路径
@@ -180,9 +184,13 @@ export function get_match_to_map_obj(match, key_arr) {
             // 赛事详情,所有投注数据----------odds_info
             // 投注项赛事列表数据
             let hps_data_arr = null
+
             hps_key_arr.forEach(hps_key_str => {
                 // 设置投注项赛事列表数据
                 hps_data_arr = lodash.get(match, hps_key_str)
+                if (!hps_data_arr||!Array.isArray(hps_data_arr)) {
+                    return
+                }
                 switch (hps_key_str) {
                     // 主玩副盘口数据时
                     case 'hpsData[0].hpsAdd':
@@ -194,7 +202,7 @@ export function get_match_to_map_obj(match, key_arr) {
                             // 遍历玩法数据
                             hps_data_arr.forEach(item2 => {
                                 if (!lodash.get(item2, 'hsw')) {
-                                    item2.hsw = lodash.get(item, `play_obj.hpid_${item2.hpid}.hsw`);
+                                    item2.hsw = lodash.get(match, `play_obj.hpid_${item2.hpid}.hsw`);
                                 }
                                 // 检查是否有盘口数据
                                 if (lodash.get(item2, 'hl.length')) {
@@ -203,7 +211,7 @@ export function get_match_to_map_obj(match, key_arr) {
                                         if (item3) {
                                             if (item3.hid) {
                                                 // 增加玩法信息到盘口级别
-                                                item3.mid = item.mid;
+                                                item3.mid = match.mid;
                                                 item3.hpid = item2.hpid;
                                                 item3.hsw = item2.hsw;
                                             }
@@ -219,13 +227,13 @@ export function get_match_to_map_obj(match, key_arr) {
                                                     }
                                                     // 设置坑位信息
                                                     if (!item3.hn) {
-                                                        let _hn = `${item.mid}_${item2.hpid}_1_${ot}`;
+                                                        let _hn = `${match.mid}_${item2.hpid}_1_${ot}`;
                                                         // 押注项设置盘口状态
                                                         Object.assign(item4, {
                                                             _hpid: item2.hpid,
                                                             _hs: (item3.hs ? item3.hs : 0),
-                                                            _mhs: (item.mhs ? item.mhs : 0),
-                                                            _mid: item.mid,
+                                                            _mhs: (match.mhs ? match.mhs : 0),
+                                                            _mid: match.mid,
                                                             _hid: item3.hid,
                                                             _hn,
                                                             _hsw: item2.hsw,
@@ -233,7 +241,7 @@ export function get_match_to_map_obj(match, key_arr) {
                                                             os: Object.hasOwnProperty.call(item4, 'os') ? item4.os : 1,
                                                         });
                                                         // 快速查询对象hn_obj增加数据
-                                                        map_obj[this.get_list_to_obj_key(item.mid, _hn, 'hn')] = item4;
+                                                        map_obj[MatchListData.get_list_to_obj_key(match.mid, _hn, 'hn')] = item4;
                                                     }
                                                 });
                                             }
@@ -248,7 +256,7 @@ export function get_match_to_map_obj(match, key_arr) {
                             // 遍历玩法数据
                             hps_data_arr.forEach(item2 => {
                                 if (!lodash.get(item2, 'hsw')) {
-                                    item2.hsw = lodash.get(item, `play_obj.hpid_${item2.hpid}.hsw`);
+                                    item2.hsw = lodash.get(match, `play_obj.hpid_${item2.hpid}.hsw`);
                                 }
                                 // 检查是否有盘口数据
                                 if (lodash.get(item2, 'hl.ol.length')) {
@@ -258,7 +266,7 @@ export function get_match_to_map_obj(match, key_arr) {
                                         if (item3) {
                                             if (item3.hid) {
                                                 // 增加玩法信息到盘口级别
-                                                item3.mid = item.mid;
+                                                item3.mid = match.mid;
                                                 item3.hpid = item2.hpid;
                                                 item3.hsw = item2.hsw;
                                             }
@@ -272,15 +280,16 @@ export function get_match_to_map_obj(match, key_arr) {
                                                     } else {
                                                         ot = item4.ot;
                                                     }
+                                                   
                                                     // 设置非坑位信息
                                                     if (!item3.hn) {
-                                                        let _hn = `${item.mid}_${item2.hpid}_1_${ot}`;
+                                                        let _hn = `${match.mid}_${item2.hpid}_1_${ot}`;
                                                         // 押注项设置盘口状态
                                                         Object.assign(item4, {
                                                             _hpid: item2.hpid,
                                                             _hs: (item3.hs ? item3.hs : 0),
-                                                            _mhs: (item.mhs ? item.mhs : 0),
-                                                            _mid: item.mid,
+                                                            _mhs: (match.mhs ? match.mhs : 0),
+                                                            _mid: match.mid,
                                                             _hid: item3.hid,
                                                             _hn,
                                                             _hsw: item2.hsw,
@@ -288,7 +297,7 @@ export function get_match_to_map_obj(match, key_arr) {
                                                             os: Object.hasOwnProperty.call(item4, 'os') ? item4.os : 1,
                                                         });
                                                         // 快速查询对象hn_obj增加数据
-                                                        map_obj[this.get_list_to_obj_key(item.mid, _hn, 'hn')] = item4;
+                                                        map_obj[MatchListData.get_list_to_obj_key(match.mid, _hn, 'hn')] = item4;
                                                     }
                                                 });
                                             }

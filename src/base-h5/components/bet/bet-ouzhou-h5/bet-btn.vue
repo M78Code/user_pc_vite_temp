@@ -32,10 +32,10 @@ const pack_up = (val) => {
 
 <style lang="scss" scoped>
 .tip{
-  color: var(--q-gb-bd-c-8);
+  color: var(--q-gb-bd-c-4);
   text-align: center;
-  margin-top: 0.2rem;
-  font-size: 0.13rem;
+  margin-top: 0.25rem;
+  font-size: 0.15rem;
   margin-right: 0.2rem;
   width: 100%;
 }

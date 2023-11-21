@@ -1,9 +1,10 @@
-import { api_match_list } from 'src/api';
+import { api_match_list, api_details } from 'src/api';
 import {
     MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
     MatchDataWarehouse_ouzhou_PC_hots_List_Common,
     MatchDataWarehouse_PC_List_Common,
     LayOutMain_pc,
+    UserCtr
 } from "src/core";
 import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -131,6 +132,21 @@ const filter_20_match = (data)=>{
     return result;
 }
 
+export const get_featurd_list = async () => {
+  let params = {
+    isHot: 1,
+    cuid: UserCtr.get_uid()
+  }
+  let featured_list = []
+  let res = await api_details.get_hots(params)
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.data);
+  // 获取matches_featured
+  featured_list = filter_featured_list(
+    MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+  );
+  return featured_list
+}
+
 // 获取首页数据
 export const init_home_matches = async () => {
     const params = {
@@ -146,7 +162,7 @@ export const init_home_matches = async () => {
         MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'),false)
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
-        MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
+        // MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
         match_count = res.dataList.length || 0;
         let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
         //过滤前20条数据
@@ -160,10 +176,10 @@ export const init_home_matches = async () => {
         mins15_list = filter_15mins_func(
           MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
         );
-        // 获取matches_featured
-        featured_list = filter_featured_list(
-          MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
-        );
+        // // 获取matches_featured
+        // featured_list = filter_featured_list(
+        //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+        // );
       } catch (error) {
           
       }

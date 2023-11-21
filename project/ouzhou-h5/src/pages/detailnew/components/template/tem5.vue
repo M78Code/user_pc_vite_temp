@@ -61,12 +61,9 @@
         <div
           @click="go_betting(ol)"
           :class="[{ 'is-active': ol.oid == active }, 'ol_ov']"
-        >
+         >
           <span class="ol-on-text">{{ ol.on }}</span>
-          <span
-            class="ol-ov-text"
-            >{{ get_oddv(ol.ov/100000) }}</span
-          >
+          <span class="ol-ov-text">{{ get_oddv(ol.ov/100000) }}</span>
         </div>
       </div>
     </template>

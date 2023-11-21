@@ -378,8 +378,19 @@ li{
         }
       }
       &.menu-favouritse{
+        padding: 10px 0 8px;
        li{
-        height: 62px;
+        height: 44px;
+        &.active{
+          background: #4B4B4B;
+          color: var(--q-gb-t-c-1);
+          font-weight: 500;
+          i.icon-star{
+            &:before{
+              color: var(--q-gb-t-c-2);
+            }
+          }
+        }
        }
       }
     }

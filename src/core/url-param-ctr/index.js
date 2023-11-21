@@ -25,17 +25,19 @@ const url_param_ctr_set = (obj={})=>{
 // 获取当前url(删除所有参数)
 const get_url_no_param = ()=>{
   let url = location.href;
-  try {
-    if(url && url.indexOf('token')>-1){
-      let hash = location.hash;
-      if(hash && hash.indexOf('?') > -1){
-        hash = hash.substring(0,hash.indexOf('?'));
-        // document.location.hash=hash;
+  if(!SEARCH_PARAMS.init_param.get('keep_url')){
+    try {
+      if(url && url.indexOf('token')>-1){
+        let hash = location.hash;
+        if(hash && hash.indexOf('?') > -1){
+          hash = hash.substring(0,hash.indexOf('?'));
+          // document.location.hash=hash;
+        }
+        url = location.origin+location.pathname+hash;
       }
-      url = location.origin+location.pathname+hash;
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
   }
   return url;
 }

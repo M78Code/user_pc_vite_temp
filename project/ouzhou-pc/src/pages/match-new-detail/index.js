@@ -159,7 +159,7 @@ export function usedetailData(route) {
 
       LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
       //存取赛事详情基础信息
-      console.log(detail_info.value,'detail_info.value')
+      // console.log(detail_info.value,'detail_info.value')
       MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
       useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       use_polling_mst(detail_info.value);

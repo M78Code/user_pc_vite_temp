@@ -29,7 +29,7 @@ class MatchMeta {
 
   init () {
     // 当前页面数据mids集合
-    this.match_mids = []
+    this.match_mids = ref([])
     // 早盘下的 mids
     this.zaopan_mids = []
     // 联赛 id 对应的 mids
@@ -47,6 +47,8 @@ class MatchMeta {
     this.other_complete_matchs = []
     // 其他仓库的全量赛事mids
     this.other_complete_mids = []
+    // 版本号
+    this.match_meta_version = ref(0)
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -390,6 +392,7 @@ class MatchMeta {
    * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率，需要虚拟列表计算
    */
   async get_results_match () {
+    this.match_mids = []
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
@@ -516,14 +519,14 @@ class MatchMeta {
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
     // ws 订阅
-    const p_15_mids = p15_list.map(t => t.mid)
-    p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
+    // const p_15_mids = p15_list.map(t => t.mid)
+    // p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
     MatchDataBasel5minsH5.set_list(p15_list)
     // 热门赛事数据
     MatchDataBaseHotsH5.set_list(hots)
     // ws 订阅
-    const hots_mids = p15_list.map(t => t.mid)
-    hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
+    // const hots_mids = p15_list.map(t => t.mid)
+    // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []
@@ -645,8 +648,6 @@ class MatchMeta {
       target_mids = this.match_mids.filter(t => t !== mid)
     }
     this.match_mids = target_mids
-    const Base_warehouse  = this.get_base_warehouse()
-    Base_warehouse.upd_data_version()
   }
 
    /**
@@ -676,8 +677,7 @@ class MatchMeta {
       this.match_assistance_operations(t)
     })
     // 不需要调用赔率接口
-    const Base_warehouse  = this.get_base_warehouse()
-    Base_warehouse.set_list(target_list)
+    MatchDataBaseH5.set_list(target_list)
   }
 
   /**
@@ -798,6 +798,7 @@ class MatchMeta {
    * @description 计算所需渲染数据
    */
   compute_page_render_list (config) {
+
     const { scrollTop = 0, type = 1, warehouse = MatchDataBaseH5 } = config
 
     // 计算当前页所需渲染数据
@@ -810,7 +811,7 @@ class MatchMeta {
     // 冠军  或者  电竞冠军 或者   赛果虚拟体育  ，赋值全部数据， 不走下边计算逻辑
     if ([400, 300].includes(menu_lv_v1) || (menu_lv_v1 == 28 && [1001, 1002, 1004, 1011, 1010, 1009, 100].includes(menu_lv_v2)) ) {
       return
-     }
+    }
 
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_current_page_render_list(scroll_top)
@@ -873,7 +874,11 @@ class MatchMeta {
    * @description 删除赛事
    */
   handle_remove_match (data) {
-
+    // mhs === 2 为关盘 则移除赛事
+    const { mid, mhs } = data
+    if (mhs === 2) return
+    const index = this.match_mids.findIndex(t => t === mid)
+    this.match_mids.splice(index, 1)
   }
 
   /**
@@ -891,14 +896,11 @@ class MatchMeta {
     }
     // 调用 matchs  接口
     if (['C104'].includes(cmd)) {
-      // mhs === 2 为关盘
-      if (data.mhs == 2) {
-        this.handle_remove_match(data)
-      }
+      this.handle_remove_match(data)
     }
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
-      // this.get_match_base_hps_by_mids()
+      this.get_match_base_hps_by_mids()
     }
   }
 
@@ -918,7 +920,7 @@ class MatchMeta {
       return target
     })
     // ws 订阅
-    warehouse.set_active_mids(this.match_mids)
+    // warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
     warehouse.set_list(list)
   }
@@ -931,7 +933,7 @@ class MatchMeta {
   handle_submit_warehouse(config) {
     const { list = [], warehouse = MatchDataBaseH5 } = config
     // ws 订阅
-    warehouse.set_active_mids(this.match_mids)
+    // warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
     warehouse.set_list(list)
     // 获取赛事赔率
@@ -939,4 +941,4 @@ class MatchMeta {
   }
 }
 
-export default new MatchMeta()
+export default ref(new MatchMeta()).value

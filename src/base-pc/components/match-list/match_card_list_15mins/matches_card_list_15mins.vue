@@ -12,12 +12,19 @@
 <script setup>
 import template2 from 'src/base-pc/components/match-list/featured_matches/template2.vue';
 import MatchesCard15Mins from './matches_card_15mins.vue';
-
+import {onBeforeUnmount} from 'vue'
+import {MatchDataWarehouse_ouzhou_PC_l5mins_List_Common} from 'src/core'
+import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
+const {ws_destroyed,set_active_mids}= use_match_list_ws(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
 const props = defineProps({
 	matches_15mins_list: {
 		type: [ Object, Array ],
 		default: () => [],
 	}
+})
+set_active_mids(props.matches_15mins_list.map(i => i.mid))
+onBeforeUnmount(()=>{
+	ws_destroyed()
 })
 </script>
 
@@ -38,7 +45,7 @@ const props = defineProps({
 			flex-shrink: 0;
 			width: 0.5px;
 			height: 80px;
-			background: #D9D9D9;
+			background: var(--q-gb-bg-c-10);
 			margin:  0 24px;
 		}
 	}

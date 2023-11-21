@@ -4,7 +4,7 @@
     <!-- 左侧菜单 -->
     <div class="menu-nav-li">
       <ul class="menu-list menu-favouritse">
-        <li class="f-s-c" @click="go_to_favouritse">
+        <li class="f-s-c" @click="go_to_favouritse" :class="MenuData.is_collect ?'active':''">
           <i class="icon-star q-icon c-icon icon"></i>
           {{ i18n_t("ouzhou.menu.collect") }}
         </li>
@@ -32,7 +32,7 @@
         <template v-for="item in BaseData.left_menu_base_mi" :key="item">
           <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }" v-if="item.ct" @click="jump_func(item,'1')">
             <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
-            {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}-{{item.mi}}
+            {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
           </li>
         </template>
       </ul>

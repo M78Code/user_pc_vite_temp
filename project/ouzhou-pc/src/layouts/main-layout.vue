@@ -93,7 +93,7 @@ onMounted(() => {
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--q-gb-bg-c-22);
+  background: var(--q-gb-bg-c-6);
 
   .video_page {
     position: fixed;

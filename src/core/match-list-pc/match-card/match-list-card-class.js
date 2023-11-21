@@ -246,7 +246,7 @@ class MatchListCardInfo {
    * @returns {Array}       联赛下的赛事ID
    */
   update_league_collect_data_and_get_mids(tid, status) {
-    update_league_collect_data_and_get_mids(tid, status);
+   return update_league_collect_data_and_get_mids(tid, status);
   }
   /**
    * @Description 移除一场联赛

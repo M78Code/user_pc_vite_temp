@@ -55,7 +55,6 @@ const set_quick_money = () => {
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
-    console.error('ssss')
     let value = props.items.playOptionsId
     // 串关获取 复试连串
     if (!BetData.is_bet_single) {
