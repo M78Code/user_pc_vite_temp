@@ -7,7 +7,8 @@
       ol_data.class,
       `csid${ol_data.csid}`,
       odds_lift,
-      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : ''
+      BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
+      odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) &&  'can-hover'
     ]"
     @click.stop="bet_click_ol"
     :id="`list-${ol_data.oid}`"
