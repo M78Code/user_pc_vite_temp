@@ -66,6 +66,7 @@ const props = defineProps({
   is_goto_top_random: Number,
 })
 
+const route = useRoute()
 const defer_render = use_defer_render()
 const store_state = store.getState();
 
@@ -193,7 +194,6 @@ const goto_top = () => {
 
 // 是否虚拟计算逻辑
 const get_is_static = () => {
-  const route = useRoute()
   return is_kemp.value || is_collect.value || route?.name === 'collect' || MatchResponsive.is_compute_origin.value
 }
 // 计算每个赛事id 对应的 容器高度 top 值

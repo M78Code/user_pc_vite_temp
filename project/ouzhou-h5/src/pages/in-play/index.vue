@@ -18,6 +18,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const emitters = ref({})
 let message_fun = null
@@ -38,6 +39,9 @@ onMounted(() => {
   message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
     MatchMeta.handle_ws_directive({ cmd, data })
   }, 1000))
+
+  // 重置所选 球种默认玩法 hpid
+  MatchResponsive.reset_match_hpid_by_csid()
   
 })
 onUnmounted(() => {
@@ -52,6 +56,8 @@ onUnmounted(() => {
  */
 const changeMenu = (mi) =>{
   MenuData.get_match_render_list();
+  // 重置所选 球种默认玩法 hpid
+  MatchResponsive.reset_match_hpid_by_csid()
 }
 </script>
 <style lang="scss" scoped>

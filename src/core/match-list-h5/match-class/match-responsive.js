@@ -1,4 +1,6 @@
 import { ref } from 'vue'
+import { sports_play_title } from 'src/core/constant/index.js'
+import { MenuData } from "src/core/index";
 
 /**
  * @description 赛事页面级别的 响应式参数
@@ -38,6 +40,14 @@ class MatchResponsive {
    * @param {String} hpid 
    */
   set_match_hpid (hpid) {
+    this.match_hpid.value = hpid
+  }
+
+  // 重置球种玩法
+  reset_match_hpid_by_csid () {
+    const item = sports_play_title[MenuData.menu_csid]
+    const hpid = lodash.get(item, '[0].hpid', '1')
+    console.log(hpid)
     this.match_hpid.value = hpid
   }
 
