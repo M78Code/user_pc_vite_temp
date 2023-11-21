@@ -44,12 +44,11 @@ export const filter_odds_func = (odds_array, csid, is15mins) => {
       }
     })
   }
-  
   // 通过otd对玩法进行排序
   odds_list.forEach(item => {
-    if (play_type && !play_type_hpid.includes(item.hpid)) {
+    // if (play_type && !play_type_hpid.includes(item.hpid)) {
       item.ol = _.sortBy(item.ol, ['otd'])
-    }
+    // }
     // if (sort_odds_list.includes(item.hpid)) {
     //   item.ol = _.sortBy(item.ol, ['otd']).reverse();
     // }

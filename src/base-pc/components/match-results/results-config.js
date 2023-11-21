@@ -1041,7 +1041,8 @@ export const useGetResultConfig = () => {
    * @description: 搜索
    */
   const sub_search = () => {
-        state.cancel = new Date().getTime();
+    console.error('sub_searchsub_search')
+    state.cancel = new Date().getTime();
     if (!test_time()) {
       return;
     }

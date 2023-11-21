@@ -12,6 +12,7 @@
 
 <script setup>
 import { onMounted, ref, watch } from 'vue'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
 const tab = ref('unsettled')
 const emits = defineEmits(['tab_change'])
 const active = ref('unsettled')
@@ -28,5 +29,5 @@ const tabList = ref([
 </script>
 
 <style lang="scss" scoped>
-@import './record_head.scss'
+@import './record_head.scss';
 </style>
