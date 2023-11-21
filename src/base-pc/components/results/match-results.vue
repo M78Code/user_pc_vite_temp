@@ -31,6 +31,7 @@
         :isSelectConfirm="isSelectConfirm"
         v-model:dateValue="model"
         :ipt_search="ipt_search"
+        :sub_search="sub_search"
         :api_league_type="api_league_type"
         :select_submit="select_submit"
         :hideSelect="hideSelect"
