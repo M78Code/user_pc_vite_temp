@@ -158,7 +158,6 @@ const collect = () => {
 
 // 监听收藏变化
 watch(() => props.match.mf, (n) => {
-  console.log('nnn', n);
   is_collect.value = Boolean(n)
 })
 

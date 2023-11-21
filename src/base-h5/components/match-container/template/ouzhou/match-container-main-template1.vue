@@ -57,7 +57,7 @@
             <div class="play-title">
               <template v-if="collapsed">
                 <div class="title">
-                  <span v-for="p in get_match_panel" :key="p">{{ p }}</span>
+                  <span v-for="p in get_match_panel" :key="`${match_hpid}_${p.ot}`">{{ p.title }}</span>
                 </div>
               </template>
               <template v-else>
@@ -254,10 +254,10 @@ import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/co
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
-import { sports_play_data } from 'src/core/constant/index.js'
+import { sports_play_data, sports_play_title } from 'src/core/constant/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -287,6 +287,7 @@ export default {
     CountingDownSecond,
   },
   setup (ctx) {
+    const match_hpid = ref('')
     const select_play = ref('1')
     const hps_play_data = ref([])
    
@@ -298,23 +299,36 @@ export default {
     // 玩法
     const get_match_panel = computed(() => {
       const { csid, hps } = ctx.match_of_list
+      // debugger
       const hpid = MatchResponsive.match_hpid.value
-      const hps_item = hps && hps.find(t => t.hpid == hpid)
-      const ol_length = hpid === '1' ? 3 : 2
-      const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: ol_length }, () => '{}'))
-      let ol_data = undefined
-      if (ol && ol[0] && ol[0].otd) {
-        ol.sort((a, b) => a.otd - b.otd)
-        ol_data = ol.map(t => {
-          if (t.ot === 'Under' || t.ot === 'Over') {
-            return t.ot === 'Under' ? i18n_t('analysis_football_matches.small_ball') : i18n_t('analysis_football_matches.big_ball')
-          } else {
-            return t.ot
-          }
-        })
+      const plays = sports_play_title[csid]
+      const play_item = plays.find(t => t.hpid === hpid)
+      let target = []
+      if (play_item) {
+        match_hpid.value = play_item.hpid
+        target = play_item.ol
+      } else {
+        // 切换左侧菜单 则默认第一个
+        target = plays[0].ol
       }
-      const result = ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
-      return result
+      return target
+
+      // const hps_item = hps && hps.find(t => t.hpid == hpid)
+      // const ol_length = hpid === '1' ? 3 : 2
+      // const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: ol_length }, () => '{}'))
+      // let ol_data = undefined
+      // if (ol && ol[0] && ol[0].otd) {
+      //   ol.sort((a, b) => a.otd - b.otd)
+      //   ol_data = ol.map(t => {
+      //     if (t.ot === 'Under' || t.ot === 'Over') {
+      //       return t.ot === 'Under' ? i18n_t('analysis_football_matches.small_ball') : i18n_t('analysis_football_matches.big_ball')
+      //     } else {
+      //       return t.ot
+      //     }
+      //   })
+      // }
+      // const result = ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
+      // return result
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {
@@ -332,14 +346,24 @@ export default {
 
     // 切换玩法赔率
     const on_select_play = (item) => {
+      const { hps, csid, mid, hn } = ctx.match_of_list
       select_play.value = item.hpid
+      // const plays = sports_play_title[csid]
+      // const play_item = plays.find(t => t.hpid === item.hpid)
+      // const ol = play_item.ol
+      // ol.forEach(t => {
+      //   const list = MatchDataBaseH5.get_list_to_obj_key(mid, `${mid}_${item.hpid}_${hn || 1}_${t.ot}`, 'hn')
+      //   console.log(list)
+      // })
+      // match_panel.value = play_item
+      // const odds_data = []
       MatchResponsive.set_match_hpid(item.hpid)
     }
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid
     }
   }
 }
@@ -476,7 +500,8 @@ export default {
       bottom: 1px;
       background: #fff;
       &.collapsed{
-        background: var(--q-gb-bg-c-6);
+        background: #e1e1e1;
+        // background: var(--q-gb-bg-c-6);
       }
     }
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
@@ -631,7 +656,7 @@ export default {
           flex: 1;
           display: flex;
           align-items: center;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 600;
           > span {
             flex: 1;

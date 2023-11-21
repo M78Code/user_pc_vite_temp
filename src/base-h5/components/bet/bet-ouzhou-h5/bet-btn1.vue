@@ -3,6 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
+  <div class="tip">{{BetData.bet_before_message.msg}}</div> 
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @click.self="set_retain_selection">{{$t('bet.save')}}</p>
     <!-- <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p> -->
@@ -10,6 +11,7 @@
       <span>{{$t('bet.understand')}}</span>
     </p>
   </div>
+  <div style="display:none">{{ BetData.bet_data_class_version }}</div>
 </template>
 
 <script setup>
@@ -34,6 +36,14 @@ const set_retain_selection = () => {
 </script>
 
 <style lang="scss" scoped>
+.tip{
+  color: var(--q-gb-bd-c-4);
+  text-align: center;
+  margin-top: 0.25rem;
+  font-size: 0.15rem;
+  margin-right: 0.2rem;
+  width: 100%;
+}
 .bet_content_bottom{
     height: 0.9rem;
     display: flex;
