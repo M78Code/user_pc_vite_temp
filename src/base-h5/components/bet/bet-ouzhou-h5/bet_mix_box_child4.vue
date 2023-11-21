@@ -12,7 +12,7 @@
                   <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 5">
                     <div class="nonebox4-content-left-content-nei"></div>
                   </div>
-                  <div class="nonebox4-content-left-content-xian green">
+                  <div class="nonebox4-content-left-content-xian green" v-if="BetViewDataClass.bet_order_status == 3">
                     <div class="nonebox4-content-left-content-nei green-nei"></div>
                   </div>
                   <div class="nonebox4-content-left-content-xian red" v-if="BetViewDataClass.bet_order_status == 4">
@@ -32,13 +32,13 @@
                         <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}</div>
                       </div>
                       <!--红色箭头-->
-                      <div class="top" style="display:none">
+                      <div class="top" v-if="item.red_green == 'red_down'">
                         <div class="jiantou one"></div>
                         <div class="jiantou two"></div>
                         <div class="jiantou three"></div>
                       </div>
                       <!--绿色箭头-->
-                      <div class="top" style="display:none">
+                      <div class="top" v-else>
                         <div class="jiantou onegreen"></div>
                         <div class="jiantou twogreen"></div>
                         <div class="jiantou threegreen"></div>
@@ -212,14 +212,15 @@
     background: var(--q-gb-bg-c-1);
     border-radius: 50%;
   }
-  .nonebox4-content-left-content-text{
+  .nonebox4-content-left-content-t
+  ext{
       line-height: 0.25rem;
         margin-top: 0.02rem;
   }
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      padding: 0 0.1rem;
+      padding: 0 0.15rem;
   }
   .nonebox4-content-right{
     text-align: right;
