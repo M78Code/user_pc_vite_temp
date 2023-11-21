@@ -280,7 +280,7 @@ const get_odds_state = (mhs, hs, os) => {
  * @return {undefined} undefined  组装投注项的数据
  */
 const bet_click_ol = () => {
-  if(!props.ol_data.oid)return
+  if(!props.ol_data.oid || odds_state.value == "lock" || odds_state.value == "seal" )return
   const {oid,_hid,_hn,_mid } = props.ol_data
   let params = {
     oid, // 投注项id ol_obj
