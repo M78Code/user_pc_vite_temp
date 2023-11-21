@@ -7,7 +7,6 @@
       ol_data.class,
       `csid${ol_data.csid}`,
       odds_lift,
-      { 'show-odds-icon': odds_state != 'seal' },
       BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : ''
     ]"
     @click.stop="bet_click_ol"
@@ -47,13 +46,13 @@
       <span v-else-if="ol_data.ov">
         {{ (ol_data.ov / 100000).toFixed(2) }}
       </span>
-      <div
-        class="odds-arrows-wrap"
-        v-if="odds_state != 'seal' && !menu_config.is_vr()"
-      >
+      <div>
+        
+      </div>
+      <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
-        <div class="odds-icon odds-up" :style="compute_css_obj({key: 'pc-home-arrow-up'})"></div>
-        <div class="odds-icon odds-down" :style="compute_css_obj({key: 'pc-home-arrow-down'})"></div>
+        <div class="odds-icon" v-if="odds_lift=='up'" :style="compute_css_obj({key: 'pc-home-arrow-up'})"></div>
+        <div class="odds-icon" v-if="odds_lift=='down'" :style="compute_css_obj({key: 'pc-home-arrow-down'})"></div>
       </div>
     </div>
   </div>
@@ -83,7 +82,7 @@ const match_odds = ref("");
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
 // 是否红升绿降中
-const odds_lift_show = ref(false);
+let odds_lift_show = false;
 
 const emit = defineEmits(['update_score'])
 
@@ -141,13 +140,14 @@ watch(() => props.ol_data.oid, () => {
 
 // 监听投注项赔率变化
 watch(() => props.ol_data.ov, (cur, old) => {
-  console.log(cur, old, 'curold')
+  if(cur==old)return
   // 赔率值处理
   format_odds(cur, 1);
   if (props.ol_data) {
     let { _mhs, _hs, os } = props.ol_data;
     odds_state.value = get_odds_state(_mhs, _hs, os);
   }
+  
   // 红升绿降变化
   set_odds_lift(cur, old);
 }, { deep: true })  
@@ -172,6 +172,7 @@ const format_odds = () => {
   match_odds.value = format_odds_value(match_odds_info,props.ol_data.csid);
 };
 
+let tid;
 /**
  * 设置赔率升降
  * @param  {number} cur - 当前赔率值
@@ -180,34 +181,34 @@ const format_odds = () => {
  */
 const set_odds_lift = (cur, old) => {
   let _odds_lift = "";
-
   if (
     odds_state.value != "lock" &&
     odds_state.value != "seal" &&
     old &&
     !is_odds_seal()
   ) {
+  
     if (cur > old) {
       _odds_lift = "up";
     } else if (cur < old) {
       _odds_lift = "down";
     }
-
-    if (_odds_lift && !odds_lift_show.value) {
-      /**清除定时器 */
-      if (timer_obj["odds_lift"]) {
-        clearTimeout(timer_obj["odds_lift"]);
-        timer_obj["odds_lift"] = null;
-      }
-      odds_lift_show.value = true;
-      odds_lift.value = _odds_lift;
-
-      timer_obj["odds_lift"] = setTimeout(() => {
-        odds_lift.value = "";
-        odds_lift_show.value = false;
-      }, 3000);
-    }
   }
+      odds_lift_show = true;
+      odds_lift.value = _odds_lift;
+    // if (_odds_lift && !odds_lift_show) {
+      /**清除定时器 */
+      // if (timer_obj["odds_lift"]) {
+      //   clearTimeout(timer_obj["odds_lift"]);
+      //   timer_obj["odds_lift"] = null;
+      //   timer_obj["odds_lift"] = 
+      clearTimeout(tid)
+      tid=setTimeout(() => {
+        odds_lift.value = "";
+        odds_lift_show = false;
+      }, 3000);
+    // }
+  // }
 };
 
 /**
@@ -278,7 +279,7 @@ const get_odds_state = (mhs, hs, os) => {
  * @return {undefined} undefined  组装投注项的数据
  */
 const bet_click_ol = () => {
-  if(!props.ol_data._oid)return
+  if(!props.ol_data.oid)return
   const {oid,_hid,_hn,_mid } = props.ol_data
   let params = {
     oid, // 投注项id ol_obj
@@ -307,20 +308,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.show-odds-icon {
-  &.up {
-    .odds-up {
-      display: block;
-    }
-  }
-}
-.show-odds-icon {
-  &.down {
-    .odds-down {
-      display: block;
-    }
-  }
-}
 .odds-arrows-wrap {
   position: relative;
 }
@@ -328,12 +315,11 @@ onUnmounted(() => {
   width: 6px;
   height: 10px;
   margin-left: 4px;
-  // position: absolute;
-  // left: -1px;
-  // top: -6px;
   overflow: hidden;
-  background-size: 100%;
-  display: none;
+  background-size: 100% 100%;
+  position: absolute;
+  left: 0px;
+  top: -5px;
 }
 .lock {
   width: 14px;
@@ -373,6 +359,8 @@ onUnmounted(() => {
   height: 34px;
   line-height: 34px;
   justify-content: center;
+  display: flex;
+  align-items: center;
 }
 .c-bet-item {
   justify-content: center !important;

@@ -347,11 +347,12 @@ const submit_handle = type => {
     // BetViewDataClass.set_bet_order_status(5)
     // return
     api_betting.post_submit_bet_list(params).then(res => {
+        set_error_message_config(res)
         if (res.code == 200) {
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-                code: res.code,
-                msg: res.message
-            })
+            // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
+            //     code: res.code,
+            //     msg: res.message
+            // })
             // 投注成功 更新余额
             UserCtr.get_balance()
             // pc 有的 
@@ -420,8 +421,8 @@ const submit_handle = type => {
             obj.esMarketLevel =  lodash_.get(UserCtr.user_info,'esMarketLevel','0');
             WsMan.skt_send_bat_handicap_odds(obj);
             // 通知页面更新 
-        }else{
-            set_error_message_config(res)
+        // }else{
+        //     set_error_message_config(res)
         }
     })
 }
@@ -443,7 +444,7 @@ const set_error_message_config = (res ={}) => {
 
         setTimeout(()=>{
             BetData.set_bet_before_message({})
-        },10000)
+        },2000)
     }
 }
 

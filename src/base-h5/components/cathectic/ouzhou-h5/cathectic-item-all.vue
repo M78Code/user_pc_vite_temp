@@ -36,7 +36,10 @@
                 <div class="settled-date" v-if="BetRecordClass.selected === 1">
                   {{ i18n_t('bet_record.number') }} <span>{{value.totalOrders}}</span>
                   {{ i18n_t('bet_record.bet') }} <span>{{value.betAmount}}</span>
-                  {{ i18n_t('bet_record.l/w') }} <span class="oringe">{{value.profit}}</span>
+                  {{ i18n_t('bet_record.l/w') }} <span :class="{'oringe': value.profit > 0}">
+                    <template v-if="value.profit > 0">+</template>  
+                    {{value.profit}}
+                  </span>
                 </div>
               </div>
               <div v-for="(item2, key) in value.data" :key="item2.betTime" class="cathectic-item">

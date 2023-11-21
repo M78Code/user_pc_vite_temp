@@ -98,7 +98,15 @@ const col_ols_data = computed(() => {
 const cur_esports_mode = ref(BetData.cur_esports_mode);
 function deal_width_handicap_ols(payload, many_obj) {
   let { hn, mid } = props.match
-
+  /*let handicap_type = hn || 1
+  const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
+  let new_ols = payload.map(item => {
+    if (item.empty) { return }
+    // 投注项数据拼接
+    let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
+    // 获取投注项内容 
+    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+  })*/
 
   let new_ols = payload
   return new_ols
