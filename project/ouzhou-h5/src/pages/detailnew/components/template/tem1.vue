@@ -13,9 +13,14 @@
       <div class="temp1-ol" :style="{ gridTemplateColumns: 'repeat(3, 1fr)' }">
       <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="temp1_ol_on">
         <div @click="go_betting(ol)" :class="[{ 'is-active': ol.oid == active }, 'temp1_ol_ov']" >
+          <template v-if="ol.os == 1">
             <span class="temp1_ol-on-text">{{ ol.ot || ol.on }}</span>
             <span class="temp1_ol-ov-text">{{ get_oddv(ol.ov/100000) }}</span>
             <olStatus :item_ol_data="ol" :active="ol?.oid == active" />
+          </template>
+          <span v-if="ol.os == 2"
+            ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
+          /></span> 
         </div>
       </div>
     </div>
@@ -27,6 +32,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import olStatus from "../ol_status.vue";
+import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
 // import { storage_bet_info } from 'src/public/utils/bet/bet_info.js'
 // import EMITTER from  "src/global/mitt.js"
 const emit = defineEmits(["bet_click_"]);
@@ -157,6 +163,12 @@ onMounted(() => {});
 .first-rad {
   &:after {
   }
+}
+.lock {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  top: 2px;
 }
 </style>
 
