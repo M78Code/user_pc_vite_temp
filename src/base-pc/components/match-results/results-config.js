@@ -1041,7 +1041,6 @@ export const useGetResultConfig = () => {
    * @description: 搜索
    */
   const sub_search = () => {
-    console.error('sub_searchsub_search')
     state.cancel = new Date().getTime();
     if (!test_time()) {
       return;
@@ -1216,6 +1215,16 @@ export const useGetResultConfig = () => {
     isSelectConfirm,
     ipt_search,
     changePage,
-    input_radio
+    input_radio,
+    
+    sub_search,
+    hideSelect,
+    input_focus,
+    input_blur,
+    champion_sport_type_filter,
+    select_submit,
+    search_hot,
+    highlights_input_radio,
+    change_sort
   };
 };

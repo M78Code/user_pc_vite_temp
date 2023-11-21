@@ -7,7 +7,6 @@
       ol_data.class,
       `csid${ol_data.csid}`,
       odds_lift,
-      { 'show-odds-icon': odds_state != 'seal' },
       BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : ''
     ]"
     @click.stop="bet_click_ol"
@@ -142,7 +141,6 @@ watch(() => props.ol_data.oid, () => {
 // 监听投注项赔率变化
 watch(() => props.ol_data.ov, (cur, old) => {
   if(cur==old)return
-  console.log(cur, old, 'curold')
   // 赔率值处理
   format_odds(cur, 1);
   if (props.ol_data) {
@@ -281,7 +279,7 @@ const get_odds_state = (mhs, hs, os) => {
  * @return {undefined} undefined  组装投注项的数据
  */
 const bet_click_ol = () => {
-  if(!props.ol_data._oid)return
+  if(!props.ol_data.oid || odds_state.value == "lock" || odds_state.value == "seal" )return
   const {oid,_hid,_hn,_mid } = props.ol_data
   let params = {
     oid, // 投注项id ol_obj

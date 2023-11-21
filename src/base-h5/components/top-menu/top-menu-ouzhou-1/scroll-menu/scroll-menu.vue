@@ -194,7 +194,7 @@ const on_change_play = (item) => {
         }
 
         :deep(.sport-img) {
-            transition: all 0.25s ease;
+            // transition: all 0.25s ease;
         }
     }
 
