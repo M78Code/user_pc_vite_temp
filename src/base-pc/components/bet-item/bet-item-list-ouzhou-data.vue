@@ -26,7 +26,7 @@
       ]"
     >
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
-      <div class="handicap-value-text">{{ score }} {{ ol_data.onb }}</div>
+      <div class="handicap-value-text">{{ score }}{{ ol_data._hpid }} <span v-show="ol_data._hpid != 1">{{ ol_data.onb }}</span></div>
     </div>
 
     <!-- 赔率 -->
@@ -44,7 +44,7 @@
       <div v-if="odds_state == 'seal'" class="lock"
       :style="compute_css_obj({key: 'pc-home-lock'})"></div>
       <span v-else-if="ol_data.ov">
-        {{ ol_data.ov / 100000 }}
+        {{ (ol_data.ov / 100000).toFixed(2) }}
       </span>
       <div
         class="odds-arrows-wrap"
