@@ -87,7 +87,7 @@ class MatchCollect {
    * @description 获取 赛事 收藏数据
    * @returns 
    */
-  get_collect_match_data () {
+  get_collect_match_data (flag = false) {
     api_common.get_new_collect_matches({
       matchType: 0,
       cuid: UserCtr.get_uid()
@@ -99,7 +99,7 @@ class MatchCollect {
         this.set_is_get_collect(true)
         MatchMeta.complete_matchs.forEach(match => {
           requestAnimationFrame(() => {
-            this.handle_collect_state(match)
+            this.handle_collect_state(match, flag)
           })
         })
       }
@@ -108,9 +108,10 @@ class MatchCollect {
   /**
    * @description 处理置收藏状态
    * @param { match } 赛事对象
-   * @remarks: 根据 collectMatchesPB， tids 有值，则根据 tid 及 exclude 判断， tids 没值 则根据 mids 判断
+   * @remarks: 1. 根据 collectMatchesPB， tids 有值，则根据 tid 及 exclude 判断
+   *           2. mids 均需要判断
    */
-  handle_collect_state (match) {
+  handle_collect_state (match, flag) {
     const map_menu = { 100: 2, 3000: 3 }
     const menu_lv_v1 = lodash.get(MenuData.current_lv_1_menu, 'mi')
     const match_type = lodash.get(map_menu, `${menu_lv_v1}`, 1)
@@ -132,22 +133,23 @@ class MatchCollect {
             match_collect_state = !(length > 0 && exclude_obj.mids.includes(mid))
           }
         }
-      } else if (mids.length > 0) {
+      }
+      if (mids.length > 0) {
         match_collect_state = mids.includes(mid)
       }
     }
     // 该联赛是否收藏
     this.set_league_collect_state(tid, league_collect_state)
     // 该赛事是否收藏
-    this.set_match_collect_state(match, match_collect_state)
+    this.set_match_collect_state(match, flag ? true : match_collect_state)
   }
   /**
    * @description 重置收藏对象
    */
   clear_collect_info () {
-    this.league_tid_collect_obj.value = {}
-    this.match_mid_collect_obj.value = {}
-    this.match_collect_obj = { 1: [], 2: [], 3: [] }
+    // this.league_tid_collect_obj.value = {}
+    // this.match_mid_collect_obj.value = {}
+    // this.match_collect_obj = { 1: [], 2: [], 3: [] }
   }
 
   /**

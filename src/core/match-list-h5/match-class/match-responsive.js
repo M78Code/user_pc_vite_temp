@@ -14,7 +14,7 @@ class MatchResponsive {
     // 是否元数据计算
     this.is_compute_origin = ref(false)
     // 赛事默认 hpid
-    this.match_hpid = ref('1')
+    this.match_hpid_info = ref({})
     // 球种对应的数量
     this.ball_seed_count = ref({})
     // 球种对应的下拉玩法  ouzhou-h5 
@@ -39,16 +39,28 @@ class MatchResponsive {
    * @description 设置 hpid
    * @param {String} hpid 
    */
-  set_match_hpid (hpid) {
-    this.match_hpid.value = hpid
+  set_match_hpid (hpid, csid) {
+    const key = this.get_hpid_key(csid)
+    Object.assign(this.match_hpid_info.value, {
+      [key]: hpid
+    })
   }
 
   // 重置球种玩法
-  reset_match_hpid_by_csid () {
-    const item = sports_play_title[MenuData.menu_csid]
+  reset_match_hpid_by_csid (csid = '') {
+    const id = csid ? csid : MenuData.menu_csid
+    const item = sports_play_title[id]
+    const key = this.get_hpid_key(csid)
     const hpid = lodash.get(item, '[0].hpid', '1')
-    console.log(hpid)
-    this.match_hpid.value = hpid
+    Object.assign(this.match_hpid_info.value, {
+      [key]: hpid
+    })
+  }
+
+  get_hpid_key (csid) {
+    const id = csid ? csid : MenuData.menu_csid
+    const key = `csid_${id}`
+    return key
   }
 
   /**
