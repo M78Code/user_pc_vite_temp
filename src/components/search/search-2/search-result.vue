@@ -274,9 +274,10 @@ function match_click(match) {
  */
 function league_click(match) {
 	if(!match) return;
-	search.insert_history(match.name)
+	search.insert_history(match.leagueName)
 	const { csid } = match.matchList[0]
-	router.push(`/search/${keyword.value}/${csid}`)
+	console.log('matchmatch',match);
+	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	PageSourceData.set_route_name('search')
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
