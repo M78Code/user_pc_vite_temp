@@ -110,7 +110,8 @@ const get_index_f_data_source = (mid) => {
 
 // 赛事列表容器滚动事件
 const handler_match_container_scroll = lodash.debounce(($ev) => {
-  if (get_is_static()) return
+  const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
+  if (get_is_static() || length < 18) return
   const scrollTop = $ev.target.scrollTop
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - prev_scroll.value) >= 500) {
     prev_scroll.value = scrollTop
