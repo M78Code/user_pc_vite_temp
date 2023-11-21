@@ -15,6 +15,7 @@
   >
     <!-- 盘口 -->
     <div
+      v-if="odds_state != 'seal'"
       :class="[
         'handicap-value',
         {
