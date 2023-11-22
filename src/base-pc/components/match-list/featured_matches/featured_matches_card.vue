@@ -5,7 +5,7 @@
     <template2 :is_show_btn="matches_featured_list.length >= 4">
       <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in matches_featured_list"
         :key="item.tid" :class="{ 'margin-box': index != matches_featured_list.length - 1 }">
-        <div class="right-top-img" :style="compute_css_obj({ key: 'icon-sport-top', position: item.csid })"></div>
+        <div class="right-top-img" :style="compute_css_obj({ key: 'pc-home-icon-sport-top', position: item.csid })"></div>
         <div class="matches_description">
           <div class="matches_type">{{ item.tn }}</div>
           <!-- <div class="matches_time din_font">
@@ -65,12 +65,13 @@ const get_featurd_list = async () => {
     //使用数据仓库的数据 因为ws会推送数据 会改变数据仓库的数据 用本地没有数据变化哦哦
     // matches_featured_list.value=res.data
     // 只显示5条数据
-    const featurd_list = res.data.slice(0, 5)
+    const featurd_list = res.data.sort((a, b) => {
+      return b.mgt - a.mgt
+    }).slice(0, 5)
     featurd_list.forEach(i => {
       mids.push(i.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(i.mid))
     })
-    console.log(matches_featured_list.value, 'matches_featured_list')
     set_active_mids(mids)
   }
 }
