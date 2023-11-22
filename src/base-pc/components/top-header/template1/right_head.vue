@@ -253,6 +253,7 @@ export default defineComponent({
     }
     // 关闭搜索状态清空值
     const close = () => {
+      SearchPCClass.set_search_isShow(false);
       is_focus.value = false
       text.value = ''
       userRouter.push('/')
