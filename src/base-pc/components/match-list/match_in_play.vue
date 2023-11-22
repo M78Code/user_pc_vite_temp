@@ -24,7 +24,7 @@
   font-weight: 500;
   color: var(--q-gb-t-c-5);
   font-size: 18px;
-  padding: 24px 0 10px 0;
+  margin-bottom: 10px;
   >span {
     font-size: 13px;
     font-weight: 400;
