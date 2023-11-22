@@ -18,30 +18,13 @@
         </div>
         <div class="analysis-top-right">
            <!-- 动画图标 -->
-          <img
-            v-if="detail_info.mvs > -1"
-            :src="show_type&&show_type=='animal' ? animal_active : animal"
-            alt=""
-            srcset=""
-            style="margin-right: 15px"
-            @click="tab_click('animal')"
-          />
+          <img v-if="detail_info.mvs > -1" :src="show_type&&show_type=='animal' ? animal_active : animal"
+            alt="" srcset="" style="margin-right: 15px" @click="tab_click('animal')" />
            <!-- 视频图标 -->
-          <img
-            v-if="cur_video_icon.type"
-            :src="show_type&&show_type!='animal'?video_active: video"
-            alt=""
-            srcset=""
-            style="margin-right: 15px"
-            @click="tab_click(cur_video_icon.type)"
-          />
+          <img v-if="cur_video_icon.type" :src="show_type&&show_type!='animal'?video_active: video"
+            alt="" srcset="" style="margin-right: 15px" @click="tab_click(cur_video_icon.type)" />
            <!-- 比分榜图标 -->
-          <img
-            :src="score_key ? score_active : score"
-            alt=""
-            srcset=""
-            @click="tab_click('score')"
-          />
+          <img :src="score_key ? score_active : score" alt="" srcset="" @click="tab_click('score')" />
         </div>
       </div>
       <!-- 动画视频 -->

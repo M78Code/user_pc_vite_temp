@@ -1,5 +1,5 @@
 <template>
-  <CurrentMatchTitle :title_value="'Featured Matches'" v-if="matches_featured_list.length" :show_more_icon="false" />
+  <CurrentMatchTitle :title_value="$t('ouzhou.match.featured') + $t('ouzhou.match.matches')" v-if="matches_featured_list.length" :show_more_icon="false" />
   <div class="featured-matched-card-wrap" v-if="matches_featured_list.length">
     <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
     <template2 :is_show_btn="matches_featured_list.length >= 4">

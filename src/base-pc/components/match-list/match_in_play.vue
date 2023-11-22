@@ -2,7 +2,7 @@
   <!-- 滚球标题 -->
   <div :class="['in-play text-left yb-flex-between']">
     <div>
-      {{ $t('menu.match_play') }}
+      {{ $t('menu.match_playing') }}
     </div>
     <!-- 赛事数量 -->
     <!-- 先隐藏了 -->

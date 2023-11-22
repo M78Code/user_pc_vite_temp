@@ -15,7 +15,7 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 	}
 	let mids = []
 	console.log('use_match_list_ws', MatchListData.name_code, mids)
-	let remove_fun = addWsMessageListener(lodash.debounce((cmd, data) => {
+	let remove_fun = addWsMessageListener(lodash.throttle((cmd, data) => {
 		// 赛事新增
 		if (["C109"].includes(cmd)) {
 			const { cd = [] } = data;
@@ -42,11 +42,11 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 			console.log('_ws_mids', _ws_mids);
 			//只有当前订阅的mids里包括推送的mid才获取数据 
 			if (_mids.some(_mid => _ws_mids.includes(_mid))) {
-				api_bymids({ mids: mid.split(',') }, null, MatchListData)
+				api_bymids({ mids: _ws_mids }, null, MatchListData)
 			}
 		}
-	}, 300))
-	const motheds = {
+	}, 1000))
+	ws_keys_map[MatchListData.name_code]  = {
 		set_inactive_mids(_mids = []) {
 			MatchListData.set_inactive_mids(_mids)
 		},
@@ -65,8 +65,7 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 			MatchListData.clear()//清除数仓数据
 		}
 	}
-	ws_keys_map[MatchListData.name_code] = motheds
-	return motheds
+	return ws_keys_map[MatchListData.name_code] 
 }
 /**
  * 返回创建的ws对象
