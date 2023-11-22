@@ -93,6 +93,8 @@ const curSelectedOption = ref(selectOptions[0])
 const changeTab = (name, index) => {
     store.tabActive = name;
     store.tabModel = false;
+    curSelectedOption.value = selectOptions[0]
+    store.dateIndex = 0
     emit("changeTab", name);
 }
 /**
@@ -174,6 +176,7 @@ const areaListChange = (item,index) => {
     const move_index = store.areaList.findIndex((t, _index) => _index === index);
     scrollRefArea.value.scrollTo(move_index - 2, "start-force");
     store.area_tab_index = index;
+    store.selectArea = item
     emit("changeArea", item.id);
 }
 </script>
