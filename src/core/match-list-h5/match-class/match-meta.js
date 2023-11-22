@@ -572,11 +572,11 @@ class MatchMeta {
       // sportId: 1,
       tid: tid
     })
-    console.log('get_ouzhou_leagues_list_data', res)
+    // console.log('get_ouzhou_leagues_list_data', res)
     MatchCollect.get_collect_match_data()
-    // const list = lodash.get(res, 'data', [])
-    // if (!list) return
-    // return list
+    if (res.code !== '200') return this.set_page_match_empty_status(true);
+    const list = lodash.get(res.data, 'data', [])
+    this.handler_match_list_data({ list: list, is_virtual: false })
   }
 
   /**
