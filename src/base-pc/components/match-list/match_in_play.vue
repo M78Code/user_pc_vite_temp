@@ -2,7 +2,7 @@
   <!-- 滚球标题 -->
   <div :class="['in-play text-left yb-flex-between']">
     <div>
-      {{ $t('menu.match_play') }}
+      {{ $t('menu.match_playing') }}
     </div>
     <!-- 赛事数量 -->
     <!-- 先隐藏了 -->
@@ -24,7 +24,7 @@
   font-weight: 500;
   color: var(--q-gb-t-c-5);
   font-size: 18px;
-  padding: 24px 0 10px 0;
+  margin-bottom: 10px;
   >span {
     font-size: 13px;
     font-weight: 400;

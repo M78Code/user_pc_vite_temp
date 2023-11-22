@@ -48,28 +48,22 @@
     </div>
 </template>
 <script>
-// import ListFilter from 'src/base-pc/components/match-list/list-filter/index.vue'
-import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import { onMounted, onUnmounted, ref, watch, getCurrentInstance, onActivated } from "vue";
+
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { IconWapper } from 'src/components/icon'
 import LoadData from 'src/components/load_data/load_data.vue';
-import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
-import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue"
-// import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
-// import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
-// import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
-// import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
+import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
+import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
+import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
+
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
-// import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
-// import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, compute_css_obj, LayOutMain_pc } from 'src/core/index.js';
-import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj, LayOutMain_pc } from "src/core/index.js";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 
 import "../match-list/match_list.scss";
