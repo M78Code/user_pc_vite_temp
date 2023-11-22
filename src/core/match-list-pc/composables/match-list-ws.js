@@ -34,12 +34,11 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 		if (["C303", "C114"].includes(cmd)) {
 			const { mid = '' } = data.cd || {};
 			let _mids = mid.split(',')
-			let _ws_mids = mids;
+			let _ws_mids = mids||[];
 			//这是公用的就拿可视区域的ID去判断
 			if (MatchListData.name_code == 'MatchDataWarehouse_PC_List_Common') {
-				_ws_mids = MatchListScrollClass.show_mids
+				_ws_mids = MatchListScrollClass.show_mids||[]
 			}
-			console.log('_ws_mids', _ws_mids);
 			//只有当前订阅的mids里包括推送的mid才获取数据 
 			if (_mids.some(_mid => _ws_mids.includes(_mid))) {
 				api_bymids({ mids: _ws_mids }, null, MatchListData)
