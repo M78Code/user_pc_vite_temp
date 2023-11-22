@@ -63,7 +63,7 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------欧洲版-H5  ouzhou-h5 8-------------------------------------------
 // 测试环境  
-// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1700488684133-test";
+// DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1700645526474-test";
 // 试玩环境  
 // DEV_TARGET_VERSION = "project_8-6544b116720143009a2f282d-1700306375010-shiwan";
 // 生产环境
