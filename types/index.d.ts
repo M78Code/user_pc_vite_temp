@@ -3,7 +3,7 @@ import { Ref as _Ref } from "vue"
 import _lodash from 'lodash'
 import { WsCmdEnum } from "src/core/data-warehouse/ws/ws-ctr/ws-cmd-type"
 import { RouteLocationRaw } from 'vue-router'
-import { _i18n_t } from "src/boot/i18n.js";
+import { i18n_t as _i18n_t } from "src/boot/i18n.js";
 import _filters from 'src/core/filters/global_filters.js'
 
 export {}

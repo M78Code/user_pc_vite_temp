@@ -3,7 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-    <div class="tip" >{{BetData.tipmsg}}</div>   
+  <div class="tip">{{BetViewDataClass.tip_message}}</div> 
     <div class="bet_content_bottom">
       <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
       <p class="place_bet"  @click="place_bet">
@@ -12,11 +12,13 @@
       </p>
     </div>
   <div style="display:none">{{ BetData.bet_data_class_version }}</div>
+  <div style="display:none">{{ BetViewDataClass.bet_view_version }}</div>
 </template>
 
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js" 
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
 
 const place_bet = () => {
@@ -34,7 +36,7 @@ const pack_up = (val) => {
 .tip{
   color: var(--q-gb-bd-c-4);
   text-align: center;
-  margin-top: 0.25rem;
+  margin-top: 0.1rem;
   font-size: 0.15rem;
   margin-right: 0.2rem;
   width: 100%;
