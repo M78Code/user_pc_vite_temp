@@ -33,7 +33,6 @@
       <score_info v-show="score_key && !lodash_.isEmpty(score_list) && detail_info.ms==1" :score_list="score_list" :detail_info="detail_info"/>
      <!-- 即将开赛 -->
       <comming-soon v-show="detail_info.ms != 1 && score_key" :detail_info="detail_info"></comming-soon>
-      
     </div>
   </div>
 </template>

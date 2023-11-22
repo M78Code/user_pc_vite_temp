@@ -174,7 +174,9 @@
 			</div>
 		</q-scroll-area>
 		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
-			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)" class="middle_info_tab diff">{{ i18n_t('ouzhou.search.no_search_rezult') }}</div>
+			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)"
+			 class="middle_info_tab diff">{{ i18n_t('ouzhou.search.no_search_rezult') }}
+		</div>
 		<!--   -->
 	</div>
 </template>

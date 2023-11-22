@@ -88,7 +88,7 @@ const score_data = computed(() => {
   if (ol_arr.length > 0) {
     ol_data.forEach(t => {
       const item = ol_arr.find(o => o.ot === t.ot)
-      target.push(item)
+      target.push(item ? item : { })
     })
   }
   return target.length > 0 ? target : Array.from({ length: ol_length }, (i) => { return {  oid: i } })
