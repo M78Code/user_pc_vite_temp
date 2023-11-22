@@ -3,7 +3,7 @@
 <template>
     <div>
         <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)"
-        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11"  />
+        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${format_money2(ref_data.max_money)}`" maxLength="11"  />
     </div>
 
 </template>
@@ -14,7 +14,7 @@ import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr } from "src/core/"
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,format_money2 } from "src/core/"
 
 const props = defineProps({
     items:{},

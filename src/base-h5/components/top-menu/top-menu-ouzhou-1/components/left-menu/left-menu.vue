@@ -150,6 +150,7 @@ const change_current_menu = (item) => {
   setPopularSort(item.mi);
   // 设置菜单对应源数据
   emits('isLeftDrawer');
+  useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE);
   BaseData.set_is_emit(false)
   MatchMeta.set_origin_match_data()
   // if (route.name === 'matchList') MatchMeta.set_origin_match_data()
