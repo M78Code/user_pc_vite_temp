@@ -75,6 +75,22 @@ onUnmounted(()=>{
   useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA).off
 })
 /**
+ * 点击获取最新球种
+ * @param {*} item 
+ * @param {*} index 
+ */
+const set_cont = async (item,index) =>{
+    const cont = await 1;
+    if(cont === get_cont(item))return;
+    leftDataList.value = leftDataList.value.map((n,i)=>{
+        if(index === i){
+            const m = n.sl?.findIndex((k)=>{return k.mi === `${n.mi}${props.menu_type}`});
+            n.sl[m].ct = cont;
+        }
+        return n;
+    })
+}
+/**
  * 滚球选择
  * @param {*} item 
  * @param {*} index 
@@ -90,6 +106,8 @@ const on_change_play = (item) => {
     const csid = MenuData.menu_csid
     const hpid = lodash.get(sports_play_data, `[${csid}][0].hpid`, '1')
     MatchResponsive.set_match_hpid(hpid)
+    //获取单个数量
+    // set_cont(item,index)
 }
 
 </script>
