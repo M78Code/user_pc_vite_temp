@@ -254,8 +254,9 @@ onBeforeUnmount(() => {
   .filter-count{
     position: absolute;
     top: 0px;
-    left: 21px;
+    left: 23px;
     height: 16px;
+    line-height: 16px;
     border-radius: 8px;
     padding: 0 4px;
     background: #BDBDBD;
