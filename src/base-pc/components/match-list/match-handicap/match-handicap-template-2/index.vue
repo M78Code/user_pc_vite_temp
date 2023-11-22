@@ -253,6 +253,8 @@ function getCurState(hipo) {
 
 ::v-deep.bet-item-wrap-ouzhou {
   display: flex;
+  width: 78px;
+  height: 48px;
   border-radius: 2px;
   justify-content: center;
   align-items: center;

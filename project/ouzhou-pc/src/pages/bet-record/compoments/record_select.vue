@@ -30,7 +30,9 @@
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" :offset="[200, 10]" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="date" range :minimal="true" ref="dateRef" />
+                  <q-date v-model="date" range :minimal="true" ref="dateRef"
+                          :locale="dateLocal"
+                  />
                 </q-popup-proxy>
               </q-icon>
             </template>
@@ -49,6 +51,15 @@ import { onMounted, ref, watch } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
+const isZH = true
+const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+const months = [...Array(12)].map((v, i) => i + 1 + '月')
+const dateLocal = isZH ? {
+  days,
+  daysShort: days,
+  months,
+  monthsShort: months,
+} : {}
 const props = defineProps({
   current_tab: {
     type: String,
@@ -243,7 +254,8 @@ div.q-menu {
 .btn-group {
   height: 34px;
   //width: 330px;
-  background: var(--q-gb-bg-c-6);
+  -background: var(--q-gb-bg-c-6); 
+  background: #E2E2E2; 
   border-radius: 16px;
   box-sizing: border-box;
   display: flex;

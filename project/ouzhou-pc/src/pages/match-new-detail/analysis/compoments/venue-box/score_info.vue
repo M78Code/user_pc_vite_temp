@@ -4,7 +4,7 @@
  * @Description: 赛事分析页赛事比分
 -->
 <template>
-  <div class="box-bc" :key="refshValue">
+  <div class="box-bc">
     <q-table :rows="data" separator="none" :columns="columns" row-key="name" hide-pagination
              no-data-label="暂无比分数据"
              :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
@@ -101,7 +101,6 @@ const props = defineProps({
 });
 
 const data = ref([]);
-const refshValue = ref(1)
 
 const padding_value = ref("1px 0px 1px 6px");
 
@@ -110,15 +109,10 @@ const columns = ref([]);
 //   足球篮球
 const get_base_data = (val) => {
   const detail_info = props.detail_info;
+  console.log("更新")
   const list = [
-    {
-      name: detail_info["mhn"],
-      key: "home",
-    },
-    {
-      name: detail_info["man"],
-      key: "away",
-    },
+    {name: detail_info["mhn"], key: "home" },
+    { name: detail_info["man"], key: "away" },
   ];
   let res = "";
   if (!_.isEmpty(val) && ["1", "2", "3"].includes(detail_info.csid)) {
@@ -145,7 +139,6 @@ const get_base_data = (val) => {
 const get_score_result = (list, val) => {
   let result = [];
   const detail_info = props.detail_info;
-  console.log(detail_info,"detail_info--==-")
   result = list.map((item) => {
     if (detail_info.csid == 1 || detail_info.csid == 3) {
       return {
@@ -263,11 +256,9 @@ const format_msc = (detials) => {
   }
 
   let both_data = [];
-  Object.keys(msc)
-    .sort()
-    .map((key) => {
-      both_data[key] = msc[key];
-    });
+  Object.keys(msc).sort().map((key) => {
+    both_data[key] = msc[key];
+  });
   for (let i in both_data) {
     let item = parseInt(i.replace("S", ""));
     if (item >= 120 && item < 160) {
@@ -333,17 +324,14 @@ const get_icon = (icon) => {
 watch(
   () => props.detail_info,
   (res) => {
-    if (res.csid == 1) {
+    if (res.csid == 1)   {
       padding_value.value = "1px 0px 1px 6px";
     } else {
       padding_value.value = "1px 0px 1px 0px";
     }
     const msc_data = [];
     // let active_index = "";
-    let current_data = {
-      home: 0,
-      away: 0,
-    };
+    let current_data = {home: 0,away: 0};
     if (res.ms != 0 && res.mmp == "0") {
       Object.assign(res, {
         mmp: "8",
@@ -403,33 +391,57 @@ watch(
       if (!["1", "2", "3"].includes(res.csid)) {
         format_msc(res);
       }
-
-      //   computed_score(res)// 计算总分
     }
+    // get_base_data(res);
   },
-  { immediate: true }
+  { immediate: false, deep: true }
 );
 
 
 watch(
   () => props.score_list,
   (val) => {
+    console.log("props.score_list--watch",val)
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
     get_base_data(val);
   },
-  { immediate: true }
+  { immediate: false, deep: true }
 );
 
 
-
-onMounted(() => {
-  setInterval(()=>{
-    ++refshValue.value
-  },2000)
-});
-
-
+// const score_list = computed(()=>{
+//   const obj = detail_info.value || {}
+//   let result = {}
+//
+//   if (obj.msc && obj.msc.length>0 ) {
+//     for (const item of obj.msc) {
+//       const list = item.split('|')
+//       const score_list = list[1].split(':')
+//       result[list[0]] = {
+//         home:score_list[0],
+//         away:score_list[1],
+//         percentage:(Number (score_list[0]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
+//         away_percentage:(Number (score_list[1]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
+//       }
+//     }
+//   }else{
+//     for (const key in obj.msc) {
+//       const home = obj.msc[key]['home']
+//       const away = obj.msc[key]['away']
+//       result[key] = {
+//         home,
+//         away,
+//         percentage:(Number (home) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
+//         away_percentage:(Number (away) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
+//       }
+//
+//     }
+//   }
+//   return result
+// })
+//
+//
 // 计算名字
 const computed_process_name = computed(() => {
   let { detail_info } = props || {};
