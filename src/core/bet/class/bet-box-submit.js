@@ -575,6 +575,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 获取限额 常规
         get_query_bet_amount_common(bet_obj)
     }
+    // 订阅投注项的 ws
     set_market_id_to_ws()
 }
 
