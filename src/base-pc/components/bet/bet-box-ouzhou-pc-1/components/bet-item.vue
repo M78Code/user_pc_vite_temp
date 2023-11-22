@@ -15,8 +15,7 @@
                 <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
             </div>
-
-
+           
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
                 <div class="f-c-c bet-money">
                     <div class="show_img" v-if="items.red_green" >

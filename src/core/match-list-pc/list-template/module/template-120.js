@@ -11,8 +11,8 @@ import * as TemplateCommon from "./template-common.js"
       _hpid: 37,
       ols: [
         { _hpid: 37, ot: '1', class: 'no-handicap' },
-        { _hpid: 37, ot: '2', class: 'no-handicap' },
         { _hpid: 37, ot: 'X', class: 'no-handicap' },
+        { _hpid: 37, ot: '2', class: 'no-handicap' },
       ],
     },
     {
@@ -64,7 +64,11 @@ export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
   let odds_list =  TemplateCommon.get_current_odds_list(template_108.main_handicap_list, { first_hpid, second_hpid })
   return odds_list
 }
-
+// 获取hots赔率模板
+export const get_hots_odds_list = () => {
+  let hots_odds_list = TemplateCommon.get_hots_odds_list(template_108.main_handicap_list)
+  return hots_odds_list;
+}
 
 //   列表宽度计算模板
 export const  width_config ={
