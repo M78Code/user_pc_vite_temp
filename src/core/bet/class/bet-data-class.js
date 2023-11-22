@@ -168,8 +168,6 @@ this.bet_appoint_ball_head= null */
     this.bet_flag = true
     // 预约投注最小值
     this.bet_pre_min_odd_value = 0
-    // 限额/投注接口报错 
-    this.bet_before_message = {}
     // 投注栏拖拽配置
     this.bet_box_draggable = {
       x: window.innerWidth * 0.6,
@@ -745,16 +743,19 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
   }
   
+  // 设置投注后的数据
+  set_bet_list_info(list) {
+    if(this.is_bet_single){
+      this.bet_single_list = lodash_.cloneDeep(list)
+    }else{
+      this.bet_s_list = lodash_.cloneDeep(list)
+    }
+  } 
+
   // 设置键盘信息 
   // 限额 /
   set_bet_keyboard_config(val) {
     this.bet_keyboard_config = val
-    this.set_bet_data_class_version()
-  }
-
-  // 设置 接口报错的显示
-  set_bet_before_message(val) {
-    this.bet_before_message = val 
     this.set_bet_data_class_version()
   }
 
