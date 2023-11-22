@@ -792,10 +792,11 @@ class MatchMeta {
       } else {
         MatchResponsive.set_ball_seed_league_count(match)
       }
-
+      
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, list.map(t => t.mid))
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)
+      
       Object.assign(match, params, {
         is_show_ball_title,
         is_show_league: index === 0 ? true : list[index].tid !== list[index - 1].tid
@@ -831,9 +832,10 @@ class MatchMeta {
       this.match_mids = lodash.uniq(result_mids)
       // 欧洲版首页热门赛事
       const arr_data = match_list.filter((t) => t.mid)
+      
       if (type === 2){
-        // 不获取赔率
-        this.handle_update_match_info({ list: arr_data, warehouse })
+        // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 type: 'cover'
+        this.handle_update_match_info({ list: arr_data, warehouse, type: is_collect ? 'cover' : 'update' })
       } else if (type === 1) {
         // 获取赔率
         this.handle_submit_warehouse({ list: arr_data, warehouse })
@@ -1005,6 +1007,9 @@ class MatchMeta {
    */
   handle_update_match_info(config) {
     let { list = [], type = '',  warehouse = MatchDataBaseH5 } = config
+
+    console.log('arr_data:', list)
+
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       // MatchResponsive.get_ball_seed_methods(t)
