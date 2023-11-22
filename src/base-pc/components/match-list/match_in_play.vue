@@ -25,7 +25,6 @@
   color: var(--q-gb-t-c-5);
   font-size: 18px;
   margin-bottom: 10px;
-  margin-top: 24px;
   >span {
     font-size: 13px;
     font-weight: 400;

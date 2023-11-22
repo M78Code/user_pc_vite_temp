@@ -26,7 +26,9 @@ export const sport_columns = {
       align: "left",
       label: "Q2",
       field: "q2",
-      icon: "red_card",
+      // 48360 【SIT】【欧洲版二期】【PC】足球，比分板，黄牌和红牌的图标位置，需要对调
+      // icon: "red_card",
+      icon: "y_card",
       headerStyle: "width: 33px",
     },
     {
@@ -34,7 +36,9 @@ export const sport_columns = {
       align: "left",
       label: "HT",
       field: "ht",
-      icon: "y_card",
+      //48360 【SIT】【欧洲版二期】【PC】足球，比分板，黄牌和红牌的图标位置，需要对调
+      // icon: "y_card",
+      icon: "red_card",
       headerStyle: "width: 33px",
     },
     {

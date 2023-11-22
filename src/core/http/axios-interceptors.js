@@ -234,10 +234,10 @@ function handle_count_error(error) {
 
     // 接受ws断开命令  
     // 此处在接口 出现 502 后 一直死循环请求接口，导致页面崩溃
-    useMittEmit(MITT_TYPES.EMIT_API_DOMAIN_UPD_CMD, {
-      type: "http",
-      data: JSON.stringify(error),
-    });
+    // useMittEmit(MITT_TYPES.EMIT_API_DOMAIN_UPD_CMD, {
+    //   type: "http",
+    //   data: JSON.stringify(error),
+    // });
     // FNANI_STATUS.err_count = {};
   }
 }

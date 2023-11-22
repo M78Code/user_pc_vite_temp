@@ -145,6 +145,7 @@ const filter_min_mi_300 = (originalArray)=>{
 const choose_filter_tab = (item) => {
   // 获取最新的 数据
   handle_click_menu_mi_1(item)
+  MenuData.set_current_ball_type(item.mif - 100)
 };
 
 /**
