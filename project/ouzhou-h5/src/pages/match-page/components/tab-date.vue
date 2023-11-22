@@ -134,6 +134,7 @@ const changeDatetab = (item, index) => {
 };
 onMounted(() => {
     setDefaultData(MenuData.menu_mi.value || '101');//默认足球
+    store.curSelectedOption = store.selectOptions[0]
 })
 
 onUnmounted(() => {
