@@ -873,7 +873,7 @@ class MenuData {
     return (this.match_list_api_config || {}).guanjun == "dianjing-guanjun";
   }
 
-  // 是否是 top_events
+  // 是否是 featured
   is_featured() {
     return this.mid_menu_result.filter_tab == 1001
   }
