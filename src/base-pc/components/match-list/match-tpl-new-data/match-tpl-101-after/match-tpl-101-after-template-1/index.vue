@@ -19,8 +19,7 @@
     <div v-tooltip="{ content: t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
       <!-- 图片资源有问题，先用文字替代  -->
-      <div :style="compute_css_obj({ key: 'pc-home-score-board' })">
-      </div>
+      <div :style="compute_css_obj({ key: 'pc-home-score-board' })"></div>
     </div>
   </div>
 </template>
