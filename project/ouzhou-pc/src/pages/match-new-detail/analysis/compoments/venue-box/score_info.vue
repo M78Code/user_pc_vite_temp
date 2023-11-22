@@ -139,7 +139,6 @@ const get_base_data = (val) => {
 const get_score_result = (list, val) => {
   let result = [];
   const detail_info = props.detail_info;
-  console.log(detail_info,"detail_info--==-")
   result = list.map((item) => {
     if (detail_info.csid == 1 || detail_info.csid == 3) {
       return {
@@ -400,7 +399,7 @@ watch(
 
 
 watch(
-  () => score_list,
+  () => props.score_list,
   (val) => {
     console.log("props.score_list--watch",val)
     const detail_info = props.detail_info;
@@ -411,38 +410,38 @@ watch(
 );
 
 
-const score_list = computed(()=>{
-  const obj = detail_info.value || {}
-  let result = {}
-
-  if (obj.msc && obj.msc.length>0 ) {
-    for (const item of obj.msc) {
-      const list = item.split('|')
-      const score_list = list[1].split(':')
-      result[list[0]] = {
-        home:score_list[0],
-        away:score_list[1],
-        percentage:(Number (score_list[0]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
-        away_percentage:(Number (score_list[1]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
-      }
-    }
-  }else{
-    for (const key in obj.msc) {
-      const home = obj.msc[key]['home']
-      const away = obj.msc[key]['away']
-      result[key] = {
-        home,
-        away,
-        percentage:(Number (home) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
-        away_percentage:(Number (away) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
-      }
-
-    }
-  }
-  return result
-})
-
-
+// const score_list = computed(()=>{
+//   const obj = detail_info.value || {}
+//   let result = {}
+//
+//   if (obj.msc && obj.msc.length>0 ) {
+//     for (const item of obj.msc) {
+//       const list = item.split('|')
+//       const score_list = list[1].split(':')
+//       result[list[0]] = {
+//         home:score_list[0],
+//         away:score_list[1],
+//         percentage:(Number (score_list[0]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
+//         away_percentage:(Number (score_list[1]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
+//       }
+//     }
+//   }else{
+//     for (const key in obj.msc) {
+//       const home = obj.msc[key]['home']
+//       const away = obj.msc[key]['away']
+//       result[key] = {
+//         home,
+//         away,
+//         percentage:(Number (home) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
+//         away_percentage:(Number (away) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
+//       }
+//
+//     }
+//   }
+//   return result
+// })
+//
+//
 // 计算名字
 const computed_process_name = computed(() => {
   let { detail_info } = props || {};
