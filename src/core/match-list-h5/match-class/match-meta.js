@@ -796,7 +796,7 @@ class MatchMeta {
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, list.map(t => t.mid))
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)
-      debugger
+      
       Object.assign(match, params, {
         is_show_ball_title,
         is_show_league: index === 0 ? true : list[index].tid !== list[index - 1].tid
