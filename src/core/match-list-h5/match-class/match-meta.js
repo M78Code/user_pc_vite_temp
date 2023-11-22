@@ -551,6 +551,21 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取欧洲版联赛数量统计
+   */
+  async get_ouzhou_leagues_data (date) {
+    const res = await api_match_list.get_leagues_list({
+      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
+      // sportId: 1,
+      selectionHour: date
+    })
+    MatchCollect.get_collect_match_data()
+    const list = lodash.get(res, 'data', [])
+    if (!list) return
+    return list
+  }
+
+  /**
    * @description 处理欧洲版首页热门赛事
    */
   handle_ouzhou_home_data (res) {

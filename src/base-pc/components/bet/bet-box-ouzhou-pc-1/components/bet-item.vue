@@ -36,7 +36,7 @@
 
             <div class="fw-e-s bet-right" v-else>
                 <div class="f-c-c bet-odds">
-                    <span class="font14 font700 mr-10">{{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}</span>
+                    <span class="font14 font700 mr-10">{{ compute_value_by_cur_odd_type(items.odds_after,'','',items.sportId) }}</span>
                 </div>
                 <!-- <BetResult :items="items" /> -->
             </div>

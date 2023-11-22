@@ -19,11 +19,11 @@
             <span :class="{'active': sort_active === 2}" @click="sortChange(2)">{{ i18n_t('bet_record.settle_time') }}</span>
             <span :class="{'active': sort_active === 1}" @click="sortChange(1)">{{ i18n_t('bet_record.bet_time') }}</span>
           </div>
-          <div 
-            :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
+          <!-- 未结算 提前结算按钮 1期隐藏 -->
+          <!-- <div :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
             @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)"
             v-if="UserCtr.user_info.settleSwitch == 1 && !lodash.isEmpty(BetRecordClass.list_data)"
-            >{{ i18n_t('early.btn2') }}</div>
+            >{{ i18n_t('early.btn2') }}</div> -->
       </div>
       <template v-if="!lodash.isEmpty(BetRecordClass.early_money_list)">
         <!-- 订单内容 -->

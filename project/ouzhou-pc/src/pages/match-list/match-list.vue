@@ -34,11 +34,11 @@
         <!-- <template v-slot:before> -->
         <!-- 头部15 Mins模块 -->
         <div v-if="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
-          <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
+          <CurrentMatchTitle :title_value="$t('ouzhou.match.15_mins')" :show_more_icon="false" />
           <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
         </div>
         <!-- 头部Featured Matches模块 -->
-          <FeaturedMatches v-if="MenuData.is_featured()"  class="match-list-item" />
+          <FeaturedMatches v-if="MenuData.is_featured()"/>
       
         <!-- </template> -->
 
@@ -60,9 +60,9 @@
         </template>
       </scroll-list>
     </load-data>
-    <ConmingSoon v-show="MenuData.is_top_events() || !match_list_card_key_arr.length" :is_nodata="MenuData.is_top_events()" :style="{
+    <!-- <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-    }" />
+    }" /> -->
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
@@ -185,14 +185,13 @@ export default {
       MatchListCardDataClass_match_list_card_key_arr();
       proxy?.$forceUpdate();
     });
-    const get_data_info = async () => {
+    const get_data_info = async (type = 0) => {
       // 判断是不是首页下的 featured 页面
-      // if (MenuData.is_featured()) {
+      if (MenuData.is_featured() || type == 1001) {
         const { mins15_list= [], match_count = 0 } = await init_home_matches();
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
-        
-      // }
+      }
     }
 
     return {
