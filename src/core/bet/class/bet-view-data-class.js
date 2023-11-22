@@ -7,7 +7,6 @@ import { ref } from "vue";
 import lodash_ from "lodash"
 import BetData from "./bet-data-class"
 
-
 class BetViewData {
   constructor() { 
     this.init()
