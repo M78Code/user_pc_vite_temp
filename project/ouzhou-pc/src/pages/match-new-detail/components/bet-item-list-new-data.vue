@@ -26,7 +26,14 @@
 
     <!-- 赔率 -->
     <div class="odds" :style=" [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes( +ol_data._hpid ) && utils.is_iframe ? 'flex:1.5' : '' ">
-      <div v-if="['seal'].includes(odds_state)" class="lock" />
+      <!-- <div v-if="['seal'].includes(odds_state)" class="lock" /> -->
+      <div style="text-align: center; width: 100%" v-if="['seal'].includes(odds_state)">
+                        <img
+                            class="vector"
+                            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
+                            alt=""
+                        />
+                    </div>
       <div v-else class="odds-arrows-wrap">
         <span :class="{ default: true, up: odds_lift == 'up', down: odds_lift == 'down', active: ol_data.oid == current_ol.oid }">
           {{ numberRetain(match_odds) }}
@@ -45,6 +52,7 @@
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from "lodash";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import { get_odds_active, utils } from "src/core/index.js";
 import { format_odds_value } from "src/core/format/module/format-odds.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
@@ -373,5 +381,9 @@ onUnmounted(() => {
 }
 .left_cell {
   text-align: left !important;
+}
+.vector {
+    width: 16px;
+    height: 16px;
 }
 </style>
