@@ -39,8 +39,14 @@
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
-      <q-menu style="background:#fff;border-radius:2px;box-shadow:0 0 4px 2px rgb(0 0 0 / 10%)">
-          <q-list style="min-width: 280px;">
+      <q-menu 
+        style="background:#fff;
+        border-radius:2px;
+        box-shadow:0 0 4px 2px rgb(0 0 0 / 10%);
+        margin-top:15px !important;"
+        anchor="bottom left" self="top middle"
+        >
+          <q-list style="min-width: 280px; ">
             <q-item clickable @click="goto_secondary_module('announcement')">
               <q-item-section>
                 <div class="flex title">
@@ -331,6 +337,7 @@ export default defineComponent({
       text-align: right;
     }
   }
+  
 }
 .q-item{
   padding: 8px 0 !important;
