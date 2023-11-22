@@ -21,7 +21,7 @@
         打印数据
       </div>
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
-      length---
+      length--- {{ match_list_card_key_arr.length }}
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
@@ -60,7 +60,7 @@
         </template>
       </scroll-list>
     </load-data>
-    <ConmingSoon v-show="MenuData.is_top_events() || !match_list_card_key_arr.length" :is_nodata="MenuData.is_top_events()" :style="{
+    <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }" />
     <!-- 联赛筛选层 -->
@@ -185,9 +185,9 @@ export default {
       MatchListCardDataClass_match_list_card_key_arr();
       proxy?.$forceUpdate();
     });
-    const get_data_info = async () => {
+    const get_data_info = async (type = 0) => {
       // 判断是不是首页下的 featured 页面
-      if (MenuData.is_featured()) {
+      if (MenuData.is_featured() || type == 1001) {
         const { mins15_list= [], match_count = 0 } = await init_home_matches();
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list

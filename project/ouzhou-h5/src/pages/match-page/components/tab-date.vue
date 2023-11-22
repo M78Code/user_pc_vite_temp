@@ -15,13 +15,13 @@
                 <!-- league的下拉项 -->
                 <div class="select" v-if="store.tabActive == 'league'">
                                 <span class="select-text">{{
-                                    curSelectedOption.label
+                                    store.curSelectedOption.label
                                 }}</span>
                                 <span class="down_arrow" @click="toggerModel"></span>
                             </div>
                             <template v-if="store.tabModel && store.tabActive == 'league'">
                                 <ul class="option-list">
-                                    <template v-for="(item, index) in selectOptions" :key="index">
+                                    <template v-for="(item, index) in store.selectOptions" :key="index">
                                         <li :class="store.dateIndex == index ? 'active' : ''
                                         " @click="changeDate(index)">
                                             {{ item.label }}
@@ -77,14 +77,6 @@ const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
 const week = dateWeekMatchesFormat();
 
-// 下拉选
-const selectOptions = reactive([
-    { label: "Next 12 Hours", time: "12hours", timestamp: 12 }, //12小时后的时间戳
-    { label: "Next 24 Hours", time: "24hours", timestamp: 24 },
-    { label: "3 Day", time: "3day", timestamp: 72 },
-    { label: "7 Day", time: "7day", timestamp: 168 },
-]);
-const curSelectedOption = ref(selectOptions[0])
 
 /**
  * tab点击
@@ -93,6 +85,8 @@ const curSelectedOption = ref(selectOptions[0])
 const changeTab = (name, index) => {
     store.tabActive = name;
     store.tabModel = false;
+    store.curSelectedOption = store.selectOptions[0]
+    store.dateIndex = 0
     emit("changeTab", name);
 }
 /**
@@ -108,8 +102,8 @@ const toggerModel = () => {
 const changeDate = (index) => {
     store.dateIndex = index;
     store.tabModel = false;
-    emit("changeDate", selectOptions[index].timestamp);
-    curSelectedOption.value = selectOptions[index]
+    emit("changeDate", store.selectOptions[index].timestamp);
+    store.curSelectedOption = store.selectOptions[index]
 }
 /**
  * 时间选择tab-赛事列表筛选
@@ -140,6 +134,7 @@ const changeDatetab = (item, index) => {
 };
 onMounted(() => {
     setDefaultData(MenuData.menu_mi.value || '101');//默认足球
+    store.curSelectedOption = store.selectOptions[0]
 })
 
 onUnmounted(() => {
@@ -174,6 +169,7 @@ const areaListChange = (item,index) => {
     const move_index = store.areaList.findIndex((t, _index) => _index === index);
     scrollRefArea.value.scrollTo(move_index - 2, "start-force");
     store.area_tab_index = index;
+    store.selectArea = item
     emit("changeArea", item.id);
 }
 </script>

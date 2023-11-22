@@ -78,6 +78,8 @@ class MatchMeta {
       menu_lv_v1_sl = MenuData.get_menu_lvmi_list(menu_lv_v1)
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
+
+    
     // 设置 元数据计算 流程
     MatchResponsive.set_is_compute_origin(true)
 
@@ -564,6 +566,22 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取欧洲版联赛详细比赛
+   */
+  async get_ouzhou_leagues_list_data (tid) {
+    const res = await api_match_list.get_leagues_list_match({
+      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
+      // sportId: 1,
+      tid: tid
+    })
+    // console.log('get_ouzhou_leagues_list_data', res)
+    MatchCollect.get_collect_match_data()
+    if (res.code !== '200') return this.set_page_match_empty_status(true);
+    const list = lodash.get(res.data, 'data', [])
+    this.handler_match_list_data({ list: list, is_virtual: false })
+  }
+
+  /**
    * @description 处理欧洲版首页热门赛事
    */
   handle_ouzhou_home_data (res) {
@@ -625,12 +643,20 @@ class MatchMeta {
       euid = MenuData.get_euid(mid+''+lv1_mi)
     }
     const params = this.get_base_params(euid)
-    this.match_mids = []
+    this.clear_match_info()
     const res = await api_common.get_collect_matches(params)
-    MatchCollect.get_collect_match_data(true)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list, is_virtual: false, is_collect: true })
+    MatchCollect.get_collect_match_data()
+    if (list.length > 0) {
+      this.handler_match_list_data({ list: list, is_virtual: false, is_collect: true })
+      // 该赛事是否收藏
+      list.forEach((t) => {
+        MatchCollect.set_match_collect_state(t, true)
+      })
+    } else {
+      this.set_page_match_empty_status(true);
+    }
   }
 
   /**
@@ -699,7 +725,9 @@ class MatchMeta {
     } else {
       target_matchs = this.complete_matchs.filter(t => t.mid !== mid)
     }
+    this.clear_match_info()
     // this.match_mids = target_mids
+    console.log(target_matchs)
     this.handler_match_list_data({ list: target_matchs, is_virtual: false, is_collect: true, type: 2 })
   }
 
@@ -893,6 +921,15 @@ class MatchMeta {
   }
 
   /**
+   * @description 清除赛事信息
+   */
+  clear_match_info () {
+    this.match_mids = []
+    this.complete_matchs = []
+    this.complete_mids = []
+  }
+
+  /**
    * @description 获取赛事赔率
    * @param { mids } mids
    */
@@ -940,7 +977,7 @@ class MatchMeta {
    * @param {*} cmd 
    */
   handle_ws_directive ({ cmd = '', data = {} }) {
-    console.log(cmd, data)
+    // console.log(cmd, data)
     // 赛事新增
     if (['C109'].includes(cmd)) {
       const { cd = [] } = data

@@ -63,6 +63,7 @@ export default defineComponent({
           root: 0,
           filter_tab: 1001, //
         }
+        MenuData.set_left_menu_result({})
         MenuData.set_mid_menu_result(obj)
         MenuData.set_current_ball_type(0)
       }
