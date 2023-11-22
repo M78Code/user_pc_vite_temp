@@ -22,6 +22,9 @@
     </div>
      <!-- 主队信息 -->
      <div class="row-item">
+         <!-- 红牌数 -->
+         <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.home',0)>0"
+            :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
@@ -34,6 +37,9 @@
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
+          <!-- 红牌数 -->
+          <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away',0) >0"
+            :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div
@@ -283,6 +289,7 @@ onUnmounted(() => {
     }
   }
   .row-item {
+    position: relative;
     display: flex;
     height: 16px;
     align-items: center;
@@ -296,6 +303,23 @@ onUnmounted(() => {
     .score {
       font-weight: 500;
       color: var(--q-gb-bg-c-2);
+    }
+  }
+  .red-ball {
+    position: absolute;
+    top: 0px;
+    left:1px;
+    height:14px;
+    line-height: 14px;
+    color:#fff;
+    min-width: 10px;
+    padding: 0 1px;
+    text-align: center;
+    border-radius: 1px;
+    font-size: 12px;
+    background-color: #FFA800;
+    &.flash {
+      animation: 1s text-flash linear infinite normal;
     }
   }
 }
