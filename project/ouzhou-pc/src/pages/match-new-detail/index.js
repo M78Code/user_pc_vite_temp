@@ -90,6 +90,13 @@ export function usedetailData(route) {
     if (detail_list.value?.length > 0) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
+        if (i.hpid==103) {  //hpid103处理
+          i.title = [
+            {otd:1},
+            {otd:0},
+            {otd:2},
+          ]
+        }
       }
     }
     let list = all_list.value.filter((item) =>
@@ -107,6 +114,12 @@ export function usedetailData(route) {
       list || []
     );
     detail_list.value = lodash_.get(getMidInfo(route.params.mid), "odds_info") || []
+
+    console.log(1111111111,detail_list.value)
+
+    
+
+
 
     show_close_thehand.value = list.length == 0;
 

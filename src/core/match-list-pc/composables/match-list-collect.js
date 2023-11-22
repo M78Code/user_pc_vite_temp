@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import lodash from 'lodash';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { UserCtr, t, PageSourceData, MenuData } from "src/core/index.js";
@@ -6,6 +6,7 @@ import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-cla
 import { api_common, api_match } from "src/api/index.js";
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 // 前端控制是否禁用收藏功能   ENABLE_COLLECT_API
 const enable_collect_api = ref(false);
@@ -185,6 +186,22 @@ const mx_collect_match = (match) => {
   });
 };
 
+const length_0_fn = ()=>{
+  // 跳转到首页
+  let obj = {
+    root: 0,
+    filter_tab: 1001, 
+  }
+  MenuData.set_is_collect(false)
+  MenuData.set_menu_root(0);
+  MenuData.set_left_menu_result({})
+  MenuData.set_mid_menu_result(obj)
+  MenuData.set_current_ball_type(0)
+  nextTick(()=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 0)
+  })
+}
+
 /**
  * @description 联赛收藏
  * @param  {object} match  单场赛事信息
@@ -236,7 +253,9 @@ const mx_collect_leagues = (match, is_champion) => {
           // 在收藏列表页 移除收藏
           if ((PageSourceData.page_source == "collect"  || MenuData.is_collect) && !cur_collect_state) {
             // 移除联赛卡片
-            MatchListCard.remove_league(match.tid);
+            MatchListCard.remove_league(match.tid, {
+              length_0_fn
+            });
             let match_length;
             if (MenuData.is_export()) {
               match_length =

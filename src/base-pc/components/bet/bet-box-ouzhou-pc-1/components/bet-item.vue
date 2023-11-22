@@ -5,8 +5,7 @@
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
-                    <span class="text-flow">{{items.handicap}}</span> 
-                    <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
+                    <span class="text-flow" v-html="items.handicap"></span> 
                 </div>
                 <div class="w-100 h15 f-s-c my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
@@ -226,10 +225,14 @@ const set_delete = () => {
         //http://api.sportxxxvo3.com/
     }
     .text-flow{
-        max-width: 74%;
+        max-width: 90%;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
     }
     .text-flow-none{
         width: 76%;
@@ -253,4 +256,6 @@ const set_delete = () => {
         }
     }
 }
+
+
 </style>
