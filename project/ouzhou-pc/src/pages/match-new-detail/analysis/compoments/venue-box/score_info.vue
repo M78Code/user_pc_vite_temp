@@ -35,28 +35,28 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span :class="[`stage-${detail_info.mmp}`,'table-name']">{{ props.row.name }}</span>
+            <span :class="[ `stage-${detail_info.mmp}`,'table-name']">{{ props.row.name }}</span>
           </q-td>
           <q-td key="q1" :props="props">
-            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q1 }}</span>
+            <span :class="[detail_info?.course === 'Q1' ? 'heightLight' : '']">{{ props.row.q1 }}</span>
           </q-td>
           <q-td key="q2" :props="props">
-            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q2 }}</span>
+            <span :class="[detail_info?.course === 'Q2' ? 'heightLight' : '']">{{ props.row.q2 }}</span>
           </q-td>
           <q-td key="ht" :props="props">
-            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.ht }}</span>
+            <span :class="[detail_info?.course === 'HT' ? 'heightLight' : '']">{{ props.row.ht }}</span>
           </q-td>
           <q-td key="q3" :props="props">
-            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q3 }}</span>
+            <span :class="[detail_info?.course === 'Q3' ? 'heightLight' : '']">{{ props.row.q3 }}</span>
           </q-td>
           <q-td key="q4" :props="props">
-            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q4 }}</span>
+            <span :class="[detail_info?.course === 'Q4' ? 'heightLight' : '']">{{ props.row.q4 }}</span>
           </q-td>
           <q-td key="q5" :props="props">
-            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.q5 }}</span>
+            <span :class="[detail_info?.course === 'Q5' ? 'heightLight' : '']">{{ props.row.q5 }}</span>
           </q-td>
           <q-td key="set" :props="props">
-            <span :class="[`stage-${detail_info.mmp}`]">{{ props.row.set }}</span>
+            <span>{{ props.row.set }}</span>
           </q-td>
           <q-td key="t" :props="props">
             <span style="font-weight: 500; color: #ff7000">{{props.row.t}}</span>
@@ -98,7 +98,6 @@ const columns = ref([]);
 //   足球篮球
 const get_base_data = (val) => {
   const detail_info = props.detail_info;
-  console.log(detail_info,"detail_info")
   const list = [
     {
       name: detail_info["mhn"],
@@ -459,6 +458,9 @@ onMounted(() => {});
   text-overflow: ellipsis;
 }
 
+.heightLight{
+  color: rgb(255, 112, 0) !important;
+}
 
 //.stage-13,.stage-14,.stage-15,
 //.stage-302,.stage-16,.stage-303{
