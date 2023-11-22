@@ -8,8 +8,35 @@
     <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <div style="display: flex;">
-          <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
+        <div style="display: flex; position: relative;">
+          <input 
+            class="search-input" 
+            :class="is_focus ? 'change_width' : ''"
+            @focus="show_search" 
+            v-model="text"
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`"
+            @keyup.enter="get_search_data(text)"
+            @compositionstart="isTyping = true"
+            @compositionend="
+              (event) => {
+                isTyping = false;
+                handleInput(event);
+              }
+            "
+            @input="
+              (event) => {
+                if (!isTyping) handleInput(event);
+              }" 
+            />
+          <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
+          <img v-show="text" @click="text = ''" class="icon-close" :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
+            <!-- <template v-slot:prepend>
+              <i class="icon-search q-icon c-icon" size="10px"></i>
+            </template>
+            <template v-slot:append>
+              <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
+            </template> -->
+          <!-- <q-input borderless rounded @focus="show_search" v-model="text" label-color="primary"
             :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" :class="is_focus ? 'change_width' : ''"
             @keyup.enter="get_search_data(text)">
             <template v-slot:prepend>
@@ -18,7 +45,7 @@
             <template v-slot:append>
               <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
             </template>
-          </q-input>
+          </q-input> -->
           <span v-show="is_focus" class="btn" @click="close">{{ i18n_t('ouzhou.search.close') }}</span>
         </div>
         <searchCom v-if="SearchPCClass.search_isShow" />
@@ -114,23 +141,23 @@
 import { defineComponent, onMounted, ref,watch, onUnmounted } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
-import store from "src/store-redux/index.js";
 import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account } from 'src/api/index';
-import { loadLanguageAsync } from "src/core/index.js";
+import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
 import BetData from 'src/core/bet/class/bet-data-class.js';
 import {  LayOutMain_pc } from 'src/core/index.js'
+import { emit } from "licia/fullscreen";
 
 export default defineComponent({
   name: "RightHead",
   components: {
     searchCom
   },
-  setup() {
+  setup(props, {emit}) {
     const text = ref('')
     const route=useRoute()
     const userRouter=useRouter()
@@ -187,9 +214,9 @@ export default defineComponent({
           params: ['EURO', 'ASIA']
         }])
     //监听输入框内容改变，并搜索
-    watch(
-      () => text.value,
+    watch( text,
       (val) => {
+        console.log('asdasdasdsad');
         let trimVal = val.trim();
         get_search_data(trimVal);
       }
@@ -248,7 +275,8 @@ export default defineComponent({
     }
     // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
-      const target_class_list = ['q-field__native q-placeholder', 'serach-wrap column', 'sports-tab', 'tab', 'tab active', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible', 'windows desktop landscape', 'icon-close'];
+      console.log('eee',e.target.className);
+      const target_class_list = ['search-input change_width', 'icon-close'];
       if(is_focus.value && SearchPCClass.search_isShow) {
         if(!target_class_list.includes(e.target.className)) {
           SearchPCClass.set_search_isShow(false);
@@ -269,6 +297,9 @@ export default defineComponent({
     }
     const get_width = (props) => {
       is_focus.value = props.focus
+    }
+    const handleInput = (e) => {
+      context.$emit('input', e.target.value)
     }
     
     onMounted(() => {
@@ -303,7 +334,9 @@ export default defineComponent({
       LOCAL_PROJECT_FILE_PREFIX,
       is_focus,
       get_search_data,
-      close
+      close,
+      compute_local_project_file_path,
+      handleInput
     };
   
   }
@@ -478,7 +511,7 @@ export default defineComponent({
   }
 }
 .change_width {
-  width: 500px;
+  width: 500px !important;
 }
 .search-click .s-input {
   width: 500px;
@@ -497,5 +530,30 @@ export default defineComponent({
 .dialog_box{
   height: 100%;
   width: 100%;
+}
+.search-input {
+  width: 200px;
+  height: 40px;
+  border-radius: 40px;
+  border: none;
+  border: 1px solid #ffb275;
+  background-color: #ff7e19;
+  padding: 14px 15px;
+  padding-left: 30px;
+  outline:none;
+  color: #fff;
+}
+.icon-search {
+  position: absolute;
+  left: 15px;
+  top: 14px;
+}
+.icon-close {
+  position: absolute;
+  right: 52px;
+  top: 13px;
+}
+.search-input::placeholder {
+  color: #ffe5d1;
 }
 </style>
