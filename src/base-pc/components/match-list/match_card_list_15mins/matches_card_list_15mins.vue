@@ -1,6 +1,6 @@
 <template>
   <div class="matches-card-list-wrap">
-    <template2 :is_show_btn="matches_15mins_list.length >= 4">
+    <template2 :is_show_btn="matches_15mins_list.length > 4">
 		<div class="matches-card-list" v-for="(item, index) in matches_15mins_list" :key="item.id">
 			<MatchesCard15Mins :current_tab="get_match_info(item)" @click="jump_to_details(get_match_info(item))" />
 			<div class="split-line" v-show="index != matches_15mins_list.length - 1"></div>
