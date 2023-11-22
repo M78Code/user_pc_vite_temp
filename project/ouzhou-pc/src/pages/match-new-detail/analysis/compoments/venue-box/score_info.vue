@@ -411,7 +411,7 @@ watch(
 );
 
 
-/*const score_list = computed(()=>{
+const score_list = computed(()=>{
   const obj = detail_info.value || {}
   let result = {}
 
@@ -440,7 +440,7 @@ watch(
     }
   }
   return result
-})*/
+})
 
 
 // 计算名字

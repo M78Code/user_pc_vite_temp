@@ -342,11 +342,7 @@ const submit_handle = type => {
     // return
     api_betting.post_submit_bet_list(params).then(res => {
         // set_error_message_config(res)
-        betData.tipmsg=res.msg
-        BetViewDataClass.set_bet_before_message({
-            code: res.code,
-            message: res.message
-        })
+        // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
         if (res.code == 200) {
             // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
             //     code: res.code,
@@ -409,13 +405,13 @@ const submit_handle = type => {
                     obj.hid = item.marketId 
                     obj.mid = item.matchId 
                 })
-                BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
+                // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
             }else{
                 seriesOrders[0].orderDetailList.forEach( item => {
                     obj.hid = item.marketId 
                     obj.mid = item.matchId 
                 })
-                BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_s_list))
+                // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_s_list))
             }
             // 用户赔率分组
             obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
@@ -427,14 +423,6 @@ const submit_handle = type => {
         }
         set_error_message_config(res)
     })
-}
-
-// 设置投注后的数据 赔率不变更
-const set_bet_odds_after = (list = []) => {
-    return list.map(item => {
-        item.odds_after = item.odds
-        return item
-    } )
 }
 
 // 设置错误信息 
