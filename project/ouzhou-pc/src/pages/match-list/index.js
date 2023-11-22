@@ -209,7 +209,7 @@ export const init_home_matches = async () => {
         //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
         // );
       } catch (error) {
-          
+          console.log(error);
       }
     });
     return {
