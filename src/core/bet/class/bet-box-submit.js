@@ -399,7 +399,6 @@ const submit_handle = type => {
                 }
 
             }
-            console.error('   BetViewDataClass.set_orderNo_bet_obj',   BetViewDataClass.orderNo_bet_obj)
             let obj = {};
             obj.hid = ''
             obj.mid = ''
