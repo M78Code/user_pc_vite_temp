@@ -117,7 +117,6 @@ const get_ouzhou_home_data = async () => {
 
 const handle_ouzhou_home_data = (res) => {
   const { p15_list, dataList } = res
-  console.log(p15_list, dataList)
   // 15 分
   if (p15_list.length > 0) time_events.value = p15_list.map(t => {
     const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
