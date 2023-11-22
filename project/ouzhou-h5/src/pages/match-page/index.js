@@ -12,5 +12,12 @@ export const store = reactive({
     tabActive: 'matches',
     leaguesMatchs: [], // top-leagues页面的渲染数据
     isLeagueDetail: false, // league 是否为联赛点击后的列表页
-    selectLeague: {} // league 当前选择的联赛
+    selectLeague: {}, // league 当前选择的联赛
+    curSelectedOption: {},
+    selectOptions: [
+        { label: "Next 12 Hours", time: "12hours", timestamp: 12 }, //12小时后的时间戳
+        { label: "Next 24 Hours", time: "24hours", timestamp: 24 },
+        { label: "3 Day", time: "3day", timestamp: 72 },
+        { label: "7 Day", time: "7day", timestamp: 168 },
+    ]
 })

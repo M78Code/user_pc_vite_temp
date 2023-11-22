@@ -342,6 +342,11 @@ const submit_handle = type => {
     // return
     api_betting.post_submit_bet_list(params).then(res => {
         // set_error_message_config(res)
+        betData.tipmsg=res.msg
+        BetViewDataClass.set_bet_before_message({
+            code: res.code,
+            message: res.message
+        })
         if (res.code == 200) {
             // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
             //     code: res.code,
@@ -566,13 +571,13 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
     }
+
     // 设置投注内容 
-    nextTick(()=>{
-        BetData.set_bet_read_write_refer_obj(bet_obj)
-        // 订阅投注项的 ws
-        set_market_id_to_ws()
-    })
-   
+    BetData.set_bet_read_write_refer_obj(bet_obj)
+
+    // 订阅投注项的 ws
+    set_market_id_to_ws()
+    
     // 判断获取限额接口类型
     if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) ||  ['esports_bet','vr_bet'].includes(other.bet_type)){
         // C01/B03/O01  电竞/电竞冠军/VR体育

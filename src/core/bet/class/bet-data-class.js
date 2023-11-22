@@ -18,7 +18,8 @@ class BetData {
     // this.bet_list = [];
      // 是否预约
     this.is_bet_pre = false
-    //是否接受更好赔率
+    
+    //是否接受更好赔率 
     this.bet_is_accept = false;
     // 接受更好赔率规则
     this.better_rules_show = false
@@ -540,6 +541,7 @@ this.bet_appoint_ball_head= null */
     this.single_list_copy = []
     this.bet_single_list = []
     this.bet_read_write_refer_obj = {}
+    this.bet_oid_list = []
     this.set_bet_amount(0)
     this.set_bet_data_class_version()
   }

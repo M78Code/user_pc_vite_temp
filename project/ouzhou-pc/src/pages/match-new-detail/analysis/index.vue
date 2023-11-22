@@ -77,14 +77,11 @@ import BasketBallStats from "./compoments/basketball_stats.vue";
 
 import switchTeam from "./compoments/switch-team.vue";
 
-import venueBox from "./compoments/venue-box/index.vue";
-import lodash_ from "lodash";
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
-import {
-  MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
-  MenuData,
-  UserCtr,
-} from "src/core/index";
+import venueBox from './compoments/venue-box/index.vue'
+import lodash_ from 'lodash'
+import { useMittOn, MITT_TYPES } from "src/core/mitt"
+import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index";
+import { format_mst_data } from "src/core/utils/matches_list.js";
 
 // const props =  defineProps({
 //   detail_info: {  // 赛事详情
@@ -108,9 +105,12 @@ onMounted(() => {
 //   })
 
 // 获取数据
-const get_detail_info = (mid) => {
-  detail_info.value = MatchDataWarehouseInstance.get_quick_mid_obj(mid);
-};
+const get_detail_info = (mid)=>{
+  // 3572298
+  const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
+  detail_info.value = infomation
+}
+
 // const show_page = ref(false)
 // watch(()=>props.detail_info,val=>{
 //   if (!_.isEmpty(val)) {
@@ -127,9 +127,8 @@ const score_list = computed(() => {
 
   if (obj.msc && obj.msc.length > 0) {
     for (const item of obj.msc) {
-      const list = item.split("|");
-      const score_list = list[1].split(":");
-      // console.log(list)
+      const list = item.split('|')
+      const score_list = list[1].split(':')
       result[list[0]] = {
         home: score_list[0],
         away: score_list[1],

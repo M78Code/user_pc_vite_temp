@@ -146,8 +146,7 @@ export default class MatchDataBase
     // 数据版本更新参数 reactive({ version: '123'})
     this.data_version = { version: '123'} ,
     // 所有投注项动态数据时间更新
-    this.cache_oid={
-    };
+    this.cache_oid={};
   }
 
 /**
