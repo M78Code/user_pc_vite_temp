@@ -482,58 +482,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         matchType = 2
     }
   console.error('hl_obj',hl_obj)
-  console.error('hn_obj',hn_obj)
   console.error('sss',ol_obj)
-    // 列表和详情 取值字段不同
-    // 投注项 显示
-    let handicap = '', handicap_attach = ''
-    if (other.is_detail) {
-        // 列表数据
-        let text = ''
-        switch(ol_obj.ot){
-            case '1':
-                // 主
-                text= mid_obj.mhn
-                break
-            case '2':
-                // 客
-                text = mid_obj.man
-                break
-        }
-        handicap = text
-        //展示用的 + 投注项  
-        if(get_handicap(ol_obj)){
-            handicap_attach = ol_obj.on
-        }
-       
-    }else{
-        // 列表数据
-        let text = ''
-        switch(ol_obj.ot){
-            case '1':
-                // 主
-                text = mid_obj.mhn
-                break
-            case 'Over':
-                text = '大'
-                break
-            case "Under":
-                text = '小'
-                break
-            case '2':
-                text = mid_obj.man
-                break
-            default:
-                text = ol_obj.on    
-                break 
-        }
-        handicap = text
-        //展示用的 + 投注项  
-        if(get_handicap(ol_obj)){
-            handicap_attach = ol_obj.on
-        }
-    }
-    console.error('handicap',handicap)
+    
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -563,12 +513,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap, // 投注项名称
-        handicap_attach, // 盘盘口值
-        show_attach: get_handicap(ol_obj),
+        handicap: get_handicap(ol_obj,other.is_detail), // 投注项名称
         show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
     }
+
+    console.error('bet_obj',bet_obj)
 
     // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
@@ -655,13 +605,30 @@ const set_orderNo_bet_obj = order_no_list => {
 }
 
 // 获取盘口值 附加值
-const get_handicap = ol_obj => {
-    // 需要显示主客队名称的 玩法id
-    // 直接显示投注项 [1, 7, 367, 344, 68, 14, 8, 9, 17, 341, 368, 342, 369, 344, 68, 14, 23, 21, 22, 12, 24, 76, 104, 340, 359]
+const get_handicap = (ol_obj = {},is_detail) => {
+    let text = ''
     // 展示用的 + 投注项  
-    let playId = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 351, 347]
-    // 直接显示投注项
-    return playId.includes(Number(ol_obj._hpid))
+    let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351]
+    let home_mark_more = [351,347]
+    if(is_detail){
+        text = ol_obj.otv
+    }else{
+        text = ol_obj.on
+    }
+    
+    if(home_away_mark.includes(ol_obj._hpid*1)){
+        let handicap = text.split(' ')
+        handicap = handicap.filter(item => item)
+
+        text = `${handicap[0]}${handicap[1] ? `<span class='ty-span'>${handicap[1]}</span>`:''}`
+
+        if(home_mark_more.includes(ol_obj._hpid*1)){
+            text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
+        }
+       
+    }
+   
+    return text
 }
 
 // 是否显示基准分 
