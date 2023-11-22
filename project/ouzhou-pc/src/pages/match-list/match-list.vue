@@ -108,7 +108,6 @@ import MatchesHeader from "src/base-pc/components/matches_header/matches_header.
 import "./match_list.scss";
 import {
   init_home_matches,
-  get_featurd_list
 } from "./index"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 
@@ -189,10 +188,9 @@ export default {
     const get_data_info = async () => {
       // 判断是不是首页下的 featured 页面
       // if (MenuData.is_featured()) {
-        const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
+        const { mins15_list= [], match_count = 0 } = await init_home_matches();
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
-        // const res = await get_featurd_list()
         
       // }
     }

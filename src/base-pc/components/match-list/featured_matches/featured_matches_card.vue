@@ -1,10 +1,3 @@
-<!--
- * @Author: lockie
- * @Date: 2023-07-01 15:24:30
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-17 14:45:09
- * @FilePath: \user-pc-vue3\src\components\match_list\featured_matches\featured_matches_card.vue
--->
 <template>
     <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
   <div class="featured-matched-card-wrap">
@@ -111,7 +104,7 @@ const get_featurd_list = async () => {
   //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
   // );
   set_active_mids(res.data.map(i => i.mid))
-  matches_featured_list.value = MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+  matches_featured_list.value = MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list.slice(0, 5);
 }
 get_featurd_list()
 //const current_ball_type = computed((csid = 0) => {
