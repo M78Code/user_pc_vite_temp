@@ -509,6 +509,7 @@ class MatchMeta {
     })
     MatchCollect.get_collect_match_data()
     const list = lodash.get(res, 'data', [])
+    if (!list) return
     return list
   }
 
