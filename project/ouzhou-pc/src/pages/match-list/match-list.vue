@@ -38,7 +38,7 @@
           <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
         </div>
         <!-- 头部Featured Matches模块 -->
-          <FeaturedMatches v-if="MenuData.is_featured()"  class="match-list-item" />
+          <FeaturedMatches v-if="MenuData.is_featured()"/>
       
         <!-- </template> -->
 
@@ -187,12 +187,11 @@ export default {
     });
     const get_data_info = async () => {
       // 判断是不是首页下的 featured 页面
-      // if (MenuData.is_featured()) {
+      if (MenuData.is_featured()) {
         const { mins15_list= [], match_count = 0 } = await init_home_matches();
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
-        
-      // }
+      }
     }
 
     return {
