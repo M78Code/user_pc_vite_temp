@@ -3,7 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-    <div class="tip">{{BetData.bet_before_message.msg}}</div>   
+    <div class="tip" >{{BetData.tipmsg}}</div>   
     <div class="bet_content_bottom">
       <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
       <p class="place_bet"  @click="place_bet">

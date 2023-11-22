@@ -826,6 +826,8 @@ class MatchMeta {
     }
 
     if (!is_virtual) {
+      // 清除虚拟计算信息
+      VirtualList.clear_virtual_info()
       this.match_mids = lodash.uniq(result_mids)
       // 欧洲版首页热门赛事
       const arr_data = match_list.filter((t) => t.mid)

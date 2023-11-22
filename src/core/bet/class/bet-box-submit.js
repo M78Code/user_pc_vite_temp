@@ -342,6 +342,11 @@ const submit_handle = type => {
     // return
     api_betting.post_submit_bet_list(params).then(res => {
         // set_error_message_config(res)
+        betData.tipmsg=res.msg
+        BetViewDataClass.set_bet_before_message({
+            code: res.code,
+            message: res.message
+        })
         if (res.code == 200) {
             // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
             //     code: res.code,
