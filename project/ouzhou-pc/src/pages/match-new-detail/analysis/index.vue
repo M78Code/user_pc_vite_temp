@@ -1,4 +1,3 @@
-
 <!--
  * @Author: cooper
  * @Date: 2023-06-06 14:13:55
@@ -8,8 +7,12 @@
   <div>
     <div class="analysis-body">
       <!-- 动画/视频/比分榜 -->
-      <venue-box :score_list="score_list" :detail_info="detail_info" v-show="!lodash_.isEmpty(detail_info)" />
-  
+      <venue-box
+        :score_list="score_list"
+        :detail_info="detail_info"
+        v-show="!lodash_.isEmpty(detail_info)"
+      />
+
       <!-- <div class="analysis-top">
         <div class="analysis-top-l">
           <div class="v-icon switch-icon"></div>
@@ -21,23 +24,43 @@
         </div>
       </div> -->
       <!-- 分析页动画 -->
-      <div v-if="!lodash_.isEmpty(score_list)&&detail_info.ms>0">
-    <div class="tabs-wrap"  v-if="['1','2','5','9','10'].includes(lodash_.get(detail_info,'csid'))" >
-      <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
-        :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
-      </span>
-    </div>
-     
-       <!-- 足球分析页图表 -->
-      <foot-ball-stats v-if="detail_info.csid==1" :detail_info="detail_info" :score_list="score_list" />
-     <!-- 2篮球、5网、9排球、10羽毛球 -->
-       <basket-ball-stats  v-if="['2','5','9','10'].includes(lodash_.get(detail_info,'csid'))" :detail_info="detail_info" :score_list="score_list" />
+      <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0">
+        <div
+          class="tabs-wrap"
+          v-if="
+            ['1', '2', '5', '9', '10'].includes(
+              String (detail_info.csid)
+            )
+          "
+        >
+          <span
+            v-for="item in tabList"
+            :key="item.id"
+            @click="tabClick(item)"
+            :class="[{ 'is-active': item.id === active }, 'tabs-item']"
+            >{{ item.label }}
+          </span>
+        </div>
 
-       <!-- 4冰、6美足、5网、7斯诺克、9排球、10羽毛球 -->
-    <!-- <template v-if="['4','6','5','7','9','10'].includes(lodash_.get(detail_info,'csid'))">
+        <!-- 足球分析页图表 -->
+        <foot-ball-stats
+          v-if="detail_info.csid == 1"
+          :detail_info="detail_info"
+          :score_list="score_list"
+        />
+        <!-- 2篮球、5网、9排球、10羽毛球 -->
+        <basket-ball-stats
+          v-if="
+            ['2', '5', '9', '10'].includes(String(detail_info.csid))
+          "
+          :detail_info="detail_info"
+          :score_list="score_list"
+        />
+
+        <!-- 4冰、6美足、5网、7斯诺克、9排球、10羽毛球 -->
+        <!-- <template v-if="['4','6','5','7','9','10'].includes(lodash_.get(detail_info,'csid'))">
       <more :match_info="detail_info" />
     </template> -->
-
       </div>
       <!-- 选择哪队会赢组件 -->
       <switch-team v-if="false" />
@@ -46,13 +69,13 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted,ref,computed,watch } from "vue";
+import { onMounted, onUnmounted, ref, computed, watch } from "vue";
 // import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 
- import FootBallStats from './compoments/football_stats.vue'
- import BasketBallStats from './compoments/basketball_stats.vue'
+import FootBallStats from "./compoments/football_stats.vue";
+import BasketBallStats from "./compoments/basketball_stats.vue";
 
-import switchTeam from './compoments/switch-team.vue'
+import switchTeam from "./compoments/switch-team.vue";
 
 import venueBox from './compoments/venue-box/index.vue'
 import lodash_ from 'lodash'
@@ -67,20 +90,19 @@ import { format_mst_data } from "src/core/utils/matches_list.js";
 //   },
 // })
 
-let detail_info = ref({})
+let detail_info = ref({});
 const active = ref(1);
 const tabList = ref([
   { label: i18n_t("common.panel_total"), id: 1 },
   // { label: "Timeline", id: 2 },
 ]);
 
-onMounted(()=>{
-  useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS,get_detail_info)
-})
+onMounted(() => {
+  useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS, get_detail_info);
+});
 // onUnmounted(()=>{
 //     useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS).off
 //   })
-
 
 // 获取数据
 const get_detail_info = (mid)=>{
@@ -98,40 +120,44 @@ const get_detail_info = (mid)=>{
 // {immediate:true}
 // )
 
+// 详情数据msc处理
+const score_list = computed(() => {
+  const obj = detail_info.value || {};
+  let result = {};
 
-
-  // 详情数据msc处理
-  const score_list = computed(()=>{
-  const obj = detail_info.value || {}
-  let result = {}
- 
-  if (obj.msc&&obj.msc.length>0 ) {
+  if (obj.msc && obj.msc.length > 0) {
     for (const item of obj.msc) {
       const list = item.split('|')
       const score_list = list[1].split(':')
       result[list[0]] = {
-        home:score_list[0],
-        away:score_list[1],
-        percentage:(Number (score_list[0]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
-        away_percentage:(Number (score_list[1]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
-      }
+        home: score_list[0],
+        away: score_list[1],
+        percentage:
+          (Number(score_list[0]) /
+            (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
+            100 || 0,
+        away_percentage:
+          (Number(score_list[1]) /
+            (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
+            100 || 0,
+      };
     }
-  }else{
+  } else {
     for (const key in obj.msc) {
-      const home = obj.msc[key]['home']
-      const away = obj.msc[key]['away']
+      const home = obj.msc[key]["home"];
+      const away = obj.msc[key]["away"];
       result[key] = {
         home,
         away,
-        percentage:(Number (home) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
-        away_percentage:(Number (away) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
-      }
-     
+        percentage:
+          (Number(home) / (Number(home) + Number(away)).toFixed(2)) * 100 || 0,
+        away_percentage:
+          (Number(away) / (Number(home) + Number(away)).toFixed(2)) * 100 || 0,
+      };
     }
   }
-   return result
-})
-
+  return result;
+});
 </script>
 
 <style lang="scss" scoped>
@@ -147,7 +173,7 @@ const get_detail_info = (mid)=>{
       background-image: url("../../../../assets/images/football_icon.png");
       height: 16px;
       width: 16px;
-      margin:0 6px 0 12px ;
+      margin: 0 6px 0 12px;
     }
     .analysis-top-txt {
       font-weight: 400;
@@ -156,7 +182,7 @@ const get_detail_info = (mid)=>{
       text-transform: capitalize;
       color: var(--q-gb-t-c-5);
     }
-    .analysis-top-l{
+    .analysis-top-l {
       display: flex;
     }
     .analysis-top-right {
@@ -174,15 +200,14 @@ const get_detail_info = (mid)=>{
   }
 }
 
-
 .tabs-wrap {
-height: 50px;
-display: flex;
-justify-content: center;
-align-items: center;
-background: var(--q-gb-bg-c-4);
-// padding-bottom: 10px;
-border-bottom: 1px solid var(--q-gb-bd-c-2);
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--q-gb-bg-c-4);
+  // padding-bottom: 10px;
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
 }
 .tabs-item {
   // margin-right: 40px;
@@ -214,6 +239,4 @@ border-bottom: 1px solid var(--q-gb-bd-c-2);
     background: var(--q-gb-bg-c-1);
   }
 }
-
-
 </style>
