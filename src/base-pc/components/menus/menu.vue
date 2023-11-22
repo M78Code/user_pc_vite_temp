@@ -70,7 +70,7 @@ const route = useRoute();
 
 // favouritse
 const go_to_favouritse = () => {
-  
+  MenuData.left_menu_result.lv1_mi = ''
   MenuData.set_is_collect(true)
   MenuData.set_menu_root(301)
 
