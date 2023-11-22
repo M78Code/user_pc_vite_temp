@@ -3,7 +3,12 @@
 -->
 <template>
   <tab-date v-if="!store.isLeagueDetail" @changeTab="onTabChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
-  <div v-else @click="goBackToLeague">123</div>
+  <div class="league-list" v-else @click="goBackToLeague">
+    <!-- {{ store.selectLeague }} -->
+    <div class="area">{{ store.selectArea.introduction }}</div>
+    <IconWapper color="#888" name="icon-triangle1" size="16px" class="icon-wapper-more" />
+    <div class="league">{{ store.selectLeague.nameText }}</div>
+  </div>
   <!--二级赛事列表-->
   <div class="match-list-page">
     <!--  判断是否是matches页面   ||  判断是否是league页面的二级列表页   -->
@@ -12,13 +17,14 @@
   </div>
 </template>
 <script setup>
-import { onMounted, reactive, onUnmounted, ref  } from "vue"
+import { onMounted, onUnmounted, ref  } from "vue"
 import tabDate from './components/tab-date.vue';
 import MatchFirstStep from "./components/match-first-step.vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { store } from "project_path/src/pages/match-page/index.js"
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import { IconWapper } from 'src/components/icon'
 import BaseData from 'src/core/base-data/base-data.js'
 
 const emitters = ref({})
@@ -51,8 +57,10 @@ const onTabChange = e => {
 const onChangeDate = e => {
   MatchMeta.get_ouzhou_leagues_data(e).then(res => {
     console.log('onChangeDate', res)
-    store.areaList = res
-    onChangeArea(res[0].id)
+    if (res) {
+      store.areaList = res
+      onChangeArea(res[0].id)
+    }
   })
 }
 
@@ -114,6 +122,23 @@ const goBackToLeague = () => {
     right: 0;
     background: url($SCSSPROJECTPATH+"/image/list/league_bg.png") no-repeat;
     background-size: cover;
+  }
+}
+
+.league-list {
+  display: flex;
+  align-items: center;
+  height: .5rem;
+  padding-left: .2rem;
+  font-size: .14rem;
+  .icon-wapper-more{
+      transform: rotate(90deg);
+    }
+  .area {
+    color: var(--q-gb-t-c-3);
+  }
+  .league {
+    font-weight: bold;
   }
 }
 </style>
