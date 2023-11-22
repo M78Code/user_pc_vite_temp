@@ -164,7 +164,7 @@ get_featurd_list()
 .featured-matched-card-wrap {
   height: 140px;
   width: 100%;
-
+  margin-bottom: 24px;
   .featured-matched-card {
     flex-shrink: 0;
     width: 300px;
