@@ -106,9 +106,9 @@ const is_lock = computed(() => {
 const get_icon = (type) => {
   let img_src = ''
   if (type === 'up'){
-    img_src = is_active.value ? ouzhou_white_up : ouzhou_hps_up
+    img_src = BetData.bet_oid_list.includes(props.odd_item.oid) ? ouzhou_white_up : ouzhou_hps_up
   } else {
-    img_src = is_active.value ? ouzhou_white_up : ouzhou_hps_down
+    img_src = BetData.bet_oid_list.includes(props.odd_item.oid) ? ouzhou_white_up : ouzhou_hps_down
   }
   return img_src
 }

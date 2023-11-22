@@ -163,9 +163,9 @@ is_collect.value = Boolean(lodash.get(props, 'match.mf'))
  * @Description 赛事收藏 
 */
 const collect = () => {
-  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
   //前端修改收藏状态
   is_collect.value = !is_collect.value
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
 }
 
 // 监听收藏变化
