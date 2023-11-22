@@ -27,11 +27,7 @@
       <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0">
         <div
           class="tabs-wrap"
-          v-if="
-            ['1', '2', '5', '9', '10'].includes(
-              String (detail_info.csid)
-            )
-          "
+          v-if="['1', '2', '5', '9', '10'].includes(String(detail_info.csid))"
         >
           <span
             v-for="item in tabList"
@@ -50,9 +46,7 @@
         />
         <!-- 2篮球、5网、9排球、10羽毛球 -->
         <basket-ball-stats
-          v-if="
-            ['2', '5', '9', '10'].includes(String(detail_info.csid))
-          "
+          v-if="['2', '5', '9', '10'].includes(String(detail_info.csid))"
           :detail_info="detail_info"
           :score_list="score_list"
         />
@@ -77,10 +71,14 @@ import BasketBallStats from "./compoments/basketball_stats.vue";
 
 import switchTeam from "./compoments/switch-team.vue";
 
-import venueBox from './compoments/venue-box/index.vue'
-import lodash_ from 'lodash'
-import { useMittOn, MITT_TYPES } from "src/core/mitt"
-import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index";
+import venueBox from "./compoments/venue-box/index.vue";
+import lodash_ from "lodash";
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import {
+  MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
+  MenuData,
+  UserCtr,
+} from "src/core/index";
 import { format_mst_data } from "src/core/utils/matches_list.js";
 
 // const props =  defineProps({
@@ -105,11 +103,11 @@ onMounted(() => {
 //   })
 
 // 获取数据
-const get_detail_info = (mid)=>{
+const get_detail_info = (mid) => {
   // 3572298
-  const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
-  detail_info.value = infomation
-}
+  const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid);
+  detail_info.value = infomation;
+};
 
 // const show_page = ref(false)
 // watch(()=>props.detail_info,val=>{
@@ -127,20 +125,22 @@ const score_list = computed(() => {
 
   if (obj.msc && obj.msc.length > 0) {
     for (const item of obj.msc) {
-      const list = item.split('|')
-      const score_list = list[1].split(':')
-      result[list[0]] = {
-        home: score_list[0],
-        away: score_list[1],
-        percentage:
-          (Number(score_list[0]) /
-            (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
-            100 || 0,
-        away_percentage:
-          (Number(score_list[1]) /
-            (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
-            100 || 0,
-      };
+      if (item) {
+        const list = item.split("|");
+        const score_list = list[1].split(":");
+        result[list[0]] = {
+          home: score_list[0],
+          away: score_list[1],
+          percentage:
+            (Number(score_list[0]) /
+              (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
+              100 || 0,
+          away_percentage:
+            (Number(score_list[1]) /
+              (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
+              100 || 0,
+        };
+      }
     }
   } else {
     for (const key in obj.msc) {
