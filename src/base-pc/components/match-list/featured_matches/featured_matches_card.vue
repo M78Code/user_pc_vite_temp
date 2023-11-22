@@ -1,32 +1,34 @@
 <template>
+  <div v-if="matches_featured_list.length">
     <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
-  <div class="featured-matched-card-wrap">
-    <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
-    <template2 :is_show_btn="matches_featured_list.length >= 4">
-      <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in col_ols_data" :key="item.tid"
-        :class="{ 'margin-box': index != matches_featured_list.length - 1 }">
-        <div class="right-top-img" :style="`background-position:0 -${current_ball_type(item.csid)}px`"></div>
-        <div class="matches_description">
-          <div class="matches_type">{{ item.tn }}</div>
-          <div class="matches_time din_font">
-            <span>{{ item.course }}</span>
-            <span v-show="Number(item.mmp)">{{ item.mstValue }}</span>
+    <div class="featured-matched-card-wrap">
+      <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
+      <template2 :is_show_btn="matches_featured_list.length >= 4">
+        <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in col_ols_data" :key="item.tid"
+          :class="{ 'margin-box': index != matches_featured_list.length - 1 }">
+          <div class="right-top-img" :style="`background-position:0 -${current_ball_type(item.csid)}px`"></div>
+          <div class="matches_description">
+            <div class="matches_type">{{ item.tn }}</div>
+            <div class="matches_time din_font">
+              <span>{{ item.course }}</span>
+              <span v-show="Number(item.mmp)">{{ item.mstValue }}</span>
+            </div>
+          </div>
+          <div class="club-name">
+            <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1.home') }}</span>
+          </div>
+          <div class="union-name">
+            <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1.away') }}</span>
+          </div>
+          <div class="odds_box">
+            <div class="top-line"></div>
+            <div class="odds_item" v-for="ol_data in item.ols">
+              <betItem :ol_data="ol_data"></betItem>
+            </div>
           </div>
         </div>
-        <div class="club-name">
-          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1.home') }}</span>
-        </div>
-        <div class="union-name">
-          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1.away') }}</span>
-        </div>
-        <div class="odds_box">
-          <div class="top-line"></div>
-          <div class="odds_item" v-for="ol_data in item.ols">
-            <betItem :ol_data="ol_data"></betItem>
-          </div>
-        </div>
-      </div>
-    </template2>
+      </template2>
+    </div>
   </div>
 </template>
 <script setup>
@@ -98,12 +100,13 @@ const get_featurd_list = async () => {
     cuid: UserCtr.get_uid()
   }
   let res = await api_details.get_hots(params)
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.data);
+  const { data= [] } = res
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(data);
   // 获取matches_featured
   // featured_list = filter_featured_list(
   //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
   // );
-  set_active_mids(res.data.map(i => i.mid))
+  set_active_mids(data.map(i => i.mid))
   matches_featured_list.value = MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list.slice(0, 5);
 }
 get_featurd_list()
