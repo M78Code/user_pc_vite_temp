@@ -61,7 +61,7 @@
     import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
       import { compute_value_by_cur_odd_type } from "src/core/index.js"
       import { format_currency } from "src/core/format/index.js"
-import i18n from "project/activity/src/i18n";
+// import i18n from "project/activity/src/i18n";
 
   const props = defineProps({
     items:{}
