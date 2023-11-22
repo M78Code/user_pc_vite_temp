@@ -5,7 +5,10 @@
 
 <template>
   <div class="matches_page">
-    <div class="item" v-for="item, index in featured_matches" :key="index" :style="{backgroundImage: `url(${get_amtch_bg_image(item.csid)})`}">
+    {{ console.log(featured_matches) }}
+    <div class="item" v-for="item, index in featured_matches" :key="index" :style="{backgroundImage: `url(${get_amtch_bg_image(item.csid)})`}"
+      @click="toDetails(item)"
+      >
       <!-- 标题 -->
       <div class="title">
         <span class="name">{{ item.tn }}</span>
@@ -27,7 +30,9 @@
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 
 import { football_bg, basketball_bg, volleyball_bg, tennis_bg, table_tennis_bg, badminton_bg, baseball_bg } from 'src/base-h5/core/utils/local-image.js'
+import { useRouter } from 'vue-router';
 
+/** @type { { featured_matches:Array<TYPES.MatchDetail> } } */
 const props = defineProps({
   featured_matches: {
     type: Array,
@@ -64,6 +69,19 @@ const matchBgImage = [{
 const get_amtch_bg_image = (csid) => {
   const item = matchBgImage.find(t => t.value == csid)
   return item?.image
+}
+
+const router = useRouter()
+/** 跳转赛事详情 @param {TYPES.MatchDetail} item */
+function toDetails(item){
+  router.push({
+    name:'category',
+    params:{
+      mid: item.mid,
+      tid: item.tid,
+      csid: item.csid
+    }
+  })
 }
 
 </script>

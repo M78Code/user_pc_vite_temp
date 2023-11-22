@@ -482,11 +482,9 @@ onUnmounted(() => {
   left: 0;
   min-width: 321px;
   height: 314px;
-
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
   background: var(--q-gb-bg-c-4);
-
-  z-index: 2;
+  z-index: 99;
   display: flex;
   flex-direction: column;
   .top-btn {

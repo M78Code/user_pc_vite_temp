@@ -8,16 +8,19 @@
         <div class="right-top-img" :style="`background-position:0 -${current_ball_type(item.csid)}px`"></div>
         <div class="matches_description">
           <div class="matches_type">{{ item.tn }}</div>
-          <div class="matches_time din_font">
+          <!-- <div class="matches_time din_font">
             <span>{{ item.course }}</span>
             <span v-show="Number(item.mmp)">{{ item.mstValue }}</span>
-          </div>
+          </div> -->
+          <!-- 比赛进程 -->
+          <match-process v-if="item" :match="item" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
+          periodColor="gray" />
         </div>
         <div class="club-name">
-          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1.home') }}</span>
+          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item,`msc_obj.S1.home`) }}</span>
         </div>
         <div class="union-name">
-          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item.msc, 'S1.away') }}</span>
+          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item,`msc_obj.S1.away`) }}</span>
         </div>
         <div class="odds_box">
           <div class="top-line"></div>
@@ -33,6 +36,7 @@
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { get_hots_odds_list } from 'src/core/match-list-pc/list-template/module/template-101.js'
 import { ref, watch, onBeforeUnmount, computed } from 'vue';
 import { api_details } from 'src/api';
@@ -108,6 +112,7 @@ const get_featurd_list = async () => {
       mids.push(i.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(i.mid))
     })
+    console.log(matches_featured_list.value, 'matches_featured_list')
     set_active_mids(mids)
   }
 }
@@ -191,8 +196,8 @@ get_featurd_list()
       align-items: center;
       margin-bottom: 10px;
       height: 14px;
-      padding: 0 14px;
-
+      padding: 0 4px 0 14px;
+      justify-content: space-between;
       .matches_type {
         font-family: "Roboto";
         font-size: 12px;
