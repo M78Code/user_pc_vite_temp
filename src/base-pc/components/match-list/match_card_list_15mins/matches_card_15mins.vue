@@ -63,7 +63,6 @@
   const get_mmp = (mst) => {
     let difference =  Math.floor(mst / 60 / 15);
     if (difference >= 6) difference = 5;
-    console.log('difference', i18n_t('ouzhou.15minutes_bet_col')[difference]);
     return i18n_t('ouzhou.15minutes_bet_col')[difference]
   }
 
@@ -76,7 +75,6 @@
       odds_list.ols = odds_list.ols.map(item => {
         if (item.empty) { return }
         // 投注项数据拼接
-        console.log('itemitemitem', item);
         let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
         // 获取投注项内容 
         return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
