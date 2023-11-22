@@ -10,7 +10,7 @@ export default {
     name: "not-login",
     data() {
         return {
-
+            compute_img_url
         };
     },
 };
