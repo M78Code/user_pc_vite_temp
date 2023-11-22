@@ -159,7 +159,6 @@ const get_score_result = (list, val) => {
       return {};
     }
   });
-  console.log(result,"detail_info--")
   return result;
 };
 
@@ -402,8 +401,6 @@ watch(
 watch(
   () => props.score_list,
   (val) => {
-    console.log(props.score_list,"props.score_list")
-    console.log(props.detail_info,"props.score_list")
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
     get_base_data(val);
