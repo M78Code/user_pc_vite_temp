@@ -31,6 +31,7 @@
       </template>
     </div>
     <div class="pagination-wrap" :style="results_table">
+    
       <q-pagination
         v-model="page"
         color="#788299"
@@ -66,7 +67,7 @@
           </template>
         </q-select>
         <span>
-          {{ i18n_t('common.page_') }}
+          {{ i18n_t('common.page_') }} {{perPageNum}}
           <!-- 条/页 -->
         </span>
       </div>
@@ -103,6 +104,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { IconWapper } from "src/components/icon/index.js";
 
 useRegistPropsHelper(component_symbol, need_register_props);
+
 const props = defineProps({
   // ...useProps,
   icon_name: {
@@ -200,11 +202,11 @@ const goToPage = val => {
   padding-right: 20px;
   height: 36px;
   font-size: 14px;
-  color: var(--q-gb-t-c-6);
-  background: var(--q-gb-bg-c-14);
+  //color: var(--q-gb-t-c-6);
+  //background: var(--q-gb-bg-c-14);
   span {
     margin-left: 20px;
-    color: var(--q-gb-t-c-6);
+    //color: var(--q-gb-t-c-6);
     .footer-text {
       margin: 0;
       font-weight: 500;
@@ -217,7 +219,7 @@ const goToPage = val => {
   height: 60px;
   font-size: 12px;
   background-color: transparent;
-  color: var(--q-gb-t-c-10);
+  //color: var(--q-gb-t-c-10);
   .pagination-select {
     display: flex;
     align-items: center;
@@ -249,8 +251,8 @@ const goToPage = val => {
       font-weight: 500;
       font-size: 12px;
       outline: medium;
-      color: var(--q-gb-t-c-6);
-      border: 1px solid var(--q-gb-bd-c-7);
+      //color: var(--q-gb-t-c-6);
+      //border: 1px solid var(--q-gb-bd-c-7);
     }
   }
   :deep(.q-field--auto-height) {
@@ -264,7 +266,7 @@ const goToPage = val => {
       .q-field__native {
         padding: 0;
         min-height: 0px;
-        color: var(--q-gb-t-c-6);
+        //color: var(--q-gb-t-c-6);
       }
       .q-field__marginal {
         margin-right: 6px;
@@ -276,7 +278,7 @@ const goToPage = val => {
       }
       &:hover {
         &::before {
-          border-color: var(--q-gb-bd-c-11);
+          //border-color: var(--q-gb-bd-c-11);
         }
       }
     }
@@ -296,17 +298,17 @@ const goToPage = val => {
 
     .q-btn__wrapper {
       min-height: 0px;
-      background-color: var(--q-gb-bg-c-3);
+      //background-color: var(--q-gb-bg-c-3);
       &:before {
         box-shadow: none;
       }
     }
   }
   .q-pagination__middle {
-    color: var(--q-gb-t-c-4);
+    //color: var(--q-gb-t-c-4);
     .q-btn-item.q-btn--standard {
-      background-color: var(--q-gb-bg-c-18);
-      color: var(--q-gb-t-c-18);
+      //background-color: var(--q-gb-bg-c-18);
+      //color: var(--q-gb-t-c-18);
     }
   }
 }

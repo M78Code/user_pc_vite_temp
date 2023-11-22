@@ -70,6 +70,8 @@ const route = useRoute();
 
 // favouritse
 const go_to_favouritse = () => {
+  // 点击收藏时清除其他球种选中状态
+  MenuData.left_menu_result.lv1_mi = ''
   // 点击菜单的时候如果在详情页应跳转出来先
   if (route.name=='details') {
     router.push('/home')
