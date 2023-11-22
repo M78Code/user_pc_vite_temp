@@ -86,8 +86,14 @@ export function get_match_template_id({ csid }) {
         tpl_id = csid_to_tpl_id(csid)
     }
     tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
-    if ('ouzhou-pc' == PROJECT_NAME)
-        return 101
+
+    if ('ouzhou-pc' == PROJECT_NAME) {
+        // 欧洲版冠军
+        if (MenuData.is_kemp()) {
+            return tpl_id
+        }
+        return 101    
+    }
     return tpl_id
 }
 
