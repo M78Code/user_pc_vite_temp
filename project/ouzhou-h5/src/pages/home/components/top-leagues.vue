@@ -4,7 +4,7 @@
 
 <template>
   <div class="top_leagues_page">
-    <collapse v-for="item, index in leaguesMatchs" :key="index" :title="item.nameText">
+    <collapse v-for="item, index in leaguesMatchs" :key="index" :title="item.nameText" @click.stop="handle_jump_match(item)">
       <!-- 图片 -->
       <template v-slot:title_icon>
         <img class="national_icon" :src="league_collect_state(item) ? have_collect_ouzhou : no_collect_ouzhou" alt="" @click.stop="handle_match_collect(item)">
@@ -18,6 +18,7 @@
 </template>
  
 <script setup>
+import { defineEmits } from 'vue'
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import { MenuData } from "src/core/index.js"
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -26,6 +27,7 @@ import collapse from "./collapse.vue"
 import MatchCollect from 'src/core/match-collect'
 import { api_common } from "src/api/index.js";
 
+const emit = defineEmits(['leagueChange'])
 
 const props = defineProps({
   leaguesMatchs: {
@@ -52,6 +54,10 @@ const handle_match_collect = (value) => {
   // 收藏页手动处理数据
   MenuData.is_collect() && MatchMeta.set_collect_match(value, 1)
   MatchCollect.handle_league_collect_state(tid)
+}
+
+const handle_jump_match = (item) => {
+  emit('leagueChange', item)
 }
 </script>
  

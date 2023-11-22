@@ -8,13 +8,15 @@ import {
   MITT_TYPES,
   PROJECT_NAME,
   SessionStorage,
+  LayOutMain_pc
 } from "src/core/index.js"
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 import STANDARD_KEY from "src/core/standard-key";
-import { LayOutMain_pc, i18n_t } from "src/core/index.js";
+
+import {i18n_t } from "src/boot/i18n.js";
 import { nextTick, ref } from "vue";
-import lodash, { includes } from 'lodash';
+import lodash_ from 'lodash';
 import BaseData from "src/core/base-data/base-data.js"
 
 
@@ -128,53 +130,29 @@ class MenuData {
     }
 
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
-    this.ouzhou_filter_config = {
-       // 首页
-      home_tab: [
-        { label: 'Featured', value: 1001 },
-        { label: 'Top Events', value: 1002 },
-      ],
-      // 左侧菜单
-      sport_tab: [
-        { label: 'Matches', value: 4001 },
-        { label: 'League', value: 4002 },
-        // { label: 'Next 24 Hours', value: 4003 },
-      ], 
-      // 收藏
-      favouritse_tab: [
-        { label: "In-Play", value: 3001 },
-        { label: "To Day", value: 3002 },
-        { label: "Early", value: 3003 }
-      ],
-      inplay:{
-        title: 'In-Play',
-        name: 'All Matches'
-      }
-    }
-    this.ouzhou_time_list = [
-      { label:i18n_t('ouzhou.filter.select_time.12h'), title:'12小时', value: 12 }, 
-      { label:i18n_t('ouzhou.filter.select_time.24h'), title:'25小时', value: 24 }, 
-      { label:i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
-      { label:i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
-    ]
+   
     // 15mins 与 featured-matched 投注选项保存字段
     this.current_check_betId = ref(null)
+    // 当前页面的csid 图片显示
+    this.current_ball_type = 0
 
-    this.init()
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
   }
 
-  init() {
-  }
-  set_fetch_filter(){}
   // 设置终极菜单id
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
     // 菜单数据缓存
     // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
     //宽度请求变化 因为请求参数是在这里触发的
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     this.set_match_list_api_config()
+  }
+
+  // 设置当前选中的赛种
+  set_current_ball_type(val) {
+    this.current_ball_type = val
+    this.set_menu_data_version();
   }
 
   // 设置一级菜单id
@@ -192,7 +170,6 @@ class MenuData {
   set_menu_data_version() {
     clearTimeout(this._tid)
     this._tid=setTimeout(() => {
-      console.error('进来了几次',this);
       useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
       useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)//列表滚动到顶部
       this.menu_data_version.value = Date.now()
@@ -351,7 +328,7 @@ class MenuData {
   * 获取当前的列表的默认的 模板配置
   */
   get_match_tpl_number() {
-    let euid = lodash.get(this.left_menu_result, 'lv1_mi');
+    let euid = lodash_.get(this.left_menu_result, 'lv1_mi');
     // 根据当前的菜单id 取到对应的模板id
     let current_template_id;
     if (PROJECT_NAME == 'ouzhou-pc') {
@@ -415,7 +392,7 @@ class MenuData {
     //     version: Date.now(),
     //   };
     // }
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // if ([2, 3].includes(Number(this.menu_root))) {
     //   // 角球
     //   if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -473,7 +450,7 @@ class MenuData {
     };
     // console.error( this.menu_root, "MENUDATA.set_mid_menu_result-------",JSON.stringify(this.mid_menu_result),  obj );
     // this.menu_root=obj.root;
-    // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
+    // MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     // 设置全屏
     this.set_menu_data_version();
     this.set_multi_column();
@@ -761,7 +738,7 @@ class MenuData {
   }
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {
-    let obj = lodash.get(BaseData.mi_euid_map_res,`[${mi}]`, {})
+    let obj = lodash_.get(BaseData.mi_euid_map_res,`[${mi}]`, {})
     return obj.p || 30001
   }
 

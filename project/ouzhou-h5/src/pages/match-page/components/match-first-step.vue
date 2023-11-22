@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, onMounted } from 'vue'
+import { defineEmits } from 'vue'
 import TopLeagues from 'project_path/src/pages/home/components/top-leagues.vue'
 import { de_img, dk_img, be_img, fr_img } from 'src/base-h5/core/utils/local-image.js'
 import NoData from "src/base-h5/components/common/no-data.vue";
@@ -23,15 +23,10 @@ const props = defineProps({
     },
 })
 
-const onLeagueChange = (league, game) => {
-    console.log('league, game: ', league, game);
-    emit('leagueChange', league, game)
+const onLeagueChange = (params) => {
+    emit('leagueChange', params)
 
 }
-
-onMounted(() => {
-    // emit('leagueChange', leagues_matchs.value[0], leagues_matchs.value[0].children[0])
-})
 </script>
 
 <style lang="scss" scoped></style>

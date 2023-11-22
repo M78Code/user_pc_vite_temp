@@ -5,20 +5,9 @@
 -->
 <template>
   <div class="box-bc">
-   
-    <q-table
-      :rows="data"
-      separator="none"
-      :columns="columns"
-      row-key="name"
-      hide-pagination
-      :table-header-style="{
-        backgroundColor: '#F1F1F1',
-        height: '28px',
-        color: '#8A8986',
-        fontSize: '13px',
-        fontWeight: 500,
-      }"
+
+    <q-table :rows="data" separator="none" :columns="columns" row-key="name" hide-pagination
+      :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
     >
       <!-- 头部插槽 足球用 -->
       <template v-slot:header="props">
@@ -46,25 +35,25 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span class="table-name">{{ props.row.name }}</span>
+            <span :class="[ `stage-${detail_info.mmp}`,'table-name']">{{ props.row.name }}</span>
           </q-td>
           <q-td key="q1" :props="props">
-            <span>{{ props.row.q1 }}</span>
+            <span :class="[detail_info?.course === 'Q1' ? 'heightLight' : '']">{{ props.row.q1 }}</span>
           </q-td>
           <q-td key="q2" :props="props">
-            <span>{{ props.row.q2 }}</span>
+            <span :class="[detail_info?.course === 'Q2' ? 'heightLight' : '']">{{ props.row.q2 }}</span>
           </q-td>
           <q-td key="ht" :props="props">
-            <span>{{ props.row.ht }}</span>
+            <span :class="[detail_info?.course === 'HT' ? 'heightLight' : '']">{{ props.row.ht }}</span>
           </q-td>
           <q-td key="q3" :props="props">
-            <span>{{ props.row.q3 }}</span>
+            <span :class="[detail_info?.course === 'Q3' ? 'heightLight' : '']">{{ props.row.q3 }}</span>
           </q-td>
           <q-td key="q4" :props="props">
-            <span>{{ props.row.q4 }}</span>
+            <span :class="[detail_info?.course === 'Q4' ? 'heightLight' : '']">{{ props.row.q4 }}</span>
           </q-td>
           <q-td key="q5" :props="props">
-            <span>{{ props.row.q5 }}</span>
+            <span :class="[detail_info?.course === 'Q5' ? 'heightLight' : '']">{{ props.row.q5 }}</span>
           </q-td>
           <q-td key="set" :props="props">
             <span>{{ props.row.set }}</span>
@@ -84,7 +73,7 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import { sport_columns, socre_dict } from "./score_config";
-import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX, stage_dict} from 'src/core/index.js';
 import _ from "lodash";
 
 const props = defineProps({
@@ -156,14 +145,15 @@ const get_score_result = (list, val) => {
         t: val.S1 ? val?.S1[item.key] : 0, // 全场
       };
     } else if (detail_info.csid == 2) {
+      // 48282 【SIT】【欧洲版二期】【PC】篮球详情页比分版未到的赛事阶段比分不需要展示
       return {
         name: item.name,
-        q1: val.S19 ? val.S19[item.key] : 0, // Q1
-        q2: val.S20 ? val?.S20[item.key] : 0, // Q2
-        ht: val.S2 ? val?.S2[item.key] : 0, // 半场
-        q3: val.S21 ? val?.S21[item.key] : 0, //Q3
-        q4: val.S22 ? val?.S22[item.key] : 0, // Q4
-        t: val.S1 ? val?.S1[item.key] : 0, // 全场
+        q1: val.S19 ? val.S19[item.key] : '', // Q1
+        q2: val.S20 ? val?.S20[item.key] : '', // Q2
+        ht: val.S2 ? val?.S2[item.key] : '', // 半场
+        q3: val.S21 ? val?.S21[item.key] : '', //Q3
+        q4: val.S22 ? val?.S22[item.key] : '', // Q4
+        t: val.S1 ? val?.S1[item.key] : '', // 全场
       };
     } else {
       return {};
@@ -464,4 +454,14 @@ onMounted(() => {});
   display: inline-block;
   text-overflow: ellipsis;
 }
+
+.heightLight{
+  color: rgb(255, 112, 0) !important;
+}
+
+//.stage-13,.stage-14,.stage-15,
+//.stage-302,.stage-16,.stage-303{
+//  //color: var(--qq--yb-text-color1) !important;
+//  color: rgb(255, 112, 0) !important;
+//}
 </style>

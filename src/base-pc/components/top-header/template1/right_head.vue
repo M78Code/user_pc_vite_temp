@@ -8,16 +8,19 @@
     <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
-          placeholder="Enter league or team" :class="is_focus ? 'change_width' : ''"
-				  @keyup.enter="get_search_data(text)">
-          <template v-slot:prepend>
-            <i class="icon-search q-icon c-icon" size="10px"></i>
-          </template>
-          <template v-slot:append>
-            <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
-          </template>
-        </q-input>
+        <div style="display: flex;">
+          <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" :class="is_focus ? 'change_width' : ''"
+            @keyup.enter="get_search_data(text)">
+            <template v-slot:prepend>
+              <i class="icon-search q-icon c-icon" size="10px"></i>
+            </template>
+            <template v-slot:append>
+              <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
+            </template>
+          </q-input>
+          <span v-show="is_focus" class="btn" @click="$router.push('/')">{{ i18n_t('ouzhou.search.close') }}</span>
+        </div>
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
@@ -42,7 +45,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
-                  <div>Announcement</div>
+                  <div>{{ i18n_t('ouzhou.set.announcement')}}</div>
                 </div>
               </q-item-section>
             </q-item>
@@ -50,7 +53,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
-                  <div>Results</div>
+                  <div>{{ i18n_t('ouzhou.set.results')}}</div>
                 </div>
               </q-item-section>
             </q-item>
@@ -58,7 +61,7 @@
               <q-item-section>
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/rule.png`" alt="" />
-                  <div>Sport Rules</div>
+                  <div>{{ i18n_t('ouzhou.set.sport_rules')}}</div>
               </div>
               </q-item-section>
             </q-item>
@@ -240,9 +243,7 @@ export default defineComponent({
     function hide_search(e) {
       const target_class_list = ['q-field__native q-placeholder', 'serach-wrap column', 'sports-tab', 'tab', 'tab active', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible', 'windows desktop landscape', 'icon-close'];
       if(is_focus.value && SearchPCClass.search_isShow) {
-        console.log('e', e.target.className);
         if(!target_class_list.includes(e.target.className)) {
-          // e.target.className != 'q-field__native q-placeholder' && e.target.className != 'serach-wrap column' && e.target.className != 'sports-tab' && e.target.className != 'tab' && e.target.className != 'tab active' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right' && e.target.className != 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible' && e.target.className != 'windows desktop landscape' && e.target.className != 'icon-close'
           SearchPCClass.set_search_isShow(false);
           is_focus.value = false;
           text.value = ''
@@ -434,7 +435,6 @@ export default defineComponent({
   }
 }
 .s-input {
-  width: 200px;
   transition: all 0.3s linear;
   :deep(.q-field) {
     background-color: rgba(255, 255, 255, 0.1);
@@ -451,10 +451,18 @@ export default defineComponent({
   :deep(.q-field__native) {
     color:var(--q-gb-t-c-1)
   }
+  .btn {
+    display: inline-block;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 16px;
+    cursor: pointer;
+    font-size: 12px;
+  }
 }
 .change_width {
   width: 500px;
-  transform: translateX(-300px);
 }
 .search-click .s-input {
   width: 500px;

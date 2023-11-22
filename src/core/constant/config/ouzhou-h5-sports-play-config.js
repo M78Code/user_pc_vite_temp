@@ -308,8 +308,8 @@ export const sports_play_title = {
       hpid: '2',
       label: '全场大小',
       ol: [
-        { ot: 'Over', title: "主队总分" },
-        { ot: 'Under', title: "客队总分" },
+        { ot: 'Over', title: "全场大" },
+        { ot: 'Under', title: "全场小" },
       ]
     },
     {
@@ -342,8 +342,8 @@ export const sports_play_title = {
       hpid: '39',
       label: '全场让球',
       ol: [
-        { ot: '1', title: "主队让球" },
-        { ot: '2', title: "客队让球" },
+        { ot: '1', title: "主队让分" },
+        { ot: '2', title: "客队让分" },
       ]
     },
   ],

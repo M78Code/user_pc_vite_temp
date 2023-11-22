@@ -38,10 +38,8 @@
           <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
         </div>
         <!-- 头部Featured Matches模块 -->
-        <div v-if="matches_featured_list.length && MenuData.is_featured()" class="match-list-item">
-          <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
-          <FeaturedMatches :matches_featured_list="matches_featured_list" />
-        </div>
+          <FeaturedMatches v-if="MenuData.is_featured()"/>
+      
         <!-- </template> -->
 
         <!-- 滚球标题 -->
@@ -99,8 +97,7 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import {
-  PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common,
+  PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,
   GlobalAccessConfig,
 } from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
@@ -111,7 +108,6 @@ import MatchesHeader from "src/base-pc/components/matches_header/matches_header.
 import "./match_list.scss";
 import {
   init_home_matches,
-  get_featurd_list
 } from "./index"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 
@@ -149,8 +145,6 @@ export default {
   setup() {
     // 15分钟赛事数据
     const matches_15mins_list = ref([]);
-    // 热推数据
-    const matches_featured_list = ref([]);
     const { ws_destroyed: ws_destroyed_common, set_active_mids } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
     
@@ -193,14 +187,11 @@ export default {
     });
     const get_data_info = async () => {
       // 判断是不是首页下的 featured 页面
-      // if (MenuData.is_featured()) {
-        const { mins15_list= [], featured_list= [], match_count = 0 } = await init_home_matches();
+      if (MenuData.is_featured()) {
+        const { mins15_list= [], match_count = 0 } = await init_home_matches();
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
-        matches_featured_list.value = await get_featurd_list()
-        // const res = await get_featurd_list()
-        
-      // }
+      }
     }
 
     return {
@@ -211,7 +202,6 @@ export default {
       GlobalAccessConfig,
       on_refresh,
       matches_15mins_list,
-      matches_featured_list,
       match_list_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass,

@@ -47,11 +47,11 @@ export default defineComponent({
       { label: i18n_t("common.betting_record"), id: 102, name: 'bet_record' },
     ]);
     const nav_click = (item = {}) => {
-      console.error('nav_click')
       // 清空数据 
       MenuData.set_mid_menu_result({})
       MenuData.set_menu_root(item.id); 
       MenuData.set_is_collect(false)
+      
       // 首页点击 首页需要 重新显示首页内容 
       if(route.name == 'home'){
         useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,item.id)
@@ -64,6 +64,11 @@ export default defineComponent({
           filter_tab: 1001, //
         }
         MenuData.set_mid_menu_result(obj)
+        MenuData.set_current_ball_type(0)
+      }
+      
+      if(item.id == 1){
+        MenuData.set_current_ball_type(1)
       }
 
       //页面中间头部导航显示处理

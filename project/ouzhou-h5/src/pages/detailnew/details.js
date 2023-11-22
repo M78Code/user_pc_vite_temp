@@ -7,7 +7,9 @@ import {
   useMittOn,
   useMitt,
   MITT_TYPES,
-  utils
+  utils,
+  UserCtr,
+  MatchDataWarehouse_H5_List_Common
 } from "src/core/index";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
@@ -18,11 +20,12 @@ export const details_main = (router,route) => {
   const match_detail = ref({});
   const category_list = ref([]);
   const tab = ref("betting");
-  const cuid = ref("");
+  const cuid = ref(UserCtr.get_uid());
   const scroller_height = ref(0);
   const loading = ref(false);
   const detail_event_tabs_value = ref({ label: "Match", id: 1 });
   const timer = ref(null);
+  /** @type {Ref<NodeJS.Timeout>} */
   const mst_timer = ref(null);
   const tab_selected_obj = ref({});
   const change_header_fix = ref(null);
@@ -58,6 +61,10 @@ export const details_main = (router,route) => {
     mst_timer.value = setInterval(() => {
       if (t.csid == 2) {
         t.mst--;
+        if(t.mst<0){
+          t.mst = 0
+          clearInterval(mst_timer.value)
+        }
       } else {
         t.mst++;
       }
@@ -217,8 +224,7 @@ export const details_main = (router,route) => {
           sessionStorage.setItem("match_oddinfo",JSON.stringify(res.data))
           MatchDataWarehouseInstance.value.set_match_details(getMidInfo(params.mid),res.data);
           // 第一次加载显示进度条
-           loading.value = false;
-  
+            loading.value = false
         },
         // axios中catch回调方法
         fun_catch: e => {
@@ -356,8 +362,49 @@ export const details_main = (router,route) => {
       mst_timer.value = null;
     }
   };
+   /**
+   *@description // 调用: /v1/m/matchDetail/getMatchOddsInfoPB接口 //赛果页面调用赛果玩法详情接口
+   *@param {obj} params 请求参数
+   *@return {obj}
+   */
+   const socketOddinfo = lodash.debounce((params) => {
+      //赛果页面调用赛果玩法详情接口
+      // match_odds_info.value = get_match_odds_info.value;
+         //接口调用
+         let obj_ = {
+          // axios api对象
+          axios_api: api_match_list.get_detail_list,
+          // axios api对象参数
+          params: params,
+          // 唯一key值
+          key: 'details',
+          error_codes: ['0401038'],
+          // axios中then回调方法
+          fun_then: res => {
+            get_match_odds_info.value = res.data;
+            if (tab_selected_obj.value.marketName) {
+              detail_tabs_change(tab_selected_obj.value);
+            } else {
+              match_odds_info.value = res.data;
+            }
+            sessionStorage.setItem("match_oddinfo",JSON.stringify(res.data))
+            MatchDataWarehouseInstance.value.set_match_details(getMidInfo(params.mid),res.data);
+          },
+          // axios中catch回调方法
+          fun_catch: e => {
+            console.log(e)
+          },
+          // 最大循环调用次数(异常时会循环调用),默认3次
+          max_loop: 1,
+          // 异常调用时延时时间,毫秒数,默认1000
+          timers: 1100
+        }
+        utils.axios_api_loop(obj_) 
+   },1000) 
+ 
   let message_fun = null
   onMounted(() => {
+    MatchDataWarehouse_H5_List_Common.set_active_mids([])
     loading.value = true;
     init.value = true;
     const { mid, csid } = route.params;
@@ -366,8 +413,22 @@ export const details_main = (router,route) => {
     let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
     // console.error(flag,'flag','cmd:',cmd,data);
     //如果ms mmp变更了 就手动调用ws
+    
     if(flag){
       init.value = false
+      switch (cmd) {
+        case "C303":
+          console.error("C303");
+          socketOddinfo({
+            mcid: 0,
+            cuid: cuid.value,
+            mid:route.params.mid,
+            newUser: 0,
+          })
+          break;
+        default:
+          break;
+      }
       // detail_init();
     }   
     })  

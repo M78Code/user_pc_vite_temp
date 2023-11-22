@@ -2,7 +2,7 @@
   <div class="component switch-button detail-header-scope">
     <div class="container">
       <div class="image">
-        <img src="" alt="">
+        <img :src="image" alt="">
       </div>
     </div>
   </div>
@@ -10,6 +10,12 @@
 
 <script setup>
 
+const props = defineProps({
+  image:{
+    required:true,
+    type: String
+  }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -2,8 +2,9 @@
  * @Description: app-h5 赛果
 -->
 <template>
-  <div :style="{ marginTop: is_hot ? '0' : '' }" 
-    :class="['match-container', {
+  <div class="match-container component match-container-main-template3"
+    :style="{ marginTop: is_hot ? '0' : '' }" 
+    :class="[{
       first: i == 0,
       match_status_bar: match.is_show_no_play,
       is_league_tail: get_league_show(i + 1),

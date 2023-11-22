@@ -142,15 +142,15 @@ watch(() => pagination, val => {
     if (!pageChangeFlag.value) {
     emit(
       "pageChange",
-      agination.limit,
-      pagination.offset,
-      page
+      [pagination.value.limit,
+      pagination.value.offset,
+      page]
     );
   } else {
     pageChangeFlag.value = false;
   }
 
-})
+},{deep:true})
 
  // 跳转页面
 const goToPage = (val) => {

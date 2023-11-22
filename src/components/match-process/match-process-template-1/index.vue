@@ -46,7 +46,7 @@
         :date_show_type="date_show_type"
         class="date-wrap"
       />
-      
+
     <!-- </template> -->
   </template>
   </div>

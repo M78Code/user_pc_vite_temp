@@ -9,12 +9,12 @@
 				<!-- 搜索展示 -->
 				<div class="content">
 					<ul class="list">
-						<div class="title">View all soccer</div>
+						<div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
 						<!-- 滚球 -->
 						<div v-show="search_data?.bowling && search_data?.bowling.length > 0" style="margin-bottom: 10px;">
 							<div @click="expand_bowling = !expand_bowling">
 								<div class="middle_info_tab diff">
-									<div class="color">UNDERWAY</div>
+									<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
 								</div>
 								<div v-show="expand_bowling">
 									<li v-for="(item, index) in search_data?.bowling" :key="index" @click="bowling_click(item)">
@@ -66,7 +66,7 @@
 						<div v-show="search_data?.league && search_data?.league.length > 0" style="margin-bottom: 10px;">
 							<div @click="expand_league = !expand_league">
 								<div class="middle_info_tab diff">
-									<div class="color">COMPETITIONS</div>
+									<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
 								</div>
 							</div>
 							<div v-show="expand_league">
@@ -119,7 +119,7 @@
 						<div v-show="search_data?.team && search_data.team?.length > 0">
 							<div @click="expand_team = !expand_team">
 								<div class="middle_info_tab diff">
-									<div class="color">TEAMS</div>
+									<div class="color">{{ i18n_t('ouzhou.search.team') }}</div>
 								</div>
 							</div>
 							<div v-show="expand_team">
@@ -149,7 +149,7 @@
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
-												v-if="item?.matchList[0]?.hps?.[0]?.hl.length > 0 && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="lodash.get(item,'matchList[0].hps[0].hl.length' ) > 0 && lodash.get(item,'matchList[0].hps[0].hl[0].ol[1].ov' ) && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div class="center">X</div>
 												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
@@ -174,7 +174,7 @@
 			</div>
 		</q-scroll-area>
 		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
-			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)" class="middle_info_tab diff">No results found. please try a different search term.</div>
+			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)" class="middle_info_tab diff">{{ i18n_t('ouzhou.search.no_search_rezult') }}</div>
 		<!--   -->
 	</div>
 </template>
@@ -185,6 +185,7 @@ import { useRouter } from 'vue-router'
 import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
+import PageSourceData from "src/core/page-source/page-source.js";
 import { get_search_result } from "src/api/module/search/index.js";
 import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/core/";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
@@ -273,10 +274,11 @@ function match_click(match) {
  */
 function league_click(match) {
 	if(!match) return;
-	search.insert_history(match.name)
+	search.insert_history(match.leagueName)
 	const { csid } = match.matchList[0]
-	router.push(`/search/${keyword.value}?csid=${csid}`)
+	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
+	PageSourceData.set_route_name('search')
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		type: 'width',
 		focus: false

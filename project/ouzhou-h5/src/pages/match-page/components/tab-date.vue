@@ -2,24 +2,24 @@
         <!-- <div class="header" :style="{ height: tabActive == 'league' ? '0.56rem' : '1.0rem' }"> -->
         <div class="header" >
             <div class="tabs">
-                <div class="matches" :class="tabActive == 'matches' ? 'active' : ''
+                <div class="matches" :class="state.tabActive == 'matches' ? 'active' : ''
                 ">
                     <span @click="changeTab('matches', 0)">{{
                         "Matches"
                     }}</span>
                 </div>
-                <div class="league" :class="tabActive == 'league' ? 'active' : ''
+                <div class="league" :class="state.tabActive == 'league' ? 'active' : ''
                 " @click="changeTab('league', 1)">
                     <span>{{ "League" }}</span>
                 </div>
                 <!-- league的下拉项 -->
-                <div class="select" v-if="tabActive == 'league'">
+                <div class="select" v-if="state.tabActive == 'league'">
                                 <span class="select-text">{{
                                     curSelectedOption.label
                                 }}</span>
                                 <span class="down_arrow" @click="toggerModel"></span>
                             </div>
-                            <template v-if="tabModel && tabActive == 'league'">
+                            <template v-if="tabModel && state.tabActive == 'league'">
                                 <ul class="option-list">
                                     <template v-for="(item, index) in selectOptions" :key="index">
                                         <li :class="dateIndex == index ? 'active' : ''
@@ -33,7 +33,7 @@
                         <!-- :class="'current_menu_mi_' + current_menu_mi" -->
                         <div :style="{backgroundPositionY: `${farmatSportImg(current_menu_mi)}px`}" class="menu_list_top_tab_background" ></div>
                         <!-- 七天时间 -->
-                        <div class="date_time" v-if="tabActive == 'matches'">
+                        <div class="date_time" v-if="state.tabActive == 'matches'">
                             <q-virtual-scroll ref="scrollDateRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
                                 <div @click="changeDatetab(item, index)" class="week" :class="second_tab_index == index ? 'active' : ''">
                                     <span>
@@ -44,7 +44,7 @@
                             </q-virtual-scroll>
                         </div>
                         <!-- 联赛的区域选择 -->
-                        <div class="date_time" v-if="tabActive == 'league'">
+                        <div class="date_time" v-if="state.tabActive == 'league'">
                             <q-virtual-scroll ref="scrollRefArea" :items="areaList" virtual-scroll-horizontal v-slot="{ item, index }">
                                 <div @click="areaListChange(item, index)" class="week" :class="area_tab_index == index ? 'active' : ''">
                                     <span>
@@ -76,7 +76,7 @@ const emitters = ref({})
 const route = useRoute();
 const sportId = route.query.sportId;
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
-const tabActive = ref("matches");//tab
+// const tabActive = ref("matches");//tab
 const tabModel = ref(false);//下拉框
 const dateIndex = ref(0);//下拉框选择
 const scrollDateRef = ref(null);
@@ -94,7 +94,16 @@ const props = defineProps({
         default: () => [],
         required: true
     },
+    tabActive: {
+        type: String,
+        default: 'matches'
+    }
 })
+
+const state = reactive({
+    ...props
+})
+
 // 下拉选
 const selectOptions = reactive([
     { label: "Next 12 Hours", time: "12hours", timestamp: 12 }, //12小时后的时间戳
@@ -110,9 +119,9 @@ const curSelectedOption = ref(selectOptions[0])
  * @param {*} name 
  */
 const changeTab = (name, index) => {
-    tabActive.value = name;
+    state.tabActive = name;
     tabModel.value = false;
-    emit("changeTab", index);
+    emit("changeTab", name);
 }
 /**
  * 下拉框
@@ -400,7 +409,6 @@ const areaListChange = (item,index) => {
         :deep(.q-virtual-scroll__content) {
             border-bottom: 10px solid #E2E2E2;
             width: 100%;
-            min-height: 100%;
         }
     }
 

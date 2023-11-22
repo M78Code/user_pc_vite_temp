@@ -2,7 +2,7 @@
  * @Description: app-h5  赛果冠军组件   冠军赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
-  <div class="champion-wrap-2" v-if="is_show">
+  <div class="champion-wrap-2 component match-container-main-template6" v-if="is_show">
     <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="handle_ball_seed_fold">
       <span class="score-inner-span"> {{ match_of_list.csna }} </span>
       <div class="collapse-dire">
