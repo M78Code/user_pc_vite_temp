@@ -49,6 +49,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr, i18n_t } from "src/core/index.js";
 import lodash_ from 'lodash'
+import userData from "src/core/user-config/user-ctr.js"
 
 
 const active_index = ref(BetData.active_index)
@@ -234,12 +235,15 @@ const _handleNumberKey = (num) => {
   ol_id = lodash_.get(BetData.bet_keyboard_config,ol_type)
   // let max_money = lodash_.get(BetViewDataClass,'bet_min_max_money[ol_id].max_money')
   let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
-  
   // 显示最大金额
   if (money_ && +money_ >= +max_money) {
     money_ = max_money
   }
-
+//超过用户余额显示用户余额
+if (money_>userData.balance)
+{
+  money_=userdata.balance
+}
   money.value = money_
   BetData.set_bet_amount(money_)
 }

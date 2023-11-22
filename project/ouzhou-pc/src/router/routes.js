@@ -16,7 +16,7 @@ const routes = [
         component: () => import('../pages/match-list/match-list.vue'),
         meta: {
           keepAlive: true, // 需要缓存,
-          title: '首页',
+          title: '体育投注',
           needRemember: true
         },
       },

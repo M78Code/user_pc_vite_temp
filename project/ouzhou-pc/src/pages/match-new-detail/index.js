@@ -159,7 +159,7 @@ export function usedetailData(route) {
       LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
       //存取赛事详情基础信息
       // console.log(detail_info.value,'detail_info.value')
-      MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
+       MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
 
       // detail_info.value = getMidInfo(mid);
       useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
@@ -267,7 +267,7 @@ export function usedetailData(route) {
    */
   const update_data = (val) => {
     if (!val) return;
-    // detail_info.value = getMidInfo(val);
+     detail_info.value = getMidInfo(val);
     all_list.value = lodash_.get(getMidInfo(val), "odds_info");
   };
   /**
@@ -321,6 +321,8 @@ export function usedetailData(route) {
     tid = route.params.tid;
     current_id.value = route.params.mid;
     current_id.value = mid;
+    LayOutMain_pc.set_oz_show_right(true); // 显示右侧
+    LayOutMain_pc.set_oz_show_left(true); // 显示菜单
     init();
   };
 
