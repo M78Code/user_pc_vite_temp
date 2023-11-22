@@ -909,15 +909,15 @@ export default {
 
       // 如果是非赛果电竞赛事，需要设置菜单类型
       if (MenuData.current_menu !== 28 && [100, 101, 102, 103].includes(+item.csid)) {
-        store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 3000 });
+        // store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 3000 });
       }
       // console.log({msg:'测试在极度快速的点几下,可以打印两次此消息,证明执行了两次'})
 
-      store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: item.mid });
-      store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: 0 });
-      store.dispatch({ type: 'matchReducer/set_details_item',  payload: 0 });
+      // store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: item.mid });
+      // store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: 0 });
+      // store.dispatch({ type: 'matchReducer/set_details_item',  payload: 0 });
       // 进入详情前，将当前赛事信息存入仓库
-      store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
+      // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
 
       if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
         this.$router.push(`/result_details/${item.mid}/0`);
@@ -931,6 +931,7 @@ export default {
         }
       }
     },
+
     // 清除当前组件所有定时器
     clear_timer() {
       // timeout定时器列表

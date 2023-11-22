@@ -18,9 +18,10 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { LayOutMain_pc, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 
-// // // 玩法模板 101 欧洲版
+// 玩法模板 101 欧洲版 常规赛事
 import { MatchTpl101AfterFullVersionWapper as MatchTpl101After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-101-after/index.js";
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// 欧洲版 冠军模板
+import { MatchTpl118AfterFullVersionWapper as MatchTpl118After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-118-after/index.js";
 export default {
   props: {
     mid: {
@@ -29,7 +30,8 @@ export default {
     },
   },
   components: {
-    MatchTpl101After
+    MatchTpl101After,
+    MatchTpl118After
   },
   setup(props) {
     // 赛事样式对象

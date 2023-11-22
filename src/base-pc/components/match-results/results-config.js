@@ -982,9 +982,10 @@ export const useGetResultConfig = () => {
    * @description: 开始日期选择
    */
   const startTimeShowFunc = (type) => {
+    console.error('67762367367327632',type.type)
     useMittEmit(MITT_TYPES.EMIT_SHOW_SELECT);
     // 体育下拉框展开时判断日期选择框是否展开
-    if (type == "close") {
+    if (type.type == "close") {
       if (state.startTimeShow == true) {
         state.startTimeShow = false;
         return;
@@ -993,6 +994,7 @@ export const useGetResultConfig = () => {
       }
     }
     state.startTimeShow = !state.startTimeShow;
+    console.error('state.startTimeShow state.startTimeShow ',state.startTimeShow )
     if (state.startTimeShow == true) {
       useMittEmit(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, "close");
     }
@@ -1216,7 +1218,6 @@ export const useGetResultConfig = () => {
     ipt_search,
     changePage,
     input_radio,
-    
     sub_search,
     hideSelect,
     input_focus,

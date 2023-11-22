@@ -3,7 +3,7 @@
 -->
 <template>
   <!-- 全部联赛标题 -->
-  <div class="all_league_title" v-if="i === 0" @click.stop="handle_ball_seed_fold">
+  <div class="all_league_title component match-container-main-template2" v-if="i === 0" @click.stop="handle_ball_seed_fold">
     <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
     <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
   </div>

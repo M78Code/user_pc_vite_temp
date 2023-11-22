@@ -18,7 +18,8 @@ class BetData {
     // this.bet_list = [];
      // 是否预约
     this.is_bet_pre = false
-    //是否接受更好赔率
+    
+    //是否接受更好赔率 
     this.bet_is_accept = false;
     // 接受更好赔率规则
     this.better_rules_show = false
@@ -34,6 +35,11 @@ class BetData {
     this.single_list_copy = []
     // true= 单关投注 false= 串关投注
     this.is_bet_single = true;
+    // 投注金额 h5使用
+    this.bet_amount = 0;
+
+    // 是否为合并模式
+    this.is_bet_merge = false;
     // 是否正在处理投注
     this.is_handle = false;
     // 单关 是否正在处理投注
@@ -119,8 +125,7 @@ class BetData {
 
     // 当前电竞查询的模式 false单关模式
     this.cur_esports_mode = false;
-    // 是否为合并模式
-    this.is_bet_merge = false;
+ 
     this.bet_category = 1; // 投注类别 1= 普通赛事 2= 虚拟体育 3= 电竞
     // 最小串关数
     this.mix_min_count = 2;
@@ -142,8 +147,7 @@ this.bet_appoint_ball_head= null */
     this.chat_room_type = "";
     // 记录投注金额
     this.bet_current_money_obj = {};
-    // 投注金额 h5使用
-    this.bet_amount = 0;
+   
     //自动化 测试
     this.auto_test_bet_info = {};
     //
@@ -168,8 +172,6 @@ this.bet_appoint_ball_head= null */
     this.bet_flag = true
     // 预约投注最小值
     this.bet_pre_min_odd_value = 0
-    // 限额/投注接口报错 
-    this.bet_before_message = {}
     // 投注栏拖拽配置
     this.bet_box_draggable = {
       x: window.innerWidth * 0.6,
@@ -539,6 +541,7 @@ this.bet_appoint_ball_head= null */
     this.single_list_copy = []
     this.bet_single_list = []
     this.bet_read_write_refer_obj = {}
+    this.bet_oid_list = []
     this.set_bet_amount(0)
     this.set_bet_data_class_version()
   }
@@ -745,16 +748,19 @@ this.bet_appoint_ball_head= null */
     this.set_bet_data_class_version()
   }
   
+  // 设置投注后的数据
+  set_bet_list_info(list) {
+    if(this.is_bet_single){
+      this.bet_single_list = lodash_.cloneDeep(list)
+    }else{
+      this.bet_s_list = lodash_.cloneDeep(list)
+    }
+  } 
+
   // 设置键盘信息 
   // 限额 /
   set_bet_keyboard_config(val) {
     this.bet_keyboard_config = val
-    this.set_bet_data_class_version()
-  }
-
-  // 设置 接口报错的显示
-  set_bet_before_message(val) {
-    this.bet_before_message = val 
     this.set_bet_data_class_version()
   }
 
@@ -773,7 +779,7 @@ this.bet_appoint_ball_head= null */
       this.bet_s_list.splice(index,1)
     }
     // 获取oid在投注项id集合中的位置
-    let index_ = this.bet_oid_list.findIndex(item => item == oid) || -1
+    let index_ = this.bet_oid_list.findIndex(item => item == oid)
     if(index_ != -1){
       this.bet_oid_list.splice(index_,1)
     }
@@ -828,7 +834,7 @@ this.bet_appoint_ball_head= null */
               time_out = setTimeout(()=>{
                 ol_obj.red_green = ''
                 this.set_ws_message_bet_info(ol_obj,ol_obj_index)
-              },5000)
+              },3000)
             }
           }
         })

@@ -1,6 +1,6 @@
 <template>
-  <div class="current-filter-wrap">
-    <div class="current-filter-list" @scroll="on_scroll">
+  <div class="current-filter-wrap" ref="area_obj_wrap">
+    <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
       <!-- 常规体育 -->
       <template v-for="(item, index) in mi_100_arr" :key="index">
         <div class="current-filter-tab" v-if=" item.ct > 0 " >
@@ -83,8 +83,8 @@ import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/compo
 import { MenuData } from "src/core/"
 import { compute_sport_id } from 'src/core/constant/index.js'
 
-let area_obj = null;
-let area_obj_wrap = null;
+let area_obj = ref();
+let area_obj_wrap = ref();
 let for_count
 // 滚动定时器
 let interval_id = null;
@@ -98,9 +98,7 @@ const show_right_btn = ref(false);
 // const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
 
 onMounted(() => {
-  area_obj = document.querySelector('.current-filter-list');
-  area_obj_wrap = document.querySelector('.current-filter-wrap');
-  if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
+  if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
     show_right_btn.value = true;
   }
  
@@ -145,6 +143,7 @@ const filter_min_mi_300 = (originalArray)=>{
 const choose_filter_tab = (item) => {
   // 获取最新的 数据
   handle_click_menu_mi_1(item)
+  MenuData.set_current_ball_type(item.mif - 100)
 };
 
 /**

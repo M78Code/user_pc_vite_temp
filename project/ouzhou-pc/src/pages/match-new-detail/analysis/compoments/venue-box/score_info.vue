@@ -4,10 +4,10 @@
  * @Description: 赛事分析页赛事比分
 -->
 <template>
-  <div class="box-bc">
-
+  <div class="box-bc" :key="refshValue">
     <q-table :rows="data" separator="none" :columns="columns" row-key="name" hide-pagination
-      :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
+             no-data-label="暂无比分数据"
+             :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
     >
       <!-- 头部插槽 足球用 -->
       <template v-slot:header="props">
@@ -20,7 +20,8 @@
                     {{ col.label }}
                 </span>
                 <div v-else style="color: #8a8986">
-                  <span style="margin-right: 6px">{{detail_info.course}}</span>
+<!--                  <span style="margin-right: 6px">{{detail_info.course}}</span>-->
+                  <span style="margin-right: 6px" v-html="computed_process_name"></span>
                   <span>{{detail_info.mst <= 0 ? "00:00" : detail_info.mstValue}}</span>
                 </div>
               </div>
@@ -35,25 +36,25 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span class="table-name">{{ props.row.name }}</span>
+            <span :class="[ `stage-${detail_info.mmp}`,'table-name']">{{ props.row.name }}</span>
           </q-td>
           <q-td key="q1" :props="props">
-            <span>{{ props.row.q1 }}</span>
+            <span :class="[detail_info?.course === 'Q1' ? 'heightLight' : '']">{{ props.row.q1 }}</span>
           </q-td>
           <q-td key="q2" :props="props">
-            <span>{{ props.row.q2 }}</span>
+            <span :class="[detail_info?.course === 'Q2' ? 'heightLight' : '']">{{ props.row.q2 }}</span>
           </q-td>
           <q-td key="ht" :props="props">
-            <span>{{ props.row.ht }}</span>
+            <span :class="[detail_info?.course === 'HT' ? 'heightLight' : '']">{{ props.row.ht }}</span>
           </q-td>
           <q-td key="q3" :props="props">
-            <span>{{ props.row.q3 }}</span>
+            <span :class="[detail_info?.course === 'Q3' ? 'heightLight' : '']">{{ props.row.q3 }}</span>
           </q-td>
           <q-td key="q4" :props="props">
-            <span>{{ props.row.q4 }}</span>
+            <span :class="[detail_info?.course === 'Q4' ? 'heightLight' : '']">{{ props.row.q4 }}</span>
           </q-td>
           <q-td key="q5" :props="props">
-            <span>{{ props.row.q5 }}</span>
+            <span :class="[detail_info?.course === 'Q5' ? 'heightLight' : '']">{{ props.row.q5 }}</span>
           </q-td>
           <q-td key="set" :props="props">
             <span>{{ props.row.set }}</span>
@@ -73,8 +74,18 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import { sport_columns, socre_dict } from "./score_config";
-import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {
+  get_match_status,
+  i18n_t,
+  is_eports_csid,
+  LOCAL_PROJECT_FILE_PREFIX,
+  stage_dict
+} from 'src/core/index.js';
+
+import { get_mmp_name } from "src/core/format/module/format-msc.js"
 import _ from "lodash";
+// import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
+import lodash from "lodash";
 
 const props = defineProps({
   detail_info: {
@@ -90,6 +101,7 @@ const props = defineProps({
 });
 
 const data = ref([]);
+const refshValue = ref(1)
 
 const padding_value = ref("1px 0px 1px 6px");
 
@@ -98,7 +110,6 @@ const columns = ref([]);
 //   足球篮球
 const get_base_data = (val) => {
   const detail_info = props.detail_info;
-  console.log(detail_info,"detail_info")
   const list = [
     {
       name: detail_info["mhn"],
@@ -134,6 +145,7 @@ const get_base_data = (val) => {
 const get_score_result = (list, val) => {
   let result = [];
   const detail_info = props.detail_info;
+  console.log(detail_info,"detail_info--==-")
   result = list.map((item) => {
     if (detail_info.csid == 1 || detail_info.csid == 3) {
       return {
@@ -160,7 +172,6 @@ const get_score_result = (list, val) => {
       return {};
     }
   });
-  console.log(result,"detail_info--")
   return result;
 };
 
@@ -403,8 +414,6 @@ watch(
 watch(
   () => props.score_list,
   (val) => {
-    console.log(props.score_list,"props.score_list")
-    console.log(props.detail_info,"props.score_list")
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
     get_base_data(val);
@@ -414,7 +423,102 @@ watch(
 
 
 
-onMounted(() => {});
+onMounted(() => {
+  setInterval(()=>{
+    ++refshValue.value
+  },2000)
+});
+
+
+// 计算名字
+const computed_process_name = computed(() => {
+  let { detail_info } = props || {};
+  if(!detail_info){
+    return '';
+  }
+  let csid = lodash.get(props, 'detail_info.csid')
+  let mmp = lodash.get(props, 'detail_info.mmp')
+  let mle = lodash.get(props, 'detail_info.mle')
+  let process_name = get_mmp_name(csid, mmp) || "";
+  // 即将开赛
+  if (lodash.get(props, 'match.ms') == 110) {
+    process_name = i18n_t("common.match_soon");
+  }
+  // 滚球 && 未开赛
+  else if (get_match_status(lodash.get(props, 'match.ms')) && match.mmp == 0) {
+    switch (Number(match.csid)) {
+        // 足
+      case 1:
+        process_name = i18n_t("common.up_half");
+        break;
+        // 篮
+      case 2:
+        process_name =
+            match.mle == 17 ? i18n_t("common.up_half") : i18n_t("common.first_match");
+        break;
+        //棒球
+      case 3:
+        process_name = i18n_t("mmp.3.401");
+        break;
+        //冰球
+      case 4:
+        process_name = i18n_t("mmp.4.1");
+        break;
+        // 网球
+      case 5:
+        process_name = i18n_t("mmp.5.8");
+        break;
+        // 美式足球
+      case 6:
+        process_name = i18n_t("mmp.6.13");
+        break;
+        // 斯诺克
+      case 7:
+        process_name = covert_mct(match);
+        break;
+        // 乒乓球
+      case 8:
+        // 排球
+      case 9:
+        // 羽毛球
+      case 10:
+        process_name = i18n_t("mmp.10.8");
+        break;
+    }
+
+    // 电竞
+    if (is_eports_csid(match.csid)) {
+      process_name = i18n_t("mmp.100.1");
+    }
+  } else {
+    // 篮球(2) && 赛制为 17分钟 && 第四节(100) ====> 阶段名称显示 "下半场"
+    if (csid == 2 && mle == 17 && mmp == 100) {
+      process_name = i18n_t("mmp.2.2");
+    }
+
+    // 斯诺克(7) 的滚球(21)
+    if (csid == 7 && mmp == 21) {
+      process_name = covert_mct(match);
+    }
+  }
+
+  // 篮球3X3滚球时显示"全场"
+  if (csid == 2 && mle == 73 && get_match_status(lodash.get(props, 'match.ms'))) {
+    process_name = i18n_t("mmp.2.21");
+  }
+  //是否列表页棒球第X局，换行显示
+  if (
+      lodash.get(props, 'match.csid')== 3 &&
+      props.show_page == "match-list" &&
+      process_name.indexOf("第") == 0
+  ) {
+    //欧洲版，不用换行
+    return props.date_show_type === 'inline' ? process_name : process_name.replace(" ", "<br/>");
+  } else {
+    return process_name;
+  }
+});
+
 </script>
 
 <style lang="scss" scoped>
@@ -458,4 +562,14 @@ onMounted(() => {});
   display: inline-block;
   text-overflow: ellipsis;
 }
+
+.heightLight{
+  color: rgb(255, 112, 0) !important;
+}
+
+//.stage-13,.stage-14,.stage-15,
+//.stage-302,.stage-16,.stage-303{
+//  //color: var(--qq--yb-text-color1) !important;
+//  color: rgb(255, 112, 0) !important;
+//}
 </style>

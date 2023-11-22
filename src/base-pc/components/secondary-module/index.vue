@@ -22,6 +22,7 @@
             </p>
           </div>
           <div class="row secondary_obj">
+          <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <p
               class="secondary_name"
               :class="item.id === LayOutMain_pc.layout_secondary_active ? 'active' :'' "
@@ -75,7 +76,7 @@ const list_data = reactive([
  * @return {}
  */
 function active_change(value) {
- 
+ LayOutMain_pc.set_layout_secondary_active(value)
 }
 /**
  * @description: 关闭弹窗
@@ -99,23 +100,27 @@ function close_page(value) {
       center / cover;
     .top_tit {
       font-size: 18px;
-      color: var(--q-gb-t-c-1);
+      -color: var(--q-gb-t-c-1);
+      color: #ffffff;
     }
     .secondary_obj {
-      color: var(--q-gb-t-c-3);
+      -color: var(--q-gb-t-c-3);
+      color: #C2C2C2;
       .secondary_name {
         margin-right: 30px;
       }
       .active {
-        color: var(--q-gb-t-c-2);
+        -color: var(--q-gb-t-c-2);
+        color: #ff7000;
         position: relative;
         &::before {
           content: "";
           position: absolute;
           display: inline-block;
-          width: 54px;
+          width: 40px;
           height: 2px;
-          background: var(--q-gb-bg-c-1);
+          -background: var(--q-gb-bg-c-1);
+          background: #ff7000;
           bottom: -8px;
           left: 0;
         }

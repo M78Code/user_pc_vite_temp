@@ -4,7 +4,7 @@
     <div class="competing-time">
       <sport_icon :size="'12px'" :status="true" :sport_id="current_tab.csid" class="sport-icon" />
       <div class="matches-time">
-        <div class="begin-time din_font">{{ (current_tab.matches_15mins_obj || {}).title }}</div>
+        <div class="begin-time din_font">{{ get_mmp(current_tab.mst) }}</div>
       </div>
     </div>
     <div class="club-name">
@@ -13,15 +13,16 @@
     <div class="union-name">
       {{ current_tab.man }}
     </div>
-    <div class="odds-box din_font" v-if="current_tab?.current_ol?.length">
+    <div class="odds-box din_font" v-if="col_ols_data.length">
       <div class="odds-box-item" 
-        v-for="item in (current_tab.current_ol[0] || {}).ol || []" 
-        :key="item.oid"
-        @click="checked_current_td({payload: current_tab, hps: current_tab.current_ol[0], ol: item, is15mins: true})"
+        v-for="(col, col_index) in col_ols_data" :key="col._hpid + col_index"
         :class="{checked: BetData.bet_oid_list.includes(item.oid) }"
       >
-        <span>{{ item.onb }}</span>
-        <span>{{ Math.floor(item.ov / 1000) / 100 }}</span>
+        <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
+          v-for="(ol_data, ol_index) in (col.ols)" :key="ol_index + '_' + ol_data._hpid + '_' + ol_data._ot">
+          <!-- 投注项组件 -->
+          <bet-item :ol_data="ol_data" />
+        </div>
       </div>
     </div>
   </div>
@@ -29,12 +30,16 @@
 
 <script setup>
 
-  import { onMounted, ref, watch } from 'vue';
-  import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
+  import { onMounted, ref, watch, computed } from 'vue';
+  import {get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
   // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
+  import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
   import BetData from "src/core/bet/class/bet-data-class.js";
   import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-  import { MenuData } from "src/core/index.js"
+  import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchListDataInfo, i18n_t } from "src/core/index.js"
+
+  import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
+  import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 
   const props = defineProps({
     current_tab: {
@@ -43,6 +48,8 @@
     },
   });
   const current_check_betId = ref(MenuData.current_check_betId.value);
+  let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
+  let odds_list = match_tpl_info.get_15mins_odds_list()
   // const ols = ref([])
 
   // // 监听 当前投注项ID的变化
@@ -53,6 +60,32 @@
       },
     )
 
+  const get_mmp = (mst) => {
+    let difference =  Math.floor(mst / 60 / 15);
+    if (difference >= 6) difference = 5;
+    return i18n_t('ouzhou.15minutes_bet_col')[difference]
+  }
+
+  const col_ols_data = computed(() => {
+    try {
+      let { hn, mid } = props.current_tab
+      let handicap_type = hn || 1
+      const many_obj = get_match_to_map_obj(props.current_tab); //非坑位对象
+      const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
+      odds_list.ols = odds_list.ols.map(item => {
+        if (item.empty) { return }
+        // 投注项数据拼接
+        let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
+        // 获取投注项内容 
+        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
+      })
+      return odds_list
+    } catch (e) {
+      console.error('deal_width_handicap_ols', e)
+      return []
+    }
+  })
+
   // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
   const checked_current_td = payload => {
     MenuData.current_check_betId.value = payload.ol.oid
@@ -62,6 +95,7 @@
       _hn: payload.hps.hn,  // hn_obj
       _mid: payload.payload.mid  //赛事id mid_obj
     }
+    console.log(params, 'params', payload)
     set_bet_obj_config(params,{})
   }
   

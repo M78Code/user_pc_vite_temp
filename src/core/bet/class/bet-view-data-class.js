@@ -27,6 +27,7 @@ class BetViewData {
     this.order_confirm_complete = 0;
     //错误信息
     this.error_message = "";
+    this.tipmsg = "1111"
     this.cur_keyboard_index = "";
     // 最大值获取标志 0: 默认值 1: 正在获取最大最小值 2:获取完成
     this.input_max_flag = 0;
@@ -123,7 +124,7 @@ class BetViewData {
   set_bet_min_max_money(obj, type = '') {
     console.error('aaa')
     // 获取query_bet_amount数据对应的限额
-    let bet_amount_list = lodash_.get(obj, 'betAmountInfo')
+    let bet_amount_list = lodash_.get(obj, 'betAmountInfo',[])
     // min_max 或者最大值 最小值接口 数据结构不同
     if (type == 'min_max') {
       bet_amount_list = obj
@@ -162,17 +163,11 @@ class BetViewData {
   // 设置提示信息 
   // code code码
   // msg 提示信息
-  set_bet_error_code({ code, message }) {
+  set_bet_before_message({ code, message }) {
     this.error_message = message
     this.error_code = code
 
-    // if (code == 200) {
-    //   // 3-投注成功状态(主要控制完成按钮)
-    //   this.set_bet_order_status(3)
-    // } else {
-    //   // 4-投注失败状态 显示错误信息
-    //   this.set_bet_order_status(4)
-    // }
+    this.set_bet_view_version()
   }
   /**
    * @description: 完成按钮是否显示
