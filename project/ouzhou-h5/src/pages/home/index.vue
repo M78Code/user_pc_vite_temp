@@ -241,6 +241,7 @@ onUnmounted(() => {
           height: calc(100% - 0px);
           overflow-y: auto;
           position: relative;
+          padding-bottom: 70px;
         }
         .match-page-section{
           height: calc(100% - 66px - 54px);
