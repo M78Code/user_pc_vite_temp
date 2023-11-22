@@ -90,6 +90,8 @@ onMounted(async () => {
   MenuData.set_menu_mi('101');
   set_default_home_data()
   get_ouzhou_home_data()
+  set_default_home_hots()
+  get_ouzhou_home_hots()
   get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
@@ -114,7 +116,8 @@ const get_ouzhou_home_data = async () => {
 }
 
 const handle_ouzhou_home_data = (res) => {
-  const { p15_list, hots, dataList } = res
+  const { p15_list, dataList } = res
+  console.log(p15_list, dataList)
   // 15 分
   if (p15_list.length > 0) time_events.value = p15_list.map(t => {
     const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
@@ -125,8 +128,24 @@ const handle_ouzhou_home_data = (res) => {
     const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
     return match
   })
+}
+
+// 设置默认数据
+const set_default_home_hots = () => {
+  const res = MatchMeta.get_default_ouzhou_home_hots()
+  handle_ouzhou_home_hots(res)
+}
+
+// 获取首页数据
+const get_ouzhou_home_hots = async () => {
+  const res = await MatchMeta.get_ouzhou_home_hots()
+  handle_ouzhou_home_hots(res)
+}
+
+// 获取首页热门赛事
+const handle_ouzhou_home_hots = async (data) => {
   // 热门赛事
-  if (hots.length > 0) featured_matches.value = hots.map(t => {
+  if (data.length > 0) featured_matches.value = data.map(t => {
     const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     return {
@@ -136,6 +155,7 @@ const handle_ouzhou_home_data = (res) => {
      }
   })
 }
+
 
 /**
  * @description 获取五大联赛赛事
