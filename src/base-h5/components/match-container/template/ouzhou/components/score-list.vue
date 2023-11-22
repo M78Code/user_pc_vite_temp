@@ -65,6 +65,7 @@ const active_score = ref('')
 
 // 赔率数据
 const score_data = computed(() => {
+  
   const hps = props.match_info.hps
   const csid = props.match_info.csid
   
@@ -78,11 +79,11 @@ const score_data = computed(() => {
   const plays = sports_play_title[csid]
   const play_item = plays.find(t => t.hpid === hpid)
   
-  const ol_data = play_item.ol
   const ol_length = hpid === '1' ? 3 : 2
   const ol_arr = lodash.get(hps_item, 'hl[0].ol', [])
-
+  
   // 最终渲染数据
+  const ol_data = lodash.get(play_item, 'ol', [])
   const target = [] 
   if (ol_arr.length > 0) {
     ol_data.forEach(t => {
