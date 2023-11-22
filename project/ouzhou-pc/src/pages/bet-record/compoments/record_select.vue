@@ -47,17 +47,20 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
+import dayjs from 'dayjs'
+const _dayjs = dayjs()
 const props = defineProps({
   current_tab: {
     type: String,
     default: ''
   }
 })
+const formatYMD = 'YYYY/MM/DD'
 const dateRef = ref(null)
 const qDateProxy = ref(null)
 const cash_value = ref([''])
 const current_time = ref(1)
-const date = ref({ from: '2023/07/01', to: '2023/07/17' })
+const date = ref({ from: '', to: '' })
 const date_value = ref('')
 const select_options = [
   { value: i18n_t("bet_record.sort_by_settled_time"), label: i18n_t("ouzhou.record.settled_time"), id: 2 },
@@ -110,15 +113,17 @@ const options = [
   }
 ]
 const btn_options = [
-  { label: i18n_t("ouzhou.record.today"), value: 1 },
-  { label: i18n_t("ouzhou.record.yesterday"), value: 2 },
-  { label: i18n_t("ouzhou.record.7_days"), value: 3 },
-  { label: i18n_t("ouzhou.record.30_days"), value: 4 }
+  { label: i18n_t("ouzhou.record.today"), value: 1, range: [_dayjs.startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
+  { label: i18n_t("ouzhou.record.yesterday"), value: 2, range: [_dayjs.subtract(1, 'day').startOf('day').format(formatYMD), _dayjs.subtract(1, 'day').endOf('day').format(formatYMD)] },
+  { label: i18n_t("ouzhou.record.7_days"), value: 3, range: [_dayjs.subtract(6, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
+  { label: i18n_t("ouzhou.record.30_days"), value: 4, range: [_dayjs.subtract(29, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] }
 ]
 // 时间筛选点击
 const time_click = (item) => {
+  const [from, to] = item.range
   current_time.value = item.value
   params.timeType = item.value
+  date.value = { from, to }
   emitClick()
 }
 const emitClick = () => {
