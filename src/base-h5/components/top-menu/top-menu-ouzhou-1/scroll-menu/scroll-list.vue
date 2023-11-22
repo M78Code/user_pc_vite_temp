@@ -77,7 +77,8 @@ const on_change_play = (item,index) => {
     // const index = dataList.value.findIndex(n=>n.mi == item.mi);
     scrollRef.value.scrollTo(index-2, 'start-force')
 }
-const reset = () => {
+const reset = (mi) => {
+    if(mi)playValue.value = mi;
     scrollRef.value.scrollTo(0, 'start-force')
 }
 

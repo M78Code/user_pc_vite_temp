@@ -95,7 +95,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     if (
       (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) 
       || ["today", "early", "bet",'match-play-common', 'match-collect'].includes(page_source)
-      || route_name == 'search'
+      || route_name == 'search' || MenuData.is_top_events()
       // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
       || !MenuData.menu_root
     ) {
@@ -104,7 +104,7 @@ const set_match_list_mapping_relation_obj_type = () => {
       type = 8
     }
   }
-  console.log('type', PageSourceData);
+  console.log('type', PageSourceData, type);
   return   type
 };
 

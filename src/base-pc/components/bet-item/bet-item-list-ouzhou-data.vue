@@ -29,7 +29,7 @@
       ? 'flex:1.5'
       : ''
       ">
-      <div v-if="['lock', 'seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
+      <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
       </div>
       <span v-else-if="ol_data.ov">
         {{ (ol_data.ov / 100000).toFixed(2) }}
@@ -57,10 +57,10 @@ import {
 import { format_odds_value } from 'src/core/format/module/format-odds.js';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useGetItem } from "./bet_item_hooks.js";
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 import { compute_css_obj } from 'src/core/server-img/index.js'
+
 // 定时器对象
 let timer_obj = {};
 const props = defineProps({
@@ -76,10 +76,8 @@ const props = defineProps({
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
-  if (props.ol_data) {
-    let { _mhs, _hs, os } = props.ol_data;
+    let { _mhs, _hs, os } = props.ol_data||{};
     return get_odds_state(_mhs, _hs, os);
-  }
 });
 // 赔率值
 const match_odds = ref("");
@@ -260,6 +258,7 @@ const bet_click_ol = () => {
     emit('update_score', current_id)
   }
   set_bet_obj_config(params, {})
+  BetData.set_bet_state_show(true)
 };
 
 onUnmounted(() => {

@@ -17,6 +17,7 @@ import {
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+import { nextTick } from "vue"
 
 let time_out = null
 // 获取限额请求数据
@@ -566,7 +567,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
     }
     // 设置投注内容 
-    BetData.set_bet_read_write_refer_obj(bet_obj)
+    nextTick(()=>{
+        BetData.set_bet_read_write_refer_obj(bet_obj)
+        // 订阅投注项的 ws
+        set_market_id_to_ws()
+    })
+   
     // 判断获取限额接口类型
     if(["C01","B03","O01"].includes(bet_obj.dataSource) || [2,4].includes(Number(bet_obj.mbmty)) ||  ['esports_bet','vr_bet'].includes(other.bet_type)){
         // C01/B03/O01  电竞/电竞冠军/VR体育
@@ -575,7 +581,6 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 获取限额 常规
         get_query_bet_amount_common(bet_obj)
     }
-    set_market_id_to_ws()
 }
 
 // h5 投注选择 数据仓库

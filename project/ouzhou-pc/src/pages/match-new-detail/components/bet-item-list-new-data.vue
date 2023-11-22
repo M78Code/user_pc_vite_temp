@@ -26,7 +26,7 @@
 
     <!-- 赔率 -->
     <div class="odds" :style=" [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes( +ol_data._hpid ) && utils.is_iframe ? 'flex:1.5' : '' ">
-      <div v-if="odds_state == 'seal'" class="lock" />
+      <div v-if="['seal'].includes(odds_state)" class="lock" />
       <div v-else class="odds-arrows-wrap">
         <span :class="{ default: true, up: odds_lift == 'up', down: odds_lift == 'down', active: ol_data.oid == current_ol.oid }">
           {{ numberRetain(match_odds) }}
@@ -49,12 +49,10 @@ import { get_odds_active, utils } from "src/core/index.js";
 import { format_odds_value } from "src/core/format/module/format-odds.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
 import { compute_value_by_cur_odd_type } from "src/core/index.js"
-import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { formatMoney, numberRetain } from 'src/core/format/index.js'
 
 const is_mounted = ref(true);
-// 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
-const odds_state = ref("");
+
 // 赔率值
 const match_odds = ref("");
 // 赔率升降 up:上升 down:下降
@@ -76,7 +74,11 @@ const props = defineProps({
     default: () => {},
   },
 });
-
+// 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
+const odds_state = computed(() => {
+    let { _mhs, _hs, os } = props.ol_data||{};
+    return get_odds_state(_mhs, _hs, os);
+});
 //玩法比分
 const score = computed(() => {
   let score = "";
@@ -160,35 +162,21 @@ const score = computed(() => {
  * @param  {number} old - 上次赔率值
  * @return {undefined} undefined
  */
- const set_odds_lift = (cur, old) => {
-  let _odds_lift = "";
-
-  if (
-    odds_state.value != "lock" &&
-    odds_state.value != "seal" &&
-    old &&
-    !is_odds_seal()
+ let tid;
+/**
+ * 设置赔率升降
+ * @param  {number} cur - 当前赔率值
+ * @param  {number} old - 上次赔率值
+ * @return {undefined} undefined
+ */
+const set_odds_lift = (cur, old) => {
+  if (!["lock", 'seal'].includes(odds_state.value) && old && !is_odds_seal()
   ) {
-    if (cur > old) {
-      _odds_lift = "up";
-    } else if (cur < old) {
-      _odds_lift = "down";
-    }
-
-    if (_odds_lift && !odds_lift_show.value) {
-      /**清除定时器 */
-      if (timer_obj["odds_lift"]) {
-        clearTimeout(timer_obj["odds_lift"]);
-        timer_obj["odds_lift"] = null;
-      }
-      odds_lift_show.value = true;
-      odds_lift.value = _odds_lift;
-
-      timer_obj["odds_lift"] = setTimeout(() => {
-        odds_lift.value = "";
-        odds_lift_show.value = false;
-      }, 3000);
-    }
+    odds_lift.value = cur > old ? "up" : 'down';
+    clearTimeout(tid)
+    tid = setTimeout(() => {
+      odds_lift.value = "";
+    }, 3000);
   }
 };
 
@@ -200,40 +188,32 @@ onMounted(() => {
   });
 });
 
-// 监听玩法ID变化 取消赔率升降
-// watch(props.ol_data._hpid, () => {
-//   clear_odds_lift()
-// })
-
 // 监听oid 取消赔率升降
-// watch(props.ol_data.oid, () => {
-//   clear_odds_lift()
-// })
+// 监听玩法ID变化 取消赔率升降 
+watch(() => [props.ol_data._hpid, props.ol_data.oid], () => {
+  clear_odds_lift()
+})
 
 // 监听投注项赔率变化
 watch(
   () => props.ol_data.ov,
   (cur, old) => {
+    if (cur == old) return
     // 赔率值处理
     format_odds(cur, 1);
-    if (props.ol_data) {
-      let { _mhs, _hs, os } = props.ol_data;
-      odds_state.value = get_odds_state(_mhs, _hs, os);
-    }
     // 红升绿降变化
     set_odds_lift(cur, old);
   },
   {immediate:true}
 );
 
-
 /**
  * 取消赔率升降
  */
-const clear_odds_lift = () => {
+ function clear_odds_lift(){
+  clearTimeout(tid)
   odds_lift.value = "";
 };
-
 
 /**
  * @description 投注项点击
