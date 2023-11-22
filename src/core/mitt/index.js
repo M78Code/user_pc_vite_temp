@@ -63,7 +63,8 @@ function useMitt(type, callback){
  * useMittEmit(MITT_TYPES.EMIT_KEY,{key:value})
  */
 function useMittEmit(type, param) {
-  // console.error("mitt----------useMittEmit-----   :", type,param);
+  
+  console.error("mitt----------useMittEmit-----   :", type,param);
  
   if(String(type).startsWith('EMIT_')&&MITT_TYPES[type]){
     emitter.emit(type, param);

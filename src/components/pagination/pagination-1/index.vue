@@ -44,6 +44,7 @@
         icon-prev="icon-triangle2"
         icon-next="icon-triangle3"
       />
+      
       <div class="pagination-select">
         <q-select
           class="select"
@@ -67,7 +68,7 @@
           </template>
         </q-select>
         <span>
-          {{ i18n_t('common.page_') }} {{perPageNum}}
+          {{ i18n_t('common.page_') }}
           <!-- 条/页 -->
         </span>
       </div>
@@ -102,6 +103,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { format_balance } from "src/core/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { IconWapper } from "src/components/icon/index.js";
+import {SelectWrapper} from "src/base-pc/components/match-results/select/index.js";
 
 useRegistPropsHelper(component_symbol, need_register_props);
 
