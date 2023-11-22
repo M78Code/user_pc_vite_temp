@@ -35,7 +35,7 @@ export default {
       // url token
       let url_token = location.search.indexOf('token');
       // session token
-      let session_stroage_token = SessionStorage.get('pc_token')||SessionStorage.get();
+      let session_stroage_token = SessionStorage.get('pc_token')||SessionStorage.get('token');
       return url_token >= 0 || session_stroage_token;
     }
   }
