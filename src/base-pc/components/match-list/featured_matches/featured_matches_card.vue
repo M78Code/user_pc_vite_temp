@@ -1,6 +1,6 @@
 <template>
-  <div class="featured-matched-card-wrap">
     <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />
+  <div class="featured-matched-card-wrap">
     <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
     <template2 :is_show_btn="matches_featured_list.length >= 4">
       <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in col_ols_data" :key="item.tid"
