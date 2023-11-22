@@ -458,7 +458,7 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
-    if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data()
+    if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data(list)
     this.handler_match_list_data({ list: list, is_classify })
   }
 
@@ -551,21 +551,6 @@ class MatchMeta {
   }
 
   /**
-   * @description 获取欧洲版联赛数量统计
-   */
-  async get_ouzhou_leagues_data (date) {
-    const res = await api_match_list.get_leagues_list({
-      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
-      // sportId: 1,
-      selectionHour: date
-    })
-    MatchCollect.get_collect_match_data()
-    const list = lodash.get(res, 'data', [])
-    if (!list) return
-    return list
-  }
-
-  /**
    * @description 获取欧洲版联赛详细比赛
    */
   async get_ouzhou_leagues_list_data (tid) {
@@ -575,9 +560,9 @@ class MatchMeta {
       tid: tid
     })
     // console.log('get_ouzhou_leagues_list_data', res)
-    MatchCollect.get_collect_match_data()
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res.data, 'data', [])
+    MatchCollect.get_collect_match_data(list)
     this.handler_match_list_data({ list: list, is_virtual: false })
   }
 
@@ -647,9 +632,10 @@ class MatchMeta {
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    MatchCollect.get_collect_match_data()
+    
     if (list.length > 0) {
       this.handler_match_list_data({ list: list, is_virtual: false, is_collect: true })
+      MatchCollect.get_collect_match_data(list)
       // 该赛事是否收藏
       list.forEach((t) => {
         MatchCollect.set_match_collect_state(t, true)

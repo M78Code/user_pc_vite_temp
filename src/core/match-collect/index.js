@@ -85,9 +85,10 @@ class MatchCollect {
 
   /**
    * @description 获取 赛事 收藏数据
+   * @params list 赛事数据
    * @returns 
    */
-  get_collect_match_data () {
+  get_collect_match_data (list = []) {
     api_common.get_new_collect_matches({
       matchType: 0,
       cuid: UserCtr.get_uid()
@@ -97,7 +98,7 @@ class MatchCollect {
         const data = lodash.get(res,'data');
         Object.assign(this.match_collect_obj, { ...data })
         this.set_is_get_collect(true)
-        MatchMeta.complete_matchs.forEach(match => {
+        list && list.length > 0 && list.forEach(match => {
           requestAnimationFrame(() => {
             this.handle_collect_state(match)
           })

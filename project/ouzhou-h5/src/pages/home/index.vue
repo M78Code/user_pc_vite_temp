@@ -66,6 +66,8 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import { api_match } from "src/api/index.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
@@ -92,7 +94,7 @@ onMounted(async () => {
   get_ouzhou_home_data()
   set_default_home_hots()
   get_ouzhou_home_hots()
-  get_five_league_matchs()
+  // get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
   // 增加监听接受返回的监听函数
@@ -177,6 +179,24 @@ const get_five_league_matchs = async () => {
     return match
   })
   MatchMeta.get_match_base_hps_by_mids(mids.toString(), MatchDataBaseFiveLeagueH5)
+}
+
+/**
+ * @description 获取热门赛事
+ */
+const get_ouzhou_home_hots1111 = () => {
+  const params = {
+    euid: "30199",
+    sort: 1,
+    apiType: 1,
+    orpt: -1,
+    csid:'1',
+    cuid: UserCtr.get_uid(),
+  }
+  api_match.post_fetch_match_list(params).then((res) => {
+    if (+res.code !== 200) return
+    handle_ouzhou_home_hots(res)
+  })
 }
 
 const tabValue = ref('featured');
