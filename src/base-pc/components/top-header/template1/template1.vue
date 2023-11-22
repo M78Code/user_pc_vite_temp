@@ -47,7 +47,6 @@ export default defineComponent({
       { label: i18n_t("common.betting_record"), id: 102, name: 'bet_record' },
     ]);
     const nav_click = (item = {}) => {
-      console.error('nav_click')
       // 清空数据 
       MenuData.set_mid_menu_result({})
       MenuData.set_menu_root(item.id); 
