@@ -185,9 +185,9 @@ export default {
       MatchListCardDataClass_match_list_card_key_arr();
       proxy?.$forceUpdate();
     });
-    const get_data_info = async () => {
+    const get_data_info = async (type = 0) => {
       // 判断是不是首页下的 featured 页面
-      if (MenuData.is_featured()) {
+      if (MenuData.is_featured() || type == 1001) {
         const { mins15_list= [], match_count = 0 } = await init_home_matches();
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
