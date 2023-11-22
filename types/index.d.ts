@@ -1,6 +1,8 @@
 import { Ref as _Ref } from "vue"
 import _lodash from 'lodash'
 import { WsCmdEnum } from "src/core/data-warehouse/ws/ws-ctr/ws-cmd-type"
+import { RouteLocationRaw } from 'vue-router'
+
 export {}
 
 declare global {
@@ -16,5 +18,17 @@ declare global {
       /** ? */ ld: string,
     }
     /** ws cmd value 枚举 */ export type WsCmdValueEnum = `${WsCmdEnum}`
+  }
+}
+/** 命名路由跳转提供类型提示 */
+type NameRouterType = RouteLocationRaw | {
+  /** 欧洲H5详情页 */
+  name: 'category',
+  params:K.mid|K.tid|K.csid|{csid?,mcid?:string}
+}
+
+declare module 'vue-router' {
+  declare interface Router {
+    push(to:RouteLocationRaw | NameRouterType );
   }
 }
