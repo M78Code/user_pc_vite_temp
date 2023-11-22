@@ -15,7 +15,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -29,7 +29,7 @@
       :results_playback_list="results_playback_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_playback_type="change_playback_type"
       @change_sort="change_sort"
       :versions="versions"
@@ -44,7 +44,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -57,7 +57,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -70,7 +70,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -83,7 +83,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -96,7 +96,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
       :sportType="sportType"
@@ -110,7 +110,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
       :sportType="sportType"
@@ -124,7 +124,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -137,7 +137,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -150,7 +150,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -163,7 +163,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -202,7 +202,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
      />
@@ -285,8 +285,8 @@ export default {
      * @param {Array} data
      * @return {undefined} undefined
      */
-    get_tr_detail(data) {
-      this.$emit("get_tr_detail", data);
+    get_tr_detail(data,index) {
+      this.$emit("get_tr_detail", [data,index]);
     },
     /**
      * @description: 父组件升降排序

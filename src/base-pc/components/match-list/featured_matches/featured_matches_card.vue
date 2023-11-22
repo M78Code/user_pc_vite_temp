@@ -1,5 +1,6 @@
 <template>
-  <CurrentMatchTitle :title_value="$t('ouzhou.match.featured') + $t('ouzhou.match.matches')" v-if="matches_featured_list.length" :show_more_icon="false" />
+  <CurrentMatchTitle :title_value="$t('ouzhou.match.featured') + $t('ouzhou.match.matches')"
+    v-if="matches_featured_list.length" :show_more_icon="false" />
   <div class="featured-matched-card-wrap" v-if="matches_featured_list.length">
     <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
     <template2 :is_show_btn="matches_featured_list.length >= 4">
@@ -13,18 +14,18 @@
             <span v-show="Number(item.mmp)">{{ item.mstValue }}</span>
           </div> -->
           <!-- 比赛进程 -->
-          <match-process v-if="item" :match="item" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
-          periodColor="gray" />
+          <match-process v-if="item" :match="item" source='match_list' show_page="match-list" :rows="1" :date_rows="1"
+            date_show_type="inline" periodColor="gray" />
         </div>
         <div class="club-name">
-          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item,`msc_obj.S1.home`) }}</span>
+          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.home`) }}</span>
         </div>
         <div class="union-name">
-          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item,`msc_obj.S1.away`) }}</span>
+          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.away`) }}</span>
         </div>
         <div class="odds_box">
           <div class="top-line"></div>
-          <div class="odds_item" v-for="ol_data in get_col_ols_data(item)">
+          <div class="odds_item" v-for="ol_data in col_ols_data[index]">
             <betItem :ol_data="ol_data"></betItem>
           </div>
         </div>
@@ -37,19 +38,20 @@ import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.v
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { get_hots_odds_list } from 'src/core/match-list-pc/list-template/module/template-101.js'
 import { ref, watch, onBeforeUnmount, computed } from 'vue';
 import { api_details } from 'src/api';
-import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import template2 from './template2.vue';
 import { MenuData } from "src/core/index.js"
 import { useRouter } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, UserCtr } from 'src/core'
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 const matches_featured_list = ref([])
 const router = useRouter();
-const tfir = ref({})
+import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
+
 
 const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common)
 
@@ -62,6 +64,7 @@ const get_featurd_list = async () => {
   MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.data);
   if (res.data && res.data.length) {
     const mids = []
+    
     //使用数据仓库的数据 因为ws会推送数据 会改变数据仓库的数据 用本地没有数据变化哦哦
     // matches_featured_list.value=res.data
     // 只显示5条数据
@@ -72,6 +75,7 @@ const get_featurd_list = async () => {
       mids.push(i.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(i.mid))
     })
+    api_bymids({ mids }, null, MatchDataWarehouse_ouzhou_PC_hots_List_Common)
     set_active_mids(mids)
   }
 }
@@ -83,10 +87,20 @@ watch(
     current_check_betId.value = MenuData.current_check_betId.value
   },
 )
+const col_ols_data = ref([])
+watch(()=>matches_featured_list.value, (v) => {
+  col_ols_data.value = v.map((match) => {
+    return get_col_ols_data(match)
+  })
+}, { deep: true,immediate:true })
 
-const hots_odds_list = get_hots_odds_list()
 function get_col_ols_data(match) {
-  let { hn, mid } = match;
+  let { hn, mid, csid } = match;
+  //获取欧洲要显示的数据
+  const tpl_id = get_ouzhou_data_tpl_id(csid)
+  //101 视图模板 却是对应不同的数据模板ID 所以要重新取
+  const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
+  const hots_odds_list = match_tpl_info.get_hots_odds_list()
   let handicap_type = hn || 1
   const many_obj = get_match_to_map_obj(match); //非坑位对象
   const hn_obj = lodash.get(MatchDataWarehouse_ouzhou_PC_hots_List_Common, "list_to_obj.hn_obj", {})
@@ -120,6 +134,7 @@ get_featurd_list()
   height: 140px;
   width: 100%;
   margin-bottom: 24px;
+
   .featured-matched-card {
     flex-shrink: 0;
     width: 300px;
@@ -147,6 +162,7 @@ get_featurd_list()
       height: 14px;
       padding: 0 4px 0 14px;
       justify-content: space-between;
+
       .matches_type {
         font-family: "Roboto";
         font-size: 12px;
