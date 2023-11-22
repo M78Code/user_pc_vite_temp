@@ -331,6 +331,11 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		let obj = compute_style_template_by_matchinfo_template18(match);
 		Object.assign(style_obj, obj);
 	}
+	// 欧洲版冠军模板计算
+	else if (template_id == 118) {
+		let obj = compute_style_template_by_matchinfo_template18(match);
+		Object.assign(style_obj, obj);
+	}
 
 	// 设置主盘口高度
 	style_obj.main_handicap_height = template_config.main_handicap_height;

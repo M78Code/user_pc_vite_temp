@@ -34,6 +34,11 @@ class BetData {
     this.single_list_copy = []
     // true= 单关投注 false= 串关投注
     this.is_bet_single = true;
+    // 投注金额 h5使用
+    this.bet_amount = 0;
+
+    // 是否为合并模式
+    this.is_bet_merge = false;
     // 是否正在处理投注
     this.is_handle = false;
     // 单关 是否正在处理投注
@@ -119,8 +124,7 @@ class BetData {
 
     // 当前电竞查询的模式 false单关模式
     this.cur_esports_mode = false;
-    // 是否为合并模式
-    this.is_bet_merge = false;
+ 
     this.bet_category = 1; // 投注类别 1= 普通赛事 2= 虚拟体育 3= 电竞
     // 最小串关数
     this.mix_min_count = 2;
@@ -142,8 +146,7 @@ this.bet_appoint_ball_head= null */
     this.chat_room_type = "";
     // 记录投注金额
     this.bet_current_money_obj = {};
-    // 投注金额 h5使用
-    this.bet_amount = 0;
+   
     //自动化 测试
     this.auto_test_bet_info = {};
     //

@@ -112,7 +112,7 @@ const popularListSort = (arr) =>{
   const tem = new Map();
   arr = arr.sort((n,m)=>{return m.num - n.num});
   arr = [...arr,...leftDataList.value]
-  const mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1))
+  let mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1) && +item.mi<MenuData.conventionalType)
   return mergeArr.slice(0,3);
 }
 /**
