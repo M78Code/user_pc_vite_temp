@@ -1,14 +1,7 @@
-<!--
- * @Author: rise
- * @Date: 2023-11-02 16:27:18
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-07 21:15:43
- * @Description:  
--->
 <template>
   <div class="detail-top-info">
     <div class="sport-info" @click="toHome">
-      <span>{{ BaseData.menus_i18n_map[MenuData.menu_mi.value] }}</span>
+      <span>{{ getCsna}}</span>
       <img class="bakc-icon" src="../img/back.png" alt="" />
     </div>
     <div class="detail-select" v-if="drop_down_list.length">
@@ -42,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch,computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/index";
 import { MatchDataWarehouse_H5_Detail_Common,MatchDataWarehouse_H5_List_Common } from 'src/core/index'
@@ -58,6 +51,9 @@ const detail_top_pop = ref(null);
 
 getDropDownList()
 
+const getCsna = computed(()=>{
+  return MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route?.params?.mid)?.csna
+})
 /** @type {Ref<Array<TYPES.MatchDetail>>} 下拉列表 */
 const drop_down_list = ref([]);
 /** 获取下拉列表 */
@@ -154,7 +150,7 @@ const refresh = (params) => {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      width: 80%;
+      max-width: 80%;
       display: inline-block;
       height: 100%;
       line-height: 100%;
