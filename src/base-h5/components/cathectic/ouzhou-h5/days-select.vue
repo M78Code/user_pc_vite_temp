@@ -61,7 +61,7 @@ onUnmounted(() => {
         z-index: 10;
         left: -0.1rem;
         top: 0.5rem;
-        background: var(--q-gb-bg-c-15);
+        background: #fff;
         padding: 0 0.1rem;
         box-shadow: 2px 2px 4px var(--q-gb-bg-c-9);
         li {
