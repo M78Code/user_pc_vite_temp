@@ -88,6 +88,9 @@ const changeTab = (name, index) => {
     store.curSelectedOption = store.selectOptions[0]
     store.dateIndex = 0
     emit("changeTab", name);
+    if (name === 'matches') {
+        changeDatetab(week[0], 0)
+    }
 }
 /**
  * 下拉框
