@@ -746,15 +746,6 @@ this.bet_appoint_ball_head= null */
    
     this.set_bet_data_class_version()
   }
-  
-  // 设置投注后的数据
-  set_bet_list_info(list) {
-    if(this.is_bet_single){
-      this.bet_single_list = lodash_.cloneDeep(list)
-    }else{
-      this.bet_s_list = lodash_.cloneDeep(list)
-    }
-  } 
 
   // 设置键盘信息 
   // 限额 /
