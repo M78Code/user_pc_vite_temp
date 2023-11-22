@@ -41,18 +41,18 @@ const last_label = computed(() => {
 // 面包屑导航第一项展示
 
 const breadCrumbs_firstOne = function (){
-    // console.log(BaseData.left_menu_base_mi,"==BaseData.left_menu_base_mi")
-    // console.log(BaseData.menus_i18n_map,"==BaseData.left_menu_base_mi")
-    // console.log(MenuData.left_menu_result,"==MenuData.left_menu_result")   // 表示选中的菜单
+    console.log(BaseData.left_menu_base_mi,"==BaseData.left_menu_base_mi")
+    console.log(BaseData.menus_i18n_map,"==BaseData.menus_i18n_map")
+    console.log(MenuData.left_menu_result,"==MenuData.left_menu_result")   // 表示选中的菜单
     const { lv1_mi } = MenuData.left_menu_result
     let firstOneName = ''
-    if(!!lv1_mi){
+    if(!!lv1_mi && MenuData.left_menu_result.menu_type === 1){
         // MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1
         // 找出左侧选中菜单
-        const leftMenu_selected = BaseData.left_menu_base_mi.find(item=>{
-            return item.mi === lv1_mi && MenuData.left_menu_result.menu_type == 1
-        })
-        firstOneName = BaseData.menus_i18n_map[leftMenu_selected.mi]
+        // const leftMenu_selected = BaseData.left_menu_base_mi.find(item=>{
+        //     return item.mi === lv1_mi && MenuData.left_menu_result.menu_type == 1
+        // })
+        firstOneName = BaseData.menus_i18n_map[lv1_mi]
     }else {
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
         firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.title : props.detail_info.csna

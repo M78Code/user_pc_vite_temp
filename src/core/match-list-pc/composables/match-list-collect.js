@@ -154,6 +154,7 @@ const mx_collect_match = (match) => {
     // 临时注释，参数可能又问题 会return
     // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09")); 
   }
+
   let cur_collect_state = Number(!match.mf);
   let _params = {
     mid: match.mid,
@@ -165,7 +166,7 @@ const mx_collect_match = (match) => {
     let data = lodash.get(res, "data");
     if (code == 200 && data == 1) {
       // 在收藏列表页 移除收藏
-      if (PageSourceData.page_source == "collect" && !cur_collect_state) {
+      if ((PageSourceData.page_source == "collect" || MenuData.is_collect) && !cur_collect_state) {
         // 移除赛事
         MatchListCard.remove_match(match.mid);
       } else {
