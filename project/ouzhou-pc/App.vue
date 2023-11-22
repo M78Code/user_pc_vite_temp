@@ -20,6 +20,8 @@ import app_mixin from "src/base-pc/mixin/app-mixin.js";
 import {SessionStorage} from "src/core/";
 
 import "./src/css/common.scss";
+import STANDARD_KEY from "src/core/standard-key";
+const token_key = STANDARD_KEY.get("token");
 
 export default {
   mixins: [app_mixin],
@@ -35,7 +37,7 @@ export default {
       // url token
       let url_token = location.search.indexOf('token');
       // session token
-      let session_stroage_token = SessionStorage.get('pc_token')||SessionStorage.get('token');
+      let session_stroage_token = SessionStorage.get(token_key);
       return url_token >= 0 || session_stroage_token;
     }
   }

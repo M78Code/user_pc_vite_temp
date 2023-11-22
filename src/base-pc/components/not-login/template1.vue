@@ -5,6 +5,7 @@
 </template>
 <script setup>
 import { compute_img_url } from "src/core/";
+
 </script>
 <style lang="scss">
 .no-token-img {
