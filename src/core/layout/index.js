@@ -153,6 +153,13 @@ class LayOutMain {
     this.layout_secondary_active = value
     this.set_layout_version()
   }
+  /** 公告 赛果 体育规则 激活次要模块设置*/
+  set_layout_secondary_active(value) { 
+    this.layout_secondary_active = value;
+    console.log('this.layout_secondary_active ',this.layout_secondary_active)
+    this.set_layout_version()
+  }
+
   /** 设置当前路由页面 */
   set_layout_current_path(route) {
     this.layout_current_path = route
