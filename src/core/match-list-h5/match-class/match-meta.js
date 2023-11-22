@@ -685,7 +685,6 @@ class MatchMeta {
       target_matchs = this.complete_matchs.filter(t => t.mid !== mid)
     }
     // this.match_mids = target_mids
-    console.log(target_matchs)
     this.handler_match_list_data({ list: target_matchs, is_virtual: false, is_collect: true, type: 2 })
   }
 
