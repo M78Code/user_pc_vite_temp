@@ -6,6 +6,7 @@
 -->
 <template>
   <div>
+<!--    <div>{{  }}</div>-->
     <div class="analysis-body">
       <!-- 动画/视频/比分榜 -->
       <venue-box :score_list="score_list" :detail_info="detail_info" v-show="!lodash_.isEmpty(detail_info)" />
@@ -22,11 +23,11 @@
       </div> -->
       <!-- 分析页动画 -->
       <div v-if="!lodash_.isEmpty(score_list)&&detail_info.ms>0">
-    <div class="tabs-wrap"  v-if="['1','2','5','9','10'].includes(lodash_.get(detail_info,'csid'))" >
-      <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
-        :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
-      </span>
-    </div>
+      <div class="tabs-wrap"  v-if="['1','2','5','9','10'].includes(lodash_.get(detail_info,'csid'))" >
+        <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
+          :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
+        </span>
+      </div>
      
        <!-- 足球分析页图表 -->
       <foot-ball-stats v-if="detail_info.csid==1" :detail_info="detail_info" :score_list="score_list" />
@@ -34,9 +35,11 @@
        <basket-ball-stats  v-if="['2','5','9','10'].includes(lodash_.get(detail_info,'csid'))" :detail_info="detail_info" :score_list="score_list" />
 
        <!-- 4冰、6美足、5网、7斯诺克、9排球、10羽毛球 -->
-    <!-- <template v-if="['4','6','5','7','9','10'].includes(lodash_.get(detail_info,'csid'))">
-      <more :match_info="detail_info" />
-    </template> -->
+        <!--
+        <template v-if="['4','6','5','7','9','10'].includes(lodash_.get(detail_info,'csid'))">
+          <more :match_info="detail_info" />
+        </template>
+        -->
 
       </div>
       <!-- 选择哪队会赢组件 -->
@@ -81,12 +84,19 @@ onMounted(()=>{
 //     useMittOn(MITT_TYPES.EMIT_SHOW_DETAILS).off
 //   })
 
+// watch(()=>detail_info.value,value => {
+//   console.log("value",value)
+// },{deep: true})
+
 
 // 获取数据
 const get_detail_info = (mid)=>{
   // 3572298
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
   detail_info.value = infomation
+  // setInterval(function (){
+  //   console.log(infomation,"infomation")
+  // },2000)
 }
 
 // const show_page = ref(false)
@@ -99,13 +109,46 @@ const get_detail_info = (mid)=>{
 // )
 
 
+const score_list = ref(null)
+
+watch(()=>detail_info.value,(value)=>{
+  const obj = value || {}
+  let result = {}
+
+  if (obj.msc && obj.msc.length>0 ) {
+    for (const item of obj.msc) {
+      const list = item.split('|')
+      const score_list = list[1].split(':')
+      result[list[0]] = {
+        home:score_list[0],
+        away:score_list[1],
+        percentage:(Number (score_list[0]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
+        away_percentage:(Number (score_list[1]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
+      }
+    }
+  }else{
+    for (const key in obj.msc) {
+      const home = obj.msc[key]['home']
+      const away = obj.msc[key]['away']
+      result[key] = {
+        home,
+        away,
+        percentage:(Number (home) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
+        away_percentage:(Number (away) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
+      }
+
+    }
+  }
+  score_list.value = result
+},{deep:true})
+
 
   // 详情数据msc处理
-  const score_list = computed(()=>{
-  const obj = detail_info.value || {}
-  let result = {}
+/*const score_list = computed(()=>{
+const obj = detail_info.value || {}
+let result = {}
  
-  if (obj.msc&&obj.msc.length>0 ) {
+  if (obj.msc && obj.msc.length>0 ) {
     for (const item of obj.msc) {
       const list = item.split('|')
       const score_list = list[1].split(':')
@@ -130,7 +173,7 @@ const get_detail_info = (mid)=>{
     }
   }
    return result
-})
+})*/
 
 </script>
 
