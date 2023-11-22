@@ -4,11 +4,7 @@
     <!-- 右侧区域 -->
     <div
       class="page-right"
-      :style="
-        route.params.video_size == 1
-          ? ''
-          : `width:${LayOutMain_pc.layout_right_width}px  !important; height:${LayOutMain_pc.layout_content_height}px  !important;`
-      "
+      :style=" route.params.video_size == 1 ? '' : `width:${LayOutMain_pc.layout_right_width}px  !important; height:${LayOutMain_pc.layout_content_height}px  !important;`"
       v-if="LayOutMain_pc.layout_right_width > 0"
     >
       <!-- 虚拟体育 -->

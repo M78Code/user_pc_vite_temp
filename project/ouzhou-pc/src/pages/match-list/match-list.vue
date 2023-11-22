@@ -21,7 +21,7 @@
         打印数据
       </div>
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
-      length---
+      length--- {{ match_list_card_key_arr.length }}
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
@@ -60,9 +60,9 @@
         </template>
       </scroll-list>
     </load-data>
-    <!-- <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
+    <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-    }" /> -->
+    }" />
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
