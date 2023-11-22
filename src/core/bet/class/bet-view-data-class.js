@@ -123,7 +123,7 @@ class BetViewData {
   set_bet_min_max_money(obj, type = '') {
     console.error('aaa')
     // 获取query_bet_amount数据对应的限额
-    let bet_amount_list = lodash_.get(obj, 'betAmountInfo')
+    let bet_amount_list = lodash_.get(obj, 'betAmountInfo',[])
     // min_max 或者最大值 最小值接口 数据结构不同
     if (type == 'min_max') {
       bet_amount_list = obj

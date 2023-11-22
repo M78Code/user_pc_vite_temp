@@ -1,5 +1,5 @@
 <template>
-	<div class='search-container'>
+	<div class="search-container">
 		<!-- 头部搜索 -->
 		<div class="top_info_search">
 			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" v-model="input_value" />
