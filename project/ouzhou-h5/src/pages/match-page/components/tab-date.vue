@@ -373,10 +373,7 @@ const areaListChange = (item,index) => {
         background-color: rgba(255, 255, 255, 1);
         :deep(.scroll) {
             width: 100%;
-        }
-        :deep(.q-virtual-scroll__content) {
             border-bottom: 10px solid #E2E2E2;
-            width: 100%;
         }
     }
 

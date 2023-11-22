@@ -50,8 +50,8 @@
       </div>
      
       <div class="total">
-        <div>Highest Win<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
-        <div>Stake<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
+        <div>{{ i18n_t("common.maxn_amount_val") }}<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
+        <div>{{ i18n_t("bet_record.total_v") }}<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
       </div>
       </div>
     </div>
@@ -61,6 +61,7 @@
     import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
       import { compute_value_by_cur_odd_type } from "src/core/index.js"
       import { format_currency } from "src/core/format/index.js"
+// import i18n from "project/activity/src/i18n";
 
   const props = defineProps({
     items:{}
