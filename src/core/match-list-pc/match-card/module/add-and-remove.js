@@ -46,7 +46,9 @@ export const remove_league = (remove_tid) => {
     );
   } else {
     // 列表接口数据类型为赛事列表
-    let match_list = MatchListData.match_list_data.match_list;
+    let match_list = MatchListData.match_list;
+    console.log('match_list', match_list);
+    
     // 移除联赛ID一样的赛事
     lodash.remove(match_list, (match) => {
       return match.tid == remove_tid;

@@ -234,7 +234,7 @@ const mx_collect_leagues = (match, is_champion) => {
           match_item.tf = cur_collect_state;
           match_item.mf = cur_collect_state;
           // 在收藏列表页 移除收藏
-          if (PageSourceData.page_source == "collect" && !cur_collect_state) {
+          if ((PageSourceData.page_source == "collect"  || MenuData.is_collect) && !cur_collect_state) {
             // 移除联赛卡片
             MatchListCard.remove_league(match.tid);
             let match_length;
