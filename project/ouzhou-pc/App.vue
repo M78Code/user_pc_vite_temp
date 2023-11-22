@@ -1,9 +1,9 @@
 <template>
-  <div id="q-app" class="full-height" v-if="judgment_token">
+  <div id="q-app" class="full-height" v-if="get_token">
     <appload v-if="init_load"></appload>
   </div>
   <div v-else>
-    <notLogin v-if="!judgment_token"/>
+    <notLogin/>
   </div>
 </template>
 <script>
@@ -23,11 +23,6 @@ export default {
   },
   data() {
     return {};
-  },
-  computed: {
-    judgment_token() {
-      return this.get_token(this.$route.name)
-    }
   },
   methods: {
     // 判断是否具有 token  url 或 session
