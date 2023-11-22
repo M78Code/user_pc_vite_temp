@@ -42,8 +42,8 @@
 
 
         <div class="total">
-          <div>Highest Win<span class="total-left">72.40</span></div>
-          <div>Stake<span class="total-right">10.00</span></div>
+          <div>{{ i18n_t("common.maxn_amount_val") }}<span class="total-left">72.40</span></div>
+          <div>{{ i18n_t("bet_record.total_v") }}<span class="total-right">10.00</span></div>
         </div>
       </div>
 
