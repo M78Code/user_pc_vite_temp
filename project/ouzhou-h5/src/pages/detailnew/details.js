@@ -224,8 +224,9 @@ export const details_main = (router,route) => {
           sessionStorage.setItem("match_oddinfo",JSON.stringify(res.data))
           MatchDataWarehouseInstance.value.set_match_details(getMidInfo(params.mid),res.data);
           // 第一次加载显示进度条
-          if(init.value){
-            loading.value = false}
+          // if(init.value){ // 解决详情无限loading
+            loading.value = false
+          // }
         },
         // axios中catch回调方法
         fun_catch: e => {
