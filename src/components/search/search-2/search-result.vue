@@ -9,12 +9,12 @@
 				<!-- 搜索展示 -->
 				<div class="content">
 					<ul class="list">
-						<div class="title">View all soccer</div>
+						<div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
 						<!-- 滚球 -->
 						<div v-show="search_data?.bowling && search_data?.bowling.length > 0" style="margin-bottom: 10px;">
 							<div @click="expand_bowling = !expand_bowling">
 								<div class="middle_info_tab diff">
-									<div class="color">UNDERWAY</div>
+									<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
 								</div>
 								<div v-show="expand_bowling">
 									<li v-for="(item, index) in search_data?.bowling" :key="index" @click="bowling_click(item)">
@@ -66,7 +66,7 @@
 						<div v-show="search_data?.league && search_data?.league.length > 0" style="margin-bottom: 10px;">
 							<div @click="expand_league = !expand_league">
 								<div class="middle_info_tab diff">
-									<div class="color">COMPETITIONS</div>
+									<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
 								</div>
 							</div>
 							<div v-show="expand_league">
@@ -119,7 +119,7 @@
 						<div v-show="search_data?.team && search_data.team?.length > 0">
 							<div @click="expand_team = !expand_team">
 								<div class="middle_info_tab diff">
-									<div class="color">TEAMS</div>
+									<div class="color">{{ i18n_t('ouzhou.search.team') }}</div>
 								</div>
 							</div>
 							<div v-show="expand_team">
@@ -174,7 +174,7 @@
 			</div>
 		</q-scroll-area>
 		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
-			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)" class="middle_info_tab diff">No results found. please try a different search term.</div>
+			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)" class="middle_info_tab diff">{{ i18n_t('ouzhou.search.no_search_rezult') }}</div>
 		<!--   -->
 	</div>
 </template>

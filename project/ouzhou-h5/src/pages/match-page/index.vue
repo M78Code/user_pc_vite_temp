@@ -2,10 +2,12 @@
  * 早盘，今日赛事页面
 -->
 <template>
-  <tab-date @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate" @changeArea="onChangeArea" :areaList="state.leagueData"/>
+  <tab-date v-if="!state.isLeagueDetail" @changeTab="onTabChange" @changeMatchDate="onMatchDateChange" @changeDate="onChangeDate" @changeArea="onChangeArea" :tabActive="state.curTab" :areaList="state.leagueData"/>
+  <div v-else @click="goBackToLeague">123</div>
   <!--二级赛事列表-->
   <div class="match-list-page">
-    <MatchContainer v-if="state.curTab === 0 || state.isClickDetail && state.curTab === 1" />
+    <!--  判断是否是matches页面   ||  判断是否是league页面的二级列表页   -->
+    <MatchContainer v-if="state.curTab === 'matches' || (state.curTab !== 'matches' && state.isLeagueDetail)"/>
     <MatchFirstStep v-else @leagueChange="onLeagueChange" :leaguesMatchs="state.leagueAreaData"/>
   </div>
 </template>
@@ -22,12 +24,13 @@ import BaseData from 'src/core/base-data/base-data.js'
 const emitters = ref({})
 const state = reactive({
   isClickDetail: false,  //是否点击联赛详情
-  curTab: 0,
+  curTab: 'matches',
   curDate: '',
   curLeague: {},
   curArea: '',
   curFilterDate: '',
   leagueData: [],
+  isLeagueDetail: false
 })
 
 onMounted(() => {
@@ -39,7 +42,7 @@ onMounted(() => {
       }
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
-      if (state.curTab) {
+      if (state.curTab !== 'matches') {
         onChangeDate(12)
       }
     }).off
@@ -51,7 +54,7 @@ onUnmounted(() => {
 
 const onTabChange = e => {
   state.curTab = e
-  if (state.curTab) {
+  if (state.curTab !== 'matches') {
     onChangeDate(12) // 默认展示12个小时的数据
   }
 }
@@ -68,9 +71,10 @@ const onChangeDate = e => {
 const onMatchDateChange = e => {
   state.curDate = e
 }
-const onLeagueChange = (league, game) => {
-  state.isClickDetail = true
-  state.curLeague = league
+const onLeagueChange = (league) => {
+  console.log('onLeagueChange', league)
+  // state.curLeague = league
+  state.isLeagueDetail = true
 }
 
 const onChangeArea = e => {
@@ -83,8 +87,10 @@ const onChangeArea = e => {
   state.leagueAreaData = arr
 }
 
-const goback = () => {
-  state.isClickDetail = false
+const goBackToLeague = () => {
+  onTabChange(1)
+  state.isLeagueDetail = false
+  state.curTab = 'league'
 }
 
 </script>
