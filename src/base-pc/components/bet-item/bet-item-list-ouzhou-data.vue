@@ -75,10 +75,8 @@ const props = defineProps({
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
-  if (props.ol_data) {
-    let { _mhs, _hs, os } = props.ol_data;
+    let { _mhs, _hs, os } = props.ol_data||{};
     return get_odds_state(_mhs, _hs, os);
-  }
 });
 // 赔率值
 const match_odds = ref("");
