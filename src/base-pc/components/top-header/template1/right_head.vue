@@ -8,16 +8,19 @@
     <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
-          placeholder="Enter league or team" :class="is_focus ? 'change_width' : ''"
-				  @keyup.enter="get_search_data(text)">
-          <template v-slot:prepend>
-            <i class="icon-search q-icon c-icon" size="10px"></i>
-          </template>
-          <template v-slot:append>
-            <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
-          </template>
-        </q-input>
+        <div style="display: flex;">
+          <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" :class="is_focus ? 'change_width' : ''"
+            @keyup.enter="get_search_data(text)">
+            <template v-slot:prepend>
+              <i class="icon-search q-icon c-icon" size="10px"></i>
+            </template>
+            <template v-slot:append>
+              <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
+            </template>
+          </q-input>
+          <span v-show="is_focus" class="btn" @click="$router.push('/')">{{ i18n_t('ouzhou.search.close') }}</span>
+        </div>
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
@@ -432,7 +435,6 @@ export default defineComponent({
   }
 }
 .s-input {
-  width: 200px;
   transition: all 0.3s linear;
   :deep(.q-field) {
     background-color: rgba(255, 255, 255, 0.1);
@@ -449,10 +451,18 @@ export default defineComponent({
   :deep(.q-field__native) {
     color:var(--q-gb-t-c-1)
   }
+  .btn {
+    display: inline-block;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 16px;
+    cursor: pointer;
+    font-size: 12px;
+  }
 }
 .change_width {
   width: 500px;
-  transform: translateX(-300px);
 }
 .search-click .s-input {
   width: 500px;

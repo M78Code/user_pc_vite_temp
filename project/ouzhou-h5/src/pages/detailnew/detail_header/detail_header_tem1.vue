@@ -23,6 +23,8 @@
         <div class="match-detail-team-name">{{ get_match_detail.man }}</div>
         <div class="match-detail-num" v-if="scoew_icon_list['S1']">{{ scoew_icon_list['S1'].away }}</div>
       </div>
+      <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
+      {{ console.log(get_match_detail.ms) }}
       <template v-if="get_match_detail.ms == 1">
         <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
           <div class="list" v-for="item in football_score_icon_list" :key="item.msc_key">
@@ -228,6 +230,7 @@ onUnmounted(()=>{
     padding: 15px 14px 0 14px;
     line-height: 23px;
     background-color: var(--q-gb-bg-c-2);
+    font-weight: 700; //使用设计稿的500不明显，故使用700. 初步判断为苹方字体不包含500字重的缘故
     // background: linear-gradient(
     //   90.05deg,
     //   rgba(255, 255, 255, 0.81) 0.04%,
@@ -339,7 +342,7 @@ onUnmounted(()=>{
       justify-content: flex-start;
       .list-item {
         padding: 0 15px 0 0;
-        font-weight: 500;
+        // font-weight: 500; //已在父节点设置font-weight
       }
       .line {
         position: absolute;

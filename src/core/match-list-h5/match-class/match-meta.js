@@ -4,7 +4,7 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
-import { api_common, api_match_list, api_match } from "src/api/index.js";
+import { api_common, api_match_list, api_match, api_home } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -280,6 +280,10 @@ class MatchMeta {
     // 虚拟列表计算
     VirtualList.set_match_mid_map_base_info(match, template_config.match_template_config)
 
+    // 球种 默认玩法 
+    
+    MatchResponsive.reset_match_hpid_by_csid(csid)
+
   }
 
   /**
@@ -478,6 +482,56 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取欧洲版联赛数量统计
+   */
+  async get_ouzhou_leagues_data (date) {
+    const res = await api_match_list.get_leagues_list({
+      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
+      // sportId: 1,
+      selectionHour: date
+    })
+    MatchCollect.get_collect_match_data()
+    const list = lodash.get(res, 'data', [])
+    return list
+  }
+
+  /**
+ * @description 获取缓存的欧洲首页热门赛事
+ * @returns 
+ */
+  get_default_ouzhou_home_hots ()  {
+    const res = localStorage.getItem('ouzhou_home_hots') && JSON.parse(localStorage.getItem('ouzhou_home_hots'))
+    return this.get_ouzhou_home_hots_data(res)
+  }
+
+  /**
+   * @description 获取欧洲版首页热门赛事
+   */
+  async get_ouzhou_home_hots () {
+    const res = await api_home.hot_ulike_recommendation({ 
+      isHot: 1,
+      cuid: UserCtr.get_uid()
+      })
+    return this.get_ouzhou_home_hots_data(res)
+  }
+  
+  /**
+   * @description 获取欧洲版首页热门赛事
+   */
+  get_ouzhou_home_hots_data (res) {
+    if (!res || +res.code !== 200 || res.data.length < 1) return []
+    localStorage.setItem('ouzhou_home_hots', JSON.stringify(res))
+    const hots = lodash.get(res, 'data', [])
+    const hots_list = hots.slice(0, 5)
+    // const hots_mids = hots_list.map(t => t.mid)
+    // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
+    // 热门赛事数据
+    MatchDataBaseHotsH5.set_list(hots_list)
+    return hots_list
+  }
+
+  
+  /**
    * @description 获取缓存的欧洲首页赛事
    * @returns 
    */
@@ -505,6 +559,7 @@ class MatchMeta {
     })
     MatchCollect.get_collect_match_data()
     const list = lodash.get(res, 'data', [])
+    if (!list) return
     return list
   }
 
@@ -515,19 +570,15 @@ class MatchMeta {
     if (!res || +res.code !== 200) return { p15_list: [], hots: [], dataList: [] }
     localStorage.setItem('ouzhou_home_data', JSON.stringify(res))
     const p15 = lodash.get(res, 'data.p15', [])
-    const hots = lodash.get(res, 'data.hots', [])
     const dataList = lodash.get(res, 'data.dataList', [])
+
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
     // ws 订阅
     // const p_15_mids = p15_list.map(t => t.mid)
     // p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
     MatchDataBasel5minsH5.set_list(p15_list.slice(0, 5))
-    // 热门赛事数据
-    MatchDataBaseHotsH5.set_list(hots.slice(0, 5))
-    // ws 订阅
-    // const hots_mids = p15_list.map(t => t.mid)
-    // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
+    
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []
@@ -535,7 +586,7 @@ class MatchMeta {
       match_list = MatchUtils.get_home_in_play_data(dataList)
       this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
     }
-    return { p15_list, hots, dataList: match_list }
+    return { p15_list, dataList: match_list }
   }
 
   /**
@@ -576,10 +627,10 @@ class MatchMeta {
     const params = this.get_base_params(euid)
     this.match_mids = []
     const res = await api_common.get_collect_matches(params)
-    MatchCollect.get_collect_match_data()
+    MatchCollect.get_collect_match_data(true)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list, is_virtual: false })
+    this.handler_match_list_data({ list: list, is_virtual: false, is_collect: true })
   }
 
   /**
@@ -640,15 +691,16 @@ class MatchMeta {
    */
   set_collect_match (match, type) {
     const { mid, tid } = match
-    let target_mids = []
+    let target_matchs = []
     if (type === 1) {
-      const matchs = this.complete_matchs.filter(t => t.tid === tid)
-      const mids = matchs.map(item => item.mid)
-      target_mids = this.match_mids.filter(t => !mids.includes(t))
+      target_matchs = this.complete_matchs.filter(t => t.tid !== tid)
+      // const mids = matchs.map(item => item.mid)
+      // target_matchs = this.match_mids.filter(t => !mids.includes(t))
     } else {
-      target_mids = this.match_mids.filter(t => t !== mid)
+      target_matchs = this.complete_matchs.filter(t => t.mid !== mid)
     }
-    this.match_mids = target_mids
+    // this.match_mids = target_mids
+    this.handler_match_list_data({ list: target_matchs, is_virtual: false, is_collect: true, type: 2 })
   }
 
    /**
@@ -691,7 +743,7 @@ class MatchMeta {
    */
   handler_match_list_data(config) {
 
-    const { list, type = 1, is_virtual = true, is_classify = false, warehouse = MatchDataBaseH5 } = config
+    const { list = [], type = 1, is_virtual = true, is_classify = false, warehouse = MatchDataBaseH5, is_collect = false } = config
 
     // 清除联赛下得赛事数量
     if (this.is_other_warehouse(warehouse.name_code)) {
@@ -712,6 +764,7 @@ class MatchMeta {
       } else {
         MatchResponsive.set_ball_seed_league_count(match)
       }
+
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, list.map(t => t.mid))
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)

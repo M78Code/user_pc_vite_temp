@@ -103,11 +103,10 @@ const on_change_play = (item) => {
     scrollRef.value.scrollTo(index-2, 'start-force')
     // MenuData.get_match_render_list();
     emits('changeMenu',item.mi)
+    
     const csid = MenuData.menu_csid
     const hpid = lodash.get(sports_play_data, `[${csid}][0].hpid`, '1')
-    MatchResponsive.set_match_hpid(hpid)
-    //获取单个数量
-    // set_cont(item,index)
+    MatchResponsive.set_match_hpid(hpid, csid)
 }
 
 </script>

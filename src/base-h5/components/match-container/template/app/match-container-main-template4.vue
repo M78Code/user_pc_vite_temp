@@ -2,7 +2,7 @@
  * @Description:  app-h5       虚拟体育赛狗赛马赛果项
 -->
 <template>
-  <div class="v-match-container">
+  <div class="v-match-container component match-container-main-template4">
     <div class="dog-horse">
       <div class="v-m-b-container row"
         :class="{

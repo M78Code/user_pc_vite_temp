@@ -18,6 +18,7 @@ import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 
+let time_out = null
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
@@ -182,15 +183,7 @@ const get_query_bet_amount_common = (obj) => {
             // 获取预约投注项
             set_bet_pre_list(latestMarketInfo)
         } else {
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-                code: res.code,
-                msg: res.message
-            })
-            // 获取限额失败的信息
-            BetData.set_bet_before_message({
-                code: res.code,
-                msg: res.message
-            })
+            set_error_message_config(res)
         }
     })
 }
@@ -347,7 +340,7 @@ const submit_handle = type => {
     // BetViewDataClass.set_bet_order_status(5)
     // return
     api_betting.post_submit_bet_list(params).then(res => {
-        set_error_message_config(res)
+        // set_error_message_config(res)
         if (res.code == 200) {
             // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
             //     code: res.code,
@@ -410,42 +403,47 @@ const submit_handle = type => {
                     obj.hid = item.marketId 
                     obj.mid = item.matchId 
                 })
+                BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
             }else{
                 seriesOrders[0].orderDetailList.forEach( item => {
                     obj.hid = item.marketId 
                     obj.mid = item.matchId 
                 })
+                BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_s_list))
             }
             // 用户赔率分组
             obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
-            obj.esMarketLevel =  lodash_.get(UserCtr.user_info,'esMarketLevel','0');
+            obj.esMarketLevel = lodash_.get(UserCtr.user_info,'esMarketLevel','0');
             WsMan.skt_send_bat_handicap_odds(obj);
             // 通知页面更新 
         // }else{
         //     set_error_message_config(res)
         }
+        set_error_message_config(res)
     })
+}
+
+// 设置投注后的数据 赔率不变更
+const set_bet_odds_after = (list = []) => {
+    return list.map(item => {
+        item.odds_after = item.odds
+        return item
+    } )
 }
 
 // 设置错误信息 
 const set_error_message_config = (res ={}) => {
-    
-    if(BetData.deviceType == 2){
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-            code: res.code,
-            msg: res.message
-        })
-    }else{
-        // 获取限额失败的信息
-        BetData.set_bet_before_message({
-            code: res.code,
-            msg: res.message
-        })
 
-        setTimeout(()=>{
-            BetData.set_bet_before_message({})
-        },2000)
-    }
+    clearTimeout(time_out)
+    // 获取限额失败的信息
+    BetViewDataClass.set_bet_before_message({
+        code: res.code,
+        message: res.message
+    })
+
+    time_out = setTimeout(()=>{
+        BetViewDataClass.set_bet_before_message({})
+    },5000)
 }
 
 // 选择投注项数据 
@@ -577,6 +575,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 获取限额 常规
         get_query_bet_amount_common(bet_obj)
     }
+    // 订阅投注项的 ws
     set_market_id_to_ws()
 }
 

@@ -155,6 +155,7 @@ class MatchUtils {
 	 * @param  {object} match  当场赛事信息
 	 */
 	get_match_score(match) {
+    if (!match) return {home_score: '0', away_score: '0'}
 		let key = "S1";
 		let { csid, mmp, msc_obj = {} } = match;
 		// 足球 | 手球

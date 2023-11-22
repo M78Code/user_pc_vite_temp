@@ -10,6 +10,8 @@
         scrolling="no"
       ></iframe>
     </div>
+    <!-- <SwitchButtons></SwitchButtons> -->
+    <!-- 比分版 -->
     <!-- <div class="detail-header-score row">
       <div class="detail-home col-5">
         <div class="detail-home-info">
@@ -65,6 +67,7 @@ import lodash from "lodash";
 import { api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
 import { useMittOn, useMitt,MITT_TYPES } from "src/core/index.js"
+import SwitchButtons from "./components/SwitchButtons.vue"
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -196,6 +199,7 @@ onMounted(() => {
   
 <style lang="scss" scoped>
 .detail_header_tem2 {
+  position: relative;
   .detail-header-video {
     height: 230px;
     width: 100vw;

@@ -1,14 +1,17 @@
 <!-- 赛事搜素结果列表页 -->
 <template>
   <!-- 列表容器 -->
-  <load-data :state="'data'">
-    <scroll-list>
-      <template>
-        <match-list-card v-for="card_key in match_list_card.match_list_card_key_arr" :key="card_key"
-          :card_key="card_key" />
-      </template>
-    </scroll-list>
-  </load-data>
+  <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+  <div class="yb-match-list full-height relative-position">
+    <load-data :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
+      <scroll-list>
+        <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
+          :class="`card_key_${card_key}`">
+          <match-list-card :card_key="card_key" />
+        </div>
+      </scroll-list>
+    </load-data>
+  </div>
 </template>
 
 <script>
@@ -32,25 +35,30 @@ import "../match-list/match_list.scss";
 
 const { mounted_fn, handle_destroyed, load_data_state, collect_count, is_show_hot, mx_use_list_res } = useMatchListMx();
 const { page_source } = PageSourceData;
-const route = useRoute();
 export default {
   components: {
     // ListFilter,
-    LeagueTab,
-    MatchesHeader,
     MatchListCard,
-    PlayVirtualMatchType,
     LoadData,
     ScrollList,
-    IconWapper,
     LoadData,
-    ConmingSoon
   },
   setup() {
 
+    const match_list_card_key_arr = ref([])
+    const route = useRoute();
     onMounted(() => {
-      fetch_search_match_list()
+      LayOutMain_pc.set_oz_show_right(false);
+      LayOutMain_pc.set_oz_show_left(true);
     })
+
+    watch(() => route.params, () => {
+      fetch_search_match_list()
+    }, { immediate: true, deep: true })
+
+    function MatchListCardDataClass_match_list_card_key_arr() {
+      match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
+    }
 
     /**
       * 搜索相关列表数据
@@ -60,19 +68,50 @@ export default {
       // 更新列表模板编号 和请求参数
       // $menu.set_match_list_api_params()
       let keyword = route.params.keyword || ''
-      params = {
+      let params = {
         device: "PC",
         cuid: UserCtr.get_uid(),
         keyword: keyword.replace(/_g_/g, "/"),
-        searchSportType: route.query.csid,
+        searchSportType: route.params.csid,
       };
-      api_match.post_search_match(params).then(({ data }) => {
+      api_match.post_search_match(params).then((res) => {
         //保存数据到数据仓库
-        mx_use_list_res(data, is_socket, true);
+        mx_use_list_res(res, is_socket, true);
+        MatchListCardDataClass_match_list_card_key_arr()
       });
+    }
+
+    return {
+      match_list_card_key_arr,
+      MatchListCardDataClass,
+      LayOutMain_pc
     }
   },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+
+.scroll {
+  overflow-y: scroll;
+  padding-right: 3px;
+
+  /* 火狐滚动条无法自定义宽度，只能通过此属性使滚动条宽度变细 */
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--q-gb-bg-c-11);
+    border-radius: 4px;
+  }
+}
+
+.leagues-tabs {
+  height: 40px;
+  position: sticky;
+  top: 133px;
+  z-index: 200;
+  font-size: 13px;
+}
+</style>

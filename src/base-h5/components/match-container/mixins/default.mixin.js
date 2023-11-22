@@ -931,6 +931,7 @@ export default {
         }
       }
     },
+
     // 清除当前组件所有定时器
     clear_timer() {
       // timeout定时器列表

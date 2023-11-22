@@ -504,7 +504,8 @@ export default function () {
 		set_load_data_state,
 		check_match_last_update_time,
 		mounted_fn,
-		fetch_match_list,handle_destroyed
+		fetch_match_list,handle_destroyed,
+		mx_use_list_res
 	}
 };
 export {

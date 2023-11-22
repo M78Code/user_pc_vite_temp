@@ -41,6 +41,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     */
   let type;
   const page_source = PageSourceData.page_source;
+  const route_name = PageSourceData.route_name;
   // 列表页强力推荐
   if (PageSourceData.is_show_hot) {
     type = MenuData.is_export() ? 7 : 2;
@@ -94,6 +95,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     if (
       (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) 
       || ["today", "early", "bet",'match-play-common', 'match-collect'].includes(page_source)
+      || route_name == 'search'
       // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
       || !MenuData.menu_root
     ) {
@@ -102,7 +104,7 @@ const set_match_list_mapping_relation_obj_type = () => {
       type = 8
     }
   }
-  console.log('type', type);
+  console.log('type', PageSourceData);
   return   type
 };
 

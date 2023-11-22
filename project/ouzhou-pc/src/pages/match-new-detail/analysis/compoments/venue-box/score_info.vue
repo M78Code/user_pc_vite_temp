@@ -7,7 +7,8 @@
   <div class="box-bc">
 
     <q-table :rows="data" separator="none" :columns="columns" row-key="name" hide-pagination
-      :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
+             no-data-label="暂无比分数据"
+             :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
     >
       <!-- 头部插槽 足球用 -->
       <template v-slot:header="props">
@@ -35,25 +36,25 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span class="table-name">{{ props.row.name }}</span>
+            <span :class="[ `stage-${detail_info.mmp}`,'table-name']">{{ props.row.name }}</span>
           </q-td>
           <q-td key="q1" :props="props">
-            <span>{{ props.row.q1 }}</span>
+            <span :class="[detail_info?.course === 'Q1' ? 'heightLight' : '']">{{ props.row.q1 }}</span>
           </q-td>
           <q-td key="q2" :props="props">
-            <span>{{ props.row.q2 }}</span>
+            <span :class="[detail_info?.course === 'Q2' ? 'heightLight' : '']">{{ props.row.q2 }}</span>
           </q-td>
           <q-td key="ht" :props="props">
-            <span>{{ props.row.ht }}</span>
+            <span :class="[detail_info?.course === 'HT' ? 'heightLight' : '']">{{ props.row.ht }}</span>
           </q-td>
           <q-td key="q3" :props="props">
-            <span>{{ props.row.q3 }}</span>
+            <span :class="[detail_info?.course === 'Q3' ? 'heightLight' : '']">{{ props.row.q3 }}</span>
           </q-td>
           <q-td key="q4" :props="props">
-            <span>{{ props.row.q4 }}</span>
+            <span :class="[detail_info?.course === 'Q4' ? 'heightLight' : '']">{{ props.row.q4 }}</span>
           </q-td>
           <q-td key="q5" :props="props">
-            <span>{{ props.row.q5 }}</span>
+            <span :class="[detail_info?.course === 'Q5' ? 'heightLight' : '']">{{ props.row.q5 }}</span>
           </q-td>
           <q-td key="set" :props="props">
             <span>{{ props.row.set }}</span>
@@ -73,7 +74,7 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import { sport_columns, socre_dict } from "./score_config";
-import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX, stage_dict} from 'src/core/index.js';
 import _ from "lodash";
 
 const props = defineProps({
@@ -98,7 +99,6 @@ const columns = ref([]);
 //   足球篮球
 const get_base_data = (val) => {
   const detail_info = props.detail_info;
-  console.log(detail_info,"detail_info")
   const list = [
     {
       name: detail_info["mhn"],
@@ -160,7 +160,6 @@ const get_score_result = (list, val) => {
       return {};
     }
   });
-  console.log(result,"detail_info--")
   return result;
 };
 
@@ -403,8 +402,6 @@ watch(
 watch(
   () => props.score_list,
   (val) => {
-    console.log(props.score_list,"props.score_list")
-    console.log(props.detail_info,"props.score_list")
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
     get_base_data(val);
@@ -458,4 +455,14 @@ onMounted(() => {});
   display: inline-block;
   text-overflow: ellipsis;
 }
+
+.heightLight{
+  color: rgb(255, 112, 0) !important;
+}
+
+//.stage-13,.stage-14,.stage-15,
+//.stage-302,.stage-16,.stage-303{
+//  //color: var(--qq--yb-text-color1) !important;
+//  color: rgb(255, 112, 0) !important;
+//}
 </style>

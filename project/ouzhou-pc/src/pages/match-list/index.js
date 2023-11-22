@@ -80,14 +80,14 @@ export const filter_15mins_func = payload => {
     // 过滤已开赛且未结束数据
     // const matches_15mins_list = payload.filter(item => item.mgt < timeStamp && timeStamp - item.mgt < endTimeStamp)
     
-    payload.forEach(item => {
-      item['current_ol'] = filter_odds_func(item.hps15Minutes, '32', true);
-      item['matches_15mins_obj'] = get_15mins_data(item);
-      item['course'] = handle_course_data(item);
-      item['mstValue'] = !is_timer.includes(item.csid) ? format_mst_data(item.mst) : '';
-    })
+    // payload.forEach(item => {
+    //   item['current_ol'] = filter_odds_func(item.hps15Minutes, '32', true);
+    //   item['matches_15mins_obj'] = get_15mins_data(item);
+    //   item['course'] = handle_course_data(item);
+    //   item['mstValue'] = !is_timer.includes(item.csid) ? format_mst_data(item.mst) : '';
+    // })
   
-    return payload.slice(0, 5);
+    return payload.slice(0, 5).map(item => item.mid);
 }
 
 export const filter_featured_list = payload => {
@@ -214,7 +214,6 @@ export const init_home_matches = async () => {
     });
     return {
         mins15_list,
-        featured_list,
         match_count
     }
 };
