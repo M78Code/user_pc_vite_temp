@@ -2,8 +2,8 @@
  * 早盘，今日赛事页面
 -->
 <template>
-  <tab-date v-if="!store.isLeagueDetail" @changeTab="onTabChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
-  <div class="league-list" v-else @click="goBackToLeague">
+  <tab-date v-show="!store.isLeagueDetail" @changeTab="onTabChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
+  <div class="league-list" v-show="store.isLeagueDetail" @click="goBackToLeague">
     <!-- {{ store.selectLeague }} -->
     <div class="area">{{ store.selectArea.introduction }}</div>
     <IconWapper color="#888" name="icon-triangle1" size="16px" class="icon-wapper-more" />
@@ -36,13 +36,10 @@ onMounted(() => {
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data({})
       }
-    }).off,
-    emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
-      if (store.tabActive !== 'matches') {
-        onChangeDate(12)
-      }
     }).off
   }
+  store.tabActive = 'matches'
+  store.isLeagueDetail = false
 })
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());
