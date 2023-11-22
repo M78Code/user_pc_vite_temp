@@ -14,7 +14,7 @@
         >
             <div class="temp5-hv">{{ key>0&&hpid==39?'+'+key:key }}</div>
             <div
-                v-if="value.length == 1"
+                v-if="value.length == 1&&match_info.hpid!=340"
                 style="width: 200%"
                 @click="betItemClick(key, value[0])"
                 :class="{
@@ -46,7 +46,8 @@
                     :key="o.oid"
                     @click="betItemClick(key, o)"
                 >
-                    <span v-show="!o.hs">
+               
+                    <span>
                         <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol">
                         </bet-item>
                     </span>
@@ -70,8 +71,8 @@ import betItem from "./bet-item-list-new-data.vue";
 
 const props = defineProps({
     match_info: {
-        type: Array,
-        default: () => [],
+        type: Object,
+        default: () => {},
     },
     current_ol: {
         type: Object,
@@ -84,11 +85,14 @@ const props = defineProps({
 });
 const matchInfo = computed(() => {
     let obj = {};
-    props.match_info.forEach((item) => {
+    props.match_info.hl.forEach((item) => {
         if (item && item.ol.length > 0) {
             item.ol.forEach((i) => {
                 i.hs = item.hs;
-                i.on = item.hv;
+                if (props.match_info.hpid!=340) {
+                    i.on = item.hv;
+                }
+                
                 if (!obj[i.on]) {
                     obj[i.on] = [];
                     obj[i.on] = [i];
@@ -112,10 +116,10 @@ const betItemClick = (key, o) => {
     bet_oid.value = o.oid;
 
     let obj = "";
-    if (props.match_info.length == 1) {
-        obj = props.match_info[0];
+    if (props.match_info.hl.length == 1) {
+        obj = props.match_info.hl[0];
     } else {
-        obj = props.match_info.find((item) => item.hv === key);
+        obj = props.match_info.hl.find((item) => item.hv === key);
     }
     emit("betItemClick", obj, o);
 };
