@@ -174,7 +174,9 @@
 			</div>
 		</q-scroll-area>
 		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
-			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)" class="middle_info_tab diff">{{ i18n_t('ouzhou.search.no_search_rezult') }}</div>
+			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)"
+			 class="middle_info_tab diff">{{ i18n_t('ouzhou.search.no_search_rezult') }}
+		</div>
 		<!--   -->
 	</div>
 </template>
@@ -188,7 +190,7 @@ import search from "src/core/search-class/search.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import { get_search_result } from "src/api/module/search/index.js";
 import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/core/";
-import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
+import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
@@ -243,10 +245,6 @@ function bowling_click(match) {
 	const { mid, tid, csid } = match
 	router.push(`/details/${mid}/${tid}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
-	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
-		type: 'width',
-		focus: false
-	})
 }
 
 const scrollRef = ref(null)
@@ -261,10 +259,6 @@ function match_click(match) {
 	const { mid, tid, csid } = match.matchList[0]
 	router.push(`/details/${mid}/${tid}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
-	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
-		type: 'width',
-		focus: false
-	})
 }
 
 /**
@@ -279,10 +273,6 @@ function league_click(match) {
 	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	PageSourceData.set_route_name('search')
-	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
-		type: 'width',
-		focus: false
-	})
 }
 
 const timer = ref(null)

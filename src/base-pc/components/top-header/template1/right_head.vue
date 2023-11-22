@@ -19,7 +19,7 @@
               <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
             </template>
           </q-input>
-          <span v-show="is_focus" class="btn" @click="$router.push('/')">{{ i18n_t('ouzhou.search.close') }}</span>
+          <span v-show="is_focus" class="btn" @click="close">{{ i18n_t('ouzhou.search.close') }}</span>
         </div>
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
@@ -240,6 +240,7 @@ export default defineComponent({
         SearchPCClass.set_search_isShow(true);
       }
     }
+    // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
       const target_class_list = ['q-field__native q-placeholder', 'serach-wrap column', 'sports-tab', 'tab', 'tab active', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible', 'windows desktop landscape', 'icon-close'];
       if(is_focus.value && SearchPCClass.search_isShow) {
@@ -249,6 +250,12 @@ export default defineComponent({
           text.value = ''
         } 
       }
+    }
+    // 关闭搜索状态清空值
+    const close = () => {
+      is_focus.value = false
+      text.value = ''
+      userRouter.push('/')
     }
     const get_props = (props) => {
       text.value = props.text
@@ -288,7 +295,8 @@ export default defineComponent({
       UserCtr,
       LOCAL_PROJECT_FILE_PREFIX,
       is_focus,
-      get_search_data
+      get_search_data,
+      close
     };
   
   }

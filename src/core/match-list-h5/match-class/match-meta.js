@@ -566,6 +566,22 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取欧洲版联赛详细比赛
+   */
+  async get_ouzhou_leagues_list_data (tid) {
+    const res = await api_match_list.get_leagues_list_match({
+      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
+      // sportId: 1,
+      tid: tid
+    })
+    // console.log('get_ouzhou_leagues_list_data', res)
+    MatchCollect.get_collect_match_data()
+    if (res.code !== '200') return this.set_page_match_empty_status(true);
+    const list = lodash.get(res.data, 'data', [])
+    this.handler_match_list_data({ list: list, is_virtual: false })
+  }
+
+  /**
    * @description 处理欧洲版首页热门赛事
    */
   handle_ouzhou_home_data (res) {

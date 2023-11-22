@@ -777,7 +777,7 @@ this.bet_appoint_ball_head= null */
       this.bet_s_list.splice(index,1)
     }
     // 获取oid在投注项id集合中的位置
-    let index_ = this.bet_oid_list.findIndex(item => item == oid) || -1
+    let index_ = this.bet_oid_list.findIndex(item => item == oid)
     if(index_ != -1){
       this.bet_oid_list.splice(index_,1)
     }
