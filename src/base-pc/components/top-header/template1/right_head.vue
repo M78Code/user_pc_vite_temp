@@ -341,9 +341,15 @@ export default defineComponent({
 }
 .q-item{
   padding: 8px 0 !important;
+  :deep(.q-focus-helper) {
+    color: #fff1e6 !important;
+    opacity: 1 !important;
+    z-index: -1;
+  }
   .title{
     padding: 0 16px;
   }
+  
 }
 .icon{
   width: 20px;
