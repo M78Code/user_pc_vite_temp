@@ -84,7 +84,6 @@ const expend_toggle = (item) => {
   }
 }
 const bet_click_ = (data) => {
-  debugger
   active.value = +data.oid;
   // storage_bet_info({
   //   payload: {

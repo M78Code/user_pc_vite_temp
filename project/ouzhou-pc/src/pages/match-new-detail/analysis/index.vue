@@ -5,6 +5,7 @@
 -->
 <template>
   <div>
+<!--    <div>{{  }}</div>-->
     <div class="analysis-body">
       <!-- 动画/视频/比分榜 -->
       <venue-box
@@ -105,9 +106,12 @@ onMounted(() => {
 // 获取数据
 const get_detail_info = (mid) => {
   // 3572298
-  const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid);
-  detail_info.value = infomation;
-};
+  const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
+  detail_info.value = infomation
+  // setInterval(function (){
+  //   console.log(infomation,"infomation")
+  // },2000)
+}
 
 // const show_page = ref(false)
 // watch(()=>props.detail_info,val=>{
@@ -156,6 +160,7 @@ const score_list = computed(() => {
       };
     }
   }
+
   return result;
 });
 </script>
