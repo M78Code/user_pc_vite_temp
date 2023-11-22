@@ -34,7 +34,7 @@
         <!-- <template v-slot:before> -->
         <!-- 头部15 Mins模块 -->
         <div v-if="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
-          <CurrentMatchTitle :title_value="'15 Mins'" :show_more_icon="false" />
+          <CurrentMatchTitle :title_value="$t('ouzhou.match.15_mins')" :show_more_icon="false" />
           <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
         </div>
         <!-- 头部Featured Matches模块 -->
