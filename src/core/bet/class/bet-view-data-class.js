@@ -27,6 +27,7 @@ class BetViewData {
     this.order_confirm_complete = 0;
     //错误信息
     this.error_message = "";
+    this.tipmsg = "1111"
     this.cur_keyboard_index = "";
     // 最大值获取标志 0: 默认值 1: 正在获取最大最小值 2:获取完成
     this.input_max_flag = 0;
