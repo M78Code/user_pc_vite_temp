@@ -58,6 +58,8 @@ const delete_all = ref(false) //键盘出现时，第一次按删除键把金额
 const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
 
+const user_balance = ref(userData.balance)
+
 const ref_data = reactive({
   DOM_ID_SHOW: false,
   active: 1,    //投注项状态
@@ -189,6 +191,11 @@ const _handmaxKey = () => {
   let old = BetData.bet_keyboard_config.playOptionsId
   money.value = BetViewDataClass.bet_min_max_money[old].max_money
 
+  //超过用户余额显示用户余额
+  if (money.value>user_balance._value){
+    money.value=user_balance._value
+  }
+
   BetData.set_bet_amount(money.value)
 }
 // 删除键
@@ -239,11 +246,10 @@ const _handleNumberKey = (num) => {
   if (money_ && +money_ >= +max_money) {
     money_ = max_money
   }
-//超过用户余额显示用户余额
-if (money_>userData.balance)
-{
-  money_=userdata.balance
-}
+  //超过用户余额显示用户余额
+  if (money_>user_balance._value){
+    money_=user_balance._value
+  }
   money.value = money_
   BetData.set_bet_amount(money_)
 }

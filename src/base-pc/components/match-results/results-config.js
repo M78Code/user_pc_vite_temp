@@ -732,7 +732,8 @@ export const useGetResultConfig = () => {
         .catch((err) => {
           state.details_load = "empty";
         });
-      state.$refs.result_ref.change_current_events_type();
+        // state.$refs.result_ref&&state.$refs.result_ref.change_current_events_type();
+        state?.$refs?.result_ref?.change_current_events_type();
       change_playback_type();
     }
   };
@@ -1226,6 +1227,7 @@ export const useGetResultConfig = () => {
     select_submit,
     search_hot,
     highlights_input_radio,
-    change_sort
+    change_sort,
+    get_tr_detail
   };
 };
