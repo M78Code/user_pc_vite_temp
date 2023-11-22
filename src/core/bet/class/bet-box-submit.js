@@ -183,6 +183,7 @@ const get_query_bet_amount_common = (obj) => {
             // 获取预约投注项
             set_bet_pre_list(latestMarketInfo)
         } else {
+            BetViewDataClass.set_tip_message(res)
             set_error_message_config(res)
         }
     })
@@ -340,7 +341,7 @@ const submit_handle = type => {
     // BetViewDataClass.set_bet_order_status(5)
     // return
     api_betting.post_submit_bet_list(params).then(res => {
-        // set_error_message_config(res)
+        BetViewDataClass.set_tip_message(res)
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
         if (res.code == 200) {
             // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
