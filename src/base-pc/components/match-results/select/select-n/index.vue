@@ -83,7 +83,7 @@ watch(props.sportType,(val)=>{
 )
 //筛选出空数据
 const option = computed(() => {
-  return props.options.filter(item => item !== '')
+  return props.options.filter(item =>  item !== '')
 })
 
 // 全局点击事件
@@ -103,7 +103,7 @@ const option = computed(() => {
     
 //   } else {
 //     optionsIsShow.value = !optionsIsShow.value;
-//     useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
+    //     useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
 //   }
 // };
 /**

@@ -6,9 +6,8 @@
 <template>
   <div class="time_play_page">
     <section>
-      <div class="item" v-for="item in time_events" :key="item.mid"
-        @click="toDetails(item)"
-      >
+      <div class="item" v-for="item in time_events" :key="item.mid" >
+      <div class="content" @click="toDetails(item)">
         <!-- 标题 -->
         <div class="title">
           <SportIcon size="13" :sport_id="item.icon" />
@@ -19,6 +18,7 @@
           <div>{{ item.mhn }}</div>
           <div>{{ item.man}}</div>
         </div>
+      </div>
         <template v-if="item">
           <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" />
         </template>
