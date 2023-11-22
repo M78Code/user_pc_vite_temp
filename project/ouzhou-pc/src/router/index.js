@@ -36,11 +36,7 @@ router.beforeEach((to, from, next) => {
     historiesTool.pop()
   }
   historiesTool.unshift(routeData)
-
   window.sessionStorage.setItem('RouteHistory',JSON.stringify(historiesTool))
-  console.log(historiesTool,"RouteHistory")
-  console.log(to,"RouteHistory")
-
   next()
 })
 
