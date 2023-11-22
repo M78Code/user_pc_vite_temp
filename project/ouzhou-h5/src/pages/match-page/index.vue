@@ -30,16 +30,21 @@ import BaseData from 'src/core/base-data/base-data.js'
 const emitters = ref({})
 
 onMounted(() => {
+
+  initMatchPage()
+
   BaseData.is_emit && MatchMeta.set_origin_match_data()
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data({})
       }
+      console.log('MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE')
+    }).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
+        initMatchPage()
     }).off
   }
-  store.tabActive = 'matches'
-  store.isLeagueDetail = false
 })
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());
@@ -70,9 +75,10 @@ const onChangeArea = e => {
   store.leaguesMatchs = arr
 }
 // 初始化matchpage页面
-// const initMatchPage = () => {
-//   store.tabActive = 'matches'
-// }
+const initMatchPage = () => {
+  store.tabActive = 'matches'
+  store.isLeagueDetail = false
+}
 
 const goBackToLeague = () => {
   onTabChange(1)
