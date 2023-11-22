@@ -104,7 +104,7 @@ const get_featurd_list = async () => {
   //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
   // );
   set_active_mids(res.data.map(i => i.mid))
-  matches_featured_list.value = MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
+  matches_featured_list.value = MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list.slice(0, 5);
 }
 get_featurd_list()
 //const current_ball_type = computed((csid = 0) => {
