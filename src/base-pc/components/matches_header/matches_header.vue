@@ -138,6 +138,7 @@ const checked_current_tab = payload => {
 	if ([1002].includes(payload.value*1)) {
 		MenuData.set_menu_root(500)
 		obj.current_mi = 5001
+		MenuData.set_current_ball_type(1)
 	}
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {

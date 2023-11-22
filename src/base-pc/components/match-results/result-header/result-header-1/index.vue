@@ -102,15 +102,15 @@
             <!-- 滚球 -->
             <span>{{ i18n_t("results.roll_ball") }}</span>
           </div>
-          <div
+          <!-- <div
             class="checkbox"
             v-if="results_params.sportType == '1' && show_play_back"
             @click="highlights_input_radio"
           >
-            <fliter-checkbox :checked="is_highlights" />
+            <fliter-checkbox :checked="is_highlights" /> -->
             <!-- 精彩回放筛选 -->
-            <span>{{ i18n_t("video.video_event_history") }}</span>
-          </div>
+            <!-- <span>{{ i18n_t("video.video_event_history") }}</span>
+          </div> -->
         </div>
       </div>
       <div class="match-resultstips-wrap">
@@ -222,6 +222,7 @@ const props = defineProps({
 const confirmDate=()=>{
   props.dateValue.value = date.value
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
+  console.log('6327623767623')
 }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)
@@ -485,12 +486,14 @@ function refresh() {
       text-align: center;
       line-height: 28px;
       cursor: pointer;
+      background: #ff7000;
+      color:#ffffff;
     }
   }
 
   /* ************** 日期、单选框、搜索 *************** -E */
-  .q-date__view{
-    background: #ffffff;
-  }
+}
+:deep(.q-date__view){
+background: #ffffff;
 }
 </style>
