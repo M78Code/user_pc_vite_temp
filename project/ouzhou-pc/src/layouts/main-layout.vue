@@ -19,11 +19,9 @@
       }">
         <!-- 中间区域 -->
         <router-view></router-view>
-
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div v-if="LayOutMain_pc.oz_show_right" :style="`width:${LayOutMain_pc.oz_right_width}px`"
-        class="layout_main_right">
+      <div v-if="LayOutMain_pc.oz_show_right" :style="`width:${LayOutMain_pc.oz_right_width}px`" class="layout_main_right">
         <layout-right />
       </div>
     </div>
