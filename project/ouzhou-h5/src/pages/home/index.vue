@@ -118,15 +118,21 @@ const get_ouzhou_home_data = async () => {
 const handle_ouzhou_home_data = (res) => {
   const { p15_list, dataList } = res
   // 15 分
-  if (p15_list.length > 0) time_events.value = p15_list.map(t => {
-    const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
-    return match
-  })
+  if (p15_list.length > 0) {
+    const arr_p15 = p15_list.map(t => {
+      const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
+      return match
+    })
+    time_events.value = arr_p15.filter(t => t.mid)
+  }
   // 滚球赛事
-  if (dataList.length > 0) play_matchs.value = dataList.map(t => {
-    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-    return match
-  })
+  if (dataList.length > 0) {
+    const arr_play_matchs = dataList.map(t => {
+      const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
+      return match
+    })
+    play_matchs.value = arr_play_matchs.filter(t => t.mid)
+  }
 }
 
 // 设置默认数据
@@ -144,15 +150,18 @@ const get_ouzhou_home_hots = async () => {
 // 获取首页热门赛事
 const handle_ouzhou_home_hots = async (data) => {
   // 热门赛事
-  if (data.length > 0) featured_matches.value = data.map(t => {
-    const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
-    const { home_score, away_score } = MatchUtils.get_match_score(match)
-    return {
-      ...match,
-      home_score, 
-      away_score, 
-     }
-  })
+  if (data.length > 0) {
+    const arr_data = data.map(t => {
+      const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
+      const { home_score, away_score } = MatchUtils.get_match_score(match)
+      return {
+        ...match,
+        home_score, 
+        away_score, 
+      }
+    })
+    featured_matches.value = arr_data.filter(t => t.mid)
+  }
 }
 
 

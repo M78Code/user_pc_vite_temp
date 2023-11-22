@@ -113,7 +113,7 @@
             <!-- 模板5 -->
             <template5
               v-if="[5].includes(item.hpt)"
-              :match_info="item.hl"
+              :match_info="item"
               :hpid="item.hpid"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
@@ -228,7 +228,7 @@ const sun_ol = (ol, item) => {
 
   // 其他
   result[result.length-1]._otd = item.title[item.title.length-2].otd
-   console.log(11111, result);
+  
   return result;
 };
 //  投注项点击投注,

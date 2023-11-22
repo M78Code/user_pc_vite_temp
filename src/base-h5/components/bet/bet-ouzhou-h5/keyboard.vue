@@ -240,7 +240,8 @@ const _handleNumberKey = (num) => {
     money_ = max_money
   }
 //超过用户余额显示用户余额
-if (money_>userData.balance){
+if (money_>userData.balance)
+{
   money_=userdata.balance
 }
   money.value = money_
