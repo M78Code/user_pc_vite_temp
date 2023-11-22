@@ -26,7 +26,7 @@ class BetViewData {
     this.order_confirm_complete = 0;
     //错误信息
     this.error_message = "";
-    this.tipmsg = "1111"
+    this.tip_message = "";
     this.cur_keyboard_index = "";
     // 最大值获取标志 0: 默认值 1: 正在获取最大最小值 2:获取完成
     this.input_max_flag = 0;
@@ -393,6 +393,17 @@ class BetViewData {
     this.bet_order_status = 1
     this.order_confirm_complete = 0
     this.set_bet_view_version()
+  }
+
+  //投注的提示信息
+  set_tip_message(array){
+    console.error('array', array)
+    this.tip_message = array.message
+    this.set_bet_view_version()
+    setTimeout(()=>{
+      this.tip_message = ''
+      this.set_bet_view_version()
+    },5000)
   }
 }
 export default new BetViewData();

@@ -253,8 +253,8 @@ class MatchListCardInfo {
    * @param {number} remove_tid 移除的联赛ID
    */
 
-  remove_league(remove_tid) {
-    remove_league(remove_tid);
+  remove_league(remove_tid, callback) {
+    remove_league(remove_tid, callback);
   }
 }
 
