@@ -1,10 +1,3 @@
-<!--
- * @Author: lockie
- * @Date: 2023-07-01 15:24:30
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2023-07-17 14:45:09
- * @FilePath: \user-pc-vue3\src\components\match_list\featured_matches\featured_matches_card.vue
--->
 <template>
   <div class="featured-matched-card-wrap">
     <CurrentMatchTitle :title_value="'Featured Matches'" :show_more_icon="false" />

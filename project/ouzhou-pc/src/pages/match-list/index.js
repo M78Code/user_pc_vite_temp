@@ -214,7 +214,6 @@ export const init_home_matches = async () => {
     });
     return {
         mins15_list,
-        featured_list,
         match_count
     }
 };
