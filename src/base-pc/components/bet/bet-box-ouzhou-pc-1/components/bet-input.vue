@@ -28,18 +28,20 @@ const ref_data = reactive({
     keyborard: true, // 是否显示 最高可赢 和 键盘
     seriesOdds: '', // 赔率
     show_quick: false, // 显示快捷金额
+    emit_lsit: {},
 })
 
 onMounted(() => {
     // set_ref_data_bet_money()
-    // 监听 限额变化
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
-    useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).on
+      // 监听 限额变化
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).off
+    }
 })
 
 onUnmounted(() => {
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-    useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).off
+    Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
 // 设置快捷金额
