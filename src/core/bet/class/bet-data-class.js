@@ -828,7 +828,7 @@ this.bet_appoint_ball_head= null */
               time_out = setTimeout(()=>{
                 ol_obj.red_green = ''
                 this.set_ws_message_bet_info(ol_obj,ol_obj_index)
-              },5000)
+              },3000)
             }
           }
         })

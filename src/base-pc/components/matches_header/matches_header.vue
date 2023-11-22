@@ -1,8 +1,8 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.menu_root}}-{{MenuData.mid_menu_result }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
-			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: current_ball_type})"></div>
+			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
 			<div class="matches-title">
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
@@ -34,19 +34,49 @@ import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
-import { MenuData, useMittOn,MITT_TYPES, useMittEmit } from "src/core/index.js"
+import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
-import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 const tab_list = ref([])
-// 获取当前header展示背景图
-const current_ball_type = ref(0)
+
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px')
 
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 
 let mitt_list = null
+
+const ouzhou_filter_config = {
+	// 首页   i18n_t('ouzhou.match.featured')    i18n_t('ouzhou.match.top_events')
+	home_tab: [
+		{ label: i18n_t('ouzhou.match.featured'), value: 1001 },
+		{ label: i18n_t('ouzhou.match.top_events'), value: 1002 },
+	],
+	// 左侧菜单 i18n_t('ouzhou.match.matches')  i18n_t('ouzhou.match.top_leagues'
+	sport_tab: [
+		{ label: i18n_t('ouzhou.match.matches'), value: 4001 },
+		{ label: i18n_t('ouzhou.match.top_leagues'), value: 4002 },
+		// { label: 'Next 24 Hours', value: 4003 },
+	], 
+	// 收藏 i18n_t('ouzhou.match.inplay')  i18n_t('ouzhou.match.today')  i18n_t('ouzhou.match.early')
+	favouritse_tab: [
+		{ label: i18n_t('ouzhou.match.inplay'), value: 3001 },
+		{ label: i18n_t('ouzhou.match.today'), value: 3002 },
+		{ label: i18n_t('ouzhou.match.early'), value: 3003 }
+	],
+	// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
+	inplay:{
+		title: i18n_t('ouzhou.match.inplay'),
+		name: i18n_t('ouzhou.match.all_matches')
+	}
+}
+const ouzhou_time_list = [
+	{ label: i18n_t('ouzhou.filter.select_time.12h'), title:'12小时', value: 12 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.24h'), title:'25小时', value: 24 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
+]
+
 onMounted(()=>{
 	set_tab_list(MenuData.menu_root)
 	mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_tab_list).off ]
@@ -54,30 +84,25 @@ onMounted(()=>{
 
 onUnmounted(()=>{
 	mitt_list.forEach(item => item());
-	current_ball_type.value = 0
 })
-
 
 // 设置 头部信息配置
 const set_tab_list = (news_) =>{
 	tab_list.value = []
 	// 首页
 	if(news_ == 0 ){
-		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'home_tab', [])  
+		tab_list.value = lodash_.get( ouzhou_filter_config,'home_tab', [])  
 		matches_header_title.value = i18n_t('ouzhou.match.matches')
-		// current_ball_type.value = 0
 	}
 	// 滚球
 	if( news_ == 1 ){
 		matches_header_title.value = i18n_t('ouzhou.match.inplay')
    		match_list_top.value = '146px'
-		// current_ball_type.value = 1
 	}
 	
 	// 左侧菜单
 	if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
-		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'sport_tab', [])  
-		// current_ball_type.value = 1
+		tab_list.value = lodash_.get( ouzhou_filter_config,'sport_tab', [])  
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
@@ -86,8 +111,7 @@ const set_tab_list = (news_) =>{
 	if (MenuData.is_collect) {
 		console.error(MenuData);
 		matches_header_title.value = i18n_t('ouzhou.menu.collect')
-		tab_list.value = lodash_.get(MenuData.ouzhou_filter_config,'favouritse_tab', [])  
-		// current_ball_type.value = 1
+		tab_list.value = lodash_.get( ouzhou_filter_config,'favouritse_tab', [])  
 	}
 
 	if (tab_list.value.length) {
@@ -119,7 +143,6 @@ const checked_current_tab = payload => {
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
     	useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
-		current_ball_type.value = 0
 	}
 
 	// 收藏切换tab
@@ -138,21 +161,7 @@ const checked_current_tab = payload => {
 	// get_sport_banner()
 	MenuData.set_mid_menu_result(obj)
 }
-watch(MatchListCardDataClass.list_version, (list_version) => {
-	if (MenuData.mid_menu_result.filter_tab !== 1001) {
-		get_sport_banner();
-	}
-});
-// 监听球种导航变化 切换精灵图
-const get_sport_banner = () => {
-	let arr = MatchListCardDataClass.match_list_card_key_arr
-	if (arr.length) {
-		let length = arr[0].split("_").length
-		let sport_id = arr[0].split("_")[length - 1]
-		current_ball_type.value = sport_id
-	// console.log(sport_id, 'MenuData.mid_menu_result')
-	}
-}
+
 </script>
 
 <style lang="scss" scoped>
