@@ -24,9 +24,13 @@ import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+
 // 提交投注信息
 const set_bet_submit = () => {
-    submit_handle()
+    // 未投注之前 可以点击
+    if(BetViewDataClass.bet_order_status == 1){
+        submit_handle()
+    }
 }
 // 取消投注
 const set_bet_cancel = () => {

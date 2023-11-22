@@ -255,6 +255,7 @@ import {get_match_template_id} from '../../match-handle-data.js'
         //卡片key列表
         match_list_card_key_arr,
       })
+      console.log('match_list_card_key_arr', match_list_card_key_arr);
     // 重新计算所有的联赛卡片样式
     for(let card_key in league_card_mids_arr){
       // 不是联赛容器卡片不处理
