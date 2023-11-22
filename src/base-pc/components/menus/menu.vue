@@ -79,6 +79,7 @@ const go_to_favouritse = () => {
     current_mi: 1011, // 当前选中的赛种id
   }
   MenuData.set_mid_menu_result(mid_config)
+  MenuData.set_current_ball_type(1)
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
@@ -106,6 +107,7 @@ const jump_func = (payload ={},type) => {
   MenuData.set_is_collect(false)
   MenuData.set_left_menu_result(obj)
   MenuData.set_menu_current_mi(obj.lv2_mi)
+  MenuData.set_current_ball_type(payload.mi*1 - 100)
 
   let mid_config = {
     ...MenuData.mid_menu_result,
