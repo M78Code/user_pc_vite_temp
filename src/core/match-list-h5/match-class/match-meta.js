@@ -4,7 +4,7 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
-import { api_common, api_match_list, api_match } from "src/api/index.js";
+import { api_common, api_match_list, api_match, api_home } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -482,6 +482,56 @@ class MatchMeta {
   }
 
   /**
+   * @description 获取欧洲版联赛数量统计
+   */
+  async get_ouzhou_leagues_data (date) {
+    const res = await api_match_list.get_leagues_list({
+      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
+      // sportId: 1,
+      selectionHour: date
+    })
+    MatchCollect.get_collect_match_data()
+    const list = lodash.get(res, 'data', [])
+    return list
+  }
+
+  /**
+ * @description 获取缓存的欧洲首页热门赛事
+ * @returns 
+ */
+  get_default_ouzhou_home_hots ()  {
+    const res = localStorage.getItem('ouzhou_home_hots') && JSON.parse(localStorage.getItem('ouzhou_home_hots'))
+    return this.get_ouzhou_home_hots_data(res)
+  }
+
+  /**
+   * @description 获取欧洲版首页热门赛事
+   */
+  async get_ouzhou_home_hots () {
+    const res = await api_home.hot_ulike_recommendation({ 
+      isHot: 1,
+      cuid: UserCtr.get_uid()
+      })
+    return this.get_ouzhou_home_hots_data(res)
+  }
+  
+  /**
+   * @description 获取欧洲版首页热门赛事
+   */
+  get_ouzhou_home_hots_data (res) {
+    if (!res || +res.code !== 200 || res.data.length < 1) return []
+    localStorage.setItem('ouzhou_home_hots', JSON.stringify(res))
+    const hots = lodash.get(res, 'data', [])
+    const hots_list = hots.slice(0, 5)
+    // const hots_mids = hots_list.map(t => t.mid)
+    // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
+    // 热门赛事数据
+    MatchDataBaseHotsH5.set_list(hots_list)
+    return hots_list
+  }
+
+  
+  /**
    * @description 获取缓存的欧洲首页赛事
    * @returns 
    */
@@ -520,19 +570,15 @@ class MatchMeta {
     if (!res || +res.code !== 200) return { p15_list: [], hots: [], dataList: [] }
     localStorage.setItem('ouzhou_home_data', JSON.stringify(res))
     const p15 = lodash.get(res, 'data.p15', [])
-    const hots = lodash.get(res, 'data.hots', [])
     const dataList = lodash.get(res, 'data.dataList', [])
+
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
     // ws 订阅
     // const p_15_mids = p15_list.map(t => t.mid)
     // p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
     MatchDataBasel5minsH5.set_list(p15_list.slice(0, 5))
-    // 热门赛事数据
-    MatchDataBaseHotsH5.set_list(hots.slice(0, 5))
-    // ws 订阅
-    // const hots_mids = p15_list.map(t => t.mid)
-    // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
+    
     // 首页滚球赛事
     const length = lodash.get(dataList, 'length', 0)
     let match_list = []
@@ -540,7 +586,7 @@ class MatchMeta {
       match_list = MatchUtils.get_home_in_play_data(dataList)
       this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
     }
-    return { p15_list, hots, dataList: match_list }
+    return { p15_list, dataList: match_list }
   }
 
   /**
@@ -654,7 +700,6 @@ class MatchMeta {
       target_matchs = this.complete_matchs.filter(t => t.mid !== mid)
     }
     // this.match_mids = target_mids
-    console.log(target_matchs)
     this.handler_match_list_data({ list: target_matchs, is_virtual: false, is_collect: true, type: 2 })
   }
 

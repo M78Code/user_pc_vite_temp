@@ -18,30 +18,13 @@
         </div>
         <div class="analysis-top-right">
            <!-- 动画图标 -->
-          <img
-            v-if="detail_info.mvs > -1"
-            :src="show_type&&show_type=='animal' ? animal_active : animal"
-            alt=""
-            srcset=""
-            style="margin-right: 15px"
-            @click="tab_click('animal')"
-          />
+          <img v-if="detail_info.mvs > -1" :src="show_type&&show_type=='animal' ? animal_active : animal"
+            alt="" srcset="" style="margin-right: 15px" @click="tab_click('animal')" />
            <!-- 视频图标 -->
-          <img
-            v-if="cur_video_icon.type"
-            :src="show_type&&show_type!='animal'?video_active: video"
-            alt=""
-            srcset=""
-            style="margin-right: 15px"
-            @click="tab_click(cur_video_icon.type)"
-          />
+          <img v-if="cur_video_icon.type" :src="show_type&&show_type!='animal'?video_active: video"
+            alt="" srcset="" style="margin-right: 15px" @click="tab_click(cur_video_icon.type)" />
            <!-- 比分榜图标 -->
-          <img
-            :src="score_key ? score_active : score"
-            alt=""
-            srcset=""
-            @click="tab_click('score')"
-          />
+          <img :src="score_key ? score_active : score" alt="" srcset="" @click="tab_click('score')" />
         </div>
       </div>
       <!-- 动画视频 -->
@@ -230,41 +213,6 @@ const tab_click = (type) => {
 
 .stage-13,.stage-14,.stage-15,
 .stage-302,.stage-16,.stage-303{
-  //color: var(--qq--yb-text-color1) !important;
   color: rgb(255, 112, 0) !important;
-}
-
-
-
-.stage-13 {
-  span {
-    &:nth-child(1) {
-      color: var(--qq--yb-text-color1);
-    }
-  }
-}
-.stage-14,
-.stage-301 {
-  span {
-    &:nth-child(2) {
-      color: var(--qq--yb-text-color1);
-    }
-  }
-}
-.stage-15,
-.stage-302 {
-  span {
-    &:nth-child(3) {
-      color: var(--qq--yb-text-color1);
-    }
-  }
-}
-.stage-16,
-.stage-303 {
-  span {
-    &:nth-child(4) {
-      color: var(--qq--yb-text-color1);
-    }
-  }
 }
 </style>

@@ -348,7 +348,6 @@ export default {
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
       select_play.value = item.hpid
-      console.log(csid)
       // const plays = sports_play_title[csid]
       // const play_item = plays.find(t => t.hpid === item.hpid)
       // const ol = play_item.ol
