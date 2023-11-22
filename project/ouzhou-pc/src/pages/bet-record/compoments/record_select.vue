@@ -71,7 +71,7 @@ onMounted(() => {
   date_value.value = data + '-' + data
   date.value = { from: data, to: data }
 })
-const select_value = ref(i18n_t("bet_record.bet_time"))
+const select_value = ref(i18n_t("bet_record.sort_by_settled_time"))
 let params = {
   enablePreSettle: false,
   timeType: 1,
