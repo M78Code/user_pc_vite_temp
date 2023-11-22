@@ -10,7 +10,7 @@
     <!-- 是否显示赔率 -->
     <div v-else :class="['odd',  { 'up': is_up,  'down': is_down}]"> 
       <!-- 赔率 -->
-        <span v-if="csid != 1" class="title">{{ odd_item.onb }}</span>
+        <span v-if="is_show_title" class="title">{{ odd_item.onb }}</span>
         <span>
           <span class="hpn" v-if="show_hpn">{{ get_item_hpn(odd_item) }}</span> {{ get_odd_os(odd_item) }} 
           <!-- 绿升icon -->
@@ -63,6 +63,11 @@ const is_up = ref(false)
 const is_down = ref(false)
 const old_ov = ref(0)
 
+const is_show_title = computed(() => {
+  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${props.csid}`, '1')
+  return hpid != 1
+})
+
 const is_active = computed(() => {
   return MatchResponsive.active_odd.value === `${props.match_id}_${props.odd_item.oid}`
 })
@@ -109,6 +114,7 @@ const get_icon = (type) => {
 }
 
 const set_old_submit = () => {
+  console.log(props.odd_item)
   const ol = props.odd_item
   if (is_lock.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
@@ -152,6 +158,9 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-2);
     background: #FF7000;
     border-radius: 2px;
+    .odd .title{
+      color: #fff;
+    }
     .hpn{
       position: relative;
       top: 1px;
