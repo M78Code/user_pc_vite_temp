@@ -113,7 +113,7 @@
             <!-- 模板5 -->
             <template5
               v-if="[5].includes(item.hpt)"
-              :match_info="item.hl"
+              :match_info="item"
               :hpid="item.hpid"
               :current_ol="current_ol"
               @betItemClick="betItemClick"

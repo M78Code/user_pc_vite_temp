@@ -63,18 +63,20 @@
 
   <script setup>
 
-import { ref, computed, watch } from "vue";
+import { ref, computed, onMounted,onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { format_money2,UserCtr } from "src/core/";
 import leftMenu from "./components/left-menu/left-menu.vue";
 import detailTopInfo from "./detail-top/detail-top.vue";
-import { MenuData } from 'src/core/';
+import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
+
 const router = useRouter();
 const route = useRoute()
 const amount = ref(UserCtr.balance)
 
 const leftDrawerOpen = ref(false)
 const emit = defineEmits(["change"]);
+
 // 事件执行函数
 
 const get_route_name = computed(() => {
@@ -124,7 +126,18 @@ const go_back = () => {
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
-
+/**
+ * 监听用户信息版本号
+*/
+const changebalance = (val) =>{
+  amount.value = val;
+}
+onMounted(() => {
+  useMittOn(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE, changebalance)
+})
+onUnmounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE).off
+})
 </script>
 
 <style lang="scss" scoped>
@@ -222,6 +235,15 @@ const toggleLeftDrawer = () => {
       width: 5px;
       height: 8px;
       margin-right: 5px;
+    }
+  }
+  :deep(.q-drawer-container){
+    .q-drawer__backdrop {
+      background-color: rgba(56, 55, 50, 0.6) !important;
+      filter: blur(5px);
+    }
+    .q-drawer__opener{
+      display: none;
     }
   }
 }

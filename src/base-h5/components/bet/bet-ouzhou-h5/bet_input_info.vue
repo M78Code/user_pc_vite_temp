@@ -16,7 +16,7 @@
   
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
             
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ ref_data.min_money }}-{{format_money2(ref_data.max_money) }}</span>
           
           </div>
           
@@ -27,7 +27,7 @@
 <script setup>
 import lodash_ from "lodash"
 import { onMounted, onUnmounted, reactive,ref } from "vue"
-import {MITT_TYPES,useMittOn } from "src/core/"
+import {MITT_TYPES,useMittOn,format_money2 } from "src/core/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'

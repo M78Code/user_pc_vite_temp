@@ -246,6 +246,7 @@ export default {
       }
     },
     'match_of_list.msc': {
+      immediate: true,
       handler () {
         this.score_value();
         this.mmp_map_title = matchListClass.match_period_map(this.match_of_list);

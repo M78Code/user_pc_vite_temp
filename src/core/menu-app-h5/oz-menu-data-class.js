@@ -72,15 +72,15 @@ class MenuData {
   /**
    * 初始化
    */
-  set_init_menu_list(){
-    
+  set_init_menu_list(data){
     let menu_list = [],
-        top_events_list = [];
+        top_events_list = []
+        data = data || BaseData.mew_menu_list_res;
     const session_info = SessionStorage.get("menu-h5");
     //常规球种
-    menu_list =  BaseData.mew_menu_list_res.filter((item)=>{return +item.mi<this.conventionalType});
+    menu_list =  data.filter((item)=>{return +item.mi<this.conventionalType});
     //热门球种
-    top_events_list =  BaseData.mew_menu_list_res.filter((item)=>{return item.mi==5000})?.[0].sl || [];
+    top_events_list =  data.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {

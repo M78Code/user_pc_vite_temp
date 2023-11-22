@@ -7,7 +7,10 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/ind
 import MatchListCardData from "./match-list-card-data-class";
 import {league_list_obj} from '../../composables/match-list-featch.js'
 import { PageSourceData } from 'src/core/index.js';
+import {
+  fold_template,
 
+} from "../config/card-template-config.js"
 
 //引入菜单类
 const MenuData = {
@@ -43,7 +46,9 @@ export const remove_league = (remove_tid) => {
     );
   } else {
     // 列表接口数据类型为赛事列表
-    let match_list = MatchListData.match_list_data.match_list;
+    let match_list = MatchListData.match_list;
+    console.log('match_list', match_list);
+    
     // 移除联赛ID一样的赛事
     lodash.remove(match_list, (match) => {
       return match.tid == remove_tid;
@@ -179,7 +184,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   callback
 ) => {
   // 列表接口数据类型为赛事列表
-  let match_list = MatchListData.match_list_data.match_list;
+  let match_list = MatchListData.match_list;
   match_list.forEach((match, index) => {
     if (match.mid == remove_mid) {
       match_list.splice(index, 1);
@@ -221,10 +226,10 @@ export const remove_match = (remove_mid, callback) => {
     //   callback
     // );
   } else {
-    // remove_match_when_match_list_mapping_relation_obj_type_other(
-    //   remove_mid,
-    //   callback
-    // );
+    remove_match_when_match_list_mapping_relation_obj_type_other(
+      remove_mid,
+      callback
+    );
   }
 };
 /**

@@ -23,14 +23,15 @@
   </div>
 </template>
 <script setup>
-import { ref, onBeforeUnmount, watch } from "vue";
 // import store from "src/store-redux/index.js";
+// import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
+// import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
+
+import { ref, onBeforeUnmount, watch } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import analysis from "../pages/match-new-detail/analysis/index.vue";
-// import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 import { LayOutMain_pc, MenuData } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router";
-// import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
 const route = useRoute();
 const right_status = ref(null);
 const show_right = ref(false);
