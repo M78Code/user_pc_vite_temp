@@ -18,7 +18,8 @@ class BetData {
     // this.bet_list = [];
      // 是否预约
     this.is_bet_pre = false
-    //是否接受更好赔率
+    
+    //是否接受更好赔率 
     this.bet_is_accept = false;
     // 接受更好赔率规则
     this.better_rules_show = false
