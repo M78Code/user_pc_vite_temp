@@ -141,7 +141,6 @@ const col_ols_data = computed(() => {
       let handicap_type = hn || 1
       const many_obj = get_match_to_map_obj(match); //非坑位对象
       const hn_obj = lodash.get(MatchDataWarehouse_ouzhou_PC_hots_List_Common, "list_to_obj.hn_obj", {})
-      console.log(get_hots_odds_list(), 'get_hots_odds_list()')
       match.ols = get_hots_odds_list().map(item => {
         // 投注项数据拼接
         // 投注项数据拼接

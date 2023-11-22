@@ -666,7 +666,6 @@ init(){
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list, param={}){
-    console.log('set_list', list)
     if(list){
       // 索引置换
       let temp = lodash.cloneDeep(this.match_list);
