@@ -61,6 +61,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useGetItem } from "./bet_item_hooks.js";
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 import { compute_css_obj } from 'src/core/server-img/index.js'
+
 // 定时器对象
 let timer_obj = {};
 const props = defineProps({
@@ -260,6 +261,7 @@ const bet_click_ol = () => {
     emit('update_score', current_id)
   }
   set_bet_obj_config(params, {})
+  BetData.set_bet_state_show(true)
 };
 
 onUnmounted(() => {
