@@ -131,7 +131,6 @@ export function usedetailData(route) {
     detail_loading.value = true;
     await get_category();
     get_detail();
-    await get_detail_lists();
   };
   /**
    * 获取赛事详情数据
@@ -225,6 +224,7 @@ export function usedetailData(route) {
         label: item.marketName,
         value: item.orderNo,
       }));
+      await get_detail_lists();
     } catch (error) {
       console.error("get_detail_category", error);
     }
