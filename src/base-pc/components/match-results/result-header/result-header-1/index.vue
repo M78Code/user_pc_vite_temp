@@ -42,6 +42,7 @@
             <q-icon name="icon-calendar"></q-icon>
           </div>
           <div class="date-picker-wrap relative-position">
+          <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <q-date
               v-icon="{
                 chevron_left: 'icon-arrow-left',
@@ -145,6 +146,7 @@ import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { LayOutMain_pc } from "src/core/index.js";
 
 import {
   i18n_t,
@@ -229,16 +231,15 @@ const props = defineProps({
     type:String
   },
   locale:{
-    type:String
+    type:Object
   },
 });
   const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
 })
 const confirmDate=()=>{
-  props.dateValue.value = date.value
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
-  console.error('63276237uasdkjasdjkkjaskj67623')
+  props.hideSelect(date.value)
 }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)

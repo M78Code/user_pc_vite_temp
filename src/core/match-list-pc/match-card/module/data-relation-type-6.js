@@ -21,10 +21,10 @@
     import {compute_style_template_by_matchinfo} from "./compute-style-template.js"
     import {
    
-      sport_title_card_template,
-      league_title_card_template,
+      ouzhou_sport_title_card_template,
+      ouzhou_league_title_template,
       fold_template,
-      league_container_card_template,
+      ouzhou_league_container_template,
     
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/core/constant/index.js'
@@ -88,7 +88,7 @@
 
           // 打入球种标题卡片特征
           all_card_obj[card_key] = {
-            ...sport_title_card_template,
+            ...ouzhou_sport_title_card_template,
             // 卡片索引
             card_index,
             // 球种名称
@@ -119,7 +119,7 @@
 
         // 打入联赛标题卡片特征
         all_card_obj[card_key] = {
-          ...league_title_card_template,
+          ...ouzhou_league_title_template,
           // 卡片索引
           card_index,
           // 卡片类型
@@ -154,7 +154,7 @@
 
         // 打入联赛容器卡片特征
         all_card_obj[card_key] = {
-          ...league_container_card_template,
+          ...ouzhou_league_container_template,
           // 卡片索引
           card_index,
           // 对应的联赛标题卡片key

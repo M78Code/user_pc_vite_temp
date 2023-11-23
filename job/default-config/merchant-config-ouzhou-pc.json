@@ -43,6 +43,12 @@
         "params": {
           "tableClass": "bg-deep-purple-14"
         }
+      },
+      "MatchTypeChampion": {
+        "use_component": "MatchTypeChampion2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
       }
     }
   }
