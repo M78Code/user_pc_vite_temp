@@ -35,7 +35,7 @@
       <div class="key-cell" data-num=".">.</div>
       <div class="key-cell" data-num="0">0</div>
       <div class="key-cell del-key" data-num="x">
-        <img :src="compute_local_project_file_path('/image/svg/jianpan_del_1.svg')" alt="">
+        <img :src="compute_local_project_file_path('/image/svg/jianpan_del_1.svg')" alt="" data-num="x">
         <!-- <span class="icon-delete"></span> -->
       </div>
     </div>
