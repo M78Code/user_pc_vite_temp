@@ -496,6 +496,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 重置金额为 0
     BetData.set_bet_amount(0)
     BetData.set_is_bet_pre(false)
+    BetViewDataClass.set_bet_before_message({})
 
     const { oid, _hid, _hn, _mid } = params
 
