@@ -11,7 +11,7 @@
         </div>
 
         <!-- 比赛进程 -->
-        <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
+        <match-process style="cursor:pointer" v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
         periodColor="gray" />
       </div>
       <!-- 玩法数量 -->
@@ -288,6 +288,7 @@ onUnmounted(() => {
       }
     }
     .right-handle-box {
+      cursor: pointer;
       span {
         font-weight: 500;
         margin-right: 6px;
