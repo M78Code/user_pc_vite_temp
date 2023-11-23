@@ -1,7 +1,7 @@
 <!--
  * @Author: cooper
  * @Date: 2023-05-20 12:13:55
- * @Description:模板5
+ * @Description:模板18
 -->
 
 <template>
@@ -11,10 +11,11 @@
         <div v-for="opt in item" :key="opt.otd" class="odds-title-li">
           <span class="handicap-value-text">{{ opt.osn }}</span>
           <!-- 模板18 -->
-          <template>
+         
             <div class="temp-simple">
+                
               <div v-for="ol in match_info.hl[0].ol" :key="ol.oid">
-                <template v-if="ol.otd === opt.otd">
+                <template v-if="ol.otd == opt.otd">
                   <div
                    
                     :class="{
@@ -53,7 +54,6 @@
                 </template>
               </div>
             </div>
-          </template>
         </div>
       </template>
     </template>
@@ -67,8 +67,8 @@ import betItem from "./bet-item-list-new-data.vue";
 
 const props = defineProps({
   match_info: {
-    type: Array,
-    default: () => [],
+    type: Object,
+    default: () => {},
   },
   current_ol: {
     type: Object,
@@ -83,63 +83,21 @@ const props = defineProps({
 const columnTotal = () => {
   return `repeat(3, 1fr)`;
 };
-const matchData = computed(() => {
-  let maxCount = 0;
-  let obj = {};
-  let itemList = [];
-  let result = [];
-  let resultList = [];
-  const { title, hl } = props.match_info;
-  for (const opt of props.match_info.title) {
-    obj = {};
-    result = [];
-    for (const itm of opt) {
-      itemList = hl[0].ol.filter((i) => i.otd === itm.otd);
-      obj[itm.otd] = itemList;
-      if (itemList.length > maxCount) {
-        maxCount = itemList.length; // 获取最大值那一列的数量
-      }
-    }
-    for (const key in obj) {
-      let ele = obj[key];
-      let list = [];
-      if (ele.length !== maxCount) {
-        // 列数不够的话添加假数据
-        for (let index = 0; index < maxCount - ele.length; index++) {
-          list.push({ otd: Number(key), on: "", oid: key + "-" + index });
-        }
-      }
 
-      obj[key] = [...obj[key], ...list];
-      result = [...result, ...obj[key]];
-    }
-    resultList.push(result);
-  }
-  console.log(111111111, resultList);
-  return resultList;
-});
 const emit = defineEmits(["betItemClick"]);
 
 const bet_oid = ref("");
 
-// 事件执行函数
 
-const active = ref(1);
 
-const betItemClick = (key, o) => {
+const betItemClick = (item, o) => {
   bet_oid.value = o.oid;
 
-  let obj = "";
-  if (props.match_info.length == 1) {
-    obj = props.match_info[0];
-  } else {
-    obj = props.match_info.find((item) => item.hv === key);
-  }
-  emit("betItemClick", obj, o);
+  emit("betItemClick", item, o);
 };
 
 onMounted(() => {
-  console.log(111111111, props.match_info);
+ 
 });
 </script>
 
