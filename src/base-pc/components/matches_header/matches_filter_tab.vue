@@ -50,6 +50,7 @@
     if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
       show_right_btn.value = true;
     }
+
     time = await UserCtr.get_system_time()
     update_time(time)
 
