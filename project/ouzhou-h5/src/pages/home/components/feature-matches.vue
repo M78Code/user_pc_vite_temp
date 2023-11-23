@@ -6,18 +6,16 @@
 <template>
   <div class="matches_page">
     {{ console.log(featured_matches) }}
-    <div class="item" v-for="item, index in featured_matches" :key="index" :style="{backgroundImage: `url(${get_amtch_bg_image(item.csid)})`}">
-      <div class="content" @click="toDetails(item)">
-        <!-- 标题 -->
-        <div class="title">
-          <span class="name">{{ item.tn }}</span>
-          <!-- <span class="time"> {{list.course}} {{ list.mstValue }} <span>{{ item.mstValueTime }}</span> </span> -->
-        </div>
-        <!-- 赛事名称 -->
-        <div class="game-name">
-          <div> <span>{{ item.mhn }}</span> <span class="span">{{ item.home_score }}</span> </div>
-          <div> <span>{{ item.man }}</span> <span class="span">{{ item.away_score }}</span> </div>
-        </div>
+    <div class="item" v-for="item, index in featured_matches" :key="index" :style="{backgroundImage: `url(${get_amtch_bg_image(item.csid)})`}" @click="toDetails(item)">
+      <!-- 标题 -->
+      <div class="title">
+        <span class="name">{{ item.tn }}</span>
+        <!-- <span class="time"> {{list.course}} {{ list.mstValue }} <span>{{ item.mstValueTime }}</span> </span> -->
+      </div>
+      <!-- 赛事名称 -->
+      <div class="game-name">
+        <div> <span>{{ item.mhn }}</span> <span class="span">{{ item.home_score }}</span> </div>
+        <div> <span>{{ item.man }}</span> <span class="span">{{ item.away_score }}</span> </div>
       </div>
       <template v-if="item">
         <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" :hps="get_item_hps(item)"  />
