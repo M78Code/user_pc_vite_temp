@@ -67,7 +67,7 @@ function sub_click(item, index) {
   
 <style lang="scss" scoped>
 .top-menu-content {
-    height: 50px;
+    height: 48px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
     // background: var(--q-gb-bg-c-4);  #ffffff
     // color: var(--q-gb-t-c-8);  #8A8986 
@@ -77,8 +77,8 @@ function sub_click(item, index) {
         content: "";
         position: absolute;
         width: 100%;
-        height: 14px;
-        top: 50px;
+        height: 6px;
+        top: 48px;
         right: 0;
         // background-color: var(--q-gb-bg-c-6);
         background-color:#E2E2E2;

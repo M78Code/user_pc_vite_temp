@@ -9,7 +9,7 @@
       <span class="icon-delete del-info-icon"></span>
       <div class="del-info-name">{{ $t('bet.delete_all')}}</div>
     </div>
-    <div>{{$t('bet.bet')}}</div>
+    <div class="bet-type">{{$t('bet.bet')}}</div>
     <div class="del-info" style="display:none">
       <div class="dropdown">
         <button class="dropbtn">{{BetData.is_bet_single?$t('bet.bet'):$t('bet.kushikatsu')}}</button>
@@ -107,15 +107,24 @@
       margin-top: 0.02rem;
     }
     .del-info-name{
-      margin-left: 0.15rem;
+      margin-left: 0.16rem;
       color: var(--q-gb-bg-c-4);
+      margin-top: -.03rem;
+      font-size: .14rem;
     }
     .del-info-icon{
       color: var(--q-gb-bg-c-4);
+      width: 0.12rem;
+      height: 0.12rem;
     }
     .del-info{
       display: flex;
-      font-size: 0.13rem;
+      font-size: 0.14rem;
+    }
+    .bet-type {
+      font-weight: 500; 
+      font-size: .14rem;
+      margin-top: -.03rem;
     }
     .bet-all-detele{
       display: flex;

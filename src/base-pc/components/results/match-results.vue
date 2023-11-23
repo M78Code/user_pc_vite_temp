@@ -36,6 +36,10 @@
         :is_bowls="is_bowls"
         :cancel="cancel"
         :is_show="is_show"
+        :click_popup="click_popup"
+        :img_mouseleave="img_mouseleave"
+        :timeChanged="timeChanged"
+        :search_hot="search_hot"
       ></result-header>
       <!-- 筛选条件 E-->
 
@@ -117,6 +121,7 @@ const {
   is_bowls,
   is_show,
   cancel,
+  timeChanged,
   //函数
   get_tr_detail,
   change_sort,
@@ -136,6 +141,8 @@ const {
   champion_sport_type_filter,
   search_hot,
   highlights_input_radio,
+   click_popup,
+  img_mouseleave
 } = useGetResultConfig();
 
 onMounted(() => {

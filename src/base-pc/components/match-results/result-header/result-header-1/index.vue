@@ -117,10 +117,8 @@
       </div>
       <div class="match-resultstips-wrap">
         <!-- 提示语 -->
-        <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
-          <template>
-            <div>{{ i18n_t("results.tips") }}</div>
-          </template>
+          <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
+            <div class="aaa">{{ i18n_t("results.tips") }}</div>
         </q-tooltip>
         <div
           class="match-resultstips-icon relative-position"
@@ -157,8 +155,14 @@ import {
 import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
+  current_sport_id:{
+    type: String
+  },
+  timeChanged:{
+    type: Boolean
+  },
   cancel:{
-    type:String
+    type:null
   },
   dateValue:{
     type:Object
@@ -196,6 +200,15 @@ const props = defineProps({
     type: Function,
   },
   isSelectConfirm:{
+    type: Function,
+  },
+  click_popup:{
+    type: Function,
+  },
+  img_mouseleave:{
+    type: Function,
+  },
+  search_hot:{
     type: Function,
   },
   startTimeShow:{
