@@ -8,24 +8,27 @@
     <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <div style="display: flex;">
-          <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
-            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" :class="is_focus ? 'change_width' : ''"
-            @keyup.enter="get_search_data(text)">
-            <template v-slot:prepend>
-              <i class="icon-search q-icon c-icon" size="10px"></i>
-            </template>
-            <template v-slot:append>
-              <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
-            </template>
-          </q-input>
+        <div style="display: flex; position: relative;">
+          <input 
+            class="search-input" 
+            :class="is_focus ? 'change_width' : ''"
+            @focus="show_search" 
+            v-model="keyword"
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`"
+            @keyup.enter="get_search_data(keyword)"
+            @input="() => {
+                get_search_data(keyword);
+              }" 
+          />
+          <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
+          <img v-show="keyword" @click="clear_keyword" class="icon-close" :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
           <span v-show="is_focus" class="btn" @click="close">{{ i18n_t('ouzhou.search.close') }}</span>
         </div>
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
     <!-- <div class="s-input-active">
-      <q-input borderless rounded readonly @click="change_input" v-model="text" label-color="primary" placeholder="Enter league or team">
+      <q-input borderless rounded readonly @click="change_input" v-model="keyword" label-color="primary" placeholder="Enter league or team">
         <template v-slot:prepend>
           <i class="icon-search q-icon c-icon" size="10px"></i>
         </template>
@@ -114,16 +117,16 @@
 import { defineComponent, onMounted, ref,watch, onUnmounted } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
-import store from "src/store-redux/index.js";
 import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account } from 'src/api/index';
-import { loadLanguageAsync } from "src/core/index.js";
+import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
 import BetData from 'src/core/bet/class/bet-data-class.js';
 import {  LayOutMain_pc } from 'src/core/index.js'
+import { emit } from "licia/fullscreen";
 
 export default defineComponent({
   name: "RightHead",
@@ -131,7 +134,7 @@ export default defineComponent({
     searchCom
   },
   setup() {
-    const text = ref('')
+    const keyword = ref('')
     const route=useRoute()
     const userRouter=useRouter()
     const is_search = ref(false)
@@ -187,8 +190,7 @@ export default defineComponent({
           params: ['EURO', 'ASIA']
         }])
     //监听输入框内容改变，并搜索
-    watch(
-      () => text.value,
+    watch(keyword.value,
       (val) => {
         let trimVal = val.trim();
         get_search_data(trimVal);
@@ -199,7 +201,7 @@ export default defineComponent({
     const get_search_data = (val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
         type: 'result',
-        text: val || text.value
+        text: val || keyword.value
       })
     }
     /**
@@ -248,24 +250,32 @@ export default defineComponent({
     }
     // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
-      const target_class_list = ['q-field__native q-placeholder', 'serach-wrap column', 'sports-tab', 'tab', 'tab active', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible', 'windows desktop landscape', 'icon-close'];
+      const target_class_list = ['search-input change_width', 'icon-close'];
       if(is_focus.value && SearchPCClass.search_isShow) {
         if(!target_class_list.includes(e.target.className)) {
           SearchPCClass.set_search_isShow(false);
           is_focus.value = false;
-          text.value = ''
+          keyword.value = ''
         } 
       }
+    }
+    // 清空输入框
+    const clear_keyword = () => {
+      keyword.value = ''
+      useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+        type: 'init',
+        text: keyword.value
+      })
     }
     // 关闭搜索状态清空值
     const close = () => {
       SearchPCClass.set_search_isShow(false);
       is_focus.value = false
-      text.value = ''
+      keyword.value = ''
       userRouter.push('/')
     }
     const get_props = (props) => {
-      text.value = props.text
+      keyword.value = props.text
     }
     const get_width = (props) => {
       is_focus.value = props.focus
@@ -284,7 +294,7 @@ export default defineComponent({
     })
 
     return {
-      text, 
+      keyword, 
       SearchPCClass, 
       show_search, 
       search_hot_push, 
@@ -303,7 +313,9 @@ export default defineComponent({
       LOCAL_PROJECT_FILE_PREFIX,
       is_focus,
       get_search_data,
-      close
+      close,
+      compute_local_project_file_path,
+      clear_keyword
     };
   
   }
@@ -327,23 +339,29 @@ export default defineComponent({
       font-weight: 500;
       line-height: 19px;
       letter-spacing: 0px;
-      text-align: right;
+      keyword-align: right;
     }
     .user-name{
       font-size: 14px;
       font-weight: 400;
       line-height: 16px;
       letter-spacing: 0px;
-      text-align: right;
+      keyword-align: right;
     }
   }
   
 }
 .q-item{
   padding: 8px 0 !important;
+  :deep(.q-focus-helper) {
+    color: #fff1e6 !important;
+    opacity: 1 !important;
+    z-index: -1;
+  }
   .title{
     padding: 0 16px;
   }
+  
 }
 .icon{
   width: 20px;
@@ -478,7 +496,7 @@ export default defineComponent({
   }
 }
 .change_width {
-  width: 500px;
+  width: 500px !important;
 }
 .search-click .s-input {
   width: 500px;
@@ -497,5 +515,30 @@ export default defineComponent({
 .dialog_box{
   height: 100%;
   width: 100%;
+}
+.search-input {
+  width: 200px;
+  height: 40px;
+  border-radius: 40px;
+  border: none;
+  border: 1px solid #ffb275;
+  background-color: #ff7e19;
+  padding: 14px 15px;
+  padding-left: 30px;
+  outline:none;
+  color: #fff;
+}
+.icon-search {
+  position: absolute;
+  left: 15px;
+  top: 14px;
+}
+.icon-close {
+  position: absolute;
+  right: 52px;
+  top: 13px;
+}
+.search-input::placeholder {
+  color: #ffe5d1;
 }
 </style>

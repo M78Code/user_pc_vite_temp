@@ -54,7 +54,7 @@
                     >{{ opt.osn }}</span
                   >
                   <!-- 模板4 -->
-                  <template v-if="[4, 6].includes(item.hpt)&&sun_ol(item.hl[0].ol, item).length>0">
+                  <template v-if="item.hpid==103||[4, 6].includes(item.hpt)&&sun_ol(item.hl[0].ol, item).length>0">
                     <div class="temp-simple">
                       <div
                         v-for="ol in sun_ol(item.hl[0].ol, item)"
@@ -105,7 +105,7 @@
             </div>
             <!-- 公共模板 -->
             <common-template
-              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt)"
+              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt)&&item.hpid!=103"
               :match_info="item"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
@@ -337,6 +337,7 @@ onMounted(() => {});
 
 .temp-simple {
   margin-left: -1px;
+  border-top: 1px solid var(--q-gb-bd-c-2);
   background: var(--q-gb-bg-c-4);
 }
 

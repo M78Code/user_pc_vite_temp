@@ -21,18 +21,23 @@
                             <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
                         </div>
                     </div>
+                    <!-- 绿升icon -->
+                    <img class="hps_img" src="/ouzhou-h5/image/list/down.png" alt="" v-if="items.red_green == 'red_down'">
+                    <!-- 红降icon -->
+                    <img class="hps_img" src="/ouzhou-h5/image/list/up.png" alt="" v-else>
+
                     <!--红色箭头-->
-                      <div class="top" style="display:none">
+                      <!-- <div class="top" style="display:none">
                         <div class="jiantou one"></div>
                         <div class="jiantou two"></div>
                         <div class="jiantou three"></div>
-                      </div>
+                      </div> -->
                       <!--绿色箭头-->
-                      <div class="top" style="display:none">
+                      <!-- <div class="top" style="display:none">
                         <div class="jiantou onegreen"></div>
                         <div class="jiantou twogreen"></div>
                         <div class="jiantou threegreen"></div>
-                      </div>
+                      </div> -->
                   </div>
               </div>
           </div>
@@ -58,6 +63,12 @@
   </script>
   
   <style lang="scss" scoped>
+  .hps_img{
+    width: 9px;
+    height: 18px;
+    margin-top: 6px;
+    transform: rotate(180deg);
+  }
   .jiantou{
     width: 0;
     height: 0;

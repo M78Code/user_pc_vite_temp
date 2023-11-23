@@ -6,30 +6,31 @@
 <template>
   <div class="matches_page">
     {{ console.log(featured_matches) }}
-    <div class="item" v-for="item, index in featured_matches" :key="index" :style="{backgroundImage: `url(${get_amtch_bg_image(item.csid)})`}"
-      @click="toDetails(item)"
-      >
-      <!-- 标题 -->
-      <div class="title">
-        <span class="name">{{ item.tn }}</span>
-        <!-- <span class="time"> {{list.course}} {{ list.mstValue }} <span>{{ item.mstValueTime }}</span> </span> -->
-      </div>
-      <!-- 赛事名称 -->
-      <div class="game-name">
-        <div> <span>{{ item.mhn }}</span> <span class="span">{{ item.home_score }}</span> </div>
-        <div> <span>{{ item.man }}</span> <span class="span">{{ item.away_score }}</span> </div>
+    <div class="item" v-for="item, index in featured_matches" :key="index" :style="{backgroundImage: `url(${get_amtch_bg_image(item.csid)})`}">
+      <div class="content" @click="toDetails(item)">
+        <!-- 标题 -->
+        <div class="title">
+          <span class="name">{{ item.tn }}</span>
+          <!-- <span class="time"> {{list.course}} {{ list.mstValue }} <span>{{ item.mstValueTime }}</span> </span> -->
+        </div>
+        <!-- 赛事名称 -->
+        <div class="game-name">
+          <div> <span>{{ item.mhn }}</span> <span class="span">{{ item.home_score }}</span> </div>
+          <div> <span>{{ item.man }}</span> <span class="span">{{ item.away_score }}</span> </div>
+        </div>
       </div>
       <template v-if="item">
-        <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false"  />
+        <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" :hps="get_item_hps(item)"  />
       </template>
     </div>
   </div>
 </template>
  
 <script setup>
+import lodash from 'lodash'
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
-
 import { football_bg, basketball_bg, volleyball_bg, tennis_bg, table_tennis_bg, badminton_bg, baseball_bg } from 'src/base-h5/core/utils/local-image.js'
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 /** @type { { featured_matches:Array<TYPES.MatchDetail> } } */
@@ -65,6 +66,18 @@ const matchBgImage = [{
   value: '6',
   image: football_bg,
 }]
+
+
+/**
+ * @description 赛事信息
+ */
+const get_item_hps = (item) => {
+  const hpsData = lodash.get(item, 'hpsData', [])
+  const length = lodash.get(hpsData, 'length', 0)
+  if (length < 1) return []
+  const hps = lodash.get(hpsData, '[0].hps', [])
+  return hps
+}
 
 const get_amtch_bg_image = (csid) => {
   const item = matchBgImage.find(t => t.value == csid)

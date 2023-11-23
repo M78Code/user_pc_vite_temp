@@ -19,10 +19,10 @@ declare namespace MITT {
     emitters_off: () => void
   }
   /** 兼容EMIT_REFRESH_DETAILS事件param的参数改动. 服务于原先代码 */
-  interface Refresh {
-    refresh: boolean
+  interface refresh {
+    /** 旧事件中携带的参数:是否刷新 */refresh: boolean
   }
   /** EMIT_REFRESH_DETAILS 事件的回调函数签名 */
-  type RefreshDetailsCallback = (param: K.mid | K.csid | K.tid | Refresh) => void
+  type RefreshDetailsCallback = (param: K.mid | K.csid | K.tid | refresh) => void
 }
 

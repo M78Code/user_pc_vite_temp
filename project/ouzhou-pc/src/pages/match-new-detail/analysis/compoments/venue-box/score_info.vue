@@ -36,7 +36,7 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span :class="[ `stage-${detail_info.mmp}`,'table-name']">{{ props.row.name }}</span>
+            <span class="table-name">{{ props.row.name }}</span>
           </q-td>
           <q-td key="q1" :props="props">
             <span :class="[detail_info?.course === 'Q1' ? 'heightLight' : '']">{{ props.row.q1 }}</span>
@@ -109,7 +109,6 @@ const columns = ref([]);
 //   足球篮球
 const get_base_data = (val) => {
   const detail_info = props.detail_info;
-  console.log("更新")
   const list = [
     {name: detail_info["mhn"], key: "home" },
     { name: detail_info["man"], key: "away" },
@@ -242,16 +241,10 @@ const format_msc = (detials) => {
   mmp = parseInt(is_sinuoke ? mct : mmp);
   for (var k in dict) {
     if (!msc[dict[k]] && k <= mft && is_sinuoke) {
-      msc[dict[k]] = {
-        home: "",
-        away: "",
-      };
+      msc[dict[k]] = { home: "", away: "" };
     }
     if (k == mmp && !msc[dict[k]]) {
-      msc[dict[k]] = {
-        home: 0,
-        away: 0,
-      };
+      msc[dict[k]] = { home: 0, away: 0 };
     }
   }
 
@@ -274,10 +267,7 @@ const format_msc = (detials) => {
       num_title.push(i + 1);
       // 补全比分和总盘数|总局数的列数
       if (both_data.length - 1 < i) {
-        both_data.push({
-          home: "",
-          away: "",
-        });
+        both_data.push({ home: "", away: "" });
       }
     }
   }

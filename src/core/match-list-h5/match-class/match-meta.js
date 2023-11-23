@@ -413,7 +413,7 @@ class MatchMeta {
       euid: euid,
       showem: 1, // 新增的参数
     })
-    if (+res.code !== 200) return
+    if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
@@ -454,11 +454,11 @@ class MatchMeta {
       ...params,
       md
      })
-    if (+res.code !== 200) return
+    if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
-    if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data()
+    if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data(list)
     this.handler_match_list_data({ list: list, is_classify })
   }
 
@@ -477,7 +477,7 @@ class MatchMeta {
       cuid: UserCtr.get_uid(),
     }
     api_match.post_fetch_match_list(params).then((res) => {
-      if (+res.code !== 200) return
+      if (+res.code !== 200) return this.set_page_match_empty_status(true);
       const list = lodash.get(res, 'data', [])
       this.handler_match_list_data({ list: list })
     })
@@ -510,10 +510,21 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_hots () {
-    const res = await api_home.hot_ulike_recommendation({ 
-      isHot: 1,
-      cuid: UserCtr.get_uid()
-      })
+    // const res = await api_home.hot_ulike_recommendation({ 
+    //   isHot: 1,
+    //   cuid: UserCtr.get_uid()
+    //   })
+    // return this.get_ouzhou_home_hots_data(res)
+    const params = {
+      euid: "30199",
+      sort: 1,
+      apiType: 1,
+      orpt: -1,
+      csid:'1',
+      cuid: UserCtr.get_uid(),
+    }
+    const res = await api_match.post_fetch_match_list(params)
+    if (+res.code !== 200) return
     return this.get_ouzhou_home_hots_data(res)
   }
   
@@ -551,21 +562,6 @@ class MatchMeta {
   }
 
   /**
-   * @description 获取欧洲版联赛数量统计
-   */
-  async get_ouzhou_leagues_data (date) {
-    const res = await api_match_list.get_leagues_list({
-      sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
-      // sportId: 1,
-      selectionHour: date
-    })
-    MatchCollect.get_collect_match_data()
-    const list = lodash.get(res, 'data', [])
-    if (!list) return
-    return list
-  }
-
-  /**
    * @description 获取欧洲版联赛详细比赛
    */
   async get_ouzhou_leagues_list_data (tid) {
@@ -575,9 +571,9 @@ class MatchMeta {
       tid: tid
     })
     // console.log('get_ouzhou_leagues_list_data', res)
-    MatchCollect.get_collect_match_data()
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res.data, 'data', [])
+    MatchCollect.get_collect_match_data(list)
     this.handler_match_list_data({ list: list, is_virtual: false })
   }
 
@@ -647,9 +643,10 @@ class MatchMeta {
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
-    MatchCollect.get_collect_match_data()
+    
     if (list.length > 0) {
       this.handler_match_list_data({ list: list, is_virtual: false, is_collect: true })
+      MatchCollect.get_collect_match_data(list)
       // 该赛事是否收藏
       list.forEach((t) => {
         MatchCollect.set_match_collect_state(t, true)
@@ -740,7 +737,7 @@ class MatchMeta {
     if (+res.code !== 200) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
-    if (length < 1) return
+    if (length < 1) return 
 
     const target_list = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
 
@@ -905,6 +902,8 @@ class MatchMeta {
     // 欧洲版首页 五大联赛 当前渲染的 mids
     this.match_mids = match_datas.map(t =>  t.mid)
 
+    console.log(111111)
+
     // 重置元数据计算流程
     MatchResponsive.set_is_compute_origin(false)
     // 不获取赔率
@@ -1007,8 +1006,6 @@ class MatchMeta {
    */
   handle_update_match_info(config) {
     let { list = [], type = '',  warehouse = MatchDataBaseH5 } = config
-
-    console.log('arr_data:', list)
 
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {

@@ -65,7 +65,7 @@ const old_ov = ref(0)
 
 const is_show_title = computed(() => {
   const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${props.csid}`, '1')
-  return hpid != 1
+  return hpid != 1 && !props.show_hpn
 })
 
 const is_active = computed(() => {
@@ -114,7 +114,6 @@ const get_icon = (type) => {
 }
 
 const set_old_submit = () => {
-  console.log(props.odd_item)
   const ol = props.odd_item
   if (is_lock.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
@@ -163,7 +162,8 @@ onUnmounted(() => {
     }
     .hpn{
       position: relative;
-      top: 1px;
+      top: 0px;
+      color: #fff;
     }
     .odd.up{
       color: #fff;

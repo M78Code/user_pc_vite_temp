@@ -33,6 +33,9 @@ export const details_main = (router, route) => {
   const header_fix = ref(null);
   const fixedHeight = ref(null);
   const MatchDataWarehouseInstance = ref(MatchDataWarehouse_H5_Detail_Common);
+  /** @type {Ref<Boolean>} */
+  const allCloseState = ref(void 0) // 值为undefined 则隐藏一键展开/收起
+  allCloseState.value = false
 
   /** @type {Promise<any>} 用于控制detail_init加载顺序的Promise */
   let loadingQueue;
@@ -264,7 +267,7 @@ export const details_main = (router, route) => {
    * @param {*} val  mid参数
    * @return {*}
    */
-  const update_data = (val) => {
+  function update_data(val){
     if (!val) return;
     match_detail.value = getMidInfo(val);
     console.log(match_detail.value, "match_detail.value");
@@ -482,7 +485,7 @@ export const details_main = (router, route) => {
       // 赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
       else {
         // ms变更时才调用
-        if (_new != _old ) {
+        if (_new != _old && _old) {
           // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
           detail_init()
         }
@@ -586,5 +589,6 @@ export const details_main = (router, route) => {
     touchend,
     touchstart,
     detail_tabs_change,
+    allCloseState,
   };
 };

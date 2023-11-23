@@ -31,18 +31,22 @@
                         </div>
                         <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}</div>
                       </div>
+                      <!-- 绿升icon -->
+                      <img class="hps_img" src="/ouzhou-h5/image/list/up.png" alt="" v-if="item.red_green == 'red_up'">
+                      <!-- 红降icon -->
+                      <img class="hps_img" src="/ouzhou-h5/image/list/down.png" alt="" v-else>
                       <!--红色箭头-->
-                      <div class="top" v-if="item.red_green == 'red_down'">
+                      <!-- <div class="top" v-if="item.red_green == 'red_down'">
                         <div class="jiantou one"></div>
                         <div class="jiantou two"></div>
                         <div class="jiantou three"></div>
-                      </div>
+                      </div> -->
                       <!--绿色箭头-->
-                      <div class="top" v-else>
+                      <!-- <div class="top" v-else>
                         <div class="jiantou onegreen"></div>
                         <div class="jiantou twogreen"></div>
                         <div class="jiantou threegreen"></div>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
               </div>
@@ -50,8 +54,8 @@
       </div>
      
       <div class="total">
-        <div>{{ i18n_t("common.maxn_amount_val") }}<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
-        <div>{{ i18n_t("bet_record.total_v") }}<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
+        <div>{{ i18n_t("bet.total_win2") }}<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
+        <div>{{ i18n_t("bet.bet_val") }}<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
       </div>
       </div>
     </div>
@@ -70,6 +74,12 @@
   </script>
   
   <style lang="scss" scoped>
+  .hps_img{
+    width: 9px;
+    height: 18px;
+    margin-top: 6px;
+    transform: rotate(180deg);
+  }
   .jiantou{
     width: 0;
     height: 0;
@@ -107,7 +117,7 @@
     margin-left: 4px;
   }
   .red-color{
-    color: var(--q-gb-bd-c-8) !important;
+    color: var(--q-gb-t-c-17) !important;
   }
   .red-nei{
     background: var(--q-gb-bd-c-8) !important;
@@ -116,7 +126,7 @@
      border: 1px solid var(--q-gb-bd-c-8) !important;
   }
   .green-color{
-    color: var(--q-gb-t-c-2) !important;
+    color: var(--q-gb-t-c-16) !important;
   }
   .green{
     border: 1px solid var(--q-gb-t-c-16) !important;

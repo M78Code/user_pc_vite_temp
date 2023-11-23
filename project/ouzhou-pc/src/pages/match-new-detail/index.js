@@ -2,7 +2,7 @@
  * @Author: cooper cooper@123.com
  * @Date: 2023-07-09 16:21:30
  * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-22 17:33:50
+ * @LastEditTime: 2023-11-22 19:07:56
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
  * @Description: 详情页相关接口数据处理
  */
@@ -68,6 +68,7 @@ export function usedetailData(route) {
 
   // 监听分类切换数据
   watch(current_key, (val) => {
+    if(!val) return
     get_match_detail(val);
   });
   // 监听分类切换数据
@@ -86,9 +87,16 @@ export function usedetailData(route) {
     const plays = category_list.value.find(
       (item) => item.orderNo == value
     ).plays;
-    if (detail_list.value.length > 0) {
+    if (detail_list.value?.length > 0) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
+        if (i.hpid==103) {  //hpid103处理
+          i.title = [
+            {otd:1},
+            {otd:0},
+            {otd:2},
+          ]
+        }
       }
     }
     let list = all_list.value.filter((item) =>
@@ -105,7 +113,13 @@ export function usedetailData(route) {
       MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid),
       list || []
     );
-    detail_list.value = lodash_.get(getMidInfo(route.params.mid), "odds_info");
+    detail_list.value = lodash_.get(getMidInfo(route.params.mid), "odds_info") || []
+
+    console.log(1111111111,detail_list.value)
+
+    
+
+
 
     show_close_thehand.value = list.length == 0;
 
@@ -116,6 +130,7 @@ export function usedetailData(route) {
 
   const get_all_hl_item = () => {
     all_hl_item.value = [];
+    if(!detail_list.value) return
     for (const item of detail_list.value) {
       if (item.hl.length > 0) {
         for (const opt of item.hl) {
@@ -134,8 +149,8 @@ export function usedetailData(route) {
   const init = async () => {
     // all_list_toggle = {}
     detail_loading.value = true;
-    await get_category();
     get_detail();
+    await get_category();
   };
   /**
    * 获取赛事详情数据
@@ -269,6 +284,7 @@ export function usedetailData(route) {
     if (!val) return;
     detail_info.value = getMidInfo(val);
     all_list.value = lodash_.get(getMidInfo(val), "odds_info");
+   
   };
   /**
    * @description: 从仓库获取获取赛事信息

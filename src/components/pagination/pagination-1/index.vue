@@ -31,7 +31,7 @@
       </template>
     </div>
     <div class="pagination-wrap" :style="results_table">
-    
+      <q-select v-model="perPageNum" :options="options.options_1" label="Standard" />
       <q-pagination
         v-model="page"
         color="#788299"
@@ -43,8 +43,10 @@
         ellipses
         icon-prev="icon-triangle2"
         icon-next="icon-triangle3"
-      />
+      /> 
+      
       <div class="pagination-select">
+       
         <q-select
           class="select"
           :class="{ 'select-page-input': icon_name == 'icon-triangle' }"
@@ -67,7 +69,7 @@
           </template>
         </q-select>
         <span>
-          {{ i18n_t('common.page_') }} {{perPageNum}}
+          {{ i18n_t('common.page_') }}
           <!-- 条/页 -->
         </span>
       </div>
@@ -97,14 +99,19 @@
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
 import { useGetValue } from "./use-value.js";
-import { watch } from "vue";
+import { reactive, watch } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import { format_balance } from "src/core/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { IconWapper } from "src/components/icon/index.js";
+import {SelectWrapper} from "src/base-pc/components/match-results/select/index.js";
 
 useRegistPropsHelper(component_symbol, need_register_props);
-
+const options = reactive({
+  options_1 :[
+        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+      ]
+})
 const props = defineProps({
   // ...useProps,
   icon_name: {
