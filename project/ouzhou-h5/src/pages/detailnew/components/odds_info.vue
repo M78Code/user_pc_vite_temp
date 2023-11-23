@@ -169,7 +169,7 @@ onMounted(() => {
 .match-detail-odds {
   // background: #F1F1F1;
   min-height: calc(100vh - 150px);
-  border-bottom: 40px solid #F1F1F1;
+  // border-bottom: 40px solid #F1F1F1;
   .no-data {
     width: 140px;
     height: 140px;

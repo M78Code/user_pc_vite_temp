@@ -58,13 +58,13 @@ const jump_page = (item) => {
 
 <style lang="scss" scoped>
 .footer_menu {
+  // position: fixed;
   position: relative;
   display: flex;
   align-items: center;
   text-align: center;
   height: 56px;
   box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
-  position: fixed;
   bottom: 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 1);

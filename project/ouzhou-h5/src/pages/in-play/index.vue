@@ -63,7 +63,9 @@ const changeMenu = (mi) =>{
 </script>
 <style lang="scss" scoped>
   .match_page{
-    height: calc(100% - 76px - 97px);
+    // height: calc(100% - 76px - 97px);
+    // height: calc(100% - 116px - 54px);
+    height: 100%;
     overflow-y: hidden;
     position: relative;
     .match-list-container{
