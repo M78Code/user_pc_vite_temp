@@ -12,7 +12,7 @@
 						{{ item.label }}
 						<!-- 点击联赛后出现的时间筛选 -->
 						<div 
-							v-if="MenuData.mid_menu_result.filter_tab === 4002 && item.value === 4002"
+							v-if="MenuData.is_leagues() && item.value === 4002"
 							class="leagues_filrer" 
 							@click.stop="set_show_leagues"
 						>
@@ -31,6 +31,7 @@
 		</div>
 		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_collect || MenuData.is_top_events()"  />
 		<MatchesDateTab v-if="MenuData.is_left_today() || MenuData.is_left_zaopan()" />
+		<MatchesLeaguesTab v-if="MenuData.is_leagues()"  />
 	</div>
 </template>
 
@@ -40,6 +41,7 @@ import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
+import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
 import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 
