@@ -11,7 +11,8 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap?items.handicap:items.home}}</div> <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap?items.handicap:items.home}}</div> 
+                      <span class="text-one-span">{{ items.marketValue }}</span></div>
                       <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
                     </div>
@@ -64,9 +65,9 @@
   
   <style lang="scss" scoped>
   .hps_img{
-    width: 9px;
-    height: 18px;
-    margin-top: 6px;
+    width: .08rem;
+    height: .13rem;
+    margin-top: .06rem;
     transform: rotate(180deg);
   }
   .jiantou{
@@ -116,33 +117,34 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-1);
     padding-left: 0.08rem;
   }
   .nonebox4-content-left-content-text-three{
-    font-size: 0.13rem;
+    font-size: 0.16rem;
     color: var(--q-gb-t-c-3);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-15);
-    font-size: 0.13rem;
+    font-size: 0.16rem;
+    margin: .08rem 0;
+    font-weight: 500;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-3);
+    color: var(--q-gb-bg-c-4);
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
     color: var(--q-gb-t-c-4);
-    font-size: 0.15rem;
-    font-weight: 600;
+    font-size: 0.18rem;
+    font-weight: 500;
     display: flex;
   }
   .nonebox4-content-left-info{
     display: flex;
-    justify-content: space-between;
     width: calc(100% - 0.25rem);
   }
   .nonebox4-content{
@@ -163,11 +165,10 @@
   }
   .nonebox4-content-left-content-xian{
       color: var(--q-gb-t-c-4);
-      font-size: 0.12rem;
-      width: 0.1rem;
-      margin-right: 0.15rem;
-      margin-top: 0.06rem;
+      margin-right: 0.16rem;
+      margin-top: 0.08rem;
   }
+  
   .nonebox4-content-left-content-text{
       line-height: 0.25rem;
       margin-top: 0.02rem;
@@ -175,9 +176,10 @@
   }
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
-      font-weight: bold;
+      font-weight: 700;
       color: var(--q-gb-t-c-1);
       padding: 0 0.15rem;
+      padding-right: 0.1rem;
   }
   .nonebox4-content-right{
     display: flex;

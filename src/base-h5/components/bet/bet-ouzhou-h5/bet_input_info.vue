@@ -136,16 +136,20 @@ const set_ref_data_bet_money = () => {
     .info_right{
         width: 152px;
         height: 42px;
-        box-shadow: 0px 1px 4px 0px #FF70001A;
-        border: 0.5px solid var(--q-gb-bd-c-12);
+        box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
+        border: 1px solid var(--q-gb-bg-c-1);
         padding-left: 6px;
-        background: var(--q-gb-t-c-2);
+        background: #FFF6F0;
         caret-color: var(--q-gb-bd-c-1);
         font-family: DIN;
         font-size: 20px;
         font-weight: 500;
         display: flex;
         align-items: center;
+        border-radius: 2px;
+        .content-b {
+            display: flex;
+        }
         .input_place{
             color:  #8A8986;
             font-size: 12px;
@@ -161,6 +165,16 @@ const set_ref_data_bet_money = () => {
             //color:#1A1A1A ;
             color: var(--q-gb-t-c-4);
             
+        }
+        .money-span {
+            width: 0.02rem;
+            height: 0.16rem;
+            display: flex;
+            background: var(--q-gb-bg-c-1);
+            margin: 2px 5px 0 0;
+            &.money-span3{
+                background: transparent;
+            }
         }
     }
     .money_input_cursor{
@@ -180,18 +194,19 @@ const set_ref_data_bet_money = () => {
     align-items: center;
 }
 .size_14{
-    font-size: 0.11rem;
+    font-size: 0.14rem;
     font-weight: 400;
-    color: var(--q-gb-t-c-4);
+    color: var(--q-gb-t-c-3);
 }
 .margin_left_4{
     margin-left: 4px;
     font-family: "DIN";
 }
 .size_16{
-    font-size: 0.14rem;
-    font-weight: 700;
+    font-size: 0.16rem;
+    font-weight: 500;
     color: var(--q-gb-t-c-4);
+    margin-bottom: .08rem;
 }
 .color_ff700{
     color: var(--q-gb-t-c-1);
@@ -209,5 +224,8 @@ const set_ref_data_bet_money = () => {
       border-left: 2px solid var(--q-gb-bd-c-1);
       
     }
+  }
+  .limit-txt {
+    color: var(--q-gb-t-c-3);
   }
 </style>

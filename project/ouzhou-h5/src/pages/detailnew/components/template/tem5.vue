@@ -48,7 +48,7 @@
         >
           <template v-if="value[0].os == 1">
             <span class="o_hv">{{ value[0].hv || key }}</span>
-            <span>{{ get_oddv(value[0]?.ov / 100000) }}</span>
+            <span>{{compute_value_by_cur_odd_type(value[0]?.ov,'','',MatchDetailCalss.params.sportId)}}</span>
             <olStatus :item_ol_data="value[0]" />
           </template>
           <span v-else
@@ -68,7 +68,7 @@
           >
             <template v-if="o.os == 1">
               <span class="o_hv">{{ o.on || key }}</span>
-              <span>{{ get_oddv(o?.ov / 100000) }}</span>
+              <span>{{compute_value_by_cur_odd_type(o.ov,'','',MatchDetailCalss.params.sportId)}}</span>
               <olStatus :item_ol_data="o" />
             </template>
             <span v-else
@@ -90,7 +90,7 @@
         >
           <template v-if="ol.os == 1">
             <span class="ol-on-text">{{ ol.on }}</span>
-            <span class="ol-ov-text">{{ get_oddv(ol.ov / 100000) }}</span>
+            <span class="ol-ov-text">{{compute_value_by_cur_odd_type(ol?.ov,'','',MatchDetailCalss.params.sportId)}}</span>
             <olStatus
               :item_ol_data="ol"
               :active="BetData.bet_oid_list.includes(ol?.oid)"
@@ -110,6 +110,7 @@ import { onMounted, ref, computed } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
 import olStatus from "../ol_status.vue";
+import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
 const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {

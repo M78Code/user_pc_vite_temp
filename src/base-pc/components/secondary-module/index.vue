@@ -97,6 +97,7 @@ function close_page(value) {
   max-width: 1200px !important;
   background: var(--q-gb-t-c-1);
   margin-left: 200px;
+  z-index: 9999 !important;
   .header {
     padding: 10px;
     width: 1200px;
