@@ -42,7 +42,7 @@
 
     <div class="menu-nav-li">
       <ul class="menu-list">
-        <li class="f-s-c" @click="outrights">
+        <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.menu_root == 400 }">
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
