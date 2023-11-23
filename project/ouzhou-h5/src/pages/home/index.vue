@@ -35,7 +35,7 @@
             </template> -->
             <!-- 5大联赛 -->
             <template v-if="five_league_match.length > 0">
-              <HeaderTitle :title="`${i18n_t('ouzhou.match.top_leagues')}`"></HeaderTitle>
+              <HeaderTitle title="Top Leagues"></HeaderTitle>
               <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
             </template>
           </section>
@@ -95,7 +95,7 @@ onMounted(async () => {
   get_ouzhou_home_data()
   set_default_home_hots()
   get_ouzhou_home_hots()
-  // get_five_league_matchs()
+  get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
   // 增加监听接受返回的监听函数
@@ -227,7 +227,9 @@ onUnmounted(() => {
 .home-page{
   height: 100%;
   overflow: hidden;
-  padding-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  // padding-bottom: 56px;
   .header_tabs{
     border-bottom: 2px solid var(--q-gb-bd-c-1);
     :deep(.q-tabs--dense){
@@ -263,20 +265,23 @@ onUnmounted(() => {
     }
   }
   .home_content{
-    height: calc(100% - 106px);
+    flex: 1;
+    height: 0;
     .q-tab-panels{
       height: 100%;
       .q-tab-panel{
         padding: 0;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
         .section-content{
-          height: calc(100% - 0px);
+          height: 100%;
           overflow-y: auto;
           position: relative;
-          padding-bottom: 70px;
         }
         .match-page-section{
-          height: calc(100% - 66px - 54px);
+          height: 0;
+          flex: 1;
           overflow-y: hidden;
           position: relative;
           .match-list-container{

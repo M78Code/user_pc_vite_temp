@@ -45,14 +45,14 @@
         <!-- 滚球标题 -->
         <Match-Main-Title :title="$t('menu.match_playing')" :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
-        <div v-for="card_key in match_list_card_key_arr" :key="()=>Math.random()" 
+        <div v-for="card_key in match_list_card_key_arr" :key="card_key" 
           :class="`card_key_${card_key}`">
-          <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`" />
+          <match-list-card :card_key="card_key" :key="`match-list-car-${card_key}`" />
         </div>
 
         <Match-Main-Title :title="$t('ouzhou.match.top_leagues')" v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
 
-        <div v-for="card_key in five_leagues_card_key_arr" :key="()=>Math.random()" 
+        <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" 
           :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`" />
         </div>
@@ -169,8 +169,9 @@ export default {
       nextTick(() => {
         match_list_card_key_arr.value =
           MatchListCardDataClass.match_list_card_key_arr;
-          five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
-          console.log(five_leagues_card_key_arr.value, 'five_leagues_card_key_arr');
+
+        five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
+      console.log(five_leagues_card_key_arr.value, match_list_card_key_arr.value, 'five_leagues_card_key_arr');
       })
     };
     onMounted(() => {
@@ -193,6 +194,7 @@ export default {
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
       MatchListCardDataClass_match_list_card_key_arr();
+      
     });
     const get_data_info = async (type = 0) => {
       // 判断是不是首页下的 featured 页面

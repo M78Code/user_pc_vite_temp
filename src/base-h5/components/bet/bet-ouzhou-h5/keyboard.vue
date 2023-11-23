@@ -35,7 +35,8 @@
       <div class="key-cell" data-num=".">.</div>
       <div class="key-cell" data-num="0">0</div>
       <div class="key-cell del-key" data-num="x">
-        <span class="icon-delete"></span>
+        <img :src="compute_local_project_file_path('/image/svg/jianpan_del_1.svg')" alt="" data-num="x">
+        <!-- <span class="icon-delete"></span> -->
       </div>
     </div>
   </div>
@@ -47,7 +48,7 @@ import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr, i18n_t } from "src/core/index.js";
+import { UserCtr, compute_local_project_file_path, i18n_t } from "src/core/index.js";
 import lodash_ from 'lodash'
 import userData from "src/core/user-config/user-ctr.js"
 
@@ -289,10 +290,10 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .key-row{
-  border-bottom: 1px solid var(--q-gb-t-c-5);
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
 }
 .key-cell{
-  border-right: 1px solid var(--q-gb-t-c-5);
+  border-right: 1px solid var(--q-gb-bd-c-1);
 }
 .keyboard {
   height: 185px;
@@ -301,7 +302,7 @@ onUnmounted(() => {
   font-weight: 600;
   color: var(--q-gb-bg-c-13);
   font-family: "DIN";
-  border-top: 1px solid var(--q-gb-t-c-5)
+  border-top: 1px solid var(--q-gb-bd-c-1)
 }
 .key-cell {
   flex: 1;
@@ -309,19 +310,17 @@ onUnmounted(() => {
   line-height: 46px;
   text-align: center;
   background: var(--q-bg-c-2);
+  font-size: .22rem;
+  font-weight: 500;
 }
 .key-cell {
   &:first-child { // 左侧第一排MAX的样式
-    background: var(--q-gb-bd-c-1);
+    background: var(--q-gb-bg-c-10);
     color: var(--q-gb-t-c-4);
+    font-size: .2rem;
   }
   &:last-child {
     margin-right: 0;
-  }
-  &.del-key {
-    background: cadetblue #ffffff0D no-repeat center center;
-    opacity: 0.9;
-    color: #B8B8B8;
   }
   &.shadow-show {
     color: #595959!important;

@@ -299,9 +299,8 @@ export default {
     // 玩法
     const get_match_panel = computed(() => {
       const { csid, hps } = ctx.match_of_list
-      // debugger
       const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
-      const plays = sports_play_title[csid]
+      const plays = lodash.get(sports_play_title, `${csid}`, [])
       const length = lodash.get(plays, 'length', 0)
       const play_item = length > 0 && plays.find(t => t.hpid === hpid)
       let target = []
@@ -310,7 +309,7 @@ export default {
         target = play_item.ol
       } else {
         // 切换左侧菜单 则默认第一个
-        target = plays[0].ol
+        target = plays ? plays[0]?.ol : []
       }
       return target
     })
@@ -1132,8 +1131,12 @@ export default {
     }
   }
   :deep(.start-counting-down){
+    max-width: 60px;
     .counting-down-start{
       font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
@@ -1288,6 +1291,9 @@ export default {
     }
 
     .date-time {
+      max-width: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
       color: var(--q-color-com-fs-color-37);
     }

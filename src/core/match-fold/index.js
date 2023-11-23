@@ -93,6 +93,7 @@ class MatchFold {
    * @param { type } 0 全部；1 进行中； 2 未开赛
    */
   set_ball_seed_match_fold (obj, type) {
+    
     // 赛事 mids
     let status = ''
     const csid_key = this.get_fold_key(obj)
@@ -106,7 +107,7 @@ class MatchFold {
     const match_mids = lodash.get(MatchMeta, 'complete_mids', [])
     match_mids.forEach(mid => {
       const match = MatchDataBaseH5.get_quick_mid_obj(mid)
-      if (!match || match.csid !== obj.csid) return
+      if (!match || match.csid != obj.csid) return
       const key = this.get_match_fold_key(match)
       // 全部
       if (!type) return this.set_match_fold(key, { show_card: !status })
