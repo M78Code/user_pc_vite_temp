@@ -19,6 +19,8 @@ class MatchListCardDataClass {
     this.match_list_card_key_arr = [
       // 'card_key'
     ];
+    //五大联赛卡片key列表  不包含赛事卡片
+    this.five_leagues_card_key_arr = [];
     this.match_list_style_info = ref({})
     // 赛种ID到card_key的映射对象
     this.csid_to_card_key_obj = {
@@ -65,13 +67,14 @@ class MatchListCardDataClass {
     };
   }
   set_all_card_obj({
-    all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, csid_to_card_key_obj
+    all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, five_leagues_card_key_arr, csid_to_card_key_obj
   }) {
     // 合并所有卡片样式对象
     lodash.merge(this.all_card_obj, all_card_obj)
     play_to_card_key_arr && (this.play_to_card_key_arr = play_to_card_key_arr)
     no_start_to_card_key_arr && (this.no_start_to_card_key_arr = no_start_to_card_key_arr)
     match_list_card_key_arr && (this.match_list_card_key_arr = match_list_card_key_arr)
+    five_leagues_card_key_arr && (this.five_leagues_card_key_arr = five_leagues_card_key_arr)
     csid_to_card_key_obj && (this.csid_to_card_key_obj = csid_to_card_key_obj)
     this.set_list_version()
   }
