@@ -44,10 +44,11 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
-
+import { ref, computed, onMounted ,onUnmounted,reactive } from "vue";
+import lodash_ from "lodash"
 import { useRoute } from "vue-router";
 import { LayOutMain_pc, UserCtr } from "src/core/index.js";
+import { api_betting } from "src/api/"
 
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
@@ -59,11 +60,16 @@ import secondaryModule from 'src/base-pc/components/secondary-module/index.vue'
 import { BetBoxWapper } from "src/base-pc/components/bet";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
 
 const route = useRoute();
+
+const ref_data = reactive({
+  emit_lsit:{}
+})
 
 // 屏蔽视频移动组件(视频回播功能)
 const show_move_video = computed(() => {
@@ -79,7 +85,33 @@ onMounted(() => {
     show: true,
   }
   BetData.set_bet_box_draggable(obj)
+
+  get_unsettle_tickets_count_config()
+  // 投注成功后获取投注记录数据 24小时内的
+  ref_data.emit_lsit = {
+      emitter_1: useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off,
+  }
 })
+
+// 投注成功后获取投注记录数据 24小时内的
+const get_unsettle_tickets_count_config = () => {
+    let param = {};
+    api_betting.get_unsettle_tickets_count(param).then(res => {
+      let status = lodash_.get(res, "code");
+      if (status == 200) {
+        // 获取24小时内的投注量 
+        let count = lodash_.get(res, "data", 0);
+        BetData.set_bet_record_count(count)
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  };
+
+  onUnmounted(() => {
+    Object.values(ref_data.emit_lsit).map((x) => x());
+})
+
 </script>
 <style lang="scss">
 @import url(./content-layout.scss);

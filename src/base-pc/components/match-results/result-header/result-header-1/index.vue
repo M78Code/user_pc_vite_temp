@@ -157,8 +157,14 @@ import {
 import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
+  current_sport_id:{
+    type: String
+  },
+  timeChanged:{
+    type: Boolean
+  },
   cancel:{
-    type:String
+    type:null
   },
   dateValue:{
     type:Object
@@ -196,6 +202,15 @@ const props = defineProps({
     type: Function,
   },
   isSelectConfirm:{
+    type: Function,
+  },
+  click_popup:{
+    type: Function,
+  },
+  img_mouseleave:{
+    type: Function,
+  },
+  search_hot:{
     type: Function,
   },
   startTimeShow:{
