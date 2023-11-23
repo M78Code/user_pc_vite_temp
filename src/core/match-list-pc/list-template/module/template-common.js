@@ -120,6 +120,7 @@ export const ol_template = {
 //单节15分钟玩法
 export const hps_15_minute = [
   {
+    _hpid: 32,
     ols: [
       {  _hpid: 32, ot: "1", otb: '主胜' },
       {  _hpid: 32, ot: "X", otb: '平局' },
@@ -127,6 +128,7 @@ export const hps_15_minute = [
     ],
   },
   {
+    _hpid: 33,
     ols: [
       {  _hpid: 33, ot: "1" },
       {  _hpid: 33, ot: "2" },
@@ -134,6 +136,7 @@ export const hps_15_minute = [
     ],
   },
   {
+    _hpid: 34,
     ols: [
       {  _hpid: 34, ot: "Over" },
       {  _hpid: 34, ot: "Under" },

@@ -5,6 +5,7 @@
 -->
 
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="odds-title" :style="{ gridTemplateColumns: columnTotal() }">
     <template v-if="match_info.title && match_info.title.length > 0">
       <template v-for="(item, index) in match_info.title" :key="index">
@@ -19,7 +20,7 @@
                    
                     :class="{
                       tem4: true,
-                      'tem4-active': ol.oid == current_ol.oid,
+                      'tem4-active': BetData.bet_oid_list.includes(ol.oid),
                     }"
                     @click="betItemClick(match_info.hl[0], ol)"
                   >
@@ -61,6 +62,7 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import betItem from "./bet-item-list-new-data.vue";

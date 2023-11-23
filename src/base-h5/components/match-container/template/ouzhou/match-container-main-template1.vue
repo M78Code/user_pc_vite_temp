@@ -302,7 +302,8 @@ export default {
       // debugger
       const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
       const plays = sports_play_title[csid]
-      const play_item = plays.find(t => t.hpid === hpid)
+      const length = lodash.get(plays, 'length', 0)
+      const play_item = length > 0 && plays.find(t => t.hpid === hpid)
       let target = []
       if (play_item) {
         match_hpid.value = play_item.hpid
@@ -312,23 +313,6 @@ export default {
         target = plays[0].ol
       }
       return target
-
-      // const hps_item = hps && hps.find(t => t.hpid == hpid)
-      // const ol_length = hpid === '1' ? 3 : 2
-      // const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: ol_length }, () => '{}'))
-      // let ol_data = undefined
-      // if (ol && ol[0] && ol[0].otd) {
-      //   ol.sort((a, b) => a.otd - b.otd)
-      //   ol_data = ol.map(t => {
-      //     if (t.ot === 'Under' || t.ot === 'Over') {
-      //       return t.ot === 'Under' ? i18n_t('analysis_football_matches.small_ball') : i18n_t('analysis_football_matches.big_ball')
-      //     } else {
-      //       return t.ot
-      //     }
-      //   })
-      // }
-      // const result = ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
-      // return result
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {
@@ -348,15 +332,6 @@ export default {
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
       select_play.value = item.hpid
-      // const plays = sports_play_title[csid]
-      // const play_item = plays.find(t => t.hpid === item.hpid)
-      // const ol = play_item.ol
-      // ol.forEach(t => {
-      //   const list = MatchDataBaseH5.get_list_to_obj_key(mid, `${mid}_${item.hpid}_${hn || 1}_${t.ot}`, 'hn')
-      //   console.log(list)
-      // })
-      // match_panel.value = play_item
-      // const odds_data = []
       MatchResponsive.set_match_hpid(item.hpid, csid)
     }
 
