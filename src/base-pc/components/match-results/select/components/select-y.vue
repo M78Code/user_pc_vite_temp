@@ -28,7 +28,7 @@
       <icon-wapper name="icon-search" color="#99A3B1" size="12px" />
     </div>
 
-    <div class="select-content" v-if="isShow">
+    <div class="select-content" v-if="isShow" @mouseleave="show_menu">
       <div class="top-btn">
         <!-- 全选 -->
         <div class="btn-item" @click="checkAll()">
