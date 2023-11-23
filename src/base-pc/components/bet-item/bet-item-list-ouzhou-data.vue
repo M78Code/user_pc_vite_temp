@@ -127,8 +127,6 @@ watch(() => [props.ol_data._hpid, props.ol_data.oid], () => {
 // 监听投注项赔率变化
 watch(() => props.ol_data.ov, (cur, old) => {
   if (cur == old) return
-  // 赔率值处理
-  format_odds(cur, 1);
   // 红升绿降变化
   set_odds_lift(cur, old);
 }, { deep: true })

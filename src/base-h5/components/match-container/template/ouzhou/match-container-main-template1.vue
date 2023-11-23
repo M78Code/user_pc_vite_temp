@@ -1131,8 +1131,12 @@ export default {
     }
   }
   :deep(.start-counting-down){
+    max-width: 60px;
     .counting-down-start{
       font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
@@ -1287,6 +1291,9 @@ export default {
     }
 
     .date-time {
+      max-width: 60px;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
       color: var(--q-color-com-fs-color-37);
     }
