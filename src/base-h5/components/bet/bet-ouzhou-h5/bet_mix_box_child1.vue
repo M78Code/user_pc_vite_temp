@@ -112,9 +112,9 @@
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
     color: var(--q-gb-t-c-3);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-15);

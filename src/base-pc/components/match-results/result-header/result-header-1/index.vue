@@ -117,10 +117,8 @@
       </div>
       <div class="match-resultstips-wrap">
         <!-- 提示语 -->
-        <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
-          <template>
-            <div>{{ i18n_t("results.tips") }}</div>
-          </template>
+          <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
+            <div class="aaa">{{ i18n_t("results.tips") }}</div>
         </q-tooltip>
         <div
           class="match-resultstips-icon relative-position"

@@ -149,6 +149,7 @@ const set_ref_data_bet_money = () => {
         border-radius: 2px;
         .content-b {
             display: flex;
+            align-items: center;
         }
         .input_place{
             color:  #8A8986;
@@ -171,7 +172,7 @@ const set_ref_data_bet_money = () => {
             height: 0.16rem;
             display: flex;
             background: var(--q-gb-bg-c-1);
-            margin: 2px 5px 0 0;
+            margin-right: 5px;
             &.money-span3{
                 background: transparent;
             }
@@ -224,5 +225,8 @@ const set_ref_data_bet_money = () => {
       border-left: 2px solid var(--q-gb-bd-c-1);
       
     }
+  }
+  .limit-txt {
+    color: var(--q-gb-t-c-3);
   }
 </style>

@@ -50,7 +50,7 @@ class MenuData {
     this.menu_csid = 0
     //----------------------------------- 常规球种 --------------------------------------//
     // this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
-    this.conventionalType = 103; //默认300  一期只上足球篮球
+    this.conventionalType = [101,102,105,190,191,400]; 
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
@@ -62,6 +62,7 @@ class MenuData {
     // this.menu_match_date_params= {}
     this.menu_list = []; //常规球种 101...
     this.top_events_list = []; //热门球种
+    this.champion_list = []; //冠军球种
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
 
@@ -98,13 +99,16 @@ class MenuData {
    */
   set_init_menu_list(arr){
     let menu_list = [],
-        top_events_list = []
+        top_events_list = [],
+        champion_list = [];
     let data = arr || BaseData.mew_menu_list_res;
     const session_info = SessionStorage.get("menu-h5");
     //常规球种
-    menu_list =  data.filter((item)=>{return +item.mi<this.conventionalType});
+    menu_list =  data.filter((item)=>{return this.conventionalType.includes(+item.mi)});
     //热门球种
     top_events_list =  data.filter((item)=>{return item.mi==5000})?.[0].sl || [];
+    //冠军
+    champion_list =  data.filter((item)=>{return item.mi==400})?.[0].sl || [];
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {
@@ -131,7 +135,7 @@ class MenuData {
     // });
     //正常取热门球种 3
     top_events_list = top_events_list
-    .filter((n)=>{return +n.mi-4900 < this.conventionalType})
+    .filter((n)=>{return this.conventionalType.includes(+n.mi-4900)})
     .map((item)=>{
       return {
         ...item,
@@ -140,8 +144,18 @@ class MenuData {
         csid:`${+item.mi-5000}`
       }
     });
+    champion_list = champion_list
+    .filter((n)=>{return this.conventionalType.includes(+n.mi-300)})
+    .map((item)=>{
+      return {
+        ...item,
+        mi:`${+item.mi-300}`,
+        defaultMi:item.mi
+      }
+    });
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
+    this.champion_list = champion_list;
     if(session_info){//取session球种id
       this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
       this.menu_mi.value = session_info.menu_mi;
@@ -205,8 +219,14 @@ class MenuData {
    */
   set_menu_mi(mi){
     this.menu_mi.value = mi;
-    this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
-    this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
+    if(this.menu_type.value == 400){
+      this.current_lv_2_menu_i = +mi+300;
+      this.current_lv_2_menu_mi.value = +mi+300;
+    }else{
+      this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
+      this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
+    }
+   
     SessionStorage.set("menu-h5",{
       menu_mi:mi
     });
