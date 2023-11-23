@@ -134,14 +134,13 @@ function match_list_all_params() {
             // lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
         }
     } else if (menu_root == 400) {
-        guanjun = "guanjun"
         // 冠军
         lv2_mi_info = {
             selectionHour: null,
-            ...lv2_mi_info,
-            apiType,
-            "sportId": csid,
+            "sportId": current_ball_type,
             "outrightMatches": 1,
+            sort: 1,
+            tid: '',
             "orpt": 18,
         }
     } else if (menu_root == 2000) {
