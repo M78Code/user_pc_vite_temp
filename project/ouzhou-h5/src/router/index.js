@@ -20,6 +20,14 @@ const router = createRouter({
           },
         },
         {
+          path: "/champion",
+          name: "champion",
+          component: () => import("../pages/champion/index.vue"),
+          meta: {
+            keepAlive: true, // 需要缓存
+          },
+        },
+        {
           path: "/match",
           name: "matchList",
           component: () => import("../pages/match-page/index.vue"),
