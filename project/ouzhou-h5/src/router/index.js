@@ -169,7 +169,7 @@ const router = createRouter({
  * 路由切换清除默认球种
  */
 router.beforeEach((to, from, next) => {
-  if(to.name !== from.name){
+  if(to.name !== from.name && to.name !== "category"){
     SessionStorage.remove("nemu-h5");
     MenuData.clear_menu_id();
   }
