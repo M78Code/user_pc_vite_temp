@@ -43,12 +43,20 @@
         <!-- </template> -->
 
         <!-- 滚球标题 -->
-        <In-Play :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
+        <Match-Main-Title :title="$t('menu.match_playing')" :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
         <div v-for="card_key in match_list_card_key_arr" :key="()=>Math.random()" 
           :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`" />
         </div>
+
+        <Match-Main-Title :title="$t('ouzhou.match.top_leagues')" v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
+
+        <div v-for="card_key in five_leagues_card_key_arr" :key="()=>Math.random()" 
+          :class="`card_key_${card_key}`">
+          <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`" />
+        </div>
+
         <template v-slot:after>
           <div style="height: 15px"></div>
           <div class="pager-wrap row justify-end">
@@ -101,7 +109,7 @@ import {
   GlobalAccessConfig,
 } from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
-import InPlay from "src/base-pc/components/match-list/match_in_play.vue";
+import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";
 import FeaturedMatches from "src/base-pc/components/match-list/featured_matches/featured_matches_card.vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
@@ -140,7 +148,7 @@ export default {
     MatchCardList15Mins,
     MatchesHeader,
     ConmingSoon,
-    InPlay
+    MatchMainTitle
   },
   setup() {
     // 15分钟赛事数据
@@ -162,7 +170,7 @@ export default {
         match_list_card_key_arr.value =
           MatchListCardDataClass.match_list_card_key_arr;
           five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
-          console.log(five_leagues_card_key_arr.value, 'abdd');
+          console.log(five_leagues_card_key_arr.value, 'five_leagues_card_key_arr');
       })
     };
     onMounted(() => {
@@ -204,6 +212,7 @@ export default {
       on_refresh,
       matches_15mins_list,
       match_list_card_key_arr,
+      five_leagues_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass,
       load_data_state,
