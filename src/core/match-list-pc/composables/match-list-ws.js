@@ -61,7 +61,7 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 			delete ws_keys_map[MatchListData.name_code]
 			mids = null;
 			remove_fun && remove_fun()
-			MatchListData.clear()//清除数仓数据
+			// MatchListData.clear()//清除数仓数据
 		}
 	}
 	return ws_keys_map[MatchListData.name_code] 
