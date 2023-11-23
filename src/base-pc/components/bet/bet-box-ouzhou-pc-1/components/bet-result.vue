@@ -32,14 +32,14 @@
                     </div>
                 </div>
             </div>
-
+            {{BetViewDataClass.bet_order_status}}-
             <div class="bet-delete bet-icon">
                 <!-- 投注确认中 -->
-                <icon-wapper v-if="BetViewDataClass.bet_order_status == 2" name="icon-sports_snooker" size="18px" color="#FFF" />
+                <icon-wapper v-if="BetViewDataClass.bet_order_status == 2" name="icon-sports_snooker" size="12px" color="#FF7000" />
                 <!-- 投注失败 -->
-                <icon-wapper v-if="BetViewDataClass.bet_order_status == 4" name="icon-failure" size="18px" color="#FFF" />
+                <icon-wapper v-if="BetViewDataClass.bet_order_status == 4" name="icon-failure" size="12px" color="#FF4646" />
                 <!-- 投注成功 -->
-                <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" name="icon-success" size="18px" color="#FFF" />
+                <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" name="icon-success" size="12px" color="#4FC140" />
             </div>
            
         </div>

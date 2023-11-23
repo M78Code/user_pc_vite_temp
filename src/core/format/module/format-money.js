@@ -54,6 +54,33 @@ export const format_money2 = function (num) {
   }
 };
 /**
+ *@description 将金额转化为千位符格式保留2位小数
+ *@param {Number} num 待格式化的金额
+ *@return {String} 转化后的金额 比如 '64,464.95'
+ */
+ export const format_money = function (num) {
+  try {
+    if (num && num < 0) {
+      num = 0;
+    }
+    num = (num || 0).toString();
+    let result = "";
+    let [num1, num2 = ""] = num.split(".");
+    // num2 = num2.padEnd(2, "0");
+    while (num1.length > 3) {
+      result = "," + num1.slice(-3) + result;
+      num1 = num1.slice(0, num1.length - 3);
+    }
+    if (num1) {
+      num1 = num1 + result;
+    }
+    return num1;
+  } catch (error) {
+    console.error(error);
+    return "";
+  }
+};
+/**
  *@description 将金额转化为千位符格式 小数位不做处理
  *@param {Number} num 待格式化的金额
  *@return {String} 转化后的金额 比如 '64,464.95' '1,005'
