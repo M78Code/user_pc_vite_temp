@@ -91,7 +91,7 @@ const goBackToLeague = () => {
 /* ************** 赛事列表包装器 **************** -S */
 .match-list-page {
   width: 100%;
-  height: calc(100% - 2.1rem);
+  height: 100%;
   overflow-y: hidden;
   position: relative;
 
