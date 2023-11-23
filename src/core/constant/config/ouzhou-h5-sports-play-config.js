@@ -294,7 +294,8 @@ export const sports_play_data = {
 }
 
 export const sports_play_title = {
-  "1" : [ 
+  // 足球
+  "1": [  
     {
       hpid: '1',
       label: '全场独赢',
@@ -321,7 +322,8 @@ export const sports_play_title = {
       ]
     },
   ],
-  "2" : [
+  // 篮球
+  "2": [
     {
       hpid: '37',
       label: '全场独赢',
@@ -344,6 +346,33 @@ export const sports_play_title = {
       ol: [
         { ot: '1', title: "主队让分" },
         { ot: '2', title: "客队让分" },
+      ]
+    },
+  ],
+  // 网球
+  "5": [
+    {
+      hpid: '153',
+      label: '全场独赢',
+      ol: [
+        { ot: '1', title: "主胜" },
+        { ot: '2', title: "客胜"}
+      ]
+    },
+    {
+      hpid: '155',
+      label: '全场让盘',
+      ol: [
+        { ot: '1', title: "主队让盘" },
+        { ot: '2', title: "客队让盘" },
+      ]
+    },
+    {
+      hpid: '202',
+      label: '全场让局',
+      ol: [
+        { ot: '1', title: "主队让局" },
+        { ot: '2', title: "客队让局" },
       ]
     },
   ],
