@@ -13,7 +13,8 @@
                     <span class="icon-delete nonebox4-content-left-content-xian"></span>
                     <div class="nonebox4-content-left-info">
                       <div class="nonebox4-content-left-content-text">
-                        <div class="nonebox4-content-left-content-text-one">{{item.handicap}} <span class="text-one-span">0.25</span></div>
+                        <div class="nonebox4-content-left-content-text-one">{{item.handicap}} 
+                          <span class="text-one-span">{{ items.marketValue }}</span></div>
                         <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
                         <div class="nonebox4-content-left-content-text-three">{{item.home}} v {{item.away}}</div>
                       </div>

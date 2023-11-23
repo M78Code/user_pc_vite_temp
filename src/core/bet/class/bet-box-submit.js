@@ -533,7 +533,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
-
+console.error('ol_obj',ol_obj)
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id

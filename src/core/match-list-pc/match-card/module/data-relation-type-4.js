@@ -46,9 +46,9 @@ import {get_match_template_id} from '../../match-handle-data.js'
     // 卡片key 到 赛事 id 映射 对象
     let league_card_mids_arr = {}
     // 所有卡片列表
-    let match_list_card_key_arr = []
+    let match_list_card_key_arr = [];
     // 五大联赛卡片列表
-    let five_leagues_card_key_arr = []
+    let five_leagues_card_key_arr = is_five_leagues ?  [] : undefined;
 
     
     // 所有卡片样式对象
