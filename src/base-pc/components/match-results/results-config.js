@@ -1226,6 +1226,8 @@ export const useGetResultConfig = () => {
     search_hot,
     highlights_input_radio,
     change_sort,
-    get_tr_detail
+    get_tr_detail,
+    click_popup,
+    img_mouseleave
   };
 };
