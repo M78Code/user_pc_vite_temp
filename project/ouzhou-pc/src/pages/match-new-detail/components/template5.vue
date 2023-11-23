@@ -105,7 +105,7 @@ const matchInfo = computed(() => {
             });
         }
     });
-    console.log(11111111111,obj)
+    // console.log(11111111111,obj)
     return obj;
 });
 const emit = defineEmits(["betItemClick"]);

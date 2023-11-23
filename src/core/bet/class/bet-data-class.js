@@ -799,6 +799,7 @@ this.bet_appoint_ball_head= null */
     let mid_list = []
     // 投注项盘口id
     let market_list = []
+    let time_out = null
     // 单关 切 有投注项
     if(this.is_bet_single && this.bet_single_list.length){
       // 获取单关下的赛事id 多个（单关合并）
@@ -818,7 +819,7 @@ this.bet_appoint_ball_head= null */
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
             if(ws_ol_obj.ov){
-              let time_out = null
+              clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
               //  红升绿降
@@ -826,13 +827,16 @@ this.bet_appoint_ball_head= null */
               if(ol_obj.odds > ws_ol_obj.ov ){
                 ol_obj.red_green = 'green_down'
               }
+              if(ol_obj.odds == ws_ol_obj.ov ){
+                return
+              }
+             
               // 重新设置赔率
               ol_obj.odds = ws_ol_obj.ov*1
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, '', '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
 
-              clearTimeout(time_out)
               // 5秒后清除 红升绿降
               time_out = setTimeout(()=>{
                 ol_obj.red_green = ''
