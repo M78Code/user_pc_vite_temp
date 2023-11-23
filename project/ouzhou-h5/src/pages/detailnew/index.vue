@@ -160,8 +160,11 @@ export default {
 
 <style lang="scss" scoped>
 .match-detail-container {
+  display: flex;
+  flex-direction: column;
   background: #F1F1F1;
-  height: calc(100vh - 50px - 54px );
+  // height: calc(100vh - 50px - 54px );
+  height: 100%;
   width: 100%;
   // height: 100%;
   -webkit-overflow-scrolling: touch;
