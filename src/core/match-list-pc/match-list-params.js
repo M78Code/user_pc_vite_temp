@@ -53,7 +53,6 @@ const api_params = {
  * @return {undefined} undefined
  */
 function match_list_all_params() {
-    // debugger
     // menu_root 一级菜单类型
     // left_menu_result  记录的左侧菜单数据 
     // mid_menu_result 记录的中间菜单数据
@@ -101,8 +100,7 @@ function match_list_all_params() {
             params: {
                 "cuid": UserCtr.get_uid() || '',
                 "sort": UserCtr.sort_type,
-                euid: get_mid_for_euid(menu_current_mi),
-                "selectionHour": filterHeader.open_select_time,
+                // "selectionHour": filterHeader.open_select_time, // 需要的自己在下面加
             },
         }
     }
@@ -139,7 +137,6 @@ function match_list_all_params() {
             selectionHour: null,
             "sportId": current_ball_type,
             "outrightMatches": 1,
-            sort: 1,
             tid: '',
             "orpt": 18,
         }

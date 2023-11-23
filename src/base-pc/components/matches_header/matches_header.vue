@@ -121,7 +121,7 @@ const set_tab_list = (news_) =>{
 }
 
 const checked_current_tab = payload => {
-
+// debugger
 	let obj = {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
@@ -147,6 +147,10 @@ const checked_current_tab = payload => {
     useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
 	}
 
+	// 左侧菜单点击后 tab切换
+	if (4001 == payload.value) {
+		MenuData.set_menu_root(202)
+	}
 	// 冠军
 	if(4003 == payload.value){
 		MenuData.set_menu_root(400)
