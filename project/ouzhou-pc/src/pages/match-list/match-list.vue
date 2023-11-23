@@ -167,11 +167,8 @@ export default {
     const MatchListCardDataClass_match_list_card_key_arr = () => {
       // match_list_card_key_arr.value.length = 0;
       nextTick(() => {
-        match_list_card_key_arr.value =
-          MatchListCardDataClass.match_list_card_key_arr;
-
+        match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
         five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
-      console.log(five_leagues_card_key_arr.value, match_list_card_key_arr.value, 'five_leagues_card_key_arr');
       })
     };
     onMounted(() => {
