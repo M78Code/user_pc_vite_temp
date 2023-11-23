@@ -345,17 +345,7 @@ const submit_handle = type => {
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
         let order_state = 2
         if (res.code == 200) {
-            // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-            //     code: res.code,
-            //     msg: res.message
-            // })
-            // 投注成功 更新余额
-            UserCtr.get_balance()
-            // pc 有的 
-            if(params.deviceType == 2){
-                // 投注成功后获取投注记录数据 24小时内的
-                useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
-            }
+           
             // 获取
             BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
             // 获取投注后的数据列表
@@ -397,31 +387,41 @@ const submit_handle = type => {
                 }
 
             }
-            let obj = {};
-            obj.hid = ''
-            obj.mid = ''
-            // 盘口Id，多个Id使用逗号分隔
-            // 赛事Id，多个Id使用逗号分隔
-            if(BetData.is_bet_single){
-                seriesOrders.orderDetailList.forEach( item => {
-                    obj.hid = item.marketId 
-                    obj.mid = item.matchId 
-                })
-                // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
-            }else{
-                seriesOrders[0].orderDetailList.forEach( item => {
-                    obj.hid = item.marketId 
-                    obj.mid = item.matchId 
-                })
-                // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_s_list))
+            // 投注成功 获取余额 获取投注记录数量
+            if(order_state == 3){
+                // 投注成功 更新余额
+                UserCtr.get_balance()
+                // pc 有的 
+                if(params.deviceType == 2){
+                    // 投注成功后获取投注记录数据 24小时内的
+                    useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
+                }
             }
-            // 用户赔率分组
-            obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
-            obj.esMarketLevel = lodash_.get(UserCtr.user_info,'esMarketLevel','0');
-            BetWsMessage.set_bet_c2_message(obj);
-            // 通知页面更新 
-        // }else{
-        //     set_error_message_config(res)
+            // 投注确认中 ws请求
+            if(order_state == 2){
+                let obj = {};
+                obj.hid = ''
+                obj.mid = ''
+                // 盘口Id，多个Id使用逗号分隔
+                // 赛事Id，多个Id使用逗号分隔
+                if(BetData.is_bet_single){
+                    seriesOrders.orderDetailList.forEach( item => {
+                        obj.hid = item.marketId 
+                        obj.mid = item.matchId 
+                    })
+                    // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
+                }else{
+                    seriesOrders[0].orderDetailList.forEach( item => {
+                        obj.hid = item.marketId 
+                        obj.mid = item.matchId 
+                    })
+                    // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_s_list))
+                }
+                // 用户赔率分组
+                obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
+                obj.esMarketLevel = lodash_.get(UserCtr.user_info,'esMarketLevel','0');
+                BetWsMessage.set_bet_c2_message(obj);
+            }
         }
         set_error_message_config(res,'bet',order_state)
     })
@@ -533,7 +533,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
-
+console.error('ol_obj',ol_obj)
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id

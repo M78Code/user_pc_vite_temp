@@ -1,35 +1,34 @@
 <!-- 欧洲版 主列表页面 -->
 <template>
-  <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }}</div>
-  <div
-    class="list-card-wrap v-scroll-item relative-position"
-    :class="{
+  <div>
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }}</div>
+    <div class="list-card-wrap v-scroll-item relative-position" :class="{
       'matc-type-card': [
         'sport_title',
         'play_title',
         'no_start_title',
-      ].includes(card_type),
-    }"
-    :style="`height:${card_style_obj?.card_total_height}px  !important;
+      ].includes(card_type)
+    }" :style="`height:${card_style_obj?.card_total_height}px  !important;
     width:${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)
-    }px  !important;${card_style}`"
-    v-if="card_style_obj.is_show_card"
-  >
-    <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
-      <!-- 赛事状态 | 赛种类型 -->
-      <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(
-        card_type
-      )
-        " :card_style_obj="card_style_obj" use_component_key="PlayMatchType_2" />
-      <!-- 联赛标题 -->
-      <play-match-league v-else-if="card_type == 'league_title' && card_style_obj?.mid
-        " :card_style_obj="card_style_obj" :key="card_type" />
-      <!-- 赛事卡片 -->
-      <template v-else-if="card_type == 'league_container'">
-        <!-- 数据加载状态 -->
-        <!-- 赛事列表 -->
-        <match-card v-for="mid in mids_arr" :key="mid" :mid="mid" use_component_key="MatchCardTemplate2" />
-      </template>
+  }px  !important;${card_style}`" v-if="card_style_obj.is_show_card">
+      <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
+        <div v-if="['sport_title', 'play_title', 'no_start_title'].includes(
+          card_type
+        )">
+          <!-- 赛事状态 | 赛种类型 -->
+          <play-match-type :card_style_obj="card_style_obj" use_component_key="PlayMatchType_2" />
+        </div>
+        <div v-else-if="card_type == 'league_title' && card_style_obj?.mid">
+          <play-match-league :card_style_obj="card_style_obj" :key="card_type" />
+        </div>
+        <!-- 联赛标题 -->
+        <!-- 赛事卡片 -->
+        <div v-else-if="card_type == 'league_container' && mids_arr.length">
+          <!-- 数据加载状态 -->
+          <!-- 赛事列表 -->
+          <match-card v-for="mid in mids_arr" :key="mid" :mid="mid" use_component_key="MatchCardTemplate2" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,10 +43,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import { LayOutMain_pc } from "src/core/index.js";
 
 const props = defineProps({
-  card_key: {
-    type: String,
-    default: () => "",
-  },
+  card_key: String
 });
 // 卡片样式对象
 let card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);

@@ -13,8 +13,7 @@
         <div class="content-b" @click.stop="input_click(item, index, $event)">
             <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">Limts {{ ref_data.min_money }}-{{ format_money2(ref_data.max_money) }}</span>
-          
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ format_money(ref_data.min_money) }}~{{format_money(ref_data.max_money) }}</span>
           </div>
           
        </div>
@@ -25,7 +24,7 @@
 <script setup>
 import lodash_ from "lodash"
 import { computed, onMounted, onUnmounted, reactive,ref } from "vue"
-import {MITT_TYPES,useMittOn,format_money2 } from "src/core/"
+import {MITT_TYPES,useMittOn,format_money } from "src/core/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import keyBoard from './keyboard.vue';
@@ -204,5 +203,7 @@ const set_ref_data_bet_money = () => {
       background: transparent;
     }
   }
-
+  .limit-txt {
+    color: var(--q-gb-t-c-3);
+  }
 </style>

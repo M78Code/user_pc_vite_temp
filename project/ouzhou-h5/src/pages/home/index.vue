@@ -35,7 +35,7 @@
             </template> -->
             <!-- 5大联赛 -->
             <template v-if="five_league_match.length > 0">
-              <HeaderTitle :title="`${i18n_t('ouzhou.match.top_leagues')}`"></HeaderTitle>
+              <HeaderTitle title="Top Leagues"></HeaderTitle>
               <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
             </template>
           </section>
@@ -95,7 +95,7 @@ onMounted(async () => {
   get_ouzhou_home_data()
   set_default_home_hots()
   get_ouzhou_home_hots()
-  // get_five_league_matchs()
+  get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
   // 增加监听接受返回的监听函数
