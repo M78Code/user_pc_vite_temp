@@ -72,10 +72,10 @@ class MenuData {
   /**
    * 初始化
    */
-  set_init_menu_list(data){
+  set_init_menu_list(arr){
     let menu_list = [],
         top_events_list = []
-        data = data || BaseData.mew_menu_list_res;
+    let data = arr || BaseData.mew_menu_list_res;
     const session_info = SessionStorage.get("menu-h5");
     //常规球种
     menu_list =  data.filter((item)=>{return +item.mi<this.conventionalType});
@@ -122,7 +122,7 @@ class MenuData {
       this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
       this.menu_mi.value = session_info.menu_mi;
     }
-    useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
+    !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
   }
   /**
    * 收藏
