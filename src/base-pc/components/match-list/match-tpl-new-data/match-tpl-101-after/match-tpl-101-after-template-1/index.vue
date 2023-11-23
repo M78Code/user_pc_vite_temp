@@ -117,6 +117,7 @@ export default {
       MatchListCardDataClass,
       match_list_tpl_size,
       compute_css_obj,
+      handicap_list,
       i18n_t
     }
   }
