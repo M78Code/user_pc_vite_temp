@@ -30,8 +30,8 @@
 			</div>
 		</div>
 		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_collect || MenuData.is_top_events()"  />
-		<MatchesDateTab v-if="MenuData.is_left_today() || MenuData.is_left_zaopan()" />
-		<MatchesLeaguesTab v-if="MenuData.is_leagues()"  />
+		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues()" />
+		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
 </template>
 
@@ -152,7 +152,7 @@ const checked_current_tab = payload => {
 		filter_tab: payload.value*1,
 	}
 	// 判断头部高度
-	if ([1001,4002,4003].includes(payload.value*1)) {
+	if ([1001,4003].includes(payload.value*1)) {
 		match_list_top.value = '80px'
 	} else if([4001].includes(payload.value*1)){
 		match_list_top.value = '134px'

@@ -2,19 +2,15 @@
   <div class="current-filter-wrap" ref="area_obj_wrap">
     <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
       <!-- 常规体育 -->
-      <template v-for="(item, index) in mi_100_arr" :key="index">
-        <div class="current-filter-tab" v-if=" item.ct > 0 " >
-          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
+      <template v-for="(item, index) in leagues" :key="index">
+        <div class="current-filter-tab">
+          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  select_id == item.id }">
             <div class="filter-tab-item">
-              <div class="filter-icon">
-                <sport_icon :sport_id="compute_sport_id(item.mif)" :status="MenuData.mid_menu_result.current_mi == item.mi"  size="24px" class="icon" />
-                <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
-              </div>
-              <div :class="{ checked_text: MenuData.mid_menu_result.current_mi == item.mi }" class="label-text">
-                {{  BaseData.menus_i18n_map[item.mif] || "" }}
+              <div :class="{ checked_text: select_id == item.id }" class="label-text">
+                {{ item.introduction }}
               </div>
             </div>
-            <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" src="../../../assets/images/mask_group.png" alt="">
+            <img class="current-mark" :class="{ 'show-mark': select_id == item.id }" src="../../../assets/images/mask_group.png" alt="">
           </div>
           <div class="filter-tab-split-line"></div>
         </div>
@@ -37,12 +33,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import sport_icon from "src/base-pc/components/sport_icon.vue";
-import BaseData from "src/core/base-data/base-data.js";
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 import { MenuData } from "src/core/"
-import { compute_sport_id } from 'src/core/constant/index.js'
 
 let area_obj = ref();
 let area_obj_wrap = ref();
@@ -58,11 +51,24 @@ const show_right_btn = ref(false);
 //leagues
 const leagues = ref([])
 
+const select_id = ref(null)
+
+const props = defineProps({
+  date: Number,
+});
+
+watch(() => props.date, async () => {
+  const list = await get_ouzhou_leagues_data(props.date)
+  leagues.value = list
+  if (list.length) {
+    select_id.value = list[0].id
+  }
+}, { immediate: true })
+
 onMounted(() => {
   if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
     show_right_btn.value = true;
   }
-
 })
 /**
  * 
@@ -71,8 +77,7 @@ onMounted(() => {
  */
 const choose_filter_tab = (item) => {
   // 获取最新的 数据
-  handle_click_menu_mi_1(item)
-  MenuData.set_current_ball_type(item.mif - 100)
+  select_id.value = item.id
 };
 
 /**
@@ -134,7 +139,7 @@ onBeforeUnmount(() => {
   align-items: center;
   width: 100%;
   padding-right: 20px;
-  height: 56px;
+  height: 44px;
   background: var(--q-gb-bg-c-4);
   padding-left: 18.25px;
   box-sizing: border-box;
@@ -228,7 +233,6 @@ onBeforeUnmount(() => {
   background: var(--q-gb-bg-c-10);
   margin: 0 16px;
   position: relative;
-  top: 12px;
 }
 
 .current-mark {
