@@ -43,7 +43,7 @@
 
     <!-- <div class="menu-nav-li">
         <ul class="menu-list">
-          <li class="f-s-c"> 
+          <li class="f-s-c">
             <sport_icon :sport_id="compute_sport_id(300)" size="18px" class="icon" />
             VR Sports
           </li>
