@@ -265,14 +265,14 @@ export const init_home_matches = async () => {
           console.log(error);
       }
     });
-    get_five_leagues_list().then(res=>{
+    get_five_leagues_list().then(res => {
       try {
-        MatchDataWarehouse_PC_List_Common.set_list(res);
+        MatchDataWarehouse_PC_List_Common.set_list(res.concat(MatchDataWarehouse_PC_List_Common.match_list));
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res, null, null, true
+          res, null, null, true,MatchDataWarehouse_ouzhou_PC_five_league_List_Common
         );
-      }catch (error) {
-          console.log(error);
+      } catch (error) {
+        console.log(error);
       }
     })
     return {

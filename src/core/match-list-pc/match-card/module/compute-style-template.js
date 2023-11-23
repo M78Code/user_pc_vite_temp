@@ -418,6 +418,5 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 			style_obj.total_height = 80;		
 		}
 	}
-	console.log('style_obj', style_obj.total_height);
 	return style_obj;
 };
