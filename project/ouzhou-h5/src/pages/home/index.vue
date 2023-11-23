@@ -68,6 +68,7 @@ import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
@@ -184,7 +185,7 @@ const get_five_league_matchs = async () => {
 /**
  * @description 获取热门赛事
  */
-const get_ouzhou_home_hots1111 = () => {
+const get_ouzhou_home_hots11 = () => {
   const params = {
     euid: "30199",
     sort: 1,
@@ -207,6 +208,8 @@ const on_update = (val) => {
     MenuData.set_menu_mi('101');
     get_ouzhou_home_data()
   } else {
+    // 设置 元数据计算 流程
+    MatchResponsive.set_is_compute_origin(true)
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
     MatchMeta.get_top_events_match(MenuData.top_events_list?.[0]?.csid)
   }
