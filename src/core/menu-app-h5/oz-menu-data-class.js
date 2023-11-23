@@ -7,7 +7,7 @@
  */
 
 import lodash_ from "lodash";
-import { ref } from "vue";
+import { ref,nextTick } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {
@@ -16,6 +16,10 @@ import {
   SessionStorage,
 } from "src/core/index.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+
+import STANDARD_KEY from "src/core/standard-key";
+const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
+
 const { BUILD_VERSION } = BUILD_VERSION_CONFIG;
 const menu_type_config = {
   1: 1,
@@ -34,6 +38,9 @@ class MenuData {
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash_.debounce(() => {
       that.update_time.value = Date.now();
+      nextTick(()=>{
+        SessionStorage.set(menu_h5_key,this)
+      })
     }, 16);
     //提供销毁函数
     this.destroy = () => {
@@ -63,11 +70,28 @@ class MenuData {
     //----------------------------------- 收藏 --------------------------------------//
     this.collect_id = '';//收藏id 
     this.collect_list = []
+
+    this.set_menu_h5_key_refresh()
   }
 
   get_menu_lv_2_mi_list(mi){
     const item = this.menu_lv_mi_lsit.find(item=> item.mi == mi) || {}
     return item.sl
+  }
+
+  
+  // 刷新后 获取缓存数据
+  set_menu_h5_key_refresh() {
+    // 获取数据缓存
+    let session_info = SessionStorage.get(menu_h5_key);
+    if (!session_info) {
+      return;
+    }
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        this[item] = session_info[item]
+      }
+    }
   }
 
   /**

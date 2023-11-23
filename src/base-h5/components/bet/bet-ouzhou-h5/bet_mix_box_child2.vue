@@ -13,8 +13,7 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(items.marketId)"></span>
                   <div class="nonebox4-content-left-info"> 
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> 
-                      <span class="text-one-span">{{ items.marketValue }}</span></div>
+                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div></div>
                       <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
                     </div>

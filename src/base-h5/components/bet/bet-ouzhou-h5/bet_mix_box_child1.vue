@@ -4,6 +4,7 @@
 -->
 
 <template>
+  {{ BetData.bet_data_class_version }} 
     <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
@@ -11,8 +12,7 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap?items.handicap:items.home}}</div> 
-                      <span class="text-one-span">{{ items.marketValue }}</span></div>
+                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div></div>
                       <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
                     </div>
@@ -22,23 +22,12 @@
                             <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
                         </div>
                     </div>
-                    <!-- 绿升icon -->
-                    <img class="hps_img" src="/ouzhou-h5/image/list/down.png" alt="" v-if="items.red_green == 'red_down'">
-                    <!-- 红降icon -->
-                    <img class="hps_img" src="/ouzhou-h5/image/list/up.png" alt="" v-else>
+                    {{items.red_green}}--
+                    <div class="show_img" v-if="items.red_green" >
+                      <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/up.png`" alt=""/>
+                      <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/down.png`" alt=""/>
+                    </div>
 
-                    <!--红色箭头-->
-                      <!-- <div class="top" style="display:none">
-                        <div class="jiantou one"></div>
-                        <div class="jiantou two"></div>
-                        <div class="jiantou three"></div>
-                      </div> -->
-                      <!--绿色箭头-->
-                      <!-- <div class="top" style="display:none">
-                        <div class="jiantou onegreen"></div>
-                        <div class="jiantou twogreen"></div>
-                        <div class="jiantou threegreen"></div>
-                      </div> -->
                   </div>
               </div>
           </div>
@@ -49,7 +38,7 @@
   <script setup>
   import { compute_value_by_cur_odd_type } from "src/core/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
+  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX  } from "src/core/index.js";
 
   const props = defineProps({
     items:{}
