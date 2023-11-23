@@ -153,8 +153,8 @@ onUnmounted(() => {
 }
 .nonebox4-first-left-img {
     display: flex;
-    width: 0.25rem;
-    height: 0.25rem;
+    width: 0.24rem;
+    height: 0.24rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,10 +163,11 @@ onUnmounted(() => {
     border-radius: 50%;
 }
 .nonebox4-first-left-text {
-    margin-left: 0.05rem;
+    margin-left: 0.08rem;
     display: flex;
-    font-size: 14px;
+    font-size: 0.16rem;
     color: var(--q-gb-t-c-2);
+    font-weight: 500;
 }
 .nonebox4-first-right {
     display: flex;
@@ -186,9 +187,10 @@ onUnmounted(() => {
 .nonebox4-first-right-window-num {
     display: flex;
     font-size: 18px;
-    font-weight: bold;
-    margin-right: 4px;
+    font-weight: 500;
+    margin-right: -0.03rem;
     color: var(--q-gb-t-c-1);
+    font-family: DIN;
 }
 .nonebox4-first-right-window-img {
     display: flex;
@@ -236,7 +238,7 @@ onUnmounted(() => {
 }
 .bet-bar {
   width: 100%;
-  height: 0.5rem;
+  height: 0.54rem;
   border-width: 1px 1px 0 1px;
   //border-style: solid;
   position: relative;
