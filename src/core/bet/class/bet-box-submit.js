@@ -158,6 +158,12 @@ const set_bet_order_list = (bet_list, is_single) => {
     return order_list
 }
 
+// 投注确认中 循环请求接口 拉取投注状态
+const set_order_status_info = (orderNo) => {
+    api_betting.query_order_status({orderNos: orderNo}).then(res => {
+
+    })
+}
 
 // 获取限额 常规 / 冠军
 // obj 投注数据
@@ -399,6 +405,9 @@ const submit_handle = type => {
             }
             // 投注确认中 ws请求
             if(order_state == 2){
+                console.error('orderDetailRespList',orderDetailRespList)
+                // set_order_status_info(orderDetailRespList[0])
+
                 let obj = {};
                 obj.hid = ''
                 obj.mid = ''
