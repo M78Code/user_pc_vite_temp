@@ -62,6 +62,7 @@ const ouzhou_filter_config = {
 	sport_tab: [
 		{ label: i18n_t('ouzhou.match.matches'), value: 4001 },
 		{ label: i18n_t('ouzhou.match.top_leagues'), value: 4002 },
+		{ label: '冠军', value: 4003 },
 		// { label: 'Next 24 Hours', value: 4003 },
 	], 
 	// 收藏 i18n_t('ouzhou.match.inplay')  i18n_t('ouzhou.match.today')  i18n_t('ouzhou.match.early')
@@ -139,13 +140,13 @@ const set_tab_list = (news_) =>{
 }
 
 const checked_current_tab = payload => {
-
+// debugger
 	let obj = {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
 	}
 	// 判断头部高度
-	if ([1001,4002].includes(payload.value*1)) {
+	if ([1001,4002,4003].includes(payload.value*1)) {
 		match_list_top.value = '80px'
 	} else if([4001].includes(payload.value*1)){
 		match_list_top.value = '134px'
@@ -163,6 +164,17 @@ const checked_current_tab = payload => {
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
     useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
+	}
+
+	// 左侧菜单点击后 tab切换
+	if (4001 == payload.value) {
+		MenuData.set_menu_root(202)
+	}
+	// 冠军
+	if(4003 == payload.value){
+		MenuData.set_menu_root(400)
+		obj.current_mi = 400 + MenuData.current_ball_type*1
+		MenuData.set_menu_current_mi(obj.current_mi)
 	}
 
 	// 收藏切换tab

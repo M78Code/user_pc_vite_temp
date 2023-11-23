@@ -496,8 +496,15 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 重置金额为 0
     BetData.set_bet_amount(0)
     BetData.set_is_bet_pre(false)
+    BetViewDataClass.set_bet_before_message({})
 
     const { oid, _hid, _hn, _mid } = params
+
+    // 有数据的再次点击 为取消投注项
+    if(BetData.bet_oid_list.includes(oid)){
+       return BetData.set_delete_bet_info(oid)
+    }
+
      // 列表数据仓库
      let query = {}
     // device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备 

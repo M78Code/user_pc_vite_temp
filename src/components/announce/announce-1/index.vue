@@ -182,7 +182,8 @@ onMounted(() => {
             color: #191c24;
             font-weight: 600;
             padding: 8px 30px;
-            border-bottom: 1px solid var(--q-gb-bd-c-1);
+            // border-bottom: 1px solid var(--q-gb-bd-c-1);
+            border-bottom:1px solid #ff7000;
         }
         .announce-btn{
             padding: 2px 15.5px;

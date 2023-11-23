@@ -20,6 +20,7 @@
       </div>
       <div class="choose-list" v-if='show_list'>
         <div class="choose-list-item" v-for="item in choose_config[card_style_obj.csid || '1']"
+        :key="item.first_hpid+'_'+item.second_hpid"
           @click.stop="handle_hpid_choose(item)" :class="{
             active: JSON.stringify(current_csid_hpids) == JSON.stringify(item)
           }">
