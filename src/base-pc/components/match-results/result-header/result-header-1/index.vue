@@ -254,6 +254,7 @@ function refresh() {
 </script>
 
 <style scoped lang="scss">
+.a{}
 @import "./result-header.scss";
 .top-menu-content {
     height: 40px;

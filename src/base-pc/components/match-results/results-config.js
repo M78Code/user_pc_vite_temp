@@ -969,6 +969,7 @@ export const useGetResultConfig = () => {
    * @return {}
    */
   const search_hot = (data) => {
+    console.log('datadatadatadatadata',data)
     state.pournament_params.hot = data;
     get_pournament(0);
   };

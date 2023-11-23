@@ -199,6 +199,7 @@ const checkAll = () => {
   // 全选
   menu.value = "all";
   isAllSelect.value = 1;
+  console.log('menumenumenu',menu)
 };
 /**
  * @description: 反选
@@ -230,7 +231,6 @@ const checkInvert = () => {
  * @param {n} 1 初始化联赛选中状态 0 正常处理
  */
 const checkHot = (n) => {
-  console.log('链接来')
   emit("confirm", 0);
   menu.value = "hot";
   initSport.value = n;
@@ -243,7 +243,7 @@ const checkHot = (n) => {
     input_val.value = i18n_t("select.all");
   } else {
     init.value = false;
-    is_hot.value = !is_hot;
+    is_hot.value = !is_hot.value;
     emit("search_hot", Number(is_hot.value));
   }
 };
@@ -414,8 +414,9 @@ watch(
         menu.value = "";
       }
     }
+    console.log('active.valueactive.valueactive.value',menu.value)
   },
-  { immediate: true }
+  { immediate: true,deep: true }
 );
 watch(props.sport_id, (res) => {
   is_select.value = false;
@@ -521,7 +522,13 @@ onUnmounted(() => {
         margin-right: 5px;
         background-size: 100%;
         background-repeat: no-repeat;
+        border: 1px solid #383C44;;
+        border-radius: 50%;
       }
+      .active {
+        background-image: url($SCSSPROJECTPATH+"/image/svg/radio-checked.svg");
+        }
+
     }
   }
   .wrap-item {
@@ -573,4 +580,5 @@ onUnmounted(() => {
     border-radius: 4px;
   }
 }
+
 </style>
