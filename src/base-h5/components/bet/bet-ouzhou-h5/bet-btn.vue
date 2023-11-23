@@ -3,7 +3,11 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="tip">{{BetViewDataClass.tip_message}}</div> 
+  <div class="tip">
+    <div :class="BetViewDataClass.error_code == 200 ? 'bet-success' : 'bet-error'">
+      {{ BetViewDataClass.error_message }}
+    </div>
+  </div> 
     <div class="bet_content_bottom">
       <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
       <p class="place_bet"  @click="place_bet">
@@ -11,8 +15,7 @@
         <span class="right_amount">{{BetData.bet_amount}}</span> 
       </p>
     </div>
-  <div style="display:none">{{ BetData.bet_data_class_version }}</div>
-  <div style="display:none">{{ BetViewDataClass.bet_view_version }}</div>
+  <div style="display:none">{{ BetData.bet_data_class_version }} {{ BetViewDataClass.bet_view_version }}</div>
 </template>
 
 <script setup>
@@ -22,9 +25,13 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
 
 const place_bet = () => {
-  submit_handle()
+  // 未投注之前 可以点击
+  if(BetViewDataClass.bet_order_status == 1){
+    submit_handle()
+  }
 }
 const pack_up = (val) => {
+  BetData.set_clear_bet_info()
   // TODO: 临时调试用
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   // BetData.set_clear_bet_info()
@@ -36,44 +43,49 @@ const pack_up = (val) => {
 .tip{
   color: var(--q-gb-bd-c-4);
   text-align: center;
-  margin-top: 0.1rem;
-  font-size: 0.15rem;
-  margin-right: 0.2rem;
+  font-size: 0.14rem;
   width: 100%;
+  height: .36rem;
+  line-height: 0.36rem;
+  .bet-error {
+    color: var(--q-gb-t-c-7);
+  }
+
+  .bet-success {
+    color: var(--q-gb-t-c-10);
+  }
 }
 .bet_content_bottom{
-    height: 0.5rem;
+    height: 0.58rem;
     display: flex;
-    align-items: center;
     text-align: center;
-    margin-bottom: 0.2rem;
+    justify-content: space-between;
+    align-content: space-between;
+    padding: 0 0.12rem .12rem;
    .bet_cancel{
-      width: 100px;
-      line-height: 0.3rem;
-      border-radius: 2px;
-      font-family: "Roboto";
-      font-size: 0.13rem;
+      width: 1rem;
+      line-height: 0.46rem;
+      border-radius: 0.02rem;
+      font-size: 0.16rem;
       font-weight: 400;
+      height: 0.46rem;
       letter-spacing: 0px;
       border: 0.5px solid var(--q-gb-bd-c-12);
-      margin: 0 0.2rem 0 0.2rem;
-      line-height: 0.4rem;
+      text-align: center;
       color: var(--q-gb-t-c-4);
     }
     .place_bet{
-      font-family: "DIN";
-      font-size: 0.12rem;
+      height: 0.46rem;
+      font-size: 0.14rem;
       font-weight: 500;
-      line-height: 0.4rem;
-      width: 2.17rem;
-      // height: 46px;
-      border-radius: 2px;
+      line-height: 0.46rem;
+      width: 2.35rem;
+      border-radius: 0.02rem;
       background: var(--q-gb-bg-c-1);
       color:  var(--q-gb-t-c-2);
       .right_amount{
-        font-family: DIN;
-        font-size: 0.16rem;
-        margin-left: 6px;
+        font-size: 0.18rem;
+        margin-left: 0.06rem;
       }
     }
   }
