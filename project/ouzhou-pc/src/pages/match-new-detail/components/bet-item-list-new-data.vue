@@ -1,7 +1,8 @@
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
     :class="[ ol_data.class, odds_state, `csid${ol_data.csid}`, odds_lift,
-      { 'show-odds-icon': odds_state != 'seal', 'active-odds-icon': ol_data.oid == current_ol.oid, },
+      { 'show-odds-icon': odds_state != 'seal', 'active-odds-icon': BetData.bet_oid_list.includes(ol_data.oid), },
     ]"
     :id="`list-${ol_data.oid}`"
   >
@@ -35,7 +36,7 @@
                         />
                     </div>
       <div v-else class="odds-arrows-wrap">
-        <span :class="{ default: true, up: odds_lift == 'up', down: odds_lift == 'down', active: ol_data.oid == current_ol.oid }">
+        <span :class="{ default: true, up: odds_lift == 'up', down: odds_lift == 'down', active: BetData.bet_oid_list.includes(ol_data.oid) }">
           {{ numberRetain(match_odds) }}
         </span>
         <div v-if="odds_state != 'seal'">
@@ -49,6 +50,7 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from "lodash";

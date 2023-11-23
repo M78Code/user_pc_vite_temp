@@ -115,7 +115,7 @@ export function usedetailData(route) {
     );
     detail_list.value = lodash_.get(getMidInfo(route.params.mid), "odds_info") || []
 
-    console.log(1111111111,detail_list.value)
+    // console.log(1111111111,detail_list.value)
 
     
 

@@ -48,9 +48,9 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, UserCtr } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
+import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 const matches_featured_list = ref([])
 const router = useRouter();
-import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 
 
 const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common)
@@ -101,6 +101,7 @@ function get_col_ols_data(match) {
   //101 视图模板 却是对应不同的数据模板ID 所以要重新取
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
   const hots_odds_list = match_tpl_info.get_hots_odds_list()
+
   let handicap_type = hn || 1
   const many_obj = get_match_to_map_obj(match); //非坑位对象
   const hn_obj = lodash.get(MatchDataWarehouse_ouzhou_PC_hots_List_Common, "list_to_obj.hn_obj", {})
