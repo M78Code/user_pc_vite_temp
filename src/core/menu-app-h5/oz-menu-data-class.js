@@ -7,7 +7,7 @@
  */
 
 import lodash_ from "lodash";
-import { ref } from "vue";
+import { ref,nextTick } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {
@@ -16,6 +16,10 @@ import {
   SessionStorage,
 } from "src/core/index.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+
+import STANDARD_KEY from "src/core/standard-key";
+const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
+
 const { BUILD_VERSION } = BUILD_VERSION_CONFIG;
 const menu_type_config = {
   1: 1,
@@ -34,6 +38,9 @@ class MenuData {
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash_.debounce(() => {
       that.update_time.value = Date.now();
+      nextTick(()=>{
+        SessionStorage.set(menu_h5_key,this)
+      })
     }, 16);
     //提供销毁函数
     this.destroy = () => {
@@ -43,7 +50,7 @@ class MenuData {
     this.menu_csid = 0
     //----------------------------------- 常规球种 --------------------------------------//
     // this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
-    this.conventionalType = 103; //默认300  一期只上足球篮球
+    this.conventionalType = [101,102,105,190,191,400]; 
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
@@ -55,6 +62,7 @@ class MenuData {
     // this.menu_match_date_params= {}
     this.menu_list = []; //常规球种 101...
     this.top_events_list = []; //热门球种
+    this.champion_list = []; //冠军球种
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
 
@@ -62,6 +70,8 @@ class MenuData {
     //----------------------------------- 收藏 --------------------------------------//
     this.collect_id = '';//收藏id 
     this.collect_list = []
+
+    this.set_menu_h5_key_refresh()
   }
 
   get_menu_lv_2_mi_list(mi){
@@ -69,18 +79,36 @@ class MenuData {
     return item.sl
   }
 
+  
+  // 刷新后 获取缓存数据
+  set_menu_h5_key_refresh() {
+    // 获取数据缓存
+    let session_info = SessionStorage.get(menu_h5_key);
+    if (!session_info) {
+      return;
+    }
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        this[item] = session_info[item]
+      }
+    }
+  }
+
   /**
    * 初始化
    */
-  set_init_menu_list(data){
+  set_init_menu_list(arr){
     let menu_list = [],
-        top_events_list = []
-        data = data || BaseData.mew_menu_list_res;
+        top_events_list = [],
+        champion_list = [];
+    let data = arr || BaseData.mew_menu_list_res;
     const session_info = SessionStorage.get("menu-h5");
     //常规球种
-    menu_list =  data.filter((item)=>{return +item.mi<this.conventionalType});
+    menu_list =  data.filter((item)=>{return this.conventionalType.includes(+item.mi)});
     //热门球种
     top_events_list =  data.filter((item)=>{return item.mi==5000})?.[0].sl || [];
+    //冠军
+    champion_list =  data.filter((item)=>{return item.mi==400})?.[0].sl || [];
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {
@@ -107,7 +135,7 @@ class MenuData {
     // });
     //正常取热门球种 3
     top_events_list = top_events_list
-    .filter((n)=>{return +n.mi-4900 < this.conventionalType})
+    .filter((n)=>{return this.conventionalType.includes(+n.mi-4900)})
     .map((item)=>{
       return {
         ...item,
@@ -116,13 +144,23 @@ class MenuData {
         csid:`${+item.mi-5000}`
       }
     });
+    champion_list = champion_list
+    .filter((n)=>{return this.conventionalType.includes(+n.mi-300)})
+    .map((item)=>{
+      return {
+        ...item,
+        mi:`${+item.mi-300}`,
+        defaultMi:item.mi
+      }
+    });
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
+    this.champion_list = champion_list;
     if(session_info){//取session球种id
       this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
       this.menu_mi.value = session_info.menu_mi;
     }
-    useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
+    !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
   }
   /**
    * 收藏
@@ -181,8 +219,14 @@ class MenuData {
    */
   set_menu_mi(mi){
     this.menu_mi.value = mi;
-    this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
-    this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
+    if(this.menu_type.value == 400){
+      this.current_lv_2_menu_i = +mi+300;
+      this.current_lv_2_menu_mi.value = +mi+300;
+    }else{
+      this.current_lv_2_menu_i = `${mi}${this.menu_type.value}`;
+      this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
+    }
+   
     SessionStorage.set("menu-h5",{
       menu_mi:mi
     });

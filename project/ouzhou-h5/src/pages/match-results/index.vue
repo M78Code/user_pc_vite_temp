@@ -106,7 +106,9 @@ onMounted(()=>{
 <style scoped lang="scss">
 @import "./index.scss";
 .match-result{
-    height: calc(100% - 1.73rem);
+    // height: calc(100% - 1.73rem);
+    height: 0;
+    flex: 1;
     overflow: hidden;
     overflow-y: auto;
     .match-list-container{

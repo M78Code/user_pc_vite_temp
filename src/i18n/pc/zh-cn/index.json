@@ -71,6 +71,7 @@
          "no_data": "暂无数据"
      },
      "set": {
+      "personal": "个人",
       "announcement": "公告",
       "results": "赛果",
       "sport_rules": "体育规则"

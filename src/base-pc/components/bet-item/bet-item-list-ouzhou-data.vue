@@ -32,7 +32,7 @@
       <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
       </div>
       <span v-else-if="ol_data.ov">
-        {{ (ol_data.ov / 100000).toFixed(2) }}
+        {{ match_odds }}
       </span>
       <div>
 
@@ -76,11 +76,10 @@ const props = defineProps({
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
-    let { _mhs, _hs, os } = props.ol_data||{};
-    return get_odds_state(_mhs, _hs, os);
+  let { _mhs, _hs, os } = props.ol_data || {};
+  return get_odds_state(_mhs, _hs, os);
 });
-// 赔率值
-const match_odds = ref("");
+
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
 
@@ -140,19 +139,21 @@ watch(() => props.ol_data.ov, (cur, old) => {
  * @param  {number} obv - 断档赔率值
  * @return {undefined} undefined
  */
-const format_odds = () => {
+// 赔率值
+const match_odds = computed(() => {
+  let csid = lodash.get(props.ol_data, "csid");
   let ov = lodash.get(props.ol_data, "ov");
-  let obv = lodash.get(props.ol_data, "obv");
   // 列表取 hsw
-  let hsw = props.ol_data._hsw;
+  let hsw = props.ol_data._hsw.split(',');
   let match_odds_info = compute_value_by_cur_odd_type(
-    ov / 100000,
-    obv / 100000 || '',
-    hsw || '',
-    1
+    ov,
+    1 / 100000,
+    hsw,
+    csid
   );
-  match_odds.value = format_odds_value(match_odds_info, props.ol_data.csid);
-};
+  return format_odds_value(match_odds_info, csid);
+})
+
 
 let tid;
 /**
@@ -164,7 +165,12 @@ let tid;
 const set_odds_lift = (cur, old) => {
   if (!["lock", 'seal'].includes(odds_state.value) && old && !is_odds_seal()
   ) {
-    odds_lift.value = cur > old ? "up" : 'down';
+    if (cur > old) {
+      odds_lift.value = 'up'
+    }
+    else if (old > cur) {
+      odds_lift.value = 'down'
+    }
     clearTimeout(tid)
     tid = setTimeout(() => {
       odds_lift.value = "";

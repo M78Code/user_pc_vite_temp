@@ -11,7 +11,7 @@
       <!-- 玩法列表 -->
       <div class="handicap-col" v-for="(col, col_index) in handicap_list" :key="col_index">
         <div :class="['bet-item-wrap',]" :style="get_bet_style(col_index, lodash.get(col, 'ols.length'))"
-          v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)" :key="ol_index">
+          v-for="(ol_data, ol_index) in deal_width_handicap_ols(col.ols)" :key="col_index+'_'+ol_index">
           <!-- 投注项组件 -->
           <template
             v-if="match_style_obj.data_tpl_id != 'esports' || (match_style_obj.data_tpl_id == 'esports' && getCurState(ol_data._hipo))">

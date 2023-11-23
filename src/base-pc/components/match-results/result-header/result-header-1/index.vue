@@ -1,6 +1,7 @@
 
   
 <template>
+
 <div>
   <div class="top-menu-content">
         <!-- 体育 -->
@@ -12,6 +13,7 @@
           use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
+      <q-separator class="divider" color="#F2F5F8" inset />
     <div class="search-header">
     <div class="wrap-select">
       
@@ -115,10 +117,8 @@
       </div>
       <div class="match-resultstips-wrap">
         <!-- 提示语 -->
-        <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
-          <template>
-            <div>{{ i18n_t("results.tips") }}</div>
-          </template>
+          <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
+            <div class="aaa">{{ i18n_t("results.tips") }}</div>
         </q-tooltip>
         <div
           class="match-resultstips-icon relative-position"
@@ -134,8 +134,9 @@
       </div>
     </div>
   </div>
+</div>
 
-  </div>
+
 </template>
 <script setup>
 import {  ref,computed,onMounted } from 'vue';
@@ -154,8 +155,14 @@ import {
 import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
+  current_sport_id:{
+    type: String
+  },
+  timeChanged:{
+    type: Boolean
+  },
   cancel:{
-    type:String
+    type:null
   },
   dateValue:{
     type:Object
@@ -193,6 +200,15 @@ const props = defineProps({
     type: Function,
   },
   isSelectConfirm:{
+    type: Function,
+  },
+  click_popup:{
+    type: Function,
+  },
+  img_mouseleave:{
+    type: Function,
+  },
+  search_hot:{
     type: Function,
   },
   startTimeShow:{
@@ -236,10 +252,10 @@ function refresh() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import "./result-header.scss";
 .top-menu-content {
-    height: 50px;
+    height: 40px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
     background: var(--q-gb-bg-c-11);
     color: var(--q-gb-t-c-6);
@@ -257,10 +273,18 @@ function refresh() {
         }
   };
 /* ************** 筛选条件 *************** -S */
+.divider{
+  display: inline-block;
+  width: 1200px;
+  height: 6px;
+  margin: 0;
+}
 .search-header {
   display: flex;
   align-items: center;
   padding: 28px 20px 14px 20px;
+  border-bottom:1px solid #ff7000;
+  
 
   /* ************** select *************** -S */
   .wrap-select {

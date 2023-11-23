@@ -47,7 +47,8 @@ const get_pc_rule_url = () => {
         // 生产环境
     } else if (current_env == 'idc_sandbox' || current_env == 'idc_pre') {
         // 试玩环境
-        domain = "https://sports-rules-new-shiwan.sportxxx3pk.com"
+        // domain = "https://sports-rules-new-shiwan.sportxxx3pk.com"
+        domain = "http://sports-rules-ouzhou-test.sportxxx3pk.com/#/zh_cn"
 
     } else {
         // 其他环境，测试和开发 等

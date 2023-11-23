@@ -122,15 +122,13 @@ const get_detail_info = (mid) => {
 // {immediate:true}
 // )
 
-watch(()=> detail_info.value.msc,(newValue, oldValue) => {
-  console.log(newValue,'newValue')
-  console.log(oldValue,'oldValue')
-})
 
 // 详情数据msc处理
 const score_list = computed(() => {
-  console.log("计算属性computed，score_list")
   const obj = detail_info.value || {};
+  setTimeout(function (){
+    console.log(detail_info.value,"detail_info.value")
+  },2000)
   let result = {};
   // msc [ 'S1|1:0', 'S2|1:0', 'S5|0:0', 'S6|0:0', 'S8|0:0' ] --比分（比分类型|比分）
   if (obj.msc && obj.msc.length > 0) {

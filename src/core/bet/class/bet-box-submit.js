@@ -1,6 +1,7 @@
 import { api_betting } from "src/api/index.js"
 import BetData from "./bet-data-class.js"
 import BetViewDataClass from "./bet-view-data-class.js"
+import BetWsMessage from "./bet-ws-message.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -16,7 +17,6 @@ import {
  } from 'src/core/index.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
-import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 
 let time_out = null
 // 获取限额请求数据
@@ -341,20 +341,11 @@ const submit_handle = type => {
     // BetViewDataClass.set_bet_order_status(5)
     // return
     api_betting.post_submit_bet_list(params).then(res => {
-        BetViewDataClass.set_tip_message(res)
+        // BetViewDataClass.set_tip_message(res)
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
+        let order_state = 2
         if (res.code == 200) {
-            // useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,{
-            //     code: res.code,
-            //     msg: res.message
-            // })
-            // 投注成功 更新余额
-            UserCtr.get_balance()
-            // pc 有的 
-            if(params.deviceType == 2){
-                // 投注成功后获取投注记录数据 24小时内的
-                useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
-            }
+           
             // 获取
             BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
             // 获取投注后的数据列表
@@ -378,6 +369,7 @@ const submit_handle = type => {
                     default:
                         break;
                 }
+                order_state = status
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 BetViewDataClass.set_bet_order_status(status)
             }else{
@@ -395,49 +387,101 @@ const submit_handle = type => {
                 }
 
             }
-            let obj = {};
-            obj.hid = ''
-            obj.mid = ''
-            // 盘口Id，多个Id使用逗号分隔
-            // 赛事Id，多个Id使用逗号分隔
-            if(BetData.is_bet_single){
-                seriesOrders.orderDetailList.forEach( item => {
-                    obj.hid = item.marketId 
-                    obj.mid = item.matchId 
-                })
-                // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
-            }else{
-                seriesOrders[0].orderDetailList.forEach( item => {
-                    obj.hid = item.marketId 
-                    obj.mid = item.matchId 
-                })
-                // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_s_list))
+            // 投注成功 获取余额 获取投注记录数量
+            if(order_state == 3){
+                // 投注成功 更新余额
+                UserCtr.get_balance()
+                // pc 有的 
+                if(params.deviceType == 2){
+                    // 投注成功后获取投注记录数据 24小时内的
+                    useMittEmit(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG)
+                }
             }
-            // 用户赔率分组
-            obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
-            obj.esMarketLevel = lodash_.get(UserCtr.user_info,'esMarketLevel','0');
-            WsMan.skt_send_bat_handicap_odds(obj);
-            // 通知页面更新 
-        // }else{
-        //     set_error_message_config(res)
+            // 投注确认中 ws请求
+            if(order_state == 2){
+                let obj = {};
+                obj.hid = ''
+                obj.mid = ''
+                // 盘口Id，多个Id使用逗号分隔
+                // 赛事Id，多个Id使用逗号分隔
+                if(BetData.is_bet_single){
+                    seriesOrders.orderDetailList.forEach( item => {
+                        obj.hid = item.marketId 
+                        obj.mid = item.matchId 
+                    })
+                    // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
+                }else{
+                    seriesOrders[0].orderDetailList.forEach( item => {
+                        obj.hid = item.marketId 
+                        obj.mid = item.matchId 
+                    })
+                    // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_s_list))
+                }
+                // 用户赔率分组
+                obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
+                obj.esMarketLevel = lodash_.get(UserCtr.user_info,'esMarketLevel','0');
+                BetWsMessage.set_bet_c2_message(obj);
+            }
         }
-        set_error_message_config(res)
+        set_error_message_config(res,'bet',order_state)
     })
 }
 
 // 设置错误信息 
-const set_error_message_config = (res ={}) => {
+const set_error_message_config = (res ={},type,order_state) => {
 
     clearTimeout(time_out)
-    // 获取限额失败的信息
-    BetViewDataClass.set_bet_before_message({
+   
+    let obj = {
         code: res.code,
         message: res.message
-    })
+    }
+    // 是否需求清除投注信息
+    let clear_time = true
 
-    time_out = setTimeout(()=>{
-        BetViewDataClass.set_bet_before_message({})
-    },5000)
+    if(type == 'bet'){
+        clearTimeout(time_out)
+        // 投注完成 不需要清除提示信息
+        if(res.code == 200){
+            clear_time = false
+            switch(order_state){
+                case 2:
+                    obj = {
+                        code: '0000000',
+                        message: '投注确认中'
+                    }
+                    break
+                 
+                case 3:
+                    obj = {
+                        code: 200,
+                        message: '投注成功'
+                    }
+                    break
+            
+                case 4:
+                    obj = {
+                        code: 500,
+                        message: '投注失败'
+                    }
+                    break
+            }
+           
+        }else{
+            obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
+        }
+    }
+
+    // 获取限额失败的信息
+    BetViewDataClass.set_bet_before_message(obj)
+
+    // 需求清除
+    if(clear_time){
+        time_out = setTimeout(()=>{
+            BetViewDataClass.set_bet_before_message({})
+        },5000)
+    }
+   
 }
 
 // 选择投注项数据 
@@ -452,8 +496,15 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // 重置金额为 0
     BetData.set_bet_amount(0)
     BetData.set_is_bet_pre(false)
+    BetViewDataClass.set_bet_before_message({})
 
     const { oid, _hid, _hn, _mid } = params
+
+    // 有数据的再次点击 为取消投注项
+    if(BetData.bet_oid_list.includes(oid)){
+       return BetData.set_delete_bet_info(oid)
+    }
+
      // 列表数据仓库
      let query = {}
     // device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备 
@@ -482,9 +533,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
-  console.error('hl_obj',hl_obj)
-  console.error('sss',ol_obj)
-    
+console.error('ol_obj',ol_obj)
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -564,7 +613,6 @@ const h5_match_data_switch = match_data_type => {
 
 // 根据当前的投注项 获取对应的赔率变化ws
 const set_market_id_to_ws = () => {
-    console.error('set_market_id_to_ws')
     let hid = []
     let mid = []
     let obj = {}
@@ -584,7 +632,7 @@ const set_market_id_to_ws = () => {
     obj.mid = mid.join(',')
     // 用户赔率分组
     obj.marketLevel = lodash_.get(UserCtr.user_info,'marketLevel','0');
-    WsMan.skt_send_bat_handicap_odds(obj);
+    BetWsMessage.set_bet_c2_message(obj);
 }
 
 // 设置投注后的数据内容

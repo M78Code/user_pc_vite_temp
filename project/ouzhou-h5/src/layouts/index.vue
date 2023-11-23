@@ -4,20 +4,21 @@
 -->
 <template>
   <q-layout view="lHh Lpr lFf" class="layout_container">
-    <q-page-container id="ouzhou-h5" class="page_container" :style="`height:${+inner_height / 100}rem`">
+    <!-- 顶部菜单 -->
+    <TopMenuWapper />
+    <q-page-container id="ouzhou-h5" class="page_container" >
       
-      <!-- 顶部菜单 -->
-      <TopMenuWapper />
 
       <router-view />
 
       <!-- 投注框 -->
       <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
-      
-       <bet-bar class="bar-top" v-if="tou_show"></bet-bar>
-      <FooterWapper />
 
     </q-page-container>
+    <div class="footer">
+      <bet-bar class="bar-top" v-if="tou_show||true"></bet-bar>
+      <FooterWapper />
+    </div>
   </q-layout>
 
   <!-- 吐司提示框 v-if="toast_show" -->
@@ -193,15 +194,19 @@ if (UserCtr.get_user_token()) {
 </script>
 <style lang="scss" scoped>
 
+.footer{
+  position: sticky;
+  bottom: 0;
+  z-index: 999;
+}
 .bar-top{
-  position: relative;
+    // position: fixed;
     display: flex;
     align-items: center;
     text-align: center;
     height: 56px;
     box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 56px;
+    // bottom: 56px;
     width: 100%;
     z-index: 900;
 }
@@ -217,7 +222,8 @@ if (UserCtr.get_user_token()) {
 .layout_container {
   height: 100%;
   overflow: hidden;
-
+  display: flex;
+  flex-direction: column;
   .layouts_header {
     height: 50px;
 
@@ -242,10 +248,14 @@ if (UserCtr.get_user_token()) {
   }
 
   .page_container {
-    height: calc(100% - 50px);
-    overflow: hidden;
+    // height: calc(100% - 50px);
+    // overflow: hidden;
     // margin-top: 50px;
+    flex: 10;
+    height: 0;
     padding-top: 0 !important;
+    display: flex;
+    flex-direction: column;
     :deep(.q-drawer-container){
       .q-drawer__backdrop {
         background-color: rgba(56, 55, 50, 0.6) !important;

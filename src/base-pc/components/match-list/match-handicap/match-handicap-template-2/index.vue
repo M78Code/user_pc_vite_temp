@@ -301,11 +301,11 @@ function getCurState(hipo) {
     font-size: 14px;
 
     &.up {
-      color: var(--q-gb-t-c-7);
+      color: var(--q-gb-t-c-7)!important;
     }
 
     &.down {
-      color: var(--q-gb-t-c-10);
+      color: var(--q-gb-t-c-10)!important;
     }
   }
 }
