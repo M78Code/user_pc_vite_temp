@@ -203,7 +203,7 @@ const MatchDataWarehouse_H5_List_Common = new MatchDataBase({
 const MatchDataWarehouse_H5_Detail_Common = new MatchDataBase({
   name_code: "MatchDataWarehouse_H5_Detail_Common",
 });
-
+console.log("----------------",MatchDataWarehouse_H5_Detail_Common.list_to_obj)
 /**
  * H5  数据仓库 热门页面的    竞足 和其他热门联赛 不含精选赛事 /如果竞足需要拆分就拆分出去 ，应该不需要
  */

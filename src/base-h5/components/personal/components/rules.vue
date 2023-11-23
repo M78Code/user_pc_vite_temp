@@ -1,7 +1,7 @@
 <template>
     <div class="rule_page">
 
-      <iframe class="rules-iframe" src="http://sports-rules-ouzhou-test.sportxxx3pk.com/#/en_gb" />
+      <iframe class="rules-iframe" src="http://sports-rules-ouzhou-test.sportxxx3pk.com/#/zh_cn" />
 
       <!-- <headerSelect :rule_headle_info ="rule_headle_info"></headerSelect>
       <section>

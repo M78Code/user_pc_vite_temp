@@ -209,8 +209,11 @@ export const useGetResultConfig = () => {
   /**
    * 隐藏日期选择组件
    */
-  const hideSelect = () => {
+  const hideSelect = (value) => {
     state.startTimeShow = false;
+    if (value) {
+      state.model = value
+    }
   };
   // 隐藏冠军赛种输入框内文字
   const input_focus = () => {
@@ -1163,6 +1166,7 @@ export const useGetResultConfig = () => {
    *  new_ 1确认 0取消
    */
   const isSelectConfirm = (new_) => {
+    console.log('链接2',new_)
     state.isSelectConfirmed = new_;
     if (new_ == 1) {
       if (!test_time()) {
@@ -1226,6 +1230,8 @@ export const useGetResultConfig = () => {
     search_hot,
     highlights_input_radio,
     change_sort,
-    get_tr_detail
+    get_tr_detail,
+    click_popup,
+    img_mouseleave
   };
 };

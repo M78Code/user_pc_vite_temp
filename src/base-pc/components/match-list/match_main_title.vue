@@ -2,7 +2,7 @@
   <!-- 滚球标题 -->
   <div :class="['in-play text-left yb-flex-between']">
     <div>
-      {{ $t('menu.match_playing') }}
+      {{ title }}
     </div>
     <!-- 赛事数量 -->
     <!-- 先隐藏了 -->
@@ -16,6 +16,10 @@
       type: [ Number ],
       default: () => 0,
     },
+    title: {
+      type: [ String ],
+      default: () => '',
+    }
   });
 </script>
 

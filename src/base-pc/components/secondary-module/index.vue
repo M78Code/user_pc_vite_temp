@@ -13,7 +13,7 @@
         <!-- 头部 -->
         <header class="header">
           <div class="row items-center justify-between top_tit">
-            <p>personal</p>
+            <p>{{ i18n_t('ouzhou.set.personal') }}</p>
             <p>
               <img
                 :src="compute_local_project_file_path('/image/svg/close.svg')"
@@ -29,7 +29,7 @@
               v-for="item in list_data"
               :key="item.id"
               @click="active_change(item.id)"
-            >{{item.name}}</p>
+            >{{ i18n_t(`ouzhou.set.${item.i18filed}`)}}</p>
           </div>
           <q-card></q-card>
         </header>
@@ -63,12 +63,13 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import rule from "src/base-pc/components/rule/index.vue";
 import announce from "src/base-pc/components/announce/index.vue";
 import matchResults from "src/base-pc/components/results/match-results.vue";
+import { i18n_t } from "src/boot/i18n.js"
 
 //数据列表
 const list_data = reactive([
-  { id: "announcement", name: "Announcement" },
-  { id: "results", name: "Results" },
-  { id: "sportsrules", name: "Sports rules" }
+  { id: "announcement", name: "Announcement", i18filed: 'announcement' },
+  { id: "results", name: "Results", i18filed: 'results' },
+  { id: "sportsrules", name: "Sports rules", i18filed: 'sport_rules' }
 ]);
 /**
  * @description: 改变激活的数据
@@ -97,6 +98,7 @@ function close_page(value) {
   max-width: 1200px !important;
   background: var(--q-gb-t-c-1);
   margin-left: 200px;
+  z-index: 9999 !important;
   .header {
     padding: 10px;
     width: 1200px;
