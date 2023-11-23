@@ -32,7 +32,6 @@
                     </div>
                 </div>
             </div>
-            {{BetViewDataClass.bet_order_status}}-
             <div class="bet-delete bet-icon">
                 <!-- 投注确认中 -->
                 <icon-wapper v-if="BetViewDataClass.bet_order_status == 2" name="icon-sports_snooker" size="12px" color="#FF7000" />
