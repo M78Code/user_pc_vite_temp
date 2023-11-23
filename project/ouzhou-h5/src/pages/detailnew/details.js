@@ -1,4 +1,4 @@
-import { api_match_list } from "src/api/index.js";
+import { api_match_list,api_common } from "src/api/index.js";
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
 import { onMounted, ref, watch, onUnmounted, toRaw } from "vue";
 import {
@@ -479,7 +479,7 @@ export const details_main = (router, route) => {
   );
   // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
   watch(
-    () => match_detail.value.ms,
+    () => match_detail.value?.ms,
     (_new,_old) => {
       let arr_ms = [0, 1, 2, 7, 10, 110];
       if (!arr_ms.includes(Number(_new))) {
