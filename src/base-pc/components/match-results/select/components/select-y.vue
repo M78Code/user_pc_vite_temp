@@ -116,7 +116,7 @@ const props = defineProps({
   },
   sport_id: String, //球类id
   popWidth: String, //宽度
-  hideSelect: Number, // 隐藏下拉框
+  hideSelect: Number, // 隐藏下拉框 
   isTimeChanged: Boolean, // 判断时间是否有变
 });
 const emit = defineEmits([
@@ -292,7 +292,7 @@ onUnmounted(off);
  * @description: 确认
  */
 const confrim = () => {
-  $emit("confirm", 1);
+  emit("confirm", 1);
   if (isSearch.value) {
     is_select.value = true;
     input_val.value = i18n_t("select.filter");
@@ -314,7 +314,7 @@ const confrim = () => {
   if (selectedIds.value.length) {
     active_tournament.value = _.cloneDeep(selectedIds.value);
   }
-  isShow = false;
+  isShow.value = false;
   emit("select_submit", {
     ids: active_tournament.value,
     isHot: Number(is_hot.value),
