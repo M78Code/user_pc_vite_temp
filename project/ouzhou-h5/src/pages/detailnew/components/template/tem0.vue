@@ -4,7 +4,7 @@
  * @Description: 模板id= --用于无盘口&2个/多个投注项玩法
 -->
 <template>
-   <div v-show="false">{{BetData.bet_data_class_version}}</div>
+  <div v-show="false">{{BetData.bet_data_class_version}}{{MatchDetailCalss.details_data_version.version}}</div>
   <div class="temp0 mx-10 box-style">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
@@ -44,7 +44,7 @@
         <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'temp0_ol_ov']" >
           <template v-if="ol?.os == 1">
             <span class="temp0_ol-on-text">{{ ol?.on || ol?.ott }}</span>
-            <span class="temp0_ol-ov-text">{{ get_oddv(ol?.ov/100000) }}</span>
+            <span class="temp0_ol-ov-text">{{compute_value_by_cur_odd_type(ol.ov,'','',MatchDetailCalss.params.sportId)}}</span>
             <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
           </template>
           <span v-if="ol?.os == 2"
@@ -58,6 +58,7 @@
 
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
 import { onMounted, ref, computed } from "vue";
 import olStatus from "../ol_status.vue";
 // import { storage_bet_info } from 'src/public/utils/bet/bet_info.js'

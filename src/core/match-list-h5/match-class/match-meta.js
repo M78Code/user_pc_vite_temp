@@ -83,7 +83,7 @@ class MatchMeta {
     // 设置 元数据计算 流程
     MatchResponsive.set_is_compute_origin(true)
 
-    // 刷新页面 二级菜单丢失， 暂时放在这里 获取真实数据
+    // 获取真实数据
     this.get_target_match_data({md})
 
     // 滚球全部
@@ -176,8 +176,8 @@ class MatchMeta {
 
     // 元数据不作为最终渲染数据 所以不走虚拟计算
     // 元数据只作用域切换菜单时快速显示， 最终显示还是根据接口来
-    this.match_mids = lodash.uniq(mids.slice(0, 20))
-    this.set_match_mids(result_mids.slice(0, 20), match_list.slice(0, 20), false)
+    this.match_mids = lodash.uniq(mids.slice(0, 10))
+    this.set_match_mids(result_mids.slice(0, 10), match_list.slice(0, 10), false)
   }
 
   /**
@@ -478,7 +478,9 @@ class MatchMeta {
     }
     api_match.post_fetch_match_list(params).then((res) => {
       if (+res.code !== 200) return this.set_page_match_empty_status(true);
-      const list = lodash.get(res, 'data', [])
+      const data = lodash.get(res, 'data', [])
+      // 一期只做  足球、篮球、网球、冠军
+      const list = data.filter((t) => ['1','2','5'].includes(t.csid))
       this.handler_match_list_data({ list: list })
     })
   }
@@ -639,7 +641,6 @@ class MatchMeta {
       euid = MenuData.get_euid(mid+''+lv1_mi)
     }
     const params = this.get_base_params(euid)
-    this.clear_match_info()
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
@@ -724,7 +725,6 @@ class MatchMeta {
     }
     this.clear_match_info()
     // this.match_mids = target_mids
-    console.log(target_matchs)
     this.handler_match_list_data({ list: target_matchs, is_virtual: false, is_collect: true, type: 2 })
   }
 
@@ -866,14 +866,17 @@ class MatchMeta {
       MatchResponsive.set_ball_seed_league_count(t)
       // is_show_ball_title 和顺序有关 得放在最终赋值处
       const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
-      return { ...t, is_show_ball_title }
+      return { 
+        ...t, 
+        is_show_ball_title
+      }
     })
 
     const length = lodash.get(this.complete_matchs, 'length', 0)
     this.set_page_match_empty_status(length > 0 ? false : true);
 
     // 计算所需渲染数据 or 不获取赔率
-    is_compute ? this.compute_page_render_list({ scrollTop: 0 }) : this.handle_update_match_info({ list: this.complete_matchs })
+    is_compute ? this.compute_page_render_list({ scrollTop: 0 }) : this.handle_update_match_info({ list: this.complete_matchs, type: 'cover' })
 
   }
 
@@ -901,8 +904,6 @@ class MatchMeta {
 
     // 欧洲版首页 五大联赛 当前渲染的 mids
     this.match_mids = match_datas.map(t =>  t.mid)
-
-    console.log(111111)
 
     // 重置元数据计算流程
     MatchResponsive.set_is_compute_origin(false)
@@ -959,9 +960,9 @@ class MatchMeta {
     if (!res) return
     const { code, data } = res
     if (+code !== 200) return
-    const list = MatchPage.get_obj(data)
+    // const list = MatchPage.get_obj(data)
     // 设置仓库渲染数据
-    this.handle_update_match_info({ list, type: 'cover', warehouse })
+    this.handle_update_match_info({ list: data, type: 'cover', warehouse })
   }
 
   /**

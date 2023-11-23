@@ -35,7 +35,8 @@
       <div class="key-cell" data-num=".">.</div>
       <div class="key-cell" data-num="0">0</div>
       <div class="key-cell del-key" data-num="x">
-        <span class="icon-delete"></span>
+        <img :src="compute_local_project_file_path('/image/svg/jianpan_del_1.svg')" alt="" data-num="x">
+        <!-- <span class="icon-delete"></span> -->
       </div>
     </div>
   </div>
@@ -47,7 +48,7 @@ import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr, i18n_t } from "src/core/index.js";
+import { UserCtr, compute_local_project_file_path, i18n_t } from "src/core/index.js";
 import lodash_ from 'lodash'
 import userData from "src/core/user-config/user-ctr.js"
 
@@ -57,8 +58,6 @@ const money = ref('') //用户输入金额
 const delete_all = ref(false) //键盘出现时，第一次按删除键把金额一次删完
 const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
-
-const user_balance = ref(userData.balance)
 
 const ref_data = reactive({
   DOM_ID_SHOW: false,
@@ -188,13 +187,14 @@ const _handleDecimalPoint = () => {
 
 // MAX键
 const _handmaxKey = () => {
-  let old = BetData.bet_keyboard_config.playOptionsId
-  money.value = BetViewDataClass.bet_min_max_money[old].max_money
+  let ol_id = BetData.bet_keyboard_config.playOptionsId
+  money.value = lodash_.get(BetViewDataClass.bet_min_max_money,`${ol_id}.max_money`,8888) 
 
+  // 这个有问题 用户没有余额的情况下 键盘不能使用 我们要让他可以使用 只是点投注的时候提示他 余额不足
   //超过用户余额显示用户余额
-  if (money.value>user_balance._value){
-    money.value=user_balance._value
-  }
+  // if (money.value > UserCtr.balance){
+  //   money.value = UserCtr.balance
+  // }
 
   BetData.set_bet_amount(money.value)
 }
@@ -241,15 +241,16 @@ const _handleNumberKey = (num) => {
   }
   ol_id = lodash_.get(BetData.bet_keyboard_config,ol_type)
   // let max_money = lodash_.get(BetViewDataClass,'bet_min_max_money[ol_id].max_money')
-  let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
+  let max_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${ol_id}.max_money`,8888)
   // 显示最大金额
   if (money_ && +money_ >= +max_money) {
     money_ = max_money
   }
-  //超过用户余额显示用户余额
-  if (money_>user_balance._value){
-    money_=user_balance._value
-  }
+  //超过用户余额显示用户余额 
+  // 这个有问题 用户没有余额的情况下 键盘不能使用 我们要让他可以使用 只是点投注的时候提示他 余额不足
+  // if (money_ > UserCtr.balance){
+  //   money_ = UserCtr.balance
+  // }
   money.value = money_
   BetData.set_bet_amount(money_)
 }
@@ -289,10 +290,10 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .key-row{
-  border-bottom: 1px solid var(--q-gb-t-c-5);
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
 }
 .key-cell{
-  border-right: 1px solid var(--q-gb-t-c-5);
+  border-right: 1px solid var(--q-gb-bd-c-1);
 }
 .keyboard {
   height: 185px;
@@ -301,7 +302,7 @@ onUnmounted(() => {
   font-weight: 600;
   color: var(--q-gb-bg-c-13);
   font-family: "DIN";
-  border-top: 1px solid var(--q-gb-t-c-5)
+  border-top: 1px solid var(--q-gb-bd-c-1)
 }
 .key-cell {
   flex: 1;
@@ -309,19 +310,17 @@ onUnmounted(() => {
   line-height: 46px;
   text-align: center;
   background: var(--q-bg-c-2);
+  font-size: .22rem;
+  font-weight: 500;
 }
 .key-cell {
   &:first-child { // 左侧第一排MAX的样式
-    background: var(--q-gb-bd-c-1);
+    background: var(--q-gb-bg-c-10);
     color: var(--q-gb-t-c-4);
+    font-size: .2rem;
   }
   &:last-child {
     margin-right: 0;
-  }
-  &.del-key {
-    background: cadetblue #ffffff0D no-repeat center center;
-    opacity: 0.9;
-    color: #B8B8B8;
   }
   &.shadow-show {
     color: #595959!important;

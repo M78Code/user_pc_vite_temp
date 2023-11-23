@@ -24,6 +24,7 @@ import { defineComponent, ref, reactive, watch,computed  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { MenuData } from 'src/core/'
 import BaseData from "src/core/base-data/base-data.js";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 const router = useRouter();
 // 底部菜单集合
@@ -40,12 +41,17 @@ const get_route_path = computed(() => {
 const tab_active = ref(get_route_path);
 
 const jump_page = (item) => {
+
+  if (tab_active.value === item.route) return
+
   tab_active.value = item.route
   
   // 设置一级菜单 注： 普通赛果是28, 投注赛果是29， 欧洲版不考虑投注
   VirtualList.set_is_show_ball(item.route === '/matchResults' ? false : true)
   item.type && MenuData.set_current_lv1_menu(item.type)
   BaseData.set_is_emit(true)
+
+  MatchMeta.clear_match_info()
   
   router.push(item.route)
 }
@@ -55,13 +61,13 @@ const jump_page = (item) => {
 
 <style lang="scss" scoped>
 .footer_menu {
+  // position: fixed;
   position: relative;
   display: flex;
   align-items: center;
   text-align: center;
   height: 56px;
   box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
-  position: fixed;
   bottom: 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 1);

@@ -20,6 +20,14 @@ const router = createRouter({
           },
         },
         {
+          path: "/champion",
+          name: "champion",
+          component: () => import("../pages/champion/index.vue"),
+          meta: {
+            keepAlive: true, // 需要缓存
+          },
+        },
+        {
           path: "/match",
           name: "matchList",
           component: () => import("../pages/match-page/index.vue"),
@@ -169,7 +177,7 @@ const router = createRouter({
  * 路由切换清除默认球种
  */
 router.beforeEach((to, from, next) => {
-  if(to.name !== from.name){
+  if(to.name !== from.name && to.name !== "category"){
     SessionStorage.remove("nemu-h5");
     MenuData.clear_menu_id();
   }
