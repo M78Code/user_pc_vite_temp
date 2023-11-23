@@ -29,7 +29,7 @@
               v-if="ol_data.oid && ol_data.os != 3"
               :key="ol_index"
               class="bet-col"
-              style="height: 35px !important"
+              style="height: 46px !important"
             >
               <bet-item v-if="is_mounted && ol_data.oid" :ol_data="ol_data" />
             </div>
@@ -59,7 +59,7 @@ const props = defineProps({
     default: null,
   },
 });
-const match = MatchListData.list_to_obj.mid_obj[props.mid + "_"];
+const match = MatchListData.get_quick_mid_obj(props.mid);
 const is_mounted = ref(true)
 const vx_main_menu_toggle = ref('')
 /**
@@ -75,7 +75,7 @@ function compute_match_all_handicap_data_champion(match) {
       let hl_obj = lodash.get(item, "hl", {});
       if (hl_obj.hid) {
         hl_obj.end_time = time_conversion(hl_obj.hmed);
-        hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid).hpn
+        hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid)?.hpn
         main_handicap_list.push(hl_obj);
       }
     });

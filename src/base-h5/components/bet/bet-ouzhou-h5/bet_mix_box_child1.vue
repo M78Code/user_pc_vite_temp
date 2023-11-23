@@ -4,7 +4,7 @@
 -->
 
 <template>
-  {{ BetData.bet_data_class_version }} 
+  <div v-if="false">{{ BetData.bet_data_class_version }} </div>
     <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
@@ -22,7 +22,6 @@
                             <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
                         </div>
                     </div>
-                    {{items.red_green}}--
                     <div class="show_img" v-if="items.red_green" >
                       <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/up.png`" alt=""/>
                       <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/down.png`" alt=""/>
