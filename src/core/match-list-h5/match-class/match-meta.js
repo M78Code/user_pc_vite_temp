@@ -478,7 +478,9 @@ class MatchMeta {
     }
     api_match.post_fetch_match_list(params).then((res) => {
       if (+res.code !== 200) return this.set_page_match_empty_status(true);
-      const list = lodash.get(res, 'data', [])
+      const data = lodash.get(res, 'data', [])
+      // 一期只做  足球、篮球、网球、冠军
+      const list = data.filter((t) => ['1','2','5'].includes(t.csid))
       this.handler_match_list_data({ list: list })
     })
   }
