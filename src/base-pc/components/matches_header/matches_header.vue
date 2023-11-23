@@ -10,15 +10,19 @@
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
 						:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
 						{{ item.label }}
-					</div>
-					<!-- 点击联赛后出现的时间筛选 -->
-					<div v-if=" MenuData.mid_menu_result.filter_tab === 4002" class="leagues_filrer" @click.stop="set_show_leagues">
-						Next 24 Hours
-						<div class="yb-icon-arrow"></div>
-						<div class="leagues_filrer_item" v-show="show_leagues">
-							<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
-								{{ item.title }}
-								<div class="leagues_filrer_item_line" v-if="item.value !== ouzhou_time_list[ouzhou_time_list.length -1].value"></div>
+						<!-- 点击联赛后出现的时间筛选 -->
+						<div 
+							v-if="MenuData.mid_menu_result.filter_tab === 4002 && item.value === 4002"
+							class="leagues_filrer" 
+							@click.stop="set_show_leagues"
+						>
+							Next 24 Hours
+							<span class="yb-icon-arrow"></span>
+							<div class="leagues_filrer_item" v-show="show_leagues">
+								<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
+									{{ item.title }}
+									<div class="leagues_filrer_item_line" v-if="item.value !== ouzhou_time_list[ouzhou_time_list.length -1].value"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -263,6 +267,7 @@ const checked_current_tab = payload => {
 		.checked {
 			border-bottom: 3px solid var(--q-gb-bd-c-1);
 			color: var(--q-gb-t-c-2);
+			display: flex;
 		}
 	}
 }
@@ -271,8 +276,7 @@ const checked_current_tab = payload => {
 	position: relative;
 	display: flex;
 	align-items: center;
-	margin-left: -28px;
-	margin-top: -8px;
+	margin: -8px 0px 0px 12px !important;
 	color: #fff !important;
 	font-weight: 400 !important;
 	font-size: 14px !important;
@@ -282,6 +286,7 @@ const checked_current_tab = payload => {
 		transform: rotate(90deg) !important;
 		width: 7px !important;
 		height: 7px !important;
+		display: inline-block;
 	}
 	.leagues_filrer_item {
 		position: absolute;
