@@ -25,7 +25,7 @@
         </div>
         <div class="odds_box">
           <div class="top-line"></div>
-          <div class="odds_item" v-for="ol_data in col_ols_data[index]">
+          <div class="odds_item" v-for="ol_data in col_ols_data[index]"  :key="ol_data.oid + '_' + ol_data._hpid + '_' + ol_data._ot">
             <betItem :ol_data="ol_data"></betItem>
           </div>
         </div>

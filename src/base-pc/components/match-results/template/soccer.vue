@@ -108,7 +108,7 @@
             self="center middle"
             :content-style="tooltip_style"
           >
-            <template v-if="lang == 'vi'"> Phạt góc cả trận </template>
+            <template v-if="UserCtr.lang == 'vi'"> Phạt góc cả trận </template>
             <!-- 全场角球 -->
             <template v-else>
               {{ i18n_t("icon_tips.overall") }} {{ i18n_t("list.corner") }}
@@ -146,7 +146,7 @@
             self="center middle"
             :content-style="tooltip_style"
           >
-            <template v-if="lang == 'vi'"> Bàn thắng cả trận </template>
+            <template v-if="UserCtr.lang == 'vi'"> Bàn thắng cả trận </template>
             <!-- 全场进球 -->
             <template v-else>
               {{ i18n_t("icon_tips.overall")
@@ -188,7 +188,7 @@
               <div class="table-col">
                 <div class="browser" :class="{ del: index == activeIndex }" ></div>
                 <div class="time-wrap">
-                  <div> {{ formatTime( item.matchTime, lang == "vi" ? "hh:MM dd/mm/yyyy" : "yyyy-mm-dd hh:MM" ) }} </div>
+                  <div> {{ formatTime( item.matchTime, UserCtr.lang == "vi" ? "hh:MM dd/mm/yyyy" : "yyyy-mm-dd hh:MM" ) }} </div>
                   <div class="match-stage" :class="item.matchStatus == 1 ? 'roll' : 'cancel'"
                     v-if=" format_mmp(item.matchPeriodId, item.matchStatus) != '' "
                   >
@@ -554,6 +554,7 @@ export default {
   },
   data() {
     return {
+      UserCtr,
       UserCtrInfo:UserCtr.user_info.merchantEventSwitchVO,
       tab_list: [
         // { title: i18n_t("replay_video.all"), code: "0" },
@@ -566,6 +567,7 @@ export default {
       is_expand_video_list: false,
       slideWidth: "1000px",
       slide: "style",
+      tooltip_style:'', // 不知道干嘛的 先这样写 自己改
       lorem:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo provident incidunt ducimus iusto perferendis porro earum. Totam, numquam?",
     };
