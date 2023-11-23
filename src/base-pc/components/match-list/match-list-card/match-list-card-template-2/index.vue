@@ -47,6 +47,7 @@ const props = defineProps({
 });
 // 卡片样式对象
 let card_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.card_key);
+console.log(card_style_obj, props.card_key, MatchListCardDataClass,  'card_style_obj')
 // 存储一个变量，减少对card_style_obj的重复访问和判断
 let card_type = ref(card_style_obj?.card_type);
 watch(() => MatchListCardDataClass.list_version.value, () => {
