@@ -36,7 +36,6 @@ class BetWsMessage {
     cmd_obj.hid = obj.hid;
     cmd_obj.mid = obj.mid;
     cmd_obj.marketLevel = obj.marketLevel;
-    cmd_obj.esMarketLevel = obj.esMarketLevel;
     if (cmd_obj.hid != "" && cmd_obj.mid != "") {
      this.send_msg(cmd_obj);
     }
