@@ -70,7 +70,7 @@ import { dateWeekMatchesFormat ,farmatSportImg } from '../utils';
 import { MenuData } from "src/core/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
-
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
@@ -135,10 +135,6 @@ const changeDatetab = (item, index) => {
     MatchMeta.set_origin_match_data(store.menu_time)
     emit("changeDate", item.val);
 };
-onMounted(() => {
-    setDefaultData(MenuData.menu_mi.value || '101');//默认足球
-    store.curSelectedOption = store.selectOptions[0]
-})
 
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());
@@ -154,13 +150,20 @@ const setDefaultData = (val) => {
     //球种改变设置今日
     // MenuData.set_date_time(week[0].val);
     store.menu_time = week[0]
+    store.second_tab_index = 0;
+    scrollDateRef.value && scrollDateRef.value.scrollTo(0, "start-force");
 }
-watch(() => MenuData.menu_mi.value, () => {
-    setDefaultData(MenuData.menu_mi.value)
-}, { immediate: true })
 
 watch(() => store.areaList, () => {
     areaListChange(store.areaList[0], 0)
+})
+onMounted(() => {
+    setDefaultData(MenuData.menu_mi.value || '101');//默认足球
+    store.curSelectedOption = store.selectOptions[0]
+    useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,setDefaultData)
+})
+onUnmounted(() => {
+    useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,setDefaultData).off
 })
 
 /**
