@@ -15,7 +15,7 @@
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
             <div>
               <div v-if="!col.icon">
-                <span v-if="col.field !== 'name'"
+                <span v-if="col.field !== 'name'" :class="detail_info?.course === col.label ? 'heightLight' : ''"
                       :style="{ 'line-height': '30px', color: ['p', 't'].includes(col.field) ? '#ff7000' : '#8A8986' }">
                     {{ col.label }}
                 </span>
@@ -415,7 +415,8 @@ watch(
     console.log("props.score_list--watch",val)
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
-    if(detail_info.msc_obj?.S7){
+    if(detail_info.msc_obj?.S7 && detail_info.csid == 1){
+      console.log("加时赛")
       //  加时赛
       columns.value.push({
         name: "x",
@@ -426,7 +427,8 @@ watch(
         headerStyle: { width: "33px", color: "#ff7000" },
       })
     }
-    if(detail_info.msc_obj?.S107){
+    if(detail_info.msc_obj?.S107 && detail_info.csid == 1){
+      console.log("加时赛")
       //  点球大战
       columns.value.push({
         name: "y",
