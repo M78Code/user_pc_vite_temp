@@ -883,6 +883,11 @@ class MenuData {
     return this.mid_menu_result.filter_tab == 1002
   }
 
+  // 是否是 leagues
+  is_leagues() {
+    return this.mid_menu_result.filter_tab == 4002
+  }
+
   //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
   //内部方法
   _is_cur_mi(mi, param) {
