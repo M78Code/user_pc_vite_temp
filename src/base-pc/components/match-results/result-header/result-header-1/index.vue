@@ -2,6 +2,7 @@
   
 <template>
 
+<div>
   <div class="top-menu-content">
         <!-- 体育 -->
         <!-- <span class="label">{{ i18n_t("results.sport") }}</span> -->
@@ -12,7 +13,8 @@
           use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
-  <div class="search-header">
+      <q-separator class="divider" color="#F2F5F8" inset />
+    <div class="search-header">
     <div class="wrap-select">
       
       <!-- 冠军球种才展示这个下拉选择框 -->
@@ -134,6 +136,7 @@
       </div>
     </div>
   </div>
+</div>
 
 
 </template>
@@ -236,10 +239,10 @@ function refresh() {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "./result-header.scss";
 .top-menu-content {
-    height: 50px;
+    height: 40px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
     background: var(--q-gb-bg-c-11);
     color: var(--q-gb-t-c-6);
@@ -257,10 +260,18 @@ function refresh() {
         }
   };
 /* ************** 筛选条件 *************** -S */
+.divider{
+  display: inline-block;
+  width: 1200px;
+  height: 6px;
+  margin: 0;
+}
 .search-header {
   display: flex;
   align-items: center;
   padding: 28px 20px 14px 20px;
+  border-bottom:1px solid #ff7000;
+  
 
   /* ************** select *************** -S */
   .wrap-select {

@@ -34,7 +34,7 @@
           <q-card></q-card>
         </header>
         <!-- 内容 -->
-        <section>
+        <section class="secondary_content">
           <q-tab-panels v-model="LayOutMain_pc.layout_secondary_active" animated>
           <!-- 公告 -->
             <q-tab-panel name="announcement">
@@ -89,13 +89,19 @@ function close_page(value) {
 }
 </script>
 <style lang="scss">
-.secondary_module .q-dialog__inner .dialog_content {
-  min-width: 1200px !important;
+//.q-dialog__inner .dialog_content
+.dialog_content{
+  padding-left: 320px;
+}
+.secondary_module  {
+  max-width: 1200px !important;
   background: var(--q-gb-t-c-1);
+  margin-left: 200px;
   .header {
     padding: 10px;
-    width: 100%;
+    width: 1200px;
     height: 80px;
+    border-bottom: 1px solid #ff7000;
     background: url($SCSSPROJECTPATH+"/image/png/secondary_bg.png") no-repeat
       center / cover;
     .top_tit {
@@ -119,6 +125,10 @@ function close_page(value) {
   .q-tab-panel{
     padding: 0 !important;
 }
+    .secondary_content{
+      height:calc(100% - 80px);
+      width: 1200px;
+    }
 }
 ::v-deep.q-tab-panel{
   padding: 0 ;
