@@ -32,9 +32,9 @@
                         <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}</div>
                       </div>
                       <!-- 绿升icon -->
-                      <img class="hps_img" src="/ouzhou-h5/image/list/down.png" alt="" v-if="item.red_green == 'red_down'">
+                      <img class="hps_img" src="/ouzhou-h5/image/list/up.png" alt="" v-if="item.red_green == 'red_up'">
                       <!-- 红降icon -->
-                      <img class="hps_img" src="/ouzhou-h5/image/list/up.png" alt="" v-else>
+                      <img class="hps_img" src="/ouzhou-h5/image/list/down.png" alt="" v-else>
                       <!--红色箭头-->
                       <!-- <div class="top" v-if="item.red_green == 'red_down'">
                         <div class="jiantou one"></div>
@@ -78,6 +78,7 @@
     width: 9px;
     height: 18px;
     margin-top: 6px;
+    transform: rotate(180deg);
   }
   .jiantou{
     width: 0;
@@ -116,7 +117,7 @@
     margin-left: 4px;
   }
   .red-color{
-    color: var(--q-gb-bd-c-8) !important;
+    color: var(--q-gb-t-c-17) !important;
   }
   .red-nei{
     background: var(--q-gb-bd-c-8) !important;
@@ -125,7 +126,7 @@
      border: 1px solid var(--q-gb-bd-c-8) !important;
   }
   .green-color{
-    color: var(--q-gb-t-c-2) !important;
+    color: var(--q-gb-t-c-16) !important;
   }
   .green{
     border: 1px solid var(--q-gb-t-c-16) !important;
