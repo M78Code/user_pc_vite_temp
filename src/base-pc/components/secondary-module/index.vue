@@ -112,18 +112,7 @@ function close_page(value) {
       .active {
         -color: var(--q-gb-t-c-2);
         color: #ff7000;
-        position: relative;
-        &::before {
-          content: "";
-          position: absolute;
-          display: inline-block;
-          width: 40px;
-          height: 2px;
-          -background: var(--q-gb-bg-c-1);
-          background: #ff7000;
-          bottom: -8px;
-          left: 0;
-        }
+        border-bottom:2px solid #ff7000;
       }
     }
   }

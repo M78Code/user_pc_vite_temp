@@ -39,14 +39,24 @@ const last_label = computed(() => {
 
 
 // 面包屑导航第一项展示
-
+/*
+* 面包屑导航第一项内容展示
+* 显示左侧菜单项或这头部导航项
+* 页面刷新路由重复添加一次，解决该问题
+* 48448 【SIT】【欧洲版二期】【PC】经常访问，足球，详情页面，没有菜单导航
+* */
 const breadCrumbs_firstOne = function (){
     // console.log(BaseData.left_menu_base_mi,"==BaseData.left_menu_base_mi")
     // console.log(BaseData.menus_i18n_map,"==BaseData.menus_i18n_map")
     // console.log(MenuData.left_menu_result,"==MenuData.left_menu_result")   // 表示选中的菜单
-    const { lv1_mi } = MenuData.left_menu_result
+    const { lv1_mi = void (0) } = MenuData.left_menu_result
     let firstOneName = ''
-    if(!!lv1_mi && MenuData.left_menu_result.menu_type === 1){
+    // 经常访问菜单类型为0
+    /*
+    * 经常访问菜单类型为0
+    * 全部菜单类型为1
+    * */
+    if(!!lv1_mi){
         firstOneName = BaseData.menus_i18n_map[lv1_mi]
     }else {
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))

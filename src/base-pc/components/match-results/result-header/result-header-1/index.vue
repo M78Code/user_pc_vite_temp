@@ -1,7 +1,7 @@
 
   
 <template>
-<div>
+
   <div class="top-menu-content">
         <!-- 体育 -->
         <!-- <span class="label">{{ i18n_t("results.sport") }}</span> -->
@@ -12,7 +12,7 @@
           use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
-    <div class="search-header">
+  <div class="search-header">
     <div class="wrap-select">
       
       <!-- 冠军球种才展示这个下拉选择框 -->
@@ -135,7 +135,7 @@
     </div>
   </div>
 
-  </div>
+
 </template>
 <script setup>
 import {  ref,computed,onMounted } from 'vue';
@@ -236,7 +236,7 @@ function refresh() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./result-header.scss";
 .top-menu-content {
     height: 50px;

@@ -40,6 +40,8 @@ const set_bet_cancel = () => {
 // 保留投注项
 const set_retain_selection = () => {
     BetViewDataClass.set_bet_order_status(1)
+    BetData.set_bet_amount(0)
+    BetViewDataClass.set_bet_before_message({})
     setTimeout(() => {
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     }, 200);

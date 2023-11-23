@@ -485,7 +485,7 @@ export const details_main = (router, route) => {
       // 赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
       else {
         // ms变更时才调用
-        if (_new != _old ) {
+        if (_new != _old && _old) {
           // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
           detail_init()
         }
