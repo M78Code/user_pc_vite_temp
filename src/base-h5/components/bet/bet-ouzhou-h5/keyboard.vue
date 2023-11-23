@@ -58,8 +58,6 @@ const delete_all = ref(false) //键盘出现时，第一次按删除键把金额
 const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
 
-const user_balance = ref(userData.balance)
-
 const ref_data = reactive({
   DOM_ID_SHOW: false,
   active: 1,    //投注项状态
@@ -188,13 +186,14 @@ const _handleDecimalPoint = () => {
 
 // MAX键
 const _handmaxKey = () => {
-  let old = BetData.bet_keyboard_config.playOptionsId
-  money.value = BetViewDataClass.bet_min_max_money[old].max_money
+  let ol_id = BetData.bet_keyboard_config.playOptionsId
+  money.value = lodash_.get(BetViewDataClass.bet_min_max_money,`${ol_id}.max_money`,8888) 
 
+  // 这个有问题 用户没有余额的情况下 键盘不能使用 我们要让他可以使用 只是点投注的时候提示他 余额不足
   //超过用户余额显示用户余额
-  if (money.value>user_balance._value){
-    money.value=user_balance._value
-  }
+  // if (money.value > UserCtr.balance){
+  //   money.value = UserCtr.balance
+  // }
 
   BetData.set_bet_amount(money.value)
 }
@@ -241,15 +240,16 @@ const _handleNumberKey = (num) => {
   }
   ol_id = lodash_.get(BetData.bet_keyboard_config,ol_type)
   // let max_money = lodash_.get(BetViewDataClass,'bet_min_max_money[ol_id].max_money')
-  let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
+  let max_money = lodash_.get(BetViewDataClass.bet_min_max_money,`${ol_id}.max_money`,8888)
   // 显示最大金额
   if (money_ && +money_ >= +max_money) {
     money_ = max_money
   }
-  //超过用户余额显示用户余额
-  if (money_>user_balance._value){
-    money_=user_balance._value
-  }
+  //超过用户余额显示用户余额 
+  // 这个有问题 用户没有余额的情况下 键盘不能使用 我们要让他可以使用 只是点投注的时候提示他 余额不足
+  // if (money_ > UserCtr.balance){
+  //   money_ = UserCtr.balance
+  // }
   money.value = money_
   BetData.set_bet_amount(money_)
 }
