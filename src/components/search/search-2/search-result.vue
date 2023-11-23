@@ -272,7 +272,7 @@ function league_click(match) {
 	const { csid } = match.matchList[0]
 	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
-	PageSourceData.set_route_name('search')
+	// PageSourceData.set_route_name('search')
 }
 
 const timer = ref(null)
