@@ -64,6 +64,7 @@
             "no_data": "No Data"
         },
         "set": {
+         "personal": "Personal",
          "announcement": "Announcement",
          "results": "Results",
          "sport_rules": "Sport Rules"
