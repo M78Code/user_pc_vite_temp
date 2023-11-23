@@ -28,6 +28,7 @@
     
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/core/constant/index.js'
+    import {get_match_template_id} from '../../match-handle-data.js'
     import MenuData from "src/core/menu-pc/menu-data-class.js";
 
   /**
@@ -171,9 +172,8 @@
       // 联赛卡片下的所有赛事ID列表
       league_card_mids_arr[card_key] = league_card_mids_arr[card_key] || []
       league_card_mids_arr[card_key].push(match.mid)
-
       // 赛事表征数据
-      let match_style_obj =  compute_style_template_by_matchinfo(match, 18)
+      let match_style_obj =  compute_style_template_by_matchinfo(match, get_match_template_id(match),true)
       all_card_obj[match.mid+'_'] = match_style_obj
 
     })

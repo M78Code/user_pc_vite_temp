@@ -17,13 +17,16 @@
   >
     <div v-if="is_mounted" :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
       <!-- 赛事状态 | 赛种类型 -->
-      <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(
-        card_type
-      )
+      <play-match-type v-if="['sport_title', 'play_title', 'no_start_title'].includes(card_type)
         " :card_style_obj="card_style_obj" use_component_key="PlayMatchType_2" />
       <!-- 联赛标题 -->
       <play-match-league v-else-if="card_type == 'league_title' && card_style_obj?.mid
         " :card_style_obj="card_style_obj" :key="card_type" />
+        <!-- 冠军联赛标题 -->
+      <match-type-champion
+        v-else-if="card_type == 'champion_league_title'"
+        :card_style_obj="card_style_obj"
+      />
       <!-- 赛事卡片 -->
       <template v-else-if="card_type == 'league_container'">
         <!-- 数据加载状态 -->
@@ -38,6 +41,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from "src/base-pc/components/match-list/play-match-type/index.js";
 import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from "src/base-pc/components/match-list/play-match-league/index.js";
 import { MatchCardFullVersionWapper as MatchCard } from "src/base-pc/components/match-list/match-card/index.js";
+import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from "src/base-pc/components/match-list/match-type-champion/index.js";
 
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
