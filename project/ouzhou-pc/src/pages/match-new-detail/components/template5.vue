@@ -5,6 +5,7 @@
 -->
 
 <template>
+    <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <div class="temp-simple">
         <div
             v-for="(value, key) in matchInfo"
@@ -18,7 +19,7 @@
                 style="width: 200%"
                 @click="betItemClick(key, value[0])"
                 :class="{
-                    'temp-active': value[0].oid === current_ol.oid,
+                    'temp-active': BetData.bet_oid_list.includes(value[0].oid), 
                     temp_grid_item: true,
                 }"
             >
@@ -41,8 +42,9 @@
                     v-for="o in value"
                     :class="{
                         temp_grid_item: true,
-                        'temp-active': o.oid === current_ol.oid,
+                        'temp-active':BetData.bet_oid_list.includes(o.oid),
                     }"
+                    :style="{width:value.length>1?'100%':'200%'}"
                     :key="o.oid"
                     @click="betItemClick(key, o)"
                 >
@@ -65,6 +67,7 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import betItem from "./bet-item-list-new-data.vue";
@@ -92,7 +95,7 @@ const matchInfo = computed(() => {
                 if (!['340','359','383'].includes (props.match_info.hpid)) {
                     i.on = item.hv;
                 }
-                
+
                 if (!obj[i.on]) {
                     obj[i.on] = [];
                     obj[i.on] = [i];
@@ -102,6 +105,7 @@ const matchInfo = computed(() => {
             });
         }
     });
+    // console.log(11111111111,obj)
     return obj;
 });
 const emit = defineEmits(["betItemClick"]);

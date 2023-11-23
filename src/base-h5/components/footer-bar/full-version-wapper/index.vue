@@ -26,9 +26,6 @@ export default {
       registered_component_key,
     };
   },
-  mounted() {
-    console.log(this.$slots, '1111111')
-  },
   methods: {
   },
 };

@@ -6,23 +6,21 @@
 <template>
   <div class="time_play_page">
     <section>
-      <div class="item" v-for="item in time_events" :key="item.mid" >
-      <div class="content" @click="toDetails(item)">
-        <!-- 标题 -->
-        <div class="title">
-          <SportIcon size="13" :sport_id="item.icon" />
-          <span class="span">{{ item.title }}</span>
-        </div>
-        <!-- 赛事名称 -->
-        <div class="game-name">
-          <div>{{ item.mhn }}</div>
-          <div>{{ item.man}}</div>
-        </div>
+      <div class="item" v-for="item in time_events" :key="item.mid" @click="toDetails(item)">
+       <!-- 标题 -->
+      <div class="title">
+        <SportIcon size="13" :sport_id="item.icon" />
+        <span class="span">{{ item.title }}</span>
       </div>
-        <template v-if="item">
-          <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" />
-        </template>
+      <!-- 赛事名称 -->
+      <div class="game-name">
+        <div>{{ item.mhn }}</div>
+        <div>{{ item.man}}</div>
       </div>
+      <template v-if="item">
+        <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" />
+      </template>
+    </div>
     </section>
   </div>
 </template>
