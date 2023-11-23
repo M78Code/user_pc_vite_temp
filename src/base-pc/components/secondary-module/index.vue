@@ -29,7 +29,7 @@
               v-for="item in list_data"
               :key="item.id"
               @click="active_change(item.id)"
-            >{{ i18n_t(`ouzhou.set.${item.id}`)}}</p>
+            >{{ i18n_t(`ouzhou.set.${item.i18filed}`)}}</p>
           </div>
           <q-card></q-card>
         </header>
@@ -67,9 +67,9 @@ import { i18n_t } from "src/boot/i18n.js"
 
 //数据列表
 const list_data = reactive([
-  { id: "announcement", name: "Announcement" },
-  { id: "results", name: "Results" },
-  { id: "sport_rules", name: "Sports rules" }
+  { id: "announcement", name: "Announcement", i18filed: 'announcement' },
+  { id: "results", name: "Results", i18filed: 'results' },
+  { id: "sportsrules", name: "Sports rules", i18filed: 'sport_rules' }
 ]);
 /**
  * @description: 改变激活的数据
