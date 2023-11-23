@@ -11,7 +11,8 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap?items.handicap:items.home}}</div> <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap?items.handicap:items.home}}</div> 
+                      <span class="text-one-span">{{ items.marketValue }}</span></div>
                       <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
                     </div>
@@ -122,9 +123,9 @@
   .nonebox4-content-left-content-text-three{
     font-size: 0.13rem;
     color: var(--q-gb-t-c-3);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-15);

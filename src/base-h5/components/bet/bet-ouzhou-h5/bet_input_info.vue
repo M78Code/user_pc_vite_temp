@@ -210,4 +210,7 @@ const set_ref_data_bet_money = () => {
       
     }
   }
+  .limit-txt {
+    color: var(--q-gb-t-c-3);
+  }
 </style>
