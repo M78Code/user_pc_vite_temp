@@ -38,16 +38,16 @@
           <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
         </div>
         <!-- 头部Featured Matches模块 -->
-          <FeaturedMatches v-if="MenuData.is_featured()"/>
-      
+        <FeaturedMatches v-if="MenuData.is_featured()" />
+
         <!-- </template> -->
 
         <!-- 滚球标题 -->
         <In-Play :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
-        <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
+        <div v-for="card_key in match_list_card_key_arr" :key="()=>Math.random()" 
           :class="`card_key_${card_key}`">
-          <match-list-card :card_key="card_key" />
+          <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`" />
         </div>
         <template v-slot:after>
           <div style="height: 15px"></div>
@@ -73,7 +73,7 @@
   </div>
 </template>
 <script>
-import { onMounted, onActivated, onUnmounted, ref, watch, getCurrentInstance } from "vue";
+import { onMounted, onActivated, onUnmounted, ref, watch, getCurrentInstance,nextTick } from "vue";
 import { IconWapper } from "src/components/icon";
 import LoadData from "src/components/load_data/load_data.vue";
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
@@ -147,21 +147,20 @@ export default {
     const matches_15mins_list = ref([]);
     const { ws_destroyed: ws_destroyed_common, set_active_mids } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
-    
+
     // 赛事数量
     const total_match_count = ref(0)
 
     // const coom_soon_state = ref(false);
 
     const match_list_top = ref("76px");
-
-    const { proxy } = getCurrentInstance();
-
     let mitt_list = null
-
     const MatchListCardDataClass_match_list_card_key_arr = () => {
-      match_list_card_key_arr.value =
-        MatchListCardDataClass.match_list_card_key_arr;
+      // match_list_card_key_arr.value.length = 0;
+      nextTick(() => {
+        match_list_card_key_arr.value =
+          MatchListCardDataClass.match_list_card_key_arr;
+      })
     };
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
@@ -183,12 +182,11 @@ export default {
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
       MatchListCardDataClass_match_list_card_key_arr();
-      proxy?.$forceUpdate();
     });
     const get_data_info = async (type = 0) => {
       // 判断是不是首页下的 featured 页面
       if (MenuData.is_featured() || type == 1001) {
-        const { mins15_list= [], match_count = 0 } = await init_home_matches();
+        const { mins15_list = [], match_count = 0 } = await init_home_matches();
         total_match_count.value = match_count;
         matches_15mins_list.value = mins15_list
       }

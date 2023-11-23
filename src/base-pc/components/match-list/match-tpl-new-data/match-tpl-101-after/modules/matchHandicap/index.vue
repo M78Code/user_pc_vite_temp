@@ -2,8 +2,8 @@
     <div>
         <div class="odds_td_box flex item-center">
             <div v-for="item in common_td_list" :key="item.hid">
-                <div class="commoon-td-match-card">
-                    <div v-show="item.ol.length === 3" class="td-match-card din_font" v-for="option in item.ol"
+                <div class="commoon-td-match-card" v-show="item.ol.length === 3">
+                    <div  class="td-match-card din_font" v-for="option in item.ol"
                         :key="option.oid" @click="checked_current_td({ payload: card_info, hps: item, ol: option })">
                         <div class="odds_box" :class="{
                             'up': option.is_up_or_down === 1,
@@ -18,8 +18,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="special-td-match-card">
-                    <div class="td-match-card special din_font" v-show="item.ol.length === 2" v-for="option in item.ol"
+                <div class="special-td-match-card"  v-show="item.ol.length === 2">
+                    <div class="td-match-card special din_font" v-for="option in item.ol"
                         :key="option.oid" @click="checked_current_td({ payload: card_info, hps: item, ol: option })"
                         :class="{ 'checked': option.oid == current_check_betId }">
                         <!-- <img class="vector" src="../../assets/images/vector.png" alt="" v-show="item.hs"> -->
