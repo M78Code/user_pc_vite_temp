@@ -175,9 +175,16 @@ function compute_quanbu_euid() {
  * 解析 新接口返回值  冠军页面
  */
 function resolve_mew_menu_res_mi_400() {
-    mi_400_obj.value = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
+    let mi_400_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
         sl: [],
     };
+
+    mi_400_obj.value = mi_400_obj
+
+    mi_100_arr.value = mi_400_obj.sl.map(item => {
+        item.mif = (item.mi - 400 + 100)
+        return item
+    } )
 }
 /**
  *全部 数量计算 冠军
