@@ -49,9 +49,9 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, UserCtr } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
+import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 const matches_featured_list = ref([])
 const router = useRouter();
-import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 
 
 const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common)

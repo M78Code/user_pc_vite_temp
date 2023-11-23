@@ -50,7 +50,7 @@
                   class="odds-title-li"
                 >
                   <span
-                    v-if="![0, 1, 2, 3, 7, 10].includes(item.hpt)"
+                    v-if="![0, 1, 2, 3, 7, 10,18].includes(item.hpt)"
                     class="handicap-value-text"
                     >{{ opt.osn }}</span
                   >
@@ -119,6 +119,14 @@
               :current_ol="current_ol"
               @betItemClick="betItemClick"
             />
+             <!-- 模板18 -->
+             <template18
+              v-if="[18].includes(item.hpt)"
+              :match_info="item"
+              :hpid="item.hpid"
+              :current_ol="current_ol"
+              @betItemClick="betItemClick"
+            />
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -150,6 +158,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed, inject } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import template5 from "./template5.vue";
+import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";
 import betItem from "./bet-item-list-new-data.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
