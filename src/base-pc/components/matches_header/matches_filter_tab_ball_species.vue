@@ -101,7 +101,6 @@ onMounted(() => {
   if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
     show_right_btn.value = true;
   }
- 
 
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result

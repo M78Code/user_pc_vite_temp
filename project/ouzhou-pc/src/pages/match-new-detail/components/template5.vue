@@ -43,6 +43,7 @@
                         temp_grid_item: true,
                         'temp-active': o.oid === current_ol.oid,
                     }"
+                    :style="{width:value.length>1?'100%':'200%'}"
                     :key="o.oid"
                     @click="betItemClick(key, o)"
                 >
@@ -92,7 +93,7 @@ const matchInfo = computed(() => {
                 if (!['340','359','383'].includes (props.match_info.hpid)) {
                     i.on = item.hv;
                 }
-                
+
                 if (!obj[i.on]) {
                     obj[i.on] = [];
                     obj[i.on] = [i];
@@ -102,6 +103,7 @@ const matchInfo = computed(() => {
             });
         }
     });
+    console.log(11111111111,obj)
     return obj;
 });
 const emit = defineEmits(["betItemClick"]);
