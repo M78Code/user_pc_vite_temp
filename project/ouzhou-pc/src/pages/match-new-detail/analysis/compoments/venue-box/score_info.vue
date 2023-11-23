@@ -15,12 +15,12 @@
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
             <div>
               <div v-if="!col.icon">
-                <span v-if="col.field !== 'name'"
-                  :style="{ 'line-height': '30px', color: ['p', 't'].includes(col.field) ? '#ff7000' : '#8A8986' }">
+                <span v-if="col.field !== 'name'" :class="detail_info?.course === col.label ? 'heightLight' : ''"
+                      :style="{ 'line-height': '30px', color: ['p', 't'].includes(col.field) ? '#ff7000' : '#8A8986' }">
                     {{ col.label }}
                 </span>
                 <div v-else style="color: #8a8986">
-<!--                  <span style="margin-right: 6px">{{detail_info.course}}</span>-->
+                  <!--                  <span style="margin-right: 6px">{{detail_info.course}}</span>-->
                   <span style="margin-right: 6px" v-html="computed_process_name"></span>
                   <span>{{detail_info.mst <= 0 ? "00:00" : detail_info.mstValue}}</span>
                 </div>
@@ -56,6 +56,14 @@
           <q-td key="q5" :props="props">
             <span :class="[detail_info?.course === 'Q5' ? 'heightLight' : '']">{{ props.row.q5 }}</span>
           </q-td>
+          <!--新增加时赛比分和点球大战比分 start-->
+          <q-td key="q5" :props="props" v-if="props.row.x">
+            <span :class="[detail_info?.course === 'x' ? 'heightLight' : '']">{{ props.row.x }}</span>
+          </q-td>
+          <q-td key="q5" :props="props" v-if="props.row.y">
+            <span :class="[detail_info?.course === 'y' ? 'heightLight' : '']">{{ props.row.y }}</span>
+          </q-td>
+          <!--新增加时赛比分和点球大战比分 end-->
           <q-td key="set" :props="props">
             <span>{{ props.row.set }}</span>
           </q-td>
@@ -135,6 +143,17 @@ const get_base_data = (val) => {
   data.value = res || [];
 };
 
+/*
+* 数据：
+* 角球总比分 S5
+* 黄牌总比分 S12
+* 红牌总比分 S11
+* 点球总比分 S10
+* 半场总比分 S2
+* 全场总比分 S1
+* 加时赛比分 S7
+* 点球大战 S170
+* */
 const get_score_result = (list, val) => {
   let result = [];
   const detail_info = props.detail_info;
@@ -148,6 +167,8 @@ const get_score_result = (list, val) => {
         q3: val.S10 ? val?.S10[item.key] : 0, // 点球
         q4: val.S2 ? val?.S2[item.key] : 0, // 半场
         t: val.S1 ? val?.S1[item.key] : 0, // 全场
+        x: val.S1 ? val?.S1[item.key] : '', // 加时赛比分
+        y: val.S1 ? val?.S1[item.key] : '', // 点球大战
       };
     } else if (detail_info.csid == 2) {
       // 48282 【SIT】【欧洲版二期】【PC】篮球详情页比分版未到的赛事阶段比分不需要展示
@@ -394,6 +415,30 @@ watch(
     console.log("props.score_list--watch",val)
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
+    if(detail_info.msc_obj?.S7 && detail_info.csid == 1){
+      console.log("加时赛")
+      //  加时赛
+      columns.value.push({
+        name: "x",
+        align: "left",
+        label: "T",
+        field: "x",
+        icon: "in_ball",
+        headerStyle: { width: "33px", color: "#ff7000" },
+      })
+    }
+    if(detail_info.msc_obj?.S107 && detail_info.csid == 1){
+      console.log("加时赛")
+      //  点球大战
+      columns.value.push({
+        name: "y",
+        align: "left",
+        label: "Y",
+        field: "y",
+        icon: "in_ball",
+        headerStyle: { width: "33px", color: "#ff7000" }
+      })
+    }
     get_base_data(val);
   },
   { immediate: false, deep: true }

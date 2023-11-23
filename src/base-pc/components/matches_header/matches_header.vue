@@ -10,16 +10,22 @@
 					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
 						:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
 						{{ item.label }}
-					</div>
-					<!-- 点击联赛后出现的时间筛选 -->
-					<!-- <div>
-						Next 24 Hours
-						<div>
-							<div v-for="item in MenuData.ouzhou_time_list" :key="item.value">
-								{{ item.title }}
+						<!-- 点击联赛后出现的时间筛选 -->
+						<div 
+							v-if="MenuData.mid_menu_result.filter_tab === 4002 && item.value === 4002"
+							class="leagues_filrer" 
+							@click.stop="set_show_leagues"
+						>
+							Next 24 Hours
+							<span class="yb-icon-arrow"></span>
+							<div class="leagues_filrer_item" v-show="show_leagues">
+								<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
+									{{ item.title }}
+									<div class="leagues_filrer_item_line" v-if="item.value !== ouzhou_time_list[ouzhou_time_list.length -1].value"></div>
+								</div>
 							</div>
 						</div>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -41,6 +47,10 @@ const tab_list = ref([])
 
 // 头部高度 包含 teb切换
 const match_list_top = ref('80px')
+
+const show_leagues = ref (false)
+// 是否选中联赛时间
+const active_time = ref(24)
 
 const matches_header_title = ref(i18n_t("ouzhou.match.matches"));
 
@@ -73,7 +83,7 @@ const ouzhou_filter_config = {
 }
 const ouzhou_time_list = [
 	{ label: i18n_t('ouzhou.filter.select_time.12h'), title:'12小时', value: 12 }, 
-	{ label: i18n_t('ouzhou.filter.select_time.24h'), title:'25小时', value: 24 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.24h'), title:'24小时', value: 24 }, 
 	{ label: i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
 	{ label: i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
 ]
@@ -86,6 +96,19 @@ onMounted(()=>{
 onUnmounted(()=>{
 	mitt_list.forEach(item => item());
 })
+
+const set_show_leagues = () => {
+	show_leagues.value = !show_leagues.value
+	if (show_leagues.value) {
+		window.addEventListener('click', (e) => {
+			show_leagues.value = false
+		}, { once: true })
+	}
+}
+
+const set_active_time = (item) => {
+	active_time.value = item.value
+}
 
 // 设置 头部信息配置
 const set_tab_list = (news_) =>{
@@ -244,6 +267,57 @@ const checked_current_tab = payload => {
 		.checked {
 			border-bottom: 3px solid var(--q-gb-bd-c-1);
 			color: var(--q-gb-t-c-2);
+			display: flex;
+		}
+	}
+}
+
+.leagues_filrer {
+	position: relative;
+	display: flex;
+	align-items: center;
+	margin: -8px 0px 0px 12px !important;
+	color: #fff !important;
+	font-weight: 400 !important;
+	font-size: 14px !important;
+	.yb-icon-arrow {
+		color: var(--q-gb-t-c-8) !important;
+		margin-left: 10px !important;
+		transform: rotate(90deg) !important;
+		width: 7px !important;
+		height: 7px !important;
+		display: inline-block;
+	}
+	.leagues_filrer_item {
+		position: absolute;
+		top: 33px;
+		left: 0;
+		border-radius: 2px;
+		background: #FFF;
+		box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
+		width: 200px;
+		z-index: 9;
+		min-height: 185px;
+		padding: 12px 0;
+		div {
+			height: 41px;
+			margin: 0px !important;
+			line-height: 40px;
+			color: #1A1A1A !important;
+			font-size: 14px;
+			font-weight: 400 !important;
+			padding: 0 16px;
+		}
+		div:hover {
+			color: #FF7000 !important;
+		}
+		.item_acitve {
+			background: #FFF1E6;
+			color: #1A1A1A !important;
+		}
+		.leagues_filrer_item_line {
+			height: 1px !important;
+			background-color: #E2E2E2 !important;
 		}
 	}
 }

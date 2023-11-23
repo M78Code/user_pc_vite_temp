@@ -4,6 +4,7 @@
  * @Description: 赛事详情页玩法
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="match-detail-odds">
     <div v-for="item in matchDetail" :key="item.topKey" class="odds-wrap">
       <q-expansion-item
@@ -65,7 +66,7 @@
                             v-show="!item.hl[0].hs"
                             :class="{
                               tem4: true,
-                              'tem4-active': ol.oid == current_ol.oid,
+                              'tem4-active': BetData.bet_oid_list.includes(ol.oid),
                             }"
                             @click="betItemClick(item.hl[0], ol)"
                           >
@@ -153,6 +154,7 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed, inject } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import template5 from "./template5.vue";
@@ -182,7 +184,6 @@ const props = defineProps({
 const mouse_in = ref(false);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
-
 let all_hl_item = inject("all_hl_item");
 
 const columnTotal = (item) => {
