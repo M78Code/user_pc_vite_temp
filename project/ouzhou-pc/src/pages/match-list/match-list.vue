@@ -169,8 +169,9 @@ export default {
       nextTick(() => {
         match_list_card_key_arr.value =
           MatchListCardDataClass.match_list_card_key_arr;
-          five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
-          console.log(five_leagues_card_key_arr.value, 'five_leagues_card_key_arr');
+
+        five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
+      console.log(five_leagues_card_key_arr.value, match_list_card_key_arr.value, 'five_leagues_card_key_arr');
       })
     };
     onMounted(() => {
@@ -193,6 +194,7 @@ export default {
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
       MatchListCardDataClass_match_list_card_key_arr();
+      
     });
     const get_data_info = async (type = 0) => {
       // 判断是不是首页下的 featured 页面
