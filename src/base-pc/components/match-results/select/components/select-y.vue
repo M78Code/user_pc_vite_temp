@@ -5,16 +5,8 @@
  * @Date: 2020-09-29 11:08:05
 -->
 <template>
-  <div
-    class="y-select handel relative-position"
-    :class="versions_class"
-    @click.stop
-  >
-    <div
-      class="y-field-control"
-      @click="isShow = true"
-      :style="{ width: `${popWidth}px` }"
-    >
+  <div class="y-select handel relative-position" :class="versions_class" @click.stop>
+    <div class="y-field-control" @click="isShow = true" :style="{ width: `${popWidth}px` }">
       <input
         type="text"
         class="input"
@@ -33,12 +25,12 @@
         <!-- 全选 -->
         <div class="btn-item" @click="checkAll()">
           <div :class="{ active: menu == 'all' }" class="radio-checked" />
-          <span class="">{{ i18n_t("select.checkAll") }}</span>
+          <span class>{{ i18n_t("select.checkAll") }}</span>
         </div>
         <!-- 反选 -->
         <div class="btn-item" @click="checkInvert()">
           <div :class="{ active: menu == 'invert' }" class="radio-checked" />
-          <span class="">{{ i18n_t("select.invert") }}</span>
+          <span class>{{ i18n_t("select.invert") }}</span>
         </div>
         <!-- 热门 -->
         <div class="btn-item checkbox" @click="checkHot()">
@@ -54,17 +46,16 @@
           :class="{ active: item.id == active }"
           @click="choose(item, index)"
         >
-          <div
-            class="y-checkbox"
-            :class="{ active: active_tournament.includes(item.id) }"
-          />
+          <div class="y-checkbox" :class="{ active: active_tournament.includes(item.id) }" />
           <div class="select-item">{{ item.tournamentName }}</div>
         </div>
       </q-scroll-area>
       <div class="btn-confrim">
-        <span class="cancel" @click="cancel">{{
+        <span class="cancel" @click="cancel">
+          {{
           i18n_t("select.cancel")
-        }}</span>
+          }}
+        </span>
         <span @click="confrim()">{{ i18n_t("select.confirm") }}</span>
       </div>
     </div>
@@ -74,7 +65,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
-import { IconWapper } from 'src/components/icon'
+import { IconWapper } from "src/components/icon";
 
 const route = useRoute();
 
@@ -84,7 +75,7 @@ import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import {
   useMittOn,
   useMittEmitterGenerator,
-  MITT_TYPES,
+  MITT_TYPES
 } from "src/core/index.js";
 const option = ref(null); //选中项
 const isShow = ref(false); // 是否展示联赛列表
@@ -112,19 +103,19 @@ const props = defineProps({
   list: {
     //下拉框子项
     type: Array,
-    default: [],
+    default: []
   },
   sport_id: String, //球类id
   popWidth: String, //宽度
-  hideSelect: Number, // 隐藏下拉框 
-  isTimeChanged: Boolean, // 判断时间是否有变
+  hideSelect: Number, // 隐藏下拉框
+  isTimeChanged: Boolean // 判断时间是否有变
 });
 const emit = defineEmits([
   "to_hide_select",
   "confirm",
   "ipt_search",
   "select_submit",
-  "search_hot",
+  "search_hot"
 ]);
 /**
  * @description: input获取焦点
@@ -191,7 +182,7 @@ const ipt_change = () => {
 const checkAll = () => {
   emit("confirm", 0);
   props.list &&
-    props.list.forEach((item) => {
+    props.list.forEach(item => {
       if (!active_tournament.value.includes(item.id)) {
         active_tournament.value.push(item.id);
       }
@@ -199,7 +190,7 @@ const checkAll = () => {
   // 全选
   menu.value = "all";
   isAllSelect.value = 1;
-  console.log('menumenumenu',menu)
+  console.log("menumenumenu", menu);
 };
 /**
  * @description: 反选
@@ -211,7 +202,7 @@ const checkInvert = () => {
   if (menu.value == "invert" && !props.list) return false;
   emit("confirm", 0);
   props.list &&
-    props.list.forEach((item) => {
+    props.list.forEach(item => {
       if (!active_tournament.value.includes(item.id)) {
         active_tournament.value.push(item.id);
       } else {
@@ -230,7 +221,7 @@ const checkInvert = () => {
  * @return {}
  * @param {n} 1 初始化联赛选中状态 0 正常处理
  */
-const checkHot = (n) => {
+const checkHot = n => {
   emit("confirm", 0);
   menu.value = "hot";
   initSport.value = n;
@@ -271,7 +262,7 @@ const choose = (item, index) => {
     active_tournament.value.push(item.id);
   }
   // 是否全部选中
-  let allSelect = props.list.every((item) =>
+  let allSelect = props.list.every(item =>
     active_tournament.value.includes(item.id)
   );
   menu.value = allSelect ? "all" : "";
@@ -284,7 +275,7 @@ const cancel = () => {
   emit("confirm", 0);
   isShow.value = false;
 };
-const { off } = useMittOn(MITT_TYPES.EMIT_SHOW_SELECT, (e) => {
+const { off } = useMittOn(MITT_TYPES.EMIT_SHOW_SELECT, e => {
   cancel(e);
 });
 onUnmounted(off);
@@ -319,7 +310,7 @@ const confrim = () => {
   emit("select_submit", {
     ids: active_tournament.value,
     isHot: Number(is_hot.value),
-    cur_type: menu.value,
+    cur_type: menu.value
   });
 };
 const versions_class = computed(() => {
@@ -331,7 +322,7 @@ onMounted(() => {
 });
 watch(
   props.list,
-  (res) => {
+  res => {
     let _no_active = active_tournament.value.length == 0;
     // 当前是不是反选
     let is_invert = menu.value == "invert";
@@ -401,7 +392,7 @@ watch(
       emit("select_submit", {
         ids: active_tournament.value,
         isHot: Number(is_hot.value),
-        cur_type: menu.value,
+        cur_type: menu.value
       });
     } else if (active_item && active_item.length) {
       option.value = active_item[0].tournamentName;
@@ -414,16 +405,16 @@ watch(
         menu.value = "";
       }
     }
-    console.log('active.valueactive.valueactive.value',menu.value)
+    console.log("active.valueactive.valueactive.value", menu.value);
   },
-  { immediate: true,deep: true }
+  { immediate: true, deep: true }
 );
-watch(props.sport_id, (res) => {
+watch(props.sport_id, res => {
   is_select.value = false;
   menu.value = "all";
   input_val.value = i18n_t("select.all"); //全部
 });
-watch(props.hideSelect, (res) => {
+watch(props.hideSelect, res => {
   isShow.value = false;
 });
 // 全局点击事件
@@ -433,8 +424,8 @@ watch(props.hideSelect, (res) => {
 
 watch(
   active_tournament,
-  (arr) => {
-    let allSelect = props.list.every((item) => arr.includes(item.id));
+  arr => {
+    let allSelect = props.list.every(item => arr.includes(item.id));
     // 热门全部选中和部分选中要区分开来
     if (is_hot.value) {
       itemAllSelect.value = allSelect
@@ -492,7 +483,7 @@ onUnmounted(() => {
   height: 314px;
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.1);
   -background: var(--q-gb-bg-c-4);
-    background: #ffffff;
+  background: #ffffff;
 
   z-index: 2;
   display: flex;
@@ -522,13 +513,13 @@ onUnmounted(() => {
         margin-right: 5px;
         background-size: 100%;
         background-repeat: no-repeat;
-        border: 1px solid #383C44;;
+        border: 1px solid #383c44;
         border-radius: 50%;
       }
+  
       .active {
         background-image: url($SCSSPROJECTPATH+"/image/svg/radio-checked.svg");
-        }
-
+      }
     }
   }
   .wrap-item {
@@ -551,10 +542,12 @@ onUnmounted(() => {
       margin-right: 8px;
       background-size: 100%;
       background-repeat: no-repeat;
+      border: 1px solid rgba(56,60,68,1);
+      border-radius: 2px;
     }
-    &.checked {
-      background: red;
-    }
+    .active {
+          background-image: url($SCSSPROJECTPATH+"/image/svg/checkbox-checked.svg");
+        }
   }
   .btn-confrim {
     border: 1px solid #d0d8de;
@@ -580,5 +573,4 @@ onUnmounted(() => {
     border-radius: 4px;
   }
 }
-
 </style>

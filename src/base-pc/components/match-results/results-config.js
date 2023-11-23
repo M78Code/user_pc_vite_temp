@@ -969,7 +969,7 @@ export const useGetResultConfig = () => {
    * @return {}
    */
   const search_hot = (data) => {
-    console.log('datadatadatadatadata',data)
+    console.error('datadatadatadatadata33333',data)
     state.pournament_params.hot = data;
     get_pournament(0);
   };
@@ -1167,7 +1167,6 @@ export const useGetResultConfig = () => {
    *  new_ 1确认 0取消
    */
   const isSelectConfirm = (new_) => {
-    console.log('链接2',new_)
     state.isSelectConfirmed = new_;
     if (new_ == 1) {
       if (!test_time()) {
