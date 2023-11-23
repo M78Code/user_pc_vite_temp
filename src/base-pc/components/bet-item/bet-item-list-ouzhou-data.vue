@@ -164,7 +164,12 @@ let tid;
 const set_odds_lift = (cur, old) => {
   if (!["lock", 'seal'].includes(odds_state.value) && old && !is_odds_seal()
   ) {
-    odds_lift.value = cur > old ? "up" : 'down';
+    if (cur > old) {
+      odds_lift.value = 'up'
+    }
+    else if (old > cur) {
+      odds_lift.value = 'down'
+    }
     clearTimeout(tid)
     tid = setTimeout(() => {
       odds_lift.value = "";

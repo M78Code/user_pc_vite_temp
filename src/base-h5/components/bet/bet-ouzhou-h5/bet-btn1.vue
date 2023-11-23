@@ -3,7 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="tip">{{BetViewDataClass.tip_message}}</div> 
+  <div class="tip">1111{{BetViewDataClass.error_message}}</div> 
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @click.self="set_retain_selection">{{$t('bet.save')}}</p>
     <!-- <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p> -->
@@ -30,6 +30,7 @@ const pack_up = (val) => {
 const set_retain_selection = () => {
     BetData.set_bet_amount(0)
     BetViewDataClass.set_bet_order_status(1)
+    BetViewDataClass.set_bet_before_message({})
     setTimeout(() => {
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     }, 200);
@@ -44,6 +45,7 @@ const set_retain_selection = () => {
   font-size: 0.15rem;
   margin-right: 0.2rem;
   width: 100%;
+  height: .36rem;
 }
 .bet_content_bottom{
     height: 0.6rem;
