@@ -147,6 +147,7 @@ export default {
     const matches_15mins_list = ref([]);
     const { ws_destroyed: ws_destroyed_common, set_active_mids } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
+    const five_leagues_card_key_arr = ref([]);
 
     // 赛事数量
     const total_match_count = ref(0)
@@ -160,6 +161,8 @@ export default {
       nextTick(() => {
         match_list_card_key_arr.value =
           MatchListCardDataClass.match_list_card_key_arr;
+          five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
+          console.log(five_leagues_card_key_arr.value, 'abdd');
       })
     };
     onMounted(() => {

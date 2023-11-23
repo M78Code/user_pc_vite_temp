@@ -241,11 +241,8 @@ export const init_home_matches = async () => {
       try {
         MatchDataWarehouse_ouzhou_PC_five_league_List_Common.set_list(res);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res
+          res, null, null, true
         );
-        const data = MatchDataWarehouse_ouzhou_PC_five_league_List_Common.match_list;
-        console.log('dddd', res, data);
-        
       }catch (error) {
           console.log(error);
       }
