@@ -30,7 +30,7 @@
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/core/constant/index.js'
     import MenuData from "src/core/menu-pc/menu-data-class.js";
-import {get_match_template_id} from '../../match-handle-data.js'
+    import {get_match_template_id} from '../../match-handle-data.js'
   /**
    * @Description 计算所有卡片样式数据 2. 全部赛种 不区分 是否开赛  4. 列表数据类型为赛事列表   单一赛种，有未开赛 已开赛 ，不区分赛种
    * @param {Array} match_list 赛事列表
@@ -46,9 +46,9 @@ import {get_match_template_id} from '../../match-handle-data.js'
     // 卡片key 到 赛事 id 映射 对象
     let league_card_mids_arr = {}
     // 所有卡片列表
-    let match_list_card_key_arr = []
+    let match_list_card_key_arr = [];
     // 五大联赛卡片列表
-    let five_leagues_card_key_arr = []
+    let five_leagues_card_key_arr = is_five_leagues ?  [] : undefined;
 
     
     // 所有卡片样式对象

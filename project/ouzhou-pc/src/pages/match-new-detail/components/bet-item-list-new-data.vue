@@ -1,8 +1,17 @@
 <template>
-  <div v-show="false">{{BetData.bet_data_class_version}}</div>
-  <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
-    :class="[ ol_data.class, odds_state, `csid${ol_data.csid}`, odds_lift,
-      { 'show-odds-icon': odds_state != 'seal', 'active-odds-icon': BetData.bet_oid_list.includes(ol_data.oid), },
+  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+  <div
+    v-if="is_mounted"
+    class="c-bet-item yb-flex-center relative-position yb-family-odds"
+    :class="[
+      ol_data.class,
+      odds_state,
+      `csid${ol_data.csid}`,
+      odds_lift,
+      {
+        'show-odds-icon': odds_state != 'seal',
+        'active-odds-icon': BetData.bet_oid_list.includes(ol_data.oid),
+      },
     ]"
     :id="`list-${ol_data.oid}`"
   >
@@ -26,17 +35,37 @@
     </div> -->
 
     <!-- 赔率 -->
-    <div class="odds" :style=" [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes( +ol_data._hpid ) && utils.is_iframe ? 'flex:1.5' : '' ">
+    <div
+      class="odds"
+      :style="
+        [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
+          +ol_data._hpid
+        ) && utils.is_iframe
+          ? 'flex:1.5'
+          : ''
+      "
+    >
       <!-- <div v-if="['seal'].includes(odds_state)" class="lock" /> -->
-      <div style="text-align: center; width: 100%" v-if="['seal'].includes(odds_state)">
-                        <img
-                            class="vector"
-                            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
-                            alt=""
-                        />
-                    </div>
+
+      <div
+        style="text-align: center; width: 100%"
+        v-if="['seal', 'close'].includes(odds_state)"
+      >
+        <img
+          class="vector"
+          :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
+          alt=""
+        />
+      </div>
       <div v-else class="odds-arrows-wrap">
-        <span :class="{ default: true, up: odds_lift == 'up', down: odds_lift == 'down', active: BetData.bet_oid_list.includes(ol_data.oid) }">
+        <span
+          :class="{
+            default: true,
+            up: odds_lift == 'up',
+            down: odds_lift == 'down',
+            active: BetData.bet_oid_list.includes(ol_data.oid),
+          }"
+        >
           {{ numberRetain(match_odds) }}
         </span>
         <div v-if="odds_state != 'seal'">
@@ -58,8 +87,8 @@ import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import { get_odds_active, utils } from "src/core/index.js";
 import { format_odds_value } from "src/core/format/module/format-odds.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
-import { compute_value_by_cur_odd_type } from "src/core/index.js"
-import { formatMoney, numberRetain } from 'src/core/format/index.js'
+import { compute_value_by_cur_odd_type } from "src/core/index.js";
+import { formatMoney, numberRetain } from "src/core/format/index.js";
 
 const is_mounted = ref(true);
 
@@ -86,8 +115,9 @@ const props = defineProps({
 });
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
-    let { _mhs, _hs, os } = props.ol_data||{};
-    return get_odds_state(_mhs, _hs, os);
+  let { _mhs, _hs, os } = props.ol_data || {};
+  console.log(11111111, get_odds_state(_mhs, _hs, os));
+  return get_odds_state(_mhs, _hs, os);
 });
 //玩法比分
 const score = computed(() => {
@@ -110,7 +140,7 @@ const score = computed(() => {
  * @param  {number} obv - 断档赔率值
  * @return {undefined} undefined
  */
- const format_odds = () => {
+const format_odds = () => {
   let ov = lodash.get(props.ol_data, "ov");
   let obv = lodash.get(props.ol_data, "obv");
   // 列表取 hsw
@@ -121,7 +151,7 @@ const score = computed(() => {
     hsw || "",
     1
   );
- 
+
   match_odds.value = format_odds_value(match_odds_info, props.ol_data.csid);
 };
 
@@ -132,7 +162,7 @@ const score = computed(() => {
  * @param  {number} os  投注项级 1：开 2：封 3：关 4：锁
  * @return {undefined} undefined
  */
- const get_odds_state = (mhs, hs, os) => {
+const get_odds_state = (mhs, hs, os) => {
   let _active = get_odds_active(mhs, hs, os);
   let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
   let state = "";
@@ -158,13 +188,12 @@ const score = computed(() => {
  * 当赔率对应的欧赔小于1.01时，强制转换成封盘的状态 对盘口加锁
  * @return {boolean}
  */
- const is_odds_seal = () => {
+const is_odds_seal = () => {
   let ov = lodash.get(props.ol_data, "ov");
   let obv = lodash.get(props.ol_data, "obv");
   let _odds = ov || obv;
   return _odds < 101000;
 };
-
 
 /**
  * 设置赔率升降
@@ -172,7 +201,7 @@ const score = computed(() => {
  * @param  {number} old - 上次赔率值
  * @return {undefined} undefined
  */
- let tid;
+let tid;
 /**
  * 设置赔率升降
  * @param  {number} cur - 当前赔率值
@@ -180,16 +209,14 @@ const score = computed(() => {
  * @return {undefined} undefined
  */
 const set_odds_lift = (cur, old) => {
-  if (!["lock", 'seal'].includes(odds_state.value) && old && !is_odds_seal()
-  ) {
-    odds_lift.value = cur > old ? "up" : 'down';
-    clearTimeout(tid)
+  if (!["lock", "seal"].includes(odds_state.value) && old && !is_odds_seal()) {
+    odds_lift.value = cur > old ? "up" : "down";
+    clearTimeout(tid);
     tid = setTimeout(() => {
       odds_lift.value = "";
     }, 3000);
   }
 };
-
 
 onMounted(() => {
   // 异步设置组件是否挂载完成
@@ -199,31 +226,34 @@ onMounted(() => {
 });
 
 // 监听oid 取消赔率升降
-// 监听玩法ID变化 取消赔率升降 
-watch(() => [props.ol_data._hpid, props.ol_data.oid], () => {
-  clear_odds_lift()
-})
+// 监听玩法ID变化 取消赔率升降
+watch(
+  () => [props.ol_data._hpid, props.ol_data.oid],
+  () => {
+    clear_odds_lift();
+  }
+);
 
 // 监听投注项赔率变化
 watch(
   () => props.ol_data.ov,
   (cur, old) => {
-    if (cur == old) return
+    if (cur == old) return;
     // 赔率值处理
     format_odds(cur, 1);
     // 红升绿降变化
     set_odds_lift(cur, old);
   },
-  {immediate:true}
+  { immediate: true }
 );
 
 /**
  * 取消赔率升降
  */
- function clear_odds_lift(){
-  clearTimeout(tid)
+function clear_odds_lift() {
+  clearTimeout(tid);
   odds_lift.value = "";
-};
+}
 
 /**
  * @description 投注项点击
@@ -264,17 +294,16 @@ onUnmounted(() => {
     }
   }
 }
-.active-odds-icon{
+.active-odds-icon {
   .odds-up {
-      background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg")
-        no-repeat 100% !important;
-        transform: rotate(180deg);
-    }
-    .odds-down {
-      background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg")
-        no-repeat 100% !important;
-    }
-
+    background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg") no-repeat
+      100% !important;
+    transform: rotate(180deg);
+  }
+  .odds-down {
+    background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg") no-repeat
+      100% !important;
+  }
 }
 .odds-arrows-wrap {
   position: relative;
@@ -385,7 +414,7 @@ onUnmounted(() => {
   text-align: left !important;
 }
 .vector {
-    width: 16px;
-    height: 16px;
+  width: 16px;
+  height: 16px;
 }
 </style>

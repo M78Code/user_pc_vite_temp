@@ -100,11 +100,12 @@ const set_match_list_mapping_relation_obj_type = () => {
       || !MenuData.menu_root
     ) {
       type = 9
+    } else if(MenuData.is_kemp()) {
+      type = 6
     } else {
       type = 8
     }
   }
-  console.log('type', PageSourceData, type);
   return   type
 };
 

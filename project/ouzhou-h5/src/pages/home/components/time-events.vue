@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="time_play_page">
+  <div class="time_play_page component time-events">
     <section>
       <div class="item" v-for="item in time_events" :key="item.mid" @click="toDetails(item)">
        <!-- 标题 -->
