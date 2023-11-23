@@ -101,6 +101,7 @@ function get_col_ols_data(match) {
   //101 视图模板 却是对应不同的数据模板ID 所以要重新取
   const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
   const hots_odds_list = match_tpl_info.get_hots_odds_list()
+
   let handicap_type = hn || 1
   const many_obj = get_match_to_map_obj(match); //非坑位对象
   const hn_obj = lodash.get(MatchDataWarehouse_ouzhou_PC_hots_List_Common, "list_to_obj.hn_obj", {})
