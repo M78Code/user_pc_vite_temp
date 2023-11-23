@@ -67,6 +67,7 @@
     width: 9px;
     height: 18px;
     margin-top: 6px;
+    transform: rotate(180deg);
   }
   .jiantou{
     width: 0;
