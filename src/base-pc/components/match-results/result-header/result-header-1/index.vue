@@ -222,7 +222,7 @@ const props = defineProps({
 const confirmDate=()=>{
   props.dateValue.value = date.value
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
-  console.log('6327623767623')
+  console.error('63276237uasdkjasdjkkjaskj67623')
 }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)

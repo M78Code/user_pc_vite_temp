@@ -2,7 +2,7 @@
  * @Author: cooper cooper@123.com
  * @Date: 2023-07-09 16:21:30
  * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-22 19:00:56
+ * @LastEditTime: 2023-11-22 19:07:56
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
  * @Description: 详情页相关接口数据处理
  */
@@ -90,6 +90,13 @@ export function usedetailData(route) {
     if (detail_list.value?.length > 0) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
+        if (i.hpid==103) {  //hpid103处理
+          i.title = [
+            {otd:1},
+            {otd:0},
+            {otd:2},
+          ]
+        }
       }
     }
     let list = all_list.value.filter((item) =>
@@ -106,7 +113,13 @@ export function usedetailData(route) {
       MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid),
       list || []
     );
-    detail_list.value = lodash_.get(getMidInfo(route.params.mid), "odds_info");
+    detail_list.value = lodash_.get(getMidInfo(route.params.mid), "odds_info") || []
+
+    console.log(1111111111,detail_list.value)
+
+    
+
+
 
     show_close_thehand.value = list.length == 0;
 

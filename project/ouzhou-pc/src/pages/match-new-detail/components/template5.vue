@@ -14,7 +14,7 @@
         >
             <div class="temp5-hv">{{ key>0&&hpid==39?'+'+key:key }}</div>
             <div
-                v-if="value.length == 1&&match_info.hpid!=340"
+                v-if="value.length == 1&&!['340','359','383'].includes (props.match_info.hpid)"
                 style="width: 200%"
                 @click="betItemClick(key, value[0])"
                 :class="{
@@ -89,7 +89,7 @@ const matchInfo = computed(() => {
         if (item && item.ol.length > 0) {
             item.ol.forEach((i) => {
                 i.hs = item.hs;
-                if (props.match_info.hpid!=340) {
+                if (!['340','359','383'].includes (props.match_info.hpid)) {
                     i.on = item.hv;
                 }
                 

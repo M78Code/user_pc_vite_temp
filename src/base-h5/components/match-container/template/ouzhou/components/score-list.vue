@@ -68,10 +68,13 @@ const score_data = computed(() => {
   
   const hps = props.match_info.hps
   const csid = props.match_info.csid
-  
+
+  const length = lodash.get(hps, 'length', 0)
+  if (length === 0) return [{}, {}, {}]
+
   // 真实 ol
   const hpid = !props.is_change ? '1' : lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
-  const hps_item = hps && hps.find(t => t.chpid == hpid)
+  const hps_item = hps.find(t => t.chpid == hpid)
   mhs.value = lodash.get(props.match_info, 'mhs', 1)
   item_hs.value = lodash.get(hps_item, 'hl[0].hs', 1)
   
@@ -81,6 +84,7 @@ const score_data = computed(() => {
   
   const ol_length = hpid === '1' ? 3 : 2
   const ol_arr = lodash.get(hps_item, 'hl[0].ol', [])
+
   
   // 最终渲染数据
   const ol_data = lodash.get(play_item, 'ol', [])
