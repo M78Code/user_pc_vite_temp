@@ -230,6 +230,7 @@ const checkInvert = () => {
  * @param {n} 1 初始化联赛选中状态 0 正常处理
  */
 const checkHot = (n) => {
+  console.log('链接来')
   emit("confirm", 0);
   menu.value = "hot";
   initSport.value = n;
