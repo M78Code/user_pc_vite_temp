@@ -18,10 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="change-header-fix" ref="change_header_fix"
-      :style="{
-        visibility: changeHeader ? 'visible' : 'hidden',
-      }">
+    <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: changeHeader ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail"/>
     </div>
     <div class="detail-container-position">
@@ -57,9 +54,8 @@
           <!-- 玩法模板 -->
           <div ref="fixedHeight" class="match-detail-odds-scroll"
             :class="[match_detail?.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
-            <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail" 
-              :loading="loading" v-model:allCloseState="allCloseState"
-              />
+            <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail"
+              :loading="loading" v-model:allCloseState="allCloseState"/>
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>

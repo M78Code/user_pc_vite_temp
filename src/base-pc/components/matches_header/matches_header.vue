@@ -7,30 +7,33 @@
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
 				<div v-else class="matches_tab" >
-					<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
-						:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
-						{{ item.label }}
-						<!-- 点击联赛后出现的时间筛选 -->
-						<div 
-							v-if="MenuData.mid_menu_result.filter_tab === 4002 && item.value === 4002"
-							class="leagues_filrer" 
-							@click.stop="set_show_leagues"
-						>
-							Next 24 Hours
-							<span class="yb-icon-arrow"></span>
-							<div class="leagues_filrer_item" v-show="show_leagues">
-								<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
-									{{ item.title }}
-									<div class="leagues_filrer_item_line" v-if="item.value !== ouzhou_time_list[ouzhou_time_list.length -1].value"></div>
+					<template v-if="tab_list.length">
+						<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
+							:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
+							{{ item.label }}
+							<!-- 点击联赛后出现的时间筛选 -->
+							<div 
+								v-if="MenuData.is_leagues() && item.value === 4002"
+								class="leagues_filrer" 
+								@click.stop="set_show_leagues"
+							>
+								Next 24 Hours
+								<span class="yb-icon-arrow"></span>
+								<div class="leagues_filrer_item" v-show="show_leagues">
+									<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
+										{{ item.title }}
+										<div class="leagues_filrer_item_line" v-if="item.value !== ouzhou_time_list[ouzhou_time_list.length -1].value"></div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</template>
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_collect || MenuData.is_top_events()"  />
-		<MatchesDateTab v-if="MenuData.is_left_today() || MenuData.is_left_zaopan()" />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_kemp() || MenuData.is_collect || MenuData.is_top_events()"  />
+		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues()" />
+		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
 </template>
 
@@ -40,6 +43,7 @@ import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
+import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
 import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 
@@ -133,9 +137,14 @@ const set_tab_list = (news_) =>{
 
 	// 收藏
 	if (MenuData.is_collect) {
-		console.error(MenuData);
 		matches_header_title.value = i18n_t('ouzhou.menu.collect')
 		tab_list.value = lodash_.get( ouzhou_filter_config,'favouritse_tab', [])  
+	}
+
+	// 冠军
+	if (MenuData.is_collect) {
+		matches_header_title.value = 'Outrights'
+		tab_list.value = []
 	}
 
 	if (tab_list.value.length) {
@@ -150,7 +159,7 @@ const checked_current_tab = payload => {
 		filter_tab: payload.value*1,
 	}
 	// 判断头部高度
-	if ([1001,4002,4003].includes(payload.value*1)) {
+	if ([1001,4003].includes(payload.value*1)) {
 		match_list_top.value = '80px'
 	} else if([4001].includes(payload.value*1)){
 		match_list_top.value = '134px'

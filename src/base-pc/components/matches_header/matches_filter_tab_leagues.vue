@@ -2,62 +2,19 @@
   <div class="current-filter-wrap" ref="area_obj_wrap">
     <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
       <!-- 常规体育 -->
-      <template v-for="(item, index) in mi_100_arr" :key="index">
-        <div class="current-filter-tab" v-if=" item.ct > 0 " >
-          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
+      <template v-for="(item, index) in leagues" :key="index">
+        <div class="current-filter-tab">
+          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  select_id == item.id }">
             <div class="filter-tab-item">
-              <div class="filter-icon">
-                <sport_icon :sport_id="BaseData.compute_sport_id(item.mif)" :status="MenuData.mid_menu_result.current_mi == item.mi"  size="24px" class="icon" />
-                <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
-              </div>
-              <div :class="{ checked_text: MenuData.mid_menu_result.current_mi == item.mi }" class="label-text">
-                {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif] || "" }}
+              <div :class="{ checked_text: select_id == item.id }" class="label-text">
+                {{ item.introduction }}
               </div>
             </div>
-            <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" src="../../../assets/images/mask_group.png" alt="">
+            <img class="current-mark" :class="{ 'show-mark': select_id == item.id }" src="../../../assets/images/mask_group.png" alt="">
           </div>
           <div class="filter-tab-split-line"></div>
         </div>
       </template>
-      <!-- 电竞 -->
-      <!-- <div
-        class="current-filter-tab"
-        v-for="(item, index) in mi_2000_arr" :key="index"
-      >
-        <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked: current_choose_tab == item.mi }">
-          <div class="filter-tab-item">
-            <div class="filter-icon">
-              <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mi"  size="24px" class="icon" />
-              <div class="filter-count">{{ item.ct || 0 }}</div>
-            </div>
-            <div :class="{ checked_text: current_choose_tab == item.mi }" class="label-text">
-              {{ BaseData.menus_i18n_map[item.mif] || "" }}
-            </div>
-          </div>
-          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
-        </div>
-        <div class="filter-tab-split-line"></div>
-      </div> -->
-       <!-- vr -->
-       <!-- <div
-        class="current-filter-tab"
-        v-for="(item, index) in vr_menu_data" :key="index"
-      >
-        <div class="filter-label" @click="choose_filter_tab(item, '300')" :class="{ checked: current_choose_tab == item.mi }">
-          <div class="filter-tab-item">
-            <div class="filter-icon">
-              <sport_icon :sport_id="compute_sport_id(item.mif)" :status="current_choose_tab == item.mif"  size="24px" class="icon" />
-              <div class="filter-count">{{ item.count || 0 }}</div>
-            </div>
-            <div :class="{ checked_text: current_choose_tab == item.mif }" class="label-text">
-              {{ item.name || "" }}
-            </div>
-          </div>
-          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mif }" src="../../../assets/images/mask_group.png" alt="">
-        </div>
-        <div class="filter-tab-split-line" v-show="index != vr_menu_data.length - 1"></div>
-      </div> -->
-
     </div>
     <div class="prev-btn-box" v-show="show_left_btn" @click="filter_tab_scroll('prev')">
       <div class="prev-btn">
@@ -76,12 +33,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import sport_icon from "src/base-pc/components/sport_icon.vue";
-import BaseData from "src/core/base-data/base-data.js";
-import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/components/match-list/list-filter/index.js"
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 import { MenuData } from "src/core/"
-import { compute_sport_id } from 'src/core/constant/index.js'
 
 let area_obj = ref();
 let area_obj_wrap = ref();
@@ -94,55 +48,36 @@ const show_left_btn = ref(false);
 // 是否显示右边按钮
 const show_right_btn = ref(false);
 
+//leagues
+const leagues = ref([])
 
-// const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
+const select_id = ref(null)
+
+const props = defineProps({
+  date: Number,
+});
+
+watch(() => props.date, async () => {
+  const list = await get_ouzhou_leagues_data(props.date)
+  leagues.value = list
+  if (list.length) {
+    select_id.value = list[0].id
+  }
+}, { immediate: true })
 
 onMounted(() => {
   if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
     show_right_btn.value = true;
   }
-
-  //判断接口是否正常返回数据
-  const { current_mi } = MenuData.mid_menu_result
-
-  if (!current_mi) {
-    // 默认选中当前第一个tab
-    handle_click_menu_mi_1({mi:1011,mif:101})
-    return
-  }
-
-  handle_click_menu_mi_1({mi: current_mi ,mif: current_mi+''.substring(0,3) })
 })
-/**
- * 
- * @param {Number} item.mi
- * @description 过滤mi<300
- */
-
-const filter_min_mi_300 = (originalArray)=>{
-  return originalArray.filter(item => parseInt(item.mi) < 300&&item.ct>0);
-}
-
-/**
- * 
- * @param {Number} item.mi
- * @description 过滤ct=0的列表数据
- */
-
- const filter_ct_list = (originalArray)=>{
-  return originalArray.filter(item => item.ct>0);
-}
 /**
  * 
  * @param {Number} item.mif 
  * @description 当前选择的tab高亮 通过id属性映射
  */
-
- 
 const choose_filter_tab = (item) => {
   // 获取最新的 数据
-  handle_click_menu_mi_1(item)
-  MenuData.set_current_ball_type(item.mif - 100)
+  select_id.value = item.id
 };
 
 /**
@@ -204,7 +139,7 @@ onBeforeUnmount(() => {
   align-items: center;
   width: 100%;
   padding-right: 20px;
-  height: 56px;
+  height: 44px;
   background: var(--q-gb-bg-c-4);
   padding-left: 18.25px;
   box-sizing: border-box;
@@ -298,7 +233,6 @@ onBeforeUnmount(() => {
   background: var(--q-gb-bg-c-10);
   margin: 0 16px;
   position: relative;
-  top: 12px;
 }
 
 .current-mark {

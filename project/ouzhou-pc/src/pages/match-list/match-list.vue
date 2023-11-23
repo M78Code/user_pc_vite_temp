@@ -51,12 +51,10 @@
         </div>
 
         <Match-Main-Title :title="$t('ouzhou.match.top_leagues')" v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
-
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" 
           :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`" />
         </div>
-
         <template v-slot:after>
           <div style="height: 15px"></div>
           <div class="pager-wrap row justify-end">
@@ -171,7 +169,6 @@ export default {
           MatchListCardDataClass.match_list_card_key_arr;
 
         five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
-      console.log(five_leagues_card_key_arr.value, match_list_card_key_arr.value, 'five_leagues_card_key_arr');
       })
     };
     onMounted(() => {
