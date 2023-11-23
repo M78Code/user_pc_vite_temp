@@ -18,7 +18,7 @@
         <!-- 赛事玩法名称 -->
         <template v-slot:header>
           <div style="width: 100%; line-height: 35px; font-weight: 500">
-            {{ item.hpn }}
+            {{ item.hpn }}+++{{ item.hpt }}
             <span v-if="item.hps"> ({{ item.hps.split("|")[1] }}) </span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
             <img
@@ -63,7 +63,7 @@
                       >
                         <template v-if="ol.otd === opt.otd||ol._otd === opt.otd">
                           <div
-                            v-show="!item.hl[0].hs"
+                           
                             :class="{
                               tem4: true,
                               'tem4-active': BetData.bet_oid_list.includes(ol.oid),
@@ -72,7 +72,7 @@
                           >
                             <span>{{ ol.on }}</span>
 
-                            <span v-if="ol.ov">
+                            <span>
                               <bet-item
                                 :key="`bet_4_${ol.hild}`"
                                 :ol_data="ol"
@@ -80,23 +80,23 @@
                               >
                               </bet-item>
                             </span>
-                            <span v-else></span>
+                            <!-- <span v-else></span> -->
                           </div>
-                          <div
+                          <!-- <div
                             class="tem4"
                             style="
                               justify-content: center;
                               align-items: center;
                               width: 100%;
                             "
-                            v-show="item.hl[0].hs"
+                            v-show="ol.os"
                           >
                             <img
                               class="vector"
                               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
                               alt=""
                             />
-                          </div>
+                          </div> -->
                         </template>
                       </div>
                     </div>
@@ -238,7 +238,7 @@ const sun_ol = (ol, item) => {
 
   // 其他
   result[result.length-1]._otd = item.title[item.title.length-2].otd
-  
+  // console.log(1111111111,result)
   return result;
 };
 //  投注项点击投注,
