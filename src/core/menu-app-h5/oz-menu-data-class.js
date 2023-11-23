@@ -122,7 +122,7 @@ class MenuData {
       this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
       this.menu_mi.value = session_info.menu_mi;
     }
-    // useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
+    useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA);
   }
   /**
    * 收藏
