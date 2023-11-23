@@ -4,36 +4,37 @@
 -->
 <template>
   <div class="bet-mix-box ">
-    <betMixBoxChild v-if="bet_show"></betMixBoxChild>
+    <betMixBoxChild v-if="ref_data.bet_show "></betMixBoxChild>
   </div>
 </template>
 
 <script setup>
 
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import { ref, onMounted,reactive,computed,onUnmounted } from 'vue';
 import betMixBoxChild from "./bet_mix_box_child.vue";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import BetData from "src/core/bet/class/bet-data-class.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
-
-const bet_show = ref(false)
-
+const ref_data = reactive({
+  emit_lsit:{},
+  bet_show: false
+})
 
 const set_bet_show = (ref)=>{
-  // console.error(888888,ref);
-  bet_show.value = ref
+  console.error('ssssasdasdadasd',ref);
+  ref_data.bet_show = ref
 }
 
 onMounted(() => {
   // 监听 变化
-  useMittOn(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, set_bet_show)
+  ref_data.emit_lsit = {
+      emitter_1: useMittOn(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, set_bet_show).off,
+  }
 })
 
 onUnmounted(() => {
   // clear_single_money(1)
-  useMittOn(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, set_bet_show).off
+  Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
 const get_menu_type = computed((val) => {

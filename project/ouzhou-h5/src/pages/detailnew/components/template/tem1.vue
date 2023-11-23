@@ -4,7 +4,7 @@
  * @Description: 模板id= --用于无盘口&2个/多个投注项玩法
 -->
 <template>
-  <div v-show="false">{{BetData.bet_data_class_version}}</div>
+  <div v-show="false">{{BetData.bet_data_class_version}}{{MatchDetailCalss.details_data_version.version}}</div>
   <div class="temp1 mx-10 box-style">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
@@ -15,8 +15,8 @@
       <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="temp1_ol_on">
         <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'temp1_ol_ov']" >
           <template v-if="ol.os == 1">
-            <span class="temp1_ol-on-text">{{ ol.ot || ol.on }}</span>
-            <span class="temp1_ol-ov-text">{{ get_oddv(ol.ov/100000) }}</span>
+            <span class="temp1_ol-on-text">{{ ol.ot || ol.on }}</span>{{MatchDetailCalss.params.sportId}}
+            <span class="temp1_ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,'','',MatchDetailCalss.params.sportId)}}</span>
             <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
           </template>
           <span v-if="ol.os == 2"
@@ -35,6 +35,7 @@ import { onMounted, ref, computed } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import olStatus from "../ol_status.vue";
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
+import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
 // import { storage_bet_info } from 'src/public/utils/bet/bet_info.js'
 // import EMITTER from  "src/global/mitt.js"
 const emit = defineEmits(["bet_click_"]);

@@ -37,6 +37,8 @@ class BetData {
     this.is_bet_single = true;
     // 投注金额 h5使用
     this.bet_amount = 0;
+    // 投注记录数量
+    this.bet_record_count = 0
 
     // 是否为合并模式
     this.is_bet_merge = false;
@@ -752,6 +754,12 @@ this.bet_appoint_ball_head= null */
   // 限额 /
   set_bet_keyboard_config(val) {
     this.bet_keyboard_config = val
+    this.set_bet_data_class_version()
+  }
+
+  // 获取投注记录数量
+  set_bet_record_count(count) {
+    this.bet_record_count = count
     this.set_bet_data_class_version()
   }
 
