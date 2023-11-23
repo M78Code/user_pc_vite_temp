@@ -1,6 +1,9 @@
 <template>
     <div class="rule_page">
-      <headerSelect :rule_headle_info ="rule_headle_info"></headerSelect>
+
+      <iframe class="rules-iframe" src="http://sports-rules-ouzhou-test.sportxxx3pk.com/#/en_gb" />
+
+      <!-- <headerSelect :rule_headle_info ="rule_headle_info"></headerSelect>
       <section>
         <div class="title">General Sports Explanation</div>
         <q-scroll-area style="height: 100%;">
@@ -13,7 +16,7 @@
             <div>{{ item.content }}</div>
           </collapse>
         </q-scroll-area>
-      </section>
+      </section> -->
     </div>
   </template>
    
@@ -57,6 +60,11 @@
   .rule_page{
     height: 100%;
     background: #E2E2E2;
+    .rules-iframe {
+      width: 100%;
+      height: 100%;
+    }
+
     header{
       height: 44px;
       margin-bottom: 10px;
