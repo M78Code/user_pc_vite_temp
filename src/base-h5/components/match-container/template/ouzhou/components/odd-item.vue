@@ -114,7 +114,6 @@ const get_icon = (type) => {
 }
 
 const set_old_submit = () => {
-  console.log(props.odd_item)
   const ol = props.odd_item
   if (is_lock.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
