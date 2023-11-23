@@ -63,6 +63,7 @@ class MenuData {
     this.menu_list = []; //常规球种 101...
     this.top_events_list = []; //热门球种
     this.champion_list = []; //冠军球种
+    this.slideMenu_sport = [];//赛果列表
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
 
@@ -188,6 +189,13 @@ class MenuData {
   //设置赛果参数
   set_result_menu_api_params(val){
     this.result_menu_api_params = val
+  }
+  /**
+   * 赛果列表
+   */
+  set_slideMenu_sport(arr){
+    this.slideMenu_sport = arr || [];
+    this.update();
   }
   /**
    * 请求赛事列表
