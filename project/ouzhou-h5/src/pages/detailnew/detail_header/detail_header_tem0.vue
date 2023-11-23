@@ -1,20 +1,23 @@
 <template>
   <div class="detail_header_tem0">
     <div class="detail-header-score row">
-      <div class="detail-home col-5">
+      <div class="detail-home">
         <div class="detail-home-info">
-          <span class="detail-home-info-text">{{ get_match_detail.mhn }}</span>
+          <span class="detail-home-info-text detail-team-name">{{ get_match_detail.mhn }}</span>
+          <span class="detail-separate"></span>
           <span class="detail-home-info-score-text" v-if="scoew_icon_list['S1']">{{ scoew_icon_list['S1'].home }}</span>
         </div>
       </div>
-      <div class="detail-score col-2">
-        <div class="detail-score-time">{{get_match_detail.course}}
+      <div class="detail-score">
+        <div class="detail-score-time" :class="get_match_detail.mmp == 0?'active':''">
+          <span v-if="get_match_detail.mmp!=0">{{get_match_detail.course}}</span>
           <span v-if="get_match_detail.ms != 110">{{get_match_detail.mstValue}} {{get_match_detail.mstValueTime}}</span></div>
       </div>
-      <div class="detail-away col-5">
+      <div class="detail-away">
         <div class="detail-away-info">
           <span class="detail-away-info-score-text" v-if="scoew_icon_list['S1']">{{ scoew_icon_list['S1'].away }}</span>
-          <span class="detail-away-info-text">{{ get_match_detail.man }}</span>
+          <span class="detail-separate"></span>
+          <span class="detail-away-info-text detail-team-name">{{ get_match_detail.man }}</span>
         </div>
       </div>
     </div>
@@ -23,6 +26,7 @@
   
 <script setup>
 import { defineComponent, onMounted, ref, toRef, watch } from "vue";
+/** @type {{ get_match_detail:TYPES.MatchDetail }} */
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -61,8 +65,10 @@ setTimeout(() => {
     padding: 0 8px;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: nowrap;
     min-height: 44px;
     .detail-home {
+      flex: 1;
       line-height: 20px;
       .detail-home-info {
         line-height: 25px;
@@ -75,7 +81,6 @@ setTimeout(() => {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          width: 100%;
         }
         .detail-home-info-score-text {
           //color: #FF7000;
@@ -85,12 +90,17 @@ setTimeout(() => {
       }
     }
     .detail-score {
+      padding: 0 10px;
       text-align: center;
       .detail-score-time {
+        &.active{
+          color: var(--q-gb-t-c-1);
+        }
         font-weight: 500;
       }
     }
     .detail-away {
+      flex: 1;
       line-height: 20px;
       text-align: right;
       .detail-away-info {
@@ -104,7 +114,6 @@ setTimeout(() => {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          width: 100%;
         }
         .detail-away-info-score-text {
           //color: #FF7000;
@@ -114,5 +123,12 @@ setTimeout(() => {
       }
     }
   }
+}
+.detail-team-name{
+  flex: 1;
+  width: 0;
+}
+.detail-separate{
+  width: 10px;
 }
 </style>

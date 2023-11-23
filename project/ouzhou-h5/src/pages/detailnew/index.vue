@@ -27,7 +27,7 @@
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">
         <q-separator />
-        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail.csid)">
+        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid)">
           <div
             :class="[{ 'tab-active': tab == 'betting' }, 'tabs-item']"
             @click="tabChange('betting')"
@@ -45,7 +45,8 @@
         <div class="match-detail-line"></div>
         <!-- tabs 玩法分类切换 -->
         <div v-if="tab == 'betting'">
-          <detail_tabs :category_list="category_list" :active="tab_selected_obj" @detail_tabs_change="detail_tabs_change"/>
+          <detail_tabs :category_list="category_list" :active="tab_selected_obj"
+            @detail_tabs_change="detail_tabs_change" v-model:allCloseState="allCloseState"/>
         </div>
         <div v-if="tab == 'event_analysis'">
           <detail_event_tabs @change="detail_event_tabs_change" />
@@ -56,7 +57,9 @@
           <!-- 玩法模板 -->
           <div ref="fixedHeight" class="match-detail-odds-scroll"
             :class="[match_detail?.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
-            <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail" :loading="loading"/>
+            <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail" 
+              :loading="loading" v-model:allCloseState="allCloseState"
+              />
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>
@@ -96,6 +99,7 @@ export default {
     const route = useRoute();
     const mid = ref(route?.params?.mid)
     const {
+      allCloseState,
       detail_store,
      match_odds_info,
      match_detail,
@@ -146,7 +150,8 @@ export default {
       detail_tabs_change,
       changeHeader,
       mid,
-      MatchDataWarehouseInstance
+      MatchDataWarehouseInstance,
+      allCloseState,
      }
   } 
 }

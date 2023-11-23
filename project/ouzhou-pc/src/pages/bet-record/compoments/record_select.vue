@@ -30,7 +30,9 @@
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" :offset="[200, 10]" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="date" range :minimal="true" ref="dateRef" />
+                  <q-date v-model="date" range :minimal="true" ref="dateRef"
+                          :locale="dateLocal"
+                  />
                 </q-popup-proxy>
               </q-icon>
             </template>
@@ -47,17 +49,29 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
+// import dayjs from 'dayjs'
+const _dayjs = dayjs()
+const isZH = true
+const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+const months = [...Array(12)].map((v, i) => i + 1 + '月')
+const dateLocal = isZH ? {
+  days,
+  daysShort: days,
+  months,
+  monthsShort: months,
+} : {}
 const props = defineProps({
   current_tab: {
     type: String,
     default: ''
   }
 })
+const formatYMD = 'YYYY/MM/DD'
 const dateRef = ref(null)
 const qDateProxy = ref(null)
 const cash_value = ref([''])
 const current_time = ref(1)
-const date = ref({ from: '2023/07/01', to: '2023/07/17' })
+const date = ref({ from: '', to: '' })
 const date_value = ref('')
 const select_options = [
   { value: i18n_t("bet_record.sort_by_settled_time"), label: i18n_t("ouzhou.record.settled_time"), id: 2 },
@@ -71,7 +85,7 @@ onMounted(() => {
   date_value.value = data + '-' + data
   date.value = { from: data, to: data }
 })
-const select_value = ref(i18n_t("bet_record.bet_time"))
+const select_value = ref(i18n_t("bet_record.sort_by_settled_time"))
 let params = {
   enablePreSettle: false,
   timeType: 1,
@@ -110,15 +124,17 @@ const options = [
   }
 ]
 const btn_options = [
-  { label: i18n_t("ouzhou.record.today"), value: 1 },
-  { label: i18n_t("ouzhou.record.yesterday"), value: 2 },
-  { label: i18n_t("ouzhou.record.7_days"), value: 3 },
-  { label: i18n_t("ouzhou.record.30_days"), value: 4 }
+  { label: i18n_t("ouzhou.record.today"), value: 1, range: [_dayjs.startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
+  { label: i18n_t("ouzhou.record.yesterday"), value: 2, range: [_dayjs.subtract(1, 'day').startOf('day').format(formatYMD), _dayjs.subtract(1, 'day').endOf('day').format(formatYMD)] },
+  { label: i18n_t("ouzhou.record.7_days"), value: 3, range: [_dayjs.subtract(6, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
+  { label: i18n_t("ouzhou.record.30_days"), value: 4, range: [_dayjs.subtract(29, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] }
 ]
 // 时间筛选点击
 const time_click = (item) => {
+  const [from, to] = item.range
   current_time.value = item.value
   params.timeType = item.value
+  date.value = { from, to }
   emitClick()
 }
 const emitClick = () => {
@@ -147,7 +163,7 @@ const search = () => {
 <style lang="scss">
 div.q-menu {
   box-shadow: 0 1px 5px #0003, 0 2px 2px #00000024, 0 3px 1px -2px #0000001f;
-  background: var(--q-gb-bg-c-4);
+  background: #fff;
 }
 </style>
 <style lang="scss" scoped>
@@ -238,7 +254,8 @@ div.q-menu {
 .btn-group {
   height: 34px;
   //width: 330px;
-  background: var(--q-gb-bg-c-6);
+  -background: var(--q-gb-bg-c-6); 
+  background: #E2E2E2; 
   border-radius: 16px;
   box-sizing: border-box;
   display: flex;

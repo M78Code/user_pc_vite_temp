@@ -61,7 +61,7 @@ function handle_click_menu_mi_pre_process() {
  * 解析菜单数据
  */
 function resolve_mew_menu_res() {
-    console.error('resolve_mew_menu_res')
+    // console.error('resolve_mew_menu_res')
 
     if(MenuData.is_top_events()){
         resolve_mew_menu_res_mi_5000()

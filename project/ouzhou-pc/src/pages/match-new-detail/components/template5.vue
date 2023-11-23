@@ -5,6 +5,7 @@
 -->
 
 <template>
+    <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <div class="temp-simple">
         <div
             v-for="(value, key) in matchInfo"
@@ -14,11 +15,11 @@
         >
             <div class="temp5-hv">{{ key>0&&hpid==39?'+'+key:key }}</div>
             <div
-                v-if="value.length == 1"
+                v-if="value.length == 1&&!['340','359','383'].includes (props.match_info.hpid)"
                 style="width: 200%"
                 @click="betItemClick(key, value[0])"
                 :class="{
-                    'temp-active': value[0].oid === current_ol.oid,
+                    'temp-active': BetData.bet_oid_list.includes(value[0].oid), 
                     temp_grid_item: true,
                 }"
             >
@@ -41,12 +42,14 @@
                     v-for="o in value"
                     :class="{
                         temp_grid_item: true,
-                        'temp-active': o.oid === current_ol.oid,
+                        'temp-active':BetData.bet_oid_list.includes(o.oid),
                     }"
+                    :style="{width:value.length>1?'100%':'200%'}"
                     :key="o.oid"
                     @click="betItemClick(key, o)"
                 >
-                    <span v-show="!o.hs">
+               
+                    <span>
                         <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol">
                         </bet-item>
                     </span>
@@ -64,14 +67,15 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import betItem from "./bet-item-list-new-data.vue";
 
 const props = defineProps({
     match_info: {
-        type: Array,
-        default: () => [],
+        type: Object,
+        default: () => {},
     },
     current_ol: {
         type: Object,
@@ -84,11 +88,14 @@ const props = defineProps({
 });
 const matchInfo = computed(() => {
     let obj = {};
-    props.match_info.forEach((item) => {
+    props.match_info.hl.forEach((item) => {
         if (item && item.ol.length > 0) {
             item.ol.forEach((i) => {
                 i.hs = item.hs;
-                i.on = item.hv;
+                if (!['340','359','383'].includes (props.match_info.hpid)) {
+                    i.on = item.hv;
+                }
+
                 if (!obj[i.on]) {
                     obj[i.on] = [];
                     obj[i.on] = [i];
@@ -98,6 +105,7 @@ const matchInfo = computed(() => {
             });
         }
     });
+    // console.log(11111111111,obj)
     return obj;
 });
 const emit = defineEmits(["betItemClick"]);
@@ -112,10 +120,10 @@ const betItemClick = (key, o) => {
     bet_oid.value = o.oid;
 
     let obj = "";
-    if (props.match_info.length == 1) {
-        obj = props.match_info[0];
+    if (props.match_info.hl.length == 1) {
+        obj = props.match_info.hl[0];
     } else {
-        obj = props.match_info.find((item) => item.hv === key);
+        obj = props.match_info.hl.find((item) => item.hv === key);
     }
     emit("betItemClick", obj, o);
 };

@@ -53,14 +53,13 @@ const api_params = {
  * @return {undefined} undefined
  */
 function match_list_all_params() {
-    // debugger
     // menu_root 一级菜单类型
     // left_menu_result  记录的左侧菜单数据 
     // mid_menu_result 记录的中间菜单数据
     // is_collect 是否收藏
     // menu_current_mi 当前选中的菜单id----终极菜单id 根据此id获取对应的旧菜单id 
     // get_mid_for_euid 通过当前选中的菜单id获取对应的旧菜单id
-    const { menu_root, left_menu_result, mid_menu_result, is_collect, get_mid_for_euid, menu_current_mi } = MenuData
+    const { menu_root, left_menu_result, mid_menu_result, is_collect, get_mid_for_euid, menu_current_mi,current_ball_type } = MenuData
     // mid_menu_mi 中间键 赛种菜单id 
     // md 中间键 时间id
     // tid 中间键 联赛id  // vr体育 下的赛种对应的联赛
@@ -101,8 +100,7 @@ function match_list_all_params() {
             params: {
                 "cuid": UserCtr.get_uid() || '',
                 "sort": UserCtr.sort_type,
-                euid: get_mid_for_euid(menu_current_mi),
-                "selectionHour": filterHeader.open_select_time,
+                // "selectionHour": filterHeader.open_select_time, // 需要的自己在下面加
             },
         }
     }
@@ -128,18 +126,18 @@ function match_list_all_params() {
         }
         if ([3,203].includes(menu_root*1)) {
             // 早盘获取选中的时间
-            lv2_mi_info.md = md
+            lv2_mi_info.md = md+''
+            lv2_mi_info.tid = ''
+            lv2_mi_info.orpt ='0'
             // lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
         }
     } else if (menu_root == 400) {
-        guanjun = "guanjun"
         // 冠军
         lv2_mi_info = {
             selectionHour: null,
-            ...lv2_mi_info,
-            apiType,
-            "sportId": csid,
+            "sportId": current_ball_type,
             "outrightMatches": 1,
+            tid: '',
             "orpt": 18,
         }
     } else if (menu_root == 2000) {
@@ -153,26 +151,27 @@ function match_list_all_params() {
             md,
         }
     } else if (menu_root == 500) {
-        euid = get_mid_for_euid(menu_current_mi)
-        // 没有就重新获取
-        if (!euid) {
-            // 热门默认赛事
-            let mi_500_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {
-                sl: [],
-            };
-            // 热门赛事有值的
-            let { mi } = mi_500_obj['sl'].find(item => item.ct)
-            let mi_info = BaseData.mi_info_map[`mi_${mi}`] || {};
-            euid = mi_info.euid
-        }
+        // euid = get_mid_for_euid(menu_current_mi)
+        // // 没有就重新获取
+        // if (!euid) {
+        //     // 热门默认赛事
+        //     let mi_500_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {
+        //         sl: [],
+        //     };
+        //     // 热门赛事有值的
+        //     let { mi } = mi_500_obj['sl'].find(item => item.ct)
+        //     let mi_info = BaseData.mi_info_map[`mi_${mi}`] || {};
+        //     euid = mi_info.euid
+        // }
         // 热门赛事
         lv2_mi_info = {
-            ...lv2_mi_info,
+            // ...lv2_mi_info,
             apiType,
-            hotMatches: euid == "30199" ? '1' : '', // 热门赛事 全部/赛事 才是1
-            euid,
-            "orpt": euid == "30101" ? '12' : '-1',  // 热门赛事 竞足 12，其他-1
-            pids: euid == "30101" ? -999 : '',
+            // hotMatches: euid == "30199" ? '1' : '', // 热门赛事 全部/赛事 才是1
+            euid:'30199',
+            "orpt": '-1',  // 热门赛事 竞足 12，其他-1
+            pids: '',
+            csid: current_ball_type,
         }
     } else if (menu_root == 1) {
         lv2_mi_info = {

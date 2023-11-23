@@ -2,8 +2,8 @@
 
 <template>
     <div>
-        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)"
-        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11"  />
+        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @keydown.enter="keydown($event)"
+        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money2(ref_data.max_money)}`" maxLength="11"  />
     </div>
 
 </template>
@@ -13,9 +13,8 @@ import { reactive,onMounted,onUnmounted } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import mathJs from 'src/core/bet/common/mathjs.js'
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr } from "src/core/"
-
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,format_money2 } from "src/core/"
+import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 const props = defineProps({
     items:{},
 })
@@ -28,18 +27,20 @@ const ref_data = reactive({
     keyborard: true, // 是否显示 最高可赢 和 键盘
     seriesOdds: '', // 赔率
     show_quick: false, // 显示快捷金额
+    emit_lsit: {},
 })
 
 onMounted(() => {
     // set_ref_data_bet_money()
-    // 监听 限额变化
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
-    useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).on
+      // 监听 限额变化
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).off
+    }
 })
 
 onUnmounted(() => {
-    useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
-    useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).off
+    Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
 // 设置快捷金额
@@ -50,7 +51,15 @@ const set_quick_money = () => {
     }else{
         ref_data.money = BetData.bet_amount
     }
-   
+}
+
+// 键盘回车事件
+const keydown = (e) => {
+    e.preventDefault();
+    // 未投注之前 可以点击
+    if(BetViewDataClass.bet_order_status == 1){
+        submit_handle()
+    }
 }
 
 // 限额改变 修改限额内容

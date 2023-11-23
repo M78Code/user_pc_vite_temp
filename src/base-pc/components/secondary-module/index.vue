@@ -13,7 +13,7 @@
         <!-- 头部 -->
         <header class="header">
           <div class="row items-center justify-between top_tit">
-            <p>personal</p>
+            <p>{{ i18n_t('ouzhou.set.personal') }}</p>
             <p>
               <img
                 :src="compute_local_project_file_path('/image/svg/close.svg')"
@@ -22,18 +22,19 @@
             </p>
           </div>
           <div class="row secondary_obj">
+          <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <p
               class="secondary_name"
               :class="item.id === LayOutMain_pc.layout_secondary_active ? 'active' :'' "
               v-for="item in list_data"
               :key="item.id"
               @click="active_change(item.id)"
-            >{{item.name}}</p>
+            >{{ i18n_t(`ouzhou.set.${item.id}`)}}</p>
           </div>
           <q-card></q-card>
         </header>
         <!-- 内容 -->
-        <section>
+        <section class="secondary_content">
           <q-tab-panels v-model="LayOutMain_pc.layout_secondary_active" animated>
           <!-- 公告 -->
             <q-tab-panel name="announcement">
@@ -62,12 +63,13 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import rule from "src/base-pc/components/rule/index.vue";
 import announce from "src/base-pc/components/announce/index.vue";
 import matchResults from "src/base-pc/components/results/match-results.vue";
+import { i18n_t } from "src/boot/i18n.js"
 
 //数据列表
 const list_data = reactive([
   { id: "announcement", name: "Announcement" },
   { id: "results", name: "Results" },
-  { id: "sportsrules", name: "Sports rules" }
+  { id: "sport_rules", name: "Sports rules" }
 ]);
 /**
  * @description: 改变激活的数据
@@ -75,7 +77,7 @@ const list_data = reactive([
  * @return {}
  */
 function active_change(value) {
- 
+ LayOutMain_pc.set_layout_secondary_active(value)
 }
 /**
  * @description: 关闭弹窗
@@ -88,43 +90,47 @@ function close_page(value) {
 }
 </script>
 <style lang="scss">
-.secondary_module .q-dialog__inner .dialog_content {
-  min-width: 1200px !important;
+//.q-dialog__inner .dialog_content
+.dialog_content{
+  padding-left: 320px;
+}
+.secondary_module  {
+  max-width: 1200px !important;
   background: var(--q-gb-t-c-1);
+  margin-left: 200px;
+  z-index: 9999 !important;
   .header {
     padding: 10px;
-    width: 100%;
+    width: 1200px;
     height: 80px;
+    border-bottom: 1px solid #ff7000;
     background: url($SCSSPROJECTPATH+"/image/png/secondary_bg.png") no-repeat
       center / cover;
     .top_tit {
       font-size: 18px;
-      color: var(--q-gb-t-c-1);
+      -color: var(--q-gb-t-c-1);
+      color: #ffffff;
     }
     .secondary_obj {
-      color: var(--q-gb-t-c-3);
+      -color: var(--q-gb-t-c-3);
+      color: #C2C2C2;
       .secondary_name {
         margin-right: 30px;
       }
       .active {
-        color: var(--q-gb-t-c-2);
-        position: relative;
-        &::before {
-          content: "";
-          position: absolute;
-          display: inline-block;
-          width: 54px;
-          height: 2px;
-          background: var(--q-gb-bg-c-1);
-          bottom: -8px;
-          left: 0;
-        }
+        -color: var(--q-gb-t-c-2);
+        color: #ff7000;
+        border-bottom:2px solid #ff7000;
       }
     }
   }
   .q-tab-panel{
     padding: 0 !important;
 }
+    .secondary_content{
+      height:calc(100% - 80px);
+      width: 1200px;
+    }
 }
 ::v-deep.q-tab-panel{
   padding: 0 ;

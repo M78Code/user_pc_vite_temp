@@ -112,7 +112,7 @@ const popularListSort = (arr) =>{
   const tem = new Map();
   arr = arr.sort((n,m)=>{return m.num - n.num});
   arr = [...arr,...leftDataList.value]
-  const mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1))
+  let mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1) && MenuData.conventionalType.includes(+item.mi))
   return mergeArr.slice(0,3);
 }
 /**
@@ -151,8 +151,7 @@ const change_current_menu = (item) => {
   // 设置菜单对应源数据
   emits('isLeftDrawer');
   useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE);
-
-  // 避免多次 触发数据获取方法， 以下只在 matchList 页面才触发； 其他情景由 matchList 页面自己驱动
+  BaseData.set_is_emit(false)
   MatchMeta.set_origin_match_data()
   // if (route.name === 'matchList') MatchMeta.set_origin_match_data()
 
@@ -162,6 +161,9 @@ const change_current_menu = (item) => {
   // MenuData.set_current_lv1_menu(2);
   // 重置所选 球种默认玩法 hpid
   MatchResponsive.reset_match_hpid_by_csid()
+  if(item.mi == 400){
+    return router.push({name: 'champion'})
+  }
   if(route.name != "matchList"){
     //跳转今日列表
     router.push({name: 'matchList'})

@@ -6,14 +6,14 @@
         <div class="odds-hpn" @click="expend_toggle(item)">
           <span class="odds-hpn-text">{{ item.hpn }}</span>
           <!-- <img :src="downUrl" alt=""> -->
-          <span v-if="topKey_active.includes(item.topKey)" class="odds-hpn-up-icon"></span>
-          <span v-else class="odds-hpn-down-icon"></span>
+          <span class="odds-hpn-icon" 
+            :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'" ></span>
         </div>
         
         <div
-          :class="[{ 'is-expend': topKey_active.includes(item.topKey) }, 'odds-expend']"
+          :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']"
         >
-        <!-- {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }} -->
+        {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}
           <component
               :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
               :item_data="item"
@@ -26,7 +26,7 @@
     </template>
     <template v-else>
       <div v-if="!loading">
-        <!-- <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt=""> -->
+        <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt="">
         <div class="no-data-text">No Data</div>
       </div>
     </template>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, markRaw } from "vue";
+import { onMounted, ref, computed, markRaw, watch, nextTick } from "vue";
 import temp0 from "./template/tem0.vue";
 import temp1 from "./template/tem1.vue";
 import temp3 from "./template/tem3.vue";
@@ -57,9 +57,14 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: () => false,
+  },
+  /** 全部收起状态 */
+  allCloseState: {
+    type: Boolean,
+    default: false
   }
 });
-const emit = defineEmits(["change"]);
+const emit = defineEmits(["change","update:allCloseState"]);
 const active = ref(1);
 const componentArr = ref({
     tem0: markRaw(temp0),
@@ -75,14 +80,34 @@ const tem_choice = (hpt) => {
   return 3;
 }
 // 事件执行函数
-const topKey_active = ref([]);
+const topKey_active = ref({});
+let watchAllCloseStateHandle = useWatchAllCloseState()
+/** 切换展开/收起 */
 const expend_toggle = (item) => {
-  if (topKey_active.value.includes(item.topKey)) {
-    topKey_active.value.splice(topKey_active.value.indexOf(item.topKey), 1);
-  } else {
-    topKey_active.value.push(item.topKey);
+  if(props.allCloseState){
+    watchAllCloseStateHandle()
+    emit('update:allCloseState',false)
+    props.match_odds_info.forEach(v=>topKey_active.value[v.topKey] = true)
+    delete topKey_active.value[item.topKey]
+    nextTick(()=>watchAllCloseStateHandle= useWatchAllCloseState())
+    return
+  }
+  if(topKey_active.value[item.topKey]){
+    delete topKey_active.value[item.topKey]
+  }else {
+    topKey_active.value[item.topKey] = true
+  }
+  if(Object.keys(topKey_active.value).length == props.match_odds_info.length){
+    emit('update:allCloseState', true)
   }
 }
+/** 监听一键展开/收起 */
+function useWatchAllCloseState() {
+  return watch(() => props.allCloseState,(val) =>{
+    if(!val)topKey_active.value = {}
+  })
+}
+
 const bet_click_ = (data) => {
   active.value = +data.oid;
   // storage_bet_info({
@@ -178,16 +203,14 @@ onMounted(() => {
       color: var(--q-gb-t-c-4);
       font-weight: 500;
     }
-    .odds-hpn-down-icon {
+    .odds-hpn-icon {
       width: 14px;
       height: 14px;
       background: url($SCSSPROJECTPATH+"/image/detail/down.png") no-repeat center;  
-    }
-    .odds-hpn-up-icon {
-      width: 14px;
-      height: 14px;
-      transform: rotate(180deg);
-      background: url($SCSSPROJECTPATH+"/image/detail/down.png") no-repeat center;
+      transition: transform .5s cubic-bezier(0, 0.2, 0, 1);
+      &.up{
+        transform: scaleY(-1);
+      }
     }
   }
   .is-expend {

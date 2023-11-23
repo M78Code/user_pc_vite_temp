@@ -25,7 +25,7 @@
               <div class="nonebox4-content-left-content">
                 <div class="nonebox4-content-left-info">
                   <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">{{ items.marketValue }}</span></div>
                       <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
@@ -42,8 +42,8 @@
 
 
         <div class="total">
-          <div>Highest Win<span class="total-left">72.40</span></div>
-          <div>Stake<span class="total-right">10.00</span></div>
+          <div>{{ i18n_t("common.maxn_amount_val") }}<span class="total-left">72.40</span></div>
+          <div>{{ i18n_t("bet_record.total_v") }}<span class="total-right">10.00</span></div>
         </div>
       </div>
 

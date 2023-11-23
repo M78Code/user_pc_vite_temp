@@ -3,8 +3,10 @@ import {
     MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
     MatchDataWarehouse_ouzhou_PC_hots_List_Common,
     MatchDataWarehouse_PC_List_Common,
+    MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
     LayOutMain_pc,
-    UserCtr
+    UserCtr,
+    MenuData
 } from "src/core";
 import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -46,6 +48,56 @@ export const get_home_matches = async payload => {
     const res = await api_match_list.get_home_matches(payload);
     let obj = res?.data || [];
     return obj;
+}
+
+/**
+   * 
+   * @description 获取赛事请求参数
+   * @returns { Object }
+   */
+function get_base_params (euid) {
+  // match中 hpsFlag 都为0 除开冠军或电竞冠军; 赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
+  const hpsflag = 0
+  return {
+    // cuid: UserCtr.get_uid(), // 508895784655200024
+    euid: euid ? euid : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
+    //排序	 int 类型 1 按热门排序 2 按时间排序
+    sort: 1,
+    hpsflag
+  };
+}
+
+/**
+ * 
+ * @description 获取五大联赛列表
+ */
+export const get_five_leagues_list = async () => {
+  const filterData = {}
+    const max = 5
+    const tid = ['320', '180', '239', '276', '79']
+    const euid = '40203'
+    const type = '12'
+    const params = get_base_params(euid)
+    const res = await api_match_list.get_matches_list({
+      ...params,
+      tid: tid.toString(),
+      euid,
+      type
+    })
+    const list = lodash.get(res, 'data', [])
+    list.forEach(item => {
+      const { tid } = item
+      item.warehouse_type = 'five_league'
+      if (!filterData[tid]) {
+        filterData[tid] = [item]
+      } else if (filterData[tid].length < max) {
+        filterData[tid].push(item)
+      }
+    })
+    const results = Object.values(filterData).flat()
+    console.log('555results', filterData, results);
+    
+    return results
 }
 
 /**
@@ -185,6 +237,16 @@ export const init_home_matches = async () => {
     let mins15_list = []
     let featured_list = []
     let match_count = 0;
+    get_five_leagues_list().then(res=>{
+      try {
+        MatchDataWarehouse_ouzhou_PC_five_league_List_Common.set_list(res);
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+          res, null, null, true
+        );
+      }catch (error) {
+          console.log(error);
+      }
+    })
     await get_home_matches(params).then((res) => {
       try {
         MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'),false)
@@ -204,17 +266,17 @@ export const init_home_matches = async () => {
         mins15_list = filter_15mins_func(
           MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
         );
+        console.log(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list, 'p15- mins15_list')
         // // 获取matches_featured
         // featured_list = filter_featured_list(
         //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
         // );
       } catch (error) {
-          
+          console.log(error);
       }
     });
     return {
         mins15_list,
-        featured_list,
         match_count
     }
 };

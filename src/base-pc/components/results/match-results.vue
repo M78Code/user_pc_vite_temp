@@ -10,7 +10,7 @@
     <!-- <moveVideo></moveVideo> -->
     <p class="font_match_results">12222</p>
     <!-- 赛果 -->
-    <simple-header @refresh="sub_search" :data_loaded="refresh_finish" :title="i18n_t('common.amidithion')"></simple-header>
+    <!-- <simple-header @refresh="sub_search" :data_loaded="refresh_finish" :title="i18n_t('common.amidithion')"></simple-header> -->
 
     <!-- 中间内容 S-->
     <div class="main_wrap">
@@ -23,7 +23,7 @@
         :startTimeShow="startTimeShow"
         :showSelectTime="showSelectTime"
         :isSelectConfirm="isSelectConfirm"
-        v-model:dateValue="model"
+        :dateValue="model"
         :ipt_search="ipt_search"
         @refresh="sub_search"
         :api_league_type="api_league_type"
@@ -35,7 +35,11 @@
         :input_radio="input_radio"
         :is_bowls="is_bowls"
         :cancel="cancel"
-        v-model:is_show="is_show"
+        :is_show="is_show"
+        :click_popup="click_popup"
+        :img_mouseleave="img_mouseleave"
+        :timeChanged="timeChanged"
+        :search_hot="search_hot"
       ></result-header>
       <!-- 筛选条件 E-->
 
@@ -117,6 +121,7 @@ const {
   is_bowls,
   is_show,
   cancel,
+  timeChanged,
   //函数
   get_tr_detail,
   change_sort,
@@ -136,6 +141,8 @@ const {
   champion_sport_type_filter,
   search_hot,
   highlights_input_radio,
+   click_popup,
+  img_mouseleave
 } = useGetResultConfig();
 
 onMounted(() => {

@@ -41,13 +41,14 @@ function useMittOn(type,callback) {
     }
   }
 }
-/** mitt on方法的setup 组合式函数封装, 仅限vue setup作用域期间调用, 函数内注册onUnmounted钩子移除mitt监听
- * @param {keyof MittType} type MITT_TYPES事件类型
- * @param {(params?)=>void} callback 事件触发时的回调函数
- * @returns {MITT.UseMittOnResult}
+/** mittOn方法的Setup封装,限Setup作用域调用
  * @example 
  * import { useMitt, MITT_TYPES } from "src/core/index";
  * useMitt(MITT_TYPES.EMIT_KEY,(param?)=>{})
+ * @description 函数内注册onUnmounted钩子移除mitt监听
+ * @param {keyof MittType} type MITT_TYPES事件类型
+ * @param {(params?)=>void} callback 事件触发时的回调函数
+ * @returns {MITT.UseMittOnResult}
  */
 function useMitt(type, callback){
   const {off} = useMittOn(type,callback)
@@ -55,14 +56,15 @@ function useMitt(type, callback){
 }
 /**
  * 使用 mitt emit方法
- * @param {keyof MittType} type MITT_TYPES事件类型
- * @param {Object} [param] 事件传递的参数
+ * @param {OtherMittType} type MITT_TYPES事件类型
+ * @param {any} [param] 事件传递的参数
  * @example 
  * import { useMittEmit, MITT_TYPES } from "src/core/index";
  * useMittEmit(MITT_TYPES.EMIT_KEY)
  * useMittEmit(MITT_TYPES.EMIT_KEY,{key:value})
  */
 function useMittEmit(type, param) {
+  
   // console.error("mitt----------useMittEmit-----   :", type,param);
  
   if(String(type).startsWith('EMIT_')&&MITT_TYPES[type]){

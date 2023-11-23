@@ -6,9 +6,11 @@
 -->
 <template>
   <div>
-      <q-tabs >
-        <q-tab v-for="(item ,index) in option" :key="index" @click.stop="selectSport(item)">
-          <div>
+      <q-tabs class="select_n_tabs">
+        <q-tab  v-for="(item ,index) in option" :key="index"
+                @click.stop="selectSport(item)"
+                >
+          <div class="tabs_item" :class="sport === item ? 'active' : ''">
             {{ item }}
           </div>
         </q-tab>
@@ -83,7 +85,7 @@ watch(props.sportType,(val)=>{
 )
 //筛选出空数据
 const option = computed(() => {
-  return props.options.filter(item => item !== '')
+  return props.options.filter(item =>  item !== '')
 })
 
 // 全局点击事件
@@ -103,7 +105,7 @@ const option = computed(() => {
     
 //   } else {
 //     optionsIsShow.value = !optionsIsShow.value;
-//     useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
+    //     useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
 //   }
 // };
 /**
@@ -112,12 +114,43 @@ const option = computed(() => {
  */
 const selectSport = (item) => {
   sport.value = item;
+  console.error('sportsport',sport)
   // showOption();
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
   useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);
 };
 </script>
 <style lang="scss" scoped>
+.select_n_tabs{
+  .tabs_item{
+    color: #8A8986;
+    position: relative;
+    &::before{
+      content: '';
+      width: 2px;
+      height: 14px;
+      background: #D9D9D9;
+      position: absolute;
+      right:  -20px;
+      top: 2px;
+    }
+  }
+  .active{
+    color: #1A1A1A;
+    position: relative;
+       &::before{
+      content: '';
+      background: linear-gradient(180deg, #FF7000 0%, rgba(255, 112, 0, 0) 100%);
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      top: 26px;
+      left: 40%;
+      border-radius: 4px;
+
+    }
+  }
+}
 .e-select {
   width: 120px;
   height: 28px;
@@ -136,8 +169,8 @@ const selectSport = (item) => {
     border: 1px solid #d0d8de;
     cursor: pointer;
     &:hover {
-      // border: 1px solid #ff7000;
-      border: 1px solid var(--q-gb-bd-c-1);
+      border: 1px solid #ff7000;
+      -border: 1px solid var(--q-gb-bd-c-1);
     }
   }
   .select-input {

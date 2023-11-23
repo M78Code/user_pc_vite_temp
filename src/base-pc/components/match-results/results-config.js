@@ -732,7 +732,8 @@ export const useGetResultConfig = () => {
         .catch((err) => {
           state.details_load = "empty";
         });
-      state.$refs.result_ref.change_current_events_type();
+        // state.$refs.result_ref&&state.$refs.result_ref.change_current_events_type();
+        state?.$refs?.result_ref?.change_current_events_type();
       change_playback_type();
     }
   };
@@ -984,7 +985,7 @@ export const useGetResultConfig = () => {
   const startTimeShowFunc = (type) => {
     useMittEmit(MITT_TYPES.EMIT_SHOW_SELECT);
     // 体育下拉框展开时判断日期选择框是否展开
-    if (type == "close") {
+    if (type.type == "close") {
       if (state.startTimeShow == true) {
         state.startTimeShow = false;
         return;
@@ -1224,6 +1225,9 @@ export const useGetResultConfig = () => {
     select_submit,
     search_hot,
     highlights_input_radio,
-    change_sort
+    change_sort,
+    get_tr_detail,
+    click_popup,
+    img_mouseleave
   };
 };

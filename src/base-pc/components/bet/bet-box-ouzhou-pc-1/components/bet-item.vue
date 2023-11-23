@@ -5,8 +5,7 @@
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
-                    <span class="text-flow">{{ items.handicap }}</span> 
-                    <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
+                    <span class="text-flow" v-html="items.handicap"></span> 
                 </div>
                 <div class="w-100 h15 f-s-c my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
@@ -15,15 +14,14 @@
                 <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
             </div>
-
-
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
                 <div class="f-c-c bet-money">
                     <div class="show_img" v-if="items.red_green" >
-                        <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
+                        <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
                         <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
                     </div>
-                    <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'green_down','green-down':items.red_green == 'red_up'}">
+                    
+                    <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                         {{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}
                     </span>
                     <BetInput :items="items" />
@@ -36,9 +34,8 @@
 
             <div class="fw-e-s bet-right" v-else>
                 <div class="f-c-c bet-odds">
-                    <span class="font14 font700 mr-10">{{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}</span>
+                    <span class="font14 font700 mr-10">{{ compute_value_by_cur_odd_type(items.odds_after,'','',items.sportId) }}</span>
                 </div>
-                <!-- <BetResult :items="items" /> -->
             </div>
 
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1" @click="set_delete">
@@ -56,8 +53,8 @@
            
         </div>
         <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
-            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)"  v-for="(obj, index) in ref_data.money_list" :key="obj" :class="!(ref_data.max_money < obj && index != 'max') ? '' : 'disabled'">
-                {{index == 'max' ? '' : '+' }} {{ obj }}
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money > obj && ref_data.max_money > BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
+                {{index == 'max' ? '' : '+' }}{{obj}}
             </li>
         </ul>
     </div>
@@ -66,7 +63,7 @@
 <script setup>
 
 import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr } from "src/core/"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t } from "src/core/"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import mathJs from 'src/core/bet/common/mathjs.js'
@@ -83,24 +80,32 @@ const ref_data = reactive({
     show_money: false, // 显示快捷金额
     max_money: 0, // 最大限额
     money_list: [],
+    emit_lsit: {}
 })
 
 onMounted(()=>{
     // 单关 单注默认显示快捷金额
     if(BetData.is_bet_single){
-        const { max_money = 8888} = lodash_.get(BetViewDataClass.bet_min_max_money, `${props.items.playOptionsId}`, {})
         ref_data.show_money = true
-        ref_data.max_money = max_money
+      
         let money_list = lodash_.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
         money_list.max = 'MAX'
         ref_data.money_list = money_list
     }
-    useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).on
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
+        emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).off
+    }
 })
 
 onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).off
+    Object.values(ref_data.emit_lsit).map((x) => x());
 })
+
+const set_ref_data_bet_money = () => {
+    const {max_money = 8888 } = lodash_.get(BetViewDataClass.bet_min_max_money, `${props.items.playOptionsId}`, {})
+    ref_data.max_money = max_money
+}
 
 // 快捷金额 显示隐藏
 const set_show_quick_money = (obj = {}) => {
@@ -221,10 +226,14 @@ const set_delete = () => {
         //http://api.sportxxxvo3.com/
     }
     .text-flow{
-        max-width: 74%;
+        max-width: 90%;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
     }
     .text-flow-none{
         width: 76%;
@@ -248,4 +257,6 @@ const set_delete = () => {
         }
     }
 }
+
+
 </style>

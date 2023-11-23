@@ -10,7 +10,7 @@
     <!-- 是否显示赔率 -->
     <div v-else :class="['odd',  { 'up': is_up,  'down': is_down}]"> 
       <!-- 赔率 -->
-        <span v-if="csid != 1" class="title">{{ odd_item.onb }}</span>
+        <span v-if="is_show_title" class="title">{{ odd_item.onb }}</span>
         <span>
           <span class="hpn" v-if="show_hpn">{{ get_item_hpn(odd_item) }}</span> {{ get_odd_os(odd_item) }} 
           <!-- 绿升icon -->
@@ -63,6 +63,11 @@ const is_up = ref(false)
 const is_down = ref(false)
 const old_ov = ref(0)
 
+const is_show_title = computed(() => {
+  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${props.csid}`, '1')
+  return hpid != 1
+})
+
 const is_active = computed(() => {
   return MatchResponsive.active_odd.value === `${props.match_id}_${props.odd_item.oid}`
 })
@@ -101,9 +106,9 @@ const is_lock = computed(() => {
 const get_icon = (type) => {
   let img_src = ''
   if (type === 'up'){
-    img_src = is_active.value ? ouzhou_white_up : ouzhou_hps_up
+    img_src = BetData.bet_oid_list.includes(props.odd_item.oid) ? ouzhou_white_up : ouzhou_hps_up
   } else {
-    img_src = is_active.value ? ouzhou_white_up : ouzhou_hps_down
+    img_src = BetData.bet_oid_list.includes(props.odd_item.oid) ? ouzhou_white_up : ouzhou_hps_down
   }
   return img_src
 }
@@ -152,9 +157,13 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-2);
     background: #FF7000;
     border-radius: 2px;
+    .odd .title{
+      color: #fff;
+    }
     .hpn{
       position: relative;
-      top: 1px;
+      top: 0px;
+      color: #fff;
     }
     .odd.up{
       color: #fff;

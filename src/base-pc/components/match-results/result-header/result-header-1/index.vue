@@ -1,6 +1,7 @@
 
   
 <template>
+
 <div>
   <div class="top-menu-content">
         <!-- 体育 -->
@@ -12,6 +13,7 @@
           use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
+      <q-separator class="divider" color="#F2F5F8" inset />
     <div class="search-header">
     <div class="wrap-select">
       
@@ -102,23 +104,21 @@
             <!-- 滚球 -->
             <span>{{ i18n_t("results.roll_ball") }}</span>
           </div>
-          <div
+          <!-- <div
             class="checkbox"
             v-if="results_params.sportType == '1' && show_play_back"
             @click="highlights_input_radio"
           >
-            <fliter-checkbox :checked="is_highlights" />
+            <fliter-checkbox :checked="is_highlights" /> -->
             <!-- 精彩回放筛选 -->
-            <span>{{ i18n_t("video.video_event_history") }}</span>
-          </div>
+            <!-- <span>{{ i18n_t("video.video_event_history") }}</span>
+          </div> -->
         </div>
       </div>
       <div class="match-resultstips-wrap">
         <!-- 提示语 -->
-        <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
-          <template>
-            <div>{{ i18n_t("results.tips") }}</div>
-          </template>
+          <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
+            <div class="aaa">{{ i18n_t("results.tips") }}</div>
         </q-tooltip>
         <div
           class="match-resultstips-icon relative-position"
@@ -134,8 +134,9 @@
       </div>
     </div>
   </div>
+</div>
 
-  </div>
+
 </template>
 <script setup>
 import {  ref,computed,onMounted } from 'vue';
@@ -154,8 +155,14 @@ import {
 import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
+  current_sport_id:{
+    type: String
+  },
+  timeChanged:{
+    type: Boolean
+  },
   cancel:{
-    type:String
+    type:null
   },
   dateValue:{
     type:Object
@@ -195,6 +202,15 @@ const props = defineProps({
   isSelectConfirm:{
     type: Function,
   },
+  click_popup:{
+    type: Function,
+  },
+  img_mouseleave:{
+    type: Function,
+  },
+  search_hot:{
+    type: Function,
+  },
   startTimeShow:{
     type: Boolean,
     default:false
@@ -222,6 +238,7 @@ const props = defineProps({
 const confirmDate=()=>{
   props.dateValue.value = date.value
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
+  console.error('63276237uasdkjasdjkkjaskj67623')
 }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)
@@ -235,10 +252,10 @@ function refresh() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import "./result-header.scss";
 .top-menu-content {
-    height: 50px;
+    height: 40px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
     background: var(--q-gb-bg-c-11);
     color: var(--q-gb-t-c-6);
@@ -256,10 +273,18 @@ function refresh() {
         }
   };
 /* ************** 筛选条件 *************** -S */
+.divider{
+  display: inline-block;
+  width: 1200px;
+  height: 6px;
+  margin: 0;
+}
 .search-header {
   display: flex;
   align-items: center;
   padding: 28px 20px 14px 20px;
+  border-bottom:1px solid #ff7000;
+  
 
   /* ************** select *************** -S */
   .wrap-select {
@@ -485,12 +510,14 @@ function refresh() {
       text-align: center;
       line-height: 28px;
       cursor: pointer;
+      background: #ff7000;
+      color:#ffffff;
     }
   }
 
   /* ************** 日期、单选框、搜索 *************** -E */
-  .q-date__view{
-    background: #ffffff;
-  }
+}
+:deep(.q-date__view){
+background: #ffffff;
 }
 </style>

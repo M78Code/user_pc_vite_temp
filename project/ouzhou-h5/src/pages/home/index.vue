@@ -35,7 +35,7 @@
             </template> -->
             <!-- 5大联赛 -->
             <template v-if="five_league_match.length > 0">
-              <HeaderTitle :title="`${i18n_t('ouzhou.match.top_leagues')}`"></HeaderTitle>
+              <HeaderTitle title="Top Leagues"></HeaderTitle>
               <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
             </template>
           </section>
@@ -66,6 +66,9 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import { api_match } from "src/api/index.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
@@ -90,6 +93,8 @@ onMounted(async () => {
   MenuData.set_menu_mi('101');
   set_default_home_data()
   get_ouzhou_home_data()
+  set_default_home_hots()
+  get_ouzhou_home_hots()
   get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
@@ -114,28 +119,54 @@ const get_ouzhou_home_data = async () => {
 }
 
 const handle_ouzhou_home_data = (res) => {
-  const { p15_list, hots, dataList } = res
+  const { p15_list, dataList } = res
   // 15 分
-  if (p15_list.length > 0) time_events.value = p15_list.map(t => {
-    const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
-    return match
-  })
+  if (p15_list.length > 0) {
+    const arr_p15 = p15_list.map(t => {
+      const match = MatchDataBasel5minsH5.get_quick_mid_obj(t?.mid)
+      return match
+    })
+    time_events.value = arr_p15.filter(t => t?.mid)
+  }
   // 滚球赛事
-  if (dataList.length > 0) play_matchs.value = dataList.map(t => {
-    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-    return match
-  })
-  // 热门赛事
-  if (hots.length > 0) featured_matches.value = hots.map(t => {
-    const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
-    const { home_score, away_score } = MatchUtils.get_match_score(match)
-    return {
-      ...match,
-      home_score, 
-      away_score, 
-     }
-  })
+  if (dataList.length > 0) {
+    const arr_play_matchs = dataList.map(t => {
+      const match = MatchDataBaseH5.get_quick_mid_obj(t?.mid)
+      return match
+    })
+    play_matchs.value = arr_play_matchs.filter(t => t?.mid)
+  }
 }
+
+// 设置默认数据
+const set_default_home_hots = () => {
+  const res = MatchMeta.get_default_ouzhou_home_hots()
+  handle_ouzhou_home_hots(res)
+}
+
+// 获取首页数据
+const get_ouzhou_home_hots = async () => {
+  const res = await MatchMeta.get_ouzhou_home_hots()
+  handle_ouzhou_home_hots(res)
+}
+
+// 获取首页热门赛事
+const handle_ouzhou_home_hots = async (data) => {
+  // 热门赛事
+  if (data.length > 0) {
+    const arr_data = data.map(t => {
+      const match = MatchDataBaseHotsH5.get_quick_mid_obj(t?.mid)
+      const { home_score, away_score } = MatchUtils.get_match_score(match)
+      return {
+        ...match,
+        home_score, 
+        away_score, 
+      }
+    })
+    featured_matches.value = arr_data.filter(t => t?.mid)
+  }
+}
+
 
 /**
  * @description 获取五大联赛赛事
@@ -144,11 +175,29 @@ const get_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
   const mids = []
   five_league_match.value = list.map(t => {
-    mids.push(t.mid)
-    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid) || t
+    mids.push(t?.mid)
+    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t?.mid) || t
     return match
   })
   MatchMeta.get_match_base_hps_by_mids(mids.toString(), MatchDataBaseFiveLeagueH5)
+}
+
+/**
+ * @description 获取热门赛事
+ */
+const get_ouzhou_home_hots11 = () => {
+  const params = {
+    euid: "30199",
+    sort: 1,
+    apiType: 1,
+    orpt: -1,
+    csid:'1',
+    cuid: UserCtr.get_uid(),
+  }
+  api_match.post_fetch_match_list(params).then((res) => {
+    if (+res.code !== 200) return
+    handle_ouzhou_home_hots(res)
+  })
 }
 
 const tabValue = ref('featured');
@@ -159,6 +208,8 @@ const on_update = (val) => {
     MenuData.set_menu_mi('101');
     get_ouzhou_home_data()
   } else {
+    // 设置 元数据计算 流程
+    MatchResponsive.set_is_compute_origin(true)
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
     MatchMeta.get_top_events_match(MenuData.top_events_list?.[0]?.csid)
   }
@@ -225,6 +276,7 @@ onUnmounted(() => {
           height: calc(100% - 0px);
           overflow-y: auto;
           position: relative;
+          padding-bottom: 70px;
         }
         .match-page-section{
           height: calc(100% - 66px - 54px);

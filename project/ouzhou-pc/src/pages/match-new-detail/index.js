@@ -2,7 +2,7 @@
  * @Author: cooper cooper@123.com
  * @Date: 2023-07-09 16:21:30
  * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-13 22:35:42
+ * @LastEditTime: 2023-11-22 19:07:56
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
  * @Description: 详情页相关接口数据处理
  */
@@ -68,6 +68,7 @@ export function usedetailData(route) {
 
   // 监听分类切换数据
   watch(current_key, (val) => {
+    if(!val) return
     get_match_detail(val);
   });
   // 监听分类切换数据
@@ -86,9 +87,16 @@ export function usedetailData(route) {
     const plays = category_list.value.find(
       (item) => item.orderNo == value
     ).plays;
-    if (detail_list.value.length > 0) {
+    if (detail_list.value?.length > 0) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
+        if (i.hpid==103) {  //hpid103处理
+          i.title = [
+            {otd:1},
+            {otd:0},
+            {otd:2},
+          ]
+        }
       }
     }
     let list = all_list.value.filter((item) =>
@@ -100,7 +108,18 @@ export function usedetailData(route) {
       }
       list = list.filter((i) => i.hpn);
     }
-    detail_list.value = list || [];
+    //存取玩法集数据到数据仓库 MatchDataWarehouseInstance.get_quick_mid_obj(mid)获取存到数据仓库的基础详情数据
+    MatchDataWarehouseInstance.set_match_details(
+      MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid),
+      list || []
+    );
+    detail_list.value = lodash_.get(getMidInfo(route.params.mid), "odds_info") || []
+
+    // console.log(1111111111,detail_list.value)
+
+    
+
+
 
     show_close_thehand.value = list.length == 0;
 
@@ -111,6 +130,7 @@ export function usedetailData(route) {
 
   const get_all_hl_item = () => {
     all_hl_item.value = [];
+    if(!detail_list.value) return
     for (const item of detail_list.value) {
       if (item.hl.length > 0) {
         for (const opt of item.hl) {
@@ -129,9 +149,8 @@ export function usedetailData(route) {
   const init = async () => {
     // all_list_toggle = {}
     detail_loading.value = true;
-    await get_category();
     get_detail();
-    await get_detail_lists();
+    await get_category();
   };
   /**
    * 获取赛事详情数据
@@ -161,6 +180,8 @@ export function usedetailData(route) {
       //存取赛事详情基础信息
       // console.log(detail_info.value,'detail_info.value')
       MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
+
+      // detail_info.value = getMidInfo(mid);
       useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       use_polling_mst(detail_info.value);
     } catch (error) {
@@ -223,6 +244,7 @@ export function usedetailData(route) {
         label: item.marketName,
         value: item.orderNo,
       }));
+      await get_detail_lists();
     } catch (error) {
       console.error("get_detail_category", error);
     }
@@ -241,18 +263,13 @@ export function usedetailData(route) {
       };
       const res = await get_detail_list(params);
       all_list.value = res.data || [];
-      all_list.value.forEach((item) => (item.expanded = true));
+      res.data.forEach((item) => (item.expanded = true));
       detail_loading.value = false;
       current_key.value = current_key.value
         ? current_key.value
         : tabList.value[0].value;
-      get_match_detail(current_key.value);
 
-      //存取玩法集数据到数据仓库 MatchDataWarehouseInstance.get_quick_mid_obj(mid)获取存到数据仓库的基础详情数据
-      MatchDataWarehouseInstance.set_match_details(
-        MatchDataWarehouseInstance.get_quick_mid_obj(mid),
-        all_list.value
-      );
+      get_match_detail(current_key.value);
     } catch (error) {
       console.error("get_detail_list", error);
     }
@@ -267,6 +284,7 @@ export function usedetailData(route) {
     if (!val) return;
     detail_info.value = getMidInfo(val);
     all_list.value = lodash_.get(getMidInfo(val), "odds_info");
+   
   };
   /**
    * @description: 从仓库获取获取赛事信息
@@ -319,6 +337,8 @@ export function usedetailData(route) {
     tid = route.params.tid;
     current_id.value = route.params.mid;
     current_id.value = mid;
+    LayOutMain_pc.set_oz_show_right(true); // 显示右侧
+    LayOutMain_pc.set_oz_show_left(true); // 显示菜单
     init();
   };
 

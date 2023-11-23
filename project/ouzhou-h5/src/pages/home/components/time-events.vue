@@ -6,33 +6,51 @@
 <template>
   <div class="time_play_page">
     <section>
-      <div class="item" v-for="item in time_events" :key="item.mid">
-        <!-- 标题 -->
-        <div class="title">
-          <SportIcon size="13" :sport_id="item.icon" />
-          <span class="span">{{ item.title }}</span>
-        </div>
-        <!-- 赛事名称 -->
-        <div class="game-name">
-          <div>{{ item.mhn }}</div>
-          <div>{{ item.man}}</div>
-        </div>
-        <template v-if="item">
-          <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" />
-        </template>
+      <div class="item" v-for="item in time_events" :key="item.mid" @click="toDetails(item)">
+       <!-- 标题 -->
+      <div class="title">
+        <SportIcon size="13" :sport_id="item.icon" />
+        <span class="span">{{ item.title }}</span>
       </div>
+      <!-- 赛事名称 -->
+      <div class="game-name">
+        <div>{{ item.mhn }}</div>
+        <div>{{ item.man}}</div>
+      </div>
+      <template v-if="item">
+        <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" />
+      </template>
+    </div>
     </section>
   </div>
 </template>
 <script setup>
 import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
+import { useRouter } from "vue-router";
+
+/** @type {{time_events:Array<TYPES.MatchDetail>}} */
 const props = defineProps({
   time_events: {
     type: Array,
     default: () => []
   }
 })
+const router = useRouter()
+
+/** 跳转赛事详情
+ * @param {TYPES.MatchDetail} item 
+ */
+function toDetails(item){
+  router.push({
+    name: "category",
+    params: {
+      mid:item.mid,
+      tid: item.tid,
+      csid: item.csid
+    }
+  })
+}
 
 </script>
 

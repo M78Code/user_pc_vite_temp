@@ -95,7 +95,7 @@ const set_match_list_mapping_relation_obj_type = () => {
     if (
       (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) 
       || ["today", "early", "bet",'match-play-common', 'match-collect'].includes(page_source)
-      || route_name == 'search'
+      || route_name == 'search' || MenuData.is_top_events()
       // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
       || !MenuData.menu_root
     ) {
@@ -104,7 +104,7 @@ const set_match_list_mapping_relation_obj_type = () => {
       type = 8
     }
   }
-  console.log('type', PageSourceData);
+  console.log('type', PageSourceData, type);
   return   type
 };
 
@@ -153,7 +153,7 @@ const reset_all_card_data = () => {
  */
 
 export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
-  (match_list, is_ws_call, is_remove_call) => {
+  (match_list, is_ws_call, is_remove_call, is_five_leagues) => {
     let current_csid = MenuData.left_menu_result.lv1_mi;
     // 虚拟体育 不走卡片逻辑
     if (MenuData.is_vr()) {
@@ -211,7 +211,8 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
     } else if ([9].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4(
         match_list,
-        is_ws_call
+        is_ws_call,
+        is_five_leagues
       );
     } else {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5(

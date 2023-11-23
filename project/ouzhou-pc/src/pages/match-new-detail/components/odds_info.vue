@@ -4,6 +4,7 @@
  * @Description: 赛事详情页玩法
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="match-detail-odds">
     <div v-for="item in matchDetail" :key="item.topKey" class="odds-wrap">
       <q-expansion-item
@@ -49,12 +50,12 @@
                   class="odds-title-li"
                 >
                   <span
-                    v-if="![0, 1, 2, 3, 7, 10].includes(item.hpt)"
+                    v-if="![0, 1, 2, 3, 7, 10,18].includes(item.hpt)"
                     class="handicap-value-text"
                     >{{ opt.osn }}</span
                   >
                   <!-- 模板4 -->
-                  <template v-if="[4, 6].includes(item.hpt)&&sun_ol(item.hl[0].ol, item).length>0">
+                  <template v-if="item.hpid==103||[4, 6].includes(item.hpt)&&sun_ol(item.hl[0].ol, item).length>0">
                     <div class="temp-simple">
                       <div
                         v-for="ol in sun_ol(item.hl[0].ol, item)"
@@ -62,16 +63,16 @@
                       >
                         <template v-if="ol.otd === opt.otd||ol._otd === opt.otd">
                           <div
-                            v-show="!item.hl[0].hs"
+                           
                             :class="{
                               tem4: true,
-                              'tem4-active': ol.oid == current_ol.oid,
+                              'tem4-active': BetData.bet_oid_list.includes(ol.oid),
                             }"
                             @click="betItemClick(item.hl[0], ol)"
                           >
                             <span>{{ ol.on }}</span>
 
-                            <span v-if="ol.ov">
+                            <span>
                               <bet-item
                                 :key="`bet_4_${ol.hild}`"
                                 :ol_data="ol"
@@ -79,23 +80,23 @@
                               >
                               </bet-item>
                             </span>
-                            <span v-else></span>
+                            <!-- <span v-else></span> -->
                           </div>
-                          <div
+                          <!-- <div
                             class="tem4"
                             style="
                               justify-content: center;
                               align-items: center;
                               width: 100%;
                             "
-                            v-show="item.hl[0].hs"
+                            v-show="ol.os"
                           >
                             <img
                               class="vector"
                               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
                               alt=""
                             />
-                          </div>
+                          </div> -->
                         </template>
                       </div>
                     </div>
@@ -105,7 +106,7 @@
             </div>
             <!-- 公共模板 -->
             <common-template
-              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt)"
+              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt)&&item.hpid!=103"
               :match_info="item"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
@@ -113,7 +114,15 @@
             <!-- 模板5 -->
             <template5
               v-if="[5].includes(item.hpt)"
-              :match_info="item.hl"
+              :match_info="item"
+              :hpid="item.hpid"
+              :current_ol="current_ol"
+              @betItemClick="betItemClick"
+            />
+             <!-- 模板18 -->
+             <template18
+              v-if="[18].includes(item.hpt)"
+              :match_info="item"
               :hpid="item.hpid"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
@@ -145,9 +154,11 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed, inject } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import template5 from "./template5.vue";
+import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";
 import betItem from "./bet-item-list-new-data.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
@@ -173,7 +184,6 @@ const props = defineProps({
 const mouse_in = ref(false);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
-
 let all_hl_item = inject("all_hl_item");
 
 const columnTotal = (item) => {
@@ -227,8 +237,8 @@ const sun_ol = (ol, item) => {
   }
 
   // 其他
-  result[result.length-1]._otd = item.title[item.title.length-1].otd
-   console.log(11111, result);
+  result[result.length-1]._otd = item.title[item.title.length-2].otd
+  // console.log(1111111111,result)
   return result;
 };
 //  投注项点击投注,
@@ -337,6 +347,7 @@ onMounted(() => {});
 
 .temp-simple {
   margin-left: -1px;
+  border-top: 1px solid var(--q-gb-bd-c-2);
   background: var(--q-gb-bg-c-4);
 }
 

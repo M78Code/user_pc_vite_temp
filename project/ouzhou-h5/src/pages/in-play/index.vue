@@ -25,6 +25,7 @@ let message_fun = null
 
 onMounted(() => {
   // 元数据 有缓存得情况下获取数据
+  console.log(BaseData.is_emit)
   BaseData.is_emit && MatchMeta.set_origin_match_data()
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {

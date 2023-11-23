@@ -22,7 +22,7 @@
 
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">{{ items.marketValue }}</span></div>
                       <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
@@ -38,8 +38,8 @@
         </div>
       
         <div class="total">
-          <div>Highest Win<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
-          <div>Stake<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
+          <div>{{ i18n_t("common.maxn_amount_val") }}<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
+          <div>{{ i18n_t("bet_record.total_v") }}<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
         </div>
       </div>
 
@@ -165,9 +165,9 @@
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
     color: var(--q-gb-bg-c-8);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
   }
   .nonebox4-content-left-content-text-one{
     font-size: 0.18rem;

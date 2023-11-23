@@ -89,8 +89,7 @@
     display: block;
   }
   .content-warp {
-    height: 100%;
-    background-color: var(--q-gb-bg-c-15);
+    background-color: #fff;
   }
   .second-header {
     height: 0.5rem;

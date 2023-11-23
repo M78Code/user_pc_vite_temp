@@ -5,18 +5,19 @@
 -->
 
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div v-if="[10].includes(match_info.hpt)" class="temp-simple">
     <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
       <div
         v-for="o in match_info.hl[0].ol"
         :key="o?.oid"
-        :class="{ 'temp-active': o.oid == current_ol.oid, temp: true }"
+        :class="{ 'temp-active': BetData.bet_oid_list.includes(o.oid), temp: true }"
         @click="betItemClick(match_info.hl[0], o)"
       >
         <div
           v-show="!match_info.hl[0].hs"
           :style="{
-            color: o.oid == current_ol.oid ? '#ffffff' : '#ff7000',
+            color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#ff7000',
           }"
           class="oid-width"
           :title="o.ott"
@@ -48,12 +49,12 @@
       >
         <template v-for="(o, index) in item.ol" :key="index">
           <div v-if="o && o.oid">
-            <div :class="[current_ol && current_ol.oid == o.oid ? 'temp-active' : '', 'temp',
+            <div :class="[current_ol &&  BetData.bet_oid_list.includes(o.oid) ? 'temp-active' : '', 'temp',
                 item.ol.length % 2 !== 0 && index == item.ol.length - 1 && columnNum == 2 ? 'temp-right' : '',
               ]" @click="betItemClick(item, o)"
             >
               <!-- hpt 为1  不需要给颜色 -->
-              <div style="font-weight: 500;display: flex;align-items: center;width: 100%;" v-show="!item.hs">
+              <div style="font-weight: 500;display: flex;align-items: center;width: 100%;" >
                 <span class="oid-width" :title="o.ott">{{ o.ott }}</span>
                 <span v-if="[0].includes(match_info.hpt) && match_info.title.length > 0" v-html="getOn(match_info, o)"></span>
                 <span v-else :style="{color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',}" class="temp-on oid-width">{{ o.on }}</span>
@@ -62,7 +63,7 @@
                 <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
               </div>
 
-              <div style="text-align: center; width: 100%" v-show="item.hs">
+              <div style="text-align: right; width: 100%" v-show="item.hs">
                 <img
                   class="vector"
                   :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
@@ -78,6 +79,7 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed, watch } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import betItem from "./bet-item-list-new-data.vue";

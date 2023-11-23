@@ -1,5 +1,6 @@
 
 <template>
+  <div v-show="false"> {{ MenuData.menu_data_version }} </div>
   <div class="left-container">
     <!-- 左侧菜单 -->
     <div class="menu-nav-li">
@@ -16,10 +17,10 @@
     <div class="menu-nav-li">
       <p>{{ i18n_t("ouzhou.menu.popular") }}</p>
       <ul class="menu-list">
-        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi == item && MenuData.left_menu_result.menu_type==0 }" v-for="item in popular" :key="item"
+        <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi == item.mi && MenuData.left_menu_result.menu_type==0 }" v-for="item in popular" :key="item.mi"
           @click="jump_func(item,'0')">
-          <sport_icon :sport_id="BaseData.compute_sport_id(item)" size="18px" class="icon" />
-          {{ (BaseData.menus_i18n_map || {})[item] || "" }}
+          <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
+          {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
         </li>
       </ul>
     </div>
@@ -42,7 +43,7 @@
 
     <!-- <div class="menu-nav-li">
         <ul class="menu-list">
-          <li class="f-s-c"> 
+          <li class="f-s-c">
             <sport_icon :sport_id="compute_sport_id(300)" size="18px" class="icon" />
             VR Sports
           </li>
@@ -62,14 +63,19 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 // 菜单配置
 import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
-const popular = ([101, 102])
+const popular = ([{mi:101},{mi:102}])
 
 const router = useRouter();
 const route = useRoute();
 
 // favouritse
 const go_to_favouritse = () => {
-  
+  // 点击收藏时清除其他球种选中状态
+  MenuData.left_menu_result.lv1_mi = ''
+  // 点击菜单的时候如果在详情页应跳转出来先
+  if (route.name=='details') {
+    router.push('/home')
+  }
   MenuData.set_is_collect(true)
   MenuData.set_menu_root(301)
 
@@ -79,6 +85,7 @@ const go_to_favouritse = () => {
     current_mi: 1011, // 当前选中的赛种id
   }
   MenuData.set_mid_menu_result(mid_config)
+  MenuData.set_current_ball_type(1)
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
@@ -106,6 +113,7 @@ const jump_func = (payload ={},type) => {
   MenuData.set_is_collect(false)
   MenuData.set_left_menu_result(obj)
   MenuData.set_menu_current_mi(obj.lv2_mi)
+  MenuData.set_current_ball_type(payload.mi*1 - 100)
 
   let mid_config = {
     ...MenuData.mid_menu_result,

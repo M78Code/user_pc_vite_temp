@@ -4,8 +4,9 @@
     <!-- 赛事基础信息 -->
     <div class="basic-col"
       :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
-      <!-- 比赛进程 -->
-      <basis-info101 :match="match" show_type="all" />
+      <!-- 比赛进程 网球用105模板，别的用101 -->
+      <basis-info101  :match="match" show_type="all" />
+      <!-- <basis-info105 v-else :match="match" show_type="all" /> -->
     </div>
     <!-- 竖线 -->
     <div class="vertical-line"></div>
@@ -19,8 +20,7 @@
     <div v-tooltip="{ content: t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
       <!-- 图片资源有问题，先用文字替代  -->
-      <div :style="compute_css_obj({ key: 'pc-home-score-board' })">
-      </div>
+      <div :style="compute_css_obj({ key: 'pc-home-score-board' })"></div>
     </div>
   </div>
 </template>
@@ -36,6 +36,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
+import { MatchBasisInfo105FullVersionWapper as BasisInfo105 } from 'src/base-pc/components/match-list/match-basis-info/template-105/index.js'
 import IconBox from '../modules/iconBox/index.vue'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
@@ -64,7 +65,6 @@ let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data
 let handicap_list = ref([]);
 watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
   if (props.match) {
-    console.log(props.match,"props.match")
     const csid = lodash.get(props.match, 'csid')
     //获取欧洲要显示的数据
     const tpl_id = get_ouzhou_data_tpl_id(csid)

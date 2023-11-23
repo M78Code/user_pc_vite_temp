@@ -59,7 +59,7 @@ const on_update = (val) => {
   state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
   MenuData.set_current_lv1_menu(val)
   if(state.slideMenu_sport?.[0])changeMenu(state.slideMenu_sport?.[0])
-  if(scrollListRef.value) scrollListRef.value.reset()
+  if(scrollListRef.value) scrollListRef.value.reset(state.slideMenu_sport?.[0].mi)
 }
 /**
  * 球种点击

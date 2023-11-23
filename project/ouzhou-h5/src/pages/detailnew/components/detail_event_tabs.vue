@@ -1,5 +1,5 @@
 <template>
-  <div class="match-detail-tabs">
+  <div class="match-detail-tabs component detail-event-tabs">
     <div class="tabs-wrap">
       <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
         :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label

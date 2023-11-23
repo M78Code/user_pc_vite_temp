@@ -19,11 +19,11 @@
             <span :class="{'active': sort_active === 2}" @click="sortChange(2)">{{ i18n_t('bet_record.settle_time') }}</span>
             <span :class="{'active': sort_active === 1}" @click="sortChange(1)">{{ i18n_t('bet_record.bet_time') }}</span>
           </div>
-          <div 
-            :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
+          <!-- 未结算 提前结算按钮 1期隐藏 -->
+          <!-- <div :class="['cashout', BetRecordClass.is_early ? 'active': '']" 
             @click="BetRecordClass.set_is_early(!BetRecordClass.is_early)"
             v-if="UserCtr.user_info.settleSwitch == 1 && !lodash.isEmpty(BetRecordClass.list_data)"
-            >{{ i18n_t('early.btn2') }}</div>
+            >{{ i18n_t('early.btn2') }}</div> -->
       </div>
       <template v-if="!lodash.isEmpty(BetRecordClass.early_money_list)">
         <!-- 订单内容 -->
@@ -293,7 +293,7 @@ template {
 }
 .cathectic-item {
   width: 100%;
-  background: var(--q-gb-bg-c-15);
+  background: #fff;
   overflow: hidden;
   margin-top: 0.1rem;
   padding-bottom: 0.2rem;
@@ -303,7 +303,7 @@ template {
   align-items: center;
   justify-content: space-between;
   padding: 0 0.14rem;
-  background: var(--q-gb-bg-c-15);
+  background: #fff;
   .select {
     height: 0.46rem;
     padding: 0.04rem;
@@ -320,7 +320,7 @@ template {
       padding: 0 0.14rem;
       &.active {
         color: var(--q-gb-bg-c-13);
-        background-color: var(--q-gb-bg-c-15);
+        background-color: #fff;
         border: 1px solid var(--q-gb-bg-c-18);
       }
     }
@@ -352,7 +352,7 @@ template {
 }
 .cashout {
     font-size: 0.15rem;
-    background-color: var(--q-gb-bg-c-15);
+    background-color: #fff;
     height: 0.36rem;
     line-height: 0.36rem;
     width: 1rem;
@@ -360,7 +360,7 @@ template {
     border-radius: 0.5rem;
     border: 1px solid var(--q-gb-bg-c-14);
     &.active {
-      color: var(--q-gb-bg-c-15);
+      color: #fff;
       background-color: var(--q-gb-bg-c-1);
       border-color: var(--q-gb-bg-c-1);
     }

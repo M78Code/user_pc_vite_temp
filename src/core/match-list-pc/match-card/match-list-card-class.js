@@ -202,9 +202,9 @@ class MatchListCardInfo {
   /**
    * 计算 当前的 赛事列表 级别 的 卡片 数据
    */
-  compute_match_list_style_obj_and_match_list_mapping_relation_obj(match_list) {
+  compute_match_list_style_obj_and_match_list_mapping_relation_obj(match_list, is_ws_call, is_remove_call, is_five_leagues) {
    
-    compute_match_list_style_obj_and_match_list_mapping_relation_obj(match_list);
+    compute_match_list_style_obj_and_match_list_mapping_relation_obj(match_list, is_ws_call, is_remove_call, is_five_leagues);
   }
   /**
    * @Description 冠军投注后跟新 联赛收藏状态
@@ -253,8 +253,8 @@ class MatchListCardInfo {
    * @param {number} remove_tid 移除的联赛ID
    */
 
-  remove_league(remove_tid) {
-    remove_league(remove_tid);
+  remove_league(remove_tid, callback) {
+    remove_league(remove_tid, callback);
   }
 }
 

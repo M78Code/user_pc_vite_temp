@@ -23,6 +23,8 @@
 import { defineComponent, ref, reactive, watch,computed  } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { MenuData } from 'src/core/'
+import BaseData from "src/core/base-data/base-data.js";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 const router = useRouter();
 // 底部菜单集合
@@ -44,9 +46,13 @@ const jump_page = (item) => {
   // 设置一级菜单 注： 普通赛果是28, 投注赛果是29， 欧洲版不考虑投注
   VirtualList.set_is_show_ball(item.route === '/matchResults' ? false : true)
   item.type && MenuData.set_current_lv1_menu(item.type)
+  BaseData.set_is_emit(true)
+
+  MatchMeta.clear_match_info()
   
   router.push(item.route)
 }
+
 
 </script>
 

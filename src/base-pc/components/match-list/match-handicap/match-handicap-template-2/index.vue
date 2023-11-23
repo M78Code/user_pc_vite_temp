@@ -258,6 +258,12 @@ function getCurState(hipo) {
   border-radius: 2px;
   justify-content: center;
   align-items: center;
+  flex: 1;
+
+  .c-bet-item {
+    width: 78px;
+    height: 48px;
+  }
 
   .c-bet-item.can-hover:hover {
     background: var(--q-gb-t-c-4);
@@ -265,7 +271,10 @@ function getCurState(hipo) {
   }
 
   &.bet-item-wrap-ouzhou-bigger {
-    width: 133px;
+    .c-bet-item {
+      width: 133px;
+    }
+    
   }
 
   .c-bet-item.active {
@@ -292,11 +301,11 @@ function getCurState(hipo) {
     font-size: 14px;
 
     &.up {
-      color: var(--q-gb-t-c-7);
+      color: var(--q-gb-t-c-7)!important;
     }
 
     &.down {
-      color: var(--q-gb-t-c-10);
+      color: var(--q-gb-t-c-10)!important;
     }
   }
 }
