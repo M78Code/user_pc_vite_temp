@@ -1,5 +1,6 @@
 
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="header-main">
     <div class="header-content">
       <div class="logo">
@@ -10,7 +11,9 @@
         <div class="header-nav">
           <div v-for="item in navList" :key="item.id" @click="nav_click(item)"
             :class="{ 'active-nav': route.name == item.name }">
-            <span class="header-nav-title"> {{ item.label }}</span>
+            <span class="header-nav-title"> {{ item.label }}
+              <span class="bet_record" v-if="item.name == 'bet_record'">{{ BetData.bet_record_count }}</span>
+            </span>
           </div>
         </div>
         <!-- 右侧 -->
@@ -24,12 +27,12 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, nextTick } from "vue";
-import _ from "lodash"
+import { defineComponent, ref } from "vue";
 import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
-import { LayOutMain_pc,MenuData,useMittEmit,MITT_TYPES  } from "src/core/"
+import BetData from 'src/core/bet/class/bet-data-class.js'
+import { MenuData,useMittEmit,MITT_TYPES  } from "src/core/"
 
 export default defineComponent({
   name: "TopHeaderTemplate1",
@@ -83,7 +86,8 @@ export default defineComponent({
     return {
       logo,
       navList,
-      nav_click,route
+      nav_click,route,
+      BetData
     };
   },
 });
@@ -145,6 +149,7 @@ export default defineComponent({
         border-bottom: 2px solid var(--q-gb-bd-c-13);
         color:var(--q-gb-t-c-18);
         font-weight: 500;
+        position: relative;
       }
     }
   }
@@ -155,6 +160,22 @@ export default defineComponent({
     align-items: center;
     justify-content: space-between;
   }
+
+}
+
+.bet_record{
+  height: 20px;
+  min-width: 20px;
+  text-align: center;
+  display: inline-block;
+  line-height: 20px;
+  border-radius: 20px;
+  color: var(--q-gb-t-c-2);
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--q-gb-t-c-4); // 没有这个背景色
+  position: relative;
+  top: -3px;
 
 }
 
