@@ -272,14 +272,16 @@ onUnmounted(() => {
       .q-tab-panel{
         padding: 0;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
         .section-content{
-          height: calc(100% - 0px);
+          height: 100%;
           overflow-y: auto;
           position: relative;
-          padding-bottom: 70px;
         }
         .match-page-section{
-          height: calc(100% - 66px - 54px);
+          height: 0;
+          flex: 1;
           overflow-y: hidden;
           position: relative;
           .match-list-container{
