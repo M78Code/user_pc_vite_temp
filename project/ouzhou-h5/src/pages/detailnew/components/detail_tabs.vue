@@ -1,11 +1,18 @@
 <template>
   <div>
-    <div class="match-detail-tabs" ref="reset_scroll_dom">
-      <span v-for="(item, index) in category_list" :key="item.id" @click="tabClick(item, index)"
-        :class="[{ 'is-active': item.id === active.id }, 'tabs-item']">{{ item.marketName
-        }}
-
-        </span>
+    <div class="component detail-tabs">
+      <div class="match-detail-tabs" ref="reset_scroll_dom">
+        <template v-for="(item, index) in category_list" :key="item.id" >
+          <span class="tabs-item" @click="tabClick(item, index)"
+          :class="[{ 'is-active': item.id === active.id }]"
+          >{{ item.marketName}}</span>
+        </template>
+      </div>
+      <div class="separator"></div>
+      <!--               本来想着如果没有投注项就隐藏一键展开/收起, 但是麻烦啦所以就||true -->
+      <div class="all-change" @click="changeAll" v-if="allCloseState!=(void 0) || true">
+        <span class="odds-hpn-icon" :class="allCloseState?'up':'down'"></span>
+      </div>
     </div>
     <q-separator color="orange"/>
   </div>
@@ -20,11 +27,13 @@ const props = defineProps({
   },
   active: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
+  /** @type {Boolean|(void 0)} */
+  allCloseState: [Boolean, undefined]
 });
 const reset_scroll_dom = ref(null);
-const emit = defineEmits(['detail_tabs_change'])
+const emit = defineEmits(['detail_tabs_change','update:allCloseState'])
 // 事件执行函数
 
 /**
@@ -76,15 +85,53 @@ const tab_move2 = (currentIndex, scrollBox, whether_to_slide) => {
     }
   }, whether_to_slide ? '' : 15)
 };
+
+//#region 一件收起/展开 初始情况为一键收起
+function changeAll(){
+  emit('update:allCloseState',!props.allCloseState)
+}
+//#endregion
+
 onMounted(() => {
   // console.log("reset_scroll_dom", reset_scroll_dom.value);
 });
 </script>
 
 <style lang="scss" scoped>
-.match-detail-tabs {
-  height: 50px;
+.component.detail-tabs{
+  display: flex;
+  align-items: center;
   background-color: var(--q-gb-bg-c-2);
+  padding-left: 16px;
+  height: 50px;
+}
+.separator{
+ width: 8px; 
+ height: 100%;
+ color: #D9D9D9;
+}
+.all-change{
+  width: 44px;
+  height: 100%;
+  background-color: var(--q-gb-bg-c-2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .odds-hpn-icon{
+    width: 0.14rem;
+    height: 0.14rem;
+    background: url($SCSSPROJECTPATH+"/image/detail/down.png") no-repeat center;
+    transition: transform .5s cubic-bezier(0, 0.5, 0, 1);
+    &.up{
+      transform: scaleY(-1);
+    }
+  }
+}
+
+.match-detail-tabs {
+
+  flex: 1;
+  height: 50px;
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
@@ -92,7 +139,6 @@ onMounted(() => {
   transition: 2s all;
   display: flex;
   align-items: center;
-  padding: 0 16px;
   &::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }

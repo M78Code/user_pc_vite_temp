@@ -29,6 +29,35 @@ class BetWsMessage {
     window.addEventListener("message",this.message_fun);
   }
 
+  set_bet_c2_message(obj){
+    // {cmd: "C2", hid: ""}
+    let cmd_obj = {};
+    cmd_obj.cmd = "C2";
+    cmd_obj.hid = obj.hid;
+    cmd_obj.mid = obj.mid;
+    cmd_obj.marketLevel = obj.marketLevel;
+    cmd_obj.esMarketLevel = obj.esMarketLevel;
+    if (cmd_obj.hid != "" && cmd_obj.mid != "") {
+     this.send_msg(cmd_obj);
+    }
+  }
+
+    /**
+   * @Description:发送ws消息到ws服务器
+   * @param: data 消息体
+   * @param: type 消息标记-自定义模拟推送内部命令该值为custom
+   * @return:
+   */
+    send_msg(data,type) {
+      if(data)
+      {
+        if(type){
+          data.type = type;
+        }
+        window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
+      }
+    }
+
   r_ws_msg(obj){
     // 获取window.postMessage自定义命令
     const cmd = lodash_.get(obj, 'data.cmd');

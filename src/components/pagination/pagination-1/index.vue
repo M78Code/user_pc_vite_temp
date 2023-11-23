@@ -68,7 +68,7 @@
           </template>
         </q-select>
         <span>
-          {{ i18n_t('common.page_') }}
+          {{ i18n_t('common.page_') }}222
           <!-- 条/页 -->
         </span>
       </div>
