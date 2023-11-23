@@ -237,16 +237,6 @@ export const init_home_matches = async () => {
     let mins15_list = []
     let featured_list = []
     let match_count = 0;
-    get_five_leagues_list().then(res=>{
-      try {
-        MatchDataWarehouse_ouzhou_PC_five_league_List_Common.set_list(res);
-        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res, null, null, true
-        );
-      }catch (error) {
-          console.log(error);
-      }
-    })
     await get_home_matches(params).then((res) => {
       try {
         MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'),false)
@@ -275,6 +265,16 @@ export const init_home_matches = async () => {
           console.log(error);
       }
     });
+    get_five_leagues_list().then(res=>{
+      try {
+        MatchDataWarehouse_PC_List_Common.set_list(res);
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+          res, null, null, true
+        );
+      }catch (error) {
+          console.log(error);
+      }
+    })
     return {
         mins15_list,
         match_count
