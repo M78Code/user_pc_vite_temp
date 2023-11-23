@@ -1,16 +1,36 @@
 <template>
-  <div class="basic-wrap" @click.stop="on_go_detail">
-    <!-- 发球方 -->
-    <div class="serve-ball" :class="match.mat" v-if="match.csid != 4">
-      <div class="point home"></div>
-      <div class="point away"></div>
+  <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)" >
+
+    <!-- 赛事信息 -->
+    <div class="collect-box flex items-center justify-between">
+      <div class="left-info-box flex items-center flex-start">
+        <!-- 是否收藏 -->
+        <div @click.stop="collect"
+          v-if="GlobalAccessConfig.get_collectSwitch()">
+          <div  class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
+        </div>
+
+        <!-- 比赛进程 -->
+        <match-process style="cursor:pointer" v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
+        periodColor="gray" />
+      </div>
+      <!-- 玩法数量 -->
+      <div class="right-handle-box flex flex-start items-center">
+        <span>{{ handicap_num }}</span>
+        <div class="yb-icon-arrow"></div>
+      </div>
     </div>
-    <!-- 主队信息 -->
-    <div class="row-item team-item">
-      <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'"></div>
+     <!-- 主队信息 -->
+     <div class="row-item">
+      <!-- 发球方 -->
+      <div class="serve-ball" :class="[match.mat == 'home' && 'active']">
+        <div class="point"></div>
+      </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name home ellipsis allow-user-select" :class="{'bold':match.other_team_let_ball=='T1'}" v-tooltip="{content:match.mhn,overflow:1}">{{match.mhn}}{{match.up_half_text}}</div>
+          <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
+            {{lodash.get(match, 'mhn')}}
+          </div>
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
@@ -19,57 +39,29 @@
       <div class="score-game">{{match.cur_score.home}}</div>
     </div>
     <!-- 客队信息 -->
-    <div class="row-item team-item">
-      <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'"></div>
+    <div class="row-item kedui-item">
+      <!-- 发球方 -->
+      <div class="serve-ball" :class="[match.mat == 'away' && 'active']">
+        <div class="point"></div>
+      </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name away ellipsis allow-user-select" :class="{'bold':match.other_team_let_ball=='T2'}" v-tooltip="{content:lodash.get(match,'man'),overflow:1}">{{match.man}}{{match.up_half_text}}</div>
+          <div
+            class="team-name away ellipsis allow-user-select"
+            :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}"
+          >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
         </div>
       </div>
-      <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
+      <!-- 主比分 -->
+      <div class="score">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
       <!-- 当前局比分 -->
       <div class="score-game">{{match.cur_score.away}}</div>
-    </div>                      
-    
-    <div class="row-item match-icon">
-      <!-- 提前结算 -->
-       <div @click.stop="">
-         <div
-          v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
-          class="icon-wrap settlement-pre relative-position"
-          v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
-        >
-           <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')"/>
-        </div>
-       </div>
-      <!-- 中立场、盘口数 -->
-      <div class="flex more-info" :style="`${match.csid == 4 ? 'margin-top:35px':''}`">
-        <!-- 中立场 -->
-        <div class="neutral-wrap">
-          <span v-if="match.mng" class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
-        </div>
-    
-        <!-- 是否收藏 -->
-        <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
-          <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
-        </span>
-        <!-- 统计分析 -->
-        <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" @click.stop="details.sr_click_handle(match)">
-          <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
-        </div>
-        <!-- 玩法数量 -->
-        <div class="play-count-wrap row no-wrap">
-          <span class="play-count">{{handicap_num}}</span>
-          <span class="yb-flex-center">
-            <div class="yb-icon-arrow"></div>
-          </span>
-        </div>
-      </div>
     </div>
+
 
   </div>
 </template>
+
 <script setup>
 
 import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
@@ -262,39 +254,97 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-.basic-col {
-  .row-item {
-    display: flex;
-    height: 35px;
-    align-items: center;
-    .team-logo {
-      display: flex;
-      width: 22px;
-      min-width: 22px;
-      align-items: center;
+.basic-wrap {
+  padding: 10px 10px;
+  .collect-box {
+    margin-bottom: 7px;
+    .collect-start {
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      margin-right: 11px;
+      background-size: 100% 100%;
+    }
+    .bet-num {
+      margin-left: 12px;
+      .match_times_hour {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 16px;
+          letter-spacing: 0px;
+          color: var(--q-gb-bd-c-4);
+          margin-right: 5px;
+      }
+      .match_times {
+          color: var(--q-gb-bg-c-1);
+          font-weight: 500;
+      }
+    }
+    .right-handle-box {
+      cursor: pointer;
+      span {
+        font-weight: 500;
+        margin-right: 6px;
+      }
     }
   }
-  .gif-text {
-    white-space: nowrap;
-    padding-left: 3px;
-    animation: 1s text-flash linear infinite normal;
+  .row-item {
+    position: relative;
+    display: flex;
+    height: 16px;
+    align-items: center;
+    padding-left: 25px;
+    &+.row-item {
+      margin-top: 4px;
+    }
+    &.kedui-item {
+      color: var(--q-gb-bg-c-19);
+    }
+    .score {
+      font-weight: 500;
+      color: var(--q-gb-bg-c-2);
+    }
   }
   .red-ball {
-    margin: 0 0 2.5px 8px;
-    position: relative;
-    top: 1px;
-    padding: 0 2px;
-    height: 14px;
+    position: absolute;
+    top: 0px;
+    left:1px;
+    height:14px;
     line-height: 14px;
+    color:#fff;
+    min-width: 10px;
+    padding: 0 1px;
+    text-align: center;
+    border-radius: 1px;
+    font-size: 12px;
+    background-color: #ff4141;
+    &.yellow{
+     background-color: #FFA800;
+    }
     &.flash {
       animation: 1s text-flash linear infinite normal;
     }
   }
-  .match-icon {
-    justify-content: space-between;
-  }
-  .more-info{
-     align-items: center;
+
+    /*  发球方 */
+  .serve-ball {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 5px;
+    height: 5px;
+    &.active {
+      .point {
+        background-color: #ff7000;
+      }
+    }
+    .point {
+      width: 100%;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #d0d8de;
+    }
   }
 }
+
 </style>
