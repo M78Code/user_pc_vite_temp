@@ -78,10 +78,6 @@ class MatchMeta {
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
 
-    
-    // 设置 元数据计算 流程
-    MatchResponsive.set_is_compute_origin(true)
-
     // 获取真实数据
     this.get_target_match_data({md})
 
@@ -152,7 +148,6 @@ class MatchMeta {
    * @param { mids } 赛事 mids
    */
   get_origin_match_by_mids(mids) {
-    console.log(BaseData)
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
     // 显示空数据页面
@@ -178,6 +173,8 @@ class MatchMeta {
       this.match_assistance_operations(target)
       return { ...target, tn, csna }
     })
+    // 设置 元数据计算 流程
+    MatchResponsive.set_is_compute_origin(true)
     // 元数据不作为最终渲染数据 所以不走虚拟计算
     // 元数据只作用域切换菜单时快速显示， 最终显示还是根据接口来
     this.match_mids = lodash.uniq(mids.slice(0, 10))

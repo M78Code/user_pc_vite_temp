@@ -103,7 +103,7 @@
                 <span class="title">{{ setting.title }}</span>
                 <div class="switch">
                   <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
-                  <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
+                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: setting.index === s}">{{ s }}</span>
                 </div>
               </div>
               </q-item-section>
@@ -229,6 +229,11 @@ export default defineComponent({
       visible.value = !visible.value
     }
 
+    const settingclick = (s) => {
+      settingData.value[0].index = s
+      UserCtr.set_cur_odds(s)
+    }
+
     // 切换语言
     const on_change_lang = (key) => {
       lang.value = key
@@ -314,6 +319,7 @@ export default defineComponent({
       languages,
       onExpend,
       settingData,
+      settingclick,
       visible,
       is_search,
       goto_secondary_module,
