@@ -230,10 +230,10 @@ export const remove_match = (remove_mid, callback) => {
     return;
   }
   if ([1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
-    // remove_match_when_match_list_mapping_relation_obj_type_1_3(
-    //   remove_mid,
-    //   callback
-    // );
+    remove_match_when_match_list_mapping_relation_obj_type_1_3(
+      remove_mid,
+      callback
+    );
   } else {
     remove_match_when_match_list_mapping_relation_obj_type_other(
       remove_mid,

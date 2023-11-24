@@ -11,9 +11,8 @@
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}</span> 
                     <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none font400">{{ items.playName }}</span>
                 </div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.handicap_name }} <span class="mx-4">v</span> {{ items.away }}
+                <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
@@ -55,7 +54,7 @@
            
         </div>
         <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
-            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money >= obj && ref_data.max_money >= BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money > obj && ref_data.max_money > BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
                 {{index == 'max' ? '' : '+' }}{{obj}}
             </li>
         </ul>
@@ -238,7 +237,7 @@ const set_delete = () => {
         }
     }
     .text-flow-none{
-        width: 14%;
+        width: 76%;
         line-height: 12px;
     }
     .bet-odds-value{
