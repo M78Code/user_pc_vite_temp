@@ -209,8 +209,11 @@ export const useGetResultConfig = () => {
   /**
    * 隐藏日期选择组件
    */
-  const hideSelect = () => {
+  const hideSelect = (value) => {
     state.startTimeShow = false;
+    if (value) {
+      state.model = value
+    }
   };
   // 隐藏冠军赛种输入框内文字
   const input_focus = () => {
@@ -966,6 +969,7 @@ export const useGetResultConfig = () => {
    * @return {}
    */
   const search_hot = (data) => {
+    console.error('datadatadatadatadata33333',data)
     state.pournament_params.hot = data;
     get_pournament(0);
   };

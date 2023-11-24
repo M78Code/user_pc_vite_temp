@@ -459,7 +459,7 @@ export const details_main = (router, route) => {
 
   // 监听赛事状态mmp的值
   watch(
-    () => match_detail.value.mmp,
+    () => match_detail.value?.mmp,
     (_new,_old) => {
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {

@@ -42,6 +42,7 @@
             <q-icon name="icon-calendar"></q-icon>
           </div>
           <div class="date-picker-wrap relative-position">
+          <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <q-date
               v-icon="{
                 chevron_left: 'icon-arrow-left',
@@ -145,6 +146,7 @@ import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { LayOutMain_pc } from "src/core/index.js";
 
 import {
   i18n_t,
@@ -229,16 +231,15 @@ const props = defineProps({
     type:String
   },
   locale:{
-    type:String
+    type:Object
   },
 });
   const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
 })
 const confirmDate=()=>{
-  props.dateValue.value = date.value
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
-  console.error('63276237uasdkjasdjkkjaskj67623')
+  props.hideSelect(date.value)
 }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)
@@ -253,6 +254,7 @@ function refresh() {
 </script>
 
 <style scoped lang="scss">
+.a{}
 @import "./result-header.scss";
 .top-menu-content {
     height: 40px;
@@ -389,9 +391,18 @@ function refresh() {
         height: 100%;
         border-radius: 2px;
         cursor: pointer;
-
         & :deep(.icon-calendar) {
           font-size: 14px;
+        }
+        &:hover {
+          // border: 1px solid var(--q-gb-bd-c-1);
+          border: 1px solid #ff7000;
+          // color: var(--q-gb-t-c-18);
+          .icon-calendar {
+            &:before {
+              // color: var(--q-gb-t-c-18)
+            }
+          }
         }
       }
 
@@ -399,21 +410,17 @@ function refresh() {
         :deep(.q-date) {
           .q-icon {
             font-size: 12px;
-
             &::before {
               color: var(--qq--yb-text-color3);
             }
           }
         }
-
         .q-date {
           position: relative;
           z-index: 2;
-
           :deep(.q-date__calendar-item > div) {
             width: auto;
           }
-
           /*  星期X 字体颜色正常显示 */
           :deep(.q-date__calendar-weekdays > div) {
             opacity: 1;
@@ -512,6 +519,9 @@ function refresh() {
       cursor: pointer;
       background: #ff7000;
       color:#ffffff;
+      &:hover {
+          background: #ffb001;
+        }
     }
   }
 

@@ -30,7 +30,7 @@
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/core/constant/index.js'
     import MenuData from "src/core/menu-pc/menu-data-class.js";
-import {get_match_template_id} from '../../match-handle-data.js'
+    import {get_match_template_id} from '../../match-handle-data.js'
   /**
    * @Description 计算所有卡片样式数据 2. 全部赛种 不区分 是否开赛  4. 列表数据类型为赛事列表   单一赛种，有未开赛 已开赛 ，不区分赛种
    * @param {Array} match_list 赛事列表
@@ -171,7 +171,6 @@ import {get_match_template_id} from '../../match-handle-data.js'
         card_index += 1
         card_key = `league_title_${cus_tid}`
         match_list_card_key_arr.push(card_key)
-        console.log(is_five_leagues, 'abdd')
         is_five_leagues && five_leagues_card_key_arr.push(card_key)
         csid_to_card_key_obj[csid_key].push(card_key)
 
@@ -264,7 +263,6 @@ import {get_match_template_id} from '../../match-handle-data.js'
         // 五大联赛key列表
         five_leagues_card_key_arr 
       })
-      console.log('match_list_card_key_arr', match_list_card_key_arr);
     // 重新计算所有的联赛卡片样式
     for(let card_key in league_card_mids_arr){
       // 不是联赛容器卡片不处理

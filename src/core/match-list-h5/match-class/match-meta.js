@@ -454,7 +454,8 @@ class MatchMeta {
       ...params,
       md
      })
-    if (+res.code !== 200) return this.set_page_match_empty_status(true);
+    // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
+    // if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);

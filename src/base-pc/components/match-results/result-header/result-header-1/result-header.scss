@@ -149,13 +149,13 @@
         }
       }
       // 搜索按钮
-      .search-btn {
-        background: var(--q-gb-bg-lg-12);
-        color: var(--q-gb-t-c-18);
-        &:hover {
-          -background: var(--q-gb-bg-c-18);
-        }
-      }
+      // .search-btn {
+      //   background: var(--q-gb-bg-lg-12);
+      //   color: var(--q-gb-t-c-18);
+      //   &:hover {
+      //     background: var(--q-gb-bg-c-18);
+      //   }
+      // }
     }
     // 日期选择框
     .search-date-wrapper {
@@ -202,15 +202,15 @@
       }
       .date-wrap {
         border: 1px solid var(--q-match-result-boreder-1); 
-        &:hover {
-          border: 1px solid var(--q-gb-bd-c-11);
-          color: var(--q-gb-t-c-18);
-          .icon-calendar {
-            &:before {
-              color: var(--q-gb-t-c-18)
-            }
-          }
-        }
+        // &:hover {
+        //   border: 1px solid var(--q-gb-bd-c-11);
+        //   color: var(--q-gb-t-c-18);
+        //   .icon-calendar {
+        //     &:before {
+        //       color: var(--q-gb-t-c-18)
+        //     }
+        //   }
+        // }
         .icon-calendar {
           &:before {
             color: var(--q-gb-t-c-18);

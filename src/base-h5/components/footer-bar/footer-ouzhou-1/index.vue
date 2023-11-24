@@ -41,6 +41,9 @@ const get_route_path = computed(() => {
 const tab_active = ref(get_route_path);
 
 const jump_page = (item) => {
+
+  if (tab_active.value === item.route) return
+
   tab_active.value = item.route
   
   // 设置一级菜单 注： 普通赛果是28, 投注赛果是29， 欧洲版不考虑投注

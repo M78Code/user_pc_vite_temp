@@ -120,7 +120,7 @@ onMounted(() => {
  * @Description 滚动到底部
  * @param {undefined} undefined
  */
-const on_bootom = lodash.throttle(() => {
+const on_bootom = lodash.debounce(() => {
   load_match_index.value = load_match_index.value + 20;
 }, 300);
 
@@ -135,9 +135,9 @@ const on_bootom = lodash.throttle(() => {
  * @Description 更新列表卡片偏移量
  * @param {undefined} undefined
  */
- const update_list_card_offset = lodash.throttle((e) => {
+ const update_list_card_offset = lodash.debounce((e) => {
   MatchListCard.set_card_show_level(e);
-}, 50);
+}, 300);
 /**
  * @Description 滚动条滚动事件
  * @param {object} e 滚动事件
