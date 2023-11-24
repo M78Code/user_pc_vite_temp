@@ -1,8 +1,8 @@
 <template>
   <div class="matches-card-list-wrap">
     <template2 :is_show_btn="matches_15mins_list.length > 4">
-		<div class="matches-card-list" v-for="(item, index) in matches_15mins_list" :key="item">
-			<MatchesCard15Mins :current_tab="get_match_info(item)"/>
+		<div class="matches-card-list" v-for="(mid, index) in matches_15mins_list" :key="mid">
+			<MatchesCard15Mins :mid="mid"/>
 			<div class="split-line" v-show="index != matches_15mins_list.length - 1"></div>
 		</div>
     </template2>
@@ -23,11 +23,6 @@ const props = defineProps({
 	}
 })
 set_active_mids(JSON.parse(JSON.stringify(props.matches_15mins_list)))
-
-const get_match_info = (mid) => {
-	return MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_obj(mid)
-}
-
 onBeforeUnmount(()=>{
 	ws_destroyed()
 })
