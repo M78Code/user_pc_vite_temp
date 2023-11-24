@@ -49,7 +49,7 @@
 
       <div
         style="text-align: center; width: 100%"
-        v-if="['seal', 'close'].includes(odds_state)"
+        v-if="['seal'].includes(odds_state)"
       >
         <img
           class="vector"
