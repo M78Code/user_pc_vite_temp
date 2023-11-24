@@ -10,7 +10,7 @@
     <div v-if="match_detail?.mvs > -1">
       <detail_header_tem2 :get_match_detail="match_detail" />
     </div>
-    <div v-else class="mini-header-container">
+    <div v-else class="mini-header-container"  @click="onClickTest">
       <div class="header-fix" ref="header_fix">
          <!-- v-if="!changeHeader" -->
         <div ref="scroll_video_height" class="relative-position scroll_video_h">
@@ -121,7 +121,13 @@ export default {
      changeHeader,
      MatchDataWarehouseInstance
     } = details_main(router,route)
+    console.log(match_detail,"---------------------------------------------------");
+    function onClickTest(){
+      MatchDataWarehouseInstance.value.list_to_obj.mid_obj[mid.value+"_"].msc_obj.S1.home++
+      console.log(MatchDataWarehouseInstance.value.list_to_obj.mid_obj[mid.value+"_"],"---------------------------------------------------");
+    }
     return{
+      onClickTest,
       detail_store,
       match_odds_info,
       match_detail,

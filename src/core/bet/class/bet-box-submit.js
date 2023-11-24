@@ -704,7 +704,16 @@ const h5_match_data_switch = match_data_type => {
             break
         case "h5_detail_jingxuan" :
             query = MatchDataWarehouse_H5_Detail_Jingxuan
-            break   
+            break  
+        case "h5_hots_list" :
+            query = MatchDataWarehouse_ouzhou_PC_hots_List_Common
+            break
+        case "h5_five_league" :
+            query = MatchDataWarehouse_ouzhou_PC_five_league_List_Common
+            break
+        case "h5_ten_five_mins" :
+            query = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common
+            break 
         default :
             query = MatchDataWarehouse_H5_List_Common
             break   

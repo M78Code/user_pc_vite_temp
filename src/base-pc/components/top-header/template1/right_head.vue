@@ -46,14 +46,15 @@
         style="background:#fff;
         border-radius:2px;
         box-shadow:0 0 4px 2px rgb(0 0 0 / 10%);
-        margin-top:15px !important;"
+        margin-top:15px !important;
+        top: 52px;"
         anchor="bottom left" self="top middle"
         >
           <q-list style="min-width: 280px; ">
             <q-item clickable @click="goto_secondary_module('announcement')">
               <q-item-section>
                 <div class="flex title">
-                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
+                  <img class="icon" :style="compute_css_obj('pc-head-msg')" alt="" />
                   <div>{{ i18n_t('ouzhou.set.announcement')}}</div>
                 </div>
               </q-item-section>
@@ -61,7 +62,7 @@
             <q-item clickable @click="goto_secondary_module('results')">
               <q-item-section>
                 <div class="flex title">
-                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
+                  <img class="icon" :style="compute_css_obj('pc-head-results')" alt="" />
                   <div>{{ i18n_t('ouzhou.set.results')}}</div>
                 </div>
               </q-item-section>
@@ -75,17 +76,17 @@
               </q-item-section>
             </q-item>
             <!--国际化语言   暂时隐藏-->
-            <!-- <q-item clickable  @click="onExpend">
+            <q-item clickable  @click="onExpend">
               <q-item-section class="personal-content">
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
-                  <div>language</div>
+                  <div>语言设置</div>
                 </div>
                 <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
               </q-item-section>
-            </q-item> -->
-            <!-- <q-separator /> -->
-            <!-- <q-item  v-show="visible">
+            </q-item>
+            <q-separator />
+            <q-item  v-show="visible">
               <q-slide-transition >
                 <q-item-section>
                   <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
@@ -94,9 +95,9 @@
                   </div>
                 </q-item-section>
               </q-slide-transition>
-            </q-item> -->
+            </q-item>
             <!--国际化语言结束-->
-            <!-- <q-item>
+            <q-item>
               <q-item-section>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
@@ -106,7 +107,7 @@
                 </div>
               </div>
               </q-item-section>
-            </q-item> -->
+            </q-item>
           </q-list>
       </q-menu>
     </div>
@@ -127,6 +128,8 @@ import searchCom from 'src/components/search/search-2/index.vue';
 import BetData from 'src/core/bet/class/bet-data-class.js';
 import {  LayOutMain_pc } from 'src/core/index.js'
 import { emit } from "licia/fullscreen";
+import { compute_css_obj } from 'src/core/server-img/index.js'
+
 
 export default defineComponent({
   name: "RightHead",
@@ -148,47 +151,51 @@ export default defineComponent({
         }, {
           key: 'en',
           language: 'English',
-        }, {
-          key: 'tw',
-          language: '繁體中文',
-        }, {
-          key: 'vi',
-          language: 'Tiếng Việt',
-        }, {
-          key: 'th',
-          language: 'ไทย',
-        }, {
-          key: 'ms',
-          language: 'Melayu',
-        }, {
-          key: 'ad',
-          language: 'Indonesia',
-        }, {
-          key: 'md',
-          language: 'Burmese',
-        }, {
-          key: 'ry',
-          language: 'Japanese',
-        }, {
-          key: 'pty',
-          language: 'Portuguese',
-        }, {
-          key: 'hy',
-          language: 'Korean',
-        }]
+        }, 
+        // {
+        //   key: 'tw',
+        //   language: '繁體中文',
+        // }, {
+        //   key: 'vi',
+        //   language: 'Tiếng Việt',
+        // }, {
+        //   key: 'th',
+        //   language: 'ไทย',
+        // }, {
+        //   key: 'ms',
+        //   language: 'Melayu',
+        // }, {
+        //   key: 'ad',
+        //   language: 'Indonesia',
+        // }, {
+        //   key: 'md',
+        //   language: 'Burmese',
+        // }, {
+        //   key: 'ry',
+        //   language: 'Japanese',
+        // }, {
+        //   key: 'pty',
+        //   language: 'Portuguese',
+        // }, {
+        //   key: 'hy',
+        //   language: 'Korean',
+        // }
+      ]
     const settingData = ref([{
           title: 'Odds Display',
           index: 'DEC',
           params: ['DEC', 'HK']
-        }, {
-          title: 'Bet Slip',
-          index: 'ANY',
-          params: ['ANY', 'HIG']
-        }, {
-          title: 'Version',
-          index: 'EURO',
-          params: ['EURO', 'ASIA']
-        }])
+        }, 
+        // {
+        //   title: 'Bet Slip',
+        //   index: 'ANY',
+        //   params: ['ANY', 'HIG']
+        // }, {
+        //   title: 'Version',
+        //   index: 'EURO',
+        //   params: ['EURO', 'ASIA']
+        // }
+      ])
     //监听输入框内容改变，并搜索
     watch(keyword.value,
       (val) => {
@@ -316,7 +323,8 @@ export default defineComponent({
       get_search_data,
       close,
       compute_local_project_file_path,
-      clear_keyword
+      clear_keyword,
+      compute_css_obj
     };
   
   }
@@ -353,16 +361,20 @@ export default defineComponent({
   
 }
 .q-item{
-  padding: 8px 0 !important;
+  padding: 0px 0 !important;
   :deep(.q-focus-helper) {
-    color: #fff1e6 !important;
-    opacity: 1 !important;
+    // color: #fff1e6 !important;
+    // background: #fff1e6 !important;
+    opacity: 0 !important;
     z-index: -1;
+    display: none;
   }
   .title{
     padding: 0 16px;
   }
-  
+}
+.q-item:hover {
+  background: #fff1e6 !important;
 }
 .icon{
   width: 20px;
@@ -383,8 +395,10 @@ export default defineComponent({
   transition: all 0.25s;
   justify-content: space-between;
   &.active{
-    color: var(--q-gb-t-c-2);
-    background:var(--q-gb-bg-c-5);
+    // color: var(--q-gb-t-c-2);
+    // background:var(--q-gb-bg-c-5);
+    color: #ff7000;
+    background:#fff1e6;
   }
   > span {
     display: flex;
@@ -440,7 +454,8 @@ export default defineComponent({
     height: 30px;
     display: flex;
     align-items: center;
-    background: var(--q-gb-bg-c-6);
+    // background: var(--q-gb-bg-c-6);
+    background:#E2E2E2;
     border-radius: 20px;
     justify-content: space-between;
     margin-right: 16px;
@@ -453,10 +468,12 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       transition: all 0.25s;
-      color: var(--q-gb-t-c-8);
+      // color: var(--q-gb-t-c-8);
+      color: #8A8986 ;
       &.active{
         color: #000;
-        background: var(--q-gb-bg-c-4);
+        // background: var(--q-gb-bg-c-4);
+        background: #ffffff;
         border-radius: 20px;
       }
     }
@@ -464,7 +481,8 @@ export default defineComponent({
       position: absolute;
       top: 0;
       border-radius: 20px;
-      border: 1px solid var(--q-gb-bd-c-1);
+      // border: 1px solid var(--q-gb-bd-c-1);
+      border: 1px solid #ff7000;
       transition: all 0.25s;
     }
   }

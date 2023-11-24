@@ -273,7 +273,21 @@ init(){
    */
   match_assign(match_old, match_new){
     if(match_old && match_new){
-      this.assign_with(match_old, match_new);
+      // this.assign_with(match_old, match_new);
+      this.match_assign_with_v1(match_old, match_new);
+    }
+  }
+
+  /**
+   * @description: 赛事数据一级根数据浅合并(都是赋值操作)
+   * @param {Object} match_old 旧赛事
+   * @return {Object} match_new 新赛事
+   */
+  match_assign_with_v1(match_old, match_new){
+    if(match_old && match_new){
+      for (const key in match_new) {
+        match_old[key] = match_new[key];
+      }
     }
   }
 
@@ -448,7 +462,8 @@ init(){
                                 });
         // 数据赋值和合并逻辑
         if(play_obj){
-          this.assign_with(play_obj, play_obj_temp)
+          // this.assign_with(play_obj, play_obj_temp)
+          this.match_assign_with_v1(play_obj, play_obj_temp);
         } else {
           match.play_obj = play_obj_temp;
         }

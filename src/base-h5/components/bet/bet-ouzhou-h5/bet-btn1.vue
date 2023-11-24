@@ -3,7 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="tip">1111{{BetViewDataClass.error_message}}</div> 
+  <div class="tip">{{BetViewDataClass.error_message}}</div> 
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @click.self="set_retain_selection">{{$t('bet.save')}}</p>
     <!-- <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p> -->
@@ -45,7 +45,7 @@ const set_retain_selection = () => {
   font-size: 0.15rem;
   margin-right: 0.2rem;
   width: 100%;
-  height: .36rem;
+  height: .16rem;
 }
 .bet_content_bottom{
     height: 0.6rem;
@@ -62,7 +62,7 @@ const set_retain_selection = () => {
       font-weight: 400;
       letter-spacing: 0px;
       border: 0.5px solid var(--q-gb-t-c-5);
-      margin: 0 0.1rem 0 0.1rem;
+      margin: 0 0.11rem 0 0.12rem;
       line-height: 0.4rem;
     }
     .place_bet{

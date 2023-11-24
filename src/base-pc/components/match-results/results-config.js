@@ -971,7 +971,7 @@ export const useGetResultConfig = () => {
    * @return {}
    */
   const search_hot = (data) => {
-    console.error('datadatadatadatadata33333',data)
+    // console.error('datadatadatadatadata33333',data)
     state.pournament_params.hot = data;
     get_pournament(0);
   };

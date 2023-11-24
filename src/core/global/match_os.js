@@ -1,9 +1,3 @@
-/*
- * @Author: lockie
- * @Date: 2023-07-14 18:50:53
- * @FilePath: \user-pc-vue3\src\global\match_os.js
- * @Description: 不同球种 赛事列表对应的玩法集合
- */
 export default {
   "1": [
     ["1", "2"],
