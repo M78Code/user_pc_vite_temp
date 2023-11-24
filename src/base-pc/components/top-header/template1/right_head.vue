@@ -46,14 +46,15 @@
         style="background:#fff;
         border-radius:2px;
         box-shadow:0 0 4px 2px rgb(0 0 0 / 10%);
-        margin-top:15px !important;"
+        margin-top:15px !important;
+        top: 52px;"
         anchor="bottom left" self="top middle"
         >
           <q-list style="min-width: 280px; ">
             <q-item clickable @click="goto_secondary_module('announcement')">
               <q-item-section>
                 <div class="flex title">
-                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
+                  <img class="icon" :style="compute_css_obj('pc-head-msg')" alt="" />
                   <div>{{ i18n_t('ouzhou.set.announcement')}}</div>
                 </div>
               </q-item-section>
@@ -61,7 +62,7 @@
             <q-item clickable @click="goto_secondary_module('results')">
               <q-item-section>
                 <div class="flex title">
-                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
+                  <img class="icon" :style="compute_css_obj('pc-head-results')" alt="" />
                   <div>{{ i18n_t('ouzhou.set.results')}}</div>
                 </div>
               </q-item-section>
@@ -127,6 +128,8 @@ import searchCom from 'src/components/search/search-2/index.vue';
 import BetData from 'src/core/bet/class/bet-data-class.js';
 import {  LayOutMain_pc } from 'src/core/index.js'
 import { emit } from "licia/fullscreen";
+import { compute_css_obj } from 'src/core/server-img/index.js'
+
 
 export default defineComponent({
   name: "RightHead",
@@ -250,7 +253,8 @@ export default defineComponent({
     }
     // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
-      const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape'];
+      // console.log('e', e.target.className);
+      const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape', 'bet-title', 'f-b-c bet-content'];
       if(is_focus.value && SearchPCClass.search_isShow) {
         if(!target_class_list.includes(e.target.className)) {
           SearchPCClass.set_search_isShow(false);
@@ -315,7 +319,8 @@ export default defineComponent({
       get_search_data,
       close,
       compute_local_project_file_path,
-      clear_keyword
+      clear_keyword,
+      compute_css_obj
     };
   
   }
@@ -352,16 +357,20 @@ export default defineComponent({
   
 }
 .q-item{
-  padding: 8px 0 !important;
+  padding: 0px 0 !important;
   :deep(.q-focus-helper) {
-    color: #fff1e6 !important;
-    opacity: 1 !important;
+    // color: #fff1e6 !important;
+    // background: #fff1e6 !important;
+    opacity: 0 !important;
     z-index: -1;
+    display: none;
   }
   .title{
     padding: 0 16px;
   }
-  
+}
+.q-item:hover {
+  background: #fff1e6 !important;
 }
 .icon{
   width: 20px;

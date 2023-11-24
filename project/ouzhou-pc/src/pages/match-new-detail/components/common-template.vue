@@ -115,7 +115,7 @@ const columnTotal = (item) => {
 
 const betItemClick = (item, o) => {
   bet_oid.value = o.oid;
-  emit("betItemClick", item, o);
+  emit("betItemClick", item, o,props.match_info.hpn);
 };
 //  模板hpt0 数字 需要给颜色
 const getOn = (match_info, o) => {
@@ -162,7 +162,7 @@ onMounted(() => {
     line-height: 45px;
     //  border-top: 1px solid #E2E2E2;
     border-left: 1px solid var(--q-gb-bd-c-2);
-    border-bottom: 1px solid var(--q-gb-bd-c-2);
+    // border-bottom: 1px solid var(--q-gb-bd-c-2);
 
     &:hover {
       background: var(--q-gb-bg-c-5);

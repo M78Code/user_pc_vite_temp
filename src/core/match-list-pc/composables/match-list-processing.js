@@ -163,7 +163,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			})
 		}
 		
-
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
@@ -235,7 +234,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		);
 	} else {
 		load_data_state.value = "empty";
-		console.log('lockie-2');
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
@@ -357,8 +355,6 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, collect,
 		// 	backend_run,
 		// 	true
 		// );
-		console.log('lockie-4');
-
 		// 计算赛事卡片
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			match_list,

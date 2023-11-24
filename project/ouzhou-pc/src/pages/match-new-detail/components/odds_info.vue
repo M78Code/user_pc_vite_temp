@@ -37,7 +37,7 @@
                     <div class="temp-simple">
                       <div v-for="ol in sun_ol(item.hl[0].ol, item)" :key="ol.oid" >
                         <template v-if="ol.otd === opt.otd||ol._otd === opt.otd">
-                          <div :class="{ tem4: true, 'tem4-active': BetData.bet_oid_list.includes(ol.oid) }" @click="betItemClick(item.hl[0], ol)">
+                          <div :class="{ tem4: true, 'tem4-active': BetData.bet_oid_list.includes(ol.oid) }" @click="betItemClick(item.hl[0], ol,item.hpn)">
                             <span>{{ ol.on }}</span>
 
                             <span>
@@ -144,6 +144,9 @@ const props = defineProps({
     default: false,
   },
 });
+// <!-- ms: 0开 1封 2关 11锁 -->
+//     <!-- hs: 0开 1封 2关 11锁 -->
+//     <!-- os: 1开 2封 3隐藏不显示不占地方-->
 const mouse_in = ref(false);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
@@ -205,7 +208,7 @@ const sun_ol = (ol, item) => {
   return result;
 };
 //  投注项点击投注,
-const betItemClick = (item, ol) => {
+const betItemClick = (item, ol,play_name) => {
   if (item.hs) {
     return;
   }
@@ -227,6 +230,7 @@ const betItemClick = (item, ol) => {
       device_type: 2,
       // 数据仓库类型
       match_data_type: "pc_detail", // h5_detail
+      play_name
     };
     set_bet_obj_config(params, other);
   }

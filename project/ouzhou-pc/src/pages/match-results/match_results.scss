@@ -80,6 +80,7 @@ body {
         .color-highlight {
           color: var(--q-gb-t-c-16);
         }
+        
         .table-col {
           .browser {
             margin-right: 5px;
@@ -113,7 +114,7 @@ body {
         }
         .active {
         //   background-color: #2C2D34;
-          background: var(--q-gb-bg-c-110);
+          background: #fff;
         }
         .wrap-load {
           background-color: var(--q-gb-bg-c-15);

@@ -5,6 +5,7 @@
 -->
 <template>
   <div class="box-bc">
+    
     <q-table :rows="data" separator="none" :columns="columns" row-key="name" hide-pagination
              no-data-label="暂无比分数据"
              :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
@@ -122,7 +123,7 @@ const get_base_data = (val) => {
     { name: detail_info["man"], key: "away" },
   ];
   let res = "";
-  if (!_.isEmpty(val) && ["1", "2", "3"].includes(detail_info.csid+'')) {
+  if (!_.isEmpty(val) && ["1", "2", "3"].includes(String(detail_info.csid))) {
     res = get_score_result(list, val);
   } else {
     //   篮球 赛前无数据
@@ -140,6 +141,7 @@ const get_base_data = (val) => {
       });
     }
   }
+  // console.log(11111111,detail_info)
   data.value = res || [];
 };
 
@@ -155,31 +157,34 @@ const get_base_data = (val) => {
 * 点球大战 S170
 * */
 const get_score_result = (list, val) => {
+ 
+   const msc_obj = val.msc_obj
+   console.log(11111111,msc_obj)
   let result = [];
   const detail_info = props.detail_info;
   result = list.map((item) => {
     if (detail_info.csid == 1 || detail_info.csid == 3) {
       return {
         name: item.name,
-        q1: val.S5 ? val.S5[item.key] : 0, // 角球
-        q2: val.S12 ? val?.S12[item.key] : 0, // 黄牌
-        ht: val.S11 ? val?.S11[item.key] : 0, // 红牌
-        q3: val.S10 ? val?.S10[item.key] : 0, // 点球
-        q4: val.S2 ? val?.S2[item.key] : 0, // 半场
-        t: val.S1 ? val?.S1[item.key] : 0, // 全场
-        x: val.S1 ? val?.S1[item.key] : '', // 加时赛比分
-        y: val.S1 ? val?.S1[item.key] : '', // 点球大战
+        q1: msc_obj&&msc_obj['S5'] ? msc_obj['S5'][item.key] : 0, // 角球
+        q2: msc_obj&&msc_obj.S12 ? msc_obj.S12[item.key] : 0, // 黄牌
+        ht: msc_obj&&msc_obj.S11 ? msc_obj.S11[item.key] : 0, // 红牌
+        q3: msc_obj&&msc_obj.S10 ? msc_obj.S10[item.key] : 0, // 点球
+        q4: msc_obj&&msc_obj.S2 ? msc_obj.S2[item.key] : 0, // 半场
+        t: msc_obj&&msc_obj.S1 ? msc_obj.S1[item.key] : 0, // 全场
+        x: msc_obj&&msc_obj.S1 ? msc_obj.S1[item.key] : '', // 加时赛比分
+        y: msc_obj&&msc_obj.S1 ? msc_obj.S1[item.key] : '', // 点球大战
       };
     } else if (detail_info.csid == 2) {
       // 48282 【SIT】【欧洲版二期】【PC】篮球详情页比分版未到的赛事阶段比分不需要展示
       return {
         name: item.name,
-        q1: val.S19 ? val.S19[item.key] : '', // Q1
-        q2: val.S20 ? val?.S20[item.key] : '', // Q2
-        ht: val.S2 ? val?.S2[item.key] : '', // 半场
-        q3: val.S21 ? val?.S21[item.key] : '', //Q3
-        q4: val.S22 ? val?.S22[item.key] : '', // Q4
-        t: val.S1 ? val?.S1[item.key] : '', // 全场
+        q1: msc_obj&&msc_obj.S19 ? msc_obj.S19[item.key] : '', // Q1
+        q2: msc_obj&&msc_obj.S20 ? msc_obj.S20[item.key] : '', // Q2
+        ht: msc_obj&&msc_obj.S2 ? msc_obj.S2[item.key] : '', // 半场
+        q3: msc_obj&&msc_obj.S21 ? msc_obj.S21[item.key] : '', //Q3
+        q4: msc_obj&&msc_obj.S22 ? msc_obj.S22[item.key] : '', // Q4
+        t: msc_obj&&msc_obj.S1 ? msc_obj.S1[item.key] : '', // 全场
       };
     } else {
       return {};
@@ -403,7 +408,7 @@ watch(
         format_msc(res);
       }
     }
-    // get_base_data(res);
+     get_base_data(res);
   },
   { immediate: false, deep: true }
 );

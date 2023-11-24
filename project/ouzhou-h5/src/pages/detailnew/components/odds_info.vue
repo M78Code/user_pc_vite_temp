@@ -11,7 +11,7 @@
         </div>
         
         <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-<!--         {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
+        <!-- {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }} -->
           <component
               :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
               :item_data="item"
@@ -113,7 +113,7 @@ function useWatchAllCloseState() {
   return watch(() => props.allCloseState,useWatchAllCloseState.watch)
 }
 
-const bet_click_ = (data) => {
+const bet_click_ = (data,play_name) => {
   active.value = +data.oid;
   // storage_bet_info({
   //   payload: {
@@ -147,6 +147,7 @@ const bet_click_ = (data) => {
     // 数据仓库类型
     match_data_type: "h5_detail", // h5_detail
     // match_data_type: "h5_list", // h5_detail
+    play_name
   }
   set_bet_obj_config(params,other)
 }
