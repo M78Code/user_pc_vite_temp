@@ -98,7 +98,8 @@ body {
           border-left: 1px solid var(--q-match-result-boreder-1);
           &:hover {
             // background-color: #2C2D34;
-            background: var(--q-gb-bg-c-110);
+            // background: var(--q-gb-bg-c-110);
+            background:#f5f6f9;
           }
           .table-col::before {
             // border-right: 1px solid var(--q-match-result-boreder-1);
@@ -113,7 +114,8 @@ body {
         }
         .active {
         //   background-color: #2C2D34;
-          background: var(--q-gb-bg-c-110);
+          // background: var(--q-gb-bg-c-4);
+          background:#fff;
         }
         .wrap-load {
           background-color: var(--q-gb-bg-c-15);
