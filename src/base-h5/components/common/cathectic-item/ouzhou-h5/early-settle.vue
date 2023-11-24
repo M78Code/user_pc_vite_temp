@@ -350,16 +350,16 @@ template {
       background-color: var(--q-gb-bg-c-7);
       border: 1px solid var(--q-gb-bg-c-1);
       width: 100%;
-      height: 0.5rem;
-      line-height: 0.5rem;
+      height: 0.46rem;
+      line-height: 0.46rem;
       font-size: 0.18rem;
       border-radius: 0.5rem;
       position: relative;
       &.confirm {
         background-color: var(--q-gb-bg-c-1);
-        color: var(--q-gb-bg-c-15);
+        color: #fff;
         i.amount {
-          color: var(--q-gb-bg-c-15);
+          color: #fff;
         }
       }
       &.success {
