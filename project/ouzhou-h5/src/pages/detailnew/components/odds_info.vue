@@ -2,6 +2,7 @@
   <div class="match-detail-odds">
     <template v-if="match_odds_info && match_odds_info.length > 0" >
       <div v-for="(item, index) in match_odds_info" :key="item.topKey" class="odds-wrap">
+<!--          {{match_odds_info}}-->
         <q-separator color="orange" v-if="index != 0" />
         <div class="odds-hpn" @click="expend_toggle(item)">
           <span class="odds-hpn-text">{{ item.hpn }}</span>
@@ -12,14 +13,17 @@
         
         <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
         <!-- {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }} -->
-          <component
+            <!--
+            <component
               :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
               :item_data="item"
               :active="active"
               @bet_click_="bet_click_"
           />
+            -->
+            <component :is="computedPlayComponent(item.hpt)" :play="item" :active="active" @bet_click_="bet_click_" />
+            <!--<playTemplate1 :play="item" :sport_id="MatchDetailCalss.params.sportId"></playTemplate1>-->
         </div>
-<!--          <bevisTemplate0 :betInfor="item"></bevisTemplate0>-->
       </div>
       <!-- <div class="match-detail-odds-bottom"></div> -->
     </template>
@@ -40,7 +44,7 @@ import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 
-import bevisTemplate0 from "./template/bevis-template0.vue"
+import { playTemplate1 } from "./bevis/index.js"
 
 
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
@@ -48,6 +52,8 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 // import EMITTER from "src/global/mitt.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { MatchDetailCalss } from "src/core/index.js"
+
 const props = defineProps({
   match_odds_info: {
     type: Array,
@@ -76,6 +82,32 @@ const componentArr = ref({
     tem5: markRaw(temp5),
     tem_other: markRaw(tem_other),
 });
+/*
+* 新组件使用hpid 玩法集ID
+* 原来组件使用hpt 玩法展示模板
+* 【0, 1, 5, 10】
+* */
+const playComponent = ref({
+    playTemplate1: markRaw(playTemplate1),
+    playTemplate0: markRaw(temp0),
+    playTemplate3: markRaw(temp3),
+    playTemplate5: markRaw(temp5),
+    playTemplate_other: markRaw(tem_other)
+})
+const computedPlayComponent = function (hpt){
+    let componentName = '';
+
+    if(hpt == 1){
+        componentName = 'playTemplate1'
+    }else if( [0, 5, 10].includes(hpt) ){
+        componentName = `playTemplate${hpt}`
+    }else{
+        componentName = 'playTemplate_other'
+    }
+    console.log(hpt,componentName,"componentName--computedPlayComponent")
+    return playComponent[`${componentName}`]
+}
+
 const tem_choice = (hpt) => {
   if ([0, 1, 5].includes(hpt)) {
     return hpt;

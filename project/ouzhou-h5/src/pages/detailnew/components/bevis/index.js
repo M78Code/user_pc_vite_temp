@@ -1,0 +1,1 @@
+export { default as playTemplate1 } from "./play-tempalte-1.vue"
