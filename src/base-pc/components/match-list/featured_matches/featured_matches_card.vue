@@ -265,10 +265,9 @@ get_featurd_list()
         font-size: 14px;
         font-weight: 500;
         letter-spacing: 0px;
-
-        &:hover {
-          background: rgba(255, 112, 0, 0.1);
-        }
+        // &:hover {
+        //   background: rgba(255, 112, 0, 0.1);
+        // }
 
         span {
           &:first-child {
@@ -305,10 +304,10 @@ get_featurd_list()
   }
 }
 
-::v-deep.bet-item-wrap-ouzhou {
+:deep(.bet-item-wrap-ouzhou) {
   display: flex;
   width: 78px;
-  height: 48px;
+  height: 40px !important;
   border-radius: 2px;
   justify-content: center;
   align-items: center;
@@ -316,7 +315,7 @@ get_featurd_list()
 
   .c-bet-item {
     width: 78px;
-    height: 48px;
+    height: 40px;
   }
 
   .c-bet-item.can-hover:hover {
