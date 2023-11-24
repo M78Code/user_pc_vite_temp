@@ -352,10 +352,10 @@ export default {
     async handle_match_collect () {
       const { mid,tid } = this.match_of_list
       const match_state = MatchCollect.get_match_collect_state(this.match_of_list)
-      const target_matchs = MatchMeta.complete_matchs.filter(t => t.mid !== mid)
-      if(!target_matchs.some((item)=>{return item.tid ===tid })){
-        return this.handle_league_collect()
-      }else{
+      // const target_matchs = MatchMeta.complete_matchs.filter(t => t.mid !== mid)
+      // if(!target_matchs.some((item)=>{return item.tid ===tid })){
+      //   return this.handle_league_collect()
+      // }else{
         api_common.add_or_cancel_match({
           mid,
           cf: match_state ? 0 : 1,
@@ -366,7 +366,7 @@ export default {
         // 收藏页手动处理数据
         MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 2)
         MatchCollect.set_match_collect_state(this.match_of_list, !match_state)
-      }
+      // }
     },
 
     /**

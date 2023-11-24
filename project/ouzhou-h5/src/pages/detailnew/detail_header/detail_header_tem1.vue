@@ -1,46 +1,133 @@
 <template>
   <div class="detail_header_tem1">
     <div class="match-detail-head">
-      <div v-show="get_match_detail.csid" :class="['sport_bg', `${ get_sports_bg(get_match_detail.csid) }`]"></div>
+      <div
+        v-show="get_match_detail.csid"
+        :class="['sport_bg', `${get_sports_bg(get_match_detail.csid)}`]"
+      ></div>
       <div class="match-detail-time">
         <div>
           <span class="match-detail-time-label">
-
-            <span v-if="get_match_detail.ms != 110">{{get_match_detail.mstValue}} {{get_match_detail.mstValueTime}}</span>
+                                  <!-- 开赛时间 -->
+                                  <span v-if="get_match_detail?.ms == 0">
+              <span
+                v-if="show_someone.start_time"
+                class="fz_12"
+                style="font-weight: 400"
+              >
+                <!-- 距离开赛时间小于一小时显示倒计时 -->
+                {{ i18n_t("list.after_time_start", [longTime]) }}
+              </span>
+              <template v-else>
+                <!-- .Format(i18n_t('time3'))  | format_H_M -->
+                <div class="sj-time-day">
+                  {{ format_time_zone(+get_match_detail?.mgt) }}
+                </div>
+                <span class="sj-time-soon">{{
+                  format_time_zone_time(+get_match_detail?.mgt)
+                }}</span>
+              </template>
+            </span>
+            <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
+            <span
+              v-else-if="get_match_detail?.ms == 110"
+              class="fz_12"
+              style="font-weight: 400"
+            >
+              {{ i18n_t(`ms[${get_match_detail?.ms}]`) }}
+            </span>
+            <template v-else>
+              <span>{{
+               lodash.get(i18n_t("mmp"),'[get_match_detail?.csid][get_match_detail?.mmp]')  
+              }}</span>
+              <!-- 倒/正计时组件 -->
+              <counting-down
+                :title="null"
+                :mmp="get_match_detail?.mmp"
+                :m_id="get_match_detail?.mid"
+                :second="get_match_detail?.mst"
+                :match="get_match_detail"
+                :is_add="[100, 101, 102, 103, 104].includes(+get_match_detail?.csid)"
+              />
+            </template>
+            <!-- <span v-if="get_match_detail.ms != 110">{{get_match_detail.mstValue}} {{get_match_detail.mstValueTime}}</span> -->
           </span>
-          <q-badge v-if="get_match_detail.mng == 1" text-color="white" label="N" />
+          <q-badge
+            v-if="get_match_detail.mng == 1"
+            text-color="white"
+            label="N"
+          />
         </div>
         <div class="match-detail-time-collect" @click="collect_click">
-          <img v-if="is_collect"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"   alt="" />
-          <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect.png`"  alt="" />
+          <img
+            v-if="is_collect"
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"
+            alt=""
+          />
+          <img
+            v-else
+            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect.png`"
+            alt=""
+          />
         </div>
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">{{ get_match_detail.mhn }}</div>
-        <div class="match-detail-num" v-if="scoew_icon_list['S1']">{{ scoew_icon_list['S1'].home }}</div>
+        <div class="match-detail-num" v-if="scoew_icon_list['S1']">
+          {{ scoew_icon_list["S1"].home }}
+        </div>
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">{{ get_match_detail.man }}</div>
-        <div class="match-detail-num" v-if="scoew_icon_list['S1']">{{ scoew_icon_list['S1'].away }}</div>
+        <div class="match-detail-num" v-if="scoew_icon_list['S1']">
+          {{ scoew_icon_list["S1"].away }}
+        </div>
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
       <!-- {{ console.log(get_match_detail.ms) }} -->
       <template v-if="get_match_detail.ms == 1">
         <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
-          <div class="list" v-for="item in football_score_icon_list" :key="item.msc_key">
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]['home'] : "" }}</span>
+          <div
+            class="list"
+            v-for="item in football_score_icon_list"
+            :key="item.msc_key"
+          >
+            <span>{{
+              scoew_icon_list[item.msc_key]
+                ? scoew_icon_list[item.msc_key]["home"]
+                : ""
+            }}</span>
             <span :class="[item.bg_url, 'score-icon']">
               <!-- <img class="score-icon" :src="item.url" alt="" /> -->
             </span>
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]['away'] : "" }}</span>
+            <span>{{
+              scoew_icon_list[item.msc_key]
+                ? scoew_icon_list[item.msc_key]["away"]
+                : ""
+            }}</span>
           </div>
         </div>
-        <div class="match-detail-item-list baseketball-list" v-if="['2','6'].includes(get_match_detail.csid)">
+        <div
+          class="match-detail-item-list baseketball-list"
+          v-if="['2', '6'].includes(get_match_detail.csid)"
+        >
           <div class="line"></div>
-          <div class="list-item" v-for="item in basketball_score_icon_list" :key="item.msc_key">
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]['home'] : "" }}</span>
+          <div
+            class="list-item"
+            v-for="item in basketball_score_icon_list"
+            :key="item.msc_key"
+          >
+            <span>{{
+              scoew_icon_list[item.msc_key]
+                ? scoew_icon_list[item.msc_key]["home"]
+                : ""
+            }}</span>
             <span v-if="scoew_icon_list[item.msc_key]">-</span>
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]['away'] : "" }}</span>
+            <span>{{
+              scoew_icon_list[item.msc_key]
+                ? scoew_icon_list[item.msc_key]["away"]
+                : ""
+            }}</span>
           </div>
         </div>
       </template>
@@ -50,9 +137,10 @@
 
 <script setup>
 import {onMounted, ref, computed, toRef, watch } from "vue";
+import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
-import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zone  } from "src/core";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -110,46 +198,46 @@ const show_time_counting = computed(() => {
 // 意义不明的两行代码
 const current_ball_type = ref(0);
 const sport_ball = {
-	0:7,
-	1:0,
-	2:1,
-	3:5,
-	4:10,
-	5:6,
-	6:8,
-	7:13,
-	8:2,
-	9:3,
-	10:4,
-	11:12,
-	12:9,
-	13:14,
-	14:15,
-	15:16,
-	16:21,
-	17:20,
-	18:'',
-	19:12,
-	20:25,
-	21:13,
-	22:1,
-	23:1,
-	24:1,
-	25:1,
-	26:1,
-	27:1,
-	28:1,
-	29:1,
-	30:1,
-	31:1,
-	32:1,
-	37:1,
-	38:1,
-	100:1,
-	101:1,
-	102:1,
-	103:1,
-}
+  0: 7,
+  1: 0,
+  2: 1,
+  3: 5,
+  4: 10,
+  5: 6,
+  6: 8,
+  7: 13,
+  8: 2,
+  9: 3,
+  10: 4,
+  11: 12,
+  12: 9,
+  13: 14,
+  14: 15,
+  15: 16,
+  16: 21,
+  17: 20,
+  18: "",
+  19: 12,
+  20: 25,
+  21: 13,
+  22: 1,
+  23: 1,
+  24: 1,
+  25: 1,
+  26: 1,
+  27: 1,
+  28: 1,
+  29: 1,
+  30: 1,
+  31: 1,
+  32: 1,
+  37: 1,
+  38: 1,
+  100: 1,
+  101: 1,
+  102: 1,
+  103: 1,
+};
 const cuid = ref("");
 const bg_img = ref({})
 const detail_store = ref(null);
@@ -157,62 +245,62 @@ const is_collect = ref();
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
-    msc_key: "S2"
+    msc_key: "S2",
   },
   {
     bg_url: "dianqiu",
-    msc_key: "S10"
+    msc_key: "S10",
   },
   {
     bg_url: "huangpai",
-    msc_key: "S12"
+    msc_key: "S12",
   },
   {
     bg_url: "hongpai",
-    msc_key: "S11"
+    msc_key: "S11",
   },
   {
     bg_url: "jiaoqiu",
-    msc_key: "S5"
+    msc_key: "S5",
   },
-])
+]);
 // 篮球和美足
-const basketball_score_icon_list = ref([])
+const basketball_score_icon_list = ref([]);
 const get_sports_bg = (csid) => {
   // console.log(csid, "csid");
   let num = csid;
   if (![1, 2, 5].includes(Number(csid))) {
     num = 0;
   }
-  return `sports_bg${ num }`
-}
+  return `sports_bg${num}`;
+};
 const set_basketball_score_icon_list = () => {
-  if (lodash.get(props.get_match_detail, 'mle') == '17') {
+  if (lodash.get(props.get_match_detail, "mle") == "17") {
     basketball_score_icon_list.value = [
       {
-        msc_key: "S2"
+        msc_key: "S2",
       },
       {
-        msc_key: "S3"
-      }
-    ]
+        msc_key: "S3",
+      },
+    ];
   } else {
     basketball_score_icon_list.value = [
       {
-        msc_key: "S19"
+        msc_key: "S19",
       },
       {
-        msc_key: "S20"
+        msc_key: "S20",
       },
       {
-        msc_key: "S21"
+        msc_key: "S21",
       },
       {
-        msc_key: "S22"
-      }
-    ]
+        msc_key: "S22",
+      },
+    ];
   }
-}
+};
 const scoew_icon_list = ref({});
 watch(()=>props.get_match_detail, (new_value, old_value) => {
   scoew_icon_list.value = new_value.msc_obj;
@@ -234,12 +322,12 @@ const set_scoew_icon_list = (new_value) => {
       let score_value_arr = score_key_arr[1].split(":");
       scoew_icon_list.value[score_key_arr[0]] = {
         home: score_value_arr[0],
-        away: score_value_arr[1]
-      }
+        away: score_value_arr[1],
+      };
     }
     // console.log("scoew_icon_list", scoew_icon_list);
   }
-}
+};
 /**
  *@description // 收藏
  *@param {*}
@@ -288,18 +376,21 @@ onMounted(()=>{
     //   background:url('src/assets/images/detail/baseball_bg.png') no-repeat;
     // }
     .sports_bg2 {
-      background: url($SCSSPROJECTPATH+"/image/detail/basketball_bg.png")  no-repeat;
+      background: url($SCSSPROJECTPATH + "/image/detail/basketball_bg.png")
+        no-repeat;
     }
     .sports_bg1 {
-      background:  url($SCSSPROJECTPATH+"/image/detail/football_bg.png") no-repeat;
+      background: url($SCSSPROJECTPATH + "/image/detail/football_bg.png")
+        no-repeat;
     }
     .sports_bg5 {
-      background: url($SCSSPROJECTPATH+"/image/detail/tennis_bg.png")  no-repeat;
+      background: url($SCSSPROJECTPATH + "/image/detail/tennis_bg.png")
+        no-repeat;
     }
     .sports_bg0 {
-      background: url($SCSSPROJECTPATH+"/image/detail/other_bg.png")  no-repeat;
+      background: url($SCSSPROJECTPATH + "/image/detail/other_bg.png") no-repeat;
     }
-    .sport_bg{
+    .sport_bg {
       width: 140px;
       height: 90px;
       overflow: hidden;
@@ -314,7 +405,7 @@ onMounted(()=>{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position:relative;
+      position: relative;
       .match-detail-time-label {
         color: var(--q-gb-t-c-3);
         padding-right: 10px;
@@ -322,14 +413,14 @@ onMounted(()=>{
         font-weight: 500;
       }
       .q-badge {
-        background: #0CBEB9;
+        background: #0cbeb9;
       }
       .match-detail-time-collect {
         width: 14px;
         height: 14px;
-        position:absolute;
-        z-index:2;
-        right:0;
+        position: absolute;
+        z-index: 2;
+        right: 0;
         img {
           width: 14px;
           height: 14px;
@@ -347,7 +438,7 @@ onMounted(()=>{
       .match-detail-num {
         //color: #ff7000;
         color: var(--q-gb-t-c-1);
-        font-weight: 500;;
+        font-weight: 500;
         font-size: 15px;
       }
     }
@@ -359,22 +450,26 @@ onMounted(()=>{
       .list {
       }
       .baseketball_list {
-
       }
       .dianqiu {
-       background: url($SCSSPROJECTPATH+"/image/detail/dianqiu.png")  no-repeat; 
+        background: url($SCSSPROJECTPATH + "/image/detail/dianqiu.png")
+          no-repeat;
       }
       .hongpai {
-        background: url($SCSSPROJECTPATH+"/image/detail/hongpai.png") no-repeat;
+        background: url($SCSSPROJECTPATH + "/image/detail/hongpai.png")
+          no-repeat;
       }
       .huangpai {
-        background: url($SCSSPROJECTPATH+"/image/detail/huangpai.png") no-repeat;
+        background: url($SCSSPROJECTPATH + "/image/detail/huangpai.png")
+          no-repeat;
       }
       .jiaoqiu {
-        background: url($SCSSPROJECTPATH+"/image/detail/jiaoqiu.png") no-repeat;
+        background: url($SCSSPROJECTPATH + "/image/detail/jiaoqiu.png")
+          no-repeat;
       }
       .shangbanchang {
-        background: url($SCSSPROJECTPATH+"/image/detail/shangbanchang.png") no-repeat;
+        background: url($SCSSPROJECTPATH + "/image/detail/shangbanchang.png")
+          no-repeat;
       }
       .score-icon {
         display: inline-block;
@@ -404,6 +499,9 @@ onMounted(()=>{
     }
     .match-detail-bet-or-event {
     }
+  }
+  :deep(.counting){
+     color: var(--q-gb-t-c-3) !important;
   }
 }
 </style>
