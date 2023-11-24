@@ -9,11 +9,11 @@
                 </div>
                 <div class="w-100 h15 f-s-c my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400">{{ items.playName }}</span> 
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}</span> 
                     <!-- 盘口 -->
                     <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
+                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
@@ -29,7 +29,7 @@
                     <BetInput :items="items" />
                 </div>
                 <div class="font12 h12 mt-4">
-                    <span class="font400 mr-4 text-8a8">Highest Win</span>
+                    <span class="font400 mr-4 text-8A8986-i">Highest Win</span>
                     <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount)) || '0.00' }} </span>
                 </div>
             </div>
@@ -190,8 +190,14 @@ const set_delete = () => {
 
         .bet-left {
             width: 230px;
+            .text-a1a-i {
+                color: var(--q-gb-t-c-5) !important;
+            }
         }
 
+        .text-8A8986-i {
+            color: var(--q-gb-t-c-8) !important
+        }
     }
 
     .bet-bet-money {
