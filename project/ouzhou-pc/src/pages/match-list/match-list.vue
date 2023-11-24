@@ -47,13 +47,13 @@
 
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" 
           :class="`card_key_${card_key}`">
-          <match-list-card :card_key="card_key" :key="`match-list-car-${card_key}`" />
+          <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
 
         <Match-Main-Title :title="$t('ouzhou.match.top_leagues')" v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" 
           :class="`card_key_${card_key}`">
-          <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`"   />
+          <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`"   />
         </div>
         <template v-slot:after>
           <div style="height: 15px"></div>
@@ -165,9 +165,7 @@ export default {
     const MatchListCardDataClass_match_list_card_key_arr = () => {
       // match_list_card_key_arr.value.length = 0;
       nextTick(() => {
-        match_list_card_key_arr.value =
-          MatchListCardDataClass.match_list_card_key_arr;
-
+        match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
         five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
       })
     };
@@ -257,10 +255,6 @@ export default {
     cursor: pointer;
     padding: 5px;
   }
-}
-
-.match-list-item {
-  margin-bottom: 24px;
 }
 
 .scroll {
