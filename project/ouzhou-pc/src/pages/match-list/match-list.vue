@@ -51,12 +51,10 @@
         </div>
 
         <Match-Main-Title :title="$t('ouzhou.match.top_leagues')" v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
-
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" 
           :class="`card_key_${card_key}`">
-          <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`" />
+          <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`"   />
         </div>
-
         <template v-slot:after>
           <div style="height: 15px"></div>
           <div class="pager-wrap row justify-end">
@@ -106,7 +104,7 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import {
   PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,
-  GlobalAccessConfig,
+  GlobalAccessConfig,MatchDataWarehouse_ouzhou_PC_five_league_List_Common
 } from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
@@ -222,7 +220,7 @@ export default {
       match_list_card,
       MenuData,
       LayOutMain_pc,
-      total_match_count
+      total_match_count,MatchDataWarehouse_ouzhou_PC_five_league_List_Common
     };
   },
 };
