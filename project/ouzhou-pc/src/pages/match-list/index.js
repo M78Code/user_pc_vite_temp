@@ -3,10 +3,9 @@ import {
   MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common,
   MatchDataWarehouse_PC_List_Common,
-  MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
   LayOutMain_pc,
   UserCtr,
-  MenuData
+  MenuData, axios_loop
 } from "src/core";
 import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -235,45 +234,48 @@ export const init_home_matches = async () => {
     // hasFlag: 0
   };
   let mins15_list = []
-  let featured_list = []
   let match_count = 0;
-  const res=await get_home_matches(params)
-  try {
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
-    // 处理返回数据 将扁平化数组更改为页面适用数据
-    MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
-    // MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
-    match_count = res.dataList.length || 0;
-    let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
-    //过滤前20条数据
-    sort_list = filter_20_match_new(sort_list);
-    // 将球种排序
-    MatchDataWarehouse_PC_List_Common.set_list(sort_list);
-    MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-      sort_list,
-    );
-    //获取15mins 数据
-    mins15_list = filter_15mins_func(
-      MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
-    );
-    console.log(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list, 'p15- mins15_list')
-    // // 获取matches_featured
-    // featured_list = filter_featured_list(
-    //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
-    // );
-  } catch (error) {
-    console.log(error);
-  }
-  get_five_leagues_list().then(res => {
-    try {
-      MatchDataWarehouse_PC_List_Common.set_list(res.concat(MatchDataWarehouse_PC_List_Common.match_list));
-      MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-        res, null, null, true
-      );
-    } catch (error) {
-      console.log(error);
+  axios_loop({
+    axios_api: get_home_matches,
+    params,
+    fun_then: function (res) {
+      try {
+        MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
+        // 处理返回数据 将扁平化数组更改为页面适用数据
+        MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
+         //获取15mins 数据
+        mins15_list = filter_15mins_func(res.p15);
+
+        match_count = res.dataList.length || 0;
+        let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
+        //过滤前20条数据
+        sort_list = filter_20_match_new(sort_list).concat(MatchDataWarehouse_PC_List_Common.match_list);
+        // 将球种排序
+        MatchDataWarehouse_PC_List_Common.set_list(sort_list);
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(sort_list);
+      } catch (error) {
+        console.log(error);
+      }
     }
   })
+  axios_loop({
+    axios_api: get_five_leagues_list,
+    fun_then: function (res) {
+      try {
+
+        MatchDataWarehouse_PC_List_Common.set_list(res.concat(MatchDataWarehouse_PC_List_Common.match_list));
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+          res, null, null, true
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    fun_catch: function () {
+
+    }
+  })
+  const res = await get_home_matches(params)
   return {
     mins15_list,
     match_count
