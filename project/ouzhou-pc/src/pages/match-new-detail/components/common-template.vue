@@ -120,7 +120,7 @@ const columnTotal = (item) => {
 
 const betItemClick = (item, o) => {
   bet_oid.value = o.oid;
-  emit("betItemClick", item, o);
+  emit("betItemClick", item, o,props.match_info.hpn);
 };
 //  模板hpt0 数字 需要给颜色
 const getOn = (match_info, o) => {

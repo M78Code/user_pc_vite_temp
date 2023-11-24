@@ -93,9 +93,10 @@ const bet_oid = ref("");
 
 
 const betItemClick = (item, o) => {
+  console.log(props.match_info.hpn,'hpt');
   bet_oid.value = o.oid;
 
-  emit("betItemClick", item, o);
+  emit("betItemClick", item, o,props.match_info.hpn);
 };
 
 onMounted(() => {

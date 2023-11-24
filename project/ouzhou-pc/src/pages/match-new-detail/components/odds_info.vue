@@ -68,7 +68,7 @@
                               tem4: true,
                               'tem4-active': BetData.bet_oid_list.includes(ol.oid),
                             }"
-                            @click="betItemClick(item.hl[0], ol)"
+                            @click="betItemClick(item.hl[0], ol,item.hpn)"
                           >
                             <span>{{ ol.on }}</span>
 
@@ -242,7 +242,7 @@ const sun_ol = (ol, item) => {
   return result;
 };
 //  投注项点击投注,
-const betItemClick = (item, ol) => {
+const betItemClick = (item, ol,play_name) => {
   if (item.hs) {
     return;
   }
@@ -264,6 +264,7 @@ const betItemClick = (item, ol) => {
       device_type: 2,
       // 数据仓库类型
       match_data_type: "pc_detail", // h5_detail
+      play_name
     };
     set_bet_obj_config(params, other);
   }
