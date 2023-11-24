@@ -116,7 +116,6 @@ const props = defineProps({
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
   let { _mhs, _hs, os } = props.ol_data || {};
-  console.log(11111111, get_odds_state(_mhs, _hs, os));
   return get_odds_state(_mhs, _hs, os);
 });
 //玩法比分

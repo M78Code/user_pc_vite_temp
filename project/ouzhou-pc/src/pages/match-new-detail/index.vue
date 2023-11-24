@@ -131,11 +131,14 @@ export default{
 
     provide("all_hl_item", all_hl_item);
 
-    window.addEventListener('mousedown', (val)=>{
+    onMounted(()=>{
+      window.addEventListener('mousedown', (val)=>{
       expansion_ref.value.hide();
     })
+    })
+    
     onUnmounted(()=>{
-      window.removeEventListener('mousedown')
+      window.removeEventListener('mousedown',()=>{})
     })
 
     const match_click = (item) => {
