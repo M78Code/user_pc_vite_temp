@@ -57,13 +57,15 @@ const onTabChange = e => {
 }
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
-  MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-    console.log('onChangeDate', res)
-    if (res) {
-      store.areaList = res
-      onChangeArea(res[0].id)
-    }
-  })
+  if (store.tabActive !== 'matches') {
+    MatchMeta.get_ouzhou_leagues_data(e).then(res => {
+      console.log('onChangeDate', res)
+      if (res) {
+        store.areaList = res
+        onChangeArea(res[0].id)
+      }
+    })
+  }
 }
 
 const onChangeArea = e => {

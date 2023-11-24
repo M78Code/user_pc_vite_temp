@@ -5,7 +5,6 @@ import PageSourceData from "src/core/page-source/page-source.js";
 const page_source = ref(PageSourceData.page_source) // 当前页面来源
 
 const { menu_type, update_time } =  MenuData;
-
 //是否 滚球
 const is_scroll_ball = computed(() => {
     return MenuData.is_scroll_ball(menu_type.value);
