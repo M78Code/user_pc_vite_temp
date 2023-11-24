@@ -133,7 +133,7 @@ export default{
 
     onMounted(()=>{
       window.addEventListener('mousedown', (val)=>{
-      expansion_ref.value.hide();
+        expansion_ref.value&&expansion_ref.value.hide();
     })
     })
     

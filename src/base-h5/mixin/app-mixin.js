@@ -14,6 +14,7 @@ import { enter_params, compute_css_variables, PROJECT_NAME } from "src/core/inde
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js";
+import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import { http, AllDomain } from "src/core/http/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
@@ -77,6 +78,7 @@ export default {
           MenuData.init();
           BetData.init_core()
           BetViewDataClass.init()
+          BetWsMessage.init()
           this.set_init_load(true);
         })
       });

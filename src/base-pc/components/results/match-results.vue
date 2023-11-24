@@ -23,7 +23,7 @@
         :startTimeShow="startTimeShow"
         :showSelectTime="showSelectTime"
         :isSelectConfirm="isSelectConfirm"
-        :dateValue="model"
+        :dateValue.sync="model"
         :ipt_search="ipt_search"
         @refresh="sub_search"
         :api_league_type="api_league_type"

@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div v-if="false">{{ BetData.bet_data_class_version }} </div>
+  <div v-if="false">{{ BetData.bet_data_class_version }}-{{items.red_green}} </div>
     <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
@@ -13,20 +13,22 @@
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div></div>
-                      <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
+                      <div class="nonebox4-content-left-content-text-two">
+                        {{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span>
+                        [{{ i18n_t(`odds.${items.marketTypeFinally}`) }}]
+                      </div>
                       <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                            
-                            <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
+                          <div class="show_img" v-if="items.red_green" >
+                            <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_up.png`" alt=""/>
+                            <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_down.png`" alt=""/>
+                          </div>
+                          <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">@{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
                         </div>
                     </div>
-                    <div class="show_img" v-if="items.red_green" >
-                      <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/up.png`" alt=""/>
-                      <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/down.png`" alt=""/>
-                    </div>
-
+                    
                   </div>
               </div>
           </div>
@@ -37,7 +39,7 @@
   <script setup>
   import { compute_value_by_cur_odd_type } from "src/core/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX  } from "src/core/index.js";
+  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t  } from "src/core/index.js";
 
   const props = defineProps({
     items:{}
@@ -165,13 +167,26 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: 700;
-      color: var(--q-gb-t-c-1);
       padding: 0 0.15rem;
       padding-right: 0.1rem;
+      &.red-up{
+          color: var(--q-gb-t-c-17);
+      }
+      &.green-down{
+          color: var(--q-gb-t-c-16);
+      }
   }
   .nonebox4-content-right{
     display: flex;
     flex-direction: row-reverse;
+  }
+  .show_img{
+    width: 0.08rem;
+    display: flex;
+    align-items: center;
+    img{
+      width: 100%;
+    }
   }
   </style>
   

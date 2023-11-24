@@ -9,7 +9,7 @@ export const store = reactive({
     current_menu_mi: '101',
     areaList: [],
     selectArea: {}, // league 当前选择的地区
-    tabActive: 'matches',
+    tabActive: 'Matches',
     leaguesMatchs: [], // top-leagues页面的渲染数据
     isLeagueDetail: false, // league 是否为联赛点击后的列表页
     selectLeague: {}, // league 当前选择的联赛
@@ -19,5 +19,10 @@ export const store = reactive({
         { label: "Next 24 Hours", time: "24hours", timestamp: 24 },
         { label: "3 Day", time: "3day", timestamp: 72 },
         { label: "7 Day", time: "7day", timestamp: 168 },
+    ],
+    tabOptions: [
+        'Matches',
+        'League',
+        'Outrights'
     ]
 })
