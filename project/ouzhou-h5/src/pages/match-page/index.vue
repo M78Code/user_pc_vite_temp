@@ -10,7 +10,7 @@
     <div class="league">{{ store.selectLeague.nameText }}</div>
   </div>
   <!--二级赛事列表-->
-  <div class="match-list-page league-filter">
+  <div class="match-list-page" :class="[{ 'league-filter': store.tabActive === 'league'  }]">
     <!--  判断是否是matches页面   ||  判断是否是league页面的二级列表页   -->
     <MatchContainer v-if="store.tabActive === 'matches' || (store.tabActive !== 'matches' && store.isLeagueDetail)"/>
     <MatchFirstStep v-else />
