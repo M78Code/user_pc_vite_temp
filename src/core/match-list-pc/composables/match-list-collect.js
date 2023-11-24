@@ -169,7 +169,9 @@ const mx_collect_match = (match) => {
       // 在收藏列表页 移除收藏
       if ((PageSourceData.page_source == "collect" || MenuData.is_collect) && !cur_collect_state) {
         // 移除赛事
-        MatchListCard.remove_match(match.mid);
+        MatchListCard.remove_match(match.mid, {
+          length_0_fn
+        });
       } else {
         match.mf = cur_collect_state;
       }

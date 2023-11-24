@@ -178,13 +178,13 @@ onMounted(() => {
  
   // 处理ws订单状态推送
   mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
-  mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
+  // mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
 })
 onUnmounted(() => {
   // 清除定时器 和 ws推送
   clearTimeout(timer)
   mitt_c201_handle()
-  mitt_c210_handle()
+  // mitt_c210_handle()
   mitt_expected_profit()
 })
 

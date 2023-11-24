@@ -54,7 +54,7 @@
             <q-item clickable @click="goto_secondary_module('announcement')">
               <q-item-section>
                 <div class="flex title">
-                  <img class="icon" :style="compute_css_obj('pc-head-msg')" alt="" />
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
                   <div>{{ i18n_t('ouzhou.set.announcement')}}</div>
                 </div>
               </q-item-section>
@@ -62,7 +62,7 @@
             <q-item clickable @click="goto_secondary_module('results')">
               <q-item-section>
                 <div class="flex title">
-                  <img class="icon" :style="compute_css_obj('pc-head-results')" alt="" />
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
                   <div>{{ i18n_t('ouzhou.set.results')}}</div>
                 </div>
               </q-item-section>
@@ -103,7 +103,7 @@
                 <span class="title">{{ setting.title }}</span>
                 <div class="switch">
                   <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
-                  <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
+                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: setting.index === s}">{{ s }}</span>
                 </div>
               </div>
               </q-item-section>
@@ -229,6 +229,11 @@ export default defineComponent({
       visible.value = !visible.value
     }
 
+    const settingclick = (s) => {
+      settingData.value[0].index = s
+      UserCtr.set_cur_odds(s)
+    }
+
     // 切换语言
     const on_change_lang = (key) => {
       lang.value = key
@@ -287,6 +292,7 @@ export default defineComponent({
     }
     const get_width = (props) => {
       is_focus.value = props.focus
+      keyword.value = props.text
     }
     
     onMounted(() => {
@@ -313,6 +319,7 @@ export default defineComponent({
       languages,
       onExpend,
       settingData,
+      settingclick,
       visible,
       is_search,
       goto_secondary_module,
