@@ -73,7 +73,7 @@ const props = defineProps({
     type: String,
     default: () => { }
   },
-  warehouse_name: {
+  match_data_type: {
     type: String,
     default: () => 'MatchDataWarehouse_PC_List_Common'
   }
@@ -266,7 +266,7 @@ const bet_click_ol = () => {
   } else {
     emit('update_score', current_id)
   }
-  set_bet_obj_config(params, {warehouse_name: props.warehouse_name})
+  set_bet_obj_config(params, {match_data_type: props.match_data_type})
   BetData.set_bet_state_show(true)
 };
 
