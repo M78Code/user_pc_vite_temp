@@ -21,8 +21,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
-import lodash from 'lodash';
+import { ref, computed, inject } from 'vue';
 
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { get_match_status } from 'src/core/utils/index'
