@@ -10,9 +10,9 @@ export default {
       {first_hpid: "38", second_hpid: "39"},
     ],
     "5": [
-      {first_hpid: "153", second_hpid: "202"},
+      {first_hpid: "153", second_hpid: "154"},
       {first_hpid: "153", second_hpid: "155"},
-      {first_hpid: "202", second_hpid: "155"},
+      {first_hpid: "154", second_hpid: "155"},
     ],
     "10": [
       {first_hpid: "153", second_hpid: "173"},
