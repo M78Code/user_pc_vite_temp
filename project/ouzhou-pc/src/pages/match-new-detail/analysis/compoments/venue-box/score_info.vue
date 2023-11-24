@@ -40,20 +40,14 @@
                 >
                   {{ col.label }}
                 </span>
-                <div v-else style="color: #8a8986">
-                  <!--                  <span style="margin-right: 6px">{{detail_info.course}}</span>-->
-                  <span
-                    style="margin-right: 6px"
-                    v-html="computed_process_name"
-                  ></span>
-                  <span>{{
-                    detail_info.mst <= 0 ? "00:00" : detail_info.mstValue
-                  }}</span>
+                <div v-else style="color: #8a8986;display: flex;align-items: center;">
+                  <!-- 倒/正计时组件 -->
+                  <match-process :match="detail_info" show_page="match-list" :rows="1" />
                   <img
                     :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
                     alt=""
                     srcset=""
-                    style="margin: 0 10px; height: 14px;"
+                    style="margin: 0 10px; height: 14px"
                     v-if="detail_info.mng"
                   />
                 </div>
@@ -148,8 +142,8 @@ import {
   LOCAL_PROJECT_FILE_PREFIX,
   stage_dict,
 } from "src/core/index.js";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 
-import { get_mmp_name } from "src/core/format/module/format-msc.js";
 import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import lodash from "lodash";
@@ -216,7 +210,7 @@ const get_base_data = (val) => {
  * */
 const get_score_result = (list, val) => {
   const msc_obj = val.msc_obj;
- 
+
   let result = [];
   const detail_info = props.detail_info;
   result = list.map((item) => {
@@ -279,7 +273,7 @@ const get_msc_data = (msc_data, current_data) => {
       });
     }
     //乒乓球
-    if (["7", "8", "9"].includes(detail_info.csid+'')) {
+    if (["7", "8", "9"].includes(detail_info.csid + "")) {
       res = list.map((item) => {
         return {
           name: item.name,
@@ -462,7 +456,7 @@ watch(
       }
       get_msc_data(msc_data, current_data);
     } else {
-      if (!["1", "2", "3"].includes(res.csid+'')) {
+      if (!["1", "2", "3"].includes(res.csid + "")) {
         format_msc(res);
       }
     }
@@ -538,102 +532,7 @@ watch(
 // })
 //
 //
-// 计算名字
-const computed_process_name = computed(() => {
-  let { detail_info } = props || {};
-  if (!detail_info) {
-    return "";
-  }
-  let csid = lodash.get(props, "detail_info.csid");
-  let mmp = lodash.get(props, "detail_info.mmp");
-  let mle = lodash.get(props, "detail_info.mle");
-  let process_name = get_mmp_name(csid, mmp) || "";
-  // 即将开赛
-  if (lodash.get(props, "match.ms") == 110) {
-    process_name = i18n_t("common.match_soon");
-  }
-  // 滚球 && 未开赛
-  else if (get_match_status(lodash.get(props, "match.ms")) && match.mmp == 0) {
-    switch (Number(match.csid)) {
-      // 足
-      case 1:
-        process_name = i18n_t("common.up_half");
-        break;
-      // 篮
-      case 2:
-        process_name =
-          match.mle == 17
-            ? i18n_t("common.up_half")
-            : i18n_t("common.first_match");
-        break;
-      //棒球
-      case 3:
-        process_name = i18n_t("mmp.3.401");
-        break;
-      //冰球
-      case 4:
-        process_name = i18n_t("mmp.4.1");
-        break;
-      // 网球
-      case 5:
-        process_name = i18n_t("mmp.5.8");
-        break;
-      // 美式足球
-      case 6:
-        process_name = i18n_t("mmp.6.13");
-        break;
-      // 斯诺克
-      case 7:
-        process_name = covert_mct(match);
-        break;
-      // 乒乓球
-      case 8:
-      // 排球
-      case 9:
-      // 羽毛球
-      case 10:
-        process_name = i18n_t("mmp.10.8");
-        break;
-    }
 
-    // 电竞
-    if (is_eports_csid(match.csid)) {
-      process_name = i18n_t("mmp.100.1");
-    }
-  } else {
-    // 篮球(2) && 赛制为 17分钟 && 第四节(100) ====> 阶段名称显示 "下半场"
-    if (csid == 2 && mle == 17 && mmp == 100) {
-      process_name = i18n_t("mmp.2.2");
-    }
-
-    // 斯诺克(7) 的滚球(21)
-    if (csid == 7 && mmp == 21) {
-      process_name = covert_mct(match);
-    }
-  }
-
-  // 篮球3X3滚球时显示"全场"
-  if (
-    csid == 2 &&
-    mle == 73 &&
-    get_match_status(lodash.get(props, "match.ms"))
-  ) {
-    process_name = i18n_t("mmp.2.21");
-  }
-  //是否列表页棒球第X局，换行显示
-  if (
-    lodash.get(props, "match.csid") == 3 &&
-    props.show_page == "match-list" &&
-    process_name.indexOf("第") == 0
-  ) {
-    //欧洲版，不用换行
-    return props.date_show_type === "inline"
-      ? process_name
-      : process_name.replace(" ", "<br/>");
-  } else {
-    return process_name;
-  }
-});
 </script>
 
 <style lang="scss" scoped>

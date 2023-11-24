@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <div class="score-list">
+  <div class="score-list component">
     <template v-if="score_data.length > 0">
       <OddItem 
         v-for="s in score_data" 
