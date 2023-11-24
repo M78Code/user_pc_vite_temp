@@ -200,9 +200,10 @@ const get_ouzhou_home_hots11 = () => {
   })
 }
 
-const tabValue = ref('featured');
+const tabValue = ref(MenuData.home_menu || 'featured');
 // tabs 切换
 const on_update = (val) => {
+  MenuData.set_home_menu(val);
   if (val === 'featured') {
     MenuData.set_current_lv1_menu(1);
     MenuData.set_menu_mi('101');

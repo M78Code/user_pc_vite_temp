@@ -32,6 +32,7 @@
       <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
       </div>
       <span v-else-if="ol_data.ov">
+        <span class="odds_otb">{{ ol_data.otb }}</span>
         {{ match_odds }}
       </span>
       <div>
@@ -359,7 +360,9 @@ onUnmounted(() => {
     margin-left: 0;
   }
 }
-
+.odds_otb {
+  color: var(--q-gb-bg-c-7) !important;
+}
 .null-handicap {
   .handicap-value {
     display: none;
