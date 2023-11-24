@@ -10,7 +10,7 @@
     <div class="league">{{ store.selectLeague.nameText }}</div>
   </div>
   <!--二级赛事列表-->
-  <div class="match-list-page">
+  <div class="match-list-page" :class="[{ 'league-filter': store.tabActive === 'league'  }]">
     <!--  判断是否是matches页面   ||  判断是否是league页面的二级列表页   -->
     <MatchContainer v-if="store.tabActive === 'matches' || (store.tabActive !== 'matches' && store.isLeagueDetail)"/>
     <MatchFirstStep v-else />
@@ -68,6 +68,11 @@ const onChangeDate = e => {
 
 const onChangeArea = e => {
   const arr = store.areaList.find(i => i.id === e)['tournamentList']
+  console.log('onChangeArea', store.areaList, e, arr)
+  if (arr === null) {
+    store.leaguesMatchs = []
+    return
+  }
   arr.forEach(i => {
     i.visible = true
     i.tid = i.id
@@ -104,6 +109,13 @@ const goBackToLeague = () => {
 
       .s-w-item {
         background-color: var(--q-gb-bg-c-2) !important;
+      }
+    }
+  }
+  &.league-filter{
+    :deep(.scroll-wrapper) {
+      .scroll-i-con .s-w-item {
+        position: relative;
       }
     }
   }
