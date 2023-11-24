@@ -122,9 +122,9 @@ export const hps_15_minute = [
   {
     _hpid: 32,
     ols: [
-      {  _hpid: 32, ot: "1", otb: '主胜' },
-      {  _hpid: 32, ot: "X", otb: '平局' },
-      {  _hpid: 32, ot: "2", otb: '客胜' },
+      {  _hpid: 32, ot: "1", otb: '主' },
+      {  _hpid: 32, ot: "X", otb: '平' },
+      {  _hpid: 32, ot: "2", otb: '客' },
     ],
   },
   {

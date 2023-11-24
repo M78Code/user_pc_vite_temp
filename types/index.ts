@@ -172,4 +172,10 @@ declare namespace K {
   /** 第三方赛事id */ type srid = {
     /** 第三方赛事id */ srid: String
   };
+  /** 玩法ID */ type hpid = {
+    /** 玩法ID */ hpid: string
+  }
+  /** 玩法模板 */ type hpt = {
+    /** 玩法模板 */ hpt: string
+  }
 }
