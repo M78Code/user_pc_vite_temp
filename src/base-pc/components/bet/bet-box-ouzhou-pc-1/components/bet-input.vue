@@ -3,7 +3,7 @@
 <template>
     <div>
         <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @keydown.enter="keydown($event)"
-        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money2(ref_data.max_money)}`" maxLength="11"  />
+        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${ref_data.max_money}`" maxLength="11"  />
     </div>
 
 </template>
