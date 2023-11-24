@@ -8,7 +8,7 @@ import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
-import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/core/index.js"
 import { format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
@@ -928,6 +928,13 @@ export default {
           this.$router.push({ name: 'category_loading', params: { mid: item.mid } });
         }
         else {
+          MatchDetailCalss.set_match_details_params( {
+            mid:item.mid,
+            tid:item.tid, // 联赛 id
+            sportId:item.csid, //球类id
+            media_type:"auto", // 直播类型
+            time: Date.now()
+          })
           this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
         }
       }

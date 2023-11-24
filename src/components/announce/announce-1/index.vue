@@ -128,12 +128,17 @@ function get_list() {
             //     data.nt[i].title = data.nt[i].type;
             // }
             // announce_title.value = data.nt; //左侧菜单
-            class_list = data.nl; //分类
+            class_list = data.nl || []; //分类
             announce_title.value = class_list.filter(item => item.mtl.length > 0)
-            class_list_ary.value = announce_title.value[0].mtl
-            res_list = data.nb;
+            if(announce_title.value.length > 0 ){
+                class_list_ary.value = announce_title.value[0].mtl
+                current_title.value = announce_title.value[0].nen;
+            }else {
+                class_list_ary.value = []
+                current_title.value = ""
+            }
+            // res_list = data.nb;
             // announce_list.value = data.nb; //大列表
-            current_title.value = announce_title.value[0].nen || "";
         }
     }).finally(() => loadd_finish.value = true)
 }

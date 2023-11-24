@@ -43,11 +43,17 @@
         <!-- </template> -->
 
         <!-- 滚球标题 -->
-        <In-Play :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
+        <Match-Main-Title :title="$t('menu.match_playing')" :match_count="total_match_count" v-show="match_list_card_key_arr.length && MenuData.is_home()" />
 
-        <div v-for="card_key in match_list_card_key_arr" :key="()=>Math.random()" 
+        <div v-for="card_key in match_list_card_key_arr" :key="card_key" 
           :class="`card_key_${card_key}`">
-          <match-list-card :card_key="card_key" :key="`match-list-car${card_key}`" />
+          <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
+        </div>
+
+        <Match-Main-Title :title="$t('ouzhou.match.top_leagues')" v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
+        <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" 
+          :class="`card_key_${card_key}`">
+          <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`"   />
         </div>
         <template v-slot:after>
           <div style="height: 15px"></div>
@@ -98,10 +104,10 @@ import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import {
   PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,
-  GlobalAccessConfig,
+  GlobalAccessConfig,MatchDataWarehouse_ouzhou_PC_five_league_List_Common
 } from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
-import InPlay from "src/base-pc/components/match-list/match_in_play.vue";
+import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";
 import FeaturedMatches from "src/base-pc/components/match-list/featured_matches/featured_matches_card.vue";
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
@@ -140,13 +146,14 @@ export default {
     MatchCardList15Mins,
     MatchesHeader,
     ConmingSoon,
-    InPlay
+    MatchMainTitle
   },
   setup() {
     // 15分钟赛事数据
     const matches_15mins_list = ref([]);
     const { ws_destroyed: ws_destroyed_common, set_active_mids } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
+    const five_leagues_card_key_arr = ref([]);
 
     // 赛事数量
     const total_match_count = ref(0)
@@ -158,8 +165,8 @@ export default {
     const MatchListCardDataClass_match_list_card_key_arr = () => {
       // match_list_card_key_arr.value.length = 0;
       nextTick(() => {
-        match_list_card_key_arr.value =
-          MatchListCardDataClass.match_list_card_key_arr;
+        match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
+        five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
       })
     };
     onMounted(() => {
@@ -182,6 +189,7 @@ export default {
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
       MatchListCardDataClass_match_list_card_key_arr();
+      
     });
     const get_data_info = async (type = 0) => {
       // 判断是不是首页下的 featured 页面
@@ -201,6 +209,7 @@ export default {
       on_refresh,
       matches_15mins_list,
       match_list_card_key_arr,
+      five_leagues_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass,
       load_data_state,
@@ -209,7 +218,7 @@ export default {
       match_list_card,
       MenuData,
       LayOutMain_pc,
-      total_match_count
+      total_match_count,MatchDataWarehouse_ouzhou_PC_five_league_List_Common
     };
   },
 };
@@ -246,10 +255,6 @@ export default {
     cursor: pointer;
     padding: 5px;
   }
-}
-
-.match-list-item {
-  margin-bottom: 24px;
 }
 
 .scroll {

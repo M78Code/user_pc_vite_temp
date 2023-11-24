@@ -1,7 +1,7 @@
 <template>
   <CurrentMatchTitle :title_value="$t('ouzhou.match.featured') + $t('ouzhou.match.matches')"
     v-if="matches_featured_list.length" :show_more_icon="false" />
-  <div class="featured-matched-card-wrap" v-if="matches_featured_list.length">
+  <div class="featured-matched-card-wrap" v-if='matches_featured_list.length'>
     <!-- 当热门赛事超过四条 展示右侧滚动按钮 -->
     <template2 :is_show_btn="matches_featured_list.length >= 4">
       <div @click="toJump(item)" class="featured-matched-card" v-for="(item, index) in matches_featured_list"
@@ -25,8 +25,9 @@
         </div>
         <div class="odds_box">
           <div class="top-line"></div>
-          <div class="odds_item" v-for="ol_data in col_ols_data[index]"  :key="ol_data.oid + '_' + ol_data._hpid + '_' + ol_data._ot">
-            <betItem :ol_data="ol_data"></betItem>
+          <div class="odds_item bet-item-wrap-ouzhou" v-for="ol_data in get_col_ols_data(item.mid)"
+            :key="ol_data.oid + '_' + ol_data._hpid + '_' + ol_data._ot">
+            <betItem :ol_data="ol_data" warehouse_name="hots_list"></betItem>
           </div>
         </div>
       </div>
@@ -64,7 +65,7 @@ const get_featurd_list = async () => {
   MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.data);
   if (res.data && res.data.length) {
     const mids = []
-    
+
     //使用数据仓库的数据 因为ws会推送数据 会改变数据仓库的数据 用本地没有数据变化哦哦
     // matches_featured_list.value=res.data
     // 只显示5条数据
@@ -87,14 +88,8 @@ watch(
     current_check_betId.value = MenuData.current_check_betId.value
   },
 )
-const col_ols_data = ref([])
-watch(()=>matches_featured_list.value, (v) => {
-  col_ols_data.value = v.map((match) => {
-    return get_col_ols_data(match)
-  })
-}, { deep: true,immediate:true })
-
-function get_col_ols_data(match) {
+function get_col_ols_data(_mid) {
+  const match = MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(_mid)
   let { hn, mid, csid } = match;
   //获取欧洲要显示的数据
   const tpl_id = get_ouzhou_data_tpl_id(csid)
@@ -110,7 +105,10 @@ function get_col_ols_data(match) {
     // 投注项数据拼接
     let hn_obj_config = MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
     // 获取投注项内容 
-    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+    let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+    // 15mins 和 featured赛事展示的投注项名称
+    ols_data['otb'] = item.otb
+    return ols_data;
   })
 }
 // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
@@ -304,6 +302,65 @@ get_featurd_list()
 
   .margin-box {
     margin-right: 10px;
+  }
+}
+
+::v-deep.bet-item-wrap-ouzhou {
+  display: flex;
+  width: 78px;
+  height: 48px;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  .c-bet-item {
+    width: 78px;
+    height: 48px;
+  }
+
+  .c-bet-item.can-hover:hover {
+    background: var(--q-gb-t-c-4);
+    cursor: pointer;
+  }
+
+  &.bet-item-wrap-ouzhou-bigger {
+    .c-bet-item {
+      width: 133px;
+    }
+
+  }
+
+  .c-bet-item.active {
+    background: var(--q-gb-bg-c-1) !important;
+
+    .handicap-value,
+    .handicap-value-text {
+      color: var(--q-gb-t-c-4);
+    }
+
+    .odds {
+      color: var(--q-gb-t-c-1);
+    }
+  }
+
+  div {
+    color: var(--q-gb-bg-c-7);
+    font-size: 14px;
+  }
+
+  .odds {
+    color: var(--q-gb-t-c-2);
+    font-weight: 500;
+    font-size: 14px;
+
+    &.up {
+      color: var(--q-gb-t-c-7) !important;
+    }
+
+    &.down {
+      color: var(--q-gb-t-c-10) !important;
+    }
   }
 }
 </style>

@@ -52,6 +52,17 @@ const changeMenu = (item) =>{
     state.currentSlideValue = lodash_.get(item.subList,'[0].field1', '');
     getData( item,lodash_.get(item.subList,'[0].field1', ''));
 }
+/**
+ * 初始化数据
+ * @param {*} scroll_data 
+ */
+const init_data = (scroll_data) =>{
+    state.slideMenu_sport = scroll_data;
+    state.current_mi = scroll_data[0].mi
+    state.slideMenu = scroll_data[0].subList
+    state.currentSlideValue = lodash_.get(scroll_data[0].subList,'[0].field1', '')
+    getData( scroll_data[0],lodash_.get(scroll_data[0].subList,'[0].field1', ''))
+}
 const switchHandle = async ()=> {
     const res = await  api_analysis.get_result_menu();
     //获取 赛果菜单
@@ -73,12 +84,8 @@ const switchHandle = async ()=> {
                     })
                 }
             })
-            
-            state.slideMenu_sport = scroll_data
-            state.current_mi = scroll_data[0].mi
-            state.slideMenu = scroll_data[0].subList
-            state.currentSlideValue = lodash_.get(scroll_data[0].subList,'[0].field1', '')
-            getData( scroll_data[0],lodash_.get(scroll_data[0].subList,'[0].field1', ''))
+            MenuData.set_slideMenu_sport(scroll_data);
+            !MenuData.slideMenu_sport?.length && init_data(scroll_data)
         }
     // })
 }
@@ -99,14 +106,17 @@ const getData = (item,date) =>{
 onMounted(()=>{
     VirtualList.set_is_show_ball(false)
     MenuData.set_current_lv1_menu(28)
-    switchHandle()
+    MenuData.slideMenu_sport?.length && init_data(MenuData.slideMenu_sport);//优先取缓存
+    switchHandle();//正常加载接口  替换新数据
 })
 
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
 .match-result{
-    height: calc(100% - 1.73rem);
+    // height: calc(100% - 1.73rem);
+    height: 0;
+    flex: 1;
     overflow: hidden;
     overflow-y: auto;
     .match-list-container{

@@ -1,8 +1,8 @@
 <template>
   <!-- 滚球标题 -->
-  <div :class="['in-play text-left yb-flex-between']">
+  <div :class="['match-main-title text-left yb-flex-between']">
     <div>
-      {{ $t('menu.match_playing') }}
+      {{ title }}
     </div>
     <!-- 赛事数量 -->
     <!-- 先隐藏了 -->
@@ -16,15 +16,20 @@
       type: [ Number ],
       default: () => 0,
     },
+    title: {
+      type: [ String ],
+      default: () => '',
+    }
   });
 </script>
 
 <style lang="scss" scoped>
-.in-play {
+.match-main-title {
   font-weight: 500;
   color: var(--q-gb-t-c-5);
   font-size: 18px;
   margin-bottom: 10px;
+  margin-top: 24px;
   >span {
     font-size: 13px;
     font-weight: 400;

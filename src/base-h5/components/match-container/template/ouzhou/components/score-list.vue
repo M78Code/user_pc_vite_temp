@@ -90,7 +90,7 @@ const score_data = computed(() => {
   
   // 本地 ol
   const plays = sports_play_title[csid]
-  const play_item = plays.find(t => t.hpid === hpid)
+  const play_item = plays && plays.find(t => t.hpid === hpid)
   
   const ol_length = hpid === '1' ? 3 : 2
   // structureLiveMatches 接口 结构不一样 hl 是对象

@@ -419,3 +419,87 @@
     }
   } 
 }
+/*  模板18相关样式 */
+.tpl-118 {
+  .play-wrap {
+    /*  玩法基本信息 */
+    .play-info {
+      background: var(--q-gb-bg-c-15);
+      // border-color: rgba(0, 0, 0, 0.15);
+      color: var(--q-gb-t-c-5);
+    }
+  }
+
+  .bet-col {
+    border-bottom: 1px solid var(--q-gb-bd-c-2);
+    border-right: 1px solid var(--q-gb-bd-c-2);
+
+    &:nth-of-type(even) {
+      border-right: none;
+    }
+
+    .handicap-value {
+      &.color-highlight {
+        color: var(--q-gb-bd-c-3) !important;
+      }
+    }
+  }
+
+  //一个联赛多个小组赛
+  .play-wrap {
+    .bet-list-wrap {
+      background: var(--q-gb-bg-c-4);
+      .bet-col:nth-last-child(2),
+      .bet-col:last-child {
+        border-bottom: 1px solid var(--q-gb-bd-c-8);
+      }
+    }
+  }
+}
+.tr-match-head-ouzhou {
+  background: var(--q-gb-bg-c-4);
+
+  // color: var(--q-gb-bg-c-8)FFF;
+  .leagues-wrap {
+    color: var(--q-gb-bg-c-2);
+    font-weight: 550;
+  }
+
+  .icon-arrow {
+    &::before {
+      color: var(--q-gb-bd-c-11);
+    }
+  }
+
+  .play-name {
+    .col {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--q-gb-bg-c-2);
+      font-family: "PingFangSC-Medium";
+      border-left: .5px solid transparent;
+
+      &.bet-col3,
+      &.bet-col4,
+      &.bet-col5 {
+        background: var(--q-gb-bg-c-22);
+        // font-weight: 400;
+        &.no-bg {
+          background: none;
+        }
+
+        &.y0-col4 {
+          border-right: 1px solid var(--q-gb-bd-c-8);
+          border-left: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+
+      &.bet-col2,
+      &.bet-col5 {
+        border-right: .5px solid var(--q-gb-bd-c-8);
+      }
+    }
+
+    /*  投注项列 名称 */
+  }
+}

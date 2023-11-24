@@ -2,22 +2,20 @@
   <!--赛事玩法模板-->
   <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
-  <div class="c-match-card relative-position" :id="`list-mid-${mid}`"
-    v-if="match_style_obj.is_show_card"
+  <div class="c-match-card relative-position" :id="`list-mid-${mid}`" v-if="match_style_obj.is_show_card"
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;
-        width:${LayOutMain_pc.oz_layout_content - LayOutMain_pc.oz_right_width - LayOutMain_pc.oz_left_width}px  !important;`">
+            width:${LayOutMain_pc.oz_layout_content - LayOutMain_pc.oz_right_width - LayOutMain_pc.oz_left_width}px  !important;`">
     <!--改成101用来打包调试-->
-    <component :is="`MatchTpl${101}After`" :match="get_match_item(mid)" :mid="mid" />
-    <!-- {{ `MatchTpl${101}After` }} -->
+    <component :is="`MatchTpl${get_current_template_number()}After`" :match="get_match_item(mid)" :mid="mid" />
   </div>
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, provide,inject } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
-
+import { LayOutMain_pc } from "src/core/index.js";
+import { get_match_template_id } from 'src/core/match-list-pc/match-handle-data.js';
 // 玩法模板 101 欧洲版 常规赛事
 import { MatchTpl101AfterFullVersionWapper as MatchTpl101After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-101-after/index.js";
 // 欧洲版 冠军模板
@@ -34,12 +32,21 @@ export default {
     MatchTpl118After
   },
   setup(props) {
-    // 赛事样式对象
-    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
+    const MatchListData = inject("MatchListData")
     const get_match_item = (mid) => {
       return  MatchListData.get_quick_mid_obj(mid)
     }
-
+    // 赛事样式对象
+    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
+    const match = get_match_item(props.mid)
+    const get_current_template_number = () => {
+      let tpl_id = get_match_template_id(match);
+      if (tpl_id == 118) {
+        return 118
+      } else {
+        return 101
+      }
+    }
     // 组件是否加载完成
     const is_mounted = ref(true);
     // 显示部分dom ID
@@ -59,7 +66,9 @@ export default {
       LayOutMain_pc,
       MatchListCardData,
       MatchListCardDataClass,
+      match,
       get_match_item,
+      get_current_template_number,
     }
   }
 }

@@ -9,16 +9,16 @@
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
         <div style="display: flex; position: relative;">
-          <input 
-            class="search-input" 
+          <input
+            class="search-input"
             :class="is_focus ? 'change_width' : ''"
-            @focus="show_search" 
+            @focus="show_search"
             v-model="keyword"
             :placeholder="`${i18n_t('ouzhou.search.placeholder')}`"
             @keyup.enter="get_search_data(keyword)"
             @input="() => {
                 get_search_data(keyword);
-              }" 
+              }"
           />
           <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
           <img v-show="keyword" @click="clear_keyword" class="icon-close" :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
@@ -42,7 +42,7 @@
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
-      <q-menu 
+      <q-menu
         style="background:#fff;
         border-radius:2px;
         box-shadow:0 0 4px 2px rgb(0 0 0 / 10%);
@@ -100,11 +100,11 @@
               <q-item-section>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
-                <div class="switch"> 
+                <div class="switch">
                   <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
                   <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
-                </div>  
-              </div> 
+                </div>
+              </div>
               </q-item-section>
             </q-item> -->
           </q-list>
@@ -250,7 +250,7 @@ export default defineComponent({
     }
     // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
-      const target_class_list = ['search-input change_width', 'icon-close'];
+      const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape'];
       if(is_focus.value && SearchPCClass.search_isShow) {
         if(!target_class_list.includes(e.target.className)) {
           SearchPCClass.set_search_isShow(false);

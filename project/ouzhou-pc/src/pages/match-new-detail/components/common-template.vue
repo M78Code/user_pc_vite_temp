@@ -54,7 +54,7 @@
               ]" @click="betItemClick(item, o)"
             >
               <!-- hpt 为1  不需要给颜色 -->
-              <div style="font-weight: 500;display: flex;align-items: center;width: 100%;" v-show="!item.hs">
+              <div style="font-weight: 500;display: flex;align-items: center;width: 100%;" >
                 <span class="oid-width" :title="o.ott">{{ o.ott }}</span>
                 <span v-if="[0].includes(match_info.hpt) && match_info.title.length > 0" v-html="getOn(match_info, o)"></span>
                 <span v-else :style="{color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',}" class="temp-on oid-width">{{ o.on }}</span>
@@ -63,7 +63,7 @@
                 <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
               </div>
 
-              <div style="text-align: center; width: 100%" v-show="item.hs">
+              <div style="text-align: right; width: 100%" v-show="item.hs">
                 <img
                   class="vector"
                   :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
