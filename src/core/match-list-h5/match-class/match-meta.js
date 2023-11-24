@@ -420,7 +420,7 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
-    this.handler_match_list_data({ list: list, type: 2 })
+    this.handler_match_list_data({ list: list, type: 1 })
   }
 
   /**
