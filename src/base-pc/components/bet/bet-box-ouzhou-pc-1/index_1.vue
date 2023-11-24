@@ -52,5 +52,7 @@ import BetResult from "./components/bet-result.vue"  // 投注结果
 
   .bet-box-content{
     background: var(--q-gb-bg-c-4);
+    border: 1px solid var(--q-gb-bd-c-1);
+    border-top: none;
   }
 </style>

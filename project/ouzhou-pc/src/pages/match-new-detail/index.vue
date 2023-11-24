@@ -40,19 +40,9 @@
             </span>
           -->
             <span class="leagal-time">
-              <span v-show="detail_info.ms==0"> {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}</span>
-              <span >
-                <counting-down
-                    v-if="+detail_info.mmp > 0 && +detail_info.mst > 0"
-                    :title="null"
-                    :mmp="detail_info.mmp"
-                    :m_id="detail_info.mid"
-                    :second="detail_info.mst"
-                    :match="detail_info"
-                    :is_add="
-                      [100, 101, 102, 103, 104].includes(+detail_info.csid)
-                    "
-                  />
+              <span v-if="detail_info.ms==0"> {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}</span>
+              <span v-else >
+                <match-process :match="detail_info" show_page="match-list" :rows="1" />
               </span>
                
             </span>
@@ -112,7 +102,7 @@ import { usedetailData } from "./index";
 import { formatTime, format_M_D_PC } from 'src/core/format/index.js'
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
-import countingDown from "./components/counting-down.vue";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 export default{
   components: {
     tabs,
@@ -120,7 +110,7 @@ export default{
     analysis,
     odds_info,
     loading,
-    countingDown
+    matchProcess
   },
   setup(ctx){
     const router = useRouter();

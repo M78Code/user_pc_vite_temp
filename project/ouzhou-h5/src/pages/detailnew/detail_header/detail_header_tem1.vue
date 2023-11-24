@@ -7,9 +7,9 @@
       ></div>
       <div class="match-detail-time">
         <div>
-          <span class="match-detail-time-label">
-                                  <!-- 开赛时间 -->
-                                  <span v-if="get_match_detail?.ms == 0">
+          <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
+            <!-- 开赛时间 -->
+            <span v-if="get_match_detail?.ms == 0">
               <span
                 v-if="show_someone.start_time"
                 class="fz_12"

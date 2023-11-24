@@ -42,18 +42,7 @@
                 </span>
                 <div v-else style="color: #8a8986;display: flex;align-items: center;">
                   <!-- 倒/正计时组件 -->
-                  <!-- {{ detail_info.mmp }} +++{{ detail_info.mst }} -->
-                  <counting-down
-                    v-if="+detail_info.mmp > 0 && +detail_info.mst > 0"
-                    :title="null"
-                    :mmp="detail_info.mmp"
-                    :m_id="detail_info.mid"
-                    :second="detail_info.mst"
-                    :match="detail_info"
-                    :is_add="
-                      [100, 101, 102, 103, 104].includes(+detail_info.csid)
-                    "
-                  />
+                  <match-process :match="detail_info" show_page="match-list" :rows="1" />
                   <img
                     :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
                     alt=""
@@ -153,7 +142,7 @@ import {
   LOCAL_PROJECT_FILE_PREFIX,
   stage_dict,
 } from "src/core/index.js";
-import countingDown from "../../../components/counting-down.vue";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 
 import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';

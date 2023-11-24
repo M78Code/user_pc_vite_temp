@@ -986,7 +986,10 @@ class MenuData {
   is_home(mi) {
     return this._is_cur_mi(0, mi)
   }
-
+  // 是不是 常规赛种下的冠军
+  is_common_kemp(mi) {
+    return this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
+  }
 }
 
 export default new MenuData();
