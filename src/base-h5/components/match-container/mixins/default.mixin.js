@@ -749,7 +749,6 @@ export default {
      * @return {Undefined}
      */
     score_value () {
-      
       if (!this.match_of_list) {
         this.home_score = 0;
         this.away_score = 0;
