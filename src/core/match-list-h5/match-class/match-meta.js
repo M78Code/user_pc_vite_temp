@@ -47,8 +47,8 @@ class MatchMeta {
     this.other_complete_matchs = []
     // 其他仓库的全量赛事mids
     this.other_complete_mids = []
-    // 版本号
-    this.match_meta_version = ref(0)
+    // 当前接口 euid
+    this.current_euid = ''
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -413,7 +413,10 @@ class MatchMeta {
       euid: euid,
       showem: 1, // 新增的参数
     })
+    this.current_euid = euid
     if (+res.code !== 200) return this.set_page_match_empty_status(true);
+    // 避免接口慢导致的数据错乱
+    if (this.current_euid !== euid) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status(true);
@@ -449,11 +452,14 @@ class MatchMeta {
    *  yazhou-h5 需要
    */
   async get_target_match_data ({is_classify = false, md = ''}) {
+    const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     const params = this.get_base_params()
+    this.current_euid = euid
     const res = await api_common.post_match_full_list({ 
       ...params,
       md
      })
+     if (this.current_euid !== euid) return
     // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
     // if (+res.code !== 200) return this.set_page_match_empty_status(true);
     const list = lodash.get(res, 'data', [])

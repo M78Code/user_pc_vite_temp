@@ -178,8 +178,8 @@ const router = createRouter({
  */
 router.beforeEach((to, from, next) => {
   if(to.name !== from.name && to.name !== "category"){
-    SessionStorage.remove("nemu-h5");
-    MenuData.clear_menu_id();
+      SessionStorage.remove("nemu-h5");
+      MenuData.clear_menu_id();
   }
   next()
 })

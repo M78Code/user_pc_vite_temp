@@ -80,6 +80,7 @@ class UserCtr {
       // 当前赔率
       cur_odds: "EU",
     };
+    this.test=1;
     //排序	 int 类型 1 按热门排序 2 按时间排序 欧洲版默认时间排序
     this.sort_type = 2;
      //每日活动	 Boolean 类型 ture 开启 false 关闭

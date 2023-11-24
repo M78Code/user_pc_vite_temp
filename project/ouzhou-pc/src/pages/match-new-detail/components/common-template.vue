@@ -14,15 +14,10 @@
         :class="{ 'temp-active': BetData.bet_oid_list.includes(o.oid), temp: true }"
         @click="betItemClick(match_info.hl[0], o)"
       >
-        <div
-          v-show="!match_info.hl[0].hs"
-          :style="{
-            color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#ff7000',
-          }"
-          class="oid-width"
-          :title="o.ott"
-        >
-          {{ o.ott }} <span>{{ o.on }} </span>
+        <div :title="o.ott" :style="{ color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#ff7000'}"
+             v-show="!match_info.hl[0].hs" class="oid-width">
+            {{ o.ott }}
+            <span>{{ o.on }} </span>
         </div>
         <div v-show="!match_info.hl[0].hs">
           <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
@@ -215,6 +210,7 @@ onMounted(() => {
   max-width: 75%;
   line-height: 20px;
   align-items: center;
+    margin: 0 4px;
   // overflow: hidden;
   // text-overflow: ellipsis;
   // white-space: nowrap;
