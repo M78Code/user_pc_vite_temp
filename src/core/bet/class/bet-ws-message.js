@@ -74,6 +74,9 @@ class BetWsMessage {
           case 'C106':
             this.MSG_C106(data);
             break;
+            case 'C201':
+            this.MSG_C201(data);
+            break;
           default:
             break;
         }
@@ -87,6 +90,9 @@ class BetWsMessage {
   // 投注项变更
   MSG_C106(obj) {
     BetData.set_bet_c106_change(obj.cd)
+  }
+  MSG_C201(obj) {
+    BetData.set_bet_c201_change(obj.cd)
   }
 }
 
