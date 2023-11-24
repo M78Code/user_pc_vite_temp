@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { toRef, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -39,23 +39,19 @@ import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 const props = defineProps({
   current_tab: {
     type: [Object, Array],
-    default: () => { },
+    default: () => ({ }),
   },
 });
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 let odds_list = match_tpl_info.get_15mins_odds_list()
-const ols_data = ref([])
-watch(() => props.current_tab, (v) => {
-  ols_data.value = merge_template_data({
-    match: v,
+const ols_data = computed(() => {
+  return merge_template_data({
+    match: props.current_tab,
     handicap_list: [odds_list],
     type: 4,
     play_key: 'hps15Minutes'
   }, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
-}, {
-  deep: true,
-  immediate: true
 })
 // // 监听 当前投注项ID的变化
 watch(
@@ -193,6 +189,7 @@ const get_mmp = (mst) => {
     }
   }
 }
+
 :deep(.bet-item-wrap-ouzhou) {
   display: flex;
   width: 78px;
