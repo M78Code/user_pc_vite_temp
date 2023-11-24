@@ -77,7 +77,10 @@
         // 投注项数据拼接
         let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
         // 获取投注项内容 
-        return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
+        let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+        // 15mins 和 featured赛事展示的投注项名称
+        ols_data['otb'] = item.otb
+        return ols_data;
       })
       return odds_list
     } catch (e) {
@@ -177,9 +180,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      &:hover {
-        background: rgba(255, 112, 0, 0.1);
-      }
+      // &:hover {
+      //   background: rgba(255, 112, 0, 0.1);
+      // }
     }
     div:last-of-type {
       margin: 0;

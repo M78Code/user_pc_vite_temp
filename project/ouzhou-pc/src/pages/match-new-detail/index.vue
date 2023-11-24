@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { onMounted, ref, provide } from "vue";
+import { onMounted, ref, provide,onUnmounted } from "vue";
 import { utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import odds_info from "./components/odds_info.vue";
 import analysis from "./analysis/index.vue";
@@ -130,6 +130,13 @@ export default{
     } = usedetailData(route);
 
     provide("all_hl_item", all_hl_item);
+
+    window.addEventListener('mousedown', (val)=>{
+      expansion_ref.value.hide();
+    })
+    onUnmounted(()=>{
+      window.removeEventListener('mousedown')
+    })
 
     const match_click = (item) => {
       current_id.value = item.mid;
