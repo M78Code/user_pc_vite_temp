@@ -9,8 +9,9 @@
                 </div>
                 <div class="w-100 h15 f-s-c my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none font400">{{ items.playName }}</span> 
+                    <span class="text-a1a text-flow-none mr-4 font400">{{ items.playName }}</span> 
                     <!-- 盘口 -->
+                    <span class="text-a1a text-flow-none font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
                 <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
@@ -23,7 +24,7 @@
                     </div>
                     
                     <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                        {{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}
+                      @{{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}
                     </span>
                     <BetInput :items="items" />
                 </div>
@@ -237,7 +238,7 @@ const set_delete = () => {
         }
     }
     .text-flow-none{
-        width: 76%;
+        max-width: 76%;
         line-height: 12px;
     }
     .bet-odds-value{

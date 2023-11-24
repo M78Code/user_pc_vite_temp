@@ -166,8 +166,8 @@ const set_bet_order_list = (bet_list, is_single) => {
 
 // 投注确认中 循环请求接口 拉取投注状态
 const set_order_status_info = (orderNo) => {
+    clearTimeout(time_api_out)
     api_betting.query_order_status({orderNos: orderNo}).then((res = {}) => {
-        clearTimeout(time_api_out)
         if(res.code == 200){
             let data_list = lodash_.get(res,'data', [])
             let order_status = ''
@@ -197,6 +197,12 @@ const set_order_status_info = (orderNo) => {
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 BetViewDataClass.set_bet_order_status(3)
             }
+        }
+    }).catch(()=>{
+        if(count_api < 10){
+            time_api_out = setTimeout(()=>{
+                set_order_status_info(orderNo)
+            },2000)
         }
     })
 }
@@ -554,7 +560,7 @@ const set_error_message_config = (res ={},type,order_state) => {
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
 const set_bet_obj_config = (params = {}, other = {}) => {
-    // console.log('投注项需要数据', params, 'other', other);
+    console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
 
     const { oid, _hid, _hn, _mid } = params
