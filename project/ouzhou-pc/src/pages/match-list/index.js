@@ -9,6 +9,8 @@ import {
 } from "src/core";
 import { ref } from 'vue'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
+import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
 
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 export const playingMethods_15 = [
@@ -187,7 +189,11 @@ export const init_home_matches = async () => {
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(data.p15);
         //获取15mins 数据
-        matches_15mins_list.value = data.p15.slice(0, 5).map(item => item.mid);
+        matches_15mins_list.value = data.p15.slice(0, 5).map(item => {
+          set_match_play_current_index(item, 'hps15Minutes')
+          return item.mid;
+        });
+        api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
 
         match_count = data.dataList.length || 0;
         let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
