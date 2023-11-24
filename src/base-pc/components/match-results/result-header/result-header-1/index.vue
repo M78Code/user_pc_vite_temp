@@ -237,13 +237,17 @@ const props = defineProps({
   const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
 })
+
+const  date = ref(props.dateValue)
+const  showBtn = ref(props.is_show)
+/**
+* @description: 时间选择确认
+* @return {}
+*/
 const confirmDate=()=>{
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
   props.hideSelect(date.value)
 }
-const  date = ref(props.dateValue)
-const  showBtn = ref(props.is_show)
-
 /**
 * @description: 
 * @return {}
@@ -519,9 +523,9 @@ function refresh() {
       cursor: pointer;
       background: #ff7000;
       color:#ffffff;
-      &:hover {
-          background: #ffb001;
-        }
+      // &:hover {
+      //     background: #ffb001;
+      //   }
     }
   }
 

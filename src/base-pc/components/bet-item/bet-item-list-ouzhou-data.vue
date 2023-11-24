@@ -32,7 +32,7 @@
       <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
       </div>
       <span v-else-if="ol_data.ov">
-        <span class="odds_otb">{{ ol_data.otb }}</span>
+        <span class="odds_otb" v-if="ol_data.otb">{{ disk_text_replace(UserCtr.lang, ol_data.otb) }}</span>
         {{ match_odds }}
       </span>
       <div>
@@ -61,6 +61,7 @@ import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odd
 import { useGetItem } from "./bet_item_hooks.js";
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 import { compute_css_obj } from 'src/core/server-img/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 // 定时器对象
 let timer_obj = {};
@@ -147,7 +148,7 @@ const match_odds = computed(() => {
   let csid = lodash.get(props.ol_data, "csid");
   let ov = lodash.get(props.ol_data, "ov");
   // 列表取 hsw
-  let hsw = props.ol_data._hsw.split(',');
+  let hsw =lodash.get(props.ol_data,'_hsw','').split(',');
   let match_odds_info = compute_value_by_cur_odd_type(
     ov,
     1 / 100000,
@@ -214,6 +215,49 @@ function bet_item_select(id) {
     return BetData.bet_list.includes(id);
   }
 };
+
+ /**
+   * @Description 简化盘口文本
+   * @param {string} lang 语言
+   * @param {string} onb 盘口文本
+   * @return  {string} text 盘口文本
+  */
+ const disk_text_replace = (lang,onb) => {
+    let text = ''
+    if(onb){
+      switch (lang) {
+        case 'en':
+        case 'ad':
+        case 'ms':
+          text =  onb.replace("Home","H").replace("Away","A").replace("Draw","D")
+          break;
+        case 'vi':
+          text =  onb.replace("Chủ","C").replace("Khách","K").replace("Hòa","H")
+          break;
+        case 'th':
+          text =  onb.replace("เจ้าบ้าน","H").replace("แขก","A").replace("วาด","D")
+          break;
+        case 'zh':
+        case 'tw':
+          text =  onb.replace("胜","").replace("局","").replace("勝","")
+          break;
+        case 'ko':
+          text =  onb.replace("홈팀","H").replace("방문자","A").replace("무승부","D")
+          break;
+        case 'es':
+          text =  onb.replace("Visitante","V").replace("Empate","E").replace("Inicio","I").replace("sobre","S").replace("debajo","D").replace("bajo","B")
+          break;
+        case 'pt':
+          text = onb.replace('Empate', 'EMP').replace("over", "S").replace('under', 'I')
+          break;
+        default:
+        text = onb
+          break;
+      }
+    }
+    console.log(text,'text');
+    return text
+  }
 
 /**
  * @description 获得最新的盘口状态

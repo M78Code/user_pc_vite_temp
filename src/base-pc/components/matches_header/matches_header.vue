@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
 			<div class="matches-title">
@@ -17,7 +17,7 @@
 								class="leagues_filrer" 
 								@click.stop="set_show_leagues"
 							>
-								Next 24 Hours
+								24小时
 								<span class="yb-icon-arrow"></span>
 								<div class="leagues_filrer_item" v-show="show_leagues">
 									<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
@@ -142,7 +142,7 @@ const set_tab_list = (news_) =>{
 	}
 
 	// 冠军
-	if (MenuData.is_collect) {
+	if (MenuData.is_kemp()) {
 		matches_header_title.value = 'Outrights'
 		tab_list.value = []
 	}

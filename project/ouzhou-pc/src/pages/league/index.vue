@@ -1,7 +1,5 @@
-<!-- 赛事搜素结果列表页 -->
 <template>
-  <!-- 列表容器 -->
-  <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
+  <MatchesHeader />
   <div class="yb-match-list full-height relative-position">
     <load-data :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
       <scroll-list>
@@ -23,20 +21,20 @@ import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/com
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, LayOutMain_pc, UserCtr } from 'src/core/index.js';
+import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
+import { LayOutMain_pc, UserCtr } from 'src/core/index.js';
 import { api_match } from "src/api/index.js";
 
 import "../match-list/match_list.scss";
 
-const { mounted_fn, handle_destroyed, load_data_state, collect_count, is_show_hot, mx_use_list_res } = useMatchListMx();
-const { page_source } = PageSourceData;
+const { mx_use_list_res } = useMatchListMx();
 export default {
   components: {
-    // ListFilter,
     MatchListCard,
     LoadData,
     ScrollList,
     LoadData,
+    MatchesHeader
   },
   setup() {
 
@@ -48,7 +46,7 @@ export default {
     })
 
     watch(() => route.params, () => {
-      fetch_search_match_list()
+      fetch_league_match_list()
     }, { immediate: true, deep: true })
 
     function MatchListCardDataClass_match_list_card_key_arr() {
@@ -59,17 +57,15 @@ export default {
       * 搜索相关列表数据
       * @return {undefined} undefined
       */
-    function fetch_search_match_list(is_socket = false) {
+    function fetch_league_match_list(is_socket = false) {
       // 更新列表模板编号 和请求参数
       // $menu.set_match_list_api_params()
-      let keyword = route.params.keyword || ''
+      let sportId = route.params.sportId || ''
       let params = {
-        device: "PC",
-        cuid: UserCtr.get_uid(),
-        keyword: keyword.replace(/_g_/g, "/"),
-        searchSportType: route.params.csid,
+        sportId,
+        tid: route.params.tid,
       };
-      api_match.post_search_match(params).then((res) => {
+      api_match.get_leagues_list_match(params).then((res) => {
         //保存数据到数据仓库
         mx_use_list_res(res, is_socket, true);
         MatchListCardDataClass_match_list_card_key_arr()

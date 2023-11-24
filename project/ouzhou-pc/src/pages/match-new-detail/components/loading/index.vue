@@ -1,9 +1,3 @@
-<!--
- * @Author: lockie
- * @Date: 2023-07-15 19:10:41
- * @FilePath: \user-pc-vue3\src\components\loading\index.vue
- * @Description: 
--->
 <template>
   <div class="loading_wrap">
     <div class="loading_box">

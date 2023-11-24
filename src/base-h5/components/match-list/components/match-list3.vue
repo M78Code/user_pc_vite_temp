@@ -15,6 +15,12 @@
                 :match_of_list="match_item">
               </MatchContainerMainTemplate3>
             </template>
+            <template v-if="is_kemp">
+              <MatchContainerMainTemplate2
+                :i="index"
+                :match_of_list="match_item">
+              </MatchContainerMainTemplate2>
+            </template>
             <template v-else>
               <MatchContainerMainTemplate1
                 :i="index"
@@ -33,6 +39,7 @@
 // ouzhou-h5 赛事组件
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
 import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template3.vue"; 
+import MatchContainerMainTemplate2 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template2.vue"; 
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 

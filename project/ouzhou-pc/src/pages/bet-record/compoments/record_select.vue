@@ -38,6 +38,10 @@
             </template>
           </q-input>
         </div>
+        <div class="tips">
+          <span class="dot"></span>
+          {{i18n_t("bet_record.msg_1")}}
+        </div>
         <div class="record-query" @click="search">
           {{i18n_t("bet_record.query")}}
         </div>
@@ -205,6 +209,18 @@ div.q-menu {
   .record-settled-l {
     display: flex;
     align-items: center;
+  }
+  .tips{
+    .dot{
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #ff7000;
+      margin-right: 4px;
+    }
+    font-size: 12px;
+    margin-right: 12px;
   }
 
   .record-query {

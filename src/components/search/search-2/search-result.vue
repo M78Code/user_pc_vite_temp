@@ -87,25 +87,25 @@
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div v-html="red_color(item?.matchList?.[0]?.mhn)"></div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												<div v-html="red_color(i?.mhn)"></div>
+												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
-												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
-												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div v-html="red_color(item?.matchList?.[0]?.man)"></div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												<div v-html="red_color(i?.man)"></div>
+												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -313,6 +313,9 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 			return
 		}
 		search_data.value = res.data.data
+		expand_bowling.value = true;
+		expand_league.value = true;
+		expand_team.value = true
 		console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;

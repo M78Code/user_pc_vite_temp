@@ -163,7 +163,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			})
 		}
 		
-		console.log('lockie1-1');
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
@@ -230,15 +229,12 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				clearTimeout(hot_match_list_timeout);
 			}
 		}, delay);
-		console.log('lockie1-2');
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
 	} else {
 		load_data_state.value = "empty";
-		console.log('lockie-2');
 		// 计算列表卡片样式
-		console.log('lockie1-3');
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
@@ -257,7 +253,6 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 		MatchListData.set_list(match_list)
 	}
 	// 计算赛事卡片
-	console.log('lockie1-4');
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
 	);
@@ -360,8 +355,6 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, collect,
 		// 	backend_run,
 		// 	true
 		// );
-		console.log('lockie-4');
-		console.log('lockie1-5');
 		// 计算赛事卡片
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			match_list,

@@ -136,7 +136,7 @@ get_featurd_list()
 
   .featured-matched-card {
     flex-shrink: 0;
-    width: 300px;
+    width: 288px;
     height: 140px;
     display: inline-block;
     background: var(--q-gb-bg-c-4);
