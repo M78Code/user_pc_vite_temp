@@ -749,6 +749,7 @@ export default {
      * @return {Undefined}
      */
     score_value () {
+      
       if (!this.match_of_list) {
         this.home_score = 0;
         this.away_score = 0;
@@ -759,6 +760,11 @@ export default {
         return;
       }
 
+      // const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list, true)
+      // if (this.match_of_list.mid === '2927136') {
+      //   console.log(msc_obj)
+      // }
+      
       // 比分处理
       const { home_score, away_score } = MatchUtils.get_match_score(this.match_of_list)
 
