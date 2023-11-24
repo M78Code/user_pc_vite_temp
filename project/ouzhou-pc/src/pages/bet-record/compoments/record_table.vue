@@ -497,7 +497,9 @@ const changePage = (arv) => {
  */
 const hand_copy = (data) => {
   // copyToClipboard(data)
-  GlobalSwitchClass.set_tip_show_state(true)
+  GlobalSwitchClass.set_tip_show_state(true, {
+    text: i18n_t('bet_record.copyed')
+  })
 }
 </script>
 

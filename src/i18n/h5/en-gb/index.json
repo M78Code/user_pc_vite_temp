@@ -318,7 +318,8 @@
     "total_bet": "Total Stake",
     "total_income": "To Return",
     "bet_retract": "Bet Retract",
-    "bet_inplay": "In Play"
+    "bet_inplay": "In Play",
+    "bet_limit":"Limit"
 
   },
   "bet_record": {
