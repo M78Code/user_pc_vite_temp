@@ -57,6 +57,7 @@ const handle_jump_match = (item) => {
 <style scoped lang="scss">
 .top_leagues_page{
   background-color: var(--q-gb-bg-c-2);
+  border-top: 0.027rem solid #FF7000;
   :deep(.collapse_page){
     &:not(:last-child){
       border-bottom: 10px solid #F1F1F1;
