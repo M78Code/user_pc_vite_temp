@@ -193,6 +193,8 @@ const set_order_status_info = (orderNo) => {
                 BetViewDataClass.set_bet_order_status(4)
             }
             if([0,1].includes(order_status*1)){
+                // 获取金额
+                UserCtr.get_balance()
                 set_error_message_config({code:200,message:''},'bet',3)
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 BetViewDataClass.set_bet_order_status(3)

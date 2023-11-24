@@ -132,6 +132,7 @@ const get_video_url = () => {
       // let live_type = this.$utils.get_media_icon_index(media_type)
       let live_type = 1;
 
+      console.log(11111,url_src)
       // 此处为最终处理后的视频url
       media_src.value =
         url_add_param(url_src, "video_type", 1) +

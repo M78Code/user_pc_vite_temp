@@ -45,9 +45,12 @@
 
     <!-- 右 -->
     <div class="text-right" style="margin-left:auto">
-      <!-- <p class="top-p">{{calc_settle_score}}</p> -->
-      <!-- 订单状态 -->
-      <p :class="calc_text(data_f).color" class="yb_fontsize14 fw_700" style="line-height:0.36rem;padding-right: 0.3rem;">
+      <!-- 订单状态(确认中。。) -->
+      <p v-if="data_f.orderStatus == '3'" :class="confirming.color" class="yb_fontsize14 fw_700">
+        {{confirming.text}}
+      </p>
+      <!-- 订单状态(非确认中) -->
+      <p v-else :class="calc_text(data_f).color" class="yb_fontsize14 fw_700">
         {{calc_text(data_f).text}}
       </p>
     </div>
@@ -59,12 +62,48 @@
 // import { mapGetters } from "vuex";
 import { format_money2 } from "src/core/format/index.js"
 import { i18n_t } from "src/boot/i18n.js";
+import { reactive, onMounted, onUnmounted } from 'vue'
 import { default as BetRecordClass, calc_text} from "src/core/bet-record/bet-record.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 
   const props = defineProps({
     data_f: {
       type: Object
     }
+  })
+  // 订单确认中。。。
+  const confirming = reactive({
+    color: 'orange',
+    text: i18n_t('bet_record.confirming')
+  })
+
+  let mitt_c201_handle = null
+  /**
+   *@description 处理ws订单状态推送
+  *@param {Object} · orderNo - 订单号, orderStatus - 订单状态
+  */
+  const c201_handle = ({ orderNo, orderStatus }) => {
+    if (props.data_f.orderNo == orderNo ) {
+      if (orderStatus == 1) {
+        // 成功
+        confirming.color = 'green'
+        confirming.text = i18n_t('bet_record.successful_betting')
+      } else if (orderStatus == 2) {
+        // 失败
+        confirming.color = 'red'
+        confirming.text = i18n_t('bet_record.bet_err')
+      }
+    }
+  }
+
+  onMounted(() => {
+    // 如果注单状态是确认中，ws监听注单状态变化
+    if(props.data_f.orderStatus == '3') {
+      mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).on;
+    }
+  })
+  onUnmounted(() => {
+    mitt_c201_handle && mitt_c201_handle()
   })
 
 </script>
@@ -99,6 +138,12 @@ import { default as BetRecordClass, calc_text} from "src/core/bet-record/bet-rec
   }
   .black {
     color: var(--q-gb-bg-c-13);
+  }
+}
+.text-right {
+  p {
+    line-height:0.36rem;
+    padding-right: 0.3rem;
   }
 }
 </style>

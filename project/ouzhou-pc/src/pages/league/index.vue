@@ -10,7 +10,7 @@
       </scroll-list>
     </load-data>
     <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
-      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+      width: `100%`,
     }" />
   </div>
 </template>
