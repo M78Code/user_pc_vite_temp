@@ -31,11 +31,17 @@
             style="margin: 0 10px; height: 14px"
             v-if="detail_info.mng"
           />
-          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
-<!--            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}-->
-            {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}
-          </span>
-
+          <!--
+            赛事详情
+            sportId 球类ID
+            ms 赛事状态：0未开赛，1 进行中
+            <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
+            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}
+            </span>
+          -->
+            <span class="leagal-time">
+                {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}
+            </span>
         </div>
         <div>
           <q-expansion-item
@@ -81,10 +87,7 @@
             </q-card>
           </q-expansion-item>
         </div>
-        <div
-          class="header_banne sport_bg"
-          :style="`background-position:0 -${sport_ball_type[sportId]}px`"
-        ></div>
+        <div class="header_banne sport_bg" :style="`background-position:0 -${sport_ball_type[sportId]}px`"></div>
       </div>
       <!-- tabs 玩法分类切换 -->
       <tabs :tab_options="tabList" v-model="current_key" />
@@ -272,7 +275,7 @@ export default{
       align-items: center;
 
       .leagal-time {
-        background-color: var(--q-gb-bg-c-10);
+        //background-color: var(--q-gb-bg-c-10);
         color: var(--q-gb-t-c-5);
         padding: 2px 10px;
       }
