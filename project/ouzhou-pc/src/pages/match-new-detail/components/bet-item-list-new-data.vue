@@ -307,10 +307,10 @@ onUnmounted(() => {
 .odds-arrows-wrap {
   position: relative;
   .up {
-    color: var(--q-gb-t-c-6) !important;
+    color: var(--q-gb-t-c-7) !important;
   }
   .down {
-    color: var(--q-gb-t-c-7) !important;
+    color: var(--q-gb-t-c-6) !important;
   }
   .default {
     color: var(--q-gb-t-c-2);
@@ -329,10 +329,12 @@ onUnmounted(() => {
   display: none;
 }
 .odds-up {
-  background: url($SCSSPROJECTPATH + "/image/svg/up.svg") no-repeat 100%;
+  background: url($SCSSPROJECTPATH + "/image/svg/down.svg") no-repeat 100%;
+  transform: rotate(180deg);
 }
 .odds-down {
-  background: url($SCSSPROJECTPATH + "/image/svg/down.svg") no-repeat 100%;
+  background: url($SCSSPROJECTPATH + "/image/svg/up.svg") no-repeat 100%;
+  transform: rotate(180deg);
 }
 .lock {
   width: 12px;
