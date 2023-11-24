@@ -76,17 +76,17 @@
               </q-item-section>
             </q-item>
             <!--国际化语言   暂时隐藏-->
-            <!-- <q-item clickable  @click="onExpend">
+            <q-item clickable  @click="onExpend">
               <q-item-section class="personal-content">
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
-                  <div>language</div>
+                  <div>语言设置</div>
                 </div>
                 <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
               </q-item-section>
-            </q-item> -->
-            <!-- <q-separator /> -->
-            <!-- <q-item  v-show="visible">
+            </q-item>
+            <q-separator />
+            <q-item  v-show="visible">
               <q-slide-transition >
                 <q-item-section>
                   <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
@@ -95,9 +95,9 @@
                   </div>
                 </q-item-section>
               </q-slide-transition>
-            </q-item> -->
+            </q-item>
             <!--国际化语言结束-->
-            <!-- <q-item>
+            <q-item>
               <q-item-section>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
@@ -107,7 +107,7 @@
                 </div>
               </div>
               </q-item-section>
-            </q-item> -->
+            </q-item>
           </q-list>
       </q-menu>
     </div>
@@ -151,47 +151,51 @@ export default defineComponent({
         }, {
           key: 'en',
           language: 'English',
-        }, {
-          key: 'tw',
-          language: '繁體中文',
-        }, {
-          key: 'vi',
-          language: 'Tiếng Việt',
-        }, {
-          key: 'th',
-          language: 'ไทย',
-        }, {
-          key: 'ms',
-          language: 'Melayu',
-        }, {
-          key: 'ad',
-          language: 'Indonesia',
-        }, {
-          key: 'md',
-          language: 'Burmese',
-        }, {
-          key: 'ry',
-          language: 'Japanese',
-        }, {
-          key: 'pty',
-          language: 'Portuguese',
-        }, {
-          key: 'hy',
-          language: 'Korean',
-        }]
+        }, 
+        // {
+        //   key: 'tw',
+        //   language: '繁體中文',
+        // }, {
+        //   key: 'vi',
+        //   language: 'Tiếng Việt',
+        // }, {
+        //   key: 'th',
+        //   language: 'ไทย',
+        // }, {
+        //   key: 'ms',
+        //   language: 'Melayu',
+        // }, {
+        //   key: 'ad',
+        //   language: 'Indonesia',
+        // }, {
+        //   key: 'md',
+        //   language: 'Burmese',
+        // }, {
+        //   key: 'ry',
+        //   language: 'Japanese',
+        // }, {
+        //   key: 'pty',
+        //   language: 'Portuguese',
+        // }, {
+        //   key: 'hy',
+        //   language: 'Korean',
+        // }
+      ]
     const settingData = ref([{
           title: 'Odds Display',
           index: 'DEC',
           params: ['DEC', 'HK']
-        }, {
-          title: 'Bet Slip',
-          index: 'ANY',
-          params: ['ANY', 'HIG']
-        }, {
-          title: 'Version',
-          index: 'EURO',
-          params: ['EURO', 'ASIA']
-        }])
+        }, 
+        // {
+        //   title: 'Bet Slip',
+        //   index: 'ANY',
+        //   params: ['ANY', 'HIG']
+        // }, {
+        //   title: 'Version',
+        //   index: 'EURO',
+        //   params: ['EURO', 'ASIA']
+        // }
+      ])
     //监听输入框内容改变，并搜索
     watch(keyword.value,
       (val) => {
@@ -391,8 +395,10 @@ export default defineComponent({
   transition: all 0.25s;
   justify-content: space-between;
   &.active{
-    color: var(--q-gb-t-c-2);
-    background:var(--q-gb-bg-c-5);
+    // color: var(--q-gb-t-c-2);
+    // background:var(--q-gb-bg-c-5);
+    color: #ff7000;
+    background:#fff1e6;
   }
   > span {
     display: flex;
@@ -448,7 +454,8 @@ export default defineComponent({
     height: 30px;
     display: flex;
     align-items: center;
-    background: var(--q-gb-bg-c-6);
+    // background: var(--q-gb-bg-c-6);
+    background:#E2E2E2;
     border-radius: 20px;
     justify-content: space-between;
     margin-right: 16px;
@@ -461,10 +468,12 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       transition: all 0.25s;
-      color: var(--q-gb-t-c-8);
+      // color: var(--q-gb-t-c-8);
+      color: #8A8986 ;
       &.active{
         color: #000;
-        background: var(--q-gb-bg-c-4);
+        // background: var(--q-gb-bg-c-4);
+        background: #ffffff;
         border-radius: 20px;
       }
     }
@@ -472,7 +481,8 @@ export default defineComponent({
       position: absolute;
       top: 0;
       border-radius: 20px;
-      border: 1px solid var(--q-gb-bd-c-1);
+      // border: 1px solid var(--q-gb-bd-c-1);
+      border: 1px solid #ff7000;
       transition: all 0.25s;
     }
   }
