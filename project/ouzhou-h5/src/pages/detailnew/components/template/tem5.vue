@@ -127,7 +127,7 @@ const go_betting = (data) => {
   if (data.os == 2) return;
   // console.log("payload", data);
   // storage_bet_info(payload)
-  emit("bet_click_", data);
+  emit("bet_click_", data,props.item_data.hpn);
   // EMITTER.emit("show_bet_dialog", true);
 };
 const matchInfo = computed(() => {

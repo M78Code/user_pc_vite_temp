@@ -8,9 +8,6 @@
   <div :class="['bw3', { rightMenu: right_menu_show }]" @click.stop="appclick($event)" :style="page_style">
     <ws />
     <!-- 页面路由开始 页面路由开始 页面路由开始 -->
-    <div v-if="time_str" class="time-show">
-      <div>{{ CURRENT_ENV }}-{{ time_str }}</div>
-    </div>
     <!-- 页面路由开始 -->
     <router-view />
 
@@ -255,15 +252,6 @@ ServerTime.get_server_time()
 * {
   /* 禁止火狐浏览器下显示滚动条 */
   scrollbar-width: none;
-}
-
-.time-show {
-  position: fixed;
-  left: 0.5rem;
-  color: red;
-  z-index: 9999999;
-  font-size: 15px;
-  margin-left: -50px;
 }
 
 .rightMenu {

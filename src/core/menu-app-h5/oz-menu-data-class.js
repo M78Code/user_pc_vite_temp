@@ -64,6 +64,8 @@ class MenuData {
     this.top_events_list = []; //热门球种
     this.champion_list = []; //冠军球种
     this.slideMenu_sport = [];//赛果列表
+    //home tab
+    this.home_menu = 'featured';
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
 
@@ -90,7 +92,9 @@ class MenuData {
     }
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        this[item] = session_info[item]
+        if(item !== 'menu_type'){
+          this[item] = session_info[item]
+        }
       }
     }
   }
@@ -198,6 +202,14 @@ class MenuData {
     this.update();
   }
   /**
+   * home页面tab
+   */
+  set_home_menu(val){
+    this.home_menu = val || 'featured';
+    this.update();
+  }
+  
+  /**
    * 请求赛事列表
    */
   get_match_render_list(){
@@ -261,6 +273,7 @@ class MenuData {
     this.current_lv_2_menu_i = "";
     this.menu_mi.value = "";
     this.collect_id = "";
+    this.home_menu = 'featured';
   }
   /**
    * 设置时间 并且设置时间请求参数
