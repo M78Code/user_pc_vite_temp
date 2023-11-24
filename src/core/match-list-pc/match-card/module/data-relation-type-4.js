@@ -259,7 +259,7 @@
         play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
         no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
         //卡片key列表
-        match_list_card_key_arr,
+        match_list_card_key_arr:is_five_leagues?undefined:match_list_card_key_arr,
         // 五大联赛key列表
         five_leagues_card_key_arr 
       })

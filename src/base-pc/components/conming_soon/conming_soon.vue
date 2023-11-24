@@ -38,7 +38,7 @@ const props = defineProps({
   .coming_soon_box {
     width: 100%;
     height: 100%;
-    padding-top: 300px;
+    padding-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;

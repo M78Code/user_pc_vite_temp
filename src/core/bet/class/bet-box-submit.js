@@ -189,10 +189,23 @@ const get_query_bet_amount_common = (obj) => {
             // 获取预约投注项
             set_bet_pre_list(latestMarketInfo)
         } else {
-            BetViewDataClass.set_tip_message(res)
-            set_error_message_config(res)
+            set_catch_error_query_bet_max(params)
+            // set_error_message_config(res)
         }
+    }).catch(ws => {
+        set_catch_error_query_bet_max(params)
     })
+}
+
+// 限额错误 设置默认值
+const set_catch_error_query_bet_max = (params ={}) => {
+    let oid = lodash_.get(params.orderMaxBetMoney, '[0].playOptionsId')
+    BetViewDataClass.set_bet_min_max_money_default(oid)
+    // 通知页面更新 
+    // 串关不更新
+    if(BetData.is_bet_single){
+        useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+    }
 }
 
 // 获取限额 电竞/电竞冠军/VR体育
@@ -225,8 +238,11 @@ const get_query_bet_amount_esports_or_vr = () => {
             // })
 
         } else {
-            set_error_message_config(res)
+            set_catch_error_query_bet_max(params)
+            // set_error_message_config(res)
         }
+    }).catch(ws => {
+        set_catch_error_query_bet_max(params)
     })
 }
 
@@ -253,8 +269,11 @@ const get_query_bet_amount_pre = () => {
             BetData.set_bet_appoint_obj(latestMarketInfo)
 
         } else {
-            set_error_message_config(res)
+            set_catch_error_query_bet_max(params)
+            // set_error_message_config(res)
         }
+    }).catch(ws => {
+        set_catch_error_query_bet_max(params)
     })
 }
 

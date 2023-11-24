@@ -1291,7 +1291,7 @@ export default {
     }
 
     .date-time {
-      max-width: 60px;
+      flex: 1;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
