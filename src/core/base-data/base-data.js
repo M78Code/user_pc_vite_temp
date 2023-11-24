@@ -573,7 +573,7 @@ class BaseData {
       // 更新版本
       this.base_data_version.value = Date.now();
     }
-    // console.error('this',this)
+    console.error('this',this)
   }
 
   /**

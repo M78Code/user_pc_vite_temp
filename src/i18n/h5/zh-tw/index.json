@@ -218,8 +218,9 @@
     "wanyi": "萬億",
     "total_bet": "總投注",
     "total_income": "預計總收益",
-    "bet_retract": "賭注收回"
-
+    "bet_retract": "賭注收回",
+    "bet_inplay": "進行中",
+    "bet_limit":"限額"
     
   },
   "bet_record": {
