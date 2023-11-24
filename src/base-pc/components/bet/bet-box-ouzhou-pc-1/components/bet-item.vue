@@ -54,7 +54,7 @@
            
         </div>
         <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
-            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money >= obj && ref_data.max_money >= BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money > obj && ref_data.max_money > BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
                 {{index == 'max' ? '' : '+' }}{{obj}}
             </li>
         </ul>
