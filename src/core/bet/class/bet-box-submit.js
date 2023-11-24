@@ -9,16 +9,22 @@ import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet
 import { 
     MatchDataWarehouse_PC_List_Common, 
     MatchDataWarehouse_PC_Detail_Common,
+    MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
+    MatchDataWarehouse_ouzhou_PC_hots_List_Common,
+    MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
     MatchDataWarehouse_H5_List_Common,
     MatchDataWarehouse_H5_Detail_Common,
     MatchDataWarehouse_H5_List_Hot_Main,
     MatchDataWarehouse_H5_List_Jingxuan,
-    MatchDataWarehouse_H5_Detail_Jingxuan
+    MatchDataWarehouse_H5_Detail_Jingxuan,
+    
  } from 'src/core/index.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
 
 let time_out = null
+let time_api_out = null
+let count_api = 0 
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
@@ -160,8 +166,38 @@ const set_bet_order_list = (bet_list, is_single) => {
 
 // 投注确认中 循环请求接口 拉取投注状态
 const set_order_status_info = (orderNo) => {
-    api_betting.query_order_status({orderNos: orderNo}).then(res => {
+    api_betting.query_order_status({orderNos: orderNo}).then((res = {}) => {
+        clearTimeout(time_api_out)
+        if(res.code == 200){
+            let data_list = lodash_.get(res,'data', [])
+            let order_status = ''
+            data_list.forEach(item => {
+                // data.status（4:拒单、0:接单、3:待确认、2:取消、1:已处理)
+                order_status = item.status
 
+            })
+            if(order_status == 3 && count_api < 10){
+                count_api++
+                // 待确认数据 2秒后重新拉取
+                time_api_out = setTimeout(()=>{
+                    set_order_status_info(orderNo)
+                },2000)
+            }else{
+                count_api = 0
+                clearTimeout(time_api_out)
+            }
+            // 投注失败
+            if([4,2].includes(order_status*1)){
+                set_error_message_config({code:"0402018",message:''})
+                // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                BetViewDataClass.set_bet_order_status(4)
+            }
+            if([0,1].includes(order_status*1)){
+                set_error_message_config({code:200,message:''},'bet',3)
+                // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+                BetViewDataClass.set_bet_order_status(3)
+            }
+        }
     })
 }
 
@@ -425,8 +461,8 @@ const submit_handle = type => {
             }
             // 投注确认中 ws请求
             if(order_state == 2){
-                console.error('orderDetailRespList',orderDetailRespList)
-                // set_order_status_info(orderDetailRespList[0])
+                let order_no =  lodash_.get(orderDetailRespList,'[0].orderNo', '')
+                set_order_status_info(order_no)
 
                 let obj = {};
                 obj.hid = ''
@@ -544,11 +580,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         BetData.set_bet_keyboard_show(true)
         // BetViewDataClass.set_bet_keyboard_show(true)
     }else{
-        query = MatchDataWarehouse_PC_List_Common
-        // 判断是不是详情点击 详情使用详情数据仓库
-        if (other.is_detail) {
-            query = MatchDataWarehouse_PC_Detail_Common
-        }
+        // pc 数据仓库
+        query = pc_match_data_switch(other.match_data_type)
     }
     
     // 获取对应的仓库数据
@@ -562,7 +595,15 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
-console.error('ol_obj',ol_obj)
+    const play_config = {
+        hl_obj,
+        hn_obj,
+        mid_obj,
+        ol_obj,
+        hpid: hn_obj.hpid || ol_obj._hpid,
+        other,
+    }
+
     const bet_obj = {
         sportId: mid_obj.csid, // 球种id
         matchId: mid_obj.mid,  // 赛事id
@@ -581,7 +622,7 @@ console.error('ol_obj',ol_obj)
         playOptions: ol_obj.on,   // 投注项
         tournamentLevel: mid_obj.tlev, //联赛级别
         playId: hn_obj.hpid || ol_obj._hpid, //玩法ID
-        playName: ALL_SPORT_PLAY[hn_obj.hpid || ol_obj._hpid], //玩法名称
+        playName: set_play_name(play_config), //玩法名称
         dataSource: mid_obj.cds, //数据源
         home: mid_obj.mhn, //主队名称
         away: mid_obj.man, //客队名称
@@ -596,8 +637,6 @@ console.error('ol_obj',ol_obj)
         show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
     }
-
-    console.error('bet_obj',bet_obj)
 
     // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
@@ -615,6 +654,21 @@ console.error('ol_obj',ol_obj)
     }
 }
 
+// 设置玩法名称
+const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
+    let play_name = ALL_SPORT_PLAY[hpid] //玩法名称
+
+    // 需要配置玩法比分的 玩法
+    let play_id = [4]
+    // 详情 并且本地没有配置玩法
+    if(other.is_detail){
+        play_name = other.play_name
+    }
+
+    return play_name
+    
+}
+
 // h5 投注选择 数据仓库
 const h5_match_data_switch = match_data_type => {
     let query = {}
@@ -625,16 +679,43 @@ const h5_match_data_switch = match_data_type => {
         case "h5_detail" :
             query = MatchDataWarehouse_H5_Detail_Common
             break
-
         case "h5_list_hot" :
             query = MatchDataWarehouse_H5_List_Hot_Main
             break
-
         case "h5_list_jingxuan" :
             query = MatchDataWarehouse_H5_List_Jingxuan
             break
         case "h5_detail_jingxuan" :
             query = MatchDataWarehouse_H5_Detail_Jingxuan
+            break   
+        default :
+            query = MatchDataWarehouse_H5_List_Common
+            break   
+    }
+    return query
+}
+
+// pc 投注选择 数据仓库
+const pc_match_data_switch = match_data_type => {
+    let query = {}
+    switch(match_data_type){
+        case "pc_list" :
+            query = MatchDataWarehouse_PC_List_Common
+            break
+        case "pc_hots_list" :
+            query = MatchDataWarehouse_ouzhou_PC_hots_List_Common
+            break
+        case "pc_five_league" :
+            query = MatchDataWarehouse_ouzhou_PC_five_league_List_Common
+            break
+        case "pc_ten_five_mins" :
+            query = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common
+            break
+        case "pc_detail" :
+            query = MatchDataWarehouse_PC_Detail_Common
+            break   
+        default :
+            query = MatchDataWarehouse_PC_List_Common
             break   
     }
     return query

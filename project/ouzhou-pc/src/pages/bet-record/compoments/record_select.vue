@@ -49,7 +49,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
-// import dayjs from 'dayjs'
+import dayjs from 'dayjs'
 const _dayjs = dayjs()
 const isZH = true
 const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
