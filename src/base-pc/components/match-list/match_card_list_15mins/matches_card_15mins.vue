@@ -61,7 +61,7 @@ let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 let odds_list = lodash.cloneDeep(match_tpl_info.get_15mins_odds_list())
 const ols_data = computed(() => {
   const ols = merge_template_data({
-    match:JSON.parse(JSON.stringify(props.current_tab)),
+    match:props.current_tab,
     handicap_list: [odds_list],
     type: 4,
     play_key: 'hps15Minutes'
