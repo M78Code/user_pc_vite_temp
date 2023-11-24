@@ -65,6 +65,27 @@ const announcement_index = (index) => {
   .fous {
     font-weight: 500;
     color: #1a1a1a;
+     position: relative;
+      &::after{
+      content: '';
+      background: linear-gradient(180deg, #FF7000 0%, rgba(255, 112, 0, 0) 100%);
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      top: 26px;
+      left: 40%;
+      border-radius: 4px;
+    }
+    &::before{
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: linear-gradient(180deg, #FF2B2B 0%, #FF7000 100%);
+      position: absolute;
+      right:  8px;
+      top: 0px;
+      border-radius: 50%;
+  }
   }
 }
 </style>

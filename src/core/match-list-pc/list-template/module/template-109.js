@@ -10,8 +10,8 @@ import * as TemplateCommon from "./template-common.js"
     {
       _hpid: 153,
       ols: [
-        {  _hpid: 153, ot: '1', class: 'no-handicap' },
-        {  _hpid: 153, ot: '2', class: 'no-handicap' },
+        {  _hpid: 153, ot: '1', otb: '让盘', class: 'no-handicap' },
+        {  _hpid: 153, ot: '2', otb: '让局', class: 'no-handicap' },
       ],
     },
     {
