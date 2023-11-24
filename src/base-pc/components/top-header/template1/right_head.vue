@@ -287,6 +287,7 @@ export default defineComponent({
     }
     const get_width = (props) => {
       is_focus.value = props.focus
+      keyword.value = props.text
     }
     
     onMounted(() => {
