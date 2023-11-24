@@ -10,9 +10,7 @@
             :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'" ></span>
         </div>
         
-        <div
-          :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']"
-        >
+        <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
 <!--         {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
           <component
               :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
@@ -175,7 +173,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .match-detail-odds {
   // background: #F1F1F1;
-  min-height: calc(100vh - 150px);
+  min-height: 100%;
   // border-bottom: 40px solid #F1F1F1;
   .no-data {
     width: 140px;
