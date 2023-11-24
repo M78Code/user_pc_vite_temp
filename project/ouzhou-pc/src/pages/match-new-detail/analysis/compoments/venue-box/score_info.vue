@@ -222,7 +222,7 @@ const get_msc_data = (msc_data, current_data) => {
       });
     }
     //乒乓球
-    if (["7", "8", "9"].includes(detail_info.csid)) {
+    if (["7", "8", "9"].includes(detail_info.csid+'')) {
       res = list.map((item) => {
         return {
           name: item.name,
