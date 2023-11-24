@@ -103,7 +103,8 @@
       "close": "关闭",
       "view_all_match": "查看所有比赛",
       "underway": "进行中",
-      "no_search_rezult": "没有发现结果。请尝试另一个搜索词。"
+      "no_search_rezult": "没有发现结果。请尝试另一个搜索词。",
+      "dogfall": "平局"
     },
     "15minutes_bet_col": [
       "开场~14:59",

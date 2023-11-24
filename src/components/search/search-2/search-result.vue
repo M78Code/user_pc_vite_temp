@@ -34,7 +34,7 @@
 											<div style="display: flex;flex-direction: row; flex: 1">
 												<div class="flex_1"
 													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-													<div class="center">1</div>
+													<div v-html="red_color(item?.mhn)"></div>
 													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 												</div>
 												<div class="flex_1" v-else>
@@ -42,16 +42,16 @@
 												</div>
 												<div class="flex_1"
 													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-													<div class="center">X</div>
-													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
 												<div class="flex_1"
 													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-													<div class="center">2</div>
-													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+													<div v-html="red_color(item?.man)"></div>
+													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -88,7 +88,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div class="center">1</div>
+												<div v-html="red_color(item?.matchList?.[0]?.mhn)"></div>
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -96,16 +96,16 @@
 											</div>
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div class="center">X</div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div class="center">2</div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+												<div v-html="red_color(item?.matchList?.[0]?.man)"></div>
+												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -133,33 +133,33 @@
 									<div class="list_bottom">
 										<div style="width: 60%; word-break: break-all">
 											<p>
-												<span class="home" v-html="red_color(item.matchList[0].mhn)"></span>
+												<span class="home" v-html="red_color(item?.matchList?.[0]?.mhn)"></span>
 												<span class="middle">v</span>
-												<span class="away" v-html="red_color(item.matchList[0].man)"></span>
+												<span class="away" v-html="red_color(item?.matchList?.[0]?.man)"></span>
 											</p>
 											<p>{{ (new Date(+item.matchList[0].mgt)).Format('MM/dd hh:mm') }}</p>
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="item?.matchList[0]?.hps?.[0]?.hl.length > 0 && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div class="center">1</div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												<div v-html="red_color(item?.matchList?.[0].mhn)"></div>
+												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
 												v-if="lodash.get(item,'matchList[0].hps[0].hl.length' ) > 0 && lodash.get(item,'matchList[0].hps[0].hl[0].ol[1].ov' ) && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div class="center">X</div>
-												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
 												v-if="item?.matchList[0]?.hps?.[0]?.hl.length > 0 && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div class="center">2</div>
-												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+												<div v-html="red_color(item?.matchList?.[0]?.man)"></div>
+												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -313,7 +313,7 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 			return
 		}
 		search_data.value = res.data.data
-		// console.log('res', search_data.value);
+		console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;
 		timer.value = setTimeout(() => {

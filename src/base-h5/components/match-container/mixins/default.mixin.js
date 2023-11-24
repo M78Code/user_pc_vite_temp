@@ -759,6 +759,11 @@ export default {
         return;
       }
 
+      // const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list, true)
+      // if (this.match_of_list.mid === '2927136') {
+      //   console.log(msc_obj)
+      // }
+      
       // 比分处理
       // 修改 msc_obj 
       const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list.msc, true)
