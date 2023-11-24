@@ -150,7 +150,7 @@ export default{
         csid,
       };
 
-      router.push({
+      router.replace({
         name: "details",
         params,
       });
