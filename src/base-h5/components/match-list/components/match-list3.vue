@@ -11,7 +11,7 @@
           <div class="data_mid"> <!--此data-mid用于分频订阅赛事,请勿修改-->
             <template v-if="is_results">
               <MatchContainerMainTemplate3
-                :i="index" 
+                :i="index"
                 :match_of_list="match_item">
               </MatchContainerMainTemplate3>
             </template>

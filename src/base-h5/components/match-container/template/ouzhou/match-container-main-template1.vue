@@ -13,7 +13,7 @@
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="i18n_t(`ouzhou.match.play_map.${select_play}`)" 
+            <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="i18n_t(`ouzhou.match.play_map.${select_play}`)"
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
@@ -102,7 +102,7 @@
                             </div>
 
                             <!--即将开赛 ms = 110-->
-                            
+
                             <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
                               {{ i18n_t(`ms[${match.ms}]`) }}
                             </div>
@@ -116,7 +116,7 @@
                               <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
                             </div>
                             <!--倒计时或正计时-->
-                            <div v-if="match.ms != 110 && show_counting_down(match)" 
+                            <div v-if="match.ms != 110 && show_counting_down(match)"
                               :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
                               <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
                               <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
