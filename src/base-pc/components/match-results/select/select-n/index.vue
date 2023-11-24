@@ -75,7 +75,7 @@ const props = defineProps({
     default: 0,
   },
 });
-console.log(props.options,'sportType');
+// console.log(props.options,'sportType');
 // const optionsIsShow = ref(false);
 const sport = ref(props.sportType);
 // const { off } = useMittOn(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, (e)=>{
@@ -83,7 +83,7 @@ const sport = ref(props.sportType);
 // });
 // onUnmounted(off);
 watch(props.sportType,(val)=>{
-  console.log(val,'val');
+  // console.log(val,'val');
 }
 )
 //筛选出空数据
@@ -117,7 +117,7 @@ const option = computed(() => {
  */
 const selectSport = (item) => {
   sport.value = item;
-  console.error('sportsport',sport)
+  // console.error('sportsport',sport)
   // showOption();
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
   useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);

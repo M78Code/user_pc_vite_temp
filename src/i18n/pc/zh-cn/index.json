@@ -1,6 +1,7 @@
 {
   "ouzhou": {
     "record": {
+      "msg_1": "此记录将显示所有未派彩的投注",
       "my_bet": "注单历史",
       "unsettled": "未结算",
       "settled": "已结算",
