@@ -9,7 +9,8 @@
                 </div>
                 <div class="w-100 h15 f-s-c my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none font400">{{ items.playName }}</span>
+                    <span class="text-a1a text-flow-none font400">{{ items.playName }}</span> 
+                    <!-- 盘口 -->
                 </div>
                 <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
@@ -28,7 +29,7 @@
                 </div>
                 <div class="font12 h12 mt-4">
                     <span class="font400 mr-4 text-8a8">Highest Win</span>
-                    <span class="text-1a1 font500"> {{ mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount) || '0.00' }} </span>
+                    <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount)) || '0.00' }} </span>
                 </div>
             </div>
 
@@ -63,7 +64,7 @@
 <script setup>
 
 import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t } from "src/core/"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,format_money2 } from "src/core/"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import mathJs from 'src/core/bet/common/mathjs.js'

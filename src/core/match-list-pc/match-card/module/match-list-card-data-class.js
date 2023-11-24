@@ -65,6 +65,8 @@ class MatchListCardDataClass {
       // 联赛名称吸顶高度
       league: 0,
     };
+    // 赛事列表队列数据
+    this.match_list_key = []
   }
   set_all_card_obj({
     all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, five_leagues_card_key_arr, csid_to_card_key_obj

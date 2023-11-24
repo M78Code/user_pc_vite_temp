@@ -27,7 +27,7 @@
           <div class="top-line"></div>
           <div class="odds_item bet-item-wrap-ouzhou" v-for="ol_data in get_col_ols_data(item.mid)"
             :key="ol_data.oid + '_' + ol_data._hpid + '_' + ol_data._ot">
-            <betItem :ol_data="ol_data" warehouse_name="hots_list"></betItem>
+            <betItem :ol_data="ol_data" match_data_type="pc_hots_list"></betItem>
           </div>
         </div>
       </div>
@@ -265,10 +265,9 @@ get_featurd_list()
         font-size: 14px;
         font-weight: 500;
         letter-spacing: 0px;
-
-        &:hover {
-          background: rgba(255, 112, 0, 0.1);
-        }
+        // &:hover {
+        //   background: rgba(255, 112, 0, 0.1);
+        // }
 
         span {
           &:first-child {
@@ -305,10 +304,10 @@ get_featurd_list()
   }
 }
 
-::v-deep.bet-item-wrap-ouzhou {
+:deep(.bet-item-wrap-ouzhou) {
   display: flex;
   width: 78px;
-  height: 48px;
+  height: 40px !important;
   border-radius: 2px;
   justify-content: center;
   align-items: center;
@@ -316,7 +315,7 @@ get_featurd_list()
 
   .c-bet-item {
     width: 78px;
-    height: 48px;
+    height: 40px;
   }
 
   .c-bet-item.can-hover:hover {
