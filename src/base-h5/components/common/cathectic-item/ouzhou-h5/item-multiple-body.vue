@@ -210,7 +210,7 @@ template {
         i.q-icon {
           width: 0.1rem;
           height: 0.1rem;
-          background-color: var(--q-gb-bg-c-15);
+          background-color: #fff;
           position: absolute;
           top: 50%;
           left: 0;

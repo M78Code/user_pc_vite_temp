@@ -562,7 +562,6 @@ const set_error_message_config = (res ={},type,order_state) => {
 const set_bet_obj_config = (params = {}, other = {}) => {
     console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
-
     const { oid, _hid, _hn, _mid } = params
 
     // 没有投注内容 点击无效
@@ -704,7 +703,16 @@ const h5_match_data_switch = match_data_type => {
             break
         case "h5_detail_jingxuan" :
             query = MatchDataWarehouse_H5_Detail_Jingxuan
-            break   
+            break  
+        case "h5_hots_list" :
+            query = MatchDataWarehouse_ouzhou_PC_hots_List_Common
+            break
+        case "h5_five_league" :
+            query = MatchDataWarehouse_ouzhou_PC_five_league_List_Common
+            break
+        case "h5_ten_five_mins" :
+            query = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common
+            break 
         default :
             query = MatchDataWarehouse_H5_List_Common
             break   

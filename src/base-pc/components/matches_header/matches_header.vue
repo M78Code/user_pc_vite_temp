@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
 			<div class="matches-title">
@@ -17,7 +17,7 @@
 								class="leagues_filrer" 
 								@click.stop="set_show_leagues"
 							>
-								Next 24 Hours
+								24小时
 								<span class="yb-icon-arrow"></span>
 								<div class="leagues_filrer_item" v-show="show_leagues">
 									<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
@@ -88,8 +88,8 @@ const ouzhou_filter_config = {
 const ouzhou_time_list = [
 	{ label: i18n_t('ouzhou.filter.select_time.12h'), title:'12小时', value: 12 }, 
 	{ label: i18n_t('ouzhou.filter.select_time.24h'), title:'24小时', value: 24 }, 
-	{ label: i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
-	{ label: i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 3*24 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 7*24 }, 
 ]
 
 onMounted(()=>{
@@ -142,7 +142,7 @@ const set_tab_list = (news_) =>{
 	}
 
 	// 冠军
-	if (MenuData.is_collect) {
+	if (MenuData.is_kemp()) {
 		matches_header_title.value = 'Outrights'
 		tab_list.value = []
 	}

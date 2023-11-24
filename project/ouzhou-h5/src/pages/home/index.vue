@@ -163,6 +163,7 @@ const handle_ouzhou_home_data = (res) => {
     })
     play_matchs.value = arr_play_matchs.filter(t => t?.mid)
   }
+  set_ws_active_mids()
 }
 
 // 设置默认数据
@@ -192,6 +193,7 @@ const handle_ouzhou_home_hots = async (data) => {
       }
     })
     featured_matches.value = arr_data.filter(t => t?.mid)
+    set_ws_active_mids()
   }
 }
 
@@ -206,6 +208,7 @@ const handle_ouzhou_home_hots = async (data) => {
     return { ...match, match_data_type: 'h5_five_league' }
   })
   MatchMeta.get_match_base_hps_by_mids(five_league_mids.value.toString(), MatchDataBaseFiveLeagueH5)
+  set_ws_active_mids()
 }
 
 /**
@@ -223,6 +226,7 @@ const get_ouzhou_home_hots11 = () => {
   api_match.post_fetch_match_list(params).then((res) => {
     if (+res.code !== 200) return
     handle_ouzhou_home_hots(res)
+    set_ws_active_mids()
   })
 }
 
@@ -240,6 +244,16 @@ const on_update = (val) => {
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
     MatchMeta.get_top_events_match(MenuData.top_events_list?.[0]?.csid)
   }
+}
+
+/**
+ * @description 设置 ws 激活的 mids 
+ */
+const set_ws_active_mids = () => {
+  const total_matchs = [].concat(five_league_match.value, time_events.value, featured_matches.value, play_matchs.value)
+  const total_mids = lodash.uniq(total_matchs.filter(t => t.mid).map(t => t.mid))
+  const length = lodash.get(total_mids, 'length', 0)
+  length > 0 && MatchDataBaseH5.set_active_mids(total_mids)
 }
 
 onUnmounted(() => {

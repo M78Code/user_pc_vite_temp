@@ -13,9 +13,7 @@
                     <div class="announce-title">{{ current_title }}</div>
                     <div class="ann-item" v-for="(item, i) of class_list_ary" :key="i">
                         <!-- <div class="ann-title" >[{{ item.noticeTypeName }}]</div> -->
-                        <div class="ann-content"> 
-                            <!-- {{ item.sendTime }}  -->
-                            {{ item.context }}
+                        <div class="ann-content" v-html="item.context"> 
                         </div>
                         <div class="ann-time">
                             {{ timestr(item.sendTimeOther) }}

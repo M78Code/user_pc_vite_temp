@@ -78,6 +78,25 @@
     },
     "no_data": {
         "coming_soon": "Coming Soon"
+    },
+    "search": {
+      "change": "Change",
+      "clear_search_history": "Clear history",
+      "league": "League",
+      "null1": "No data",
+      "null2": "Try another word",
+      "other": "Other Searches",
+      "search_hot": "Popular Searches",
+      "search_play": "Search Markets",
+      "search_record": "History",
+      "search_sports": "Search Sports",
+      "team": "Team",
+      "placeholder": "Enter league or team",
+      "close": "Close",
+      "view_all_match": "View all soccer",
+      "underway": "UNDERWAY",
+      "no_search_rezult": "No results found. please try a different search term.",
+      "dogfall": "dogfall"
     }
 },
   "ac_rules": {
@@ -298,7 +317,10 @@
     "wanyi": "Trillion",
     "total_bet": "Total Stake",
     "total_income": "To Return",
-    "bet_retract": "Bet Retract"
+    "bet_retract": "Bet Retract",
+    "bet_inplay": "In Play",
+    "bet_limit":"Limit"
+
   },
   "bet_record": {
     "30day": "30 days",

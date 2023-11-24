@@ -209,7 +209,7 @@ const sun_ol = (ol, item) => {
 };
 //  投注项点击投注,
 const betItemClick = (item, ol,play_name) => {
-  if (item.hs) {
+  if (item.hs || ol.os ==2) {
     return;
   }
   if (ol.cds) {

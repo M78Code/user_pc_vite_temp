@@ -9,11 +9,11 @@
                 </div>
                 <div class="w-100 h15 f-s-c my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400">{{ items.playName }}</span> 
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}</span> 
                     <!-- 盘口 -->
                     <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
+                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
@@ -29,7 +29,7 @@
                     <BetInput :items="items" />
                 </div>
                 <div class="font12 h12 mt-4">
-                    <span class="font400 mr-4 text-8a8">Highest Win</span>
+                    <span class="font400 mr-4 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                     <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount)) || '0.00' }} </span>
                 </div>
             </div>
@@ -128,11 +128,16 @@ const set_bet_money = obj => {
     }
     // 计算投注金额
     let money_amount = mathJs.add(money,money_)
-    // 投注金额 不能大于最大投注金额
-    if(money_amount > ref_data.max_money){
-        BetData.set_bet_amount(ref_data.max_money)
-    }else{
+    // 投注金额 不能大于最大投注金额 也不能大于用户约
+    if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
         BetData.set_bet_amount(mathJs.add(money,money_))
+    }else{
+        // 最大限额不能大于余额
+        let money_a = ref_data.max_money
+        if(UserCtr.balance < ref_data.max_money){
+            money_a = UserCtr.balance
+        }
+        BetData.set_bet_amount(money_a)
     }
     useMittEmit(MITT_TYPES.EMIT_SET_QUICK_AMOUNT)
 }
@@ -190,8 +195,14 @@ const set_delete = () => {
 
         .bet-left {
             width: 230px;
+            .text-a1a-i {
+                color: var(--q-gb-t-c-5) !important;
+            }
         }
 
+        .text-8A8986-i {
+            color: var(--q-gb-t-c-8) !important
+        }
     }
 
     .bet-bet-money {

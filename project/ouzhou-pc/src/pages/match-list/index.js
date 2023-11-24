@@ -7,7 +7,7 @@ import {
   UserCtr,
   MenuData, axios_loop
 } from "src/core";
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
@@ -193,8 +193,9 @@ export const init_home_matches = async () => {
           set_match_play_current_index(item, 'hps15Minutes')
           return item.mid;
         });
-        api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
-
+        axios_loop({
+          axios_api: () => api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
+        })
         match_count = data.dataList.length || 0;
         let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
         //过滤前20条数据
