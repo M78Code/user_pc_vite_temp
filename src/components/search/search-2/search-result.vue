@@ -190,7 +190,7 @@ import search from "src/core/search-class/search.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import { get_search_result } from "src/api/module/search/index.js";
 import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/core/";
-import { useMittOn, MITT_TYPES } from 'src/core/mitt';
+import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
@@ -245,6 +245,11 @@ function bowling_click(match) {
 	const { mid, tid, csid } = match
 	router.push(`/details/${mid}/${tid}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
+	
 }
 
 const scrollRef = ref(null)
@@ -259,6 +264,10 @@ function match_click(match) {
 	const { mid, tid, csid } = match.matchList[0]
 	router.push(`/details/${mid}/${tid}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
 }
 
 /**
@@ -272,6 +281,10 @@ function league_click(match) {
 	const { csid } = match.matchList[0]
 	router.push(`/search/${match.leagueName}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
 	// PageSourceData.set_route_name('search')
 }
 
@@ -316,7 +329,7 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 		expand_bowling.value = true;
 		expand_league.value = true;
 		expand_team.value = true
-		console.log('res', search_data.value);
+		// console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;
 		timer.value = setTimeout(() => {
@@ -415,6 +428,10 @@ onBeforeUnmount(() => {
 		timer.value = null
 	}
 	useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
 })
 
 // 监听搜索球种变化
