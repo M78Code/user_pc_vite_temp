@@ -4,7 +4,7 @@
 
 import { ref } from 'vue';
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common } from "src/core/index.js";
 import { get_match_status } from 'src/core/index.js'
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -65,7 +65,7 @@ export const get_compute_other_play_data = (match) => {
 * @param {NUmber} type 盘口类型 1:主盘，  2：附加盘1， 3：附加盘2  4:15分钟玩法
 * @param {String} play_key 次要玩法key
 */
-export function merge_template_data({ match, handicap_list, type = 1, play_key }) {
+export function merge_template_data({ match, handicap_list, type = 1, play_key }, MatchListData = MatchDataWarehouse_PC_List_Common) {
   let length = handicap_list.length
   let { mid, hSpecial5min, hSpecial } = match
   const many_obj = MatchListData.get_match_to_map_obj(mid)
@@ -320,7 +320,7 @@ function get_min5_state(match, mst) {
  * @Description 获取其他玩法请求参数
  * @param {array} mids 赛事ID数组
 */
-export const get_tab_param_build = (mids) => {
+export const get_tab_param_build = (mids, MatchListData = MatchDataWarehouse_PC_List_Common) => {
   let tabs = []
   mids.forEach(mid => {
     let match = MatchListData.get_quick_mid_obj(mid)
@@ -401,7 +401,7 @@ export function get_5minutes_template(match = {}) {
  * @Description 切换其他玩法
  * @param {string} mid 赛事id
 */
-export function switch_other_play(mid, play_key) {
+export function switch_other_play(mid, play_key, MatchListData = MatchDataWarehouse_PC_List_Common) {
   let match = MatchListData.get_quick_mid_obj(mid)
   set_match_play_current_index(match, play_key)
   useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { mids: [mid] });
@@ -419,8 +419,6 @@ export const set_match_play_current_index = (match, play_key) => {
   // 保存当前选中的玩法
   other_play_current_play[match.mid + '_'] = play_key
 }
-
-
 //获取保存的盘口玩法
 export function get_play_current_play(match) {
   return other_play_current_play[match.mid + '_'] || String(match.tab_play_keys).split(",")[0];
