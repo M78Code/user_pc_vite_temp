@@ -111,7 +111,7 @@ const get_menu_list = async () =>{
 /**
  * 定时器
  */
-const timer = get_interval_menu(get_menu_list,4000);
+const timer = get_interval_menu(get_menu_list,3000);
 
 onMounted(()=>{
     get_init_data();
