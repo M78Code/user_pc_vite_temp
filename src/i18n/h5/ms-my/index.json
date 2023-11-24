@@ -224,7 +224,8 @@
     "total_bet": "Jmlh taruh",
     "total_income": "Approx hasil",
     "bet_retract": "Bertaruh kembali",
-    "bet_inplay": "sedang berlangsung"
+    "bet_inplay": "sedang berlangsung",
+    "bet_limit":"membatasi"
   },
   "bet_record": {
     "30day": "30 day",

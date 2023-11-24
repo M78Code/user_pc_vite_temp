@@ -461,7 +461,9 @@
     "total_bet": "总投注",
     "total_income": "预计总收益",
     "bet_retract": "赌注收回",
-    "bet_inplay": "进行中"
+    "bet_inplay": "进行中",
+    "bet_limit":"限额"
+
 
   },
   "bet_record": {
