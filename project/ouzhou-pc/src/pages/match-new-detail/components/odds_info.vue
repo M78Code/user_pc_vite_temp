@@ -144,6 +144,9 @@ const props = defineProps({
     default: false,
   },
 });
+// <!-- ms: 0开 1封 2关 11锁 -->
+//     <!-- hs: 0开 1封 2关 11锁 -->
+//     <!-- os: 1开 2封 3隐藏不显示不占地方-->
 const mouse_in = ref(false);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
