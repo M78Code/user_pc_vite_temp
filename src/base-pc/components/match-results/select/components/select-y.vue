@@ -42,7 +42,7 @@
         <div
           class="wrap-item"
           v-for="(item, index) in list"
-          :key="`select_${index}`"
+          :key="item.id"
           :class="{ active: item.id == active }"
           @click="choose(item, index)"
         >
@@ -190,7 +190,7 @@ const checkAll = () => {
   // 全选
   menu.value = "all";
   isAllSelect.value = 1;
-  console.log("menumenumenu", menu);
+  console.log("menumenumenu", active_tournament);
 };
 /**
  * @description: 反选
