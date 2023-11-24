@@ -248,7 +248,7 @@ export default {
     'match_of_list.msc': {
       immediate: true,
       deep: true,
-      handler (val) {
+      handler () {
         this.score_value();
         this.mmp_map_title = matchListClass.match_period_map(this.match_of_list);
       }
@@ -760,7 +760,14 @@ export default {
       }
 
       // 比分处理
-      const { home_score, away_score } = MatchUtils.get_match_score(this.match_of_list)
+      // 修改 msc_obj 
+      const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list.msc, true)
+      // if (this.match_of_list.mid === '2927704') {
+      //   console.log(msc_obj)
+      // }
+      
+      // 比分处理
+      const { home_score, away_score } = MatchUtils.get_match_score({ ...this.match_of_list, msc_obj })
 
       this.home_score = home_score
       this.away_score = away_score
