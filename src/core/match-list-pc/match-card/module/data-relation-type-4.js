@@ -87,7 +87,8 @@
         card_index,
       }
     }
-
+    // 将我们的列表历史存入
+    MatchListCardData.match_list_key = match_list
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
       let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
