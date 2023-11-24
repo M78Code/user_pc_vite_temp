@@ -24,7 +24,7 @@
         <div class="match-detail-num" v-if="scoew_icon_list['S1']">{{ scoew_icon_list['S1'].away }}</div>
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
-      {{ console.log(get_match_detail.ms) }}
+      <!-- {{ console.log(get_match_detail.ms) }} -->
       <template v-if="get_match_detail.ms == 1">
         <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
           <div class="list" v-for="item in football_score_icon_list" :key="item.msc_key">
@@ -54,6 +54,7 @@ import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
 import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
+/** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -106,6 +107,7 @@ const show_time_counting = computed(() => {
     return ![0,30,31,32,33,34,50,61,80,90,100,110,120,301,302,303,445].includes(mmp);
   }
 })
+// 意义不明的两行代码
 const current_ball_type = ref(0);
 const sport_ball = {
 	0:7,
@@ -212,13 +214,14 @@ const set_basketball_score_icon_list = () => {
   }
 }
 const scoew_icon_list = ref({});
-const toRef_get_match_detail = toRef(props, "get_match_detail");
-watch(toRef_get_match_detail, (new_value, old_value) => {
-  scoew_icon_list.value = {};
-  set_scoew_icon_list(new_value);
+watch(()=>props.get_match_detail, (new_value, old_value) => {
+  scoew_icon_list.value = new_value.msc_obj;
+  // set_scoew_icon_list(new_value);
+  // 意义不明
   current_ball_type.value = sport_ball[new_value.csid] * 100;
-  set_basketball_score_icon_list();
 })
+watch(()=>props.get_match_detail.mle,set_basketball_score_icon_list,{immediate:true})
+
 /**
  *@description // 比分板数据
  *@param {*}
@@ -254,11 +257,11 @@ const collect_click = () => {
  
 }
 //#TODO: 
-setTimeout(() => {
+// setTimeout(() => {
   // console.log("get_match_detail_MatchInfo", props.get_match_detail);
-  set_scoew_icon_list(props.get_match_detail);
-  set_basketball_score_icon_list();
-}, 200);
+  // set_scoew_icon_list(props.get_match_detail);
+  // set_basketball_score_icon_list();
+// }, 200);
 
 onMounted(()=>{
     setTimeout(function (){

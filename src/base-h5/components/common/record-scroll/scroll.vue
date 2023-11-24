@@ -6,7 +6,7 @@
   <div class="my-scroll" ref="myScroll" @scroll.passive="onScroll($event)">
     <div class="scroll-list">
       <slot></slot>
-      <div class="scroll-bottom">
+      <div class="scroll-bottom" v-if="state==4||state==5">
         <p v-if="state==4">{{i18n_t('myScroll.msg5')}}</p>
         <p v-if="state==5">{{i18n_t('myScroll.msg6')}}</p>
       </div>
