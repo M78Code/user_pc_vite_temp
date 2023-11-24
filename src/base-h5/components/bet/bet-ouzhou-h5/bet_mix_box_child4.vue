@@ -20,7 +20,7 @@
                   </div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">{{ items.marketValue }}</span></div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">{{ item.marketValue }}</span></div>
                       <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
@@ -57,6 +57,7 @@
         <div>{{ i18n_t("bet.total_win2") }}<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
         <div>{{ i18n_t("bet.bet_val") }}<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
       </div>
+      <div style="display:none">{{ BetViewDataClass.bet_view_version }}</div>
       </div>
     </div>
   </template>
