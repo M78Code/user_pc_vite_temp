@@ -71,6 +71,10 @@ const props = defineProps({
   active_score: {
     type: String,
     default: () => { }
+  },
+  warehouse_name: {
+    type: String,
+    default: () => 'MatchDataWarehouse_PC_List_Common'
   }
 });
 const is_mounted = ref(true);
@@ -261,7 +265,7 @@ const bet_click_ol = () => {
   } else {
     emit('update_score', current_id)
   }
-  set_bet_obj_config(params, {})
+  set_bet_obj_config(params, {warehouse_name})
   BetData.set_bet_state_show(true)
 };
 
