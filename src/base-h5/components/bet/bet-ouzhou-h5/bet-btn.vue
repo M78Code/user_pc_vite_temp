@@ -3,12 +3,12 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="tip">
+  <div class="tip component bet-btn-item">
     <div :class="BetViewDataClass.error_code == 200 ? 'bet-success' : 'bet-error'">
       {{ BetViewDataClass.error_message }}
     </div>
   </div> 
-    <div class="bet_content_bottom">
+    <div class="bet_content_bottom component bet-btn-item">
       <p class="bet_cancel" @click="pack_up">{{$t('bet.bet_retract')}}</p>
       <p class="place_bet"  @click="place_bet">
         <span>{{$t('bet_record.bet_val')}}</span> 

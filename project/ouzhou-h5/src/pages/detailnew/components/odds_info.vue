@@ -114,7 +114,6 @@ function useWatchAllCloseState() {
 }
 
 const bet_click_ = (data,play_name) => {
-  console.log(data,'data',play_name);
   active.value = +data.oid;
   // storage_bet_info({
   //   payload: {

@@ -4,8 +4,7 @@
 		<div class="top_info_search">
 			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" v-model="input_value" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
-			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt=""
-				class="clear_value"
+			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt="" class="clear_value"
 			  @click.stop.prevent.self="clear_value" v-show="input_value.length > 0"/>
 			<span class="close_btn" @click="to_home">{{ i18n_t('ouzhou.search.close') }}</span>
 		</div>
@@ -375,11 +374,13 @@ function league_icon_error($event) {
 function default_method_jump(name, item) {
 	if (!item) return;
 
+	/*
 	if (item.mid) {
-		//set_goto_detail_matchid(item.mid);
+		set_goto_detail_matchid(item.mid);
 	} else {
-		//set_goto_detail_matchid(item.matchList[0].mid);
+		set_goto_detail_matchid(item.matchList[0].mid);
 	}
+	*/
 
 	// 手机键盘收起动画完成后才跳转
 	clearTimeout(go_detail_or_result_timer)
@@ -415,15 +416,14 @@ function suggestion_bowling_click(item) {
 // 跳转到 详情页 或者 赛果页面
 function go_detail_or_reslut(item) {
 	sessionStorage.setItem('search_txt', input_value.value);
+	const query = get_search_txt ? { search_term: get_search_txt } : {}
 	if (get_menu_type.value == 28) {
 		router.push({
 			name: 'match_result',
 			params: {
 				mid: item.mid ? item.mid : item.matchList[0].mid,
 			},
-			query: {
-				search_term: get_search_txt
-			}
+			query
 		})
 	} else {
 		router.push({
@@ -434,7 +434,7 @@ function go_detail_or_reslut(item) {
 				csid: item.csid,
 				mcid: item.mcid,
 			},
-			query: { search_term: get_search_txt }
+			query
 		})
 	}
 }

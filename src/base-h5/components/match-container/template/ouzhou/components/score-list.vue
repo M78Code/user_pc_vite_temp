@@ -11,9 +11,10 @@
         :odd_item="s"
         :mhs="mhs"
         :item_hs="item_hs"
+        :show_hpn="show_hpn"
         :match_id="match_info.id"
         :csid="match_info.csid"
-        :show_hpn="show_hpn"></OddItem>
+        :match_data_type="match_info.match_data_type"></OddItem>
     </template>
      <!-- 锁 -->
     <template v-else>
