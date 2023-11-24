@@ -109,7 +109,7 @@
         </div>
         <div
           class="match-detail-item-list baseketball-list"
-          v-if="['2', '6'].includes(get_match_detail.csid)"
+          v-if="['2', '6'].includes(get_match_detail.csid+'')"
         >
           <div class="line"></div>
           <div
@@ -328,6 +328,14 @@ const set_scoew_icon_list = (new_value) => {
     // console.log("scoew_icon_list", scoew_icon_list);
   }
 };
+watch(
+  () => props.get_match_detail.msc,
+  (msc) => {
+    set_scoew_icon_list({msc});
+    set_basketball_score_icon_list();
+  },
+  { immediate: false, deep: true }
+);
 /**
  *@description // 收藏
  *@param {*}
