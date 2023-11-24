@@ -1,20 +1,20 @@
 <template>
   <div class="sport">
     <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-    <div class="competing-time">
+    <div class="competing-time" @click="jump_to_details(current_tab)" >
       <sport_icon :size="'12px'" :status="true" :sport_id="current_tab.csid" class="sport-icon" />
       <div class="matches-time">
         <div class="begin-time din_font">{{ get_mmp(current_tab.mst) }}</div>
       </div>
     </div>
-    <div class="club-name">
+    <div class="club-name" @click="jump_to_details(current_tab)">
       {{ current_tab.mhn }}
     </div>
-    <div class="union-name">
+    <div class="union-name" @click="jump_to_details(current_tab)">
       {{ current_tab.man }}
     </div>
     <div class="odds-box din_font">
-      <div class="odds-box-item" v-for="(col, col_index) in get_col_ols_data(current_tab)" :key="col._hpid + col_index">
+      <div class="odds-box-item" v-for="(col, col_index) in ols_data" :key="col._hpid + col_index">
         <!-- :class="{checked: BetData.bet_oid_list.includes(item.oid) }" -->
         <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
           v-for="(ol_data, ol_index) in (col.ols)" :key="ol_index + '_' + ol_data._hpid + '_' + ol_data._ot">
@@ -27,28 +27,45 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, computed } from 'vue';
-import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
+import { computed, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchListDataInfo, i18n_t } from "src/core/index.js"
+import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t } from "src/core/index.js"
 import { merge_template_data } from 'src/core/match-list-pc/composables/match-list-other.js'
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
-
+const router = useRouter()
 const props = defineProps({
   current_tab: {
     type: [Object, Array],
-    default: () => { },
+    default: () => ({ }),
   },
 });
+const jump_to_details = (item) => {
+  const { tid, csid } = item;
+  //比分板跳转到详情页
+  router.push({
+    name: 'details',
+    params: {
+      mid: item.mid,
+      tid: tid,
+      csid: csid
+    }
+  })
+}
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 let odds_list = match_tpl_info.get_15mins_odds_list()
-// const ols = ref([])
-
+const ols_data = computed(() => {
+  return merge_template_data({
+    match: props.current_tab,
+    handicap_list: [odds_list],
+    type: 4,
+    play_key: 'hps15Minutes'
+  }, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
+})
 // // 监听 当前投注项ID的变化
 watch(
   MenuData.current_check_betId,
@@ -62,16 +79,6 @@ const get_mmp = (mst) => {
   if (difference >= 6) difference = 5;
   return i18n_t('ouzhou.15minutes_bet_col')[difference]
 }
-
-function get_col_ols_data(match) {
-  return merge_template_data({
-    match: props.current_tab,
-    handicap_list: [odds_list],
-    type: 4,
-    play_key: 'hps15Minutes'
-  })
-}
-
 </script>
 
 <style lang="scss" scoped>
@@ -152,13 +159,14 @@ function get_col_ols_data(match) {
 
   .odds-box-item {
     cursor: pointer;
-    width: 73px;
+    // width: 73px;
     height: 40px;
     line-height: 17px;
     letter-spacing: 0px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    width: 100%;
     // &:hover {
     //   background: rgba(255, 112, 0, 0.1);
     // }
@@ -191,6 +199,65 @@ function get_col_ols_data(match) {
 
     &:hover {
       background: var(--q-gb-bg-c-1);
+    }
+  }
+}
+
+:deep(.bet-item-wrap-ouzhou) {
+  display: flex;
+  width: 78px;
+  height: 40px !important;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  .c-bet-item {
+    width: 78px;
+    height: 40px;
+  }
+
+  .c-bet-item.can-hover:hover {
+    background: var(--q-gb-t-c-4);
+    cursor: pointer;
+  }
+
+  &.bet-item-wrap-ouzhou-bigger {
+    .c-bet-item {
+      width: 133px;
+    }
+
+  }
+
+  .c-bet-item.active {
+    background: var(--q-gb-bg-c-1) !important;
+
+    .handicap-value,
+    .handicap-value-text {
+      color: var(--q-gb-t-c-4);
+    }
+
+    .odds {
+      color: var(--q-gb-t-c-1);
+    }
+  }
+
+  div {
+    color: var(--q-gb-bg-c-7);
+    font-size: 14px;
+  }
+
+  .odds {
+    color: var(--q-gb-t-c-2);
+    font-weight: 500;
+    font-size: 14px;
+
+    &.up {
+      color: var(--q-gb-t-c-7) !important;
+    }
+
+    &.down {
+      color: var(--q-gb-t-c-10) !important;
     }
   }
 }

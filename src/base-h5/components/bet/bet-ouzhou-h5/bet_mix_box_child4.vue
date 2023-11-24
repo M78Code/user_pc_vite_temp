@@ -6,17 +6,18 @@
 <template>
     <div class="bet-mix-show">
       <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="index">
+      <!-- <div>{{BetViewDataClass.bet_order_status}}</div> -->
           <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 5">
+                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 2">
                     <div class="nonebox4-content-left-content-nei"></div>
                   </div>
-                  <div class="nonebox4-content-left-content-xian green" v-if="BetViewDataClass.bet_order_status == 3">
-                    <div class="nonebox4-content-left-content-nei green-nei"></div>
+                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 3">
+                    <span class="icon-success"></span>
                   </div>
                   <div class="nonebox4-content-left-content-xian red" v-if="BetViewDataClass.bet_order_status == 4">
-                    <div class="nonebox4-content-left-content-nei red-nei"></div>
+                    <span class="icon-failure"></span>
                   </div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
@@ -75,6 +76,13 @@
   </script>
   
   <style lang="scss" scoped>
+  .icon-failure:before{
+    font-size: 18px;
+  }
+  .icon-success:before{
+    font-size: 18px;
+    color: var(--q-gb-t-c-16);
+  }
   .hps_img{
     width: 9px;
     height: 18px;
@@ -138,6 +146,7 @@
   .total-right{
     font-weight: bold;
     margin-left: 0.05rem;
+    font-size: 0.16rem;
   }
   .total-left{
     color: var(--q-gb-t-c-18);
@@ -175,11 +184,12 @@
     color: var(--q-gb-t-c-3);
   }
   .nonebox4-content-left-content-text-two{
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-15);
     font-size: 0.13rem;
+    padding: 0.01rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-18);
+    color: #000000;
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
@@ -210,7 +220,7 @@
   .nonebox4-content-left-content-xian{
     width: 0.15rem;
     height: 0.13rem;
-    border: 1px solid var(--q-gb-bd-c-1);
+    border: 1px solid var(--q-gb-bg-c-1);;
     border-radius: 50%;
     margin-right: 0.15rem;
     margin-top: 0.08rem;
@@ -232,7 +242,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      padding: 0 0.15rem;
+      padding: 0 0.05rem;
   }
   .nonebox4-content-right{
     text-align: right;
@@ -241,6 +251,7 @@
     font-size: 0.12rem;
     font-weight: bold;
     color: var(--q-gb-t-c-1);
+    padding: 0 0.05rem;
   }
   </style>
   

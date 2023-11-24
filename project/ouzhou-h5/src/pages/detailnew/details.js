@@ -1,4 +1,4 @@
-import { api_match_list,api_common } from "src/api/index.js";
+import { api_match_list, api_common } from "src/api/index.js";
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
 import { onMounted, ref, watch, onUnmounted, toRaw } from "vue";
 import {
@@ -11,7 +11,7 @@ import {
   UserCtr,
   MatchDataWarehouse_H5_List_Common,
   MenuData,
-  SearchData
+  SearchData,
 } from "src/core/index";
 import { details_ws } from "./details-ws";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
@@ -37,8 +37,8 @@ export const details_main = (router, route) => {
   const fixedHeight = ref(null);
   const MatchDataWarehouseInstance = ref(MatchDataWarehouse_H5_Detail_Common);
   /** @type {Ref<Boolean>} */
-  const allCloseState = ref(void 0) // 值为undefined 则隐藏一键展开/收起
-  allCloseState.value = false
+  const allCloseState = ref(void 0); // 值为undefined 则隐藏一键展开/收起
+  allCloseState.value = false;
 
   /** @type {Promise<any>} 用于控制detail_init加载顺序的Promise */
   let loadingQueue;
@@ -270,11 +270,11 @@ export const details_main = (router, route) => {
    * @param {*} val  mid参数
    * @return {*}
    */
-  function update_data(val){
+  function update_data(val) {
     if (!val) return;
     match_detail.value = getMidInfo(val);
     match_odds_info.value = lodash.get(getMidInfo(val), "odds_info");
-  };
+  }
   /**
    * @description: 从仓库获取获取赛事信息
    * @param {*} mid
@@ -425,7 +425,7 @@ export const details_main = (router, route) => {
 
   let message_fun = null;
   onMounted(() => {
-    console.log(MenuData,'MenuData');
+    console.log(MenuData, "MenuData");
     MatchDataWarehouse_H5_List_Common.set_active_mids([]);
     loading.value = true;
     init.value = true;
@@ -459,14 +459,14 @@ export const details_main = (router, route) => {
   // 监听赛事状态mmp的值
   watch(
     () => match_detail.value?.mmp,
-    (_new,_old) => {
+    (_new, _old) => {
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {
         event_switch();
       }
       // 否则更新玩法集
       else {
-        if(_old != undefined){
+        if (_old != undefined) {
           const { mid, csid } = route.params;
           get_category_list_info({
             sportId: csid,
@@ -479,7 +479,7 @@ export const details_main = (router, route) => {
   // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
   watch(
     () => match_detail.value?.ms,
-    (_new,_old) => {
+    (_new, _old) => {
       let arr_ms = [0, 1, 2, 7, 10, 110];
       if (!arr_ms.includes(Number(_new))) {
         event_switch();
@@ -489,78 +489,78 @@ export const details_main = (router, route) => {
         // ms变更时才调用
         if (_new != _old && _old) {
           // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-          detail_init()
+          detail_init();
         }
       }
     }
   );
-      /**
-     *@description 详情页赛事结束自动切换赛事 todo
-     *@param {Undefined}
-     *@return {Object} 返回赛事各项id(球类id:csid/赛事id:mid/联赛id:tid)
-     */
-     function event_switch() {
-      let { mid, csid } = route.params;
-      let params = {
-        // 查找参数 1:赛事列表(非滚球:今日 早盘...) 2:赛事详情(滚球) 3:赛事筛选 4:赛事搜索(int) 如果不传默认 1:赛事列表
-        sm: 2,
-        // 菜单ID 多个用逗号分割(字符串)
-        euid: MenuData.get_euid(),
-        // 早盘日期的参数 早盘 和 串关都要加 (字符串)
-        md: -1,
-        // 赛事种类id
-        csid,
-        // 联赛id
-        tid:getMidInfo(mid).tid,
-        // 排序 int 类型 1按热门排序 2按时间排序(整型)
-        sort: 1,
-        // 搜索关键词 赛事搜索(字符串)
-        keyword: lodash.trim(SearchData.search_txt) || "",
-        // 用户id或者uuid
-        cuid: cuid.value,
-        // 赛事id
-        mid,
-      };
+  /**
+   *@description 详情页赛事结束自动切换赛事 todo
+   *@param {Undefined}
+   *@return {Object} 返回赛事各项id(球类id:csid/赛事id:mid/联赛id:tid)
+   */
+  function event_switch() {
+    let { mid, csid,tid } = route.params;
+    let params = {
+      // 查找参数 1:赛事列表(非滚球:今日 早盘...) 2:赛事详情(滚球) 3:赛事筛选 4:赛事搜索(int) 如果不传默认 1:赛事列表
+      sm: 2,
+      // 菜单ID 多个用逗号分割(字符串)
+      euid: MenuData.get_euid(MenuData.current_lv_2_menu_i),
+      // 早盘日期的参数 早盘 和 串关都要加 (字符串)
+      md: -1,
+      // 赛事种类id
+      csid,
+      // 联赛id
+      tid,
+      // 排序 int 类型 1按热门排序 2按时间排序(整型)
+      sort: 1,
+      // 搜索关键词 赛事搜索(字符串)
+      keyword: lodash.trim(SearchData.search_txt) || "",
+      // 用户id或者uuid
+      cuid: cuid.value,
+      // 赛事id
+      mid,
+    };
 
-      api_common.get_detail_video(params).then((res) => {
-        let event_data = _.get(res, "data", {});
-        if (event_data && event_data.mid) {
-          // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型
-          let flag1 = [100, 101, 103].includes(+event_data.csid);
-          let flag2 = [100, 101, 103].includes(+params.csid);
-          if (!this.get_godetailpage) {
-            // 如果是从app直接进详情页
-            if (flag1) {
-              this.set_menu_type(3000);
-            } else {
-              this.set_menu_type("");
-            }
+    api_common.get_detail_video(params).then((res) => {
+      let event_data = lodash.get(res, "data", {});
+      if (event_data && event_data.mid) {
+        // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型
+        let flag1 = [100, 101, 103].includes(+event_data.csid);
+        let flag2 = [100, 101, 103].includes(+params.csid);
+        if (!this.get_godetailpage) {
+          // 如果是从app直接进详情页
+          if (flag1) {
+            MenuData.set_menu_type(3000);
           } else {
-            // 如果是正常情况下触发了自动跳转
-            if (flag1 !== flag2) {
-              if (flag1) {
-                this.set_menu_type(3000);
-              } else {
-                this.set_menu_type("");
-              }
+            MenuData.set_menu_type("");
+          }
+        } else {
+          // 如果是正常情况下触发了自动跳转
+          if (flag1 !== flag2) {
+            if (flag1) {
+              MenuData.set_menu_type(3000);
+            } else {
+              MenuData.set_menu_type("");
             }
           }
-          // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-          get_matchDetail_MatchInfo({ mid: event_data.mid, cuid: cuid.value })
-          // this.get_match_details({ mid: event_data.mid, cuid: this.get_uid });
-          // 重新调用 详情页面玩法集接口(/v1/m/category/getCategoryList)
-          // this.get_odds_list({ sportId: event_data.csid, mid: event_data.mid });
-          // 存储设置新的赛事id
-          // this.set_goto_detail_matchid(event_data.mid);
-        } else {
-          // 如果不是演播厅的，才有退出回到 列表
-          // if (lodash.get(this.get_video_url, "active") != "lvs") {
-            // 没有返回赛事数据就跳转到列表页
-            router.push({ name: "matchList" });
-          // }
         }
-      });
-    }
+        // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
+        get_matchDetail_MatchInfo({ mid: event_data.mid, cuid: cuid.value });
+        // this.get_match_details({ mid: event_data.mid, cuid: this.get_uid });
+        // 重新调用 详情页面玩法集接口(/v1/m/category/getCategoryList)
+        // this.get_odds_list({ sportId: event_data.csid, mid: event_data.mid });
+        // 存储设置新的赛事id
+        // this.set_goto_detail_matchid(event_data.mid);
+      } else {
+        // 如果不是演播厅的，才有退出回到 列表
+        // if (lodash.get(this.get_video_url, "active") != "lvs") {
+        // 没有返回赛事数据就跳转到列表页
+        router.push({ name: "matchList" });
+        // }
+      }
+    });
+  }
   onUnmounted(() => {
     clear_all_timer();
     // 组件销毁时销毁监听函数

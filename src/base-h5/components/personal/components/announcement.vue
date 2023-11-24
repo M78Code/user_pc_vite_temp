@@ -4,7 +4,7 @@
       <section>
         <div class="title"> <span>information</span>  <span class="titlebtn" @click="readall">Read All</span></div>
         <q-scroll-area style="height: 100%;">
-          <div v-for="(item , index) in announcement_data" :key="index">
+          <div v-for="(item , index) in announcement_data" class="main_content" :class="{active:show}" :key="index">
             <div class="contents">
               <span v-if="show">*</span><div>{{ item.content }}</div>
             </div>
@@ -115,6 +115,21 @@ const showclick = (index) => {
       margin-bottom: 10px;
       background: #fff;
     }
+    .main_content{
+      border-bottom: 1px solid #DBDBDB;
+    }
+    .active{
+      &::before{
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: linear-gradient(180deg, #FF2B2B 0%, #FF7000 100%);
+      position: absolute;
+      left:  8px;
+      top: 12px;
+      border-radius: 50%;
+    }
+    }
     section{
       height: calc(100% - 75px);
       background: #fff;
@@ -128,6 +143,7 @@ const showclick = (index) => {
         border-bottom: 1px solid #F3F3F3;
         display: flex;
         justify-content: space-between;
+        border-top: 1px solid #ff7000;
       }
       :deep(.q-scrollarea__thumb){
         display: none;
@@ -151,6 +167,7 @@ const showclick = (index) => {
                 margin-top: 0.08rem;
                 margin-bottom: 0.1rem;
                 font-size: 0.12rem;
+                color: #8A8986;
             }
             .titlebtn{
               width: 70px;
@@ -161,6 +178,7 @@ const showclick = (index) => {
               line-height: 24px;
               font-size: 12px;
               font-weight: 400;
+              background: rgba(255, 112, 0, 0.02);
             }
             .contents{
               display: flex;

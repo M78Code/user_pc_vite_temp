@@ -48,11 +48,11 @@ const pack_up = (val) => {
   height: .36rem;
   line-height: 0.36rem;
   .bet-error {
-    color: var(--q-gb-t-c-7);
+    color: var(--q-gb-t-c-4);
   }
 
   .bet-success {
-    color: var(--q-gb-t-c-10);
+    color: var(--q-gb-t-c-4);
   }
 }
 .bet_content_bottom{
