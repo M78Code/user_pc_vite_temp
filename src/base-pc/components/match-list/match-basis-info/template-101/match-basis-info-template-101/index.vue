@@ -332,6 +332,14 @@ onUnmounted(() => {
       animation: 1s text-flash linear infinite normal;
     }
   }
+  :deep(.c-match-process ) {
+    .jingcai ,.process-name {
+      margin-right: 5px;
+    }
+    .date-wrap {
+      padding-left: 0 !important;
+    }
+  }  
 }
 
 </style>
