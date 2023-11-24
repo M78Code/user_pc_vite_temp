@@ -5,9 +5,18 @@
  */
 
 <template>
-  <div></div>
+  <template v-if="wslog.ws_run">
+    <div class="time-show">
+      <span>{{ CURRENT_ENV_MAP[CURRENT_ENV] }}:{{ log_time }}</span>
+    </div>
+    <div class="time-show-copy" @click="copy_token()"> 
+      <span>☺</span>
+    </div>
+  </template>
 </template>
 <script setup>
+import { copyToClipboard } from "quasar";
+import { wslog } from "src/core/log/";
 import WsMan from './ws-man.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
@@ -15,6 +24,8 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 // 页面 失去 焦点后  WS 断开时间
 const DOCUMENT_HIDDEN_WS_CLOSE_TIME = 5 * 60 * 1000;
+// 当前环境
+const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 import {
   ref,
   onMounted,
@@ -25,14 +36,30 @@ import {
   onBeforeUnmount,
   watch,
 } from "vue";
+// 环境对应关系
+const CURRENT_ENV_MAP={ 
+  'local_dev':'开发',
+  'local_test':'测试',
+  'idc_pre':'预发布',
+  'idc_sandbox':'试玩',
+  'idc_lspre':'隔离预发布',
+  'idc_online':'生产',
+  'idc_ylcs':'微型测试',
+  'local_dev':'开发',
+  'local_dev':'开发',
+  'local_dev':'开发',
+}
 // 延时器使用
 let timer = 0;
 let timer2 = 0;
 let timer_text = 0;
+let log_time_timer = 0;
 // 最后次ws断开时间
 let lase_socket_close_time = new Date().getTime();
 // ws状态变化
 const ws_status = ref(0)
+// ws开启页面提示时间
+const log_time = ref(0)
 // 测试使用到的仓库对象
 // const match_data_base1 = reactive(new MatchDataBase({name_code:'1111'}));
 // 测试使用到的方法
@@ -52,6 +79,22 @@ function test(){
     
 
   }, 6000);
+}
+/**
+ * @Description 设置时间 
+ * @param {undefined} undefined
+*/
+function set_time_str(){
+  try {
+    log_time.value =  (new Date()).format_log("yyyy-MM-dd hh:mm:ss.S");
+  } catch (error) {
+    console.error(error);
+    log_time.value = '';
+  }
+}
+// copy缓存的参数
+function copy_token(is_key_down) {
+  copyToClipboard(SEARCH_PARAMS.init_param.toString());
 }
 /**
  * @description: visibilitychange事件监听
@@ -430,8 +473,12 @@ onMounted(()=>{
   document.addEventListener('pagehide', event_listener_visibilitychange);
   // 启动WS操作对象
   WsMan.run();
+  if(wslog.ws_run){
+    clearInterval(log_time_timer);
+    log_time_timer = setInterval(set_time_str, 100);
+  }
   // 开启测试功能
-  test();
+  // test();
 })
 
 onBeforeUnmount(()=>{
@@ -444,7 +491,44 @@ onBeforeUnmount(()=>{
   clearTimeout(timer);
   clearTimeout(timer2);
   clearTimeout(timer_text);
+  clearInterval(log_time_timer);
   // 销毁WS操作对象
   WsMan.destroyed();
 })
 </script>
+<style lang="scss" scoped>
+.time-show {
+  position: fixed;
+  top: 20px;
+  width:  100vw;
+  color: red;
+  z-index: 9999999;
+  font-size: 20px;
+  text-align: center;
+  pointer-events:none;
+  span {
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 5px;
+  }
+}
+.time-show-copy {
+  position: fixed;
+  left: -15px;
+  padding-top: -90px !important;
+  margin: 0px;
+  top: -10px;
+  width: 30px;
+  height: 30px;
+  color: red;
+  z-index: 9999999;
+  font-size: 30px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 20px 20px;
+  span {
+    position:relative;
+    left: 0px;
+    top: -10px;
+  }
+}
+</style>
