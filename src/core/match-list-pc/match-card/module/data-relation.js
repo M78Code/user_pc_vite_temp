@@ -165,7 +165,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
     }
   MatchListCardData.match_list_mapping_relation_obj_type = set_match_list_mapping_relation_obj_type();
     // 非ws调用  清空卡片数据
-    if (!is_ws_call) {
+    if (!is_ws_call&&!is_five_leagues) {
       MatchListCardData.match_list_render_key++;
       // 重置 赛事模板配置  开始
       //  let template_id = MenuData.match_tpl_number

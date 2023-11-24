@@ -31,7 +31,6 @@
       </template>
     </div>
     <div class="pagination-wrap" :style="results_table">
-      <q-select v-model="perPageNum" :options="options.options_1" label="Standard" />
       <q-pagination
         v-model="page"
         color="#788299"

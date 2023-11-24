@@ -171,7 +171,6 @@
         card_index += 1
         card_key = `league_title_${cus_tid}`
         match_list_card_key_arr.push(card_key)
-        console.log(is_five_leagues, 'abdd')
         is_five_leagues && five_leagues_card_key_arr.push(card_key)
         csid_to_card_key_obj[csid_key].push(card_key)
 
@@ -264,7 +263,6 @@
         // 五大联赛key列表
         five_leagues_card_key_arr 
       })
-      console.log('match_list_card_key_arr', match_list_card_key_arr);
     // 重新计算所有的联赛卡片样式
     for(let card_key in league_card_mids_arr){
       // 不是联赛容器卡片不处理

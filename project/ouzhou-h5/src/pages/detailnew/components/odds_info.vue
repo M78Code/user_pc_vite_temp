@@ -13,7 +13,7 @@
         <div
           :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']"
         >
-        <!-- {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }} -->
+<!--         {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
           <component
               :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
               :item_data="item"
@@ -21,6 +21,7 @@
               @bet_click_="bet_click_"
           />
         </div>
+<!--          <bevisTemplate0 :betInfor="item"></bevisTemplate0>-->
       </div>
       <!-- <div class="match-detail-odds-bottom"></div> -->
     </template>
@@ -40,6 +41,10 @@ import temp1 from "./template/tem1.vue";
 import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
+
+import bevisTemplate0 from "./template/bevis-template0.vue"
+
+
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 // import EMITTER from "src/global/mitt.js";
@@ -170,7 +175,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .match-detail-odds {
   // background: #F1F1F1;
-  min-height: calc(100vh - 150px);
+  min-height: 100%;
   // border-bottom: 40px solid #F1F1F1;
   .no-data {
     width: 140px;

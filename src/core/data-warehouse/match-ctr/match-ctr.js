@@ -665,7 +665,7 @@ init(){
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list, param={}){
-    console.log('set_list', list)
+    console.log('set_list', list,this.name_code)
     if(list){
       // 索引置换
       let temp = lodash.cloneDeep(this.match_list);
@@ -1507,6 +1507,9 @@ init(){
             }
           } else if('array' == type2){
             item && this.assign_with(old_value[i],item);
+          }else {
+            /** #TODO:  数据没有被合并的问题 */
+            old_value[i] = new_value[i]
           }
           // console.error(i,'-old_value=item=>>>=',JSON.stringify(old_value[i]));
           // console.error(i,'-new_value=item=>>>=',JSON.stringify(item));
