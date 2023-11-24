@@ -87,10 +87,7 @@
             </q-card>
           </q-expansion-item>
         </div>
-        <div
-          class="header_banne sport_bg"
-          :style="`background-position:0 -${sport_ball_type[sportId]}px`"
-        ></div>
+        <div class="header_banne sport_bg" :style="`background-position:0 -${sport_ball_type[sportId]}px`"></div>
       </div>
       <!-- tabs 玩法分类切换 -->
       <tabs :tab_options="tabList" v-model="current_key" />
