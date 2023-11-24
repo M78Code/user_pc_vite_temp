@@ -1,6 +1,6 @@
 <!-- 单关，串关，投注金额输入框 -->
 <template>
-    <div class="bet_input_info flex_input">
+    <div class="bet_input_info flex_input component bet-input-info">
        <div class="info_left">
        <div class="size_16 color_a1a1">{{$t('bet.bet')}}</div>
         <div class="size_14">
@@ -42,7 +42,7 @@ const props = defineProps({
     }
 })
 
-const input_click = (item,index,evnet) => {
+const input_click = (item,index,event) => {
     console.error('index', index)
   event.preventDefault()
   BetData.set_bet_keyboard_config(item)
