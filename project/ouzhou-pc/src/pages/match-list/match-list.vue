@@ -25,7 +25,7 @@
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <load-data v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length" :state="'data'" :style="{
+    <load-data v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length && !MenuData.is_leagues()" :state="'data'" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }">
       <!--此处先写死高度用来调试UI -->
@@ -66,6 +66,13 @@
         </template>
       </scroll-list>
     </load-data>
+    <load-data v-else :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
+      <scroll-list>
+        <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id}`">
+          <play-match-league :league_obj="league_item" />
+        </div>
+      </scroll-list>
+    </load-data>
     <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }" />
@@ -93,6 +100,7 @@ import ScrollList from "src/base-pc/components/cus-scroll/scroll_list.vue";
 import refresh from "src/components/refresh/refresh.vue";
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue"; //电竞赛事列表筛选
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
+import PlayMatchLeague from './play-match-league.vue'
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
@@ -116,6 +124,7 @@ import {
   matches_15mins_list, match_count,init_home_matches 
 } from "./index"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
+import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
 const {
   mounted_fn,
@@ -146,7 +155,8 @@ export default {
     MatchCardList15Mins,
     MatchesHeader,
     ConmingSoon,
-    MatchMainTitle
+    MatchMainTitle,
+    PlayMatchLeague
   },
   setup() {
     // 15分钟赛事数据
@@ -190,6 +200,10 @@ export default {
       }
     }
 
+    function get_league_list() {
+      return MatchLeagueData.get_league_list()
+    }
+
     return {
       show_refresh_mask,
       collect_count,
@@ -208,6 +222,7 @@ export default {
       match_list_top,
       match_list_card,
       MenuData,
+      get_league_list,
       LayOutMain_pc,
       MatchDataWarehouse_ouzhou_PC_five_league_List_Common
     };
