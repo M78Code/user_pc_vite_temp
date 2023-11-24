@@ -10,9 +10,7 @@
             :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'" ></span>
         </div>
         
-        <div
-          :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']"
-        >
+        <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
 <!--         {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
           <component
               :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
