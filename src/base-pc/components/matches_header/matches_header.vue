@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_kemp() || MenuData.is_collect || MenuData.is_top_events()"  />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() ) || MenuData.is_collect || MenuData.is_top_events()"  />
 		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues()" />
 		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
