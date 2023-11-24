@@ -298,7 +298,7 @@ onUnmounted(() => {
       margin-top: 4px;
     }
     &.kedui-item {
-      color: var(--q-gb-bg-c-19);
+      color: var(--q-gb-t-c-8);
     }
     .score {
       font-weight: 500;

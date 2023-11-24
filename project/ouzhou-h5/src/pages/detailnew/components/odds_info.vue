@@ -1,26 +1,29 @@
 <template>
-  <div class="match-detail-odds">
+  <div class="match-detail-odds component odds-info">
     <template v-if="match_odds_info && match_odds_info.length > 0" >
-      <div v-for="(item, index) in match_odds_info" :key="item.topKey" class="odds-wrap">
-        <q-separator color="orange" v-if="index != 0" />
-        <div class="odds-hpn" @click="expend_toggle(item)">
-          <span class="odds-hpn-text">{{ item.hpn }}</span>
-          <!-- <img :src="downUrl" alt=""> -->
-          <span class="odds-hpn-icon" 
-            :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'" ></span>
+      <template v-for="(item, index) in match_odds_info" :key="item.topKey">
+        <div class="odds-wrap">
+          <q-separator color="orange" v-if="index != 0" />
+          <div class="odds-hpn" @click="expend_toggle(item)">
+            <span class="odds-hpn-text">{{ item.hpn }}</span>
+            <!-- <img :src="downUrl" alt=""> -->
+            <span class="odds-hpn-icon" 
+              :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'" ></span>
+          </div>
+          
+          <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
+          <!-- {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }} -->
+            <component
+                :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
+                :item_data="item"
+                :active="active"
+                @bet_click_="bet_click_"
+            />
+          </div>
+  <!--          <bevisTemplate0 :betInfor="item"></bevisTemplate0>-->
         </div>
-        
-        <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-        <!-- {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }} -->
-          <component
-              :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
-              :item_data="item"
-              :active="active"
-              @bet_click_="bet_click_"
-          />
-        </div>
-<!--          <bevisTemplate0 :betInfor="item"></bevisTemplate0>-->
-      </div>
+      </template>
+      
       <!-- <div class="match-detail-odds-bottom"></div> -->
     </template>
     <template v-else>
@@ -48,6 +51,7 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 // import EMITTER from "src/global/mitt.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+// /** @type {{match_odds_info:Array<TYPES.MatchDetail|{hl:Array<TYPES.Hl>}}} */
 const props = defineProps({
   match_odds_info: {
     type: Array,

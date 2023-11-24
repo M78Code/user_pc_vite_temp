@@ -4,7 +4,7 @@
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: route.params.sportId })"></div>
 			<div class="matches-title">
 				<div class="match_all_matches">
-					<span class="sports">{{ BaseData.menus_i18n_map[+route.params.sportId + 100] || "" }}</span>
+					<span class="sports" @click="jumpTo()">{{ BaseData.menus_i18n_map[+route.params.sportId + 100] || "" }}</span>
 					<img class="t_left" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
 					<span class="leagues_name">{{ getName() }}</span>
 				</div>
@@ -18,31 +18,31 @@ import { ref,onMounted,onUnmounted, watch } from 'vue';
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MenuData,i18n_t, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
 
 const route = useRoute();
-// 头部高度 包含 teb切换
-const match_list_top = ref('80px')
+const router = useRouter()
 
 const getName = () => {
 	let list = MatchLeagueData.get_league_list()
 	let name = ''
-	console.log(list , 'liost', route.params.tid)
 	list.map(item => {
 		if (item.id == route.params.tid) {
 			name = item.nameText
 		}
 	})
-	return name
+	return name || MatchLeagueData.league_name
 }
-
+const jumpTo = ()=>{
+	router.go(-1)
+}
 </script>
 
 <style lang="scss" scoped>
 .matches_header_wrap {
-	height: v-bind('match_list_top');
+	height:80px;
 	// padding-right: 7px;
 	box-sizing: border-box;
 	margin-bottom: 10px;
