@@ -10,9 +10,9 @@ import * as TemplateCommon from "./template-common.js"
     {
       _hpid: 1,
       ols: [
-        { _hpid: 1, otb: "主胜" , ot: "1"},
-        { _hpid: 1, otb: "平局" , ot: 'X'},
-        { _hpid: 1, otb: "客胜" , ot: '2'},
+        { _hpid: 1, otb: "主" , ot: "1"},
+        { _hpid: 1, otb: "平" , ot: 'X'},
+        { _hpid: 1, otb: "客" , ot: '2'},
       ],
     },
     {
