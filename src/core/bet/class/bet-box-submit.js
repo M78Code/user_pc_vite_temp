@@ -393,10 +393,11 @@ const submit_handle = type => {
                 }
 
             }
+             // 投注成功 更新余额
+             UserCtr.get_balance()
             // 投注成功 获取余额 获取投注记录数量
             if(order_state == 3){
-                // 投注成功 更新余额
-                UserCtr.get_balance()
+               
                 // pc 有的 
                 if(params.deviceType == 2){
                     // 投注成功后获取投注记录数据 24小时内的
