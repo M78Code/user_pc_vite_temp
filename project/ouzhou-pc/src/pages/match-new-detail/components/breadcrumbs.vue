@@ -9,7 +9,7 @@
       <span >{{ breadCrumbs_firstOne() }}</span>
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
     </div>
-    <div class="detail-bread-item">
+    <div class="detail-bread-item" @click="jumpToLeagues()">
       <span>{{ detail_info.tn }}</span>
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
     </div>
@@ -24,6 +24,8 @@ import { onMounted, ref, computed, watch } from "vue";
 import { useRoute,useRouter } from 'vue-router'
 import {LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core/index.js'
 import BaseData from "src/core/base-data/base-data.js";
+import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
+
 const props = defineProps({
   detail_info: {
     type: Object,
@@ -68,7 +70,11 @@ const breadCrumbs_firstOne = function (){
 const jumpTo = ()=>{
   router.go(-1)
 }
-
+const jumpToLeagues  = () => {
+  const { csid = 1, tid, tn } = props.detail_info
+  MatchLeagueData.set_league_name(tn)
+  router.push(`/league/${csid}/${tid}`)
+}
 
 
 
@@ -108,7 +114,7 @@ const jumpTo = ()=>{
     color: #B5B5B5;
     display: flex;
     align-items: center;
-
+    cursor: pointer;
     img {
       height: 12px;
       margin: 0 10px 4px 10px;

@@ -225,7 +225,8 @@
     "total_bet": "Total taruhan",
     "total_income": "Prediksi profit",
     "bet_retract": "Bertaruh kembali",
-    "bet_inplay": "sedang berlangsung"
+    "bet_inplay": "sedang berlangsung",
+    "bet_limit":"membatasi"
   },
   "bet_record": {
     "30day": "30 hr",

@@ -1,9 +1,13 @@
 import lodash from "lodash"
+import { UserCtr } from "src/core";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 export default class BetRecordWs {
     constructor() {
         this.run()
+        setTimeout(()=>{
+            this.set_bet_c3_message()
+        }, 1000)
     }
     /**
     * @description: 开始WS
@@ -22,6 +26,32 @@ export default class BetRecordWs {
         // 增加ws消息监听
         window.addEventListener("message", this.message_fun);
     }
+
+    // 订单订阅
+  set_bet_c3_message() {
+    let cmd_obj = {};
+    cmd_obj.cmd = "C3";
+    cmd_obj.cuid = UserCtr.get_cuid()
+    if (cmd_obj.cuid) {
+     this.send_msg(cmd_obj);
+    }
+  }
+
+    /**
+   * @Description:发送ws消息到ws服务器
+   * @param: data 消息体
+   * @param: type 消息标记-自定义模拟推送内部命令该值为custom
+   * @return:
+   */
+    send_msg(data,type) {
+      if(data) {
+        if(type){
+          data.type = type;
+        }
+        window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
+      }
+    }
+
     /**
      * @description: ws消息监听
      * @param {undefined} undefined
@@ -42,7 +72,7 @@ export default class BetRecordWs {
                         useMittEmit(MITT_TYPES.EMIT_C201_HANDLE, data)
                         break;
                     case 'C210':
-                        useMittEmit(MITT_TYPES.EMIT_C210_HANDLE, data)
+                        // useMittEmit(MITT_TYPES.EMIT_C210_HANDLE, data)
                         break;
                     default:
                         break;
