@@ -181,6 +181,7 @@ export const init_home_matches = async () => {
     sort: 1,
     // hasFlag: 0
   };
+  const match_list=[]
   await axios_loop({
     axios_api: api_match_list.get_home_matches,
     params,
@@ -201,8 +202,9 @@ export const init_home_matches = async () => {
         let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
         //过滤前20条数据
         sort_list = filter_20_match_new(sort_list).concat(MatchDataWarehouse_PC_List_Common.match_list);
+        match_list.push(...sort_list)
         // 将球种排序
-        MatchDataWarehouse_PC_List_Common.set_list(sort_list);
+        MatchDataWarehouse_PC_List_Common.set_list(match_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(sort_list);
       } catch (error) {
         console.log(error);
@@ -219,7 +221,8 @@ export const init_home_matches = async () => {
             return get_match_status(match.ms)
           })
         }
-        MatchDataWarehouse_PC_List_Common.set_list(res.concat(MatchDataWarehouse_PC_List_Common.match_list));
+        match_list.push(...res)
+        MatchDataWarehouse_PC_List_Common.set_list(match_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
           res, null, null, true
         );

@@ -117,7 +117,8 @@ const jump_func = (payload ={},type) => {
 
   let mid_config = {
     ...MenuData.mid_menu_result,
-    md: ''
+    md: '',
+    filter_tab: 4001
   }
   MenuData.set_mid_menu_result(mid_config)
 
@@ -148,6 +149,7 @@ const outrights = () => {
 
   let mid_config = {
     ...MenuData.mid_menu_result,
+   
   }
   MenuData.set_mid_menu_result(mid_config)
 
