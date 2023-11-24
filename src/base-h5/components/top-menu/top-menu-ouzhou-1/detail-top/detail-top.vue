@@ -79,6 +79,7 @@ function getDropDownList() {
 
 /** 返回上一页 */
 const toHome = () => {
+    console.log(router,"asdfasdf")
   router.go(-1);
 };
 watch(() => detail_top_pop.value,
