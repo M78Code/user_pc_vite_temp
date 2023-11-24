@@ -36,7 +36,6 @@ export const remove_league = (remove_tid, callback) => {
         }
       });
     });
-    console.log('lockie1-6');
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       all_league_obj,
@@ -57,7 +56,6 @@ export const remove_league = (remove_tid, callback) => {
         callback.length_0_fn();
       }
     }
-    console.log('lockie1-7');
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       match_list,
@@ -172,7 +170,6 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
       callback.length_0_fn();
     }
   } else {
-    console.log('lockie1-8');
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       all_league_obj,
@@ -191,14 +188,11 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
 ) => {
   // 列表接口数据类型为赛事列表
   let match_list = MatchListCardData.match_list_key;
-  console.log('lockie1-91', match_list);
   match_list.forEach((match, index) => {
     if (match.mid == remove_mid) {
       match_list.splice(index, 1);
     }
   });
-  console.log('lockie1-92', match_list);
-
   if (match_list.length == 0) {
     // 参照 remove_match_callback_when_match_list_length_0_demo
     if (callback && callback.length_0_fn) {

@@ -2,6 +2,7 @@
 {
     "ouzhou": {
         "record": {
+            "msg_1": "This record will show all unpaid bets",
             "my_bet": "My Bets",
             "unsettled": "Unsettled",
             "settled": "settled",

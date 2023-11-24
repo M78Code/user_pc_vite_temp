@@ -1,6 +1,6 @@
 <!-- 单关，串关，投注金额输入框 -->
 <template>
-    <div>
+    <div class="component bet-input-info1">
         <div class="bet_input_info flex_input">
        <div class="info_left">
        <div class="size_16 color_a1a1">{{$t('bet.bet')}}</div>
