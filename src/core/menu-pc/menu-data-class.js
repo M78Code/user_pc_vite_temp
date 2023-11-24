@@ -571,7 +571,7 @@ class MenuData {
       return;
     }
     if (Object.keys(session_info).length) {
-      const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root } = session_info;
+      const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root,current_ball_type } = session_info;
 
       this.menu_root_count = menu_root_count;
 
@@ -584,6 +584,8 @@ class MenuData {
 
       // 设置当前请求的菜单id
       this.set_menu_current_mi(menu_current_mi)
+
+      this.set_current_ball_type(current_ball_type)
     
     }
   }

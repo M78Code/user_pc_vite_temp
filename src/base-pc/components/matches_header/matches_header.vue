@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
 			<div class="matches-title">
@@ -129,7 +129,7 @@ const set_tab_list = (news_) =>{
 	}
 	
 	// 左侧菜单
-	if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
+	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
 		tab_list.value = lodash_.get( ouzhou_filter_config,'sport_tab', [])  
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
@@ -142,13 +142,17 @@ const set_tab_list = (news_) =>{
 	}
 
 	// 冠军
-	if (MenuData.is_kemp()) {
+	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
 		matches_header_title.value = 'Outrights'
 		tab_list.value = []
 	}
 
 	if (tab_list.value.length) {
-		checked_current_tab(tab_list.value[0])
+		if(MenuData.mid_menu_result.filter_tab){
+			checked_current_tab({value:MenuData.mid_menu_result.filter_tab})
+		}else{
+			checked_current_tab(tab_list.value[0])
+		}
 	}
 }
 
