@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_kemp() || MenuData.is_collect || MenuData.is_top_events()"  />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() ) || MenuData.is_collect || MenuData.is_top_events()"  />
 		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues()" />
 		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
@@ -88,8 +88,8 @@ const ouzhou_filter_config = {
 const ouzhou_time_list = [
 	{ label: i18n_t('ouzhou.filter.select_time.12h'), title:'12小时', value: 12 }, 
 	{ label: i18n_t('ouzhou.filter.select_time.24h'), title:'24小时', value: 24 }, 
-	{ label: i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
-	{ label: i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 3*24 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 7*24 }, 
 ]
 
 onMounted(()=>{

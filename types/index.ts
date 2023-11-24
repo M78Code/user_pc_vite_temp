@@ -52,12 +52,10 @@ declare namespace TYPES {
     /** 综合评分 */ star: String
   }
 
-  /** hl 盘口? */ interface Hl extends K.mid, K.t {
+  /** hl 盘口? */ interface Hl extends K.mid, K.t, K.hpid {
     /** 盘口ID */ hid: string,
     /** ? */ hmt: number,
     /** ? */ hn: number,
-    /** ? */ hpid: string,
-    /** ? */ hs: number,
     /** 赔率集合? 投注项集合? */ ol: Array<Ol>
   }
 
@@ -111,7 +109,7 @@ declare namespace K {
     /** 投注项id */ oid: any
   };
   /** 投注项状态 */ type os = {
-    /** 投注项状态 */ os: number
+    /** 投注项状态:0开,1封,3隐藏 */ os: number
   };
   /** 赔率 */ type ov = {
     /** 赔率 */ ov: string
@@ -149,7 +147,7 @@ declare namespace K {
     /** 是否支持赛前盘 */ mp: number
   };
   /** 赛事状态 */ type ms = {
-    /** 赛事状态 */ ms: number
+    /** 赛事状态:0开,1封,2关,11锁 */ ms: number
   };
   /** 最近5场的比分 */ type msc = {
     /** 最近5场的比分 */ msc: Array<String>
@@ -174,8 +172,11 @@ declare namespace K {
   };
   /** 玩法ID */ type hpid = {
     /** 玩法ID */ hpid: string
-  }
+  };
   /** 玩法模板 */ type hpt = {
     /** 玩法模板 */ hpt: string
+  };
+  /** 盘口状态 */ type hs = {
+    /** 盘口状态:0开,1封,2关,11锁 */ hs: number,
   }
 }

@@ -360,19 +360,19 @@ export const sports_play_title = {
       ]
     },
     {
+      hpid: '154',
+      label: '全场让局',
+      ol: [
+        { ot: '1', title: "主队让局" },
+        { ot: '2', title: "客队让局" },
+      ]
+    },
+    {
       hpid: '155',
       label: '全场让盘',
       ol: [
         { ot: '1', title: "主队让盘" },
         { ot: '2', title: "客队让盘" },
-      ]
-    },
-    {
-      hpid: '202',
-      label: '全场让局',
-      ol: [
-        { ot: '1', title: "主队让局" },
-        { ot: '2', title: "客队让局" },
       ]
     },
   ],
