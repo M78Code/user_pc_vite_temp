@@ -536,7 +536,8 @@ export default {
 }
 
 .empty-wrap{
-	background-image: var(--qq--public-bg-image2);
+	//background-image: var(--qq--public-bg-image2);
+	background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	width: 200px;

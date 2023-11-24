@@ -273,7 +273,6 @@ export const details_main = (router, route) => {
   function update_data(val){
     if (!val) return;
     match_detail.value = getMidInfo(val);
-    console.log(match_detail.value, "match_detail.value");
     match_odds_info.value = lodash.get(getMidInfo(val), "odds_info");
   };
   /**

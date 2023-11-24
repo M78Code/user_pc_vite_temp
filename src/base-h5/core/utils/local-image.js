@@ -89,8 +89,8 @@ export const have_collect_ouzhou = compute_local_project_file_path('/image/list/
 export const odd_lock_ouzhou = compute_local_project_file_path('/image/list/lock.png')
 
 // 欧洲 赔率升高图标
-export const ouzhou_hps_up = compute_local_project_file_path('/image/list/up.png')
-export const ouzhou_hps_down = compute_local_project_file_path('/image/list/down.png')
+export const ouzhou_hps_up = compute_local_project_file_path('/image/list/icon_up.png')
+export const ouzhou_hps_down = compute_local_project_file_path('/image/list/icon_down.png')
 export const ouzhou_white_down = compute_local_project_file_path('/image/list/white_down.png')
 export const ouzhou_white_up = compute_local_project_file_path('/image/list/white_up.png')
 

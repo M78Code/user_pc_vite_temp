@@ -17,17 +17,17 @@
 
             <div class="fw-e-s bet-right">
                 <div class="f-c-c bet-odds">
-                    <span class="font14 font700 mr-10">{{ items.oddsValues }}</span>
+                    <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
                 </div>
                 <div class="bet-result" >
                     <div class="w-100 fw-s-b">
                         <div class="w-100 bet-result-info fw-b-c">
                             <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("bet.total_bet")}}</div>
-                            <div class="font12 font500 bet-money f-s-c">{{ mathJs.divide(items.betMoney,100) || '0.00' }}</div>
+                            <div class="font12 font500 bet-money f-s-c">{{ format_money2(mathJs.divide(items.betMoney,100)) || '0.00' }}</div>
                         </div>
                         <div class="w-100 bet-result-info fw-b-c mt-8">
                             <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("common.maxn_amount_val") }}</div>
-                            <div class="font12 font500 bet-money f-s-c">{{ mathJs.divide(items.maxWinMoney,100) || '0.00' }}</div>
+                            <div class="font12 font500 bet-money f-s-c">{{ format_money2(mathJs.divide(items.maxWinMoney,100)) || '0.00' }}</div>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
 
 <script setup> 
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import {LOCAL_PROJECT_FILE_PREFIX,i18n_t } from "src/core/"
+import {i18n_t,format_money2 } from "src/core/"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { IconWapper } from 'src/components/icon/index.js'
 

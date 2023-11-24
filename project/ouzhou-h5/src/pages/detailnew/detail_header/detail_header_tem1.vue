@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, toRef, watch,onUnmounted } from "vue";
+import {onMounted, ref, computed, toRef, watch } from "vue";
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
 import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core";
@@ -149,11 +149,9 @@ const sport_ball = {
 	103:1,
 }
 const cuid = ref("");
-const bg_img = ref({
-
-})
+const bg_img = ref({})
 const detail_store = ref(null);
-let is_collect = ref(sessionStorage.getItem("is_collect") || MatchCollect.get_match_collect_state(props.get_match_detail));
+const is_collect = ref();
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -245,15 +243,14 @@ const set_scoew_icon_list = (new_value) => {
  *@return {*}
  */
 const collect_click = () => {
-  api_common.add_or_cancel_match({
-        mid:props.get_match_detail.mid,
+    api_common.add_or_cancel_match({
+        mid: props.get_match_detail.mid,
         cf: is_collect.value ? 0 : 1,
         cuid: UserCtr.get_uid()
-      }).then(res => {
+    }).then(res => {
         if (res.code != 200) return
         is_collect.value = !is_collect.value
-        sessionStorage.setItem("is_collect", is_collect.value);
-      })
+    })
  
 }
 //#TODO: 
@@ -262,8 +259,11 @@ setTimeout(() => {
   set_scoew_icon_list(props.get_match_detail);
   set_basketball_score_icon_list();
 }, 200);
-onUnmounted(()=>{
-  sessionStorage.removeItem("is_collect") 
+
+onMounted(()=>{
+    setTimeout(function (){
+        is_collect.value = props.get_match_detail.mf
+    },320)
 })
 </script>
 

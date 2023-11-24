@@ -3,16 +3,16 @@ import {
   MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common,
   MatchDataWarehouse_PC_List_Common,
-  MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
   LayOutMain_pc,
   UserCtr,
-  MenuData
+  MenuData, axios_loop
 } from "src/core";
-import { filter_odds_func, handle_course_data, format_mst_data } from 'src/core/utils/matches_list.js'
+import { ref } from 'vue'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
+import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
 
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-
 export const playingMethods_15 = [
   {
     value: 0,
@@ -36,20 +36,6 @@ export const playingMethods_15 = [
 ]
 
 const is_timer = ['5', '10', '8', '7', '9', '13', '3']
-
-
-
-/**
- * 
- * @param {Object} payload 请求主页列表的入参
- * @description 用于请求列表数据的函数 
- */
-export const get_home_matches = async payload => {
-  const res = await api_match_list.get_home_matches(payload);
-  let obj = res?.data || [];
-  return obj;
-}
-
 /**
    * 
    * @description 获取赛事请求参数
@@ -142,48 +128,6 @@ export const filter_15mins_func = payload => {
   return payload.slice(0, 5).map(item => item.mid);
 }
 
-export const filter_featured_list = payload => {
-  payload.forEach(item => {
-    item['current_ol'] = filter_odds_func(item.hps, '1', true);
-    item['course'] = handle_course_data(item);
-    item['mstValue'] = !is_timer.includes(item.csid) ? format_mst_data(item.mst) : '';
-  })
-  return payload.slice(0, 5);
-}
-
-const filter_20_match = (data) => {
-  const result = [];
-  // 足球最多10个
-  const max_football_count = 5;
-  let football_count = 0;
-  // 别的球种5个
-  const max_other_count = 2;
-
-  //用来跟踪每种球种的数量
-  const sport_counts = {}
-
-  for (const item of data) {
-    if (item.csid === '1' && football_count < max_football_count) {
-      result.push(item);
-      football_count++;
-    } else if (item.csid !== '1') {
-      //当前球种数量
-      const current_count = sport_counts['ball' + item.csid] || 0;
-      // 当前球种数量小于5时，推入result
-      if (current_count < max_other_count) {
-        result.push(item);
-        sport_counts['ball' + item.csid] = current_count + 1;
-      }
-    }
-    // 大于20条时，跳出循环
-    if (result.length >= 10) {
-      break;
-    }
-  }
-
-  return result;
-}
-
 // 新规则：足球15 ，篮球5
 const filter_20_match_new = (data) => {
   const result = [];
@@ -226,6 +170,8 @@ export const get_featurd_list = async () => {
   );
   return featured_list
 }
+const matches_15mins_list = ref([])
+let match_count = ref(0);
 
 // 获取首页数据
 export const init_home_matches = async () => {
@@ -234,48 +180,50 @@ export const init_home_matches = async () => {
     sort: 1,
     // hasFlag: 0
   };
-  let mins15_list = []
-  let featured_list = []
-  let match_count = 0;
-  const res=await get_home_matches(params)
-  try {
-    MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
-    // 处理返回数据 将扁平化数组更改为页面适用数据
-    MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(res.p15);
-    // MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.hots);
-    match_count = res.dataList.length || 0;
-    let sort_list = res.dataList.sort((x, y) => x.csid - y.csid)
-    //过滤前20条数据
-    sort_list = filter_20_match_new(sort_list);
-    // 将球种排序
-    MatchDataWarehouse_PC_List_Common.set_list(sort_list);
-    MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-      sort_list,
-    );
-    //获取15mins 数据
-    mins15_list = filter_15mins_func(
-      MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list
-    );
-    console.log(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.match_list, 'p15- mins15_list')
-    // // 获取matches_featured
-    // featured_list = filter_featured_list(
-    //   MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
-    // );
-  } catch (error) {
-    console.log(error);
-  }
-  get_five_leagues_list().then(res => {
-    try {
-      MatchDataWarehouse_PC_List_Common.set_list(res.concat(MatchDataWarehouse_PC_List_Common.match_list));
-      MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-        res, null, null, true
-      );
-    } catch (error) {
-      console.log(error);
+  await axios_loop({
+    axios_api: api_match_list.get_home_matches,
+    params,
+    fun_then: function ({ data }) {
+      try {
+        MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
+        // 处理返回数据 将扁平化数组更改为页面适用数据
+        MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(data.p15);
+        //获取15mins 数据
+        matches_15mins_list.value = data.p15.slice(0, 5).map(item => {
+          set_match_play_current_index(item, 'hps15Minutes')
+          return item.mid;
+        });
+        api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
+
+        match_count = data.dataList.length || 0;
+        let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
+        //过滤前20条数据
+        sort_list = filter_20_match_new(sort_list).concat(MatchDataWarehouse_PC_List_Common.match_list);
+        // 将球种排序
+        MatchDataWarehouse_PC_List_Common.set_list(sort_list);
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(sort_list);
+      } catch (error) {
+        console.log(error);
+      }
     }
   })
-  return {
-    mins15_list,
-    match_count
-  }
+  axios_loop({
+    axios_api: get_five_leagues_list,
+    fun_then: function (res) {
+      try {
+
+        MatchDataWarehouse_PC_List_Common.set_list(res.concat(MatchDataWarehouse_PC_List_Common.match_list));
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+          res, null, null, true
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  })
+
 };
+export {
+  matches_15mins_list,
+  match_count
+}

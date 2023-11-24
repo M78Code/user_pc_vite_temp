@@ -22,7 +22,7 @@
         <template v-if="get_route_name == 'category'">
           <detail-top-info />
         </template>
-        
+
         <!-- 个人中心 vr 电竞 头部 -->
         <template v-else-if="is_personal_page">
           <div class="back" @click="go_back">
