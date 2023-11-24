@@ -39,7 +39,7 @@
         <div></div> -->
         <div
           v-if="value.length == 1"
-          @click="go_betting(value)"
+          @click="go_betting(value[0])"
           :class="{
             'is-active': value[0].oid === active,
             temp_grid_item: true,
