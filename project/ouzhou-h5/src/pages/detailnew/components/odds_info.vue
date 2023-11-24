@@ -2,7 +2,7 @@
   <div class="match-detail-odds component odds-info">
     <template v-if="match_odds_info && match_odds_info.length > 0" >
       <template v-for="(item, index) in match_odds_info" :key="item.topKey">
-        <div class="odds-wrap">
+        <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2||item.hs == 11))">
           <q-separator color="orange" v-if="index != 0" />
           <div class="odds-hpn" @click="expend_toggle(item)">
             <span class="odds-hpn-text">{{ item.hpn }}</span>
@@ -51,7 +51,7 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 // import EMITTER from "src/global/mitt.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
-// /** @type {{match_odds_info:Array<TYPES.MatchDetail|{hl:Array<TYPES.Hl>}}} */
+// /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
 const props = defineProps({
   match_odds_info: {
     type: Array,

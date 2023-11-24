@@ -19,8 +19,11 @@
 					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
 			</div>
 			<ul class="list1" v-show="history_data && history_data.length > 0">
+				<div class="middle_info_tab diff text">
+					<div>{{ i18n_t('ouzhou.search.search_history') }}</div>
+				</div>
 				<li v-for="(item, index) in history_data" :key="item.cuid">
-					<span style="display: inline-block; width: 95%;" @click="get_search_data(0, 1, item.keyword)">{{ item.keyword }}</span><span @click="_delete_history_search(item.keyword)">x</span>
+					<span style="display: inline-block; width: 90%;" @click="get_search_data(0, 1, item.keyword)">{{ item.keyword }}</span><img :src="compute_local_project_file_path('/image/svg/close10.svg')" alt="" @click="_delete_history_search(item.keyword)">
 				</li>
 				<li class="del" @click="_delete_history_search('')">{{ i18n_t('ouzhou.search.clear_search_history') }}</li>
 			</ul>
@@ -31,8 +34,9 @@
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) ||
 				!input_value">
+				<div class="line"></div>
 				<div class="q-mx-md">
-					<div class="text-bol half-border-bottom">{{ i18n_t('ouzhou.search.search_hot') }}</div>
+					<div class="text-bol">{{ i18n_t('ouzhou.search.search_hot') }}</div>
 					<!-- 热门内容 -->
 					<div class="row">
 						<div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index"
@@ -76,7 +80,7 @@
 										<span class="middle">v</span>
 										<span class="away" v-html="red_color(item.man)"></span>
 									</p>
-									<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
+									<p>{{ format_date_overseas(item.mgt) }}</p>
 								</div>
 								<div style="display: flex;flex-direction: row; flex: 1">
 									<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
@@ -128,7 +132,7 @@
 										<span class="middle">v</span>
 										<span class="away" v-html="red_color(i.man)"></span>
 									</p>
-									<p>{{ (new Date(+i.mgt)).Format('MM/dd hh:mm') }}</p>
+									<p>{{ format_date_overseas(i.mgt) }}</p>
 								</div>
 								<div style="display: flex;flex-direction: row; flex: 1">
 									<div class="flex_1" v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
@@ -176,7 +180,7 @@
 										<span class="middle">v</span>
 										<span class="away" v-html="red_color(item.man)"></span>
 									</p>
-									<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
+									<p>{{ format_date_overseas(item.mgt) }}</p>
 								</div>
 								<div style="display: flex;flex-direction: row; flex: 1">
 									<div class="flex_1" v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
@@ -230,6 +234,7 @@
 import lodash from 'lodash'
 import { onMounted, ref, watch, onUnmounted } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
+import { format_date_overseas } from "src/core/format/module/format-date.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -239,7 +244,6 @@ import { compute_value_by_cur_odd_type } from "src/core/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
-import { text } from 'licia/$property';
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
@@ -613,7 +617,7 @@ onUnmounted(() => {
 .middle_info_tab {
 	padding: 9px 18px;
 	display: flex;
-	border-bottom: 1px solid var(--q-gb-bd-c-1);
+	border-bottom: 1px solid var(--q-gb-bg-c-1);
 	background-color: var(--q-gb-bg-c-2);
 	font-size: 14px;
 	font-weight: 500;
@@ -650,6 +654,7 @@ onUnmounted(() => {
 	&.diff {
 	  padding: 9px 0 9px 20px;
 		position: unset;
+		margin-top: 8px;
 	}		
 	.color {
 		//color: #FF7000;
@@ -658,8 +663,7 @@ onUnmounted(() => {
 }
 
 li {
-	margin-bottom: 8px;
-	padding: 14px 10px;
+	padding: 7px 10px;
 	background-color: var(--q-gb-bg-c-2);
 	// border-radius: 6px;
 	font-size: 14px;
@@ -676,6 +680,7 @@ li {
 
 	.list_bottom {
 		display: flex;
+		margin-bottom: 16px;
 
 		div p:first-child {
 			font-size: 14px;
@@ -702,6 +707,9 @@ li {
 			color: var(--q-gb-t-c-1);
 		}
 	}
+	.list_bottom:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .list1 {
@@ -711,9 +719,7 @@ li {
 
 	li {
 		margin-bottom: 0;
-	}
-	li:first-child {
-		border-radius: 6px 6px 0px 0px;
+		padding: 14px 10px;
 	}
 	
 	li:last-child {
@@ -731,6 +737,11 @@ li {
 	img {
 		margin-left: 10px;
 	}
+	.text {
+		border-radius: 6px 6px 0px 0px;
+		border-color: var(--q-gb-bd-c-1);
+		padding-left: 10px;
+	}
 }
 
 .list {
@@ -742,6 +753,7 @@ li {
 		padding-left: 20px;
 		font-weight: 500;
 		font-size: 14px;
+		margin-bottom: -8px;
 	}
 }
 
@@ -772,7 +784,16 @@ li {
 	font-size: 0.14rem;
 	border-radius: 6px;
 	background-color: var(--q-gb-bg-c-2);
+	position: relative;
 
+
+	.line {
+		width: 100%;
+		height: 1px;
+		position: absolute;
+		top: .4rem;
+		background-color: var(--q-gb-bd-c-1);
+	}
 	.text-bol {
 		font-size: 0.14rem;
 		height: 0.4rem;
