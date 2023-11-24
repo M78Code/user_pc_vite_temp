@@ -58,10 +58,10 @@ const jump_to_details = (item) => {
 }
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-let odds_list = match_tpl_info.get_15mins_odds_list()
+let odds_list = lodash.cloneDeep(match_tpl_info.get_15mins_odds_list())
 const ols_data = computed(() => {
   const ols = merge_template_data({
-    match:JSON.parse(JSON.stringify(props.current_tab)), //不知道什么问题一直是同一个
+    match:props.current_tab,
     handicap_list: [odds_list],
     type: 4,
     play_key: 'hps15Minutes'
