@@ -118,9 +118,14 @@ const set_active_time = (item) => {
 const set_tab_list = (news_) =>{
 	tab_list.value = []
 	// 首页
-	if(news_ == 0 ){
+	if(news_ == 0 || news_ == 500){
 		tab_list.value = lodash_.get( ouzhou_filter_config,'home_tab', [])  
 		matches_header_title.value = i18n_t('ouzhou.match.matches')
+		// top evnets
+		if (news_ == 500) {
+			checked_current_tab(tab_list.value[1])
+			return
+		}
 	}
 	// 滚球
 	if( news_ == 1 ){
@@ -140,7 +145,6 @@ const set_tab_list = (news_) =>{
 		matches_header_title.value = i18n_t('ouzhou.menu.collect')
 		tab_list.value = lodash_.get( ouzhou_filter_config,'favouritse_tab', [])  
 	}
-
 	// 冠军
 	if (MenuData.is_kemp()) {
 		matches_header_title.value = 'Outrights'
@@ -176,7 +180,7 @@ const checked_current_tab = payload => {
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
-    useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
+    	useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
 	}
 
 	// 左侧菜单点击后 tab切换
