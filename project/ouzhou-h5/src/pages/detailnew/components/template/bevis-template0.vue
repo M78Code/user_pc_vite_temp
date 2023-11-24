@@ -19,10 +19,11 @@ onMounted(()=>{
 <!--
 双重机会&进球大小
 -->
-
 <template>
     <div class="tempalte0">
+        <li v-for="ol in betInfor.hl[0].ol.filter(i=>i.os != 3)">
 
+        </li>
     </div>
 </template>
 
