@@ -152,13 +152,14 @@ function get_col_ols_data(match) {
 
   .odds-box-item {
     cursor: pointer;
-    width: 73px;
+    // width: 73px;
     height: 40px;
     line-height: 17px;
     letter-spacing: 0px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    width: 100%;
     // &:hover {
     //   background: rgba(255, 112, 0, 0.1);
     // }
@@ -191,6 +192,64 @@ function get_col_ols_data(match) {
 
     &:hover {
       background: var(--q-gb-bg-c-1);
+    }
+  }
+}
+:deep(.bet-item-wrap-ouzhou) {
+  display: flex;
+  width: 78px;
+  height: 40px !important;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  .c-bet-item {
+    width: 78px;
+    height: 40px;
+  }
+
+  .c-bet-item.can-hover:hover {
+    background: var(--q-gb-t-c-4);
+    cursor: pointer;
+  }
+
+  &.bet-item-wrap-ouzhou-bigger {
+    .c-bet-item {
+      width: 133px;
+    }
+
+  }
+
+  .c-bet-item.active {
+    background: var(--q-gb-bg-c-1) !important;
+
+    .handicap-value,
+    .handicap-value-text {
+      color: var(--q-gb-t-c-4);
+    }
+
+    .odds {
+      color: var(--q-gb-t-c-1);
+    }
+  }
+
+  div {
+    color: var(--q-gb-bg-c-7);
+    font-size: 14px;
+  }
+
+  .odds {
+    color: var(--q-gb-t-c-2);
+    font-weight: 500;
+    font-size: 14px;
+
+    &.up {
+      color: var(--q-gb-t-c-7) !important;
+    }
+
+    &.down {
+      color: var(--q-gb-t-c-10) !important;
     }
   }
 }
