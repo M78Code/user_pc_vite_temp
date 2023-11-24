@@ -9,7 +9,8 @@
 -->
 <template>
   <div class="timer-layout">
-    <span class="timer-layout0">{{time_str_old}}</span>
+      <!-- 为什么要使用visibility: hidden;隐藏  占位了啊兄弟们 -->
+    <span class="timer-layout0" v-show="false">{{time_str_old}}</span>
     <span class="timer-layout2"
     :class="[date_show_type === 'inline' && 'no-absolute' ]">{{time_str}}</span>
   </div>
@@ -164,6 +165,6 @@ export default {
 }
 .timer-layout2.no-absolute {
     position: static;
-    margin-left: -30px;
+    /* margin-left: -30px; 如果有特殊需求 请再组件上加 不要加公共组件内*/
   }
 </style>

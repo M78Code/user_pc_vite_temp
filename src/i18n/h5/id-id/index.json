@@ -224,7 +224,8 @@
     "wanyi": "Trilion",
     "total_bet": "Total taruhan",
     "total_income": "Prediksi profit",
-    "bet_retract": "Bertaruh kembali"
+    "bet_retract": "Bertaruh kembali",
+    "bet_inplay": "sedang berlangsung"
   },
   "bet_record": {
     "30day": "30 hr",

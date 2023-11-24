@@ -39,7 +39,7 @@ const changeMenu = (item) =>{
     if(state.current_mi == item.mi)return;
     state.current_mi = item.mi;
     MenuData.set_menu_mi(item.mi);
-    MatchMeta.set_origin_match_data()
+    MatchMeta.get_champion_match()
 }
 onMounted(async () => {
   MenuData.set_current_lv1_menu(400);
@@ -53,7 +53,6 @@ onMounted(async () => {
 .home-page{
   height: 100%;
   overflow: hidden;
-  padding-bottom: 56px;
   .header_tabs{
     border-bottom: 2px solid var(--q-gb-bd-c-1);
     :deep(.q-tabs--dense){
@@ -89,7 +88,7 @@ onMounted(async () => {
     }
   }
   .home_content{
-    height: calc(100% - 106px);
+    height: calc(100% - 56px);
     .q-tab-panels{
       height: 100%;
       .q-tab-panel{
@@ -102,11 +101,11 @@ onMounted(async () => {
           padding-bottom: 70px;
         }
         .match-page-section{
-          height: calc(100% - 66px - 54px);
+          height: 100%;
           overflow-y: hidden;
           position: relative;
           .match-list-container{
-            height: 100%;
+            height: calc(100% - 66px);
             background-color: var(--q-gb-bg-c-2) !important;
             :deep(.scroll-wrapper){
               background-color: var(--q-gb-bg-c-2) !important;

@@ -14,7 +14,7 @@
       <button @click="submit_click" :class="{'confirm': status == 2 || status == 3, 'success': status == 4}">
         <span>
           <!-- 暂停提前结算 -->
-          <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template>
+          <!-- <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template> -->
           <!-- 提前结算 -->
           <template v-if="status == 1 || status == 6">{{ i18n_t('early.btn2') }}</template>
           <!-- 确认提前结算 -->
@@ -116,7 +116,8 @@ const min_bet_money = computed(() => {
 })
 // 计算提前结算按钮是否显示
 const calc_show = computed(() => {
-  return BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle
+  return false
+  // return BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle
   // return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
 })
 watch(() => expected_profit.value, (_new, _old) => {
@@ -280,7 +281,8 @@ const submit_early_settle = () => {
       message = i18n_t('early.info10');
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
-      status.value = 5;
+      message = i18n_t('early.btn1');
+      // status.value = 5;
     } else if (res.code == "0400537") {
       // 金额有变动，需要更新按钮上的金额
       status.value = 1;

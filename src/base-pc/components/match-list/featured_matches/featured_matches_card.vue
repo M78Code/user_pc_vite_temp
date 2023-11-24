@@ -234,6 +234,7 @@ get_featurd_list()
 
     .union-name {
       margin-bottom: 14px;
+      color: var(--q-gb-t-c-8);
     }
 
     .odds_box {
