@@ -338,9 +338,11 @@ export default {
       }).then(res => {
         if (+res.code !== 200) return
       })
+      //先执行删除收藏 再执行删除收藏页数据
+      MatchCollect.handle_league_collect_state(tid)
       // 收藏页手动处理数据
       MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 1)
-      MatchCollect.handle_league_collect_state(tid)
+
       
     },
 
@@ -348,18 +350,23 @@ export default {
      * @description: 设置 赛事收藏与否
      */
     async handle_match_collect () {
-      const { mid } = this.match_of_list
+      const { mid,tid } = this.match_of_list
       const match_state = MatchCollect.get_match_collect_state(this.match_of_list)
-      api_common.add_or_cancel_match({
-        mid,
-        cf: match_state ? 0 : 1,
-        cuid: UserCtr.get_uid()
-      }).then(res => {
-        if (+res.code !== 200) return
-      })
-      // 收藏页手动处理数据
-      MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 2)
-      MatchCollect.set_match_collect_state(this.match_of_list, !match_state)
+      const target_matchs = MatchMeta.complete_matchs.filter(t => t.mid !== mid)
+      if(!target_matchs.some((item)=>{return item.tid ===tid })){
+        return this.handle_league_collect()
+      }else{
+        api_common.add_or_cancel_match({
+          mid,
+          cf: match_state ? 0 : 1,
+          cuid: UserCtr.get_uid()
+        }).then(res => {
+          if (+res.code !== 200) return
+        })
+        // 收藏页手动处理数据
+        MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 2)
+        MatchCollect.set_match_collect_state(this.match_of_list, !match_state)
+      }
     },
 
     /**
