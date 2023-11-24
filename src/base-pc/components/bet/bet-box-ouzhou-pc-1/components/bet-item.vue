@@ -11,9 +11,14 @@
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}</span> 
                     <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none font400">{{ items.playName }}</span>
+                    <span class="text-a1a text-flow-none font400">
+                     <template v-for="(item, index) in odds_constant">
+                    <div v-if="[items.marketTypeFinally].includes(item.value)" :key="index">[{{ item.label }}]
+                    </div>
+                   </template>
+                    </span>
                 </div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.handicap_name }} <span class="mx-4">v</span> {{ items.away }}
+                <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
@@ -55,7 +60,7 @@
            
         </div>
         <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
-            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money >= obj && ref_data.max_money >= BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money > obj && ref_data.max_money > BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
                 {{index == 'max' ? '' : '+' }}{{obj}}
             </li>
         </ul>
@@ -77,7 +82,14 @@ const props = defineProps({
     items:{},
     index:{}
 })
-
+const odds_constant = [
+    { label: i18n_t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
+    { label: i18n_t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
+    { label: i18n_t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
+    { label: i18n_t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
+    { label: i18n_t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
+    { label: i18n_t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
+]
 const ref_data = reactive({
     show_money: false, // 显示快捷金额
     max_money: 0, // 最大限额
@@ -238,7 +250,7 @@ const set_delete = () => {
         }
     }
     .text-flow-none{
-        width: 14%;
+        width: 26%;
         line-height: 12px;
     }
     .bet-odds-value{
