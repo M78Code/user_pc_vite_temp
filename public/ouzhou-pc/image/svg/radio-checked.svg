@@ -3,8 +3,8 @@
     <title>单选框-选中</title>
     <g id="单选框-选中" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g>
-            <rect id="矩形备份" stroke="#569ffd" x="0.5" y="0.5" width="13" height="13" rx="6.5"></rect>
-            <rect id="矩形备份-62" fill="#569ffd" x="3" y="3" width="8" height="8" rx="4"></rect>
+            <rect id="矩形备份" stroke="#ff7000" x="0.5" y="0.5" width="13" height="13" rx="6.5"></rect>
+            <rect id="矩形备份-62" fill="#ff7000" x="3" y="3" width="8" height="8" rx="4"></rect>
         </g>
     </g>
 </svg>
