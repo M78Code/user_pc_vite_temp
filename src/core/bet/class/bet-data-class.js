@@ -858,5 +858,9 @@ this.bet_appoint_ball_head= null */
       }
     }
   }
+
+  set_bet_c201_change( obj={} ) {
+    
+  }
 }
 export default new BetData();
