@@ -70,7 +70,7 @@ const get_featurd_list = async () => {
     // matches_featured_list.value=res.data
     // 只显示5条数据
     const featurd_list = res.data.sort((a, b) => {
-      return b.mgt - a.mgt
+      return a.mgt - b.mgt
     }).slice(0, 5)
     featurd_list.forEach(i => {
       mids.push(i.mid)
