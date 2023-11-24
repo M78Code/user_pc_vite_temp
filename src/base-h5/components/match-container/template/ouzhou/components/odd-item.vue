@@ -200,15 +200,9 @@ onUnmounted(() => {
     }
     &.up{
       color: #FF4646;
-      img {
-        transform: rotateX(-180deg);
-      }
     }
     &.down{
       color: #17A414;
-      img {
-        transform: rotateX(-180deg);
-      }
     }
     .hps_img{
       width: 6px;
