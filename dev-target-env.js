@@ -53,7 +53,7 @@ let  DEV_TARGET_VERSION = ''
 
 //----------------------------------欧洲版-PC  ouzhou-pc 7-------------------------------------------
 // 测试环境
-DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1700645253734-test";
+// DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1700645253734-test";
    
 // 试玩环境
 DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1700646374913-shiwan";
