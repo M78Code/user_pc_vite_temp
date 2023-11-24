@@ -76,6 +76,7 @@ import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataB
 let message_fun = null
 const play_matchs = ref([])
 const time_events = ref([])
+const five_league_mids = ref([])
 const featured_matches = ref([])
 const five_league_match = ref([])
 const state = reactive({
@@ -100,11 +101,37 @@ onMounted(async () => {
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
-    console.log('wswswswswswsws-cmd:', cmd, data)
-    // get_ouzhou_home_data()
-    // get_five_league_matchs()
+    handle_webscoket_cmd(cmd,data)
   }, 1000))
 })
+
+/**
+ * @description 处理 ws
+ */
+ const handle_webscoket_cmd = (cmd, data) => {
+  console.log('wswswswswswsws-cmd:', cmd, data)
+  if (['C109', 'C104'].includes(cmd)) {
+    const { cd = [] } = data
+    if (cd.length < 1) return
+    // 欧洲版 二期  只展示 足球、篮球、网球， 球种菜单放开的同时这里也需要增加
+    const item = cd.find(t => [1,2,5].includes(+t.csid) )
+    if (item) {
+      get_ouzhou_home_data()
+      get_five_league_matchs()
+    }
+  }
+  // 赛事 阶段变更 也需要重新请求
+  if (['C104'].includes(cmd)) {
+    get_ouzhou_home_data()
+    get_five_league_matchs()
+  }
+  // 调用 mids  接口
+  if (['C303', 'C114'].includes(cmd)) {
+    if (five_league_mids.value.length > 0) {
+      MatchMeta.get_match_base_hps_by_mids(five_league_mids.value.toString(), MatchDataBaseFiveLeagueH5)
+    }
+  }
+}
 
 // 设置默认数据
 const set_default_home_data = () => {
@@ -124,7 +151,7 @@ const handle_ouzhou_home_data = (res) => {
   if (p15_list.length > 0) {
     const arr_p15 = p15_list.map(t => {
       const match = MatchDataBasel5minsH5.get_quick_mid_obj(t?.mid)
-      return match
+      return { ...match, match_data_type: 'h5_ten_five_mins' }
     })
     time_events.value = arr_p15.filter(t => t?.mid)
   }
@@ -136,6 +163,7 @@ const handle_ouzhou_home_data = (res) => {
     })
     play_matchs.value = arr_play_matchs.filter(t => t?.mid)
   }
+  set_ws_active_mids()
 }
 
 // 设置默认数据
@@ -160,26 +188,27 @@ const handle_ouzhou_home_hots = async (data) => {
       return {
         ...match,
         home_score, 
-        away_score, 
+        away_score,
+         match_data_type: 'h5_hots_list' 
       }
     })
     featured_matches.value = arr_data.filter(t => t?.mid)
+    set_ws_active_mids()
   }
 }
-
 
 /**
  * @description 获取五大联赛赛事
  */
-const get_five_league_matchs = async () => {
+ const get_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
-  const mids = []
   five_league_match.value = list.map(t => {
-    mids.push(t?.mid)
+    five_league_mids.value.push(t?.mid)
     const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t?.mid) || t
-    return match
+    return { ...match, match_data_type: 'h5_five_league' }
   })
-  MatchMeta.get_match_base_hps_by_mids(mids.toString(), MatchDataBaseFiveLeagueH5)
+  MatchMeta.get_match_base_hps_by_mids(five_league_mids.value.toString(), MatchDataBaseFiveLeagueH5)
+  set_ws_active_mids()
 }
 
 /**
@@ -197,6 +226,7 @@ const get_ouzhou_home_hots11 = () => {
   api_match.post_fetch_match_list(params).then((res) => {
     if (+res.code !== 200) return
     handle_ouzhou_home_hots(res)
+    set_ws_active_mids()
   })
 }
 
@@ -214,6 +244,16 @@ const on_update = (val) => {
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
     MatchMeta.get_top_events_match(MenuData.top_events_list?.[0]?.csid)
   }
+}
+
+/**
+ * @description 设置 ws 激活的 mids 
+ */
+const set_ws_active_mids = () => {
+  const total_matchs = [].concat(five_league_match.value, time_events.value, featured_matches.value, play_matchs.value)
+  const total_mids = lodash.uniq(total_matchs.filter(t => t.mid).map(t => t.mid))
+  const length = lodash.get(total_mids, 'length', 0)
+  length > 0 && MatchDataBaseH5.set_active_mids(total_mids)
 }
 
 onUnmounted(() => {

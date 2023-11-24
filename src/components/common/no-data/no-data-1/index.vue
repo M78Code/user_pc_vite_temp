@@ -80,9 +80,10 @@ export default {
   .img {
     margin-bottom: 10px;
     width: 130px;
-    height: 0px;
+    height: auto;
     background-size: 100%;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
+    background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png") !important;
   }
 
   &.esports-size {

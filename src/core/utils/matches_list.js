@@ -1,10 +1,3 @@
-/*
- * @Author: lockie
- * @Date: 2023-07-08 16:11:56
- * @FilePath: \user-pc-vue3\src\utils\matches_list.js
- * @Description: 
- */
-
 import _ from 'lodash';
 import courseData from 'src/core/global/course.js'
 import match_play from 'src/core/global/match_os.js';
