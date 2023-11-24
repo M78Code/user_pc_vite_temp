@@ -257,10 +257,6 @@ export default {
   }
 }
 
-.match-list-item {
-  margin-bottom: 24px;
-}
-
 .scroll {
   overflow-y: scroll;
   padding-right: 3px;

@@ -1,8 +1,5 @@
 <template>
   <div class="full-height" @click="set_global_click" :style="page_style">
-    <div v-if="_data.is_ws_run" class="timeShow" @click="copyToken()">
-      {{ _data.current_env }}
-    </div>
     <ws />
     <!-- 页面路由开始 -->
     <router-view />
@@ -128,17 +125,6 @@ function set_global_click() {
     //设置全局点击事件
     GlobalSwitchClass.set_global_click()
 }
-function copyToken(is_key_down) {
-  // if (this.get_user && this.get_user.token) {
-  if (is_key_down) {
-    copyToClipboard(`?ignore_iframe_pc=1&token=${this.get_user.token}`);
-  } else {
-    copyToClipboard(
-      `?wsl=9999&ignore_iframe_pc=1&token=${this.get_user.token}`
-    );
-  }
-  // }
-}
 /**
  * @description: 检查内嵌版的逻辑处理动作
  */
@@ -234,17 +220,6 @@ export default {
 }
 </script>
 <style scoped>
-.timeShow {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  width: 100px;
-  color: red;
-  z-index: 9999999;
-  font-size: 20px;
-  text-align: right;
-}
-
 .error-data {
   display: none;
 }
