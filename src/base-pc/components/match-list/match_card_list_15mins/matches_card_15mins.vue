@@ -1,16 +1,16 @@
 <template>
   <div class="sport">
     <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-    <div class="competing-time">
+    <div class="competing-time" @click="jump_to_details(current_tab)" >
       <sport_icon :size="'12px'" :status="true" :sport_id="current_tab.csid" class="sport-icon" />
       <div class="matches-time">
         <div class="begin-time din_font">{{ get_mmp(current_tab.mst) }}</div>
       </div>
     </div>
-    <div class="club-name">
+    <div class="club-name" @click="jump_to_details(current_tab)">
       {{ current_tab.mhn }}
     </div>
-    <div class="union-name">
+    <div class="union-name" @click="jump_to_details(current_tab)">
       {{ current_tab.man }}
     </div>
     <div class="odds-box din_font">
@@ -28,6 +28,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -35,13 +36,25 @@ import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t } fro
 import { merge_template_data } from 'src/core/match-list-pc/composables/match-list-other.js'
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
-
+const router = useRouter()
 const props = defineProps({
   current_tab: {
     type: [Object, Array],
     default: () => ({ }),
   },
 });
+const jump_to_details = (item) => {
+  const { tid, csid } = item;
+  //比分板跳转到详情页
+  router.push({
+    name: 'details',
+    params: {
+      mid: item.mid,
+      tid: tid,
+      csid: csid
+    }
+  })
+}
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 let odds_list = match_tpl_info.get_15mins_odds_list()
