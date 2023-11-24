@@ -265,7 +265,7 @@ const bet_click_ol = () => {
   } else {
     emit('update_score', current_id)
   }
-  set_bet_obj_config(params, {warehouse_name})
+  set_bet_obj_config(params, {warehouse_name: props.warehouse_name})
   BetData.set_bet_state_show(true)
 };
 
