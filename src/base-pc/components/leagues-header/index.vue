@@ -45,7 +45,7 @@ const jumpTo = ()=>{
 	height:80px;
 	// padding-right: 7px;
 	box-sizing: border-box;
-	// margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 .sports {
 	color: #B5B5B5;
