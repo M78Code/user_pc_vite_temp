@@ -65,7 +65,7 @@ const old_ov = ref(0)
 
 const is_show_title = computed(() => {
   const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${props.csid}`, '1')
-  return hpid != 1
+  return hpid != 1 && !props.show_hpn
 })
 
 const is_active = computed(() => {
