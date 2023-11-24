@@ -835,6 +835,8 @@ this.bet_appoint_ball_head= null */
               if(ol_obj.odds > ws_ol_obj.ov ){
                 ol_obj.red_green = 'green_down'
               }
+
+              console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
               if(ol_obj.odds == ws_ol_obj.ov ){
                 return
               }
