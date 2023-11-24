@@ -105,7 +105,10 @@ function get_col_ols_data(_mid) {
     // 投注项数据拼接
     let hn_obj_config = MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
     // 获取投注项内容 
-    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+    let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+    // 15mins 和 featured赛事展示的投注项名称
+    ols_data['otb'] = item.otb
+    return ols_data;
   })
 }
 // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
