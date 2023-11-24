@@ -21,7 +21,7 @@
         <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
           v-for="(ol_data, ol_index) in (col.ols)" :key="ol_index + '_' + ol_data._hpid + '_' + ol_data._ot">
           <!-- 投注项组件 -->
-          <bet-item :ol_data="ol_data" warehouse_name="ten_five_mins" />
+          <bet-item :ol_data="ol_data" warehouse_name="pc_ten_five_mins" />
         </div>
       </div>
     </div>
