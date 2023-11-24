@@ -54,7 +54,7 @@
             <q-item clickable @click="goto_secondary_module('announcement')">
               <q-item-section>
                 <div class="flex title">
-                  <img class="icon" :style="compute_css_obj('pc-head-msg')" alt="" />
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/notice.png`" alt="" />
                   <div>{{ i18n_t('ouzhou.set.announcement')}}</div>
                 </div>
               </q-item-section>
@@ -62,7 +62,7 @@
             <q-item clickable @click="goto_secondary_module('results')">
               <q-item-section>
                 <div class="flex title">
-                  <img class="icon" :style="compute_css_obj('pc-head-results')" alt="" />
+                  <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/results.png`" alt="" />
                   <div>{{ i18n_t('ouzhou.set.results')}}</div>
                 </div>
               </q-item-section>
@@ -287,6 +287,7 @@ export default defineComponent({
     }
     const get_width = (props) => {
       is_focus.value = props.focus
+      keyword.value = props.text
     }
     
     onMounted(() => {

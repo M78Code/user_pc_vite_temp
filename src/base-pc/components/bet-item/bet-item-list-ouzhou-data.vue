@@ -405,7 +405,7 @@ onUnmounted(() => {
   }
 }
 .odds_otb {
-  color: var(--q-gb-bg-c-7) !important;
+  color: var(--q-gb-t-c-8) !important;
 }
 .null-handicap {
   .handicap-value {
