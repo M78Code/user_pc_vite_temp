@@ -209,8 +209,13 @@ const get_animation_url = () => {
 .detail-loading {
   position: absolute;
   left: 50%;
-  top: 0%;
-  transform: translate(-50%, -30%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  &::v-deep{
+    .loading_box{
+      padding-top: 0;
+    }
+  }
 }
 .video-iframe {
 }

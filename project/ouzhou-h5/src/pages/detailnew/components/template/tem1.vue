@@ -56,7 +56,7 @@ const get_oddv = (num) => {
 }
 const go_betting = (data) => {
   if(data.os == 2) return
-  emit("bet_click_", data);
+  emit("bet_click_", data,props.item_data.hpn);
   // storage_bet_info(payload)
   // EMITTER.emit("show_bet_dialog", true)
 };
