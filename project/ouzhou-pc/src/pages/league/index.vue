@@ -1,5 +1,5 @@
 <template>
-  <MatchesHeader />
+1  <!-- <MatchesHeader /> -->
   <div class="yb-match-list full-height relative-position">
     <load-data :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
       <scroll-list>
