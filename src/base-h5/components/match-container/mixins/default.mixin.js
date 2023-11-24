@@ -770,7 +770,7 @@ export default {
       // if (this.match_of_list.mid === '2927704') {
       //   console.log(msc_obj)
       // }
-      console.log(MatchUtils.get_match_score({ ...this.match_of_list, msc_obj }))
+      
       // 比分处理
       const { home_score, away_score } = MatchUtils.get_match_score({ ...this.match_of_list, msc_obj })
 
