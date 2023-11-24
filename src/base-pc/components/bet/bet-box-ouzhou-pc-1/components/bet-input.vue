@@ -166,7 +166,8 @@ const show_quick_amount = state => {
         outline: none;   
        // padding-left: 14px;
         border: 0.5px solid var(--q-gb-bd-c-1);
-        box-shadow: 0px 1px 4px rgba(255, 112, 0, 0.1)
+        box-shadow: 0px 1px 4px rgba(255, 112, 0, 0.1);
+        background: var(--q-gb-bg-c-18);
     }
     &::-webkit-input-placeholder {/*Chrome/Safari*/
         font-family: 'PingFang SC';
