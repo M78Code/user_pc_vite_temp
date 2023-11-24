@@ -562,7 +562,6 @@ const set_error_message_config = (res ={},type,order_state) => {
 const set_bet_obj_config = (params = {}, other = {}) => {
     console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
-
     const { oid, _hid, _hn, _mid } = params
 
     // 没有投注内容 点击无效
