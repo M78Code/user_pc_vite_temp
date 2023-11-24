@@ -11,7 +11,7 @@
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none mr-4 font400">{{ items.playName }}</span> 
                     <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
+                    <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
                 <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
