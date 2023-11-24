@@ -192,7 +192,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   // 列表接口数据类型为赛事列表
   let match_list = MatchListData.match_list;
   console.log('lockie1-91', match_list);
-  debugger
+
   match_list.forEach((match, index) => {
     if (match.mid == remove_mid) {
       match_list.splice(index, 1);
