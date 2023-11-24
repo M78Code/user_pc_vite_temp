@@ -5,7 +5,8 @@
     <div class="basic-col"
       :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
       <!-- 比赛进程 网球用105模板，别的用101 -->
-      <basis-info101  :match="match" show_type="all" />
+      <component v-if="match" :is="current_basic_info()" :match="match" show_type="all"></component>
+      <!-- <basis-info101 :match="match" show_type="all" /> -->
       <!-- <basis-info105 v-else :match="match" show_type="all" /> -->
     </div>
     <!-- 竖线 -->
@@ -17,7 +18,7 @@
     <!-- 投注信息 -->
     <match-handicap :handicap_list="handicap_list" :match="match" use_component_key="MatchHandicap2" />
     <!-- 比分板 -->
-    <div v-tooltip="{ content: t('common.score_board') }" class="score-board"
+    <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
       <!-- 图片资源有问题，先用文字替代  -->
       <div :style="compute_css_obj({ key: 'pc-home-score-board' })"></div>
@@ -25,9 +26,9 @@
   </div>
 </template>
 
-<script setup>
+<script>
 
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, defineProps } from 'vue';
 import lodash from 'lodash'
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData, t } from "src/core/index.js";
@@ -42,64 +43,87 @@ import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/com
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { useRouter } from 'vue-router';
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
-const props = defineProps({
-  mid: {
-    type: [String, Number],
-    default: null,
-  },
-  is_show_more: {
-    type: Boolean,
-    default: () => false
-  },
-  match: {
-    type: [Object],
-    default: () => {},
-  }
-})
-const router = useRouter()
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 
-//101号模板 默认就是 101的宽高配置 不会改变
-let match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, 'template_101_config.width_config', {})
-let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-let handicap_list = ref([]);
-watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
-  if (props.match) {
-    const csid = lodash.get(props.match, 'csid')
-    //获取欧洲要显示的数据
-    const tpl_id = get_ouzhou_data_tpl_id(csid)
-    //101 视图模板 却是对应不同的数据模板ID 所以要重新取
-    match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
-    //获取要展示的赔率数据
-    handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
-  }
-}, { deep: true, immediate: true })
+export default {
+  components: {
+    BasisInfo101,
+    BasisInfo105,
+    MatchHandicap,
+    IconBox
+  },
+  props: {
+    mid: {
+        type: [String, Number],
+        default: null,
+      },
+      is_show_more: {
+        type: Boolean,
+        default: () => false
+      },
+      match: {
+        type: [Object],
+        default: () => { },
+      }
+  },
+  setup(props) {
+    const router = useRouter()
+    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 
-// watch(() => MatchListCardDataClass.list_version.value, (new_value, old_value) => {
-//   if (match) {
-//     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
-//   }
-// })
-function jump_to_details() {
-  const { tid, csid } = props.match;
-  //比分板跳转到详情页
-  router.push({
-    name: 'details',
-    params: {
-      mid: props.mid,
-      tid: tid,
-      csid: csid
+    //101号模板 默认就是 101的宽高配置 不会改变
+    let match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, 'template_101_config.width_config', {})
+    let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
+    let handicap_list = ref([]);
+    watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
+      if (props.match) {
+        const csid = lodash.get(props.match, 'csid')
+        //获取欧洲要显示的数据
+        const tpl_id = get_ouzhou_data_tpl_id(csid)
+        //101 视图模板 却是对应不同的数据模板ID 所以要重新取
+        match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`]
+        //获取要展示的赔率数据
+        handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
+      }
+    }, { deep: true, immediate: true })
+
+    function current_basic_info() {
+      if (props.match.csid == 5) {
+        return 'BasisInfo105'
+      } else {
+        return 'BasisInfo101'
+      }
     }
-  })
+    // watch(() => MatchListCardDataClass.list_version.value, (new_value, old_value) => {
+    //   if (match) {
+    //     handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(lodash.get(match, 'csid')))
+    //   }
+    // })
+    function jump_to_details() {
+      const { tid, csid } = props.match;
+      //比分板跳转到详情页
+      router.push({
+        name: 'details',
+        params: {
+          mid: props.mid,
+          tid: tid,
+          csid: csid
+        }
+      })
+    }
+
+
+    return {
+      current_basic_info,
+      jump_to_details,
+      MatchListCardDataClass,
+      match_list_tpl_size,
+      compute_css_obj,
+      handicap_list,
+      i18n_t
+    }
+  }
 }
 
 
-onMounted(() => {
-  // 异步设置组件是否挂载完成
-  // setTimeout(()=>{
-  //   is_mounted.value = true
-  // })
-})
 
 </script>
 
@@ -110,7 +134,7 @@ onMounted(() => {
   .vertical-line {
     width: 1px;
     height: 60px;
-    background:  var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-10);
   }
 }
 
@@ -185,11 +209,13 @@ onMounted(() => {
   cursor: pointer;
   text-align: center;
   margin-left: auto;
+
   >div {
     width: 16px;
     height: 12px;
     background-size: 100%;
   }
+
   &:hover {
     color: var(--q-gb-bg-c-17);
   }

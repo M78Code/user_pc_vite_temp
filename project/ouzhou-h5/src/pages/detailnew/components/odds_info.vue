@@ -175,7 +175,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .match-detail-odds {
   // background: #F1F1F1;
-  min-height: calc(100vh - 150px);
+  min-height: 100%;
   // border-bottom: 40px solid #F1F1F1;
   .no-data {
     width: 140px;

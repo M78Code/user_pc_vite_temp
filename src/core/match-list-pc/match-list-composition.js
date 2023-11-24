@@ -227,7 +227,7 @@ function mounted_fn() {
 	// 开启自动化测试功能
 	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	// 列表数据仓库
-	MatchListData.init();
+	// MatchListData.init();
 	timer_obj.value = {};
 	// store.dispatch({
 	// 	type: "SET_IS_ROLL_SHOW_BANNER",

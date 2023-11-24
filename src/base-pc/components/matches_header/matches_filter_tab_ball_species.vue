@@ -7,11 +7,11 @@
           <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
             <div class="filter-tab-item">
               <div class="filter-icon">
-                <sport_icon :sport_id="compute_sport_id(item.mif)" :status="MenuData.mid_menu_result.current_mi == item.mi"  size="24px" class="icon" />
+                <sport_icon :sport_id="BaseData.compute_sport_id(item.mif)" :status="MenuData.mid_menu_result.current_mi == item.mi"  size="24px" class="icon" />
                 <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
               </div>
               <div :class="{ checked_text: MenuData.mid_menu_result.current_mi == item.mi }" class="label-text">
-                {{  BaseData.menus_i18n_map[item.mif] || "" }}
+                {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif] || "" }}
               </div>
             </div>
             <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" src="../../../assets/images/mask_group.png" alt="">
