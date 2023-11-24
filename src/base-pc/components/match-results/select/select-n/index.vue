@@ -6,8 +6,11 @@
 -->
 <template>
   <div>
-      <q-tabs class="select_n_tabs">
-        <q-tab  v-for="(item ,index) in option" :key="index"
+      <q-tabs class="select_n_tabs" inline-label
+        outside-arrows
+        mobile-arrows
+>
+        <q-tab  v-for="(item ,index) in option" :key="index "
                 @click.stop="selectSport(item)"
                 >
           <div class="tabs_item" :class="sport === item ? 'active' : ''">
@@ -128,17 +131,17 @@ const selectSport = (item) => {
     &::before{
       content: '';
       width: 2px;
-      height: 14px;
+      height: 12px;
       background: #D9D9D9;
       position: absolute;
       right:  -20px;
-      top: 2px;
+      top: 3px;
     }
   }
   .active{
     color: #1A1A1A;
     position: relative;
-       &::before{
+      &::after{
       content: '';
       background: linear-gradient(180deg, #FF7000 0%, rgba(255, 112, 0, 0) 100%);
       position: absolute;
@@ -147,9 +150,18 @@ const selectSport = (item) => {
       top: 26px;
       left: 40%;
       border-radius: 4px;
-
+    }
+    &::before{
+      content: '';
+      width: 2px;
+      height: 12px;
+      background: #D9D9D9;
+      position: absolute;
+      right:  -20px;
+      top: 3px;
     }
   }
+
 }
 .e-select {
   width: 120px;

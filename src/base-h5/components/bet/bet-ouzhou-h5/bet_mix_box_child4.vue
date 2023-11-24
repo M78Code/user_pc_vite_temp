@@ -32,9 +32,9 @@
                         <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}</div>
                       </div>
                       <!-- 绿升icon -->
-                      <img class="hps_img" src="/ouzhou-h5/image/list/up.png" alt="" v-if="item.red_green == 'red_up'">
+                      <img class="hps_img" src="/ouzhou-h5/image/list/icon_up.png" alt="" v-if="item.red_green == 'red_up'">
                       <!-- 红降icon -->
-                      <img class="hps_img" src="/ouzhou-h5/image/list/down.png" alt="" v-else>
+                      <img class="hps_img" src="/ouzhou-h5/image/list/icon_down.png" alt="" v-else>
                       <!--红色箭头-->
                       <!-- <div class="top" v-if="item.red_green == 'red_down'">
                         <div class="jiantou one"></div>
