@@ -84,7 +84,7 @@ export const query_order_pre_settle_confirm = (params, config={}, url = "/v1/bet
  
  
 // 轮询获取订单状态和最新赔率最高可盈（joken）
-export const query_order_status = (params, config, url = "/v1/betOrder/queryOrderStatus") => http.get(`${prefix}${url}`, params, config)
+export const query_order_status = (params, config, url = "/v1/betOrder/queryOrderStatus") => http.get(`${prefix3}${url}`, params, config)
 
  
  
