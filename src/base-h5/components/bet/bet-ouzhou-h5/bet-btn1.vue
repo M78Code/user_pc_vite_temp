@@ -3,7 +3,7 @@
  * @Description: 虚拟小键盘
 -->
 <template>
-  <div class="tip">{{BetViewDataClass.error_message}}</div> 
+  <div class="tip" v-show="false">{{BetViewDataClass.error_message}}</div> 
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @click.self="set_retain_selection">{{$t('bet.save')}}</p>
     <!-- <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p> -->
@@ -23,8 +23,8 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 const pack_up = (val) => {
   // TODO: 临时调试用
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
-  // BetData.set_clear_bet_info()
-  // BetViewDataClass.set_clear_bet_view_config()
+  BetData.set_clear_bet_info()
+  BetViewDataClass.set_clear_bet_view_config()
 }
 // 保留投注项
 const set_retain_selection = () => {
@@ -74,7 +74,7 @@ const set_retain_selection = () => {
       // height: 46px;
       border-radius: 2px;
       background: var(--q-gb-bg-c-1);
-      color:  var(--q-gb-bg-c-15);
+      color:  var(--q-gb-t-c-2);
       .right_amount{
         font-family: DIN;
         font-size: 0.2rem;

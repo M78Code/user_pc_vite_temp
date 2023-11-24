@@ -217,7 +217,8 @@
     "wanyi": "Nghìn tỷ",
     "total_bet": "Tổng tiền cược",
     "total_income": "Tổng doanh thu ước tính",
-    "bet_retract": "Đặt cược lại"
+    "bet_retract": "Đặt cược lại",
+    "bet_inplay": "trong tiến trình"
 
   },
   "bet_record": {

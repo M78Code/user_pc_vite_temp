@@ -20,7 +20,7 @@
       },
     ]">
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
-      <div class="handicap-value-text">{{ score }} <span v-show="ol_data._hpid != 1">{{ ol_data.onb }}</span></div>
+      <div class="handicap-value-text">{{ score }} <span v-show="!['1', '32'].includes(ol_data._hpid)">{{ ol_data.onb }}</span></div>
     </div>
     <!-- 赔率 -->
     <div class="odds" :class="[odds_lift]" :style="[1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
@@ -148,7 +148,7 @@ const match_odds = computed(() => {
   let csid = lodash.get(props.ol_data, "csid");
   let ov = lodash.get(props.ol_data, "ov");
   // 列表取 hsw
-  let hsw = props.ol_data._hsw.split(',');
+  let hsw =lodash.get(props.ol_data,'_hsw','').split(',');
   let match_odds_info = compute_value_by_cur_odd_type(
     ov,
     1 / 100000,

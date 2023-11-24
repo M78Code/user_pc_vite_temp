@@ -382,7 +382,7 @@ class MatchMeta {
    */
   async get_champion_match() {
     MatchFold.clear_fold_info()
-    const menu_lv_v2 = lodash.get(MenuData.current_lv_2_menu, 'mi')
+    const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     const res = await api_common.post_match_full_list({
       euid,
