@@ -182,7 +182,7 @@ function resolve_mew_menu_res_mi_400() {
 
     mi_400_obj.value = mi_400_obj
 
-    mi_100_arr.value = mi_400_obj.sl.map(item => {
+    mi_100_arr.value = (mi_400_obj.sl || []).map(item => {
         item.mif = (item.mi - 400 + 100)
         return item
     } )

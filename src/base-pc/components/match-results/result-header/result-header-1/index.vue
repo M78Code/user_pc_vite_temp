@@ -254,6 +254,7 @@ function refresh() {
 </script>
 
 <style scoped lang="scss">
+.a{}
 @import "./result-header.scss";
 .top-menu-content {
     height: 40px;
@@ -390,9 +391,18 @@ function refresh() {
         height: 100%;
         border-radius: 2px;
         cursor: pointer;
-
         & :deep(.icon-calendar) {
           font-size: 14px;
+        }
+        &:hover {
+          // border: 1px solid var(--q-gb-bd-c-1);
+          border: 1px solid #ff7000;
+          // color: var(--q-gb-t-c-18);
+          .icon-calendar {
+            &:before {
+              // color: var(--q-gb-t-c-18)
+            }
+          }
         }
       }
 
@@ -400,21 +410,17 @@ function refresh() {
         :deep(.q-date) {
           .q-icon {
             font-size: 12px;
-
             &::before {
               color: var(--qq--yb-text-color3);
             }
           }
         }
-
         .q-date {
           position: relative;
           z-index: 2;
-
           :deep(.q-date__calendar-item > div) {
             width: auto;
           }
-
           /*  星期X 字体颜色正常显示 */
           :deep(.q-date__calendar-weekdays > div) {
             opacity: 1;
