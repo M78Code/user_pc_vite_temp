@@ -97,7 +97,7 @@ export const useGetResultConfig = () => {
       endTime: "", //结束时间,毫秒时间戳
       langType: "zh",
       nameStr: "", //模糊查询字符串
-      hot: "", //是否热门
+      hot: null, //是否热门
       isVirtualSport: "",
     },
     activeIndex: -1, //查看表格内详细的index
@@ -460,9 +460,11 @@ export const useGetResultConfig = () => {
       state.cancel = new Date().getTime();
       return;
     }
+    console.error('63267236736727632测试')
     api_analysis
       .post_results_pournament(state.pournament_params)
       .then((res) => {
+        console.error('63267236736727632测试3333',res)
         const code = lodash.get(res, "code");
         const data = lodash.get(res, "data");
         // 从链接获取联赛 id

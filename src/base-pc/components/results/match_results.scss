@@ -87,9 +87,12 @@ body {
             height: 12px !important;
             background-size: 100%;
             background-repeat: no-repeat;
-            background-image: var(--qq--bg-image-url35); //todo `url(${preffix}/image/yabo/svg/theme01_plus.svg)`,
+            background-image: url($SCSSPROJECTPATH+"/image/svg/theme02_plus.svg");
+            //background-image: var(--qq--bg-image-url35); //todo `url(${preffix}/image/yabo/svg/theme01_plus.svg)`,
+            
             &.del {
-              background-image: var(--qq--bg-image-url36); //todo `url(${preffix}/image/yabo/svg/theme01_del.svg)`
+              //background-image: var(--qq--bg-image-url36); //todo `url(${preffix}/image/yabo/svg/theme01_del.svg)`
+              background-image: url($SCSSPROJECTPATH+"/image/svg/theme02_y0_del.svg");
             }
           }
         }

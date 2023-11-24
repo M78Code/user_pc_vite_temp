@@ -9,9 +9,11 @@
                 </div>
                 <div class="w-100 h15 f-s-c my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                    <span class="text-a1a text-flow-none font400">{{ items.playName }}</span> 
+                    <!-- 盘口 -->
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}</span>
                 </div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
+                <div class="w-100 text-8a8 fon12 font400">{{ items.handicap_name }} <span class="mx-4">v</span> {{ items.away }}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
@@ -236,7 +238,7 @@ const set_delete = () => {
         }
     }
     .text-flow-none{
-        width: 76%;
+        width: 14%;
         line-height: 12px;
     }
     .bet-odds-value{
