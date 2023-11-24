@@ -19,7 +19,6 @@ import { useMittEmit, MITT_TYPES,project_name, MenuData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
 } from 'src/core'
-import { configureStore } from '@reduxjs/toolkit';
 
 class MatchMeta {
 
@@ -153,6 +152,7 @@ class MatchMeta {
    * @param { mids } 赛事 mids
    */
   get_origin_match_by_mids(mids) {
+    console.log(BaseData)
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
     // 显示空数据页面
@@ -169,11 +169,15 @@ class MatchMeta {
       const params = this.set_match_default_properties(match, index, result_mids)
       // 赛事最终数据
       const target = Object.assign(match, template, params)
+      // 球种名称
+      const csna = BaseData?.menus_i18n_map[`${100 + Number(match.csid)}`]
+      // 联赛名称
+      const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
+      // 球种名称
       // 赛事其他操作
       this.match_assistance_operations(target)
-      return target
+      return { ...target, tn, csna }
     })
-
     // 元数据不作为最终渲染数据 所以不走虚拟计算
     // 元数据只作用域切换菜单时快速显示， 最终显示还是根据接口来
     this.match_mids = lodash.uniq(mids.slice(0, 10))
@@ -283,7 +287,6 @@ class MatchMeta {
     VirtualList.set_match_mid_map_base_info(match, template_config.match_template_config)
 
     // 球种 默认玩法 
-    
     MatchResponsive.reset_match_hpid_by_csid(csid)
 
   }
@@ -786,10 +789,22 @@ class MatchMeta {
     const length = lodash.get(list, 'length', 0)
     
     if (length < 1) return this.set_page_match_empty_status(true);
-    // // 重置折叠对象
+
+    let target_data = list
+    if (is_classify) {
+      // 赛事归类(开赛-未开赛) 里面包含了球种归类
+      target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
+    } else {
+      // 球种归类
+      const arr_data = MatchUtils.handler_match_classify_by_csid(list)
+      // 联赛归类
+      target_data = MatchUtils.handler_match_classify_by_tid(arr_data).filter((t) => t.mid)
+    }
+
+    // 重置折叠对象
     // MatchFold.clear_fold_info()
     // 赛事全量数据
-    const match_list = list.map((match, index) => {
+    const match_list = target_data.map((match, index) => {
       // 设置联赛下的赛事数量， 不能是虚拟计算过后得
       if (this.is_other_warehouse(warehouse.name_code)) {
         MatchResponsive.set_other_ball_seed_league_count(match)
@@ -798,28 +813,18 @@ class MatchMeta {
       }
       
       // 设置赛事默认参数
-      const params = this.set_match_default_properties(match, index, list.map(t => t.mid))
-      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, list)
+      const params = this.set_match_default_properties(match, index, target_data.map(t => t.mid))
+      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
       
       Object.assign(match, params, {
         is_show_ball_title,
-        is_show_league: index === 0 ? true : list[index].tid !== list[index - 1].tid
+        is_show_league: index === 0 ? true : target_data[index].tid !== target_data[index - 1].tid
       })
       //  赛事操作
       this.match_assistance_operations(match)
       return match
     })
 
-    let target_data = list
-    if (is_classify) {
-      // 赛事归类(开赛-未开赛) 里面包含了球种归类
-      target_data = MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid)
-    } else {
-      // 球种归类
-      const arr_data = MatchUtils.handler_match_classify_by_csid(target_data)
-      // 联赛归类
-      target_data = MatchUtils.handler_match_classify_by_tid(arr_data).filter((t) => t.mid)
-    }
     const result_mids = target_data.map(t => t.mid)
    
     if (this.is_other_warehouse(warehouse.name_code)) {
