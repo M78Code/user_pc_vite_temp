@@ -571,21 +571,26 @@ class MenuData {
       return;
     }
     if (Object.keys(session_info).length) {
-      const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root,current_ball_type } = session_info;
+      for(let item in session_info){
+        if(item != 'menu_data_version'){
+          this[item] = session_info[item]
+        }
+      }
+      // const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root,current_ball_type } = session_info;
 
-      this.menu_root_count = menu_root_count;
+      // this.menu_root_count = menu_root_count;
 
-      this.set_menu_root(menu_root)
-      // 设置左侧菜单
-      this.set_left_menu_result(left_menu_result);
+      // this.set_menu_root(menu_root)
+      // // 设置左侧菜单
+      // this.set_left_menu_result(left_menu_result);
 
-      // 设置中间件
-      this.set_mid_menu_result(mid_menu_result);
+      // // 设置中间件
+      // this.set_mid_menu_result(mid_menu_result);
 
-      // 设置当前请求的菜单id
-      this.set_menu_current_mi(menu_current_mi)
+      // // 设置当前请求的菜单id
+      // this.set_menu_current_mi(menu_current_mi)
 
-      this.set_current_ball_type(current_ball_type)
+      // this.set_current_ball_type(current_ball_type)
     
     }
   }

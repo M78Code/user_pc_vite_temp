@@ -143,7 +143,9 @@ class UserCtr {
     }
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        this[item] = session_info[item]
+        if(item != 'user_version'){
+          this[item] = session_info[item]
+        }
       }
     }
   }
