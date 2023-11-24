@@ -148,7 +148,7 @@ const match_odds = computed(() => {
   let csid = lodash.get(props.ol_data, "csid");
   let ov = lodash.get(props.ol_data, "ov");
   // 列表取 hsw
-  let hsw = props.ol_data._hsw.split(',');
+  let hsw =lodash.get(props.ol_data,'_hsw','').split(',');
   let match_odds_info = compute_value_by_cur_odd_type(
     ov,
     1 / 100000,

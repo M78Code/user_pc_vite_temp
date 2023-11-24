@@ -523,9 +523,9 @@ function refresh() {
       cursor: pointer;
       background: #ff7000;
       color:#ffffff;
-      &:hover {
-          background: #ffb001;
-        }
+      // &:hover {
+      //     background: #ffb001;
+      //   }
     }
   }
 
