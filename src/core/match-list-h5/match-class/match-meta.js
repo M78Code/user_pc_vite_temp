@@ -978,9 +978,10 @@ class MatchMeta {
   handle_remove_match (data) {
     // mhs === 2 为关盘 则移除赛事
     const { mid, mhs } = data
-    if (mhs === 2) return
-    const index = this.match_mids.findIndex(t => t === mid)
-    this.match_mids.splice(index, 1)
+    if (+mhs === 2) {
+      const index = this.match_mids.findIndex(t => t === mid)
+      this.match_mids.splice(index, 1)
+    }
   }
 
   /**

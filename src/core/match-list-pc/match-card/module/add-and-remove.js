@@ -190,9 +190,8 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   callback
 ) => {
   // 列表接口数据类型为赛事列表
-  let match_list = MatchListData.match_list;
+  let match_list = MatchListCardData.match_list_key;
   console.log('lockie1-91', match_list);
-  debugger
   match_list.forEach((match, index) => {
     if (match.mid == remove_mid) {
       match_list.splice(index, 1);
@@ -231,10 +230,10 @@ export const remove_match = (remove_mid, callback) => {
     return;
   }
   if ([1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
-    // remove_match_when_match_list_mapping_relation_obj_type_1_3(
-    //   remove_mid,
-    //   callback
-    // );
+    remove_match_when_match_list_mapping_relation_obj_type_1_3(
+      remove_mid,
+      callback
+    );
   } else {
     remove_match_when_match_list_mapping_relation_obj_type_other(
       remove_mid,
