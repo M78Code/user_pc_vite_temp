@@ -216,7 +216,7 @@ const get_base_data = (val) => {
  * */
 const get_score_result = (list, val) => {
   const msc_obj = val.msc_obj;
-  console.log(11111111, msc_obj);
+ 
   let result = [];
   const detail_info = props.detail_info;
   result = list.map((item) => {

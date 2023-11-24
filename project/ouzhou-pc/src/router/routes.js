@@ -65,6 +65,14 @@ const routes = [
         }
       },
       {
+        path: "/league/:sportId/:tid",
+        name: "league",
+        component: () => import('../pages/league/index.vue'),
+        meta: {
+          keepAlive: true, // 需要缓存
+        }
+      },
+      {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
         name: "video",
         component: () => import("../pages/video/video.vue")

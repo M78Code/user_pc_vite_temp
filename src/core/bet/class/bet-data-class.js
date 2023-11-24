@@ -858,5 +858,19 @@ this.bet_appoint_ball_head= null */
       }
     }
   }
+
+  set_bet_c201_change( obj={} ) {
+    // 订单id
+    let order_no = lodash_.get(obj,'orderNo')
+    // 订单状态 订单状态(1:投注成功 2:投注失败)
+    let status = lodash_.get(obj,'status', 0)
+    // 单关 单注 简单 粗暴 其他的后面做
+    if(status == 1){
+      BetViewDataClass.set_bet_order_status(3)
+    }
+    if(status == 2){
+      BetViewDataClass.set_bet_order_status(4)
+    }
+  }
 }
 export default new BetData();

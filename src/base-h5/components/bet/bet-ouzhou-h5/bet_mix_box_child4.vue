@@ -22,7 +22,7 @@
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">{{ item.marketValue }}</span></div>
-                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
+                      <div class="nonebox4-content-left-content-text-two">[{{item.matchType == 2?  i18n_t("bet.bet_inplay") :''}}] <span class="text-two-span">{{item.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
                     <div class="flex">
@@ -30,24 +30,11 @@
                         <div class="nonebox4-content-right">
                            <div class="nonebox4-content-right-profit">{{item.oddsValues}}</div>
                         </div>
-                        <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}</div>
+                        <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">
+                          {{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}
+                        </div>
                       </div>
-                      <!-- 绿升icon -->
-                      <img class="hps_img" src="/ouzhou-h5/image/list/icon_up.png" alt="" v-if="item.red_green == 'red_up'">
-                      <!-- 红降icon -->
-                      <img class="hps_img" src="/ouzhou-h5/image/list/icon_down.png" alt="" v-else>
-                      <!--红色箭头-->
-                      <!-- <div class="top" v-if="item.red_green == 'red_down'">
-                        <div class="jiantou one"></div>
-                        <div class="jiantou two"></div>
-                        <div class="jiantou three"></div>
-                      </div> -->
-                      <!--绿色箭头-->
-                      <!-- <div class="top" v-else>
-                        <div class="jiantou onegreen"></div>
-                        <div class="jiantou twogreen"></div>
-                        <div class="jiantou threegreen"></div>
-                      </div> -->
+                    
                     </div>
                   </div>
               </div>

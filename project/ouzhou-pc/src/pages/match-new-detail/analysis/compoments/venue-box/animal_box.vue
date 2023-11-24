@@ -137,6 +137,8 @@ const get_video_url = () => {
         url_add_param(url_src, "video_type", 1) +
         `&live_type=${live_type}&csid=${props.detail_info.csid}&icons_right=163&pip_right=80`;
         iframe_loading.value = false;
+
+        console.log(11111,media_src.value)
     }
   );
 };
