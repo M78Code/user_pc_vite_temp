@@ -21,7 +21,6 @@ const ref_data = reactive({
 })
 
 const set_bet_show = (ref)=>{
-  console.error('ssssasdasdadasd',ref);
   ref_data.bet_show = ref
 }
 

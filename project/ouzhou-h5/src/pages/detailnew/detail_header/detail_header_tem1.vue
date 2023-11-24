@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, toRef, watch,onUnmounted } from "vue";
+import {onMounted, ref, computed, toRef, watch } from "vue";
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
 import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core";
@@ -61,7 +61,52 @@ const props = defineProps({
     default: () => {},
   },
 });
-
+const show_time_counting = computed(() => {
+  let csid = Number(props.get_match_detail.csid);
+  let mmp = Number(props.get_match_detail.mmp);
+  // 网羽乒斯棒球(3)排球(9)不显示倒计时,只显示状态标题
+  if([5, 10, 8, 7, 3, 9, 13].includes(csid)){
+    return false;
+  }
+  // 足球
+  else if(csid === 1){
+    return ![0,30,31,32,33,34,50,61,80,90,100,110,120,301,302,303,445].includes(mmp);
+  }
+  // 冰球
+  else if(csid == 4){
+    // return false;  //临时屏蔽冰球倒计时
+    if(!props.get_match_detail.mlet){
+      return false;
+    }
+    // 第一局 第二局 第三局 加时赛 点球大战
+    let mmps = [1,2,3,40,50];
+    return mmps.includes(mmp);
+  }
+  // 美式足球
+  else if(csid == 6){
+    if(!props.get_match_detail.mlet){
+      return false;
+    }
+    if(mmp === 40){  // 2843 【SIT】【H5】列表页，美足加时赛阶段，期望优化时间展示
+      if(counting_time.value === '00:00'){
+        return false
+      }
+    }
+    // 第一节 第二节 第三节 第四节 加时赛
+    let mmps = [13, 14, 15, 16, 40];
+    return mmps.includes(mmp);
+  }
+  // dota
+  else if([100,101,102,103].includes(+csid)){
+    if(mmp > -1){
+      return true;
+    }
+  }
+  else
+  {
+    return ![0,30,31,32,33,34,50,61,80,90,100,110,120,301,302,303,445].includes(mmp);
+  }
+})
 // 意义不明的两行代码
 const current_ball_type = ref(0);
 const sport_ball = {
@@ -106,11 +151,9 @@ const sport_ball = {
 	103:1,
 }
 const cuid = ref("");
-const bg_img = ref({
-
-})
+const bg_img = ref({})
 const detail_store = ref(null);
-let is_collect = ref(sessionStorage.getItem("is_collect") || MatchCollect.get_match_collect_state(props.get_match_detail));
+const is_collect = ref();
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -203,15 +246,14 @@ const set_scoew_icon_list = (new_value) => {
  *@return {*}
  */
 const collect_click = () => {
-  api_common.add_or_cancel_match({
-        mid:props.get_match_detail.mid,
+    api_common.add_or_cancel_match({
+        mid: props.get_match_detail.mid,
         cf: is_collect.value ? 0 : 1,
         cuid: UserCtr.get_uid()
-      }).then(res => {
+    }).then(res => {
         if (res.code != 200) return
         is_collect.value = !is_collect.value
-        sessionStorage.setItem("is_collect", is_collect.value);
-      })
+    })
  
 }
 //#TODO: 
@@ -220,8 +262,11 @@ const collect_click = () => {
   // set_scoew_icon_list(props.get_match_detail);
   // set_basketball_score_icon_list();
 // }, 200);
-onUnmounted(()=>{
-  sessionStorage.removeItem("is_collect") 
+
+onMounted(()=>{
+    setTimeout(function (){
+        is_collect.value = props.get_match_detail.mf
+    },320)
 })
 </script>
 

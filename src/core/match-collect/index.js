@@ -61,7 +61,9 @@ class MatchCollect {
     // 赛事 是否 收藏
     Object.assign(this.match_mid_collect_obj.value, {
       [match_key]: { match_collect: is_collect }
-    }) 
+    })
+    // console.log(match)
+    // console.log(this.match_mid_collect_obj.value)
   }
   /*
    * @description 获取联赛收藏状态

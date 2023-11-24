@@ -49,7 +49,7 @@
 
       <div
         style="text-align: center; width: 100%"
-        v-if="['seal', 'close'].includes(odds_state)"
+        v-if="['seal'].includes(odds_state)"
       >
         <img
           class="vector"
@@ -116,7 +116,6 @@ const props = defineProps({
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
   let { _mhs, _hs, os } = props.ol_data || {};
-  console.log(11111111, get_odds_state(_mhs, _hs, os));
   return get_odds_state(_mhs, _hs, os);
 });
 //玩法比分
@@ -308,10 +307,10 @@ onUnmounted(() => {
 .odds-arrows-wrap {
   position: relative;
   .up {
-    color: var(--q-gb-t-c-6) !important;
+    color: var(--q-gb-t-c-7) !important;
   }
   .down {
-    color: var(--q-gb-t-c-7) !important;
+    color: var(--q-gb-t-c-6) !important;
   }
   .default {
     color: var(--q-gb-t-c-2);
@@ -330,10 +329,12 @@ onUnmounted(() => {
   display: none;
 }
 .odds-up {
-  background: url($SCSSPROJECTPATH + "/image/svg/up.svg") no-repeat 100%;
+  background: url($SCSSPROJECTPATH + "/image/svg/down.svg") no-repeat 100%;
+  transform: rotate(180deg);
 }
 .odds-down {
-  background: url($SCSSPROJECTPATH + "/image/svg/down.svg") no-repeat 100%;
+  background: url($SCSSPROJECTPATH + "/image/svg/up.svg") no-repeat 100%;
+  transform: rotate(180deg);
 }
 .lock {
   width: 12px;

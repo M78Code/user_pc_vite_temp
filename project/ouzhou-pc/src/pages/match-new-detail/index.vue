@@ -31,60 +31,40 @@
             style="margin: 0 10px; height: 14px"
             v-if="detail_info.mng"
           />
-          <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
-<!--            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}-->
-            {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}
-          </span>
-
+          <!--
+            赛事详情
+            sportId 球类ID
+            ms 赛事状态：0未开赛，1 进行中
+            <span class="leagal-time" v-if="sportId == 1 && detail_info.ms == 0">
+            {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}
+            </span>
+          -->
+            <span class="leagal-time">
+                {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}
+            </span>
         </div>
         <div>
-          <q-expansion-item
-            ref="expansion_ref"
-            expand-separator
-            :expand-icon-toggle="false"
-            :hide-expand-icon="true"
-          >
+          <q-expansion-item ref="expansion_ref" expand-separator :expand-icon-toggle="false" :hide-expand-icon="true">
             <template v-slot:header>
-              <div
-                style="
-                  width: 100%;
-                  line-height: 35px;
-                  font-weight: 500;
-                  display: flex;
-                "
-              >
+              <div class="expansion_ref_slotHeader" style="">
                 <div @click="show_item">
                   <span class="home-vs-away">{{ detail_info.mhn }} </span>
                   <span class="match-detail-head-name m-10">v</span>
                   <span class="home-vs-away">{{ detail_info.man }}</span>
                 </div>
-                <img
-                  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
-                  alt=""
-                  srcset=""
-                  class="expand-icon"
-                />
+                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" class="expand-icon" />
               </div>
             </template>
             <q-card class="match-name-list">
               <div v-for="item in matchDetailList" :key="item.mid">
-                <div
-                  :class="{
-                    'card-item': true,
-                    'active-nav': current_id == item.mid,
-                  }"
-                  @click="match_click(item)"
-                >
+                <div :class="{ 'card-item': true, 'active-nav': current_id == item.mid }" @click="match_click(item)">
                   {{ item.mhn + " v " + item.man }}
                 </div>
               </div>
             </q-card>
           </q-expansion-item>
         </div>
-        <div
-          class="header_banne sport_bg"
-          :style="`background-position:0 -${sport_ball_type[sportId]}px`"
-        ></div>
+        <div class="header_banne sport_bg" :style="`background-position:0 -${sport_ball_type[sportId]}px`"></div>
       </div>
       <!-- tabs 玩法分类切换 -->
       <tabs :tab_options="tabList" v-model="current_key" />
@@ -108,7 +88,7 @@
 </template>
 
 <script>
-import { onMounted, ref, provide } from "vue";
+import { onMounted, ref, provide,onUnmounted } from "vue";
 import { utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import odds_info from "./components/odds_info.vue";
 import analysis from "./analysis/index.vue";
@@ -150,6 +130,16 @@ export default{
     } = usedetailData(route);
 
     provide("all_hl_item", all_hl_item);
+
+    onMounted(()=>{
+      window.addEventListener('mousedown', (val)=>{
+        expansion_ref.value&&expansion_ref.value.hide();
+    })
+    })
+    
+    onUnmounted(()=>{
+      window.removeEventListener('mousedown',()=>{})
+    })
 
     const match_click = (item) => {
       current_id.value = item.mid;
@@ -272,7 +262,7 @@ export default{
       align-items: center;
 
       .leagal-time {
-        background-color: var(--q-gb-bg-c-10);
+        //background-color: var(--q-gb-bg-c-10);
         color: var(--q-gb-t-c-5);
         padding: 2px 10px;
       }
@@ -429,4 +419,19 @@ export default{
     border-radius: 4px;
   }
 }
+
+
+.expansion_ref_slotHeader{
+    width: 100%;
+    line-height: 35px;
+    font-weight: 500;
+    display: flex;
+}
+
+::v-deep .q-expansion-item {
+    .q-focus-helper {
+        visibility: hidden;
+    }
+}
+//q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
 </style>

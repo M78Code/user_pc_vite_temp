@@ -21,64 +21,27 @@
             {{ item.hpn }}
             <span v-if="item.hps"> ({{ item.hps.split("|")[1] }}) </span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
-            <img
-              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
-              alt=""
-              srcset=""
-              class="expand-icon"
-              :style="{
-                transform: item.expanded ? 'rotate(0deg)' : 'rotate(180deg)',
-              }"
-            />
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" alt="" srcset="" class="expand-icon" :style="{transform: item.expanded ? 'rotate(0deg)' : 'rotate(180deg)' }" />
           </div>
         </template>
         <q-card>
           <q-card-section>
             <!-- 详情页玩法名称 -->
-            <div
-              class="odds-title"
-              :style="{ gridTemplateColumns: columnTotal(item) }"
-            >
+            <div class="odds-title" :style="{ gridTemplateColumns: columnTotal(item) }">
               <template v-if="item.title && item.title.length > 0">
-                <span
-                  v-if="[5].includes(item.hpt)"
-                  class="odds-title-li"
-                ></span>
-                <div
-                  v-for="opt in item.title"
-                  :key="opt.otd"
-                  class="odds-title-li"
-                >
-                  <span
-                    v-if="![0, 1, 2, 3, 7, 10,18].includes(item.hpt)"
-                    class="handicap-value-text"
-                    >{{ opt.osn }}</span
-                  >
+                <span v-if="[5].includes(item.hpt)" class="odds-title-li"></span>
+                <div v-for="opt in item.title" :key="opt.otd" class="odds-title-li">
+                  <span v-if="![0, 1, 2, 3, 7, 10,18].includes(item.hpt)" class="handicap-value-text" >{{ opt.osn }}</span>
                   <!-- 模板4 -->
                   <template v-if="item.hpid==103||[4, 6].includes(item.hpt)&&sun_ol(item.hl[0].ol, item).length>0">
                     <div class="temp-simple">
-                      <div
-                        v-for="ol in sun_ol(item.hl[0].ol, item)"
-                        :key="ol.oid"
-                      >
+                      <div v-for="ol in sun_ol(item.hl[0].ol, item)" :key="ol.oid" >
                         <template v-if="ol.otd === opt.otd||ol._otd === opt.otd">
-                          <div
-                           
-                            :class="{
-                              tem4: true,
-                              'tem4-active': BetData.bet_oid_list.includes(ol.oid),
-                            }"
-                            @click="betItemClick(item.hl[0], ol)"
-                          >
+                          <div :class="{ tem4: true, 'tem4-active': BetData.bet_oid_list.includes(ol.oid) }" @click="betItemClick(item.hl[0], ol,item.hpn)">
                             <span>{{ ol.on }}</span>
 
                             <span>
-                              <bet-item
-                                :key="`bet_4_${ol.hild}`"
-                                :ol_data="ol"
-                                :current_ol="current_ol"
-                              >
-                              </bet-item>
+                              <bet-item :key="`bet_4_${ol.hild}`" :ol_data="ol" :current_ol="current_ol"></bet-item>
                             </span>
                             <!-- <span v-else></span> -->
                           </div>
@@ -181,6 +144,9 @@ const props = defineProps({
     default: false,
   },
 });
+// <!-- ms: 0开 1封 2关 11锁 -->
+//     <!-- hs: 0开 1封 2关 11锁 -->
+//     <!-- os: 1开 2封 3隐藏不显示不占地方-->
 const mouse_in = ref(false);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
@@ -242,7 +208,7 @@ const sun_ol = (ol, item) => {
   return result;
 };
 //  投注项点击投注,
-const betItemClick = (item, ol) => {
+const betItemClick = (item, ol,play_name) => {
   if (item.hs) {
     return;
   }
@@ -264,6 +230,7 @@ const betItemClick = (item, ol) => {
       device_type: 2,
       // 数据仓库类型
       match_data_type: "pc_detail", // h5_detail
+      play_name
     };
     set_bet_obj_config(params, other);
   }

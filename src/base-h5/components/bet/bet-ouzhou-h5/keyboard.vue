@@ -192,9 +192,9 @@ const _handmaxKey = () => {
 
   // 这个有问题 用户没有余额的情况下 键盘不能使用 我们要让他可以使用 只是点投注的时候提示他 余额不足
   //超过用户余额显示用户余额
-  // if (money.value > UserCtr.balance){
-  //   money.value = UserCtr.balance
-  // }
+  if (money.value > UserCtr.balance){
+    money.value = UserCtr.balance
+  }
 
   BetData.set_bet_amount(money.value)
 }
@@ -248,9 +248,9 @@ const _handleNumberKey = (num) => {
   }
   //超过用户余额显示用户余额 
   // 这个有问题 用户没有余额的情况下 键盘不能使用 我们要让他可以使用 只是点投注的时候提示他 余额不足
-  // if (money_ > UserCtr.balance){
-  //   money_ = UserCtr.balance
-  // }
+  if (money_ > UserCtr.balance){
+    money_ = UserCtr.balance
+  }
   money.value = money_
   BetData.set_bet_amount(money_)
 }

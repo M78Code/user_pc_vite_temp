@@ -10,9 +10,10 @@
     <div class="league">{{ store.selectLeague.nameText }}</div>
   </div>
   <!--二级赛事列表-->
-  <div class="match-list-page">
+  <div class="match-list-page" :class="[{ 'league-filter': store.tabActive === 'League'  }]">
     <!--  判断是否是matches页面   ||  判断是否是league页面的二级列表页   -->
-    <MatchContainer v-if="store.tabActive === 'matches' || (store.tabActive !== 'matches' && store.isLeagueDetail)"/>
+    <MatchContainer v-if="store.tabActive === 'Matches' || (store.tabActive !== 'Matches' && store.isLeagueDetail)"/>
+    <NoData v-else-if="store.tabActive === 'Outrights'" which='comingSoon' class="data-get-empty2" height='400'></NoData>
     <MatchFirstStep v-else />
   </div>
 </template>
@@ -26,6 +27,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import { IconWapper } from 'src/components/icon'
 import BaseData from 'src/core/base-data/base-data.js'
+import NoData from "src/base-h5/components/common/no-data.vue";
 
 const emitters = ref({})
 
@@ -51,23 +53,30 @@ onUnmounted(() => {
 })
 
 const onTabChange = e => {
-  if (store.tabActive !== 'matches') {
+  if (store.tabActive !== 'Matches') {
     onChangeDate(12) // 默认展示12个小时的数据
   }
 }
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
-  MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-    console.log('onChangeDate', res)
-    if (res) {
-      store.areaList = res
-      onChangeArea(res[0].id)
-    }
-  })
+  if (store.tabActive !== 'Matches') {
+    MatchMeta.get_ouzhou_leagues_data(e).then(res => {
+      console.log('onChangeDate', res)
+      if (res) {
+        store.areaList = res
+        onChangeArea(res[0].id)
+      }
+    })
+  }
 }
 
 const onChangeArea = e => {
   const arr = store.areaList.find(i => i.id === e)['tournamentList']
+  console.log('onChangeArea', store.areaList, e, arr)
+  if (arr === null) {
+    store.leaguesMatchs = []
+    return
+  }
   arr.forEach(i => {
     i.visible = true
     i.tid = i.id
@@ -76,14 +85,14 @@ const onChangeArea = e => {
 }
 // 初始化matchpage页面
 const initMatchPage = () => {
-  store.tabActive = 'matches'
+  store.tabActive = 'Matches'
   store.isLeagueDetail = false
 }
 
 const goBackToLeague = () => {
   onTabChange(1)
   store.isLeagueDetail = false
-  store.tabActive = 'league'
+  store.tabActive = 'League'
 }
 
 </script>
@@ -104,6 +113,13 @@ const goBackToLeague = () => {
 
       .s-w-item {
         background-color: var(--q-gb-bg-c-2) !important;
+      }
+    }
+  }
+  &.league-filter{
+    :deep(.scroll-wrapper) {
+      .scroll-i-con .s-w-item {
+        position: relative;
       }
     }
   }

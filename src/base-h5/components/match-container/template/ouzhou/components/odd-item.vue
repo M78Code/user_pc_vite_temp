@@ -56,6 +56,11 @@ const props = defineProps({
   mhs: {
     type: Number,
     default: () => 0
+  },
+  // 数据仓库
+  match_data_type: {
+    type: String,
+    default: () => 'h5_list'
   }
 })
 

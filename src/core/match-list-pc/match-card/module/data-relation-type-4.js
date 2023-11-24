@@ -87,7 +87,8 @@
         card_index,
       }
     }
-
+    // 将我们的列表历史存入
+    MatchListCardData.match_list_key = match_list
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
       let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
@@ -259,7 +260,7 @@
         play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
         no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
         //卡片key列表
-        match_list_card_key_arr,
+        match_list_card_key_arr:is_five_leagues?undefined:match_list_card_key_arr,
         // 五大联赛key列表
         five_leagues_card_key_arr 
       })

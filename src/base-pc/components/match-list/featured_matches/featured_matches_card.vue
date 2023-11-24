@@ -27,7 +27,7 @@
           <div class="top-line"></div>
           <div class="odds_item bet-item-wrap-ouzhou" v-for="ol_data in get_col_ols_data(item.mid)"
             :key="ol_data.oid + '_' + ol_data._hpid + '_' + ol_data._ot">
-            <betItem :ol_data="ol_data"></betItem>
+            <betItem :ol_data="ol_data" match_data_type="pc_hots_list"></betItem>
           </div>
         </div>
       </div>
@@ -105,7 +105,10 @@ function get_col_ols_data(_mid) {
     // 投注项数据拼接
     let hn_obj_config = MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
     // 获取投注项内容 
-    return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+    let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
+    // 15mins 和 featured赛事展示的投注项名称
+    ols_data['otb'] = item.otb
+    return ols_data;
   })
 }
 // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
@@ -133,7 +136,7 @@ get_featurd_list()
 
   .featured-matched-card {
     flex-shrink: 0;
-    width: 300px;
+    width: 288px;
     height: 140px;
     display: inline-block;
     background: var(--q-gb-bg-c-4);
@@ -262,10 +265,9 @@ get_featurd_list()
         font-size: 14px;
         font-weight: 500;
         letter-spacing: 0px;
-
-        &:hover {
-          background: rgba(255, 112, 0, 0.1);
-        }
+        // &:hover {
+        //   background: rgba(255, 112, 0, 0.1);
+        // }
 
         span {
           &:first-child {
@@ -302,10 +304,10 @@ get_featurd_list()
   }
 }
 
-::v-deep.bet-item-wrap-ouzhou {
+:deep(.bet-item-wrap-ouzhou) {
   display: flex;
   width: 78px;
-  height: 48px;
+  height: 40px !important;
   border-radius: 2px;
   justify-content: center;
   align-items: center;
@@ -313,7 +315,7 @@ get_featurd_list()
 
   .c-bet-item {
     width: 78px;
-    height: 48px;
+    height: 40px;
   }
 
   .c-bet-item.can-hover:hover {

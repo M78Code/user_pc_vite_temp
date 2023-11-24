@@ -39,7 +39,7 @@
         <div></div> -->
         <div
           v-if="value.length == 1"
-          @click="go_betting(value)"
+          @click="go_betting(value[0])"
           :class="{
             'is-active': value[0].oid === active,
             temp_grid_item: true,
@@ -127,7 +127,7 @@ const go_betting = (data) => {
   if (data.os == 2) return;
   // console.log("payload", data);
   // storage_bet_info(payload)
-  emit("bet_click_", data);
+  emit("bet_click_", data,props.item_data.hpn);
   // EMITTER.emit("show_bet_dialog", true);
 };
 const matchInfo = computed(() => {

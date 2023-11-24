@@ -87,9 +87,12 @@ body {
             height: 12px !important;
             background-size: 100%;
             background-repeat: no-repeat;
-            background-image: var(--qq--bg-image-url35); //todo `url(${preffix}/image/yabo/svg/theme01_plus.svg)`,
+            background-image: url($SCSSPROJECTPATH+"/image/svg/theme02_plus.svg");
+            //background-image: var(--qq--bg-image-url35); //todo `url(${preffix}/image/yabo/svg/theme01_plus.svg)`,
+            
             &.del {
-              background-image: var(--qq--bg-image-url36); //todo `url(${preffix}/image/yabo/svg/theme01_del.svg)`
+              //background-image: var(--qq--bg-image-url36); //todo `url(${preffix}/image/yabo/svg/theme01_del.svg)`
+              background-image: url($SCSSPROJECTPATH+"/image/svg/theme02_y0_del.svg");
             }
           }
         }
@@ -98,7 +101,8 @@ body {
           border-left: 1px solid var(--q-match-result-boreder-1);
           &:hover {
             // background-color: #2C2D34;
-            background: var(--q-gb-bg-c-110);
+            // background: var(--q-gb-bg-c-110);
+            background:#f5f6f9;
           }
           .table-col::before {
             // border-right: 1px solid var(--q-match-result-boreder-1);
@@ -113,7 +117,8 @@ body {
         }
         .active {
         //   background-color: #2C2D34;
-          background: var(--q-gb-bg-c-110);
+          // background: var(--q-gb-bg-c-4);
+          background:#fff;
         }
         .wrap-load {
           background-color: var(--q-gb-bg-c-15);
@@ -173,7 +178,8 @@ body {
         }
         .pagination-link {
           span {
-            color: var(--q-match-result-text-color-3);
+            // color: var(--q-gb-t-c-8);
+            color:#8a8986;
           }
           input {
             background: var(--q-gb-bg-c-11);
@@ -186,7 +192,8 @@ body {
         }
         .pagination-select {
           span {
-            color: var(--q-match-result-text-color-3);
+            // color: var(--q-match-result-text-color-3);
+            color:#8a8986;
           }
         }
       }
