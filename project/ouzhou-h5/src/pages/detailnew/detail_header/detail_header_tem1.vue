@@ -137,6 +137,7 @@
 
 <script setup>
 import {onMounted, ref, computed, toRef, watch } from "vue";
+import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
 import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zone  } from "src/core";
@@ -498,6 +499,9 @@ onMounted(()=>{
     }
     .match-detail-bet-or-event {
     }
+  }
+  :deep(.counting){
+     color: var(--q-gb-t-c-3) !important;
   }
 }
 </style>
