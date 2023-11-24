@@ -122,7 +122,7 @@ const get_base_data = (val) => {
     { name: detail_info["man"], key: "away" },
   ];
   let res = "";
-  if (!_.isEmpty(val) && ["1", "2", "3"].includes(detail_info.csid)) {
+  if (!_.isEmpty(val) && ["1", "2", "3"].includes(detail_info.csid+'')) {
     res = get_score_result(list, val);
   } else {
     //   篮球 赛前无数据
@@ -399,7 +399,7 @@ watch(
       }
       get_msc_data(msc_data, current_data);
     } else {
-      if (!["1", "2", "3"].includes(res.csid)) {
+      if (!["1", "2", "3"].includes(res.csid+'')) {
         format_msc(res);
       }
     }
