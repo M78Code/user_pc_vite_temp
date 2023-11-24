@@ -374,7 +374,7 @@ export default class Ws {
         wslog.send_msg('WS---R:', msg)
         // console.log('------------------------------------onMessage----------------------'+msg)
       }
-      // WsRev.ws_rev_msg(this_, JSON.parse(msg));
+      WsRev.ws_rev_msg(this_, JSON.parse(msg));
     } catch (error) {
       console.log('=======websocket服务器返回数据错误=======' + msg);
     }

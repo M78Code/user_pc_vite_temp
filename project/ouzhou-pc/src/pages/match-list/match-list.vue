@@ -66,7 +66,7 @@
         </template>
       </scroll-list>
     </load-data>
-    <load-data v-else :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
+    <load-data v-else-if="MenuData.is_leagues()" :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
       <scroll-list>
         <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
           <play-match-league :league_obj="league_item" />

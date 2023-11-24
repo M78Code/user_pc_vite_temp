@@ -193,11 +193,9 @@ export const init_home_matches = async () => {
           set_match_play_current_index(item, 'hps15Minutes')
           return item.mid;
         });
-        setTimeout(() => {
-          axios_loop({
-            axios_api: () => api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
-          })
-        }, 1000);
+        axios_loop({
+          axios_api: () => api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
+        })
         match_count = data.dataList.length || 0;
         let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
         //过滤前20条数据
