@@ -1,7 +1,7 @@
 <template>
-  <MatchesHeader />
+  <LeaguesHeader />
   <div class="yb-match-list full-height relative-position">
-    <load-data :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
+    <load-data :state="'data'" v-if="match_list_card_key_arr.length" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
       <scroll-list>
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
           :class="`card_key_${card_key}`">
@@ -9,6 +9,9 @@
         </div>
       </scroll-list>
     </load-data>
+    <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
+      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+    }" />
   </div>
 </template>
 
@@ -21,9 +24,10 @@ import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/com
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
+import LeaguesHeader from "src/base-pc/components/leagues-header/index.vue";
 import { LayOutMain_pc, UserCtr } from 'src/core/index.js';
 import { api_match } from "src/api/index.js";
+import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 
 import "../match-list/match_list.scss";
 
@@ -34,7 +38,8 @@ export default {
     LoadData,
     ScrollList,
     LoadData,
-    MatchesHeader
+    LeaguesHeader,
+    ConmingSoon
   },
   setup() {
 

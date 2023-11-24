@@ -68,7 +68,7 @@
     </load-data>
     <load-data v-else :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
       <scroll-list>
-        <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id}`">
+        <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
           <play-match-league :league_obj="league_item" />
         </div>
       </scroll-list>
@@ -284,5 +284,8 @@ export default {
   top: 133px;
   z-index: 200;
   font-size: 13px;
+}
+.league_card {
+  margin-bottom: 10px;
 }
 </style>
