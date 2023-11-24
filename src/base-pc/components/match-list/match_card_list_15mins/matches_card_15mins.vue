@@ -61,12 +61,11 @@ let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 let odds_list = match_tpl_info.get_15mins_odds_list()
 const ols_data = computed(() => {
   const ols = merge_template_data({
-    match: props.current_tab,
+    match:JSON.parse(JSON.stringify(props.current_tab)), //不知道什么问题一直是同一个
     handicap_list: [odds_list],
     type: 4,
     play_key: 'hps15Minutes'
   }, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
-  console.log('ols',props.current_tab.mid, ols,MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.list_to_obj.mid_obj)
   return ols
 })
 // // 监听 当前投注项ID的变化
