@@ -162,7 +162,9 @@ const setDefaultData = (val) => {
 }
 
 watch(() => store.areaList, () => {
-    areaListChange(store.areaList[0], 0)
+    const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
+    const offset = index < 0 ? 0 : index
+    areaListChange(store.areaList[offset], offset)
 })
 onMounted(() => {
     setDefaultData(MenuData.menu_mi.value || '101');//默认足球
