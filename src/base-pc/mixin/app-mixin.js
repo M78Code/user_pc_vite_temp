@@ -1,6 +1,6 @@
 import { http, AllDomain } from "src/core/http/";
 import { SessionStorage,enter_params } from "src/core/index.js";
-import { loadLanguageAsync, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass,MenuData } from "src/core/index.js";
+import { loadLanguageAsync,LocalStorage, LayOutMain_pc,MatchDetailCalss,GlobalSwitchClass,MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
