@@ -121,7 +121,7 @@ onMounted(async () => {
     }
   }
   // 赛事 阶段变更 也需要重新请求
-  if (['C104'].includes(cmd)) {
+  if (['C104', '901'].includes(cmd)) {
     get_ouzhou_home_data()
     get_five_league_matchs()
   }

@@ -126,6 +126,7 @@ const goBackToLeague = () => {
     :deep(.scroll-wrapper) {
       .scroll-i-con .s-w-item {
         position: relative;
+        transform: translateY(0) !important;
       }
     }
   }
