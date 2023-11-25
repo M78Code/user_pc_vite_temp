@@ -1,29 +1,31 @@
 <template>
   <div class="match-detail-odds component odds-info">
     <template v-if="match_odds_info && match_odds_info.length > 0" >
-      <template v-for="(item, index) in match_odds_info" :key="item.topKey">
-        <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2||item.hs == 11))">
-          <q-separator color="orange" v-if="index != 0" />
-          <div class="odds-hpn" @click="expend_toggle(item)">
-            <span class="odds-hpn-text">{{ item.hpn }}</span>
-            <!-- <img :src="downUrl" alt=""> -->
-            <span class="odds-hpn-icon" 
-              :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'" ></span>
-          </div>
-          
-          <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-          <!-- {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }} -->
-            <component
-                :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
-                :item_data="item"
-                :active="active"
-                @bet_click_="bet_click_"
-            />
-          </div>
-  <!--          <bevisTemplate0 :betInfor="item"></bevisTemplate0>-->
+      <div v-for="(item, index) in match_odds_info" :key="item.topKey" class="odds-wrap">
+<!--          {{match_odds_info}}-->
+        <q-separator color="orange" v-if="index != 0" />
+        <div class="odds-hpn" @click="expend_toggle(item)">
+          <span class="odds-hpn-text">{{ item.hpn }}</span>
+          <!-- <img :src="downUrl" alt=""> -->
+          <span class="odds-hpn-icon" 
+            :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'" ></span>
         </div>
-      </template>
-      
+        
+        <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
+<!--         {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
+<!--            <component
+              :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
+              :item_data="item"
+              :play="item"
+              :active="active"
+              @bet_click_="bet_click_"
+          />-->
+            <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" :play="item" :active="active"
+                       :sport_id="MatchDetailCalss.params.sportId" @bet_click_="bet_click_" />
+<!--            <playTemplate1 :play="item" :sport_id="MatchDetailCalss.params.sportId"></playTemplate1>-->
+<!--            <playTemplate4 :play="item" :sport_id="MatchDetailCalss.params.sportId"></playTemplate4>-->
+        </div>
+      </div>
       <!-- <div class="match-detail-odds-bottom"></div> -->
     </template>
     <template v-else>
@@ -43,7 +45,7 @@ import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 
-import bevisTemplate0 from "./template/bevis-template0.vue"
+import { playTemplate1,playTemplate4 } from "./bevis/index.js"
 
 
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
@@ -51,7 +53,12 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 // import EMITTER from "src/global/mitt.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+<<<<<<< HEAD
+import { MatchDetailCalss } from "src/core/index.js"
+
+=======
 // /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
+>>>>>>> 91386d96a0b82c7c094f75770b1996fc5d8bd8cb
 const props = defineProps({
   match_odds_info: {
     type: Array,
@@ -80,6 +87,35 @@ const componentArr = ref({
     tem5: markRaw(temp5),
     tem_other: markRaw(tem_other),
 });
+/*
+* 新组件使用hpid 玩法集ID
+* 原来组件使用hpt 玩法展示模板
+* 【0, 1, 5, 10】
+* */
+const playComponent = ref({
+    template1: markRaw(playTemplate1),
+    template4: markRaw(playTemplate4),
+    template0: markRaw(temp0),
+    template3: markRaw(temp3),
+    template5: markRaw(temp5),
+    template_other: markRaw(tem_other)
+})
+const computedPlayComponent = function (hpt){
+    let componentName = 'template1';
+    if(hpt == 1){
+        componentName = 'template1'
+    }else if([0, 5].includes(+hpt)){
+        componentName = `template${hpt}`
+    }else if(hpt == 10){
+        componentName = 'template3'
+    }else if(hpt == 4){
+        componentName = 'template4'
+    }else {
+        componentName = 'template_other'
+    }
+    return componentName
+}
+
 const tem_choice = (hpt) => {
   if ([0, 1, 5].includes(hpt)) {
     return hpt;
