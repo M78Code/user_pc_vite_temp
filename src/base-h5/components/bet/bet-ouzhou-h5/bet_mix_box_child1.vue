@@ -169,6 +169,7 @@
       font-weight: 700;
       padding: 0 0.15rem;
       padding-right: 0.1rem;
+      color: var(--q-gb-t-c-1);
       &.red-up{
           color: var(--q-gb-t-c-17);
       }
