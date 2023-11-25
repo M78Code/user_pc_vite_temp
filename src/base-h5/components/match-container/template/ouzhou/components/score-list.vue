@@ -9,12 +9,10 @@
         v-for="s in score_data" 
         :key="s.oid"
         :odd_item="s"
-        :mhs="mhs"
         :item_hs="item_hs"
         :show_hpn="show_hpn"
-        :match_id="match_info.id"
-        :csid="match_info.csid"
-        :match_data_type="match_info.match_data_type"></OddItem>
+        :custom_type="custom_type"
+        :match_info="match_info"></OddItem>
     </template>
      <!-- 锁 -->
     <template v-else>
@@ -62,16 +60,23 @@ const props = defineProps({
   is_change: {
     type: Boolean,
     default: () => true
+  },
+  // 是否使用传过来的赔率 hps 最为渲染数据
+  custom_type: {
+    type: String,
+    default: () => ''
   }
 })
 
 const ol_info = ref({})
-const mhs = ref(0)
 const item_hs = ref(0)
 const active_score = ref('')
 
 // 赔率数据
 const score_data = computed(() => {
+
+  // 自定义hps获取
+  if (props.custom_type === '15_mintues') return get_time_hps(props.hps)
   
   const hps_length = lodash.get(props.hps, 'length', 0)
   const hps = hps_length > 0 ? props.hps : props.match_info.hps
@@ -87,7 +92,6 @@ const score_data = computed(() => {
 
   const hps_item = hps.find(t => t.chpid == hpid)
 
-  mhs.value = lodash.get(props.match_info, 'mhs', 1)
   // structureLiveMatches 接口 结构不一样 hl 是对象
   item_hs.value = hps_length > 0 ? lodash.get(hps_item, 'hl.hs', 1) :  lodash.get(hps_item, 'hl[0].hs', 1)
   
@@ -109,6 +113,18 @@ const score_data = computed(() => {
   }
   return target.length > 0 ? target : Array.from({ length: ol_length }, (i) => { return {  oid: i } })
 })
+
+// 处理15分赔率
+
+const get_time_hps = (hps) => {
+  const length = lodash.get(hps, 'length', 0)
+  if (length < 1) return [{}, {}, {}]
+  const item = hps.find(t => t.ot === 'X')
+  const index = hps.findIndex(t => t.ot === 'X')
+  hps.splice(index, 1)
+  hps.splice(1, 0, item)
+  return hps
+}
 
 </script>
  
