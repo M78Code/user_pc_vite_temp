@@ -46,6 +46,7 @@ import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
 import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
+import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
 const tab_list = ref([])
 
@@ -111,6 +112,7 @@ const set_show_leagues = () => {
 }
 
 const set_active_time = (item) => {
+	MatchLeagueData.set_select_hours(item.value)
 	active_time.value = item.value
 }
 
