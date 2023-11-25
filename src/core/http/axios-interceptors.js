@@ -10,7 +10,7 @@ import { get_query_string } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "../mitt";
 // import userCtr from "../user-config/user-ctr";
 const token_key = STANDARD_KEY.get("token"); //token键
-const lang_key = STANDARD_KEY.get("lang"); // 语言key
+const lang_key =  'lang'; // 语言key
 
 const FNANI_STATUS = {
   // token api接口连续失效次数
@@ -50,7 +50,7 @@ const requestHook = {
     }
     //请求token
     // const requestId = "68e6c351022cec470f7cc3195fbabda7adb46a8d"
-    const requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") ||get_query_string.token || "";
+    const requestId = SessionStorage.get(token_key) || SessionStorage.get("token") ||get_query_string.token || "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = LocalStorage.get(lang_key,LocalStorage.get('lang')); // 语言调整
