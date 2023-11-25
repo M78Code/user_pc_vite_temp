@@ -212,7 +212,7 @@ export const useGetResultConfig = () => {
   const hideSelect = (value) => {
     state.startTimeShow = false;
     if (value) {
-      state.model = value
+      showDate(value.from, value.to);
     }
   };
   // 隐藏冠军赛种输入框内文字
@@ -460,13 +460,13 @@ export const useGetResultConfig = () => {
       state.cancel = new Date().getTime();
       return;
     }
-    console.error('63267236736727632测试')
     api_analysis
       .post_results_pournament(state.pournament_params)
       .then((res) => {
-        console.error('63267236736727632测试3333',res)
         const code = lodash.get(res, "code");
         const data = lodash.get(res, "data");
+        console.error('test一下',code)
+
         // 从链接获取联赛 id
         let { tid } = route.query;
         if (code == 200 && data.length) {
@@ -1077,7 +1077,7 @@ export const useGetResultConfig = () => {
       });
 
       state.init = true;
-      state.get_pournament();
+      get_pournament();
       state.change_runninBar = false;
       state.reset_pagination = Math.random();
     } else {
@@ -1101,25 +1101,25 @@ export const useGetResultConfig = () => {
     ).getTime(); //当时间
 
     if (end_day - start_day > 86400000 * 7) {
-      state.toast(i18n_t("results.error_time")); //日期区间最多跨度为7天
+      toast(i18n_t("results.error_time")); //日期区间最多跨度为7天
       statu = false;
       return statu;
     }
 
     if (end_day < start_day) {
-      state.toast(i18n_t("results.early_time")); //请选择晚于开始的结束时间
+      toast(i18n_t("results.early_time")); //请选择晚于开始的结束时间
       statu = false;
       return statu;
     }
 
     if (start_day > end_day) {
-      state.toast(i18n_t("results.late_time")); //请选择早于结束的开始时间
+      toast(i18n_t("results.late_time")); //请选择早于结束的开始时间
       statu = false;
       return statu;
     }
 
     if (current - start_day > 86400000 * 35) {
-      state.toast(i18n_t("results.max_time")); //最多可以查询近35天的历史比赛
+      toast(i18n_t("results.max_time")); //最多可以查询近35天的历史比赛
       statu = false;
       return statu;
     }

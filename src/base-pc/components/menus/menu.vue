@@ -73,7 +73,7 @@ const go_to_favouritse = () => {
   // 点击收藏时清除其他球种选中状态
   MenuData.left_menu_result.lv1_mi = ''
   // 点击菜单的时候如果在详情页应跳转出来先
-  if (route.name=='details') {
+  if (['league','details'].includes(route.name)) {
     router.push('/home')
   }
   MenuData.set_is_collect(true)
@@ -99,7 +99,7 @@ const go_to_favouritse = () => {
  */
 const jump_func = (payload ={},type) => {
    // 点击菜单的时候如果在详情页应跳转出来先
-  if (route.name=='details') {
+  if (['league','details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
@@ -117,7 +117,8 @@ const jump_func = (payload ={},type) => {
 
   let mid_config = {
     ...MenuData.mid_menu_result,
-    md: ''
+    md: '',
+    filter_tab: 4001
   }
   MenuData.set_mid_menu_result(mid_config)
 
@@ -130,7 +131,7 @@ const jump_func = (payload ={},type) => {
 // 冠军
 const outrights = () => {
  // 点击菜单的时候如果在详情页应跳转出来先
- if (route.name=='details') {
+ if (['league','details'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
@@ -148,6 +149,7 @@ const outrights = () => {
 
   let mid_config = {
     ...MenuData.mid_menu_result,
+   
   }
   MenuData.set_mid_menu_result(mid_config)
 

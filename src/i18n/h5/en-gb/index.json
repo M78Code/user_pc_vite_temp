@@ -86,7 +86,7 @@
       "null1": "No data",
       "null2": "Try another word",
       "other": "Other Searches",
-      "search_hot": "Popular Searches",
+      "search_hot": "Hot",
       "search_play": "Search Markets",
       "search_record": "History",
       "search_sports": "Search Sports",
@@ -96,7 +96,8 @@
       "view_all_match": "View all soccer",
       "underway": "UNDERWAY",
       "no_search_rezult": "No results found. please try a different search term.",
-      "dogfall": "dogfall"
+      "dogfall": "dogfall",
+      "search_history": "Search History"
     }
 },
   "ac_rules": {

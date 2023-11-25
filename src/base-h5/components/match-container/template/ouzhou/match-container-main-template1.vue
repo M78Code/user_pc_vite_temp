@@ -1128,6 +1128,9 @@ export default {
     .count_span {
       display: flex;
       align-items: center;
+      .mc-n{
+        color: #1A1A1A;
+      }
     }
   }
   :deep(.start-counting-down){
