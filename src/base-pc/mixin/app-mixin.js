@@ -46,6 +46,7 @@ export default {
           let languageName = window.SEARCH_PARAMS.init_param.get('lang') ||LocalStorage.get('lang');
           await loadLanguageAsync(languageName);
         } catch (error) {
+          console.error(error)
         } finally {
           console.log(" init_domain --  开始执行:");
           // 实例化域名检测类对象

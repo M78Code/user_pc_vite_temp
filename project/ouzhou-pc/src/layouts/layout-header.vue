@@ -192,7 +192,7 @@ const showActivityTime = ref(SessionStorage.get('showActivityTime'))
 const allowClick = ref(false)
 /** 活动弹框显隐 */
 const showActivity = ref(false)
-const userBannerTimer = ref(i18n_tc('common.auto_close').replace('%s', 5))
+const userBannerTimer = ref(i18n_t('common.auto_close').replace('%s', 5))
 /***
  * 运营位活动弹窗
  */
