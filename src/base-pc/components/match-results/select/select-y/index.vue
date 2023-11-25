@@ -174,7 +174,7 @@ const ipt_change = () => {
   }
   // 输入完之后把当前已选中的联赛清空
   active_tournament.value.length = 0;
-  timer = setTimeout(() => {
+  timer.value = setTimeout(() => {
     emit("ipt_search", input_val.value, Number(is_hot.value));
   }, 500);
 };

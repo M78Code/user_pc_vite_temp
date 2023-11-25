@@ -148,6 +148,7 @@ const set_tab_list = (news_) =>{
 	// 冠军
 	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
 		matches_header_title.value = 'Outrights'
+		match_list_top.value = '116px'
 		tab_list.value = []
 	}
 
@@ -189,7 +190,12 @@ const checked_current_tab = payload => {
 
 	// 左侧菜单点击后 tab切换
 	if (4001 == payload.value) {
-		MenuData.set_menu_root(202)
+		// 有时间为 早盘
+		if(obj.md){
+			MenuData.set_menu_root(203)
+		}else{
+			MenuData.set_menu_root(202)
+		}
 	}
 	// 联赛
 	if(4002 == payload.value){
