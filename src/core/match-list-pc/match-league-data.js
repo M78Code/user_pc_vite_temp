@@ -33,9 +33,9 @@ class MatchLeagueData {
   }
 
   get_league_list() {
-    if (JSON.parse(localStorage.getItem("league_list"))?.length) {
-      this.league_list.value = JSON.parse(localStorage.getItem("league_list"))
-    }
+    // if (JSON.parse(localStorage.getItem("league_list"))?.length) {
+    //   this.league_list.value = JSON.parse(localStorage.getItem("league_list"))
+    // }
     return this.league_list.value
   }
 
