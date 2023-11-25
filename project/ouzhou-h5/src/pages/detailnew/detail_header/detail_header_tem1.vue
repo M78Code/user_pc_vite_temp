@@ -198,7 +198,7 @@ const sport_ball = {
 const cuid = ref("");
 const bg_img = ref({})
 const detail_store = ref(null);
-const is_collect = ref();
+const is_collect = computed(()=>props.get_match_detail.mf);
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -258,14 +258,29 @@ const set_basketball_score_icon_list = () => {
     ];
   }
 };
-const scoew_icon_list = ref({});
+const scoew_icon_list = ref([])
+// console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
 watch(()=>props.get_match_detail, (new_value, old_value) => {
-  scoew_icon_list.value = new_value.msc_obj;
+  scoew_icon_list.value = new_value.msc_obj||set_scoew_icon_list(new_value)
   // set_scoew_icon_list(new_value);
   // 意义不明
   current_ball_type.value = sport_ball[new_value.csid] * 100;
+  set_basketball_score_icon_list()
 })
-watch(()=>props.get_match_detail.mle,set_basketball_score_icon_list,{immediate:true})
+watch(
+  () => props.get_match_detail.msc,
+  (msc) => {
+    set_scoew_icon_list({msc});
+    set_basketball_score_icon_list();
+  },
+  { immediate: false, deep: true }
+);
+watch(()=>props.get_match_detail.mle,
+  set_basketball_score_icon_list,
+  {
+    immediate:true
+  }
+)
 
 /**
  *@description // 比分板数据
@@ -285,14 +300,7 @@ const set_scoew_icon_list = (new_value) => {
     // console.log("scoew_icon_list", scoew_icon_list);
   }
 };
-watch(
-  () => props.get_match_detail.msc,
-  (msc) => {
-    set_scoew_icon_list({msc});
-    set_basketball_score_icon_list();
-  },
-  { immediate: false, deep: true }
-);
+
 /**
  *@description // 收藏
  *@param {*}
@@ -317,9 +325,9 @@ const collect_click = () => {
 // }, 200);
 
 onMounted(()=>{
-    setTimeout(function (){
-        is_collect.value = props.get_match_detail.mf
-    },320)
+    // setTimeout(function (){
+    //     is_collect.value = props.get_match_detail.mf
+    // },320)
 })
 </script>
 
