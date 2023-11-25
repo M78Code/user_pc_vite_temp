@@ -196,7 +196,9 @@ if (UserCtr.get_user_token()) {
 .footer{
   position: sticky;
   bottom: 0;
-  z-index: 999;
+  // 不能高于投注框的z-index: 1600
+  // 可能存在列表项超过1000个之后z-index大于下值导致底部栏被遮挡
+  z-index: 1100;
 }
 .bar-top{
     // position: fixed;

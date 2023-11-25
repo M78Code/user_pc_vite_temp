@@ -39,28 +39,19 @@ const props = defineProps({
     type: Boolean,
     default: () => false
   },
-  csid: {
-    type: [String, Number],
-    default: () => '1'
-  },
-  match_id: {
-    type: Number,
-    default: () => 1
-  },
   // 盘口状态
   item_hs: {
     type: Number,
     default: () => 0
   },
-  // 赛事状态
-  mhs: {
-    type: Number,
-    default: () => 0
+  // 赛事信息
+  match_info: {
+    type: Object,
+    default: () => {}
   },
-  // 数据仓库
-  match_data_type: {
+  custom_type: {
     type: String,
-    default: () => 'h5_list'
+    default: () => ''
   }
 })
 
@@ -69,12 +60,14 @@ const is_down = ref(false)
 const old_ov = ref(0)
 
 const is_show_title = computed(() => {
-  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${props.csid}`, '1')
+   const { csid = '1' } = props.match_info
+  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
   return hpid != 1 && !props.show_hpn
 })
 
 const is_active = computed(() => {
-  return MatchResponsive.active_odd.value === `${props.match_id}_${props.odd_item.oid}`
+  const { match_id = 1 } = props.match_info.id
+  return MatchResponsive.active_odd.value === `${match_id}_${props.odd_item.oid}`
 })
 
 watch(() => props.odd_item?.ov, (a,b) => {
@@ -96,16 +89,19 @@ const reset_status = () => {
 
 // 显示的赔率
 const get_odd_os = (s) => {
-  return compute_value_by_cur_odd_type(s.ov,'','',props.csid)
+  return compute_value_by_cur_odd_type(s.ov,'','',props.match_info.csid)
 }
 
 const get_item_hpn = (s) => {
-  return s.ot
+  let result = s.ot
+  if (['hots', '15_mintues'].includes(props.custom_type)) result = s.onb.substring(0,1)
+  return result
 }
 
 // 是否锁盘
 const is_lock = computed(() => {
-  return props.odd_item.os != 1 || props.item_hs == 1 || props.mhs == 1
+  const { mhs = 0 } = props.match_info
+  return props.odd_item.os != 1 || props.item_hs == 1 || mhs == 1
 })
 
 const get_icon = (type) => {
@@ -120,6 +116,7 @@ const get_icon = (type) => {
 
 const set_old_submit = () => {
   const ol = props.odd_item
+  const { match_data_type = 'h5_list' } = props.match_info
   if (is_lock.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
   const {oid,_hid,_hn,_mid } = ol
@@ -137,7 +134,7 @@ const set_old_submit = () => {
     // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
     device_type: 1,  
     // 数据仓库类型
-    match_data_type: props.match_data_type, // h5_detail
+    match_data_type: match_data_type, // h5_detail
   }
   console.log('score-list.vue ',params)
   set_bet_obj_config(params,other)

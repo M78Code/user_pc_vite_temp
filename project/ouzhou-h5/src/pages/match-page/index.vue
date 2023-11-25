@@ -28,12 +28,20 @@ import { IconWapper } from 'src/components/icon'
 import BaseData from 'src/core/base-data/base-data.js'
 import { MenuData } from "src/core/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
+let message_fun = null
 const emitters = ref({})
 
 onMounted(() => {
   initMatchPage()
   BaseData.is_emit && MatchMeta.set_origin_match_data()
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
+    MatchMeta.handle_ws_directive({ cmd, data })
+  }, 1000))
+
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
       if (!BaseData.is_emit) {
@@ -48,6 +56,9 @@ onMounted(() => {
 })
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());
+   // 组件销毁时销毁监听函数
+  ws_message_listener.ws_remove_message_listener(message_fun)
+  message_fun = null
 })
 
 const onTabChange = e => {

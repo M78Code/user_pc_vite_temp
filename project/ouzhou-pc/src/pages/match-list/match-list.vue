@@ -34,12 +34,12 @@
       <scroll-list>
         <!-- <template v-slot:before> -->
         <!-- 头部15 Mins模块 -->
-        <div v-if="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
+        <div v-if="matches_15mins_list.length && MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp() )" class="match-list-item">
           <CurrentMatchTitle :title_value="$t('ouzhou.match.15_mins')" :show_more_icon="false" />
           <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
         </div>
         <!-- 头部Featured Matches模块 -->
-        <FeaturedMatches v-if="MenuData.is_featured()" />
+        <FeaturedMatches v-if="MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp() )" />
 
         <!-- </template> -->
 

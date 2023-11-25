@@ -81,6 +81,8 @@ export const corner_icon = compute_local_project_file_path('/image/list/corner_i
 export const mearlys_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
 // app-h5 中力场
 export const midfield_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
+// 回到顶部
+export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')
 
 // ouzhou 收藏 - 空
 export const no_collect_ouzhou = compute_local_project_file_path('/image/list/collect.png')

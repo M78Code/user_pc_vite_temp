@@ -1,3 +1,6 @@
+import { format_M_D_PC } from "src/core/format"
+import { i18n_t } from "src/core/index.js"
+
 // 月份数组
 const month = [
     "Jan",
@@ -84,10 +87,10 @@ export const dateWeekMatchesFormat = (day) => {
     day = day||new Date();
     let result = [];
     Date.prototype.getMonthDay = function (i) {
-        let dateVal = i === 0?'Today':i === 1?'Tomorrow':month[this.getMonth()] + ' ' + this.getDate();
+        let date_time = i === 0 ? "" : new Date(this.setHours(12, 0, 0, 0)).getTime()
         return {
-          val:i === 0?"":new Date(this.setHours(12, 0, 0, 0)).getTime(),
-          name:dateVal,
+          val: date_time,
+          name:  i == 0 ? i18n_t('today') : i == 1 ? i18n_t('tomorrow') : `${format_M_D_PC(date_time)}`,
           type:i === 0?0:1
         };
     }
