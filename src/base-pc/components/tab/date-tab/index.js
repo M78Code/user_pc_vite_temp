@@ -4,7 +4,6 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { ref } from 'vue';
 import { api_common } from "src/api/index.js";
 
-
 const final_index = ref(0) //下划线left
 const date_menu_version = ref(1) //日期菜单数据版本
 const item_wrap_left = ref(0) //item包裹left
