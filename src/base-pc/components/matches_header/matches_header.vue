@@ -189,7 +189,12 @@ const checked_current_tab = payload => {
 
 	// 左侧菜单点击后 tab切换
 	if (4001 == payload.value) {
-		MenuData.set_menu_root(202)
+		// 有时间为 早盘
+		if(obj.md){
+			MenuData.set_menu_root(203)
+		}else{
+			MenuData.set_menu_root(202)
+		}
 	}
 	// 联赛
 	if(4002 == payload.value){
