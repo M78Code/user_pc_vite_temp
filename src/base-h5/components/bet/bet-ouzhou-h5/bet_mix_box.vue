@@ -5,7 +5,7 @@
 <template>
 <div v-if="false">{{ BetData.bet_data_class_version }}</div>
   <div class="bet-mix-box ">
-    <betMixBoxChild v-if="ref_data.bet_box_h5_show "></betMixBoxChild>
+    <betMixBoxChild v-if="BetData.bet_box_h5_show "></betMixBoxChild>
   </div>
 </template>
 
