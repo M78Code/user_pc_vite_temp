@@ -5,6 +5,7 @@
 -->
 <template>
   <div class="box-bc">
+ 
     <q-table
       :rows="data"
       separator="none"
@@ -40,15 +41,24 @@
                 >
                   {{ col.label }}
                 </span>
-                <div v-else style="color: #8a8986;display: flex;align-items: center;">
+                <div
+                  v-else
+                  style="color: #8a8986; display: flex; align-items: center"
+                >
                   <!-- 倒/正计时组件 -->
-                  <match-process :match="detail_info" show_page="match-list" :rows="1" />
+                  <div style=" margin-right:25px;">
+                    <match-process
+                    :match="detail_info"
+                    show_page="match-list"
+                    :rows="1"
+                  />
+                  </div>
                   <img
                     :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
                     alt=""
                     srcset=""
                     style="margin: 0 10px; height: 14px"
-                    v-if="detail_info.mng"
+                   
                   />
                 </div>
               </div>
@@ -142,7 +152,7 @@ import {
   LOCAL_PROJECT_FILE_PREFIX,
   stage_dict,
 } from "src/core/index.js";
-import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 
 import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
@@ -460,7 +470,10 @@ watch(
         format_msc(res);
       }
     }
-    get_base_data(res);
+    if (["1", "2", "3"].includes(res.csid + "")) {
+      get_base_data(res);
+      }
+    // get_base_data(res);
   },
   { immediate: false, deep: true }
 );
@@ -495,43 +508,13 @@ watch(
         headerStyle: { width: "33px", color: "#ff7000" },
       });
     }
-    get_base_data(val);
+    if (["1", "2", "3"].includes(detail_info.csid + "")) {
+      get_base_data(val);
+      }
+   
   },
   { immediate: false, deep: true }
 );
-
-// const score_list = computed(()=>{
-//   const obj = detail_info.value || {}
-//   let result = {}
-//
-//   if (obj.msc && obj.msc.length>0 ) {
-//     for (const item of obj.msc) {
-//       const list = item.split('|')
-//       const score_list = list[1].split(':')
-//       result[list[0]] = {
-//         home:score_list[0],
-//         away:score_list[1],
-//         percentage:(Number (score_list[0]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
-//         away_percentage:(Number (score_list[1]) / (Number (score_list[0]) + Number (score_list[1])).toFixed(2)) * 100||0,
-//       }
-//     }
-//   }else{
-//     for (const key in obj.msc) {
-//       const home = obj.msc[key]['home']
-//       const away = obj.msc[key]['away']
-//       result[key] = {
-//         home,
-//         away,
-//         percentage:(Number (home) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
-//         away_percentage:(Number (away) / (Number (home) + Number (away)).toFixed(2)) * 100||0,
-//       }
-//
-//     }
-//   }
-//   return result
-// })
-//
-//
 
 </script>
 

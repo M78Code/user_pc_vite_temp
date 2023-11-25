@@ -33,7 +33,7 @@ const WebStorage = class WebStorage {
   }
   getKey(key) {
     let res = '';
-    if(key && key.startsWith(this.prefixKey)){
+    if (key && key.startsWith(this.prefixKey)) {
       res = `${key}`.toUpperCase();
     } else {
       res = `${this.prefixKey}${key}`.toUpperCase();
@@ -49,19 +49,23 @@ const WebStorage = class WebStorage {
    * @memberof Cache
    */
   set(key, value, expire) {
-    if (!expire) {
-      expire = this.timeout;
-    }
+    try {
+      if (!expire) {
+        expire = this.timeout;
+      }
 
-    const stringData = JSON.stringify({
-      value,
-      time: Date.now(),
-      expire: isNumber(expire) ? new Date().getTime() + expire * 1000 : null,
-    });
-    const stringifyValue = this.hasEncrypt
-      ? this.encryption.encryptByAES(stringData)
-      : stringData;
-    this.storage.setItem(this.getKey(key), stringifyValue);
+      const stringData = JSON.stringify({
+        value,
+        time: Date.now(),
+        expire: isNumber(expire) ? new Date().getTime() + expire * 1000 : null,
+      });
+      const stringifyValue = this.hasEncrypt
+        ? this.encryption.encryptByAES(stringData)
+        : stringData;
+      this.storage.setItem(this.getKey(key), stringifyValue);
+    } catch (e) {
+      console.error(e,key,value)
+    }
   }
 
   /**

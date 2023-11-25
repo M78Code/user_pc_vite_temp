@@ -593,8 +593,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备 
     if(other.device_type == 1){
         query = h5_match_data_switch(other.match_data_type)
-        useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
-        BetViewDataClass.set_bet_show(true)
+        // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
+        // BetViewDataClass.set_bet_show(true)
+        // 点击投注项 显示投注栏
+        BetData.set_h5_bet_box_show(true)
+        // 点击投注项 展开投注栏
+        BetData.set_bet_state_show(true)
         BetData.set_bet_keyboard_show(true)
         // BetViewDataClass.set_bet_keyboard_show(true)
     }else{
@@ -651,8 +655,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: get_handicap(ol_obj,other.is_detail), // 投注项名称
-        show_mark_score: get_mark_score(ol_obj), // 是否显示基准分
+        handicap: get_handicap(ol_obj,other.is_detail,mid_obj), // 投注项名称
+        mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
     }
 
@@ -681,6 +685,10 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
         play_name = other.play_name
+    }
+    let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+    if(hpn){
+        play_name = hpn
     }
 
     return play_name
@@ -791,15 +799,31 @@ const set_orderNo_bet_obj = order_no_list => {
 }
 
 // 获取盘口值 附加值
-const get_handicap = (ol_obj = {},is_detail) => {
+const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let text = ''
     // 展示用的 + 投注项  
     let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127]
     let home_mark_more = [351,347]
+    let home_away_only = [1]
     if(is_detail){
         text = ol_obj.otv
     }else{
         text = ol_obj.on
+    }
+
+    // 独赢类
+    if(home_away_only.includes(ol_obj._hpid*1)){
+        switch(ol_obj.ot){
+            case '1':
+                // 主
+                text= mid_obj.mhn
+                break
+            case '2':
+                // 客
+                text = mid_obj.man
+                break
+        }
+        return text
     }
     
     if(home_away_mark.includes(ol_obj._hpid*1)){
@@ -818,12 +842,17 @@ const get_handicap = (ol_obj = {},is_detail) => {
 }
 
 // 是否显示基准分 
-const get_mark_score = ol_obj => {
+const get_mark_score = (ol_obj,mid_obj) => {
+    let score = ''
     // 显示基准分
     // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
     let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
     // 判断需要显示基准分的玩法
-    return !playId.includes(Number(ol_obj._hpid))
+    if(playId.includes(Number(ol_obj._hpid))){
+        let obj = lodash_.get(mid_obj,'msc_obj.S1',{})
+        score = `(${obj.home}-${obj.away})`
+    }
+    return score
 }
 
 export {

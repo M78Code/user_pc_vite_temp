@@ -9,7 +9,7 @@
 				<!-- 搜索展示 -->
 				<div class="content">
 					<ul class="list">
-						<div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
+						<!-- <div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div> -->
 						<!-- 滚球 -->
 						<div v-show="search_data?.bowling && search_data?.bowling.length > 0" style="margin-bottom: 10px;">
 							<div @click="expand_bowling = !expand_bowling">
@@ -76,7 +76,7 @@
 										<span v-html="red_color(item.leagueName)"></span><img
 											:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 									</div>
-									<div class="list_bottom" v-for="(i, idx) in item.matchList">
+									<div class="list_bottom" v-for="(i, idx) in item.matchList"  @click.stop="league_item_click(i)">
 										<div style="width: 60%; word-break: break-all">
 											<p>
 												<span class="home" v-html="red_color(i.mhn)"></span>
@@ -175,7 +175,12 @@
 		</q-scroll-area>
 		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
 			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)"
-			 class="middle_info_tab diff">{{ i18n_t('ouzhou.search.no_search_rezult') }}
+			 class="no-result-warp">
+			 <p>{{ i18n_t('ouzhou.search.no_search_rezult') }}</p>
+			 <div class="result">
+				<img :src="compute_local_project_file_path('/image/svg/no-result.svg')" />
+				<div>{{ i18n_t('ouzhou.search.null1') }}</div>
+			 </div>
 		</div>
 		<!--   -->
 	</div>
@@ -194,7 +199,6 @@ import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
-
 const props = defineProps({
 	show_type: {
 		type: String,
@@ -286,6 +290,22 @@ function league_click(match) {
 		text: ''
 	})
 	// PageSourceData.set_route_name('search')
+}
+
+/**
+ * @Description:点击联赛搜索
+ * @param {object} match 点击联赛下的具体赛事
+ * @param {*} match 
+ */
+function league_item_click(match) {
+	if(!match) return;
+	const { mid, tid, csid } = match
+	router.push(`/details/${mid}/${tid}/${csid}`)
+	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
 }
 
 const timer = ref(null)
@@ -674,16 +694,32 @@ watch(
 	width: 100%;
 	z-index: 1;
 	color: var(--q-gb-t-c-5);
-
 	&.diff {
 		padding: 9px 0 9px 20px;
 		position: unset;
 		overflow: auto;
 	}
-
 	.color {
 		color: #FF7000;
 		// color: var(--q-gb-t-c-1);
+	}
+}
+.no-result-warp {
+	background-color: #fff;
+	height: 500px;
+	p {
+		padding: 14px;
+		border-bottom: 1px solid #FF7000;
+	}
+	.result {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 300px;
+		div {
+			margin-top: 10px;
+		}
 	}
 }
 
@@ -709,6 +745,7 @@ li {
 
 		div p:first-child {
 			font-size: 14px;
+			margin-bottom: 0;
 		}
 
 		div p:last-child {

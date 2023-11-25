@@ -2,8 +2,8 @@
 
 <template>
     <div>
-        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @keydown.enter="keydown($event)"
-        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money2(ref_data.max_money)}`" maxLength="11"  />
+        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn" @blur="drap_fn" @keydown.enter="keydown($event)"
+        :placeholder="`${i18n_t('bet.money_range')} ${parseInt(ref_data.min_money)}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
     </div>
 
 </template>
@@ -13,7 +13,7 @@ import { reactive,onMounted,onUnmounted } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,format_money2 } from "src/core/"
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr, format_money3 } from "src/core/"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 const props = defineProps({
     items:{},
@@ -29,6 +29,17 @@ const ref_data = reactive({
     show_quick: false, // 显示快捷金额
     emit_lsit: {},
 })
+
+// 开启/停止拖拽
+let stop_drap = true
+const stop_drap_fn = () => {
+    stop_drap = false
+    useMittEmit(MITT_TYPES.EMIT_STOP_DRAP, stop_drap)
+}
+const drap_fn = () => {
+    stop_drap = true
+    useMittEmit(MITT_TYPES.EMIT_STOP_DRAP, stop_drap)
+}
 
 onMounted(() => {
     // set_ref_data_bet_money()

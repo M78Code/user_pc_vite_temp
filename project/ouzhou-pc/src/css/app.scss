@@ -207,3 +207,63 @@ input::-ms-clear,
 input::-ms-reveal {
   display: none;
 }
+
+
+.bet-item-wrap-ouzhou {
+  display: flex;
+  width: 78px;
+  height: 48px;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  .c-bet-item {
+    width: 78px;
+    height: 48px;
+    &.active {
+      background: var(--q-gb-bg-c-1) !important;
+      &.up,&.down{
+        background: var(--q-gb-t-c-4) !important;
+        .odds{
+          color: var(--q-gb-t-c-2);
+        }
+        div{
+          color: var(--q-gb-t-c-5);
+        }
+      }
+      .handicap-value,
+      .handicap-value-text {
+        color: var(--q-gb-t-c-4);
+      }
+      .odds {
+        color: var(--q-gb-t-c-1);
+      }
+    }
+    &.can-hover:hover {
+      background: var(--q-gb-t-c-4);
+      cursor: pointer;
+    }
+  }
+  &.bet-item-wrap-ouzhou-bigger {
+    .c-bet-item {
+      width: 133px;
+    }
+  }
+  div {
+    color: var(--q-gb-bg-c-7);
+    font-size: 14px;
+  }
+  .odds {
+    color: var(--q-gb-t-c-2);
+    font-weight: 500;
+    font-size: 14px;
+
+    &.up {
+      color: var(--q-gb-t-c-7)!important;
+    }
+
+    &.down {
+      color: var(--q-gb-t-c-10)!important;
+    }
+  }
+}

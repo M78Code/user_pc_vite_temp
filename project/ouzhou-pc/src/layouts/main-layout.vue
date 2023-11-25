@@ -35,7 +35,7 @@
     <secondaryModule></secondaryModule>
 
     <Vue3DraggableResizable v-model:x="BetData.bet_box_draggable.x" v-model:y="BetData.bet_box_draggable.y"
-      v-model:active="BetData.bet_box_draggable.isActive" :draggable="true" :resizable="false" :parent="true"
+      v-model:active="BetData.bet_box_draggable.isActive" :draggable="stop_drap" :resizable="false" :parent="true"
       v-if="BetData.bet_box_draggable.show">
       <div class="ty-bet-box">
         <bet-box-wapper use_component_key="BetBoxOuZhouPC_1" />
@@ -76,6 +76,10 @@ const show_move_video = computed(() => {
   return lodash.get(UserCtr.get_user(), "merchantEventSwitchVO.eventSwitch")
 })
 
+const stop_drap = ref(true)
+const stop_drap_emit = (props) => {
+  stop_drap.value = props
+}
 onMounted(() => {
   let obj = {
     x: window.innerWidth * 0.6,
@@ -90,6 +94,7 @@ onMounted(() => {
   // 投注成功后获取投注记录数据 24小时内的
   ref_data.emit_lsit = {
       emitter_1: useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off,
+      emitter_2: useMittOn(MITT_TYPES.EMIT_STOP_DRAP, stop_drap_emit).off
   }
 })
 

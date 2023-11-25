@@ -25,9 +25,10 @@
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <load-data v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length && !MenuData.is_leagues()" :state="'data'" :style="{
-      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-    }">
+    <load-data v-if="MenuData.menu_root_show_shoucang != 300 && match_list_card_key_arr.length && !MenuData.is_leagues()"
+      :state="load_data_state" :style="{
+        width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+      }">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
       <scroll-list>
@@ -66,14 +67,15 @@
         </template>
       </scroll-list>
     </load-data>
-    <load-data v-else-if="MenuData.is_leagues()" :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
+    <load-data v-else-if="MenuData.is_leagues() && get_league_list().length" :state="'data'"
+      :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
       <scroll-list>
         <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
           <play-match-league :league_obj="league_item" />
         </div>
       </scroll-list>
     </load-data>
-    <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
+    <ConmingSoon v-show="is_conming_soon" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }" />
     <!-- 联赛筛选层 -->
@@ -86,29 +88,26 @@
   </div>
 </template>
 <script>
-import { onMounted, onActivated, onUnmounted, ref, watch, getCurrentInstance, nextTick } from "vue";
+import { onMounted, onActivated, onUnmounted, ref, watch, computed, nextTick } from "vue";
 import { IconWapper } from "src/components/icon";
 import LoadData from "src/components/load_data/load_data.vue";
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
-// import listFilter from "src/base-pc/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/index.vue"; //热门赛事列表 头部筛选
 import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js"; //赛事列表头部——滚球——赛事类型
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from "src/base-pc/components/cus-scroll/scroll_list.vue";
-import refresh from "src/components/refresh/refresh.vue";
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue"; //电竞赛事列表筛选
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 import PlayMatchLeague from './play-match-league.vue'
-// import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
-// import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
-// import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
-// import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
-// import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
-// import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
-import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
+import {
+  mounted_fn,
+  load_data_state,
+  show_refresh_mask,
+  handle_destroyed
+} from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import {
   PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,
@@ -121,24 +120,15 @@ import FeaturedMatches from "src/base-pc/components/match-list/featured_matches/
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import "./match_list.scss";
 import {
-  matches_15mins_list, match_count,init_home_matches 
+  matches_15mins_list, match_count, init_home_matches
 } from "./index"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
-
-const {
-  mounted_fn,
-  load_data_state,
-  show_refresh_mask,
-  collect_count,
-  is_show_hot,
-  on_refresh, handle_destroyed
-} = useMatchListMx();
 const { page_source } = PageSourceData;
+console.log('load_data_state',load_data_state.value != 'loading',load_data_state.value)
 export default {
   components: {
     LeagueTab,
-    // listFilter,
     listFilterDate,
     MatchListCard,
     ListFilterHot,
@@ -147,7 +137,6 @@ export default {
     ScrollList,
     IconWapper,
     LoadData,
-    refresh,
     EsportsHeader,
     ListHeader,
     CurrentMatchTitle,
@@ -171,6 +160,9 @@ export default {
         five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
       })
     };
+    const is_conming_soon = computed(() => {
+      return load_data_state.value != 'loading' && ((!match_list_card_key_arr.value.length && !MenuData.is_leagues()) || (!get_league_list().length && MenuData.is_leagues()))
+    })
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
@@ -199,18 +191,13 @@ export default {
         await init_home_matches();
       }
     }
-
     function get_league_list() {
       return MatchLeagueData.get_league_list()
     }
-
     return {
       show_refresh_mask,
-      collect_count,
-      is_show_hot,
-      page_source,
+      page_source, is_conming_soon,
       GlobalAccessConfig,
-      on_refresh,
       matches_15mins_list,
       match_count,
       match_list_card_key_arr,
@@ -218,7 +205,6 @@ export default {
       compute_css_obj,
       MatchListCardDataClass,
       load_data_state,
-      // coom_soon_state,
       match_list_top,
       match_list_card,
       MenuData,
@@ -285,6 +271,7 @@ export default {
   z-index: 200;
   font-size: 13px;
 }
+
 .league_card {
   margin-bottom: 10px;
 }

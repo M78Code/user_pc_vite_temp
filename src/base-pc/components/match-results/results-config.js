@@ -343,6 +343,7 @@ export const useGetResultConfig = () => {
   const get_sportType = () => {
     let params = {
       langType: "zh", //默认zh
+      showem: 1, // 电子赛事
     };
     api_analysis
       .get_sportType(params)
@@ -356,7 +357,7 @@ export const useGetResultConfig = () => {
             // 18-娱乐,28-高尔夫,29-自行车,33-赛车运动
             if (
               [
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1001,
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 90, 91, 1001,
                 1004, 1002, 1011, 1010, 1009, 18, 28, 29, 33,
               ].includes(data[i].id * 1) ||
               is_eports_csid(data[i].id * 1)
@@ -455,6 +456,7 @@ export const useGetResultConfig = () => {
     ).getTime();
     state.pournament_params.runningBar = state.is_bowls ? "1" : "0";
     state.pournament_params.champion = state.current_sport_id == "0" ? 1 : 0;
+    state.pournament_params['showem'] = 1;
     state.league_type = [];
     if (!test_time()) {
       state.cancel = new Date().getTime();
@@ -465,10 +467,8 @@ export const useGetResultConfig = () => {
       .then((res) => {
         const code = lodash.get(res, "code");
         const data = lodash.get(res, "data");
-        console.error('test一下',code)
-
         // 从链接获取联赛 id
-        let { tid } = route.query;
+        let { tid } = route.query ?? null;
         if (code == 200 && data.length) {
           data.sort((a, b) => {
             return a.tournamentName.localeCompare(b.tournamentName, "zh");
@@ -971,7 +971,6 @@ export const useGetResultConfig = () => {
    * @return {}
    */
   const search_hot = (data) => {
-    // console.error('datadatadatadatadata33333',data)
     state.pournament_params.hot = data;
     get_pournament(0);
   };
@@ -1180,7 +1179,6 @@ export const useGetResultConfig = () => {
    * 修改当前选中的赛种名字
    */
   const setSport = ({ currentItem, isChampion }) => {
-    // console.log(state.api_sport_type,'state.api_sport_type22');
     state.is_highlights = false;
     if (state.results_params.sportType == "1" && state.is_highlights) {
       state.results_params.isPlayBack = 1;

@@ -12,7 +12,7 @@
   <!--二级赛事列表-->
   <div class="match-list-page" :class="[{ 'league-filter': store.tabActive === 'League'  }]">
     <MatchFirstStep v-if="store.tabActive === 'League' && !store.isLeagueDetail" />
-     <NoData v-else-if="store.tabActive === 'Outrights'" which='comingSoon' class="data-get-empty2" height='400'></NoData>
+     <!-- <NoData v-else-if="store.tabActive === 'Outrights'" which='comingSoon' class="data-get-empty2" height='400'></NoData> -->
     <MatchContainer v-else/>
   </div>
 </template>

@@ -82,7 +82,7 @@
      },
      "search": {
         "change": "换一换",
-        "clear_search_history": "清除历史记录",
+        "clear_search_history": "清除搜索历史",
         "league": "联赛",
         "null1": "搜索结果为空",
         "null2": "换个词搜索试试吧",
@@ -2306,6 +2306,7 @@
   "time7": "yyyy年MM月dd日 hh:mm",
   "time8": "yyyy年MM月dd日 hh:mm:ss",
   "time9": "hh:mm",
+  "time10": "yyyy/MM/dd hh:mm",
   "tips": {
     "msg1": "合并投注项",
     "msg2": "勾选后，单/串关可自由切换，多个投注项会同时展示在投注栏里，同一玩法的盘口投注项会替换原投注项。"

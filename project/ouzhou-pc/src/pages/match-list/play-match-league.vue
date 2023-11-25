@@ -4,24 +4,22 @@
     <div class="tr-match-head" @click="jump_to_league_list()" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
-        <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
+        <!-- <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`"> -->
           <!-- 联赛是否收藏 -->
-          <div @click.stop="collect" class="icon-wrap m-star-wrap-league"
+          <!-- <div @click.stop="collect" class="icon-wrap m-star-wrap-league"
             v-if="GlobalAccessConfig.get_collectSwitch">
-            <!-- <div class="collect-start"
-              :style="compute_css_obj({ key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty' })"></div> -->
           </div>
-        </div>
+        </div> -->
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <img v-img="[lodash.get(league_obj, 'pickUrlthumb')]" />
+          <img :src="get_server_file_path(league_obj.picUrlthumb)" />
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
           <div class="absolute-full">
             <!-- 联赛数量 -->
             <span class="ellipsis allow-user-select leagues-name" v-tooltip="{ content: league_obj.tn, overflow: 1 }">
-              {{ league_obj.nameText }}
+              {{ lodash.get(league_obj, 'nameText') }}
             </span>
           </div>
         </div>
@@ -39,12 +37,14 @@
 </template>
 
 <script setup>
-  import { defineProps } from 'vue';
-  import { useRouter } from 'vue-router'
+import { defineProps } from 'vue';
+import { useRouter } from 'vue-router'
 
-  import { GlobalAccessConfig, LayOutMain_pc } from 'src/core/index.js';
+import { GlobalAccessConfig, LayOutMain_pc, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 
-  import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { get_server_file_path } from "src/core/file-path/file-path.js";
+
 
   const router = useRouter();
   const props = defineProps({
@@ -61,5 +61,62 @@
   }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+
+.ouzhou-match-league {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: var(--q-gb-bg-c-15);
+  border-bottom: 1px solid var(--q-gb-bd-c-2);
+  font-weight: 500;
+  cursor: pointer;
+  .league-icon-wrap {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      line-height: 18px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  .leagues-wrap {
+    padding-left: 14px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .tr-match-head {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
+  }
+
+  .league-match-count {
+      height: 100%;
+      position: absolute;
+      right: 13px;
+      font-weight: 600;
+      color: var(--q-gb-t-c-5);
+      display: flex;
+      align-items: center;
+      // span {
+      //   display: flex;
+      //   height: 100%;
+      //   align-items: center;
+      // }
+    }
+    
+    .collect-start {
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      background-size: 100%;
+    }
+
+}
+</style>
 

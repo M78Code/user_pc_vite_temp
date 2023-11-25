@@ -3,7 +3,7 @@
  * @Description:
 -->
 <template>
-  <q-layout view="lHh Lpr lFf" class="layout_container">
+  <q-layout view="lHh Lpr lFf" class="layout_container ouzhou-h5-layout">
     <!-- 顶部菜单 -->
     <TopMenuWapper />
     <q-page-container id="ouzhou-h5" class="page_container" >
@@ -11,12 +11,13 @@
 
       <router-view />
 
-      <!-- 投注框 -->
-      <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
-
+     
     </q-page-container>
     <div class="footer">
-      <bet-bar class="bar-top" v-if="tou_show||true"></bet-bar>
+
+       <!-- 投注框 -->
+       <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
+
       <FooterWapper />
     </div>
   </q-layout>
@@ -43,6 +44,7 @@ import { TopMenuWapper } from "src/base-h5/components/top-menu/"
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import { FooterWapper } from "src/base-h5/components/footer-bar/"
 
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { useRoute } from 'vue-router'
 
 import { api_common } from "src/api/index.js";
@@ -57,14 +59,11 @@ var tou_show = ref(true)
 let routerPath = ref<String>('')
 const route = useRoute()
 watch(() => route.path,newRoute => {
+  tou_show.value = false
   if(newRoute == '/home' || newRoute == '/inplay' || newRoute == '/match'){
-    tou_show.value = true
-  }else{
-    tou_show.value = false
+    tou_show.value = BetData.bet_single_list.length>0?true:false
   }
 })
-
-import BetData from "src/core/bet/class/bet-data-class.js";
 
 
 import "./index.scss"
@@ -219,6 +218,17 @@ if (UserCtr.get_user_token()) {
   left: 0
 }
 
+:deep(.q-drawer-container) {
+  .q-drawer__backdrop {
+    background-color: rgba(56, 55, 50, 0.6) !important;
+    filter: blur(5px);
+  }
+
+  .q-drawer__opener {
+    display: none;
+  }
+}
+
 .layout_container {
   height: 100%;
   overflow: hidden;
@@ -231,16 +241,6 @@ if (UserCtr.get_user_token()) {
       display: none;
     }
 
-    :deep(.q-drawer-container) {
-      .q-drawer__backdrop {
-        background-color: rgba(56, 55, 50, 0.6) !important;
-        filter: blur(5px);
-      }
-
-      .q-drawer__opener {
-        display: none;
-      }
-    }
   }
 
   :deep(.q-drawer) {
@@ -256,6 +256,7 @@ if (UserCtr.get_user_token()) {
     padding-top: 0 !important;
     display: flex;
     flex-direction: column;
+    position: relative;
     :deep(.q-drawer-container){
       .q-drawer__backdrop {
         background-color: rgba(56, 55, 50, 0.6) !important;

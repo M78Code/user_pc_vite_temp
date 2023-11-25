@@ -23,25 +23,24 @@
                     <q-separator color="orange" v-if="index != 0"/>
                     <div class="odds-hpn" @click="expend_toggle(item)">
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
-                        <span class="odds-hpn-icon"
-                              :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
+                        <span class="odds-hpn-icon" :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
-
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-                        <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" :play="item"
-                                   :active="active"
-                                   :sport_id="MatchDetailCalss.params.sportId" @bet_click_="bet_click_"/>
+<!--                        {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
+                        <component
+                            :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
+                            :item_data="item"
+                            :active="active"
+                            @bet_click_="bet_click_"
+                        />
                     </div>
-<!--                    <playTemplate4 :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" :play="item"
-                                   :active="active"
-                                   :sport_id="MatchDetailCalss.params.sportId" @bet_click_="bet_click_"></playTemplate4>-->
                 </div>
             </template>
             <!-- <div class="match-detail-odds-bottom"></div> -->
         </template>
         <template v-else>
             <div v-if="!loading">
-                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt="">
+                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/no-data.png`" alt="">
                 <div class="no-data-text">No Data</div>
             </div>
         </template>
@@ -49,14 +48,12 @@
 </template>
 
 <script setup>
-import {onMounted, ref, computed, markRaw, watch, nextTick} from "vue";
+import {onMounted, ref, markRaw, watch, nextTick} from "vue";
 import temp0 from "./template/tem0.vue";
 import temp1 from "./template/tem1.vue";
 import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
-
-import {playTemplate1, playTemplate4} from "./bevis/index.js"
 
 
 import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
@@ -96,34 +93,6 @@ const componentArr = ref({
     tem5: markRaw(temp5),
     tem_other: markRaw(tem_other),
 });
-/*
-* 新组件使用hpid 玩法集ID
-* 原来组件使用hpt 玩法展示模板
-* 【0, 1, 5, 10】
-* */
-const playComponent = ref({
-    template1: markRaw(playTemplate1),
-    template4: markRaw(playTemplate4),
-    template0: markRaw(temp0),
-    template3: markRaw(temp3),
-    template5: markRaw(temp5),
-    template_other: markRaw(tem_other)
-})
-const computedPlayComponent = function (hpt) {
-    let componentName = 'template1';
-    if (hpt == 1) {
-        componentName = 'template1'
-    } else if ([0, 5].includes(+hpt)) {
-        componentName = `template${hpt}`
-    } else if (hpt == 10) {
-        componentName = 'template3'
-    } else if (hpt == 4) {
-        componentName = 'template4'
-    } else {
-        componentName = 'template_other'
-    }
-    return componentName
-}
 
 const tem_choice = (hpt) => {
     if ([0, 1, 5].includes(hpt)) {
@@ -235,8 +204,9 @@ onMounted(() => {
 
     .no-data-text {
         text-align: center;
-        color: #A1A3A5;
-        font-size: 16px;
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 0;
     }
 }
 

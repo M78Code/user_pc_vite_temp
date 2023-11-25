@@ -46,6 +46,7 @@ import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
 import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
+import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
 const tab_list = ref([])
 
@@ -111,6 +112,7 @@ const set_show_leagues = () => {
 }
 
 const set_active_time = (item) => {
+	MatchLeagueData.set_select_hours(item.value)
 	active_time.value = item.value
 }
 
@@ -148,6 +150,7 @@ const set_tab_list = (news_) =>{
 	// 冠军
 	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
 		matches_header_title.value = 'Outrights'
+		match_list_top.value = '116px'
 		tab_list.value = []
 	}
 
@@ -189,7 +192,18 @@ const checked_current_tab = payload => {
 
 	// 左侧菜单点击后 tab切换
 	if (4001 == payload.value) {
-		MenuData.set_menu_root(202)
+		// 有时间为 早盘
+		if(obj.md){
+			MenuData.set_menu_root(203)
+		}else{
+			MenuData.set_menu_root(202)
+		}
+	}
+	// 联赛
+	if(4002 == payload.value){
+		// MenuData.set_menu_root(400)
+		// obj.current_mi = 400 + MenuData.current_ball_type*1
+		MenuData.set_menu_current_mi(obj.current_mi)
 	}
 	// 冠军
 	if(4003 == payload.value){

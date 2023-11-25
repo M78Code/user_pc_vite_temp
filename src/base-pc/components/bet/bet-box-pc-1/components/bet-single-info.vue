@@ -37,7 +37,7 @@
             </span>
             <!--足,蓝,棒,乒,排[1,2,3,8,9]-->
             <span
-              v-if="[1, 2, 3, 8, 9].includes(item.sportId * 1) && item.show_mark_score && ![0, 100].includes(Number(item.match_ms))"
+              v-if="[1, 2, 3, 8, 9].includes(item.sportId * 1) && item.mark_score && ![0, 100].includes(Number(item.match_ms))"
               class="score">
               ({{ item.scoreBenchmark }})
             </span>

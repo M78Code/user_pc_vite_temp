@@ -34,9 +34,9 @@
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score" v-if="match.csid == 5">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
+      <div class="score">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{match.cur_score.home}}</div>
+      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.home') }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
@@ -55,7 +55,7 @@
       <!-- 主比分 -->
       <div class="score">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{match.cur_score.away}}</div>
+      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
     </div>
 
 
@@ -305,25 +305,9 @@ onUnmounted(() => {
       color: var(--q-gb-bg-c-2);
     }
   }
-  .red-ball {
-    position: absolute;
-    top: 0px;
-    left:1px;
-    height:14px;
-    line-height: 14px;
-    color:#fff;
-    min-width: 10px;
-    padding: 0 1px;
-    text-align: center;
-    border-radius: 1px;
-    font-size: 12px;
-    background-color: #ff4141;
-    &.yellow{
-     background-color: #FFA800;
-    }
-    &.flash {
-      animation: 1s text-flash linear infinite normal;
-    }
+  .score-game {
+    color: var(--q-gb-t-c-2);
+    font-weight: 500;
   }
 
     /*  发球方 */
@@ -335,14 +319,14 @@ onUnmounted(() => {
     height: 5px;
     &.active {
       .point {
-        background-color: #ff7000;
+        background-color: var(--q-gb-bg-c-1);
       }
     }
     .point {
       width: 100%;
       height: 5px;
       border-radius: 50%;
-      background-color: #d0d8de;
+       background-color: var(--q-gb-bg-c-11);
     }
   }
 }

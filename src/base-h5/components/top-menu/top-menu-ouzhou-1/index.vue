@@ -118,7 +118,7 @@ const to_search_page = () => {
 }
 
 const jump_personal = () => {
-  router.push('/personal')
+    router.push('/personal')
 }
 
 // 回到上一页
@@ -242,15 +242,6 @@ onUnmounted(()=>{
       width: 5px;
       height: 8px;
       margin-right: 5px;
-    }
-  }
-  :deep(.q-drawer-container){
-    .q-drawer__backdrop {
-      background-color: rgba(56, 55, 50, 0.6) !important;
-      filter: blur(5px);
-    }
-    .q-drawer__opener{
-      display: none;
     }
   }
 }
