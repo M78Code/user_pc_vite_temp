@@ -370,7 +370,7 @@ export default {
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2 })
-      MatchMeta.get_match_base_hps_by_mids()
+      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids()
     },
     /**
      * @description 联赛折叠
@@ -382,7 +382,7 @@ export default {
       MatchFold.set_league_fold(this.match_of_list)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2 })
-      MatchMeta.get_match_base_hps_by_mids()
+      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids()
     },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器
@@ -758,18 +758,10 @@ export default {
         this.away_yellow_score = 0;
         return;
       }
-
-      // const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list, true)
-      // if (this.match_of_list.mid === '2927136') {
-      //   console.log(msc_obj)
-      // }
       
       // 比分处理
       // 修改 msc_obj 
       const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list.msc, true)
-      // if (this.match_of_list.mid === '2927704') {
-      //   console.log(msc_obj)
-      // }
       
       // 比分处理
       const { home_score, away_score } = MatchUtils.get_match_score({ ...this.match_of_list, msc_obj })

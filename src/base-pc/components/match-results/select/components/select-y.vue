@@ -12,7 +12,6 @@
         class="input"
         v-model="input_val"
         @input="ipt_change"
-        @blur="ipt_blur"
         @focus="ipt_focus"
         :class="{ is_select: is_select }"
         :placeholder="i18n_t('select.placeholder')"
@@ -140,13 +139,10 @@ const ipt_focus = () => {
   // 当前是筛选状态也不请求全部，保留当前状态
   // inputOldVal !=i18n_t("select.filter")
   if (!targetSport.value) {
-    emit("ipt_search", input_val.value, Number(is_hot.value));
+    emit("ipt_search", [input_val.value, Number(is_hot.value)]);
   }
 };
-/**
- * @description: input失去焦点
- */
-const ipt_blur = () => {};
+
 /**
  * @description: 监听input输入
  * @param {String} val input值
@@ -171,7 +167,7 @@ const ipt_change = () => {
   // 输入完之后把当前已选中的联赛清空
   active_tournament.value.length = 0;
   timer = setTimeout(() => {
-    emit("ipt_search", input_val.value, Number(is_hot.value));
+    emit("ipt_search", [input_val.value, Number(is_hot.value)]);
   }, 500);
 };
 /**
@@ -190,7 +186,6 @@ const checkAll = () => {
   // 全选
   menu.value = "all";
   isAllSelect.value = 1;
-  console.log("menumenumenu", active_tournament);
 };
 /**
  * @description: 反选
@@ -198,7 +193,6 @@ const checkAll = () => {
  * @return {undefined} undefined
  */
 const checkInvert = () => {
-  console.error('listlistlist',props.list)
   // 如果当前选中状态是反选并且没有联赛就不予处理
   if (menu.value == "invert" && !props.list) return false;
   emit("confirm", 0);
@@ -406,7 +400,6 @@ watch(
         menu.value = "";
       }
     }
-    console.log("active.valueactive.valueactive.value", menu.value);
   },
   { immediate: true, deep: true }
 );

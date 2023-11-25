@@ -121,7 +121,7 @@ onMounted(async () => {
     }
   }
   // 赛事 阶段变更 也需要重新请求
-  if (['C104'].includes(cmd)) {
+  if (['C104', '901'].includes(cmd)) {
     get_ouzhou_home_data()
     get_five_league_matchs()
   }
@@ -202,7 +202,7 @@ const handle_ouzhou_home_hots = async (data) => {
  */
  const get_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
-  five_league_match.value = list.map(t => {
+  if (list && list.length > 0) five_league_match.value = list.map(t => {
     five_league_mids.value.push(t?.mid)
     const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t?.mid) || t
     return { ...match, match_data_type: 'h5_five_league' }
