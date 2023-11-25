@@ -5,7 +5,7 @@
   >
   <template v-if="match">
     <div
-      v-show="lodash.get(match, 'mcid') && show_page == 'match-list'"
+      v-show="lodash.get(match, 'mcid') && lodash.get(match, 'mcid').trim() && show_page == 'match-list'"
       class="jingcai"
     >
       {{ lodash.get(match, 'mcid') }}

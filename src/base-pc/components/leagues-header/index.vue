@@ -33,7 +33,7 @@ const getName = () => {
 			name = item.nameText
 		}
 	})
-	return name || MatchLeagueData.league_name
+	return name || MatchLeagueData.league_name.value
 }
 const jumpTo = ()=>{
 	router.go(-1)

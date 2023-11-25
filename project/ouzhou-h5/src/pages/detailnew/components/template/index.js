@@ -1,1 +1,0 @@
-export { default as bevisTemplate0} from "./bevis-template0"
