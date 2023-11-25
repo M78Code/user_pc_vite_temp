@@ -1,26 +1,16 @@
 <template>
-  <div>
+  <div class="secondary_module">
     <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
-    <q-dialog
-      v-model="LayOutMain_pc.layout_secondary_dialog"
-      class="secondary_module"
-      persistent
-      full-width
-      full-height
-    >
-      <!-- <q-card class="q-card dialog_card"> -->
-      <div class="dialog_content">
         <!-- 头部 -->
         <header class="header">
           <div class="row items-center justify-between top_tit">
-            <!-- <p>{{ i18n_t('ouzhou.set.personal') }}</p> -->
-            <p></p>
-            <p>
+            <p>{{ i18n_t('ouzhou.set.personal') }}</p>
+            <!-- <p>
               <img
                 :src="compute_local_project_file_path('/image/svg/close.svg')"
                 @click="close_page"
               />
-            </p>
+            </p> -->
           </div>
           <div class="row secondary_obj">
           <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
@@ -35,8 +25,9 @@
           <q-card></q-card>
         </header>
         <!-- 内容 -->
+        <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
         <section class="secondary_content">
-          <q-tab-panels v-model="LayOutMain_pc.layout_secondary_active" animated>
+          <q-tab-panels class="secondary_panels" v-model="LayOutMain_pc.layout_secondary_active" animated>
           <!-- 公告 -->
             <q-tab-panel name="announcement">
               <announce></announce>
@@ -51,8 +42,6 @@
             </q-tab-panel>
           </q-tab-panels>
         </section>
-      </div>
-    </q-dialog>
   </div>
 </template>
 
@@ -80,29 +69,17 @@ const list_data = reactive([
 function active_change(value) {
  LayOutMain_pc.set_layout_secondary_active(value)
 }
-/**
- * @description: 关闭弹窗
- * @param {}
- * @return {}
- */
-function close_page(value) {
-  LayOutMain_pc.set_layout_secondary_dialog();
-  BetData.set_bet_box_draggable({ show: true });
-}
+
 </script>
-<style lang="scss">
+<style lang="scss" scope>
 //.q-dialog__inner .dialog_content
-.dialog_content{
-  padding-left: 320px;
-}
 .secondary_module  {
-  max-width: 1200px !important;
+  width: 100%;
+  height: 100%;
   background: var(--q-gb-t-c-1);
-  margin-left: 200px;
-  z-index: 9999 !important;
   .header {
     padding: 10px;
-    width: 1200px;
+    width: 100%;
     height: 80px;
     border-bottom: 1px solid #ff7000;
     background: url($SCSSPROJECTPATH+"/image/png/secondary_bg.png") no-repeat
@@ -125,16 +102,14 @@ function close_page(value) {
       }
     }
   }
-  .q-tab-panels{
-  height: 100% !important;
-}
   .q-tab-panel{
     padding: 0 !important;
 }
-    .secondary_content{
-      height:calc(100% - 80px);
-      width: 1200px;
-    }
+.secondary_panels{
+  height: 760px !important;
 }
-
+.secondary_content{
+  height:calc(100% - 80px);
+}
+}
 </style>

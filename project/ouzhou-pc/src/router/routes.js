@@ -115,6 +115,11 @@ const routes = [
     name: "rule",
     component: () => import("../pages/rule/index.vue"),
   },
+  {
+    path: "/secondary",
+    name: "secondary",
+    component: () => import("../pages/secondary/index.vue"),
+  },
   // // 每日成长任务
   // {
   //   path: '/activity',

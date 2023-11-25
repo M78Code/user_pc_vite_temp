@@ -149,9 +149,10 @@ const outrights = () => {
 
   let mid_config = {
     ...MenuData.mid_menu_result,
-   
+    filter_tab: '',
+    current_mi: '401'
   }
-  MenuData.set_mid_menu_result(mid_config)
+  MenuData.set_mid_menu_result({})
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,1014)

@@ -3,7 +3,7 @@
 		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
-			<div class="matches-title">
+			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp()) ? 'matches_outrights' : '']">
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
 				<div v-else class="matches_tab" >
@@ -31,14 +31,14 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() ) || MenuData.is_collect || MenuData.is_top_events()"  />
+		<MatchesFilterTab v-if="MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp()) || MenuData.is_collect || MenuData.is_top_events()"  />
 		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues()" />
 		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted, watch } from 'vue';
+import { ref,onMounted,onUnmounted, watch, nextTick } from 'vue';
 import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
@@ -150,8 +150,12 @@ const set_tab_list = (news_) =>{
 	// 冠军
 	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
 		matches_header_title.value = 'Outrights'
-		match_list_top.value = '116px'
+		match_list_top.value = '146px'
 		tab_list.value = []
+		// 只是想让他请求接口而已
+		nextTick(()=>{
+			MenuData.set_menu_current_mi(MenuData.menu_current_mi)
+		})
 	}
 
 	if (tab_list.value.length) {
@@ -164,7 +168,6 @@ const set_tab_list = (news_) =>{
 }
 
 const checked_current_tab = payload => {
-// debugger
 	let obj = {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
@@ -172,7 +175,7 @@ const checked_current_tab = payload => {
 	// 判断头部高度
 	if ([1001,4003].includes(payload.value*1)) {
 		match_list_top.value = '80px'
-	} else if([4001].includes(payload.value*1)){
+	} else if([4001, 4002].includes(payload.value*1)){
 		match_list_top.value = '134px'
 	} else {
 		match_list_top.value = '146px'
@@ -187,7 +190,9 @@ const checked_current_tab = payload => {
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
-    	useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
+		nextTick(()=>{
+			useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
+		})
 	}
 
 	// 左侧菜单点击后 tab切换
@@ -203,13 +208,18 @@ const checked_current_tab = payload => {
 	if(4002 == payload.value){
 		// MenuData.set_menu_root(400)
 		// obj.current_mi = 400 + MenuData.current_ball_type*1
-		MenuData.set_menu_current_mi(obj.current_mi)
+		nextTick(()=>{
+			MenuData.set_menu_current_mi(obj.current_mi)
+		})
+		
 	}
 	// 冠军
 	if(4003 == payload.value){
 		MenuData.set_menu_root(400)
 		obj.current_mi = 400 + MenuData.current_ball_type*1
-		MenuData.set_menu_current_mi(obj.current_mi)
+		nextTick(()=>{
+			MenuData.set_menu_current_mi(obj.current_mi)
+		})
 	}
 
 	// 收藏切换tab
@@ -223,7 +233,9 @@ const checked_current_tab = payload => {
 		if( payload.value == 3003){
 			obj.current_mi = 1013
 		}
-		MenuData.set_menu_current_mi(obj.current_mi)
+		nextTick(()=>{
+			MenuData.set_menu_current_mi(obj.current_mi)
+		})
 	}
 	// get_sport_banner()
 	MenuData.set_mid_menu_result(obj)
@@ -238,9 +250,16 @@ const checked_current_tab = payload => {
 	box-sizing: border-box;
 }
 
+.matches_outrights {
+	height: 80px;
+    line-height: 80px;
+	.current_match_title {
+		padding-top: 0px !important;
+	}
+}
+
 .matches_header {
 	width: 100%;
-	padding-top: 10px;
 	box-sizing: border-box;
 	border-bottom: 2px solid var(--q-gb-bd-c-1);
 	background: var(--q-gb-bg-lg-8);
@@ -264,7 +283,8 @@ const checked_current_tab = payload => {
 		font-weight: 500;
 		color: var(--q-gb-t-c-1);
 		margin-bottom: 21px;
-		height: 20px;
+		height: 30px;
+		padding-top: 10px;
 		&.all_matches{
 			margin-bottom: 12px;
 		}

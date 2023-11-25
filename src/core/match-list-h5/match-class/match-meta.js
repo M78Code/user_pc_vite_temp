@@ -996,7 +996,7 @@ class MatchMeta {
    * @param {*} cmd 
    */
   handle_ws_directive ({ cmd = '', data = {} }) {
-    // console.log(cmd, data)
+    console.log('--------wswswswswswsws-cmd:', cmd, data)
     // 赛事新增
     if (['C109'].includes(cmd)) {
       const { cd = [] } = data
@@ -1008,6 +1008,7 @@ class MatchMeta {
     if (['C104', '901'].includes(cmd)) {
       this.handle_remove_match(data)
     }
+    
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
       this.get_match_base_hps_by_mids()

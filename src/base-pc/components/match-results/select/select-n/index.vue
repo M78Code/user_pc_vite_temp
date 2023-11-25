@@ -124,7 +124,12 @@ const selectSport = (item) => {
 };
 </script>
 <style lang="scss" scoped>
+html,body{
+  height: 100%;
+}
 .select_n_tabs{
+  background: #ffffff;
+  color: #1A1A1A;
   .tabs_item{
     color: #8A8986;
     position: relative;

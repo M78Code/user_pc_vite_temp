@@ -14,9 +14,12 @@
 				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<!-- <div class="middle_info_tab">EXAMPLE SEARCHES</div> -->
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+					:class="['tab', tabIndex === index ? 'active' : '']">
+					{{ item.sportName }}
+					<span class="round"></span>
+				</div>
 			</div>
 			<ul class="list1" v-show="history_data && history_data.length > 0">
 				<div class="middle_info_tab diff text">
@@ -53,9 +56,12 @@
 
 			<div class="content">
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+					:class="['tab', tabIndex === index ? 'active' : '']">
+					{{ item.sportName }}
+					<span class="round"></span>
+				</div>
 			</div>
 			<ul class="list">
 				<div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
@@ -215,9 +221,12 @@
 			!show_history))"
 		>
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+					:class="['tab', tabIndex === index ? 'active' : '']">
+					{{ item.sportName }}
+					<span class="round"></span>
+				</div>
 			</div>
 			<div class="not_found">
 				<no-data :code="400"></no-data>
@@ -624,6 +633,9 @@ onUnmounted(() => {
 	width: 100%;
 	z-index: 1;
 	color: var(--q-gb-t-c-4);
+	&.top_tab{
+		border-bottom: 10px solid #E2E2E2;
+	}
 	.tab {
 		background-color: var(--q-gb-bg-c-2);
 		border-radius: 40px;
@@ -631,7 +643,7 @@ onUnmounted(() => {
 		font-size: 12px;
 		flex-shrink: 0;
 		padding: 3px 10px;
-
+		position: relative;
 		// &:first-child {
 		// 	padding-left: 0;
 		// }
@@ -639,12 +651,27 @@ onUnmounted(() => {
 		&:last-child {
 			margin-right: 0;
 		}
+		.round {
+			position: absolute;
+			width: 0;
+			height: 8px;
+			bottom: -14px;
+			border-radius: 50%;
+			//background: linear-gradient(180deg, #FF7000 0%, #FF9440 50%);
+			background: var(--q-gb-bg-lg-8);
+			left: 50%;
+			margin-left: -4px;
+		}
 
+		// &.active {
+		// 	background-color: var(--q-gb-bg-c-1);
+		// 	color: var(--q-gb-t-c-2);
+		// }
 		&.active {
-			//background-color: #FF7000;
-			background-color: var(--q-gb-bg-c-1);
-			//color: #fff;
-			color: var(--q-gb-t-c-2);
+			.round {
+				width: 8px;
+			}
+			color: var(--q-gb-t-c-1);
 		}
 
 	}
@@ -723,7 +750,7 @@ li {
 		background-color: #fff; 
 		text-align: center;
 		color: #8A8986;
-		font-size: 14px;
+		font-size: 12px;
 	}
 
 	img {
@@ -732,6 +759,7 @@ li {
 	.text {
 		border-color: var(--q-gb-bd-c-1);
 		padding-left: 10px;
+		font-weight: 600;
 	}
 }
 
@@ -754,13 +782,16 @@ li {
 		font-weight: 600;
 		//color: #FF7000;
 		color: var(--q-gb-t-c-1);
+		&.top_tab{
+		border-bottom: 10px solid #E2E2E2;
+	}
 	}
 }
 
 .not_found {
 	height: calc(100% - 90px);
 	text-align: center;
-	margin: 86px 0;
+	padding: 2rem 0 1rem;
 
 	p {
 		font-size: 16px;
