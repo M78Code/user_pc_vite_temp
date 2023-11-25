@@ -108,7 +108,7 @@ const jumpToLeagues  = () => {
   
 <style lang="scss" scoped>
 .detail-bread {
-  margin-left: 20px;
+  margin-left: 14px;
   display: flex;
   align-items: center;
   width: 80%;
