@@ -41,7 +41,7 @@
         </template>
         <template v-else>
             <div v-if="!loading">
-                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt="">
+                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/no-data.png`" alt="">
                 <div class="no-data-text">No Data</div>
             </div>
         </template>
@@ -235,8 +235,9 @@ onMounted(() => {
 
     .no-data-text {
         text-align: center;
-        color: #A1A3A5;
-        font-size: 16px;
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 0;
     }
 }
 
