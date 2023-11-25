@@ -7,7 +7,6 @@ html, body {
 }
 
 body {
-
   /*  主内容滚动条样式 */
   .c-main-scroll::-webkit-scrollbar {
     height: 14px;
@@ -80,7 +79,7 @@ body {
   /** 数据加载组件 -S*/
   .load-data-wrap {
     color: var(--q-layout-color-1);
-    background-color: var(--q-gb-bg-c-4);
+    // background-color: var(--q-gb-bg-c-4);
     /* 列表右侧暂无数据 */
     .list_right_empty {
       .img {
@@ -90,6 +89,7 @@ body {
 
     /* 暂无数据 */
     .empty-wrap {
+      background-color: var(--q-gb-bg-c-4);
       .img {
         background-image: var(--qq--public-bg-image2); // TODO: png/no_data_01.png
       }
