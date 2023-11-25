@@ -46,7 +46,7 @@ import { MenuData } from "src/core/index.js"
 import { useRouter } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, UserCtr } from 'src/core'
+import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, UserCtr, MITT_TYPES, useMittOn } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
@@ -68,7 +68,7 @@ const get_featurd_list = async () => {
     //使用数据仓库的数据 因为ws会推送数据 会改变数据仓库的数据 用本地没有数据变化哦哦
     // matches_featured_list.value=res.data
     // 只显示5条数据
-    lodash.get(res,'data',[]).slice(0,5).forEach(match => {
+    lodash.get(res, 'data', []).slice(0, 5).forEach(match => {
       mids.push(match.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(match.mid))
     })
@@ -77,6 +77,8 @@ const get_featurd_list = async () => {
     set_active_mids(mids) //添加ws订阅
   }
 }
+const mitt_list = [useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, get_featurd_list).off]
+
 const current_check_betId = ref(MenuData.current_check_betId.value)
 // 监听 当前投注项ID的变化
 watch(
@@ -121,6 +123,7 @@ const toJump = (item) => {
 }
 onBeforeUnmount(() => {
   ws_destroyed()
+  mitt_list.forEach(i => i())
 })
 get_featurd_list()
 </script>
@@ -263,10 +266,12 @@ get_featurd_list()
         font-size: 14px;
         font-weight: 500;
         letter-spacing: 0px;
-        :deep(.c-bet-item){
+
+        :deep(.c-bet-item) {
           width: 74px;
           height: 40px;
         }
+
         // &:hover {
         //   background: rgba(255, 112, 0, 0.1);
         // }
@@ -306,5 +311,4 @@ get_featurd_list()
     margin-right: 10px;
   }
 }
-
 </style>

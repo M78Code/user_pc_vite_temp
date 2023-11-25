@@ -21,7 +21,7 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 			const { cd = [] } = data;
 			if (cd.length < 1) return;
 			const item = cd.find((t) => t.csid == MenuData.menu_csid);
-			if (item) useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE);
+			if (item) useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
 		}
 		// 调用 matchs  接口
 		if (["C104"].includes(cmd)) {
