@@ -75,7 +75,7 @@
             @ipt_search="ipt_search(arguments)"
             @search_hot="search_hot"
             @confirm="isSelectConfirm"
-            :hideSelect="cancel"
+            :cancel="cancel"
             :isTimeChanged="timeChanged"
           ></select-y>
         </div>

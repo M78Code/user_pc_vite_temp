@@ -178,7 +178,7 @@ let match_count = ref(0);
 export const init_home_matches = async () => {
   const params = {
     type: 1,
-    sort: 1,
+    sort: 2,
     // hasFlag: 0
   };
   const match_list=[]

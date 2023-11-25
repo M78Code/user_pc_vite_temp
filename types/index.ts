@@ -52,7 +52,7 @@ declare namespace TYPES {
     /** 综合评分 */ star: String
   }
 
-  /** hl 盘口? */ interface Hl extends K.mid, K.t, K.hpid {
+  /** hl 盘口? */ interface Hl extends K.mid, K.t, K.hpid,K.hs {
     /** 盘口ID */ hid: string,
     /** ? */ hmt: number,
     /** ? */ hn: number,

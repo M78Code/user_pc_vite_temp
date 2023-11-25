@@ -15,7 +15,7 @@
       </div>
       <div class="layout_main_center" :style="{
         width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-        height: LayOutMain_pc.layout_content_height + 'px'
+        height: LayOutMain_pc.oz_layout_content_height + 'px'
       }">
         <!-- 中间区域 -->
         <router-view></router-view>
