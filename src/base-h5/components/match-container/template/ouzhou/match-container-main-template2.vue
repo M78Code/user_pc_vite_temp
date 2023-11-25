@@ -19,7 +19,6 @@
             <div class="league-icon-mini">
               <img :src="get_server_file_path(match_of_list.lurl)">
             </div>
-            {{ console.log(match_of_list) }}
             <span>{{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }}</span>
         </span>
         
