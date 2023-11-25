@@ -4,9 +4,9 @@
       <section>
         <div class="title"> <span>information</span>  <span class="titlebtn" @click="readall">Read All</span></div>
         <q-scroll-area style="height: 100%;">
-          <div v-for="(item , index) in announcement_data" class="main_content" :class="{active:show}" :key="index">
+          <div v-for="(item , index) in announcement_data" class="main_content" :key="index">
             <div class="contents">
-              <span v-if="show">*</span><div>{{ item.content }}</div>
+              <span v-if="show">*</span><div :class="{active:show}">{{ item.content }}</div>
             </div>
             <div class="footer">
               <div class="ann-time">{{ DateForMat(new Date(), 'yyyy-MM-dd hh:mm') }}</div>
@@ -119,11 +119,12 @@ const showclick = (index) => {
       border-bottom: 1px solid #DBDBDB;
     }
     .active{
-      &::before{
+      &::after{
       content: '';
       width: 4px;
       height: 4px;
-      background: linear-gradient(180deg, #FF2B2B 0%, #FF7000 100%);
+      //background: linear-gradient(180deg, #FF2B2B 0%, #FF7000 100%);
+      background-image: url($SCSSPROJECTPATH + "/image/svg/red_drop.svg");
       position: absolute;
       left:  8px;
       top: 12px;
