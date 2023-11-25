@@ -75,7 +75,7 @@
             @ipt_search="ipt_search(arguments)"
             @search_hot="search_hot"
             @confirm="isSelectConfirm"
-            :hideSelect="cancel"
+            :cancel="cancel"
             :isTimeChanged="timeChanged"
           ></select-y>
         </div>
@@ -116,10 +116,11 @@
           </div> -->
         </div>
       </div>
-      <div class="match-resultstips-wrap">
+      <div class="flex items-center">
+        <div>
         <!-- 提示语 -->
           <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
-            <div class="aaa">{{ i18n_t("results.tips") }}</div>
+            <div>{{ i18n_t("results.tips") }}</div>
         </q-tooltip>
         <div
           class="match-resultstips-icon relative-position"
@@ -128,11 +129,13 @@
         >
           <span class="cursor-pointer"></span>
         </div>
-        <!-- 搜索 -->
-        <div class="search-btn" @click="refresh()">
-          {{ i18n_t("results.search") }}
-        </div>
       </div>
+      <!-- 搜索 -->
+      <div class="search-btn" @click="refresh()">
+          {{ i18n_t("results.search") }}
+      </div>
+      </div>
+      
     </div>
   </div>
 </div>
@@ -566,4 +569,10 @@ function refresh() {
 :deep(.q-date__view){
 background: #ffffff;
 }
+.q_data{
+  :deep(.material-icons){  
+    line-height: 12px !important;
+  }
+}
+
 </style>

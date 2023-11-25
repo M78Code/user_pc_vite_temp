@@ -30,7 +30,7 @@
  * 
  */
 import MatchDataBaseWS from  "./match-ctr-ws.js"
-import { reactive } from 'vue'
+import { reactive,toRef} from 'vue'
 import {other_play_name_to_playid} from 'src/core/constant/config/data-class-ctr/other-play-id.js'
 export default class MatchDataBase
 {
@@ -291,8 +291,6 @@ init(){
     }
   }
 
-
-  
   /**
    * @description: 获取快速查询对象中的指定mid赛事对象
    * @param {String} mid 赛事mid
@@ -302,6 +300,17 @@ init(){
     // 获取指定mid的赛事
     const key = this.get_list_to_obj_key(mid,mid, 'mid')
     return lodash.get(this.list_to_obj.mid_obj, key);
+    // return this.list_to_obj.mid_obj[this.get_list_to_obj_key(mid,mid,'mid')];
+  }
+/**
+   * @description: 获取快速查询对象中的指定mid赛事对象 ref对象
+   * @param {String} mid 赛事mid
+   * @return {TYPES.MatchDetail} 赛事
+   */
+  get_quick_mid_ob_ref(mid){
+    // 获取指定mid的赛事
+    const key = this.get_list_to_obj_key(mid,mid, 'mid')
+    return toRef(this.list_to_obj.mid_obj, key);
     // return this.list_to_obj.mid_obj[this.get_list_to_obj_key(mid,mid,'mid')];
   }
 

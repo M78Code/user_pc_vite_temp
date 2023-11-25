@@ -38,11 +38,11 @@
           <span>{{ i18n_t("select.hot") }}</span>
         </div>
       </div>
-      <q-scroll-area :style="{ flex: '1' }">
+      <q-scroll-area ref="scrollArea" :style="{ flex: '1' }">
         <div
           class="wrap-item"
           v-for="(item, index) in list"
-          :key="item.id"
+          :key="item.nameCode"
           :class="{ active: item.id == active }"
           @click="choose(item, index)"
         >
@@ -107,7 +107,7 @@ const props = defineProps({
   },
   sport_id: String, //球类id
   popWidth: String, //宽度
-  hideSelect: Number, // 隐藏下拉框
+  cancel: null, // 隐藏下拉框
   isTimeChanged: Boolean // 判断时间是否有变
 });
 const emit = defineEmits([
@@ -198,6 +198,7 @@ const checkAll = () => {
  * @return {undefined} undefined
  */
 const checkInvert = () => {
+  console.error('listlistlist',props.list)
   // 如果当前选中状态是反选并且没有联赛就不予处理
   if (menu.value == "invert" && !props.list) return false;
   emit("confirm", 0);
@@ -414,7 +415,7 @@ watch(props.sport_id, res => {
   menu.value = "all";
   input_val.value = i18n_t("select.all"); //全部
 });
-watch(props.hideSelect, res => {
+watch(props.cancel, res => {
   isShow.value = false;
 });
 // 全局点击事件

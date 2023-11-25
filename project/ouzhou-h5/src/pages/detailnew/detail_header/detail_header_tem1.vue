@@ -6,58 +6,14 @@
         :class="['sport_bg', `${get_sports_bg(get_match_detail.csid)}`]"
       ></div>
       <div class="match-detail-time">
-        <div>
           <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
-            <!-- 开赛时间 -->
-            <span v-if="get_match_detail?.ms == 0">
-              <span
-                v-if="show_someone.start_time"
-                class="fz_12"
-                style="font-weight: 400"
-              >
-                <!-- 距离开赛时间小于一小时显示倒计时 -->
-                {{ i18n_t("list.after_time_start", [longTime]) }}
-              </span>
-              <template v-else>
-                <!-- .Format(i18n_t('time3'))  | format_H_M -->
-                <div class="sj-time-day">
-                  {{ format_time_zone(+get_match_detail?.mgt) }}
-                </div>
-                <span class="sj-time-soon">{{
-                  format_time_zone_time(+get_match_detail?.mgt)
-                }}</span>
-              </template>
-            </span>
-            <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
-            <span
-              v-else-if="get_match_detail?.ms == 110"
-              class="fz_12"
-              style="font-weight: 400"
-            >
-              {{ i18n_t(`ms[${get_match_detail?.ms}]`) }}
-            </span>
-            <template v-else>
-              <span>{{
-               lodash.get(i18n_t("mmp"),'[get_match_detail?.csid][get_match_detail?.mmp]')  
-              }}</span>
-              <!-- 倒/正计时组件 -->
-              <counting-down
-                :title="null"
-                :mmp="get_match_detail?.mmp"
-                :m_id="get_match_detail?.mid"
-                :second="get_match_detail?.mst"
-                :match="get_match_detail"
-                :is_add="[100, 101, 102, 103, 104].includes(+get_match_detail?.csid)"
-              />
-            </template>
-            <!-- <span v-if="get_match_detail.ms != 110">{{get_match_detail.mstValue}} {{get_match_detail.mstValueTime}}</span> -->
+            <match-stage :detail_data="get_match_detail" ></match-stage>
           </span>
           <q-badge
             v-if="get_match_detail.mng == 1"
             text-color="white"
             label="N"
           />
-        </div>
         <div class="match-detail-time-collect" @click="collect_click">
           <img
             v-if="is_collect"
@@ -137,6 +93,7 @@
 
 <script setup>
 import {onMounted, ref, computed, toRef, watch } from "vue";
+import matchStage from "src/base-h5/components/match/match-stage.vue";  // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
@@ -241,7 +198,7 @@ const sport_ball = {
 const cuid = ref("");
 const bg_img = ref({})
 const detail_store = ref(null);
-const is_collect = ref();
+const is_collect = computed(()=>props.get_match_detail.mf);
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -301,14 +258,29 @@ const set_basketball_score_icon_list = () => {
     ];
   }
 };
-const scoew_icon_list = ref({});
+const scoew_icon_list = ref([])
+// console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
 watch(()=>props.get_match_detail, (new_value, old_value) => {
-  scoew_icon_list.value = new_value.msc_obj;
+  scoew_icon_list.value = new_value.msc_obj||set_scoew_icon_list(new_value)
   // set_scoew_icon_list(new_value);
   // 意义不明
   current_ball_type.value = sport_ball[new_value.csid] * 100;
+  set_basketball_score_icon_list()
 })
-watch(()=>props.get_match_detail.mle,set_basketball_score_icon_list,{immediate:true})
+watch(
+  () => props.get_match_detail.msc,
+  (msc) => {
+    set_scoew_icon_list({msc});
+    set_basketball_score_icon_list();
+  },
+  { immediate: false, deep: true }
+);
+watch(()=>props.get_match_detail.mle,
+  set_basketball_score_icon_list,
+  {
+    immediate:true
+  }
+)
 
 /**
  *@description // 比分板数据
@@ -328,14 +300,7 @@ const set_scoew_icon_list = (new_value) => {
     // console.log("scoew_icon_list", scoew_icon_list);
   }
 };
-watch(
-  () => props.get_match_detail.msc,
-  (msc) => {
-    set_scoew_icon_list({msc});
-    set_basketball_score_icon_list();
-  },
-  { immediate: false, deep: true }
-);
+
 /**
  *@description // 收藏
  *@param {*}
@@ -360,9 +325,9 @@ const collect_click = () => {
 // }, 200);
 
 onMounted(()=>{
-    setTimeout(function (){
-        is_collect.value = props.get_match_detail.mf
-    },320)
+    // setTimeout(function (){
+    //     is_collect.value = props.get_match_detail.mf
+    // },320)
 })
 </script>
 

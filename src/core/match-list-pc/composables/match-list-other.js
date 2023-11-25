@@ -71,6 +71,7 @@ export function merge_template_data({ match, handicap_list, type = 1, play_key }
   let { mid, hSpecial5min, hSpecial } = match
   const many_obj = get_match_to_map_obj(match)
   const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
+  handicap_list= lodash.cloneDeep(handicap_list)
   handicap_list.forEach((col, col_index) => {
     col.ols.forEach((ol, ol_index) => {
       let { hn, _hpid, hpid, ot } = ol
