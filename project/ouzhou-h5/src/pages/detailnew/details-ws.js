@@ -34,7 +34,7 @@ export const details_ws = (router, route) => {
    * "C102"  获取玩法集 获取盘口信息
    * "C109"  获取玩法集 获取盘口信息
    * "C112"  获取玩法集 获取盘口信息
-   * "C303"  获取盘口信息
+   * "C303"  获取盘口信息 新增玩法/新增盘口/主主盘变更
    */
   const handler_ws_cmd = (cmd, data) => {
     // 如果mid与我们的赛事id不一致 不处理  C105在数据仓库处理
