@@ -118,7 +118,7 @@ const handler_match_container_scroll = lodash.debounce(($ev) => {
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
   if (get_is_static() || length < 18) return
   const scrollTop = $ev.target.scrollTop
-  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - prev_scroll.value) >= 500) {
+  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 300) || Math.abs(scrollTop - prev_scroll.value) >= 300) {
     prev_scroll.value = scrollTop
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2 })
     if (!is_export.value) get_match_base_hps()
@@ -130,7 +130,7 @@ const get_match_base_hps = lodash.debounce(() => {
   MatchMeta.get_match_base_hps_by_mids()
   clearTimeout(scroll_timer.value)
   scroll_timer.value = null
-}, 600)
+}, 800)
 
 /**
  * @description: 页面滚动事件处理函数
@@ -303,6 +303,7 @@ onUnmounted(() => {
       position: absolute;
       top: 0;
       left: 0;
+      content-visibility: auto;
       &.last{
         // padding-bottom: 0.01rem;
         .match-container{
