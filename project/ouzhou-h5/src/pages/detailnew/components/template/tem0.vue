@@ -43,8 +43,6 @@
       <div v-for="ol in item_data.hl[0].ol.filter(i=>i.os != 3)" :key="ol?.oid" class="temp0_ol_on">
         <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'temp0_ol_ov']" >
           <template v-if="ol?.os == 1">
-            <span>{{ ol?.ott }}</span>
-            <!--<span>小</span>-->
             <span class="temp0_ol-on-text">{{ ol?.on || ol?.ott }}</span>
             <span class="temp0_ol-ov-text">{{compute_value_by_cur_odd_type(ol.ov,'','',MatchDetailCalss.params.sportId)}}</span>
             <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />

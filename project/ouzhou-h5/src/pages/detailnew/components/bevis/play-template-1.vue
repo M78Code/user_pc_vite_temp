@@ -14,18 +14,19 @@ os: 1 开盘 ，2 封盘
 
 
 <script setup name="template6">
-import {defineProps,onMounted} from "vue"
-import { compute_value_by_cur_odd_type } from "src/core/index.js"
+import {defineProps, onMounted, defineEmits} from "vue"
+import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import olStatus from "../ol_status.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 
 const props = defineProps({
     play: {
         type: Object,
         default: () => ({})
     },
-    sport_id:{
-        type: [String,Number],
+    sport_id: {
+        type: [String, Number],
         default: ''
     },
     active: {
@@ -33,52 +34,72 @@ const props = defineProps({
         default: () => 0,
     },
 })
-onMounted(()=>{
-    setTimeout(function (){
-        if(props.play.hpid == 7){
-            console.log(props.play,"props.play")
-        }
-    },1200)
-})
+
+const emits = defineEmits(['bet_click_'])
+const go_betting = (data) => {
+    if(data.os == 2) return
+    emits("bet_click_", data,props.item_data.hpn);
+};
 </script>
 
 <template>
-    <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)" class="info">
+    <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)"
+         class="info">
         <div class="left">{{ olChild.otv }}</div>
-        <div class="right">
-            <p>{{ compute_value_by_cur_odd_type(olChild.ov,'','',sport_id) }}</p>
-            <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )" />
+        <div :class="['right',{ 'is-active': true }]" v-if="olChild.os == 1">
+            <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
+            <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
         </div>
+        <div v-if="olChild.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></div>
     </div>
 </template>
 
 <style scoped lang="scss">
-.info{
+.info {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 8px 16px;
     box-sizing: border-box;
-    .left{
+
+    .left {
         word-wrap: break-word;
         color: #1A1A1A;
         font-size: 14px;
         font-family: Roboto;
         font-weight: 400;
     }
-    .right{
+
+    .right {
         font-size: 14px;
         font-weight: 500;
         line-height: 14px;
-        word-wrap: break-word
+        word-wrap: break-word;
+        position: relative;
+        display: flex;
+        align-items: center;
     }
-    .red{
+
+    .is-active {
+        background-color: var(--q-gb-bg-c-1);
+        color: var(--q-gb-t-c-2);
+        .ol-on {
+            .ol-ov {
+                //color: #fff;
+                color: var(--q-gb-t-c-2);
+            }
+        }
+    }
+
+    .red {
         color: #FF4646;
     }
-    .green{
+
+    .green {
         color: #17A414;
     }
 }
+
 // Levante Unión Deportiva
 </style>
