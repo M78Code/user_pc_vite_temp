@@ -50,13 +50,7 @@ let virtual_list_timeout_id;
 let switch_timer_id
 let mitt_list = [];
 
-let tid_match_list;
-useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
-	clearTimeout(tid_match_list)
-	tid_match_list = setTimeout(() => {
-		fetch_match_list()
-	}, 80);
-})
+
 // watch(() => MenuData.match_list_version.value, () => {
 // 	clearTimeout(tid_match_list)
 // 	tid_match_list = setTimeout(() => {
@@ -222,6 +216,7 @@ function init_page_when_base_data_first_loaded() {
 	// 	30000
 	// );
 }
+let tid_match_list;
 function mounted_fn() {
 	// fetch_match_list();
 	// 开启自动化测试功能
@@ -245,13 +240,19 @@ function mounted_fn() {
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
 		// 调用列表接口
-		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off,
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST,  () => {
+			clearTimeout(tid_match_list)
+			tid_match_list = setTimeout(() => {
+				fetch_match_list()
+			}, 80);
+		}).off,
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match).off,
 		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
 			// 重新订阅C8
 			api_bymids({ is_show_mids_change: true })
 		}, 1000)).off,
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_match_list).off,
 		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded).off,
 	]
 
