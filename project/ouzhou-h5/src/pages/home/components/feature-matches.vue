@@ -5,7 +5,6 @@
 
 <template>
   <div class="matches_page">
-    {{ console.log(featured_matches) }}
     <div class="item" v-for="item, index in featured_matches" :key="index" :style="{backgroundImage: `url(${get_amtch_bg_image(item.csid)})`}" >
       <!-- 卡片区 -->
       <div class="card" @click="toDetails(item)">
@@ -21,7 +20,7 @@
         </div>
       </div>
       <template v-if="item">
-        <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" :hps="get_item_hps(item)"  />
+        <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" :hps="get_item_hps(item)" custom_type="hots" />
       </template>
     </div>
   </div>

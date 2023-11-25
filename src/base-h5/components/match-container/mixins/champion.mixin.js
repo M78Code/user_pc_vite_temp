@@ -35,6 +35,9 @@ export default {
       const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
       return !show_card
     },
+    league_collect_state ()  {
+      return MatchCollect.get_league_collect_state(this.match_of_list.tid)
+    },
     /**
      * @description 赛事收藏
      */
@@ -49,11 +52,8 @@ export default {
      * @description 赛事收藏
      */
     handle_match_collect ()  {
-      //获取当前收藏状态
-      const state = MatchCollect.get_match_collect_state(this.match_of_list)
-      MatchCollect.set_match_collect_state(this.match_of_list, !state)
+      MatchCollect.handle_match_collect(this.match_of_list)
     },
-    
     /**
      * @description 球种折叠
      */
