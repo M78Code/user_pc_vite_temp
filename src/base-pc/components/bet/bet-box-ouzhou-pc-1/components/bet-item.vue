@@ -7,9 +7,9 @@
                 <div class="w-100 f-s-c text-1a1 h15">
                     <span class="text-flow" v-html="items.handicap"></span> 
                 </div>
-                <div class="w-100 handicap f-s-c my-4">
+                <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i playName">{{ items.playName }}</span>
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}</span>
                     <!-- 盘口 -->
                     <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
@@ -249,17 +249,11 @@ const set_delete = () => {
         }
     }
     .handicap{
-        height: 20px;
+        max-width: 190px;
     }
     .text-flow-none{
-        max-width: 50%;
         min-width: 16%;
         line-height: 16px;
-    }
-    .playName{
-      word-wrap: break-word;
-      display: inline-block;
-      height: auto;
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);
