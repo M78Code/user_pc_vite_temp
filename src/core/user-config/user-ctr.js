@@ -233,6 +233,7 @@ class UserCtr {
   set_cur_odds(odd) {
     this.set_pre_odds(this.odds.cur_odds)
     this.odds.cur_odds = odd;
+    this.set_user_version()
   }
   set_pre_odds(odd) {
     this.odds.pre_odds = odd
