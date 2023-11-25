@@ -66,14 +66,14 @@
         </template>
       </scroll-list>
     </load-data>
-    <load-data v-else-if="MenuData.is_leagues()" :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
+    <load-data v-else-if="MenuData.is_leagues() && get_league_list().length" :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
       <scroll-list>
         <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
           <play-match-league :league_obj="league_item" />
         </div>
       </scroll-list>
     </load-data>
-    <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
+    <ConmingSoon v-show="(!match_list_card_key_arr.length && !MenuData.is_leagues()) || (!get_league_list().length && MenuData.is_leagues())" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }" />
     <!-- 联赛筛选层 -->

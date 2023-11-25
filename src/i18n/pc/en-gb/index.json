@@ -3,6 +3,12 @@
     "ouzhou": {
         "record": {
             "msg_1": "This record will show all unpaid bets",
+            "msg_2": "Will show all payout bet paid today",
+            "msg_3": "Will show all payout bet paid yesterday",
+            "msg_4": "Will show all  payout bet paid in 7-day",
+            "msg_5": "Will show all payout bet paid in 30-day",
+            "msg_6": "This record will display all paid bets within selected range",
+            "msg_7": "This record will display all booked bets",
             "my_bet": "My Bets",
             "unsettled": "Unsettled",
             "settled": "settled",

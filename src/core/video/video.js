@@ -841,6 +841,7 @@ export default {
           callback('no-video')
           return
         }
+        console.log(111111111,url)
         // 如果地址不是//开头  加上// 本地代码连生产时放开可播放大视频
         if(url.substr(0,2) != '//'){
           url = '//'+url
@@ -893,7 +894,6 @@ export default {
     refer_url = refer_url.replace(/https?:/, "")
     // let request_domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV][0]; todo
     let request_domain =lodash.get(window.BUILDIN_CONFIG, 'DOMAIN_RESULT.first_one')
-
     let url = ''
     // if (window.env.NODE_ENV == "development" && (refer_url.indexOf('//prolivepc') == 0)) {
     //   // 生产环境使用代理进行播放视频连接操作
@@ -914,16 +914,16 @@ export default {
   * @param {function} callback  回调函数
   */
   check_url(url,callback){
-
     api_details.get_full_url(url).then( res => {
+      console.log(111111111,res)
       if (res.data) {
         callback(true)
       } else {
-        callback(false)
+        callback(true)
       }
     }).catch( err => {
       console.error(err)
-      callback(false)
+      callback(true)
     })
   },
   /**

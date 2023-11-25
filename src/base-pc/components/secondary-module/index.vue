@@ -124,6 +124,9 @@ function close_page(value) {
       }
     }
   }
+  .q-tab-panels{
+  height: 100% !important;
+}
   .q-tab-panel{
     padding: 0 !important;
 }
@@ -132,7 +135,5 @@ function close_page(value) {
       width: 1200px;
     }
 }
-::v-deep.q-tab-panel{
-  padding: 0 ;
-}
+
 </style>
