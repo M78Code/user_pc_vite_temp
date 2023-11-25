@@ -101,6 +101,15 @@ function sub_click(item, index) {
             // color: var(--q-gb-t-c-5);  
             color:#1a1a1a;
         }
+        &::before{
+            content: '';
+            width: 2px;
+            height: 12px;
+            background: #D9D9D9;
+            position: absolute;
+            right:  -18px;
+            top: 18px;
+            }
     }
     .top-menu-list {
         overflow: hidden;
