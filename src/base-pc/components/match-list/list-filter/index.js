@@ -7,6 +7,9 @@ import BaseData from "src/core/base-data/base-data.js";
 import { functions } from "lodash";
 import { api_match_list } from "src/api/index.js";
 
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
+
 const current_menu = ref({});
 const mi_100_arr = ref([]);
 const menu_mi = ref(1);
@@ -176,10 +179,15 @@ function compute_quanbu_euid() {
  * 解析 新接口返回值  冠军页面
  */
 function resolve_mew_menu_res_mi_400() {
+   console.error('sss')
     let mi_400_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
         sl: [],
     };
-
+    if(BUILD_VERSION){
+        let csid_ = [401,402,405]
+        mi_400_obj.sl = mi_400_obj.sl.filter( item=>csid_.includes(item.mi*1))
+    }
+   
     mi_400_obj.value = mi_400_obj
 
     mi_100_arr.value = (mi_400_obj.sl || []).map(item => {

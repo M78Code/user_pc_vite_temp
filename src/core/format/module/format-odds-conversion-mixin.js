@@ -56,7 +56,7 @@ const acc_sub = (num1, num2 = num1) => {
 //   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
 export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
-  let cur_odd=UserCtr.odds.cur_odds;//当前赔率"EU" /HK
+  let cur_odd = UserCtr.odds.cur_odds;//当前赔率"EU" /HK
   /**
    * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
    * 是 对全局 赔率转换的 基础设定
