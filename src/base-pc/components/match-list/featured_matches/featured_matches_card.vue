@@ -65,19 +65,16 @@ const get_featurd_list = async () => {
   MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.data);
   if (res.data && res.data.length) {
     const mids = []
-
     //使用数据仓库的数据 因为ws会推送数据 会改变数据仓库的数据 用本地没有数据变化哦哦
     // matches_featured_list.value=res.data
     // 只显示5条数据
-    const featurd_list = res.data.sort((a, b) => {
-      return a.mgt - b.mgt
-    }).slice(0, 5)
-    featurd_list.forEach(i => {
-      mids.push(i.mid)
-      matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(i.mid))
+    lodash.get(res,'data',[]).slice(0,5).forEach(match => {
+      mids.push(match.mid)
+      matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(match.mid))
     })
+    //查询赔率接口
     api_bymids({ mids }, null, MatchDataWarehouse_ouzhou_PC_hots_List_Common)
-    set_active_mids(mids)
+    set_active_mids(mids) //添加ws订阅
   }
 }
 const current_check_betId = ref(MenuData.current_check_betId.value)
@@ -305,62 +302,4 @@ get_featurd_list()
   }
 }
 
-:deep(.bet-item-wrap-ouzhou) {
-  display: flex;
-  width: 78px;
-  height: 40px !important;
-  border-radius: 2px;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-
-  .c-bet-item {
-    width: 78px;
-    height: 40px;
-  }
-
-  .c-bet-item.can-hover:hover {
-    background: var(--q-gb-t-c-4);
-    cursor: pointer;
-  }
-
-  &.bet-item-wrap-ouzhou-bigger {
-    .c-bet-item {
-      width: 133px;
-    }
-
-  }
-
-  .c-bet-item.active {
-    background: var(--q-gb-bg-c-1) !important;
-
-    .handicap-value,
-    .handicap-value-text {
-      color: var(--q-gb-t-c-4);
-    }
-
-    .odds {
-      color: var(--q-gb-t-c-1);
-    }
-  }
-
-  div {
-    color: var(--q-gb-bg-c-7);
-    font-size: 14px;
-  }
-
-  .odds {
-    color: var(--q-gb-t-c-2);
-    font-weight: 500;
-    font-size: 14px;
-
-    &.up {
-      color: var(--q-gb-t-c-7) !important;
-    }
-
-    &.down {
-      color: var(--q-gb-t-c-10) !important;
-    }
-  }
-}
 </style>

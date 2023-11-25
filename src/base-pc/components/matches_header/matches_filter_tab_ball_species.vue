@@ -76,11 +76,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/components/match-list/list-filter/index.js"
-import { MenuData } from "src/core/"
+import { MenuData ,useMittOn,MITT_TYPES, } from "src/core/"
 import { compute_sport_id } from 'src/core/constant/index.js'
 
 let area_obj = ref();
@@ -94,6 +94,9 @@ const show_left_btn = ref(false);
 // 是否显示右边按钮
 const show_right_btn = ref(false);
 
+const ref_data = reactive({
+  emit_lsit:''
+}) 
 
 // const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
 
@@ -101,6 +104,8 @@ onMounted(() => {
   if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
     show_right_btn.value = true;
   }
+
+  console.error('mi_100_arr.value',mi_100_arr.value)
 
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
@@ -112,7 +117,23 @@ onMounted(() => {
   }
 
   handle_click_menu_mi_1({mi: current_mi ,mif: current_mi+''.substring(0,3) })
+
+  ref_data.emit_lsit = {
+      emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, set_ref_base_menu).off,
+  }
+
 })
+
+// 菜单数量修改
+const set_ref_base_menu = (list=[] ) => {
+  mi_100_arr.value = mi_100_arr.value.map(item => {
+    let obj = list.find( ob => ob.mi == item.mi) || {}
+    if(obj.mi){
+      item.ct = obj.count
+    }
+    return item
+  })
+}
 /**
  * 
  * @param {Number} item.mi
