@@ -14,7 +14,6 @@
 import betMixBoxChild from "./bet_mix_box_child.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 
-
 </script>
  
 <style lang="scss" scoped>

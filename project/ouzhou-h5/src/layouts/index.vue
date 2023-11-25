@@ -3,6 +3,8 @@
  * @Description:
 -->
 <template>
+
+  <div>
   <q-layout view="lHh Lpr lFf" class="layout_container">
     <!-- 顶部菜单 -->
     <TopMenuWapper />
@@ -16,13 +18,14 @@
 
     </q-page-container>
     <div class="footer">
-    
       <FooterWapper />
     </div>
   </q-layout>
 
   <!-- 吐司提示框 v-if="toast_show" -->
   <toast></toast>
+  </div>
+
 </template>
 
 <script setup>
@@ -37,11 +40,13 @@ import {
 
 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import betBar from "src/base-h5/components/bet/bet-ouzhou-h5/bet-bar.vue";
 import { MenuWapper } from "src/base-h5/components/menu";
 import { TopMenuWapper } from "src/base-h5/components/top-menu/"
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import { FooterWapper } from "src/base-h5/components/footer-bar/"
 
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { useRoute } from 'vue-router'
 
 import { api_common } from "src/api/index.js";
@@ -53,17 +58,15 @@ const toast = defineAsyncComponent(() =>
 
 var tou_show = ref(true)
 
-let routerPath = ref<String>('')
+let routerPath = ref('')
 const route = useRoute()
 watch(() => route.path,newRoute => {
-  if(newRoute == '/home' || newRoute == '/inplay' || newRoute == '/match'){
-    tou_show.value = true
-  }else{
+  if(['/personal','/announcement','/rules'].includes(newRoute)){
     tou_show.value = false
+  }else{
+    tou_show.value = true
   }
-})
-
-import BetData from "src/core/bet/class/bet-data-class.js";
+},{deep:true,immediate:true})
 
 
 import "./index.scss"

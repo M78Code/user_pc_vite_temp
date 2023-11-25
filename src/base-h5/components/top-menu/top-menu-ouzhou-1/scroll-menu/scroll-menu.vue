@@ -76,81 +76,78 @@ const get_init_data = () =>{
  * 获取最新列表
  * @param {*} data 
  */
-const getNewData = (data) =>{
-    leftDataList.value = leftDataList.value.map((item)=>{
-        item.sl = data.filter((n)=>{return n.mi === item.mi})?.[0]?.sl;
-        return item;
-    })
-}
+// const getNewData = (data) =>{
+//     leftDataList.value = leftDataList.value.map((item)=>{
+//         item.sl = data.filter((n)=>{return n.mi === item.mi})?.[0]?.sl;
+//         return item;
+//     })
+// }
 /**
  * 定时器转换
  * @param {*} fn 
  * @param {*} delay 
  */
-const get_interval_menu = (fn, delay) =>{
-    let timer = null
-    const inside = () => {
-        clearTimeout(timer)
-        fn()
-        timer = setTimeout(inside, delay)
-    }
-    timer = setTimeout(inside, delay)
-    return {
-        clear() {
-            clearTimeout(timer)
-        }
-    }
-}
+// const get_interval_menu = (fn, delay) =>{
+//     let timer = null
+//     const inside = () => {
+//         clearTimeout(timer)
+//         fn()
+//         timer = setTimeout(inside, delay)
+//     }
+//     timer = setTimeout(inside, delay)
+//     return {
+//         clear() {
+//             clearTimeout(timer)
+//         }
+//     }
+// }
+// /**
+//  * 清除定时器
+//  * @param {*} flagTimer 
+//  */
+// const clearInterval = (flagTimer) => {
+//     flagTimer.clear()
+// }
+// /**
+//  * 获取列表 之后更换ws
+//  */
+// const get_menu_list = async () =>{
+//     const res = await api_base_data.get_base_data_menu_init();
+//     if(res && res.code =="200" && res.data){
+//         getNewData(res.data);
+//     }else{
+//         clearInterval(timer)
+//     }
+// }
+// /**
+//  * 定时器
+//  */
+// const timer = get_interval_menu(get_menu_list,3000);
 /**
- * 清除定时器
- * @param {*} flagTimer 
+ * ws推送球种数量
+ * @param {*} list 
  */
-const clearInterval = (flagTimer) => {
-    flagTimer.clear()
+const get_menu_ws_list = (list) =>{
+    list = list.filter((item)=>{return item.mi});
+    leftDataList.value = leftDataList.value.map((item)=>{
+        list.forEach((n)=>{
+            if(item.mi == n.mi.slice(0,3)){
+                let index = item.sl?.findIndex((k)=>{return k.mi == n.mi})
+                item.sl[index].ct = n.count;
+            }
+        })
+        return item;
+    })
 }
-/**
- * 获取列表 之后更换ws
- */
-const get_menu_list = async () =>{
-    const res = await api_base_data.get_base_data_menu_init();
-    if(res && res.code =="200" && res.data){
-        getNewData(res.data);
-    }else{
-        clearInterval(timer)
-    }
-}
-/**
- * 定时器
- */
-const timer = get_interval_menu(get_menu_list,3000);
-
 onMounted(()=>{
     get_init_data();
     useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
+    useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,get_menu_ws_list)
 })
 onUnmounted(()=>{
-    clearInterval(timer)
     useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA).off
+    useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE).off
 })
-/**
- * 点击获取最新球种 接口暂时无用
- * @param {*} item 
- * @param {*} index 
- */
-const set_cont = async (item,index) =>{
-    const cont = await api_common.post_menu_play_count({
-        cuid: get_uid.value,
-        euid: "1011"
-    });
-    if(cont === get_cont(item))return;
-    leftDataList.value = leftDataList.value.map((n,i)=>{
-        if(index === i){
-            const m = n.sl?.findIndex((k)=>{return k.mi === `${n.mi}${props.menu_type}`});
-            n.sl[m].ct = cont;
-        }
-        return n;
-    })
-}
 /**
  * 滚球选择
  * @param {*} item 
