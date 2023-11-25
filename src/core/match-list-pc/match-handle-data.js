@@ -89,7 +89,7 @@ export function get_match_template_id({ csid }) {
 
     if ('ouzhou-pc' == PROJECT_NAME) {
         // 欧洲版冠军
-        if (MenuData.is_kemp()) {
+        if (MenuData.is_kemp() && MenuData.is_common_kemp()) {
             return tpl_id
         }
         return 101    
