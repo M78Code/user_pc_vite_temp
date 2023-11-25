@@ -1,6 +1,7 @@
-import { PageSourceData, fileds_map_common,UserCtr } from "src/core/index.js";
+import { PageSourceData, fileds_map_common } from "src/core/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { ref } from "vue"
 import lodash_ from "lodash"
@@ -185,19 +186,19 @@ this.bet_appoint_ball_head= null */
     // 默认展开 投注弹窗
     this.bet_state_show = true
     // ---------------------------------- H5 ------------------------------------------------------------------------------------------
+   //显示隐藏H5投注栏
+    this.bet_box_h5_show = false
+    
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
-    // h5 投注栏默认隐藏
-    this.h5_bet_box_show = false
   }
- 
 
-  set_h5_bet_box_show(val) {
-    this.h5_bet_box_show = val
+  set_bet_box_h5_show (value) {
+    
+    this.bet_box_h5_show = value
     this.set_bet_data_class_version()
   }
-
 
   // 通过  mount_point_key 计算 取值字段映射
   get_fields_map_by_mount_point_type(type) {
@@ -873,8 +874,6 @@ this.bet_appoint_ball_head= null */
     // 单关 单注 简单 粗暴 其他的后面做
     if(status == 1){
       BetViewDataClass.set_bet_order_status(3)
-      // 获取金额
-      UserCtr.get_balance()
     }
     if(status == 2){
       BetViewDataClass.set_bet_order_status(4)
