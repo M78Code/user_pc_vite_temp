@@ -3,7 +3,7 @@
 		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
-			<div class="matches-title">
+			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp()) ? 'matches_outrights' : '']">
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
 				<div v-else class="matches_tab" >
@@ -148,7 +148,7 @@ const set_tab_list = (news_) =>{
 	// 冠军
 	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
 		matches_header_title.value = 'Outrights'
-		match_list_top.value = '116px'
+		match_list_top.value = '146px'
 		tab_list.value = []
 	}
 
@@ -236,9 +236,16 @@ const checked_current_tab = payload => {
 	box-sizing: border-box;
 }
 
+.matches_outrights {
+	height: 80px;
+    line-height: 80px;
+	.current_match_title {
+		padding-top: 0px !important;
+	}
+}
+
 .matches_header {
 	width: 100%;
-	padding-top: 10px;
 	box-sizing: border-box;
 	border-bottom: 2px solid var(--q-gb-bd-c-1);
 	background: var(--q-gb-bg-lg-8);
@@ -263,6 +270,7 @@ const checked_current_tab = payload => {
 		color: var(--q-gb-t-c-1);
 		margin-bottom: 21px;
 		height: 20px;
+		padding-top: 10px;
 		&.all_matches{
 			margin-bottom: 12px;
 		}
