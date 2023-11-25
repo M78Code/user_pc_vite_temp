@@ -47,13 +47,13 @@
            "37": "全场独赢",
            "38": "全场总分",
            "39": "全场让分",
-           "153": "独赢",
-           "155": "让局",
+           "153": "全场独赢",
+           "155": "全场让盘",
            "172": "让分", 
            "173": "总分", 
            "181": "让局", 
            "182": "总局数", 
-           "202": "总局数",
+           "202": "全场让局",
            "242": "独赢",
            "243": "让球",
            "244": "总分",
@@ -81,23 +81,24 @@
          "coming_soon": "即将推出"
      },
      "search": {
-       "change": "换一换",
-       "clear_search_history": "清除历史记录",
-       "league": "联赛",
-       "null1": "搜索结果为空",
-       "null2": "换个词搜索试试吧",
-       "other": "其他搜索",
-       "search_hot": "热门搜索",
-       "search_play": "搜玩法",
-       "search_record": "搜索历史",
-       "search_sports": "搜球类",
-       "team": "球队",
-       "placeholder": "请输入联赛名或球队名",
-       "close": "关闭",
-       "view_all_match": "查看所有比赛",
-       "underway": "进行中",
-       "no_search_rezult": "没有发现结果。请尝试另一个搜索词。",
-       "dogfall": "平局"
+        "change": "换一换",
+        "clear_search_history": "清除历史记录",
+        "league": "联赛",
+        "null1": "搜索结果为空",
+        "null2": "换个词搜索试试吧",
+        "other": "其他搜索",
+        "search_hot": "热门搜索",
+        "search_play": "搜玩法",
+        "search_record": "搜索历史",
+        "search_sports": "搜球类",
+        "team": "球队",
+        "placeholder": "请输入联赛名或球队名",
+        "close": "关闭",
+        "view_all_match": "查看所有比赛",
+        "underway": "进行中",
+        "no_search_rezult": "没有发现结果。请尝试另一个搜索词。",
+        "dogfall": "平局",
+        "search_history": "搜索历史"
      }
   },
   "app_h5": {
@@ -460,7 +461,11 @@
     "wanyi": "万亿",
     "total_bet": "总投注",
     "total_income": "预计总收益",
-    "bet_retract": "赌注收回"
+    "bet_retract": "赌注收回",
+    "bet_inplay": "进行中",
+    "bet_limit":"限额"
+
+
   },
   "bet_record": {
     "30day": "30天",

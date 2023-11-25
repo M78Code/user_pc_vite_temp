@@ -70,7 +70,7 @@ const old_ov = ref(0)
 
 const is_show_title = computed(() => {
   const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${props.csid}`, '1')
-  return hpid != 1
+  return hpid != 1 && !props.show_hpn
 })
 
 const is_active = computed(() => {
@@ -200,15 +200,9 @@ onUnmounted(() => {
     }
     &.up{
       color: #FF4646;
-      img {
-        transform: rotateX(-180deg);
-      }
     }
     &.down{
       color: #17A414;
-      img {
-        transform: rotateX(-180deg);
-      }
     }
     .hps_img{
       width: 6px;

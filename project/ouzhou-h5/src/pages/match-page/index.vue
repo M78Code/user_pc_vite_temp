@@ -79,7 +79,6 @@ const onChangeDate = e => {
 
 const onChangeArea = e => {
   const arr = store.areaList.find(i => i.id === e)['tournamentList']
-  console.log('onChangeArea', store.areaList, e, arr)
   if (arr === null) {
     store.leaguesMatchs = []
     return

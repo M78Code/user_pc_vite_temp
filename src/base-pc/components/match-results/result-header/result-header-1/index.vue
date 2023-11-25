@@ -45,8 +45,8 @@
           <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <q-date
               v-icon="{
-                chevron_left: 'icon-arrow-left',
-                chevron_right: 'icon-arrow-right',
+                'chevron_left': 'icon-arrow-left',
+                'chevron_right': 'icon-arrow-right',
               }"
               class="q_data"
               v-model="date"
@@ -55,7 +55,7 @@
               range
               v-if="startTimeShow"
               minimal
-              :locale="locale"
+              :locale="locales"
             />
           </div>
         </div>
@@ -75,7 +75,7 @@
             @ipt_search="ipt_search(arguments)"
             @search_hot="search_hot"
             @confirm="isSelectConfirm"
-            :hideSelect="cancel"
+            :cancel="cancel"
             :isTimeChanged="timeChanged"
           ></select-y>
         </div>
@@ -116,10 +116,11 @@
           </div> -->
         </div>
       </div>
-      <div class="match-resultstips-wrap">
+      <div class="flex items-center">
+        <div>
         <!-- 提示语 -->
           <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
-            <div class="aaa">{{ i18n_t("results.tips") }}</div>
+            <div>{{ i18n_t("results.tips") }}</div>
         </q-tooltip>
         <div
           class="match-resultstips-icon relative-position"
@@ -128,11 +129,13 @@
         >
           <span class="cursor-pointer"></span>
         </div>
-        <!-- 搜索 -->
-        <div class="search-btn" @click="refresh()">
-          {{ i18n_t("results.search") }}
-        </div>
       </div>
+      <!-- 搜索 -->
+      <div class="search-btn" @click="refresh()">
+          {{ i18n_t("results.search") }}
+      </div>
+      </div>
+      
     </div>
   </div>
 </div>
@@ -140,7 +143,7 @@
 
 </template>
 <script setup>
-import {  ref,computed,onMounted } from 'vue';
+import {  ref,computed,onMounted, reactive } from 'vue';
 import {SelectWrapper} from "src/base-pc/components/match-results/select/index.js";
 import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
@@ -230,14 +233,46 @@ const props = defineProps({
   sport_id:{
     type:String
   },
-  locale:{
-    type:Object
-  },
+
 });
   const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
 })
-
+const locales = 
+{
+        days: i18n_t('time.time_date_week'),
+        daysShort: i18n_t('time.time_date_week'),
+        months: [
+        i18n_t('time.month_1'),
+        i18n_t('time.month_2'),
+          i18n_t('time.month_3'),
+          i18n_t('time.month_4'),
+          i18n_t('time.month_5'),
+          i18n_t('time.month_6'),
+          i18n_t('time.month_7'),
+          i18n_t('time.month_8'),
+          i18n_t('time.month_9'),
+          i18n_t('time.month_10'),
+          i18n_t('time.month_11'),
+          i18n_t('time.month_12')
+        ],
+        monthsShort: [
+          i18n_t('time.month_1'),
+          i18n_t('time.month_2'),
+          i18n_t('time.month_3'),
+          i18n_t('time.month_4'),
+          i18n_t('time.month_5'),
+          i18n_t('time.month_6'),
+          i18n_t('time.month_7'),
+          i18n_t('time.month_8'),
+          i18n_t('time.month_9'),
+          i18n_t('time.month_10'),
+          i18n_t('time.month_11'),
+          i18n_t('time.month_12')
+        ],
+        // 每周的第一天
+        firstDayOfWeek: 7,
+      }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)
 /**
@@ -534,4 +569,10 @@ function refresh() {
 :deep(.q-date__view){
 background: #ffffff;
 }
+.q_data{
+  :deep(.material-icons){  
+    line-height: 12px !important;
+  }
+}
+
 </style>

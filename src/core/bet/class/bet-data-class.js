@@ -1,7 +1,6 @@
-import { PageSourceData, fileds_map_common } from "src/core/index.js";
+import { PageSourceData, fileds_map_common,UserCtr } from "src/core/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
-import UserCtr from "src/core/user-config/user-ctr.js";
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { ref } from "vue"
 import lodash_ from "lodash"
@@ -860,7 +859,19 @@ this.bet_appoint_ball_head= null */
   }
 
   set_bet_c201_change( obj={} ) {
-    
+    // 订单id
+    let order_no = lodash_.get(obj,'orderNo')
+    // 订单状态 订单状态(1:投注成功 2:投注失败)
+    let status = lodash_.get(obj,'status', 0)
+    // 单关 单注 简单 粗暴 其他的后面做
+    if(status == 1){
+      BetViewDataClass.set_bet_order_status(3)
+      // 获取金额
+      UserCtr.get_balance()
+    }
+    if(status == 2){
+      BetViewDataClass.set_bet_order_status(4)
+    }
   }
 }
 export default new BetData();

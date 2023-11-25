@@ -116,7 +116,8 @@ const is_collect = ref(false) //赛事是否收藏
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'match.mid'))
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    return `+${ lodash.get(props, 'match.mc') || 0}`
+    const mc=lodash.get(props, 'match.mc')
+    return mc?`+${lodash.get(props, 'match.mc')}`:''
   }else{
     return i18n_t('match_info.more')
   }
@@ -305,7 +306,7 @@ onUnmounted(() => {
       margin-top: 4px;
     }
     &.kedui-item {
-      color: var(--q-gb-bg-c-19);
+      color: var(--q-gb-t-c-8);
     }
     .score {
       font-weight: 500;

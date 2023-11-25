@@ -74,7 +74,7 @@ const set_retain_selection = () => {
       // height: 46px;
       border-radius: 2px;
       background: var(--q-gb-bg-c-1);
-      color:  var(--q-gb-bg-c-15);
+      color:  var(--q-gb-t-c-2);
       .right_amount{
         font-family: DIN;
         font-size: 0.2rem;

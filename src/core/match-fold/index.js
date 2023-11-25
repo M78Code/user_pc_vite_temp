@@ -104,24 +104,25 @@ class MatchFold {
     } else if (type === 2) {
       status = this.not_begin_csid_fold_obj.value[csid_key]
     }
-    const match_mids = lodash.get(MatchMeta, 'complete_mids', [])
-    match_mids.forEach(mid => {
-      const match = MatchDataBaseH5.get_quick_mid_obj(mid)
-      if (!match || match.csid != obj.csid) return
-      const key = this.get_match_fold_key(match)
+    const matchs = lodash.get(MatchMeta, 'complete_matchs', [])
+    matchs.forEach(item => {
+      if (!item || item.csid != obj.csid) return
+      const key = this.get_match_fold_key(item)
       // 全部
       if (!type) return this.set_match_fold(key, { show_card: !status })
       // 进行中
-      if (type === 1 && [1,110].includes(+match.ms)) return this.set_match_fold(key, { show_card: !status })
+      if (type === 1 && [1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card: !status })
       // 未开赛
-      if (type === 2 && ![1,110].includes(+match.ms)) return this.set_match_fold(key, { show_card: !status })
+      if (type === 2 && ![1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card: !status })
     })
+
     // 全部
     if (!type) return this.set_ball_seed_csid_fold_obj(csid_key, !status)
     // 进行中
     if (type === 1) return this.set_progress_csid_fold_obj(csid_key, !status)
     // 未开赛
     if (type === 2) return this.set_not_begin_csid_fold_obj(csid_key, !status)
+
   }
   /**
    * @description 设置赛事次要玩法是否展开

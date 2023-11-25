@@ -94,14 +94,20 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    // 输入控制 在2位小数 todo
-    if (ref_data.money > ref_data.max_money) {
-        // 超出最大限额 使用 最大限额 作为投注金额
-        ref_data.money = ref_data.max_money
-        // 修改页面提示 1: 输入金额超出最大限额时
-        BetViewDataClass.set_input_money_state(1)
+    console.error('sss')
+    // 输入控制
+    if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+        BetData.set_bet_amount(ref_data.money)
+    }else{
+        // 最大限额不能大于余额
+        let money_a = ref_data.max_money
+        if(UserCtr.balance < ref_data.max_money){
+            money_a = UserCtr.balance
+        }
+        ref_data.money = money_a
+        BetData.set_bet_amount(money_a)
     }
-    BetData.set_bet_amount(ref_data.money)
+   
     // 计算最高可赢金额
     // ref_data.win_money = ref_data.money * props.item.oddFinally
 }

@@ -114,6 +114,7 @@ const changeDate = (index) => {
  * @param {*} index 
  */
 const changeDatetab = (item, index) => {
+    console.log(item, index)
     store.tabModel = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
@@ -121,18 +122,24 @@ const changeDatetab = (item, index) => {
     // MenuData.set_date_time(item.val, item.type);
     store.menu_time = item?.val
 
-    // //根据时间筛选列表
-    // if (!item?.val) {
-    //     // 设置菜单对应源数据
-    //     MatchMeta.set_origin_match_data()
-    // } else {
-    //     //根据时间筛选列表
-    //     MatchMeta.filter_match_by_time(item.val)
-    // }
     MenuData.set_current_lv1_menu(item.type ? '3' : '2');
     MenuData.set_menu_mi(store.current_menu_mi);
-    // 获取数据
-    MatchMeta.set_origin_match_data(store.menu_time)
+
+    let time = ''
+    if (!item?.val) {
+        const cureent_date = new Date()
+        cureent_date.setHours(12, 0, 0, 0)
+        const today_time = cureent_date.getTime()
+        time = today_time
+    } else {
+      time = item?.val
+    }
+    // 设置菜单对应源数据
+    // MatchMeta.set_origin_match_data(store.menu_time)
+    // 根据时间筛选列表
+    MatchMeta.filter_match_by_time(time)
+    MatchMeta.get_target_match_data(!item?.val ? '' : { md: item?.val })
+    
     emit("changeDate", item.val);
 };
 
@@ -155,7 +162,9 @@ const setDefaultData = (val) => {
 }
 
 watch(() => store.areaList, () => {
-    areaListChange(store.areaList[0], 0)
+    const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
+    const offset = index < 0 ? 0 : index
+    areaListChange(store.areaList[offset], offset)
 })
 onMounted(() => {
     setDefaultData(MenuData.menu_mi.value || '101');//默认足球

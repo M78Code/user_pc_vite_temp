@@ -193,6 +193,8 @@ const set_order_status_info = (orderNo) => {
                 BetViewDataClass.set_bet_order_status(4)
             }
             if([0,1].includes(order_status*1)){
+                // 获取金额
+                UserCtr.get_balance()
                 set_error_message_config({code:200,message:''},'bet',3)
                 // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
                 BetViewDataClass.set_bet_order_status(3)
@@ -562,7 +564,6 @@ const set_error_message_config = (res ={},type,order_state) => {
 const set_bet_obj_config = (params = {}, other = {}) => {
     console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
-
     const { oid, _hid, _hn, _mid } = params
 
     // 没有投注内容 点击无效

@@ -1,22 +1,20 @@
 <template>
   <div class="sport">
     <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-    <div class="competing-time" @click="jump_to_details(current_tab)">
-      <sport_icon :size="'12px'" :status="true" :sport_id="current_tab.csid" class="sport-icon" />
+    <div class="competing-time" @click="jump_to_details(match)">
+      <sport_icon :size="'12px'" :status="true" :sport_id="match.csid" class="sport-icon" />
       <div class="matches-time">
-        <div class="begin-time din_font">{{ get_mmp(current_tab.mst) }}</div>
+        <div class="begin-time din_font">{{ get_mmp(match.mst) }}</div>
       </div>
     </div>
     <div class="club-name" @click="jump_to_details(current_tab)">
-      {{ current_tab.mhn }}
+      {{ match.mhn }}
     </div>
-    <div class="union-name" @click="jump_to_details(current_tab)">
-      {{ current_tab.man }}
+    <div class="union-name" @click="jump_to_details(match)">
+      {{ match.man }}
     </div>
     <div class="odds-box din_font">
-      <div class="odds-box-item" v-for="(col, col_index) in ols_data"
-        :key="`${current_tab.mid}_${col._hpid}_${col_index}`">
-        <!-- :class="{checked: BetData.bet_oid_list.includes(item.oid) }" -->
+      <div class="odds-box-item" v-for="(col, col_index) in ols_data" :key="`${match.mid}_${col._hpid}_${col_index}`">
         <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
           v-for="(ol_data, ol_index) in (col.ols)" :key="`${ol_data.oid}_${ol_index}_${col_index}`">
           <!-- 投注项组件 -->
@@ -28,7 +26,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, toRef } from 'vue';
 import { useRouter } from 'vue-router';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -39,10 +37,7 @@ import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.v
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 const router = useRouter()
 const props = defineProps({
-  current_tab: {
-    type: [Object, Array],
-    default: () => ({}),
-  },
+  mid: String
 });
 const jump_to_details = (item) => {
   const { tid, csid } = item;
@@ -56,17 +51,17 @@ const jump_to_details = (item) => {
     }
   })
 }
+const match = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_ob_ref(props.mid)
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-let odds_list = match_tpl_info.get_15mins_odds_list()
+let odds_list = (match_tpl_info.get_15mins_odds_list())
 const ols_data = computed(() => {
-  const ols = merge_template_data({
-    match:JSON.parse(JSON.stringify(props.current_tab)), //不知道什么问题一直是同一个
+  return merge_template_data({
+    match: match.value,
     handicap_list: [odds_list],
     type: 4,
     play_key: 'hps15Minutes'
   }, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
-  return ols
 })
 // // 监听 当前投注项ID的变化
 watch(
@@ -75,7 +70,6 @@ watch(
     current_check_betId.value = MenuData.current_check_betId.value
   },
 )
-
 const get_mmp = (mst) => {
   let difference = Math.floor(mst / 60 / 15);
   if (difference >= 6) difference = 5;

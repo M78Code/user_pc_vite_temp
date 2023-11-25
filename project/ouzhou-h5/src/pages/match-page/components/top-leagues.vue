@@ -49,14 +49,14 @@ const handle_match_collect = (value) => {
 const handle_jump_match = (item) => {
   store.isLeagueDetail = true
   store.selectLeague = item
-  // console.log('handle_jump_match', item)
-  MatchMeta.get_ouzhou_leagues_list_data(item.tid)
+  MatchMeta.get_ouzhou_leagues_list_data(item.tid, store.curSelectedOption.timestamp)
 }
 </script>
  
 <style scoped lang="scss">
 .top_leagues_page{
   background-color: var(--q-gb-bg-c-2);
+  border-top: 0.027rem solid #FF7000;
   :deep(.collapse_page){
     &:not(:last-child){
       border-bottom: 10px solid #F1F1F1;

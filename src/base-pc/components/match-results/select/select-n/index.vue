@@ -10,7 +10,7 @@
         outside-arrows
         mobile-arrows
 >
-        <q-tab  v-for="(item ,index) in option" :key="index "
+        <q-tab v-for="(item ,index) in option" :key="index "
                 @click.stop="selectSport(item)"
                 >
           <div class="tabs_item" :class="sport === item ? 'active' : ''">
