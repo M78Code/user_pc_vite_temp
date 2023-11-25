@@ -149,7 +149,7 @@ onMounted(() => {});
         line-height: 45px;
         //  border-top: 1px solid #E2E2E2;
         border-left: 1px solid var(--q-gb-bd-c-2);
-         border-bottom: 1px solid var(--q-gb-bd-c-2);
+        //  border-bottom: 1px solid var(--q-gb-bd-c-2);
     }
 
     & > div:last-child {
