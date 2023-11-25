@@ -56,7 +56,8 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
   const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 
   function jump_to_league_list() {
-    const { id, sportId } = props.league_obj
+    const { id, sportId, nameText } = props.league_obj
+    MatchLeagueData.set_league_name(nameText)
     router.push(`/league/${sportId}/${id}`)
   }
 </script>

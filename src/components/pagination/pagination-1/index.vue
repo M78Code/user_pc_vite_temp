@@ -33,7 +33,7 @@
     <div class="pagination-wrap" :style="results_table">
       <q-pagination
         v-model="page"
-        color="#788299"
+        color="#ffffff"
         text-color="panda-text-3"
         :max="max"
         size="sm"
@@ -45,7 +45,6 @@
       /> 
       
       <div class="pagination-select">
-       
         <q-select
           class="select"
           :class="{ 'select-page-input': icon_name == 'icon-triangle' }"
@@ -224,7 +223,7 @@ const goToPage = val => {
   justify-content: center;
   height: 60px;
   font-size: 12px;
-  background-color: transparent;
+  background-color: #ffffff;
   //color: var(--q-gb-t-c-10);
   .pagination-select {
     display: flex;
