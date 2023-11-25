@@ -686,6 +686,10 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     if(other.is_detail){
         play_name = other.play_name
     }
+    let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+    if(hpn){
+        play_name = hpn
+    }
 
     return play_name
     

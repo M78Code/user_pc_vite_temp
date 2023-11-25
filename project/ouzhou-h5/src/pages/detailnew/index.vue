@@ -75,7 +75,8 @@ import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
 import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
 import detail_tabs from "./components/detail_tabs.vue";
 import detail_event_tabs from "./components/detail_event_tabs.vue";
-import odds_info from "./components/odds_info.vue";
+// import odds_info from "./components/odds_info.vue";
+import odds_info from "./components/bevis_odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
@@ -122,12 +123,7 @@ export default {
      MatchDataWarehouseInstance
     } = details_main(router,route)
     console.log(match_detail,"---------------------------------------------------");
-    function onClickTest(){
-      MatchDataWarehouseInstance.value.list_to_obj.mid_obj[mid.value+"_"].msc_obj.S1.home++
-      console.log(MatchDataWarehouseInstance.value.list_to_obj.mid_obj[mid.value+"_"],"---------------------------------------------------");
-    }
     return{
-      onClickTest,
       detail_store,
       match_odds_info,
       match_detail,
@@ -192,6 +188,8 @@ export default {
     position: relative;
     z-index: 90;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   .match-detail-line {
     height: 10px;
@@ -238,7 +236,6 @@ export default {
     background-color: var(--q-gb-bg-c-2);
   }
   .match-detail-odds-scroll {
-    overflow-x: hidden;
     width: 100vw;
     background: #F1F1F1;
     // padding: 14px 0;

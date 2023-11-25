@@ -151,7 +151,7 @@ const outrights = () => {
     ...MenuData.mid_menu_result,
    
   }
-  MenuData.set_mid_menu_result(mid_config)
+  MenuData.set_mid_menu_result({})
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,1014)

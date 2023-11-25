@@ -309,7 +309,7 @@ onUnmounted(() => {
     }
     .score {
       font-weight: 500;
-      color: var(--q-gb-bg-c-2);
+      color: var(--q-gb-t-c-5);
     }
   }
   .red-ball {
