@@ -3,9 +3,7 @@
  * @Description:
 -->
 <template>
-
-  <div>
-  <q-layout view="lHh Lpr lFf" class="layout_container">
+  <q-layout view="lHh Lpr lFf" class="layout_container ouzhou-h5-layout">
     <!-- 顶部菜单 -->
     <TopMenuWapper />
     <q-page-container id="ouzhou-h5" class="page_container" >
@@ -18,15 +16,14 @@
 
     </q-page-container>
     <div class="footer">
-      <bet-bar class="bar-top" v-if="tou_show"></bet-bar>
+      <!-- <bet-bar class="bar-top" v-if="tou_show && BetData.bet_single_list.length>0"></bet-bar>
+      <div style="display:none">{{ BetData.bet_data_class_version }}</div> -->
       <FooterWapper />
     </div>
   </q-layout>
 
   <!-- 吐司提示框 v-if="toast_show" -->
   <toast></toast>
-  </div>
-
 </template>
 
 <script setup>
@@ -59,15 +56,14 @@ const toast = defineAsyncComponent(() =>
 
 var tou_show = ref(true)
 
-let routerPath = ref('')
+let routerPath = ref<String>('')
 const route = useRoute()
 watch(() => route.path,newRoute => {
-  if(['/personal','/announcement','/rules'].includes(newRoute)){
-    tou_show.value = false
-  }else{
-    tou_show.value = true
+  tou_show.value = false
+  if(newRoute == '/home' || newRoute == '/inplay' || newRoute == '/match'){
+    tou_show.value = BetData.bet_single_list.length>0?true:false
   }
-},{deep:true,immediate:true})
+})
 
 
 import "./index.scss"
@@ -222,6 +218,17 @@ if (UserCtr.get_user_token()) {
   left: 0
 }
 
+:deep(.q-drawer-container) {
+  .q-drawer__backdrop {
+    background-color: rgba(56, 55, 50, 0.6) !important;
+    filter: blur(5px);
+  }
+
+  .q-drawer__opener {
+    display: none;
+  }
+}
+
 .layout_container {
   height: 100%;
   overflow: hidden;
@@ -234,16 +241,6 @@ if (UserCtr.get_user_token()) {
       display: none;
     }
 
-    :deep(.q-drawer-container) {
-      .q-drawer__backdrop {
-        background-color: rgba(56, 55, 50, 0.6) !important;
-        filter: blur(5px);
-      }
-
-      .q-drawer__opener {
-        display: none;
-      }
-    }
   }
 
   :deep(.q-drawer) {

@@ -707,7 +707,7 @@ init(){
       // 列表数据同步到快捷操作对象中
       this._list_to_obj_fun(this.match_list,this.list_to_obj)
       // set_active_mids 报错 DOMException: Failed to execute 'postMessage' on 'Window': Response object could not be clone 先放在这
-      this.mids_ation = list.map(t => t.mid)
+      this.set_active_mids(list.map(t => t.mid))
       // ws命令赛事订阅
       this.ws_ctr.scmd_c8();
       this.upd_data_version();

@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div v-if="false">{{ BetData.bet_data_class_version }}-{{items.red_green}} </div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}} </div>
     <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
