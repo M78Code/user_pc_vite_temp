@@ -10,29 +10,22 @@ import * as TemplateCommon from "./template-common.js"
     {
       _hpid: 153,
       ols: [
-        {  _hpid: 153, ot: '1', class: 'no-handicap' },
-        {  _hpid: 153, ot: '2', class: 'no-handicap' },
+        {  _hpid: 153, ot: '1', otb: '主胜', class: 'no-handicap' },
+        {  _hpid: 153, ot: '2', otb: '客胜', class: 'no-handicap' },
       ],
     },
     {
       _hpid: 154,
       ols: [
-        {  _hpid: 154, ot: '1' },
-        {  _hpid: 154, ot: '2' },
+        {  _hpid: 154, ot: '1', otb: '主队让盘', },
+        {  _hpid: 154, ot: '2', otb: '客队让盘', },
       ],
     },
     {
       _hpid: 155,
       ols: [
-        {  _hpid: 155, ot: '1' },
-        {  _hpid: 155, ot: '2' },
-      ],
-    },
-    {
-      _hpid: 202,
-      ols: [
-        {  _hpid: 202, ot: 'Over' },
-        {  _hpid: 202, ot: 'Under' },
+        {  _hpid: 155, ot: '1', otb: '主队让局', },
+        {  _hpid: 155, ot: '2', otb: '客队让局', },
       ],
     },
   ]

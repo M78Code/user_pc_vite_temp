@@ -35,6 +35,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
+import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import { MenuData } from "src/core/"
 
 let area_obj = ref();
@@ -58,10 +59,12 @@ const props = defineProps({
 });
 
 watch(() => props.date, async () => {
+
   const list = await get_ouzhou_leagues_data(props.date)
   leagues.value = list
   if (list.length) {
     select_id.value = list[0].id
+    choose_filter_tab(list[0])
   }
 }, { immediate: true })
 
@@ -75,7 +78,8 @@ onMounted(() => {
  * @param {Number} item.mif 
  * @description 当前选择的tab高亮 通过id属性映射
  */
-const choose_filter_tab = (item) => {
+function choose_filter_tab(item) {
+  MatchLeagueData.set_league_obj(item)
   // 获取最新的 数据
   select_id.value = item.id
 };

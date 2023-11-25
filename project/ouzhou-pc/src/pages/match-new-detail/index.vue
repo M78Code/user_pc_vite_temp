@@ -40,7 +40,11 @@
             </span>
           -->
             <span class="leagal-time">
-                {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}
+              <span v-if="detail_info.ms==0"> {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}</span>
+              <span v-else >
+                <match-process :match="detail_info" show_page="match-list" :rows="1" />
+              </span>
+               
             </span>
         </div>
         <div>
@@ -98,13 +102,15 @@ import { usedetailData } from "./index";
 import { formatTime, format_M_D_PC } from 'src/core/format/index.js'
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 export default{
   components: {
     tabs,
     breadcrumbs,
     analysis,
     odds_info,
-    loading
+    loading,
+    matchProcess
   },
   setup(ctx){
     const router = useRouter();
@@ -150,7 +156,7 @@ export default{
         csid,
       };
 
-      router.push({
+      router.replace({
         name: "details",
         params,
       });

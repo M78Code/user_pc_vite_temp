@@ -8,7 +8,7 @@
       :style="{width: counting_wrapper_width === 'auto' ? 'auto' : counting_wrapper_width + 'rem'}"
   >
     <!--棒球单独处理-->
-    <span class="title-space-1" ref="title-space">
+    <span class="title-space-1" ref="title-space" v-show="title">
       {{title}}
     </span>
     <span v-if="show_time_counting" ref="counting" class="counting" v-html="utils.counting_time_ctr_show_format(match,counting_time)"></span>

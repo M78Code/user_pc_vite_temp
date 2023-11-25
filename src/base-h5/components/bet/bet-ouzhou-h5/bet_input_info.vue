@@ -1,6 +1,6 @@
 <!-- 单关，串关，投注金额输入框 -->
 <template>
-    <div class="bet_input_info flex_input">
+    <div class="bet_input_info flex_input component bet-input-info">
        <div class="info_left">
        <div class="size_16 color_a1a1">{{$t('bet.bet')}}</div>
         <div class="size_14">
@@ -16,7 +16,7 @@
   
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
             
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ format_money(ref_data.min_money) }}~{{format_money(ref_data.max_money) }}</span>
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.bet_limit')}} {{ format_money(ref_data.min_money) }}~{{format_money(ref_data.max_money) }}</span>
           
           </div>
           
@@ -42,7 +42,7 @@ const props = defineProps({
     }
 })
 
-const input_click = (item,index,evnet) => {
+const input_click = (item,index,event) => {
     console.error('index', index)
   event.preventDefault()
   BetData.set_bet_keyboard_config(item)

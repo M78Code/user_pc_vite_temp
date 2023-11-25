@@ -38,6 +38,10 @@
             </template>
           </q-input>
         </div>
+        <div class="tips">
+          <span class="dot"></span>
+          {{tipMsg}}
+        </div>
         <div class="record-query" @click="search">
           {{i18n_t("bet_record.query")}}
         </div>
@@ -67,6 +71,15 @@ const props = defineProps({
   }
 })
 const formatYMD = 'YYYY/MM/DD'
+const msgList = [
+  i18n_t("bet_record.msg_1"),
+  i18n_t("bet_record.msg_2"),
+  i18n_t("bet_record.msg_3"),
+  i18n_t("bet_record.msg_4"),
+  i18n_t("bet_record.msg_5"),
+  i18n_t("bet_record.msg_6"),
+]
+const tipMsg = ref(msgList[0])
 const dateRef = ref(null)
 const qDateProxy = ref(null)
 const cash_value = ref([''])
@@ -101,6 +114,7 @@ watch(() => props.current_tab, (newVal) => {
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
   date.value = { from: data, to: data }
+  tipMsg.value = msgList[0]
   setTimeout(() => {
     tabChange.value = false
   }, 500)
@@ -134,6 +148,7 @@ const time_click = (item) => {
   const [from, to] = item.range
   current_time.value = item.value
   params.timeType = item.value
+  tipMsg.value = msgList[item.value]
   date.value = { from, to }
   emitClick()
 }
@@ -146,6 +161,7 @@ const selectInput = (v) => {
   emit('itemFilter', params)
 }
 const search = () => {
+  tipMsg.value = msgList[5]
   const beginTime = date.value.from.split('/')
     .join('-')
   const endTime = date.value.to.split('/')
@@ -205,6 +221,18 @@ div.q-menu {
   .record-settled-l {
     display: flex;
     align-items: center;
+  }
+  .tips{
+    .dot{
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #ff7000;
+      margin-right: 4px;
+    }
+    font-size: 12px;
+    margin-right: 12px;
   }
 
   .record-query {

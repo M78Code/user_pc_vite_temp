@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
 			<div class="matches-title">
@@ -17,7 +17,7 @@
 								class="leagues_filrer" 
 								@click.stop="set_show_leagues"
 							>
-								Next 24 Hours
+								24小时
 								<span class="yb-icon-arrow"></span>
 								<div class="leagues_filrer_item" v-show="show_leagues">
 									<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || MenuData.is_kemp() || MenuData.is_collect || MenuData.is_top_events()"  />
+		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() ) || MenuData.is_collect || MenuData.is_top_events()"  />
 		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues()" />
 		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
@@ -88,8 +88,8 @@ const ouzhou_filter_config = {
 const ouzhou_time_list = [
 	{ label: i18n_t('ouzhou.filter.select_time.12h'), title:'12小时', value: 12 }, 
 	{ label: i18n_t('ouzhou.filter.select_time.24h'), title:'24小时', value: 24 }, 
-	{ label: i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 36 }, 
-	{ label: i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 84 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.36h'), title:'3天', value: 3*24 }, 
+	{ label: i18n_t('ouzhou.filter.select_time.84h'), title:'7天', value: 7*24 }, 
 ]
 
 onMounted(()=>{
@@ -118,9 +118,14 @@ const set_active_time = (item) => {
 const set_tab_list = (news_) =>{
 	tab_list.value = []
 	// 首页
-	if(news_ == 0 ){
+	if(news_ == 0 || news_ == 500){
 		tab_list.value = lodash_.get( ouzhou_filter_config,'home_tab', [])  
 		matches_header_title.value = i18n_t('ouzhou.match.matches')
+		// top evnets
+		if (news_ == 500) {
+			checked_current_tab(tab_list.value[1])
+			return
+		}
 	}
 	// 滚球
 	if( news_ == 1 ){
@@ -129,7 +134,7 @@ const set_tab_list = (news_) =>{
 	}
 	
 	// 左侧菜单
-	if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
+	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
 		tab_list.value = lodash_.get( ouzhou_filter_config,'sport_tab', [])  
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
@@ -140,15 +145,18 @@ const set_tab_list = (news_) =>{
 		matches_header_title.value = i18n_t('ouzhou.menu.collect')
 		tab_list.value = lodash_.get( ouzhou_filter_config,'favouritse_tab', [])  
 	}
-
 	// 冠军
-	if (MenuData.is_collect) {
+	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
 		matches_header_title.value = 'Outrights'
 		tab_list.value = []
 	}
 
 	if (tab_list.value.length) {
-		checked_current_tab(tab_list.value[0])
+		if(MenuData.mid_menu_result.filter_tab){
+			checked_current_tab({value:MenuData.mid_menu_result.filter_tab})
+		}else{
+			checked_current_tab(tab_list.value[0])
+		}
 	}
 }
 
@@ -176,7 +184,7 @@ const checked_current_tab = payload => {
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
-    useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
+    	useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
 	}
 
 	// 左侧菜单点击后 tab切换

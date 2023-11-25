@@ -44,6 +44,7 @@ const props = defineProps({
 })
 const leftDataList = ref([]);
 const emits = defineEmits(['changeMenu'])
+const contInit = ref([]);
 /**
  * 获取滚球数量
  * @param {*} item 
@@ -70,6 +71,16 @@ const get_init_data = () =>{
     // MenuData.menu_mi.value || 
     MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
     playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
+}
+/**
+ * 获取最新列表
+ * @param {*} data 
+ */
+const getNewData = (data) =>{
+    leftDataList.value = leftDataList.value.map((item)=>{
+        item.sl = data.filter((n)=>{return n.mi === item.mi})?.[0]?.sl;
+        return item;
+    })
 }
 /**
  * 定时器转换
@@ -103,7 +114,7 @@ const clearInterval = (flagTimer) => {
 const get_menu_list = async () =>{
     const res = await api_base_data.get_base_data_menu_init();
     if(res && res.code =="200" && res.data){
-        MenuData.set_init_menu_list(res.data)
+        getNewData(res.data);
     }else{
         clearInterval(timer)
     }
@@ -111,7 +122,7 @@ const get_menu_list = async () =>{
 /**
  * 定时器
  */
-const timer = get_interval_menu(get_menu_list,4000);
+const timer = get_interval_menu(get_menu_list,3000);
 
 onMounted(()=>{
     get_init_data();

@@ -14,7 +14,7 @@
       <button @click="submit_click" :class="{'confirm': status == 2 || status == 3, 'success': status == 4}">
         <span>
           <!-- 暂停提前结算 -->
-          <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template>
+          <!-- <template v-if="status == 5">{{ i18n_t('early.btn1') }} </template> -->
           <!-- 提前结算 -->
           <template v-if="status == 1 || status == 6">{{ i18n_t('early.btn2') }}</template>
           <!-- 确认提前结算 -->
@@ -116,7 +116,8 @@ const min_bet_money = computed(() => {
 })
 // 计算提前结算按钮是否显示
 const calc_show = computed(() => {
-  return BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle
+  return false
+  // return BetRecordClass.selected === 0 && props.item_data.seriesType === '1' && props.item_data.enablePreSettle
   // return /10true[1-6]+/.test("" + lodash.get(UserCtr.user_info, 'settleSwitch') + BetRecordClass.selected + props.item_data.enablePreSettle + status.value);
 })
 watch(() => expected_profit.value, (_new, _old) => {
@@ -177,13 +178,13 @@ onMounted(() => {
  
   // 处理ws订单状态推送
   mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
-  mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
+  // mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
 })
 onUnmounted(() => {
   // 清除定时器 和 ws推送
   clearTimeout(timer)
   mitt_c201_handle()
-  mitt_c210_handle()
+  // mitt_c210_handle()
   mitt_expected_profit()
 })
 
@@ -280,7 +281,8 @@ const submit_early_settle = () => {
       message = i18n_t('early.info10');
     } else if (res.code == "0400527") {
       // 不支持提前结算或者暂停
-      status.value = 5;
+      message = i18n_t('early.btn1');
+      // status.value = 5;
     } else if (res.code == "0400537") {
       // 金额有变动，需要更新按钮上的金额
       status.value = 1;
@@ -350,16 +352,16 @@ template {
       background-color: var(--q-gb-bg-c-7);
       border: 1px solid var(--q-gb-bg-c-1);
       width: 100%;
-      height: 0.5rem;
-      line-height: 0.5rem;
+      height: 0.46rem;
+      line-height: 0.46rem;
       font-size: 0.18rem;
       border-radius: 0.5rem;
       position: relative;
       &.confirm {
         background-color: var(--q-gb-bg-c-1);
-        color: var(--q-gb-bg-c-15);
+        color: #fff;
         i.amount {
-          color: var(--q-gb-bg-c-15);
+          color: #fff;
         }
       }
       &.success {

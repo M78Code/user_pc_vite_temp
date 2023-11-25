@@ -6,6 +6,7 @@ import { ref } from 'vue';
 
 import { MatchDataWarehouse_PC_List_Common } from "src/core/index.js";
 import { get_match_status } from 'src/core/index.js'
+import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 let other_play_current_play = {};
@@ -68,8 +69,9 @@ export const get_compute_other_play_data = (match) => {
 export function merge_template_data({ match, handicap_list, type = 1, play_key }, MatchListData = MatchDataWarehouse_PC_List_Common) {
   let length = handicap_list.length
   let { mid, hSpecial5min, hSpecial } = match
-  const many_obj = MatchListData.get_match_to_map_obj(mid)
+  const many_obj = get_match_to_map_obj(match)
   const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
+  handicap_list= lodash.cloneDeep(handicap_list)
   handicap_list.forEach((col, col_index) => {
     col.ols.forEach((ol, ol_index) => {
       let { hn, _hpid, hpid, ot } = ol

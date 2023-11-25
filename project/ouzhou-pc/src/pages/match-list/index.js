@@ -5,14 +5,15 @@ import {
   MatchDataWarehouse_PC_List_Common,
   LayOutMain_pc,
   UserCtr,
-  MenuData, axios_loop
+  MenuData, axios_loop, get_match_status
 } from "src/core";
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
 
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+
 export const playingMethods_15 = [
   {
     value: 0,
@@ -177,9 +178,10 @@ let match_count = ref(0);
 export const init_home_matches = async () => {
   const params = {
     type: 1,
-    sort: 1,
+    sort: 2,
     // hasFlag: 0
   };
+  const match_list=[]
   await axios_loop({
     axios_api: api_match_list.get_home_matches,
     params,
@@ -193,14 +195,16 @@ export const init_home_matches = async () => {
           set_match_play_current_index(item, 'hps15Minutes')
           return item.mid;
         });
-        api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
-
+        axios_loop({
+          axios_api: () => api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
+        })
         match_count = data.dataList.length || 0;
         let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
         //过滤前20条数据
         sort_list = filter_20_match_new(sort_list).concat(MatchDataWarehouse_PC_List_Common.match_list);
+        match_list.push(...sort_list)
         // 将球种排序
-        MatchDataWarehouse_PC_List_Common.set_list(sort_list);
+        MatchDataWarehouse_PC_List_Common.set_list(match_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(sort_list);
       } catch (error) {
         console.log(error);
@@ -211,8 +215,14 @@ export const init_home_matches = async () => {
     axios_api: get_five_leagues_list,
     fun_then: function (res) {
       try {
-
-        MatchDataWarehouse_PC_List_Common.set_list(res.concat(MatchDataWarehouse_PC_List_Common.match_list));
+        //五大联赛，只显示滚球数据
+        if(res?.length){
+          res = res.filter(match=>{
+            return get_match_status(match.ms)
+          })
+        }
+        match_list.push(...res)
+        MatchDataWarehouse_PC_List_Common.set_list(match_list);
         MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
           res, null, null, true
         );
