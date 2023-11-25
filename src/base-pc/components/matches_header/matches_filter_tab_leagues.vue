@@ -62,9 +62,12 @@ watch(() => props.date, async () => {
 
   const list = await get_ouzhou_leagues_data(props.date)
   leagues.value = list
-  if (list.length) {
+  if (list?.length) {
     select_id.value = list[0].id
     choose_filter_tab(list[0])
+  } else {
+    MatchLeagueData.league_list.value = []
+    localStorage.setItem("league_list", JSON.stringify([]))
   }
 }, { immediate: true })
 

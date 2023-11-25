@@ -43,50 +43,10 @@ const is_loading_balance = ref(false) // 金额刷新中？
 
 // 悬浮条点击 
 const menu_click = () => {
-  return
-  // 至少选择几场比赛
-  let min_num = lodash.get(UserCtr, 'configVO.minSeriesNum', 2)
-  // 投注数组信息
-  let bet_list = BetData.bet_list
+ BetData.set_bet_state_show = false
 
-  if (get_mix_bet_flag.value && bet_list.length < min_num) {
-    set_toast({ 'txt': i18n_t('bet.match_min', [min_num]) });
-    return
-  }
 
-  if (get_bet_status.value != 0) {
-    return
-  }
 
-  if (bet_list.length == 1) {
-    set_is_mix(false)
-  }
-  // 储存到数据仓库
-  // set_active_index(0)
-  // set_bet_status(1)
-
-  if (bet_list.length == 1) {
-    // 单关时若金额不合要求，则清除金额
-    let _money = +lodash.get(view_ctr_obj[BetData.bet_list[0]], 'money')
-    if (!_money || _money < 0.01 || _money > +UserCtr.balance) {
-      set_money_total('clear_')
-    }
-  }
-
-  if (
-    get_is_combine.value &&
-    ![3000, 900, 11].includes(+get_menu_type.value) &&
-    !BetData.bet_is_mix.value
-  ) {
-    let _money = 0,
-      _money_total = BetData.bet_money_total.value
-    lodash.forIn(view_ctr_obj, function (item, key) {
-      if (+item.money > 0.01) {
-        _money = _money + +item.money
-      }
-    })
-    set_money_total(_money - _money_total)
-  }
 }
 
 // 获取用户余额

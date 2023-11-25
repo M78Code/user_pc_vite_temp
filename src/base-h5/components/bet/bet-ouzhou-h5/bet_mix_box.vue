@@ -3,42 +3,16 @@
  * @Description: 投注弹框，单关串关切换逻辑与普通赛事不一致，所以组件区分，避免逻辑混乱
 -->
 <template>
+<div v-if="false">{{ BetData.bet_data_class_version }}</div>
   <div class="bet-mix-box ">
-    <betMixBoxChild v-if="ref_data.bet_show "></betMixBoxChild>
+    <betMixBoxChild v-if="ref_data.bet_box_h5_show "></betMixBoxChild>
   </div>
 </template>
 
 <script setup>
 
-import { ref, onMounted,reactive,computed,onUnmounted } from 'vue';
 import betMixBoxChild from "./bet_mix_box_child.vue";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-
-
-const ref_data = reactive({
-  emit_lsit:{},
-  bet_show: false
-})
-
-const set_bet_show = (ref)=>{
-  ref_data.bet_show = ref
-}
-
-onMounted(() => {
-  // 监听 变化
-  ref_data.emit_lsit = {
-      emitter_1: useMittOn(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, set_bet_show).off,
-  }
-})
-
-onUnmounted(() => {
-  // clear_single_money(1)
-  Object.values(ref_data.emit_lsit).map((x) => x());
-})
-
-const get_menu_type = computed((val) => {
-    return val
-})
+import BetData from "src/core/bet/class/bet-data-class.js";
 
 </script>
  

@@ -194,7 +194,7 @@ const set_is_bet_single = () =>{
 const pack_up = (val) => {
   // TODO: 临时调试用
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
-  BetData.set_clear_bet_info()
+  // BetData.set_clear_bet_info()
   // BetViewDataClass.set_clear_bet_view_config()
 }
 
