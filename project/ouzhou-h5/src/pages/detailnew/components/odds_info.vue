@@ -53,12 +53,8 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 // import EMITTER from "src/global/mitt.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
-<<<<<<< HEAD
 import { MatchDetailCalss } from "src/core/index.js"
 
-=======
-// /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
->>>>>>> 91386d96a0b82c7c094f75770b1996fc5d8bd8cb
 const props = defineProps({
   match_odds_info: {
     type: Array,
