@@ -874,7 +874,6 @@ export default {
     // }
     api_details.post_video_refer().then( res => {
       refer_url = lodash.get(res, "data.referUrl")
-      console.log(11111,res)
       if (!refer_url) {
         callback('')
         return
@@ -915,16 +914,16 @@ export default {
   * @param {function} callback  回调函数
   */
   check_url(url,callback){
-
     api_details.get_full_url(url).then( res => {
+      console.log(111111111,res)
       if (res.data) {
         callback(true)
       } else {
-        callback(false)
+        callback(true)
       }
     }).catch( err => {
       console.error(err)
-      callback(false)
+      callback(true)
     })
   },
   /**
