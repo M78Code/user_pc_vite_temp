@@ -24,6 +24,11 @@ if (!project) {
   console.log('');
   console.log('');
   console.log('');
+  console.log('相关的入口文件在  entries/self-use-version   ');
+  console.log(`相关的组件代码需要在  project/${project}  内   素材在  public/${project} 内`);
+  console.log('');
+  console.log('');
+
 }
 
 const  IS_DEV= process.env.NODE_ENV=='development'
