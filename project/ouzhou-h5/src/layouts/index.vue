@@ -13,11 +13,13 @@
 
       <router-view />
 
-      <!-- 投注框 -->
-      <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
-
+     
     </q-page-container>
     <div class="footer">
+
+       <!-- 投注框 -->
+       <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
+
       <FooterWapper />
     </div>
   </q-layout>
@@ -258,6 +260,7 @@ if (UserCtr.get_user_token()) {
     padding-top: 0 !important;
     display: flex;
     flex-direction: column;
+    position: relative;
     :deep(.q-drawer-container){
       .q-drawer__backdrop {
         background-color: rgba(56, 55, 50, 0.6) !important;

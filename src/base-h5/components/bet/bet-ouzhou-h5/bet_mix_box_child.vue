@@ -11,7 +11,7 @@
 
     <div v-show="false">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}-{{BetData.is_bet_single}}-{{BetData.is_bet_merge}}</div>
 
-   <div class="content-box">
+   <div class="content-box" :class="BetData.bet_state_show?'bet_state_show':''">
         <!-- 头部 -->
         <bet-bar></bet-bar>
         
@@ -362,7 +362,7 @@ background: var(--q-gb-t-c-3) !important;
 
 .content-box {
   position: fixed;
-  bottom: -1px;
+  bottom: 0.56rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1600;
@@ -370,7 +370,10 @@ background: var(--q-gb-t-c-3) !important;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   background-color: var(--q-gb-t-c-2);
-
+  &.bet_state_show{
+    bottom: 0;
+    z-index: 16000;
+  }
   .yb_pl14 {
     margin-right: 0.01rem;
 
