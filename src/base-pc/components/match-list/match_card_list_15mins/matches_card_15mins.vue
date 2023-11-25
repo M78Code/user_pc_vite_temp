@@ -166,6 +166,13 @@ const get_mmp = (mst) => {
     // &:hover {
     //   background: rgba(255, 112, 0, 0.1);
     // }
+
+    :deep(.c-bet-item){
+          width: 74px;
+          height: 40px;
+        }
+
+
   }
 
   div:last-of-type {
