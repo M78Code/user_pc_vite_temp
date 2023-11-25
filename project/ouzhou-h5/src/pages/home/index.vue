@@ -202,7 +202,7 @@ const handle_ouzhou_home_hots = async (data) => {
  */
  const get_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
-  five_league_match.value = list.map(t => {
+  if (list && list.length > 0) five_league_match.value = list.map(t => {
     five_league_mids.value.push(t?.mid)
     const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t?.mid) || t
     return { ...match, match_data_type: 'h5_five_league' }
