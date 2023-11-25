@@ -5,7 +5,7 @@
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
-                    <span class="text-flow" v-html="items.handicap"></span> 
+                    <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
@@ -252,8 +252,12 @@ const set_delete = () => {
         max-width: 190px;
     }
     .text-flow-none{
-        min-width: 16%;
+        max-width: 84%;
         line-height: 16px;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);
