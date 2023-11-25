@@ -18,11 +18,14 @@
         v-if="
           item_data.title &&
           item_data.title.length > 0 &&
-          item_data.title.length < 3
+          item_data.title.length <= 3
         "
       >
         <div v-for="opt in item_data.title" :key="opt.otd" class="odds-title-li">
+          <!-- 根据UI显示hpt：7（全场让球胜平负）玩法头
           <div class="odds-title-li-text" v-if="![0, 1, 3, 5, 7, 10].includes(item_data.hpt)">
+          -->
+          <div class="odds-title-li-text" v-if="![0, 1, 3, 5, 10].includes(item_data.hpt)">
             <span>{{ opt.osn }}</span>
           </div>
           <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
@@ -50,16 +53,18 @@
       </template>
 
       <template v-else>
-        <div v-for="ol in item_data.hl[0].ol.filter((i)=>i.os !=3)" :key="ol?.oid" class="ol_on">
-          <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']">
-            <template v-if="ol?.os == 1">
-              <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
-              <span class="ol-ov-text">{{ get_oddv(ol?.ov / 100000) }}</span>
-              <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
-            </template>
-            <span v-if="ol?.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+        <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
+          <div v-for="ol in hl_item.ol.filter((i)=>i.os !=3)" :key="ol?.oid" class="ol_on">
+            <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']">
+              <template v-if="ol?.os == 1">
+                <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
+                <span class="ol-ov-text">{{ get_oddv(ol?.ov / 100000) }}</span>
+                <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
+              </template>
+              <span v-if="ol?.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+            </div>
           </div>
-        </div>
+        </template>
       </template>
     </div>
   </div>
