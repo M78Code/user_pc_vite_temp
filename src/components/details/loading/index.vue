@@ -1,6 +1,6 @@
 <template>
   <div class="loading_page">
-    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/loding.gif`"  alt="">
+    <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/loading_ou.png`"  alt="">
     <div class="text">LOADING <span class="dot"> </span> </div>
   </div>
 </template>
@@ -33,8 +33,14 @@ const props = defineProps({
     margin-top: 10px;
     display: flex;
     justify-content: center;
-    color: #000;
     background-color: rgba(56, 55, 50, 0.01);
+    color: #1A1A1A;
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
   }
   img {
     position: relative;
