@@ -15,7 +15,7 @@
                 :match_of_list="match_item">
               </MatchContainerMainTemplate3>
             </template>
-            <template v-if="is_kemp">
+            <template v-else-if="is_kemp">
               <MatchContainerMainTemplate2
                 :i="index"
                 :match_of_list="match_item">

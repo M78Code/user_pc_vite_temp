@@ -12,7 +12,7 @@
     <span v-else>
       {{i18n_t('mmp')[1][detail_data.mmp]}}
       <!-- 计时器 -->
-      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ utils.counting_time_ctr_show_format(detail_data, $filters.format_mgt_time(showTime)) }}</span>
+      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ utils.counting_time_ctr_show_format(detail_data, format_mgt_time(showTime)) }}</span>
       <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;{{ utils.counting_time_ctr_show_format(detail_data, '00:00')}}</span>
     </span>
   </span>
@@ -22,10 +22,10 @@
   import lodash from 'lodash';
   import { computed, onMounted, onUnmounted, ref, watch } from "vue"
   // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
-  // import { format_mgt_time } from "src/core/format/index.js"
+  import { format_mgt_time } from "src/core/format/index.js"
   import { utils } from 'src/core/utils/index.js';
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-  import { i18n_t } from "src/boot/i18n.js"
+// import { format_mgt_time } from "src/core/index";
   const props = defineProps({
     detail_data: {
       type: Object,
@@ -96,7 +96,7 @@ onUnmounted(() => {
     */
   const initRestTime = (num) => {
     // 清除相关倒计时;
-    if(showTimeInterval){ clearInterval(showTimeInterval) }
+    if(showTimeInterval.value){ clearInterval(showTimeInterval.value) }
     // 比赛进行时; 6, 上半场， 7，下半场, 41 加时赛上半场， 42 加时下半场；
     if(props.detail_data.mmp == '6' || props.detail_data.mmp == '7' || props.detail_data.mmp == '41' || props.detail_data.mmp == '42'){
         calculagraph(num);
