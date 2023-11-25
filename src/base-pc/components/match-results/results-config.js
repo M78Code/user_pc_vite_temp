@@ -465,10 +465,8 @@ export const useGetResultConfig = () => {
       .then((res) => {
         const code = lodash.get(res, "code");
         const data = lodash.get(res, "data");
-        console.error('test一下',code)
-
         // 从链接获取联赛 id
-        let { tid } = route.query;
+        let { tid } = route.query ?? null;
         if (code == 200 && data.length) {
           data.sort((a, b) => {
             return a.tournamentName.localeCompare(b.tournamentName, "zh");
@@ -971,7 +969,6 @@ export const useGetResultConfig = () => {
    * @return {}
    */
   const search_hot = (data) => {
-    // console.error('datadatadatadatadata33333',data)
     state.pournament_params.hot = data;
     get_pournament(0);
   };
@@ -1180,7 +1177,6 @@ export const useGetResultConfig = () => {
    * 修改当前选中的赛种名字
    */
   const setSport = ({ currentItem, isChampion }) => {
-    // console.log(state.api_sport_type,'state.api_sport_type22');
     state.is_highlights = false;
     if (state.results_params.sportType == "1" && state.is_highlights) {
       state.results_params.isPlayBack = 1;

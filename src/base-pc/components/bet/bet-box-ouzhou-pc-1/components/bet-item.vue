@@ -5,15 +5,15 @@
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
-                    <span class="text-flow" v-html="items.handicap"></span> 
+                    <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
-                <div class="w-100 h15 f-s-c my-4">
-                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}</span> 
+                <div class="w-100 handicap my-4">
+                    <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}</span>
                     <!-- 盘口 -->
                     <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
-                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
+                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.mark_score}}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
@@ -29,7 +29,7 @@
                     <BetInput :items="items" />
                 </div>
                 <div class="font12 h12 mt-4">
-                    <span class="font400 mr-4 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
+                    <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                     <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount)) || '0.00' }} </span>
                 </div>
             </div>
@@ -248,9 +248,16 @@ const set_delete = () => {
             color: var(--q-gb-t-c-2);
         }
     }
+    .handicap{
+        max-width: 190px;
+    }
     .text-flow-none{
-        max-width: 76%;
-        line-height: 12px;
+        max-width: 84%;
+        line-height: 16px;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);

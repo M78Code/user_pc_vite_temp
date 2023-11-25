@@ -15,7 +15,7 @@
             <div class="nonebox4-first-left-text">{{i18n_t("bet.bet_record")}}</div>
         </div>
         <div class="nonebox4-first-right">
-            <div class="nonebox4-first-right-window" @click.stop="get_balance">
+            <div class="nonebox4-first-right-window">
                 <div class="nonebox4-first-right-window-num">{{ format_money2(userData.balance) }}</div>
             </div>
         </div>
@@ -25,114 +25,18 @@
 
 <script setup>
 import lodash from "lodash"
-// import store from "src/store-redux/index.js";
-import { compute_local_project_file_path, i18n_t } from "src/core/index.js";
 import { format_money2 } from 'src/core/format/module/format-money.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
 import userData from "src/core/user-config/user-ctr.js"
 
-
-
-
-let balance_timer = null // 延时器
-
-
 const get_bet_status = ref(true)
-const is_loading_balance = ref(false) // 金额刷新中？
 
 // 悬浮条点击 
 const menu_click = () => {
-  return
-  // 至少选择几场比赛
-  let min_num = lodash.get(UserCtr, 'configVO.minSeriesNum', 2)
-  // 投注数组信息
-  let bet_list = BetData.bet_list
-
-  if (get_mix_bet_flag.value && bet_list.length < min_num) {
-    set_toast({ 'txt': i18n_t('bet.match_min', [min_num]) });
-    return
-  }
-
-  if (get_bet_status.value != 0) {
-    return
-  }
-
-  if (bet_list.length == 1) {
-    set_is_mix(false)
-  }
-  // 储存到数据仓库
-  // set_active_index(0)
-  // set_bet_status(1)
-
-  if (bet_list.length == 1) {
-    // 单关时若金额不合要求，则清除金额
-    let _money = +lodash.get(view_ctr_obj[BetData.bet_list[0]], 'money')
-    if (!_money || _money < 0.01 || _money > +UserCtr.balance) {
-      set_money_total('clear_')
-    }
-  }
-
-  if (
-    get_is_combine.value &&
-    ![3000, 900, 11].includes(+get_menu_type.value) &&
-    !BetData.bet_is_mix.value
-  ) {
-    let _money = 0,
-      _money_total = BetData.bet_money_total.value
-    lodash.forIn(view_ctr_obj, function (item, key) {
-      if (+item.money > 0.01) {
-        _money = _money + +item.money
-      }
-    })
-    set_money_total(_money - _money_total)
-  }
+  BetData.set_bet_state_show(true)
 }
 
-// 获取用户余额
-const get_balance = () => {
-  if (is_loading_balance.value) { return };
-
-  is_loading_balance.value = true;
-  // 清除延时器
-  clearTimeout(balance_timer);
-  balance_timer = setTimeout(() => {
-    is_loading_balance.value = false;
-  }, 800);
-
-  userData.get_balance()
-}
-
-const mix_sum_odds = computed(() => {
-  if (BetData.bet_is_mix.value) {
-    const mix_data = get_s_count_data.value
-    let S = ''
-    if (mix_data.length == 0 || mix_data.length == 1 && this.BetData.bet_list.length == 1) {//串关，但是投注项数量为1，取当前投注项赔率
-      const odds = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.hps.0.hl.0.ol.0.ov')
-      const hsw = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.hps[0].hsw') || 0
-      const csid = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.csid') || 0
-      S = this.compute_value_by_cur_odd_type(odds / 100000, null, hsw, null, csid)
-    } else {
-      S = mix_data.length > 0 ? mix_data[0].odds : ''
-    }
-    if (S && this.BetData.bet_list.length > 1) {
-      S = S + ''
-      if (S.length > 9) {//超过9位数，显示前六位，后面小数点代替
-        return '@' + S.substring(0, 6) + '...'
-      } else {
-        return '@' + S
-      }
-    } else {
-      return ''
-    }
-  }
-  return ''
-})
-// 卸载清除计时器
-onUnmounted(() => {
-  clearInterval(balance_timer)
-  balance_timer = null
-})
 
 
 </script>

@@ -123,12 +123,7 @@ export default {
      MatchDataWarehouseInstance
     } = details_main(router,route)
     console.log(match_detail,"---------------------------------------------------");
-    function onClickTest(){
-      MatchDataWarehouseInstance.value.list_to_obj.mid_obj[mid.value+"_"].msc_obj.S1.home++
-      console.log(MatchDataWarehouseInstance.value.list_to_obj.mid_obj[mid.value+"_"],"---------------------------------------------------");
-    }
     return{
-      onClickTest,
       detail_store,
       match_odds_info,
       match_detail,

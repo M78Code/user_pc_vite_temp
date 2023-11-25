@@ -181,16 +181,6 @@
     }
   }
 
-  /*  投注项样式 */
-  .c-bet-item {
-    width: 100%;
-    height: 100%;
-    // &.seal.csid1 .odds {
-    //   width: 100%;
-    //   justify-content: center !important;
-    //   margin-left: 0px !important;
-    // }
-  }
   /*  公共样式 */
   .absolute-full {
     position: absolute;
@@ -303,8 +293,6 @@
 
 /*  列表和详情公共投注项样式  */
 .c-bet-item {
-  width: 100%;
-  height: 100%;
   font-size: 13px;
   &.seal.csid1 .handicap-wrap {
     display: none;

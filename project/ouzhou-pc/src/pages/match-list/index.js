@@ -8,6 +8,7 @@ import {
   MenuData, axios_loop, get_match_status
 } from "src/core";
 import { nextTick, ref } from 'vue'
+import {set_load_data_state} from 'src/core/match-list-pc/match-list-composition.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
@@ -187,6 +188,7 @@ export const init_home_matches = async () => {
     params,
     fun_then: function ({ data }) {
       try {
+        set_load_data_state("data")
         MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
         // 处理返回数据 将扁平化数组更改为页面适用数据
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(data.p15);

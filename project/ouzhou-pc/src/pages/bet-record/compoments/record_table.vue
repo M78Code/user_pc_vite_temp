@@ -236,7 +236,7 @@ import Pagination from 'project_path/src/components/Pagination.vue'
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
-// import { copyToClipboard } from 'quasar'
+import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
 const lang = computed(() => {
   return UserCtr.lang;
@@ -496,7 +496,7 @@ const changePage = (arv) => {
  * @param data
  */
 const hand_copy = (data) => {
-  // copyToClipboard(data)
+  copyToClipboard(data)
   GlobalSwitchClass.set_tip_show_state(true, {
     text: i18n_t('bet_record.copyed')
   })

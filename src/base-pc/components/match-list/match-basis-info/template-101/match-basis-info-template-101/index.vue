@@ -15,7 +15,7 @@
         periodColor="gray" />
       </div>
       <!-- 玩法数量 -->
-      <div class="right-handle-box flex flex-start items-center">
+      <div class="right-handle-box flex flex-start items-center" v-if="lodash.get(match, 'mhn')">
         <span>{{ handicap_num }}</span>
         <div class="yb-icon-arrow"></div>
       </div>
@@ -77,10 +77,9 @@ import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/ma
 
 import { get_match_status } from 'src/core/utils/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
+import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
 import { useRouter } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -117,7 +116,7 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
     const mc=lodash.get(props, 'match.mc')
-    return mc?`+${lodash.get(props, 'match.mc')}`:''
+    return mc?`+${lodash.get(props, 'match.mc')}`:'+0'
   }else{
     return i18n_t('match_info.more')
   }

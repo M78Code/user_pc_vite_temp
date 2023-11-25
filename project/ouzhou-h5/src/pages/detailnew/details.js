@@ -474,7 +474,7 @@ export const details_main = (router, route) => {
           });
         }
       }
-    }
+    },{deep:true}
   );
   // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
   watch(
@@ -492,13 +492,14 @@ export const details_main = (router, route) => {
           detail_init();
         }
       }
-    }
+    },{deep:true}
   );
   /**
    *@description 详情页赛事结束自动切换赛事 todo
    *@param {Undefined}
    *@return {Object} 返回赛事各项id(球类id:csid/赛事id:mid/联赛id:tid)
    */
+  let  get_godetailpage = ref(true)
   function event_switch() {
     let { mid, csid,tid } = route.params;
     let params = {
@@ -528,7 +529,7 @@ export const details_main = (router, route) => {
         // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型
         let flag1 = [100, 101, 103].includes(+event_data.csid);
         let flag2 = [100, 101, 103].includes(+params.csid);
-        if (!this.get_godetailpage) {
+        if (!get_godetailpage) {
           // 如果是从app直接进详情页
           if (flag1) {
             MenuData.set_menu_type(3000);

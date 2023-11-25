@@ -46,6 +46,14 @@ import {
 import STANDARD_KEY from "src/core/standard-key";
 const base_data_key = STANDARD_KEY.get("base_data_key");
 
+const base_menu_id_new = {
+  30002: "1011",
+  30003: '1021',
+  30004: '1051',
+  30091: '',
+  30090: ''
+}
+
 class BaseData {
   constructor() {
     //基础数据返回值
@@ -179,8 +187,9 @@ class BaseData {
   }
 
   // 菜单数量变化
-  set_base_c301_change(obj) {
-    console.error('sss',obj)
+  set_base_c301_change(list = []) {
+    list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
 
   /**
