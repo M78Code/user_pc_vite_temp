@@ -216,7 +216,7 @@ function init_page_when_base_data_first_loaded() {
 	// 元数据 
 	set_base_data_init();
 	//释放试图 
-	load_data_state.value = 'data'
+	// load_data_state.value = 'data'
 	// check_match_last_update_timer_id = setInterval(
 	// 	check_match_last_update_time(),
 	// 	30000

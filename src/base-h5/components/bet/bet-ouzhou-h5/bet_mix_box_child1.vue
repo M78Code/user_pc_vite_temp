@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div v-if="false">{{ BetData.bet_data_class_version }}-{{items.red_green}} </div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}} </div>
     <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
@@ -169,6 +169,7 @@
       font-weight: 700;
       padding: 0 0.15rem;
       padding-right: 0.1rem;
+      color: var(--q-gb-t-c-1);
       &.red-up{
           color: var(--q-gb-t-c-17);
       }

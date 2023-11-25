@@ -47,8 +47,8 @@ import STANDARD_KEY from "src/core/standard-key";
 const base_data_key = STANDARD_KEY.get("base_data_key");
 
 const base_menu_id_new = {
-  30001: "1011",
-  30002: '1021',
+  30002: "1011",
+  30003: '1021',
   30004: '1051',
   30091: '',
   30090: ''
