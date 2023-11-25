@@ -15,7 +15,6 @@
      */
     import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
     import MatchListCardData from "./match-list-card-data-class.js";
-    import MatchListCardDataFive from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import {ref} from "vue"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
@@ -44,9 +43,9 @@
     // 未开赛 到卡片key的 映射对象
     let no_start_to_card_key_arr = ['no_start_title']
     // 赛种ID 到卡片key的 映射对象
-    let csid_to_card_key_obj = {}
+    let csid_to_card_key_obj = MatchListCardData.csid_to_card_key_obj
     // 五大联赛 赛种ID 到卡片key的 映射对象
-    let csid_to_card_key_obj_five = {}
+    let csid_to_card_key_obj_five = MatchListCardData.csid_to_card_key_obj_five
     // 卡片key 到 赛事 id 映射 对象
     let league_card_mids_arr = {}
     // 所有卡片列表
@@ -266,6 +265,7 @@
     if(all_card_obj['no_start_title']){
       all_card_obj['no_start_title'].match_count = no_start_match_count
     }
+    console.log('csid_to_card_key_obj', csid_to_card_key_obj);
      // 已开赛 到卡片key的 映射对象
      MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象
