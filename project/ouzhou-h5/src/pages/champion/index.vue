@@ -39,12 +39,13 @@ const changeMenu = (item) =>{
     if(state.current_mi == item.mi)return;
     state.current_mi = item.mi;
     MenuData.set_menu_mi(item.mi);
+    // MatchMeta.set_origin_match_data()
     MatchMeta.get_champion_match()
 }
 onMounted(async () => {
   MenuData.set_current_lv1_menu(400);
   MenuData.set_menu_mi('101');
-  // MatchMeta.set_origin_match_data()
+//   MatchMeta.set_origin_match_data()
   MatchMeta.get_champion_match()
 })
 </script>

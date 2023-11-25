@@ -11,14 +11,17 @@ let ENVSTR = ENV_TARGET_ENV || DEV_TARGET_ENV;
 
 //项目
 const PROJECT ='activity'
- //构建目录名字
+//项目启动文件入口目录名字
+const ENTRY_DIR_NAME = 'activity'
+//构建目录名字
 const BUILD_DIR_NAME = 'activity'
 //构建版本基础参数
-const BUILD_VERSION_COMMON = RESOLVE_BUILD_VERSION_COMMON_FN({PROJECT,ENVSTR })
+const BUILD_VERSION_COMMON = RESOLVE_BUILD_VERSION_COMMON_FN({PROJECT,ENVSTR ,BUILD_DIR_NAME})
  //最终基础配置
   const config = {
     ...BUILD_VERSION_COMMON,
-    BUILD_DIR_NAME
+    ENTRY_DIR_NAME,
+    
   };
   // console.log(config);
 let str = `export default  ${JSON.stringify(config)} `;
