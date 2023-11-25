@@ -17,7 +17,7 @@
                        {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} <span class="text-two-span">{{items.playName}}</span>
                         [{{ i18n_t(`odds.${items.marketTypeFinally}`) }}]
                       </div>
-                      <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
+                      <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}} {{ items.mark_score}}</div>
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
