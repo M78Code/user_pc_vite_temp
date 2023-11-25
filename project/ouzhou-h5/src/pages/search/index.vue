@@ -14,9 +14,12 @@
 				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<!-- <div class="middle_info_tab">EXAMPLE SEARCHES</div> -->
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+					:class="['tab', tabIndex === index ? 'active' : '']">
+					{{ item.sportName }}
+					<span class="round"></span>
+				</div>
 			</div>
 			<ul class="list1" v-show="history_data && history_data.length > 0">
 				<div class="middle_info_tab diff text">
@@ -35,11 +38,11 @@
 				!(search_data.league && search_data.league.length > 0) ||
 				!input_value">
 				<div class="line"></div>
-				<div class="q-mx-md">
+				<div>
 					<div class="text-bol">{{ i18n_t('ouzhou.search.search_hot') }}</div>
 					<!-- 热门内容 -->
 					<div class="row">
-						<div class="col-6 hotItem" v-for="(item, index) in hot_list" :key="index"
+						<div class="col-12 hotItem" v-for="(item, index) in hot_list" :key="index"
 							@click="get_search_data(0, 1, item.keyWord)">
 							<span class="defaultText" :class="{ redText: index <= 2, 'normal-1': index > 2 }">
 								{{ index + 1 }}.
@@ -626,6 +629,9 @@ onUnmounted(() => {
 	width: 100%;
 	z-index: 1;
 	color: var(--q-gb-t-c-4);
+	&.top_tab{
+		border-bottom: 10px solid #E2E2E2;
+	}
 	.tab {
 		background-color: var(--q-gb-bg-c-2);
 		border-radius: 40px;
@@ -633,7 +639,7 @@ onUnmounted(() => {
 		font-size: 12px;
 		flex-shrink: 0;
 		padding: 3px 10px;
-
+		position: relative;
 		// &:first-child {
 		// 	padding-left: 0;
 		// }
@@ -641,12 +647,27 @@ onUnmounted(() => {
 		&:last-child {
 			margin-right: 0;
 		}
+		.round {
+			position: absolute;
+			width: 0;
+			height: 8px;
+			bottom: -14px;
+			border-radius: 50%;
+			//background: linear-gradient(180deg, #FF7000 0%, #FF9440 50%);
+			background: var(--q-gb-bg-lg-8);
+			left: 50%;
+			margin-left: -4px;
+		}
 
+		// &.active {
+		// 	background-color: var(--q-gb-bg-c-1);
+		// 	color: var(--q-gb-t-c-2);
+		// }
 		&.active {
-			//background-color: #FF7000;
-			background-color: var(--q-gb-bg-c-1);
-			//color: #fff;
-			color: var(--q-gb-t-c-2);
+			.round {
+				width: 8px;
+			}
+			color: var(--q-gb-t-c-1);
 		}
 
 	}
@@ -713,7 +734,7 @@ li {
 }
 
 .list1 {
-	margin: 10px;
+	margin: 10px 0;
 	margin-top: 50px;
 	border-radius: 6px;
 
@@ -722,16 +743,16 @@ li {
 		padding: 14px 10px;
 	}
 	
-	li:last-child {
-		border-radius: 0px 0px 6px 6px;
-	}
+	// li:last-child {
+	// 	border-radius: 0px 0px 6px 6px;
+	// }
 
 	.del {
 		width: 100%;
 		background-color: #fff; 
 		text-align: center;
 		color: #8A8986;
-		font-size: 14px;
+		font-size: 12px;
 	}
 
 	img {
@@ -741,6 +762,7 @@ li {
 		border-radius: 6px 6px 0px 0px;
 		border-color: var(--q-gb-bd-c-1);
 		padding-left: 10px;
+		font-weight: 600;
 	}
 }
 
@@ -769,7 +791,7 @@ li {
 .not_found {
 	height: calc(100% - 90px);
 	text-align: center;
-	margin: 86px 0;
+	// margin: 86px 0;
 
 	p {
 		font-size: 16px;
@@ -778,11 +800,11 @@ li {
 }
 
 .searchHot {
-	width: 96%;
+	width: 100%;
 	min-height: 1.83rem;
 	margin: 0 auto 0.18rem;
 	font-size: 0.14rem;
-	border-radius: 6px;
+	// border-radius: 6px;
 	background-color: var(--q-gb-bg-c-2);
 	position: relative;
 
@@ -796,8 +818,10 @@ li {
 	}
 	.text-bol {
 		font-size: 0.14rem;
-		height: 0.4rem;
+		height: 0.44rem;
 		line-height: 0.4rem;
+		padding-left: 18px;
+		font-weight: 600;
 	}
 
 	.hotItem {
@@ -807,7 +831,8 @@ li {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		font-size: 0.14rem;
-
+		border-bottom:1px solid var(--q-gb-bd-c-1);
+		padding:0 0.16rem;
 		.defaultText {
 			letter-spacing: 0;
 			font-size: 0.14rem;
