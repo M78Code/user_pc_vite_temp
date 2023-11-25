@@ -153,7 +153,7 @@ const match_odds = computed(() => {
     ov,
     1 / 100000,
     hsw,
-    csid
+    csid,UserCtr.user_version.value
   );
   return format_odds_value(match_odds_info, csid);
 })

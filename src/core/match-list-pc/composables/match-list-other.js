@@ -66,7 +66,7 @@ export const get_compute_other_play_data = (match) => {
 * @param {NUmber} type 盘口类型 1:主盘，  2：附加盘1， 3：附加盘2  4:15分钟玩法
 * @param {String} play_key 次要玩法key
 */
-export function merge_template_data({ match, handicap_list, type = 1, play_key }, MatchListData = MatchDataWarehouse_PC_List_Common) {
+export function get_template_data({ match, handicap_list, type = 1, play_key }, MatchListData = MatchDataWarehouse_PC_List_Common) {
   let length = handicap_list.length
   let { mid, hSpecial5min, hSpecial } = match
   const many_obj = get_match_to_map_obj(match)
@@ -84,14 +84,6 @@ export function merge_template_data({ match, handicap_list, type = 1, play_key }
       const hn_key = MatchListData.get_list_to_obj_key(mid, `${mid}_${_hpid || hpid}_${handicap_type}_${ot}`, 'hn')
       let ol_data = lodash.get(hn_obj, hn_key) || many_obj[hn_key]
       if (ol_data) {
-        //附加盘1
-        // if (type == 2) {
-        //   match.has_add1 = true
-        // }
-        // //附加盘2
-        // if (type == 3) {
-        //   match.has_add2 = true
-        // }
         Object.assign(col.ols[ol_index], ol_data)
       }
     })
