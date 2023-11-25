@@ -3,9 +3,9 @@
  * @Description: 投注弹框，单关串关切换逻辑与普通赛事不一致，所以组件区分，避免逻辑混乱
 -->
 <template>
-  <div v-show="false">-{{ BetData.bet_data_class_version }}-{{BetData.h5_bet_box_show}}</div>
-  <div class="bet-mix-box " v-if="BetData.h5_bet_box_show && BetData.bet_oid_list.length">
-    <betMixBoxChild></betMixBoxChild>
+<div v-if="false">{{ BetData.bet_data_class_version }}</div>
+  <div class="bet-mix-box ">
+    <betMixBoxChild v-if="ref_data.bet_box_h5_show "></betMixBoxChild>
   </div>
 </template>
 
@@ -13,7 +13,6 @@
 
 import betMixBoxChild from "./bet_mix_box_child.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
-
 
 </script>
  
