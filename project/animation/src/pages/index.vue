@@ -40,39 +40,12 @@ mixins:[websocket_base],
         queryParams: null,
         params: {
             "needCommands": [
-                30001,
-                30003,
+                // 30001,
+                // 30003,
                 30013,
-                30051
+                // 30051
             ],
             "protocolVersion": 2,
-            "subscribe": {
-                "30001": [
-                    {
-                        "sportId": "1",
-                        "matchId": "2907576"
-                    }
-                ],
-                "30003": [
-                    {
-                        "sportId": "1",
-                        "matchId": "2907576"
-                    }
-                ],
-                "30013": [
-                    {
-                        "matchId": "2907576",
-                        "dataSourceCode": "PD"
-                    }
-                ],
-                "30051": [
-                    {
-                        "sportId": "1",
-                        "matchId": "2907576",
-                        "dataSourceCode": "PD"
-                    }
-                ]
-            },
             "uuid": uid()
         }
     }
@@ -151,20 +124,22 @@ mixins:[websocket_base],
         }).then(res => {
           let sus = _.get(res, "data.code");
           let data = _.get(res, "data.data.customizedEventBeanVoList") || [];
-          let map = _.get(res, "data.data.customizedEventBeanVoListMap") || {};
-          let msg = _.get(res, "data.msg");
-          data.forEach(item => {
-                let Mtime = Math.ceil(item.currentTime / 60); //秒数 显示分秒
-                item.currentTime = Mtime;
-                if (Mtime < 10) { //分秒小于十分钟前面加0
-                  item.currentTime = "0" + Mtime;
+            //   let map = _.get(res, "data.data.customizedEventBeanVoListMap") || {};
+            //   let msg = _.get(res, "data.msg");
+            if(sus == 200) {
+                data.forEach(item => {
+                    let Mtime = Math.ceil(item.currentTime / 60); //秒数 显示分秒
+                    item.currentTime = Mtime;
+                    if (Mtime < 10) { //分秒小于十分钟前面加0
+                    item.currentTime = "0" + Mtime;
+                    }
+                })
+                if(type == 1){ // 直接获取数据
+                    this.dataObj = [...data];
+                }else { // 加载更多
+                    this.dataObj = [...this.dataObj, ...data];
                 }
-              })
-              if(type == 1){ // 直接获取数据
-                this.dataObj = [...data];
-              }else { // 加载更多
-                this.dataObj = [...this.dataObj, ...data];
-              }
+            }
         }).catch(err => {
             console.error(err)
         })
