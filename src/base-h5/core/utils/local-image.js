@@ -74,12 +74,15 @@ export const no_data_ouzhou = compute_local_project_file_path('/image/png/no_dat
 
 export const no_data_collect = compute_local_project_file_path('/image/png/no_data_collect.png')
 export const coming_soon = compute_local_project_file_path('/image/png/coming_soon.png')
+export const no_wifi = compute_local_project_file_path('/image/list/no-wifi.png')
 // 角球图标
 export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.svg')
 // app-h5 提前结算
 export const mearlys_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
 // app-h5 中力场
 export const midfield_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
+// 回到顶部
+export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')
 
 // ouzhou 收藏 - 空
 export const no_collect_ouzhou = compute_local_project_file_path('/image/list/collect.png')

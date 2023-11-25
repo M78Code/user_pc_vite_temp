@@ -8,11 +8,11 @@
       </q-tabs>
     </div>
     <!-- 主内容区 -->
-    <div class="home_content" ref="scrollAreaRef" :visible="false">
+    <div class="home_content" :visible="false">
       <q-tab-panels v-model="tabValue" animated>
         <!-- featured page -->
         <q-tab-panel name="featured">
-          <section class="section-content">
+          <section ref="container" class="section-content"  @scroll="handle_container_scroll">
             <!-- 时间赛事 -->
             <template v-if="time_events.length > 0">
               <HeaderTitle title="15 Mins"></HeaderTitle>
@@ -50,6 +50,8 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
+    <!-- 回到顶部按钮组件 -->
+    <ScrollTop :list_scroll_top="scroll_top" @back-top="goto_top" />
   </div>
 </template>
  
@@ -68,12 +70,15 @@ import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
 let message_fun = null
+const container = ref(null)
+const scroll_top = ref(0)
 const play_matchs = ref([])
 const time_events = ref([])
 const five_league_mids = ref([])
@@ -181,7 +186,7 @@ const get_ouzhou_home_hots = async () => {
 // 获取首页热门赛事
 const handle_ouzhou_home_hots = async (data) => {
   // 热门赛事
-  if (data.length > 0) {
+  if (data && data.length > 0) {
     const arr_data = data.map(t => {
       const match = MatchDataBaseHotsH5.get_quick_mid_obj(t?.mid)
       const { home_score, away_score } = MatchUtils.get_match_score(match)
@@ -254,6 +259,17 @@ const set_ws_active_mids = () => {
   const total_mids = lodash.uniq(total_matchs.filter(t => t.mid).map(t => t.mid))
   const length = lodash.get(total_mids, 'length', 0)
   length > 0 && MatchDataBaseH5.set_active_mids(total_mids)
+}
+
+const handle_container_scroll = lodash.debounce(($ev) => {
+  scroll_top.value = $ev.target.scrollTop
+}, 100)
+
+/**
+ * @description: 列表回到顶部
+ */
+const goto_top = () => {
+  container.value.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 onUnmounted(() => {

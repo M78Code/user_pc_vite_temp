@@ -9,7 +9,7 @@
 				<!-- 搜索展示 -->
 				<div class="content">
 					<ul class="list">
-						<div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
+						<!-- <div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div> -->
 						<!-- 滚球 -->
 						<div v-show="search_data?.bowling && search_data?.bowling.length > 0" style="margin-bottom: 10px;">
 							<div @click="expand_bowling = !expand_bowling">
@@ -17,12 +17,12 @@
 									<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
 								</div>
 								<div v-show="expand_bowling">
-									<li v-for="(item, index) in search_data?.bowling" :key="index" @click="bowling_click(item)">
-										<div class="list_top">
+									<li v-for="(item, index) in search_data?.bowling" :key="index">
+										<div class="list_top" @click="bowling_top_click(item)">
 											<span v-html="red_color(item.tn)"></span><img
 												:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 										</div>
-										<div class="list_bottom">
+										<div class="list_bottom" @click="bowling_click(item)">
 											<div style="width: 60%; word-break: break-all">
 												<p>
 													<span class="home" v-html="red_color(item.mhn)"></span>
@@ -70,13 +70,12 @@
 								</div>
 							</div>
 							<div v-show="expand_league">
-								<li v-for="(item, index) in search_data?.league" :key="index"
-								@click="league_click(item)">
-									<div class="list_top">
+								<li v-for="(item, index) in search_data?.league" :key="index">
+									<div class="list_top" @click="league_click(item)">
 										<span v-html="red_color(item.leagueName)"></span><img
 											:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 									</div>
-									<div class="list_bottom" v-for="(i, idx) in item.matchList"  @click.stop="league_item_click(i)">
+									<div class="list_bottom" v-for="(i, idx) in item.matchList"  @click="league_item_click(i)">
 										<div style="width: 60%; word-break: break-all">
 											<p>
 												<span class="home" v-html="red_color(i.mhn)"></span>
@@ -237,6 +236,21 @@ watch(
 		_get_search_result(res, true)
 	}
 )
+/**
+ * @Description:点击滚球搜索
+ * @param {string} league 点击联赛标题
+ * @return {undefined} undefined
+ */
+ function bowling_top_click(match) {
+	update_show_type('none')
+	const { csid, tn } = match;
+	router.push(`/search/${tn}/${csid}`)
+	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
+}
 
 /**
  * @Description:点击滚球搜索
@@ -253,7 +267,6 @@ function bowling_click(match) {
 		focus: false,
 		text: ''
 	})
-	
 }
 
 const scrollRef = ref(null)

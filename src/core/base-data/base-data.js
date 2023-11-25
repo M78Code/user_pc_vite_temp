@@ -545,8 +545,21 @@ class BaseData {
        *  一期只有足球篮球  暂定
        *  重置默认数据
        */
-      this.left_menu_base_mi_arr = left_menu ;
-      this.left_menu_base_mi = left_menu_mi;
+      if(BUILD_VERSION){
+        let csid_ = [101,102,105]
+        this.left_menu_base_mi_arr = !BUILD_VERSION ? csid_ : left_menu ;
+       
+        let list_mi_lsit = []
+        left_menu_mi.forEach(item=>{
+          if(csid_.includes(item.mi*1)){
+            list_mi_lsit.push(item)
+          }
+        })
+        this.left_menu_base_mi = list_mi_lsit;
+      }else{
+        this.left_menu_base_mi_arr = left_menu ; 
+        this.left_menu_base_mi = left_menu_mi;
+      }
 
       this.sports_mi = sports_mi;
 
@@ -584,7 +597,7 @@ class BaseData {
       // 数据对比替换
 
       // if (old_menu != new_menu) {
-      this.mew_menu_list_res = menu_info;
+      this.mew_menu_list_res = menu_info ;
       // localStorage.setItem("is_session_base_data", JSON.stringify());
       // 计算 live
       this.set_mi_gunqiu();

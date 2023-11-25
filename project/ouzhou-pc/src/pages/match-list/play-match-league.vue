@@ -12,7 +12,7 @@
         </div> -->
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <img v-img="[lodash.get(league_obj, 'pickUrlthumb')]" />
+          <img :src="get_server_file_path(league_obj.picUrlthumb)" />
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
@@ -37,12 +37,14 @@
 </template>
 
 <script setup>
-  import { defineProps } from 'vue';
-  import { useRouter } from 'vue-router'
+import { defineProps } from 'vue';
+import { useRouter } from 'vue-router'
 
-  import { GlobalAccessConfig, LayOutMain_pc } from 'src/core/index.js';
+import { GlobalAccessConfig, LayOutMain_pc, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 
-  import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { get_server_file_path } from "src/core/file-path/file-path.js";
+
 
   const router = useRouter();
   const props = defineProps({

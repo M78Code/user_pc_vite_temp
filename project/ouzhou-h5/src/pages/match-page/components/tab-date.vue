@@ -5,7 +5,7 @@
             <div class="tabs-item" v-for="(item, index) in store.tabOptions" :key="'tabs' + index"
                 :class="store.tabActive === item ? 'active' : ''">
                 <span @click="changeTab(item, index)">{{
-                    item
+                    i18n_t(`ouzhou.match.${item.toLowerCase()}`)
                 }}</span>
             </div>
             <!-- league的下拉项 -->
@@ -203,7 +203,7 @@ const areaListChange = (item, index) => {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        border-bottom: 1px solid var(--q-gb-bd-c-1);
+        border-bottom: 1px solid var(--q-gb-bg-c-1);
         position: relative;
 
         div {

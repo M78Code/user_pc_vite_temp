@@ -34,9 +34,17 @@
      "match": {
          "favorites": "收藏",
          "matches": "赛事",
+         "league": "联赛",
+         "outrights": "冠军",
          "featured": "精选",
          "top_events": "热门赛事",
          "home": "首页",
+          "select_time": {
+            "12h": "12小时以内",
+            "24h": "24小时以内",
+            "72h": "三天以内",
+            "168h": "七天以内"
+          },
           "play_map": {
             "1": "全场独赢",
             "2": "全场大小",
@@ -82,7 +90,7 @@
      },
      "search": {
         "change": "换一换",
-        "clear_search_history": "清除历史记录",
+        "clear_search_history": "清除搜索历史",
         "league": "联赛",
         "null1": "搜索结果为空",
         "null2": "换个词搜索试试吧",
@@ -1229,6 +1237,7 @@
     "topic": "专题",
     "abandon": "放弃",
     "add": "加",
+    "day": "日",
     "all_result": "所有赛果",
     "animation": "动画",
     "animation_info": "动画信息",
@@ -2285,6 +2294,18 @@
   },
   "time": {
     "monthes": "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]",
+    "month_1": "1月",
+    "month_10": "10月",
+    "month_11": "11月",
+    "month_12": "12月",
+    "month_2": "2月",
+    "month_3": "3月",
+    "month_4": "4月",
+    "month_5": "5月",
+    "month_6": "6月",
+    "month_7": "7月",
+    "month_8": "8月",
+    "month_9": "9月",
     "time_date_1": "%month月%date日",
     "time_date_2": "%s月%s日 (%s)",
     "time_date_3": "%s月%s日 %s:%s",
