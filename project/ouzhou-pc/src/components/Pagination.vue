@@ -103,7 +103,10 @@ export default defineComponent({
     // 监听页码变化
     watch(() => state.current, (newVal) => {
       console.log('页码变了: ', newVal)
-      context.emit('pageChange', state)
+      context.emit('pageChange', { 
+        ...state,
+        current: newVal || 1
+      })
     })
 
 
@@ -112,6 +115,7 @@ export default defineComponent({
         return state.pagination.limit;
       },
       set: function (val) {
+        context.emit('pageSizeChange', val)
         if (val !== perPageNum) {
           state.pagination.limit = val.value;
           // 进行每页显示数量切换时，判断当前偏移量是否大于改变后的偏移量，如果是，则不触发limit改变的事件，因为偏移量的改变也会触发
@@ -128,6 +132,11 @@ export default defineComponent({
       return Math.ceil(props.count / perPageNum.value);
     })
 
+    const goToPage = (v) => {
+      state.current = +v || 1
+      state.goPage = +v || 1
+      context.emit('goPageChange',  +v || 1)
+    }
     onMounted(() => {
       //  console.log(1111111111,context )
     })
@@ -135,6 +144,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       perPageNum,
+      goToPage,
       // page,
       max
     }
