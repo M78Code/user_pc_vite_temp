@@ -15,7 +15,7 @@
             <div class="nonebox4-first-left-text">{{i18n_t("bet.bet_record")}}</div>
         </div>
         <div class="nonebox4-first-right">
-            <div class="nonebox4-first-right-window" @click.stop="get_balance">
+            <div class="nonebox4-first-right-window">
                 <div class="nonebox4-first-right-window-num">{{ format_money2(userData.balance) }}</div>
             </div>
         </div>
@@ -25,74 +25,18 @@
 
 <script setup>
 import lodash from "lodash"
-// import store from "src/store-redux/index.js";
-import { compute_local_project_file_path, i18n_t } from "src/core/index.js";
 import { format_money2 } from 'src/core/format/module/format-money.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
 import userData from "src/core/user-config/user-ctr.js"
 
-
-
-
-let balance_timer = null // 延时器
-
-
 const get_bet_status = ref(true)
-const is_loading_balance = ref(false) // 金额刷新中？
 
 // 悬浮条点击 
 const menu_click = () => {
- BetData.set_bet_state_show = false
-
-
-
+  BetData.set_bet_state_show(true)
 }
 
-// 获取用户余额
-const get_balance = () => {
-  if (is_loading_balance.value) { return };
-
-  is_loading_balance.value = true;
-  // 清除延时器
-  clearTimeout(balance_timer);
-  balance_timer = setTimeout(() => {
-    is_loading_balance.value = false;
-  }, 800);
-
-  userData.get_balance()
-}
-
-const mix_sum_odds = computed(() => {
-  if (BetData.bet_is_mix.value) {
-    const mix_data = get_s_count_data.value
-    let S = ''
-    if (mix_data.length == 0 || mix_data.length == 1 && this.BetData.bet_list.length == 1) {//串关，但是投注项数量为1，取当前投注项赔率
-      const odds = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.hps.0.hl.0.ol.0.ov')
-      const hsw = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.hps[0].hsw') || 0
-      const csid = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.csid') || 0
-      S = this.compute_value_by_cur_odd_type(odds / 100000, null, hsw, null, csid)
-    } else {
-      S = mix_data.length > 0 ? mix_data[0].odds : ''
-    }
-    if (S && this.BetData.bet_list.length > 1) {
-      S = S + ''
-      if (S.length > 9) {//超过9位数，显示前六位，后面小数点代替
-        return '@' + S.substring(0, 6) + '...'
-      } else {
-        return '@' + S
-      }
-    } else {
-      return ''
-    }
-  }
-  return ''
-})
-// 卸载清除计时器
-onUnmounted(() => {
-  clearInterval(balance_timer)
-  balance_timer = null
-})
 
 
 </script>

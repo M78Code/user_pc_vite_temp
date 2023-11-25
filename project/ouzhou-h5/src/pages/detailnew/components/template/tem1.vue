@@ -23,9 +23,7 @@
                 <span class="temp1_ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,'','',MatchDetailCalss.params.sportId)}}</span>
                 <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
               </template>
-              <span v-if="ol.os == 2"
-                ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
-              /></span> 
+              <span v-if="ol.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
             </div>
           </div>
         </template>

@@ -73,6 +73,12 @@ const jumpTo = ()=>{
 const jumpToLeagues  = () => {
   const { csid = 1, tid, tn } = props.detail_info
   MatchLeagueData.set_league_name(tn)
+  let mid_config = {
+    ...MenuData.mid_menu_result,
+    md: '',
+    filter_tab: 4002
+  }
+  MenuData.set_mid_menu_result(mid_config)
   router.push(`/league/${csid}/${tid}`)
 }
 

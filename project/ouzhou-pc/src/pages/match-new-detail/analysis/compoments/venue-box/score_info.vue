@@ -46,17 +46,19 @@
                   style="color: #8a8986; display: flex; align-items: center"
                 >
                   <!-- 倒/正计时组件 -->
-                  <match-process
+                  <div style=" margin-right:25px;">
+                    <match-process
                     :match="detail_info"
                     show_page="match-list"
                     :rows="1"
                   />
+                  </div>
                   <img
                     :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
                     alt=""
                     srcset=""
                     style="margin: 0 10px; height: 14px"
-                    v-if="detail_info.mng"
+                   
                   />
                 </div>
               </div>
