@@ -118,7 +118,7 @@ const to_search_page = () => {
 }
 
 const jump_personal = () => {
-  router.push('/personal')
+    router.push('/personal')
 }
 
 // 回到上一页
