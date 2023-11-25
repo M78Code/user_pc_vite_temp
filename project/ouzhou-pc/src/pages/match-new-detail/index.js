@@ -348,7 +348,7 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
-    off_init()
+    // off_init()
   });
 
     /**
