@@ -162,7 +162,8 @@ const goto_announcement = () => {
  
 <style lang="scss" scoped>
 .personal_page{
-  height: calc(100% - 56px);
+  // height: calc(100% - 56px);
+  height:100vh;
   :deep(.q-scrollarea__thumb){
     display: none;
   }

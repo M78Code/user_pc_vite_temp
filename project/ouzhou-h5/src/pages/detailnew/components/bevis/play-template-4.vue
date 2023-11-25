@@ -109,7 +109,7 @@ const go_betting = (data) => {
 
         &-bet {
             height: 48px;
-            line-height: 48px;
+            // line-height: 48px;
             background-color: var(--q-gb-bg-c-2);
             border: 1px solid var(--q-gb-bd-c-10);
             font-weight: 500;
