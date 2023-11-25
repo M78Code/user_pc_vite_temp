@@ -5,84 +5,86 @@
 <template>
   <div class="bet-mix-box-child2">
     <!-- 多注顶部蒙层 -->
-    <div v-if="true" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
-    <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
+    <div class="full-shadow" @click.self="pack_up" @touchmove.prevent v-if="BetData.bet_state_show"></div>
     <!-- 投注中的蒙层，所有不能点击 -->
-    <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
+    <!-- <div v-if="BetViewDataClass.bet_order_status != 1" class="fixed full-shadow2" @touchmove.prevent></div> -->
 
-    <div style="display: none;">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
+    <div v-show="false">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}-{{BetData.is_bet_single}}-{{BetData.is_bet_merge}}</div>
 
    <div class="content-box">
         <!-- 头部 -->
-        <bet-bar @click="pack_up"></bet-bar>
-        <!-- 删除全部和选择type -->
-        <bet-all-detele v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
-        <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
-        <div>
-            <!-- 单关  -->
-            <div v-if="BetData.is_bet_single">
-                <!-- 单关单注  -->
-                <div v-if="!BetData.is_bet_merge">
-                  <div v-if="BetViewDataClass.bet_order_status == 1 && BetData.bet_single_list.length ">
-                       <!-- 单关投注项列表  -->
-                        <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
-                      <!-- 单关的输入框 -->
-                      <bet-input-info :item="BetData.bet_single_list[0]" ></bet-input-info>
-                      <!-- 键盘 -->
-                      <key-board></key-board>
+        <bet-bar></bet-bar>
+        
+        <div v-show="BetData.bet_state_show">
+                <!-- 删除全部和选择type -->
+          <bet-all-detele v-if="BetViewDataClass.bet_order_status == 1"></bet-all-detele>
+          <!-- --------{{BetViewDataClass.bet_order_status}} - {{BetData.is_bet_single}} -->
+          <div>
+              <!-- 单关  -->
+              <div v-if="BetData.is_bet_single">
+                  <!-- 单关单注  -->
+                  <div v-if="!BetData.is_bet_merge">
+                    <div v-if="BetViewDataClass.bet_order_status == 1 && BetData.bet_single_list.length ">
+                        <!-- 单关投注项列表  -->
+                          <bet-mix-box-child1 :items="BetData.bet_single_list[0]" :index="0"></bet-mix-box-child1>
+                        <!-- 单关的输入框 -->
+                        <bet-input-info :item="BetData.bet_single_list[0]" ></bet-input-info>
+                        <!-- 键盘 -->
+                        <key-board></key-board>
+                    </div>
+                    <bet-mix-box-child4 v-else :item="BetData.bet_single_list[0]" :index="0" ></bet-mix-box-child4>
                   </div>
-                  <bet-mix-box-child4 v-else :item="BetData.bet_single_list[0]" :index="0" ></bet-mix-box-child4>
-                </div>
-                <!-- 单关合并 -->
-                <div v-else>
-                    <!-- 合并单关  -->
-                    <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                        @touchmove="touchmove_handle($event)">
-                        <bet-mix-box-child2></bet-mix-box-child2>
-                    </div>
-                    <!-- 键盘 -->
-                    <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board>
-                </div>
-            </div>
+                  <!-- 单关合并 -->
+                  <div v-else>
+                      <!-- 合并单关  -->
+                      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
+                          @touchmove="touchmove_handle($event)">
+                          <bet-mix-box-child2></bet-mix-box-child2>
+                      </div>
+                      <!-- 键盘 -->
+                      <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board>
+                  </div>
+              </div>
 
-            <!-- 串关 -->
-            <div v-if="!BetData.is_bet_single">
-                <!-- 串关投注项列表  -->
-                <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
-                    @touchmove="touchmove_handle($event)">
-                    <div v-if="BetViewDataClass.bet_order_status == 1">
-                        <bet-mix-box-child3 :items="BetData.bet_s_list"></bet-mix-box-child3>
-                       <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
-                          <bet-input-info1></bet-input-info1>
-                       </template>
-                    </div>
-                    <bet-mix-box-child6 v-else></bet-mix-box-child6>
-                </div>
-                <!-- <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board> -->
+              <!-- 串关 -->
+              <div v-if="!BetData.is_bet_single">
+                  <!-- 串关投注项列表  -->
+                  <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
+                      @touchmove="touchmove_handle($event)">
+                      <div v-if="BetViewDataClass.bet_order_status == 1">
+                          <bet-mix-box-child3 :items="BetData.bet_s_list"></bet-mix-box-child3>
+                        <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single">
+                            <bet-input-info1></bet-input-info1>
+                        </template>
+                      </div>
+                      <bet-mix-box-child6 v-else></bet-mix-box-child6>
+                  </div>
+                  <!-- <key-board v-if="BetData.bet_keyboard_show" :config="ref_data.key_board_config"></key-board> -->
 
-                <bet-info></bet-info>
-            </div>
+                  <bet-info></bet-info>
+              </div>
 
-            <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
-              <bet-input-info1></bet-input-info1>
-            </template>
+              <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
+                <bet-input-info1></bet-input-info1>
+              </template>
 
-            <!-- <div v-if="state == 4">
-              <bet-mix-box-child4></bet-mix-box-child4>
-            </div>
-            <div v-if="state == 5">
-              <bet-mix-box-child5></bet-mix-box-child5>
-            </div>
-            <div v-if="state == 6">
-              <bet-mix-box-child6></bet-mix-box-child6>
-            </div> -->
+              <!-- <div v-if="state == 4">
+                <bet-mix-box-child4></bet-mix-box-child4>
+              </div>
+              <div v-if="state == 5">
+                <bet-mix-box-child5></bet-mix-box-child5>
+              </div>
+              <div v-if="state == 6">
+                <bet-mix-box-child6></bet-mix-box-child6>
+              </div> -->
+          </div>
+          <!-- 键盘 -->
+          <key-board v-if="state < 4"></key-board>
+          <!-- 按钮 -->
+          <bet-btn v-if="BetViewDataClass.bet_order_status == 1"></bet-btn>
+          <bet-btn1 v-else></bet-btn1>
+
         </div>
-        <!-- 键盘 -->
-        <key-board v-if="state < 4"></key-board>
-        <!-- 按钮 -->
-        <bet-btn v-if="BetViewDataClass.bet_order_status == 1"></bet-btn>
-        <bet-btn1 v-else></bet-btn1>
-
    </div>
   </div>
 </template>
@@ -188,14 +190,11 @@ const is_bet_check_rc = () => {
 // 单关 串关切换
 const set_is_bet_single = () =>{
   BetData.set_is_bet_single()
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  BetData.set_bet_state_show(false)
 }
-// 投注事件
+// 蒙版点击 收起投注栏 事件
 const pack_up = (val) => {
-  // TODO: 临时调试用
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
-  // BetData.set_clear_bet_info()
-  // BetViewDataClass.set_clear_bet_view_config()
+  BetData.set_bet_state_show(false)
 }
 
 const submit_order = (type) => {

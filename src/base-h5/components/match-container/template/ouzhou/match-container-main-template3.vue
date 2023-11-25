@@ -197,7 +197,6 @@ import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
 
 import { IconWapper } from 'src/components/icon'
-import ScoreList from './components/score-list.vue';
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
@@ -229,7 +228,6 @@ export default {
     main_source:String,
   },
   components: {
-    ScoreList,
     IconWapper,
     OddListWrap,
     ImageCacheLoad,
