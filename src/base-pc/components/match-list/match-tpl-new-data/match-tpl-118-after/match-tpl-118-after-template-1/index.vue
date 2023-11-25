@@ -17,6 +17,7 @@
             :class="vx_main_menu_toggle == 'mini' ? 'max2' : 'max1'"
             v-tooltip="{ content: hl_data.hpn, overflow: 1 }"
           >
+          {{ hl_data.hid }}
             {{ hl_data.hpn }}
           </div>
           <!--盘口结束时间-->
@@ -74,6 +75,7 @@ function compute_match_all_handicap_data_champion(match) {
     lodash.each(hpsData.hps, (item) => {
       let hl_obj = lodash.get(item, "hl", {});
       if (hl_obj.hid) {
+        console.log('hl_objhl_obj', hl_obj);
         hl_obj.end_time = time_conversion(hl_obj.hmed);
         hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid)?.hpn
         main_handicap_list.push(hl_obj);
