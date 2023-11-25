@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <div class="temp3 mx-10 box-style component tem5">
+  <div class="temp3 box-style component tem5">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
     <!-- os: 1开 2封 3隐藏不显示不占地方-->
