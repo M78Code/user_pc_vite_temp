@@ -34,30 +34,7 @@ import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 
-import {playTemplate1, playTemplate4, playTemplate5} from "./bevis/index.js"
-
-/*import { template0, template1, template2, template3, template4, template5, template6, template7, template8, template9,
-    template10, template11, template12, template13, template14, template15, template18, template51,
-} from "./template-3/index.js"*/
-
-import template0 from "./template-3/temp0.vue"
-import template1 from "./template-3/temp1.vue"
-import template2 from "./template-3/temp2.vue"
-import template3 from "./template-3/temp3.vue"
-import template4 from "./template-3/temp4.vue"
-import template5 from "./template-3/temp5.vue"
-import template6 from "./template-3/temp6.vue"
-import template7 from "./template-3/temp7.vue"
-import template8 from "./template-3/temp8.vue"
-import template9 from "./template-3/temp9.vue"
-import template10 from "./template-3/temp10.vue"
-import template11 from "./template-3/temp11.vue"
-import template12 from "./template-3/temp12.vue"
-import template13 from "./template-3/temp13.vue"
-import template14 from "./template-3/temp14.vue"
-import template15 from "./template-3/temp15.vue"
-import template18 from "./template-3/temp18.vue"
-import template51 from "./template-3/temp51.vue"
+import {playTemplate0, playTemplate1, playTemplate4, playTemplate5} from "./bevis/index.js"
 
 import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
@@ -107,23 +84,20 @@ const active = ref(1);
 * 【0, 1, 5, 10】
 * */
 const playComponent = ref({
+    template0: markRaw(playTemplate0),
     template1: markRaw(playTemplate1),
-    template4: markRaw(playTemplate4),
-    template0: markRaw(temp0),
     template3: markRaw(temp3),
+    template4: markRaw(playTemplate4),
     template5: markRaw(temp5),
     template_other: markRaw(tem_other)
 })
 const computedPlayComponent = function (hpt) {
-    let componentName = 'template1';
-    if (hpt == 1) {
-        componentName = 'template1'
-    } else if ([0, 5].includes(+hpt)) {
+    let arr = [0,1,3,5]
+    let componentName = '';
+    if (arr.includes(hpt)) {
         componentName = `template${hpt}`
-    } else if (hpt == 10) {
+    } else if(hpt == 10){
         componentName = 'template3'
-    } else if (hpt == 4) {
-        componentName = 'template4'
     } else {
         componentName = 'template_other'
     }

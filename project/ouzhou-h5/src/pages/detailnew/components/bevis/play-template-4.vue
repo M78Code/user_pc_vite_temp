@@ -22,8 +22,8 @@ os: 1 开盘 ，2 封盘
 
 
 <script setup name="template4">
-import {defineProps, computed} from "vue"
 import olStatus from "../ol_status.vue";
+import {defineProps, computed, defineEmits} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
@@ -58,21 +58,22 @@ const AssembleData = computed(() => {
     return betInformation
 })
 
-const get_oddv = function (num) {
-    const re = /([0-9]+\.[0-9]{2})[0-9]*/;
-    return num.toString().replace(re, "$1");
-}
+const emits = defineEmits(["bet_click_"]);
+const go_betting = (data) => {
+    if(data.os == 2) return
+    emits("bet_click_", data,props.play.hpn);
+};
 </script>
 
 <template>
     <div class="template4">
         <ul v-for="item of AssembleData" :key="item.otd" class="list">
             <li class="list-title">{{ item.osn }}</li>
-            <li v-for="_item of item.information" :key="_item.oid"
+            <li v-for="_item of item.information" :key="_item.oid"  @click="go_betting(_item)"
                 :class="['list-bet',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
                 <template v-if="_item?.os == 1">
                     <span>{{ _item.on ?? _item.ott }}</span>
-                    <span>{{ get_oddv(_item?.ov / 100000) }}</span>
+                    <span>{{ compute_value_by_cur_odd_type(_item.ov,'','',sport_id) }}</span>
                     <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )" />
                 </template>
                 <figure v-if="_item?.os == 2">
@@ -128,13 +129,20 @@ const get_oddv = function (num) {
 
                 &:nth-child(1) {
                     color: var(--q-gb-t-c-4);
-                    text-align: right;
+                    text-align: center;
                     overflow: hidden;
+                    text-overflow: ellipsis;
+                    word-break: break-word;
+                    -webkit-line-clamp: 2;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
                 }
 
                 &:nth-last-child(1) {
                     color: var(--q-gb-t-c-1);
-                    text-align: left;
+                    text-align: center;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
             }
         }

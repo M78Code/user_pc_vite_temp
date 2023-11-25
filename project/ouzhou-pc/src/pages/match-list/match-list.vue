@@ -34,12 +34,12 @@
       <scroll-list>
         <!-- <template v-slot:before> -->
         <!-- 头部15 Mins模块 -->
-        <div v-if="matches_15mins_list.length && MenuData.is_featured()" class="match-list-item">
+        <div v-if="matches_15mins_list.length && MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp() )" class="match-list-item">
           <CurrentMatchTitle :title_value="$t('ouzhou.match.15_mins')" :show_more_icon="false" />
           <MatchCardList15Mins :matches_15mins_list="matches_15mins_list" />
         </div>
         <!-- 头部Featured Matches模块 -->
-        <FeaturedMatches v-if="MenuData.is_featured()" />
+        <FeaturedMatches v-if="MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp() )" />
 
         <!-- </template> -->
 
@@ -148,7 +148,8 @@ export default {
     PlayMatchLeague
   },
   setup() {
-    // 15分钟赛事数据
+   
+
     const { ws_destroyed: ws_destroyed_common } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
     const five_leagues_card_key_arr = ref([]);
@@ -167,7 +168,8 @@ export default {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
       get_data_info()
-      mitt_list = [useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, get_data_info).off]
+      mitt_list = [useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, get_data_info).off, // 15分钟赛事数据
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,get_data_info).off]
       mounted_fn();
       MatchListCardDataClass_match_list_card_key_arr();
     });
@@ -183,7 +185,6 @@ export default {
 
     watch(MatchListCardDataClass.list_version, (list_version) => {
       MatchListCardDataClass_match_list_card_key_arr();
-
     });
     const get_data_info = async (type = 0) => {
       // 判断是不是首页下的 featured 页面
