@@ -76,7 +76,7 @@
 										<span v-html="red_color(item.leagueName)"></span><img
 											:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 									</div>
-									<div class="list_bottom" v-for="(i, idx) in item.matchList">
+									<div class="list_bottom" v-for="(i, idx) in item.matchList"  @click.stop="league_item_click(i)">
 										<div style="width: 60%; word-break: break-all">
 											<p>
 												<span class="home" v-html="red_color(i.mhn)"></span>
@@ -290,6 +290,22 @@ function league_click(match) {
 		text: ''
 	})
 	// PageSourceData.set_route_name('search')
+}
+
+/**
+ * @Description:点击联赛搜索
+ * @param {object} match 点击联赛下的具体赛事
+ * @param {*} match 
+ */
+function league_item_click(match) {
+	if(!match) return;
+	const { mid, tid, csid } = match
+	router.push(`/details/${mid}/${tid}/${csid}`)
+	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
 }
 
 const timer = ref(null)
@@ -678,6 +694,11 @@ watch(
 	width: 100%;
 	z-index: 1;
 	color: var(--q-gb-t-c-5);
+	&.diff {
+		padding: 9px 0 9px 20px;
+		position: unset;
+		overflow: auto;
+	}
 	.color {
 		color: #FF7000;
 		// color: var(--q-gb-t-c-1);

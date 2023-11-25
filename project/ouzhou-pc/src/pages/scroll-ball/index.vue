@@ -61,14 +61,11 @@ import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "s
 
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
+import {mounted_fn, handle_destroyed,load_data_state,  is_show_hot, on_refresh } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj, LayOutMain_pc } from "src/core/index.js";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
-
 import "../match-list/match_list.scss";
-
-const { mounted_fn, handle_destroyed,load_data_state, collect_count, is_show_hot, on_refresh } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
     components: {
@@ -122,7 +119,6 @@ export default {
         return {
             MenuData,
             MatchListData,
-            collect_count,
             is_show_hot,
             page_source,
             GlobalAccessConfig,
