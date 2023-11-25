@@ -4,38 +4,14 @@ import vue from "@vitejs/plugin-vue";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 import path from "path";
 
-console.log("-------------__dirname---------", __dirname);
-console.log("-------------__dirname---------", __dirname);
+  
+//本地开发端口
+const port = 28400
+console.log("---------启动文件入口目录-------------", __dirname);
+import COMPUTE_ENTRY_CONFIG from "../../job/entry-config.js";
+//入口配置
+const  { project, outDir, base,} = COMPUTE_ENTRY_CONFIG({port})
 
-let project = 'activity'
-
-if (!project) {
-    console.error("目标项目必须设定 ----------");
-    console.error("进程结束");
-    process.exit(1)
-} else {
-  console.log("-------------project---------", project);
-  console.log('');
-  console.log('');
-  console.log('');
-  console.log('本地开发需要打开全路径：');
-  console.log(`http://localhost:29300/project/${project}/index.html`);
-  console.log('');
-  console.log('');
-  console.log('');
-  console.log('相关的入口文件在  entries/activity   ');
-  console.log(`相关的组件代码需要在  project/${project}  内   素材在  public/${project} 内`);
-  console.log('');
-  console.log('');
-}
-
-const IS_DEV = process.env.NODE_ENV == 'development'
-// 本次打包的 客户端版本
-import BUILD_VERSION_CONFIG from "../../job/output/version/build-version.js";
-let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
-
-const outDir = "dist/activity/" + BUILD_VERSION
-const base = IS_DEV ? '/' : `/${BUILD_VERSION}/`
 // https://vitejs.dev/config/
 export default defineConfig({
     base,
@@ -51,8 +27,6 @@ export default defineConfig({
         }),
 
         quasar({
-            // sassVariables: `app/project/${project}/src/css/quasar-variables.scss`,
-            // sassVariables: `app/job/output/css/variables.scss`,
             sassVariables: path.resolve(__dirname, '../../project/activity/src/css/quasar.variables.scss')
         }),
     ],
@@ -67,7 +41,7 @@ export default defineConfig({
             input: {
 
                 index: path.resolve(__dirname, `../../project/${project}/index.html`),
-                // index: path.resolve(__dirname, `index.html`),
+      
 
             },
             output: {
@@ -90,9 +64,8 @@ export default defineConfig({
         },
     },
     server: {
-        port: 29300,
+        port,
         open: `../../project/${project}/index.html`,
-        // open:    "../../project/yazhou-pc/index.html" ,
         hmr: true,
     },
 });
