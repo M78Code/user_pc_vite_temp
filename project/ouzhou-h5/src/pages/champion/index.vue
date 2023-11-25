@@ -55,7 +55,7 @@ onMounted(async () => {
   height: 100%;
   overflow: hidden;
   .header_tabs{
-    border-bottom: 2px solid var(--q-gb-bd-c-1);
+    border-bottom: 1px solid var(--q-gb-bg-c-1);
     :deep(.q-tabs--dense){
       .scroll--mobile{
         height: 50px;

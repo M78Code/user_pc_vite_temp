@@ -3,10 +3,13 @@
 -->
 <template>
   <div class="champion-wrap-2 component match-container-main-template6">
-    <div class="sport-title match-indent" @click="handle_ball_seed_fold" v-if="get_sport_show(i)">
-      <span class="score-inner-span"> {{ match_of_list.csna }} </span>
+    <div class="sport-title match-indent" @click="handle_ball_seed_fold" v-if="!i && routeName">
+      <div class="flex items-center">
+        <SportIcon size="20"  :status="false" :sport_id="String(Number(match_of_list.csid ) + 100)" />
+        <span class="score-inner-span"> {{ match_of_list.csna }} </span>
+      </div>
       <div class="collapse-dire">
-        <img class="icon-down-arrow" :class="{ 'collapsed': league_collapsed }" :src='compute_img_url("icon-collapse")' />
+        <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', { 'collapsed': !collapsed }]" />
       </div>
     </div>
     <div v-if="is_show_league(i)"
@@ -24,15 +27,8 @@
         
       </div>
 
-      <div class="collapse-dire">
-        <!-- <icon-wapper color="#c9c9c9" name="icon-arrow" size="15px" :class="['icon-wapper', { 'collapsed': !collapsed }]" /> -->
-        <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
-          <!-- 未收藏图标 compute_img_url('icon-favorite')-->
-          <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
-          <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
-          <img v-if='match_collect_state' :src="normal_img_is_favorite">
-        </div>
-      </div>
+      <img class="national_icon" :src="league_collect_state ? have_collect_ouzhou : no_collect_ouzhou" alt="" @click.stop="handle_match_collect">
+
     </div>
 
     <template v-for="(hp, index) of match_of_list.hps">
@@ -64,7 +60,7 @@
 </template>
 
 <script>
-
+import { useRoute } from "vue-router";
 import { i18n_t } from 'src/core/index.js'
 import { lang, theme } from 'src/base-h5/mixin/userctr.js'
 import { menu_type } from 'src/base-h5/mixin/menu.js'
@@ -74,7 +70,7 @@ import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/compone
 import { IconWapper } from 'src/components/icon'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import OddItemChampion from "src/base-h5/components/match-list/components/odd-item-champion.vue";
-import { not_favorite_app, normal_img_is_favorite } from 'src/base-h5/core/utils/local-image.js'
+import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import champion_mixin from '../../mixins/champion.mixin.js'
 import 'src/base-h5/css/pages/match-container-champion.scss'
 
@@ -92,7 +88,11 @@ export default {
     OddItemChampion,
     SportIcon
   },
-  setup() {
+  setup(ctx) {
+
+    const route = useRoute();
+    const routeName = route.name !== 'matchList'
+
     return {
       lang,
       theme,
@@ -101,8 +101,9 @@ export default {
       compute_img_url,
       GlobalAccessConfig,
       get_server_file_path,
-      not_favorite_app,
-      normal_img_is_favorite
+      have_collect_ouzhou,
+      no_collect_ouzhou,
+      routeName
     }
   }
 }
@@ -123,6 +124,12 @@ export default {
     &::before {
       display: none !important;
     }
+
+    .national_icon{
+        width: 14px;
+        height: 14px;
+        margin-right: .18rem;
+      }
 
     .league-wrapper {
       padding-left: 0.1rem;
@@ -160,7 +167,7 @@ export default {
         .league-icon-mini {
           width: 0.22rem;
           height: 0.22rem;
-          margin: -0.01rem 0.07rem 0 0.09rem;
+          margin: -0.01rem 0.07rem 0 0.06rem;
           position: relative;
           transform: scale(0.85);
 
@@ -192,7 +199,8 @@ export default {
           width: 14px;
           height: 13px;
         }
-      }
+      }  
+
     }
 
     .collapse-dire {
@@ -285,6 +293,15 @@ export default {
       .ol-li-item:nth-child(even) {
         border-right: 0;
       }
+      .ol-li-item:hover, .ol-li-item:focus {
+        background-color: var(--q-gb-bg-c-1);
+        :deep(.odds) {
+          color: var(--q-gb-t-c-2);
+        }
+        :deep(.on) {
+          color: var(--q-gb-t-c-2);
+        }
+      }
     }
   }
 }
@@ -292,18 +309,39 @@ export default {
 .sport-title {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 0.4rem;
   font-size: 0.12rem;
   background-image: var(--q-gb-bg-c-2);
   margin: 0 auto;
+  border-bottom: .01rem solid var(--q-gb-t-c-1);
+  padding: 0 .18rem;
+  padding-right: .09rem;
+
+  .collapse-dire {
+      margin-right: 0.18rem;
+
+      .icon-arrow {
+        width: 0.12rem;
+        height: 0.06rem;
+        display: block;
+        transition: transform 0.3s;
+
+        &.collapsed {
+          transform: rotateZ(180deg);
+        }
+      }
+    }
 
   &.hidden_sport {
     display: none !important;
   }
 
   .score-inner-span {
-    width: 3.3rem;
+    font-size: .13rem;
+    font-weight: bold;
     color: var(--q-match-fs-color-153);
+    padding-left: .08rem;
   }
 
   .icon_match_cup,
