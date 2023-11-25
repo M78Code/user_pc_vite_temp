@@ -72,7 +72,7 @@
             :sport_id="sport_id"
             popWidth="170"
             @select_submit="select_submit"
-            @ipt_search="ipt_search(arguments)"
+            @ipt_search="ipt_search"
             @search_hot="search_hot"
             @confirm="isSelectConfirm"
             :cancel="cancel"
