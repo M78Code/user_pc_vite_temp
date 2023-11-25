@@ -166,13 +166,13 @@ export default{
       }, 200);
     };
 
-    const refresh_click = () => {
+    const refresh_click =lodash.debounce(() => {
       refresh_data.value = true;
       init();
       setTimeout(() => {
         refresh_data.value = false;
       }, 1000);
-    };
+    },500);
 
     const sport_ball_type = {
       1: 0,
