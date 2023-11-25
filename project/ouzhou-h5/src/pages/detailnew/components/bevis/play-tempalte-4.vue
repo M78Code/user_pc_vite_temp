@@ -62,6 +62,10 @@ const get_oddv = function (num) {
     const re = /([0-9]+\.[0-9]{2})[0-9]*/;
     return num.toString().replace(re, "$1");
 }
+
+setTimeout(function (){
+    console.log(props.play,"playTemplate4")
+})
 </script>
 
 <template>

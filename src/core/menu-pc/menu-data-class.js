@@ -603,8 +603,6 @@ class MenuData {
    
   }
 
-
-
   // is_multi_column(){
   //   return   this.match_list_api_config.is_multi_column ||false
   // }
