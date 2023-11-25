@@ -2,7 +2,9 @@
   <div class="record-select">
     <!-- 未结算 -->
     <div class="record-select-main" v-if="current_tab == 'unsettled'">
-      <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" />
+      <!-- <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" /> -->
+      <!-- 占位提前结算 -->
+      <div></div>
       <span style="font-size: 12px;color:#8A8986;">{{i18n_t("ouzhou.record.unpaid_bets")}}</span>
     </div>
     <!-- 已结算 -->
@@ -15,7 +17,9 @@
               }}</span>
           </div>
         </div>
-        <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" />
+        <!-- <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" /> -->
+        <!-- 占位提前结算 -->
+        <div></div>
       </div>
       <div class="record-settled-l">
         <div style="width:180px;">

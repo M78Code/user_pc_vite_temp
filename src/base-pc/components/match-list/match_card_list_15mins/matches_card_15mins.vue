@@ -32,7 +32,7 @@ import { useRouter } from 'vue-router';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t } from "src/core/index.js"
-import { merge_template_data } from 'src/core/match-list-pc/composables/match-list-other.js'
+import { get_template_data } from 'src/core/match-list-pc/composables/match-list-other.js'
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 const router = useRouter()
@@ -56,7 +56,7 @@ const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 let odds_list = (match_tpl_info.get_15mins_odds_list())
 const ols_data = computed(() => {
-  return merge_template_data({
+  return get_template_data({
     match: match.value,
     handicap_list: [odds_list],
     type: 4,

@@ -270,14 +270,14 @@ watch(()=>props.get_match_detail, (new_value, old_value) => {
   set_basketball_score_icon_list()
 })
 watch(
-  () => props.get_match_detail.msc,
+  () => props.get_match_detail?.msc,
   (msc) => {
     set_scoew_icon_list({msc});
     set_basketball_score_icon_list();
   },
   { immediate: false, deep: true }
 );
-watch(()=>props.get_match_detail.mle,
+watch(()=>props.get_match_detail?.mle,
   set_basketball_score_icon_list,
   {
     immediate:true
