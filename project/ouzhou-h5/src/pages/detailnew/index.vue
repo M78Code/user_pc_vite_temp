@@ -192,6 +192,8 @@ export default {
     position: relative;
     z-index: 90;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   .match-detail-line {
     height: 10px;
@@ -238,7 +240,6 @@ export default {
     background-color: var(--q-gb-bg-c-2);
   }
   .match-detail-odds-scroll {
-    overflow-x: hidden;
     width: 100vw;
     background: #F1F1F1;
     // padding: 14px 0;
