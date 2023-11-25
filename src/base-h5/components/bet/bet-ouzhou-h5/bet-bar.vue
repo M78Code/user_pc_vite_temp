@@ -6,7 +6,6 @@
 -->
 <template>
   <!-- 头部 -->
-  <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetData.h5_bet_box_show}}-{{BetData.bet_state_show}}</div>
   <div class="bet-bar row justify-between items-center" @touchmove.prevent @click="menu_click"
     :class="{ 'fixed-bottom': $route.name != 'matchList' && get_bet_status == 0 }">
     <div v-show="false">{{ userData.user_version }}</div>
@@ -44,7 +43,10 @@ const is_loading_balance = ref(false) // 金额刷新中？
 
 // 悬浮条点击 
 const menu_click = () => {
-  BetData.set_bet_state_show(true)
+ BetData.set_bet_state_show = false
+
+
+
 }
 
 // 获取用户余额
