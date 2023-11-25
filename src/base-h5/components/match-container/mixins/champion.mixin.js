@@ -49,7 +49,7 @@ export default {
      * @description 赛事收藏
      */
     handle_match_collect ()  {
-      // 获取当前收藏状态
+      //获取当前收藏状态
       const state = MatchCollect.get_match_collect_state(this.match_of_list)
       MatchCollect.set_match_collect_state(this.match_of_list, !state)
     },

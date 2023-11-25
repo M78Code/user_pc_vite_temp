@@ -152,7 +152,6 @@ const change_current_menu = (item) => {
   emits('isLeftDrawer');
   useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
   BaseData.set_is_emit(false)
-  MatchMeta.set_origin_match_data()
   // if (route.name === 'matchList') MatchMeta.set_origin_match_data()
 
   // MenuData.set_menu_lv2_mi(item.mi+''+2)
@@ -160,9 +159,13 @@ const change_current_menu = (item) => {
   // 当前页面不做跳转
   // MenuData.set_current_lv1_menu(2);
   // 重置所选 球种默认玩法 hpid
-  MatchResponsive.reset_match_hpid_by_csid()
+  // MatchResponsive.reset_match_hpid_by_csid()
   if(item.mi == 400){
     return router.push({name: 'champion'})
+  }else{
+    MatchMeta.set_origin_match_data()
+    // 重置所选 球种默认玩法 hpid
+    MatchResponsive.reset_match_hpid_by_csid()
   }
   if(route.name != "matchList"){
     //跳转今日列表

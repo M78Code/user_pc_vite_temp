@@ -1128,15 +1128,16 @@ export default {
     .count_span {
       display: flex;
       align-items: center;
+      font-size: 12px;
       .mc-n{
         color: #1A1A1A;
       }
     }
   }
   :deep(.start-counting-down){
-    max-width: 60px;
+    flex: 1;
     .counting-down-start{
-      font-size: 13px;
+      font-size: 12px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -1223,8 +1224,9 @@ export default {
     height: 100%;
     color: #999;
     flex: 1;
+    font-size: 12px;
     .counting-down-wrap{
-      font-size: 13px;
+      font-size: 12px;
     }
 
     &.newer {

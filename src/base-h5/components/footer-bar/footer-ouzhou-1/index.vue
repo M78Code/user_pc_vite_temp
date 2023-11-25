@@ -61,8 +61,7 @@ const jump_page = (item) => {
 
 <style lang="scss" scoped>
 .footer_menu {
-  // position: fixed;
-  position: relative;
+  position: fixed;
   display: flex;
   align-items: center;
   text-align: center;
@@ -71,7 +70,7 @@ const jump_page = (item) => {
   bottom: 0;
   width: 100%;
   background-color: rgba(255, 255, 255, 1);
-  z-index: 1000;
+  z-index: 10000;
 
   // 半弧样式
   .arc {
