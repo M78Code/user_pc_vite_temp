@@ -655,7 +655,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: get_handicap(ol_obj,other.is_detail), // 投注项名称
+        handicap: get_handicap(ol_obj,other.is_detail,mid_obj), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
     }
@@ -795,15 +795,31 @@ const set_orderNo_bet_obj = order_no_list => {
 }
 
 // 获取盘口值 附加值
-const get_handicap = (ol_obj = {},is_detail) => {
+const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let text = ''
     // 展示用的 + 投注项  
     let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127]
     let home_mark_more = [351,347]
+    let home_away_only = [1]
     if(is_detail){
         text = ol_obj.otv
     }else{
         text = ol_obj.on
+    }
+
+    // 独赢类
+    if(home_away_only.includes(ol_obj._hpid*1)){
+        switch(ol_obj.ot){
+            case '1':
+                // 主
+                text= mid_obj.mhn
+                break
+            case '2':
+                // 客
+                text = mid_obj.man
+                break
+        }
+        return text
     }
     
     if(home_away_mark.includes(ol_obj._hpid*1)){
