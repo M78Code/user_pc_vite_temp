@@ -36,7 +36,6 @@
         {{ match_odds }}
       </span>
       <div>
-
       </div>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
