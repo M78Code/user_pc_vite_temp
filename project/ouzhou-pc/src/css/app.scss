@@ -208,6 +208,73 @@ input::-ms-reveal {
   display: none;
 }
 
+/* 箭头 */
+.yb-icon-arrow {
+  width: 7px;
+  height: 7px;
+  transition: transform 0.3s;
+  position: relative;
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-top: 1px solid;
+    border-right: 1px solid;
+    border-color: var(--qq--match-icon-color1);
+    transform: rotate(45deg);
+    position: absolute;
+    left: -35.35%;
+    top: 0;
+  }
+}
+/* 边框三角箭头 */
+.yb-icon-boder-arrow {
+  width: 10px;
+  height: 5px;
+  overflow: hidden;
+  position: relative;
+  &:before {
+    position: absolute;
+    left: 0;
+    top: 41.42%;
+    content: "";
+    width: 100%;
+    height: 200%;
+    transform: rotate(45deg);
+    border-left: 1px solid #A80A33;
+    border-top: 1px solid #A80A33;
+  }
+}
+/* 三角形 */
+.yb-icon-triangle {
+  width: 10px;
+  height: 5px;
+  overflow: hidden;
+  &:before {
+    position: absolute;
+    left: 0;
+    top: 41.42%;
+    content: "";
+    width: 100%;
+    height: 200%;
+    transform: rotate(45deg);
+    background-color: #ccc;
+  }
+}
+.yb-absolute.ellipsis {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+.yb-absolute-fit {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
 
 .bet-item-wrap-ouzhou {
   display: flex;
