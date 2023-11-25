@@ -14,7 +14,7 @@
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div></div>
                       <div class="nonebox4-content-left-content-text-two">
-                       [{{items.matchType == 2? i18n_t("bet.bet_inplay") :''}}] <span class="text-two-span">{{items.playName}}</span>
+                       {{items.matchType == 2? `[${i18n_t("bet.bet_inplay")}]` :''}} <span class="text-two-span">{{items.playName}}</span>
                         [{{ i18n_t(`odds.${items.marketTypeFinally}`) }}]
                       </div>
                       <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
@@ -163,12 +163,17 @@
       line-height: 0.25rem;
       margin-top: 0.02rem;
       width: calc(100% - 0.85rem);
+      :deep(.ty-span) {
+        margin-left: 0.05rem;
+        color: var(--q-gb-t-c-1);
+      }
   }
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: 700;
       padding: 0 0.15rem;
       padding-right: 0.1rem;
+      color: var(--q-gb-t-c-1);
       &.red-up{
           color: var(--q-gb-t-c-17);
       }
