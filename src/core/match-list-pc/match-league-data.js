@@ -11,6 +11,8 @@ class MatchLeagueData {
     this.league_list = ref([]);
     // 当前是否是选中联赛
     this.is_league_checked = false;
+    // 当前选中的时间
+    this.selectHours = 24;
     // 当前选中的区域id
     this.regionId = null;
     this.choose_league_obj = {};
@@ -26,11 +28,19 @@ class MatchLeagueData {
     localStorage.setItem("league_list", JSON.stringify(payload.tournamentList))
   }
 
+  set_select_hours(payload) {
+    this.selectHours = payload;
+  }
+
   get_league_list() {
     if (JSON.parse(localStorage.getItem("league_list"))?.length) {
       this.league_list.value = JSON.parse(localStorage.getItem("league_list"))
     }
     return this.league_list.value
+  }
+
+  get_select_hours() {
+    return this.selectHours;
   }
 
   set_league_name (name) {
