@@ -375,10 +375,13 @@ onUnmounted(() => {
     flex-shrink: 0;
 
     .date-wrap {
+        position: relative;
       padding: 0 10px;
 
       :deep(.timer-layout) {
-        padding: 0;
+        //padding: 0;
+        //  display: inline-block;
+          background-color: var(--q-gb-bg-c-10);
       }
     }
   }
@@ -396,5 +399,8 @@ onUnmounted(() => {
 
 .process-name.gray-color {
   color: var(--q-gb-t-c-8);
+}
+.c-match-process{
+    position: relative;
 }
 </style>
