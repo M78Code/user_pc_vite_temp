@@ -23,7 +23,8 @@ if (!project) {
   console.log('');
   console.log('');
   console.log('');
-  console.log('相关的组件代码需要在  project/activity  内   素材在  public/activity 内');
+  console.log('相关的入口文件在  entries/activity   ');
+  console.log(`相关的组件代码需要在  project/${project}  内   素材在  public/${project} 内`);
   console.log('');
   console.log('');
 }
