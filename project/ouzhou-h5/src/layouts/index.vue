@@ -16,7 +16,6 @@
 
     </q-page-container>
     <div class="footer">
-      <bet-bar class="bar-top" v-if="tou_show"></bet-bar>
       <FooterWapper />
     </div>
   </q-layout>
