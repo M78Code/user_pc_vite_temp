@@ -6,7 +6,7 @@
 <template>
   <!-- 电竞dota2 -->
   <div class="stage_child_101">
-    <span>{{i18n_t('mmp')[detail_data.csid][detail_data.mmp]}}</span>
+    <span>{{lodash.get(i18n_t('mmp') ,"[detail_data.csid][detail_data.mmp]") }}</span>
     <!-- 倒/正计时组件 -->
     <counting-down
       v-if="+detail_data.mmp >0 && +detail_data.mst > 0"

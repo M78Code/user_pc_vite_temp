@@ -212,7 +212,10 @@
       <!--分页组件-->
 
       <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"
-                  @pageChange="changePage">
+                  @pageChange="changePage"
+                  @pageSizeChange="pageSizeChange"
+                  @goPageChange="goPageChange"
+      >
       </Pagination>
       <!--      <pagination-wrapper-->
       <!--        v-if="tableData.length > 0"-->
@@ -490,6 +493,12 @@ const changePage = (arv) => {
   const { current } = arv
   console.log(1111111111, arv)
   emit('itemFilter', { page: current })
+}
+const goPageChange = (v) => {
+  emit('itemFilter', { page: v })
+}
+const pageSizeChange = (v) => {
+  emit('itemFilter', { size: v.value })
 }
 /**
  * 复制id

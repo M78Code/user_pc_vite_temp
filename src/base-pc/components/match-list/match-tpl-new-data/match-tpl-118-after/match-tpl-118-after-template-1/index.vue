@@ -17,7 +17,6 @@
             :class="vx_main_menu_toggle == 'mini' ? 'max2' : 'max1'"
             v-tooltip="{ content: hl_data.hpn, overflow: 1 }"
           >
-          {{ hl_data.hid }}
             {{ hl_data.hpn }}
           </div>
           <!--盘口结束时间-->

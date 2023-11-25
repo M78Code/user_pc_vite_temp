@@ -51,29 +51,16 @@
             <span>{{compute_value_by_cur_odd_type(value[0]?.ov,'','',MatchDetailCalss.params.sportId)}}</span>
             <olStatus :item_ol_data="value[0]" />
           </template>
-          <span v-else
-            ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
-          /></span>
+          <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
         </div>
         <template v-else>
-          <div
-            v-for="o in value"
-            :class="{
-              temp_grid_item: true,
-              'is-active': o.oid == active,
-              ol_ov: true,
-            }"
-            :key="o.oid"
-            @click="go_betting(o)"
-          >
+          <div v-for="o in value" :class="{ temp_grid_item: true, 'is-active': o.oid == active,ol_ov: true,}" :key="o.oid" @click="go_betting(o)">
             <template v-if="o.os == 1">
               <span class="o_hv">{{ o.on || key }}</span>
               <span>{{compute_value_by_cur_odd_type(o.ov,'','',MatchDetailCalss.params.sportId)}}</span>
               <olStatus :item_ol_data="o" />
             </template>
-            <span v-else
-              ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
-            /></span>
+            <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
           </div>
         </template>
       </div>
@@ -82,13 +69,7 @@
     <template v-else>
       <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
         <div v-for="ol in hl_item.ol" :key="ol.oid" class="ol_on">
-          <div
-            @click="go_betting(ol)"
-            :class="[
-              { 'is-active': BetData.bet_oid_list.includes(ol?.oid) },
-              'ol_ov',
-            ]"
-          >
+          <div @click="go_betting(ol)" :class="[ { 'is-active': BetData.bet_oid_list.includes(ol?.oid) },'ol_ov']">
             <template v-if="ol.os == 1">
               <span class="ol-on-text">{{ ol.on }}</span>
               <span class="ol-ov-text">{{compute_value_by_cur_odd_type(ol?.ov,'','',MatchDetailCalss.params.sportId)}}</span>
@@ -97,9 +78,7 @@
                 :active="BetData.bet_oid_list.includes(ol?.oid)"
               />
             </template>
-            <span v-if="ol.os == 2"
-              ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
-            /></span>
+            <span v-if="ol.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
           </div>
         </div>
       </template>

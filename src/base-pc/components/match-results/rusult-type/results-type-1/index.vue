@@ -48,6 +48,35 @@
       @change_sort="change_sort"
       :versions="versions"
     />
+    <!-- 电子足球 -->
+    <soccer
+      v-if="['90'].includes(sportType)"
+      :load_data_state="load_data_state"
+      :details_load="details_load"
+      :results_list="results_list"
+      :results_order_list="results_order_list"
+      :results_playback_list="results_playback_list"
+      :is_sortUp="is_sortUp"
+      :activeIndex="activeIndex"
+      @get_tr_detail="get_tr_detail"
+      @change_playback_type="change_playback_type"
+      @change_sort="change_sort"
+      :versions="versions"
+      ref="soccer_ref"
+    />
+    <!-- 电子篮球 -->
+    <basketball
+      v-if="sportType == '91'"
+      :load_data_state="load_data_state"
+      :details_load="details_load"
+      :results_list="results_list"
+      :results_order_list="results_order_list"
+      :is_sortUp="is_sortUp"
+      :activeIndex="activeIndex"
+      @get_tr_detail="get_tr_detail"
+      @change_sort="change_sort"
+      :versions="versions"
+    />
     <!-- 棒球 -->
     <baseball
       v-if="sportType == '3'"
