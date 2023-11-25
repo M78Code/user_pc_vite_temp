@@ -293,7 +293,7 @@ function refresh() {
 </script>
 
 <style scoped lang="scss">
-.a{}
+
 @import "./result-header.scss";
 .top-menu-content {
     height: 40px;
@@ -301,13 +301,13 @@ function refresh() {
     background: var(--q-gb-bg-c-11);
     color: var(--q-gb-t-c-6);
     &:after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 14px;
-        top: 111px;
-        right: 0;
-        background-color: var(--q-gb-bd-c-2);
+        -content: "";
+        -position: absolute;
+        -width: 100%;
+        -height: 14px;
+        -top: 111px;
+        -right: 0;
+        -background-color: var(--q-gb-bd-c-2);
     }
     ::v-deep .q-tab__indicator{
             display: none;
@@ -316,7 +316,7 @@ function refresh() {
 /* ************** 筛选条件 *************** -S */
 .divider{
   display: inline-block;
-  width: 1200px;
+  -width: 100%;
   height: 6px;
   margin: 0;
 }

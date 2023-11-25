@@ -221,9 +221,16 @@ export default defineComponent({
     const change_input = () => {}
     //赛果 || 公告 || 体育规则
     const goto_secondary_module = (value) => {
-      LayOutMain_pc.set_layout_secondary_dialog(value)
-      BetData.set_bet_box_draggable({show:false})
-      // userRouter.push("/match_results")
+      LayOutMain_pc.set_layout_secondary_active(value)
+      let _window_width = 1200;
+      let _window_height = 850;
+      let path = userRouter.resolve({ path: '/secondary' }).href;
+      path = path.substr(path.indexOf('#/'))
+      window.open(
+        `/project/ouzhou-pc/index.html${path}`,
+        "",
+        `height=${_window_height}, width=${_window_width}, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
+      );
     }
     const onExpend = () => {
       visible.value = !visible.value
