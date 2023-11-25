@@ -55,6 +55,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
 import { MatchDetailCalss } from "src/core/index.js"
 
+// /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
 const props = defineProps({
   match_odds_info: {
     type: Array,
