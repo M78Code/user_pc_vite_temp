@@ -33,18 +33,23 @@ const props = defineProps({
         default: () => 0,
     },
 })
+onMounted(()=>{
+    setTimeout(function (){
+        if(props.play.hpid == 7){
+            console.log(props.play,"props.play")
+        }
+    },1200)
+})
 </script>
 
 <template>
-    <q-expansion-item label="Fulltime Result">
-        <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)" class="info">
-            <div class="left">{{ olChild.otv }}</div>
-            <div class="right">
-                <p>{{ compute_value_by_cur_odd_type(olChild.ov,'','',sport_id) }}</p>
-                <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )" />
-            </div>
+    <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)" class="info">
+        <div class="left">{{ olChild.otv }}</div>
+        <div class="right">
+            <p>{{ compute_value_by_cur_odd_type(olChild.ov,'','',sport_id) }}</p>
+            <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )" />
         </div>
-    </q-expansion-item>
+    </div>
 </template>
 
 <style scoped lang="scss">

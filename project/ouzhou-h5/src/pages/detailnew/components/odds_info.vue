@@ -12,17 +12,18 @@
         </div>
         
         <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-        <!-- {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }} -->
-            <!--
-            <component
+<!--         {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
+<!--            <component
               :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
               :item_data="item"
+              :play="item"
               :active="active"
               @bet_click_="bet_click_"
-          />
-            -->
-            <component :is="computedPlayComponent(item.hpt)" :play="item" :active="active" @bet_click_="bet_click_" />
-            <!--<playTemplate1 :play="item" :sport_id="MatchDetailCalss.params.sportId"></playTemplate1>-->
+          />-->
+            <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" :play="item" :active="active"
+                       :sport_id="MatchDetailCalss.params.sportId" @bet_click_="bet_click_" />
+<!--            <playTemplate1 :play="item" :sport_id="MatchDetailCalss.params.sportId"></playTemplate1>-->
+<!--            <playTemplate4 :play="item" :sport_id="MatchDetailCalss.params.sportId"></playTemplate4>-->
         </div>
       </div>
       <!-- <div class="match-detail-odds-bottom"></div> -->
@@ -44,7 +45,7 @@ import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 
-import { playTemplate1 } from "./bevis/index.js"
+import { playTemplate1,playTemplate4 } from "./bevis/index.js"
 
 
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
@@ -88,24 +89,27 @@ const componentArr = ref({
 * 【0, 1, 5, 10】
 * */
 const playComponent = ref({
-    playTemplate1: markRaw(playTemplate1),
-    playTemplate0: markRaw(temp0),
-    playTemplate3: markRaw(temp3),
-    playTemplate5: markRaw(temp5),
-    playTemplate_other: markRaw(tem_other)
+    template1: markRaw(playTemplate1),
+    template4: markRaw(playTemplate4),
+    template0: markRaw(temp0),
+    template3: markRaw(temp3),
+    template5: markRaw(temp5),
+    template_other: markRaw(tem_other)
 })
 const computedPlayComponent = function (hpt){
-    let componentName = '';
-
+    let componentName = 'template1';
     if(hpt == 1){
-        componentName = 'playTemplate1'
-    }else if( [0, 5, 10].includes(hpt) ){
-        componentName = `playTemplate${hpt}`
-    }else{
-        componentName = 'playTemplate_other'
+        componentName = 'template1'
+    }else if([0, 5].includes(+hpt)){
+        componentName = `template${hpt}`
+    }else if(hpt == 10){
+        componentName = 'template3'
+    }else if(hpt == 4){
+        componentName = 'template4'
+    }else {
+        componentName = 'template_other'
     }
-    console.log(hpt,componentName,"componentName--computedPlayComponent")
-    return playComponent[`${componentName}`]
+    return componentName
 }
 
 const tem_choice = (hpt) => {
