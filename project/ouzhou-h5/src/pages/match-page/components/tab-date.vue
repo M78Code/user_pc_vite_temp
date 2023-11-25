@@ -5,7 +5,7 @@
             <div class="tabs-item" v-for="(item, index) in store.tabOptions" :key="'tabs' + index"
                 :class="store.tabActive === item ? 'active' : ''">
                 <span @click="changeTab(item, index)">{{
-                    item
+                    i18n_t(`ouzhou.match.${item.toLowerCase()}`)
                 }}</span>
             </div>
             <!-- league的下拉项 -->
