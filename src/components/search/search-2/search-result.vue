@@ -9,7 +9,7 @@
 				<!-- 搜索展示 -->
 				<div class="content">
 					<ul class="list">
-						<div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
+						<!-- <div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div> -->
 						<!-- 滚球 -->
 						<div v-show="search_data?.bowling && search_data?.bowling.length > 0" style="margin-bottom: 10px;">
 							<div @click="expand_bowling = !expand_bowling">

@@ -5,7 +5,7 @@
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
-                    <span class="text-flow" v-html="items.handicap"></span> 
+                    <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
@@ -13,7 +13,7 @@
                     <!-- 盘口 -->
                     <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
-                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
+                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
@@ -55,7 +55,7 @@
            
         </div>
         <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
-            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money > obj && ref_data.max_money > BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money >= obj && ref_data.max_money >= BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
                 {{index == 'max' ? '' : '+' }}{{obj}}
             </li>
         </ul>
@@ -252,8 +252,12 @@ const set_delete = () => {
         max-width: 190px;
     }
     .text-flow-none{
-        min-width: 16%;
+        max-width: 84%;
         line-height: 16px;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);

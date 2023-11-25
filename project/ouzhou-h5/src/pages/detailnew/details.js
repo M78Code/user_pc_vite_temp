@@ -499,6 +499,7 @@ export const details_main = (router, route) => {
    *@param {Undefined}
    *@return {Object} 返回赛事各项id(球类id:csid/赛事id:mid/联赛id:tid)
    */
+  let  get_godetailpage = ref(true)
   function event_switch() {
     let { mid, csid,tid } = route.params;
     let params = {
@@ -528,7 +529,7 @@ export const details_main = (router, route) => {
         // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型
         let flag1 = [100, 101, 103].includes(+event_data.csid);
         let flag2 = [100, 101, 103].includes(+params.csid);
-        if (!this.get_godetailpage) {
+        if (!get_godetailpage) {
           // 如果是从app直接进详情页
           if (flag1) {
             MenuData.set_menu_type(3000);

@@ -23,6 +23,7 @@ import LoadData from 'src/components/load_data/load_data.vue';
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import { mx_use_list_res } from 'src/core/match-list-pc/composables/match-list-processing.js'
+import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import LeaguesHeader from "src/base-pc/components/leagues-header/index.vue";
@@ -67,6 +68,7 @@ export default {
       let params = {
         sportId,
         tid: route.params.tid,
+        selectionHour: MatchLeagueData.get_select_hours()
       };
       api_match.get_leagues_list_match(params).then((res) => {
         //保存数据到数据仓库

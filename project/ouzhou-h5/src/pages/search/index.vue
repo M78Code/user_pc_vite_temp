@@ -37,19 +37,15 @@
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) ||
 				!input_value">
-				<div class="line"></div>
 				<div>
 					<div class="text-bol">{{ i18n_t('ouzhou.search.search_hot') }}</div>
 					<!-- 热门内容 -->
-					<div class="row">
-						<div class="col-12 hotItem" v-for="(item, index) in hot_list" :key="index"
+					<ul>
+						<li class="hotItem" v-for="(item, index) in hot_list" :key="index"
 							@click="get_search_data(0, 1, item.keyWord)">
-							<span class="defaultText" :class="{ redText: index <= 2, 'normal-1': index > 2 }">
-								{{ index + 1 }}.
-							</span>
-							<span class="q-ml-sm" :class="{ keyWordText: index <= 2 }">{{ item.keyWord }}</span>
-						</div>
-					</div>
+							{{ index + 1 }}.{{ item.keyWord }}
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -60,9 +56,12 @@
 
 			<div class="content">
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+					:class="['tab', tabIndex === index ? 'active' : '']">
+					{{ item.sportName }}
+					<span class="round"></span>
+				</div>
 			</div>
 			<ul class="list">
 				<div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
@@ -216,17 +215,19 @@
 		</div>
 		</div>
 		<!-- 搜索 无结果 -->
-		<div class="content" v-show="(!(search_data?.teamH5 && search_data.teamH5?.length > 0) &&
+		<div class="content not-data" v-show="(!(search_data?.teamH5 && search_data.teamH5?.length > 0) &&
 			!(search_data?.league && search_data.league?.length > 0) &&
 			(!show_hot || 
 			!show_history))"
 		>
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">{{ item.sportName }}</div>
+					:class="['tab', tabIndex === index ? 'active' : '']">
+					{{ item.sportName }}
+					<span class="round"></span>
+				</div>
 			</div>
-			<div class="middle_info_tab diff">{{ i18n_t('ouzhou.search.no_search_rezult') }}</div>
 			<div class="not_found">
 				<no-data :code="400"></no-data>
 			</div>
@@ -366,7 +367,7 @@ const get_sport_kind = () => {
 	get_search_sport().then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			sport_kind_data.value = data
+			sport_kind_data.value = data.slice(0, 3)
 		}
 	});
 }
@@ -616,6 +617,9 @@ onUnmounted(() => {
 	color: var(--q-gb-t-c-4);
 	padding-top: 50px;
 }
+.content.not-data {
+	background-color: var(--q-gb-bg-c-2);
+}
 
 .middle_info_tab {
 	padding: 9px 18px;
@@ -673,7 +677,7 @@ onUnmounted(() => {
 	}
 
 	&.diff {
-	  padding: 9px 0 9px 20px;
+	  	padding: 11px 0 11px 20px;
 		position: unset;
 		margin-top: 8px;
 	}		
@@ -734,18 +738,12 @@ li {
 }
 
 .list1 {
-	margin: 10px 0;
 	margin-top: 50px;
-	border-radius: 6px;
 
 	li {
 		margin-bottom: 0;
-		padding: 14px 10px;
+		padding: 12px 10px;
 	}
-	
-	// li:last-child {
-	// 	border-radius: 0px 0px 6px 6px;
-	// }
 
 	.del {
 		width: 100%;
@@ -759,7 +757,6 @@ li {
 		margin-left: 10px;
 	}
 	.text {
-		border-radius: 6px 6px 0px 0px;
 		border-color: var(--q-gb-bd-c-1);
 		padding-left: 10px;
 		font-weight: 600;
@@ -785,13 +782,16 @@ li {
 		font-weight: 600;
 		//color: #FF7000;
 		color: var(--q-gb-t-c-1);
+		&.top_tab{
+		border-bottom: 10px solid #E2E2E2;
+	}
 	}
 }
 
 .not_found {
 	height: calc(100% - 90px);
 	text-align: center;
-	// margin: 86px 0;
+	padding: 2rem 0 1rem;
 
 	p {
 		font-size: 16px;
@@ -800,28 +800,20 @@ li {
 }
 
 .searchHot {
-	width: 100%;
 	min-height: 1.83rem;
-	margin: 0 auto 0.18rem;
+	// margin: 0 auto 0.18rem;
 	font-size: 0.14rem;
-	// border-radius: 6px;
 	background-color: var(--q-gb-bg-c-2);
 	position: relative;
 
 
-	.line {
-		width: 100%;
-		height: 1px;
-		position: absolute;
-		top: .4rem;
-		background-color: var(--q-gb-bd-c-1);
-	}
 	.text-bol {
+		margin-top: .1rem;
 		font-size: 0.14rem;
 		height: 0.44rem;
-		line-height: 0.4rem;
-		padding-left: 18px;
-		font-weight: 600;
+		line-height: 0.44rem;
+		border-bottom: 1px solid var(--q-gb-bd-c-1);
+		text-indent: 0.16rem;
 	}
 
 	.hotItem {
@@ -830,9 +822,11 @@ li {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		font-size: 0.14rem;
-		border-bottom:1px solid var(--q-gb-bd-c-1);
-		padding:0 0.16rem;
+		font-size: 0.12rem;
+		padding: 0;
+		border-bottom: 1px solid var(--q-gb-bd-c-1);
+		text-indent: 0.16rem;
+
 		.defaultText {
 			letter-spacing: 0;
 			font-size: 0.14rem;
@@ -853,6 +847,9 @@ li {
 			// 	font-weight: bold;
 			// }
 		}
+	}
+	.hotItem:last-child {
+		border-radius: 0px 0px 6px 6px;
 	}
 }
 .flex_1 {

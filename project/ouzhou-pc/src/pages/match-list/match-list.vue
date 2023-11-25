@@ -75,6 +75,9 @@
         </div>
       </scroll-list>
     </load-data>
+    <ConmingSoon v-show="is_conming_soon" :style="{
+      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
+    }" />
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->

@@ -224,11 +224,19 @@ export default class MatchDataBaseWS
       let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
       let ctsp = lodash.get(ws_obj,'ctsp');
+      let mpid = lodash.get(ws_obj,'mpid');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
         this.match_ctr.assign_with(match, cd_obj);
+        // 数据状态hpid 就是详情的mmp
+        if(mpid == 999){
+          this.match_ctr.assign_with(match, {mmp:mpid});
+        }else if(!!mpid){
+          this.match_ctr.assign_with(match, {ms:mpid});
+        }
+        
         // 格式化列表赛事(部分数组转对象)
         this.match_ctr.list_serialized_match_obj([match]);
       }
