@@ -36,7 +36,7 @@
       <!-- 当前盘下的当前局比分 -->
       <div class="score">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
+      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.home') }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
