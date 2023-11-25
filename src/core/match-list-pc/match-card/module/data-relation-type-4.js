@@ -11,9 +11,11 @@
      * 8. 欧洲版 常规
      * 9. 欧洲版 滚球
      * 处理 ： 9 
+     * 因为首页有两个列表  所以不能用同一个表征类  需要新创建一个五大联赛的表征类
      */
     import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
     import MatchListCardData from "./match-list-card-data-class.js";
+    import MatchListCardDataFive from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import {ref} from "vue"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
@@ -43,6 +45,8 @@
     let no_start_to_card_key_arr = ['no_start_title']
     // 赛种ID 到卡片key的 映射对象
     let csid_to_card_key_obj = {}
+    // 五大联赛 赛种ID 到卡片key的 映射对象
+    let csid_to_card_key_obj_five = {}
     // 卡片key 到 赛事 id 映射 对象
     let league_card_mids_arr = {}
     // 所有卡片列表
@@ -102,7 +106,11 @@
       }
       let csid_key = 'csid_'+_match.csid
       // 赛种ID到卡片key的映射
-      csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []
+      if (!is_five_leagues) {
+        csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []      
+      } else {
+        csid_to_card_key_obj_five[csid_key] = csid_to_card_key_obj_five[csid_key] || []
+      }
 
       // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片 且不是5大联赛
       if(MatchListCardData.match_list_mapping_relation_obj_type == 9 && _match.csid != pre_match_csid && !is_five_leagues){
@@ -129,7 +137,6 @@
             Object.assign(all_card_obj[card_key],fold_template)
           }
         }
-
       }
       // 是否创建了一个赛事开赛状态标题卡片
       let is_create_match_status_card = false
@@ -173,7 +180,11 @@
         card_key = `league_title_${cus_tid}`
         match_list_card_key_arr.push(card_key)
         is_five_leagues && five_leagues_card_key_arr.push(card_key)
-        csid_to_card_key_obj[csid_key].push(card_key)
+        if (!is_five_leagues) {
+          csid_to_card_key_obj[csid_key].push(card_key)        
+        } else {
+          csid_to_card_key_obj_five[csid_key].push(card_key)
+        }
 
         if(match_ms == 1){
           // 已开赛 到卡片key的 映射对象
@@ -212,7 +223,11 @@
         card_key = `league_container_${cus_tid}`
         match_list_card_key_arr.push(card_key)
         is_five_leagues && five_leagues_card_key_arr.push(card_key)
-        csid_to_card_key_obj[csid_key].push(card_key)
+        if (!is_five_leagues) {
+          csid_to_card_key_obj[csid_key].push(card_key)        
+        } else {
+          csid_to_card_key_obj_five[csid_key].push(card_key)
+        }
 
         if(match_ms == 1){
           // 已开赛 到卡片key的 映射对象
@@ -251,12 +266,12 @@
     if(all_card_obj['no_start_title']){
       all_card_obj['no_start_title'].match_count = no_start_match_count
     }
-
      // 已开赛 到卡片key的 映射对象
      MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象
         all_card_obj,
         csid_to_card_key_obj,//赛种ID 到卡片key的 映射对象
+        csid_to_card_key_obj_five,//五大联赛 赛种ID 到卡片key的 映射对象
         play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
         no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
         //卡片key列表
