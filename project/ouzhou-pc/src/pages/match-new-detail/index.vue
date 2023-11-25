@@ -222,7 +222,6 @@ export default{
     line-height: 35px !important;
   }
 }
-
 .match-detail-container {
   flex: 1;
   overflow: hidden;
@@ -237,7 +236,6 @@ export default{
     background: var(--q-gb-bg-lg-5);
     display: flex;
     justify-content: space-between;
-
     .bread-right {
       position: relative;
       display: flex;
@@ -254,13 +252,25 @@ export default{
       }
     }
   }
-
+  :deep(.temp) {
+    padding: 0 16px;
+    .oid-width {
+      margin: 0px;
+    }
+    .temp-on {
+      margin-left: 4px;
+    }
+  } 
   .match-detail-head {
     position: relative;
     height: 80px;
 
     padding: 15px 0 16px 14px;
     background: var(--q-gb-bg-lg-4);
+
+    :deep(.q-item){
+      padding: 8px 0px;
+    }  
 
     .detail-head-leagal {
       display: flex;
