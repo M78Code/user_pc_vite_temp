@@ -103,7 +103,7 @@ function initEvent() {
   // 当前时间
   let now = new Date().getTime();
   // 赛事开始时间-当前时间 小于一小时并且大于0时为true
-  one_hour.value = (+props.detail_data.mgt - now < 3600 * 1000) && (props.detail_data.mgt - now > 0)
+  one_hour.value = (+props.detail_data?.mgt - now < 3600 * 1000) && (props.detail_data.mgt - now > 0)
 }
 
 // 监听match_nostart事件
