@@ -794,7 +794,7 @@ const set_orderNo_bet_obj = order_no_list => {
 const get_handicap = (ol_obj = {},is_detail) => {
     let text = ''
     // 展示用的 + 投注项  
-    let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351]
+    let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127]
     let home_mark_more = [351,347]
     if(is_detail){
         text = ol_obj.otv

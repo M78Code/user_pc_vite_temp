@@ -474,7 +474,7 @@ export const details_main = (router, route) => {
           });
         }
       }
-    }
+    },{deep:true}
   );
   // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
   watch(
@@ -492,7 +492,7 @@ export const details_main = (router, route) => {
           detail_init();
         }
       }
-    }
+    },{deep:true}
   );
   /**
    *@description 详情页赛事结束自动切换赛事 todo
