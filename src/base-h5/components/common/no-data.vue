@@ -18,7 +18,7 @@
             </p>
         </template> -->
         <!-- <div class="empty-favorite-bg" :style="compute_css_obj(lodash.get(arr_const[which], 'key'))"> </div> -->
-        <img class="no_data_img" :src="no_data_icon" alt="">
+        <img class="no_data_img" :class="[{ 'no-wifi': which === 'noWifi' }]" :src="no_data_icon" alt="">
          <!-- 有消息用消息 没有信息 用默认信息 -->
         <p> {{ msg ? $t(msg) : lodash.get(arr_const[which], 'txt') }} </p>
     </div>
@@ -30,7 +30,7 @@ import { useRoute } from 'vue-router'
 
 import { i18n_t ,} from "src/boot/i18n.js";
 import { useMittEmit,compute_css_obj, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, PROJECT_NAME } from "src/core/index.js"
-import { no_data_img, no_data_app,no_data_new_app, no_data_collect, no_data_ouzhou, coming_soon } from 'src/base-h5/core/utils/local-image.js'
+import { no_data_img, no_data_app,no_data_new_app, no_data_collect, no_data_ouzhou, coming_soon, no_wifi } from 'src/base-h5/core/utils/local-image.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { is_collect } from 'src/base-h5/mixin/menu.js'
 
@@ -117,6 +117,9 @@ const no_data_icon = computed(() => {
         if (props.which === 'comingSoon') {
             return coming_soon
         }
+        if (props.which === 'noWifi') {
+            return no_wifi
+        }
         return no_data_ouzhou
     } else {
         if (is_collect.value) {
@@ -167,6 +170,10 @@ function refresh_data() {
     .no_data_img{
         width: 200px;
         height: 200px;
+        &.no-wifi{
+            width: 150px;
+            height: 150px;
+        }
     }
 
     .empty-favorite-bg {
