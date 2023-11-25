@@ -148,6 +148,7 @@ const set_tab_list = (news_) =>{
 	// 冠军
 	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
 		matches_header_title.value = 'Outrights'
+		match_list_top.value = '116px'
 		tab_list.value = []
 	}
 
