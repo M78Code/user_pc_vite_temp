@@ -114,6 +114,9 @@ const columnTotal = (item) => {
 };
 
 const betItemClick = (item, o) => {
+  if (o.os!=1) {
+        return
+    }
   bet_oid.value = o.oid;
   emit("betItemClick", item, o,props.match_info.hpn);
 };

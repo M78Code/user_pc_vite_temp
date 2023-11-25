@@ -188,8 +188,15 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
+    // h5 投注栏默认隐藏
+    this.h5_bet_box_show = false
   }
+ 
 
+  set_h5_bet_box_show(val) {
+    this.h5_bet_box_show = val
+    this.set_bet_data_class_version()
+  }
 
 
   // 通过  mount_point_key 计算 取值字段映射

@@ -192,6 +192,12 @@ const checked_current_tab = payload => {
 		MenuData.set_menu_root(202)
 	}
 	// 冠军
+	if(4002 == payload.value){
+		MenuData.set_menu_root(400)
+		obj.current_mi = 400 + MenuData.current_ball_type*1
+		MenuData.set_menu_current_mi(obj.current_mi)
+	}
+	// 冠军
 	if(4003 == payload.value){
 		MenuData.set_menu_root(400)
 		obj.current_mi = 400 + MenuData.current_ball_type*1
