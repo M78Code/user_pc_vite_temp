@@ -1,10 +1,10 @@
 <template>
   <div class="secondary_module">
-    <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
         <!-- 头部 -->
         <header class="header">
           <div class="row items-center justify-between top_tit">
-            <p>{{ i18n_t('ouzhou.set.personal') }}</p>
+          <p></p>
+            <!-- <p>{{ i18n_t('ouzhou.set.personal') }}</p> -->
             <!-- <p>
               <img
                 :src="compute_local_project_file_path('/image/svg/close.svg')"
@@ -13,7 +13,6 @@
             </p> -->
           </div>
           <div class="row secondary_obj">
-          <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <p
               class="secondary_name"
               :class="item.id === LayOutMain_pc.layout_secondary_active ? 'active' :'' "
