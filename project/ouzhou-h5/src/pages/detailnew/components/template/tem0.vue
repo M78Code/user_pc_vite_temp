@@ -40,18 +40,21 @@
       </div>
     </div> -->
     <div class="temp0-ol" :style="{ gridTemplateColumns: 'repeat(3, 1fr)' }">
-      <div v-for="ol in item_data.hl[0].ol.filter(i=>i.os != 3)" :key="ol?.oid" class="temp0_ol_on">
-        <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'temp0_ol_ov']" >
-          <template v-if="ol?.os == 1">
-            <span>{{ ol?.ott }}</span>
-            <!--<span>小</span>-->
-            <span class="temp0_ol-on-text">{{ ol?.on || ol?.ott }}</span>
-            <span class="temp0_ol-ov-text">{{compute_value_by_cur_odd_type(ol.ov,'','',MatchDetailCalss.params.sportId)}}</span>
-            <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
-          </template>
-          <span v-if="ol?.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock" /></span>
+      <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
+        <div v-for="ol in hl_item.ol.filter(i=>i.os != 3)" :key="ol?.oid" class="temp0_ol_on">
+          <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'temp0_ol_ov']" >
+            <template v-if="ol?.os == 1">
+              <span>{{ ol?.ott }}</span>
+              <!--<span>小</span>-->
+              <span class="temp0_ol-on-text">{{ ol?.on || ol?.ott }}</span>
+              <span class="temp0_ol-ov-text">{{compute_value_by_cur_odd_type(ol.ov,'','',MatchDetailCalss.params.sportId)}}</span>
+              <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
+            </template>
+            <span v-if="ol?.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock" /></span>
+          </div>
         </div>
-      </div>
+      </template>
+      
     </div>
   </div>
 </template>

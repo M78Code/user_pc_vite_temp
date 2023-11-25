@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-show="false">{{BetData.bet_data_class_version}}</div>
-  <div class="temp3 mx-10 box-style">
+  <div class="temp3 mx-10 box-style component tem-other">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
     <!-- os: 1开 2封 3隐藏不显示不占地方-->
@@ -25,25 +25,27 @@
           <div class="odds-title-li-text" v-if="![0, 1, 3, 5, 7, 10].includes(item_data.hpt)">
             <span>{{ opt.osn }}</span>
           </div>
+          <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
+            <div v-for="ol in hl_item.ol.filter((i)=>i.os !=3)" :key="ol?.oid" class="ol_on">
+              <template v-if="ol?.otd === opt?.otd">
+                <!-- <div>{{ ol.on }}</div> -->
 
-          <div v-for="ol in item_data.hl[0].ol.filter((i)=>i.os !=3)" :key="ol?.oid" class="ol_on">
-            <template v-if="ol?.otd === opt?.otd">
-              <!-- <div>{{ ol.on }}</div> -->
+                <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']">
+                  <!-- {{ (ol.ov/100000).toFixed(2) }} -->
 
-              <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']">
-                <!-- {{ (ol.ov/100000).toFixed(2) }} -->
-
-                <template v-if="ol?.os == 1">
-                  <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
-                  <span class="ol-ov-text">{{get_oddv(ol?.ov / 100000) }}</span>
-                  <olStatus :item_ol_data="ol" :active="ol.oid == active" />
-                </template>
-                <span v-if="ol?.os == 2">
-                    <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-                </span>
-              </div>
-            </template>
-          </div>
+                  <template v-if="ol?.os == 1">
+                    <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
+                    <span class="ol-ov-text">{{get_oddv(ol?.ov / 100000) }}</span>
+                    <olStatus :item_ol_data="ol" :active="ol.oid == active" />
+                  </template>
+                  <span v-if="ol?.os == 2">
+                      <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                  </span>
+                </div>
+              </template>
+            </div>
+          </template>
+         
         </div>
       </template>
 
