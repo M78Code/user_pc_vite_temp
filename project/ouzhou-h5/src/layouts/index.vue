@@ -16,14 +16,14 @@
 
     </q-page-container>
     <div class="footer">
-      <bet-bar class="bar-top" v-if="tou_show && BetData.bet_single_list.length>0"></bet-bar>
-      <div style="display:none">{{ BetData.bet_data_class_version }}</div>
+      <bet-bar class="bar-top" v-if="tou_show"></bet-bar>
       <FooterWapper />
     </div>
   </q-layout>
 
   <!-- 吐司提示框 v-if="toast_show" -->
   <toast></toast>
+
 </template>
 
 <script setup>
@@ -56,14 +56,15 @@ const toast = defineAsyncComponent(() =>
 
 var tou_show = ref(true)
 
-let routerPath = ref<String>('')
+let routerPath = ref('')
 const route = useRoute()
 watch(() => route.path,newRoute => {
-  tou_show.value = false
-  if(newRoute == '/home' || newRoute == '/inplay' || newRoute == '/match'){
-    tou_show.value = BetData.bet_single_list.length>0?true:false
+  if(['/personal','/announcement','/rules'].includes(newRoute)){
+    tou_show.value = false
+  }else{
+    tou_show.value = true
   }
-})
+},{deep:true,immediate:true})
 
 
 import "./index.scss"

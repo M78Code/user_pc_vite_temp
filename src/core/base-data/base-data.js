@@ -188,9 +188,7 @@ class BaseData {
 
   // 菜单数量变化
   set_base_c301_change(list = []) {
-   
     list.forEach(item => item.mi = base_menu_id_new[item.menuId])
-    console.error('sss',list)
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
 

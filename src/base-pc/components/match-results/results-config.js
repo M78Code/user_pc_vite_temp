@@ -465,10 +465,12 @@ export const useGetResultConfig = () => {
       .then((res) => {
         const code = lodash.get(res, "code");
         const data = lodash.get(res, "data");
-        console.error('test一下',code)
+        console.error('test一下',route.query)
 
         // 从链接获取联赛 id
-        let { tid } = route.query;
+        let { tid } = route.query ?? null;
+        console.error('tid',tid)
+        console.error('typetype',type)
         if (code == 200 && data.length) {
           data.sort((a, b) => {
             return a.tournamentName.localeCompare(b.tournamentName, "zh");
