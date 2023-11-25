@@ -73,11 +73,26 @@ const ENVSTR_MAP = {
   
 
 export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
-    const BUILD_VERSION = format_date(new Date().getTime());
+    const VERSION_STR = format_date(new Date().getTime());
+    //是否是开发环境
+    const IS_DEV = NODE_ENV_CONFIG.IS_DEV 
+    //构建版本号
+    const BUILD_VERSION=  IS_DEV ? "" : VERSION_STR
+    //构建目录名字
+    const BUILD_DIR_NAME =config.BUILD_DIR_NAME
+    //打包构建输出目录
+    const BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_VERSION}` 
+    //开发或生产环境服务的公共基础路径
+    const BUILD_BASE = IS_DEV ? '/' : `/${BUILD_VERSION}/`
     return {
         ...RESOLVE_PROJECT_FN(config.PROJECT),
         ...RESOLVE_ENV_FN(config.ENVSTR),
         ...NODE_ENV_CONFIG,
-        BUILD_VERSION: NODE_ENV_CONFIG.IS_DEV ? "" : BUILD_VERSION,
+        BUILD_DIR_NAME,
+        BUILD_VERSION,
+        BUILD_OUTDIR ,
+        BUILD_BASE
+
+
     }
 }
