@@ -75,9 +75,6 @@
         </div>
       </scroll-list>
     </load-data>
-    <ConmingSoon v-show="is_conming_soon" :style="{
-      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-    }" />
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->
@@ -98,7 +95,6 @@ import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/com
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js"; //赛事列表头部——滚球——赛事类型
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from "src/base-pc/components/cus-scroll/scroll_list.vue";
-import refresh from "src/components/refresh/refresh.vue";
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue"; //电竞赛事列表筛选
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 import PlayMatchLeague from './play-match-league.vue'
@@ -107,7 +103,7 @@ import {
   mounted_fn,
   load_data_state,
   show_refresh_mask,
- handle_destroyed
+  handle_destroyed
 } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import {
@@ -126,6 +122,7 @@ import {
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 const { page_source } = PageSourceData;
+console.log('load_data_state',load_data_state.value != 'loading',load_data_state.value)
 export default {
   components: {
     LeagueTab,
@@ -161,9 +158,7 @@ export default {
       })
     };
     const is_conming_soon = computed(() => {
-      return load_data_state.value != 'loading' 
-      
-      && ((!match_list_card_key_arr.value.length && !MenuData.is_leagues()) || (!get_league_list().length && MenuData.is_leagues()))
+      return load_data_state.value != 'loading' && ((!match_list_card_key_arr.value.length && !MenuData.is_leagues()) || (!get_league_list().length && MenuData.is_leagues()))
     })
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
@@ -276,4 +271,5 @@ export default {
 
 .league_card {
   margin-bottom: 10px;
-}</style>
+}
+</style>
