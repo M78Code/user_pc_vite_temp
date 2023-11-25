@@ -11,18 +11,17 @@
     </div>
     <div v-if="is_show_league(i)"
       :class="['league-container flex items-center justify-between right-border', { collapsed: !collapsed }]"
-      @click="handle_league_fold">
+      @click.stop="handle_league_fold">
       <div class="league-wrapper champion flex items-center">
-        <div v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()" class="favorite"
-          :class="[{ favorited: match_of_list.tf }, theme]" @click.stop="handle_league_fold"></div>
+       
         <span class="league-title-text row justify-between"
           :class="{ 'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch()) }">
             <div class="league-icon-mini">
               <img :src="get_server_file_path(match_of_list.lurl)">
             </div>
-            {{ console.log(match_of_list) }}
             <span>{{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }}</span>
         </span>
+        
       </div>
 
       <div class="collapse-dire">
@@ -38,50 +37,25 @@
 
     <template v-for="(hp, index) of match_of_list.hps">
       <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
-        <div class="flex items-center justify-between" :class="{ 'is-favorite': false }">
 
-          
-          <div class="match-title items-center">
-            <div class="debug-head" style="color:red;position:absolute;right:0;">
-              {{ get_key_by_obg(hp) }}
-            </div>
+        <div class="hps-wrap-title flex items-center justify-between" :class="{ 'is-favorite': false }">
+          <div class="match-title items-center font-weight">
             <div class="hpn-wrap ellipsis">
-              联赛
+              Winner
             </div>
           </div>
           <div class="match-title items-center">
-            <div class="debug-head" style="color:red;position:absolute;right:0;">
-              {{ get_key_by_obg(hp) }}
+            <div class="hpn-wrap ellipsis date-style">
+              {{(new Date(+match_of_list.med)).Format(i18n_t('time10'))}}
+              Bet Closed
             </div>
-            <div class="hpn-wrap ellipsis">
-              {{ hp.hps }}
-            </div>
-          </div>
-        </div>
-
-        <div v-if="!collapsed && hp.hmed" class="limit-time">
-          <div class="limit-t-i">
-            <template v-if="!['zh', 'tw'].includes(lang)">
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} 
-            </template>
-            <template v-else>
-              {{(new Date(+hp.hmed)).Format(i18n_t('time7'))}} 
-            </template>
           </div>
         </div>
 
         <div class="ol-list-wrap flex" :data-ol="hp.ol.length" v-if="hp.ol">
-          <div class="ol-list-left">
-            <div class="ol-list-left-title">
-              <span>{{ menu_type == 100 ? match_of_list.onTn : match_of_list.tn }}</span>
-            </div>
-          </div>
-          <div class="ol-list-right">
-            <!-- 右侧赔率组件 -->
             <OddItemChampion v-for="(ol_item, i) of hp.ol" :key="i" :hs="hp.hs" :data-i="i" :ol_item="ol_item"
               :csid="match_of_list.csid" @click.stop="item_click(match_of_list, hp, ol_item)">
             </OddItemChampion>
-          </div>
         </div>
       </div>
     </template>
@@ -144,7 +118,7 @@ export default {
 
   .league-container {
     height: 0.4rem;
-    border-bottom: .01rem solid var(--q-gb-bg-c-1);
+    border: .01rem solid var(--q-gb-bd-c-5);
 
     &::before {
       display: none !important;
@@ -182,10 +156,11 @@ export default {
       .league-title-text {
         font-weight: 600;
         align-items: center;
+        font-size: .13rem;
         .league-icon-mini {
           width: 0.22rem;
           height: 0.22rem;
-          margin: 0.01rem 0.07rem 0 0.09rem;
+          margin: -0.01rem 0.07rem 0 0.09rem;
           position: relative;
           transform: scale(0.85);
 
@@ -243,7 +218,7 @@ export default {
     text-align: right;
     margin-top: 0.02rem;
     margin-right: 0.08rem;
-      padding-left: 0.11rem;
+    padding-left: 0.11rem;
     display: flex;
     align-items: center;
     border-bottom: 0 !important;
@@ -258,79 +233,58 @@ export default {
 
   .hps-wrap {
 
-    >div {
-      border-bottom: 1px solid var(--q-gb-t-c-6);
+    .hps-wrap-title {
+      background-color: var(--q-gb-bg-c-10);
+      height: .36rem;
+      padding: 0 .18rem;
+      // border-bottom: 1px solid var(--q-gb-t-c-6);
+    }
+
+    .font-weight {
+      font-weight: bold;
     }
 
     .match-title {
       height: 0.24rem;
-      padding-left: 0.11rem;
-      // padding-top: 0.12rem;
       position: relative;
       display: flex;
-      width: 50%;
-      justify-content: center;
-
-
-      // &:before {
-      //   width: 0.03rem;
-      //   height: 0.16rem;
-      //   transform: translateY(-1px);
-      //   content: ' ';
-      //   display: block;
-      //   border-radius: 0.015rem;
-      //   background: var(--q-gb-t-c-1);
-      // }
 
       .hpn-wrap {
         color: #414655;
-        font-size: 11px;
+        font-size: 0.12rem;
+      }
+      .date-style {
+        color: var(--q-gb-t-c-1) !important;
       }
     }
+
+    
 
     .ol-list-wrap {
       width: 100%;
+      display: flex;
       height: auto;
-      flex-wrap: wrap;
-      margin-top: 0.07rem;
-      padding-left: 0.07rem;
-      justify-content: space-between;
+      justify-content: flex-start;
+      :deep(.on) {
+        color: var(--q-gb-t-c-4);
+      }
       // padding-bottom: 0.08rem;
       .ol-li-item {
         background: #fff;
-        width: 98%;
+        width: 50%;
+        height: auto;
+        padding: .14rem .20rem;
         margin: 0;
-        margin-bottom: .06rem;
-      }
-      .ol-list-left {
-        flex: 1;
-        .ol-list-left-title {
-          background: #fff;
-          width: 98%;
-          margin: 0;
-          margin-bottom: 0.06rem;
-          height: 0.4rem;
-          padding: 0 0.1rem;
-          overflow: hidden;
-          justify-content: center;
-          align-items: center;
-          display: flex;
-          border-radius: 0.04rem;
-          span {
-            max-width: 1.56rem;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-          }
+        border-bottom: .01rem solid var(--q-gb-bg-c-19);
+        border-right: .01rem solid var(--q-gb-bg-c-19);
+        border-radius: 0;
+        :deep(.odds) {
+          color: var(--q-gb-t-c-1);
         }
       }
-      .ol-list-right {
-        flex: 1;
+      .ol-li-item:nth-child(even) {
+        border-right: 0;
       }
-    }
-
-    .ol-list-wrap2 {
-      padding-bottom: 0.08rem;
     }
   }
 }

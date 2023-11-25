@@ -135,14 +135,12 @@ import refresh from "src/components/refresh/refresh.vue"
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import useMatchListMx from "src/core/match-list-pc/match-list-composition.js";
+import {collect_count} from 'src/core/match-list-pc/composables/match-list-collect.js'
+import {mounted_fn, load_data_state, show_refresh_mask,  is_show_hot} from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { PageSourceData } from 'src/core/index.js';
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
-
 import "./match_list.scss";
-
-const { mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot } = useMatchListMx();
 const { page_source } = PageSourceData;
 export default {
   components: {
