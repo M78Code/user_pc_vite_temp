@@ -22,7 +22,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 
 const pack_up = (val) => {
   // TODO: 临时调试用
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  BetData.set_h5_bet_box_show(false)
   BetData.set_clear_bet_info()
   BetViewDataClass.set_clear_bet_view_config()
 }

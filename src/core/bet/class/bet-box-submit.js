@@ -593,8 +593,10 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     // device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备 
     if(other.device_type == 1){
         query = h5_match_data_switch(other.match_data_type)
-        useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
-        BetViewDataClass.set_bet_show(true)
+        // 点击投注项 显示投注栏
+        BetData.set_h5_bet_box_show(true)
+        // 点击投注项 展开投注栏
+        BetData.set_bet_state_show(true)
         BetData.set_bet_keyboard_show(true)
         // BetViewDataClass.set_bet_keyboard_show(true)
     }else{
@@ -794,7 +796,7 @@ const set_orderNo_bet_obj = order_no_list => {
 const get_handicap = (ol_obj = {},is_detail) => {
     let text = ''
     // 展示用的 + 投注项  
-    let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351]
+    let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127]
     let home_mark_more = [351,347]
     if(is_detail){
         text = ol_obj.otv

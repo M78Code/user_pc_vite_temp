@@ -7,6 +7,7 @@ import { i18n_t, i18n } from "src/boot/i18n.js";
 import { nextTick, ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BaseWsMessage from "./base-ws-message"
 const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
@@ -39,9 +40,19 @@ import {
   useMittOn,
   useMittEmit,
   useMittEmitterGenerator,
-  MITT_TYPES,
+  MITT_TYPES,MenuData,LocalStorage
 } from "src/core/index.js"
-import { MenuData } from "src/core/";
+
+import STANDARD_KEY from "src/core/standard-key";
+const base_data_key = STANDARD_KEY.get("base_data_key");
+
+const base_menu_id_new = {
+  30001: "1011",
+  30002: '1021',
+  30004: '1051',
+  30091: '',
+  30090: ''
+}
 
 class BaseData {
   constructor() {
@@ -170,6 +181,17 @@ class BaseData {
       // 5分钟一次
       // this.set_menu_init_time(3000000);
     }, 2000);
+
+    // ws请求订阅
+    BaseWsMessage.init()
+  }
+
+  // 菜单数量变化
+  set_base_c301_change(list = []) {
+   
+    list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    console.error('sss',list)
+    useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
 
   /**
@@ -215,9 +237,12 @@ class BaseData {
     });
     // 等待以上4个接口同时请求完成再通知列表获取
     return Promise.all([p1, p2, p3, p4, p5]).then((res) => {
-      const base_data = localStorage.getItem('base_data')
-      !base_data && this.handle_base_data(res)
-      localStorage.setItem('base_data', JSON.stringify(res))
+      // const base_data = LocalStorage.get(base_data_key)
+      // //   !base_data && this.handle_base_data(res)
+      this.handle_base_data(res)
+      nextTick(()=>{
+        LocalStorage.set(base_data_key,res)
+      })
     }).catch((err) => {
       this.set_default_base_data()
       console.error('err:', '元数据接口请求超时')
@@ -226,11 +251,10 @@ class BaseData {
 
   // 从缓存读取默认数据
   set_default_base_data () {
-    const base_data = localStorage.getItem('base_data')
+    const base_data = LocalStorage.get(base_data_key)
     if (base_data) {
-      const res = JSON.parse(base_data)
       this.set_is_emit(true)
-      this.handle_base_data(res)
+      this.handle_base_data(base_data)
     }
   }
 
@@ -440,7 +464,7 @@ class BaseData {
     // 接口返回值很多没有p值，也就是euid 值，先注释调用接口的，用默认的，
     this.mi_euid_map_res = lodash_.get(res, 'data')
 
-    localStorage.setItem("is_session_base_data", JSON.stringify());
+    // localStorage.setItem("is_session_base_data", JSON.stringify());
     this.resolve_mi_euid_map_res();
   }
   /**

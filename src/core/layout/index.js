@@ -53,6 +53,7 @@ class LayOutMain {
     this.layout_left_menu_status = 'normal'
     // 页面中间内容高度
     this.layout_content_height = 0
+    this.oz_layout_content_height = 0
     // 页面中间内容宽度
     this.layout_content_width = 1440
     // 布局更新
@@ -100,6 +101,7 @@ class LayOutMain {
     this.set_layout_left_menu_status()
     this.set_layout_main_width()
     this.set_layout_search_width()
+    this.set_oz_layout_content_config()
   }
 
   // 设置 中间内容区域 宽度 高度
@@ -107,6 +109,10 @@ class LayOutMain {
     this.layout_content_height = client_height - this.layout_nav_height - this.layout_notice_height
     this.layout_content_width = client_width - this.layout_left_width - this.layout_right_width
     this.set_layout_version()
+  }
+
+  set_oz_layout_content_config() {
+    this.oz_layout_content_height = client_height - 68;
   }
  
   // 设置 左侧列表显示形式
