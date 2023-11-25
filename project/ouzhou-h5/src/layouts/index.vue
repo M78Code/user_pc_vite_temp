@@ -16,7 +16,7 @@
 
     </q-page-container>
     <div class="footer">
-      <bet-bar class="bar-top" v-if="tou_show||true"></bet-bar>
+    
       <FooterWapper />
     </div>
   </q-layout>
@@ -37,7 +37,6 @@ import {
 
 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import betBar from "src/base-h5/components/bet/bet-ouzhou-h5/bet-bar.vue";
 import { MenuWapper } from "src/base-h5/components/menu";
 import { TopMenuWapper } from "src/base-h5/components/top-menu/"
 import { BetBoxWapper } from "src/base-h5/components/bet";
