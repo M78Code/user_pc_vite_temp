@@ -117,6 +117,9 @@ const bet_oid = ref("");
 const active = ref(1);
 
 const betItemClick = (key, o) => {
+    if (o.os!=1) {
+        return
+    }
     console.log(props.match_info.hpn,'hpt');
     bet_oid.value = o.oid;
 
