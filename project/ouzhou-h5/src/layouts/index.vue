@@ -16,7 +16,7 @@
 
     </q-page-container>
     <div class="footer">
-      <bet-bar class="bar-top" v-if="tou_show||true"></bet-bar>
+      <bet-bar class="bar-top" v-if="tou_show"></bet-bar>
       <FooterWapper />
     </div>
   </q-layout>
@@ -57,12 +57,12 @@ var tou_show = ref(true)
 let routerPath = ref<String>('')
 const route = useRoute()
 watch(() => route.path,newRoute => {
-  if(newRoute == '/home' || newRoute == '/inplay' || newRoute == '/match'){
-    tou_show.value = true
-  }else{
+  if(['/personal','/announcement','/rules'].includes(newRoute)){
     tou_show.value = false
+  }else{
+    tou_show.value = true
   }
-})
+},{deep:true,immediate:true})
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 
