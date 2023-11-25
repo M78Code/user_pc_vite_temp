@@ -98,11 +98,11 @@ DEV_TARGET_ENV='dev'
 DEV_TARGET_ENV='test'
 //隔离
 DEV_TARGET_ENV='geli'
-//压测
-DEV_TARGET_ENV='mini'
-//试玩
-DEV_TARGET_ENV='shiwan'
-//生产
+// //压测
+// DEV_TARGET_ENV='mini'
+// //试玩
+// DEV_TARGET_ENV='shiwan'
+// //生产
 DEV_TARGET_ENV='online'
 
 

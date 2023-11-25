@@ -1,23 +1,34 @@
-import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
-import routes from "./routes"
-const router = createRouter({
-  history: createWebHashHistory(),  // hash 模式
-  // history: createWebHistory(),  // history 模式
-  routes: routes,
-})
+import { route } from 'quasar/wrappers'
+import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router';
+import routes from './routes'
 
-// 全局路由守卫
-router.beforeEach((to, from, next) => {
-  // console.log(to, from)
-  if (to.meta.title) {
-    document.title = `${to.meta.title}`;
-  }
-  next()
-})
+/*
+ * If not building with SSR mode, you can
+ * directly export the Router instantiation;
+ *
+ * The function below can be async too; either use
+ * async/await or return a Promise which resolves
+ * with the Router instance.
+ */
+const VUE_ROUTER_MODE = 'history';
+const VUE_ROUTER_BASE = '/';
 
-router.afterEach((to, from) => {
-  // console.log(to, from)
-  console.log('afterEach')
-})
+export default route(function (/* { store, ssrContext } */) {
+  // const createHistory = process.env.SERVER
+  //   ? createMemoryHistory
+  //   : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
 
-export default router
+  const createHistory = (VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory)
+
+  const Router = createRouter({
+    scrollBehavior: () => ({ left: 0, top: 0 }),
+    routes,
+
+    // Leave this as is and make changes in quasar.conf.js instead!
+    // quasar.conf.js -> build -> vueRouterMode
+    // quasar.conf.js -> build -> publicPath
+    history: createHistory(VUE_ROUTER_BASE)
+  })
+
+  return Router
+})()
