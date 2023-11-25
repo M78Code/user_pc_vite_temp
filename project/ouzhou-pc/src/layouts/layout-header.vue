@@ -21,13 +21,11 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, } from 'vue'
-import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
-import { SessionStorage, utils } from 'src/core/index.js'
+import { SessionStorage, utils,t } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
-import { i18n_t } from "src/boot/i18n.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
@@ -38,6 +36,7 @@ import gift_package from '/ouzhou-pc/image/common/activity_banner/gift_package.p
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import TemHeader from "src/base-pc/components/top-header/template1/template1.vue";
+import { i18n_tc } from 'src/boot/i18n';
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
@@ -193,7 +192,7 @@ const showActivityTime = ref(SessionStorage.get('showActivityTime'))
 const allowClick = ref(false)
 /** 活动弹框显隐 */
 const showActivity = ref(false)
-const userBannerTimer = ref(i18n_t('common.auto_close').replace('%s', 5))
+const userBannerTimer = ref(i18n_tc('common.auto_close').replace('%s', 5))
 /***
  * 运营位活动弹窗
  */

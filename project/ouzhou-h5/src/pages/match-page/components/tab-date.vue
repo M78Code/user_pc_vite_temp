@@ -203,7 +203,7 @@ const areaListChange = (item, index) => {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        border-bottom: 1px solid var(--q-gb-bd-c-1);
+        border-bottom: 1px solid var(--q-gb-bg-c-1);
         position: relative;
 
         div {
