@@ -7,9 +7,9 @@
                 <div class="w-100 f-s-c text-1a1 h15">
                     <span class="text-flow" v-html="items.handicap"></span> 
                 </div>
-                <div class="w-100 h15 f-s-c my-4">
-                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}</span> 
+                <div class="w-100 handicap f-s-c my-4">
+                    <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i playName">{{ items.playName }}</span>
                     <!-- 盘口 -->
                     <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
@@ -29,7 +29,7 @@
                     <BetInput :items="items" />
                 </div>
                 <div class="font12 h12 mt-4">
-                    <span class="font400 mr-4 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
+                    <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                     <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount)) || '0.00' }} </span>
                 </div>
             </div>
@@ -248,9 +248,18 @@ const set_delete = () => {
             color: var(--q-gb-t-c-2);
         }
     }
+    .handicap{
+        height: 20px;
+    }
     .text-flow-none{
-        max-width: 76%;
-        line-height: 12px;
+        max-width: 50%;
+        min-width: 16%;
+        line-height: 16px;
+    }
+    .playName{
+      word-wrap: break-word;
+      display: inline-block;
+      height: auto;
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);
