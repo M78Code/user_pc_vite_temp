@@ -137,7 +137,7 @@ const set_old_submit = () => {
     // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
     device_type: 1,  
     // 数据仓库类型
-    match_data_type: "h5_list", // h5_detail
+    match_data_type: props.match_data_type, // h5_detail
   }
   console.log('score-list.vue ',params)
   set_bet_obj_config(params,other)
