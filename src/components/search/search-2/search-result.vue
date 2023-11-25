@@ -678,6 +678,11 @@ watch(
 	width: 100%;
 	z-index: 1;
 	color: var(--q-gb-t-c-5);
+	&.diff {
+		padding: 9px 0 9px 20px;
+		position: unset;
+		overflow: auto;
+	}
 	.color {
 		color: #FF7000;
 		// color: var(--q-gb-t-c-1);
