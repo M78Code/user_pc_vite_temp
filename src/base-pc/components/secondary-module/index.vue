@@ -13,7 +13,8 @@
         <!-- 头部 -->
         <header class="header">
           <div class="row items-center justify-between top_tit">
-            <p>{{ i18n_t('ouzhou.set.personal') }}</p>
+            <!-- <p>{{ i18n_t('ouzhou.set.personal') }}</p> -->
+            <p></p>
             <p>
               <img
                 :src="compute_local_project_file_path('/image/svg/close.svg')"

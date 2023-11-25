@@ -14,10 +14,10 @@ os: 1 开盘 ，2 封盘
 
 
 <script setup name="template6">
-import {defineProps, onMounted, defineEmits} from "vue"
-import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import olStatus from "../ol_status.vue";
+import {defineProps, defineEmits} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
+import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 
 const props = defineProps({
@@ -38,13 +38,13 @@ const props = defineProps({
 const emits = defineEmits(['bet_click_'])
 const go_betting = (data) => {
     if(data.os == 2) return
-    emits("bet_click_", data,props.item_data.hpn);
+    emits("bet_click_", data,props.play.hpn);
 };
 </script>
 
 <template>
     <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)"
-         :class="['info',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
+         :class="['template1',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
         <div class="left">{{ olChild.otv }}</div>
         <div class="right" v-if="olChild.os == 1">
             <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
@@ -57,7 +57,7 @@ const go_betting = (data) => {
 </template>
 
 <style scoped lang="scss">
-.info {
+.template1 {
     width: 100%;
     display: flex;
     align-items: center;
@@ -95,8 +95,8 @@ const go_betting = (data) => {
 }
 
 .is-active {
-    background-color: var(--q-gb-bg-c-1);
-    color: var(--q-gb-t-c-2);
+    background-color: var(--q-gb-bg-c-1) !important;
+    color: var(--q-gb-t-c-2) !important;
 }
 
 .lock {

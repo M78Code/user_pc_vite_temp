@@ -109,7 +109,7 @@ const go_betting = (data) => {
                     <span class="on">{{ item.on }}</span>
                     <span class="ov">{{ compute_value_by_cur_odd_type(item?.ov, '', '', sport_id) }}</span>
                     <olStatus style="position: absolute;right: 8%" :item_ol_data="item"
-                              :active="BetData.bet_oid_list.includes(ol?.oid)"/>
+                              :active="BetData.bet_oid_list.includes(item?.oid)"/>
                 </li>
             </ul>
         </div>

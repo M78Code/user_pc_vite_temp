@@ -143,7 +143,7 @@ class MenuData {
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
     // 菜单数据缓存
-    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     this.set_match_list_api_config()
@@ -405,7 +405,7 @@ class MenuData {
     this.set_multi_column();
     // console.error('set_left_menu_result',JSON.stringify(obj),this.menu_root)
     this.set_menu_data_version();
-    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
   }
   /**
    * 中间菜单显示配置 默认的
@@ -463,7 +463,7 @@ class MenuData {
     set_is_collect(is_collect) {
       this.is_collect=is_collect
       if (is_collect) {
-        useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+        useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
       }
     }
   /**
@@ -717,7 +717,7 @@ class MenuData {
     this.set_bet_category();
 
     // 菜单数据缓存
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     nextTick(()=>{
       SessionStorage.set(menu_key,this)
     })
