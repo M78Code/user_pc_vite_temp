@@ -542,6 +542,7 @@ class MatchMeta {
    */
   get_ouzhou_home_hots_data (res) {
     if (!res || +res.code !== 200 || res.data.length < 1) return []
+    localStorage.removeItem('ouzhou_home_hots')
     localStorage.setItem('ouzhou_home_hots', JSON.stringify(res))
     const hots = lodash.get(res, 'data', [])
     const hots_list = hots.slice(0, 5)
@@ -1028,7 +1029,7 @@ class MatchMeta {
       return target
     })
     // ws 订阅
-    MatchDataBaseH5.set_active_mids(this.match_mids)
+    // MatchDataBaseH5.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
     warehouse.set_list(list)
   }
