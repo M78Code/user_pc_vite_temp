@@ -8,12 +8,14 @@
       <div class="match-detail-time">
           <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
             <match-stage :detail_data="get_match_detail" ></match-stage>
-          </span>
-          <q-badge
+            <q-badge
             v-if="get_match_detail.mng == 1"
             text-color="white"
             label="N"
+            style="margin-left:5px"
           />
+          </span>
+    
         <div class="match-detail-time-collect" @click="collect_click">
           <img
             v-if="is_collect"
@@ -384,6 +386,7 @@ onMounted(()=>{
         padding-right: 10px;
         font-size: 15px;
         font-weight: 500;
+        display:flex;
       }
       .q-badge {
         background: #0cbeb9;

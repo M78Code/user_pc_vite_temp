@@ -263,6 +263,10 @@ get_featurd_list()
         font-size: 14px;
         font-weight: 500;
         letter-spacing: 0px;
+        :deep(.c-bet-item){
+          width: 74px;
+          height: 40px;
+        }
         // &:hover {
         //   background: rgba(255, 112, 0, 0.1);
         // }
@@ -278,6 +282,7 @@ get_featurd_list()
             color: var(--q-gb-t-c-2);
           }
         }
+
       }
 
       .checked {

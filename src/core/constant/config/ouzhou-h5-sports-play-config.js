@@ -49,12 +49,12 @@ export const sports_play_data = {
       },
       {
         label: i18n_t('ouzhou.match.play_map.155'),
-        hpid: '155',
+        hpid: '154',
         csid: '5'
       },
       {
-        label: i18n_t('ouzhou.match.play_map.202'),
-        hpid: '202',
+        label: i18n_t('ouzhou.match.play_map.155'),
+        hpid: '155',
         csid: '5'
       }
     ],
@@ -361,18 +361,18 @@ export const sports_play_title = {
     },
     {
       hpid: '154',
-      label: '全场让局',
-      ol: [
-        { ot: '1', title: "主队让局" },
-        { ot: '2', title: "客队让局" },
-      ]
-    },
-    {
-      hpid: '155',
       label: '全场让盘',
       ol: [
         { ot: '1', title: "主队让盘" },
         { ot: '2', title: "客队让盘" },
+      ]
+    },
+    {
+      hpid: '155',
+      label: '全场让局',
+      ol: [
+        { ot: '1', title: "主队让局" },
+        { ot: '2', title: "客队让局" },
       ]
     },
   ],
