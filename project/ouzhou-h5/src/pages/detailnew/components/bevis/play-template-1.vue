@@ -44,13 +44,15 @@ const go_betting = (data) => {
 
 <template>
     <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)"
-         class="info">
+         :class="['info',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
         <div class="left">{{ olChild.otv }}</div>
-        <div :class="['right',{ 'is-active': true }]" v-if="olChild.os == 1">
+        <div class="right" v-if="olChild.os == 1">
             <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
             <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
         </div>
-        <div v-if="olChild.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></div>
+        <div v-if="olChild.os == 2">
+            <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+        </div>
     </div>
 </template>
 
@@ -81,16 +83,7 @@ const go_betting = (data) => {
         align-items: center;
     }
 
-    .is-active {
-        background-color: var(--q-gb-bg-c-1);
-        color: var(--q-gb-t-c-2);
-        .ol-on {
-            .ol-ov {
-                //color: #fff;
-                color: var(--q-gb-t-c-2);
-            }
-        }
-    }
+
 
     .red {
         color: #FF4646;
@@ -101,5 +94,15 @@ const go_betting = (data) => {
     }
 }
 
-// Levante Unión Deportiva
+.is-active {
+    background-color: var(--q-gb-bg-c-1);
+    color: var(--q-gb-t-c-2);
+}
+
+.lock {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 2px;
+}
 </style>
