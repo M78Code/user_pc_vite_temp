@@ -7,7 +7,7 @@ import {
   UserCtr,
   MenuData, axios_loop, get_match_status
 } from "src/core";
-import { nextTick, ref } from 'vue'
+import {  ref } from 'vue'
 import {set_load_data_state} from 'src/core/match-list-pc/match-list-composition.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'

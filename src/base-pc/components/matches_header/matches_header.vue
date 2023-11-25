@@ -3,7 +3,7 @@
 		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{ MenuData.current_ball_type }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
-			<div class="matches-title">
+			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp()) ? 'matches_outrights' : '']">
 				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ matches_header_title }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
 				<div v-else class="matches_tab" >
@@ -31,7 +31,7 @@
 				</div>
 			</div>
 		</div>
-		<MatchesFilterTab v-if=" MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() ) || MenuData.is_collect || MenuData.is_top_events()"  />
+		<MatchesFilterTab v-if="MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp()) || MenuData.is_collect || MenuData.is_top_events()"  />
 		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues()" />
 		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
@@ -46,6 +46,7 @@ import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
 import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
+import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
 const tab_list = ref([])
 
@@ -111,6 +112,7 @@ const set_show_leagues = () => {
 }
 
 const set_active_time = (item) => {
+	MatchLeagueData.set_select_hours(item.value)
 	active_time.value = item.value
 }
 
@@ -148,7 +150,7 @@ const set_tab_list = (news_) =>{
 	// 冠军
 	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
 		matches_header_title.value = 'Outrights'
-		match_list_top.value = '116px'
+		match_list_top.value = '146px'
 		tab_list.value = []
 	}
 
@@ -170,7 +172,7 @@ const checked_current_tab = payload => {
 	// 判断头部高度
 	if ([1001,4003].includes(payload.value*1)) {
 		match_list_top.value = '80px'
-	} else if([4001].includes(payload.value*1)){
+	} else if([4001, 4002].includes(payload.value*1)){
 		match_list_top.value = '134px'
 	} else {
 		match_list_top.value = '146px'
@@ -236,9 +238,16 @@ const checked_current_tab = payload => {
 	box-sizing: border-box;
 }
 
+.matches_outrights {
+	height: 80px;
+    line-height: 80px;
+	.current_match_title {
+		padding-top: 0px !important;
+	}
+}
+
 .matches_header {
 	width: 100%;
-	padding-top: 10px;
 	box-sizing: border-box;
 	border-bottom: 2px solid var(--q-gb-bd-c-1);
 	background: var(--q-gb-bg-lg-8);
@@ -262,7 +271,8 @@ const checked_current_tab = payload => {
 		font-weight: 500;
 		color: var(--q-gb-t-c-1);
 		margin-bottom: 21px;
-		height: 20px;
+		height: 30px;
+		padding-top: 10px;
 		&.all_matches{
 			margin-bottom: 12px;
 		}

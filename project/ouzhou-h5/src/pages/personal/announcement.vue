@@ -1,8 +1,8 @@
 <template>
-    <announcement />
+    <announceh />
 </template>
 <script setup>
-import announcement from "src/base-h5/components/personal/components/announcement.vue"
+import announceh from 'src/components/announce/announce-h5/index.vue'
 </script>
 
 <style lang="scss" scoped>
