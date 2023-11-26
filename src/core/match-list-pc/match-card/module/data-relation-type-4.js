@@ -252,7 +252,6 @@
       // 合并所有卡片样式对象
         all_card_obj,
         csid_to_card_key_obj,//赛种ID 到卡片key的 映射对象
-        csid_to_card_key_obj_five,//五大联赛 赛种ID 到卡片key的 映射对象
         play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
         no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
         //卡片key列表

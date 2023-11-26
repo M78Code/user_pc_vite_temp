@@ -171,7 +171,7 @@ class MatchMeta {
       // 球种名称
       // 赛事其他操作
       this.match_assistance_operations(target)
-      return { ...target, tn, csna }
+      return { ...target, tn, csna, is_meta: true }
     })
     // 设置 元数据计算 流程
     MatchResponsive.set_is_compute_origin(true)
@@ -544,6 +544,9 @@ class MatchMeta {
     localStorage.setItem('ouzhou_home_hots', JSON.stringify(res))
     const hots = lodash.get(res, 'data', [])
     const hots_list = hots.slice(0, 5)
+    hots_list.map(t => {
+      t.match_data_type = 'h5_hots_list' 
+    })
     // const hots_mids = hots_list.map(t => t.mid)
     // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
     // 热门赛事数据
@@ -627,6 +630,7 @@ class MatchMeta {
           title,
           isLock,
           ...item,
+          match_data_type: 'h5_ten_five_mins',
           icon: String(Number(item.csid ) + 100)
         }
       })
@@ -692,6 +696,7 @@ class MatchMeta {
     list.forEach(item => {
       const { tid } = item
       item.warehouse_type = 'five_league'
+      item.match_data_type = 'h5_five_league'
       if (!filterData[tid]) {
         filterData[tid] = [item]
       } else if (filterData[tid].length < max) {
@@ -827,6 +832,8 @@ class MatchMeta {
       this.match_assistance_operations(match)
       return match
     })
+
+    console.log('match_list-match_list', match_list)
 
     // 最终赛事数据
     const matchs_data = lodash.uniqBy(match_list, 'mid')
@@ -1041,7 +1048,13 @@ class MatchMeta {
     list = lodash.map(list, t => {
       // MatchResponsive.get_ball_seed_methods(t)
       const match = warehouse.get_quick_mid_obj(t.mid)
-      const target = type === 'cover' ? Object.assign({}, match, t) : Object.assign({}, t, match)
+      // match.is_meta
+      let target = {}
+      if (type === 'cover') {
+        target = Object.assign({}, match, t)
+      } else {
+        target = match?.is_meta ? Object.assign({}, match, t) : Object.assign({}, t, match)
+      }
       return target
     })
     // ws 订阅
