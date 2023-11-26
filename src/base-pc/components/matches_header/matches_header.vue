@@ -17,7 +17,7 @@
 								class="leagues_filrer" 
 								@click.stop="set_show_leagues"
 							>
-								24小时
+								{{ ouzhou_time_list.filter(times => times.value === active_time )[0].label }}
 								<span class="yb-icon-arrow"></span>
 								<div class="leagues_filrer_item" v-show="show_leagues">
 									<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
@@ -199,6 +199,10 @@ const checked_current_tab = payload => {
 		}else{
 			MenuData.set_menu_root(202)
 		}
+	}
+	// 热门联赛
+	if(4002 == payload.value){
+		MenuData.set_menu_current_mi('')
 	}
 	// 冠军
 	if(4003 == payload.value){
