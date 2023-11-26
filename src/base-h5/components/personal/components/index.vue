@@ -28,7 +28,7 @@
           </template>
         </collapse>
         <!-- Language -->
-        <collapse v-if="false" v-model="l_visible" :title="`${i18n_t('ouzhou.setting_menu.language')}`">  
+        <collapse  v-show="false" v-model="l_visible" :title="`${i18n_t('ouzhou.setting_menu.language')}`">  
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
           </template>
@@ -40,16 +40,16 @@
           </template>
         </collapse>
         <!-- Odds Settings -->
-        <collapse v-if="false" v-model="s_visible" :title="`${i18n_t('ouzhou.setting_menu.odds_setting')}`">
+        <collapse v-show="false" v-model="s_visible" :title="`${i18n_t('ouzhou.setting_menu.odds_setting')}`">
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/setting.png`" alt="" />
           </template>
           <template v-slot:content>
-            <div class="setting_item" v-for="setting in settingData" :key="setting.title">
+            <div class="setting_item" v-for="(setting,idx) in settingData" :key="setting.title">
               <span>{{ setting.title }}</span>
               <div class="switch"> 
-                <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
-                <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
+                <span class="bg" :style="{left: setting.index === setting.options[0] ? 0 : '50px'}"></span>
+                <span v-for="(s,y) in setting.params" :key="s" @click="handel_change(setting,setting.options[y],idx)" :class="{active: setting.index === setting.options[y]}">{{ s }}</span>
               </div>  
             </div> 
           </template> 
@@ -114,18 +114,26 @@ const languages = [{
 }]
 const settingData = ref([{
   title: i18n_t("ouzhou.setting_menu.odds_display"),
-  index: i18n_t("ouzhou.setting_menu.dec"),
+  index:UserCtr.odds.cur_odds, //用户已选中值
+  options:["EU","HK"], //盘口
   params: [i18n_t("ouzhou.setting_menu.dec"), i18n_t("ouzhou.setting_menu.hk")]
 }, {
   title: i18n_t("pre_record.odds"),
-  index: i18n_t("ouzhou.setting_menu.any"),
+  index: true, //用户已选中值
+  options:[true,false], //接受更好赔率
   params: [i18n_t("ouzhou.setting_menu.any"), i18n_t("ouzhou.setting_menu.hig")]
 }, {
   title: i18n_t("ouzhou.setting_menu.version"),
-  index: i18n_t("ouzhou.setting_menu.euro"),
+  index: 'EU',  //用户已选中值
+  options:["EU","ASIXA"], //版本需 欧洲/亚洲  需要修改值0 
   params: [i18n_t("ouzhou.setting_menu.euro"), i18n_t("ouzhou.setting_menu.asia")]
 }])
-
+function handel_change(setting,s,idx){
+  if(idx==0){
+    UserCtr.set_cur_odds(s) //HK/EU
+  }
+  setting.index = s
+}
 onMounted(() => {
   //初始化金额隐藏
   on_show_money(UserCtr.show_balance)

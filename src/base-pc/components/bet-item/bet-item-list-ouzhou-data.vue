@@ -1,5 +1,5 @@
 <template>
-  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}{{UserCtr.user_version}}</div>
   <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
     :class="[
       ol_data.class,
@@ -20,20 +20,26 @@
       },
     ]">
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
-      <div class="handicap-value-text">{{ score }} <span v-show="!['1', '32'].includes(ol_data._hpid)">{{ ol_data.onb }}</span></div>
+      <div class="handicap-value-text">{{ score }} <span v-show="!['1', '32'].includes(ol_data._hpid)">{{ ol_data.onb
+      }}</span></div>
     </div>
     <!-- 赔率 -->
     <div class="odds" :class="[odds_lift]" :style="[1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
-      +ol_data._hpid
-    ) && utils.is_iframe
-      ? 'flex:1.5'
-      : ''
+        +ol_data._hpid
+      ) && utils.is_iframe
+        ? 'flex:1.5'
+        : ''
       ">
       <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
       </div>
       <span v-else-if="ol_data.ov">
         <span class="odds_otb" v-if="ol_data.otb">{{ disk_text_replace(UserCtr.lang, ol_data.otb) }}</span>
-        {{ match_odds }}
+        {{ compute_value_by_cur_odd_type(
+          ol_data.ov,
+          '',
+          '',
+          ol_data.csid
+        ) }}
       </span>
       <div>
       </div>
@@ -87,19 +93,7 @@ const odds_state = computed(() => {
 
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
-
-
 const emit = defineEmits(['update_score'])
-
-
-
-
-
-const {
-  bet_click
-} = useGetItem({ props });
-
-
 //玩法比分
 const score = computed(() => {
   let score = "";
@@ -114,50 +108,23 @@ const score = computed(() => {
   }
   return score;
 });
-
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(() => {
   //   is_mounted.value = true;
   // });
 });
-
 // 监听oid 取消赔率升降
 // 监听玩法ID变化 取消赔率升降 
 watch(() => [props.ol_data._hpid, props.ol_data.oid], () => {
   clear_odds_lift()
 })
-
-
 // 监听投注项赔率变化
 watch(() => props.ol_data.ov, (cur, old) => {
   if (cur == old) return
   // 红升绿降变化
   set_odds_lift(cur, old);
 }, { deep: true })
-
-/**
- * 赔率转换
- * @param  {number} ov - 赔率值
- * @param  {number} obv - 断档赔率值
- * @return {undefined} undefined
- */
-// 赔率值
-const match_odds = computed(() => {
-  let csid = lodash.get(props.ol_data, "csid");
-  let ov = lodash.get(props.ol_data, "ov");
-  // 列表取 hsw
-  let hsw =lodash.get(props.ol_data,'_hsw','').split(',');
-  let match_odds_info = compute_value_by_cur_odd_type(
-    ov,
-    1 / 100000,
-    hsw,
-    csid,UserCtr.user_version.value
-  );
-  return format_odds_value(match_odds_info, csid);
-})
-
-
 let tid;
 /**
  * 设置赔率升降
@@ -215,48 +182,48 @@ function bet_item_select(id) {
   }
 };
 
- /**
-   * @Description 简化盘口文本
-   * @param {string} lang 语言
-   * @param {string} onb 盘口文本
-   * @return  {string} text 盘口文本
-  */
- const disk_text_replace = (lang,onb) => {
-    let text = ''
-    if(onb){
-      switch (lang) {
-        case 'en':
-        case 'ad':
-        case 'ms':
-          text =  onb.replace("Home","H").replace("Away","A").replace("Draw","D")
-          break;
-        case 'vi':
-          text =  onb.replace("Chủ","C").replace("Khách","K").replace("Hòa","H")
-          break;
-        case 'th':
-          text =  onb.replace("เจ้าบ้าน","H").replace("แขก","A").replace("วาด","D")
-          break;
-        case 'zh':
-        case 'tw':
-          text =  onb.replace("胜","").replace("局","").replace("勝","")
-          break;
-        case 'ko':
-          text =  onb.replace("홈팀","H").replace("방문자","A").replace("무승부","D")
-          break;
-        case 'es':
-          text =  onb.replace("Visitante","V").replace("Empate","E").replace("Inicio","I").replace("sobre","S").replace("debajo","D").replace("bajo","B")
-          break;
-        case 'pt':
-          text = onb.replace('Empate', 'EMP').replace("over", "S").replace('under', 'I')
-          break;
-        default:
+/**
+  * @Description 简化盘口文本
+  * @param {string} lang 语言
+  * @param {string} onb 盘口文本
+  * @return  {string} text 盘口文本
+ */
+const disk_text_replace = (lang, onb) => {
+  let text = ''
+  if (onb) {
+    switch (lang) {
+      case 'en':
+      case 'ad':
+      case 'ms':
+        text = onb.replace("Home", "H").replace("Away", "A").replace("Draw", "D")
+        break;
+      case 'vi':
+        text = onb.replace("Chủ", "C").replace("Khách", "K").replace("Hòa", "H")
+        break;
+      case 'th':
+        text = onb.replace("เจ้าบ้าน", "H").replace("แขก", "A").replace("วาด", "D")
+        break;
+      case 'zh':
+      case 'tw':
+        text = onb.replace("胜", "").replace("局", "").replace("勝", "")
+        break;
+      case 'ko':
+        text = onb.replace("홈팀", "H").replace("방문자", "A").replace("무승부", "D")
+        break;
+      case 'es':
+        text = onb.replace("Visitante", "V").replace("Empate", "E").replace("Inicio", "I").replace("sobre", "S").replace("debajo", "D").replace("bajo", "B")
+        break;
+      case 'pt':
+        text = onb.replace('Empate', 'EMP').replace("over", "S").replace('under', 'I')
+        break;
+      default:
         text = onb
-          break;
-      }
+        break;
     }
-    console.log(text,'text');
-    return text
   }
+  console.log(text, 'text');
+  return text
+}
 
 /**
  * @description 获得最新的盘口状态
@@ -309,7 +276,7 @@ const bet_click_ol = () => {
   } else {
     emit('update_score', current_id)
   }
-  set_bet_obj_config(params, {match_data_type: props.match_data_type})
+  set_bet_obj_config(params, { match_data_type: props.match_data_type })
   BetData.set_bet_state_show(true)
 };
 
@@ -403,9 +370,11 @@ onUnmounted(() => {
     margin-left: 0;
   }
 }
+
 .odds_otb {
   color: var(--q-gb-t-c-8) !important;
 }
+
 .active {
   .odds_otb {
     color: var(--q-gb-t-c-4) !important;
@@ -444,5 +413,4 @@ onUnmounted(() => {
 
 .left_cell {
   text-align: left !important;
-}
-</style>
+}</style>

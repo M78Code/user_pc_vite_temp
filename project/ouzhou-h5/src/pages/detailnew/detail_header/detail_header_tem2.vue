@@ -132,7 +132,8 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
   */
   const get_animation_url = (params)=>{
     const match = props.get_match_detail
-
+      const tempUrl = JSON.parse(JSON.stringify(animation_src.value))
+      animation_src.value = ''
     // mock start
     // animation_src.value = get_animation_mock.data.animationUrl;
     // let style = 'day' 
@@ -147,10 +148,11 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
 
     //获取动画播放地址
     api_match_list.post_video_url(params).then( res => {
+
     let animationUrl = ''
     // 足篮棒网使用3.0动画  其他使用2.0
     if([1,2,3,5].includes(match.csid*1)){
-      let style = 'day' 
+      let style = 'day'
       let animation3Url = lodash.get(res, "data.animation3Url") || []
       animation3Url.forEach( item =>{
         if(item.styleName.indexOf(style) >= 0){
@@ -171,7 +173,7 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
     }
   }).catch( err => {
     console.error(err);
-    
+        animation_src.value = tempUrl
   })
 }
 get_animation_url({
