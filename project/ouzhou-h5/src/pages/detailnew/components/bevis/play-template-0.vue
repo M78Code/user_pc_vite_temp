@@ -1,8 +1,3 @@
-<!--
- * @Author: gamer
- * @Date: 2023-07-06 18:35:53
- * @Description: 模板id= --用于无盘口&2个/多个投注项玩法
--->
 <!-- ms: 0开 1封 2关 11锁 -->
 <!-- hs: 0开 1封 2关 11锁 -->
 <!-- os: 1开 2封 3隐藏不显示不占地方-->
@@ -70,6 +65,7 @@ const go_betting = (data) => {
     display: grid;
     padding: 8px;
     box-sizing: border-box;
+    overflow: hidden;
     .list{
         display: grid;
         grid-template-columns: repeat(3,1fr);
