@@ -58,8 +58,8 @@ const AssembleData = computed(() => {
     };
     const {hl = [], title} = props.play;
     isLocked.value = hl[0].hs == 11 ? true : false
-    const others = hl[0].ol.filter(ol_item => ol_item.ot == 'Other');
-    const assemble = hl[0].ol.filter(ol_item => ol_item.ot != 'Other');
+    const others = hl[0].ol.filter(ol_item => +ol_item.otd === 0);
+    const assemble = hl[0].ol.filter(ol_item => +ol_item.otd !== 0);
     if (others.length) {
         betInformation.others = lodash.uniqWith(others, 'oid')
     }
@@ -130,6 +130,7 @@ const go_betting = (data) => {
 
     .list {
         flex: 1;
+        overflow: hidden;
 
         &-title {
             height: 48px;

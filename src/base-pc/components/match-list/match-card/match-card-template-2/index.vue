@@ -20,6 +20,8 @@ import { get_match_template_id } from 'src/core/match-list-pc/match-handle-data.
 import { MatchTpl101AfterFullVersionWapper as MatchTpl101After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-101-after/index.js";
 // 欧洲版 冠军模板
 import { MatchTpl118AfterFullVersionWapper as MatchTpl118After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-118-after/index.js";
+import { utils } from 'src/core/utils/module/utils.js'
+
 export default {
   props: {
     mid: {
@@ -34,7 +36,10 @@ export default {
   setup(props) {
     const MatchListData = inject("MatchListData")
     const get_match_item = (mid) => {
-      return  MatchListData.get_quick_mid_obj(mid)
+      const match = MatchListData.get_quick_mid_obj(mid);
+      //增加让球方判断
+      match && utils.computed_team_let_ball(match);
+      return match
     }
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
