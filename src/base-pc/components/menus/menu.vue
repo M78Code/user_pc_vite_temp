@@ -43,7 +43,7 @@
 
     <div class="menu-nav-li">
       <ul class="menu-list">
-        <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.menu_root == 400 }">
+        <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
@@ -158,7 +158,7 @@ const outrights = () => {
     filter_tab: '',
     current_mi: '401'
   }
-  MenuData.set_mid_menu_result({})
+  MenuData.set_mid_menu_result(mid_config)
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,1014)
