@@ -38,7 +38,7 @@
             <div v-if="item.ms != 110 && show_counting_down(item)"
               :class="['counting-down-up-container relative-position', { 'special-match-container': item.mfo || [0, 31].includes(+item.mmp) }]">
               <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
-              <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="item.mmp"
+              <CountingDownSecond ref="counting-down-second" :title="get_mmp_map_title(item)" :mmp="item.mmp"
                 :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)" :m_id="item.mid" :second="item.mst" :match="item">
               </CountingDownSecond>
             </div>
@@ -63,6 +63,7 @@ import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { format_time_zone } from "src/core/format/index.js"
 import PageSourceData from "src/core/page-source/page-source.js";
+import MatchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
@@ -102,7 +103,6 @@ const matchBgImage = [{
   image: football_bg,
 }]
 
-
 /**
  * @description 赛事信息
  */
@@ -117,6 +117,10 @@ const get_item_hps = (item) => {
 const get_amtch_bg_image = (csid) => {
   const item = matchBgImage.find(t => t.value == csid)
   return item?.image
+}
+
+const get_mmp_map_title = (item) => {
+  return MatchListClass.match_period_map(item);
 }
 
   /**
@@ -216,6 +220,16 @@ function toDetails(item){
         flex: 1;
         flex-wrap: nowrap;
         flex-direction: row-reverse;
+        .counting-down-wrap{
+          flex: 1;
+          flex-wrap: nowrap;
+          flex-direction: row-reverse;
+          position: static;
+          :deep(.counting){
+            font-size: 12px;
+            color: var(--q-gb-t-c-3);
+          }
+        }
       }
       > span {
         > span {

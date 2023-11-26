@@ -80,7 +80,6 @@ body {
         .color-highlight {
           color: var(--q-gb-t-c-16);
         }
-        .table-col {
           .browser {
             margin-right: 5px;
             width: 12px;
@@ -95,7 +94,6 @@ body {
               background-image: url($SCSSPROJECTPATH+"/image/svg/theme02_y0_del.svg");
             }
           }
-        }
         .table-tr-td {
           border-bottom: 1px solid var(--q-match-result-boreder-1);//#d0d8de
           border-left: 1px solid var(--q-match-result-boreder-1);
@@ -105,14 +103,14 @@ body {
             background:#f5f6f9;
           }
           .table-col::before {
-            // border-right: 1px solid var(--q-match-result-boreder-1);
-            //content: '';
-            //position: absolute;
-            //left: 0;
-            //top: 20%;
-            //bottom: 20%;
-            //width: 1px;
-            //background-color: var(--q-match-result-boreder-1);
+            //border-right: 1px solid var(--q-match-result-boreder-1);
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background-color: var(--q-match-result-boreder-1);
           }
         }
         .active {
@@ -182,7 +180,7 @@ body {
             color:#8a8986;
           }
           input {
-            background: var(--q-gb-bg-c-11);
+            background: var(--q-gb-bg-c-4);
             border: 1px solid var(--q-match-result-boreder-1);
             color: var(--q-match-result-text-color-1);
             &:hover {

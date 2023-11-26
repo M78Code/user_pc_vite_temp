@@ -39,10 +39,18 @@ const props = defineProps({
     },
 })
 const AssembleData = computed(() => {
-    let betInformation = []
-    const ol = props.play.hl[0].ol
-    const title = props.play.title
-    let baseArr = _.groupBy(ol.filter(i => i.os != 3), 'otd')
+    let betInformation = {
+        others: [],
+        assemble: [],
+    };
+    const {hl = [], title} = props.play;
+    const others = hl[0].ol.filter(ol_item => ol_item.ot == 'Other');
+    const assemble = hl[0].ol.filter(ol_item => ol_item.ot != 'Other');
+    if (others.length) {
+        betInformation.others = lodash.uniqWith(others, 'oid')
+    }
+    const baseArr = _.groupBy(assemble.filter(i => i.os != 3), 'otd')
+
     title.forEach(item => {
         betInformation.push({
             osn: item.osn,

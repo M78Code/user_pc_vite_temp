@@ -23,7 +23,7 @@ os: 1 开盘 ，2 封盘
 
 <script setup name="template4">
 import olStatus from "../ol_status.vue";
-import {defineProps, computed, defineEmits, reactive} from "vue"
+import {defineProps, computed, defineEmits, ref} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
@@ -49,28 +49,17 @@ const props = defineProps({
 * hl 里面所有的ol都需要渲染
 *
 * */
-const AssembleStore = reactive({
-    ol_others: [],      // 其他数据
+const isLocked = ref(false)
 
-})
-
-const SetAssembleStore = function () {
-    let {hl: hl_list, title: title_ist} = props.play;
-    const ol_list = hl_list[0].ol;
-    let other_list = ol_list.filter(ol_item => ol_item == 'Other');
-    if (other_list.length) {
-
-    }
-
-}
 const AssembleData = computed(() => {
     let betInformation = {
         others: [],
-        assemble: []
+        assemble: [],
     };
     const {hl = [], title} = props.play;
-    const others = hl[0].ol.filter(ol_item => ol_item.ot == 'Other');
-    const assemble = hl[0].ol.filter(ol_item => ol_item.ot != 'Other');
+    isLocked.value = hl[0].hs == 11 ? true : false
+    const others = hl[0].ol.filter(ol_item => +ol_item.otd === 0);
+    const assemble = hl[0].ol.filter(ol_item => +ol_item.otd !== 0);
     if (others.length) {
         betInformation.others = lodash.uniqWith(others, 'oid')
     }
@@ -104,15 +93,13 @@ const go_betting = (data) => {
                 <li class="list-title textOverflow2">{{ item.osn }}</li>
                 <li v-for="_item of item.information" :key="_item.oid" @click="go_betting(_item)"
                     :class="['list-bet',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
-                    <template v-if="_item?.os == 1">
+                    <template v-if="_item?.os == 1 && !isLocked">
                         <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
-                        <span class="ov-text textOverflow1">{{
-                                compute_value_by_cur_odd_type(_item.ov, '', '', sport_id)
-                            }}</span>
+                        <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', sport_id) }}</span>
                         <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item"
                                   :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                     </template>
-                    <figure v-if="_item?.os == 2">
+                    <figure v-if="_item?.os == 2 || isLocked">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </figure>
                 </li>
@@ -120,12 +107,12 @@ const go_betting = (data) => {
         </div>
         <div v-for="_item of AssembleData.others" :key="_item.oid" @click="go_betting(_item)"
              :class="['other',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
-            <template v-if="_item?.os == 1">
-                <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
-                <span class="ov-text textOverflow1">{{compute_value_by_cur_odd_type(_item.ov, '', '', sport_id) }}</span>
+            <template v-if="_item?.os == 1 && !isLocked">
+                <span class="on-text">{{ _item.on ?? _item.ott }}</span>
+                <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', sport_id) }}</span>
                 <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
             </template>
-            <figure v-if="_item?.os == 2">
+            <figure v-if="_item?.os == 2 || isLocked">
                 <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
             </figure>
         </div>
@@ -143,6 +130,7 @@ const go_betting = (data) => {
 
     .list {
         flex: 1;
+        overflow: hidden;
 
         &-title {
             height: 48px;

@@ -1,8 +1,3 @@
-<!--
- * @Author: gamer
- * @Date: 2023-07-06 18:35:53
- * @Description: 模板id= --用于无盘口&2个/多个投注项玩法
--->
 <!-- ms: 0开 1封 2关 11锁 -->
 <!-- hs: 0开 1封 2关 11锁 -->
 <!-- os: 1开 2封 3隐藏不显示不占地方-->
@@ -46,7 +41,7 @@ const go_betting = (data) => {
             <template v-for="hl_item in play.hl" :key="hl_item.hid">
                 <li v-for="ol_item in hl_item.ol.filter(i=>i.os != 3)" :key="ol_item?.oid" @click="go_betting(ol_item)"
                     :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }, 'list-item']">
-                    <template v-if="ol_item?.os == 1">
+                    <template v-if="ol_item?.os == 1 && ol_item._hs != 11">
                         <span class="on-text textOverflow2">
                             {{ ol_item?.on || ol_item?.ott }}
                         </span>
@@ -55,7 +50,7 @@ const go_betting = (data) => {
                         </span>
                         <olStatus :item_ol_data="ol_item" :active="BetData.bet_oid_list.includes(ol_item?.oid )"/>
                     </template>
-                    <span v-if="ol_item?.os == 2">
+                    <span v-if="ol_item?.os == 2 || ol_item._hs == 11">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </span>
                 </li>
@@ -70,6 +65,7 @@ const go_betting = (data) => {
     display: grid;
     padding: 8px;
     box-sizing: border-box;
+    overflow: hidden;
     .list{
         display: grid;
         grid-template-columns: repeat(3,1fr);
