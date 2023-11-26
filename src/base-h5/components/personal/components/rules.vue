@@ -2,7 +2,7 @@
     <div class="rule_page">
       <iframe class="rules-iframe" src="http://sports-rules-ouzhou-test.sportxxx3pk.com/#/zh_cn" />
 
-      <section>
+      <!-- <section>
         <div class="title">General Sports Explanation</div>
         <q-scroll-area style="height: 100%;">
           <collapse v-for="(item,index) in rules_list" :key="index" :title="item.title">

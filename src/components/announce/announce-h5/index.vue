@@ -204,7 +204,7 @@ export default defineComponent({
                 text-align: justify;
 
                 &.is_long_word {
-                    max-width: 3.3rem;
+                    // max-width: 3.3rem;
                 }
             }
 
