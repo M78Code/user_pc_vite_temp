@@ -13,38 +13,19 @@
     <div class="hairline-border">
       <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
         <div class="item-wrap" v-if="hl_item && hl_item.ol">
-          <div
-            v-for="(ol_item, index) in hl_item.ol"
-            :key="index"
-            class="item2"
-          >
+          <div v-for="(ol_item, index) in hl_item.ol" :key="index" class="item2">
             <!-- 主程序 start -->
-            <div
-              @click="go_betting(ol_item)"
-              :class="[
-                { 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) },
-                'ol_ov',
-                'play-box-style',
-                'details_color',
-                'warp',
-              ]"
-            >
+            <div @click="go_betting(ol_item)"
+              :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) },'ol_ov','play-box-style','details_color','warp',]">
               <div class="ellipsis remark fz_14">
-                <span>
-                  {{ ol_item.on || ol_item.ott }}
-                </span>
+                <span>{{ ol_item.on || ol_item.ott }}</span>
               </div>
               <div class="text-right ol-on">
-                <template v-if="ol_item.os == 1">
+                <template v-if="ol_item.os == 1 && hl_item?.hs != 11">
                   <span class="ol-ov">{{compute_value_by_cur_odd_type(ol_item.ov,'','',MatchDetailCalss.params.sportId)}}</span>
-                  <olStatus
-                    :item_ol_data="ol_item"
-                    :active="BetData.bet_oid_list.includes(ol_item?.oid )"
-                  />
+                  <olStatus :item_ol_data="ol_item" :active="BetData.bet_oid_list.includes(ol_item?.oid )"/>
                 </template>
-                <span v-if="ol_item.os == 2"
-                  ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
-                /></span>
+                <span v-if="ol_item.os == 2 || hl_item?.item == 11"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
               </div>
             </div>
             <!-- 主程序 end -->

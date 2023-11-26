@@ -10,6 +10,7 @@ import { api_common, api_account } from 'src/api/index';
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { DateForMat } from "src/core/format/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+
 const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 
 export const utils = {
@@ -1120,6 +1121,54 @@ export const utils = {
       match_data_type: "h5_detail",
   }
     set_bet_obj_config(params,other)
-  }
+  },
+  /**
+   * 获取队伍中的让球方
+   * @param {Object} match   赛事详情数据
+   * @param {string} play_id  玩法id
+   * @returns {string}   让球方(T1|T2|'')
+   */
+  get_team_let_ball(match,play_id){
+    let team_let_ball = ''
+    if(play_id){
+      lodash.each([`${match.mid}_${play_id}_1_1`,`${match.mid}_${play_id}_1_2`], hn => {
+        let ol_data = match.all_ol_data[hn] || {}
+        if(ol_data.on && (ol_data.on.trim()).startsWith('-')) {
+          team_let_ball = ol_data.ots;
+        }
+      })
+    }
+    return  team_let_ball
+  },
+  /**
+   * 计算队伍中的让球方
+   * @param {object} match 赛事对象
+   */
+  computed_team_let_ball(match) {
+    let team_let_ball = ''
+    let other_team_let_ball = ''
+    // 让球玩法ID
+    let let_ball_play_id = lodash.get(match,'main_handicap_list.1.ols.1._hpid')
+    //常规玩法让球方
+    team_let_ball =  this.get_team_let_ball(match,let_ball_play_id)
+    //足球特殊玩法
+    if( match.csid == 1 &&  (match.cosCorner || match.cosPunish)){
+       let other_hpid = lodash.get(match,'other_handicap_list.1.ols.1._hpid')
+       other_team_let_ball = this.get_team_let_ball(match,other_hpid);
+    }
+    //当前局玩法
+    if(match.is_show_cur_handicap){
+      let other_hpid = lodash.get(match,'cur_handicap_list.1.ols.1._hpid')
+      //网球
+      if(match.csid == 5){
+         other_hpid = lodash.get(match,'cur_handicap_list.2.ols.1._hpid')
+      }
+      other_team_let_ball = this.get_team_let_ball(match,other_hpid);
+    }
+    //主盘让球方
+    match.team_let_ball = team_let_ball
+     //足球罚牌角球 | 篮球等当前局
+    match.other_team_let_ball = other_team_let_ball
+  },
 };
 

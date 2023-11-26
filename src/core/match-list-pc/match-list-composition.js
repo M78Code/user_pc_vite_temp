@@ -28,7 +28,6 @@ import { match_list_handle_set } from './match-handle-data.js'
 import { mx_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
-
 const { load_video_resources } = pre_load_video
 // 数据请求状态
 const load_data_state = ref("loading");
@@ -41,6 +40,7 @@ const is_loading = ref(true);
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
 const api_error_count = ref(0);
+let is_has_base_data = false; //是否有元数据
 let check_match_last_update_timer_id;
 let get_match_list_timeid;
 let hot_match_list_timeout;
@@ -95,7 +95,8 @@ export function fetch_match_list(is_socket = false, cut) {
 		// fetch_search_match_list && fetch_search_match_list(is_socket);
 		return false;
 	}
-	if (!is_socket) {
+	//不是 w 并且没有 元数据列表 启动loading
+	if (!is_socket && !is_has_base_data) {
 		load_data_state.value = "loading";
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
@@ -111,7 +112,7 @@ export function fetch_match_list(is_socket = false, cut) {
 	delete _params.lv2_mi;
 	// 近期开赛
 	// console.error('MenuData.menu_root',MenuData.menu_root)
-	if (MenuData.menu_root == 2) {
+	if (MenuData.is_today()) {
 		// _params.selectionHour = filterHeader.open_select_time;
 	} else {
 		_params.selectionHour = null;
@@ -125,7 +126,15 @@ export function fetch_match_list(is_socket = false, cut) {
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
-					load_data_state.value = 'data'
+					if (lodash.get(res, "data.length")!=undefined || lodash.get(res, "data.data.length")!=undefined) {
+						const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
+						load_data_state.value = len ? 'data' : 'empty'
+					}
+					else {
+						const livedata = lodash.get(res, "data.livedata.length", 0)
+						const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
+						load_data_state.value = livedata + nolivedata > 0 ? 'data' : 'empty'
+					}
 					//处理服务器返回的 列表 数据   fetch_match_list
 					handle_match_list_request_when_ok(
 						JSON.parse(JSON.stringify(res)),
@@ -146,6 +155,7 @@ export function fetch_match_list(is_socket = false, cut) {
 						load_data_state.value = "empty";
 					}
 				}
+
 				show_refresh_mask.value = false;
 			})
 			.catch((err) => {
@@ -164,7 +174,9 @@ export function fetch_match_list(is_socket = false, cut) {
 					}
 				}
 			});
+
 	};
+	set_load_data_state(load_data_state.value)
 	const match_list_debounce_cache = axios_debounce_cache.get_match_list;
 	if (match_list_debounce_cache && match_list_debounce_cache["ENABLED"]) {
 		let info = match_list_debounce_cache.can_send_request(_params);
@@ -207,10 +219,13 @@ function handle_destroyed() {
 	hot_match_list_timeout = null;
 }
 function init_page_when_base_data_first_loaded() {
-	// 元数据 
-	set_base_data_init();
+	//设置元数据 列表 返回boolean
+	is_has_base_data = set_base_data_init()
+	if (is_has_base_data) {
+		MatchListScrollClass.set_scroll_top(0);
+		load_data_state.value = 'data';
+	}
 	//释放试图 
-	// load_data_state.value = 'data'
 	// check_match_last_update_timer_id = setInterval(
 	// 	check_match_last_update_time(),
 	// 	30000
@@ -240,10 +255,12 @@ function mounted_fn() {
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
 		// 调用列表接口
-		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST,  () => {
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, () => {
 			clearTimeout(tid_match_list)
 			tid_match_list = setTimeout(() => {
-				fetch_match_list()
+				//请求列表接口之前 先设置元数据列表
+				init_page_when_base_data_first_loaded()
+				fetch_match_list()//请求接口
 			}, 80);
 		}).off,
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
@@ -252,8 +269,8 @@ function mounted_fn() {
 			// 重新订阅C8
 			api_bymids({ is_show_mids_change: true })
 		}, 1000)).off,
-		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_match_list).off,
-		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded).off,
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fetch_match_list).off,
+		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 100)).off,
 	]
 
 	load_video_resources();
@@ -284,16 +301,7 @@ function mounted_fn() {
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
 export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
-	
-	let {
-		match_list_api_config,
-		menu_root,
-		match_list_api_type,
-		left_menu_result,
-	} = MenuData;
-
-	let current_menu = ([2, 3].includes(Number(menu_root)) && left_menu_result.guanjun != "common-guanjun")
-	if (lodash.get(data, "data.livedata") || lodash.get(data, "data.nolivedata") || ((menu_root == 2000 || current_menu) && !match_list_api_config.is_collect)) {
+	if (lodash.get(data, "data.livedata") || lodash.get(data, "data.nolivedata")) {
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法

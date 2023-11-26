@@ -7,7 +7,7 @@
            
             <span>{{$t('bet.total_win2')}}</span>
             <!-- <span class="margin_left_4">&thinsp;{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span> -->
-            <span class="margin_left_4">{{ mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally), BetData.bet_amount) || '0.00' }}</span>
+            <span class="margin_left_4">{{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }}</span>
         </div>
        </div>
        <div class="info_right size_14">
@@ -27,7 +27,7 @@
 <script setup>
 import lodash_ from "lodash"
 import { onMounted, onUnmounted, reactive,ref } from "vue"
-import {MITT_TYPES,useMittOn,format_money2,format_money } from "src/core/"
+import {MITT_TYPES,useMittOn,format_money2,format_money,UserCtr } from "src/core/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'

@@ -185,7 +185,7 @@
           <template v-for="(item, index) in results_list" :key="index">
             <div class="table-tr-td" :class="{ active: index == activeIndex }" @click="get_tr_detail(item, index)">
               <!-- 日期 -->
-              <div class="table-col">
+              <div class="table-col_date">
                 <div class="browser" :class="{ del: index == activeIndex }" ></div>
                 <div class="time-wrap">
                   <div> {{ formatTime( item.matchTime, UserCtr.lang == "vi" ? "hh:MM dd/mm/yyyy" : "yyyy-mm-dd hh:MM" ) }} </div>
@@ -661,7 +661,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.table-col {
+.table-col,.table-col_date {
   position: relative;
   &:first-child {
     display: flex;

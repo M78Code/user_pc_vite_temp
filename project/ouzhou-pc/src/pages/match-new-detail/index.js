@@ -1,24 +1,25 @@
 import { ref, onMounted, watch, onUnmounted } from "vue";
-import { api_match_list,api_common } from "src/api";
+import { api_match_list, api_common, api_details } from "src/api";
 import { useRouter } from "vue-router";
 // import store from "src/store-redux-vuex/index.js";
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
   MenuData,
   UserCtr,
-  MatchDetailCalss
+  MatchDetailCalss,
 } from "src/core/index";
 import {
   filter_odds_func,
   handle_course_data,
   format_mst_data,
 } from "src/core/utils/matches_list.js";
-import { useGetGlobal } from  "src/core/global/mixin/global_mixin.js"
+import { useGetGlobal } from "src/core/global/mixin/global_mixin.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 import { LayOutMain_pc } from "src/core/";
 import lodash_ from "lodash";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 export function usedetailData(route) {
   const router = useRouter();
   const category_list = ref([]); //分类数据
@@ -62,7 +63,7 @@ export function usedetailData(route) {
 
   // 监听分类切换数据
   watch(current_key, (val) => {
-    if(!val) return
+    if (!val) return;
     get_match_detail(val);
   });
   // 监听分类切换数据
@@ -84,12 +85,9 @@ export function usedetailData(route) {
     if (detail_list.value?.length > 0) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
-        if (i.hpid==103) {  //hpid103处理
-          i.title = [
-            {otd:1},
-            {otd:0},
-            {otd:2},
-          ]
+        if (i.hpid == 103) {
+          //hpid103处理
+          i.title = [{ otd: 1 }, { otd: 0 }, { otd: 2 }];
         }
       }
     }
@@ -107,13 +105,10 @@ export function usedetailData(route) {
       MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid),
       list || []
     );
-    detail_list.value = lodash_.get(getMidInfo(route.params.mid), "odds_info") || []
+    detail_list.value =
+      lodash_.get(getMidInfo(route.params.mid), "odds_info") || [];
 
     // console.log(1111111111,detail_list.value)
-
-    
-
-
 
     show_close_thehand.value = list.length == 0;
 
@@ -124,7 +119,7 @@ export function usedetailData(route) {
 
   const get_all_hl_item = () => {
     all_hl_item.value = [];
-    if(!detail_list.value) return
+    if (!detail_list.value) return;
     for (const item of detail_list.value) {
       if (item.hl.length > 0) {
         for (const opt of item.hl) {
@@ -140,24 +135,26 @@ export function usedetailData(route) {
   /**
    * 获取数据
    */
-  const init = async () => {
- 
+  const init = async (params) => {
+    const { isNeedLoading = true } = params || {};
+
     // all_list_toggle = {}
-    detail_loading.value = true;
-    get_detail();
+    detail_loading.value = isNeedLoading;
+    get_detail(params);
     await get_category();
   };
   /**
    * 获取赛事详情数据
    */
-  const get_detail = async () => {
+  const get_detail = async (par) => {
+    const { isNeedLoading = true } = par || {};
     try {
       const params = {
         mid: mid,
         cuid: user_info.userId,
         t: new Date().getTime(),
       };
-      detail_loading.value = true;
+      detail_loading.value = isNeedLoading;
       const res = await get_detail_data(params);
       // 空赛事数据跳转回首页
       if (lodash_.isEmpty(res.data)) {
@@ -178,7 +175,6 @@ export function usedetailData(route) {
 
       // detail_info.value = getMidInfo(mid);
       useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
-      use_polling_mst(detail_info.value);
     } catch (error) {
       console.error("get_detail_data", error);
     }
@@ -200,27 +196,6 @@ export function usedetailData(route) {
     }
   };
 
-  /**
-   * @name 开赛时间自动加1
-   * @param {*} t
-   */
-  const use_polling_mst = (payload) => {
-    if (Number(payload.mst) <= 0 || payload.ms !== 1) {
-      return;
-    }
-    // payload.mst = Number(payload.mst)+10
-    mst_timer = setInterval(() => {
-      if (payload.csid == 1) {
-        payload.mst++;
-      } else if (payload.csid == 2) {
-        if (Number(payload.mst) == 1) {
-          clearInterval(mst_timer);
-        }
-        payload.mst--;
-      }
-      payload.mstValue = format_mst_data(payload.mst);
-    }, 1000);
-  };
   /**
    * 获取赛事tabs数据
    */
@@ -262,9 +237,11 @@ export function usedetailData(route) {
       detail_loading.value = false;
       current_key.value = current_key.value
         ? current_key.value
-        : tabList.value?tabList.value[0].value:null;
+        : tabList.value
+        ? tabList.value[0].value
+        : null;
 
-        current_key.value&&get_match_detail(current_key.value);
+      current_key.value && get_match_detail(current_key.value);
     } catch (error) {
       console.error("get_detail_list", error);
     }
@@ -279,7 +256,6 @@ export function usedetailData(route) {
     if (!val) return;
     detail_info.value = getMidInfo(val);
     all_list.value = lodash_.get(getMidInfo(val), "odds_info");
-   
   };
   /**
    * @description: 从仓库获取获取赛事信息
@@ -288,6 +264,75 @@ export function usedetailData(route) {
    */
   const getMidInfo = (mid) => {
     return MatchDataWarehouseInstance.get_quick_mid_obj(mid);
+  };
+  /**
+   * @description: 一键折叠
+   * @param {*} mid
+   * @return {*} 赛事详情
+   */
+  const set_odds_fold = (val) => {
+    for (const item of all_list.value) {
+      item.expanded = !val;
+    }
+  };
+
+  /**
+   * @description: 一键置顶
+   * @param {*} mid
+   * @return {*} 赛事详情
+   */
+  const set_top = (val) => {
+    let params = {
+      cuid: user_info.userId,
+      playId: val.hpid,
+      matchId: val.mid,
+      topKey: val.topKey,
+      status: val.hton == "0" ? 0 : 1, //0置顶，1取消置顶
+    };
+
+    api_details.set_playTop(params).then((res) => {
+      const code = lodash_.get(res, "code");
+      if (code == 200) {
+        if (!params.status) {
+          //置顶
+          if (val.hton == "0") {
+            val.hton = new Date().getTime() + "";
+          }
+          all_list.value = all_list.value.filter(
+            (item) => item.hpid != val.hpid
+          );
+          all_list.value.unshift(val);
+          get_match_detail(current_key.value);
+        } else {
+          //取消置顶
+          val.hton = "0";
+          let arr = []; //暂存置顶的数据
+          for (var i = 0; i < all_list.value.length; i++) {
+            if (all_list.value[i].hton != "0") {
+              arr.unshift(all_list.value.splice(i, 1)[0]);
+              i--;
+            }
+          }
+          //根据hpon排序
+          all_list.value.sort(function (a, b) {
+            return a.hpon - b.hpon;
+          });
+          //插入置顶的数据
+          for (var i in arr) {
+            all_list.value.unshift(arr[i]);
+          }
+          get_match_detail(current_key.value);
+        }
+        // // 保存置顶玩法的 id
+        // this.set_top_id({
+        //   id: params.topKey,
+        //   type: !params.status,
+        // });
+        // this.set_current_index(handicap);
+        // // 计算单双列玩法
+        // this.set_waterfall(handicap);
+      }
+    });
   };
 
   /*
@@ -303,7 +348,7 @@ export function usedetailData(route) {
     },
     { deep: true }
   );
-
+  let message_fun = null;
   onMounted(() => {
     sportId = route.params.csid;
     mid = route.params.mid;
@@ -312,25 +357,86 @@ export function usedetailData(route) {
     LayOutMain_pc.set_oz_show_right(true); // 显示右侧
     LayOutMain_pc.set_oz_show_left(true); // 显示菜单
     init();
+    // 一键折叠监听
+    useMittOn(MITT_TYPES.EMIT_SHOW_FOLD, set_odds_fold);
+    // 一键置顶监听
+    useMittOn(MITT_TYPES.EMIT_SET_PLAT_TOP, set_top);
+
+
+      // 增加监听接受返回的监听函数
+     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+     if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
+     // handler_ws_cmd(cmd, data);
+     // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
+     // console.error(flag,'flag','cmd:',cmd,data);
+     //如果ms mmp变更了 就手动调用ws
+       init.value = false
+       switch (cmd) {
+         case "C303":
+           get_detail_lists()
+           break;
+         case "C302":
+          get_detail_lists()
+          break;
+         case "C104":
+           RCMD_C104(data)
+           break;  
+         case "C109":
+          RCMD_C109(data)
+          break; 
+         default:
+           break;
+       }
+   })
   });
+  /**
+   * @description: RCMD_C109
+   * @return {*}
+   */
+  function RCMD_C109(obj){
+    if(!obj){return}
+    let skt_data = obj.cd;
+    if(!skt_data || skt_data.length<1) return;
+    // 重新拉取数据;
+    get_category();
+    get_detail_lists();
+  };
+  /**
+ * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
+ * @param {*} obj
+ * @return {*}
+ */  
+  function RCMD_C104(obj) {
+    let skt_data = obj.cd;
+    // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
+    if(skt_data.mhs == 0 || skt_data.mhs == 11){
+      // 重新拉取数据;
+     get_category();
+     get_detail_lists();
+    }else if(skt_data.mhs == 1){
+      // 设置盘口状态
+    }else if(skt_data.mhs == 2){
+      show_close_thehand.value = true;  
+    }
+  }
   //todo mitt 触发ws更新
   const { off } = useMittOn(
     MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,
     (res) => {}
   );
-    //  赛事切换刷新数据
-    const refresh = () => {
-      all_list_toggle = {};
-      detail_list.value = [];
-      sportId = route.params.csid;
-      mid = route.params.mid;
-      tid = route.params.tid;
-      current_id.value = route.params.mid;
-      current_id.value = mid;
-      LayOutMain_pc.set_oz_show_right(true); // 显示右侧
-      LayOutMain_pc.set_oz_show_left(true); // 显示菜单
-      init();
-    };
+  //  赛事切换刷新数据
+  const refresh = () => {
+    all_list_toggle = {};
+    detail_list.value = [];
+    sportId = route.params.csid;
+    mid = route.params.mid;
+    tid = route.params.tid;
+    current_id.value = route.params.mid;
+    current_id.value = mid;
+    LayOutMain_pc.set_oz_show_right(true); // 显示右侧
+    LayOutMain_pc.set_oz_show_left(true); // 显示菜单
+    init();
+  };
   /* 赛事结束之后调取详情接口 */
   // const { off:off_init } = useMittOn(
   //   MITT_TYPES.EMIT_SHOW_DETAILS,
@@ -343,12 +449,12 @@ export function usedetailData(route) {
     // off_init()
   });
 
-    /**
-     *@description 详情页赛事结束自动切换赛事 todo
-     *@param {Undefined}
-     *@return {Object} 返回赛事各项id(球类id:csid/赛事id:mid/联赛id:tid)
-     */
-      /**
+  /**
+   *@description 详情页赛事结束自动切换赛事 todo
+   *@param {Undefined}
+   *@return {Object} 返回赛事各项id(球类id:csid/赛事id:mid/联赛id:tid)
+   */
+  /**
    * @description 返回上一页
    */
   const back_to = (is_back = true) => {
@@ -372,7 +478,7 @@ export function usedetailData(route) {
           keyword: route.query.keyword,
           csid: route.params.csid,
         });
-        SearchPCClass.set_search_isShow(true)
+        SearchPCClass.set_search_isShow(true);
       }
       let { from_path, from } = cur_menu_type.value;
       from_path = from_path || "/home";
@@ -380,48 +486,50 @@ export function usedetailData(route) {
         from_path = "/home";
       }
       // 告知列表是详情返回：用于是否重新自动拉右侧内容
-      MatchDetailCalss.set_is_back_btn_click(is_back)
-      router.push({path:from_path});
+      MatchDetailCalss.set_is_back_btn_click(is_back);
+      router.push({ path: from_path });
       if (from_path.includes("search")) {
-        LayOutMain_pc.set_unfold_multi_column(false)
+        LayOutMain_pc.set_unfold_multi_column(false);
       }
     }, 50);
   };
-     const { mx_autoset_active_match } = useGetGlobal({back_to}); 
-    // 监听赛事状态mmp的值
-    watch(
-      () => detail_info.value?.mmp,
-      (_new, _old) => {
-        // 如果是999赛事结束即调接口切换赛事
-        if (_new == "999") {
-          mx_autoset_active_match({mid:route.params.mid});
+  const { mx_autoset_active_match } = useGetGlobal({ back_to });
+  // 监听赛事状态mmp的值
+  watch(
+    () => detail_info.value?.mmp,
+    (_new, _old) => {
+      // 如果是999赛事结束即调接口切换赛事
+      if (_new == "999") {
+        mx_autoset_active_match({ mid: route.params.mid });
+      }
+      // 否则更新玩法集
+      else {
+        if (_old != undefined) {
+          // get_category();
         }
-        // 否则更新玩法集
-        else {
-          if (_old != undefined) {
-            // get_category();
-          }
+      }
+    },
+    { deep: true }
+  );
+  // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
+  watch(
+    () => detail_info.value?.ms,
+    (_new, _old) => {
+      let arr_ms = [0, 1, 2, 7, 10, 110];
+      if (!arr_ms.includes(Number(_new)) && _new != undefined) {
+        mx_autoset_active_match({ mid: route.params.mid });
+      }
+      // 赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
+      else {
+        // ms变更时才调用
+        if (_new != _old && _old) {
+          // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
+          refresh();
         }
-      },{deep:true}
-    );
-    // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
-    watch(
-      () => detail_info.value?.ms,
-      (_new, _old) => {
-        let arr_ms = [0, 1, 2, 7, 10, 110];
-        if (!arr_ms.includes(Number(_new)) &&  _new != undefined ) {
-          mx_autoset_active_match({mid:route.params.mid});
-        }
-        // 赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
-        else {
-          // ms变更时才调用
-          if (_new != _old && _old) {
-            // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-            refresh();
-          }
-        }
-      },{deep:true}
-    );
+      }
+    },
+    { deep: true }
+  );
 
   return {
     tabList,

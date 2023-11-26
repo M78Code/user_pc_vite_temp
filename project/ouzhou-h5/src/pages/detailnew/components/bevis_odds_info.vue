@@ -2,7 +2,7 @@
     <div class="match-detail-odds component odds-info">
         <template v-if="match_odds_info && match_odds_info.length > 0">
             <template v-for="(item, index) in match_odds_info" :key="item.topKey">
-                <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2||item.hs == 11))">
+                <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
                     <q-separator color="orange" v-if="index != 0"/>
                     <div class="odds-hpn" @click="expend_toggle(item)">
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
@@ -10,16 +10,19 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-<!--                        {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
+<!--{{ item.hpt }}-->
+<!--{{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :play="item" :item_data="item" :active="active" @bet_click_="bet_click_" />
+                        <playTemplate3 :play="item" :active="active" @bet_click_="bet_click_"></playTemplate3>
                     </div>
                 </div>
             </template>
+
         </template>
         <template v-else>
             <div v-if="!loading">
-                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt="">
+                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/no-data.png`" alt="">
                 <div class="no-data-text">No Data</div>
             </div>
         </template>
@@ -28,13 +31,11 @@
 
 <script setup>
 import {onMounted, ref, markRaw, watch, nextTick} from "vue";
-import temp0 from "./template/tem0.vue";
-import temp1 from "./template/tem1.vue";
 import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 
-import {playTemplate0, playTemplate1, playTemplate4, playTemplate5} from "./bevis/index.js"
+import {playTemplate0, playTemplate1, playTemplate3, playTemplate4, playTemplate5} from "./bevis/index.js"
 
 import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
@@ -42,6 +43,7 @@ import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
 import {useMittEmit, MITT_TYPES} from "src/core/mitt"
 import {LOCAL_PROJECT_FILE_PREFIX} from "src/core";
 import {MatchDetailCalss} from "src/core"
+import _ from "lodash"
 
 // /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
 const props = defineProps({
@@ -64,15 +66,15 @@ const props = defineProps({
         default: false
     }
 });
+
+/*setTimeout(function (){
+    let baseData = []
+    baseData = _.groupBy(props.match_odds_info,'hpt')
+    console.log(baseData,"baseData")
+    console.log(props.match_odds_info,"props.match_odds_info")
+},2000)*/
 const emit = defineEmits(["change", "update:allCloseState"]);
 const active = ref(1);
-/*const componentArr = ref({
-    tem0: markRaw(temp0),
-    tem1: markRaw(temp1),
-    tem3: markRaw(temp3),
-    tem5: markRaw(temp5),
-    tem_other: markRaw(tem_other),
-});*/
 /*
 * 新组件使用hpid 玩法集ID
 * 原来组件使用hpt 玩法展示模板
@@ -92,7 +94,7 @@ const playComponent = ref({
     template_other: markRaw(tem_other)
 })
 const computedPlayComponent = function (hpt) {
-    let arr = [0,1,3,5]
+    let arr = [0,1,3,5,4]
     let componentName = '';
     if (arr.includes(hpt)) {
         componentName = `template${hpt}`

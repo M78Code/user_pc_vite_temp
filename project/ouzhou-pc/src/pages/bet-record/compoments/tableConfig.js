@@ -9,7 +9,8 @@
 import { ref, onMounted } from 'vue'
 import { api_match_list } from 'src/api'
 import { responseData } from './mock'
-import { UserCtr } from 'src/core/index.js'
+import { i18n_t, UserCtr } from 'src/core/index.js'
+import GlobalSwitchClass from 'src/core/global/global.js'
 export function useGetOrderList () {
   const { get_order_list } = api_match_list // 接口
   // const userInfo = state.userReducer?.userInfo || {}; // 用户数据
@@ -79,6 +80,19 @@ export function useGetOrderList () {
         ...obj
       }
       let res = await get_order_list(params)
+      if(res.code !== '200'){
+        if(res.code === '0401038'){
+          GlobalSwitchClass.set_tip_show_state(true, {
+            text: '请求过于频繁'
+          })
+          return ;
+        }
+        return;
+        // GlobalSwitchClass.set_tip_show_state(true, {
+        //   text: res.message
+        // })
+        // return;
+      }
       tableData.value = res.data?.records || []
       total.value = res.data?.total
     } catch (error) {

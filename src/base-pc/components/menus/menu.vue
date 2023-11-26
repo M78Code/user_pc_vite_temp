@@ -31,7 +31,8 @@
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
         <template v-for="item in BaseData.left_menu_base_mi" :key="item">
-          <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }" v-if="item.ct" @click="jump_func(item,'1')">
+          <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }"
+           v-if="item.ct" @click="jump_func(item,'1')">
             <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
           </li>
@@ -42,7 +43,7 @@
 
     <div class="menu-nav-li">
       <ul class="menu-list">
-        <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.menu_root == 400 }">
+        <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
@@ -71,6 +72,7 @@ const route = useRoute();
 // favouritse
 const go_to_favouritse = () => {
   // 点击收藏时清除其他球种选中状态
+  if(MenuData.is_collect)return
   MenuData.left_menu_result.lv1_mi = ''
   // 点击菜单的时候如果在详情页应跳转出来先
   if (['league','details'].includes(route.name)) {
@@ -98,8 +100,11 @@ const go_to_favouritse = () => {
  * @returns {undefind} 无返回值
  */
 const jump_func = (payload ={},type) => {
+  if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
+    return
+  }
    // 点击菜单的时候如果在详情页应跳转出来先
-  if (['league','details'].includes(route.name)) {
+  if (['league','details','search'].includes(route.name)) {
     router.push('/home')
   }
   let obj = {
@@ -130,6 +135,7 @@ const jump_func = (payload ={},type) => {
 
 // 冠军
 const outrights = () => {
+  if(MenuData.menu_root == 400)return
  // 点击菜单的时候如果在详情页应跳转出来先
  if (['league','details'].includes(route.name)) {
     router.push('/home')
@@ -152,7 +158,7 @@ const outrights = () => {
     filter_tab: '',
     current_mi: '401'
   }
-  MenuData.set_mid_menu_result({})
+  MenuData.set_mid_menu_result(mid_config)
 
   nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,1014)

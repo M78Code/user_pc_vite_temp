@@ -71,8 +71,8 @@ const get_odds_value = (ol_item,hsw) => {
   let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
   let csid = props.csid;
   let r1 = compute_value_by_cur_odd_type(ov,'','',csid)
-
-  return r1 || 0;
+  const result = r1.split('.')[1] === '00' ? r1.split('.')[0] : r1
+  return result || 0;
 }
 
 </script>

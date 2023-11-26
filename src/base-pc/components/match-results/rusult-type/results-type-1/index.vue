@@ -358,7 +358,15 @@ export default {
       .table-col:first-child {
         padding-left: 20px;
       }
+      .table-col_date:first-child {
+        padding-left: 20px;
+      }
       .table-col {
+        .icon {
+          background-size: 100%;
+        }
+      }
+      .table-col_date {
         .icon {
           background-size: 100%;
         }
@@ -384,7 +392,7 @@ export default {
         &:hover {
           background: #f5f7fa;
         }
-        .table-col {
+        .table-col,.table-col_date {
           height: 58px;
           // border-right: 1px solid #d0d8de;
           
@@ -494,7 +502,8 @@ export default {
             background-position: center;
             padding-bottom: 0;
             height: 50px !important;
-            background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png");
+            // background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png");
+            background-image: url($SCSSPROJECTPATH+"/image/svg/no-data.svg");
           }
           .text-center {
             color: #999;

@@ -28,8 +28,9 @@
 
   .main_wrap {
     display: flex;
-    flex: 1;
+    // flex: 1;
     flex-flow: column;
+    height: 700px;
     /* ************** 筛选条件 *************** -S */
   }
 
@@ -49,6 +50,11 @@
       flex-flow: column;
       height: 100%;
       .table-col:first-child {
+        span {
+          margin-right: 10px;
+        }
+      }
+      .table-col_date:first-child {
         span {
           margin-right: 10px;
         }

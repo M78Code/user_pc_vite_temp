@@ -1,9 +1,9 @@
 <template>
   <span>
     <!-- 红升icon -->
-    <img class="hps_img" v-if="is_down" :src="active ? ouzhou_white_up : ouzhou_hps_down" alt="" />
+    <img class="hps_img" v-if="is_down" :src="active ? ouzhou_white_up : ouzhou_hps_up " alt="" />
     <!-- 绿降icon -->
-    <img class="hps_img" v-if="is_up" :src="active ? ouzhou_white_down : ouzhou_hps_up" alt="" />
+    <img class="hps_img" v-if="is_up" :src="active ? ouzhou_white_down :ouzhou_hps_down " alt="" />
   </span>
 </template>
 <script setup>
@@ -44,7 +44,7 @@ const reset_status = () => {
     is_down.value = false;
     clearTimeout(timer);
     timer = null;
-  }, 5000);
+  }, 3000);
 };
 </script>
 <style scoped>

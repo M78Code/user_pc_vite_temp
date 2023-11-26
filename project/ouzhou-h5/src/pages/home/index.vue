@@ -36,7 +36,7 @@
             <!-- 5大联赛 -->
             <template v-if="five_league_match.length > 0">
               <HeaderTitle title="Top Leagues"></HeaderTitle>
-              <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
+              <MatchLeagues :five_league_match="five_league_match"/>
             </template>
           </section>
         </q-tab-panel>
@@ -122,14 +122,21 @@ onMounted(async () => {
     const item = cd.find(t => [1,2,5].includes(+t.csid) )
     if (item) {
       get_ouzhou_home_data()
+      get_ouzhou_home_hots()
       get_five_league_matchs()
     }
   }
-  // 赛事 阶段变更 也需要重新请求
-  if (['C104', '901'].includes(cmd)) {
-    get_ouzhou_home_data()
-    get_five_league_matchs()
+
+  // 调用 matchs  接口
+  if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
+    const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
+    if (mhs == 2 || mmp == '999') {
+      get_ouzhou_home_data()
+      get_ouzhou_home_hots()
+      get_five_league_matchs()
+    }
   }
+
   // 调用 mids  接口
   if (['C303', 'C114'].includes(cmd)) {
     if (five_league_mids.value.length > 0) {
@@ -156,7 +163,7 @@ const handle_ouzhou_home_data = (res) => {
   if (p15_list.length > 0) {
     const arr_p15 = p15_list.map(t => {
       const match = MatchDataBasel5minsH5.get_quick_mid_obj(t?.mid)
-      return { ...match, match_data_type: 'h5_ten_five_mins' }
+      return match
     })
     time_events.value = arr_p15.filter(t => t?.mid)
   }
@@ -193,8 +200,7 @@ const handle_ouzhou_home_hots = async (data) => {
       return {
         ...match,
         home_score, 
-        away_score,
-         match_data_type: 'h5_hots_list' 
+        away_score
       }
     })
     featured_matches.value = arr_data.filter(t => t?.mid)
@@ -210,7 +216,7 @@ const handle_ouzhou_home_hots = async (data) => {
   if (list && list.length > 0) five_league_match.value = list.map(t => {
     five_league_mids.value.push(t?.mid)
     const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t?.mid) || t
-    return { ...match, match_data_type: 'h5_five_league' }
+    return match
   })
   MatchMeta.get_match_base_hps_by_mids(five_league_mids.value.toString(), MatchDataBaseFiveLeagueH5)
   set_ws_active_mids()
@@ -345,7 +351,7 @@ onUnmounted(() => {
             height: 100%;
             background-color: var(--q-gb-bg-c-2) !important;
             :deep(.scroll-wrapper){
-              background-color: var(--q-gb-bg-c-2) !important;
+              // background-color: var(--q-gb-bg-c-2) !important;
               .s-w-item{
                 background-color: var(--q-gb-bg-c-2) !important;
               }

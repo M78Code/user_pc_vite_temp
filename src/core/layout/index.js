@@ -87,7 +87,7 @@ class LayOutMain {
     // 区域大小
     this.oz_layout_content = 1430
     //公告 赛果 体育规则 当前进入的模块
-    this.layout_secondary_active = 'announcement'
+    this.layout_secondary_active = ''
     // ------------------------------------------ 欧洲版 pc 专用 --------------------------------------------------------------------------------------------
   }
 
@@ -152,7 +152,7 @@ class LayOutMain {
     }
   }
   /** 公告 赛果 体育规则 激活次要模块设置*/
-  set_layout_secondary_active(value='announcement') { 
+  set_layout_secondary_active(value) { 
     this.layout_secondary_active = value;
     this.set_layout_version()
   }
