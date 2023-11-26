@@ -58,6 +58,7 @@
                     alt=""
                     srcset=""
                     style="margin: 0 10px; height: 14px"
+                    v-if="detail_info.mng"
                    
                   />
                 </div>
