@@ -13,7 +13,7 @@
                     <!-- 盘口 -->
                     <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
                 </div>
-                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
+                <div class="w-100 fon12 font400 text-8A8986-i" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">

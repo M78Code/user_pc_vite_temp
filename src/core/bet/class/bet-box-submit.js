@@ -3,8 +3,6 @@ import BetData from "./bet-data-class.js"
 import BetViewDataClass from "./bet-view-data-class.js"
 import BetWsMessage from "./bet-ws-message.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
-import UserCtr from "src/core/user-config/user-ctr.js"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { 
     MatchDataWarehouse_PC_List_Common, 
@@ -21,6 +19,7 @@ import {
  } from 'src/core/index.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
+import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/core/index.js"
 
 let time_out = null
 let time_api_out = null
@@ -51,6 +50,10 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
             // "userId": UserCtr.get_uid()
+        }
+        // 冠军没有赛事阶段
+        if(MenuData.is_kemp()){
+            delete obj.matchProcessId
         }
         // 串关没有 这个字段 
         if (is_single) {
@@ -617,6 +620,11 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if ([1, 2].includes(Number(mid_obj.ms))) {
         matchType = 2
     }
+    // 冠军
+    if(MenuData.is_kemp()){
+        matchType = 3
+    }
+
     const play_config = {
         hl_obj,
         hn_obj,
@@ -658,6 +666,10 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         handicap: get_handicap(ol_obj,other.is_detail,mid_obj), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
+    }
+    // 冠军 
+    if(MenuData.is_kemp()){
+        bet_obj.handicap = ol_obj.on
     }
 
     // 设置投注内容 
@@ -804,7 +816,8 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let text = ''
     // 展示用的 + 投注项
     // 两数拼接  
-    let home_away_mark = [2, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127,38] // 
+    let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127,38] // 
+
     // 多位数
     let home_mark_more = [351,347]
     // 主客队
