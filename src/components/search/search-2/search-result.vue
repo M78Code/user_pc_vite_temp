@@ -175,7 +175,7 @@
 		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
 			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)"
 			 class="no-result-warp">
-			 <p>{{ i18n_t('ouzhou.search.no_search_rezult') }}</p>
+			 <!-- <p>{{ i18n_t('ouzhou.search.no_search_rezult') }}</p> -->
 			 <div class="result">
 				<img :src="compute_local_project_file_path('/image/svg/no-result.svg')" />
 				<div>{{ i18n_t('ouzhou.search.null1') }}</div>
@@ -698,7 +698,7 @@ watch(
 .middle_info_tab {
 	padding: 9px 18px;
 	display: flex;
-	border-bottom: 1px solid #FF7000;
+	border-bottom: 1px solid var(--q-header-search-color-5);
 	background-color: #fff;
 	font-size: 14px;
 	font-weight: 500;
@@ -729,7 +729,7 @@ watch(
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		height: 300px;
+		height: 100%;
 		div {
 			margin-top: 10px;
 		}
