@@ -41,14 +41,14 @@ export default {
     LeaguesHeader,
   },
   setup() {
-    mounted_fn()
     const match_list_card_key_arr = ref([])
     const route = useRoute();
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-
       MenuData.set_menu_current_mi(400 + MenuData.current_ball_type * 1)
+      mounted_fn()
+
     })
 
     watch(() => route.params, () => {
