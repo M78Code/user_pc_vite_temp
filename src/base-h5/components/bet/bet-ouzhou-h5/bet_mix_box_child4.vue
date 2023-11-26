@@ -21,7 +21,7 @@
                   </div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">{{ item.marketValue }}</span></div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}} <span class="text-one-span">{{ item.marketValue }}</span></div>
                       <div class="nonebox4-content-left-content-text-two">[{{item.matchType == 2?  i18n_t("bet.bet_inplay") :''}}] <span class="text-two-span">{{item.playName}}</span></div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
