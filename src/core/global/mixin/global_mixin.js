@@ -278,7 +278,6 @@ export const useGetGlobal = ({  back_to }) => {
           : api_details.post_fetch_list_latest_match(_params);
 
       api.then(({ data }) => {
-        debugger
         if (!details.auto_swich_match) return;
         let { mid = -1, csid: sportId, tid } = data || {};
         // 详情时重载页面
