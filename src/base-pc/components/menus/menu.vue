@@ -31,7 +31,8 @@
       <p>{{ i18n_t("ouzhou.menu.all_sports")}}</p>
       <ul class="menu-list">
         <template v-for="item in BaseData.left_menu_base_mi" :key="item">
-          <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }" v-if="item.ct" @click="jump_func(item,'1')">
+          <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }"
+           v-if="item.ct" @click="jump_func(item,'1')">
             <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
           </li>
@@ -71,6 +72,7 @@ const route = useRoute();
 // favouritse
 const go_to_favouritse = () => {
   // 点击收藏时清除其他球种选中状态
+  if(MenuData.is_collect)return
   MenuData.left_menu_result.lv1_mi = ''
   // 点击菜单的时候如果在详情页应跳转出来先
   if (['league','details'].includes(route.name)) {
@@ -98,6 +100,9 @@ const go_to_favouritse = () => {
  * @returns {undefind} 无返回值
  */
 const jump_func = (payload ={},type) => {
+  if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
+    return
+  }
    // 点击菜单的时候如果在详情页应跳转出来先
   if (['league','details'].includes(route.name)) {
     router.push('/home')
@@ -130,6 +135,7 @@ const jump_func = (payload ={},type) => {
 
 // 冠军
 const outrights = () => {
+  if(MenuData.menu_root == 400)return
  // 点击菜单的时候如果在详情页应跳转出来先
  if (['league','details'].includes(route.name)) {
     router.push('/home')

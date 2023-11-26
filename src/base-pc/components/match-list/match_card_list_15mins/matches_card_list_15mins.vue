@@ -17,7 +17,7 @@ import MatchesCard15Mins from './matches_card_15mins.vue';
 import { onBeforeUnmount, watch } from 'vue'
 import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common } from 'src/core'
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
-const { ws_destroyed, set_active_mids } = use_match_list_ws()
+const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
 const props = defineProps({
 	matches_15mins_list: {
 		type: [Array],
