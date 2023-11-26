@@ -19,7 +19,7 @@
       <icon-wapper name="icon-search" color="#99A3B1" size="12px" />
     </div>
 
-    <div class="select-content" v-if="isShow" @mouseleave="show_menu">
+    <div class="select-content" v-if="isShow">
       <div class="top-btn">
         <!-- 全选 -->
         <div class="btn-item" @click="checkAll()">
@@ -65,11 +65,10 @@
 import { onMounted, onUnmounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { IconWapper } from "src/components/icon";
-
+import { GlobalSwitchClass} from "src/core/index";
 const route = useRoute();
 
 import { i18n_t } from "src/core/index";
-// import { mapGetters } from "vuex";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import {
   useMittOn,
@@ -109,6 +108,7 @@ const props = defineProps({
   cancel: null, // 隐藏下拉框
   isTimeChanged: Boolean // 判断时间是否有变
 });
+
 const emit = defineEmits([
   "to_hide_select",
   "confirm",
@@ -193,6 +193,7 @@ const checkAll = () => {
  * @return {undefined} undefined
  */
 const checkInvert = () => {
+  console.error('get_global_click',GlobalSwitchClass.global_click)
   // 如果当前选中状态是反选并且没有联赛就不予处理
   if (menu.value == "invert" && !props.list) return false;
   emit("confirm", 0);
@@ -315,6 +316,11 @@ const versions_class = computed(() => {
 onMounted(() => {
   input_val.value = i18n_t("select.all");
 });
+// 全局点击事件
+watch('GlobalSwitchClass.global_click', res => {
+  isShow.value = false;
+},
+    {deep:true, immediate: true });
 watch(
   props.list,
   res => {
@@ -411,10 +417,7 @@ watch(props.sport_id, res => {
 watch(props.cancel, res => {
   isShow.value = false;
 });
-// 全局点击事件
-// watch(get_global_click, (res) => {
-//   isShow.value = false;
-// });
+
 
 watch(
   active_tournament,

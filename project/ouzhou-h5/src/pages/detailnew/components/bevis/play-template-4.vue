@@ -68,12 +68,12 @@ const go_betting = (data) => {
 <template>
     <div class="template4">
         <ul v-for="item of AssembleData" :key="item.otd" class="list">
-            <li class="list-title">{{ item.osn }}</li>
+            <li class="list-title textOverflow2">{{ item.osn }}</li>
             <li v-for="_item of item.information" :key="_item.oid"  @click="go_betting(_item)"
                 :class="['list-bet',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
                 <template v-if="_item?.os == 1">
-                    <span>{{ _item.on ?? _item.ott }}</span>
-                    <span>{{ compute_value_by_cur_odd_type(_item.ov,'','',sport_id) }}</span>
+                    <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
+                    <span class="ov-text textOverflow1">{{ compute_value_by_cur_odd_type(_item.ov,'','',sport_id) }}</span>
                     <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )" />
                 </template>
                 <figure v-if="_item?.os == 2">
@@ -105,6 +105,7 @@ const go_betting = (data) => {
             }
             text-transform: capitalize;
             word-wrap: break-word
+
         }
 
         &-bet {
@@ -130,19 +131,11 @@ const go_betting = (data) => {
                 &:nth-child(1) {
                     color: var(--q-gb-t-c-4);
                     text-align: center;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    word-break: break-word;
-                    -webkit-line-clamp: 2;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
                 }
 
                 &:nth-last-child(1) {
                     color: var(--q-gb-t-c-1);
                     text-align: center;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
                 }
             }
         }
@@ -161,5 +154,18 @@ const go_betting = (data) => {
     height: 16px;
     position: relative;
     top: 2px;
+}
+.textOverflow1{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.textOverflow2{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 </style>
