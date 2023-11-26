@@ -15,9 +15,9 @@
         :default-opened="true"
         :header-style="{ backgroundColor: '#ffffff', height: '50px' }"
       >
-        <!-- 赛事玩法名称 -->
+        <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
-          <div style="width: 100%; line-height: 35px; font-weight: 500">
+          <div style="width: 100%; line-height: 35px; font-weight: 500" v-if="item.hl[0].hs!=2">
             {{ item.hpn }}
             <span v-if="item.hps"> ({{ item.hps.split("|")[1] }}) </span>
             <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
@@ -32,7 +32,7 @@
             />
           </div>
         </template>
-        <q-card>
+        <q-card v-if="item.hl[0].hs!=2">
           <q-card-section>
             <!-- 详情页玩法名称 -->
             <div
@@ -97,7 +97,7 @@
                               align-items: center;
                               width: 100%;
                             "
-                            v-show="ol.os"
+                            v-show="item.hl[0].hs==1||item.hl[0].hs==11"
                           >
                             <img
                               class="vector"
@@ -189,6 +189,7 @@ const props = defineProps({
     default: false,
   },
 });
+// `mhs` 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
 // <!-- ms: 0开 1封 2关 11锁 -->
 //     <!-- hs: 0开 1封 2关 11锁 -->
 //     <!-- os: 1开 2封 3隐藏不显示不占地方-->

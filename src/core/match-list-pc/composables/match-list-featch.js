@@ -276,11 +276,11 @@ const api_bymids = (
         let league_load_status = "";
         // 检查赛事是否移除
         if (code == 200 ) {
-          mids.forEach((mid) => {
-            if (!mids_arr.includes(String(mid))) {
-              remove_match_data(mid,MatchListData);
-            }
-          });
+          // mids.forEach((mid) => {
+          //   if (!mids_arr.includes(String(mid))) {
+          //     remove_match_data(mid,MatchListData);
+          //   }
+          // });
           if(match_list.length > 0){
             MatchListData.set_list(
               match_list,

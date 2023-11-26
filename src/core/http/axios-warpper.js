@@ -101,7 +101,7 @@ class AxiosHttp {
       this.request_count = 0;
     }, 60 * 1000);
     //明确声明超时错误
-    this.axios_instance.defaults.timeout = 15000;
+    this.axios_instance.defaults.timeout = 10000;
     this.axios_instance.defaults.transitional.clarifyTimeoutError = true;
     //设置ROOT_DOMAIN
     this.setApiDomain();
