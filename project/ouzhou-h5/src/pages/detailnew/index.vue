@@ -80,6 +80,8 @@ import odds_info from "./components/bevis_odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
+
+// import './index.scss'
 export default {
   components:{
     detail_header_tem0,

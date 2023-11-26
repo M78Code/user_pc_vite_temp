@@ -26,15 +26,12 @@
             <span class="ellipsis allow-user-select ">{{ card_style_obj.league_obj.onTn || card_style_obj.league_obj.tn }}</span>
           </div>
         </div>
-         <!-- 联赛收藏 -->
-        <div
-          class="icon-wrap"
-          :class="card_style_obj.league_obj.tf && 'active'"
-          v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch()"
-          @click.stop="mx_collect({type: menu_config.is_export() ? 'leagues' : 'champion', match: card_style_obj.league_obj})"
-        >
-          <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
-        </div>
+        <!-- 冠军联赛是否收藏 -->
+        <div @click.stop="collect"
+            class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch">
+            <div class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
+          </div>
+
       </div>
     </div>
   </div>
@@ -47,6 +44,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import MatchListCardClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';
 import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
+import { compute_css_obj } from "src/core/index.js";
 
 const props = defineProps({
   card_style_obj: {
@@ -55,6 +53,15 @@ const props = defineProps({
   },
 })
 
+const is_collect = ref(false);
+//第一次进页面时，收藏从接口获取状态，后续点击前端控制
+is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+
+const collect = lodash.throttle(() => {
+  mx_collect({ type: 'champion', match: props.card_style_obj.league_obj });
+  // 前端控制收藏状态
+  is_collect.value = !is_collect.value;
+}, 1000)
 
 </script>
 <style lang="scss" scoped>
@@ -98,5 +105,11 @@ const props = defineProps({
         transform: rotate(180deg);
       }
   }
+}
+.collect-start {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  background-size: 100%;
 }
 </style>

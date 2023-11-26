@@ -1124,5 +1124,5 @@ class BaseData {
 }
 
 const base_data_instance = new BaseData();
-
+useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>base_data_instance.init())
 export default base_data_instance;

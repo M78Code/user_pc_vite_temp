@@ -1,9 +1,11 @@
 <template>
   <div class="matches-card-list-wrap">
     <template2 :is_show_btn="matches_15mins_list.length > 4">
-		<div class="matches-card-list" v-for="(mid, index) in matches_15mins_list" :key="mid">
-			<MatchesCard15Mins :mid="mid"/>
-			<div class="split-line" v-show="index != matches_15mins_list.length - 1"></div>
+		<div class="matches-card-list-module">
+			<div class="matches-card-list" v-for="(mid, index) in matches_15mins_list" :key="mid">
+				<MatchesCard15Mins :mid="mid"/>
+				<div class="split-line" v-show="index != matches_15mins_list.length - 1"></div>
+			</div>
 		</div>
     </template2>
 	</div>
@@ -31,12 +33,19 @@ onBeforeUnmount(()=>{
 <style lang="scss" scoped>
 	.matches-card-list-wrap {
 		background: var(--q-gb-bg-lg-1);
-		padding: 25px 12px 13px 12px;
 		box-sizing: border-box;
 		width: 100%;
 		height: 150px;
 		display: flex;
 		align-items: center;
+		.matches-card-list-module {
+			padding: 25px 12px 13px 12px;
+			box-sizing: border-box;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+		}
 		.matches-card-list {
 			display: flex;
 			align-items: center;

@@ -47,7 +47,7 @@ const go_betting = (data) => {
                 <li v-for="ol_item in hl_item.ol.filter(i=>i.os != 3)" :key="ol_item?.oid" @click="go_betting(ol_item)"
                     :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }, 'list-item']">
                     <template v-if="ol_item?.os == 1">
-                        <span class="on-text">
+                        <span class="on-text textOverflow2">
                             {{ ol_item?.on || ol_item?.ott }}
                         </span>
                         <span class="ov-text">
@@ -82,17 +82,12 @@ const go_betting = (data) => {
             background-color: var(--q-gb-bg-c-2);
             border: 1px solid var(--q-gb-bd-c-10);
             gap: 4px;
-            //padding: 8px;
+            padding: 0 2px;
             box-sizing: border-box;
+            overflow: hidden;
             .on-text{
                 color: var(--q-gb-t-c-4);
                 text-align: center;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                word-break: break-word;
-                -webkit-line-clamp: 2;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
                 //line-height: 1;
             }
             .ov-text{
@@ -118,6 +113,16 @@ const go_betting = (data) => {
     height: 16px;
     position: relative;
     top: 2px;
+}
+
+.textOverflow1{}
+.textOverflow2{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 </style>
 
