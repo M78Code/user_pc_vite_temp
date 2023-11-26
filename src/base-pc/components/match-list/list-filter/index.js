@@ -65,7 +65,7 @@ function handle_click_menu_mi_pre_process() {
  * 解析菜单数据
  */
 function resolve_mew_menu_res() {
-    // console.error('resolve_mew_menu_res')
+    console.error('resolve_mew_menu_res')
 
     if(MenuData.is_top_events()){
         resolve_mew_menu_res_mi_5000()
@@ -80,6 +80,9 @@ function resolve_mew_menu_res() {
             }
             if( MenuData.mid_menu_result.filter_tab  == 3003){
                 type = 3
+            }
+            if( MenuData.mid_menu_result.filter_tab  == 3004){
+                resolve_mew_menu_res_mi_400()
             }
         }
         //滚球  常规 +电竞
