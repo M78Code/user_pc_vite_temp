@@ -816,9 +816,9 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let text = ''
     // 展示用的 + 投注项
     // 两数拼接  
-    let home_away_mark = [2, 4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127,38] // 
+    let home_away_mark = [2, 4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199] // 
     // 首页不需要拼接的
-    let home_away_diff = [2, 4]
+    let home_away_diff = [2]
     // 多位数
     let home_mark_more = [351,347]
     // 主客队
@@ -839,6 +839,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
                 text = ol_obj.on
                 break
         }
+        // debugger
         return text
     }
 
@@ -857,6 +858,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
                 text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
             }
         }
+        // debugger
         return text
 
     }else{
@@ -883,6 +885,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
             }
             text = `${text} <span class='ty-span'>${ol_obj.on}</span>`  
         }
+        // debugger
         return text  
     }
 }
