@@ -224,6 +224,7 @@ const checked_current_tab = payload => {
 		}
 		if( payload.value == 3004){
 			obj.current_mi = 30401
+			MenuData.set_menu_root(400)
 		}
 		MenuData.set_menu_current_mi(obj.current_mi)
 	}
