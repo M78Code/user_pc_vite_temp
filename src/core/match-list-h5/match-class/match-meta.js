@@ -939,6 +939,13 @@ class MatchMeta {
   }
 
   /**
+   * @description 重置 prev_scroll 
+   */
+  set_prev_scroll (val) {
+    this.prev_scroll = val
+  }
+
+  /**
    * @description 清除赛事信息
    */
   clear_match_info () {

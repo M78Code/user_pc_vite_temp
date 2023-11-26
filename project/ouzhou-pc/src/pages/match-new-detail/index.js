@@ -178,7 +178,6 @@ export function usedetailData(route) {
 
       // detail_info.value = getMidInfo(mid);
       useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
-      use_polling_mst(detail_info.value);
     } catch (error) {
       console.error("get_detail_data", error);
     }
@@ -200,27 +199,6 @@ export function usedetailData(route) {
     }
   };
 
-  /**
-   * @name 开赛时间自动加1
-   * @param {*} t
-   */
-  const use_polling_mst = (payload) => {
-    if (Number(payload.mst) <= 0 || payload.ms !== 1) {
-      return;
-    }
-    // payload.mst = Number(payload.mst)+10
-    mst_timer = setInterval(() => {
-      if (payload.csid == 1) {
-        payload.mst++;
-      } else if (payload.csid == 2) {
-        if (Number(payload.mst) == 1) {
-          clearInterval(mst_timer);
-        }
-        payload.mst--;
-      }
-      payload.mstValue = format_mst_data(payload.mst);
-    }, 1000);
-  };
   /**
    * 获取赛事tabs数据
    */

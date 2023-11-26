@@ -253,7 +253,7 @@ function mounted_fn() {
 			api_bymids({ is_show_mids_change: true })
 		}, 1000)).off,
 		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_match_list).off,
-		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded).off,
+		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded,100)).off,
 	]
 
 	load_video_resources();

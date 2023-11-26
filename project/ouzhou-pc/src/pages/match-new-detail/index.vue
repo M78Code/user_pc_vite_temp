@@ -280,9 +280,9 @@ export default{
       align-items: center;
 
       .leagal-time {
-        //background-color: var(--q-gb-bg-c-10);
+        background-color: var(--q-gb-bg-c-10);
         color: var(--q-gb-t-c-5);
-        padding: 2px 10px;
+        padding: 2px 0px 2px 10px;
       }
     }
 
