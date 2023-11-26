@@ -163,7 +163,7 @@ onMounted(() => {
 @import "./index.scss";
 </style>
 
-<style lang="scss">
+<style lang="scss" scope>
 @import "./match_results.scss";
 div.q-menu {
   border: 0 none !important;

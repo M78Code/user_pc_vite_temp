@@ -49,21 +49,16 @@ const AssembleData = computed(() => {
 </script>
 
 <template>
-    <div class="template1" v-if="false">
-        <div v-for="olChild of AssembleData" :key="olChild.oid" @click="go_betting(olChild)"
-             :class="['list',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
-            <div class="left">{{ olChild.otv }}</div>
-            <div class="right" v-if="olChild.os == 1">
-                <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
-                <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
-            </div>
-            <div v-if="olChild.os == 2">
-                <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-            </div>
+    <div v-for="olChild of AssembleData" :key="olChild.oid" @click="go_betting(olChild)"
+         :class="['list',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
+        <div class="left">{{ olChild.otv }}</div>
+        <div class="right" v-if="olChild.os == 1">
+            <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
+            <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
         </div>
-    </div>
-    <div v-else class="template1 noData">
-        当前盘口暂无可用投注项
+        <div v-if="olChild.os == 2">
+            <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+        </div>
     </div>
 </template>
 
