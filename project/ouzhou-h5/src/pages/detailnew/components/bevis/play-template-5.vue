@@ -25,7 +25,7 @@ import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import _ from "lodash"
 
 const props = defineProps({
-    play: {
+    item_data: {
         type: Object,
         default: () => ({})
     },
@@ -43,7 +43,7 @@ const AssembleData = computed(() => {
         others: [],
         assemble: [],
     };
-    const {hl = [], title} = props.play;
+    const {hl = [], title} = props.item_data;
     const others = hl[0].ol.filter(ol_item => ol_item.ot == 'Other');
     const assemble = hl[0].ol.filter(ol_item => ol_item.ot != 'Other');
     if (others.length) {
@@ -67,7 +67,7 @@ const AssembleData = computed(() => {
 * 所有数据 大小对应
 * */
 const matchInfo = computed(() => {
-    const {title, hl} = props.play
+    const {title, hl} = props.item_data
     title.forEach(titleChild => {
         titleChild.information = new Array()
         hl.forEach(hlChild => {
@@ -103,12 +103,12 @@ const matchInfo = computed(() => {
 const emits = defineEmits(['bet_click_'])
 const go_betting = (data) => {
     if (data.os == 2) return;
-    emits("bet_click_", data, props.play.hpn);
+    emits("bet_click_", data, props.item_data.hpn);
 }
 </script>
 
 <template>
-    <section class="template5" v-if="play.title && play.title.length">
+    <section class="template5" v-if="item_data.title && item_data.title.length">
         <div class="list" v-for="item of matchInfo" :key="item.otd">
             <aside class="list-title">{{ item.osn }}</aside>
             <ul class="list-bet">

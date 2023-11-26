@@ -21,7 +21,7 @@ import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import ResultOlItem from "../../result/ResultOlItem.vue";
 const props = defineProps({
-    play: {
+    item_data: {
         type: Object,
         default: () => ({})
     },
@@ -38,11 +38,11 @@ const props = defineProps({
 const emits = defineEmits(['bet_click_'])
 const go_betting = (data) => {
     if (data.os == 2) return
-    emits("bet_click_", data, props.play.hpn);
+    emits("bet_click_", data, props.item_data.hpn);
 };
 
 const AssembleData = computed(() => {
-    const {hl} = props.play
+    const {hl} = props.item_data
     return hl[0].ol.filter(item => item.os != 3)
 })
 </script>
