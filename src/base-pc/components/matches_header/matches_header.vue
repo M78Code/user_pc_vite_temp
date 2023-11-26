@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted, watch, nextTick } from 'vue';
+import { ref,onMounted,onUnmounted, watch } from 'vue';
 import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
@@ -78,7 +78,8 @@ const ouzhou_filter_config = {
 	favouritse_tab: [
 		{ label: i18n_t('ouzhou.match.inplay'), value: 3001 },
 		{ label: i18n_t('ouzhou.match.today'), value: 3002 },
-		{ label: i18n_t('ouzhou.match.early'), value: 3003 }
+		{ label: i18n_t('ouzhou.match.early'), value: 3003 },
+		{ label: i18n_t('ouzhou..champion'), value: 3004 }
 	],
 	// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
 	inplay:{
@@ -152,10 +153,6 @@ const set_tab_list = (news_) =>{
 		matches_header_title.value = 'Outrights'
 		match_list_top.value = '146px'
 		tab_list.value = []
-		// 只是想让他请求接口而已
-		nextTick(()=>{
-			MenuData.set_menu_current_mi(MenuData.menu_current_mi)
-		})
 	}
 
 	if (tab_list.value.length) {
@@ -168,6 +165,7 @@ const set_tab_list = (news_) =>{
 }
 
 const checked_current_tab = payload => {
+// debugger
 	let obj = {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
@@ -190,9 +188,7 @@ const checked_current_tab = payload => {
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
-		nextTick(()=>{
-			useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
-		})
+    	useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
 	}
 
 	// 左侧菜单点击后 tab切换
@@ -207,19 +203,14 @@ const checked_current_tab = payload => {
 	// 联赛
 	if(4002 == payload.value){
 		// MenuData.set_menu_root(400)
-		// obj.current_mi = 400 + MenuData.current_ball_type*1
-		nextTick(()=>{
-			MenuData.set_menu_current_mi(obj.current_mi)
-		})
-		
+		obj.current_mi = 400 + MenuData.current_ball_type*1
+		MenuData.set_menu_current_mi(obj.current_mi)
 	}
 	// 冠军
 	if(4003 == payload.value){
 		MenuData.set_menu_root(400)
 		obj.current_mi = 400 + MenuData.current_ball_type*1
-		nextTick(()=>{
-			MenuData.set_menu_current_mi(obj.current_mi)
-		})
+		MenuData.set_menu_current_mi(obj.current_mi)
 	}
 
 	// 收藏切换tab
@@ -233,9 +224,10 @@ const checked_current_tab = payload => {
 		if( payload.value == 3003){
 			obj.current_mi = 1013
 		}
-		nextTick(()=>{
-			MenuData.set_menu_current_mi(obj.current_mi)
-		})
+		if( payload.value == 3004){
+			obj.current_mi = 30401
+		}
+		MenuData.set_menu_current_mi(obj.current_mi)
 	}
 	// get_sport_banner()
 	MenuData.set_mid_menu_result(obj)

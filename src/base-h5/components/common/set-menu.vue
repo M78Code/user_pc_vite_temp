@@ -165,7 +165,7 @@
           <div class="skin-wrap">
             <div class="skin-icon skin-icon1" v-for="(item, i) in theme_list" @click="UserCtr.set_theme(item.key)"
               :key="item.key" :style="compute_css_obj(i == 0 ? 'menu-theme-night' : 'menu-theme-day')">
-              <!-- {{ item.i18n[lang] || item.key }} -->
+              {{ item.i18n[lang] || item.key }}
             </div>
 
           </div>
