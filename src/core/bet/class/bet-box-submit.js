@@ -839,7 +839,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
                 text = ol_obj.on
                 break
         }
-        debugger
+        // debugger
         return text
     }
 
@@ -858,7 +858,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
                 text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
             }
         }
-        debugger
+        // debugger
         return text
 
     }else{
@@ -885,7 +885,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
             }
             text = `${text} <span class='ty-span'>${ol_obj.on}</span>`  
         }
-        debugger
+        // debugger
         return text  
     }
 }
