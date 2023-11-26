@@ -11,7 +11,38 @@
         <!-- 标题 -->
         <div class="title">
           <span class="name">{{ item.tn }}</span>
-          <!-- <span class="time"> {{list.course}} {{ list.mstValue }} <span>{{ item.mstValueTime }}</span> </span> -->
+          
+          <!-- 赛事日期标准版 -->
+          <div :class="['timer-wrapper-c flex items-center']">
+
+            <!-- 赛事回合数mfo -->
+            <div v-if="item.mfo" class="mfo-title" :class="{ 'is-ms1': item.ms == 1 }">
+              {{ item.mfo }}
+            </div>
+
+            <!--即将开赛 ms = 110-->
+
+            <div class="coming-soon" v-if="item.ms" v-show="item.ms == 110">
+              {{ i18n_t(`ms[${item.ms}]`) }}
+            </div>
+
+            <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
+            <div class="date-time" v-show="item.ms != 110 && !show_start_counting_down(item) && !show_counting_down(item)">
+              {{ format_time_zone(+item.mgt).Format(i18n_t('time4')) }}
+            </div>
+            <!--一小时内开赛 -->
+            <div class="start-counting-down" v-show="item.ms != 110 && show_start_counting_down(item)">
+              <CountingDownStart :match="item" :index="index" :mgt_time="item.mgt"></CountingDownStart>
+            </div>
+            <!--倒计时或正计时-->
+            <div v-if="item.ms != 110 && show_counting_down(item)"
+              :class="['counting-down-up-container relative-position', { 'special-match-container': item.mfo || [0, 31].includes(+item.mmp) }]">
+              <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
+              <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="item.mmp"
+                :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)" :m_id="item.mid" :second="item.mst" :match="item">
+              </CountingDownSecond>
+            </div>
+          </div>
         </div>
         <!-- 赛事名称 -->
         <div class="game-name">
@@ -28,10 +59,14 @@
  
 <script setup>
 import lodash from 'lodash'
-import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
-import { football_bg, basketball_bg, volleyball_bg, tennis_bg, table_tennis_bg, badminton_bg, baseball_bg } from 'src/base-h5/core/utils/local-image.js'
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { format_time_zone } from "src/core/format/index.js"
+import PageSourceData from "src/core/page-source/page-source.js";
+import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
+import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
+import { football_bg, basketball_bg, volleyball_bg, tennis_bg, table_tennis_bg, badminton_bg, baseball_bg } from 'src/base-h5/core/utils/local-image.js'
 
 /** @type { { featured_matches:Array<TYPES.MatchDetail> } } */
 const props = defineProps({
@@ -84,6 +119,42 @@ const get_amtch_bg_image = (csid) => {
   return item?.image
 }
 
+  /**
+   * @description: 多少分钟后开赛显示
+   * @param {Object} item 赛事对象
+   * @return {String}
+   */
+  const show_start_counting_down = (item) => {
+    if (typeof item.mcg == 'undefined') {
+      return false;
+    }
+    let r = false;
+    // 滚球中不需要显示多少分钟后开赛
+    if (item && item.ms == 1) {
+      return r;
+    }
+    let start_time = item.mgt * 1;
+    let init_server = PageSourceData.init_time.server_time * 1;
+    let init_local = PageSourceData.init_time.local_time;
+    let now_local = new Date().getTime();
+    let sub_local_time = now_local - init_local;
+    let now_server_time = init_server + sub_local_time;
+    let sub_time = start_time - now_server_time;
+
+    // mcg 1:滚球 2:即将开赛 3:今日赛事 4:早盘
+    r = item.mcg != 1 && 0 < sub_time && sub_time < 60 * 60 * 1000;
+    return r;
+  }
+  // 赛事状态  0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断
+  /**
+   * @description: 进行中(但不是收藏页)的赛事显示累加计时|倒计时
+   * @param {Object} item 赛事对象
+   * @return {Boolean}
+   */
+  const show_counting_down = (item) => {
+    return [1, 2, 10].includes(item.ms * 1);
+  }
+
 const router = useRouter()
 /** 跳转赛事详情 @param {TYPES.MatchDetail} item */
 function toDetails(item){
@@ -130,7 +201,7 @@ function toDetails(item){
       font-size: 12px;
       color: var(--q-gb-t-c-3);
       .name{
-        width: 160px;
+        width: 140px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -140,6 +211,11 @@ function toDetails(item){
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+      }
+      .timer-wrapper-c{
+        flex: 1;
+        flex-wrap: nowrap;
+        flex-direction: row-reverse;
       }
       > span {
         > span {
