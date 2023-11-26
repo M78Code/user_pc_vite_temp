@@ -590,7 +590,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if(BetData.bet_oid_list.includes(oid)){
        return BetData.set_delete_bet_info(oid)
     }
-
+    // 点击投注项 展开投注栏
+    BetData.set_bet_state_show(true)
      // 列表数据仓库
      let query = {}
     // device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备 
@@ -600,8 +601,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // BetViewDataClass.set_bet_show(true)
         // 点击投注项 显示投注栏
         BetData.set_h5_bet_box_show(true)
-        // 点击投注项 展开投注栏
-        BetData.set_bet_state_show(true)
+      
         BetData.set_bet_keyboard_show(true)
         // BetViewDataClass.set_bet_keyboard_show(true)
     }else{
