@@ -88,7 +88,8 @@ export function get_match_template_id({ csid }) {
     tpl_id = Number(tpl_id) + Number(different_version_config[PROJECT_NAME])
     if ('ouzhou-pc' == PROJECT_NAME) {
         // 欧洲版冠军
-        if (MenuData.is_kemp() || MenuData.is_common_kemp()) {
+        console.log(' MenuData.is_collect_kemp()',  MenuData.is_collect_kemp());
+        if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
             return tpl_id
         }
         return 101    
