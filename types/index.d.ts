@@ -29,6 +29,10 @@ declare global {
 type NameRouterType = RouteLocationRaw | {
   /** 欧洲H5详情页 */
   name: 'category',
+  params:K.mid|K.tid|K.csid|{csid?,mcid?:string},
+}|{
+  /** 欧洲H5赛果详情页 */
+  name: 'result',
   params:K.mid|K.tid|K.csid|{csid?,mcid?:string}
 }
 

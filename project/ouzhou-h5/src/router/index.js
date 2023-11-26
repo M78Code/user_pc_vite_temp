@@ -52,6 +52,11 @@ const router = createRouter({
           },
         },
         {
+          path: "/result/:mid/:tid/:csid?/:mcid?",
+          name: "result",
+          component: () => import("../pages/detail-result/index.vue"),
+        },
+        {
           path: "/home",
           name: "home",
           component: () => import("../pages/home/index.vue"),

@@ -1,5 +1,6 @@
 
 import lodash from 'lodash'
+import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES, UserCtr } from  "src/core"
@@ -23,7 +24,7 @@ import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
 
-export default {
+export default defineComponent({
   data () {
     return {
       timer_super11: null,
@@ -940,7 +941,13 @@ export default {
             media_type:"auto", // 直播类型
             time: Date.now()
           })
-          this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
+          let params= { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid }
+          // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
+          let name = 'category' //赛事详情
+          if(item.ms==4){
+            name = 'result'
+          }
+          this.$router.push({name,params})
         }
       }
     },
@@ -967,4 +974,4 @@ export default {
   destroyed() {
     this.clear_timer()
   }
-}
+})
