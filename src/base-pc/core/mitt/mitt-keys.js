@@ -382,6 +382,10 @@ export const EMIT_SHOW_SELECT= 'EMIT_SHOW_SELECT'
 
 /**   赛事详情更新   */
 export const EMIT_SHOW_DETAILS= 'EMIT_SHOW_DETAILS'
+
+/**   赛事详情更新一键收起   */
+export const EMIT_SHOW_FOLD= 'EMIT_SHOW_FOLD'
+
 // WS驱动详情
 export const EMIT_DATAWARE_DETAIL_UPDATE = "EMIT_DATAWARE_DETAIL_UPDATE"
 

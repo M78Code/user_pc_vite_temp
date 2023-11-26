@@ -43,7 +43,7 @@ const go_betting = (data) => {
 
 const AssembleData = computed(() => {
     const {hl} = props.play
-    return hl[0].filter(item => item.os != 3)
+    return hl[0].ol.filter(item => item.os != 3)
 })
 
 </script>

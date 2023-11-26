@@ -25,7 +25,7 @@
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <load-data :state="load_data_state" :style="{
+    <load-data  v-if="MenuData.menu_root_show_shoucang != 300&& !MenuData.is_leagues()" :state="load_data_state" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
     }">
       <!--此处先写死高度用来调试UI -->
@@ -58,12 +58,6 @@
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
-        <div v-if="MenuData.is_leagues() && get_league_list().length"
-          :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
-          <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
-            <play-match-league :league_obj="league_item" />
-          </div>
-        </div>
         <template v-slot:after>
           <div style="height: 15px"></div>
           <div class="pager-wrap row justify-end">
@@ -75,9 +69,16 @@
         </template>
       </scroll-list>
     </load-data>
-    <ConmingSoon v-show="is_conming_soon" :style="{
+    <load-data v-if="MenuData.is_leagues() && get_league_list().length" :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
+      <scroll-list>
+        <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
+          <play-match-league :league_obj="league_item" />
+        </div>
+      </scroll-list>
+    </load-data>
+    <!-- <ConmingSoon v-show="is_conming_soon" :style="{
       width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-    }" />
+    }" /> -->
     <!-- 联赛筛选层 -->
     <!-- <leagues-filter v-if="vx_show_filter_popup" /> -->
     <!-- 点击头部刷新弹出 loading 蒙层 -->

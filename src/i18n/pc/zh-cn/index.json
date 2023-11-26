@@ -9,6 +9,7 @@
       "msg_6": "此记录将显示所选范围内所有已派彩的投注",
       "msg_7": "此记录将显示所有已预约的投注",
       "my_bet": "注单历史",
+      "copy": "复制",
       "unsettled": "未结算",
       "settled": "已结算",
       "unpaid_bets": "该记录将显示所有未派彩的投注",
@@ -1321,7 +1322,12 @@
     "unfold": "展开",
     "yellow_card": "黄牌",
     "yellow_card_down": "下半场黄牌",
-    "yellow_card_up": "上半场黄牌"
+    "yellow_card_up": "上半场黄牌",
+    "corner": "角球",
+    "half_1": "上半场",
+    "half_2": "下半场",
+    "S7": "加时赛比分",
+    "S170": "点球大战比分"
   },
   "isoName": "zh",
   "list": {

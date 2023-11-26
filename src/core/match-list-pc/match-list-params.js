@@ -105,7 +105,6 @@ function match_list_all_params() {
         }
     }
    
-   
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${menu_current_mi}`] || {};
     delete lv2_mi_info.h5_euid
@@ -194,6 +193,10 @@ function match_list_all_params() {
             },
             bymids: {},
         }
+    }
+    // 收藏点击冠军时，修改orpt为18
+    if(menu_current_mi == 30401){
+        lv2_mi_info.orpt = '18'
     }
 
     lodash.merge(
