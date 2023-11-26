@@ -227,6 +227,8 @@ div.q-menu {
     align-items: center;
   }
   .tips{
+    text-align: right;
+    width: 245px;
     .dot{
       display: inline-block;
       width: 6px;
