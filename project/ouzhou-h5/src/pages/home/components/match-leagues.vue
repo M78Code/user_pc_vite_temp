@@ -4,7 +4,7 @@
 <template>
     <div style="display: none;">{{ MatchDataBaseFiveLeagueH5.data_version.version }}</div>
     <section class="match-play-page">
-      <div class="match-item" v-for="item, index in fiveLeagues_Matches" :key="item.mid">
+      <div class="match-item" v-for="item, index in five_league_match" :key="item.mid">
        <template v-if="item && defer_render(index)">
          <MatchContainerMainTemplate1
           :i="index"
@@ -24,7 +24,7 @@ import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/
 
 const defer_render = use_defer_render()
 const props = defineProps({
-    fiveLeagues_Matches: {
+    five_league_match: {
     type: Array,
     default: () => []
   }
