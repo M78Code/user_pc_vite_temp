@@ -30,7 +30,7 @@
                 </div>
                 <div class="font12 h12 mt-4">
                     <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                    <span class="text-1a1 font500"> {{ format_money2(mathJs.multiply(BetData.bet_amount,items.oddFinally)) || '0.00' }} </span>
+                    <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }} </span>
                 </div>
             </div>
 

@@ -995,6 +995,10 @@ class MenuData {
   is_common_kemp(mi) {
     return this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
   }
+
+  is_collect_kemp() {
+    return this.is_collect && this.menu_root == 400
+  }
 }
 
 export default new MenuData();
