@@ -1,10 +1,5 @@
 <!--
-hpid == 玩法ID =>
-    "2"
-  - 全场大小 (hpid：2)
-
-hpt == 玩法展示模板 => 5
-
+净胜分
 ms: 赛事状态 0未开赛 1 进行中
 hs: 盘口状态 0 开盘 1 封盘, 2 关盘, 3 已结算, 4 已取消, 5 盘口的中间状态，该状态的盘口后续不会有赔率过来 11:锁盘状态
 os: 1 开盘 ，2 封盘
@@ -75,25 +70,6 @@ const matchInfo = computed(() => {
 
     console.log(title, "template5--title")
     return title
-
-    /*
-    hl.forEach((item) => {
-        if (item && item.ol.length > 0) {
-            item.ol.forEach((i) => {
-                if (!obj[i.on]) {
-                    obj[i.on] = [];
-                    obj[i.on] = [i];
-                } else {
-                    obj[i.on] = [...obj[i.on], i];
-                }
-            });
-        }
-    });
-    return {
-        title,
-        information: obj
-    };
-    */
 })
 
 const emits = defineEmits(['bet_click_'])
@@ -101,24 +77,19 @@ const go_betting = (data) => {
     if (data.os == 2) return;
     emits("bet_click_", data, props.item_data.hpn);
 }
+setTimeout(function (){
+    console.log("props")
+},2000)
 </script>
 
 <template>
-    <section class="template5" v-if="item_data.title && item_data.title.length">
-        <div class="list" v-for="item of matchInfo" :key="item.otd">
-            <aside class="list-title">{{ item.osn }}</aside>
-            <ul class="list-bet">
-                <li :class="[{ 'is-active': item.oid == active },'list-bet--item']"
-                    v-for="item of item.information" :key="item.oid" @click="go_betting(item)">
-                    <span class="on">{{ item.on }}</span>
-                    <span class="ov">{{ compute_value_by_cur_odd_type(item?.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
-                    <olStatus style="position: absolute;right: 8%" :item_ol_data="item"
-                              :active="BetData.bet_oid_list.includes(item?.oid)"/>
-                </li>
-            </ul>
-        </div>
+    <section class="template5">
+        <nav class="title">
+            <div class="title-item"></div>
+            <div class="title-item"></div>
+            <div class="title-item"></div>
+        </nav>
     </section>
-    <section v-else></section>
 
 </template>
 
