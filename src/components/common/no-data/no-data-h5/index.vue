@@ -171,7 +171,7 @@ function refresh_data() {
   p {
     margin: 0.14rem;
     font-size: 0.14rem;
-    color: var(--q-gb-t-c-5);
+    color: #1a1a1a;
 
     span {
       display: inline-block;

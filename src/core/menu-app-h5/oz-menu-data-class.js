@@ -85,6 +85,7 @@ class MenuData {
   
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
+    const notItem = ['menu_type']
     // 获取数据缓存
     let session_info = SessionStorage.get(menu_h5_key);
     if (!session_info) {
@@ -92,7 +93,7 @@ class MenuData {
     }
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        if(item !== 'menu_type'){
+        if(!notItem.includes(item)){
           this[item] = session_info[item]
         }
       }
