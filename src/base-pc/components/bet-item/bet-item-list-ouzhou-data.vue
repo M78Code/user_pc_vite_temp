@@ -145,7 +145,6 @@ const set_odds_lift = (cur, old) => {
     else if (old > cur) {
       odds_lift.value = 'down'
     }
-    console.log(odds_lift.value,'set_odds_lift' )
     clearTimeout(tid)
     tid = setTimeout(() => {
       odds_lift.value = "";
