@@ -26,7 +26,7 @@
             </span>
           </div>
           <!-- 赛事渲染信息 -->
-          <div class="s-w-i-inner">
+          <div class="s-w-i-inner" v-if="defer_render(index)">
             <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>
           </div>
         </div>
@@ -102,12 +102,9 @@ onMounted(() => {
     emitter: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, update_max_height).off,
   }
 })
-
 const get_match_item = (mid) => {
   return MatchDataBaseH5.get_quick_mid_obj(mid)
 }
-
-
 const get_index_f_data_source = (mid) => {
   return lodash.findIndex(MatchMeta.match_mids, { mid });
 }
