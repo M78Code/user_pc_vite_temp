@@ -28,6 +28,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import _ from "lodash"
+import ResultOlItem from "../../result/ResultOlItem.vue";
 
 const props = defineProps({
     item_data: {
@@ -81,10 +82,11 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 };
+
 </script>
 
 <template>
-    <section class="template4">
+    <section class="template4 component play-template-4">
         <div class="assemble">
             <ul v-for="item of AssembleData.assemble" :key="item.otd" class="list">
                 <li class="list-title textOverflow2">{{ item.osn }}</li>
@@ -99,6 +101,7 @@ const go_betting = (data) => {
                     <figure v-if="_item?.os == 2 || isLocked">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </figure>
+                    <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>
                 </li>
             </ul>
         </div>
@@ -112,6 +115,7 @@ const go_betting = (data) => {
             <figure v-if="_item?.os == 2 || isLocked">
                 <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
             </figure>
+            <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>
         </div>
     </section>
 </template>

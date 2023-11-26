@@ -6,7 +6,7 @@
       <div class="icontainer">
         <span class="item state">{{ i18n_t('bet_record.bet_no_status0'+value.result) }}</span>
         <span class="separate"></span>
-        <span class="item content"> {{ value.on||value.ott }} </span>
+        <span class="item content" :alt="value.on||value.ott"> {{ value.on||value.ott }} </span>
       </div>
     </slot>
   </div>
@@ -29,21 +29,47 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
 </script>
 
 <style lang="scss" scoped>
-.component.result-ol-item{
-  width: 100%;
-  height: 100%;
-  --private-state-color: #8A8986; //#TODO: css var
-  --privete-flex-direction: row;
-  &.r-win,&.r-win-half{
-    --private-state-color: #FF4646; //#TODO: css var
-    background-color: #FFC8C8; //#TODO: css var
-  }
-}
+
 .left{
   text-align: right;
 }
 .right{
   text-align: left;
+}
+.overflow{
+  flex: 1;
+  width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+}
+.content-overflow{
+  .icontainer{
+    .item{
+      flex: none;
+      &.content{
+        @extend .overflow;
+      }
+    }
+  }
+}
+.result-ol-item{
+  --private-state-color: #8A8986; //#TODO: css var
+  --privete-flex-direction: row;
+  --private-inner-container-padding: 0px 0px;
+}
+.component.result-ol-item{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  &.r-win,&.r-win-half{
+    --private-state-color: #FF4646; //#TODO: css var
+    background-color: #FFC8C8; //#TODO: css var
+  }
+  >.icontainer{
+    padding: var(--private-inner-container-padding);
+  }
 }
 .icontainer{
   display: flex;
@@ -72,18 +98,68 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
     --privete-flex-direction: row-reverse;
   }
 }
-.hpt-0{
-  display: flex;
-  align-items: center;
-}
 
 .hpt-1,.hpt-3{
   height: 100%;
+  /** play-template-1继承来的css 变量 */
   padding: var(--private-container-padding);
   font-size: 14px;
+  @extend .content-overflow;
   .icontainer{
     height: 100%;
-    padding: 0px 20px;
   }
+}
+.hpt-0{
+  --private-inner-container-padding: 0px 10px;
+  justify-content: center;
+  @extend .overflow;
+  // @extend .content-overflow;
+  .icontainer{
+    @extend .overflow;
+    display: block;
+    text-align: center;
+    width: auto;
+    max-width: 100%;
+    justify-content: center;
+    .item{
+      flex: none;
+    }
+    .content{
+      @extend .overflow;
+      padding-right: -10px;
+    }
+    .separate{
+      padding: 0 4px;
+    }
+  }
+}
+.hpt-1{
+  --private-inner-container-padding: 0px 4px;
+}
+/** 兼容了模板4的情况, 但是呢不符合UI */
+.hpt-4{
+  justify-content: center;
+  .icontainer{
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-basis: 68px;
+    .state,.content{
+      flex: 0;
+      flex-basis: 50%;
+      text-align: center;
+    }
+    .content{
+      padding: 0px 8px;
+      box-sizing: border-box;
+    }
+    .separate{
+      width: 0;
+      display: none;
+    }
+  }
+}
+.hpt-3{
+  --private-inner-container-padding: 0px 20px;
 }
 </style>
