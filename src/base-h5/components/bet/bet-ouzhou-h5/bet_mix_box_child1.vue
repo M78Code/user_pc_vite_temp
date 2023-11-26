@@ -110,6 +110,12 @@
     color: var(--q-gb-t-c-1);
     padding-left: 0.08rem;
   }
+  .nonebox4-content-left-content-text-one-tit {
+    :deep(.ty-span) {
+      margin-left: 4px;
+      color: var(--q-gb-bg-c-1);
+    }
+  }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
     color: var(--q-gb-t-c-3);
