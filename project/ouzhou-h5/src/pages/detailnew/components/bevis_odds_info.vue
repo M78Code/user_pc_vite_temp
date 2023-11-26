@@ -14,8 +14,7 @@
 <!--{{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
                         {{ computedPlayComponent(item.hpt) }}
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
-                                   :play="item" :item_data="item" :active="active" @bet_click_="bet_click_" />
-                        <playTemplate3 :play="item" :active="active" @bet_click_="bet_click_"></playTemplate3>
+                                   :item_data="item" :active="active" @bet_click_="bet_click_" />
                     </div>
                 </div>
             </template>

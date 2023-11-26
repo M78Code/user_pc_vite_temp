@@ -702,7 +702,6 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     if(hpn){
         play_name = hpn
     }
-
     return play_name
     
 }
@@ -889,12 +888,14 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
 
 // 是否显示基准分 
 const get_mark_score = (ol_obj,mid_obj) => {
+    // debugger
     let score = ''
     // 显示基准分
     // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
-    let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
+    // let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
+    let play_id = [18, 19, 37, 38, 39, 42, 188, 189, 199]
     // 判断需要显示基准分的玩法
-    if(playId.includes(Number(ol_obj._hpid))){
+    if(play_id.includes(Number(ol_obj._hpid))){
         let obj = lodash_.get(mid_obj,'msc_obj.S1',{})
         score = `(${obj.home}-${obj.away})`
     }

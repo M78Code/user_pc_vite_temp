@@ -30,7 +30,7 @@ import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import _ from "lodash"
 
 const props = defineProps({
-    play: {
+    item_data: {
         type: Object,
         default: () => ({})
     },
@@ -56,7 +56,7 @@ const AssembleData = computed(() => {
         others: [],
         assemble: [],
     };
-    const {hl = [], title} = props.play;
+    const {hl = [], title} = props.item_data;
     isLocked.value = hl[0].hs == 11 ? true : false
     const others = hl[0].ol.filter(ol_item => +ol_item.otd === 0);
     const assemble = hl[0].ol.filter(ol_item => +ol_item.otd !== 0);
@@ -72,9 +72,6 @@ const AssembleData = computed(() => {
             information: baseArr[item.otd]
         })
     })
-    if (props.play.hpt == 4) {
-        console.log(betInformation, "betInformation")
-    }
     return betInformation
 })
 
@@ -82,7 +79,7 @@ const emits = defineEmits(["bet_click_"]);
 const go_betting = (data) => {
     // 为2的时候封盘挂锁
     if (data.os == 2) return
-    emits("bet_click_", data, props.play.hpn);
+    emits("bet_click_", data, props.item_data.hpn);
 };
 </script>
 

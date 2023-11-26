@@ -11,7 +11,7 @@ import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 
 const props = defineProps({
-    play: {
+    item_data: {
         type: Object,
         default: () => {
         },
@@ -29,7 +29,7 @@ const props = defineProps({
 const emits = defineEmits(["bet_click_"])
 const go_betting = (data) => {
     if (data.os == 2) return
-    emits("bet_click_", data, props.play.hpn);
+    emits("bet_click_", data, props.item_data.hpn);
 };
 </script>
 
@@ -38,7 +38,7 @@ const go_betting = (data) => {
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <div class="template0">
         <ul class="list">
-            <template v-for="hl_item in play.hl" :key="hl_item.hid">
+            <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
                 <li v-for="ol_item in hl_item.ol.filter(i=>i.os != 3)" :key="ol_item?.oid" @click="go_betting(ol_item)"
                     :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }, 'list-item']">
                     <template v-if="ol_item?.os == 1 && ol_item._hs != 11">
