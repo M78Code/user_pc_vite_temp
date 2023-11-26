@@ -59,7 +59,7 @@ function get_base_params(euid) {
  * 
  * @description 获取五大联赛列表
  */
-export const get_five_leagues_list = async () => {
+export const get_five_leagues_list_api = async () => {
   const filterData = {}
   const max = 5
   const tid = ['320', '180', '239', '276', '79']
@@ -108,28 +108,6 @@ export const get_15mins_data = payload => {
   }
 }
 
-/**
- * 
- * @param {Array} payload 需要筛选的15分钟玩法数据 
- * @description 需要返回已开赛且未结束的赛事(滚球)
- * @returns {Array} 返回处理好的15分钟玩法数据
- */
-export const filter_15mins_func = payload => {
-  // const timeStamp = new Date().getTime()
-  // const endTimeStamp = 90 * 60 * 1000
-  // 过滤已开赛且未结束数据
-  // const matches_15mins_list = payload.filter(item => item.mgt < timeStamp && timeStamp - item.mgt < endTimeStamp)
-
-  // payload.forEach(item => {
-  //   item['current_ol'] = filter_odds_func(item.hps15Minutes, '32', true);
-  //   item['matches_15mins_obj'] = get_15mins_data(item);
-  //   item['course'] = handle_course_data(item);
-  //   item['mstValue'] = !is_timer.includes(item.csid) ? format_mst_data(item.mst) : '';
-  // })
-
-  return payload.slice(0, 5).map(item => item.mid);
-}
-
 // 新规则：足球15 ，篮球5
 const filter_20_match_new = (data) => {
   const result = [];
@@ -174,7 +152,9 @@ export const get_featurd_list = async () => {
 }
 const matches_15mins_list = ref(SessionStorage.get('matches_15mins_list', []))
 let match_count = ref(0);
-
+if (matches_15mins_list.value.length) {
+  MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(matches_15mins_list.value);
+}
 // 获取首页数据
 export const init_home_matches = async () => {
   const params = {
@@ -205,12 +185,14 @@ export const init_home_matches = async () => {
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(data.p15);
         SessionStorage.get('matches_15mins_list', data.p15 || [])
         //获取15mins 数据
+        const mids_15 = []
         matches_15mins_list.value = data.p15.slice(0, 5).map(item => {
           set_match_play_current_index(item, 'hps15Minutes')
-          return item.mid;
+          mids_15.push(item.mid)
+          return item;
         });
         axios_loop({
-          axios_api: () => api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
+          axios_api: () => api_bymids({ mids: mids_15 }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
         })
         match_count = data.dataList.length || 0;
         let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
@@ -227,7 +209,7 @@ export const init_home_matches = async () => {
     }
   })
   axios_loop({
-    axios_api: get_five_leagues_list,
+    axios_api: get_five_leagues_list_api,
     fun_then: function (res) {
       try {
         //五大联赛，只显示滚球数据

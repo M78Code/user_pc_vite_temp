@@ -43,9 +43,9 @@
     // 未开赛 到卡片key的 映射对象
     let no_start_to_card_key_arr = ['no_start_title']
     // 赛种ID 到卡片key的 映射对象
-    let csid_to_card_key_obj = MatchListCardData.csid_to_card_key_obj
+    let csid_to_card_key_obj = {}
     // 五大联赛 赛种ID 到卡片key的 映射对象
-    let csid_to_card_key_obj_five = MatchListCardData.csid_to_card_key_obj_five
+    let csid_to_card_key_obj_five = {}
     // 卡片key 到 赛事 id 映射 对象
     let league_card_mids_arr = {}
     // 所有卡片列表
@@ -115,6 +115,7 @@
       if(MatchListCardData.match_list_mapping_relation_obj_type == 9 && _match.csid != pre_match_csid && !is_five_leagues){
         pre_match_csid = _match.csid
         card_key = `sport_title_${_match.csid}`
+        console.log('card_keycard_key',csid_key, csid_to_card_key_obj, !csid_to_card_key_obj[csid_key].includes(card_key));
         // 判断球种标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复球种标题卡片
         if(!csid_to_card_key_obj[csid_key].includes(card_key)){
           // 球种标题卡片处理
@@ -265,7 +266,6 @@
     if(all_card_obj['no_start_title']){
       all_card_obj['no_start_title'].match_count = no_start_match_count
     }
-    console.log('csid_to_card_key_obj', csid_to_card_key_obj);
      // 已开赛 到卡片key的 映射对象
      MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象

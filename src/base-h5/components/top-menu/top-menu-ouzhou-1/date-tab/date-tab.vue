@@ -56,8 +56,7 @@ const time_tab = (item) => {
         padding: 0 10px;
         height: 45px;
         line-height: 45px;
-
-        //   border-bottom: 1px solid #ff7000;
+        border-bottom: 1px solid var(--q-gb-bg-c-1);
         &::-webkit-scrollbar {
             display: none;
             /* Chrome Safari */
@@ -75,7 +74,7 @@ const time_tab = (item) => {
             }
 
             .time_active {
-                background: #ff7000;
+                background: var(--q-gb-bg-c-1);
                 color: #fff;
                 padding: 0 0.1rem;
             }
