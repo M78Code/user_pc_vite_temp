@@ -179,5 +179,12 @@ declare namespace K {
   };
   /** 盘口状态 */ type hs = {
     /** 盘口状态:0开,1封,2关,11锁 */ hs: number,
+  };
+  /** 用户ID */ type cuid = {
+    /** 用户ID */ cuid: number,
   }
 }
+
+/** annotation */ type template = {
+    /** annotation */ template: number,
+  }

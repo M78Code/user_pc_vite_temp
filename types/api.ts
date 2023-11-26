@@ -13,5 +13,6 @@ namespace AXIOS {
 }
 
 namespace API {
+  export type Result<T extends AXIOS.Resource<Object|Array<Object>>=AXIOS.Resource<Object|Array<Object>>> = Promise<AXIOS.Resource<T>>
   export interface MatchDetails extends AXIOS.Resource<Array<TYPES.MatchDetail>> { }
 }

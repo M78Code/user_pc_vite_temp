@@ -165,7 +165,10 @@ export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url
 
 // 赛事详情页面接口（christion）
 export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
-// 赛果详情页面接口（christion）
+/** 
+ * 赛果详情页面接口（christion）
+ * @returns {Promise<API.MatchDetails>}
+ */
 export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
 
 // 电竞赛事详情页面接口（start）
