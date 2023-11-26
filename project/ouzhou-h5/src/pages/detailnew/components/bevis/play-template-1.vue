@@ -17,7 +17,7 @@ os: 1 开盘 ，2 封盘
 import olStatus from "../ol_status.vue";
 import {defineProps, defineEmits, computed} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import {compute_value_by_cur_odd_type} from "src/core/index.js"
+import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import ResultOlItem from "../../result/ResultOlItem.vue";
 const props = defineProps({
@@ -25,14 +25,10 @@ const props = defineProps({
         type: Object,
         default: () => ({})
     },
-    sport_id: {
-        type: [String, Number],
-        default: ''
-    },
     active: {
         type: Number,
         default: () => 0,
-    },
+    }
 })
 
 const emits = defineEmits(['bet_click_'])
@@ -61,7 +57,7 @@ const AssembleData = computed(() => {
                 :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
                 <div class="left">{{ olChild.otv }}</div>
                 <div class="right" v-if="olChild.os == 1 && olChild._hs != 11">
-                    <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
+                    <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</p>
                     <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                 </div>
                 <div v-if="olChild.os == 2 || olChild._hs == 11">

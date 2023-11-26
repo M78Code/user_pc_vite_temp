@@ -19,11 +19,7 @@ const props = defineProps({
     active: {
         type: Number,
         default: () => 0,
-    },
-    sport_id: {
-        type: [String, Number],
-        default: ''
-    },
+    }
 })
 
 const emits = defineEmits(["bet_click_"])
@@ -46,7 +42,7 @@ const go_betting = (data) => {
                             {{ ol_item?.on || ol_item?.ott }}
                         </span>
                         <span class="ov-text">
-                            {{ compute_value_by_cur_odd_type(ol_item.ov, '', '', sport_id) }}
+                            {{ compute_value_by_cur_odd_type(ol_item.ov, '', '', MatchDetailCalss.params.sportId) }}
                         </span>
                         <olStatus :item_ol_data="ol_item" :active="BetData.bet_oid_list.includes(ol_item?.oid )"/>
                     </template>

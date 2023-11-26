@@ -17,11 +17,7 @@ const props = defineProps({
     active: {
         type: Number,
         default: () => 0,
-    },
-    sport_id: {
-        type: [String, Number],
-        default: ''
-    },
+    }
 })
 const emits = defineEmits(["bet_click_"]);
 const go_betting = (data) => {
