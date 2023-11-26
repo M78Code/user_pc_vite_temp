@@ -25,7 +25,7 @@ const props = defineProps({
 	}
 })
 watch(() => props.matches_15mins_list, (v) => {
-	set_active_mids(v.map(i => i.mid || i))
+	set_active_mids(v.map(i => i.mid))
 }, { immediate: true })
 onBeforeUnmount(() => {
 	ws_destroyed()
