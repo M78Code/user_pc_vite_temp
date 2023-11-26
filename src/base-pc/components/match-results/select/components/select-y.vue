@@ -231,7 +231,7 @@ const checkHot = n => {
   } else {
     init.value = false;
     is_hot.value = !is_hot.value;
-    emit("search_hot", Number(is_hot.value));
+    // emit("search_hot", Number(is_hot.value));
   }
 };
 const { off: offInit } = useMittOn(MITT_TYPES.EMIT_INIT_SELECT, () => {
