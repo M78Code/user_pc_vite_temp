@@ -318,7 +318,7 @@ onMounted(() => {
 });
 // 全局点击事件
   watch(
-    () => GlobalSwitchClass.global_click,
+    () => GlobalSwitchClass.global_switch_version.version,
     (new_) => {
     console.log('resres',new_)
       isShow.value = false;

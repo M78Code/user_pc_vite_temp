@@ -19,6 +19,7 @@ import { LayOutMain_pc } from "src/core/";
 import lodash_ from "lodash";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 export function usedetailData(route) {
   const router = useRouter();
   const category_list = ref([]); //分类数据
@@ -140,24 +141,26 @@ export function usedetailData(route) {
   /**
    * 获取数据
    */
-  const init = async () => {
+  const init = async (params) => {
+    const { isNeedLoading = true } = params || {}
  
     // all_list_toggle = {}
-    detail_loading.value = true;
-    get_detail();
+    detail_loading.value = isNeedLoading;
+    get_detail(params);
     await get_category();
   };
   /**
    * 获取赛事详情数据
    */
-  const get_detail = async () => {
+  const get_detail = async (par) => {
+    const { isNeedLoading = true } = par || {}
     try {
       const params = {
         mid: mid,
         cuid: user_info.userId,
         t: new Date().getTime(),
       };
-      detail_loading.value = true;
+      detail_loading.value = isNeedLoading;
       const res = await get_detail_data(params);
       // 空赛事数据跳转回首页
       if (lodash_.isEmpty(res.data)) {
@@ -267,6 +270,18 @@ export function usedetailData(route) {
   const getMidInfo = (mid) => {
     return MatchDataWarehouseInstance.get_quick_mid_obj(mid);
   };
+  /**
+   * @description: 一键折叠
+   * @param {*} mid
+   * @return {*} 赛事详情
+   */
+  const set_odds_fold = (val)=>{
+    for (const item of all_list.value) {
+      item.expanded = !val
+      
+    }
+
+  }
 
   /*
    **监听数据仓库版本号
@@ -281,7 +296,7 @@ export function usedetailData(route) {
     },
     { deep: true }
   );
-
+  let message_fun = null
   onMounted(() => {
     sportId = route.params.csid;
     mid = route.params.mid;
@@ -290,6 +305,31 @@ export function usedetailData(route) {
     LayOutMain_pc.set_oz_show_right(true); // 显示右侧
     LayOutMain_pc.set_oz_show_left(true); // 显示菜单
     init();
+    // 一键折叠监听
+    useMittOn(MITT_TYPES.EMIT_SHOW_FOLD, set_odds_fold);
+
+
+      // 增加监听接受返回的监听函数
+     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+     if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
+     // handler_ws_cmd(cmd, data);
+     // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
+     // console.error(flag,'flag','cmd:',cmd,data);
+     //如果ms mmp变更了 就手动调用ws
+       init.value = false
+       switch (cmd) {
+         case "C303":
+           console.error("C303");
+           get_detail_lists()
+           break;
+          case "C302":
+           console.error("C302");
+           get_detail_lists()
+           break;
+         default:
+           break;
+       }
+   });
   });
   //todo mitt 触发ws更新
   const { off } = useMittOn(
