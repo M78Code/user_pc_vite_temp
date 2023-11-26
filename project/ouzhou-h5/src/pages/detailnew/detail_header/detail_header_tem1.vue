@@ -200,7 +200,7 @@ const sport_ball = {
 const cuid = ref("");
 const bg_img = ref({})
 const detail_store = ref(null);
-const is_collect = computed(()=>props.get_match_detail.mf);
+const is_collect = ref();
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -327,9 +327,9 @@ const collect_click = () => {
 // }, 200);
 
 onMounted(()=>{
-    // setTimeout(function (){
-    //     is_collect.value = props.get_match_detail.mf
-    // },320)
+    setTimeout(function (){
+        is_collect.value = props.get_match_detail.mf
+    },320)
 })
 </script>
 

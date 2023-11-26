@@ -41,16 +41,14 @@ const go_betting = (data) => {
     emits("bet_click_", data, props.play.hpn);
 };
 
-const AssembleData = computed(() => {
-    const {hl} = props.play
-    return hl[0].filter(item => item.os != 3)
-})
-
+setTimeout(function (){
+    console.log(props.play)
+},2000)
 </script>
 
 <template>
-    <div v-for="olChild of AssembleData" :key="olChild.oid" @click="go_betting(olChild)"
-         :class="['list',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
+    <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)"
+         :class="['template1',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
         <div class="left">{{ olChild.otv }}</div>
         <div class="right" v-if="olChild.os == 1">
             <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
@@ -63,13 +61,7 @@ const AssembleData = computed(() => {
 </template>
 
 <style scoped lang="scss">
-.template1{
-    min-height: 48px;
-}
-.noData{
-    text-align: center;
-}
-.list {
+.template1 {
     width: 100%;
     display: flex;
     align-items: center;
