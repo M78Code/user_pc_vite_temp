@@ -55,7 +55,7 @@ let  DEV_TARGET_VERSION = ''
 // 测试环境
 // DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1700645253734-test";
    
-// 测试环境
+// 隔离环境
 DEV_TARGET_VERSION = "project_7-6544b0f3fb906b00ad5e8733-1700984307856-geli";
 
 // 试玩环境
