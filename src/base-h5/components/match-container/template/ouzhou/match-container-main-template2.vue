@@ -293,15 +293,15 @@ export default {
       .ol-li-item:nth-child(even) {
         border-right: 0;
       }
-      .ol-li-item:hover, .ol-li-item:focus {
-        background-color: var(--q-gb-bg-c-1);
-        :deep(.odds) {
-          color: var(--q-gb-t-c-2);
-        }
-        :deep(.on) {
-          color: var(--q-gb-t-c-2);
-        }
-      }
+      // .ol-li-item:hover, .ol-li-item:focus {
+      //   background-color: var(--q-gb-bg-c-1);
+      //   :deep(.odds) {
+      //     color: var(--q-gb-t-c-2);
+      //   }
+      //   :deep(.on) {
+      //     color: var(--q-gb-t-c-2);
+      //   }
+      // }
     }
   }
 }

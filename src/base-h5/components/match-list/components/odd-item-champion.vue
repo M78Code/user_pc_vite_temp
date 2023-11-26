@@ -2,7 +2,7 @@
  * @Description: 冠军赛事投注项组件
 -->
 <template>
-  <div class="ol-li-item flex items-center justify-between" :data-oid="ol_item.oid"
+  <div :class="['ol-li-item flex items-center justify-between', {active: BetData.bet_oid_list.includes(ol_item.oid) }]" :data-oid="ol_item.oid"
     :id="DOM_ID_SHOW && `list-${lodash.get(ol_item, 'oid')}`"
     v-if="odd_status !== 3"> <!--关盘 odd_status === 3 移除-->
     <div class="on">
@@ -26,6 +26,7 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch} from "vue";
+import BetData from "src/core/bet/class/bet-data-class.js";
 import lodash from 'lodash'
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
@@ -86,6 +87,16 @@ const get_odds_value = (ol_item,hsw) => {
   margin-bottom: 0.02rem;
   border-radius: 0.04rem;
   overflow: hidden;
+
+  &.active {
+        background-color: var(--q-gb-bg-c-1);
+   .odds {
+          color: var(--q-gb-t-c-2);
+        }
+   .on {
+          color: var(--q-gb-t-c-2);
+        }
+      }
 
   &:nth-child(2n-1) {
     width: 48%;
