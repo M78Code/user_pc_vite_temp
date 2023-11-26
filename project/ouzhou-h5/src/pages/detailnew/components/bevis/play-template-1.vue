@@ -41,6 +41,7 @@ const go_betting = (data) => {
     emits("bet_click_", data, props.play.hpn);
 };
 
+/** @type {Ref<TYPES.Ol[]>} */
 const AssembleData = computed(() => {
     const {hl} = props.play
     return hl[0].ol.filter(item => item.os != 3)
@@ -48,29 +49,39 @@ const AssembleData = computed(() => {
 </script>
 
 <template>
-    <div class="template1 component play-template-1"
-      v-for="olChild of AssembleData" :key="olChild.oid"
-          @click="go_betting(olChild)"
-          :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
-        <div class="left">{{ olChild.otv }}</div>
-        <div class="right" v-if="olChild.os == 1 && olChild._hs != 11">
-            <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
-            <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
-        </div>
-        <div v-if="olChild.os == 2 || olChild._hs == 11">
-            <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-        </div>
-        <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
-    </div>
+    <template v-for="olChild of AssembleData" :key="olChild.oid">
+        <template v-if="olChild.result != (void 0)">
+            <div class="component play-template-1">
+                <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
+            </div>
+        </template>
+        <template v-else>
+            <div class="template1 component play-template-1"
+                @click="go_betting(olChild)"
+                :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
+                <div class="left">{{ olChild.otv }}</div>
+                <div class="right" v-if="olChild.os == 1 && olChild._hs != 11">
+                    <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
+                    <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
+                </div>
+                <div v-if="olChild.os == 2 || olChild._hs == 11">
+                    <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                </div>
+            </div>
+        </template>
+    </template>
 </template>
 
 <style scoped lang="scss">
+.component.play-template-1{
+    --private-container-padding: 8px 16px;
+}
 .template1 {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 16px;
+    padding: var(--private-container-padding);
     box-sizing: border-box;
 
     .left {

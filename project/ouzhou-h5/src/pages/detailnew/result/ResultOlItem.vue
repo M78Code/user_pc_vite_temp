@@ -66,6 +66,8 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
 }
 .hpt-3,.hpt-1{
   height: 100%;
+  padding: var(--private-container-padding);
+  font-size: 14px;
   .icontainer{
     height: 100%;
     padding: 0px 20px;
