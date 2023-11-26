@@ -197,6 +197,8 @@ function match_list_all_params() {
     // 收藏点击冠军时，修改orpt为18
     if(menu_current_mi == 30401){
         lv2_mi_info.orpt = '18'
+        lv2_mi_info.sportId = ''
+        lv2_mi_info.outrightMatches = 1
     }
 
     lodash.merge(
