@@ -322,6 +322,10 @@ export function usedetailData(route) {
            console.error("C303");
            get_detail_lists()
            break;
+          case "C302":
+           console.error("C302");
+           get_detail_lists()
+           break;
          default:
            break;
        }
