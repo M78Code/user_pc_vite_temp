@@ -1,5 +1,5 @@
 <template>
-  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }} {{UserCtr.user_version}}</div>
   <div
     v-if="is_mounted"
     class="c-bet-item yb-flex-center relative-position yb-family-odds"
@@ -66,7 +66,7 @@
             active: BetData.bet_oid_list.includes(ol_data.oid),
           }"
         >
-          {{ numberRetain(match_odds) }}
+          {{ compute_value_by_cur_odd_type(ol_data.ov,'','',1) }}
         </span>
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
