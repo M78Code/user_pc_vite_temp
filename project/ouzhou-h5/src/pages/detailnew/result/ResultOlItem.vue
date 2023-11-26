@@ -18,9 +18,9 @@ import { utils } from 'src/core/index'
 
 const props = withDefaults(defineProps<{
   value: TYPES.OlResult,
-  /** 玩法模板 */ hpt: 0|1|3,
+  /** 玩法模板 */ hpt: -1|0|1|3,
 }>(),{
-  hpt: 0
+  hpt: -1
 })
 
 let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
@@ -31,7 +31,9 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
 <style lang="scss" scoped>
 .component.result-ol-item{
   width: 100%;
+  height: 100%;
   --private-state-color: #8A8986; //#TODO: css var
+  --privete-flex-direction: row;
   &.r-win,&.r-win-half{
     --private-state-color: #FF4646; //#TODO: css var
     background-color: #FFC8C8; //#TODO: css var
@@ -47,6 +49,7 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
   display: flex;
   text-wrap: nowrap;
   align-items: center;
+  flex-direction: var(--privete-flex-direction);
   width: 100%;
   >.item{
     flex: 1;
@@ -64,14 +67,23 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
     color: #000000;
   }
 }
-.hpt-3,.hpt-1{
+.hpt-1,.hpt-3{
+  &.component.result-ol-item{
+    --privete-flex-direction: row-reverse;
+  }
+}
+.hpt-0{
+  display: flex;
+  align-items: center;
+}
+
+.hpt-1,.hpt-3{
   height: 100%;
   padding: var(--private-container-padding);
   font-size: 14px;
   .icontainer{
     height: 100%;
     padding: 0px 20px;
-    flex-direction: row-reverse;
   }
 }
 </style>
