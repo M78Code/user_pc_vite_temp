@@ -158,7 +158,9 @@ export default{
 
     const refresh_click =lodash.debounce(() => {
       refresh_data.value = true;
-      init();
+      init({
+        isNeedLoading: false
+      });
       setTimeout(() => {
         refresh_data.value = false;
       }, 1000);
