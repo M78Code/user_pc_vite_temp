@@ -192,7 +192,7 @@ const goto_top = () => {
     container.value.scrollTo({ top: 0, behavior: 'smooth' });
     clearTimeout(timer)
     timer = null
-  }, 250)
+  }, 100)
 }
 
 // 是否虚拟计算逻辑

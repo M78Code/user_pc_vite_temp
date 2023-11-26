@@ -51,11 +51,11 @@ const AssembleData = computed(() => {
     <div v-for="olChild of AssembleData" :key="olChild.oid" @click="go_betting(olChild)"
          :class="['template1',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
         <div class="left">{{ olChild.otv }}</div>
-        <div class="right" v-if="olChild.os == 1">
+        <div class="right" v-if="olChild.os == 1 && olChild._hs != 11">
             <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
             <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
         </div>
-        <div v-if="olChild.os == 2">
+        <div v-if="olChild.os == 2 || olChild._hs == 11">
             <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
         </div>
     </div>

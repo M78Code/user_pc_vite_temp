@@ -1,6 +1,6 @@
 
 <template>
-  <div v-show="false">{{BetData.bet_data_class_version}}</div>
+  <div v-show="false">{{BetData.bet_data_class_version}}{{UserCtr.user_version}}</div>
   <div class="header-main">
     <div class="header-content">
       <div class="logo">
@@ -16,6 +16,7 @@
             </span>
           </div>
         </div>
+        <div v-show="false">{{UserCtr.user_version}}</div>
         <!-- 右侧 -->
         <div>
           <right_head />
@@ -32,7 +33,7 @@ import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { MenuData,useMittEmit,MITT_TYPES  } from "src/core/"
+import { MenuData,useMittEmit,MITT_TYPES,UserCtr  } from "src/core/"
 
 export default defineComponent({
   name: "TopHeaderTemplate1",
@@ -87,7 +88,8 @@ export default defineComponent({
       logo,
       navList,
       nav_click,route,
-      BetData
+      BetData,
+      UserCtr
     };
   },
 });

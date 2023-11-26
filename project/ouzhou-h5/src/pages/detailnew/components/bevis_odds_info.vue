@@ -2,7 +2,7 @@
     <div class="match-detail-odds component odds-info">
         <template v-if="match_odds_info && match_odds_info.length > 0">
             <template v-for="(item, index) in match_odds_info" :key="item.topKey">
-                <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2||item.hs == 11))">
+                <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
                     <q-separator color="orange" v-if="index != 0"/>
                     <div class="odds-hpn" @click="expend_toggle(item)">
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
@@ -10,13 +10,14 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-<!--                        {{ item.hpt }}-->
-<!--                        {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
+<!--{{ item.hpt }}-->
+<!--{{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :play="item" :item_data="item" :active="active" @bet_click_="bet_click_" />
                     </div>
                 </div>
             </template>
+
         </template>
         <template v-else>
             <div v-if="!loading">
