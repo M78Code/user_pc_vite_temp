@@ -322,15 +322,53 @@ export function usedetailData(route) {
            console.error("C303");
            get_detail_lists()
            break;
-          case "C302":
-           console.error("C302");
-           get_detail_lists()
-           break;
+         case "C302":
+          console.error("C302");
+          get_detail_lists()
+          break;
+         case "C104":
+           console.error("C104");
+           RCMD_C104(data)
+           break;  
+         case "C109":
+          console.error("C109");
+          RCMD_C109(data)
+          break; 
          default:
            break;
        }
-   });
+   })
   });
+  /**
+   * @description: RCMD_C109
+   * @return {*}
+   */
+  function RCMD_C109(obj){
+    if(!obj){return}
+    let skt_data = obj.cd;
+    if(!skt_data || skt_data.length<1) return;
+    // 重新拉取数据;
+    get_category();
+    get_detail_lists();
+  };
+  /**
+ * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
+ * @param {*} obj
+ * @return {*}
+ */  
+  function RCMD_C104(obj) {
+    let skt_data = obj.cd;
+    // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
+    if(skt_data.mhs == 0 || skt_data.mhs == 11){
+      // 重新拉取数据;
+     get_category();
+     get_detail_lists();
+    }else if(skt_data.mhs == 1){
+      // 设置盘口状态
+    }else if(skt_data.mhs == 2){
+      show_close_thehand.value = true;  
+    }
+  }
   //todo mitt 触发ws更新
   const { off } = useMittOn(
     MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,
