@@ -1,5 +1,5 @@
 <template>
-  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }} {{UserCtr.user_version}}</div>
   <div
     v-if="is_mounted"
     class="c-bet-item yb-flex-center relative-position yb-family-odds"
@@ -66,7 +66,7 @@
             active: BetData.bet_oid_list.includes(ol_data.oid),
           }"
         >
-          {{ numberRetain(match_odds) }}
+          {{ compute_value_by_cur_odd_type(ol_data.ov,'','',ol_data.csid) }}
         </span>
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
@@ -86,9 +86,7 @@ import lodash from "lodash";
 import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core/index.js";
 import { get_odds_active, utils } from "src/core/index.js";
 import { format_odds_value } from "src/core/format/module/format-odds.js";
-import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
 import { compute_value_by_cur_odd_type } from "src/core/index.js";
-import { formatMoney, numberRetain } from "src/core/format/index.js";
 
 const is_mounted = ref(true);
 
@@ -251,21 +249,6 @@ function clear_odds_lift() {
   clearTimeout(tid);
   odds_lift.value = "";
 }
-
-/**
- * @description 投注项点击
- * @return {undefined} undefined  组装投注项的数据
- */
-// const bet_click_ol = () => {
-//   const { oid, _hid, _hn, _mid } = props.ol_data;
-//   let params = {
-//     oid, // 投注项id ol_obj
-//     _hid, // hl_obj
-//     _hn, // hn_obj
-//     _mid, //赛事id mid_obj
-//   };
-//   set_bet_obj_config(params, {});
-// };
 
 onUnmounted(() => {
   // 清除定时器

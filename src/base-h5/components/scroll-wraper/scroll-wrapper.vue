@@ -116,9 +116,9 @@ const get_index_f_data_source = (mid) => {
 const handler_match_container_scroll = lodash.debounce(($ev) => {
   scroll_top.value = $ev.target.scrollTop
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
-  if (get_is_static() || length < 18) return
+  if (get_is_static() || length < 17) return
   const scrollTop = $ev.target.scrollTop
-  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 300) || Math.abs(scrollTop - prev_scroll.value) >= 300) {
+  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 200) || Math.abs(scrollTop - prev_scroll.value) >= 200) {
     prev_scroll.value = scrollTop
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2 })
     if (!is_export.value) get_match_base_hps()
@@ -190,7 +190,12 @@ const get_is_show_footer_animate = () => {
  * @description: 列表回到顶部
  */
 const goto_top = () => {
-  container.value.scrollTo({ top: 0, behavior: 'smooth' });
+  MatchMeta.set_prev_scroll(0)
+  let timer = setTimeout(() => {
+    container.value.scrollTo({ top: 0, behavior: 'smooth' });
+    clearTimeout(timer)
+    timer = null
+  }, 250)
 }
 
 // 是否虚拟计算逻辑

@@ -38,7 +38,7 @@ class MatchMeta {
     // 赛事全量数据
     this.complete_matchs = []
     // 上一次滚动得距离
-    this.prev_scroll = null
+    this.prev_scroll = 0
     // 是否需要赛事归类操作
     this.is_classify = false
     // 其他仓库的全量赛事
@@ -757,6 +757,7 @@ class MatchMeta {
     this.complete_matchs = target_list
     this.complete_mids = lodash.uniq(custom_match_mids)
     this.match_mids = lodash.uniq(custom_match_mids)
+    
     // 重置折叠对象
     MatchFold.clear_fold_info()
     target_list.forEach((t, i) => {
@@ -897,10 +898,11 @@ class MatchMeta {
    */
   compute_page_render_list (config) {
 
-    const { scrollTop = 0, type = 1, warehouse = MatchDataBaseH5 } = config
+    const { scrollTop = 0, type = 1, is_scroll = true,  warehouse = MatchDataBaseH5 } = config
 
     // 计算当前页所需渲染数据
-    const scroll_top = scrollTop === 0 ? this.prev_scroll : scrollTop
+    const scroll_top = is_scroll ? scrollTop : this.prev_scroll
+
     this.prev_scroll = scroll_top
 
     // 菜单 ID 对应的 元数据赛事 mids
@@ -935,6 +937,13 @@ class MatchMeta {
    */
   is_other_warehouse (name) {
     return ['MatchDataWarehouse_ouzhou_PC_five_league_List_Common'].includes(name)
+  }
+
+  /**
+   * @description 重置 prev_scroll 
+   */
+  set_prev_scroll (val) {
+    this.prev_scroll = val
   }
 
   /**
@@ -984,11 +993,16 @@ class MatchMeta {
    * @description 删除赛事
    */
   handle_remove_match (data) {
-    // mhs === 2 为关盘 则移除赛事
-    const { mid, mhs } = data
-    if (+mhs === 2) {
-      const index = this.match_mids.findIndex(t => t === mid)
-      this.match_mids.splice(index, 1)
+    // mhs === 2  || mmp === 999 为关盘 则移除赛事
+    const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
+    console.log('8888888888888:', mid, mmp, mhs)
+    if (mhs == 2 || mmp == '999') {
+      const item = this.match_mids.find(t => t === mid)
+      if (item) {
+        const index = this.complete_matchs.findIndex(t => t === mid)
+        this.complete_matchs.splice(index, 1)
+        this.handler_match_list_data({ list: this.complete_matchs, is_classify })
+      }
     }
   }
 
@@ -1006,10 +1020,10 @@ class MatchMeta {
       if (item) this.get_target_match_data({})
     }
     // 调用 matchs  接口
-    if (['C104', '901'].includes(cmd)) {
+    if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
       this.handle_remove_match(data)
     }
-    
+
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
       this.get_match_base_hps_by_mids()

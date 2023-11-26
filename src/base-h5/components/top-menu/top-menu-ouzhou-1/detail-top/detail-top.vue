@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-top-info">
+  <div class="detail-top-info component detail-top">
     <div class="sport-info" @click="toHome">
       <span>{{ getCsna}}</span>
       <img class="bakc-icon" src="../img/back.png" alt="" />
@@ -7,7 +7,7 @@
     <div class="detail-select" v-if="drop_down_list.length">
       <div class="detail-select-nav">
         <q-btn class="label">
-          <span class="btn-label">{{ drop_down_list[active].tn }}</span>
+          <span class="btn-label">{{ drop_down_list[active].tn }}{{ drop_down_list[active].tn }}{{ drop_down_list[active].tn }}{{ drop_down_list[active].tn }}</span>
           <q-menu class="detail-top-pop">
             <div class="detail-top-pop-content" ref="detail_top_pop">
               <div class="match_detail_top_list">
@@ -173,14 +173,20 @@ const refresh = (params) => {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    flex: 1;
+    width: 0;
     // flex: 1;
     .detail-select-nav {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
       margin: 0 auto;
+      flex: 1;
+      width: 0;
 
       .btn-label {
         // height: 45px;
         // line-height: 45px;
-        max-width: 200px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -190,10 +196,9 @@ const refresh = (params) => {
       .label {
         padding: 0;
         color: #fff;
-        display: inline-block;
+        // display: inline-block; //杜绝 inline-block
         height: 45px;
         line-height: 45px;
-        max-width: 200px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

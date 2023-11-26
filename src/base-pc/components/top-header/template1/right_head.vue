@@ -99,11 +99,12 @@
             <!--国际化语言结束-->
             <q-item>
               <q-item-section>
+                <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
                 <div class="switch">
-                  <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
-                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: setting.index === s}">{{ s }}</span>
+                  <span class="bg" :style="{left: UserCtr.odds.cur_odds === setting.params[0] ? 0 : '50px'}"></span>
+                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: UserCtr.odds.cur_odds == s}">{{  i18n_t(`odds.${s}`) }}</span>
                 </div>
               </div>
               </q-item-section>
@@ -120,7 +121,7 @@ import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
 import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
-import { api_account } from 'src/api/index';
+import { api_account,api_betting } from 'src/api/index';
 import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
@@ -184,7 +185,7 @@ export default defineComponent({
     const settingData = ref([{
           title: 'Odds Display',
           index: 'DEC',
-          params: ['DEC', 'HK']
+          params: ['EU', 'HK']
         }, 
         // {
         //   title: 'Bet Slip',
@@ -197,7 +198,7 @@ export default defineComponent({
         // }
       ])
     //监听输入框内容改变，并搜索
-    watch(keyword.value,
+    watch(() => keyword.value,
       (val) => {
         let trimVal = val.trim();
         get_search_data(trimVal);
@@ -227,7 +228,7 @@ export default defineComponent({
       let path = userRouter.resolve({ path: '/secondary' }).href;
       path = path.substr(path.indexOf('#/'))
       window.open(
-        `/project/ouzhou-pc/index.html${path}`,
+        `${window.location.pathname}${path}`,
         "",
         `height=${_window_height}, width=${_window_width}, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
       );
@@ -237,8 +238,17 @@ export default defineComponent({
     }
 
     const settingclick = (s) => {
-      settingData.value[0].index = s
-      UserCtr.set_cur_odds(s)
+      
+      let params = {
+        userMarketPrefer: s
+      }
+      api_betting.record_user_preference(params).then((res ={}) =>{
+        if(res.code == 200){
+          UserCtr.set_cur_odds(s)
+        }else{
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
+        }
+      })
     }
 
     // 切换语言

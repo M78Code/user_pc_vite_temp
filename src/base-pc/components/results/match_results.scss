@@ -106,13 +106,13 @@ body {
           }
           .table-col::before {
             // border-right: 1px solid var(--q-match-result-boreder-1);
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 20%;
-            bottom: 20%;
-            width: 1px;
-            background-color: var(--q-match-result-boreder-1);
+            //content: '';
+            //position: absolute;
+            //left: 0;
+            //top: 20%;
+            //bottom: 20%;
+            //width: 1px;
+            //background-color: var(--q-match-result-boreder-1);
           }
         }
         .active {

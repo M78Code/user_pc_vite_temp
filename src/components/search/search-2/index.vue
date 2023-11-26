@@ -16,7 +16,7 @@
       <!-- <search-input v-model:show_type="show_type" /> -->
       <!-- 遮罩层样式.bottom-wrap -->
       <div class="bottom-wrap col search-result relative-position">
-        <div class="sports-tab" ref="tab">
+        <div class="sports-tab" ref="tab" v-if="sports_list.length">
           <div v-for="(item, index) in sports_list" :key="item.id" @click="set_sports_tab_index(index)"
             :class="['tab', sports_tab_index === index ? 'active' : '']">{{ item.sportName }}</div>
         </div>
@@ -243,6 +243,7 @@ export default defineComponent({
   // width: v-bind(main_width);
   // right: 0;
   top: 60px;
+  width: 100%;
   bottom: 0;
   z-index: 10001;
   // background-color: pink;
@@ -251,11 +252,11 @@ export default defineComponent({
 .serach-wrap {
   position: absolute;
   top: 10px;
-  left: 240px;
+  left: 50%;
   bottom: 0;
   z-index: 999;
-  min-width: 1445px;
-
+  min-width: 1450px;
+  transform: translateX(-50%);
   &.iframe {
     top: 50px !important;
   }
@@ -275,14 +276,15 @@ export default defineComponent({
     background-color: #e2e2e2;
 
     :deep(.serach-background) {
-      background-color: var(--q-gb-bg-c-4);
+      background-color: #e2e2e2;
       // min-height: 400px;
       overflow: hidden;
     }
   }
 
   .search-result {
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    // box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    margin-top: 9px;
   }
 
   &.mini {
@@ -292,7 +294,6 @@ export default defineComponent({
 }
 .sports-tab {
 	padding: 9px 20px;
-  margin-top: 12px;
 	display: flex;
 	border-bottom: 1px solid var(--q-gb-bd-c-1);
 	background-color: var(--q-gb-bg-c-4);
@@ -305,7 +306,7 @@ export default defineComponent({
 		background-color: var(--q-gb-bg-c-4);
 		border-radius: 40px;
 		text-align: center;
-		font-size: 12px;
+		font-size: 14px;
 		flex-shrink: 0;
 		padding: 6px 20px;
     cursor: pointer;

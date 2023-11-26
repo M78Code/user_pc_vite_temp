@@ -41,7 +41,7 @@
         </div>
         <div class="match-detail-line"></div>
         <!-- tabs 玩法分类切换 -->
-        <div v-if="tab == 'betting'">
+        <div v-if="tab == 'betting' && category_list.length > 0 ">
           <detail_tabs :category_list="category_list" :active="tab_selected_obj"
             @detail_tabs_change="detail_tabs_change" v-model:allCloseState="allCloseState"/>
         </div>
@@ -80,6 +80,8 @@ import odds_info from "./components/bevis_odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
+
+// import './index.scss'
 export default {
   components:{
     detail_header_tem0,

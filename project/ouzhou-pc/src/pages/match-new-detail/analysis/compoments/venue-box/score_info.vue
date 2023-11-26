@@ -58,6 +58,7 @@
                     alt=""
                     srcset=""
                     style="margin: 0 10px; height: 14px"
+                    v-if="detail_info.mng"
                    
                   />
                 </div>
@@ -203,7 +204,8 @@ const get_base_data = (val) => {
       });
     }
   }
-  // console.log(11111111,detail_info)
+  //  console.log(11111111,detail_info)
+  //  console.log(11111111,data.value)
   data.value = res || [];
 };
 
@@ -481,7 +483,7 @@ watch(
 watch(
   () => props.score_list,
   (val) => {
-    console.log("props.score_list--watch", val);
+    // console.log(11111, val);
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
     if (detail_info.msc_obj?.S7 && detail_info.csid == 1) {
@@ -508,9 +510,9 @@ watch(
         headerStyle: { width: "33px", color: "#ff7000" },
       });
     }
-    if (["1", "2", "3"].includes(detail_info.csid + "")) {
-      get_base_data(val);
-      }
+    // if (["1", "2", "3"].includes(detail_info.csid + "")) {
+    //   get_base_data(val);
+    //   }
    
   },
   { immediate: false, deep: true }

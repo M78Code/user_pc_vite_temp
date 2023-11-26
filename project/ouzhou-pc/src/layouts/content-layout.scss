@@ -79,14 +79,18 @@ body {
   /** 数据加载组件 -S*/
   .load-data-wrap {
     color: var(--q-layout-color-1);
-    // background-color: var(--q-gb-bg-c-4);
     /* 列表右侧暂无数据 */
     .list_right_empty {
       .img {
         background-image: var(--qq--bg-image-url38); // TODO: new_empty.svg
       }
     }
-
+    .loading-wrap{
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+    background-color: var(--q-gb-bg-c-4);
+    }
     /* 暂无数据 */
     .empty-wrap {
       .img {

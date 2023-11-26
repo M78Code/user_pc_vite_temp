@@ -28,7 +28,6 @@ import { match_list_handle_set } from './match-handle-data.js'
 import { mx_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
-
 const { load_video_resources } = pre_load_video
 // 数据请求状态
 const load_data_state = ref("loading");
@@ -41,6 +40,7 @@ const is_loading = ref(true);
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
 const api_error_count = ref(0);
+let is_has_base_data=false; //是否有元数据
 let check_match_last_update_timer_id;
 let get_match_list_timeid;
 let hot_match_list_timeout;
@@ -95,7 +95,8 @@ export function fetch_match_list(is_socket = false, cut) {
 		// fetch_search_match_list && fetch_search_match_list(is_socket);
 		return false;
 	}
-	if (!is_socket) {
+	//不是 w 并且没有 元数据列表 启动loading
+	if (!is_socket&&!is_has_base_data) {
 		load_data_state.value = "loading";
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
@@ -111,7 +112,7 @@ export function fetch_match_list(is_socket = false, cut) {
 	delete _params.lv2_mi;
 	// 近期开赛
 	// console.error('MenuData.menu_root',MenuData.menu_root)
-	if (MenuData.menu_root == 2) {
+	if (MenuData.is_today()) {
 		// _params.selectionHour = filterHeader.open_select_time;
 	} else {
 		_params.selectionHour = null;
@@ -207,10 +208,13 @@ function handle_destroyed() {
 	hot_match_list_timeout = null;
 }
 function init_page_when_base_data_first_loaded() {
-	// 元数据 
-	set_base_data_init();
+	//设置元数据 列表 返回boolean
+	is_has_base_data=set_base_data_init()
+	if(is_has_base_data){
+		MatchListScrollClass.set_scroll_top(0);
+		load_data_state.value = 'data';
+	}
 	//释放试图 
-	// load_data_state.value = 'data'
 	// check_match_last_update_timer_id = setInterval(
 	// 	check_match_last_update_time(),
 	// 	30000
@@ -243,7 +247,9 @@ function mounted_fn() {
 		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST,  () => {
 			clearTimeout(tid_match_list)
 			tid_match_list = setTimeout(() => {
-				fetch_match_list()
+				//请求列表接口之前 先设置元数据列表
+				init_page_when_base_data_first_loaded()
+				fetch_match_list()//请求接口
 			}, 80);
 		}).off,
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
@@ -253,7 +259,7 @@ function mounted_fn() {
 			api_bymids({ is_show_mids_change: true })
 		}, 1000)).off,
 		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_match_list).off,
-		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded).off,
+		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded,100)).off,
 	]
 
 	load_video_resources();

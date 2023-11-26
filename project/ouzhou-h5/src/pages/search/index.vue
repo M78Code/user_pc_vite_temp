@@ -571,21 +571,20 @@ onUnmounted(() => {
 		top: 20px;
 		width: 12px;
 		height: 12px;
-		//color: #fff;
-		color: var(--q-gb-t-c-2);
 	}
 
 	input {
-		border: 1px solid #CE5B00;
+		border: none;
 		border-radius: 20px;
-		width: 300px;
+		background: rgba(255, 255, 255, 0.2);
+		width: 85%;
 		height: 30px;
+		box-shadow: 0 0 0 .5px #ffffff;
 		padding-left: 30px;
-		background: #CE5B00;
 		outline: none;
 		//color: #fff;
 		color: var(--q-gb-t-c-2);
-		margin-right: 6px;
+		margin-right: 16px;
 		font-weight: 500;
 	}
 
@@ -601,15 +600,15 @@ onUnmounted(() => {
 		top: 20px;
 		//color: #fff;
 		color: var(--q-gb-t-c-2);
-		font-size: 14px;
-		left: 290px;
+		font-size: 12px;
+		left: 80%;
 	}
 
 	.close_btn {
 		//color: #fff;
 		color: var(--q-gb-t-c-2);
 		opacity: .8;
-		font-size: 14px;
+		font-size: 12px;
 	}
 }
 
@@ -759,7 +758,6 @@ li {
 	.text {
 		border-color: var(--q-gb-bd-c-1);
 		padding-left: 10px;
-		font-weight: 600;
 	}
 }
 
@@ -813,7 +811,8 @@ li {
 		height: 0.44rem;
 		line-height: 0.44rem;
 		border-bottom: 1px solid var(--q-gb-bd-c-1);
-		text-indent: 0.16rem;
+		text-indent: 0.18rem;
+		font-weight: 500;
 	}
 
 	.hotItem {
@@ -825,7 +824,7 @@ li {
 		font-size: 0.12rem;
 		padding: 0;
 		border-bottom: 1px solid var(--q-gb-bd-c-1);
-		text-indent: 0.16rem;
+		text-indent: 0.15rem;
 
 		.defaultText {
 			letter-spacing: 0;

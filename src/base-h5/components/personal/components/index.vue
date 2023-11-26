@@ -1,4 +1,5 @@
 <template>
+  
   <div class="personal_page"> 
     <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;"> 
       <!-- 用户名称 --> 
@@ -28,7 +29,7 @@
           </template>
         </collapse>
         <!-- Language -->
-        <collapse v-if="false" v-model="l_visible" :title="`${i18n_t('ouzhou.setting_menu.language')}`">  
+        <collapse v-model="l_visible" :title="`${i18n_t('ouzhou.setting_menu.language')}`">  
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
           </template>
@@ -39,17 +40,18 @@
             </div>
           </template>
         </collapse>
+        <div v-show="false">{{UserCtr.user_version}}</div>
         <!-- Odds Settings -->
-        <collapse v-if="false" v-model="s_visible" :title="`${i18n_t('ouzhou.setting_menu.odds_setting')}`">
+        <collapse v-model="s_visible" :title="`${i18n_t('ouzhou.setting_menu.odds_setting')}`">
           <template v-slot:title_icon>
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/setting.png`" alt="" />
           </template>
           <template v-slot:content>
-            <div class="setting_item" v-for="setting in settingData" :key="setting.title">
+            <div class="setting_item" v-for="(setting,idx) in settingData" :key="setting.title">
               <span>{{ setting.title }}</span>
               <div class="switch"> 
-                <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
-                <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
+                <span class="bg" :style="{left: UserCtr.odds.cur_odds == setting.options[0] ? 0 : '50px'}"></span>
+                <span v-for="s in setting.options" :key="s" @click="handel_change(s,idx)" :class="{active: UserCtr.odds.cur_odds == s}">{{ i18n_t(`odds.${s}`) }}</span>
               </div>  
             </div> 
           </template> 
@@ -64,7 +66,7 @@ import collapse from "src/base-h5/components/personal/components/collapse.vue"
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { api_account } from 'src/api/index';
+import { api_account,api_betting } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,format_money2 } from "src/core";
 //语言设置
@@ -84,48 +86,68 @@ const languages = [{
 }, {
   key: 'en',
   language: 'English',
-}, {
-  key: 'tw',
-  language: '繁體中文',
-}, {
-  key: 'vi',
-  language: 'Tiếng Việt',
-}, {
-  key: 'th',
-  language: 'ไทย',
-}, {
-  key: 'ms',
-  language: 'Melayu',
-}, {
-  key: 'ad',
-  language: 'Indonesia',
-}, {
-  key: 'md',
-  language: 'Burmese',
-}, {
-  key: 'ry',
-  language: 'Japanese',
-}, {
-  key: 'pty',
-  language: 'Portuguese',
-}, {
-  key: 'hy',
-  language: 'Korean',
-}]
+},
+//  {
+//   key: 'tw',
+//   language: '繁體中文',
+// }, {
+//   key: 'vi',
+//   language: 'Tiếng Việt',
+// }, {
+//   key: 'th',
+//   language: 'ไทย',
+// }, {
+//   key: 'ms',
+//   language: 'Melayu',
+// }, {
+//   key: 'ad',
+//   language: 'Indonesia',
+// }, {
+//   key: 'md',
+//   language: 'Burmese',
+// }, {
+//   key: 'ry',
+//   language: 'Japanese',
+// }, {
+//   key: 'pty',
+//   language: 'Portuguese',
+// }, {
+//   key: 'hy',
+//   language: 'Korean',
+// }
+]
 const settingData = ref([{
   title: i18n_t("ouzhou.setting_menu.odds_display"),
-  index: i18n_t("ouzhou.setting_menu.dec"),
+  index: UserCtr.odds.cur_odds, //用户已选中值
+  options:["EU","HK"], //盘口
   params: [i18n_t("ouzhou.setting_menu.dec"), i18n_t("ouzhou.setting_menu.hk")]
-}, {
-  title: i18n_t("pre_record.odds"),
-  index: i18n_t("ouzhou.setting_menu.any"),
-  params: [i18n_t("ouzhou.setting_menu.any"), i18n_t("ouzhou.setting_menu.hig")]
-}, {
-  title: i18n_t("ouzhou.setting_menu.version"),
-  index: i18n_t("ouzhou.setting_menu.euro"),
-  params: [i18n_t("ouzhou.setting_menu.euro"), i18n_t("ouzhou.setting_menu.asia")]
-}])
-
+},
+//  {
+//   title: i18n_t("pre_record.odds"),
+//   index: true, //用户已选中值
+//   options:[true,false], //接受更好赔率
+//   params: [i18n_t("ouzhou.setting_menu.any"), i18n_t("ouzhou.setting_menu.hig")]
+// }, {
+//   title: i18n_t("ouzhou.setting_menu.version"),
+//   index: 'EU',  //用户已选中值
+//   options:["EU","ASIXA"], //版本需 欧洲/亚洲  需要修改值0 
+//   params: [i18n_t("ouzhou.setting_menu.euro"), i18n_t("ouzhou.setting_menu.asia")]
+// }
+])
+function handel_change(s,idx){
+  let params = {
+    userMarketPrefer: s
+  }
+  api_betting.record_user_preference(params).then((res ={}) =>{
+    if(res.code == 200){
+      if(idx==0){
+        UserCtr.set_cur_odds(s) //HK/EU
+      }
+    }else{
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
+    }
+  })
+}
 onMounted(() => {
   //初始化金额隐藏
   on_show_money(UserCtr.show_balance)

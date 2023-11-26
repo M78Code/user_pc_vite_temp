@@ -273,7 +273,6 @@ const no_user_event = () => {
 
 <style lang="scss" scoped>
 .load-data-wrap {
-  min-height: 60%;
   overflow: auto;
 
   &.is-detail {
