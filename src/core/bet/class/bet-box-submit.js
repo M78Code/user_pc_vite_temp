@@ -800,28 +800,15 @@ const set_orderNo_bet_obj = order_no_list => {
 
 // 获取盘口值 附加值
 const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
+    console.error('get_handicap')
     let text = ''
-    // 展示用的 + 投注项  
-    let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127]
+    // 展示用的 + 投注项
+    // 两数拼接  
+    let home_away_mark = [2, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127,38] // 
+    // 多位数
     let home_mark_more = [351,347]
-    let home_away_only = [1]
-    if(is_detail){
-        text = ol_obj.otv
-    }else{
-        if(home_away_mark.includes(ol_obj._hpid*1)){
-            switch(ol_obj.ot){
-                case '1':
-                    // 主
-                    text= mid_obj.mhn
-                    break
-                case '2':
-                    // 客
-                    text = mid_obj.man
-                    break
-            }
-            text = `${mid_obj.mhn}${mid_obj.man ? `<span class='ty-span'>${mid_obj.man}</span>`:''} ${ol_obj.on}`        
-        }
-    }
+    // 主客队
+    let home_away_only = [1,37]
 
     // 独赢类
     if(home_away_only.includes(ol_obj._hpid*1)){
@@ -834,23 +821,59 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
                 // 客
                 text = mid_obj.man
                 break
+            default:
+                text = ol_obj.on
+                break
         }
         return text
     }
+
+    // 详情 
+    if(is_detail){
+        // 投注项名称
+        text = ol_obj.otv
+        // 
+        if(home_away_mark.includes(ol_obj._hpid*1)){
+            let handicap = text.split(' ')
+            handicap = handicap.filter(item => item)
     
-    if(home_away_mark.includes(ol_obj._hpid*1)){
-        let handicap = text.split(' ')
-        handicap = handicap.filter(item => item)
-
-        text = `${handicap[0]}${handicap[1] ? `<span class='ty-span'>${handicap[1]}</span>`:''}`
-
-        if(home_mark_more.includes(ol_obj._hpid*1)){
-            text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
+            text = `${handicap[0]}${handicap[1] ? `<span class='ty-span'>${handicap[1]}</span>`:''}`
+    
+            if(home_mark_more.includes(ol_obj._hpid*1)){
+                text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
+            }
         }
-       
+
+        return text
+
+    }else{
+        // 首页 列表
+        text = ol_obj.on
+        // 是否需要 玩法拼接
+        if(home_away_mark.includes(ol_obj._hpid*1)){
+
+            let handicap = text.split(' ')
+            handicap = handicap.filter(item => item)
+    
+            text = `${handicap[0]}${handicap[1] ? `<span class='ty-span'>${handicap[1]}</span>`:''}`
+          
+        }else{
+            // 主客队拼接
+            switch(ol_obj.ot){
+                case '1':
+                    // 主
+                    text = mid_obj.mhn
+                    break
+                case '2':
+                    // 客
+                    text = mid_obj.man
+                    break
+            }
+            text = `${text} <span class='ty-span'>${ol_obj.on}</span>`  
+        }
+
+        return text  
     }
-   
-    return text
 }
 
 // 是否显示基准分 
