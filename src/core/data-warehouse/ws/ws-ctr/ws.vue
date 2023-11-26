@@ -52,6 +52,7 @@ const CURRENT_ENV_MAP={
 // 延时器使用
 let timer = 0;
 let timer2 = 0;
+let timer_ws_msg = 0;
 let timer_text = 0;
 let log_time_timer = 0;
 // 最后次ws断开时间
@@ -157,10 +158,7 @@ function socket_status(status, old_status) {
     // 发送注单信息命令
     clearTimeout(timer);
     timer = setTimeout(() => {
-      scmd_c3();
-      scmd_c4();
-      scmd_c5();
-      scmd_c7();
+      scmd_all();
     }, 600);
   }
 }
@@ -209,7 +207,7 @@ function scmd_c3() {
  * @description: 辅助订阅C4-滚球新赛事通知(C302)
  * @return {undefined} undefined
  */
-function scmd_c4() {
+function scmd_c4(type=1) {
   let obj = { copen: 1 };
   WsMan.skt_send_initiative_push(obj);
 }
@@ -235,10 +233,17 @@ function scmd_c7() {
  * @return {undefined} undefined
  */
  function scmd_all() {
-  scmd_c3();
-  scmd_c4();
-  scmd_c5();
-  scmd_c7();
+  if(WsMan.ws && WsMan.ws.ws&& WsMan.ws.ws.readyState == 1){
+    scmd_c3();
+    scmd_c4();
+    scmd_c5();
+    scmd_c7();
+  } else {
+    clearTimeout(timer_ws_msg);
+    timer_ws_msg = setTimeout(() => {
+      scmd_all();
+    }, 1000);
+  }
 }
 
 
@@ -456,9 +461,7 @@ watch(
     get_uid, //单关
   ],
   () => {
-    scmd_c3();
-    scmd_c4();
-    scmd_c5();
+    scmd_all();
   },
   {
     immediate: true,
@@ -491,7 +494,10 @@ onBeforeUnmount(()=>{
   clearTimeout(timer);
   clearTimeout(timer2);
   clearTimeout(timer_text);
+  clearTimeout(timer_ws_msg);
   clearInterval(log_time_timer);
+  // 发送命令
+  scmd_c4(2);
   // 销毁WS操作对象
   WsMan.destroyed();
 })

@@ -1,11 +1,3 @@
-/*
- * @Author: cooper cooper@123.com
- * @Date: 2023-07-09 16:21:30
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-25 22:31:51
- * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
- * @Description: 详情页相关接口数据处理
- */
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import { api_match_list,api_common } from "src/api";
 import { useRouter } from "vue-router";
@@ -149,7 +141,7 @@ export function usedetailData(route) {
    * 获取数据
    */
   const init = async () => {
-    debugger
+ 
     // all_list_toggle = {}
     detail_loading.value = true;
     get_detail();
@@ -417,7 +409,7 @@ export function usedetailData(route) {
       () => detail_info.value?.ms,
       (_new, _old) => {
         let arr_ms = [0, 1, 2, 7, 10, 110];
-        if (!arr_ms.includes(Number(_new))) {
+        if (!arr_ms.includes(Number(_new)) &&  _new != undefined ) {
           mx_autoset_active_match({mid:route.params.mid});
         }
         // 赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
@@ -425,7 +417,7 @@ export function usedetailData(route) {
           // ms变更时才调用
           if (_new != _old && _old) {
             // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-            // refresh();
+            refresh();
           }
         }
       },{deep:true}
