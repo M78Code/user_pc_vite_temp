@@ -99,11 +99,12 @@
             <!--国际化语言结束-->
             <q-item>
               <q-item-section>
+                <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
                 <div class="switch">
-                  <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
-                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: setting.index === s}">{{  i18n_t(`odds.${s}`) }}</span>
+                  <span class="bg" :style="{left: UserCtr.odds.cur_odds === setting.params[0] ? 0 : '50px'}"></span>
+                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: UserCtr.odds.cur_odds == s}">{{  i18n_t(`odds.${s}`) }}</span>
                 </div>
               </div>
               </q-item-section>
@@ -244,7 +245,7 @@ export default defineComponent({
       api_betting.record_user_preference(params).then((res ={}) =>{
         if(res.code == 200){
           UserCtr.set_cur_odds(s)
-          settingData.value[0].index = s
+          console.error('set_cur_odds',s)
         }else{
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
         }
