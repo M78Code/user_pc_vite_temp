@@ -477,7 +477,6 @@ export const details_main = (router, route) => {
       init.value = false;
       switch (cmd) {
         case "C303":
-          console.error("C303");
           socketOddinfo({
             mcid: 0,
             cuid: cuid.value,
@@ -486,7 +485,6 @@ export const details_main = (router, route) => {
           });
           break;
         case "C302":
-          console.error("C302");
           socketOddinfo({
             mcid: 0,
             cuid: cuid.value,
@@ -495,11 +493,9 @@ export const details_main = (router, route) => {
           });
           break;
         case "C104":
-          console.error("C104");
           RCMD_C104(data);
           break;
         case "C109":
-          console.error("C109");
           RCMD_C109(data);
           break;
         default:
