@@ -27,7 +27,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down, ouzhou_white_up } from 'src/base-h5/core/utils/local-image.js'
+import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down } from 'src/base-h5/core/utils/local-image.js'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type } from "src/core/index.js"
 
 const props = defineProps({
@@ -107,9 +107,9 @@ const is_lock = computed(() => {
 const get_icon = (type) => {
   let img_src = ''
   if (type === 'up'){
-    img_src = BetData.bet_oid_list.includes(props.odd_item.oid) ? ouzhou_white_up : ouzhou_hps_up
+    img_src = ouzhou_hps_up
   } else {
-    img_src = BetData.bet_oid_list.includes(props.odd_item.oid) ? ouzhou_white_up : ouzhou_hps_down
+    img_src = ouzhou_hps_down
   }
   return img_src
 }
@@ -157,27 +157,29 @@ onUnmounted(() => {
   justify-content: center;
   &.active{
     color: var(--q-gb-t-c-2);
-    background: #FF7000;
     border-radius: 2px;
-    .odd .title{
-      color: #fff;
+    .odd {
+      background: #FF7000;
+      .title{
+        color: #fff;
+      }
+      &.up{
+        background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
+        .hpn{
+          color: #1A1A1A;
+        }
+      }
+      &.down{
+        background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
+        .hpn{
+          color: #1A1A1A;
+        }
+      }
     }
     .hpn{
       position: relative;
       top: 0px;
       color: #fff;
-    }
-    .odd.up{
-      color: #fff;
-       img {
-        transform: rotateX(0deg);
-      }
-    }
-    .odd.down{
-      color: #fff;
-      img {
-        transform: rotateX(180deg);
-      }
     }
   }
   .hpn{

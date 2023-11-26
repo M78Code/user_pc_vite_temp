@@ -270,6 +270,18 @@ export function usedetailData(route) {
   const getMidInfo = (mid) => {
     return MatchDataWarehouseInstance.get_quick_mid_obj(mid);
   };
+  /**
+   * @description: 一键折叠
+   * @param {*} mid
+   * @return {*} 赛事详情
+   */
+  const set_odds_fold = (val)=>{
+    for (const item of all_list.value) {
+      item.expanded = !val
+      
+    }
+
+  }
 
   /*
    **监听数据仓库版本号
@@ -293,6 +305,10 @@ export function usedetailData(route) {
     LayOutMain_pc.set_oz_show_right(true); // 显示右侧
     LayOutMain_pc.set_oz_show_left(true); // 显示菜单
     init();
+    // 一键折叠监听
+    useMittOn(MITT_TYPES.EMIT_SHOW_FOLD, set_odds_fold);
+
+
       // 增加监听接受返回的监听函数
      message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
      if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
