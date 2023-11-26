@@ -255,7 +255,7 @@ export default defineComponent({
   left: 50%;
   bottom: 0;
   z-index: 999;
-  min-width: 1450px;
+  min-width: 1470px;
   transform: translateX(-50%);
   &.iframe {
     top: 50px !important;
