@@ -132,13 +132,14 @@ export function fetch_match_list(is_socket = false, cut) {
 						is_socket,
 						cut
 					);
-					if (lodash.get(res, "data.data")) {
-						load_data_state.value = lodash.get(data, "data.data.length") ? 'data' : 'empty'
+					if (lodash.get(res, "data.length") || lodash.get(res, "data.data.length")) {
+						const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
+						load_data_state.value = len ? 'data' : 'empty'
 					}
 					else {
-						const livedata = lodash.get(res, "data.livedata",[])
-						const nolivedata = lodash.get(res, "data.nolivedata", [])
-						load_data_state.value = livedata.length + nolivedata.length > 0 ? 'data' : 'empty'
+						const livedata = lodash.get(res, "data.livedata.length", 0)
+						const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
+						load_data_state.value = livedata + nolivedata > 0 ? 'data' : 'empty'
 					}
 				} else if (res.code == "0401038") {
 					// let is_collect = this.vx_layout_list_type == 'collect'
@@ -154,6 +155,7 @@ export function fetch_match_list(is_socket = false, cut) {
 						load_data_state.value = "empty";
 					}
 				}
+
 				show_refresh_mask.value = false;
 			})
 			.catch((err) => {
@@ -172,7 +174,9 @@ export function fetch_match_list(is_socket = false, cut) {
 					}
 				}
 			});
+
 	};
+	set_load_data_state(load_data_state.value)
 	const match_list_debounce_cache = axios_debounce_cache.get_match_list;
 	if (match_list_debounce_cache && match_list_debounce_cache["ENABLED"]) {
 		let info = match_list_debounce_cache.can_send_request(_params);

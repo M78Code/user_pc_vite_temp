@@ -207,7 +207,6 @@ function match_list_all_params() {
             params: lv2_mi_info
         }
     )
-    console.log('asdasdasda', UserCtr);
     return config
 }
 export function get_collet_match_list_params(){

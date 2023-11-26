@@ -87,7 +87,7 @@ export default {
       const that = this;
       if (that.tconfig.step) {
         if (!that.timer || that.replay) {
-          clearInterval(that.timer);
+          // clearInterval(that.timer);
           // 设置格式化时间
           if (that.tconfig.time_format) {
             that.time_str = that.tconfig.time_format(
