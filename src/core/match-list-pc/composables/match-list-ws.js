@@ -14,7 +14,6 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 		return ws_keys_map[MatchListData.name_code]
 	}
 	let mids = []
-	console.log('use_match_list_ws', MatchListData.name_code, mids)
 	let remove_fun = addWsMessageListener(lodash.throttle((cmd, data) => {
 		// 赛事新增
 		if (["C109"].includes(cmd)) {
@@ -24,7 +23,7 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 			if (item) useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
 		}
 		// 调用 matchs  接口
-		if (["C104"].includes(cmd)) {
+		if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
 			// mhs === 2 为关盘
 			if (data.mhs == 2) {
 				socket_remove_match(data.cd, MatchListData);
