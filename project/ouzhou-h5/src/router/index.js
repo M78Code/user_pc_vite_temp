@@ -52,11 +52,6 @@ const router = createRouter({
           },
         },
         {
-          path: "/result/:mid/:tid/:csid?/:mcid?",
-          name: "result",
-          component: () => import("../pages/detail-result/index.vue"),
-        },
-        {
           path: "/home",
           name: "home",
           component: () => import("../pages/home/index.vue"),
@@ -116,6 +111,11 @@ const router = createRouter({
           //       import("../pages/details/children/category.vue"),
           //   },
           // ],
+        },
+        {
+          path: "/result/:mid/:tid/:csid?/:mcid?",
+          name: "result",
+          component: () => import("../pages/detailnew/result/index.vue"),
         },
         // 投注列表
         {
