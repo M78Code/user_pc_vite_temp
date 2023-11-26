@@ -231,7 +231,7 @@ const checkHot = n => {
   } else {
     init.value = false;
     is_hot.value = !is_hot.value;
-    emit("search_hot", Number(is_hot.value));
+    // emit("search_hot", Number(is_hot.value));
   }
 };
 const { off: offInit } = useMittOn(MITT_TYPES.EMIT_INIT_SELECT, () => {
@@ -317,7 +317,15 @@ onMounted(() => {
   input_val.value = i18n_t("select.all");
 });
 // 全局点击事件
-watch('GlobalSwitchClass.global_click', res => {
+  watch(
+    () => GlobalSwitchClass.global_click,
+    (new_) => {
+    console.log('resres',new_)
+      isShow.value = false;
+    },
+    {deep:true, immediate: true }
+  );
+  watch(GlobalSwitchClass.global_click, res => {
   isShow.value = false;
 },
     {deep:true, immediate: true });

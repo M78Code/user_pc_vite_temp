@@ -119,9 +119,10 @@
 import { defineComponent, onMounted, ref,watch, onUnmounted } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
+import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
-import { api_account,api_betting } from 'src/api/index';
-import { loadLanguageAsync, compute_local_project_file_path,i18n_t } from "src/core/index.js";
+import { api_account } from 'src/api/index';
+import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
@@ -183,8 +184,8 @@ export default defineComponent({
       ]
     const settingData = ref([{
           title: 'Odds Display',
-          index: 'EU',
-          params: ['EU',"HK" ]
+          index: 'DEC',
+          params: ['EU', 'HK']
         }, 
         // {
         //   title: 'Bet Slip',
@@ -197,7 +198,7 @@ export default defineComponent({
         // }
       ])
     //监听输入框内容改变，并搜索
-    watch(() => keyword.value,
+    watch(keyword.value,
       (val) => {
         let trimVal = val.trim();
         get_search_data(trimVal);
@@ -227,7 +228,7 @@ export default defineComponent({
       let path = userRouter.resolve({ path: '/secondary' }).href;
       path = path.substr(path.indexOf('#/'))
       window.open(
-        `/project/ouzhou-pc/index.html${path}`,
+        `${window.location.pathname}${path}`,
         "",
         `height=${_window_height}, width=${_window_width}, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
       );
@@ -236,7 +237,6 @@ export default defineComponent({
       visible.value = !visible.value
     }
 
-    // 切换盘口赔率
     const settingclick = (s) => {
       
       let params = {
@@ -349,8 +349,7 @@ export default defineComponent({
       close,
       compute_local_project_file_path,
       clear_keyword,
-      compute_css_obj,
-      i18n_t
+      compute_css_obj
     };
   
   }

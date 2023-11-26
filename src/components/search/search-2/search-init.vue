@@ -1,16 +1,10 @@
 <!-- @Description: 搜索面板初始化 -->
 
 <template>
-    <div
-        class="wrap-init"
-        @click.stop
-    >
-        <div
-            class="init-wrap "
-            v-if="histroy_data.length > 0"
-        >
+    <div @click.stop>
+        <div class="init-wrap" v-if="histroy_data.length > 0">
             <div class="init-row">
-                <div class="line"></div>
+                <!-- <div class="line"></div> -->
                 <div class="row-title col">
                     {{ i18n_t('search.search_record') }}
                     <!-- 搜索记录 -->
@@ -41,9 +35,9 @@
             </div>
         </div>
 
-        <div class="init-wrap">
+        <div class="init-wrap" v-if="hot_data.length > 0">
             <div class="init-row">
-                <div class="line"></div>
+                <!-- <div class="line"></div> -->
                 <div class="row-title col">
                     {{ i18n_t('search.search_hot') }}
                     <!-- 热词搜索 -->
@@ -63,7 +57,7 @@
                 :key="index"
                 @click="click_keyword(item.keyWord, true)"
             >
-                {{ index + 1 }}&ensp;&ensp;{{ item.keyWord }}
+                {{ item.keyWord }}
             </div>
         </div>
         <!-- 其他搜索   本期不做 -->
@@ -72,7 +66,7 @@
             v-if="false"
         >
             <div class="init-row">
-                <div class="line"></div>
+                <!-- <div class="line"></div> -->
                 <div class="row-title col">
                     {{ i18n_t('search.other') }}
                     <!-- 其他搜索 -->
@@ -219,17 +213,16 @@ onMounted(init)
 }
 
 .init-wrap {
-    margin-bottom: 25px;
-
+    margin-bottom: 10px;
+    background-color: #fff;
+    font-size: 14px;
     .init-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: #fff;
         border-bottom: 1px solid #282b37;
         height: 42px;
         margin-bottom: 8px;
-
         .line {
             height: 14px;
             width: 3px;
@@ -241,12 +234,13 @@ onMounted(init)
             display: flex;
             align-items: center;
             line-height: 14px;
+            padding-left: 20px;
         }
 
         .clear-history {
             color: #5a6074;
             cursor: pointer;
-
+            padding-right: 20px;
             &:hover {
                 color: #99a3b1;
             }
@@ -258,7 +252,7 @@ onMounted(init)
         justify-content: space-between;
         align-items: center;
         height: 30px;
-        padding: 0 10px;
+        padding: 0 20px;
         border-radius: 2px;
         cursor: pointer;
 

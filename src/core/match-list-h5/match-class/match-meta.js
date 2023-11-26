@@ -38,7 +38,7 @@ class MatchMeta {
     // 赛事全量数据
     this.complete_matchs = []
     // 上一次滚动得距离
-    this.prev_scroll = null
+    this.prev_scroll = 0
     // 是否需要赛事归类操作
     this.is_classify = false
     // 其他仓库的全量赛事
@@ -898,10 +898,11 @@ class MatchMeta {
    */
   compute_page_render_list (config) {
 
-    const { scrollTop = 0, type = 1, warehouse = MatchDataBaseH5 } = config
+    const { scrollTop = 0, type = 1, is_scroll = true,  warehouse = MatchDataBaseH5 } = config
 
     // 计算当前页所需渲染数据
-    const scroll_top = scrollTop === 0 ? this.prev_scroll : scrollTop
+    const scroll_top = is_scroll ? scrollTop : this.prev_scroll
+
     this.prev_scroll = scroll_top
 
     // 菜单 ID 对应的 元数据赛事 mids
@@ -936,6 +937,13 @@ class MatchMeta {
    */
   is_other_warehouse (name) {
     return ['MatchDataWarehouse_ouzhou_PC_five_league_List_Common'].includes(name)
+  }
+
+  /**
+   * @description 重置 prev_scroll 
+   */
+  set_prev_scroll (val) {
+    this.prev_scroll = val
   }
 
   /**
