@@ -1,5 +1,5 @@
 <template>
-  <div class="component result-ol-item" v-if="value.result != (void 0)||true"
+  <div class="component result-ol-item" v-if="value.result != (void 0)"
     :class="[state,'hpt-'+hpt]" @click.stop
   >
     <slot>
