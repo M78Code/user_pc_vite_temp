@@ -149,7 +149,7 @@ export function usedetailData(route) {
    * 获取数据
    */
   const init = async () => {
-    debugger
+ 
     // all_list_toggle = {}
     detail_loading.value = true;
     get_detail();
