@@ -571,21 +571,20 @@ onUnmounted(() => {
 		top: 20px;
 		width: 12px;
 		height: 12px;
-		//color: #fff;
-		color: var(--q-gb-t-c-2);
 	}
 
 	input {
-		border: 1px solid #CE5B00;
+		border: none;
 		border-radius: 20px;
-		width: 300px;
+		background: rgba(255, 255, 255, 0.2);
+		width: 85%;
 		height: 30px;
+		box-shadow: 0 0 0 .5px #ffffff;
 		padding-left: 30px;
-		background: #CE5B00;
 		outline: none;
 		//color: #fff;
 		color: var(--q-gb-t-c-2);
-		margin-right: 6px;
+		margin-right: 16px;
 		font-weight: 500;
 	}
 
@@ -601,15 +600,15 @@ onUnmounted(() => {
 		top: 20px;
 		//color: #fff;
 		color: var(--q-gb-t-c-2);
-		font-size: 14px;
-		left: 290px;
+		font-size: 12px;
+		left: 80%;
 	}
 
 	.close_btn {
 		//color: #fff;
 		color: var(--q-gb-t-c-2);
 		opacity: .8;
-		font-size: 14px;
+		font-size: 12px;
 	}
 }
 

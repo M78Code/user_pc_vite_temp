@@ -28,7 +28,9 @@
         <div v-else-if="card_type == 'league_container'&&mids_arr.length">
           <!-- 数据加载状态 -->
           <!-- 赛事列表 -->
-          <match-card v-for="mid in mids_arr" :key="mid" :mid="mid" />
+          <!-- {{ card_style_obj.mids.split(',') }}
+          {{ mids_arr }} -->
+          <match-card v-for="mid in card_style_obj.mids.split(',')" :key="mid" :mid="mid" />
         </div>
       </div>
     </div>
@@ -96,7 +98,9 @@ const card_style = computed(() => {
 const mids_arr = computed(() => {
   let mids_arr = [];
   if (card_style_obj?.card_type == "league_container") {
-    mids_arr = card_style_obj?.mids.split(",");
+    // 深拷贝一个mids 所属对象 防止mids丢失
+    let new_card_style_obj = lodash.cloneDeep(card_style_obj)
+    mids_arr = new_card_style_obj?.mids.split(",");
     return mids_arr;
   }
   return mids_arr;

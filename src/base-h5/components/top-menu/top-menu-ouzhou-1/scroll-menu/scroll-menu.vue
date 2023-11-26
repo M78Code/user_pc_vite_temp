@@ -25,7 +25,7 @@
 </template>
 <script setup>
 import lodash from 'lodash'
-import { onMounted, ref ,onUnmounted} from "vue"
+import { onMounted, ref ,onUnmounted, reactive} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData , UserCtr} from "src/core/";
@@ -45,6 +45,10 @@ const props = defineProps({
 const leftDataList = ref([]);
 const emits = defineEmits(['changeMenu'])
 const contInit = ref([]);
+
+const ref_data = reactive({
+    emit_lsit:{}
+})
 /**
  * 获取滚球数量
  * @param {*} item 
@@ -141,12 +145,15 @@ const get_menu_ws_list = (list) =>{
 }
 onMounted(()=>{
     get_init_data();
-    useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
-    useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,get_menu_ws_list)
+
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data).off,
+        emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
+    }
+   
 })
 onUnmounted(()=>{
-    useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA).off
-    useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE).off
+    Object.values(ref_data.emit_lsit).map((x) => x());
 })
 /**
  * 滚球选择

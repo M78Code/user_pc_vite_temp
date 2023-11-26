@@ -11,9 +11,10 @@
         mobile-arrows
 >
         <q-tab v-for="(item ,index) in option" :key="index "
-                @click.stop="selectSport(item)"
+                @click.stop="selectSport(item,index)"
+                :class="active_sport === index ? 'active' : ''"
                 >
-          <div class="tabs_item" :class="sport === item ? 'active' : ''">
+          <div class="tabs_item">
             {{ item }}
           </div>
         </q-tab>
@@ -62,7 +63,10 @@ import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import { onMounted, onUnmounted, ref,watch,computed } from "vue";
 const props = defineProps({
   // 当前选中的球种
-  sportType: String,
+  sportType: {
+    type: String,
+    default: '1'
+  },
   // 球种名字列表
   options: Array,
   // 是否展示输入框
@@ -78,6 +82,8 @@ const props = defineProps({
 // console.log(props.options,'sportType');
 // const optionsIsShow = ref(false);
 const sport = ref(props.sportType);
+//激活数据
+const active_sport = ref(0);
 // const { off } = useMittOn(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, (e)=>{
 //   showOption(e)
 // });
@@ -115,8 +121,9 @@ const option = computed(() => {
  * @description 下拉框选择球种
  * @param String item 球种名称
  */
-const selectSport = (item) => {
+const selectSport = (item,index) => {
   sport.value = item;
+  active_sport.value = index;
   // console.error('sportsport',sport)
   // showOption();
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
@@ -129,9 +136,9 @@ html,body{
 }
 .select_n_tabs{
   background: #ffffff;
-  color: #1A1A1A;
+  
+  color: #8A8986;
   .tabs_item{
-    color: #8A8986;
     position: relative;
     &::before{
       content: '';
@@ -139,7 +146,7 @@ html,body{
       height: 12px;
       background: #D9D9D9;
       position: absolute;
-      right:  -20px;
+      right:  -24px;
       top: 3px;
     }
   }
@@ -152,19 +159,11 @@ html,body{
       position: absolute;
       width: 8px;
       height: 8px;
-      top: 26px;
-      left: 40%;
+      top: 42px;
+      left: 44%;
       border-radius: 4px;
     }
-    &::before{
-      content: '';
-      width: 2px;
-      height: 12px;
-      background: #D9D9D9;
-      position: absolute;
-      right:  -20px;
-      top: 3px;
-    }
+
   }
 
 }

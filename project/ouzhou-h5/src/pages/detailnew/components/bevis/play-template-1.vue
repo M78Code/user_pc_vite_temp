@@ -15,7 +15,7 @@ os: 1 开盘 ，2 封盘
 
 <script setup name="template6">
 import olStatus from "../ol_status.vue";
-import {defineProps, defineEmits} from "vue"
+import {defineProps, defineEmits, computed} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
@@ -37,22 +37,27 @@ const props = defineProps({
 
 const emits = defineEmits(['bet_click_'])
 const go_betting = (data) => {
-    if(data.os == 2) return
-    emits("bet_click_", data,props.play.hpn);
+    if (data.os == 2) return
+    emits("bet_click_", data, props.play.hpn);
 };
+
+const AssembleData = computed(() => {
+    const {hl} = props.play
+    return hl[0].ol.filter(item => item.os != 3)
+})
 </script>
 
 <template>
     <div class="template1 component play-template-1"
-        v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" 
+      v-for="olChild of AssembleData" :key="olChild.oid"
           @click="go_betting(olChild)"
           :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
         <div class="left">{{ olChild.otv }}</div>
-        <div class="right" v-if="olChild.os == 1">
+        <div class="right" v-if="olChild.os == 1 && olChild._hs != 11">
             <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
             <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
         </div>
-        <div v-if="olChild.os == 2">
+        <div v-if="olChild.os == 2 || olChild._hs == 11">
             <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
         </div>
         <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
@@ -84,8 +89,8 @@ const go_betting = (data) => {
         position: relative;
         display: flex;
         align-items: center;
+        color: var(--q-gb-t-c-1);
     }
-
 
 
     .red {
@@ -100,6 +105,10 @@ const go_betting = (data) => {
 .is-active {
     background-color: var(--q-gb-bg-c-1) !important;
     color: var(--q-gb-t-c-2) !important;
+
+    .right {
+        color: var(--q-gb-t-c-2);
+    }
 }
 
 .lock {

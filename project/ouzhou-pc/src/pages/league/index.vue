@@ -1,7 +1,8 @@
 <template>
   <LeaguesHeader />
   <div class="yb-match-list full-height relative-position">
-    <load-data :state="'data'" v-if="match_list_card_key_arr.length" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,}">
+    <load-data :state="load_data_state"
+      :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
       <scroll-list>
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key" :data-card-key="card_key"
           :class="`card_key_${card_key}`">
@@ -9,27 +10,27 @@
         </div>
       </scroll-list>
     </load-data>
-    <ConmingSoon v-show="!match_list_card_key_arr.length" :style="{
-      width: `100%`,
-    }" />
   </div>
 </template>
 
 <script>
 // import ListFilter from 'src/base-pc/components/match-list/list-filter/index.vue'
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch,onUnmounted } from "vue";
 import { useRoute } from 'vue-router';
 import LoadData from 'src/components/load_data/load_data.vue';
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import { mx_use_list_res } from 'src/core/match-list-pc/composables/match-list-processing.js'
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
-
+import {
+  mounted_fn,
+  load_data_state,
+  handle_destroyed,set_load_data_state 
+} from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import LeaguesHeader from "src/base-pc/components/leagues-header/index.vue";
-import { LayOutMain_pc, UserCtr } from 'src/core/index.js';
+import { LayOutMain_pc, MenuData } from 'src/core/index.js';
 import { api_match } from "src/api/index.js";
-import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 import "../match-list/match_list.scss";
 export default {
   components: {
@@ -38,15 +39,16 @@ export default {
     ScrollList,
     LoadData,
     LeaguesHeader,
-    ConmingSoon
   },
   setup() {
-
     const match_list_card_key_arr = ref([])
     const route = useRoute();
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
+      MenuData.set_menu_current_mi('')
+      mounted_fn()
+
     })
 
     watch(() => route.params, () => {
@@ -70,24 +72,29 @@ export default {
         tid: route.params.tid,
         selectionHour: MatchLeagueData.get_select_hours()
       };
+      set_load_data_state("loading")
       api_match.get_leagues_list_match(params).then((res) => {
+        set_load_data_state(lodash.get(res, 'data.data.length', 0) ? "data" : "empty")
         //保存数据到数据仓库
-        mx_use_list_res(res, is_socket, true);
+        mx_use_list_res(res);
         MatchListCardDataClass_match_list_card_key_arr()
+      }).catch(e => {
+        set_load_data_state('refresh')
       });
     }
-
+    onUnmounted(() => {
+      handle_destroyed()
+    })
     return {
       match_list_card_key_arr,
       MatchListCardDataClass,
-      LayOutMain_pc
+      LayOutMain_pc, load_data_state
     }
   },
 };
 </script>
 
 <style lang="scss">
-
 .scroll {
   overflow-y: scroll;
   padding-right: 3px;

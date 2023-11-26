@@ -37,12 +37,12 @@
                   @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }]">
                   <!-- {{ (ol.ov/100000).toFixed(2) }} -->
 
-                  <template v-if="ol?.os == 1">
+                  <template v-if="ol?.os == 1 && ol?._hs != 11">
                     <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
                     <span class="ol-ov-text">{{get_oddv(ol?.ov / 100000) }}</span>
                     <olStatus :item_ol_data="ol" :active="ol.oid == active" />
                   </template>
-                  <span v-if="ol?.os == 2">
+                  <span v-if="ol?.os == 2 || ol?._hs == 11">
                       <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                   </span>
                   <ResultOlItem :value="ol"></ResultOlItem>

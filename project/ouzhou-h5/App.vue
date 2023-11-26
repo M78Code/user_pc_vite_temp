@@ -13,9 +13,6 @@ export default {
   components: {
     appload,
   },
-  beforeCreate(){
-    LocalStorage.set("lang",'en');
-  }
 };
 </script>
 <style lang="scss">

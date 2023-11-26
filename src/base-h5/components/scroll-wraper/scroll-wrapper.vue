@@ -26,7 +26,7 @@
             </span>
           </div>
           <!-- 赛事渲染信息 -->
-          <div class="s-w-i-inner">
+          <div class="s-w-i-inner" v-if="defer_render(index)">
             <slot :match_item="get_match_item(match_mid)" :mid="match_mid" :index="index"></slot>
           </div>
         </div>
@@ -102,12 +102,9 @@ onMounted(() => {
     emitter: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, update_max_height).off,
   }
 })
-
 const get_match_item = (mid) => {
   return MatchDataBaseH5.get_quick_mid_obj(mid)
 }
-
-
 const get_index_f_data_source = (mid) => {
   return lodash.findIndex(MatchMeta.match_mids, { mid });
 }
@@ -118,7 +115,7 @@ const handler_match_container_scroll = lodash.debounce(($ev) => {
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
   if (get_is_static() || length < 17) return
   const scrollTop = $ev.target.scrollTop
-  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 300) || Math.abs(scrollTop - prev_scroll.value) >= 300) {
+  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 200) || Math.abs(scrollTop - prev_scroll.value) >= 200) {
     prev_scroll.value = scrollTop
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2 })
     if (!is_export.value) get_match_base_hps()
@@ -190,7 +187,12 @@ const get_is_show_footer_animate = () => {
  * @description: 列表回到顶部
  */
 const goto_top = () => {
-  container.value.scrollTo({ top: 0, behavior: 'smooth' });
+  MatchMeta.set_prev_scroll(0)
+  let timer = setTimeout(() => {
+    container.value.scrollTo({ top: 0, behavior: 'smooth' });
+    clearTimeout(timer)
+    timer = null
+  }, 100)
 }
 
 // 是否虚拟计算逻辑

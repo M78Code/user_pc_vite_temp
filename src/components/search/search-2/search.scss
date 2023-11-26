@@ -61,7 +61,7 @@
 
         .init-wrap {
           .init-row {
-            color: var(--q-gb-t-c-8); // #666
+            color: var(--q-gb-t-c-5); // #666
             border-bottom-color: var(--q-header-search-color-5);
 
             .clear-history {
@@ -75,10 +75,10 @@
         }
 
         .histroy-item {
-          color: var(--q-gb-t-c-8);
+          color: var(--q-gb-t-c-5);
 
           .ellipsis {
-            color: var(--q-gb-t-c-8);
+            color: var(--q-gb-t-c-5);
           }
 
           .search_deleteIcon {
@@ -180,7 +180,7 @@
 
       /*  体育切换 */
       .sports-tab {
-        background-color: var(--q-gb-bg-c-11); // #fff
+        background-color: var(--q-gb-bg-c-4); // #fff
 
         // border-bottom-color: var(--q-header-search-color-5);
         .tab-wrap {

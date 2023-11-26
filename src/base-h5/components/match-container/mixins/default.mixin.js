@@ -370,7 +370,7 @@ export default defineComponent({
       const { csid, is_virtual = false, start_flag = '', warehouse_type = '' }  = this.match_of_list
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
-      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2 })
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       if (!is_results.value) MatchMeta.get_match_base_hps_by_mids()
     },
     /**
@@ -382,7 +382,7 @@ export default defineComponent({
       if (is_hot.value || is_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
-      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2 })
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       if (!is_results.value) MatchMeta.get_match_base_hps_by_mids()
     },
     /**

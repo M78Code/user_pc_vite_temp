@@ -42,19 +42,21 @@ import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/ma
 import { ref, watch, onBeforeUnmount, computed } from 'vue';
 import { api_details } from 'src/api';
 import template2 from './template2.vue';
-import { MenuData } from "src/core/index.js"
 import { useRouter } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, UserCtr, MITT_TYPES, useMittOn } from 'src/core'
+import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
-const matches_featured_list = ref([])
 const router = useRouter();
 
-
+const cache_data = SessionStorage.get('get_hots', []);
 const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common)
+if (cache_data.length) {
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(cache_data);
+}
+const matches_featured_list = ref(cache_data)
 
 const get_featurd_list = async () => {
   let params = {
@@ -72,6 +74,7 @@ const get_featurd_list = async () => {
       mids.push(match.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(match.mid))
     })
+    SessionStorage.set('get_hots', matches_featured_list.value)
     //查询赔率接口
     api_bymids({ mids }, null, MatchDataWarehouse_ouzhou_PC_hots_List_Common)
     set_active_mids(mids) //添加ws订阅

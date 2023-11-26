@@ -6,7 +6,7 @@
             <!-- {{ i18n_t('common.notice') }} -->
         <!-- </simple-header> -->
         <!-- tab 组件 及 下边内容 滚动部分 -->
-        <tabs :tabList="tabList" :tabIndex="tab_index" :rightDistance="false" class="notice_tabs" @changeTab="changeTab"
+        <tabs v-if="istab" :tabList="tabList" :tabIndex="tab_index" :rightDistance="false" class="notice_tabs" @changeTab="changeTab"
             :class="{ loading: loading_page }">
             <!-- 滚动区域组件,切换tab 回到顶部 -->
             <q-scroll-area class="notice_scroll" ref="scrollArea" :thumb-style="{ opacity: 0 }">
@@ -23,7 +23,7 @@
                         <div class="ann-time">{{ DateForMat(new Date(+item.sendTimeOther), 'yyyy-MM-dd hh:mm') }}</div>
                     </div>
                     <!-- 没有数据 组件 -->
-                    <no-data v-show="no_data_list" which='noMessage' height='500'></no-data>
+                    <no-data v-show="no_data_list" which='noMessage' height='500px'></no-data>
                 </div>
             </q-scroll-area>
         </tabs>
@@ -37,7 +37,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import { useRoute } from "vue-router"
 import { api_home } from "src/api/index";
 import { LoadingWapper as loadPage } from "src/components/common/loading";
-import { NoDataWapper as noData } from "src/components/common/no-data";
+import noData from "src/components/common/no-data/no-data-h5/index.vue";
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 import tabs from "./tab.vue";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -53,9 +53,10 @@ const props = defineProps({})
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-
+// 解决渲染问题
+const istab = ref(false)
 /** 返回的大列表 */
-let res_list = reactive([])
+// let res_list = reactive([])
 /** 左侧菜单 */
 let tabList = reactive([])
 /** 大列表 */
@@ -87,7 +88,6 @@ const changeTab = (tab,i) => {
 const no_data_list = ref(false)
 const loading_page = ref(true)
 
-
 /** 判断接口是否有数据 */
 function has_data_list() {
     no_data_list.value = announce_list.length <= 0
@@ -109,6 +109,7 @@ onUnmounted(() => {
  * @return {undefined} undefined
  */
 function get_list() {
+    istab.value = false
     api_home.post_announce_list().then(({ code, data }) => {
         if (code == 200 && data) {
             // data.nt.unshift({ id: 0, type: i18n_t('common.all_notice') });
@@ -128,9 +129,11 @@ function get_list() {
                 announce_list = []; 
                 current_title.value = "";
             }
+                
             timer1.value = setTimeout(() => {
+                istab.value = true
                 loading_page.value = false
-            }, time_out)
+            },1000)
             has_data_list()
         }
     }).catch(err => {
@@ -201,7 +204,7 @@ export default defineComponent({
                 text-align: justify;
 
                 &.is_long_word {
-                    max-width: 3.3rem;
+                    // max-width: 3.3rem;
                 }
             }
 

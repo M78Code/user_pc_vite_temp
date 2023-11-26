@@ -58,6 +58,7 @@
                     alt=""
                     srcset=""
                     style="margin: 0 10px; height: 14px"
+                    v-if="detail_info.mng"
                    
                   />
                 </div>
@@ -65,6 +66,9 @@
 
               <div v-else>
                 <img :src="get_icon(col.icon)" alt="" class="top-icon" />
+                <q-tooltip v-if="col.tooltip">
+                  {{col.tooltip}}
+                </q-tooltip>
               </div>
             </div>
           </q-th>
@@ -203,7 +207,8 @@ const get_base_data = (val) => {
       });
     }
   }
-  // console.log(11111111,detail_info)
+  //  console.log(11111111,detail_info)
+  //  console.log(11111111,data.value)
   data.value = res || [];
 };
 
@@ -478,10 +483,28 @@ watch(
   { immediate: false, deep: true }
 );
 
+const insetColumnTooltip = () => {
+  const mapping = {
+    q1: i18n_t('icon_tips.corner'),
+    q2: i18n_t('icon_tips.yellow_card'),
+    ht: i18n_t('icon_tips.red_card'),
+    q3: i18n_t('icon_tips.penalty_kick'),
+    q4: i18n_t('icon_tips.half_1'),
+    t: i18n_t('icon_tips.overall'),
+    x: i18n_t('icon_tips.S7'),
+    y: i18n_t('icon_tips.S170'),
+  }
+  columns.value = columns.value.map(v => {
+    return {
+      ...v,
+      tooltip: mapping[v.name] || ''
+    };
+  })
+}
 watch(
   () => props.score_list,
   (val) => {
-    console.log("props.score_list--watch", val);
+    // console.log(11111, val);
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
     if (detail_info.msc_obj?.S7 && detail_info.csid == 1) {
@@ -508,9 +531,10 @@ watch(
         headerStyle: { width: "33px", color: "#ff7000" },
       });
     }
-    if (["1", "2", "3"].includes(detail_info.csid + "")) {
-      get_base_data(val);
-      }
+    // if (["1", "2", "3"].includes(detail_info.csid + "")) {
+    //   get_base_data(val);
+    //   }
+    insetColumnTooltip()
    
   },
   { immediate: false, deep: true }

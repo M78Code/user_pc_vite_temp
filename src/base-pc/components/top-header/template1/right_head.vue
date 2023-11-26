@@ -37,7 +37,7 @@
     <div class="h-right">
       <div class="user-info">
         <span class="user-balance">  {{ format_balance(UserCtr.balance) }} </span>
-        <span class="user-name">{{ UserCtr.user_info.nickName }}</span>
+        <span class="user-name">{{ lodash.get(UserCtr.get_user(), "nickName") }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
@@ -89,9 +89,10 @@
             <q-item  v-show="visible">
               <q-slide-transition >
                 <q-item-section>
-                  <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
+                  <div v-show="false">{{UserCtr.user_version}}</div>
+                  <div :class="['language_item', {active: UserCtr.lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
                     <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
-                    <img class="lang" v-if="lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
+                    <img class="lang" v-if="UserCtr.lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
                   </div>
                 </q-item-section>
               </q-slide-transition>
@@ -99,11 +100,12 @@
             <!--国际化语言结束-->
             <q-item>
               <q-item-section>
+                <div v-show="false">{{UserCtr.user_version}}</div>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
                 <div class="switch">
-                  <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
-                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: setting.index === s}">{{  i18n_t(`odds.${s}`) }}</span>
+                  <span class="bg" :style="{left: UserCtr.odds.cur_odds === setting.params[0] ? 0 : '50px'}"></span>
+                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: UserCtr.odds.cur_odds == s}">{{  i18n_t(`odds.${s}`) }}</span>
                 </div>
               </div>
               </q-item-section>
@@ -118,9 +120,10 @@
 import { defineComponent, onMounted, ref,watch, onUnmounted } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
+import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account,api_betting } from 'src/api/index';
-import { loadLanguageAsync, compute_local_project_file_path,i18n_t } from "src/core/index.js";
+import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
@@ -182,8 +185,8 @@ export default defineComponent({
       ]
     const settingData = ref([{
           title: 'Odds Display',
-          index: 'EU',
-          params: ['EU',"HK" ]
+          index: 'DEC',
+          params: ['EU', 'HK']
         }, 
         // {
         //   title: 'Bet Slip',
@@ -220,13 +223,13 @@ export default defineComponent({
     const change_input = () => {}
     //赛果 || 公告 || 体育规则
     const goto_secondary_module = (value) => {
-      LayOutMain_pc.set_layout_secondary_active(value)
+      localStorage.setItem("secondary_active", value)
       let _window_width = 1200;
       let _window_height = 850;
       let path = userRouter.resolve({ path: '/secondary' }).href;
       path = path.substr(path.indexOf('#/'))
       window.open(
-        `/project/ouzhou-pc/index.html${path}`,
+        `${window.location.pathname}${path}`,
         "",
         `height=${_window_height}, width=${_window_width}, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
       );
@@ -235,7 +238,6 @@ export default defineComponent({
       visible.value = !visible.value
     }
 
-    // 切换盘口赔率
     const settingclick = (s) => {
       
       let params = {
@@ -244,7 +246,6 @@ export default defineComponent({
       api_betting.record_user_preference(params).then((res ={}) =>{
         if(res.code == 200){
           UserCtr.set_cur_odds(s)
-          settingData.value[0].index = s
         }else{
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
         }
@@ -254,12 +255,12 @@ export default defineComponent({
     // 切换语言
     const on_change_lang = (key) => {
       lang.value = key
-      api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang.value }).then(res => {
+      api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: key }).then(res => {
           let code = lodash.get(res, 'code');
           if (code == 200) {
               // 设置国际化语言
-              loadLanguageAsync(lang.value).then().finally(() => {
-                UserCtr.set_lang(lang.value) 
+              loadLanguageAsync(key).then().finally(() => {
+                UserCtr.set_lang(key) 
               })
           } else if (code == '0401038') {
               useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
@@ -348,8 +349,7 @@ export default defineComponent({
       close,
       compute_local_project_file_path,
       clear_keyword,
-      compute_css_obj,
-      i18n_t
+      compute_css_obj
     };
   
   }

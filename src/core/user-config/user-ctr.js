@@ -15,6 +15,8 @@ import { ServerTime } from "src/core/";
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { default_theme_key } from "src/core/theme/"
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 // #TODO 接口统一管理的文件，后续替换
 import { api_details, api_account, api_common } from "src/api/";
@@ -215,6 +217,8 @@ class UserCtr {
     this.lang = data;
     this.user_info.languageName = data;
     useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
+    LocalStorage.set('lang',data)
+    this.update()
   }
   /**
   * 设置主题变化
@@ -233,7 +237,7 @@ class UserCtr {
   set_cur_odds(odd) {
     this.set_pre_odds(this.odds.cur_odds)
     this.odds.cur_odds = odd;
-    this.set_user_version()
+    this.update()
   }
   set_pre_odds(odd) {
     this.odds.pre_odds = odd
@@ -273,6 +277,7 @@ class UserCtr {
     // 设置用户信息，存入localStorage中
     // this.user_info.token = this.user_token
     this.set_user_base_info(this.user_info);
+    
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
     // 判断是不是新用户登录
@@ -991,14 +996,21 @@ class UserCtr {
    */
   set_user_base_info(obj) {
     if (obj) {
+      let lang_list = ['zh','en']
+      let lang = obj.languageName
+      if(PROJECT_NAME.includes('ouzhou')){
+        if(!lang_list.includes(obj.languageName)){
+          lang = 'zh'
+        }
+      }
       try {
         let data = {
-          languageName: obj.languageName,
+          languageName: lang,
           userMarketPrefer: obj.userMarketPrefer,
         };
         // 设置国际化语言
-        this.set_lang(lodash.get(obj,'languageName'));
-        LocalStorage.set(this.local_storage_key, JSON.stringify(data));
+        this.set_lang(data.languageName);
+        LocalStorage.set(this.local_storage_key, data);
       } catch (error) {
         console.error("userCtr  set_user_base_info() 错误:", error);
       }
@@ -1355,13 +1367,7 @@ class UserCtr {
    */
   set_show_balance(state) {
     this.show_balance = state
-    this.set_user_version()
-  }
-  /**
-    * 更新用户信息版本 显示
-    */
-  set_user_version() {
-    this.user_version.value = Date.now()
+    this.update()
   }
 
   get_resources_obj() {

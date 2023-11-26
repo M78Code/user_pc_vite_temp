@@ -71,7 +71,7 @@ const changeMenu = (mi) =>{
       height: 100%;
       background-color: var(--q-gb-bg-c-2) !important;
       :deep(.scroll-wrapper){
-        background-color: var(--q-gb-bg-c-2) !important;
+        // background-color: var(--q-gb-bg-c-2) !important;
         .s-w-item{
           background-color: var(--q-gb-bg-c-2) !important;
         }
