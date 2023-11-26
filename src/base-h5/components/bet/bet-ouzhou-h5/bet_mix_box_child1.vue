@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}} </div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}}{{UserCtr.user_version}} </div>
     <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
@@ -15,9 +15,9 @@
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div></div>
                       <div class="nonebox4-content-left-content-text-two">
                        {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} <span class="text-two-span">{{items.playName}}</span>
-                        [{{ i18n_t(`odds.${items.marketTypeFinally}`) }}]
+                        [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
                       </div>
-                      <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}} {{ items.matchType == 2? items.mark_score : ''}}</div>
+                      <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{ items.matchType == 2? items.mark_score : ''}}</div>
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
@@ -39,7 +39,7 @@
   <script setup>
   import { compute_value_by_cur_odd_type } from "src/core/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t  } from "src/core/index.js";
+  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr } from "src/core/index.js";
 
   const props = defineProps({
     items:{}
