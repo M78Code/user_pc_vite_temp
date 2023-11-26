@@ -80,6 +80,7 @@ const stop_drap = ref(true)
 const stop_drap_emit = (props) => {
   stop_drap.value = props
 }
+let upd_time_refresh_timer;
 onMounted(() => {
   let obj = {
     x: window.innerWidth * 0.6,
@@ -96,8 +97,19 @@ onMounted(() => {
       emitter_1: useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off,
       emitter_2: useMittOn(MITT_TYPES.EMIT_STOP_DRAP, stop_drap_emit).off
   }
-  useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,  {time:new Date().getTime(), step:1000})
+
+  // 全局一秒钟定时器
+  upd_time_refresh_timer = setInterval(global_one_second_timer, 1000);
+
 })
+
+/**
+ * @Description 全局一秒钟定时器 
+ * @param {undefined} undefined
+*/
+const global_one_second_timer = () => {
+  useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,  {time:new Date().getTime(), step:1000})
+}
 
 // 投注成功后获取投注记录数据 24小时内的
 const get_unsettle_tickets_count_config = () => {
@@ -116,6 +128,7 @@ const get_unsettle_tickets_count_config = () => {
 
   onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
+    clearInterval(upd_time_refresh_timer)
 })
 
 </script>
