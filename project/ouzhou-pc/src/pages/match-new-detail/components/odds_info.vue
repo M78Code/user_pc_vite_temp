@@ -17,10 +17,19 @@
       >
         <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
-          <div style="width: 100%; line-height: 35px; font-weight: 500" v-if="item.hl[0].hs!=2">
+          <div class="odds-item"  v-if="item.hl[0].hs!=2">
             {{ item.hpn }}
             <span v-if="item.hps"> ({{ item.hps.split("|")[1] }}) </span>
-            <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
+            <!-- 一键置顶 -->
+            <img
+              :src="parseInt(item.hton)>0?set_top__active_png:set_top_png"
+              alt=""
+              @click.stop="set_top(item)"
+              srcset=""
+              class="set-icon"
+             
+            />
+            <!-- 折叠 -->
             <img
               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
               alt=""
@@ -170,6 +179,7 @@ import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";
 import betItem from "./bet-item-list-new-data.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 const props = defineProps({
   matchDetail: {
@@ -189,6 +199,9 @@ const props = defineProps({
     default: false,
   },
 });
+
+const set_top_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top.png`
+const set_top__active_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top_active.png`
 // `mhs` 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
 // <!-- ms: 0开 1封 2关 11锁 -->
 //     <!-- hs: 0开 1封 2关 11锁 -->
@@ -256,6 +269,13 @@ const sun_ol = (ol, item) => {
   // console.log(1111111111,result)
   return result;
 };
+  // 一键置顶
+const set_top = (item)=>{
+
+  useMittEmit(MITT_TYPES.EMIT_SET_PLAT_TOP, item);
+}
+
+
 //  投注项点击投注,
 const betItemClick = (item, ol, play_name) => {
   if (item.hs || ol.os == 2) {
@@ -434,6 +454,12 @@ onMounted(() => {});
   left: 50%;
   transform: translate(-50%, 0);
 }
+.odds-item{
+  width: 100%;
+   line-height: 35px; 
+   font-weight: 500;
+   position: relative;
+}
 .expand-icon {
   height: 9px;
   float: right;
@@ -444,7 +470,13 @@ onMounted(() => {});
   width: 16px;
   height: 16px;
 }
-
-.expand-mouse-in {
+.set-icon{
+  position: absolute;
+  right: -25px;
+  top:8px;
+  height: 16px;
+  width: 16px;
+  margin-right: 50px;
+  cursor: pointer;
 }
 </style>

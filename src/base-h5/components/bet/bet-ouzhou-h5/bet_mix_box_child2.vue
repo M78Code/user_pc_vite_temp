@@ -52,6 +52,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    :deep(.ty-span) {
+      margin-left: 4px;
+      color: var(--q-gb-t-c-2);
+    }
   }
   .content-right-duo{
     display: inline-block;

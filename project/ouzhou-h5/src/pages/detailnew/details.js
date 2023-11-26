@@ -422,7 +422,44 @@ export const details_main = (router, route) => {
     };
     utils.axios_api_loop(obj_);
   }, 1000);
-
+  /**
+   * @description: RCMD_C109
+   * @return {*}
+   */
+  function RCMD_C109(obj) {
+    if (!obj) {
+      return;
+    }
+    let skt_data = obj.cd;
+    if (!skt_data || skt_data.length < 1) return;
+    // 重新拉取数据;
+    const { mid, csid } = route.params;
+    get_category_list_info({
+      sportId: csid,
+      mid,
+    });
+  }
+  /**
+   * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
+   * @param {*} obj
+   * @return {*}
+   */
+  function RCMD_C104(obj) {
+    let skt_data = obj.cd;
+    // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
+    if (skt_data.mhs == 0 || skt_data.mhs == 11) {
+      // 重新拉取数据;
+      const { mid, csid } = route.params;
+      get_category_list_info({
+        sportId: csid,
+        mid,
+      });
+    } else if (skt_data.mhs == 1) {
+      // 设置盘口状态
+    } else if (skt_data.mhs == 2) {
+      match_odds_info.value = [];
+    }
+  }
   let message_fun = null;
   onMounted(() => {
     console.log(MenuData, "MenuData");
@@ -437,29 +474,33 @@ export const details_main = (router, route) => {
       // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
       // console.error(flag,'flag','cmd:',cmd,data);
       //如果ms mmp变更了 就手动调用ws
-        init.value = false
-        switch (cmd) {
-          case "C303":
-            console.error("C303");
-            socketOddinfo({
-              mcid: 0,
-              cuid: cuid.value,
-              mid:route.params.mid,
-              newUser: 0,
-            })
-            break;
-            case "C302":
-              console.error("C302");
-              socketOddinfo({
-                mcid: 0,
-                cuid: cuid.value,
-                mid:route.params.mid,
-                newUser: 0,
-              })
-              break;  
-          default:
-            break;
-        }
+      init.value = false;
+      switch (cmd) {
+        case "C303":
+          socketOddinfo({
+            mcid: 0,
+            cuid: cuid.value,
+            mid: route.params.mid,
+            newUser: 0,
+          });
+          break;
+        case "C302":
+          socketOddinfo({
+            mcid: 0,
+            cuid: cuid.value,
+            mid: route.params.mid,
+            newUser: 0,
+          });
+          break;
+        case "C104":
+          RCMD_C104(data);
+          break;
+        case "C109":
+          RCMD_C109(data);
+          break;
+        default:
+          break;
+      }
     });
   });
 
@@ -481,7 +522,8 @@ export const details_main = (router, route) => {
           });
         }
       }
-    },{deep:true}
+    },
+    { deep: true }
   );
   // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
   watch(
@@ -499,16 +541,17 @@ export const details_main = (router, route) => {
           detail_init();
         }
       }
-    },{deep:true}
+    },
+    { deep: true }
   );
   /**
    *@description 详情页赛事结束自动切换赛事 todo
    *@param {Undefined}
    *@return {Object} 返回赛事各项id(球类id:csid/赛事id:mid/联赛id:tid)
    */
-  let  get_godetailpage = ref(true)
+  let get_godetailpage = ref(true);
   function event_switch() {
-    let { mid, csid,tid } = route.params;
+    let { mid, csid, tid } = route.params;
     let params = {
       // 查找参数 1:赛事列表(非滚球:今日 早盘...) 2:赛事详情(滚球) 3:赛事筛选 4:赛事搜索(int) 如果不传默认 1:赛事列表
       sm: 2,

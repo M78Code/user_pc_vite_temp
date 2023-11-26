@@ -4,7 +4,7 @@
     <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;"> 
       <!-- 用户名称 --> 
       <header> 
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, {{user_info.nickName}}
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, {{ lodash.get(UserCtr.get_user(), "nickName") }}
       </header> 
       <!-- 用户信息 -->
       <div class="info"> 
