@@ -238,7 +238,7 @@ onMounted(() => {
             white-space: nowrap;
             text-overflow: ellipsis;
             color: var(--q-gb-t-c-4);
-            font-weight: 500;
+            font-weight: 800; //设计图的500无效
         }
 
         .odds-hpn-icon {
