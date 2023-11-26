@@ -67,7 +67,6 @@ const set_retain_selection = () => {
       width: 100px;
       line-height: 0.3rem;
       border-radius: 2px;
-      font-family: "Roboto";
       font-size: 0.13rem;
       font-weight: 400;
       letter-spacing: 0px;
@@ -76,7 +75,6 @@ const set_retain_selection = () => {
       line-height: 0.4rem;
     }
     .place_bet{
-      font-family: "DIN";
       font-size: 0.14rem;
       font-weight: 500;
       line-height: 0.4rem;
@@ -86,7 +84,6 @@ const set_retain_selection = () => {
       background: var(--q-gb-bg-c-1);
       color:  var(--q-gb-t-c-2);
       .right_amount{
-        font-family: DIN;
         font-size: 0.2rem;
         margin-left: 6px;
       }
