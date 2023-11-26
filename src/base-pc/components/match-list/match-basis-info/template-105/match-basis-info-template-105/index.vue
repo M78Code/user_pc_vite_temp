@@ -329,6 +329,15 @@ onUnmounted(() => {
        background-color: var(--q-gb-bg-c-11);
     }
   }
+
+  :deep(.c-match-process ) {
+    .jingcai ,.process-name {
+      margin-right: 5px;
+    }
+    .date-wrap {
+      padding-left: 0 !important;
+    }
+  } 
 }
 
 </style>
