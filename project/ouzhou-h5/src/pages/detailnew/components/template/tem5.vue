@@ -41,7 +41,7 @@
           v-if="value.length == 1"
           @click="go_betting(value[0])"
           :class="{
-            'is-active': value[0].oid === active,
+            'is-active':  BetData.bet_oid_list.includes(value[0]?.oid ),
             temp_grid_item: true,
             ol_ov: true,
           }"
