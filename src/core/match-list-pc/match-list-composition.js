@@ -40,7 +40,7 @@ const is_loading = ref(true);
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
 const api_error_count = ref(0);
-let is_has_base_data=false; //是否有元数据
+let is_has_base_data = false; //是否有元数据
 let check_match_last_update_timer_id;
 let get_match_list_timeid;
 let hot_match_list_timeout;
@@ -96,7 +96,7 @@ export function fetch_match_list(is_socket = false, cut) {
 		return false;
 	}
 	//不是 w 并且没有 元数据列表 启动loading
-	if (!is_socket&&!is_has_base_data) {
+	if (!is_socket && !is_has_base_data) {
 		load_data_state.value = "loading";
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
@@ -126,13 +126,20 @@ export function fetch_match_list(is_socket = false, cut) {
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
-					load_data_state.value = 'data'
 					//处理服务器返回的 列表 数据   fetch_match_list
 					handle_match_list_request_when_ok(
 						JSON.parse(JSON.stringify(res)),
 						is_socket,
 						cut
 					);
+					if (lodash.get(res, "data.data")) {
+						load_data_state.value = lodash.get(data, "data.data.length") ? 'data' : 'empty'
+					}
+					else {
+						const livedata = lodash.get(res, "data.livedata",[])
+						const nolivedata = lodash.get(res, "data.nolivedata", [])
+						load_data_state.value = livedata.length + nolivedata.length > 0 ? 'data' : 'empty'
+					}
 				} else if (res.code == "0401038") {
 					// let is_collect = this.vx_layout_list_type == 'collect'
 					// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
@@ -209,8 +216,8 @@ function handle_destroyed() {
 }
 function init_page_when_base_data_first_loaded() {
 	//设置元数据 列表 返回boolean
-	is_has_base_data=set_base_data_init()
-	if(is_has_base_data){
+	is_has_base_data = set_base_data_init()
+	if (is_has_base_data) {
 		MatchListScrollClass.set_scroll_top(0);
 		load_data_state.value = 'data';
 	}
@@ -244,7 +251,7 @@ function mounted_fn() {
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
 		// 调用列表接口
-		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST,  () => {
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, () => {
 			clearTimeout(tid_match_list)
 			tid_match_list = setTimeout(() => {
 				//请求列表接口之前 先设置元数据列表
@@ -258,8 +265,8 @@ function mounted_fn() {
 			// 重新订阅C8
 			api_bymids({ is_show_mids_change: true })
 		}, 1000)).off,
-		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_match_list).off,
-		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded,100)).off,
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fetch_match_list).off,
+		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 100)).off,
 	]
 
 	load_video_resources();
@@ -290,7 +297,7 @@ function mounted_fn() {
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
 export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
-	
+
 	let {
 		match_list_api_config,
 		menu_root,
