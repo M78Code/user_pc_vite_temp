@@ -44,7 +44,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onMounted ,onUnmounted,reactive } from "vue";
+import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount } from "vue";
 import lodash_ from "lodash"
 import { useRoute } from "vue-router";
 import { LayOutMain_pc, UserCtr } from "src/core/index.js";
@@ -126,6 +126,9 @@ const get_unsettle_tickets_count_config = () => {
     });
   };
 
+  onBeforeMount(()=>{
+    clearInterval(upd_time_refresh_timer)
+  })
   onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
     clearInterval(upd_time_refresh_timer)
