@@ -159,13 +159,13 @@ onMounted(() => {
   display: grid;
   text-align: center;
 
-  & > div {
+  .temp {
     cursor: pointer;
     min-height: 45px;
     line-height: 45px;
     //  border-top: 1px solid #E2E2E2;
     border-left: 1px solid var(--q-gb-bd-c-2);
-    //  border-bottom: 1px solid var(--q-gb-bd-c-2);
+    border-bottom: 1px solid var(--q-gb-bd-c-2);
 
     &:hover {
       background: var(--q-gb-bg-c-5);
@@ -194,7 +194,7 @@ onMounted(() => {
 .temp-active {
   background: var(--q-gb-bg-c-1);
   color: var(--q-gb-t-c-1);
-
+  border-bottom-color: var(--q-gb-bg-c-1)!important;
   &:hover {
     background: var(--q-gb-bg-c-1) !important;
     color: var(--q-gb-t-c-1);

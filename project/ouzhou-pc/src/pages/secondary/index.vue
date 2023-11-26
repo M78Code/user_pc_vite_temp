@@ -47,13 +47,13 @@
 <script setup>
 import { LayOutMain_pc } from "src/core/index.js";
 import { compute_local_project_file_path } from "src/core/index.js";
-import { ref, reactive,toRef, toRefs } from "vue";
+import { ref, reactive,onMounted } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import rule from "src/base-pc/components/rule/index.vue";
 import announce from "src/base-pc/components/announce/index.vue";
 import matchResults from "src/base-pc/components/results/match-results.vue";
 import { i18n_t } from "src/boot/i18n.js"
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 //数据列表
 const list_data = reactive([
   { id: "announcement", name: "Announcement", i18filed: 'announcement' },
@@ -68,7 +68,10 @@ const list_data = reactive([
 function active_change(value) {
  LayOutMain_pc.set_layout_secondary_active(value)
 }
-
+onMounted(()=>{
+ const value = localStorage.getItem("secondary_active")
+ active_change(value)
+})
 </script>
 <style lang="scss" scope>
 //.q-dialog__inner .dialog_content
@@ -105,7 +108,8 @@ function active_change(value) {
     padding: 0 !important;
 }
 .secondary_panels{
-  height: 760px !important;
+  // height: 760px !important;
+  // height:calc(100% - 80px);
 }
 .secondary_content{
   height:calc(100% - 80px);

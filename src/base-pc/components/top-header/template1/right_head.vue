@@ -89,9 +89,10 @@
             <q-item  v-show="visible">
               <q-slide-transition >
                 <q-item-section>
-                  <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
+                  <div v-show="false">{{UserCtr.user_version}}</div>
+                  <div :class="['language_item', {active: UserCtr.lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
                     <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
-                    <img class="lang" v-if="lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
+                    <img class="lang" v-if="UserCtr.lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
                   </div>
                 </q-item-section>
               </q-slide-transition>
@@ -99,7 +100,7 @@
             <!--国际化语言结束-->
             <q-item>
               <q-item-section>
-                <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
+                <div v-show="false">{{UserCtr.user_version}}</div>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
                 <div class="switch">
@@ -222,7 +223,7 @@ export default defineComponent({
     const change_input = () => {}
     //赛果 || 公告 || 体育规则
     const goto_secondary_module = (value) => {
-      LayOutMain_pc.set_layout_secondary_active(value)
+      localStorage.setItem("secondary_active", value)
       let _window_width = 1200;
       let _window_height = 850;
       let path = userRouter.resolve({ path: '/secondary' }).href;
@@ -254,12 +255,12 @@ export default defineComponent({
     // 切换语言
     const on_change_lang = (key) => {
       lang.value = key
-      api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang.value }).then(res => {
+      api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: key }).then(res => {
           let code = lodash.get(res, 'code');
           if (code == 200) {
               // 设置国际化语言
-              loadLanguageAsync(lang.value).then().finally(() => {
-                UserCtr.set_lang(lang.value) 
+              loadLanguageAsync(key).then().finally(() => {
+                UserCtr.set_lang(key) 
               })
           } else if (code == '0401038') {
               useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))

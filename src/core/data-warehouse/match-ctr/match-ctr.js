@@ -964,10 +964,10 @@ init(){
                   item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
                 // 检查是否有盘口数据
-                if (lodash.get(item2,'hl.ol.length')) {
+                if (lodash.get(item2,'hl.ol.length') || lodash.get(item2,'hl[0].ol.length')) {
                   // if(item2.hl.ol.forEach(item3 => {
                   if(lodash.get(item2,'hl')){
-                    let item3 = item2.hl;
+                    let item3 = lodash.get(item2,'hl[0]') || lodash.get(item2,'hl');
                     if (item3) {
                       if (item3.hid) {
                         // 增加玩法信息到盘口级别
@@ -1123,10 +1123,10 @@ init(){
                     item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                   }
                   // 检查是否有盘口数据
-                  if (lodash.get(item2,'hl.ol.length')) {
+                  if (lodash.get(item2,'hl.ol.length')  || lodash.get(item2,'hl[0].ol.length')) {
                     // if(item2.hl.ol.forEach(item3 => {
                     if(lodash.get(item2,'hl')){
-                      let item3 = item2.hl;
+                      let item3 = lodash.get(item2,'hl[0]') || lodash.get(item2,'hl');
                       if (item3) {
                         if (item3.hid) {
                           // 增加玩法信息到盘口级别
