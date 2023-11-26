@@ -10,6 +10,7 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
+                        {{ item.hpt }}
 <!--                        {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :play="item" :item_data="item" :active="active" @bet_click_="bet_click_" />
@@ -42,6 +43,7 @@ import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
 import {useMittEmit, MITT_TYPES} from "src/core/mitt"
 import {LOCAL_PROJECT_FILE_PREFIX} from "src/core";
 import {MatchDetailCalss} from "src/core"
+import _ from "lodash"
 
 // /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
 const props = defineProps({
@@ -64,6 +66,12 @@ const props = defineProps({
         default: false
     }
 });
+
+/*setTimeout(function (){
+    let baseData = []
+    baseData = _.groupBy(props.match_odds_info,'hpt')
+    console.log(baseData,"baseData")
+},2000)*/
 const emit = defineEmits(["change", "update:allCloseState"]);
 const active = ref(1);
 /*const componentArr = ref({

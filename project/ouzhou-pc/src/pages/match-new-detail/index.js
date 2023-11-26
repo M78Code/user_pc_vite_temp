@@ -319,19 +319,15 @@ export function usedetailData(route) {
        init.value = false
        switch (cmd) {
          case "C303":
-           console.error("C303");
            get_detail_lists()
            break;
          case "C302":
-          console.error("C302");
           get_detail_lists()
           break;
          case "C104":
-           console.error("C104");
            RCMD_C104(data)
            break;  
          case "C109":
-          console.error("C109");
           RCMD_C109(data)
           break; 
          default:
