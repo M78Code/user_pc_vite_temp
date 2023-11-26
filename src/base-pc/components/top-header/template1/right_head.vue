@@ -222,7 +222,7 @@ export default defineComponent({
     const change_input = () => {}
     //赛果 || 公告 || 体育规则
     const goto_secondary_module = (value) => {
-      LayOutMain_pc.set_layout_secondary_active(value)
+      localStorage.setItem("secondary_active", value)
       let _window_width = 1200;
       let _window_height = 850;
       let path = userRouter.resolve({ path: '/secondary' }).href;
