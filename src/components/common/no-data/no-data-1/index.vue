@@ -83,7 +83,8 @@ export default {
     height: auto;
     background-size: 100%;
     background-repeat: no-repeat;
-    background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png") !important;
+    // background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/svg/no-data.svg") !important;
   }
 
   &.esports-size {

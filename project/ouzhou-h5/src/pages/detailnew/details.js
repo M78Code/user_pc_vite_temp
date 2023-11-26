@@ -448,6 +448,15 @@ export const details_main = (router, route) => {
               newUser: 0,
             })
             break;
+            case "C302":
+              console.error("C302");
+              socketOddinfo({
+                mcid: 0,
+                cuid: cuid.value,
+                mid:route.params.mid,
+                newUser: 0,
+              })
+              break;  
           default:
             break;
         }
