@@ -37,8 +37,10 @@ import odds_info from "../components/bevis_odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import { api_match_list, api_common, api_analysis } from "src/api/index.js";
 
+import './index.scss'
+
 const { mid, csid } = useRoute().params, cuid = UserCtr.get_uid()
-const loading = ref(false)
+const loading = ref(true)
 /** @type {Ref<TYPES.MatchDetail>} */
 const matchDetail = ref({})
 const matchResults = ref([])
@@ -47,7 +49,7 @@ const matchResults = ref([])
 ;(function initial(){
   api_analysis.get_match_result({mid,cuid}).then(res=>{
     matchResults.value = res.data
-    console.log(matchResults.value)
+    loading.value = false
   })
   api_match_list.get_detail_list({mcid:0,cuid,newUser:0,mid}).then(console.log)
 })()

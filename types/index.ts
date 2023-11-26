@@ -38,10 +38,14 @@ declare namespace TYPES {
     mearlys: number,
     mft: number,
   }
+  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid {
+    hv:any,
+    ol:T[]
+  }
 
-  /** ol 赔率? */ interface Ol extends K.ot, K.ov, K.oid, K.obv, K.os {
-    /**  */
-
+  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os {
+  }
+  /** Ol投注项 结果 */ interface OlResult extends K.ot,K.oid,K.on,K.result,K.ott,K.otd {
   }
 
   /** 非足球活力值排名 */ interface Rank {
@@ -70,6 +74,8 @@ declare namespace TYPES {
       /** 时间戳 */ time: string
     }
   }
+  type OlResultArray =  ['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half']
+  type OlResultState= OlResultArray[K.result[keyof K.result]]
 }
 
 /** 属性字段复用注释 */
@@ -118,8 +124,17 @@ declare namespace K {
     /** 断档赔率 */ obv: string
   };
 
-  /** 投注項类型 */ type ot = {
-    /** 投注項类型 */ ot: string
+  /** 投注項类型? */ type ot = {
+    /** 投注項类型? */ ot: string
+  };
+  /** 投注项的name? */ type on = {
+    /** 投注项的name? */ on: string,
+  };
+    /** 投注项列ID? */ type otd = {
+    /** 投注项列ID? */ otd: string
+  };
+  /** 投注项头名称 */ type ott = {
+    /** 投注项头名称 */ ott: string
   };
   /** 玩法名称 */ type hpn = {
     /** 玩法名称 */ hpn: string
@@ -175,16 +190,23 @@ declare namespace K {
     /** 玩法ID */ hpid: string
   };
   /** 玩法模板 */ type hpt = {
-    /** 玩法模板 */ hpt: string
+    /** 玩法模板 */ hpt: number
   };
   /** 盘口状态 */ type hs = {
     /** 盘口状态:0开,1封,2关,11锁 */ hs: number,
   };
   /** 用户ID */ type cuid = {
     /** 用户ID */ cuid: number,
-  }
+  };
+  /** 投注项结果:0?,1?,2走水,3输,4赢,5赢半,6输半 */ type result = {
+    /** 投注项结果:0?,1?,2走水,3输,4赢,5赢半,6输半 */ result: 0|1|2|3|4|5|6,
+  };
+
+  /** 盘口ID? */ type hid = {
+    /** 盘口ID? */ hid: number,
+  };
 }
 
 /** annotation */ type template = {
     /** annotation */ template: number,
-  }
+  };

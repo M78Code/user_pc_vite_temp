@@ -19,7 +19,7 @@ import {defineProps, defineEmits} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
-
+import ResultOlItem from "../../result/ResultOlItem.vue";
 const props = defineProps({
     play: {
         type: Object,
@@ -43,8 +43,10 @@ const go_betting = (data) => {
 </script>
 
 <template>
-    <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)"
-         :class="['template1',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
+    <div class="template1 component play-template-1"
+        v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" 
+          @click="go_betting(olChild)"
+          :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
         <div class="left">{{ olChild.otv }}</div>
         <div class="right" v-if="olChild.os == 1">
             <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
@@ -53,6 +55,7 @@ const go_betting = (data) => {
         <div v-if="olChild.os == 2">
             <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
         </div>
+        <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
     </div>
 </template>
 
