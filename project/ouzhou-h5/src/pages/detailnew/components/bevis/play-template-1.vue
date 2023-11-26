@@ -41,13 +41,14 @@ const go_betting = (data) => {
     emits("bet_click_", data, props.play.hpn);
 };
 
-setTimeout(function (){
-    console.log(props.play)
-},2000)
+const AssembleData = computed(() => {
+    const {hl} = props.play
+    return hl[0].ol.filter(item => item.os != 3)
+})
 </script>
 
 <template>
-    <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)"
+    <div v-for="olChild of AssembleData" :key="olChild.oid" @click="go_betting(olChild)"
          :class="['template1',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
         <div class="left">{{ olChild.otv }}</div>
         <div class="right" v-if="olChild.os == 1">
