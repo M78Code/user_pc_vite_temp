@@ -15,7 +15,7 @@ os: 1 开盘 ，2 封盘
 
 <script setup name="template6">
 import olStatus from "../ol_status.vue";
-import {defineProps, defineEmits} from "vue"
+import {defineProps, defineEmits, computed} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
@@ -37,27 +37,44 @@ const props = defineProps({
 
 const emits = defineEmits(['bet_click_'])
 const go_betting = (data) => {
-    if(data.os == 2) return
-    emits("bet_click_", data,props.play.hpn);
+    if (data.os == 2) return
+    emits("bet_click_", data, props.play.hpn);
 };
+
+const AssembleData = computed(() => {
+    const {hl} = props.play
+    return hl[0].filter(item => item.os != 3)
+})
+
 </script>
 
 <template>
-    <div v-for="olChild of play.hl[0].ol.filter(i=>i.os != 3)" :key="olChild.oid" @click="go_betting(olChild)"
-         :class="['template1',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
-        <div class="left">{{ olChild.otv }}</div>
-        <div class="right" v-if="olChild.os == 1">
-            <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
-            <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
+    <div class="template1" v-if="false">
+        <div v-for="olChild of AssembleData" :key="olChild.oid" @click="go_betting(olChild)"
+             :class="['list',{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
+            <div class="left">{{ olChild.otv }}</div>
+            <div class="right" v-if="olChild.os == 1">
+                <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', sport_id) }}</p>
+                <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
+            </div>
+            <div v-if="olChild.os == 2">
+                <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+            </div>
         </div>
-        <div v-if="olChild.os == 2">
-            <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-        </div>
+    </div>
+    <div v-else class="template1 noData">
+        当前盘口暂无可用投注项
     </div>
 </template>
 
 <style scoped lang="scss">
-.template1 {
+.template1{
+    min-height: 48px;
+}
+.noData{
+    text-align: center;
+}
+.list {
     width: 100%;
     display: flex;
     align-items: center;
@@ -81,8 +98,8 @@ const go_betting = (data) => {
         position: relative;
         display: flex;
         align-items: center;
+        color: var(--q-gb-t-c-1);
     }
-
 
 
     .red {
@@ -97,6 +114,10 @@ const go_betting = (data) => {
 .is-active {
     background-color: var(--q-gb-bg-c-1) !important;
     color: var(--q-gb-t-c-2) !important;
+
+    .right {
+        color: var(--q-gb-t-c-2);
+    }
 }
 
 .lock {
