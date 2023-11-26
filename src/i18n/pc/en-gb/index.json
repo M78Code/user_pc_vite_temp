@@ -9,6 +9,7 @@
       "msg_6": "This record will display all paid bets within selected range",
       "msg_7": "This record will display all booked bets",
       "my_bet": "My Bets",
+      "copy": "copy",
       "unsettled": "Unsettled",
       "settled": "settled",
       "unpaid_bets": "This record will show all unpaid bets",
@@ -1302,7 +1303,12 @@
     "unfold": "Open",
     "yellow_card": "Yellow card",
     "yellow_card_down": "2H Yellow card",
-    "yellow_card_up": "1H Yellow card"
+    "yellow_card_up": "1H Yellow card",
+    "corner": "Corners",
+    "half_1": "1st Half",
+    "half_2": "2nd Half",
+    "S7": "OT",
+    "S170": "PEN"
   },
   "isoName": "en",
   "list": {

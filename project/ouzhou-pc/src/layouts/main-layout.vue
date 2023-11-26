@@ -15,7 +15,7 @@
       </div>
       <div class="layout_main_center" :style="{
         width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-        height: LayOutMain_pc.oz_layout_content_height + 'px'
+        height: `calc(100vh - 68px)`
       }">
         <!-- 中间区域 -->
         <router-view></router-view>
@@ -148,6 +148,7 @@ const get_unsettle_tickets_count_config = () => {
 
 .layout_main_center {
   padding: 10px 0 0;
+  // height: 100%;
 }
 
 .layout_main_right {
