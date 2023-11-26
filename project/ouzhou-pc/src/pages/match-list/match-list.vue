@@ -69,7 +69,8 @@
         </template>
       </scroll-list>
     </load-data>
-    <load-data v-if="MenuData.is_leagues() && get_league_list().length" :state="'data'" :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
+    <load-data v-if="MenuData.is_leagues()" :state="get_league_list().length?'data':'empty'"
+     :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
       <scroll-list>
         <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
           <play-match-league :league_obj="league_item" />
@@ -194,7 +195,7 @@ export default {
       }
     }
     function get_league_list() {
-      return MatchLeagueData.get_league_list()
+      return MatchLeagueData.get_league_list()||[]
     }
     return {
       show_refresh_mask,

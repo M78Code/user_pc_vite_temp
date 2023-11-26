@@ -820,9 +820,9 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     // 首页不需要拼接的
     let home_away_diff = [2, 38]
     // 多位数
-    let home_mark_more = [351,347]
+    let home_mark_more = [351, 347]
     // 主客队
-    let home_away_only = [1,37]
+    let home_away_only = [1, 37, 32]
 
     // 独赢类
     if(home_away_only.includes(ol_obj._hpid*1)){

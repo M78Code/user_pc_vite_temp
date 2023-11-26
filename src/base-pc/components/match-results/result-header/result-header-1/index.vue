@@ -238,8 +238,7 @@ const props = defineProps({
   const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
 })
-const locales = 
-{
+const locales = {
         days: i18n_t('time.time_date_week'),
         daysShort: i18n_t('time.time_date_week'),
         months: [
@@ -283,6 +282,7 @@ const confirmDate=()=>{
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
   props.hideSelect(date.value)
 }
+
 /**
 * @description: 
 * @return {}
