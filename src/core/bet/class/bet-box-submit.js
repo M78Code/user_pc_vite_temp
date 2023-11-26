@@ -570,7 +570,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     const { oid, _hid, _hn, _mid } = params
 
     // 没有投注内容 点击无效
-    if(!oid || !_hid || !_hn || !_mid){
+    if(!oid || !_hid || !_mid){
         return
     }
 
