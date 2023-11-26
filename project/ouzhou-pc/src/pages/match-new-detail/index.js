@@ -141,24 +141,26 @@ export function usedetailData(route) {
   /**
    * 获取数据
    */
-  const init = async () => {
+  const init = async (params) => {
+    const { isNeedLoading = true } = params || {}
  
     // all_list_toggle = {}
-    detail_loading.value = true;
-    get_detail();
+    detail_loading.value = isNeedLoading;
+    get_detail(params);
     await get_category();
   };
   /**
    * 获取赛事详情数据
    */
-  const get_detail = async () => {
+  const get_detail = async (par) => {
+    const { isNeedLoading = true } = par || {}
     try {
       const params = {
         mid: mid,
         cuid: user_info.userId,
         t: new Date().getTime(),
       };
-      detail_loading.value = true;
+      detail_loading.value = isNeedLoading;
       const res = await get_detail_data(params);
       // 空赛事数据跳转回首页
       if (lodash_.isEmpty(res.data)) {

@@ -808,7 +808,19 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     if(is_detail){
         text = ol_obj.otv
     }else{
-        text = ol_obj.on
+        if(home_away_mark.includes(ol_obj._hpid*1)){
+            switch(ol_obj.ot){
+                case '1':
+                    // 主
+                    text= mid_obj.mhn
+                    break
+                case '2':
+                    // 客
+                    text = mid_obj.man
+                    break
+            }
+            text = `${mid_obj.mhn}${mid_obj.man ? `<span class='ty-span'>${mid_obj.man}</span>`:''} ${ol_obj.on}`        
+        }
     }
 
     // 独赢类

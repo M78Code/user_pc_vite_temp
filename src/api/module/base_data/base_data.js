@@ -8,7 +8,7 @@ export const post_base_data_menu_mapping = (params, config={}, url = "/v3/menu/l
   return http.post(`${prefix_job}${url}`, params, config);
 }
 //菜单数量统计
-export const get_base_data_menu_init = (params, config={}, url = "/v3/menu/init") => {
+export const get_base_data_menu_init = (params, config={}, url = "/v3/menu/initPB") => {
   return http.get(`${prefix_job}${url}`, params, config);
 };
 // 旧菜单数量统计
