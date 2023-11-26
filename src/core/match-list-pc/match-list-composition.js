@@ -132,14 +132,14 @@ export function fetch_match_list(is_socket = false, cut) {
 						is_socket,
 						cut
 					);
-					if (lodash.get(res, "data.data")) {
-
-						load_data_state.value = lodash.get(res, "data.data.length") ? 'data' : 'empty'
+					if (lodash.get(res, "data.length") || lodash.get(res, "data.data.length")) {
+						const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
+						load_data_state.value = len ? 'data' : 'empty'
 					}
 					else {
-						const livedata = lodash.get(res, "data.livedata",[])
-						const nolivedata = lodash.get(res, "data.nolivedata", [])
-						load_data_state.value = livedata.length + nolivedata.length > 0 ? 'data' : 'empty'
+						const livedata = lodash.get(res, "data.livedata.length", 0)
+						const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
+						load_data_state.value = livedata + nolivedata > 0 ? 'data' : 'empty'
 					}
 				} else if (res.code == "0401038") {
 					// let is_collect = this.vx_layout_list_type == 'collect'
