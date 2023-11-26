@@ -570,7 +570,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     const { oid, _hid, _hn, _mid } = params
 
     // 没有投注内容 点击无效
-    if(!oid ){
+    if(!oid || !_hid || !_mid){
         return
     }
 
@@ -812,12 +812,13 @@ const set_orderNo_bet_obj = order_no_list => {
 
 // 获取盘口值 附加值
 const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
-    console.error('get_handicap')
+    // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
     // 两数拼接  
-    let home_away_mark = [2,4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347,351,127,38] // 
-
+    let home_away_mark = [2, 4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199] // 
+    // 首页不需要拼接的
+    let home_away_diff = [2, 38]
     // 多位数
     let home_mark_more = [351,347]
     // 主客队
@@ -856,20 +857,18 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
                 text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
             }
         }
-
         return text
 
     }else{
         // 首页 列表
         text = ol_obj.on
         // 是否需要 玩法拼接
-        if(home_away_mark.includes(ol_obj._hpid*1)){
+        if(home_away_diff.includes(ol_obj._hpid*1)){
 
             let handicap = text.split(' ')
             handicap = handicap.filter(item => item)
     
             text = `${handicap[0]}${handicap[1] ? `<span class='ty-span'>${handicap[1]}</span>`:''}`
-          
         }else{
             // 主客队拼接
             switch(ol_obj.ot){
@@ -884,7 +883,6 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
             }
             text = `${text} <span class='ty-span'>${ol_obj.on}</span>`  
         }
-
         return text  
     }
 }

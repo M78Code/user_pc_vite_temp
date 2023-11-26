@@ -66,12 +66,9 @@ const  loadLanguageAsync= async(lang)=>{
   lang = lang || locale
 try {
   const langfile =  await   import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/${map_lang[lang]}/index.json`  )
-
-  LocalStorage.set('lang', lang),
   // 动态加载对应的语言包
   // let langFile = langfile.default || langfile;
   // 设置语言信息
-  console.error(langfile)
   //加载服务器语言设置
   let msg = {}
   const server_val = server_key_map[lang];
@@ -81,6 +78,7 @@ try {
       lodash.set(msg, v, message[v])
     }
   }
+  console.error('ssss',lang)
   i18n.global.setLocaleMessage(lang, { ...langfile, ...msg });
   i18n.global.locale = lang;
   // 设置语种

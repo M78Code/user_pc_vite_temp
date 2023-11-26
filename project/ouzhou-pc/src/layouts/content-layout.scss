@@ -93,10 +93,16 @@ body {
     }
     /* 暂无数据 */
     .empty-wrap {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--q-gb-bg-c-4);
+      height: 100%;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
       .img {
         background-image: var(--qq--public-bg-image2); // TODO: png/no_data_01.png
       }
-
       &.esports-size {
         .text-center {
           color: var(--q-gb-t-c-8);
