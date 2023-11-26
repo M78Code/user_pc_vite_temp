@@ -16,7 +16,7 @@
       >
         <div :title="o.ott" :style="{ color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#ff7000'}"
              v-show="!match_info.hl[0].hs" class="oid-width">
-            {{ o.ott }}333
+            {{ o.ott }}
             <span>{{ o.on }} </span>
         </div>
         <div v-show="!match_info.hl[0].hs">
@@ -52,7 +52,7 @@
               <div style="font-weight: 500;display: flex;align-items: center;width: 100%;" >
                 <span class="oid-width" :title="o.ott">{{ o.ott }}</span>
                 <span v-if="[0].includes(match_info.hpt) && match_info.title.length > 0" v-html="getOn(match_info, o)"></span>
-                <span v-else :style="{color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',}" class="temp-on oid-width">{{ o.on }}2222</span>
+                <span v-else :style="{color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',}" class="temp-on oid-width">{{ o.on }}</span>
               </div>
               <div v-show="!item.hs" class="temp-on" :style="{ color: '#ff7000' }" style="font-weight: 500">
                 <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
