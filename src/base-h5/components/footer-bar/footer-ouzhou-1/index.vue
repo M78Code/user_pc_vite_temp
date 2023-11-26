@@ -3,7 +3,7 @@
 * @Description: 底部悬浮菜单
 -->
 <template>
-  <div class="footer_menu">
+  <div class="footer_menu" v-if="is_rule_page">
     <!-- 中间弧形 -->
     <span class="arc"></span>
     <!-- 底部菜单 -->
@@ -55,7 +55,12 @@ const jump_page = (item) => {
   
   router.push(item.route)
 }
-
+/**
+ * 公告
+ */
+ const is_rule_page = computed(() => {
+  return !['/announcement'].includes(router.currentRoute.value.path)
+})
 
 </script>
 
