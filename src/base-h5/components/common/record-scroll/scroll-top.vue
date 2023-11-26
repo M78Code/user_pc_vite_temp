@@ -5,14 +5,16 @@
 -->
 
 <template>
-  <img v-show="is_show_back_top_btn" class="list-scroll-to-top" :src="compute_img_url('scroll-to-top')" @click="back_top">
+  <img v-show="is_show_btn" class="list-scroll-to-top" :src="scroll_top_image" @click="back_top">
 </template>
 
 <script setup>
-import { utils,UserCtr, compute_img_url } from 'src/core/index.js'
+import { utils,UserCtr, compute_img_url, PROJECT_NAME } from 'src/core/index.js'
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
+import { scroll_top_icon } from 'src/base-h5/core/utils/local-image.js'
 
+const emits = defineEmits(['back-top'])
 const props = defineProps({
   // 父组件滚动高度
   list_scroll_top: {
@@ -20,6 +22,14 @@ const props = defineProps({
     default: 0
   }
 })
+
+/**
+ * @description 是否显示按钮
+ */
+const is_show_btn = computed(() => {
+  return props.list_scroll_top >= window.innerHeight
+})
+
 // 通过判断父组件滚动时间间隔控制按钮显示，放在该组件维护
 let is_show_back_top_btn = ref(true)
 let scroll_timer = ref(null)
@@ -37,6 +47,15 @@ watch(() => props.list_scroll_top, (curr_top, prev_top) => {
     is_show_back_top_btn.value = false
   }, 5000)
 })
+
+const scroll_top_image = computed(() => {
+  let img_src = ''
+  if (PROJECT_NAME === 'ouzhou-h5') {
+    img_src = scroll_top_icon
+  }
+  return img_src
+})
+
 /**
    * 回到顶部功能实现过程：
    * 1. 获取页面当前距离顶部的滚动距离（虽然IE不常用了，但还是需要考虑一下兼容性的）
@@ -47,8 +66,7 @@ watch(() => props.list_scroll_top, (curr_top, prev_top) => {
 const back_top = () => {
   //  防止调用多次
   if (utils.is_time_limit(500)) return
-
-  // $emit('back-top')
+  emits('back-top')
 }
 onDeactivated(() => {
   clearTimeout(scroll_timer)
@@ -64,7 +82,8 @@ onUnmounted(() => {
   z-index: 86;
   position: fixed;
   width: 0.3rem;
-  bottom: 0.58rem;
+  bottom: 1rem;
   right: .2rem;
+  z-index: 999;
 }
 </style>

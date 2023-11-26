@@ -2,8 +2,6 @@
 //  import { LocalStorage, SessionStorage  } from "src/core/utils/index.js";
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 // import server_i18n_map from "app/job/output/i18n/index.json";
-import STANDARD_KEY from "../core/standard-key";
-const lang_key = STANDARD_KEY.get("lang"); // 语言key
 
 import { createI18n } from "vue-i18n";
 import lodash from 'lodash'
@@ -13,7 +11,7 @@ import BUILDIN_CONFIG from "app/job/output/env/index.js";
 const PROJECT_NAME = BUILDIN_CONFIG.PROJECT_NAME
 
 const IS_PC = PROJECT_NAME.includes('pc')
-const locale = LocalStorage.get(lang_key, "zh"); //緩存的值
+const locale = LocalStorage.get('lang', "zh"); //緩存的值
 // 所有语中使用到的公共的国际化字符串
 // import * as other from 'src/i18n/common-lang'
 const i18n = createI18n({
@@ -66,11 +64,10 @@ const map_lang = {
  */
 const  loadLanguageAsync= async(lang)=>{
   lang = lang || locale
-
 try {
   const langfile =  await   import( /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/${map_lang[lang]}/index.json`  )
 
-  LocalStorage.set(lang_key, lang),
+  LocalStorage.set('lang', lang),
   // 动态加载对应的语言包
   // let langFile = langfile.default || langfile;
   // 设置语言信息

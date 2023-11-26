@@ -512,6 +512,7 @@ class MatchMeta {
  * @returns 
  */
   get_default_ouzhou_home_hots ()  {
+    this.current_euid = 'ouzhou_h5'
     const res = localStorage.getItem('ouzhou_home_hots') && JSON.parse(localStorage.getItem('ouzhou_home_hots'))
     return this.get_ouzhou_home_hots_data(res)
   }
@@ -520,11 +521,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_hots () {
-    // const res = await api_home.hot_ulike_recommendation({ 
-    //   isHot: 1,
-    //   cuid: UserCtr.get_uid()
-    //   })
-    // return this.get_ouzhou_home_hots_data(res)
+    this.current_euid = 'ouzhou_h5'
     const params = {
       euid: "30199",
       sort: 1,
@@ -560,6 +557,7 @@ class MatchMeta {
    * @returns 
    */
   get_default_ouzhou_home_data ()  {
+    this.current_euid = 'ouzhou_h5'
     const res = localStorage.getItem('ouzhou_home_data') && JSON.parse(localStorage.getItem('ouzhou_home_data'))
     return this.handle_ouzhou_home_data(res)
   }
@@ -568,6 +566,7 @@ class MatchMeta {
    * @description 获取欧洲版首页热门赛事
    */
   async get_ouzhou_home_data () {
+    this.current_euid = 'ouzhou_h5'
     const res = await api_match_list.get_home_matches({ type: 1, sort: 2 })
     return this.handle_ouzhou_home_data(res)
   }
@@ -593,6 +592,7 @@ class MatchMeta {
    * @description 处理欧洲版首页热门赛事
    */
   handle_ouzhou_home_data (res) {
+    if (this.current_euid != 'ouzhou_h5') return { p15_list: [], hots: [], dataList: [] }
     if (!res || +res.code !== 200) return { p15_list: [], hots: [], dataList: [] }
     localStorage.setItem('ouzhou_home_data', JSON.stringify(res))
     const p15 = lodash.get(res, 'data.p15', [])
@@ -919,8 +919,9 @@ class MatchMeta {
 
     // 重置元数据计算流程
     MatchResponsive.set_is_compute_origin(false)
+
     // 不获取赔率
-    if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse })
+    if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse, type: 'cover' })
 
     // 获取赔率
     if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse })
@@ -996,7 +997,7 @@ class MatchMeta {
    * @param {*} cmd 
    */
   handle_ws_directive ({ cmd = '', data = {} }) {
-    // console.log(cmd, data)
+    console.log('--------wswswswswswsws-cmd:', cmd, data)
     // 赛事新增
     if (['C109'].includes(cmd)) {
       const { cd = [] } = data
@@ -1008,6 +1009,7 @@ class MatchMeta {
     if (['C104', '901'].includes(cmd)) {
       this.handle_remove_match(data)
     }
+    
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
       this.get_match_base_hps_by_mids()

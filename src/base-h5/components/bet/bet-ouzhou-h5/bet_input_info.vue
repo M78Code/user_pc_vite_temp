@@ -167,13 +167,6 @@ const set_ref_data_bet_money = () => {
             color: var(--q-gb-t-c-4);
             
         }
-        .money-span {
-            width: 0.02rem;
-            height: 0.16rem;
-            display: flex;
-            background: var(--q-gb-bg-c-1);
-            margin-right: 5px;
-        }
     }
     .money_input_cursor{
         background: transparent;
@@ -215,7 +208,7 @@ const set_ref_data_bet_money = () => {
 .money-span {
     width: 0.02rem;
     height: 0.16rem;
-    margin: 0 1px;
+    margin-right: 0.05rem;
     background: var(--q-gb-bg-c-1);
     &.money-span3{
       background: #FFF6F0;

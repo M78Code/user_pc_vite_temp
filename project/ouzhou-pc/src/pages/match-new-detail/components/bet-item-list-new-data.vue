@@ -83,7 +83,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core/index.js";
 import { get_odds_active, utils } from "src/core/index.js";
 import { format_odds_value } from "src/core/format/module/format-odds.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
@@ -93,7 +93,7 @@ import { formatMoney, numberRetain } from "src/core/format/index.js";
 const is_mounted = ref(true);
 
 // 赔率值
-const match_odds = ref("");
+// const match_odds = ref("");
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
 // 是否红升绿降中
@@ -139,7 +139,7 @@ const score = computed(() => {
  * @param  {number} obv - 断档赔率值
  * @return {undefined} undefined
  */
-const format_odds = () => {
+const match_odds =computed (() => {
   let ov = lodash.get(props.ol_data, "ov");
   let obv = lodash.get(props.ol_data, "obv");
   // 列表取 hsw
@@ -148,11 +148,11 @@ const format_odds = () => {
     ov,
     obv || "",
     hsw || "",
-    1
+    1,UserCtr.user_version.value
   );
 
-  match_odds.value = format_odds_value(match_odds_info, props.ol_data.csid);
-};
+  return format_odds_value(match_odds_info, props.ol_data.csid);
+})
 
 /**
  * @description 获得最新的盘口状态
@@ -238,8 +238,6 @@ watch(
   () => props.ol_data.ov,
   (cur, old) => {
     if (cur == old) return;
-    // 赔率值处理
-    format_odds(cur, 1);
     // 红升绿降变化
     set_odds_lift(cur, old);
   },

@@ -149,7 +149,8 @@ const outrights = () => {
 
   let mid_config = {
     ...MenuData.mid_menu_result,
-   
+    filter_tab: '',
+    current_mi: '401'
   }
   MenuData.set_mid_menu_result({})
 

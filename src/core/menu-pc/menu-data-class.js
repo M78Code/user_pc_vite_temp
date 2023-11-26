@@ -147,6 +147,7 @@ class MenuData {
     //宽度请求变化 因为请求参数是在这里触发的
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     this.set_match_list_api_config()
+    
   }
 
   // 设置当前选中的赛种

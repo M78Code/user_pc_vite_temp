@@ -1,4 +1,5 @@
 import { reactive } from "vue"
+import { i18n_t } from "src/core/index.js"
 
 export const store = reactive({
     tabModel: false, //下拉框
@@ -15,10 +16,10 @@ export const store = reactive({
     selectLeague: {}, // league 当前选择的联赛
     curSelectedOption: {},
     selectOptions: [
-        { label: "Next 12 Hours", time: "12hours", timestamp: 12 }, //12小时后的时间戳
-        { label: "Next 24 Hours", time: "24hours", timestamp: 24 },
-        { label: "3 Day", time: "3day", timestamp: 72 },
-        { label: "7 Day", time: "7day", timestamp: 168 },
+        { label: i18n_t('ouzhou.match.select_time.12h'), time: "12hours", timestamp: 12 }, //12小时后的时间戳
+        { label: i18n_t('ouzhou.match.select_time.24h'), time: "24hours", timestamp: 24 },
+        { label: i18n_t('ouzhou.match.select_time.72h'), time: "3day", timestamp: 72 },
+        { label: i18n_t('ouzhou.match.select_time.168h'), time: "7day", timestamp: 168 },
     ],
     tabOptions: [
         'Matches',

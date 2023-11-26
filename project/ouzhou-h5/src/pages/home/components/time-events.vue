@@ -21,7 +21,7 @@
           </div>
         </div>
         <template v-if="item">
-          <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" />
+          <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" :hps="get_item_hps(item)" custom_type="15_mintues" />
         </template>
       </div>
     </section>
@@ -40,6 +40,15 @@ const props = defineProps({
   }
 })
 const router = useRouter()
+
+const get_item_hps = (item) => {
+  const hps15Minutes = lodash.get(item, 'hps15Minutes', [])
+  const length = lodash.get(hps15Minutes, 'length', 0)
+  if (length < 1) return []
+  const hps_item = hps15Minutes.find(t => t.hpid === '32')
+  const hps = lodash.get(hps_item, 'hl[0].ol', [])
+  return hps
+}
 
 /** 跳转赛事详情
  * @param {TYPES.MatchDetail} item 

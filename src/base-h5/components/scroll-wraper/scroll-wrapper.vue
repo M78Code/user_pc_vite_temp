@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div class="scroll-wrapper" @scroll="handler_match_container_scroll">
+  <div class="scroll-wrapper" ref="container" @scroll="handler_match_container_scroll">
     <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
     <div  :class="['scroll-i-con', {high_scrolling: set_ishigh_scrolling && menu_type !== 100 &&
        !(menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(menu_lv2.mi)) && menu_type != 100,
@@ -39,6 +39,8 @@
     <div class="err_box" v-if="MatchMeta.match_mids.length < 1">
        <img class="scroll-title-icon" :src="compute_local_project_file_path('/image/png/no_data_app.png')" alt="">
     </div>
+    <!-- 回到顶部按钮组件 -->
+    <ScrollTop :list_scroll_top="scroll_top" @back-top="goto_top" />
   </div>
 </template>
 
@@ -59,7 +61,7 @@ import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_export,
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
-
+import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
@@ -72,6 +74,7 @@ const store_state = store.getState();
 
 // 调试信息
 let test = ref('')
+let scroll_top = ref(0)
 let prev_frame_time = ref(0)
 //滚动中上一帧的scroll top
 let prev_frame_poi = ref(0)
@@ -84,7 +87,7 @@ const max_height = ref(false)
 // 赛事mids
 const scroll_timer = ref(0)
 const emitters = ref({})
-
+const container = ref(null)
 const match_meta = ref(MatchMeta)
 
 const match_mids = computed(() => {
@@ -111,10 +114,11 @@ const get_index_f_data_source = (mid) => {
 
 // 赛事列表容器滚动事件
 const handler_match_container_scroll = lodash.debounce(($ev) => {
+  scroll_top.value = $ev.target.scrollTop
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
   if (get_is_static() || length < 18) return
   const scrollTop = $ev.target.scrollTop
-  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 500) || Math.abs(scrollTop - prev_scroll.value) >= 500) {
+  if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 300) || Math.abs(scrollTop - prev_scroll.value) >= 300) {
     prev_scroll.value = scrollTop
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2 })
     if (!is_export.value) get_match_base_hps()
@@ -126,8 +130,7 @@ const get_match_base_hps = lodash.debounce(() => {
   MatchMeta.get_match_base_hps_by_mids()
   clearTimeout(scroll_timer.value)
   scroll_timer.value = null
-}, 600)
-
+}, 800)
 
 /**
  * @description: 页面滚动事件处理函数
@@ -185,11 +188,9 @@ const get_is_show_footer_animate = () => {
 }
 /**
  * @description: 列表回到顶部
- * @param {String} is_user
- * @return {Undefined} Undefined
  */
 const goto_top = () => {
-  RouterScroll.scroll_list_wrapper_by(0);
+  container.value.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // 是否虚拟计算逻辑
@@ -302,6 +303,7 @@ onUnmounted(() => {
       position: absolute;
       top: 0;
       left: 0;
+      content-visibility: auto;
       &.last{
         // padding-bottom: 0.01rem;
         .match-container{
