@@ -60,7 +60,7 @@ import secondaryModule from 'src/base-pc/components/secondary-module/index.vue'
 import { BetBoxWapper } from "src/base-pc/components/bet";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
@@ -96,6 +96,7 @@ onMounted(() => {
       emitter_1: useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off,
       emitter_2: useMittOn(MITT_TYPES.EMIT_STOP_DRAP, stop_drap_emit).off
   }
+  useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,  {time:new Date().getTime(), step:1000})
 })
 
 // 投注成功后获取投注记录数据 24小时内的
