@@ -432,27 +432,25 @@ export const details_main = (router, route) => {
     const { mid, csid } = route.params;
     // 增加监听接受返回的监听函数
     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-      handler_ws_cmd(cmd, data);
+      if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
+      // handler_ws_cmd(cmd, data);
       // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
       // console.error(flag,'flag','cmd:',cmd,data);
       //如果ms mmp变更了 就手动调用ws
-      // if(flag){
-      //   init.value = false
-      //   switch (cmd) {
-      //     case "C303":
-      //       console.error("C303");
-      //       socketOddinfo({
-      //         mcid: 0,
-      //         cuid: cuid.value,
-      //         mid:route.params.mid,
-      //         newUser: 0,
-      //       })
-      //       break;
-      //     default:
-      //       break;
-      //   }
-      //   // detail_init();
-      // }
+        init.value = false
+        switch (cmd) {
+          case "C303":
+            console.error("C303");
+            socketOddinfo({
+              mcid: 0,
+              cuid: cuid.value,
+              mid:route.params.mid,
+              newUser: 0,
+            })
+            break;
+          default:
+            break;
+        }
     });
   });
 

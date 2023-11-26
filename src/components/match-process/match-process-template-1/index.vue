@@ -260,8 +260,9 @@ const computed_show_date = computed(() => {
   }
   // 足、篮、冰、美足、手、拳、沙排、英式橄榄球、曲棍球、水球 时才显示【赛事日期】
   // 电竞赛事未开赛也展示赛事日期
+  // 欧洲版网球没有展示未开赛时间，在此处加了5
   else if (
-    [1, 2, 4, 6, 11, 12, 13, 14, 15, 16].includes(csid) ||
+    [1, 2, 4, 5, 6, 11, 12, 13, 14, 15, 16].includes(csid) ||
     is_eports_csid(csid)
   ) {
     show = true;

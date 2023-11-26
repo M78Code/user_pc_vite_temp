@@ -317,7 +317,15 @@ onMounted(() => {
   input_val.value = i18n_t("select.all");
 });
 // 全局点击事件
-watch('GlobalSwitchClass.global_click', res => {
+  watch(
+    () => GlobalSwitchClass.global_click,
+    (new_) => {
+    console.log('resres',new_)
+      isShow.value = false;
+    },
+    {deep:true, immediate: true }
+  );
+  watch(GlobalSwitchClass.global_click, res => {
   isShow.value = false;
 },
     {deep:true, immediate: true });
