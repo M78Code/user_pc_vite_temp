@@ -41,7 +41,7 @@
         </div>
         <div class="match-detail-line"></div>
         <!-- tabs 玩法分类切换 -->
-        <div v-if="tab == 'betting' && category_list.length > 0 ">
+        <div v-if="tab == 'betting' && category_list?.length > 0 ">
           <detail_tabs :category_list="category_list" :active="tab_selected_obj"
             @detail_tabs_change="detail_tabs_change" v-model:allCloseState="allCloseState"/>
         </div>
