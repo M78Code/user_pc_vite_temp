@@ -196,7 +196,7 @@ export default defineComponent({
         // }
       ])
     //监听输入框内容改变，并搜索
-    watch(keyword.value,
+    watch(() => keyword.value,
       (val) => {
         let trimVal = val.trim();
         get_search_data(trimVal);
