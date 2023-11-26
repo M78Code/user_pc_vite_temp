@@ -17,7 +17,7 @@
 								class="leagues_filrer" 
 								@click.stop="set_show_leagues"
 							>
-								24小时
+								{{ ouzhou_time_list.filter(times => times.value === active_time )[0].label }}
 								<span class="yb-icon-arrow"></span>
 								<div class="leagues_filrer_item" v-show="show_leagues">
 									<div v-for="item in ouzhou_time_list" :key="item.value" @click="set_active_time(item)" :class="item.value == active_time ? 'item_acitve': ''">
@@ -71,7 +71,7 @@ const ouzhou_filter_config = {
 	sport_tab: [
 		{ label: i18n_t('ouzhou.match.matches'), value: 4001 },
 		{ label: i18n_t('ouzhou.match.top_leagues'), value: 4002 },
-		{ label: '冠军', value: 4003 },
+		{ label: i18n_t('menu.match_winner'), value: 4003 },
 		// { label: 'Next 24 Hours', value: 4003 },
 	], 
 	// 收藏 i18n_t('ouzhou.match.inplay')  i18n_t('ouzhou.match.today')  i18n_t('ouzhou.match.early')
@@ -79,7 +79,7 @@ const ouzhou_filter_config = {
 		{ label: i18n_t('ouzhou.match.inplay'), value: 3001 },
 		{ label: i18n_t('ouzhou.match.today'), value: 3002 },
 		{ label: i18n_t('ouzhou.match.early'), value: 3003 },
-		{ label: i18n_t('ouzhou..champion'), value: 3004 }
+		{ label: i18n_t('menu.match_winner'), value: 3004 }
 	],
 	// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
 	inplay:{
@@ -200,11 +200,9 @@ const checked_current_tab = payload => {
 			MenuData.set_menu_root(202)
 		}
 	}
-	// 联赛
+	// 热门联赛
 	if(4002 == payload.value){
-		// MenuData.set_menu_root(400)
-		obj.current_mi = 400 + MenuData.current_ball_type*1
-		MenuData.set_menu_current_mi(obj.current_mi)
+		MenuData.set_menu_current_mi('')
 	}
 	// 冠军
 	if(4003 == payload.value){
