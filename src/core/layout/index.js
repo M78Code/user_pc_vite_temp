@@ -153,7 +153,6 @@ class LayOutMain {
   }
   /** 公告 赛果 体育规则 激活次要模块设置*/
   set_layout_secondary_active(value) { 
-    console.log('valu2222222e',value)
     this.layout_secondary_active = value;
     this.set_layout_version()
   }

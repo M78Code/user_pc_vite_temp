@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-show="false">{{BetData.bet_data_class_version}}</div>
-  <div class="temp3 box-style">
+  <div class="temp3 box-style component tem3">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
     <!-- os: 1开 2封 3隐藏不显示不占地方-->
@@ -14,21 +14,28 @@
       <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
         <div class="item-wrap" v-if="hl_item && hl_item.ol">
           <div v-for="(ol_item, index) in hl_item.ol" :key="index" class="item2">
+            <template v-if="ol_item.result != (void 0)">
+              <ResultOlItem :value="ol_item" :hpt="3"></ResultOlItem>
+            </template>
+            <template v-else>
             <!-- 主程序 start -->
-            <div @click="go_betting(ol_item)"
-              :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) },'ol_ov','play-box-style','details_color','warp',]">
+            <div class="ol_ov play-box-style details_color warp"
+              @click="go_betting(ol_item)"
+              :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }]"
+            >
               <div class="ellipsis remark fz_14">
                 <span>{{ ol_item.on || ol_item.ott }}</span>
               </div>
               <div class="text-right ol-on">
-                <template v-if="ol_item.os == 1">
+                <template v-if="ol_item.os == 1 && hl_item?.hs != 11">
                   <span class="ol-ov">{{compute_value_by_cur_odd_type(ol_item.ov,'','',MatchDetailCalss.params.sportId)}}</span>
                   <olStatus :item_ol_data="ol_item" :active="BetData.bet_oid_list.includes(ol_item?.oid )"/>
                 </template>
-                <span v-if="ol_item.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+                <span v-if="ol_item.os == 2 || hl_item?.item == 11"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
               </div>
             </div>
             <!-- 主程序 end -->
+          </template>
           </div>
           <!-- 补空缺 -->
           <!-- <div
@@ -48,8 +55,10 @@ import { onMounted, ref, computed } from "vue";
 import olStatus from "../ol_status.vue";
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
 import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
+import ResultOlItem from "../../result/ResultOlItem.vue";
 // import { storage_bet_info } from 'src/public/utils/bet/bet_info.js'
 // import EMITTER from  "src/global/mitt.js"
+
 const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
