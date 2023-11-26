@@ -37,7 +37,7 @@
     <div class="h-right">
       <div class="user-info">
         <span class="user-balance">  {{ format_balance(UserCtr.balance) }} </span>
-        <span class="user-name">{{ UserCtr.user_info.nickName }}</span>
+        <span class="user-name">{{ lodash.get(UserCtr.get_user(), "nickName") }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
