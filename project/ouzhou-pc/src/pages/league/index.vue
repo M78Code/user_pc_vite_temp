@@ -27,7 +27,7 @@ import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import LeaguesHeader from "src/base-pc/components/leagues-header/index.vue";
-import { LayOutMain_pc, UserCtr } from 'src/core/index.js';
+import { LayOutMain_pc, UserCtr, MenuData } from 'src/core/index.js';
 import { api_match } from "src/api/index.js";
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 import "../match-list/match_list.scss";
@@ -47,6 +47,8 @@ export default {
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
+      
+		  MenuData.set_menu_current_mi(400 + MenuData.current_ball_type*1)
     })
 
     watch(() => route.params, () => {
