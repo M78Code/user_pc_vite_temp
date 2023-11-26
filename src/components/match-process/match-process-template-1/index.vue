@@ -381,7 +381,7 @@ onUnmounted(() => {
       :deep(.timer-layout) {
         //padding: 0;
         //  display: inline-block;
-          background-color: var(--q-gb-bg-c-10);
+          // background-color: var(--q-gb-bg-c-10);
       }
     }
   }
