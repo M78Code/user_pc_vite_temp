@@ -149,7 +149,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .announce-area{
     width: 100%;
-    height: calc(100% - 300px);
+    height: calc(100% - 80px);
     padding-top: 6px;
     padding-bottom: 50px;
 }
