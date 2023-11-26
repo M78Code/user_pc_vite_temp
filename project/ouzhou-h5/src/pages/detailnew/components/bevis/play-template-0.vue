@@ -18,7 +18,7 @@ const props = defineProps({
     },
     active: {
         type: Number,
-        default: () => 0,
+        default: 0,
     }
 })
 
@@ -36,7 +36,9 @@ const go_betting = (data) => {
         <ul class="list">
             <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
                 <li v-for="ol_item in hl_item.ol.filter(i=>i.os != 3)" :key="ol_item?.oid" @click="go_betting(ol_item)"
-                    :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }, 'list-item']">
+                    :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }]"
+                    class="list-item"
+                >
                     <template v-if="ol_item?.os == 1 && ol_item._hs != 11">
                         <span class="on-text textOverflow2">
                             {{ ol_item?.on || ol_item?.ott }}

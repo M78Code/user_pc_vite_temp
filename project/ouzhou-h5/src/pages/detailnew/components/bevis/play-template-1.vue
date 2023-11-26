@@ -27,7 +27,7 @@ const props = defineProps({
     },
     active: {
         type: Number,
-        default: () => 0,
+        default: 0,
     }
 })
 

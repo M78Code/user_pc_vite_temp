@@ -36,7 +36,7 @@ const props = defineProps({
     },
     active: {
         type: Number,
-        default: () => 0,
+        default: 0,
     }
 })
 
@@ -85,7 +85,9 @@ const go_betting = (data) => {
             <ul v-for="item of AssembleData.assemble" :key="item.otd" class="list">
                 <li class="list-title textOverflow2">{{ item.osn }}</li>
                 <li v-for="_item of item.information" :key="_item.oid" @click="go_betting(_item)"
-                    :class="['list-bet',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
+                    :class="[{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]"
+                    class="list-bet"
+                >
                     <template v-if="_item?.os == 1 && !isLocked">
                         <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
                         <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', sport_id) }}</span>
