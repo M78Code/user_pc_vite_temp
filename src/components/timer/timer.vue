@@ -52,7 +52,8 @@ export default {
   created() {
     // 启动计时器
     this.start();
-    useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+    
+    let { off: off_ } = useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time());
   },
   destroyed() {
     // off_()
@@ -88,6 +89,11 @@ export default {
       if (that.tconfig.step) {
         if (!that.timer || that.replay) {
           clearInterval(that.timer);
+          that.timer = null;
+          //启动定时器
+          that.timer = setInterval(()=>{
+            that.set_date_time();
+          }, that.tconfig.timer_ms);
           // 设置格式化时间
           if (that.tconfig.time_format) {
             that.time_str = that.tconfig.time_format(
