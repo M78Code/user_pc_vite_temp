@@ -10,7 +10,7 @@ import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { enter_params, compute_css_variables, PROJECT_NAME } from "src/core/index.js";
+import { enter_params, compute_css_variables, PROJECT_NAME,LocalStorage } from "src/core/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js";
@@ -61,8 +61,8 @@ export default {
     // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
     // 后面如果确实有需要就自己处理 。目前这个是兼容某些异常场景下 接口先返回来回
     // 文件后返回回来 的显示异常，不管 前端缓存，资源文件丢失的场景，生产无此场景
-    const lang = window.SEARCH_PARAMS.init_param.get('lang');
-    lang && (await  loadLanguageAsync());
+    const lang = window.SEARCH_PARAMS.init_param.get('lang') || LocalStorage.get('lang');
+    lang && (await  loadLanguageAsync(lang));
       // 实例化域名检测类对象
       AllDomain.create( () => {
         // data参数说明: {type:'domain_api',status:0 ,list:[]}
@@ -74,7 +74,7 @@ export default {
         // ws和http域名切换逻辑
         http.setApiDomain();
         enter_params(async(user)=>{
-          await loadLanguageAsync(user?.languageName);
+          await loadLanguageAsync(lang);
           MenuData.init();
           BetData.init_core()
           BetViewDataClass.init()
