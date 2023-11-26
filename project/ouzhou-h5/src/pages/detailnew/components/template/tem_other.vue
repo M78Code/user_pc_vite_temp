@@ -10,10 +10,11 @@
     <!-- hs: 0开 1封 2关 11锁 -->
     <!-- os: 1开 2封 3隐藏不显示不占地方-->
     <!-- 按ol循环，不考虑按tittle循环-->
-    <div
+    <!-- 
+      垃圾,4202年还用grid, 哥们还是看看flex布局吧
       :style="{ gridTemplateColumns: columnTotal(item_data) }"
-      class="odds-title"
-    >
+    -->
+    <div class="odds-title">
       <template
         v-if="
           item_data.title &&
@@ -141,7 +142,8 @@ onMounted(() => {
     }
   }
   .odds-title {
-    display: grid;
+    // display: grid;
+    display: flex;
     text-align: center;
     // height: 36px;
     // line-height: 26px;
@@ -149,13 +151,18 @@ onMounted(() => {
     .odds-title-li {
       color: var(--q-gb-t-c-4);
       font-size: 12px;
-
+      flex: 1;
+      width: 0;
       // margin-bottom: 10px;
       .odds-title-li-text {
         //background: #f5f5f5;
         background-color: var(--q-gb-bg-c-10);
         height: 30px;
         line-height: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
+        width: 100%;
       }
     }
     .ol_on {
