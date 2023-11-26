@@ -263,10 +263,10 @@ const set_basketball_score_icon_list = () => {
 const scoew_icon_list = ref([])
 // console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
 watch(()=>props.get_match_detail, (new_value, old_value) => {
-  scoew_icon_list.value = new_value.msc_obj||set_scoew_icon_list(new_value)
+  scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
   // set_scoew_icon_list(new_value);
   // 意义不明
-  current_ball_type.value = sport_ball[new_value.csid] * 100;
+  current_ball_type.value = sport_ball[new_value?.csid] * 100;
   set_basketball_score_icon_list()
 })
 watch(

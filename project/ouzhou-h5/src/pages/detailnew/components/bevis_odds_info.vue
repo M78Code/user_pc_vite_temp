@@ -10,7 +10,7 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-                        {{ item.hpt }}
+                        <!-- {{ item.hpt }} -->
 <!--                        {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :play="item" :item_data="item" :active="active" @bet_click_="bet_click_" />
