@@ -20,7 +20,7 @@ os: 1 开盘 ，2 封盘
 import {defineProps, computed, defineEmits} from "vue"
 import olStatus from "../ol_status.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import {compute_value_by_cur_odd_type} from "src/core/index.js"
+import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import _ from "lodash"
 
@@ -29,14 +29,10 @@ const props = defineProps({
         type: Object,
         default: () => ({})
     },
-    sport_id: {
-        type: [String, Number],
-        default: ''
-    },
     active: {
         type: Number,
         default: () => 0,
-    },
+    }
 })
 const AssembleData = computed(() => {
     let betInformation = {
@@ -115,7 +111,7 @@ const go_betting = (data) => {
                 <li :class="[{ 'is-active': item.oid == active },'list-bet--item']"
                     v-for="item of item.information" :key="item.oid" @click="go_betting(item)">
                     <span class="on">{{ item.on }}</span>
-                    <span class="ov">{{ compute_value_by_cur_odd_type(item?.ov, '', '', sport_id) }}</span>
+                    <span class="ov">{{ compute_value_by_cur_odd_type(item?.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                     <olStatus style="position: absolute;right: 8%" :item_ol_data="item"
                               :active="BetData.bet_oid_list.includes(item?.oid)"/>
                 </li>

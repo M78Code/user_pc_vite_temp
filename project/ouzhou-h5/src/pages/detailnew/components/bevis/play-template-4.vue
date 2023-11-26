@@ -25,7 +25,7 @@ os: 1 开盘 ，2 封盘
 import olStatus from "../ol_status.vue";
 import {defineProps, computed, defineEmits, ref} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import {compute_value_by_cur_odd_type} from "src/core/index.js"
+import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import _ from "lodash"
 
@@ -34,14 +34,10 @@ const props = defineProps({
         type: Object,
         default: () => ({})
     },
-    sport_id: {
-        type: [String, Number],
-        default: ''
-    },
     active: {
         type: Number,
         default: () => 0,
-    },
+    }
 })
 
 /*
@@ -106,7 +102,7 @@ const go_betting = (data) => {
              :class="['other',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
             <template v-if="_item?.os == 1 && !isLocked">
                 <span class="on-text">{{ _item.on ?? _item.ott }}</span>
-                <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', sport_id) }}</span>
+                <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                 <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
             </template>
             <figure v-if="_item?.os == 2 || isLocked">
