@@ -86,7 +86,7 @@ const changeTab = (tab,i) => {
 
 /** 有没有公告数据 */
 const no_data_list = ref(false)
-const loading_page = ref(false)
+const loading_page = ref(true)
 
 /** 判断接口是否有数据 */
 function has_data_list() {
@@ -133,7 +133,7 @@ function get_list() {
             timer1.value = setTimeout(() => {
                 istab.value = true
                 loading_page.value = false
-            },0)
+            },1000)
             has_data_list()
         }
     }).catch(err => {
