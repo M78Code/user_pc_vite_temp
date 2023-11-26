@@ -10,7 +10,7 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-                        {{ item.hpt }}
+<!--                        {{ item.hpt }}-->
 <!--                        {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :play="item" :item_data="item" :active="active" @bet_click_="bet_click_" />
@@ -29,8 +29,6 @@
 
 <script setup>
 import {onMounted, ref, markRaw, watch, nextTick} from "vue";
-import temp0 from "./template/tem0.vue";
-import temp1 from "./template/tem1.vue";
 import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
@@ -71,16 +69,10 @@ const props = defineProps({
     let baseData = []
     baseData = _.groupBy(props.match_odds_info,'hpt')
     console.log(baseData,"baseData")
+    console.log(props.match_odds_info,"props.match_odds_info")
 },2000)*/
 const emit = defineEmits(["change", "update:allCloseState"]);
 const active = ref(1);
-/*const componentArr = ref({
-    tem0: markRaw(temp0),
-    tem1: markRaw(temp1),
-    tem3: markRaw(temp3),
-    tem5: markRaw(temp5),
-    tem_other: markRaw(tem_other),
-});*/
 /*
 * 新组件使用hpid 玩法集ID
 * 原来组件使用hpt 玩法展示模板
@@ -100,7 +92,7 @@ const playComponent = ref({
     template_other: markRaw(tem_other)
 })
 const computedPlayComponent = function (hpt) {
-    let arr = [0,1,3,5]
+    let arr = [0,1,3,5,4]
     let componentName = '';
     if (arr.includes(hpt)) {
         componentName = `template${hpt}`

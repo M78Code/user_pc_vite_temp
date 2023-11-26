@@ -54,7 +54,7 @@
           <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
         </div>
         <template v-else>
-          <div v-for="o in value" :class="{ temp_grid_item: true, 'is-active': o.oid == active,ol_ov: true,}" :key="o.oid" @click="go_betting(o)">
+          <div v-for="o in value" :class="{ temp_grid_item: true, 'is-active': BetData.bet_oid_list.includes(o?.oid ),ol_ov: true,}" :key="o.oid" @click="go_betting(o)">
             <template v-if="o.os == 1">
               <span class="o_hv">{{ o.on || key }}</span>
               <span>{{compute_value_by_cur_odd_type(o.ov,'','',MatchDetailCalss.params.sportId)}}</span>

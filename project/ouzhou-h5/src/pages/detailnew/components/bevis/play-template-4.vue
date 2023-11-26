@@ -15,18 +15,18 @@ hs: 盘口状态 0 开盘 1 封盘, 2 关盘, 3 已结算, 4 已取消, 5 盘口
 os: 1 开盘 ，2 封盘
 -->
 
-<!-- ms: 0开 1封 2关 11锁 -->
-<!-- hs: 0开 1封 2关 11锁 -->
-<!-- os: 1开 2封 3隐藏不显示不占地方-->
+<!-- ms: 0开 1封 2关 11锁 11整个都是锁 -->
+<!-- hs: 0开 1封 2关 11锁盘   1和11挂锁 -->
+<!-- os: 1开 2封 3隐藏不显示不占地方 2挂锁 -->
 <!-- 按ol循环，不考虑按tittle循环-->
 
 
 <script setup name="template4">
 import olStatus from "../ol_status.vue";
-import {defineProps, computed, defineEmits} from "vue"
+import {defineProps, computed, defineEmits, reactive} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from "src/core/index.js"
-import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
+import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import _ from "lodash"
 
 const props = defineProps({
@@ -43,52 +43,103 @@ const props = defineProps({
         default: () => 0,
     },
 })
+
+/*
+*
+* hl 里面所有的ol都需要渲染
+*
+* */
+const AssembleStore = reactive({
+    ol_others: [],      // 其他数据
+
+})
+
+const SetAssembleStore = function () {
+    let {hl: hl_list, title: title_ist} = props.play;
+    const ol_list = hl_list[0].ol;
+    let other_list = ol_list.filter(ol_item => ol_item == 'Other');
+    if (other_list.length) {
+
+    }
+
+}
 const AssembleData = computed(() => {
-    let betInformation = []
-    const ol = props.play.hl[0].ol
-    const title = props.play.title
-    let baseArr = _.groupBy(ol.filter(i => i.os != 3), 'otd')
+    let betInformation = {
+        others: [],
+        assemble: []
+    };
+    const {hl = [], title} = props.play;
+    const others = hl[0].ol.filter(ol_item => ol_item.ot == 'Other');
+    const assemble = hl[0].ol.filter(ol_item => ol_item.ot != 'Other');
+    if (others.length) {
+        betInformation.others = lodash.uniqWith(others, 'oid')
+    }
+    //os等于3需要隐藏投注项
+    const baseArr = _.groupBy(assemble.filter(i => i.os != 3), 'otd')
     title.forEach(item => {
-        betInformation.push({
+        betInformation.assemble.push({
             osn: item.osn,
             otd: item.otd,
             information: baseArr[item.otd]
         })
     })
+    if (props.play.hpt == 4) {
+        console.log(betInformation, "betInformation")
+    }
     return betInformation
 })
 
 const emits = defineEmits(["bet_click_"]);
 const go_betting = (data) => {
-    if(data.os == 2) return
-    emits("bet_click_", data,props.play.hpn);
+    // 为2的时候封盘挂锁
+    if (data.os == 2) return
+    emits("bet_click_", data, props.play.hpn);
 };
 </script>
 
 <template>
-    <div class="template4">
-        <ul v-for="item of AssembleData" :key="item.otd" class="list">
-            <li class="list-title textOverflow2">{{ item.osn }}</li>
-            <li v-for="_item of item.information" :key="_item.oid"  @click="go_betting(_item)"
-                :class="['list-bet',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
-                <template v-if="_item?.os == 1">
-                    <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
-                    <span class="ov-text textOverflow1">{{ compute_value_by_cur_odd_type(_item.ov,'','',sport_id) }}</span>
-                    <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )" />
-                </template>
-                <figure v-if="_item?.os == 2">
-                    <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-                </figure>
-            </li>
-        </ul>
-    </div>
+    <section class="template4">
+        <div class="assemble">
+            <ul v-for="item of AssembleData.assemble" :key="item.otd" class="list">
+                <li class="list-title textOverflow2">{{ item.osn }}</li>
+                <li v-for="_item of item.information" :key="_item.oid" @click="go_betting(_item)"
+                    :class="['list-bet',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
+                    <template v-if="_item?.os == 1">
+                        <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
+                        <span class="ov-text textOverflow1">{{
+                                compute_value_by_cur_odd_type(_item.ov, '', '', sport_id)
+                            }}</span>
+                        <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item"
+                                  :active="BetData.bet_oid_list.includes(_item?.oid )"/>
+                    </template>
+                    <figure v-if="_item?.os == 2">
+                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                    </figure>
+                </li>
+            </ul>
+        </div>
+        <div v-for="_item of AssembleData.others" :key="_item.oid" @click="go_betting(_item)"
+             :class="['other',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
+            <template v-if="_item?.os == 1">
+                <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
+                <span class="ov-text textOverflow1">{{compute_value_by_cur_odd_type(_item.ov, '', '', sport_id) }}</span>
+                <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
+            </template>
+            <figure v-if="_item?.os == 2">
+                <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+            </figure>
+        </div>
+    </section>
 </template>
 
 <style scoped lang="scss">
-.template4 {
-    display: flex;
+.template4{
     padding: 8px;
     box-sizing: border-box;
+}
+.assemble {
+    display: flex;
+
 
     .list {
         flex: 1;
@@ -143,24 +194,58 @@ const go_betting = (data) => {
         .is-active {
             background-color: var(--q-gb-bg-c-1);
             color: var(--q-gb-t-c-2);
+
             .span {
                 color: var(--q-gb-t-c-4);
             }
         }
     }
+
+
 }
+
+.other {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--q-gb-bg-c-2);
+    border: 1px solid var(--q-gb-bd-c-10);
+    gap: 8px;
+
+    span {
+        text-align: center;
+        font: {
+            size: 12px;
+            family: DIN;
+            weight: 500;
+        }
+    }
+    .on-text {
+        color: var(--q-gb-t-c-4);
+    }
+
+    .ov-text {
+        color: var(--q-gb-t-c-1);
+    }
+}
+
+
 .lock {
     width: 16px;
     height: 16px;
     position: relative;
     top: 2px;
 }
-.textOverflow1{
+
+.textOverflow1 {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
-.textOverflow2{
+
+.textOverflow2 {
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
