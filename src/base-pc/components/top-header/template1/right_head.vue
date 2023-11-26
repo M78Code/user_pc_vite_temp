@@ -37,7 +37,7 @@
     <div class="h-right">
       <div class="user-info">
         <span class="user-balance">  {{ format_balance(UserCtr.balance) }} </span>
-        <span class="user-name">{{ UserCtr.user_info.nickName }}</span>
+        <span class="user-name">{{ lodash.get(UserCtr.get_user(), "nickName") }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
@@ -222,7 +222,7 @@ export default defineComponent({
     const change_input = () => {}
     //赛果 || 公告 || 体育规则
     const goto_secondary_module = (value) => {
-      LayOutMain_pc.set_layout_secondary_active(value)
+      localStorage.setItem("secondary_active", value)
       let _window_width = 1200;
       let _window_height = 850;
       let path = userRouter.resolve({ path: '/secondary' }).href;

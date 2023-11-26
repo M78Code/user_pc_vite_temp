@@ -117,6 +117,7 @@ const get_icon = (type) => {
 const set_old_submit = () => {
   const ol = props.odd_item
   const { match_data_type = 'h5_list' } = props.match_info
+  console.error('sss',match_data_type)
   if (is_lock.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
   const {oid,_hid,_hn,_mid } = ol

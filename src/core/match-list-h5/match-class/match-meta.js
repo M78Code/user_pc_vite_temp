@@ -171,7 +171,7 @@ class MatchMeta {
       // 球种名称
       // 赛事其他操作
       this.match_assistance_operations(target)
-      return { ...target, tn, csna }
+      return { ...target, tn, csna, is_meta: true }
     })
     // 设置 元数据计算 流程
     MatchResponsive.set_is_compute_origin(true)
@@ -544,6 +544,9 @@ class MatchMeta {
     localStorage.setItem('ouzhou_home_hots', JSON.stringify(res))
     const hots = lodash.get(res, 'data', [])
     const hots_list = hots.slice(0, 5)
+    hots_list.map(t => {
+      t.match_data_type = 'h5_hots_list' 
+    })
     // const hots_mids = hots_list.map(t => t.mid)
     // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
     // 热门赛事数据
@@ -627,6 +630,7 @@ class MatchMeta {
           title,
           isLock,
           ...item,
+          match_data_type: 'h5_ten_five_mins',
           icon: String(Number(item.csid ) + 100)
         }
       })
@@ -692,6 +696,7 @@ class MatchMeta {
     list.forEach(item => {
       const { tid } = item
       item.warehouse_type = 'five_league'
+      item.match_data_type = 'h5_five_league'
       if (!filterData[tid]) {
         filterData[tid] = [item]
       } else if (filterData[tid].length < max) {
@@ -828,6 +833,8 @@ class MatchMeta {
       return match
     })
 
+    console.log('match_list-match_list', match_list)
+
     // 最终赛事数据
     const matchs_data = lodash.uniqBy(match_list, 'mid')
     const result_mids = matchs_data.map(t => t.mid)
@@ -922,8 +929,8 @@ class MatchMeta {
     // 重置元数据计算流程
     MatchResponsive.set_is_compute_origin(false)
 
-    // 不获取赔率
-    if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse, type: 'cover' })
+    // 不获取赔率, type: 'cover'
+    if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse })
 
     // 获取赔率
     if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse })
@@ -955,6 +962,46 @@ class MatchMeta {
     this.complete_mids = []
   }
 
+  /**
+   * @description 删除赛事
+   */
+  handle_remove_match (data) {
+    // mhs === 2  || mmp === 999 为关盘 则移除赛事
+    const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
+    console.log('8888888888888:', mid, mmp, mhs)
+    if (mhs == 2 || mmp == '999') {
+      const item = this.match_mids.find(t => t === mid)
+      if (item) {
+        const index = this.complete_matchs.findIndex(t => t === mid)
+        this.complete_matchs.splice(index, 1)
+        this.handler_match_list_data({ list: this.complete_matchs, is_classify: true })
+      }
+    }
+  }
+
+  /**
+   * @description ws 指令处理
+   * @param {*} cmd 
+   */
+  handle_ws_directive ({ cmd = '', data = {} }) {
+    console.log('--------wswswswswswsws-cmd:', cmd, data)
+    // 赛事新增
+    if (['C109'].includes(cmd)) {
+      const { cd = [] } = data
+      if (cd.length < 1) return
+      const item = cd.find(t => t.csid == MenuData.menu_csid)
+      if (item) this.get_target_match_data({})
+    }
+    // 调用 matchs  接口
+    if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
+      this.handle_remove_match(data)
+    }
+
+    // 调用 mids  接口
+    if (['C303', 'C114'].includes(cmd)) {
+      this.get_match_base_hps_by_mids()
+    }
+  }
   /**
    * @description 获取赛事赔率
    * @param { mids } mids
@@ -990,60 +1037,24 @@ class MatchMeta {
   }
 
   /**
-   * @description 删除赛事
-   */
-  handle_remove_match (data) {
-    // mhs === 2  || mmp === 999 为关盘 则移除赛事
-    const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
-    console.log('8888888888888:', mid, mmp, mhs)
-    if (mhs == 2 || mmp == '999') {
-      const item = this.match_mids.find(t => t === mid)
-      if (item) {
-        const index = this.complete_matchs.findIndex(t => t === mid)
-        this.complete_matchs.splice(index, 1)
-        this.handler_match_list_data({ list: this.complete_matchs, is_classify })
-      }
-    }
-  }
-
-  /**
-   * @description ws 指令处理
-   * @param {*} cmd 
-   */
-  handle_ws_directive ({ cmd = '', data = {} }) {
-    console.log('--------wswswswswswsws-cmd:', cmd, data)
-    // 赛事新增
-    if (['C109'].includes(cmd)) {
-      const { cd = [] } = data
-      if (cd.length < 1) return
-      const item = cd.find(t => t.csid == MenuData.menu_csid)
-      if (item) this.get_target_match_data({})
-    }
-    // 调用 matchs  接口
-    if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
-      this.handle_remove_match(data)
-    }
-
-    // 调用 mids  接口
-    if (['C303', 'C114'].includes(cmd)) {
-      this.get_match_base_hps_by_mids()
-    }
-  }
-
-  /**
    * @description 更新对应赛事
    * @param { list } 赛事数据 
    * @param { type } 接口请求时， 以接口数据为准， 反之已上一次的数据为准 避免赔率闪动
    * @param { warehouse } 仓库类型
    */
   handle_update_match_info(config) {
-
     let { list = [], type = '',  warehouse = MatchDataBaseH5 } = config
     // 合并前后两次赛事数据
     list = lodash.map(list, t => {
       // MatchResponsive.get_ball_seed_methods(t)
       const match = warehouse.get_quick_mid_obj(t.mid)
-      const target = type === 'cover' ? Object.assign({}, match, t) : Object.assign({}, t, match)
+      // match.is_meta
+      let target = {}
+      if (type === 'cover') {
+        target = Object.assign({}, match, t)
+      } else {
+        target = match?.is_meta ? Object.assign({}, match, t) : Object.assign({}, t, match)
+      }
       return target
     })
     // ws 订阅
@@ -1058,7 +1069,7 @@ class MatchMeta {
    * @param { warehouse } 仓库类型
    */
   handle_submit_warehouse(config) {
-    const { list = [], warehouse = MatchDataBaseH5 } = config
+    let { list = [], warehouse = MatchDataBaseH5 } = config
     // ws 订阅
     // warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据

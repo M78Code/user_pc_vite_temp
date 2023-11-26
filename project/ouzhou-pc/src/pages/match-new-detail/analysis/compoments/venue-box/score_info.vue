@@ -66,6 +66,9 @@
 
               <div v-else>
                 <img :src="get_icon(col.icon)" alt="" class="top-icon" />
+                <q-tooltip v-if="col.tooltip">
+                  {{col.tooltip}}
+                </q-tooltip>
               </div>
             </div>
           </q-th>
@@ -480,6 +483,24 @@ watch(
   { immediate: false, deep: true }
 );
 
+const insetColumnTooltip = () => {
+  const mapping = {
+    q1: i18n_t('icon_tips.corner'),
+    q2: i18n_t('icon_tips.yellow_card'),
+    ht: i18n_t('icon_tips.red_card'),
+    q3: i18n_t('icon_tips.penalty_kick'),
+    q4: i18n_t('icon_tips.half_1'),
+    t: i18n_t('icon_tips.overall'),
+    x: i18n_t('icon_tips.S7'),
+    y: i18n_t('icon_tips.S170'),
+  }
+  columns.value = columns.value.map(v => {
+    return {
+      ...v,
+      tooltip: mapping[v.name] || ''
+    };
+  })
+}
 watch(
   () => props.score_list,
   (val) => {
@@ -513,6 +534,7 @@ watch(
     // if (["1", "2", "3"].includes(detail_info.csid + "")) {
     //   get_base_data(val);
     //   }
+    insetColumnTooltip()
    
   },
   { immediate: false, deep: true }

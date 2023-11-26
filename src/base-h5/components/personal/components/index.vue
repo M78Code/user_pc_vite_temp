@@ -4,7 +4,7 @@
     <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;"> 
       <!-- 用户名称 --> 
       <header> 
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, {{user_info.nickName}}
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, {{ lodash.get(UserCtr.get_user(), "nickName") }}
       </header> 
       <!-- 用户信息 -->
       <div class="info"> 
@@ -34,9 +34,9 @@
             <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
           </template>
           <template v-slot:content>
-            <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
+            <div :class="['language_item', {active: UserCtr.lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
               <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
-              <img class="lang" v-if="lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
+              <img class="lang" v-if="UserCtr.lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
             </div>
           </template>
         </collapse>

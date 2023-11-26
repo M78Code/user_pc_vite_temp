@@ -193,7 +193,6 @@ const checkAll = () => {
  * @return {undefined} undefined
  */
 const checkInvert = () => {
-  console.error('get_global_click',GlobalSwitchClass.global_click)
   // 如果当前选中状态是反选并且没有联赛就不予处理
   if (menu.value == "invert" && !props.list) return false;
   emit("confirm", 0);
@@ -320,15 +319,10 @@ onMounted(() => {
   watch(
     () => GlobalSwitchClass.global_switch_version.version,
     (new_) => {
-    console.log('resres',new_)
       isShow.value = false;
     },
     {deep:true, immediate: true }
   );
-  watch(GlobalSwitchClass.global_click, res => {
-  isShow.value = false;
-},
-    {deep:true, immediate: true });
 watch(
   props.list,
   res => {

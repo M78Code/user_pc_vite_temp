@@ -22,17 +22,18 @@
     </div>
      <!-- 主队信息 -->
      <div class="row-item">
-         <!-- 红牌数 -->
-       <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.home',0)>0"
-          :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
-          <!-- 黄牌数 -->
-       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.home',0)>0&&lodash.get(match, 'msc_obj.S11.home',0)<0"
-          :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
+        
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
             {{lodash.get(match, 'mhn')}}
           </div>
+           <!-- 红牌数 -->
+       <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.home',0)>0"
+          :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
+          <!-- 黄牌数 -->
+       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.home',0)>0&&lodash.get(match, 'msc_obj.S11.home',0)<0"
+          :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -40,20 +41,22 @@
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
-          <!-- 红牌数 -->
-          <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away',0) >0"
-            :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
-             <!-- 黄牌数 -->
-       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.away',0)>0&&lodash.get(match, 'msc_obj.S11.away',0)<0"
-          :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
+         
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div
             class="team-name away ellipsis allow-user-select"
             :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
+              <!-- 红牌数 -->
+       <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away')>0"
+            :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
+             <!-- 黄牌数 -->
+       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.away',0)>0&&lodash.get(match, 'msc_obj.S11.away',0)<0"
+          :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
         </div>
       </div>
+   
       <!-- 主比分 -->
       <div
         class="score"
@@ -313,12 +316,13 @@ onUnmounted(() => {
     }
   }
   .red-ball {
-    position: absolute;
-    top: 0px;
-    left:1px;
+    // position: absolute;
+    // top: 0px;
+    // left:1px;
     height:14px;
     line-height: 14px;
     color:#fff;
+    margin-left: 3px;
     min-width: 10px;
     padding: 0 1px;
     text-align: center;

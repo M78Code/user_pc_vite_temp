@@ -15,7 +15,7 @@
       </div>
       <div class="layout_main_center" :style="{
         width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-        height: LayOutMain_pc.oz_layout_content_height + 'px'
+        height: `calc(100vh - 68px)`
       }">
         <!-- 中间区域 -->
         <router-view></router-view>
@@ -44,7 +44,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onMounted ,onUnmounted,reactive } from "vue";
+import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount } from "vue";
 import lodash_ from "lodash"
 import { useRoute } from "vue-router";
 import { LayOutMain_pc, UserCtr } from "src/core/index.js";
@@ -60,7 +60,7 @@ import secondaryModule from 'src/base-pc/components/secondary-module/index.vue'
 import { BetBoxWapper } from "src/base-pc/components/bet";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
@@ -80,6 +80,7 @@ const stop_drap = ref(true)
 const stop_drap_emit = (props) => {
   stop_drap.value = props
 }
+let upd_time_refresh_timer;
 onMounted(() => {
   let obj = {
     x: window.innerWidth * 0.6,
@@ -96,7 +97,19 @@ onMounted(() => {
       emitter_1: useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off,
       emitter_2: useMittOn(MITT_TYPES.EMIT_STOP_DRAP, stop_drap_emit).off
   }
+
+  // 全局一秒钟定时器
+  upd_time_refresh_timer = setInterval(global_one_second_timer, 1000);
+
 })
+
+/**
+ * @Description 全局一秒钟定时器 
+ * @param {undefined} undefined
+*/
+const global_one_second_timer = () => {
+  useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,  {time:new Date().getTime(), step:1000})
+}
 
 // 投注成功后获取投注记录数据 24小时内的
 const get_unsettle_tickets_count_config = () => {
@@ -113,8 +126,12 @@ const get_unsettle_tickets_count_config = () => {
     });
   };
 
+  onBeforeMount(()=>{
+    clearInterval(upd_time_refresh_timer)
+  })
   onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
+    clearInterval(upd_time_refresh_timer)
 })
 
 </script>
@@ -148,6 +165,7 @@ const get_unsettle_tickets_count_config = () => {
 
 .layout_main_center {
   padding: 10px 0 0;
+  // height: 100%;
 }
 
 .layout_main_right {

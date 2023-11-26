@@ -54,11 +54,11 @@ const jump_to_details = (item) => {
 const match = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_ob_ref(props.mid)
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-let odds_list = (match_tpl_info.get_15mins_odds_list())
+let handicap_list =[lodash.cloneDeep(match_tpl_info.get_15mins_odds_list())]
 const ols_data = computed(() => {
   return get_template_data({
     match: match.value,
-    handicap_list: [odds_list],
+    handicap_list,
     type: 4,
     play_key: 'hps15Minutes'
   }, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)

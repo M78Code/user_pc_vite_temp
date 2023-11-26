@@ -41,6 +41,7 @@ export default {
     const match = get_match_item(props.mid)
     const get_current_template_number = () => {
       let tpl_id = get_match_template_id(match);
+      console.log('tpl_id', tpl_id);
       if (tpl_id == 118) {
         return 118
       } else {

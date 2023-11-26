@@ -35,7 +35,7 @@
               <div>
                 <span class="datails-order">{{ props.row.orderNo }}</span>
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/bet_copy.png`" alt="" class="copy_icon"
-                     title="copy" @click="hand_copy(props.row.orderNo)">
+                     :title="i18n_t('ouzhou.record.copy')" @click="hand_copy(props.row.orderNo)">
                 <!-- <img :src="bet_copy" alt="" class="copy_icon" title="copy"  @click="utils.copy(props.row.orderNo)" > -->
                 <!-- <i class="icon-icon_copy copy" color="red" @copy_iconclick="utils.copy(props.row.orderNo)"></i> -->
               </div>

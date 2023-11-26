@@ -152,7 +152,9 @@ export const get_featurd_list = async () => {
 }
 const matches_15mins_list = ref(SessionStorage.get('matches_15mins_list', []))
 let match_count = ref(0);
-
+if (matches_15mins_list.value.length) {
+  MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(matches_15mins_list.value);
+}
 // 获取首页数据
 export const init_home_matches = async () => {
   const params = {
@@ -183,12 +185,14 @@ export const init_home_matches = async () => {
         MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(data.p15);
         SessionStorage.get('matches_15mins_list', data.p15 || [])
         //获取15mins 数据
+        const mids_15 = []
         matches_15mins_list.value = data.p15.slice(0, 5).map(item => {
           set_match_play_current_index(item, 'hps15Minutes')
-          return item.mid;
+          mids_15.push(item.mid)
+          return item;
         });
         axios_loop({
-          axios_api: () => api_bymids({ mids: matches_15mins_list.value }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
+          axios_api: () => api_bymids({ mids: mids_15 }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
         })
         match_count = data.dataList.length || 0;
         let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)

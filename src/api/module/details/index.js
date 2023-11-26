@@ -56,7 +56,8 @@ export const get_match_odds_info = (params, config = {}, url = "/v1/w/matchDetai
 //赛事盘口详情 （视频页，调用H5接口）PB
 export const get_match_detail_m = (params, config = {}, url = "/v1/m/matchDetail/getMatchOddsInfoPB") => http.get(`${prefix}${url}`, params)
 
- 
+ //玩法置顶
+export const set_playTop = (params, config = {}, url = "/v1/m/category/playTop") => http.get(`${prefix}${url}`, params)
 // 置顶接口
 export const get_category_playTop = (params, config, url = "/v1/m/category/playTop") => http.get(`${prefix}${url}`, params, config)
 
