@@ -386,6 +386,9 @@ export const EMIT_SHOW_DETAILS= 'EMIT_SHOW_DETAILS'
 /**   赛事详情更新一键收起   */
 export const EMIT_SHOW_FOLD= 'EMIT_SHOW_FOLD'
 
+/**   赛事详情更新一键置顶   */
+export const EMIT_SET_PLAT_TOP= 'EMIT_SET_PLAT_TOP'
+
 // WS驱动详情
 export const EMIT_DATAWARE_DETAIL_UPDATE = "EMIT_DATAWARE_DETAIL_UPDATE"
 
