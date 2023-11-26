@@ -494,7 +494,8 @@ export default {
             background-position: center;
             padding-bottom: 0;
             height: 50px !important;
-            background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png");
+            // background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png");
+            background-image: url($SCSSPROJECTPATH+"/image/svg/no-data.svg");
           }
           .text-center {
             color: #999;
