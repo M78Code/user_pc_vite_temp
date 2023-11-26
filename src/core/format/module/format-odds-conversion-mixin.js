@@ -10,6 +10,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { esports_csid } from "../../constant/config/csid"
 import { useRoute } from "vue-router"
 import {UserCtr} from 'src/core'
+// import { format_odds } from "src/core/format/module/format-odds.js"
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
 const all_odds_arr = [] //所有的赔率数组
@@ -57,6 +58,7 @@ const acc_sub = (num1, num2 = num1) => {
 // },
 export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
   let cur_odd = UserCtr.odds.cur_odds;//当前赔率"EU" /HK
+  console.error('cur_odd',cur_odd)
   /**
    * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
    * 是 对全局 赔率转换的 基础设定
@@ -69,16 +71,17 @@ export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
   let str = "";
   breakVal = ""; // 断档值废弃
   // 从欧盘转到港盘
-  if (!arr || ['2'].includes(oddsTable[cur_odd]) && cur_odd == 'HK') {
+  if ([2].includes(oddsTable[cur_odd]*1) && cur_odd == 'HK') {
     str = calc_odds(odds_val, csid);
+    str = change_EU_HK(str);
     //聊天室跟单特殊处理
-    if (arr && arr.includes(oddsTable[cur_odd]) || bet_chat_room_type == "HK") {
+    if (arr && arr.includes(oddsTable[cur_odd]) && bet_chat_room_type == "HK") {
       str = change_EU_HK(str);
     }
     return str;
   }
 
-  if (!arr || arr.includes(oddsTable[cur_odd]) && cur_odd) {
+  if (arr.includes(oddsTable[cur_odd]) && cur_odd) {
     cur_odd == 'EU' ? str = calc_odds(odds_val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : odds_val, cur_odd, csid);
   } else {
     str = calc_odds(odds_val, csid);

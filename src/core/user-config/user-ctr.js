@@ -233,7 +233,7 @@ class UserCtr {
   set_cur_odds(odd) {
     this.set_pre_odds(this.odds.cur_odds)
     this.odds.cur_odds = odd;
-    this.set_user_version()
+    this.update()
   }
   set_pre_odds(odd) {
     this.odds.pre_odds = odd
@@ -1355,13 +1355,7 @@ class UserCtr {
    */
   set_show_balance(state) {
     this.show_balance = state
-    this.set_user_version()
-  }
-  /**
-    * 更新用户信息版本 显示
-    */
-  set_user_version() {
-    this.user_version.value = Date.now()
+    this.update()
   }
 
   get_resources_obj() {

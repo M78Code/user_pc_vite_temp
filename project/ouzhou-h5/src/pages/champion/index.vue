@@ -2,7 +2,7 @@
   <div class="home-page">
     <!-- tab 切换 -->
     <div class="header_tabs">
-      <q-tabs v-model="tabValue" dense class="bg-grey-3" align="justify" narrow-indicator @update:modelValue="on_update">
+      <q-tabs v-model="tabValue" dense class="bg-grey-3" align="justify" narrow-indicator >
         <!-- <q-tab name="featured" :label="`${i18n_t('ouzhou.match.Outrights')}`" /> -->
         <q-tab name="outrights" label="Outrights" />
       </q-tabs>
