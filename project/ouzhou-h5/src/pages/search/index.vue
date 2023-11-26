@@ -759,7 +759,6 @@ li {
 	.text {
 		border-color: var(--q-gb-bd-c-1);
 		padding-left: 10px;
-		font-weight: 600;
 	}
 }
 
@@ -813,7 +812,8 @@ li {
 		height: 0.44rem;
 		line-height: 0.44rem;
 		border-bottom: 1px solid var(--q-gb-bd-c-1);
-		text-indent: 0.16rem;
+		text-indent: 0.18rem;
+		font-weight: 500;
 	}
 
 	.hotItem {
@@ -825,7 +825,7 @@ li {
 		font-size: 0.12rem;
 		padding: 0;
 		border-bottom: 1px solid var(--q-gb-bd-c-1);
-		text-indent: 0.16rem;
+		text-indent: 0.15rem;
 
 		.defaultText {
 			letter-spacing: 0;
