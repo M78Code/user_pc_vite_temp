@@ -121,7 +121,7 @@ import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
 import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
-import { api_account } from 'src/api/index';
+import { api_account,api_betting } from 'src/api/index';
 import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
@@ -245,7 +245,6 @@ export default defineComponent({
       api_betting.record_user_preference(params).then((res ={}) =>{
         if(res.code == 200){
           UserCtr.set_cur_odds(s)
-          console.error('set_cur_odds',s)
         }else{
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
         }

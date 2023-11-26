@@ -1,7 +1,7 @@
 
 <template>
     <div class="bet-list">
-        <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}</div>
+        <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
@@ -11,7 +11,7 @@
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}</span>
                     <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${items.marketTypeFinally}`) }}] </span> 
+                    <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                 </div>
                 <div class="w-100 fon12 font400 text-8A8986-i" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                 </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="font12 h12 mt-4">
                     <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                    <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount)) || '0.00' }} </span>
+                    <span class="text-1a1 font500"> {{ format_money2(mathJs.multiply(BetData.bet_amount,items.oddFinally)) || '0.00' }} </span>
                 </div>
             </div>
 
