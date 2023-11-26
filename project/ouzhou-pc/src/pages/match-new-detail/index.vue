@@ -93,7 +93,7 @@
 
 <script>
 import { onMounted, ref, provide,onUnmounted } from "vue";
-import { utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { utils, MenuData, LOCAL_PROJECT_FILE_PREFIX ,useMittOn,MITT_TYPES} from "src/core/index.js";
 import odds_info from "./components/odds_info.vue";
 import analysis from "./analysis/index.vue";
 import tabs from "./components/tabs.vue";
@@ -134,19 +134,9 @@ export default{
       refresh,
       get_match_detail
     } = usedetailData(route);
-
     provide("all_hl_item", all_hl_item);
 
-    onMounted(()=>{
-      window.addEventListener('mousedown', (val)=>{
-        expansion_ref.value&&expansion_ref.value.hide();
-    })
-    })
-    
-    onUnmounted(()=>{
-      window.removeEventListener('mousedown',()=>{})
-    })
-
+   
     const match_click = (item) => {
       current_id.value = item.mid;
       const { mid, tid, csid } = item;
@@ -173,6 +163,18 @@ export default{
         refresh_data.value = false;
       }, 1000);
     },500);
+    const detail_mitt=useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,init).off
+    function mousedown_fun(val){
+        expansion_ref.value&&expansion_ref.value.hide();
+    }
+    onMounted(()=>{
+      window.addEventListener('mousedown',mousedown_fun )
+    })
+    
+    onUnmounted(()=>{
+      detail_mitt()
+      window.removeEventListener('mousedown',mousedown_fun)
+    })
 
     const sport_ball_type = {
       1: 0,
@@ -278,9 +280,9 @@ export default{
       align-items: center;
 
       .leagal-time {
-        //background-color: var(--q-gb-bg-c-10);
+        background-color: var(--q-gb-bg-c-10);
         color: var(--q-gb-t-c-5);
-        padding: 2px 10px;
+        padding: 2px 0px 2px 10px;
       }
     }
 
