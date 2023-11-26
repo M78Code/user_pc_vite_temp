@@ -52,7 +52,7 @@ export default {
   created() {
     // 启动计时器
     this.start();
-    useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time);
+    useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
   },
   destroyed() {
     // off_()
