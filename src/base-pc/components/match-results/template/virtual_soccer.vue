@@ -135,7 +135,7 @@ export default {
   .table-col {
     &:first-child {
       display: flex;
-      align-items: center;
+      // align-items: center;
       width: 13%;
     }
     &:nth-child(2) {
@@ -152,7 +152,7 @@ export default {
     }
     &:nth-child(4),
     &:last-child {
-      text-align: center;
+      // text-align: center;
     }
     &:nth-child(4) {
       user-select: text;
@@ -184,7 +184,7 @@ export default {
       &:nth-child(4),
       &:nth-child(5),
       &:last-child {
-        text-align: center;
+        // text-align: center;
       }
     }
   }
