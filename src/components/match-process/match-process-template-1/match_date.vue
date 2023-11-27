@@ -31,6 +31,7 @@
           on_time_change: before_start_timer_change,
         }"
         :date_show_type="date_show_type"
+        :match="match"
       />
     </template>
     <!-- 滚球(ms:1) -->
@@ -47,6 +48,7 @@
           on_time_change: inplay_timer_change,
         }"
         :date_show_type="date_show_type"
+        :match="match"
       />
 
       <!-- 显示:00:00 || 节制  -->
