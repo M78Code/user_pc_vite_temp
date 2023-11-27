@@ -5,7 +5,6 @@
 -->
 <template>
   <div class="box-bc">
- 
     <q-table
       :rows="data"
       separator="none"
@@ -46,12 +45,12 @@
                   style="color: #8a8986; display: flex; align-items: center"
                 >
                   <!-- 倒/正计时组件 -->
-                  <div style=" margin-right:25px;">
+                  <div style="margin-right: 25px">
                     <match-process
-                    :match="detail_info"
-                    show_page="match-list"
-                    :rows="1"
-                  />
+                      :match="detail_info"
+                      show_page="match-list"
+                      :rows="1"
+                    />
                   </div>
                   <img
                     :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
@@ -59,7 +58,6 @@
                     srcset=""
                     style="margin: 0 10px; height: 14px"
                     v-if="detail_info.mng"
-                   
                   />
                 </div>
               </div>
@@ -67,7 +65,7 @@
               <div v-else>
                 <img :src="get_icon(col.icon)" alt="" class="top-icon" />
                 <q-tooltip v-if="col.tooltip">
-                  {{col.tooltip}}
+                  {{ col.tooltip }}
                 </q-tooltip>
               </div>
             </div>
@@ -77,7 +75,30 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span class="table-name">{{ props.row.name }}</span>
+            <span class="table-name" >
+              <!-- 发球方小圆点 -->
+              <div
+                style="width: 10px"
+                v-if="
+                  _.get(detail_info, 'mmp') != 0 &&
+                  _.get(detail_info, 'csid') != '4'
+                "
+              >
+                <span
+                  class="round"
+                  v-if="
+                    _.get(detail_info, 'mat') == 'away' && props.rowIndex === 1
+                  "
+                ></span>
+                <span
+                  class="round"
+                  v-if="
+                    _.get(detail_info, 'mat') == 'home' && props.rowIndex === 0
+                  "
+                ></span>
+              </div>
+              {{ props.row.name }}</span
+            >
           </q-td>
           <q-td key="q1" :props="props">
             <span
@@ -160,7 +181,6 @@ import { MatchProcessFullVersionWapper as matchProcess } from "src/components/ma
 
 import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import lodash from "lodash";
 
 const props = defineProps({
   detail_info: {
@@ -477,7 +497,7 @@ watch(
     }
     if (["1", "2", "3"].includes(res.csid + "")) {
       get_base_data(res);
-      }
+    }
     // get_base_data(res);
   },
   { immediate: false, deep: true }
@@ -485,22 +505,22 @@ watch(
 
 const insetColumnTooltip = () => {
   const mapping = {
-    q1: i18n_t('icon_tips.corner'),
-    q2: i18n_t('icon_tips.yellow_card'),
-    ht: i18n_t('icon_tips.red_card'),
-    q3: i18n_t('icon_tips.penalty_kick'),
-    q4: i18n_t('icon_tips.half_1'),
-    t: i18n_t('icon_tips.overall'),
-    x: i18n_t('icon_tips.S7'),
-    y: i18n_t('icon_tips.S170'),
-  }
-  columns.value = columns.value.map(v => {
+    q1: i18n_t("icon_tips.corner"),
+    q2: i18n_t("icon_tips.yellow_card"),
+    ht: i18n_t("icon_tips.red_card"),
+    q3: i18n_t("icon_tips.penalty_kick"),
+    q4: i18n_t("icon_tips.half_1"),
+    t: i18n_t("icon_tips.overall"),
+    x: i18n_t("icon_tips.S7"),
+    y: i18n_t("icon_tips.S170"),
+  };
+  columns.value = columns.value.map((v) => {
     return {
       ...v,
-      tooltip: mapping[v.name] || ''
+      tooltip: mapping[v.name] || "",
     };
-  })
-}
+  });
+};
 watch(
   () => props.score_list,
   (val) => {
@@ -534,12 +554,10 @@ watch(
     // if (["1", "2", "3"].includes(detail_info.csid + "")) {
     //   get_base_data(val);
     //   }
-    insetColumnTooltip()
-   
+    insetColumnTooltip();
   },
   { immediate: false, deep: true }
 );
-
 </script>
 
 <style lang="scss" scoped>
@@ -580,12 +598,22 @@ watch(
   margin-left: 15px;
   width: 180px;
   overflow: hidden;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   text-overflow: ellipsis;
 }
 
 .heightLight {
   color: rgb(255, 112, 0) !important;
+}
+
+.round {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 8px;
+  background-color: var(--q-gb-bg-c-12);
+  margin-right: 4px;
 }
 
 //.stage-13,.stage-14,.stage-15,
