@@ -421,6 +421,7 @@ function on_refresh() {
  */
 function socket_remove_match(match) {
 	// 列表加载中不操作
+	console.log('88888888888881', load_data_state.value);
 	if (load_data_state.value != "data") {
 		return;
 	}
