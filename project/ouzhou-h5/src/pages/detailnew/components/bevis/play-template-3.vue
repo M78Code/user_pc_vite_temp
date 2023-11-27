@@ -25,7 +25,8 @@ const go_betting = (data) => {
     emits("bet_click_", data, props.item_data.hpn);
 }
 const AssembleData = computed(()=>{
-    const { title }
+    const { title,hl } = props.item_data
+    // const
 })
 </script>
 <template>
