@@ -815,7 +815,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let text = ''
     // 展示用的 + 投注项
     // 两数拼接  
-    let home_away_mark = [2, 4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199] // 
+    let home_away_mark = [2, 4, 7, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199, 367] // 
     // 首页不需要拼接的
     let home_away_diff = [2, 38]
     // 多位数
@@ -835,7 +835,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
                 text = mid_obj.man
                 break
             default:
-                text = ol_obj.on
+                text = ol_obj.on ? ol_obj.on : ol_obj.otv
                 break
         }
         return text
