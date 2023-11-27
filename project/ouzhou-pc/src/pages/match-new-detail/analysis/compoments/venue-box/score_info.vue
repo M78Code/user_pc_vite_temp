@@ -29,7 +29,7 @@
                 <span
                   v-if="col.field !== 'name'"
                   :class="
-                    detail_info?.course === col.label ? 'heightLight' : ''
+                    course === col.label ? 'heightLight' : ''
                   "
                   :style="{
                     'line-height': '30px',
@@ -102,48 +102,48 @@
           </q-td>
           <q-td key="q1" :props="props">
             <span
-              :class="[detail_info?.course === 'Q1' ? 'heightLight' : '']"
+              :class="[course === 'Q1' ? 'heightLight' : '']"
               >{{ props.row.q1 }}</span
             >
           </q-td>
           <q-td key="q2" :props="props">
             <span
-              :class="[detail_info?.course === 'Q2' ? 'heightLight' : '']"
+              :class="[course === 'Q2' ? 'heightLight' : '']"
               >{{ props.row.q2 }}</span
             >
           </q-td>
           <q-td key="ht" :props="props">
             <span
-              :class="[detail_info?.course === 'HT' ? 'heightLight' : '']"
+              :class="[course === 'HT' ? 'heightLight' : '']"
               >{{ props.row.ht }}</span
             >
           </q-td>
           <q-td key="q3" :props="props">
             <span
-              :class="[detail_info?.course === 'Q3' ? 'heightLight' : '']"
+              :class="[course === 'Q3' ? 'heightLight' : '']"
               >{{ props.row.q3 }}</span
             >
           </q-td>
           <q-td key="q4" :props="props">
             <span
-              :class="[detail_info?.course === 'Q4' ? 'heightLight' : '']"
+              :class="[course === 'Q4' ? 'heightLight' : '']"
               >{{ props.row.q4 }}</span
             >
           </q-td>
           <q-td key="q5" :props="props">
             <span
-              :class="[detail_info?.course === 'Q5' ? 'heightLight' : '']"
+              :class="[course === 'Q5' ? 'heightLight' : '']"
               >{{ props.row.q5 }}</span
             >
           </q-td>
           <!--新增加时赛比分和点球大战比分 start-->
           <q-td key="q5" :props="props" v-if="props.row.x">
-            <span :class="[detail_info?.course === 'x' ? 'heightLight' : '']">{{
+            <span :class="[course === 'x' ? 'heightLight' : '']">{{
               props.row.x
             }}</span>
           </q-td>
           <q-td key="q5" :props="props" v-if="props.row.y">
-            <span :class="[detail_info?.course === 'y' ? 'heightLight' : '']">{{
+            <span :class="[course === 'y' ? 'heightLight' : '']">{{
               props.row.y
             }}</span>
           </q-td>
@@ -178,7 +178,7 @@ import {
   stage_dict,
 } from "src/core/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
-
+import { handle_course_data } from "src/core/utils/matches_list.js";
 import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
@@ -200,6 +200,10 @@ const data = ref([]);
 const padding_value = ref("1px 0px 1px 6px");
 
 const columns = ref([]);
+
+const course = computed(()=>{
+  return handle_course_data(props.detail_info)
+})
 
 //   足球篮球
 const get_base_data = (val) => {
