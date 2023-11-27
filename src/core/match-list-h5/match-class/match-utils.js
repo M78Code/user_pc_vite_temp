@@ -64,7 +64,7 @@ class MatchUtils {
     const result_tids = lodash.uniq(tid_list)
     const tids_matchs = []
     result_tids.forEach(tid => {
-      const cur_tid_arr = list.filter(item => item.tid === tid)
+      const cur_tid_arr = list.filter(item => item.tid == tid)
       cur_tid_arr.length > 0 && tids_matchs.push(...cur_tid_arr)
     })
     return tids_matchs
@@ -85,7 +85,7 @@ class MatchUtils {
       is_show_ball_title = true
     } else {
       const prev_match = list[i - 1];
-      is_show_ball_title = match.csid !== prev_match.csid
+      is_show_ball_title = match.csid != prev_match.csid && match.csid && prev_match.csid 
     }
     return is_show_ball_title
   }
