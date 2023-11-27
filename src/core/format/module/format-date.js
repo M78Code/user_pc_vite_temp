@@ -1,5 +1,5 @@
 import { isDate } from "lodash";
-import { i18n_t } from "src/core/index.js"
+import { i18n_t,i18n } from "src/core/index.js"
 import ServerTime from "src/core/server-time/server-time.js"
 
 // 对Date的扩展，将 Date 转化为指定格式的String

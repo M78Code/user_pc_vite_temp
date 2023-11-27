@@ -706,10 +706,11 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
         play_name = other.play_name
-    }
-    let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
-    if(hpn){
-        play_name = hpn
+    }else{
+        let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        if(hpn){
+            play_name = hpn
+        }
     }
     return play_name
     
@@ -824,7 +825,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let text = ''
     // 展示用的 + 投注项
     // 两数拼接  
-    let home_away_mark = [2, 4, 7, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199, 367] // 
+    let home_away_mark = [2, 4, 7, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199, 367, 58] // 
     // 首页不需要拼接的
     let home_away_diff = [2, 38]
     // 多位数
