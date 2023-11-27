@@ -944,7 +944,7 @@ export default defineComponent({
           let params= { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid }
           // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
           let name = 'category' //赛事详情
-          if(item.ms==4){
+          if(this.$route.name == 'matchResults' ||item.ms==4){
             name = 'result'
           }
           this.$router.push({name,params})

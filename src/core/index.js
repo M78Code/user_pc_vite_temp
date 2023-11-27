@@ -159,6 +159,14 @@ const MatchDataWarehouse_ouzhou_PC_hots_List_Common = new MatchDataBase({
 });
 
 /**
+ * 欧洲版 PC/H5 数据仓库 滚球 列表
+ */
+
+const MatchDataWarehouse_ouzhou_PC_in_play_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_ouzhou_PC_in_play_List_Common",
+});
+
+/**
  * 欧洲版 PC/H5 数据仓库 通用列表
  */
 
@@ -304,6 +312,7 @@ export {
   MatchDataWarehouse_ouzhou_PC_hots_List_Common,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
   MatchDataWarehouse_ouzhou_PC_List_Common,
+  MatchDataWarehouse_ouzhou_PC_in_play_List_Common,
   LayOutMain_pc,
   compute_css_variables,
   GlobalSwitchClass,

@@ -547,7 +547,7 @@ class BaseData {
        */
       if(BUILD_VERSION){
         let csid_ = [101,102,105]
-        this.left_menu_base_mi_arr = !BUILD_VERSION ? csid_ : left_menu ;
+        this.left_menu_base_mi_arr = csid_;
        
         let list_mi_lsit = []
         left_menu_mi.forEach(item=>{

@@ -117,6 +117,10 @@ export const table_tennis_bg = compute_local_project_file_path('/image/featured/
 export const badminton_bg = compute_local_project_file_path('/image/featured/badminton_bg.png')
 export const baseball_bg = compute_local_project_file_path('/image/featured/baseball_bg.png')
 
+// 无token页面
+export const friendly_reminder_zh = compute_local_project_file_path('/image/common/friendly_reminder_zh.jpg')
+export const friendly_reminder_en = compute_local_project_file_path('/image/common/friendly_reminder_en.jpg')
+
 //弹出框菜单图片
 export const popup_menu = {
   refesh: compute_local_project_file_path('/image/menu/refesh.svg'),

@@ -308,7 +308,7 @@ const confrim = () => {
   if (selectedIds.value.length) {
     active_tournament.value = _.cloneDeep(selectedIds.value);
   }
-  isShow = false;
+  isShow.value = false;
   emit("select_submit", {
     ids: active_tournament.value,
     isHot: Number(is_hot.value),

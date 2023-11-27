@@ -183,7 +183,7 @@ const refreshAll = (params) => {
       margin: 0 auto;
       flex: 1;
       width: 0;
-
+      justify-content: center;
       .btn-label {
         // height: 45px;
         // line-height: 45px;
