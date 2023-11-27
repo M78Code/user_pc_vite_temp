@@ -256,13 +256,14 @@ export default defineComponent({
     // 切换语言
     const on_change_lang = (key) => {
       lang.value = key
-      api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: key }).then(res => {
+      // 设置国际化语言
+      loadLanguageAsync(key).then().finally(() => {
+        UserCtr.set_lang(key) 
+      })
+      api_account.set_user_lang({ languageName: key }).then(res => {
           let code = lodash.get(res, 'code');
           if (code == 200) {
-              // 设置国际化语言
-              loadLanguageAsync(key).then().finally(() => {
-                UserCtr.set_lang(key) 
-              })
+             
           } else if (code == '0401038') {
               useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
           }

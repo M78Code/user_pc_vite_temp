@@ -85,7 +85,7 @@ class MenuData {
   
   // 刷新后 获取缓存数据
   set_menu_h5_key_refresh() {
-    const notItem = ['menu_type']
+    const notItem = ['menu_type','current_lv_2_menu_mi','update_time']
     // 获取数据缓存
     let session_info = SessionStorage.get(menu_h5_key);
     if (!session_info) {
