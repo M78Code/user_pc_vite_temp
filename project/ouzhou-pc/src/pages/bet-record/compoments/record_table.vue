@@ -25,7 +25,9 @@
           <q-tr :props="props">
             <!-- 编号 -->
             <q-td key="sn" :props="props">
-              <span @click="labelClick(props)">{{ props.rowIndex + 1 }}</span>
+              <span @click="labelClick(props)">
+                {{getRowIndex(props.rowIndex)}}
+              </span>
             </q-td>
             <!-- 投注详情 -->
             <q-td key="datails" :props="props">
@@ -215,6 +217,7 @@
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
+                  :reset_pagination="pageCurrent"
       >
       </Pagination>
       <!--      <pagination-wrapper-->
@@ -245,9 +248,17 @@ const lang = computed(() => {
   return UserCtr.lang;
 })
 const pageSize = ref('50')
+const pageCurrent = ref('1')
+const getRowIndex = (rowIndex) => {
+  return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
+}
 const emit = defineEmits(['itemFilter'])
 const props = defineProps({
   current_tab: {
+    type: String,
+    default: ''
+  },
+  timeType: {
     type: String,
     default: ''
   }
@@ -262,6 +273,9 @@ const { columns, tableData, total, loading, handle_fetch_order_list } = useGetOr
 const labelClick = (row) => {
   console.log(row)
 }
+watch(() => props.timeType, (newVal) => {
+  pageCurrent.value = '1'
+})
 // 监听tab 切换表格头数据
 watch(() => props.current_tab, (newVal) => {
   tableData.value = []
@@ -492,21 +506,28 @@ const order_status = (orderStatus) => {
 // 页码变化
 const changePage = (arv) => {
   const { current } = arv
+  pageCurrent.value = current
   console.log(1111111111, arv)
   emit('itemFilter', {
     page: current,
-    size: +pageSize.value
+    size: +pageSize.value,
+    timeType: props.timeType
   })
 }
 const goPageChange = (v) => {
+  pageCurrent.value = v
   emit('itemFilter', {
     page: v,
-    size: +pageSize.value
+    size: +pageSize.value,
+    timeType: props.timeType
   })
 }
 const pageSizeChange = (v) => {
   pageSize.value = v.value
-  emit('itemFilter', { size: v.value })
+  emit('itemFilter', {
+    size: v.value,
+    timeType: props.timeType
+  })
 }
 /**
  * 复制id
