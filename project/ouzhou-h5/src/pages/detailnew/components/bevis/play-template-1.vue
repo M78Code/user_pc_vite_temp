@@ -24,10 +24,6 @@ const props = defineProps({
     item_data: {
         type: Object,
         default: () => ({})
-    },
-    active: {
-        type: Number,
-        default: 0,
     }
 })
 
@@ -37,84 +33,90 @@ const go_betting = (data) => {
     emits("bet_click_", data, props.item_data.hpn);
 };
 
-/** @type {Ref<TYPES.Ol[]>} */
-const AssembleData = computed(() => {
-    const {hl} = props.item_data
-    return hl[0].ol.filter(item => item.os != 3)
-})
+setTimeout(function (){
+    console.log(props.item_data,"item-data")
+},1200)
 </script>
 
 <template>
-    <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-    <template v-for="olChild of AssembleData" :key="olChild.oid">
-        <template v-if="olChild.result != (void 0)">
-            <div class="component play-template-1">
-                <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
-            </div>
-        </template>
-        <template v-else>
-            <div class="template1 component play-template-1"
-                @click="go_betting(olChild)"
+    <span v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</span>
+    <section class="template1" v-if="item_data?.hl">
+        <ul class="title">
+            <li class="title-item textOverflow1" v-for="titleChild of item_data?.title" :key="titleChild.otd">
+                {{ titleChild?.osn }}
+            </li>
+        </ul>
+        <ul class="list" v-for="hlChild of item_data?.hl" :key="hlChild.hid">
+            <li class="bet" v-for="olChild of hlChild.ol" :key="olChild.oid" @click="go_betting(olChild)"
                 :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
-                <div class="left">{{ olChild.otv }}</div>
-                <div class="right" v-if="olChild.os == 1 && olChild._hs != 11">
-                    <p>{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</p>
-                    <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
-                </div>
-                <div v-if="olChild.os == 2 || olChild._hs == 11">
-                    <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-                </div>
-            </div>
-        </template>
-    </template>
+
+                <template v-if="olChild.result != (void 0)">
+                    <div class="component play-template-1">
+                        <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
+                    </div>
+                </template>
+
+                <template v-else >
+                    <template v-if="olChild.os == 1">
+                        <span class="on-text textOverflow2">{{olChild.ott || olChild.on}}</span>
+                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
+                        <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
+                    </template>
+                    <template v-if="olChild.os == 2">
+                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                    </template>
+                </template>
+            </li>
+        </ul>
+    </section>
+
 </template>
 
 <style scoped lang="scss">
 .component.play-template-1{
     --private-container-padding: 8px 16px;
 }
-.template1 {
+.template1{
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--private-container-padding);
     box-sizing: border-box;
+    padding: 8px;
+    overflow: hidden;
 
-    .left {
-        word-wrap: break-word;
-        color: #1A1A1A;
-        font-size: 14px;
-        font-family: Roboto;
-        font-weight: 400;
+    .title{
+        display: flex;
+        background: var(--q-gb-bg-c-10);
+        &-item{
+            height: 48px;
+            flex: 1;
+            text-align: center;
+            line-height: 48px;
+        }
     }
 
-    .right {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 14px;
-        word-wrap: break-word;
-        position: relative;
+    .list {
+        width: 100%;
         display: flex;
         align-items: center;
-        color: var(--q-gb-t-c-1);
-    }
+        justify-content: space-between;
+        padding: var(--private-container-padding);
+        box-sizing: border-box;
 
+        .bet{
+            flex: 1;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    .red {
-        color: #FF4646;
-    }
-
-    .green {
-        color: #17A414;
+        }
     }
 }
 
-.is-active {
-    background-color: var(--q-gb-bg-c-1) !important;
-    color: var(--q-gb-t-c-2) !important;
 
-    .right {
+
+.is-active {
+    background-color: var(--q-gb-bg-c-1);
+    .ov-text {
         color: var(--q-gb-t-c-2);
     }
 }
@@ -124,5 +126,27 @@ const AssembleData = computed(() => {
     height: 16px;
     position: relative;
     top: 2px;
+}
+
+.on-text{
+    color: var(--q-gb-t-c-4);
+}
+.ov-text{
+    color: var(--q-gb-t-c-1);
+    margin: 0 8px;
+}
+.textOverflow1 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.textOverflow2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 </style>

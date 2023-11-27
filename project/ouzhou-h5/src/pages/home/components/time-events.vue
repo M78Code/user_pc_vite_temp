@@ -1,74 +1,31 @@
 <!--
-* @Author: Dolphin
 * @Description: 15分 玩法
 -->
 
 <template>
-  <div class="time_play_page component time-events">
+  <div class="time-play-page">
     <section>
       <div class="item" v-for="item in time_events" :key="item.mid">
-        <!-- 卡片区 -->
-        <div class="card" @click="toDetails(item)">
-          <!-- 标题 -->
-          <div class="title">
-            <SportIcon size="13" :sport_id="item.icon" />
-            <span class="span">{{ item.title }}</span>
-          </div>
-          <!-- 赛事名称 -->
-          <div class="game-name">
-            <div>{{ item.mhn }}</div>
-            <div>{{ item.man}}</div>
-          </div>
-        </div>
-        <template v-if="item">
-          <ScoreList :match_info="item" :score_length="3" height="39px" :show_hpn="true" :is_change="false" :hps="get_item_hps(item)" custom_type="15_mintues" />
-        </template>
+        <TimeEventEvents :item="item" />
       </div>
     </section>
   </div>
 </template>
 <script setup>
-import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
-import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
-import { useRouter } from "vue-router";
+import TimeEventEvents from './time-events-item.vue'
 
-/** @type {{time_events:Array<TYPES.MatchDetail>}} */
 const props = defineProps({
   time_events: {
     type: Array,
     default: () => []
   }
 })
-const router = useRouter()
-
-const get_item_hps = (item) => {
-  const hps15Minutes = lodash.get(item, 'hps15Minutes', [])
-  const length = lodash.get(hps15Minutes, 'length', 0)
-  if (length < 1) return []
-  const hps_item = hps15Minutes.find(t => t.hpid === '32')
-  const hps = lodash.get(hps_item, 'hl[0].ol', [])
-  return hps
-}
-
-/** 跳转赛事详情
- * @param {TYPES.MatchDetail} item 
- */
-function toDetails(item){
-  router.push({
-    name: "category",
-    params: {
-      mid:item.mid,
-      tid: item.tid,
-      csid: item.csid
-    }
-  })
-}
 
 </script>
 
 <style scoped lang="scss">
-.time_play_page{
-  section {
+.time-play-page{
+  :deep(section) {
     height: 126px;
     padding: 8px 0 2px;
     overflow: hidden;

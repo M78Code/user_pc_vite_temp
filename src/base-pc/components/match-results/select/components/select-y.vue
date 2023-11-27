@@ -6,7 +6,7 @@
 -->
 <template>
   <div class="y-select handel relative-position" :class="versions_class" @click.stop>
-    <div class="y-field-control" @click="isShow = true" :style="{ width: `${popWidth}px` }">
+    <div class="y-field-control" @click="showFc" :style="{ width: `${popWidth}px` }">
       <input
         type="text"
         class="input"
@@ -100,8 +100,7 @@ const itemAllSelect = ref("all"); // 针对选项的判断 all 全部选中  par
 const props = defineProps({
   list: {
     //下拉框子项
-    type: Array,
-    default: []
+    type: Array
   },
   sport_id: String, //球类id
   popWidth: String, //宽度
@@ -170,6 +169,15 @@ const ipt_change = () => {
     emit("ipt_search", [input_val.value, Number(is_hot.value)]);
   }, 500);
 };
+const showFc = () =>{
+  isShow.value = true;
+  menu.value = "all";
+  props.list.forEach(item => {
+      if (!active_tournament.value.includes(item.id)) {
+        active_tournament.value.push(item.id);
+      }
+    });
+}
 /**
  * @description: 全选
  * @param {}
@@ -326,6 +334,7 @@ onMounted(() => {
 watch(
   props.list,
   res => {
+     console.log('resresresresresres',res)
     let _no_active = active_tournament.value.length == 0;
     // 当前是不是反选
     let is_invert = menu.value == "invert";
@@ -342,6 +351,7 @@ watch(
     let tournamentName,
       { tid } = route.query;
     let active_item = null;
+   
     if (res && res.length) {
       // 如果条件有变，就清空已选中id
       if (
@@ -361,6 +371,11 @@ watch(
         // 或者时间有变化
         // 或者当前为热门并且是全部选中状态
         // 或者当前是全部选中状态，就重新全部选中
+         console.log('is_invertis_inver2222222t',is_invert)
+         console.log('is_invertis_inver3333333333t',_no_active)
+         console.log('is_invertis_inver4444444444t',isTimeChanged)
+         console.log('is_invertis_inver5555555t',is_hot)
+         console.log('is_invertis_inver6666666t',itemAllSelect.value)
         if (
           _no_active ||
           isTimeChanged ||
@@ -368,6 +383,7 @@ watch(
           itemAllSelect.value == "all"
         ) {
           // 当前不是反选才进行全选操作
+         
           if (!is_invert || menu.value == "") {
             if (!active_tournament.value.includes(item.id)) {
               active_tournament.value.push(item.id);
@@ -435,6 +451,7 @@ watch(
     } else {
       itemAllSelect.value = allSelect ? "all" : "part";
     }
+    console.log('arr',arr)
   },
   { deep: true }
 );

@@ -14,7 +14,7 @@
         :class="{
           'temp-active': BetData.bet_oid_list.includes(o.oid),
           temp: true,
-          'odds-lift': BetData.bet_oid_list.includes(ol.oid) && o.odds_lift,
+          'odds-lift': BetData.bet_oid_list.includes(o.oid) && o.odds_lift,
         }"
         @click="betItemClick(match_info.hl[0], o)"
       >

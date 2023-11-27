@@ -20,7 +20,7 @@
       </span>
       {{get_odds_value(ol_item)}}
     </div>
-
+    <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
   </div>
 </template>
 
@@ -89,14 +89,14 @@ const get_odds_value = (ol_item,hsw) => {
   overflow: hidden;
 
   &.active {
-        background-color: var(--q-gb-bg-c-1);
-   .odds {
-          color: var(--q-gb-t-c-2);
-        }
-   .on {
-          color: var(--q-gb-t-c-2);
-        }
-      }
+    background-color: var(--q-gb-bg-c-1) !important;
+    .odds {
+      color: var(--q-gb-t-c-2)!important;
+    }
+    .on {
+      color: var(--q-gb-t-c-2)!important;
+    }
+  }
 
   &:nth-child(2n-1) {
     width: 48%;

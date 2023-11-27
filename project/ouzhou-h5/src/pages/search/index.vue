@@ -372,7 +372,7 @@ const get_sport_kind = () => {
 	get_search_sport().then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			sport_kind_data.value = data.slice(0, 3)
+			sport_kind_data.value = data.filter(item => MenuData.conventionalType.includes(+item.id + 100))
 		}
 	});
 }
