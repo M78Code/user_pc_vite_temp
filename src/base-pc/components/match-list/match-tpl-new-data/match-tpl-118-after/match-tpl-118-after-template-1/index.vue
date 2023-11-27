@@ -88,8 +88,8 @@ function compute_match_all_handicap_data_champion(match) {
   display: block !important;
 }
 .play-info {
-  height: 32px;
-  line-height: 32px;
+  height: 36px;
+  line-height: 36px;
   padding: 0 15px;
   .max1 {
     max-width: 530px;

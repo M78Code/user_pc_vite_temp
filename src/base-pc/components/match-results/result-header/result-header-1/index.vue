@@ -143,14 +143,14 @@
 
 </template>
 <script setup>
-import {  ref,computed,onMounted, reactive } from 'vue';
+import {  ref,computed,onMounted, reactive,watch } from 'vue';
 import {SelectWrapper} from "src/base-pc/components/match-results/select/index.js";
 import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { LayOutMain_pc } from "src/core/index.js";
-
+import { GlobalSwitchClass} from "src/core/index";
 import {
   i18n_t,
   useMittEmit,
@@ -224,8 +224,7 @@ const props = defineProps({
     default:null // 日期选择框内计算后的日期
   },
   api_league_type:{
-    type:Array,
-    default:()=>[]
+    type:Array
   },
   pournament_params:{
     type:Object
@@ -235,6 +234,15 @@ const props = defineProps({
   },
 
 });
+// 全局点击事件
+  watch(
+    () => GlobalSwitchClass.global_switch_version.version,
+    (new_) => {
+     props.hideSelect()
+     console.log('api_league_typeapi_league_typeapi_league_type',props.api_league_type)
+    },
+    {deep:true, immediate: true }
+  );
   const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
 })

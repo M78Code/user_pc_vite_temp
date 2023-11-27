@@ -1,5 +1,7 @@
 <template>
-  <div v-show="false">{{ BetData.bet_data_class_version }} {{UserCtr.user_version}}</div>
+  <div v-show="false">
+    {{ BetData.bet_data_class_version }} {{ UserCtr.user_version }}
+  </div>
   <div
     v-if="is_mounted"
     class="c-bet-item yb-flex-center relative-position yb-family-odds"
@@ -66,7 +68,7 @@
             active: BetData.bet_oid_list.includes(ol_data.oid),
           }"
         >
-          {{ compute_value_by_cur_odd_type(ol_data.ov,'','',ol_data.csid) }}
+          {{ compute_value_by_cur_odd_type(ol_data.ov, "", "", ol_data.csid) }}
         </span>
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
@@ -83,7 +85,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, UserCtr } from "src/core/index.js";
 import { get_odds_active, utils } from "src/core/index.js";
 import { format_odds_value } from "src/core/format/module/format-odds.js";
 import { compute_value_by_cur_odd_type } from "src/core/index.js";
@@ -111,6 +113,8 @@ const props = defineProps({
     default: () => {},
   },
 });
+
+
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
   let { _mhs, _hs, os } = props.ol_data || {};
@@ -137,7 +141,7 @@ const score = computed(() => {
  * @param  {number} obv - 断档赔率值
  * @return {undefined} undefined
  */
-const match_odds =computed (() => {
+const match_odds = computed(() => {
   let ov = lodash.get(props.ol_data, "ov");
   let obv = lodash.get(props.ol_data, "obv");
   // 列表取 hsw
@@ -146,11 +150,12 @@ const match_odds =computed (() => {
     ov,
     obv || "",
     hsw || "",
-    1,UserCtr.user_version.value
+    1,
+    UserCtr.user_version.value
   );
 
   return format_odds_value(match_odds_info, props.ol_data.csid);
-})
+});
 
 /**
  * @description 获得最新的盘口状态
@@ -208,9 +213,12 @@ let tid;
 const set_odds_lift = (cur, old) => {
   if (!["lock", "seal"].includes(odds_state.value) && old && !is_odds_seal()) {
     odds_lift.value = cur > old ? "up" : "down";
-    clearTimeout(tid);
+    props.ol_data.odds_lift =  odds_lift.value
+     clearTimeout(tid);
     tid = setTimeout(() => {
       odds_lift.value = "";
+      props.ol_data.odds_lift = ''
+
     }, 3000);
   }
 };
@@ -275,15 +283,15 @@ onUnmounted(() => {
   }
 }
 .active-odds-icon {
-  .odds-up {
-    background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg") no-repeat
-      100% !important;
-    transform: rotate(180deg);
-  }
-  .odds-down {
-    background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg") no-repeat
-      100% !important;
-  }
+  // .odds-up {
+  //   background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg") no-repeat
+  //     100% !important;
+  //   transform: rotate(180deg);
+  // }
+  // .odds-down {
+  //   background: url($SCSSPROJECTPATH + "/image/svg/active_arrow.svg") no-repeat
+  //     100% !important;
+  // }
 }
 .odds-arrows-wrap {
   position: relative;
@@ -297,7 +305,7 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-2);
   }
   .active {
-    color: var(--q-gb-t-c-1) !important;
+    color: var(--q-gb-t-c-1) ;
   }
 }
 .odds-icon {
