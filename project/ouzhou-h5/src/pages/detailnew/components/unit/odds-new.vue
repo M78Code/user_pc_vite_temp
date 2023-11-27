@@ -104,7 +104,7 @@ export default defineComponent({
         let r = '';
         let r1 = compute_value_by_cur_odd_type(
           props.ol_data.ov,
-          null,
+          props.ol_data._hpid,
           props.item_data.hsw,
           false,
           props.ol_data.csid

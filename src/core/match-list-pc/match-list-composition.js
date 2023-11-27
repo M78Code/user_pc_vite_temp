@@ -55,7 +55,7 @@ useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({is_socket = undefined}) => {
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
 		//请求列表接口之前 先设置元数据列表
-		if (!is_socket)
+		if (!is_socket&&!MenuData.is_leagues())
 		init_page_when_base_data_first_loaded()
 		fetch_match_list(is_socket)//请求接口
 	}, 80);
@@ -100,7 +100,8 @@ export function fetch_match_list(is_socket = false, cut) {
 		return;
 	}
 	// 【搜索列表】 WS 之类的调用 fetch_match_list 转向到 fetch_search_match_list
-	if (page_source == "search") {
+	 //热门联赛不走此方法
+	if (page_source == "search"||MenuData.is_leagues()) {
 		// fetch_search_match_list && fetch_search_match_list(is_socket);
 		return false;
 	}

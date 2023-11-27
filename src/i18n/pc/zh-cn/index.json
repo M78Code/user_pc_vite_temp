@@ -88,6 +88,21 @@
       "results": "赛果",
       "sport_rules": "体育规则"
      },
+     "setting_menu": {
+        "personal": "个人",
+        "back": "返回",
+        "money": "余额",
+        "language": "语言",
+        "odds_setting": "赔率设置",
+        "odds_display": "赔率盘口",
+        "dec": "欧洲盘",
+        "hk": "香港盘",
+        "any": "任何赔率",
+        "hig": "最佳赔率",
+        "version": "版本",
+        "euro": "欧洲版",
+        "asia": "亚洲版"
+      },
      "filter": {
       "part": "部分",
       "select_league": "3小时以内",
@@ -128,6 +143,11 @@
     ],
     "bet_col": {
       "bet_col_1": {
+        "bet_col_1": "主胜",
+        "bet_col_X": "平局",
+        "bet_col_2": "客胜"
+      },
+      "bet_col_32": {
         "bet_col_1": "主胜",
         "bet_col_X": "平局",
         "bet_col_2": "客胜"

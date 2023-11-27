@@ -147,8 +147,8 @@ const format_odds = () => {
   // 列表取 hsw
   let hsw = props.ol_data._hsw;
   let match_odds_info = compute_value_by_cur_odd_type(
-    ov / 100000,
-    obv / 100000 || '',
+    ov ,
+    ov.hpid,
     hsw || '',
     1
   );

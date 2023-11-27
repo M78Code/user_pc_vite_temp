@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { sports_play_title } from 'src/core/constant/index.js'
+import { use_sports_play_title } from 'src/core/constant/index.js'
 import { MenuData } from "src/core/index";
 
 /**
@@ -48,6 +48,7 @@ class MatchResponsive {
 
   // 重置球种玩法
   reset_match_hpid_by_csid (csid = '') {
+    const sports_play_title = use_sports_play_title()
     const id = csid ? csid : MenuData.menu_csid
     const item = sports_play_title[id]
     const key = this.get_hpid_key(csid)

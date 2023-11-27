@@ -375,7 +375,11 @@ background: var(--q-gb-t-c-3) !important;
   &.bet_state_show{
     position: fixed;
     bottom: 0;
+
     z-index: var(--private-bet-mix-box-child-z-index);
+
+   //z-index: 16000;
+
   }
   .yb_pl14 {
     margin-right: 0.01rem;
