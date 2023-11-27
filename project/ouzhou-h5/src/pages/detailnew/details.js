@@ -12,12 +12,14 @@ import {
   MatchDataWarehouse_H5_List_Common,
   MenuData,
   SearchData,
+  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5
 } from "src/core/index";
 import { details_ws } from "./details-ws";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
 export const details_main = (router, route) => {
-  let { mid, csid } = route.params;
+  const mid= ref(route.params.mid);
+  const csid= ref(route.params.csid);
   const detail_store = ref(MatchDetailCalss); //todo
   const match_odds_info = ref([]);
   /** @type {Ref<TYPES.MatchDetail>} */
@@ -258,7 +260,6 @@ export const details_main = (router, route) => {
   watch(
     () => MatchDataWarehouseInstance.value.data_version,
     (val, oldval) => {
-      console.log("data_version", val.version);
       if (val.version) {
         update_data(route.params.mid);
       }
@@ -341,10 +342,9 @@ export const details_main = (router, route) => {
       );
     });
     //初次调用成功后 赋值init未false
-    const { mid, csid } = route.params;
     get_category_list_info({
-      sportId: csid,
-      mid,
+      sportId: csid.value,
+      mid:mid.value,
     });
   }
   /**
@@ -358,14 +358,15 @@ export const details_main = (router, route) => {
    */
   const detail_init = () => {
     get_matchDetail_MatchInfo({
-      mid,
+      mid:mid.value,
       cuid: cuid.value,
     });
   };
   detail_init();
   /** 监听顶部刷新功能 */
   useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS, (params) => {
-    (mid = params.mid), (csid = params.csid);
+    mid.value = params.mid;
+    csid.value = params.csid;
     loading.value = true;
     detail_init();
   });
@@ -462,11 +463,12 @@ export const details_main = (router, route) => {
   }
   let message_fun = null;
   onMounted(() => {
-    console.log(MenuData, "MenuData");
+    console.log(MatchDataBaseH5.get_quick_mid_obj(mid.value),'MatchDataBaseH5.get_quick_mid_obj(mid)');
+    // match_odds_info.value = lodash.get(MatchDataBaseH5.get_quick_mid_obj(mid.value),"hps","[]")
+    // match_detail.value = MatchDataBaseH5.get_quick_mid_obj(mid.value) || []
     MatchDataWarehouse_H5_List_Common.set_active_mids([]);
     loading.value = true;
     init.value = true;
-    const { mid, csid } = route.params;
     // 增加监听接受返回的监听函数
     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
       if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
@@ -477,10 +479,9 @@ export const details_main = (router, route) => {
       init.value = false;
       switch (cmd) {
         case "C303":
-          const { mid, csid } = route.params;
           get_category_list_info({
-            sportId: csid,
-            mid,
+            sportId: csid.value,
+            mid:mid.value,
           });
           break;
         case "C302":
@@ -602,7 +603,7 @@ export const details_main = (router, route) => {
         // 如果不是演播厅的，才有退出回到 列表
         // if (lodash.get(this.get_video_url, "active") != "lvs") {
         // 没有返回赛事数据就跳转到列表页
-        router.push({ name: "matchList" });
+        router.go("-1");
         // }
       }
     });

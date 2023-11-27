@@ -1,6 +1,6 @@
 <template>
   <span
-    class="text-right component"
+    class="component"
     @click.stop="set_hton"
     :class="show_top ? 'icon_zd_select' : 'icon_zd_default'"
   ></span>
