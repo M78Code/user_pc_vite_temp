@@ -49,8 +49,17 @@ let axios_debounce_timer2;
 let virtual_list_timeout_id;
 let switch_timer_id
 let mitt_list = [];
-
-
+let tid_match_list;
+// 调用列表接口
+useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({is_socket = undefined}) => {
+	clearTimeout(tid_match_list)
+	tid_match_list = setTimeout(() => {
+		//请求列表接口之前 先设置元数据列表
+		if (!is_socket)
+		init_page_when_base_data_first_loaded()
+		fetch_match_list(is_socket)//请求接口
+	}, 80);
+})
 // watch(() => MenuData.match_list_version.value, () => {
 // 	clearTimeout(tid_match_list)
 // 	tid_match_list = setTimeout(() => {
@@ -231,7 +240,6 @@ function init_page_when_base_data_first_loaded() {
 	// 	30000
 	// );
 }
-let tid_match_list;
 function mounted_fn() {
 	// fetch_match_list();
 	// 开启自动化测试功能
