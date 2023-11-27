@@ -500,6 +500,8 @@ const submit_handle = type => {
             }
         }
         set_error_message_config(res,'bet',order_state)
+    }).catch(()=>{
+        set_error_message_config({code:"0401038"},'bet')
     })
 }
 
