@@ -7,7 +7,7 @@
         <!-- 注单历史筛选区域 -->
         <record_select :current_tab="current_tab" @itemFilter="itemFilter" />
         <!-- 注单历史表格组件 -->
-        <record_table :current_tab="current_tab" ref="tableRef" @itemFilter="itemFilter" />
+        <record_table :timeType="timeType" :current_tab="current_tab" ref="tableRef" @itemFilter="itemFilter" />
 
       </div>
     </div>
@@ -23,11 +23,13 @@ import { LayOutMain_pc } from "src/core/index.js";
 
 const current_tab = ref('unsettled')
 const tableRef = ref(null)
+const timeType = ref(null)
 //  tab 切换
 const tab_change = (val) => {
   current_tab.value = val
 }
 const itemFilter = (obj) => {
+  timeType.value = obj.timeType
   const orderStatus = current_tab.value == 'settled' ? 1 : 0
   tableRef.value.getTableData({ ...obj, orderStatus })
 }
