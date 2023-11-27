@@ -39,7 +39,7 @@ export default {
     // 设置wslog 默认函数防止提前调用报错
     window.wslog = { sendMsg: () => {} };
     // 设置商户分割信息
-    let gr = (window.SEARCH_PARAMS.init_param.get('gr').toLocaleUpperCase()) || sessionStorage.getItem(STANDARD_KEY.get("gr")) || "COMMON";
+    let gr = (window.SEARCH_PARAMS.init_param.get('gr')?.toLocaleUpperCase()) || sessionStorage.getItem(STANDARD_KEY.get("gr")) || "COMMON";
 
     BUILDIN_CONFIG.DOMAIN_RESULT.gr = gr;
 

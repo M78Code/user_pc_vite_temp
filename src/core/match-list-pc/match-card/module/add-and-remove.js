@@ -131,9 +131,10 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
   // 移除的赛事联赛ID
   let remove_tid = lodash.get(
     MatchListData.list_to_obj.mid_obj,
-    `mid_${remove_mid}.tid`
+    `${remove_mid}_.tid`
   );
-  let all_league_obj = MatchListData.match_list_data.league_list_obj;
+  let all_league_obj = league_list_obj;
+  console.log('888888888888eqw', all_league_obj, remove_tid);
   // 遍历所有赛事数据
   let match_status_type_arr = ["livedata", "nolivedata"];
   match_status_type_arr.forEach((match_status_type) => {
@@ -224,7 +225,7 @@ export const remove_match = (remove_mid, callback) => {
   if (route_name == "search") {
     return;
   }
-  if ([1, 3].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+  if ([1, 3, 8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
     remove_match_when_match_list_mapping_relation_obj_type_1_3(
       remove_mid,
       callback

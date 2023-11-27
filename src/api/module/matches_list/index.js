@@ -15,7 +15,7 @@ const { API_PREFIX_JOB: prefix, API_PREFIX_USER: prefix_12 } = API_PREFIX;
 
 
 //首页常规赛事列表接口(新)
-export const get_home_matches = (params, config={}, url = "/yewu11/v3/m/homeMatches") => http.post(url, params,{axios_debounce_cache_key:'get_home_matches'});
+export const get_home_matches = (params, config={}, url = "/yewu11/v3/m/homeMatchesPB") => http.post(url, params,{axios_debounce_cache_key:'get_home_matches'});
 
 //详情页获取玩法分类接口(新)
 export const get_detail_category = (params, config={}, url = "/yewu11/v1/w/category/getCategoryList") => http.get(url, params);
@@ -33,7 +33,7 @@ export const get_order_list = (params, config={}, url = "/yewu12/order/betRecord
 export const get_leagues_list = (params, config={}, url = "/yewu11/v3/european/getLeaguesPB") => http.post(url, params);
 
 //获取联赛数量统计
-export const get_leagues_list_match = (params, config={}, url = "/yewu11/v3/european/matchesByTid") => http.post(url, params);
+export const get_leagues_list_match = (params, config={}, url = "/yewu11/v3/european/matchesByTidPB") => http.post(url, params);
 
 //详情页获取玩法详情数据(新)
 export const get_detail_data = (params, config={}, url = "/yewu11/v1/w/matchDetail/getMatchDetail") => http.get(url, params);
