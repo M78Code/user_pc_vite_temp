@@ -79,7 +79,7 @@ const jumpToLeagues  = () => {
     filter_tab: 4002
   }
   MenuData.set_mid_menu_result(mid_config)
-  router.push(`/league/${csid}/${tid}`)
+  router.push(`/league/${csid}/${tid}/2`)
 }
 
 

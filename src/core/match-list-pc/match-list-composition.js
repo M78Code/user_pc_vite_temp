@@ -256,7 +256,6 @@ function mounted_fn() {
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
 		// 调用列表接口
 		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({is_socket = undefined}) => {
-			console.log('asdadasdasdasdasdas');
 			clearTimeout(tid_match_list)
 			tid_match_list = setTimeout(() => {
 				//请求列表接口之前 先设置元数据列表
@@ -423,7 +422,6 @@ function on_refresh() {
  */
 function socket_remove_match(match) {
 	// 列表加载中不操作
-	console.log('88888888888881', load_data_state.value);
 	if (load_data_state.value != "data") {
 		return;
 	}

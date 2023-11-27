@@ -24,10 +24,12 @@ import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import {mx_use_list_res} from "src/core/match-list-pc/composables/match-list-processing.js";
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData, LayOutMain_pc, UserCtr } from 'src/core/index.js';
+import {  LayOutMain_pc, UserCtr } from 'src/core/index.js';
 import { api_match } from "src/api/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 
 import "../match-list/match_list.scss";
+import { nextTick } from "licia";
 export default {
   components: {
     // ListFilter,
@@ -46,7 +48,9 @@ export default {
     })
 
     watch(() => route.params, () => {
-      fetch_search_match_list()
+      nextTick(()=>{
+        fetch_search_match_list()
+      })
     }, { immediate: true, deep: true })
 
     function MatchListCardDataClass_match_list_card_key_arr() {
@@ -68,6 +72,7 @@ export default {
         searchSportType: route.params.csid,
       };
       api_match.post_search_match(params).then((res) => {
+        PageSourceData.set_route_name(route.name)
         //保存数据到数据仓库
         mx_use_list_res(res, is_socket, true);
         MatchListCardDataClass_match_list_card_key_arr()
