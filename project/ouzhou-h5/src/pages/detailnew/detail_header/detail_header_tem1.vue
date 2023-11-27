@@ -201,7 +201,7 @@ const sport_ball = {
 const cuid = ref("");
 const bg_img = ref({})
 const detail_store = ref(null);
-const is_collect = ref();
+const is_collect = ref(MatchCollect.get_match_collect_state(props.get_match_detail));
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -310,13 +310,14 @@ const set_scoew_icon_list = (new_value) => {
  *@return {*}
  */
 const collect_click = () => {
+  is_collect.value = !is_collect.value
     api_common.add_or_cancel_match({
         mid: props.get_match_detail.mid,
         cf: is_collect.value ? 0 : 1,
         cuid: UserCtr.get_uid()
     }).then(res => {
         if (res.code != 200) return
-        is_collect.value = !is_collect.value
+        MatchCollect.set_match_collect_state(props.get_match_detail, is_collect.value)
     })
  
 }

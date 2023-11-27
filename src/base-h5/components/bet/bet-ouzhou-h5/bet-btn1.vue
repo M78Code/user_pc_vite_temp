@@ -26,12 +26,14 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 
 const pack_up = (val) => {
   // TODO: 临时调试用
+  BetViewDataClass.set_is_finally(true)
   BetData.set_h5_bet_box_show(false)
   BetData.set_clear_bet_info()
   BetViewDataClass.set_clear_bet_view_config()
 }
 // 保留投注项
 const set_retain_selection = () => {
+    BetViewDataClass.set_is_finally(true)
     BetData.set_bet_amount(0)
     BetViewDataClass.set_bet_order_status(1)
     BetViewDataClass.set_bet_before_message({})
