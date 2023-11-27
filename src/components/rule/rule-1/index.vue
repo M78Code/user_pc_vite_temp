@@ -53,15 +53,18 @@ const get_pc_rule_url = () => {
 
     } else {
         // 其他环境，测试和开发 等
-        domain = "http://sports-rules-new-test.sportxxx3pk.com"
+        domain = "http://sports-rules-ouzhou-test.sportxxx3pk.com"
 
     }
+    let obj = {rdm:(new Date().getTime())};
     if (!!get_merchant_style) {
-        url = `${domain}/#/${lang2}?themeColors=${theme2}&sty=${get_merchant_style}&rdm=${new Date().getTime()}`;
+        obj.sty = get_merchant_style;
+        obj.themeColors = theme2;
     } else {
-        url = `${domain}/#/${lang2}?themeColors=${theme2}&rdm=${new Date().getTime()}`;
+        obj.themeColors = theme2;
     }
-    console.log(`===========体育规则iframe的url值:${url}`, theme2);
+    let param = UserCtr.get_user_url_parames(obj);
+    url = `${domain}/#/${lang2}?${param}`;
     rule_url.value = url
     return url;
 }

@@ -69,7 +69,7 @@ function active_change(value) {
  LayOutMain_pc.set_layout_secondary_active(value)
 }
 onMounted(()=>{
- const value = localStorage.getItem("secondary_active")
+ const value = SEARCH_PARAMS.init_param.get("secondary_active") || localStorage.getItem("secondary_active") ;
  active_change(value)
 })
 </script>
@@ -109,7 +109,6 @@ onMounted(()=>{
 }
 .secondary_panels{
   // height: 760px !important;
-  // height:calc(100% - 80px);
 }
 .secondary_content{
   height:calc(100% - 80px);

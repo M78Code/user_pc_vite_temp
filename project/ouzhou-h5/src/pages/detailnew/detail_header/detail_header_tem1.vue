@@ -43,7 +43,8 @@
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
       <!-- {{ console.log(get_match_detail.ms) }} -->
-      <template v-if="get_match_detail.ms == 1">
+      <!-- 赛果需要显示比分 添加4 -->
+      <template v-if=" [1,4].includes(get_match_detail.ms)">
         <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
           <div
             class="list"
@@ -108,6 +109,10 @@ const props = defineProps({
     default: () => {},
   },
 });
+  // 赛事收藏状态
+const  is_collect = computed(()=>{
+  return MatchCollect.get_match_collect_state(props.get_match_detail)
+}) 
 const show_time_counting = computed(() => {
   let csid = Number(props.get_match_detail.csid);
   let mmp = Number(props.get_match_detail.mmp);
@@ -200,7 +205,7 @@ const sport_ball = {
 const cuid = ref("");
 const bg_img = ref({})
 const detail_store = ref(null);
-const is_collect = ref();
+console.log(is_collect,'is_collect');
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -309,13 +314,14 @@ const set_scoew_icon_list = (new_value) => {
  *@return {*}
  */
 const collect_click = () => {
+  MatchCollect.set_match_collect_state(props.get_match_detail, !is_collect.value)
     api_common.add_or_cancel_match({
         mid: props.get_match_detail.mid,
         cf: is_collect.value ? 0 : 1,
         cuid: UserCtr.get_uid()
     }).then(res => {
         if (res.code != 200) return
-        is_collect.value = !is_collect.value
+        
     })
  
 }
@@ -327,9 +333,9 @@ const collect_click = () => {
 // }, 200);
 
 onMounted(()=>{
-    setTimeout(function (){
-        is_collect.value = props.get_match_detail.mf
-    },320)
+    // setTimeout(function (){
+    //     is_collect.value = props.get_match_detail.mf
+    // },320)
 })
 </script>
 

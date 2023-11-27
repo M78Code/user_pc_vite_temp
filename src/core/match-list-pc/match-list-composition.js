@@ -126,13 +126,7 @@ export function fetch_match_list(is_socket = false, cut) {
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
-					//处理服务器返回的 列表 数据   fetch_match_list
-					handle_match_list_request_when_ok(
-						JSON.parse(JSON.stringify(res)),
-						is_socket,
-						cut
-					);
-					if (lodash.get(res, "data.length") || lodash.get(res, "data.data.length")) {
+					if (lodash.get(res, "data.length")!=undefined || lodash.get(res, "data.data.length")!=undefined) {
 						const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
 						load_data_state.value = len ? 'data' : 'empty'
 					}
@@ -141,6 +135,12 @@ export function fetch_match_list(is_socket = false, cut) {
 						const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
 						load_data_state.value = livedata + nolivedata > 0 ? 'data' : 'empty'
 					}
+					//处理服务器返回的 列表 数据   fetch_match_list
+					handle_match_list_request_when_ok(
+						JSON.parse(JSON.stringify(res)),
+						is_socket,
+						cut
+					);
 				} else if (res.code == "0401038") {
 					// let is_collect = this.vx_layout_list_type == 'collect'
 					// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
@@ -301,16 +301,7 @@ function mounted_fn() {
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
 export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
-
-	let {
-		match_list_api_config,
-		menu_root,
-		match_list_api_type,
-		left_menu_result,
-	} = MenuData;
-
-	let current_menu = ([2, 3].includes(Number(menu_root)) && left_menu_result.guanjun != "common-guanjun")
-	if (lodash.get(data, "data.livedata") || lodash.get(data, "data.nolivedata") || ((menu_root == 2000 || current_menu) && !match_list_api_config.is_collect)) {
+	if (lodash.get(data, "data.livedata") || lodash.get(data, "data.nolivedata")) {
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法
@@ -430,6 +421,7 @@ function on_refresh() {
  */
 function socket_remove_match(match) {
 	// 列表加载中不操作
+	console.log('88888888888881', load_data_state.value);
 	if (load_data_state.value != "data") {
 		return;
 	}
@@ -437,10 +429,10 @@ function socket_remove_match(match) {
 	MatchListCardClass.remove_match(match.mid);
 	// 更新收藏数量
 	update_collect_data({ type: "remove", match });
-	if (vx_details_params.mid == match.mid) {
-		// 赛事移除时右侧赛事自动切换
-		mx_autoset_active_match({ mid: match.mid });
-	}
+	// if (vx_details_params.mid == match.mid) {
+	// 	// 赛事移除时右侧赛事自动切换
+	// 	mx_autoset_active_match({ mid: match.mid });
+	// }
 };
 
 /**

@@ -471,7 +471,7 @@ class Http {
                 config.time = new Date().getTime();
                 this.request_count++;
                 // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
-                if (sessionStorage.getItem("pb")) {
+                if (sessionStorage.getItem("pb") || SEARCH_PARAMS.init_param.get("pb")) {
                     if (_.endsWith(config.url, "PB")) {
                         config.url = config.url.substring(0, config.url.length - 2);
                     } else {

@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: changeHeader ? 'visible' : 'hidden' }">
+    <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail"/>
     </div>
     <div class="detail-container-position">
@@ -177,7 +177,7 @@ export default {
     width: 100%;
   }
   .header-fix {
-    
+
   }
   .change-header-fix {
     width: 100vw;
@@ -250,8 +250,8 @@ export default {
   //   height: calc(100vh - 210px);
   // }
   .match-detail-odds-height2 {
-    overflow-y: scroll;
-    height: calc(100vh - 325px);
+    // overflow-y: scroll;
+    // height: calc(100vh - 325px);
   }
   // .match-detail-odds-height3 {
   //   height: calc(100vh - 275px);

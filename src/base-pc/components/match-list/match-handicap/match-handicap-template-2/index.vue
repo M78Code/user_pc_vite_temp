@@ -13,7 +13,7 @@
         <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
           v-for="(ol_data, ol_index) in (col.ols)" :key="ol_index + '_' + ol_data._hpid + '_' + ol_data._ot">
           <!-- 投注项组件 -->
-          <bet-item :ol_data="ol_data" match_data_type="pc_list" />
+          <bet-item :ol_data="ol_data" match_data_type="pc_list" :is_scroll_ball="MenuData.is_scroll_ball()" />
         </div>
       </div>
     </div>
@@ -30,6 +30,7 @@ import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.v
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
+import MenuData from "src/core/menu-pc/menu-data-class.js"
 
 const MatchListData=inject("MatchListData")
 const props = defineProps({

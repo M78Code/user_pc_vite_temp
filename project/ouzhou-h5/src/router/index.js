@@ -112,6 +112,11 @@ const router = createRouter({
           //   },
           // ],
         },
+        {
+          path: "/result/:mid/:tid/:csid?/:mcid?",
+          name: "result",
+          component: () => import("../pages/detailnew/result/index.vue"),
+        },
         // 投注列表
         {
           path: "/betting_history",

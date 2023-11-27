@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-top-info component detail-top">
+  <div class="component detail-top-info detail-top">
     <div class="sport-info" @click="toHome">
       <span>{{ getCsna}}</span>
       <img class="bakc-icon" src="../img/back.png" alt="" />
@@ -28,8 +28,8 @@
 
     </div>
     <div class="refresh" @click.capture>
-      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""  @click.stop="refreshAll"
-        :class="[{ 'refresh-active': '' }, 'refresh-icon']" />
+      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""  @touchend="refreshAll"
+       :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']" />
     </div>
   </div>
 </template>
