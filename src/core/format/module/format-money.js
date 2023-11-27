@@ -47,7 +47,6 @@ export const format_money2 = function (num) {
     if (num1) {
       num1 = num1 + result;
     }
-    console.error('format_money2',num,num1 + "." + num2)
     return num1 + "." + num2;
   } catch (error) {
     console.error(error);
