@@ -232,7 +232,7 @@ export default defineComponent({
       window.open(
         url,
         "",
-        `height=${_window_height}, width=${_window_width}, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
+        `height=${_window_height}, width=${_window_width}, top=100, left=360, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
       );
     }
     const onExpend = () => {
