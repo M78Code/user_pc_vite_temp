@@ -25,7 +25,7 @@
               <div class="on">
                 <div class="bg-style" :class="`ranking-bg-style1-${on} csid-${vsport_ctr.info.csid}`" v-for="(on,on_key) in ol.ons" :key="on_key"></div>
               </div>
-              <div class="odds">{{compute_value_by_cur_odd_type(ol.ov / 100000,'',vsport_ctr.horse_play_data[play_id].hsw)}}</div>
+              <div class="odds">{{compute_value_by_cur_odd_type(ol.ov ,play_id,vsport_ctr.horse_play_data[play_id].hsw)}}</div>
             </div>
           </div>
         </div>

@@ -173,14 +173,14 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--q-gb-t-c-2);
-    background: var(--q-gb-bg-c-1);
+    color: var(--q-gb-t-c-14);
+    background: var(--q-gb-bg-c-13);
     border-radius: 50%;
 }
 .nonebox4-first-left-text {
     margin-left: 0.05rem;
     display: flex;
-    font-size: 14px;
+    font-size: 16px;
 }
 .nonebox4-first-right {
     display: flex;
@@ -200,7 +200,7 @@ onUnmounted(() => {
 }
 .nonebox4-first-right-window-num {
     display: flex;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     margin-right: 4px;
 }
@@ -320,8 +320,8 @@ onUnmounted(() => {
 }
 
 .refesh {
-  width: 0.13rem;
-  height: 0.13rem;
+  width: 0.2rem;
+  height: 0.2rem;
   background: url( $SCSSPROJECTPATH+"/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
   // background: var(--q-color-com-img-bg-58) no-repeat center / 100% 100%;
   margin-left: 0.05rem

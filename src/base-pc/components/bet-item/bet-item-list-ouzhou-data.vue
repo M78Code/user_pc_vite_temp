@@ -39,7 +39,7 @@
         <span class="odds_otb" v-if="ol_data.otb">{{ disk_text_replace(UserCtr.lang, $t(`ouzhou.bet_col.bet_col_${ol_data._hpid}.bet_col_${ol_data.ot}`)) }}</span>
         {{ compute_value_by_cur_odd_type(
           ol_data.ov,
-          '',
+          ol_data._hpid,
           '',
           ol_data.csid
         ) }}
