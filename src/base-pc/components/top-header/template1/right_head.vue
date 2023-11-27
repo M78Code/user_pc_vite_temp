@@ -228,8 +228,13 @@ export default defineComponent({
       let _window_height = 850;
       let path = userRouter.resolve({ path: '/secondary' }).href;
       path = path.substr(path.indexOf('#/'))
+      let obj = {rdm:(new Date().getTime())};
+      // 设置激活参数
+      obj.secondary_active = value;
+      let param = UserCtr.get_user_url_parames(obj);
+      let url = `${window.location.pathname}${path}?${param}`;
       window.open(
-        `${window.location.pathname}${path}`,
+        url,
         "",
         `height=${_window_height}, width=${_window_width}, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
       );

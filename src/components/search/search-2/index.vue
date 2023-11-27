@@ -59,11 +59,11 @@ import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { LayOutMain_pc, utils } from 'src/core/index.js'
 // 搜索输入框组件
 import searchInput from "./search-input.vue"
-// 搜索初始化组件
+// // 搜索初始化组件
 import searchInt from "./search-init.vue"
 //搜索赛事组件
 import searchSports from "./search-sports.vue"
-// 搜索玩法组件
+// // 搜索玩法组件
 import searchPlay from "./search-play.vue"
 // 搜索查询结果组件
 import searchResult from "./search-result.vue"

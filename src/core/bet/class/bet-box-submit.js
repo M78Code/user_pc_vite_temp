@@ -174,6 +174,11 @@ const set_order_status_info = (orderNo) => {
         if(res.code == 200){
             let data_list = lodash_.get(res,'data', [])
             let order_status = ''
+            console.error('BetViewDataClass.is_finally',BetViewDataClass.is_finally)
+            // 已经完成了单次投注订单 不需要在执行了
+            if(BetViewDataClass.is_finally){
+               return clearTimeout(time_api_out)
+            }    
             data_list.forEach(item => {
                 // data.status（4:拒单、0:接单、3:待确认、2:取消、1:已处理)
                 order_status = item.status
@@ -417,7 +422,7 @@ const submit_handle = type => {
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
         let order_state = 2
         if (res.code == 200) {
-           
+            BetViewDataClass.set_is_finally(false)
             // 获取
             BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
             // 获取投注后的数据列表
@@ -500,6 +505,8 @@ const submit_handle = type => {
             }
         }
         set_error_message_config(res,'bet',order_state)
+    }).catch(()=>{
+        set_error_message_config({code:"0401038"},'bet')
     })
 }
 
@@ -573,7 +580,9 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if(!oid || !_hid || !_mid){
         return
     }
-
+    // 是否上一个投注流程已走完
+    BetViewDataClass.set_is_finally(true)
+    
     BetViewDataClass.set_bet_order_status(1)
     BetData.set_bet_mode(-1)
     // 重置金额为 0

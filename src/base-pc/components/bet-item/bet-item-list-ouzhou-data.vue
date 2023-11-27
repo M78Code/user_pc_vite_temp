@@ -227,7 +227,6 @@ const disk_text_replace = (lang, onb) => {
         break;
     }
   }
-  console.log(text, 'text');
   return text
 }
 
