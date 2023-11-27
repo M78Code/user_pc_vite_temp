@@ -211,6 +211,7 @@ export const set_template_width_base = (
 /**
  * @Description 设置欧洲版模板table宽度
  * @param {number} total_width 列表总宽度
+ * @param {boolean} more_width 是否是滚球
  */
 export const set_ouzhou_template_width_base = (
   total_width,
