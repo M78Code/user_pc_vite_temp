@@ -23,7 +23,7 @@
      <!-- 主队信息 -->
      <div class="row-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'"
+        <img v-if="show_type == 'all' && home_avatar"
           v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
@@ -45,7 +45,7 @@
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all'" 
+        <img v-if="show_type == 'all' && away_avatar"
           v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
       </div>  
       <div class="ellipsis-wrap">
@@ -129,6 +129,16 @@ const handicap_num = computed(() => {
   }else{
     return i18n_t('match_info.more')
   }
+})
+
+const home_avatar = computed(()=>{
+  const url = ((lodash.get(props.match, 'match_logo') || {}) || {}).home_1_logo || (lodash.get(props.match, 'match_logo') || {}).home_1_letter;
+  return url
+})
+
+const away_avatar = computed(()=>{
+  const url = (lodash.get(props.match, 'match_logo') || {}).away_1_logo ||  (lodash.get(props.match, 'match_logo') || {}).away_1_letter
+  return url
 })
 
 const play_name_obj = computed(() => {
