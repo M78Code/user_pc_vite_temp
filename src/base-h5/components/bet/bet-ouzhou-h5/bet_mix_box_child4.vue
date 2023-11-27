@@ -187,6 +187,11 @@
     font-size: 0.15rem;
     font-weight: 600;
   }
+  .nonebox4-content-left-content-text{
+      line-height: 0.25rem;
+      margin-top: 0.02rem;
+      width: calc(100% - 1rem);
+  }
   .nonebox4-content-left-info{
     display: flex;
     justify-content: space-between;
@@ -237,6 +242,7 @@
   }
   .nonebox4-content-right{
     text-align: right;
+    width: 0.7rem;
   }
   .nonebox4-content-right-bot{
     font-size: 0.12rem;

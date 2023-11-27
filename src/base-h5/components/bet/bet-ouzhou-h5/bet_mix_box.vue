@@ -4,7 +4,7 @@
 -->
 <template>
   <div v-show="false">-{{ BetData.bet_data_class_version }}-{{BetData.h5_bet_box_show}}</div>
-  <div class="bet-mix-box " v-if="BetData.h5_bet_box_show && BetData.bet_oid_list.length">
+  <div class="component bet-mix-box ouzhou-h5" v-if="BetData.h5_bet_box_show && BetData.bet_oid_list.length">
     <betMixBoxChild></betMixBoxChild>
   </div>
 </template>
