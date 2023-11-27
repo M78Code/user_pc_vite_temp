@@ -85,6 +85,9 @@ const onChangeDate = e => {
         store.areaList = res
         store.selectArea = res[0]
         onChangeArea(res[0].id)
+      } else {
+        store.leaguesMatchs = []
+        store.areaList = []
       }
     })
   }
