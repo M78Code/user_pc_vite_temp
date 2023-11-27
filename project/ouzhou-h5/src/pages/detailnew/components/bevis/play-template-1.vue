@@ -40,7 +40,7 @@ setTimeout(function (){
 
 <template>
     <span v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</span>
-    <section class="template1" v-if="item_data?.hl">
+<!--    <section class="template1" v-if="item_data?.hl">
         <ul class="title">
             <li class="title-item textOverflow1" v-for="titleChild of item_data?.title" :key="titleChild.otd">
                 {{ titleChild?.osn }}
@@ -59,7 +59,7 @@ setTimeout(function (){
                 <template v-else >
                     <template v-if="olChild.os == 1">
                         <span class="on-text textOverflow2">{{olChild.ott || olChild.on}}</span>
-                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
+                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </template>
                     <template v-if="olChild.os == 2">
@@ -68,6 +68,29 @@ setTimeout(function (){
                 </template>
             </li>
         </ul>
+    </section>-->
+
+    <section class="template1" v-if="item_data?.hl">
+        <template v-for="hlChild of item_data?.hl" :key="hlChild.hid">
+            <template class="bet" v-for="olChild of hlChild.ol" :key="olChild.oid"
+                      :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
+                <template v-if="olChild.result != (void 0)">
+                    <div class="component play-template-1">
+                        <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
+                    </div>
+                </template>
+                <div class="list" v-else @click="go_betting(olChild)" v-if="olChild.os == 1"
+                     :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
+                    <p class="on-text list-item">{{olChild.ott || olChild.on}}</p>
+                    <p class="ov-text list-item">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</p>
+                    <olStatus style="position: absolute;right: 0" :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
+                </div>
+                <div v-if="olChild.os == 2" class="lockBox">
+                    <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                </div>
+            </template>
+
+        </template>
     </section>
 
 </template>
@@ -78,6 +101,20 @@ setTimeout(function (){
     --private-container-padding: 8px 16px;
 }
 .template1{
+    padding: 8px;
+    box-sizing: border-box;
+    width: 100%;
+    .list{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4px;
+        box-sizing: border-box;
+        height: 40px;
+        position: relative;
+    }
+}
+/*.template1{
     width: 100%;
     box-sizing: border-box;
     padding: 8px;
@@ -111,5 +148,12 @@ setTimeout(function (){
 
         }
     }
+}*/
+
+.lockBox{
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--q-gb-bd-c-10);
 }
+
 </style>

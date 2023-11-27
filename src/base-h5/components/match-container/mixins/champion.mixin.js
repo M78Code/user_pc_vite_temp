@@ -144,7 +144,7 @@ export default {
      */
     get_odds_value(ol_item,hsw) {
       let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
-      let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw );
+      let r1 = compute_value_by_cur_odd_type(ov,ov._hpid, hsw );
       return r1 || 0;
     },
 

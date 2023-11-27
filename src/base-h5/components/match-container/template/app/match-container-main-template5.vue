@@ -325,7 +325,7 @@ export default {
       // }
       const match_odds = compute_value_by_cur_odd_type(
         ov,
-        obv,  //todo
+        ov._hpid,  //todo
         hsw,
         sport_id
       );

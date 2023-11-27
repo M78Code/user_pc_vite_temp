@@ -74,11 +74,13 @@ const fold_odds = () => {
 
 <style lang="scss" scoped>
 .match-search {
-  position: relative;
+
+  display: flex;
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
   .flod {
-    position: absolute;
-    right: 0;
-    top: 0;
+    // position: absolute;
+    // right: 0;
+    // top: 0;
     height: 50px;
     line-height: 50px;
     width: 70px;
@@ -86,7 +88,9 @@ const fold_odds = () => {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--q-gb-bg-c-4);
     cursor: pointer;
+    overflow: hidden;
     &::before {
       content: "";
       display: block;
@@ -104,13 +108,14 @@ const fold_odds = () => {
     }
   }
   .search-top {
+    flex:1;
     height: 50px;
     background-color: var(--q-gb-bg-c-4);
     // border-radius: 4px;
     display: flex;
     align-items: center;
     padding-left: 10px;
-    border-bottom: 1px solid var(--q-gb-bd-c-1);
+    overflow: hidden;
   }
 
   .btn-group {

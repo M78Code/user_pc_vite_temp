@@ -11,7 +11,7 @@
             <ul v-if="obj.hl.ol">
               <div> 盘口id: {{ obj.hl.hid }} - {{ obj.hl.hv }}</div>
               <li v-for="(obj_ol,index2) in obj.hl.ol" :key="index2" class="ty-li" @click="set_bet_obj_config(item,obj,obj.hl,obj_ol)">
-               投注项： {{ obj_ol.oid }} - {{ obj_ol.onb }} - 1 - {{ obj_ol.ov }} - {{ compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid) }}
+               投注项： {{ obj_ol.oid }} - {{ obj_ol.onb }} - 1 - {{ obj_ol.ov }} - {{ compute_value_by_cur_odd_type(obj_ol.ov,obj_ol._hpid,'',item.csid) }}
               </li>
             </ul>
           </div>
@@ -23,7 +23,7 @@
                   <ul v-for="(obj_hl,index4) in obj.hl" :key="index4">
                     <div> 盘口id: {{ obj_hl.hid }} - {{ obj_hl.hv }} </div>
                     <li v-for="(obj_ol,index5) in obj_hl.ol" :key="index5" class="ty-li" @click="set_bet_obj_config(item,obj,obj_hl,obj_ol)">
-                      投注项： {{ obj_ol.oid }} - {{ obj_ol.onb }} -  {{ obj_ol.ov }} - {{ compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid) }}
+                      投注项： {{ obj_ol.oid }} - {{ obj_ol.onb }} -  {{ obj_ol.ov }} - {{ compute_value_by_cur_odd_type(obj_ol.ov,obj_ol._hpid,'',item.csid) }}
                       <!-- obj_ol.ov,'','', -->
                     </li>
                   </ul>

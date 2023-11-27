@@ -180,7 +180,7 @@ export default defineComponent({
         // }
       ]
     const settingData = ref([{
-          title: 'Odds Display',
+          title: i18n_t("ouzhou.setting_menu.odds_display"),
           index: 'DEC',
           params: ['EU', 'HK']
         }, 
