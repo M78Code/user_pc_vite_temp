@@ -912,16 +912,22 @@ init(){
                   }
                   const obj_temp = {};
                   for (const key in item2) {
-                    if(key!='hl'){
+                    if(!['hl','ol'].includes(key)){
                       obj_temp[key] = item2[key];
                     }
                   }
                   item.play_obj[play_obj_key] = obj_temp;
                 }
                 // 检查是否有盘口数据
-                if (lodash.get(item2,'hl.length')) {
+                if (lodash.get(item2,'hl.length') || lodash.get(item2,'ol.length')) {
+                  let item_arr = [];
+                  if(lodash.get(item2,'ol.length')){
+                    item_arr = [item2]
+                  } else{
+                    item_arr = item2.hl;
+                  }
                   // 遍历盘口数据
-                  item2.hl.forEach(item3 => {
+                  item_arr.forEach(item3 => {
                     if (item3) {
                       if (item3.hid) {
                         // 增加玩法信息到盘口级别
@@ -985,7 +991,7 @@ init(){
                   }
                   const obj_temp = {};
                   for (const key in item2) {
-                    if(key!='hl'){
+                    if(!['hl','ol'].includes(key)){
                       obj_temp[key] = item2[key];
                     }
                   }
@@ -1104,16 +1110,22 @@ init(){
                     }
                     const obj_temp = {};
                     for (const key in item2) {
-                      if(key!='hl'){
+                      if(!['hl','ol'].includes(key)){
                         obj_temp[key] = item2[key];
                       }
                     }
                     item.play_obj[play_obj_key] = obj_temp;
                   }
                   // 检查是否有盘口数据
-                  if (lodash.get(item2,'hl.length')) {
+                  if (lodash.get(item2,'hl.length') || lodash.get(item2,'ol.length')) {
+                    let item_arr = [];
+                    if(lodash.get(item2,'ol.length')){
+                      item_arr = [item2]
+                    } else{
+                      item_arr = item2.hl;
+                    }
                     // 遍历盘口数据
-                    item2.hl.forEach(item3 => {
+                    item_arr.forEach(item3 => {
                       if (item3) {
                         if (item3.hid) {
                           // 增加玩法信息到盘口级别
@@ -1172,7 +1184,7 @@ init(){
                     }
                     const obj_temp = {};
                     for (const key in item2) {
-                      if(key!='hl'){
+                      if(!['hl','ol'].includes(key)){
                         obj_temp[key] = item2[key];
                       }
                     }

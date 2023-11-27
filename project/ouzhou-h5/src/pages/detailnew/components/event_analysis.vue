@@ -45,7 +45,8 @@
               <div class="progress-title">
                 <span>{{ detail_info[item.value_key]['home'] }}</span>
                 <span>{{ item.title }}</span>
-                <span>{{ detail_info[item.value_key]['away'] }}</span></div>
+                <span>{{ detail_info[item.value_key]['away'] }}</span>
+              </div>
               <div class="progress-content">
                 <div class="progress">
                   
