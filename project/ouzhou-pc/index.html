@@ -466,13 +466,13 @@
         let location_href = location.href.split('?')[1];
         let params = {}
         let location_search = ''
-        if (location_href.indexOf('#/') > -1) {
+        if ((location_href||'').indexOf('#/') > -1) {
           is_hash = true
           location_search = location_href.split('#/')
           // location.hash.replace(/([^?&=]+)=([^&]+)/g, (_,k,v) => params[k] = v); 
         }
         //解析URL参数
-        let url_search = new URLSearchParams(location_search || location_href);
+        let url_search = SEARCH_PARAMS.init_param;
         // 获取清除缓存参数
         let clearcache = url_search.get("clearcache");
         if (clearcache == "1") {

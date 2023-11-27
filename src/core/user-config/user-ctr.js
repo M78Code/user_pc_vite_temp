@@ -1523,6 +1523,13 @@ class UserCtr {
     res.lang = this.lang || get_value('lang');
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api'));
+    // 功能附加参数
+    const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
+    PARAM_ADD_KEY.forEach(key => {
+      const val = SEARCH_PARAMS.init_param.get(key);
+      val && (res[key] = val);
+    });
+
     // 参数累加
     const searchParams = new URLSearchParams(res);
     // url编码转换

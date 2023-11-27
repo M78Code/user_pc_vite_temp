@@ -66,6 +66,7 @@ const onTabChange = e => {
     case 'Matces':
       break
     case 'League':
+      MenuData.set_current_lv1_menu(2);
       onChangeDate(12) // 默认展示12个小时的数据
       break
     case 'Outrights':
@@ -80,9 +81,14 @@ const onTabChange = e => {
 const onChangeDate = e => {
   if (store.tabActive !== 'Matches') {
     MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-      if (res) {
+      console.log('onChangeDate', res)
+      if (res.length) {
         store.areaList = res
+        store.selectArea = res[0]
         onChangeArea(res[0].id)
+      } else {
+        store.leaguesMatchs = []
+        store.areaList = []
       }
     })
   }
