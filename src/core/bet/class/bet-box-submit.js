@@ -174,6 +174,11 @@ const set_order_status_info = (orderNo) => {
         if(res.code == 200){
             let data_list = lodash_.get(res,'data', [])
             let order_status = ''
+            console.error('BetViewDataClass.is_finally',BetViewDataClass.is_finally)
+            // 已经完成了单次投注订单 不需要在执行了
+            if(BetViewDataClass.is_finally){
+               return clearTimeout(time_api_out)
+            }    
             data_list.forEach(item => {
                 // data.status（4:拒单、0:接单、3:待确认、2:取消、1:已处理)
                 order_status = item.status
@@ -417,7 +422,7 @@ const submit_handle = type => {
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
         let order_state = 2
         if (res.code == 200) {
-           
+            BetViewDataClass.set_is_finally(false)
             // 获取
             BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
             // 获取投注后的数据列表
@@ -500,6 +505,8 @@ const submit_handle = type => {
             }
         }
         set_error_message_config(res,'bet',order_state)
+    }).catch(()=>{
+        set_error_message_config({code:"0401038"},'bet')
     })
 }
 
@@ -573,7 +580,9 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if(!oid || !_hid || !_mid){
         return
     }
-
+    // 是否上一个投注流程已走完
+    BetViewDataClass.set_is_finally(true)
+    
     BetViewDataClass.set_bet_order_status(1)
     BetData.set_bet_mode(-1)
     // 重置金额为 0
@@ -702,7 +711,6 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     if(hpn){
         play_name = hpn
     }
-
     return play_name
     
 }
@@ -889,12 +897,14 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
 
 // 是否显示基准分 
 const get_mark_score = (ol_obj,mid_obj) => {
+    // debugger
     let score = ''
     // 显示基准分
     // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
-    let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
+    // let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
+    let play_id = [18, 19, 37, 38, 39, 42, 188, 189, 199]
     // 判断需要显示基准分的玩法
-    if(playId.includes(Number(ol_obj._hpid))){
+    if(play_id.includes(Number(ol_obj._hpid))){
         let obj = lodash_.get(mid_obj,'msc_obj.S1',{})
         score = `(${obj.home}-${obj.away})`
     }

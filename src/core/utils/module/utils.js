@@ -13,6 +13,8 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
 const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 
+const OL_RESULTS=['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half'];
+
 export const utils = {
 
   // 是否加载播放器js
@@ -458,7 +460,7 @@ export const utils = {
          "4": '赢',
          "5": '赢半',
          "6": '输半',
-   *@param {Number} val result的值
+   *@param {K.result[keyof K.result]} val result的值
    *@return {Boolean}
    */
   calc_win(val){
@@ -467,6 +469,17 @@ export const utils = {
     }else{
       return false
     }
+  },
+  /** 计算ol.result的值返回投注项状态
+   * 
+   * @param {K.result[keyof K.result]} val ol.result
+   * @returns {TYPES.OlResultState}
+   */
+  calcOlResult(val){
+    if(val > 0 && val <=6 ){
+      return OL_RESULTS[val]
+    }
+    return "r-unkown"
   },
 
   /**

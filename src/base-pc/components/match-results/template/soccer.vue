@@ -466,11 +466,12 @@
               </div>
             </div>
             <div v-if="index == activeIndex" class="wrap-load">
-              <div class="tab_change_content"  v-if="item.playBack&&show_play_back">
+              <!--v-if="item.playBack&&show_play_back"-->
+              <div class="tab_change_content"  v-if="false">
                 <tabs :value="current_events_type" :tabs="tab_list" @click="change_video_history_list"></tabs>
               </div>
               <!-- 精彩回放视频滚动列表 -->
-              <div class="play_back_event" v-if="item.playBack&&show_play_back">
+              <!-- <div class="play_back_event" v-if="item.playBack&&show_play_back">
                 <slider-x ref="drag_scroll" v-if="item.playBack && results_playback_list.length">
                   <template v-for="(slotProps,index) in results_playback_list" :key="index">
                     <div class="video-history-item"  @click="handle_item_click(slotProps)">
@@ -492,12 +493,12 @@
                         </div>
                     </div>
                   </template>
-                </slider-x>
+                </slider-x> -->
                 <!-- <no-data v-else :width="'141px'" :height="'80px'"></no-data> -->
-                <div style="width: 100%; height: 100%" class="flex   yb-flex-center" v-else>
+                <!-- <div style="width: 100%; height: 100%" class="flex   yb-flex-center" v-else>
                   <div class="no-data-bg"></div>
                 </div>
-              </div>
+              </div> -->
               <load-data :state="details_load" color="light">
                 <template v-for="(list, i) in results_order_list" :key="i">
                   <div

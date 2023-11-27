@@ -10,11 +10,8 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-<!--{{ item.hpt }}-->
-<!--{{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
-                                   :play="item" :item_data="item" :active="active" @bet_click_="bet_click_" />
-                        <playTemplate3 :play="item" :active="active" @bet_click_="bet_click_"></playTemplate3>
+                                   :item_data="item" :active="active" @bet_click_="bet_click_" />
                     </div>
                 </div>
             </template>
@@ -93,10 +90,10 @@ const playComponent = ref({
     template5: markRaw(temp5),
     template_other: markRaw(tem_other)
 })
+const hptArr = [0,1,3,5,4]
 const computedPlayComponent = function (hpt) {
-    let arr = [0,1,3,5,4]
     let componentName = '';
-    if (arr.includes(hpt)) {
+    if (hptArr.includes(hpt)) {
         componentName = `template${hpt}`
     } else if(hpt == 10){
         componentName = 'template3'
@@ -240,7 +237,7 @@ onMounted(() => {
             white-space: nowrap;
             text-overflow: ellipsis;
             color: var(--q-gb-t-c-4);
-            font-weight: 500;
+            font-weight: 800; //设计图的500无效
         }
 
         .odds-hpn-icon {

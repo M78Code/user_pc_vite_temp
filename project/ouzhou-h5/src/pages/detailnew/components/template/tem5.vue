@@ -51,7 +51,10 @@
             <span>{{compute_value_by_cur_odd_type(value[0]?.ov,'','',MatchDetailCalss.params.sportId)}}</span>
             <olStatus :item_ol_data="value[0]" />
           </template>
-          <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+          <template v-else>
+            <ResultOlItem v-if="value[0].result != (void 0)" :value="value[0]" :hpt="5"></ResultOlItem>
+            <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+          </template>
         </div>
         <template v-else>
           <div v-for="o in value" :class="{ temp_grid_item: true, 'is-active': BetData.bet_oid_list.includes(o?.oid ),ol_ov: true,}" :key="o.oid" @click="go_betting(o)">
@@ -60,7 +63,10 @@
               <span>{{compute_value_by_cur_odd_type(o.ov,'','',MatchDetailCalss.params.sportId)}}</span>
               <olStatus :item_ol_data="o" />
             </template>
-            <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+            <template v-else>
+              <ResultOlItem v-if="o.result != (void 0)" :value="o" :hpt="5"></ResultOlItem>
+              <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+            </template>
           </div>
         </template>
       </div>
@@ -78,6 +84,7 @@
                 :active="BetData.bet_oid_list.includes(ol?.oid)"
               />
             </template>
+            <ResultOlItem :value="ol" :hpt="5"></ResultOlItem>
             <span v-if="ol.os == 2 || ol._hs == 11"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
           </div>
         </div>
@@ -93,6 +100,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
 import olStatus from "../ol_status.vue";
 import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
+import ResultOlItem from "../../result/ResultOlItem.vue";
 const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
@@ -151,6 +159,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.else{
+  border: 1px solid red;
+}
 .odds-wrap {
   background-color: var(--q-gb-bg-c-2);
   box-sizing: border-box;
