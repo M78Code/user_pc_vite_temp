@@ -174,7 +174,6 @@ const set_order_status_info = (orderNo) => {
         if(res.code == 200){
             let data_list = lodash_.get(res,'data', [])
             let order_status = ''
-            console.error('BetViewDataClass.is_finally',BetViewDataClass.is_finally)
             // 已经完成了单次投注订单 不需要在执行了
             if(BetViewDataClass.is_finally){
                return clearTimeout(time_api_out)
@@ -431,6 +430,13 @@ const submit_handle = type => {
            
             // 单关
             if(BetData.is_bet_single){
+                orderDetailList = orderDetailList.map(item=>{
+                    if(item.matchType == 2){
+                        let score = item.scoreBenchmark.split(':')
+                        item.mark_score = `(${score[0]}-${score[1]})`
+                    }
+                    return item
+                })
                 set_orderNo_bet_obj(orderDetailRespList)
                 // 订单状态 0:投注失败 1: 投注成功 2: 订单确认中
                 let status_code = orderDetailRespList[0].orderStatusCode

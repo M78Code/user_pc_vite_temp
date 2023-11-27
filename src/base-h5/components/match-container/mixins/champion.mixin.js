@@ -156,6 +156,7 @@ export default {
      * @return {String}
      */
     item_click(match,hp,ol_item) {
+      console.log(match,hp,ol_item)
       if (!ol_item.ov || ol_item.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
       let flag = get_odds_active(0, hp.hs, ol_item.os);
       if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
