@@ -65,7 +65,7 @@ const routes = [
         }
       },
       {
-        path: "/league/:sportId/:tid",
+        path: "/league/:sportId/:tid/:type",
         name: "league",
         component: () => import('../pages/league/index.vue'),
         meta: {
