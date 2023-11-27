@@ -3,7 +3,7 @@
 		<template2 :is_show_btn="matches_15mins_list.length > 4">
 			<div class="matches-card-list-module">
 				<div class="matches-card-list" v-for="(match, index) in matches_15mins_list" :key="match.mid">
-					<MatchesCard15Mins :mid="match.mid" />
+					<MatchesCard15Mins :mid="match.mid" :idx="index" @del="idx => emits('del', idx)" />
 					<div class="split-line" v-show="index != matches_15mins_list.length - 1"></div>
 				</div>
 			</div>

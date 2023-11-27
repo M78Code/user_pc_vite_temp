@@ -89,7 +89,7 @@ const go_betting = (data) => {
                 >
                     <template v-if="_item?.os == 1 && !isLocked">
                         <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
-                        <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', sport_id) }}</span>
+                        <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item"
                                   :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                     </template>
@@ -116,6 +116,7 @@ const go_betting = (data) => {
 </template>
 
 <style scoped lang="scss">
+@import "basicTemplateStyle";
 .template4{
     padding: 8px;
     box-sizing: border-box;
@@ -213,28 +214,5 @@ const go_betting = (data) => {
     .ov-text {
         color: var(--q-gb-t-c-1);
     }
-}
-
-
-.lock {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 2px;
-}
-
-.textOverflow1 {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.textOverflow2 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 </style>

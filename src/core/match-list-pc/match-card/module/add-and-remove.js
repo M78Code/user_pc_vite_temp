@@ -134,7 +134,6 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
     `${remove_mid}_.tid`
   );
   let all_league_obj = league_list_obj;
-  console.log('888888888888eqw', all_league_obj, remove_tid);
   // 遍历所有赛事数据
   let match_status_type_arr = ["livedata", "nolivedata"];
   match_status_type_arr.forEach((match_status_type) => {
@@ -200,7 +199,6 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
       callback.length_0_fn();
     }
   } else {
-    console.log('88888888888883');
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       match_list,
