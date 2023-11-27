@@ -5,22 +5,37 @@
 -->
 
 <template>
-  <div v-show="false">{{BetData.bet_data_class_version}}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div v-if="[10].includes(match_info.hpt)" class="temp-simple">
     <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
       <div
         v-for="o in match_info.hl[0].ol"
         :key="o?.oid"
-        :class="{ 'temp-active': BetData.bet_oid_list.includes(o.oid), temp: true }"
+        :class="{
+          'temp-active': BetData.bet_oid_list.includes(o.oid),
+          temp: true,
+          'odds-lift': BetData.bet_oid_list.includes(ol.oid) && o.odds_lift,
+        }"
         @click="betItemClick(match_info.hl[0], o)"
       >
-        <div :title="o.ott" :style="{ color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#ff7000'}"
-             v-show="!match_info.hl[0].hs" class="oid-width">
-            {{ o.ott }}
-            <span>{{ o.on }} </span>
+        <div
+          :title="o.ott"
+          :style="{
+            color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#ff7000',
+          }"
+          v-show="!match_info.hl[0].hs"
+          class="oid-width"
+        >
+          {{ o.ott }}
+          <span>{{ o.on }} </span>
         </div>
         <div v-show="!match_info.hl[0].hs">
-          <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
+          <bet-item
+            :key="`bet_0_${o.hild}`"
+            :ol_data="o"
+            :current_ol="current_ol"
+          >
+          </bet-item>
           <!-- {{ Math.floor(o.ov / 1000) / 100 }} -->
         </div>
         <div
@@ -44,18 +59,57 @@
       >
         <template v-for="(o, index) in item.ol" :key="index">
           <div v-if="o && o.oid">
-            <div :class="[current_ol &&  BetData.bet_oid_list.includes(o.oid) ? 'temp-active' : '', 'temp',
-                item.ol.length % 2 !== 0 && index == item.ol.length - 1 && columnNum == 2 ? 'temp-right' : '',
-              ]" @click="betItemClick(item, o)"
+            <div
+              :class="{
+                'temp-active':
+                  current_ol && BetData.bet_oid_list.includes(o.oid),
+                temp: true,
+                'temp-right':
+                  item.ol.length % 2 !== 0 &&
+                  index == item.ol.length - 1 &&
+                  columnNum == 2,
+                'odds-lift':
+                  BetData.bet_oid_list.includes(o.oid) && o.odds_lift,
+              }"
+              @click="betItemClick(item, o)"
             >
               <!-- hpt 为1  不需要给颜色 -->
-              <div style="font-weight: 500;display: flex;align-items: center;width: 100%;" >
+              <div
+                style="
+                  font-weight: 500;
+                  display: flex;
+                  align-items: center;
+                  width: 100%;
+                "
+              >
                 <span class="oid-width" :title="o.ott">{{ o.ott }}</span>
-                <span v-if="[0].includes(match_info.hpt) && match_info.title.length > 0" v-html="getOn(match_info, o)"></span>
-                <span v-else :style="{color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',}" class="temp-on oid-width">{{ o.on }}</span>
+                <span
+                  v-if="
+                    [0].includes(match_info.hpt) && match_info.title.length > 0
+                  "
+                  v-html="getOn(match_info, o)"
+                ></span>
+                <span
+                  v-else
+                  :style="{
+                    color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',
+                  }"
+                  class="temp-on oid-width"
+                  >{{ o.on }}</span
+                >
               </div>
-              <div v-show="!item.hs" class="temp-on" :style="{ color: '#ff7000' }" style="font-weight: 500">
-                <bet-item :key="`bet_0_${o.hild}`" :ol_data="o"  :current_ol="current_ol"> </bet-item>
+              <div
+                v-show="!item.hs"
+                class="temp-on"
+                :style="{ color: '#ff7000' }"
+                style="font-weight: 500"
+              >
+                <bet-item
+                  :key="`bet_0_${o.hild}`"
+                  :ol_data="o"
+                  :current_ol="current_ol"
+                >
+                </bet-item>
               </div>
 
               <div style="text-align: right; width: 100%" v-show="item.hs">
@@ -96,7 +150,7 @@ const columnNum = ref(0); // 获取当前分成几列展示
 const columnTotal = (item) => {
   let total;
   const { match_info } = props;
-  if (match_info.title.length > 0 && ![0,3].includes (match_info.hpt)) {
+  if (match_info.title.length > 0 && ![0, 3].includes(match_info.hpt)) {
     if (match_info.hpt === 10) {
       total = 3;
     } else {
@@ -114,11 +168,11 @@ const columnTotal = (item) => {
 };
 
 const betItemClick = (item, o) => {
-  if (o.os!=1) {
-        return
-    }
+  if (o.os != 1) {
+    return;
+  }
   bet_oid.value = o.oid;
-  emit("betItemClick", item, o,props.match_info.hpn);
+  emit("betItemClick", item, o, props.match_info.hpn);
 };
 //  模板hpt0 数字 需要给颜色
 const getOn = (match_info, o) => {
@@ -133,6 +187,10 @@ const getOn = (match_info, o) => {
     result = o.on.replace(hv, `<span>${hv}</span>`);
   }
   return result;
+};
+
+const odds_change = (obj) => {
+  console.log(obj);
 };
 
 // 事件执行函数
@@ -194,7 +252,7 @@ onMounted(() => {
 .temp-active {
   background: var(--q-gb-bg-c-1);
   color: var(--q-gb-t-c-1);
-  border-bottom-color: var(--q-gb-bg-c-1)!important;
+  border-bottom-color: var(--q-gb-bg-c-1) !important;
   &:hover {
     background: var(--q-gb-bg-c-1) !important;
     color: var(--q-gb-t-c-1);
@@ -205,6 +263,21 @@ onMounted(() => {
     // margin-left: 10px;
   }
 }
+.odds-lift {
+  // span {
+  //   &:nth-child(1) {
+  //     width: 50%;
+  //     display: block;
+  //     text-align: right;
+  //     margin-right: 10px;
+  //     overflow: hidden;
+  //     color: var(--q-gb-t-c-5) !important;
+  //   }
+  // }
+  color: var(--q-gb-t-c-5) !important;
+  background-color: var(--q-gb-bg-c-5) !important;
+}
+
 
 .oid-width {
   // min-width: 50px;
@@ -213,7 +286,7 @@ onMounted(() => {
   max-width: 75%;
   line-height: 20px;
   align-items: center;
-    margin: 0 4px;
+  margin: 0 4px;
   // overflow: hidden;
   // text-overflow: ellipsis;
   // white-space: nowrap;
