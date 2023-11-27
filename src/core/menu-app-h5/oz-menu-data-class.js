@@ -50,7 +50,7 @@ class MenuData {
     this.menu_csid = 0
     //----------------------------------- 常规球种 --------------------------------------//
     // this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
-    this.conventionalType = [101,102,105,190,191,400]; 
+    this.conventionalType = [101,102,105,400]; 
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
