@@ -211,11 +211,12 @@
       </q-table>
       <!--分页组件-->
 
-      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"
+      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="records.total" 
+                  :betTotalAmount="records.betTotalAmount"
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
-      >
+                  :profit="records.profit">
       </Pagination>
       <!--      <pagination-wrapper-->
       <!--        v-if="tableData.length > 0"-->
@@ -258,7 +259,7 @@ const match_type = {
   2: i18n_t("list.list_today_play_title"),
   3: i18n_t("menu.match_winner")
 }
-const { columns, tableData, total, loading, handle_fetch_order_list } = useGetOrderList()
+const { columns, tableData, loading, handle_fetch_order_list,records } = useGetOrderList()
 const labelClick = (row) => {
   console.log(row)
 }
@@ -612,7 +613,7 @@ const hand_copy = (data) => {
     position: fixed;
     bottom: 0;
     left: 50%;
-    width: 1430px;
+    width: 1360px;
     transform: translate(-50%, 0);
     background-color: var(--q-gb-bg-c-4);
     box-shadow: 0 -4px 8px var(--q-gb-bg-c-15);
