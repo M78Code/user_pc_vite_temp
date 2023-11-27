@@ -2736,9 +2736,9 @@
     "no_data_msg_1": "Match not found"
   },
   "odds": {
-    "EU": "Decimal",
+    "EU": "DEC",
     "GB": "Fractional",
-    "HK": "Hong Kong",
+    "HK": "HK",
     "ID": "Indonesian",
     "MY": "Malaysian",
     "US": "American"
