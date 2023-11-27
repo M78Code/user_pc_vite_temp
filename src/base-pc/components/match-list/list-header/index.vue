@@ -246,7 +246,7 @@ function compute_quanbu_btn_class () {
 function select_time_change () {
   //设置session
   sessionStorage.setItem('is_select_time', '1')
-  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
+  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {});
 }
 /**
  * 重置条件
