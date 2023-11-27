@@ -1,5 +1,5 @@
 <template>
-  <div id="q-app" class="full-height" v-if="get_token">
+  <div id="q-app" class="full-height" v-if="judgment_token()">
     <appload v-if="init_load"></appload>
   </div>
   <div v-else>
@@ -26,11 +26,12 @@ export default {
   },
   methods: {
     // 判断是否具有 token  url 或 session
-    get_token() {
+    judgment_token() {
       // url token
       let url_token = location.search.indexOf('token');
       // session token
-      let session_stroage_token = SessionStorage.get(token_key) || SessionStorage.get('token');
+      let session_stroage_token = sessionStorage.getItem('pc_token') || sessionStorage.getItem('token');
+      console.log('session_stroage_token', session_stroage_token);
       return url_token >= 0 || session_stroage_token;
     }
   }
