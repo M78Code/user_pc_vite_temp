@@ -37,7 +37,7 @@
           <span>{{ i18n_t("select.hot") }}</span>
         </div>
       </div>
-      <q-scroll-area ref="scrollArea" :style="{ flex: '1' }">
+      <q-scroll-area ref="scrollArea" :style="{ flex: '1' }" v-if="list.length > 0">
         <div
           class="wrap-item"
           v-for="(item, index) in list"
@@ -49,6 +49,7 @@
           <div class="select-item">{{ item.tournamentName }}</div>
         </div>
       </q-scroll-area>
+      <no_data v-else :width="'130px'" :height="'156px'" />
       <div class="btn-confrim">
         <span class="cancel" @click="cancel">
           {{
@@ -66,6 +67,7 @@ import { onMounted, onUnmounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { IconWapper } from "src/components/icon";
 import { GlobalSwitchClass} from "src/core/index";
+import no_data from "src/components/no_data/no_data.vue";
 const route = useRoute();
 
 import { i18n_t } from "src/core/index";
