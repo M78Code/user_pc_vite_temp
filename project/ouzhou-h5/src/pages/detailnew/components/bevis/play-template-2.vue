@@ -27,8 +27,8 @@ setTimeout(function () {
 <template>
     <section class="template2">
         <nav class="title" v-if="item_data?.title">
-            <div class="text-title">{{ item_data.title[0].osn }}</div>
-            <div class="text-title">{{ item_data.title[1].osn }}</div>
+            <div class="text-title textOverflow1">{{ item_data.title[0].osn }}</div>
+            <div class="text-title textOverflow1">{{ item_data.title[1].osn }}</div>
         </nav>
         <ul class="bet" v-for="(hlChild,hlIndex) of item_data.hl" :key="hlIndex">
             <template v-if="!!hlChild">
@@ -36,7 +36,7 @@ setTimeout(function () {
                     @click="go_betting(olChild)"
                     v-for="olChild of hlChild.ol" :key="olChild.oid">
                     <template v-if="olChild.os == 1 && olChild._hs != 11">
-                        <span class="on-text">{{ olChild.otv || olChild.ott }}</span>
+                        <span class="on-text textOverflow2">{{ olChild.otv || olChild.ott }}</span>
                         <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </template>
@@ -104,5 +104,20 @@ setTimeout(function () {
         color: var(--q-gb-t-c-2);
         margin: 0 8px;
     }
+}
+
+.textOverflow1 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.textOverflow2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 </style>
