@@ -68,14 +68,21 @@
       class="table-footer"
       v-if="results_data.total && load_data_state != 'empty'"
     >
-      <pagination-wrapper
+      <!-- <pagination-wrapper
         :count="results_data.total"
         @pageChange="changePage"
         :is_bet_record="false"
         :results_table="results_table_style"
         :reset_pagination="reset_pagination"
-      ></pagination-wrapper>
+      ></pagination-wrapper> -->
+      <Pagination class="record-pagination" :count="results_data.total"
+                  @pageChange="changePage"
+                  @pageSizeChange="pageSizeChange"
+                  @goPageChange="goPageChange"
+      >
+      </Pagination>
     </div>
+    
     <!-- 底部分页条 E-->
     <div class="tips" v-if="tips.statu">{{ tips.message }}</div>
   </div>
@@ -86,7 +93,8 @@ import { i18n_t } from "src/boot/i18n.js";
 import { useGetResultConfig } from "src/base-pc/components/match-results/results-config.js";
 import { RusultType } from "src/base-pc/components/match-results/rusult-type/index.js";
 import { SimpleHeaderWapper as simpleHeader } from "src/components/common/simple-header/index.js";
-import { PaginationWrapper } from "src/components/pagination/index.js";
+import Pagination from 'project_path/src/components/Pagination.vue'
+//import { PaginationWrapper } from "src/components/pagination/index.js";
 import moveVideo from "src/base-pc/components/video-replay/move-video.vue";
 import { ResultHeader } from "src/base-pc/components/match-results/result-header/index.js";
 import { onMounted,ref } from "vue";
@@ -127,6 +135,8 @@ const {
   change_sort,
   change_playback_type,
   changePage,
+  pageSizeChange,
+  goPageChange,
   get_serverTime,
   startTimeShowFunc,
   isSelectConfirm,
