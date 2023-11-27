@@ -202,6 +202,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 .detail_header_tem2 {
   position: relative;
+  /**.change-header-fix z-index:91; 需大于其 */
+  z-index: 102;
   .detail-header-video {
     height: 230px;
     width: 100vw;

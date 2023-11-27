@@ -120,16 +120,12 @@
 import { defineComponent, onMounted, ref,watch, onUnmounted } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
-import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account,api_betting } from 'src/api/index';
 import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
-import BetData from 'src/core/bet/class/bet-data-class.js';
-import {  LayOutMain_pc } from 'src/core/index.js'
-import { emit } from "licia/fullscreen";
 import { compute_css_obj } from 'src/core/server-img/index.js'
 
 
@@ -236,7 +232,7 @@ export default defineComponent({
       window.open(
         url,
         "",
-        `height=${_window_height}, width=${_window_width}, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
+        `height=${_window_height}, width=${_window_width}, top=100, left=360, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
       );
     }
     const onExpend = () => {

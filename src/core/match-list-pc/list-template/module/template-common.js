@@ -211,6 +211,7 @@ export const set_template_width_base = (
 /**
  * @Description 设置欧洲版模板table宽度
  * @param {number} total_width 列表总宽度
+ * @param {boolean} more_width 是否是滚球
  */
 export const set_ouzhou_template_width_base = (
   total_width,
@@ -221,7 +222,7 @@ export const set_ouzhou_template_width_base = (
   config.process_team_width = 340;
   // 视频按钮区域宽度
   config.media_width = 46;
-  config.play_icon_width = 115;
+  config.play_icon_width = more_width ? 106 : 115;
   // 设置投注项宽度
   config.bet_width = more_width ? 264 : 330;
   // 联赛标题高度

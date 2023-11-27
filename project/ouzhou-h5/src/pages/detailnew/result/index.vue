@@ -87,7 +87,7 @@ const matchResults = ref([])
   .change-header-fix {
     width: 100vw;
     position: fixed;
-    top: 50px;
+    top: 49px;
     z-index: 91;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
