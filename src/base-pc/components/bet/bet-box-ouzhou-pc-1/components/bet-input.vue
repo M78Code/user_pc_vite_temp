@@ -3,7 +3,7 @@
 <template>
     <div>
         <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-        :placeholder="`${i18n_t('bet.money_range')} ${parseInt(ref_data.min_money)}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
+        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
     </div>
 
 </template>
@@ -170,7 +170,7 @@ const show_quick_amount = state => {
     border: 0.5px solid var(--q-gb-bd-c-5);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
-    padding: 0 8px;
+    padding: 0 0 0 8px;
     display: flex;
     align-itemss: center;
     transition: .3s;
@@ -185,7 +185,6 @@ const show_quick_amount = state => {
         background: var(--q-gb-bg-c-18);
     }
     &::-webkit-input-placeholder {/*Chrome/Safari*/
-        font-family: 'PingFang SC';
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
@@ -194,7 +193,6 @@ const show_quick_amount = state => {
         color: var(--q-gb-t-c-8);
     }
     &::-moz-placeholder {/*Firefox*/
-        font-family: 'PingFang SC';
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
@@ -203,7 +201,6 @@ const show_quick_amount = state => {
         color: var(--q-gb-t-c-8);
     }
     &::-ms-input-placeholder {/*IE*/
-        font-family: 'PingFang SC';
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
