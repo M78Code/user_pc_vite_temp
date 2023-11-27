@@ -74,7 +74,6 @@ function compute_match_all_handicap_data_champion(match) {
     lodash.each(hpsData.hps, (item) => {
       let hl_obj = lodash.get(item, "hl", {});
       if (hl_obj.hid) {
-        console.log('hl_objhl_obj', hl_obj);
         hl_obj.end_time = time_conversion(hl_obj.hmed);
         hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid)?.hpn
         main_handicap_list.push(hl_obj);

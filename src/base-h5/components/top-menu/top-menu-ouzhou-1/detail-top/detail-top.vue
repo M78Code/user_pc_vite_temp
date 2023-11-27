@@ -29,8 +29,7 @@
     </div>
     <div class="refresh" @click.capture>
       <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""  @touchend="refreshAll"
-        :class="[{ 'refresh-active': '' }, 'refresh-icon']" />
-        
+       :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']" />
     </div>
   </div>
 </template>
