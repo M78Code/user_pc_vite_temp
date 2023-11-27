@@ -13,9 +13,9 @@
 				{{ getName() }}
 				<span class="yb-icon-arrow"></span>
 				<div class="leagues_filrer_item" v-show="show_leagues">
-					<div v-for="item in active_league_list" :key="item.id" @click="set_active_league(item)" :class="item.id == active_league ? 'league_acitve': ''">
+					<div v-for="item in league_list" :key="item.id" @click="set_active_league(item)" :class="item.id == active_league ? 'league_acitve': ''">
 						{{ item.nameText }}
-						<div class="leagues_filrer_item_line" v-if="item.id !== active_league_list[active_league_list.length -1].id"></div>
+						<div class="leagues_filrer_item_line" v-if="item.id !== league_list[league_list.length -1].id"></div>
 					</div>
 				</div>
 			</div>
@@ -32,20 +32,16 @@ import { useRoute, useRouter } from 'vue-router';
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 
-// const props = defineProps({
-//   list: Array,
-// });
+// route.params.type  1 从联赛列表进入 2 从普通赛事详情进入
 
 const route = useRoute();
 const router = useRouter()
 const show_leagues = ref (false)
 const active_league = ref(route.params.tid)
-const active_league_list = JSON.parse(localStorage.getItem("league_list"))
-console.log(active_league_list, 'active_league_list')
+const league_list = ref([])
 
 const set_show_leagues = () => {
-	if (!active_league_list.length) return;
-	if (!active_league_list.filter(item => item.id == active_league.value)?.length) return;
+	if (!league_list.value.length) return;
 	show_leagues.value = !show_leagues.value
 	if (show_leagues.value) {
 		window.addEventListener('click', (e) => {
@@ -54,14 +50,27 @@ const set_show_leagues = () => {
 	}
 }
 
+watch(() => route.params.type, async () => {
+	if (route.params.type == 2) {
+		const list = await get_ouzhou_leagues_data(12)
+		list?.map(item => {
+			item.tournamentList?.map(leagues => {
+				league_list.value.push(leagues)
+			})
+		})
+	} else {
+		league_list.value = JSON.parse(localStorage.getItem("league_list"))
+	}
+}, { immediate: true })
+
 const set_active_league = (item) => {
 	active_league.value = item.id
-	router.push(`/league/${route.params.sportId}/${item.id}`)
+	router.push(`/league/${route.params.sportId}/${item.id}/${route.params.type}`)
 }
 
 const getName = () => {
 	let name = ''
-	active_league_list.map(item => {
+	league_list.value.map(item => {
 		if (item.id == route.params.tid) {
 			name = item.nameText
 		}

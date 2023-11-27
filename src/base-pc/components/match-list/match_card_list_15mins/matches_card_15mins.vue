@@ -14,9 +14,10 @@
       {{ match.man }}
     </div>
     <div class="odds-box din_font">
-      <div class="odds-box-item" v-for="(col, col_index) in ols_data" :key="`${match.mid}_${col._hpid}_${col_index}`">
-        <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
-          v-for="(ol_data, ol_index) in (col.ols)" :key="`${ol_data.oid}_${ol_index}_${col_index}`">
+      <div class="odds-box-item">
+        <div :class="['bet-item-wrap-ouzhou', (handicap_list.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
+          v-for="(ol_data, i) in ols_data" :key="`${ol_data.oid}+${ol_data._hpid}+${i}`">
+          <!-- {{ ol_data }} -->
           <!-- 投注项组件 -->
           <bet-item :ol_data="ol_data" match_data_type="pc_ten_five_mins" />
         </div>
@@ -38,6 +39,7 @@ import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 const router = useRouter()
 const props = defineProps({
   mid: String,
+  idx: Number
 });
 const jump_to_details = (item) => {
   const { tid, csid } = item;
@@ -54,32 +56,26 @@ const jump_to_details = (item) => {
 const match = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_ob_ref(props.mid)
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-let handicap_list = [lodash.cloneDeep(match_tpl_info.get_15mins_odds_list())] //只有一个数组哦
+let handicap_list = ref(lodash.cloneDeep(match_tpl_info.get_15mins_odds_list())) //只有一个数组哦
+const emits = defineEmits(['del'])
 const ols_data = computed(() => {
-  const jieduan = lodash.find(match.value.hps15Minutes, (i) => handicap_list[0]._hpid == i.hpid) //找到玩法ID
-
-  // get_min15_handicap_type(1,hSpecial,0)
-
   const { mid } = match.value
+  const jieduan = lodash.find(match.value.hps15Minutes, (i) => handicap_list.value._hpid == i.hpid) //找到玩法ID 和阶段
   const ot_Map = lodash.keyBy(lodash.get(jieduan, 'hl[0].ol', []), (i) => i.ot) //找到ol数据
-  return handicap_list.map((col) => {
-    col.ols.forEach((ol, ol_index) => {
-      const ol_data = ot_Map[ol.ot]
-      if (ol_data) {
-        const ref_oid = lodash.get(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, `list_to_obj.ol_obj.${mid}_${ol_data.oid}`, {})
-        Object.assign(col.ols[ol_index], ref_oid)
-      }
-    });
-    return col
+  handicap_list.value.ols.forEach((ol) => {
+    const ol_data = ot_Map[ol.ot]
+    if (ol_data) {
+      const ref_oid = lodash.get(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, `list_to_obj.ol_obj.${mid}_${ol_data.oid}`, {})
+      Object.assign(ol, ref_oid)
+    }
   })
-
-
-  // get_template_data({
-  //   match: match.value,
-  //   handicap_list,
-  //   type: 4,
-  //   play_key: 'hps15Minutes'
-  // }, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common)
+  return handicap_list.value.ols
+})
+watch(() => match.hSpecial, (v, o) => {
+  if (v != o && v != undefined && o != undefined) {
+    // 15分钟玩法阶段
+    emits("del", props.idx)
+  }
 })
 // // 监听 当前投注项ID的变化
 watch(

@@ -372,8 +372,7 @@ const get_sport_kind = () => {
 	get_search_sport().then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			const ls = ["足球", "篮球", "网球"]  //只显示足、篮、网
-			sport_kind_data.value = data.filter(item => ls.includes(item.sportName))
+			sport_kind_data.value = data.filter(item => MenuData.conventionalType.includes(+item.id + 100))
 		}
 	});
 }

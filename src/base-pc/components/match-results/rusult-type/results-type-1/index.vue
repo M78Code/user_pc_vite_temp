@@ -431,9 +431,9 @@ export default {
             user-select: text;
           }
           .tournament-logo {
-            // min-width: 18px;
-            // height: 18px;
-            // margin-right: 5px;
+            min-width: 18px;
+            height: 18px;
+            margin-right: 5px;
           }
           .ellipsis-line-2 {
             display: -webkit-box;
