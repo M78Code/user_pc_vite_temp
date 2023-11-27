@@ -73,6 +73,7 @@ import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js"
 const router = useRouter();
 const route = useRoute()
 const amount = ref(UserCtr.balance)
+const hisLen = ref(history.length)
 
 const leftDrawerOpen = ref(false)
 const emit = defineEmits(["change"]);
@@ -123,6 +124,10 @@ const jump_personal = () => {
 
 // 回到上一页
 const go_back = () => {
+  if(is_rule_page.value){
+    router.go(hisLen.value - history.length - 1)
+    return ;
+  }
   if (route.path == '/coming_soon' && getSessionItem('routePath')) {
     router.push('/')
   } else {
@@ -140,9 +145,11 @@ const changebalance = (val) =>{
   amount.value = val;
 }
 onMounted(() => {
+  hisLen.value = history.length
   useMittOn(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE, changebalance)
 })
 onUnmounted(()=>{
+  hisLen.value = history.length
   useMittOn(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE).off
 })
 </script>
