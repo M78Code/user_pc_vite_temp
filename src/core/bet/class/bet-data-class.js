@@ -179,6 +179,7 @@ this.bet_appoint_ball_head= null */
       x: window.innerWidth * 0.6,
       y: window.innerHeight * 0.7,
       isActive: false,
+      draggable:true,
       show: false,
     }
     // console.error('window.innerWidth',window.innerWidth);
