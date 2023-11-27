@@ -5,7 +5,7 @@
  */
 
 <template>
-  <template v-if="wslog.ws_run && false">
+  <template v-if="wslog.ws_run">
     <div class="time-show">
       <span>{{ CURRENT_ENV_MAP[CURRENT_ENV] }}:{{ log_time }}</span>
     </div>
