@@ -294,7 +294,6 @@ const get_msc_data = (msc_data, current_data) => {
     },
   ];
   if (msc_data.length > 0) {
-    console.log(1111111111111, current_data);
     //   网球
     if (detail_info.csid == 5) {
       res = list.map((item) => {
@@ -346,8 +345,6 @@ const format_msc = (detials) => {
   let msc_data = [];
   let msc = props.score_list;
   const current_data = computed_score(detials); // 计算总分
-  console.log(111111111111, current_data);
-  console.log(111111111111);
 
   csid == "4" && (mft = mft || 3);
   let dict = socre_dict(csid);
