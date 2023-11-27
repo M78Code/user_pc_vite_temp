@@ -81,7 +81,7 @@ export function usedetailData(route) {
   const get_match_detail = (value) => {
     const plays = category_list.value.find(
       (item) => item.orderNo == value
-    ).plays;
+    )?.plays;
     if (detail_list.value?.length > 0) {
       for (const i of detail_list.value) {
         all_list_toggle[i.hpid] = i.expanded === undefined ? true : i.expanded;
@@ -91,9 +91,13 @@ export function usedetailData(route) {
         }
       }
     }
-    let list = all_list.value.filter((item) =>
-      plays.includes(Number(item.hpid))
-    );
+    let list;
+    if (plays) {
+      list = all_list.value.filter((item) => plays.includes(Number(item.hpid)));
+    } else {
+      list = all_list.value;
+    }
+
     if (list.length > 0) {
       for (const item of list) {
         item.expanded = all_list_toggle[item.hpid];
@@ -209,11 +213,13 @@ export function usedetailData(route) {
       const res = await get_detail_category(params);
       category_list.value = res.data || [];
       const list = res.data?.filter((i) => i.marketName);
+      if (list) {
+        tabList.value = list.map((item) => ({
+          label: item.marketName,
+          value: item.orderNo,
+        }));
+      }
 
-      tabList.value = list.map((item) => ({
-        label: item.marketName,
-        value: item.orderNo,
-      }));
       await get_detail_lists();
     } catch (error) {
       console.error("get_detail_category", error);
@@ -362,63 +368,64 @@ export function usedetailData(route) {
     // 一键置顶监听
     useMittOn(MITT_TYPES.EMIT_SET_PLAT_TOP, set_top);
 
-
-      // 增加监听接受返回的监听函数
-     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-     if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
-     // handler_ws_cmd(cmd, data);
-     // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
-     // console.error(flag,'flag','cmd:',cmd,data);
-     //如果ms mmp变更了 就手动调用ws
-       init.value = false
-       switch (cmd) {
-         case "C303":
-         get_category();
-         get_detail_lists();
-           break;
-         case "C302":
-          // 赛事状态发现变更  ms 
+    // 增加监听接受返回的监听函数
+    message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+      if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
+      // handler_ws_cmd(cmd, data);
+      // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
+      // console.error(flag,'flag','cmd:',cmd,data);
+      //如果ms mmp变更了 就手动调用ws
+      init.value = false;
+      switch (cmd) {
+        case "C303":
+          get_category();
+          get_detail_lists();
+          break;
+        case "C302":
+          // 赛事状态发现变更  ms
           init();
           break;
-         case "C104":
-           RCMD_C104(data)
-           break;  
-         case "C109":
-          RCMD_C109(data)
-          break; 
-         default:
-           break;
-       }
-   })
+        case "C104":
+          RCMD_C104(data);
+          break;
+        case "C109":
+          RCMD_C109(data);
+          break;
+        default:
+          break;
+      }
+    });
   });
   /**
    * @description: RCMD_C109
    * @return {*}
    */
-  function RCMD_C109(obj){
-    if(!obj){return}
+  function RCMD_C109(obj) {
+    if (!obj) {
+      return;
+    }
     let skt_data = obj.cd;
-    if(!skt_data || skt_data.length<1) return;
+    if (!skt_data || skt_data.length < 1) return;
     // 重新拉取数据;
     get_category();
     get_detail_lists();
-  };
+  }
   /**
- * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
- * @param {*} obj
- * @return {*}
- */  
+   * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
+   * @param {*} obj
+   * @return {*}
+   */
   function RCMD_C104(obj) {
     let skt_data = obj.cd;
     // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
-    if(skt_data.mhs == 0 || skt_data.mhs == 11){
+    if (skt_data.mhs == 0 || skt_data.mhs == 11) {
       // 重新拉取数据;
-     get_category();
-     get_detail_lists();
-    }else if(skt_data.mhs == 1){
+      get_category();
+      get_detail_lists();
+    } else if (skt_data.mhs == 1) {
       // 设置盘口状态
-    }else if(skt_data.mhs == 2){
-      show_close_thehand.value = true;  
+    } else if (skt_data.mhs == 2) {
+      show_close_thehand.value = true;
     }
   }
   //todo mitt 触发ws更新
@@ -448,7 +455,7 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
-    message_fun = null
+    message_fun = null;
     // off_init()
   });
 
