@@ -16,7 +16,7 @@
                       <div class="nonebox4-content-left-content-text-two">
                        {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} 
                        <span class="text-two-span">{{items.playName}}
-                         <span v-if="items.playId == 4">{{items.matchType == 2? items.mark_score : ''}}</span>
+                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
                         [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
                       </div>
