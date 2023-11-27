@@ -88,7 +88,6 @@
     }
     // 将我们的列表历史存入
     MatchListCardData.match_list_key = lodash.cloneDeep(match_list)
-    console.log('match_listmatch_listmatch_list1', match_list);
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
       let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
@@ -107,7 +106,6 @@
       if(MatchListCardData.match_list_mapping_relation_obj_type == 9 && _match.csid != pre_match_csid){
         pre_match_csid = _match.csid
         card_key = `sport_title_${_match.csid}`
-        console.log('card_keycard_key',csid_key, csid_to_card_key_obj, !csid_to_card_key_obj[csid_key].includes(card_key));
         // 判断球种标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复球种标题卡片
         if(!csid_to_card_key_obj[csid_key].includes(card_key)){
           // 球种标题卡片处理
@@ -204,7 +202,6 @@
         if(!is_ws_call){
           Object.assign(all_card_obj[card_key],fold_template)
         }
-        console.log('object');
         // 打入联赛容器卡片
         card_index += 1
         card_key = `league_container_${cus_tid}`
