@@ -66,6 +66,7 @@ const onTabChange = e => {
     case 'Matces':
       break
     case 'League':
+      MenuData.set_current_lv1_menu(2);
       onChangeDate(12) // 默认展示12个小时的数据
       break
     case 'Outrights':
