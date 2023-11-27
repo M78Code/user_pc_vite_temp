@@ -1,4 +1,3 @@
-
 <!--
  * @Author: cooper
  * @Date: 2023-06-06 14:13:55
@@ -10,7 +9,13 @@
       <div class="analysis-top">
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
-          <sport_icon :sport_id="detail_info.csid" :status="false" size="18px" class="icon" style="margin:0 10px"/>
+          <sport_icon
+            :sport_id="detail_info.csid"
+            :status="false"
+            size="18px"
+            class="icon"
+            style="margin: 0 10px"
+          />
           <!--<span class="analysis-top-txt">{{ detail_info.tn }}</span>-->
           <span class="home-vs-away">{{ detail_info.mhn }} </span>
           <span class="match-detail-head-name m-10">v</span>
@@ -18,21 +23,54 @@
         </div>
         <div class="analysis-top-right">
           <!-- 视频图标 -->
-          <img v-if="cur_video_icon.type" :src="show_type&&show_type!='animal'?video_active: video"
-               alt="" srcset="" style="margin-right: 15px" @click="tab_click(cur_video_icon.type)" />
-           <!-- 动画图标 -->
-          <img v-if="detail_info.mvs > -1" :src="show_type&&show_type=='animal' ? animal_active : animal"
-            alt="" srcset="" style="margin-right: 15px" @click="tab_click('animal')" />
-           <!-- 比分榜图标 -->
-          <img :src="score_key ? score_active : score" alt="" srcset="" @click="tab_click('score')" />
+          <img
+            v-if="cur_video_icon.type"
+            :src="show_type && show_type != 'animal' ? video_active : video"
+            alt=""
+            srcset=""
+            style="margin-right: 15px"
+            @click="tab_click(cur_video_icon.type)"
+          />
+          <!-- 动画图标 -->
+          <img
+            v-if="detail_info.mvs > -1"
+            :src="show_type && show_type == 'animal' ? animal_active : animal"
+            alt=""
+            srcset=""
+            style="margin-right: 15px"
+            @click="tab_click('animal')"
+          />
+          <!-- 比分榜图标 -->
+          <img
+            :src="score_key ? score_active : score"
+            alt=""
+            srcset=""
+            @click="tab_click('score')"
+          />
         </div>
       </div>
       <!-- 动画视频 -->
-      <animal_box v-if="animal_key" :show_type="show_type" :detail_info="detail_info" />
+      <animal_box
+        v-if="animal_key"
+        :show_type="show_type"
+        :detail_info="detail_info"
+      />
       <!-- 比分 -->
-      <score_info v-show="score_key && !lodash_.isEmpty(score_list) && [1,3].includes( detail_info.ms)" :score_list="score_list" :detail_info="detail_info"/>
-     <!-- 即将开赛  ms，0未开赛；1进行中；3完赛 110 即将开赛-->
-      <comming-soon v-show="detail_info.ms == 110 && score_key" :detail_info="detail_info"></comming-soon>
+      
+      <score_info
+        v-show="
+          score_key &&
+          !lodash_.isEmpty(score_list) &&
+          [1, 3].includes(Number(detail_info.ms))
+        "
+        :score_list="score_list"
+        :detail_info="detail_info"
+      />
+      <!-- 即将开赛  ms，0未开赛；1进行中；3完赛 110 即将开赛-->
+      <comming-soon
+        v-show="detail_info.ms == 110 && score_key"
+        :detail_info="detail_info"
+      ></comming-soon>
     </div>
   </div>
 </template>
@@ -46,7 +84,6 @@ import commingSoon from "./comming-soon.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import { get_match_status } from "src/core/utils/index";
 import lodash_ from "lodash";
-
 
 const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
 const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`;
@@ -70,23 +107,23 @@ const props = defineProps({
 
 const animal_key = ref(false);
 const score_key = ref(true);
-const show_type = ref('');
+const show_type = ref("");
 
 watch(
   () => props.detail_info,
   (val) => {
     // 有动画优先播放动画
     if (val.mvs > -1) {
-      animal_key.value = false
+      animal_key.value = false;
       setTimeout(() => {
-        tab_click('animal')
+        tab_click("animal");
       }, 100);
-    // tab_click('animal')
-   }else{
-    animal_key.value = false;
-     score_key.value = true;
-     show_type.value = ''
-   }
+      // tab_click('animal')
+    } else {
+      animal_key.value = false;
+      score_key.value = true;
+      show_type.value = "";
+    }
   }
 );
 
@@ -115,7 +152,7 @@ const cur_video_icon = computed(() => {
   // 包含的语言
   // let status = ["zh", "tw"].includes(this.get_lang);
   //演播厅
-  if (lvs == 2  && [1, 0].includes(lss)) {
+  if (lvs == 2 && [1, 0].includes(lss)) {
     if (lss === 1) {
       cur_video_icon = {
         type: "studio",
@@ -134,8 +171,8 @@ const cur_video_icon = computed(() => {
       // text: this.$root.$t("common.anchor"),
     };
     //源视频                       非电竞 或者电竞有url
-  } 
- if (mms == 2 && is_play) {
+  }
+  if (mms == 2 && is_play) {
     cur_video_icon = {
       type: "video",
       // text: this.$root.$t("common.o_video"),
@@ -144,11 +181,10 @@ const cur_video_icon = computed(() => {
   return cur_video_icon;
 });
 
-
 const tab_click = (type) => {
-  show_type.value = type=='score'?'':type
+  show_type.value = type == "score" ? "" : type;
 
-  if (type == "animal"||type == "video") {
+  if (type == "animal" || type == "video") {
     animal_key.value = true;
     score_key.value = false;
   } else {
@@ -209,9 +245,12 @@ const tab_click = (type) => {
   }
 }
 
-
-.stage-13,.stage-14,.stage-15,
-.stage-302,.stage-16,.stage-303{
+.stage-13,
+.stage-14,
+.stage-15,
+.stage-302,
+.stage-16,
+.stage-303 {
   color: rgb(255, 112, 0) !important;
 }
 </style>
