@@ -238,7 +238,7 @@ const checkHot = n => {
   } else {
     init.value = false;
     is_hot.value = !is_hot.value;
-    // emit("search_hot", Number(is_hot.value));
+    emit("search_hot", Number(is_hot.value));
   }
 };
 const { off: offInit } = useMittOn(MITT_TYPES.EMIT_INIT_SELECT, () => {
@@ -334,7 +334,6 @@ onMounted(() => {
 watch(
   props.list,
   res => {
-     console.log('resresresresresres',res)
     let _no_active = active_tournament.value.length == 0;
     // 当前是不是反选
     let is_invert = menu.value == "invert";
