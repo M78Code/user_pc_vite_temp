@@ -466,7 +466,7 @@
         let location_href = location.href.split('?')[1];
         let params = {}
         let location_search = ''
-        if (location_href.indexOf('#/') > -1) {
+        if ((location_href||'').indexOf('#/') > -1) {
           is_hash = true
           location_search = location_href.split('#/')
           // location.hash.replace(/([^?&=]+)=([^&]+)/g, (_,k,v) => params[k] = v); 
