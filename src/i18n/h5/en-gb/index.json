@@ -459,7 +459,10 @@
     "virtual_sports": "VR Sports",
     "auto_close": "Auto close after %s s",
     "HD": "HD",
-    "SD": "SD"
+    "SD": "SD",
+
+    "shot_wide_goal": "Shot Wide Goal",
+    "shots_on_goal": "Shot On Goal"
   },
   "detail": {
     "less": "<",
