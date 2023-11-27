@@ -11,14 +11,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { i18n_t, compute_img_url } from "src/core/index.js"
+import { ref } from "vue";
 const tabList = ref([
-  { label: 'Match', id: 1 },
-  { label: 'Data', id: 2 },
-  { label: 'Lineup', id: 3 },
-  { label: 'Inteligence', id: 4 },
-  { label: 'Odds', id: 5 },
+  { label: i18n_t('analysis_football_matches.match') , id: 1 },
+  { label: i18n_t('analysis_football_matches.analysis_data'), id: 2 },
+  { label: i18n_t('analysis_football_matches.line_up'), id: 3 },
+  { label: i18n_t('analysis_football_matches.intelligence'), id: 4 },
+  { label: i18n_t('analysis_football_matches.Odds'), id: 5 },
 ]);
 const emit = defineEmits(['change'])
 // 事件执行函数
@@ -30,11 +29,6 @@ const tabClick = (item) => {
   active.value = item.id
   emit('change', item)
 }
-
-
-onMounted(() => {
-
-});
 </script>
 
 <style lang="scss" scoped>

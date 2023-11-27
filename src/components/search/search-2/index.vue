@@ -171,7 +171,8 @@ function set_sports_list() {
     if (lodash.get(res, 'code') == 200) {
       const list = lodash.get(res, 'data') || []
       // 根据商户过滤篮球赛事
-      sports_list = list
+      const ls = ["1", "2", "5"]  //只显示足、篮、网
+      sports_list = list.filter(item => ls.includes(item.id))
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id
       if (csid) {

@@ -12,8 +12,8 @@
                 <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
                     <q-separator color="orange" v-if="keyscorll != 0"/>
                     <div class="odds-hpn">
-                           <!-- 置顶按钮 -->
-                     <!-- v-if="!item_data.hotName" -->
+                        <!-- 置顶按钮 -->
+                         <!-- v-if="!item_data.hotName" -->
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
                         <set-top :item_data="item" :match_odds_info="match_odds_info" :match_detail="match_detail" />
                         <span class="odds-hpn-icon"  @click="expend_toggle(item)"
@@ -37,7 +37,7 @@
                         <span class="odds-hpn-icon"  @click="expend_toggle(item)"  :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>      
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-                        <!--                        {{ `template${item.hpt}` }}-->
+                        <!--{{ `template${item.hpt}` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :item_data="item" @bet_click_="bet_click_" />
                     </div>

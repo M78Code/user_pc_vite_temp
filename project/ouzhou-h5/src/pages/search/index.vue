@@ -14,7 +14,7 @@
 				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<!-- <div class="middle_info_tab">EXAMPLE SEARCHES</div> -->
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab top_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
 					:class="['tab', tabIndex === index ? 'active' : '']">
 					{{ item.sportName }}
@@ -35,7 +35,7 @@
 			<div class='searchHot' :class="[(history_data.length > 0) ? '' : 'mt50']" v-show="show_hot && 
 				(hot_list && hot_list.length > 0) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
-				!(search_data.league && search_data.league.length > 0) ||
+				!(search_data.league && search_data.league.length > 0) &&
 				!input_value">
 				<div>
 					<div class="text-bol">{{ i18n_t('ouzhou.search.search_hot') }}</div>
@@ -56,7 +56,7 @@
 
 			<div class="content">
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab top_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
 					:class="['tab', tabIndex === index ? 'active' : '']">
 					{{ item.sportName }}
@@ -221,7 +221,7 @@
 			!show_history))"
 		>
 			<!-- 球类 tabs -->
-			<div class="middle_info_tab top_tab" ref="tab_growp">
+			<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
 					:class="['tab', tabIndex === index ? 'active' : '']">
 					{{ item.sportName }}
@@ -372,7 +372,8 @@ const get_sport_kind = () => {
 	get_search_sport().then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			sport_kind_data.value = data.slice(0, 3)
+			const ls = ["1", "2", "5"]  //只显示足、篮、网
+			sport_kind_data.value = data.filter(item => ls.includes(item.id))
 		}
 	});
 }

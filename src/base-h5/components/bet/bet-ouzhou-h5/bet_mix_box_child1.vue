@@ -14,7 +14,10 @@
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div></div>
                       <div class="nonebox4-content-left-content-text-two">
-                       {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} <span class="text-two-span">{{items.playName}}</span>
+                       {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} 
+                       <span class="text-two-span">{{items.playName}}
+                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                        </span>
                         [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
                       </div>
                       <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{ items.matchType == 2? items.mark_score : ''}}</div>
