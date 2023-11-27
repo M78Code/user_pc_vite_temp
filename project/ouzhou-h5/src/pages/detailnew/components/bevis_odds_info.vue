@@ -10,8 +10,9 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
+<!--                        {{ `template${item.hpt}` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
-                                   :item_data="item" :active="active" @bet_click_="bet_click_" />
+                                   :item_data="item" @bet_click_="bet_click_" />
                     </div>
                 </div>
             </template>
@@ -32,7 +33,7 @@ import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 
-import {playTemplate0, playTemplate1, playTemplate3, playTemplate4, playTemplate5} from "./bevis/index.js"
+import {playTemplate0, playTemplate1, playTemplate2, playTemplate3, playTemplate4, playTemplate5} from "./bevis/index.js"
 
 import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
@@ -85,12 +86,13 @@ const active = ref(1);
 const playComponent = ref({
     template0: markRaw(playTemplate0),
     template1: markRaw(playTemplate1),
+    template2: markRaw(playTemplate2),
     template3: markRaw(temp3),
     template4: markRaw(playTemplate4),
     template5: markRaw(temp5),
     template_other: markRaw(tem_other)
 })
-const hptArr = [0,1,3,5,4]
+const hptArr = [0,1,2,3,5,4]
 const computedPlayComponent = function (hpt) {
     let componentName = '';
     if (hptArr.includes(hpt)) {
@@ -101,12 +103,6 @@ const computedPlayComponent = function (hpt) {
         componentName = 'template_other'
     }
     return componentName
-}
-const tem_choice = (hpt) => {
-    if ([0, 1, 5].includes(hpt)) {
-        return hpt;
-    }
-    return 3;
 }
 // 事件执行函数
 const topKey_active = ref({});
