@@ -57,7 +57,7 @@ const requestHook = {
     config.headers["checkId"] = `pc-${requestId}-${(UserCtr.get_uid()).replace(/-/g, "")}-${Date.now()}`;
     config.time = new Date().getTime();
     // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
-    if (SessionStorage.get(STANDARD_KEY.get("pb"))) {
+    if (SessionStorage.get(STANDARD_KEY.get("pb")) || SEARCH_PARAMS.init_param.get("pb")) {
       if (endsWith(config.url, "PB")) {
         config.url = config.url.substring(0, config.url.length - 2);
       } else {

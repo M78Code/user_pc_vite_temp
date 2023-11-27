@@ -53,7 +53,7 @@ const get_pc_rule_url = () => {
 
     } else {
         // 其他环境，测试和开发 等
-        domain = "http://sports-rules-new-test.sportxxx3pk.com"
+        domain = "http://sports-rules-ouzhou-test.sportxxx3pk.com"
 
     }
     if (!!get_merchant_style) {

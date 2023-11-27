@@ -27,9 +27,9 @@
       </div>
 
     </div>
-    <div class="refresh" @click="refresh">
-      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""
-        :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']" />
+    <div class="refresh" @click.capture>
+      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""  @click.stop="refreshAll"
+        :class="[{ 'refresh-active': '' }, 'refresh-icon']" />
     </div>
   </div>
 </template>
@@ -105,14 +105,14 @@ function change_active(item, index) {
   */
   const params = { mid: item.mid, csid: item.csid, tid:item.tid }
   router.replace({ name: 'category', params});
-  refresh(params)
+  refreshAll(params)
 }
 /**
  * @description: 刷新
  * @param {{ mid: string, csid: string, tid: string }} params
  * @return {*}
  */
-const refresh = (params) => {
+const refreshAll = (params) => {
   if(params instanceof Event){
     params = route.params
   }
