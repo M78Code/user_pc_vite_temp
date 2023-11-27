@@ -118,7 +118,46 @@
         "no_search_rezult": "没有发现结果。请尝试另一个搜索词。",
         "dogfall": "平局",
         "search_history": "搜索历史"
-     }
+     },
+     "bet_col": {
+      "bet_col_1": {
+        "bet_col_1": "主胜",
+        "bet_col_X": "平局",
+        "bet_col_2": "客胜"
+      },
+      "bet_col_2": {
+        "bet_col_Over": "全场大小",
+        "bet_col_Under": "全场大小"
+      },
+      "bet_col_4": {
+        "bet_col_1": "主队让球",
+        "bet_col_2": "客队让球"
+      },
+      "bet_col_37": {
+        "bet_col_1": "主胜",
+        "bet_col_2": "客胜"
+      },
+      "bet_col_38": {
+        "bet_col_Over": "主队总分",
+        "bet_col_Under": "客队总分"
+      },
+      "bet_col_39": {
+        "bet_col_1": "主队总分",
+        "bet_col_2": "客队总分"
+      },
+      "bet_col_153": {
+        "bet_col_1": "主胜",
+        "bet_col_2": "客胜"
+      },
+      "bet_col_154": {
+        "bet_col_1": "主队让盘",
+        "bet_col_2": "客队让盘"
+      },
+      "bet_col_155": {
+        "bet_col_1": "主队让局",
+        "bet_col_2": "客队让局"
+      }
+    }
   },
   "app_h5": {
     "cathectic": {
@@ -1105,6 +1144,12 @@
     "msg1": "当前操作频繁，请稍后再试"
   },
   "list": {
+    "win1": "主胜",
+    "win2": "客胜",
+    "play": "玩法",
+    "play1": "全场独赢",
+    "play2": "全场让球",
+    "play3": "全场大小",
     "after_time_start": "{0}分钟后开赛",
     "after_time_start2": "{0}分钟后开始",
     "go_to_details": "详情",
@@ -2148,6 +2193,7 @@
     "loding_more": "加载更多"
   },
   "search": {
+    "dogfall": "平局",
     "clear_search_history": "清除搜索记录",
     "hot": "热",
     "hot_league": "热门联赛",

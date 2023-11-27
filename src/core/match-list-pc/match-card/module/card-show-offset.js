@@ -79,6 +79,10 @@ export const set_card_show_level = (scroll_top = 0) => {
   }
   list_arry.forEach((card_key) => {
     let card_obj = MatchListCardData.all_card_obj[card_key];
+    if(!card_obj){
+      console.log("未找到表征:card_key",card_key, card_obj);
+      return;
+    }
     // 是否联赛容器卡片
     if (card_obj.card_type == "league_container") {
       // 设置卡片显示等级
