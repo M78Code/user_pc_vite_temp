@@ -2,7 +2,7 @@
 
 <template>
     <div>
-        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn" @blur="drap_fn" @keydown.enter="keydown($event)"
+        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
         :placeholder="`${i18n_t('bet.money_range')} ${parseInt(ref_data.min_money)}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
     </div>
 
@@ -31,14 +31,12 @@ const ref_data = reactive({
 })
 
 // 开启/停止拖拽
-let stop_drap = true
-const stop_drap_fn = () => {
-    stop_drap = false
-    useMittEmit(MITT_TYPES.EMIT_STOP_DRAP, stop_drap)
-}
-const drap_fn = () => {
-    stop_drap = true
-    useMittEmit(MITT_TYPES.EMIT_STOP_DRAP, stop_drap)
+const stop_drap_fn = (state) => {
+    let obj = {
+        ...BetData.bet_box_draggable,
+        draggable: state
+    }
+    BetData.set_bet_box_draggable(obj)
 }
 
 onMounted(() => {

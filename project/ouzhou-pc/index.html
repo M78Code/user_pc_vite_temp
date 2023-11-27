@@ -462,8 +462,17 @@
       // 再者，即便是改参数进入页面后面的流程会纠正错误参数
 
       try {
+        let is_hash = false
+        let location_href = location.href.split('?')[1];
+        let params = {}
+        let location_search = ''
+        if ((location_href||'').indexOf('#/') > -1) {
+          is_hash = true
+          location_search = location_href.split('#/')
+          // location.hash.replace(/([^?&=]+)=([^&]+)/g, (_,k,v) => params[k] = v); 
+        }
         //解析URL参数
-        let url_search = new URLSearchParams(location.search || location.hash);
+        let url_search = new URLSearchParams(location_search || location_href);
         // 获取清除缓存参数
         let clearcache = url_search.get("clearcache");
         if (clearcache == "1") {
@@ -476,11 +485,12 @@
         SEARCH_PARAMS.init_param_del(['clearcache']);
 
         //计算token
-        let token =
-          sessionStorage.getItem("token") || url_search.get("token") || "";
+        let token = params.token || url_search.get("token") || sessionStorage.getItem("pc_token") || '';
+        let lang = params.lg || url_search.get("lg");
         if (token) {
           sessionStorage.setItem("token", token);
         }
+        sessionStorage.setItem("lang", lang);
         //计算 pb 压缩
         // 是否解除pb压缩开关: pb=1时表示数据不进行加密接口请求
         let pb = sessionStorage.getItem("pb") || url_search.get("pb") || "";

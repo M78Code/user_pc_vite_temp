@@ -44,6 +44,7 @@ class BetViewData {
     this.is_effect = true;
 
     // 是否投注完成 投注确认中的时候，轮询和ws还在跑；等轮询和ws回来 会清空投注项内容
+    // 是否上一个投注流程已走完
     this.is_finally = false;
 
     //tips 数据 */
@@ -400,6 +401,12 @@ class BetViewData {
   // 投注后的 串关信息数据
   set_orderNo_bet_single_obj(array) {
     this.orderNo_bet_single_obj = array
+    this.set_bet_view_version()
+  }
+
+  // 设置是否走完投注流程
+  set_is_finally(val) {
+    this.is_finally = val
     this.set_bet_view_version()
   }
 
