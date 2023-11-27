@@ -196,7 +196,7 @@ function toDetails(item){
     background-repeat: no-repeat;
     background-size: 75px;
     background-position: top right; 
-    
+    content-visibility: auto;
     .title{
       display: flex;
       padding: 3px 10px 0;

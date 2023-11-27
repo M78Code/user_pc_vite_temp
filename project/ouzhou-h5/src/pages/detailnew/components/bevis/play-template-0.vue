@@ -16,10 +16,6 @@ const props = defineProps({
         type: Object,
         default: () => {
         },
-    },
-    active: {
-        type: Number,
-        default: 0,
     }
 })
 
