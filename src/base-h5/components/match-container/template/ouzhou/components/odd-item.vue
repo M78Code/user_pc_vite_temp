@@ -4,7 +4,7 @@
 
 <template>
   <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
-  <div :class="['odd-item', {active: BetData.bet_oid_list.includes(odd_item.oid) }]" @click="set_old_submit">
+  <div :class="['odd-item', {active: BetData?.bet_oid_list?.includes(odd_item.oid) }]" @click="set_old_submit">
     <!-- 锁 -->
     <img v-if="is_lock" class="lock" :src="odd_lock_ouzhou" alt="lock">
     <!-- 是否显示赔率 -->
@@ -84,7 +84,7 @@ const reset_status = () => {
     is_down.value = false
     clearTimeout(timer)
     timer = null
-  }, 5000)
+  }, 3000)
 }
 
 // 显示的赔率
@@ -117,7 +117,6 @@ const get_icon = (type) => {
 const set_old_submit = () => {
   const ol = props.odd_item
   const { match_data_type = 'h5_list' } = props.match_info
-  console.error('sss',match_data_type)
   if (is_lock.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
   const {oid,_hid,_hn,_mid } = ol

@@ -8,7 +8,11 @@
     <!-- <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1> -->
     <!-- 普通赛事菜单 -->
     <!-- <betMixBoxChild2 v-else></betMixBoxChild2> -->
-    <betMixBoxChild2 v-if="bet_show"></betMixBoxChild2>
+    <div v-show="false">-{{ BetData.bet_data_class_version }}-{{BetData.bet_state_show}}</div>
+    <!-- <div class="bet-mix-box " v-if="BetData.h5_bet_box_show && BetData.bet_oid_list.length">
+      <betMixBoxChild></betMixBoxChild>
+    </div> -->
+    <betMixBoxChild2 v-if="BetData.h5_bet_box_show && BetData.bet_oid_list.length"></betMixBoxChild2>
   </div>
 </template>
 
