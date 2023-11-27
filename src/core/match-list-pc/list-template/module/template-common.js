@@ -221,7 +221,7 @@ export const set_ouzhou_template_width_base = (
   config.process_team_width = 340;
   // 视频按钮区域宽度
   config.media_width = 46;
-  config.play_icon_width = 115;
+  config.play_icon_width = more_width ? 106 : 115;
   // 设置投注项宽度
   config.bet_width = more_width ? 264 : 330;
   // 联赛标题高度
