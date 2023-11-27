@@ -319,7 +319,7 @@ export const sports_play_title = {
       ol: [
         { ot: '1', title: i18n_t('bet_col.bet_col_4.bet_col_1') }, // "主队让球"
         { ot: '2', title: i18n_t('bet_col.bet_col_4.bet_col_2') }, // "客队让球"
-      2
+      ]
     },
   ],
   // 篮球
