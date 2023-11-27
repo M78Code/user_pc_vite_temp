@@ -1,5 +1,6 @@
 <template>
     <div class="no-token-wrap">
+        {{ compute_img_url('not-login') }}
         <img class="no-token-img" :src="compute_img_url('not-login')" />
     </div>
 </template>
