@@ -89,7 +89,7 @@ const go_betting = (data) => {
                 >
                     <template v-if="_item?.os == 1 && !isLocked">
                         <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
-                        <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', sport_id) }}</span>
+                        <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item"
                                   :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                     </template>
