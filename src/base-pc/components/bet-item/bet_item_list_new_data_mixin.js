@@ -154,8 +154,8 @@ const bet_item = {
       // 列表取 hsw
       let hsw = this.ol_data._hsw
       let match_odds = this.compute_value_by_cur_odd_type(
-        ov / 100000,
-        obv / 100000,
+        ov ,
+       ov._hid,
         hsw,
         this.ol_data.csid
       );

@@ -90,7 +90,7 @@ setTimeout(function (){
                 >
                     <template v-if="_item?.os == 1 && _item._hs != 11">
                         <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
-                        <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
+                        <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item"
                                   :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                     </template>
@@ -105,7 +105,7 @@ setTimeout(function (){
              :class="['other',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
             <template v-if="_item?.os == 1 && _item._hs != 11">
                 <span class="on-text">{{ _item.on ?? _item.ott }}</span>
-                <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
+                <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                 <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
             </template>
             <figure v-if="_item?.os == 2 || _item._hs == 11">

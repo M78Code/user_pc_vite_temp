@@ -14,11 +14,13 @@ import {
   useMittEmit,
   MITT_TYPES,
   SessionStorage,
+  LocalStorage
 } from "src/core/index.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
+const menu_h5 = STANDARD_KEY.get("menu_h5");
 
 const { BUILD_VERSION } = BUILD_VERSION_CONFIG;
 const menu_type_config = {
@@ -50,7 +52,7 @@ class MenuData {
     this.menu_csid = 0
     //----------------------------------- 常规球种 --------------------------------------//
     // this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
-    this.conventionalType = [101,102,105,400]; 
+    this.conventionalType = [101,102]; 
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
@@ -108,7 +110,8 @@ class MenuData {
         top_events_list = [],
         champion_list = [];
     let data = arr || BaseData.mew_menu_list_res;
-    const session_info = SessionStorage.get("menu-h5");
+    // const session_info = SessionStorage.get(menu_h5);
+    let session_info = LocalStorage.get(menu_h5);
     //常规球种
     menu_list =  data.filter((item)=>{return this.conventionalType.includes(+item.mi)});
     //热门球种
@@ -240,7 +243,7 @@ class MenuData {
    */
   set_menu_mi(mi){
     this.menu_mi.value = mi;
-    if(this.menu_type.value == 400){
+    if(this.menu_type.value == 400){//冠军
       this.current_lv_2_menu_i = +mi+300;
       this.current_lv_2_menu_mi.value = +mi+300;
     }else{
@@ -248,7 +251,10 @@ class MenuData {
       this.current_lv_2_menu_mi.value = `${mi}${this.menu_type.value}`;
     }
    
-    SessionStorage.set("menu-h5",{
+    // SessionStorage.set(menu_h5,{
+    //   menu_mi:mi
+    // });
+    LocalStorage.set(menu_h5,{
       menu_mi:mi
     });
     this.menu_csid = mi*1 - 100
