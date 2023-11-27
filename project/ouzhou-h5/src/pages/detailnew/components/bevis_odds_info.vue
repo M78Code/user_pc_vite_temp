@@ -6,22 +6,44 @@
 <template>
     <div class="match-detail-odds component odds-info">
         <template v-if="match_odds_info && match_odds_info.length > 0">
-            <template v-for="(item, index) in match_odds_info" :key="item.topKey">
+         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
+          <!-- 置顶 -->
+          <template v-for="(item,keyscorll) in match_list_new">
                 <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
-                    <q-separator color="orange" v-if="index != 0"/>
-                    <div class="odds-hpn" @click="expend_toggle(item)">
+                    <q-separator color="orange" v-if="keyscorll != 0"/>
+                    <div class="odds-hpn">
+                        <!-- 置顶按钮 -->
+                         <!-- v-if="!item_data.hotName" -->
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
-                        <span class="odds-hpn-icon"
+                        <set-top :item_data="item" :match_odds_info="match_odds_info" :match_detail="match_detail" />
+                        <span class="odds-hpn-icon"  @click="expend_toggle(item)"
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-                        {{ `template${item.hpt}` }}
+                      <!--   {{ `template${item.hpt}` }}-->
+                        <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" @bet_click_="bet_click_" />       
+                    </div>
+                </div>
+          </template>
+          <!-- 非置顶 -->
+          <template v-for="(item, keyscorll) in match_list_normal">
+                <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
+                    <q-separator color="orange" />               
+                    <div class="odds-hpn">
+                        <!-- 置顶按钮 -->
+                        <!-- v-if="!item_data.hotName" -->
+                        <span class="odds-hpn-text">{{ item.hpn }}</span>
+                        <set-top :item_data="item" :match_odds_info="match_odds_info" :match_detail="match_detail" />
+                        <span class="odds-hpn-icon"  @click="expend_toggle(item)"  :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>      
+                    </div>
+                    <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
+                        <!--{{ `template${item.hpt}` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :item_data="item" @bet_click_="bet_click_" />
                     </div>
                 </div>
-            </template>
-
+          </template>
+        </transition-group>
         </template>
         <template v-else>
             <div v-if="!loading">
@@ -33,21 +55,19 @@
 </template>
 
 <script setup>
-import {onMounted, ref, markRaw, watch, nextTick} from "vue";
+import {onMounted, ref, markRaw, watch, nextTick,computed} from "vue";
 import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
-
+import setTop from "./set_top.vue";
 import {playTemplate0, playTemplate1, playTemplate2, playTemplate3, playTemplate4, playTemplate5} from "./bevis/index.js"
-
 import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
+import { useRoute } from "vue-router";
 // import EMITTER from "src/global/mitt.js";
-import {useMittEmit, MITT_TYPES} from "src/core/mitt"
-import {LOCAL_PROJECT_FILE_PREFIX} from "src/core";
-import {MatchDetailCalss} from "src/core"
-import _ from "lodash"
-
+import {useMittEmit, MITT_TYPES,MatchDetailCalss,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common} from "src/core/"
+const MatchDataWarehouseInstance =ref(MatchDataWarehouse_H5_Detail_Common) 
+const route = useRoute()
 // /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
 const props = defineProps({
     match_odds_info: {
@@ -70,12 +90,6 @@ const props = defineProps({
     }
 });
 
-/*setTimeout(function (){
-    let baseData = []
-    baseData = _.groupBy(props.match_odds_info,'hpt')
-    console.log(baseData,"baseData")
-    console.log(props.match_odds_info,"props.match_odds_info")
-},2000)*/
 const emit = defineEmits(["change", "update:allCloseState"]);
 const active = ref(1);
 /*
@@ -192,6 +206,15 @@ const get_oddv = (num) => {
 const clear_score_active = () => {
     active.value = 0;
 }
+
+// 置顶列表
+const match_list_new = computed(()=>{
+  return MatchDataWarehouseInstance.value.listSortNew(route.params.mid);
+}) 
+// 非置顶列表
+ const match_list_normal = computed(()=>{
+   return  MatchDataWarehouseInstance.value.listSortNormal(route.params.mid);
+ }) 
 onMounted(() => {
     // EMITTER.on("clear_score_active", () => {
     //   clear_score_active()
@@ -200,6 +223,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+
 .match-detail-odds {
     // background: #F1F1F1;
     min-height: 100%;
@@ -263,4 +287,5 @@ onMounted(() => {
         background: red;
     }
 }
+@import "src/base-h5/components/details/styles/tournament-play-new.scss"
 </style>
