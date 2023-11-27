@@ -374,7 +374,6 @@ export function usedetailData(route) {
        switch (cmd) {
          case "C303":
          get_category();
-         get_detail_lists();
            break;
          case "C302":
           // 赛事状态发现变更  ms 
@@ -401,7 +400,6 @@ export function usedetailData(route) {
     if(!skt_data || skt_data.length<1) return;
     // 重新拉取数据;
     get_category();
-    get_detail_lists();
   };
   /**
  * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
@@ -414,7 +412,6 @@ export function usedetailData(route) {
     if(skt_data.mhs == 0 || skt_data.mhs == 11){
       // 重新拉取数据;
      get_category();
-     get_detail_lists();
     }else if(skt_data.mhs == 1){
       // 设置盘口状态
     }else if(skt_data.mhs == 2){

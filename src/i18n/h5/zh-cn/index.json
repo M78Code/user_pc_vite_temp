@@ -45,6 +45,10 @@
         "home": "体育投注",
         "today": "今日",
         "early": "早盘",
+        "bet_col_Over": "全场大",
+        "bet_col_Under": "全场小",
+        "home_handicap": "主队让分",
+        "away_handicap": "客队让分",
         "tomorrow": "明天",
           "select_time": {
             "12h": "12小时以内",

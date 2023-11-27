@@ -28,7 +28,34 @@ import * as TemplateCommon from "./template-common.js"
         {  _hpid: 155, ot: '2', otb: '客队让局', },
       ],
     },
-  ]
+  ],
+  // 当前局盘口
+  cur_handicap_list: [
+    {
+      ols: [
+        {  _hpid: 162, ot: '1', class: 'no-handicap' },
+        {  _hpid: 162, ot: '2', class: 'no-handicap' },
+      ],
+    },
+    {
+      ols: [
+        { empty:1},
+        { empty:1}
+      ],
+    },
+    {
+      ols: [
+        {  _hpid: 163, ot: '1' },
+        {  _hpid: 163, ot: '2' },
+      ],
+    },
+    {
+      ols: [
+        {  _hpid: 164, ot: 'Over' },
+        {  _hpid: 164, ot: 'Under' },
+      ],
+    },
+  ],
 }
 
 // 因为我们的欧洲版 

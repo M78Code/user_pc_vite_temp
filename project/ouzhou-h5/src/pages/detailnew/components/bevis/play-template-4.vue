@@ -44,27 +44,24 @@ const props = defineProps({
 * */
 const isLocked = ref(false)
 
+const betInformation = {
+    others: [],
+    assemble: [],
+}
 const AssembleData = computed(() => {
-    let betInformation = {
-        others: [],
-        assemble: [],
-    };
     const {hl = [], title} = props.item_data;
-    isLocked.value = hl[0].hs == 11 ? true : false
-    const others = hl[0].ol.filter(ol_item => +ol_item.otd === 0);
-    const assemble = hl[0].ol.filter(ol_item => +ol_item.otd !== 0);
-    if (others.length) {
-        betInformation.others = lodash.uniqWith(others, 'oid')
-    }
-    //os等于3需要隐藏投注项
-    const baseArr = _.groupBy(assemble.filter(i => i.os != 3), 'otd')
+    const baseData = lodash.groupBy(hl[0].ol.filter(ol_item => ol_item.os != 3),'otd')
     title.forEach(item => {
         betInformation.assemble.push({
             osn: item.osn,
             otd: item.otd,
-            information: baseArr[item.otd]
+            information: baseData[item.otd]
         })
     })
+    if(!!baseData['-1']){
+        betInformation.others = baseData['-1']
+    }
+    console.log(betInformation,"betInformation")
     return betInformation
 })
 
@@ -74,12 +71,16 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 };
-
+setTimeout(function (){
+    if(props.item_data.hpt == 4){
+        console.log(props.item_data,"props.item_data")
+    }
+},1200)
 </script>
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-    <section class="template4 component play-template-4">
+    <section class="template4 component play-template-4" v-if="!!AssembleData.assemble">
         <div class="assemble">
             <ul v-for="item of AssembleData.assemble" :key="item.otd" class="list">
                 <li class="list-title textOverflow2">{{ item.osn }}</li>
@@ -87,13 +88,13 @@ const go_betting = (data) => {
                     :class="[{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]"
                     class="list-bet"
                 >
-                    <template v-if="_item?.os == 1 && !isLocked">
+                    <template v-if="_item?.os == 1 && _item._hs != 11">
                         <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
                         <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item"
                                   :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                     </template>
-                    <figure v-if="_item?.os == 2 || isLocked">
+                    <figure v-if="_item?.os == 2 || _item._hs == 11">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </figure>
                     <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>
@@ -102,12 +103,12 @@ const go_betting = (data) => {
         </div>
         <div v-for="_item of AssembleData.others" :key="_item.oid" @click="go_betting(_item)"
              :class="['other',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
-            <template v-if="_item?.os == 1 && !isLocked">
+            <template v-if="_item?.os == 1 && _item._hs != 11">
                 <span class="on-text">{{ _item.on ?? _item.ott }}</span>
                 <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                 <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
             </template>
-            <figure v-if="_item?.os == 2 || isLocked">
+            <figure v-if="_item?.os == 2 || _item._hs == 11">
                 <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
             </figure>
             <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>
@@ -134,6 +135,7 @@ const go_betting = (data) => {
             line-height: 48px;
             text-align: center;
             color: #8A8986;
+            background: var(--q-gb-bg-c-10);
             font: {
                 size: 14px;
                 family: Roboto;
@@ -163,25 +165,6 @@ const go_betting = (data) => {
                     family: DIN;
                     weight: 500;
                 }
-
-                &:nth-child(1) {
-                    color: var(--q-gb-t-c-4);
-                    text-align: center;
-                }
-
-                &:nth-last-child(1) {
-                    color: var(--q-gb-t-c-1);
-                    text-align: center;
-                }
-            }
-        }
-
-        .is-active {
-            background-color: var(--q-gb-bg-c-1);
-            color: var(--q-gb-t-c-2);
-
-            .span {
-                color: var(--q-gb-t-c-4);
             }
         }
     }
