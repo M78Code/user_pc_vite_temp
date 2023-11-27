@@ -17,14 +17,10 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 };
-setTimeout(function () {
-    if (props.item_data.hpt == 2) {
-        console.log(`template2==`, props.item_data)
-    }
-}, 1200)
 </script>
 
 <template>
+    <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <section class="template2">
         <nav class="title" v-if="item_data?.title">
             <div class="text-title textOverflow1">{{ item_data.title[0].osn }}</div>

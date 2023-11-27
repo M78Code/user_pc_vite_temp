@@ -82,6 +82,7 @@ const go_betting = (data) => {
 </script>
 
 <template>
+    <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <section class="template4 component play-template-4">
         <div class="assemble">
             <ul v-for="item of AssembleData.assemble" :key="item.otd" class="list">
