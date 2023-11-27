@@ -472,7 +472,7 @@
           // location.hash.replace(/([^?&=]+)=([^&]+)/g, (_,k,v) => params[k] = v); 
         }
         //解析URL参数
-        let url_search = new URLSearchParams(location_search || location_href);
+        let url_search = SEARCH_PARAMS.init_param;
         // 获取清除缓存参数
         let clearcache = url_search.get("clearcache");
         if (clearcache == "1") {
