@@ -222,7 +222,6 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4(
           match_list,
           is_ws_call,
-          is_five_leagues
         );
       }
     } else {

@@ -87,7 +87,8 @@
       }
     }
     // 将我们的列表历史存入
-    MatchListCardData.match_list_key = match_list
+    MatchListCardData.match_list_key = lodash.cloneDeep(match_list)
+    console.log('match_listmatch_listmatch_list1', match_list);
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
       let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
@@ -203,7 +204,7 @@
         if(!is_ws_call){
           Object.assign(all_card_obj[card_key],fold_template)
         }
-
+        console.log('object');
         // 打入联赛容器卡片
         card_index += 1
         card_key = `league_container_${cus_tid}`

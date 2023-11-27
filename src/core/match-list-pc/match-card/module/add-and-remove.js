@@ -171,6 +171,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
       callback.length_0_fn();
     }
   } else {
+    console.log('all_league_obj', all_league_obj);
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       all_league_obj,
@@ -188,19 +189,21 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   callback
 ) => {
   // 列表接口数据类型为赛事列表
+  console.log('MatchListCardData.match_list_key', MatchListCardData.match_list_key);
   let match_list = MatchListCardData.match_list_key;
   match_list.forEach((match, index) => {
     if (match.mid == remove_mid) {
       match_list.splice(index, 1);
     }
   });
+  console.log('match_list', match_list);
   if (match_list.length == 0) {
     // 参照 remove_match_callback_when_match_list_length_0_demo
     if (callback && callback.length_0_fn) {
       callback.length_0_fn();
     }
   } else {
-    console.log('88888888888883');
+    console.log('88888888888883', match_list);
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       match_list,
@@ -226,11 +229,14 @@ export const remove_match = (remove_mid, callback) => {
     return;
   }
   if ([1, 3, 8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+    console.log('kasdasd1');
     remove_match_when_match_list_mapping_relation_obj_type_1_3(
       remove_mid,
       callback
     );
   } else {
+    console.log('kasdasd2');
+
     remove_match_when_match_list_mapping_relation_obj_type_other(
       remove_mid,
       callback
