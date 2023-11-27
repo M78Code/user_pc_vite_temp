@@ -37,7 +37,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "marketId": item.marketId,  //盘口id
             "deviceType": BetData.deviceType,  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
             "matchId": item.matchId,  // 赛事id
-            "oddsFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
+            "oddsFinally": compute_value_by_cur_odd_type(item.odds, item.playId, '', item.sportId),  //赔率
             "oddsValue": item.odds,  // 赔率 万位
             "playId": item.playId,   // 玩法id
             "playOptionId": item.playOptionsId,   // 投注项id
@@ -97,7 +97,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "playOptionsId": item.playOptionsId,   // 投注项id
                     "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
                     "odds": item.odds,  // 赔率 万位
-                    "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
+                    "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, '', item.sportId),  //赔率
                     "playName": item.playName, //玩法名称
                     "sportName": item.sportName,  // 球种名称
                     "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
@@ -134,7 +134,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "playOptionsId": item.playOptionsId,   // 投注项id
                 "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
                 "odds": item.odds,  // 赔率 万位
-                "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
+                "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, '', item.sportId),  //赔率
                 "playName": item.playName, //玩法名称
                 "sportName": item.sportName,  // 球种名称
                 "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
@@ -660,7 +660,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         playOptionsId: ol_obj.oid, //投注项id
         marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
         odds: ol_obj.ov,  //十万位赔率
-        oddFinally: compute_value_by_cur_odd_type(ol_obj.ov, '', '', mid_obj.csid), //最终赔率
+        oddFinally: compute_value_by_cur_odd_type(ol_obj.ov,ol_obj._hpid, '', mid_obj.csid), //最终赔率
         sportName: mid_obj.csna, //球种名称
         matchType,  //赛事类型
         matchName: mid_obj.tn, //赛事名称

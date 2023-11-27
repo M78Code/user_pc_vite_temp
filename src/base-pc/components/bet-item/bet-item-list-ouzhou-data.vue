@@ -39,7 +39,7 @@
         <span class="odds_otb" v-if="ol_data.otb">{{ disk_text_replace(UserCtr.lang, ol_data.otb) }}</span>
         {{ compute_value_by_cur_odd_type(
           ol_data.ov,
-          '',
+          ol_data._hpid,
           '',
           ol_data.csid
         ) }}
