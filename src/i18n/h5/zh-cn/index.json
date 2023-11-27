@@ -32,11 +32,18 @@
          "my_bets": "注单记录"
      },
      "match": {
-         "favorites": "收藏",
-         "matches": "赛事",
-         "featured": "精选",
-         "top_events": "热门赛事",
-         "home": "首页",
+        "favorites": "收藏",
+        "matches": "赛事",
+        "featured": "特色",
+        "top_events": "热门赛事",
+        "top_leagues": "热门联赛",
+        "all_matches": "所有赛事",
+        "15_mins": "15分钟",
+        "inplay": "滚球",
+        "home": "体育投注",
+        "today": "今日",
+        "early": "早盘",
+        "tomorrow": "明天",
          "play_map": {
            "1": "全场独赢",
            "2": "全场大小",
