@@ -39,5 +39,8 @@ const props = defineProps({
 <style scoped lang="scss">
 .match-play-page{
   // height: 100%;
+  .match-item{
+    content-visibility: auto;
+  }
 }
 </style>
