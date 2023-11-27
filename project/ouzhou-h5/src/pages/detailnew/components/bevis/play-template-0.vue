@@ -32,24 +32,24 @@ const go_betting = (data) => {
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <div class="template0">
         <ul class="list">
-            <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
-                <li v-for="ol_item in hl_item.ol.filter(i=>i.os != 3)" :key="ol_item?.oid" @click="go_betting(ol_item)"
+            <template v-for="hlChild in item_data.hl" :key="hlChild.hid">
+                <li v-for="olChild in hlChild.ol.filter(i=>i.os != 3)" :key="olChild?.oid" @click="go_betting(olChild)"
                     :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
                     class="list-item"
                 >
-                    <template v-if="ol_item?.os == 1 && ol_item._hs != 11">
+                    <template v-if="olChild?.os == 1 && olChild._hs != 11">
                         <span class="on-text textOverflow2">
-                            {{ ol_item?.on || ol_item?.ott }}
+                            {{ olChild?.on || olChild?.ott }}
                         </span>
                         <span class="ov-text">
-                            {{ compute_value_by_cur_odd_type(ol_item.ov, '', '', MatchDetailCalss.params.sportId) }}
+                            {{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}
                         </span>
-                        <olStatus :item_ol_data="ol_item" :active="BetData.bet_oid_list.includes(ol_item?.oid )"/>
+                        <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </template>
-                    <span v-if="ol_item?.os == 2 || ol_item._hs == 11">
+                    <span v-if="olChild?.os == 2 || olChild._hs == 11">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </span>
-                    <ResultOlItem :value="ol_item" :hpt="0"></ResultOlItem>
+                    <ResultOlItem :value="olChild" :hpt="0"></ResultOlItem>
                 </li>
             </template>
         </ul>

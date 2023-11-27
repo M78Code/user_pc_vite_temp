@@ -171,7 +171,7 @@
   .nonebox4-content-left-content-text{
       line-height: 0.25rem;
       margin-top: 0.02rem;
-      width: calc(100% - 0.85rem);
+      width: calc(100% - 1rem);
   }
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
@@ -189,6 +189,7 @@
   .nonebox4-content-right{
     display: flex;
     flex-direction: row-reverse;
+    width: 0.7rem;
   }
   .show_img{
     width: 0.08rem;
