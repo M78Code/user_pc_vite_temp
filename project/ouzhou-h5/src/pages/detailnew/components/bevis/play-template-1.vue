@@ -73,6 +73,7 @@ setTimeout(function (){
 </template>
 
 <style scoped lang="scss">
+@import "basicTemplateStyle";
 .component.play-template-1{
     --private-container-padding: 8px 16px;
 }
@@ -110,43 +111,5 @@ setTimeout(function (){
 
         }
     }
-}
-
-
-
-.is-active {
-    background-color: var(--q-gb-bg-c-1);
-    .ov-text {
-        color: var(--q-gb-t-c-2);
-    }
-}
-
-.lock {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 2px;
-}
-
-.on-text{
-    color: var(--q-gb-t-c-4);
-}
-.ov-text{
-    color: var(--q-gb-t-c-1);
-    margin: 0 8px;
-}
-.textOverflow1 {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.textOverflow2 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 </style>

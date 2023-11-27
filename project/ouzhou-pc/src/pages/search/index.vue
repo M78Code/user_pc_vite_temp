@@ -16,20 +16,18 @@
 
 <script>
 // import ListFilter from 'src/base-pc/components/match-list/list-filter/index.vue'
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch,nextTick } from "vue";
 import { useRoute } from 'vue-router';
 import LoadData from 'src/components/load_data/load_data.vue';
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import {mx_use_list_res} from "src/core/match-list-pc/composables/match-list-processing.js";
 
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import {  LayOutMain_pc, UserCtr } from 'src/core/index.js';
+import {  LayOutMain_pc, UserCtr,PageSourceData } from 'src/core/index.js';
 import { api_match } from "src/api/index.js";
-import PageSourceData from "src/core/page-source/page-source.js";
-
 import "../match-list/match_list.scss";
-import { nextTick } from "licia";
 export default {
   components: {
     // ListFilter,
@@ -45,6 +43,7 @@ export default {
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
+      MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
     })
 
     watch(() => route.params, () => {

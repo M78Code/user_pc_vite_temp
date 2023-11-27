@@ -116,6 +116,7 @@ const go_betting = (data) => {
 </template>
 
 <style scoped lang="scss">
+@import "basicTemplateStyle";
 .template4{
     padding: 8px;
     box-sizing: border-box;
@@ -213,28 +214,5 @@ const go_betting = (data) => {
     .ov-text {
         color: var(--q-gb-t-c-1);
     }
-}
-
-
-.lock {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 2px;
-}
-
-.textOverflow1 {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.textOverflow2 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 </style>
