@@ -8,7 +8,7 @@
 </template>
 <script setup>
 import lodash_ from 'lodash'
-import { watch,onMounted, onBeforeMount, reactive,ref,nextTick } from "vue";
+import { watch,onMounted, onBeforeMount, reactive,ref,nextTick, onUnmounted } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
