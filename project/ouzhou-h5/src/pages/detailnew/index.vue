@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: changeHeader ? 'visible' : 'hidden' }">
+    <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail"/>
     </div>
     <div class="detail-container-position">
@@ -80,6 +80,7 @@ import odds_info from "./components/bevis_odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
+import { i18n_t } from "src/core/index.js"
 
 // import './index.scss'
 export default {
@@ -177,13 +178,12 @@ export default {
     width: 100%;
   }
   .header-fix {
-    position: relative;
-    z-index: 9999;
+
   }
   .change-header-fix {
     width: 100vw;
     position: fixed;
-    top: 50px;
+    top: 49px;
     z-index: 91;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }

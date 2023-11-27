@@ -190,9 +190,6 @@ export const init_home_matches = async () => {
           mids_15.push(item.mid)
           return item;
         });
-        axios_loop({
-          axios_api: () => api_bymids({ mids: mids_15 }, null, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common),
-        })
         match_count = data.dataList.length || 0;
         let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
         //过滤前20条数据

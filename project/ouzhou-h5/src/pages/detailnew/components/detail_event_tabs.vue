@@ -2,9 +2,9 @@
   <div class="match-detail-tabs component detail-event-tabs">
     <div class="tabs-wrap">
       <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
-        :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label
-        }}
-
+            class="tabs-item"
+            :class="[{ 'is-active': item.id === active }]">
+          {{ item.label }}
         </span>
     </div>
   </div>
@@ -12,6 +12,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { i18n_t, compute_img_url } from "src/core/index.js"
 const tabList = ref([
   { label: 'Match', id: 1 },
   { label: 'Data', id: 2 },

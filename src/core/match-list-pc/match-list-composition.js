@@ -430,10 +430,10 @@ function socket_remove_match(match) {
 	// 移除卡片
 	MatchListCardClass.remove_match(match.mid);
 	// 更新收藏数量
-	// update_collect_data({ type: "remove", match });
+	update_collect_data({ type: "remove", match });
 	// if (vx_details_params.mid == match.mid) {
-		// 赛事移除时右侧赛事自动切换
-		// mx_autoset_active_match({ mid: match.mid });
+	// 	// 赛事移除时右侧赛事自动切换
+	// 	mx_autoset_active_match({ mid: match.mid });
 	// }
 };
 
