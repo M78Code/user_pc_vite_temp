@@ -6,7 +6,6 @@
   <div class="bet-mix-box-child2">
     <!-- 多注顶部蒙层 -->
 
-    <div v-if="false" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <!-- 投注中的蒙层，所有不能点击 -->
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
@@ -29,29 +28,6 @@
           <bevisBettedStatus v-else></bevisBettedStatus>
         </div>
       </div>
-
-
-      <!-- 第一个弹窗的内容 -->
-      <!--      
-      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
-        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)"> &ndash;&gt;
-          &lt;!&ndash; 单关投注项列表 &ndash;&gt;
-          <bet-mix-box-child7></bet-mix-box-child7>
-          <bet-collusion-input1></bet-collusion-input1>
-      </div>
-      -->
-
-      <!-- 第二个弹窗内容 -->
-      <!--
-      <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_other_height1}px` }"
-        @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
-          &lt;!&ndash; 列表 &ndash;&gt;
-          <bet-mix-box-child8></bet-mix-box-child8>
-          &lt;!&ndash; 结果框 &ndash;&gt; 
-          <bet-collusion-input2></bet-collusion-input2>
-      </div>
-      -->
-
 
       <!-- 中间可滚动区域 -->
       <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
@@ -184,10 +160,8 @@ import betMixBoxChild3 from './bet_mix_box_child3.vue';
 import betMixBoxChild4 from './bet_mix_box_child4.vue';
 import betMixBoxChild5 from './bet_mix_box_child5.vue';
 import betAfterStatus from './bet-after-status.vue';
-import betMixBoxChild7 from './bet_mix_box_child7.vue';
-import betMixBoxChild8 from './bet_mix_box_child8.vue';
 
-import betInfoList from "./bet_info_list.vue";
+// import betInfoList from "./bet_info_list.vue";
 import bevisBettedStatus from "./bevis/bevis-betted_status.vue"
 import bevisBettedButton from "./bevis/bevis-betted-button.vue"
 import bevisBettedConfig from "./bevis/bevis-betted-config.vue"
@@ -292,6 +266,7 @@ const set_is_bet_single = () =>{
 const pack_up = (val) => {
   // TODO: 临时调试用
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  BetData.set_bet_state_show(false)
   // BetData.set_clear_bet_info()
   // BetViewDataClass.set_clear_bet_view_config()
 }
@@ -480,7 +455,7 @@ background: var(--q-gb-t-c-3) !important;
   -webkit-overflow-scrolling: touch;
   border-radius: 24px 24px 0 0;
   //border: 1px solid;
-  background-color: var(--q-bg-c-2);
+  background-color: var(--q-gb-bg-c-15);
   ;
 
   .yb_pl14 {

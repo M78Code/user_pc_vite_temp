@@ -49,8 +49,17 @@ let axios_debounce_timer2;
 let virtual_list_timeout_id;
 let switch_timer_id
 let mitt_list = [];
-
-
+let tid_match_list;
+// 调用列表接口
+useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({is_socket = undefined}) => {
+	clearTimeout(tid_match_list)
+	tid_match_list = setTimeout(() => {
+		//请求列表接口之前 先设置元数据列表
+		if (!is_socket)
+		init_page_when_base_data_first_loaded()
+		fetch_match_list(is_socket)//请求接口
+	}, 80);
+})
 // watch(() => MenuData.match_list_version.value, () => {
 // 	clearTimeout(tid_match_list)
 // 	tid_match_list = setTimeout(() => {
@@ -231,7 +240,6 @@ function init_page_when_base_data_first_loaded() {
 	// 	30000
 	// );
 }
-let tid_match_list;
 function mounted_fn() {
 	// fetch_match_list();
 	// 开启自动化测试功能
@@ -254,17 +262,7 @@ function mounted_fn() {
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count).off,
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
-		// 调用列表接口
-		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({is_socket = undefined}) => {
-			console.log('asdadasdasdasdasdas');
-			clearTimeout(tid_match_list)
-			tid_match_list = setTimeout(() => {
-				//请求列表接口之前 先设置元数据列表
-				if (!is_socket)
-				init_page_when_base_data_first_loaded()
-				fetch_match_list(is_socket)//请求接口
-			}, 80);
-		}).off,
+		
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match).off,
 		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
@@ -423,7 +421,6 @@ function on_refresh() {
  */
 function socket_remove_match(match) {
 	// 列表加载中不操作
-	console.log('88888888888881', load_data_state.value);
 	if (load_data_state.value != "data") {
 		return;
 	}

@@ -22,7 +22,11 @@
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}} <span class="text-one-span">{{ item.marketValue }}</span></div>
-                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?  `[${i18n_t("bet.bet_inplay")}]` :''}} <span class="text-two-span">{{item.playName}}</span></div>
+                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?  `[${i18n_t("bet.bet_inplay")}]` :''}}
+                         <span class="text-two-span">{{item.playName}}
+                          <span v-if="[4,19,143,113].includes(item.playId*1)">{{item.matchType == 2? item.mark_score : ''}}</span>
+                         </span>
+                      </div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
                     <div class="flex">
@@ -183,6 +187,11 @@
     font-size: 0.15rem;
     font-weight: 600;
   }
+  .nonebox4-content-left-content-text{
+      line-height: 0.25rem;
+      margin-top: 0.02rem;
+      width: calc(100% - 1rem);
+  }
   .nonebox4-content-left-info{
     display: flex;
     justify-content: space-between;
@@ -233,6 +242,7 @@
   }
   .nonebox4-content-right{
     text-align: right;
+    width: 0.7rem;
   }
   .nonebox4-content-right-bot{
     font-size: 0.12rem;

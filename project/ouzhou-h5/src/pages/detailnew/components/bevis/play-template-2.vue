@@ -32,7 +32,7 @@ const go_betting = (data) => {
                     @click="go_betting(olChild)"
                     v-for="olChild of hlChild.ol" :key="olChild.oid">
                     <template v-if="olChild.os == 1 && olChild._hs != 11">
-                        <span class="on-text textOverflow2">{{ olChild.otv || olChild.ott }}</span>
+                        <span class="on-text textOverflow2">{{ olChild.on }}</span>
                         <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </template>
@@ -46,6 +46,7 @@ const go_betting = (data) => {
 </template>
 
 <style scoped lang="scss">
+@import "basicTemplateStyle";
 .template2 {
     width: 100%;
     padding: 8px;
@@ -79,41 +80,5 @@ const go_betting = (data) => {
             border-bottom: 1px solid var(--q-gb-bd-c-10);
         }
     }
-}
-
-.lock {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 2px;
-}
-.on-text{
-    color: var(--q-gb-t-c-4);
-}
-.ov-text{
-    color: var(--q-gb-t-c-1);
-    margin: 0 8px;
-}
-.is-active{
-    background-color: var(--q-gb-bg-c-1);
-    .ov-text{
-        color: var(--q-gb-t-c-2);
-        margin: 0 8px;
-    }
-}
-
-.textOverflow1 {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.textOverflow2 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 </style>

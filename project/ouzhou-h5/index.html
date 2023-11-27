@@ -510,9 +510,10 @@
         // 清除缓存的参数
         SEARCH_PARAMS.init_param_del(['clearcache']);
         let token = url_search.get("token");
-
+        let lang = url_search.get("lg");
         // 设置 loading 动画 主题
         set_root_loading_theme(url_search);
+        sessionStorage.setItem('h5_lang', lang);
         if (token) {
           // 有 keep_url 代表不需要优化（缩短）url
           if (

@@ -74,9 +74,10 @@ import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vu
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5 } from "src/core/index.js";
 
 let message_fun = null
+let handler_func = null
 const container = ref(null)
 const scroll_top = ref(0)
 const play_matchs = ref([])
@@ -104,17 +105,32 @@ onMounted(async () => {
   get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
+  // 接口请求防抖
+  handler_func = lodash.debounce(({ cmd, data }) => {
+    handle_webscoket_cmd(cmd, data)
+  }, 1000)
+
   // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
-    handle_webscoket_cmd(cmd,data)
-  }, 1000))
+  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+    // 赛事删除
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
+      if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
+        get_ouzhou_home_data()
+        // get_ouzhou_home_hots()
+        // get_five_league_matchs()
+      }
+    } else {
+      handler_func({ cmd, data })
+    }
+  })
 })
 
 /**
  * @description 处理 ws
  */
  const handle_webscoket_cmd = (cmd, data) => {
-  console.log('wswswswswswsws-cmd:', cmd, data)
+  // console.log('wswswswswswsws-cmd:', cmd, data)
   if (['C109', 'C104'].includes(cmd)) {
     const { cd = [] } = data
     if (cd.length < 1) return
@@ -122,18 +138,8 @@ onMounted(async () => {
     const item = cd.find(t => [1,2,5].includes(+t.csid) )
     if (item) {
       get_ouzhou_home_data()
-      get_ouzhou_home_hots()
-      get_five_league_matchs()
-    }
-  }
-
-  // 调用 matchs  接口
-  if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
-    const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
-    if (mhs == 2 || mmp == '999') {
-      get_ouzhou_home_data()
-      get_ouzhou_home_hots()
-      get_five_league_matchs()
+      // get_ouzhou_home_hots()
+      // get_five_league_matchs()
     }
   }
 
@@ -170,7 +176,7 @@ const handle_ouzhou_home_data = (res) => {
   // 滚球赛事
   if (dataList.length > 0) {
     const arr_play_matchs = dataList.map(t => {
-      const match = MatchDataBaseH5.get_quick_mid_obj(t?.mid)
+      const match = MatchDataBaseInPlayH5.get_quick_mid_obj(t?.mid)
       return match
     })
     play_matchs.value = arr_play_matchs.filter(t => t?.mid)

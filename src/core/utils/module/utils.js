@@ -10,7 +10,8 @@ import { api_common, api_account } from 'src/api/index';
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { DateForMat } from "src/core/format/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 
 const OL_RESULTS=['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half'];
@@ -1081,6 +1082,23 @@ export const utils = {
       return counting_time_;
     },
     /**
+     * @description 赛事显示倒计时优化显示
+     * @param match 赛事信息
+     * @param counting_time 需要显示的时间
+     * @return undefined
+     */
+    counting_time_ctr_show_format_ouzhou(match,counting_time) {
+      // counting_time 格式00:00
+      let counting_time_ = counting_time;
+      // C01赛事只显示分钟不显示秒
+      if(lodash.get(match,'cds')=='C01' && lodash.get(match,'csid')==1 && counting_time){
+        counting_time_ = lodash.get(counting_time_.split(':'),'[0]');
+      } else if(lodash.get(match,'ctt')==1 && [1,2].includes(lodash.get(match,'csid')*1) && counting_time){
+        counting_time_ = lodash.get(counting_time_.split(':'),'[0]');
+      }
+      return counting_time_;
+    },
+    /**
      * @description 虚拟赛事换算走表步长
      * @param match 赛事信息
      * @param step 原来的步长
@@ -1141,11 +1159,11 @@ export const utils = {
    * @param {string} play_id  玩法id
    * @returns {string}   让球方(T1|T2|'')
    */
-  get_team_let_ball(match,play_id){
+  get_team_let_ball(match, play_id, hn_obj_data){
     let team_let_ball = ''
     if(play_id){
-      lodash.each([`${match.mid}_${play_id}_1_1`,`${match.mid}_${play_id}_1_2`], hn => {
-        let ol_data = match.all_ol_data[hn] || {}
+      lodash.each([`${match.mid}_${match.mid}_${play_id}_1_1`,`${match.mid}_${match.mid}_${play_id}_1_2`], hn => {
+        let ol_data = hn_obj_data[hn] || {}
         if(ol_data.on && (ol_data.on.trim()).startsWith('-')) {
           team_let_ball = ol_data.ots;
         }
@@ -1157,31 +1175,37 @@ export const utils = {
    * 计算队伍中的让球方
    * @param {object} match 赛事对象
    */
-  computed_team_let_ball(match) {
+  computed_team_let_ball(match, hn_obj_data) {
     let team_let_ball = ''
     let other_team_let_ball = ''
     // 让球玩法ID
-    let let_ball_play_id = lodash.get(match,'main_handicap_list.1.ols.1._hpid')
+    let match_template_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${get_ouzhou_data_tpl_id(match.csid)}_config`][`template_${get_ouzhou_data_tpl_id(match.csid)}`];
     //常规玩法让球方
-    team_let_ball =  this.get_team_let_ball(match,let_ball_play_id)
+    // team_let_ball =  this.get_team_let_ball(match,let_ball_play_id)
     //足球特殊玩法
-    if( match.csid == 1 &&  (match.cosCorner || match.cosPunish)){
-       let other_hpid = lodash.get(match,'other_handicap_list.1.ols.1._hpid')
-       other_team_let_ball = this.get_team_let_ball(match,other_hpid);
-    }
+    // if( match.csid == 1 &&  (match.cosCorner || match.cosPunish)){
+    //    let other_hpid = lodash.get(match,'other_handicap_list.1.ols.1._hpid')
+    //    other_team_let_ball = this.get_team_let_ball(match,other_hpid);
+    // }
     //当前局玩法
-    if(match.is_show_cur_handicap){
-      let other_hpid = lodash.get(match,'cur_handicap_list.1.ols.1._hpid')
+    if(match.is_show_cur_handicap || 1){
+      let other_hpid = lodash.get(match_template_info,'cur_handicap_list.1.ols.1._hpid')
       //网球
       if(match.csid == 5){
-         other_hpid = lodash.get(match,'cur_handicap_list.2.ols.1._hpid')
+         other_hpid = lodash.get(match_template_info,'cur_handicap_list.2.ols.1._hpid')
       }
-      other_team_let_ball = this.get_team_let_ball(match,other_hpid);
+      other_team_let_ball = this.get_team_let_ball(match,other_hpid, hn_obj_data);
     }
+    let special_play = {
+      other_team_let_ball
+    }
+    Object.assign(match, special_play)
+
     //主盘让球方
-    match.team_let_ball = team_let_ball
-     //足球罚牌角球 | 篮球等当前局
-    match.other_team_let_ball = other_team_let_ball
+    // match.team_let_ball = team_let_ball
+    //  //足球罚牌角球 | 篮球等当前局
+    // match.other_team_let_ball = other_team_let_ball
+    return match
   },
 };
 
