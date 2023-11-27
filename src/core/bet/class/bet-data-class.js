@@ -179,6 +179,7 @@ this.bet_appoint_ball_head= null */
       x: window.innerWidth * 0.6,
       y: window.innerHeight * 0.7,
       isActive: false,
+      draggable:true,
       show: false,
     }
     // console.error('window.innerWidth',window.innerWidth);
@@ -878,14 +879,18 @@ this.bet_appoint_ball_head= null */
     let order_no = lodash_.get(obj,'orderNo')
     // 订单状态 订单状态(1:投注成功 2:投注失败)
     let status = lodash_.get(obj,'status', 0)
-    // 单关 单注 简单 粗暴 其他的后面做
-    if(status == 1){
-      BetViewDataClass.set_bet_before_message({code:200,message:"投注成功"})
-      BetViewDataClass.set_bet_order_status(3)
-    }
-    if(status == 2){
-      BetViewDataClass.set_bet_before_message({code:'0402018',message:"投注失败"})
-      BetViewDataClass.set_bet_order_status(4)
+    console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
+    // 订单已经完成 不需要去设置 用户点击了 保留选项 或者投注的确定
+    if(!BetViewDataClass.is_finally){
+      // 单关 单注 简单 粗暴 其他的后面做
+      if(status == 1){
+        BetViewDataClass.set_bet_before_message({code:200,message:"投注成功"})
+        BetViewDataClass.set_bet_order_status(3)
+      }
+      if(status == 2){
+        BetViewDataClass.set_bet_before_message({code:'0402018',message:"投注失败"})
+        BetViewDataClass.set_bet_order_status(4)
+      }
     }
   }
 }

@@ -8,8 +8,9 @@
           <detail_header_tem1 :get_match_detail="matchDetail" />
         </div>
       </div>
+      <div class="separate"></div>
+      <q-separator color="orange"/>
     </div>
-    <q-separator />
     <div class="detail-container-position">
       <odds_info :match_odds_info="matchResults" :match_detail="matchDetail" :loading="loading"/>
     </div>
@@ -79,7 +80,10 @@ const matchResults = ref([])
     width: 100%;
   }
 }
-
+.separate{
+  height: 10px;
+  background: #F1F1F1;
+}
   .change-header-fix {
     width: 100vw;
     position: fixed;
@@ -161,6 +165,7 @@ const matchResults = ref([])
   // .match-detail-odds-height1 {
   //   height: calc(100vh - 210px);
   // }
+  /** 处理兼容性问题 */
   .match-detail-odds-height2 {
     overflow-y: scroll;
     height: calc(100vh - 325px);

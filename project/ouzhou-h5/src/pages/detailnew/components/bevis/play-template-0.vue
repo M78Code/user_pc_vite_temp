@@ -9,28 +9,26 @@ import {defineEmits, defineProps} from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
+import ResultOlItem from "../../result/ResultOlItem.vue";
 
 const props = defineProps({
-    play: {
+    item_data: {
         type: Object,
         default: () => {
         },
     },
     active: {
         type: Number,
-        default: () => 0,
-    },
-    sport_id: {
-        type: [String, Number],
-        default: ''
-    },
+        default: 0,
+    }
 })
 
 const emits = defineEmits(["bet_click_"])
 const go_betting = (data) => {
     if (data.os == 2) return
-    emits("bet_click_", data, props.play.hpn);
+    emits("bet_click_", data, props.item_data.hpn);
 };
+
 </script>
 
 
@@ -38,21 +36,24 @@ const go_betting = (data) => {
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <div class="template0">
         <ul class="list">
-            <template v-for="hl_item in play.hl" :key="hl_item.hid">
+            <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
                 <li v-for="ol_item in hl_item.ol.filter(i=>i.os != 3)" :key="ol_item?.oid" @click="go_betting(ol_item)"
-                    :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }, 'list-item']">
+                    :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }]"
+                    class="list-item"
+                >
                     <template v-if="ol_item?.os == 1 && ol_item._hs != 11">
                         <span class="on-text textOverflow2">
                             {{ ol_item?.on || ol_item?.ott }}
                         </span>
                         <span class="ov-text">
-                            {{ compute_value_by_cur_odd_type(ol_item.ov, '', '', sport_id) }}
+                            {{ compute_value_by_cur_odd_type(ol_item.ov, '', '', MatchDetailCalss.params.sportId) }}
                         </span>
                         <olStatus :item_ol_data="ol_item" :active="BetData.bet_oid_list.includes(ol_item?.oid )"/>
                     </template>
                     <span v-if="ol_item?.os == 2 || ol_item._hs == 11">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </span>
+                    <ResultOlItem :value="ol_item" :hpt="0"></ResultOlItem>
                 </li>
             </template>
         </ul>

@@ -42,6 +42,7 @@ const set_retain_selection = () => {
     BetViewDataClass.set_bet_order_status(1)
     BetData.set_bet_amount(0)
     BetViewDataClass.set_bet_before_message({})
+    BetViewDataClass.set_is_finally(true)
     setTimeout(() => {
         useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
     }, 200);
@@ -49,6 +50,7 @@ const set_retain_selection = () => {
 
 // 清空投注项 和投注后的内容
 const set_confirm = () => {
+    BetViewDataClass.set_is_finally(true)
     BetData.set_clear_bet_info()
     BetViewDataClass.set_clear_bet_view_config()
 }

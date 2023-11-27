@@ -904,6 +904,20 @@ init(){
                 if(!lodash.get(item2,'hsw')){
                   item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
+                // 玩法对象补偿
+                let play_obj_key = `hpid_${item2.hpid}`;
+                if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                  if(!item.play_obj){
+                    item.play_obj = {};
+                  }
+                  const obj_temp = {};
+                  for (const key in item2) {
+                    if(key!='hl'){
+                      obj_temp[key] = item2[key];
+                    }
+                  }
+                  item.play_obj[play_obj_key] = obj_temp;
+                }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.length')) {
                   // 遍历盘口数据
@@ -962,6 +976,20 @@ init(){
               hps_data_arr.forEach(item2 => {
                 if(!lodash.get(item2,'hsw')){
                   item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
+                }
+                // 玩法对象补偿
+                let play_obj_key = `hpid_${item2.hpid}`;
+                if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                  if(!item.play_obj){
+                    item.play_obj = {};
+                  }
+                  const obj_temp = {};
+                  for (const key in item2) {
+                    if(key!='hl'){
+                      obj_temp[key] = item2[key];
+                    }
+                  }
+                  item.play_obj[play_obj_key] = obj_temp;
                 }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.ol.length') || lodash.get(item2,'hl[0].ol.length')) {
@@ -1068,6 +1096,20 @@ init(){
                   if(!lodash.get(item2,'hsw')){
                     item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                   }
+                  // 玩法对象补偿
+                  let play_obj_key = `hpid_${item2.hpid}`;
+                  if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                    if(!item.play_obj){
+                      item.play_obj = {};
+                    }
+                    const obj_temp = {};
+                    for (const key in item2) {
+                      if(key!='hl'){
+                        obj_temp[key] = item2[key];
+                      }
+                    }
+                    item.play_obj[play_obj_key] = obj_temp;
+                  }
                   // 检查是否有盘口数据
                   if (lodash.get(item2,'hl.length')) {
                     // 遍历盘口数据
@@ -1121,6 +1163,20 @@ init(){
                 hps_data_arr.forEach(item2 => {
                   if(!lodash.get(item2,'hsw')){
                     item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
+                  }
+                  // 玩法对象补偿
+                  let play_obj_key = `hpid_${item2.hpid}`;
+                  if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                    if(!item.play_obj){
+                      item.play_obj = {};
+                    }
+                    const obj_temp = {};
+                    for (const key in item2) {
+                      if(key!='hl'){
+                        obj_temp[key] = item2[key];
+                      }
+                    }
+                    item.play_obj[play_obj_key] = obj_temp;
                   }
                   // 检查是否有盘口数据
                   if (lodash.get(item2,'hl.ol.length')  || lodash.get(item2,'hl[0].ol.length')) {

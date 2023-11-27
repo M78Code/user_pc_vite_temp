@@ -10,23 +10,19 @@ import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 
 const props = defineProps({
-    play: {
+    item_data: {
         type: Object,
         default: () => ({}),
     },
     active: {
         type: Number,
         default: () => 0,
-    },
-    sport_id: {
-        type: [String, Number],
-        default: ''
-    },
+    }
 })
 const emits = defineEmits(["bet_click_"]);
 const go_betting = (data) => {
     if (data.os == 2) return
-    emits("bet_click_", data, props.play.hpn);
+    emits("bet_click_", data, props.item_data.hpn);
 }
 const AssembleData = computed(()=>{
     let information = {
@@ -34,14 +30,13 @@ const AssembleData = computed(()=>{
         assemble: [],
         title: []
     }
-    let { title,hl } = props.play
+    let { title,hl } = props.item_data
     const assemble = hl[0].ol.filter(i=>i.os != 3)
-    console.log(props.play,"props.play")
     return []
 })
 </script>
 <template>
-    <section class="template3" v-if="play?.hl[0]?.ol">
+    <section class="template3" v-if="item_data?.hl[0]?.ol">
         <ul v-for="item of AssembleData" :key="item?.id">
             <li></li>
         </ul>

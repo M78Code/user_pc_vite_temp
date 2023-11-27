@@ -1,3 +1,8 @@
+<!--
+ * @Description: 欧洲h5赛果详情共用该模板, 动态component中的template模板需要兼容赛果详情
+ * import ResultOlItem from "../../result/ResultOlItem.vue";
+ * 于OlItem位置引入ResultOlItem组件即可
+-->
 <template>
     <div class="match-detail-odds component odds-info">
         <template v-if="match_odds_info && match_odds_info.length > 0">
@@ -10,11 +15,8 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-<!--{{ item.hpt }}-->
-<!--{{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
-                                   :play="item" :item_data="item" :active="active" @bet_click_="bet_click_" />
-                        <playTemplate3 :play="item" :active="active" @bet_click_="bet_click_"></playTemplate3>
+                                   :item_data="item" :active="active" @bet_click_="bet_click_" />
                     </div>
                 </div>
             </template>
