@@ -83,7 +83,7 @@ const msgList = [
   i18n_t("bet_record.msg_5"),
   i18n_t("bet_record.msg_6"),
 ]
-const tipMsg = ref(msgList[0])
+const tipMsg = ref(msgList[1])
 const dateRef = ref(null)
 const qDateProxy = ref(null)
 const cash_value = ref([''])
@@ -118,7 +118,8 @@ watch(() => props.current_tab, (newVal) => {
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
   date.value = { from: data, to: data }
-  tipMsg.value = msgList[0]
+  tipMsg.value = msgList[1]
+  current_time.value = 1
   setTimeout(() => {
     tabChange.value = false
   }, 500)

@@ -77,8 +77,8 @@ export default defineComponent({
       }
     })
     const get_odds = (item) =>{
-      let val = item.ov / 100000, hsw = props.item_data.hsw;
-      let ov = props.compute_value_by_cur_odd_type(val, null, hsw);
+      let val = item.ov , hsw = props.item_data.hsw;
+      let ov = props.compute_value_by_cur_odd_type(val, item._hpid, hsw);
       return ov ? ov : '';
     };
     const init = () =>{

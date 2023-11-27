@@ -72,7 +72,7 @@ const ref_data = reactive({
 	sport_tab: [
 		{ label: i18n_t('ouzhou.match.matches'), value: 4001 },
 		{ label: i18n_t('ouzhou.match.top_leagues'), value: 4002 },
-		{ label: i18n_t('menu.match_winner'), value: 4003 },
+		// { label: i18n_t('menu.match_winner'), value: 4003 },
 		// { label: 'Next 24 Hours', value: 4003 },
 	], 
 	// 收藏 i18n_t('ouzhou.match.inplay')  i18n_t('ouzhou.match.today')  i18n_t('ouzhou.match.early')
@@ -80,7 +80,7 @@ const ref_data = reactive({
 		{ label: i18n_t('ouzhou.match.inplay'), value: 3001 },
 		{ label: i18n_t('ouzhou.match.today'), value: 3002 },
 		{ label: i18n_t('ouzhou.match.early'), value: 3003 },
-		{ label: i18n_t('menu.match_winner'), value: 3004 }
+		// { label: i18n_t('menu.match_winner'), value: 3004 }
 	],
 	// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
 	inplay:{

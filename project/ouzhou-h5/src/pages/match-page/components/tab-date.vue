@@ -278,15 +278,15 @@ const areaListChange = (item, index) => {
         }
     }
 
-    .menu_list_top_tab_background {
-        width: 140px;
-        height: 49px;
-        position: absolute;
-        top: 50px;
-        right: 0;
-        background-size: cover;
-        background: url($SCSSPROJECTPATH+"/image/list/league_bg.png") no-repeat;
-    }
+    // .menu_list_top_tab_background {
+    //     width: 140px;
+    //     height: 49px;
+    //     position: absolute;
+    //     top: 50px;
+    //     right: 0;
+    //     background-size: cover;
+    //     background: url($SCSSPROJECTPATH+"/image/list/league_bg.png") no-repeat;
+    // }
 
     // 七天时间tabs样式
     .date_time {

@@ -96,6 +96,21 @@
       "no_search_rezult": "No results found. please try a different search term.",
       "dogfall": "dogfall"
     },
+    "setting_menu": {
+      "personal": "Personal",
+      "back": "Back",
+      "money": "Money",
+      "language": "Language",
+      "odds_setting": "Odds Settings",
+      "odds_display": "Odds Display",
+      "dec": "DEC",
+      "hk": "HK",
+      "any": "ANY",
+      "hig": "HIG",
+      "version": "Version",
+      "euro": "EURO",
+      "asia": "ASIA"
+    },
     "15minutes_bet_col": [
       "Start~14:59",
       "15:00~29:59",
@@ -106,6 +121,11 @@
     ],
     "bet_col": {
       "bet_col_1": {
+        "bet_col_1": "Home",
+        "bet_col_X": "Away",
+        "bet_col_2": "Draw"
+      },
+      "bet_col_32": {
         "bet_col_1": "Home",
         "bet_col_X": "Away",
         "bet_col_2": "Draw"
