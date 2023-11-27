@@ -332,6 +332,10 @@ onUnmounted(() => {
     &+.row-item {
       margin-top: 4px;
     }
+
+    .team-name {
+      max-width: 180px;
+    }
     &.kedui-item {
       color: var(--q-gb-t-c-8);
     }
