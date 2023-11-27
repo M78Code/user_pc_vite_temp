@@ -10,7 +10,7 @@
 					<template v-if="tab_list.length">
 						<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
 							:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
-							{{ item.label }}
+							{{ i18n_t(item.label) }}
 							<!-- 点击联赛后出现的时间筛选 -->
 							<div 
 								v-if="MenuData.is_leagues() && item.value === 4002"
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted, watch, reactive } from 'vue';
+import { ref,onMounted,onUnmounted, toRef, reactive } from 'vue';
 import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
@@ -65,21 +65,21 @@ const ref_data = reactive({
 	ouzhou_filter_config :{
 	// 首页   i18n_t('ouzhou.match.featured')    i18n_t('ouzhou.match.top_events')
 	home_tab: [
-		{ label: i18n_t('ouzhou.match.featured'), value: 1001 },
-		{ label: i18n_t('ouzhou.match.top_events'), value: 1002 },
+		{ label: ('ouzhou.match.featured'), value: 1001 },
+		{ label: ('ouzhou.match.top_events'), value: 1002 },
 	],
 	// 左侧菜单 i18n_t('ouzhou.match.matches')  i18n_t('ouzhou.match.top_leagues'
 	sport_tab: [
-		{ label: i18n_t('ouzhou.match.matches'), value: 4001 },
-		{ label: i18n_t('ouzhou.match.top_leagues'), value: 4002 },
+		{ label: ('ouzhou.match.matches'), value: 4001 },
+		{ label: ('ouzhou.match.top_leagues'), value: 4002 },
 		// { label: i18n_t('menu.match_winner'), value: 4003 },
 		// { label: 'Next 24 Hours', value: 4003 },
 	], 
 	// 收藏 i18n_t('ouzhou.match.inplay')  i18n_t('ouzhou.match.today')  i18n_t('ouzhou.match.early')
 	favouritse_tab: [
-		{ label: i18n_t('ouzhou.match.inplay'), value: 3001 },
-		{ label: i18n_t('ouzhou.match.today'), value: 3002 },
-		{ label: i18n_t('ouzhou.match.early'), value: 3003 },
+		{ label: ('ouzhou.match.inplay'), value: 3001 },
+		{ label: ('ouzhou.match.today'), value: 3002 },
+		{ label: ('ouzhou.match.early'), value: 3003 },
 		// { label: i18n_t('menu.match_winner'), value: 3004 }
 	],
 	// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
@@ -123,7 +123,7 @@ const set_tab_list = (news_) =>{
 	tab_list.value = []
 	// 首页
 	if(news_ == 0 || news_ == 500){
-		tab_list.value = lodash_.get( ref_data.ouzhou_filter_config,'home_tab', [])  
+		tab_list.value =  lodash_.get( ref_data.ouzhou_filter_config,'home_tab', [])
 		matches_header_title.value = i18n_t('ouzhou.match.matches')
 		// top evnets
 		if (news_ == 500) {
