@@ -446,6 +446,7 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
+    message_fun = null
     // off_init()
   });
 

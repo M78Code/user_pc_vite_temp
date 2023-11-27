@@ -502,8 +502,10 @@ class MatchMeta {
       // sportId: 1,
       selectionHour: date
     })
-    MatchCollect.get_collect_match_data()
     const list = lodash.get(res, 'data', [])
+    if (list.length) {
+      MatchCollect.get_collect_match_data()
+    }
     return list
   }
 
