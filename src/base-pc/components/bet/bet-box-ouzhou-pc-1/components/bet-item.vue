@@ -18,29 +18,23 @@
                 <div class="w-100 fon12 font400 text-8A8986-i" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                 </div>
             </div>
-            <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
-                <div class="f-c-c bet-money">
-                    <div class="show_img" v-if="items.red_green" >
-                        <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
-                        <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
-                    </div>
-                    
-                    <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                      @{{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}
-                    </span>
-                    <BetInput :items="items" />
-                </div>
-                <div class="font12 h12 mt-4">
-                    <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                    <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }} </span>
-                </div>
-            </div>
 
-            <div class="fw-e-s bet-right" v-else>
-                <div class="f-c-c bet-odds">
-                    <span class="font14 font700 mr-10">{{ compute_value_by_cur_odd_type(items.odds_after,'','',items.sportId) }}</span>
+            <div class="f-c-c bet-money">
+                <div class="show_img" v-if="items.red_green" >
+                    <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
+                    <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
                 </div>
+                
+                <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
+                    @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
+                </span>
+                <BetInput :items="items" />
             </div>
+            <div class="font12 h12 mt-4">
+                <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
+                <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }} </span>
+            </div>
+          
 
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1" @click="set_delete">
                 <span class="icon-delete"></span>

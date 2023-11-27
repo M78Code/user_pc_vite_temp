@@ -273,6 +273,7 @@ const get_ouzhou_leagues_data = async (date) => {
       sportId: MenuData.current_ball_type ? Number(MenuData.current_ball_type) : 1,
       selectionHour: date
     })
+    console.log('rewrewrwerwerw', res);
     const list = lodash.get(res, 'data', [])
     return list
 }
