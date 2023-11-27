@@ -99,10 +99,20 @@ function resolve_mew_menu_res_mi_5000() {
     mi_5000_list = BaseData.mew_menu_list_res.find(item => item.mi == 5000) || {}
     // top _events 
     mi_5000_all = mi_5000_list.sl || [];
-    mi_100_arr.value = mi_5000_all.map(item => {
-        item.mif = (item.mi - 5000 + 100)
-        return item
-    } )
+    let mi_5_list = []
+    mi_5000_all.forEach(item => {
+        if(BUILD_VERSION){
+            let csid_ = [5001,5002,5005]
+            if(csid_.includes(item.mi*1)){
+                item.mif = (item.mi - 5000 + 100)
+                mi_5_list.push(item)
+            }
+        }else{
+            item.mif = (item.mi - 5000 + 100)
+            mi_5_list.push(item) 
+        }
+    })
+    mi_100_arr.value = mi_5_list
 }
 
 /**

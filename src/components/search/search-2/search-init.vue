@@ -221,7 +221,7 @@ onMounted(init)
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #282b37;
-        height: 42px;
+        height: 50px;
         margin-bottom: 8px;
         .line {
             height: 14px;
@@ -251,7 +251,7 @@ onMounted(init)
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 30px;
+        height: 36px;
         padding: 0 20px;
         border-radius: 2px;
         cursor: pointer;

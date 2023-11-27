@@ -16,14 +16,14 @@ export const get_base_data_menu_init_old = (params, config={}, url = "/v2/w/menu
   return http.get(`${prefix_job}${url}`, params, config);
 };
 // 菜单-联赛-赛事
-export const post_base_data_mi_tid_mids = (params, config={}, url = "/v3/menu/loadTournamentMatch")=>{
+export const post_base_data_mi_tid_mids = (params, config={}, url = "/v3/menu/loadTournamentMatchPB")=>{
   return http.post(`${prefix_job}${url}`, params, config);
 }
 // 菜单国际化
-export const post_base_data_menu_i18n = (params, config={}, url = "/v3/menu/loadNameList")=>{
+export const post_base_data_menu_i18n = (params, config={}, url = "/v3/menu/loadNameListPB")=>{
   return http.post(`${prefix_job}${url}`, params, config);
 }
 // 元数据接口
-export const get_base_data = (params, config={}, url = "/v2/m/getOriginalData") => {
+export const get_base_data = (params, config={}, url = "/v2/m/getOriginalDataPB") => {
   return http.get(`${prefix_job}${url}`, params, config);
 };

@@ -74,7 +74,6 @@ class MatchListCardDataClass {
   set_all_card_obj({
     all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, five_leagues_card_key_arr, csid_to_card_key_obj
   }) {
-    console.log('csid_to_card_key_obj', csid_to_card_key_obj);
     // 合并所有卡片样式对象
     lodash.merge(this.all_card_obj, all_card_obj)
     play_to_card_key_arr && (this.play_to_card_key_arr = play_to_card_key_arr)

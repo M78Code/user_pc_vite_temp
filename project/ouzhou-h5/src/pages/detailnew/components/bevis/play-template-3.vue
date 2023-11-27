@@ -1,7 +1,11 @@
-<!-- ms: 0开 1封 2关 11锁 -->
-<!-- hs: 0开 1封 2关 11锁 -->
-<!-- os: 1开 2封 3隐藏不显示不占地方-->
-<!-- 按ol循环，不考虑按tittle循环-->
+<!--
+    ms: 0开 1封 2关 11锁
+    hs: 0开 1封 2关 11锁
+    os: 1开 2封 3隐藏不显示不占地方 按ol循环，不考虑按tittle循环
+
+    平局退款
+-->
+
 <script setup name="play-template-3">
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {computed, defineProps} from "vue";
@@ -13,10 +17,6 @@ const props = defineProps({
     item_data: {
         type: Object,
         default: () => ({}),
-    },
-    active: {
-        type: Number,
-        default: () => 0,
     }
 })
 const emits = defineEmits(["bet_click_"]);
@@ -25,35 +25,57 @@ const go_betting = (data) => {
     emits("bet_click_", data, props.item_data.hpn);
 }
 const AssembleData = computed(()=>{
-    let information = {
-        others: [],
-        assemble: [],
-        title: []
-    }
-    let { title,hl } = props.item_data
-    const assemble = hl[0].ol.filter(i=>i.os != 3)
-    return []
+    const { title,hl } = props.item_data
+    const ol_list = hl[0].ol.filter(item=>item.os != 3)
+
+
+    // const
 })
 </script>
 <template>
+    <span v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</span>
     <section class="template3" v-if="item_data?.hl[0]?.ol">
-        <ul v-for="item of AssembleData" :key="item?.id">
-            <li></li>
+        <ul class="list">
+            <template v-for="olChild of item_data.hl[0].ol" :key="olChild?.oid">
+                <template v-if="olChild.result != (void 0)">
+                    <ResultOlItem :value="olChild" :hpt="3"></ResultOlItem>
+                </template>
+                <template v-else>
+                    <li v-if="olChild.os == 1" class="list-item" @click="go_betting(olChild)"
+                        :class="{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }"
+                    >
+                        <span class="on-text textOverflow2">{{ olChild?.on || olChild?.ott }}</span>
+                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
+                        <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
+                    </li>
+                    <li v-else class="list-item">
+                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                    </li>
+                </template>
+            </template>
         </ul>
     </section>
 </template>
 
 <style lang="scss" scoped>
+@import "basicTemplateStyle";
 .template3{
     overflow: hidden;
     padding: 8px;
     box-sizing: border-box;
-}
-
-.lock {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 2px;
+    .list{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: 48px;
+        &-item{
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--q-gb-bg-c-2);
+            border: 1px solid var(--q-gb-bd-c-10);
+        }
+    }
 }
 </style>

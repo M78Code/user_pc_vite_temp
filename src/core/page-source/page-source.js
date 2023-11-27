@@ -144,11 +144,6 @@ class PageSourceData {
   {
     this.list_query_other_params=Object.assign({},this.list_query_other_params,obj)
   }
-  // 设置当前路由名称
-  set_route_name (value) {
-    this.route_name = value
-  }
-
 
   // 列表与收藏切换
 
@@ -160,8 +155,10 @@ class PageSourceData {
   set_from_page(from_page_source) {
     this.from_page_source = from_page_source;
   }
+  // 设置当前路由名称
+
   set_route_name(name){
-    this.router_name = name
+    this.route_name = name
    }
 
   is_search(){

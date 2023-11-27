@@ -46,7 +46,7 @@
             @detail_tabs_change="detail_tabs_change" v-model:allCloseState="allCloseState"/>
         </div>
         <div v-if="tab == 'event_analysis'">
-          <detail_event_tabs @change="detail_event_tabs_change" />
+          <detail_event_tabs :match_detail="match_odds_info" @change="detail_event_tabs_change" />
         </div>
       </div>
       <q-tab-panels v-model="tab" animated>
@@ -80,6 +80,7 @@ import odds_info from "./components/bevis_odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
+import { i18n_t } from "src/core/index.js"
 
 // import './index.scss'
 export default {

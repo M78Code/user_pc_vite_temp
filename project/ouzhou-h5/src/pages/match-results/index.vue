@@ -68,8 +68,8 @@ const switchHandle = async ()=> {
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
         if(res?.code == 200){
             let scroll_data = res.data.filter((n)=>{return n.sportId != '0'}).map( item => {
-                // <100常规 >3000电竞  vr不处理 冠军400
-                const mi = +item.menuId<100?100+item.sportId*1 + '':+item.menuId>3000 && +item.menuId<10000?`${'2'}${item.sportId}`:item.menuId=='10000'?400:item.sportId;
+                // <100常规 >=100 < 400电竞  vr不处理 冠军10000
+                const mi = +item.menuId<100?100+item.sportId*1 + '':+item.menuId>=100 && +item.menuId<400?`${'2'}${item.sportId}`:item.menuId=='10000'?400:item.sportId;
                 return {
                     mi: mi,
                     ct: item.count,
@@ -83,8 +83,8 @@ const switchHandle = async ()=> {
                     })
                 }
             })
-            MenuData.set_slideMenu_sport(scroll_data);
             !MenuData.slideMenu_sport?.length && init_data(scroll_data)
+            MenuData.set_slideMenu_sport(scroll_data);
         }
     // })
 }

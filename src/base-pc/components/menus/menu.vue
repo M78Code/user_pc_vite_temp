@@ -89,9 +89,9 @@ const go_to_favouritse = () => {
   MenuData.set_mid_menu_result(mid_config)
   MenuData.set_current_ball_type(1)
 
-  nextTick(()=>{
+  // nextTick(()=>{
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
-  })
+  // })
 }
 /**
  * 

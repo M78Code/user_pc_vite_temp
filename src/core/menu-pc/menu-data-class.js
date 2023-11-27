@@ -463,7 +463,7 @@ class MenuData {
     set_is_collect(is_collect) {
       this.is_collect=is_collect
       if (is_collect) {
-        useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
+        useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
       }
     }
   /**
@@ -717,7 +717,7 @@ class MenuData {
     this.set_bet_category();
 
     // 菜单数据缓存
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
     nextTick(()=>{
       SessionStorage.set(menu_key,this)
     })

@@ -11,17 +11,18 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, provide,inject } from 'vue';
+import { ref, onMounted, onUnmounted, provide,inject, watch } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { LayOutMain_pc } from "src/core/index.js";
 import { get_match_template_id } from 'src/core/match-list-pc/match-handle-data.js';
+import {
+  socket_remove_match
+} from "src/core/match-list-pc/match-list-composition.js";
 // 玩法模板 101 欧洲版 常规赛事
 import { MatchTpl101AfterFullVersionWapper as MatchTpl101After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-101-after/index.js";
 // 欧洲版 冠军模板
 import { MatchTpl118AfterFullVersionWapper as MatchTpl118After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-118-after/index.js";
-import { utils } from 'src/core/utils/module/utils.js'
-
 export default {
   props: {
     mid: {
@@ -36,17 +37,13 @@ export default {
   setup(props) {
     const MatchListData = inject("MatchListData")
     const get_match_item = (mid) => {
-      const match = MatchListData.get_quick_mid_obj(mid);
-      //增加让球方判断
-      match && utils.computed_team_let_ball(match);
-      return match
+      return  MatchListData.get_quick_mid_obj(mid)
     }
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
     const match = get_match_item(props.mid)
     const get_current_template_number = () => {
       let tpl_id = get_match_template_id(match);
-      console.log('tpl_id', tpl_id);
       if (tpl_id == 118) {
         return 118
       } else {

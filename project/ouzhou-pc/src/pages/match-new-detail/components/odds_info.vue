@@ -17,17 +17,16 @@
       >
         <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
-          <div class="odds-item"  v-if="item.hl[0].hs!=2">
-            {{ item.hpn }}
+          <div class="odds-item" v-if="item.hl[0].hs != 2">
+        {{ item.hpn }}
             <span v-if="item.hps"> ({{ item.hps.split("|")[1] }}) </span>
             <!-- 一键置顶 -->
             <img
-              :src="parseInt(item.hton)>0?set_top__active_png:set_top_png"
+              :src="parseInt(item.hton) > 0 ? set_top__active_png : set_top_png"
               alt=""
               @click.stop="set_top(item)"
               srcset=""
               class="set-icon"
-             
             />
             <!-- 折叠 -->
             <img
@@ -41,7 +40,7 @@
             />
           </div>
         </template>
-        <q-card v-if="item.hl[0].hs!=2">
+        <q-card v-if="item.hl[0].hs != 2">
           <q-card-section>
             <!-- 详情页玩法名称 -->
             <div
@@ -85,6 +84,9 @@
                               'tem4-active': BetData.bet_oid_list.includes(
                                 ol.oid
                               ),
+                              'odds-lift':
+                                BetData.bet_oid_list.includes(ol.oid) &&
+                                ol.odds_lift,
                             }"
                             @click="betItemClick(item.hl[0], ol, item.hpn)"
                           >
@@ -200,8 +202,8 @@ const props = defineProps({
   },
 });
 
-const set_top_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top.png`
-const set_top__active_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top_active.png`
+const set_top_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top.png`;
+const set_top__active_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top_active.png`;
 // `mhs` 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
 // <!-- ms: 0开 1封 2关 11锁 -->
 //     <!-- hs: 0开 1封 2关 11锁 -->
@@ -210,6 +212,8 @@ const mouse_in = ref(false);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
 let all_hl_item = inject("all_hl_item");
+
+const odds_lift_obj = ref({});
 
 const columnTotal = (item) => {
   let total;
@@ -269,12 +273,10 @@ const sun_ol = (ol, item) => {
   // console.log(1111111111,result)
   return result;
 };
-  // 一键置顶
-const set_top = (item)=>{
-
+// 一键置顶
+const set_top = (item) => {
   useMittEmit(MITT_TYPES.EMIT_SET_PLAT_TOP, item);
-}
-
+};
 
 //  投注项点击投注,
 const betItemClick = (item, ol, play_name) => {
@@ -441,6 +443,20 @@ onMounted(() => {});
     color: var(--q-gb-t-c-1);
   }
 }
+.odds-lift {
+  span {
+    &:nth-child(1) {
+      width: 50%;
+      display: block;
+      text-align: right;
+      margin-right: 10px;
+      overflow: hidden;
+      color: var(--q-gb-t-c-5) !important;
+    }
+  }
+  color: var(--q-gb-t-c-5) !important;
+  background-color: var(--q-gb-bg-c-5) !important;
+}
 
 .bottom-height {
   height: 150px;
@@ -454,11 +470,11 @@ onMounted(() => {});
   left: 50%;
   transform: translate(-50%, 0);
 }
-.odds-item{
+.odds-item {
   width: 100%;
-   line-height: 35px; 
-   font-weight: 500;
-   position: relative;
+  line-height: 35px;
+  font-weight: 500;
+  position: relative;
 }
 .expand-icon {
   height: 9px;
@@ -470,10 +486,10 @@ onMounted(() => {});
   width: 16px;
   height: 16px;
 }
-.set-icon{
+.set-icon {
   position: absolute;
   right: -25px;
-  top:8px;
+  top: 8px;
   height: 16px;
   width: 16px;
   margin-right: 50px;

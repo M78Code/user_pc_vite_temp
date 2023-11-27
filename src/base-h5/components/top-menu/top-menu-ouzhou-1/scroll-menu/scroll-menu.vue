@@ -54,7 +54,7 @@ const ref_data = reactive({
  * @param {*} item 
  */
  const get_cont = (item) => {
-    return item.sl.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
+    return item.sl?.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
 }
 /**
  * 列表数据

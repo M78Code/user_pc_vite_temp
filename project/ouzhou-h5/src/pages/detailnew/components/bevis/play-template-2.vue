@@ -17,14 +17,10 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 };
-setTimeout(function () {
-    if (props.item_data.hpt == 2) {
-        console.log(`template2==`, props.item_data)
-    }
-}, 1200)
 </script>
 
 <template>
+    <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <section class="template2">
         <nav class="title" v-if="item_data?.title">
             <div class="text-title textOverflow1">{{ item_data.title[0].osn }}</div>
@@ -36,7 +32,7 @@ setTimeout(function () {
                     @click="go_betting(olChild)"
                     v-for="olChild of hlChild.ol" :key="olChild.oid">
                     <template v-if="olChild.os == 1 && olChild._hs != 11">
-                        <span class="on-text textOverflow2">{{ olChild.otv || olChild.ott }}</span>
+                        <span class="on-text textOverflow2">{{ olChild.on }}</span>
                         <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </template>
@@ -50,6 +46,7 @@ setTimeout(function () {
 </template>
 
 <style scoped lang="scss">
+@import "basicTemplateStyle";
 .template2 {
     width: 100%;
     padding: 8px;
@@ -83,41 +80,5 @@ setTimeout(function () {
             border-bottom: 1px solid var(--q-gb-bd-c-10);
         }
     }
-}
-
-.lock {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 2px;
-}
-.on-text{
-    color: var(--q-gb-t-c-4);
-}
-.ov-text{
-    color: var(--q-gb-t-c-1);
-    margin: 0 8px;
-}
-.is-active{
-    background-color: var(--q-gb-bg-c-1);
-    .ov-text{
-        color: var(--q-gb-t-c-2);
-        margin: 0 8px;
-    }
-}
-
-.textOverflow1 {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.textOverflow2 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 </style>
