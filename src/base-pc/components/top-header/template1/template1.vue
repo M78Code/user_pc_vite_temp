@@ -29,7 +29,7 @@
 </template>
 <script>
 import { defineComponent, ref } from "vue";
-// import right_head from "./right_head.vue";
+import right_head from "./right_head.vue";
 import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import BetData from 'src/core/bet/class/bet-data-class.js'
@@ -38,7 +38,7 @@ import { MenuData,useMittEmit,MITT_TYPES,UserCtr  } from "src/core/"
 export default defineComponent({
   name: "TopHeaderTemplate1",
   components: {
-    // right_head,
+    right_head,
   },
   props: {},
   setup(props, context) {
