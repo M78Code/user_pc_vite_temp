@@ -24,10 +24,6 @@ const props = defineProps({
     item_data: {
         type: Object,
         default: () => ({})
-    },
-    active: {
-        type: Number,
-        default: 0,
     }
 })
 

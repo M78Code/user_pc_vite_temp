@@ -25,7 +25,6 @@ import {conpute_match_list_card_offset ,set_fold_match_list_scroll_top} from  ".
       // 设置未折叠高度
       click_card_obj.card_total_height = click_card_obj.card_nofold_height
     }
-    console.log('MatchListCardData', MatchListCardData);
     // 赛种下所有卡片key列表
     let sport_card_keys_arr = MatchListCardData.csid_to_card_key_obj['csid_'+click_card_obj.csid] || []
 

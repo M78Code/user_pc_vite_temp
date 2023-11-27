@@ -21,15 +21,15 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common,rem
 
 			if (cd.length < 1) return;
 			const item = cd.find((t) => t.csid == MenuData.current_ball_type) || !MenuData.current_ball_type;
-			console.log('88888888888882:', item, cd, MenuData.current_ball_type)
-
-			if (item) useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {is_socket: true});
+			if (MenuData.is_home()) {
+				useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES)
+			} else {
+				if (item) useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {is_socket: true});			
+			}
 		}
 		// 调用 matchs  接口
 		if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
-			console.log('`C101C102C104`', data);
 			const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
-			console.log('88888888888889:', mid, mmp, mhs, data)
 			if (mhs == 2 || mmp == '999') {
 			// mhs === 2 为关盘
 				socket_remove_match(data.cd, MatchListData);
