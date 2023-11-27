@@ -5,6 +5,7 @@
 -->
 <template>
   <div class="box-bc">
+   
     <q-table
       :rows="data"
       separator="none"

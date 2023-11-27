@@ -47,8 +47,9 @@
       //margin-top: 10px;
       display: flex;
       justify-content: space-between;
-      //background: var(--q-gb-bg-c-11);
+      background: var(--q-gb-bg-c-11);
       padding: 10px;
+      border-radius: 0.12rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
