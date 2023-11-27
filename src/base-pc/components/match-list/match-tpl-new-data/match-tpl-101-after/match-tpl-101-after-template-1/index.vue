@@ -31,7 +31,7 @@
 import { ref, watch, defineProps } from 'vue';
 import lodash from 'lodash'
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData, t } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -43,7 +43,7 @@ import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/com
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { useRouter } from 'vue-router';
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
-
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 export default {
   components: {
     BasisInfo101,
@@ -116,15 +116,21 @@ export default {
     // })
     function jump_to_details() {
       const { tid, csid } = props.match;
-      //比分板跳转到详情页
-      router.push({
-        name: 'details',
-        params: {
-          mid: props.mid,
-          tid: tid,
-          csid: csid
-        }
-      })
+      if(MenuData.is_scroll_ball()){
+        // 控制右侧比分板
+        MatchDataWarehouseInstance.set_match_details(props.match,[])
+        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, props.match.mid);
+      }else {
+        //比分板跳转到详情页
+        router.push({
+          name: 'details',
+          params: {
+            mid: props.mid,
+            tid: tid,
+            csid: csid
+          }
+        })
+      }
     }
 
 
