@@ -59,7 +59,7 @@ const jump_page = (item) => {
  * 公告
  */
  const is_rule_page = computed(() => {
-  return !['/announcement'].includes(router.currentRoute.value.path)
+  return !['/announcement','/rules'].includes(router.currentRoute.value.path)
 })
 
 </script>

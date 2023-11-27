@@ -219,7 +219,8 @@
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
                   :profit="records.profit"
-                  :reset_pagination="pageCurrent">
+                  :reset_pagination="pageCurrent"
+                  :is_bet_record="true">
       </Pagination>
       <!--      <pagination-wrapper-->
       <!--        v-if="tableData.length > 0"-->

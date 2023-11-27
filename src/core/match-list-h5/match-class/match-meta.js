@@ -882,7 +882,7 @@ class MatchMeta {
     MatchResponsive.clear_ball_seed_league_count()
 
     // 赛事归类开赛、未开赛
-    const target_data = this.is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list
+    const target_data = this.is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list.filter((t) => t.mid)
     // 过滤赛事 
     this.complete_mids = mids
     this.complete_matchs = target_data.map((t, index) => {
