@@ -30,11 +30,11 @@
             <span>{{ opt.osn }}</span>
           </div>
           <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
-            <div v-for="ol in hl_item.ol.filter((i)=>i.os !=3)" :key="ol?.oid" class="ol_on">
+            <div v-for="ol in filter(hl_item)" :key="ol?.oid" class="ol_on">
               <template v-if="ol?.otd === opt?.otd">
                 <!-- <div>{{ ol.on }}</div> -->
-
-                <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']">
+                <div class="ol_ov"
+                  @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }]">
                   <!-- {{ (ol.ov/100000).toFixed(2) }} -->
 
                   <template v-if="ol?.os == 1 && ol?._hs != 11">
@@ -45,6 +45,7 @@
                   <span v-if="ol?.os == 2 || ol?._hs == 11">
                       <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                   </span>
+                  <ResultOlItem :value="ol"></ResultOlItem>
                 </div>
               </template>
             </div>
@@ -55,14 +56,15 @@
 
       <template v-else>
         <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
-          <div v-for="ol in hl_item.ol.filter((i)=>i.os !=3)" :key="ol?.oid" class="ol_on">
-            <div @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }, 'ol_ov']">
+          <div v-for="ol in filter(hl_item)" :key="ol?.oid" class="ol_on">
+            <div class="ol_ov else" @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }]">
               <template v-if="ol?.os == 1">
                 <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
                 <span class="ol-ov-text">{{ get_oddv(ol?.ov / 100000) }}</span>
                 <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
               </template>
               <span v-if="ol?.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+              <ResultOlItem :value="ol"></ResultOlItem>
             </div>
           </div>
         </template>
@@ -78,6 +80,8 @@ import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import EMITTER from  "src/global/mitt.js"
 import olStatus from "../ol_status.vue";
+import ResultOlItem from "../../result/ResultOlItem.vue";
+
 const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
@@ -113,6 +117,10 @@ const columnTotal = (item) => {
   }
   return `repeat(${total}, 1fr)`;
 };
+
+function filter(item){
+  return item.ol.filter((i)=>i.result!=(void 0) || i.os !=3)
+}
 onMounted(() => {
   // console.error('type',props.item_data)
 });
@@ -167,6 +175,8 @@ onMounted(() => {
     }
     .ol_on {
       background-color: var(--q-gb-bg-c-2);
+      flex: 1;
+      min-width: 25%;
       .ol_ov {
         border: 1px solid var(--q-gb-bd-c-10);
         border-width: 1px 1px 0 1px;
@@ -174,7 +184,7 @@ onMounted(() => {
         height: 50px;
         line-height: 50px;
         font-weight: 500;
-        //color: #FF7000;
+        width: 100%;
         color: var(--q-gb-t-c-1);
         display: flex;
         justify-content: center;
@@ -184,9 +194,9 @@ onMounted(() => {
           color: var(--q-gb-t-c-4);
           overflow: hidden;
         }
-      }
-      .ol_ov:nth-last-child(1) {
-        border-bottom: 1px solid var(--q-gb-bd-c-10);
+        &:nth-last-child(1) {
+          border-bottom: 1px solid var(--q-gb-bd-c-10);
+        }
       }
       .is-active {
         //background: #FF7000;

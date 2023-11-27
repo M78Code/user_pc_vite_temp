@@ -109,7 +109,6 @@ onMounted(()=>{
 }
 .secondary_panels{
   // height: 760px !important;
-  // height:calc(100% - 80px);
 }
 .secondary_content{
   height:calc(100% - 80px);

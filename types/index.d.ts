@@ -25,10 +25,15 @@ declare global {
     /** ws cmd value 枚举 */ export type WsCmdValueEnum = `${WsCmdEnum}`
   }
 }
+
 /** 命名路由跳转提供类型提示 */
 type NameRouterType = RouteLocationRaw | {
   /** 欧洲H5详情页 */
   name: 'category',
+  params:K.mid|K.tid|K.csid|{csid?,mcid?:string},
+}|{
+  /** 欧洲H5赛果详情页 */
+  name: 'result',
   params:K.mid|K.tid|K.csid|{csid?,mcid?:string}
 }
 
