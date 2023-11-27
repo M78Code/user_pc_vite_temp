@@ -75,7 +75,7 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span class="table-name" >
+            <span class="table-name">
               <!-- 发球方小圆点 -->
               <div
                 style="width: 10px"
@@ -414,6 +414,7 @@ const computed_score = (res) => {
       current_data.away += parseInt(score[i].away || 0);
     }
   }
+  console.log(11111111, current_data);
   return current_data;
 };
 
@@ -486,8 +487,8 @@ watch(
       }
 
       //   active_index = this.stage_dict(res.csid, res.mmp, res.mct) - 1
-      if (res.msc.S103) {
-        current_data = res.msc.S103;
+      if (props.score_list.S103) {
+        current_data = props.score_list.S103;
       }
       get_msc_data(msc_data, current_data);
     } else {
