@@ -2,8 +2,8 @@
   <div class="detail_header_tem1">
     <div class="match-detail-head">
       <div
-        v-show="get_match_detail.csid"
-        :class="['sport_bg', `${get_sports_bg(get_match_detail.csid)}`]"
+        v-show="get_match_detail?.csid"
+        :class="['sport_bg', `${get_sports_bg(get_match_detail?.csid)}`]"
       ></div>
       <div class="match-detail-time">
           <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">

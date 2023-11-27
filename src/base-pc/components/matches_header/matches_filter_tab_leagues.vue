@@ -59,9 +59,10 @@ const props = defineProps({
 });
 
 watch(() => props.date, async () => {
-
   const list = await get_ouzhou_leagues_data(props.date)
   leagues.value = list
+  console.log('123123123123123123', props.date);
+
   if (list?.length) {
     select_id.value = list[0].id
     choose_filter_tab(list[0])

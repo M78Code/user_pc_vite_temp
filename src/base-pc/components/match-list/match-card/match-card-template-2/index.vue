@@ -14,7 +14,7 @@
 import { ref, onMounted, onUnmounted, provide,inject, watch } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc } from "src/core/index.js";
+import { LayOutMain_pc, utils } from "src/core/index.js";
 import { get_match_template_id } from 'src/core/match-list-pc/match-handle-data.js';
 import {
   socket_remove_match
@@ -37,7 +37,9 @@ export default {
   setup(props) {
     const MatchListData = inject("MatchListData")
     const get_match_item = (mid) => {
-      return  MatchListData.get_quick_mid_obj(mid)
+      // let special_ball = utils.computed_team_let_ball(MatchListData.get_quick_mid_obj(mid))
+      let hn_obj_data = MatchListData.list_to_obj.hn_obj;
+      return utils.computed_team_let_ball(MatchListData.get_quick_mid_obj(mid), hn_obj_data)
     }
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)

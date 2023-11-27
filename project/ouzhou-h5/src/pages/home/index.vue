@@ -74,7 +74,7 @@ import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vu
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5 } from "src/core/index.js";
 
 let message_fun = null
 let handler_func = null
@@ -176,7 +176,7 @@ const handle_ouzhou_home_data = (res) => {
   // 滚球赛事
   if (dataList.length > 0) {
     const arr_play_matchs = dataList.map(t => {
-      const match = MatchDataBaseH5.get_quick_mid_obj(t?.mid)
+      const match = MatchDataBaseInPlayH5.get_quick_mid_obj(t?.mid)
       return match
     })
     play_matchs.value = arr_play_matchs.filter(t => t?.mid)

@@ -10,6 +10,7 @@
 		</div>
 		<!-- 搜索 历史 -->
 		<div class="content" v-show="(show_history && history_data &&
+				!(search_data?.bowling && search_data?.bowling.length) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<!-- <div class="middle_info_tab">EXAMPLE SEARCHES</div> -->
@@ -51,7 +52,8 @@
 		</div>
 
 		<!-- 搜索展示 -->
-		<div style="height: 100%; overflow-y: auto;" v-show="(search_data?.teamH5 && search_data?.teamH5.length > 0) ||
+		<div style="height: 100%; overflow-y: auto;" v-show="(search_data?.bowling && search_data?.bowling.length > 0) || 
+			(search_data?.teamH5 && search_data?.teamH5.length > 0) ||
 			(search_data?.league && search_data?.league.length > 0)">
 
 			<div class="content">
@@ -215,8 +217,9 @@
 		</div>
 		</div>
 		<!-- 搜索 无结果 -->
-		<div class="content not-data" v-show="(!(search_data?.teamH5 && search_data.teamH5?.length > 0) &&
-			!(search_data?.league && search_data.league?.length > 0) &&
+		<div class="content not-data" v-show="(!(search_data?.bowling && search_data?.bowling.length) && 
+			!(search_data?.teamH5 && search_data?.teamH5.length > 0) &&
+			!(search_data?.league && search_data?.league.length > 0) &&
 			(!show_hot || 
 			!show_history))"
 		>

@@ -3,7 +3,7 @@
  * @Description: 普通赛事的投注弹框
 -->
 <template>
-  <div class="bet-mix-box-child2">
+  <div class="component bet-mix-box-chid ouzhou-h5 bet-mix-box-child2">
     <!-- 多注顶部蒙层 -->
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent v-if="BetData.bet_state_show"></div>
     <!-- 投注中的蒙层，所有不能点击 -->
@@ -345,6 +345,8 @@ background: var(--q-gb-t-c-3) !important;
     margin-bottom: .2rem ;
 }
 .bet-mix-box-child2 {
+  /** tabbar z-index 已经10000， 该项需要大于其 */
+  --private-bet-mix-box-child-z-index: 100000;
   .used-money {
     color: var(--q-gb-t-c-2);
   }
@@ -365,14 +367,19 @@ background: var(--q-gb-t-c-3) !important;
   bottom: 0;
   // left: 50%;
   // transform: translateX(-50%);
-  z-index: 1600;
+  //z-index: var(--private-bet-mix-box-child-z-index);
   overflow: hidden;
   width: 100%;
   -webkit-overflow-scrolling: touch;
   background-color: var(--q-gb-t-c-2);
   &.bet_state_show{
+    position: fixed;
     bottom: 0;
-    z-index: 16000;
+
+    z-index: var(--private-bet-mix-box-child-z-index);
+
+   //z-index: 16000;
+
   }
   .yb_pl14 {
     margin-right: 0.01rem;

@@ -96,8 +96,8 @@ export default defineComponent({
     },
     results_table: Object,
     reset_pagination: {
-      type: Number,
-      default: 1,
+      type: String,
+      default: '1',
     }
   },
   filters: {
@@ -146,10 +146,13 @@ export default defineComponent({
     // 监听页码变化
     watch(() => state.current, (newVal) => {
       console.log('页码变了: ', newVal)
-      context.emit('pageChange', { 
+      context.emit('pageChange', {
         ...state,
         current: newVal || 1
       })
+    })
+    watch(() => props.reset_pagination, (newVal) => {
+      state.current = +newVal
     })
 
 
