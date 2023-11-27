@@ -28,7 +28,7 @@
                             <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_up.png`" alt=""/>
                             <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_down.png`" alt=""/>
                           </div>
-                          <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">@{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
+                          <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">@{{compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId)}}</div>
                         </div>
                     </div>
                     

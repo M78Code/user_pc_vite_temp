@@ -243,7 +243,7 @@ export function usedetailData(route) {
       detail_loading.value = false;
       current_key.value = current_key.value
         ? current_key.value
-        : tabList.value
+        : tabList.value.length>0
         ? tabList.value[0].value
         : null;
 
