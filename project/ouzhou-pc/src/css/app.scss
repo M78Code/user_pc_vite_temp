@@ -311,6 +311,9 @@ input::-ms-reveal {
   &.bet-item-wrap-ouzhou-bigger {
     .c-bet-item {
       width: 133px;
+      &.scroll-ball-bet-item {
+        width: 122px;
+      }
     }
   }
   div {

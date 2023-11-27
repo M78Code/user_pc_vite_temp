@@ -11,18 +11,18 @@
 					<ul class="list">
 						<!-- <div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div> -->
 						<!-- 滚球 -->
-						<div v-show="search_data?.bowling && search_data?.bowling.length > 0" style="margin-bottom: 10px;">
+						<div v-show="!lodash.isEmpty(show_bowling_list)" style="margin-bottom: 10px;">
 							<div @click="expand_bowling = !expand_bowling">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
 								</div>
 								<div v-show="expand_bowling">
-									<li v-for="(item, index) in search_data?.bowling" :key="index">
-										<div class="list_top" @click="bowling_top_click(item)">
-											<span v-html="red_color(item.tn)"></span><img
+									<li v-for="(value, name, index) in show_bowling_list" :key="name">
+										<div class="list_top" @click="bowling_top_click(value)">
+											<span v-html="red_color(value.tn)"></span><img
 												:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 										</div>
-										<div class="list_bottom" @click="bowling_click(item)">
+										<div class="list_bottom" v-for="(item, i) in value.children" @click="bowling_click(item)">
 											<div style="width: 60%; word-break: break-all">
 												<p>
 													<span class="home" v-html="red_color(item.mhn)"></span>
@@ -122,14 +122,14 @@
 								</div>
 							</div>
 							<div v-show="expand_team">
-								<li v-for="(item, index) in search_data?.team" :key="index" @click="match_click(item)">
+								<li v-for="(item, index) in search_data?.team" :key="index">
 									<div v-if="item.matchList[0].tn">
-										<div class="list_top">
+										<div class="list_top" @click="match_top_click(item)">
 											<span v-html="red_color(item.matchList[0].tn)"></span><img
 												:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 										</div>
 									</div>
-									<div class="list_bottom">
+									<div class="list_bottom" @click="match_click(item)">
 										<div style="width: 60%; word-break: break-all">
 											<p>
 												<span class="home" v-html="red_color(item?.matchList?.[0]?.mhn)"></span>
@@ -186,7 +186,7 @@
 </template>
   
 <script setup>
-import { ref, reactive, watch, onBeforeUnmount, nextTick, onMounted } from 'vue'
+import { ref, reactive, watch, onBeforeUnmount, nextTick, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import lodash from 'lodash'
 
@@ -229,6 +229,26 @@ const get_props = (props) => {
 const expand_bowling = ref(true);
 const expand_league = ref(true);
 const expand_team = ref(true)
+
+// 进行中同联赛下的赛事放在一起
+const show_bowling_list = computed(() => {
+	const obj = {}
+	const bowling = search_data.value?.bowling || []
+	bowling.forEach(item => {
+		const {csid, tn } = item;
+		if(!obj[tn]) {
+			obj[tn] = {
+				tn,
+				csid,
+				children: [item]
+			}
+		} else {
+			obj[tn].children.push(item)
+		}
+	})
+	return obj;
+});
+
 // 监听搜索关键词改变
 watch(
 	() => keyword.value,
@@ -244,6 +264,39 @@ watch(
  function bowling_top_click(match) {
 	update_show_type('none')
 	const { csid, tn } = match;
+	router.push(`/search/${tn}/${csid}`)
+	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
+}
+/**
+ * @Description:点击联赛搜索
+ * @param {object} match 点击联赛标题
+ * @return {undefined} undefined
+ */
+ function league_click(match) {
+	if(!match) return;
+	search.insert_history(match.leagueName)
+	const { csid } = match.matchList[0]
+	router.push(`/search/${match.leagueName}/${csid}`)
+	SearchPCClass.set_search_isShow(false);
+	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
+		focus: false,
+		text: ''
+	})
+	// PageSourceData.set_route_name('search')
+}
+/**
+ * @Description:点击队伍搜索
+ * @param {object} match 点击联赛标题
+ * @return {undefined} undefined
+ */
+ function match_top_click(match) {
+	if(!match) return;
+	search.insert_history(match.name)
+	const { tn, csid } = match.matchList[0]
 	router.push(`/search/${tn}/${csid}`)
 	SearchPCClass.set_search_isShow(false);
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
@@ -268,7 +321,6 @@ function bowling_click(match) {
 		text: ''
 	})
 }
-
 const scrollRef = ref(null)
 /**
  * @Description:点击队伍搜索
@@ -286,25 +338,6 @@ function match_click(match) {
 		text: ''
 	})
 }
-
-/**
- * @Description:点击联赛搜索
- * @param {object} match 点击的赛事
- * @return {undefined} undefined
- */
-function league_click(match) {
-	if(!match) return;
-	search.insert_history(match.leagueName)
-	const { csid } = match.matchList[0]
-	router.push(`/search/${match.leagueName}/${csid}`)
-	SearchPCClass.set_search_isShow(false);
-	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
-		focus: false,
-		text: ''
-	})
-	// PageSourceData.set_route_name('search')
-}
-
 /**
  * @Description:点击联赛搜索
  * @param {object} match 点击联赛下的具体赛事
@@ -379,7 +412,6 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 		})
 	})
 }, 500)
-
 
 /**
  * @description 获取赛事赔率

@@ -251,7 +251,7 @@ const compute_style_template_by_matchinfo_template118 = (match, template_id) => 
 	main_handicap_list.forEach((hl_data) => {
 		if (hl_data.hpid ) {
 			// 盘口标题高度
-			add_handicap_height += 40;
+			add_handicap_height += 36;
 			// 计算投注项数量
 			ol_count = 0;
 			hl_data.ol.forEach((ol) => {
@@ -260,10 +260,9 @@ const compute_style_template_by_matchinfo_template118 = (match, template_id) => 
 				}
 			});
 			// 累加投注项高度
-			add_handicap_height = add_handicap_height + Math.ceil(ol_count / 2) * 40;
+			add_handicap_height = add_handicap_height + Math.ceil(ol_count / 2) * 46;
 		}
 	});
-	Object.assign(match, main_handicap_list)
 	return { add_handicap_height };
 };
 /**
@@ -413,7 +412,6 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 			style_obj.cur_handicap_height +
 			style_obj.add_handicap_height +
 			style_obj.tab_play_total_height
-			console.log('style_obj', style_obj);
 		} else {
 			style_obj.total_height = 80;		
 		}

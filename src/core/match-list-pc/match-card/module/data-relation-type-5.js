@@ -175,7 +175,6 @@
       // 赛事表征数据
       let match_style_obj =  compute_style_template_by_matchinfo(match, get_match_template_id(match),true)
       all_card_obj[match.mid+'_'] = match_style_obj
-
     })
 
     MatchListCardData.set_all_card_obj({
@@ -197,7 +196,6 @@
         match_style_obj.parent_card_key = card_key
         card_total_height += match_style_obj.total_height
       })
-
       // 设置联赛容器卡片
       let league_container_card_obj = MatchListCardData.all_card_obj[card_key]
       // 联赛标题卡片

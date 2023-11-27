@@ -393,6 +393,7 @@
 }
 /*  模板18相关样式 */
 .tpl-118 {
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
   .play-wrap {
     /*  玩法基本信息 */
     .play-info {
@@ -419,12 +420,10 @@
 
   //一个联赛多个小组赛
   .play-wrap {
+
     .bet-list-wrap {
       background: var(--q-gb-bg-c-4);
-      .bet-col:nth-last-child(2),
-      .bet-col:last-child {
-        border-bottom: 1px solid var(--q-gb-bd-c-8);
-      }
+      box-sizing: border-box;
     }
   }
 }

@@ -39,7 +39,7 @@
 
                   <template v-if="ol?.os == 1 && ol?._hs != 11">
                     <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
-                    <span class="ol-ov-text">{{get_oddv(ol?.ov / 100000) }}</span>
+                    <span class="ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,'','',MatchDetailCalss.params.sportId)}}</span>
                     <olStatus :item_ol_data="ol" :active="ol.oid == active" />
                   </template>
                   <span v-if="ol?.os == 2 || ol?._hs == 11">
@@ -60,7 +60,7 @@
             <div class="ol_ov else" @click="go_betting(ol)" :class="[{ 'is-active': BetData.bet_oid_list.includes(ol?.oid ) }]">
               <template v-if="ol?.os == 1">
                 <span class="ol-on-text">{{ ol?.on || ol?.ott }}</span>
-                <span class="ol-ov-text">{{ get_oddv(ol?.ov / 100000) }}</span>
+                <span class="ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,'','',MatchDetailCalss.params.sportId)}}</span>
                 <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
               </template>
               <span v-if="ol?.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
@@ -77,6 +77,7 @@
 import { onMounted, ref, computed } from "vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
+import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import EMITTER from  "src/global/mitt.js"
 import olStatus from "../ol_status.vue";
