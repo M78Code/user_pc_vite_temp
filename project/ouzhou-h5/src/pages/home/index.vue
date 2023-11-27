@@ -116,12 +116,9 @@ onMounted(async () => {
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
       if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
-        const item = this.match_mids.find(t => t === mid)
-        if (item) {
-          get_ouzhou_home_data()
-          get_ouzhou_home_hots()
-          get_five_league_matchs()
-        }
+        get_ouzhou_home_data()
+        // get_ouzhou_home_hots()
+        // get_five_league_matchs()
       }
     } else {
       handler_func({ cmd, data })
@@ -141,8 +138,8 @@ onMounted(async () => {
     const item = cd.find(t => [1,2,5].includes(+t.csid) )
     if (item) {
       get_ouzhou_home_data()
-      get_ouzhou_home_hots()
-      get_five_league_matchs()
+      // get_ouzhou_home_hots()
+      // get_five_league_matchs()
     }
   }
 
