@@ -1142,18 +1142,30 @@ export const useGetResultConfig = () => {
     }, 2000);
   };
 
-  /**
-   * @description: 翻页
-   * @param {Array} tableData 分页组件传过来的值
-   */
-  const changePage = (tableData) => {
-        state.results_params.page = {
-      size: tableData[0], //每页条数
-      current: tableData[2], //当前页码
-    };
-    get_results();
-  };
-
+/**
+ * @description: 页码变化
+ * @param {Array} tableData 分页组件传过来的值
+ */
+const changePage = (v) => {
+  state.results_params.page.current = v.current 
+  get_results();
+}
+/**
+ * @description: 去那页
+ * @param {Array} tableData 分页组件传过来的值
+ */
+const goPageChange = (v) => {
+  state.results_params.page.current = v
+  get_results();
+}
+/**
+ * @description: 每页多少条
+ * @param {Array} tableData 分页组件传过来的值
+ */
+const pageSizeChange = (v) => {
+  state.results_params.page.size = v.value
+  get_results();
+}
   /**
    * @description: 日期升降序
    *
@@ -1220,6 +1232,8 @@ export const useGetResultConfig = () => {
     isSelectConfirm,
     ipt_search,
     changePage,
+    goPageChange,
+    pageSizeChange,
     input_radio,
     sub_search,
     hideSelect,

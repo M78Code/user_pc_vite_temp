@@ -176,7 +176,7 @@ class MenuData {
   get_menu_lvmi_list_only(mid){
     let menu_lv_mi_lsit = [];
     this.menu_list.forEach(item => {
-      (item.sl || {}).find(obj=>{
+      (item.sl || []).find(obj=>{
         // 菜单id最后一位为顶级菜单的id
         if(obj.mi.substr(obj.mi.length-1,1) == mid){
           menu_lv_mi_lsit.push(obj)
@@ -307,7 +307,7 @@ class MenuData {
   get_menu_lvmi_list(mid){
     let menu_lv_mi_lsit = [];
     this.menu_list.forEach(item => {
-      (item.sl || {}).find(obj=>{
+      (item.sl || []).find(obj=>{
         // 菜单id最后一位为顶级菜单的id
         if(obj.mi.substr(obj.mi.length-1,1) == mid){
           menu_lv_mi_lsit.push(obj)
