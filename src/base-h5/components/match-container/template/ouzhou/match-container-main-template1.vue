@@ -130,7 +130,12 @@
                           <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
                             :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
                           </div>
+                          <!--中立场图标-->
+                          <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
+                            <img class="neutral-icon-btn" :src="neutral_site" />
+                          </div>
                         </div>
+                   
                         <!--玩法数量-->
                         <div class="goto-detail" @click='goto_details(match)'>
                           <span class="count_span" :class="{ esports: 3000 == menu_type }">
@@ -256,7 +261,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
-import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import { have_collect_ouzhou, no_collect_ouzhou, neutral_site } from 'src/base-h5/core/utils/local-image.js'
 import { sports_play_data, sports_play_title } from 'src/core/constant/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
@@ -337,7 +342,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site
     }
   }
 }
@@ -1266,20 +1271,20 @@ export default {
   }
 
   .live-i-b-wrap {
-    height: 0.14rem;
+    height: 0.12rem;
     width: auto;
     display: flex;
-    margin-left: 0.08rem;
+    margin-right: 0.08rem;
 
     .live-icon-btn,
     .live-icon-play-btn {
-      width: 0.18rem;
-      height: 0.14rem;
+      width: 0.12rem;
+      height: 0.12rem;
     }
 
     .neutral-icon-btn {
-      width: 0.18rem;
-      height: 0.14rem;
+      width: 0.12rem;
+      height: 0.12rem;
       /*margin-left: 0.08rem;*/
     }
   }

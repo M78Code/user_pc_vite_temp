@@ -79,8 +79,10 @@ export const no_wifi = compute_local_project_file_path('/image/list/no-wifi.png'
 export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.svg')
 // app-h5 提前结算
 export const mearlys_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
-// app-h5 中力场
+
 export const midfield_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
+// app-h5 中立场
+export const neutral_site = compute_local_project_file_path('/image/list/neutral_site.png')
 // 回到顶部
 export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')
 

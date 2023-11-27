@@ -502,8 +502,10 @@ class MatchMeta {
       // sportId: 1,
       selectionHour: date
     })
-    MatchCollect.get_collect_match_data()
     const list = lodash.get(res, 'data', [])
+    if (list.length) {
+      MatchCollect.get_collect_match_data()
+    }
     return list
   }
 
@@ -581,7 +583,7 @@ class MatchMeta {
     const res = await api_match_list.get_leagues_list_match({
       sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
       tid: tid,
-      selectHour: time
+      selectionHour: time
     })
     // console.log('get_ouzhou_leagues_list_data', res)
     if (res.code !== '200') return this.set_page_match_empty_status({ state: true });
