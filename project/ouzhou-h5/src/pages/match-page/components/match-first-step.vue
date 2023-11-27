@@ -1,10 +1,8 @@
 <template>
-    <div>
-        <template v-if="store.leaguesMatchs.length">
-            <TopLeagues/>
-        </template>
-        <NoData v-else which='noMatch' class="data-get-empty2" height='400'></NoData>
-    </div>
+    <template v-if="store.leaguesMatchs.length">
+        <TopLeagues/>
+    </template>
+    <NoData v-else which='noMatch' class="data-get-empty2" height='400'></NoData>
 </template>
 
 <script setup>

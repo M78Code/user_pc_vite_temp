@@ -30,7 +30,7 @@ function remove_match_data(mid,MatchListData=MatchDataWarehouse_PC_List_Common) 
   //切换右侧
   if (vx_details_params.mid == mid) {
     // 赛事移除时右侧赛事自动切换
-    mx_autoset_active_match({ mid });
+    mx_autoset_active_match({ mid },MatchListData);
   }
 };
 
@@ -72,7 +72,7 @@ const set_home_loading_time_record = (status) => {
 /**
  * get_match_base_info_by_mids 数据解析
  */
-const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
+export const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
   // 计算赛事卡片
   // 重新计算赛事样式
   MatchListCardClass.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(
@@ -266,9 +266,7 @@ const api_bymids = (
         let ts1 = res.ts
 
         match_list_handle_set(match_list)
-        MatchListData.set_list(
-          match_list,
-        );
+        
         let mids_arr = [];
         match_list.forEach((match) => {
           mids_arr.push(String(match.mid));
@@ -277,15 +275,18 @@ const api_bymids = (
         // 展开联赛数据加载状态
         let league_load_status = "";
         // 检查赛事是否移除
-        if (code == 200) {
-          mids.forEach((mid) => {
-            if (!mids_arr.includes(String(mid))) {
-              remove_match_data(mid);
-            }
-          });
-        }
-        if (code == 200 && match_list.length > 0) {
-          set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
+        if (code == 200 ) {
+          // mids.forEach((mid) => {
+          //   if (!mids_arr.includes(String(mid))) {
+          //     remove_match_data(mid,MatchListData);
+          //   }
+          // });
+          if(match_list.length > 0){
+            MatchListData.set_list(
+              match_list,
+            );
+            set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
+          }
         } else if (code == "0400500" && by_mids_fun_count++ < 3) {
           by_mids_fun();
           league_load_status = "empty";

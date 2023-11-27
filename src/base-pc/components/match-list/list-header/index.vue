@@ -67,9 +67,9 @@
       <!-- 列表排序按钮 -->
       <!-- 电子竞技 vr 没有  -->
       <div v-show="menu_config.compute_if_can_show_sort()" show_type="sort" class="flex list-sort select-btn  yb-hover-bg">
-        <div v-for="(sort, index) in sort_option" @click="on_click_sort(sort)"
+        <div v-for="(sort, index) in sort_option" @click="on_click_sort(sort)" :key="sort.id "
           :class="[sort.id == vx_match_sort ? 'active' : 'yb-hover-bg', 'list-sort-item']"
-          v-show="!filterHeader.show_filter_popup && !is_search_page" :key="index">
+          v-show="!filterHeader.show_filter_popup && !is_search_page">
           {{ sort.name }}
         </div>
       </div>
@@ -246,7 +246,7 @@ function compute_quanbu_btn_class () {
 function select_time_change () {
   //设置session
   sessionStorage.setItem('is_select_time', '1')
-  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
+  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {});
 }
 /**
  * 重置条件

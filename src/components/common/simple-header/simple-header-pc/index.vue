@@ -1,7 +1,7 @@
 <!-- @Description: 简单页面头部  体育规则页面使用 -->
 
 <template>
-  <div class="c-simple-header" :style="page_style">
+  <div class="c-simple-header" v-if="false" :style="page_style">
       <div v-if="is_hide_icon" class="icon-layout"></div>
       <div v-else class="rule-logo">
           <div class="img-logo custom-format-img-logo-01"></div>

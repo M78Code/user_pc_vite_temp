@@ -81,7 +81,8 @@ class UseGlobal {
    * @return {*}
    */
   set_global_click(){
-    this.global_click++
+    this.global_click++;
+    this.set_global_data_version()
   }
   set_tip_show_state(bool = false, o){
     const {

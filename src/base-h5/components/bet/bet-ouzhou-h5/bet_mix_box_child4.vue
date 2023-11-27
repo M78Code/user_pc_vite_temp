@@ -6,22 +6,27 @@
 <template>
     <div class="bet-mix-show">
       <div v-for="(item, index) in BetViewDataClass.orderNo_bet_obj" :key="index">
+      <!-- <div>{{BetViewDataClass.bet_order_status}}</div> -->
           <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 5">
+                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 2">
                     <div class="nonebox4-content-left-content-nei"></div>
                   </div>
-                  <div class="nonebox4-content-left-content-xian green" v-if="BetViewDataClass.bet_order_status == 3">
-                    <div class="nonebox4-content-left-content-nei green-nei"></div>
+                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 3">
+                    <span class="icon-success"></span>
                   </div>
                   <div class="nonebox4-content-left-content-xian red" v-if="BetViewDataClass.bet_order_status == 4">
-                    <div class="nonebox4-content-left-content-nei red-nei"></div>
+                    <span class="icon-failure"></span>
                   </div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one">{{item.matchName}} <span class="text-one-span">0.25{{BetViewDataClass.bet_order_status}}</span></div>
-                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{item.playName}}</span></div>
+                      <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}} <span class="text-one-span">{{ item.marketValue }}</span></div>
+                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?  `[${i18n_t("bet.bet_inplay")}]` :''}}
+                         <span class="text-two-span">{{item.playName}}
+                          <span v-if="[4,19,143,113].includes(item.playId*1)">{{item.matchType == 2? item.mark_score : ''}}</span>
+                         </span>
+                      </div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
                     <div class="flex">
@@ -29,20 +34,11 @@
                         <div class="nonebox4-content-right">
                            <div class="nonebox4-content-right-profit">{{item.oddsValues}}</div>
                         </div>
-                        <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">{{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}</div>
+                        <div class="nonebox4-content-right-bot" :class="BetViewDataClass.bet_order_status == 3?'green-color':BetViewDataClass.bet_order_status==4?'red-color':''">
+                          {{BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc')}}{{}}
+                        </div>
                       </div>
-                      <!--红色箭头-->
-                      <div class="top" v-if="item.red_green == 'red_down'">
-                        <div class="jiantou one"></div>
-                        <div class="jiantou two"></div>
-                        <div class="jiantou three"></div>
-                      </div>
-                      <!--绿色箭头-->
-                      <div class="top" v-else>
-                        <div class="jiantou onegreen"></div>
-                        <div class="jiantou twogreen"></div>
-                        <div class="jiantou threegreen"></div>
-                      </div>
+                    
                     </div>
                   </div>
               </div>
@@ -50,9 +46,10 @@
       </div>
      
       <div class="total">
-        <div>{{ i18n_t("common.maxn_amount_val") }}<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
-        <div>{{ i18n_t("bet_record.total_v") }}<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
+        <div>{{ i18n_t("bet.total_win2") }}<span class="total-left">{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span></div>
+        <div>{{ i18n_t("bet.bet_val") }}<span class="total-right">{{ format_currency(parseFloat(item.betMoney)/100) }}</span></div>
       </div>
+      <div style="display:none">{{ BetViewDataClass.bet_view_version }}</div>
       </div>
     </div>
   </template>
@@ -61,7 +58,7 @@
     import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
       import { compute_value_by_cur_odd_type } from "src/core/index.js"
       import { format_currency } from "src/core/format/index.js"
-import i18n from "project/activity/src/i18n";
+// import i18n from "project/activity/src/i18n";
 
   const props = defineProps({
     items:{}
@@ -70,6 +67,19 @@ import i18n from "project/activity/src/i18n";
   </script>
   
   <style lang="scss" scoped>
+  .icon-failure:before{
+    font-size: 18px;
+  }
+  .icon-success:before{
+    font-size: 18px;
+    color: var(--q-gb-t-c-16);
+  }
+  .hps_img{
+    width: 9px;
+    height: 18px;
+    margin-top: 6px;
+    transform: rotate(180deg);
+  }
   .jiantou{
     width: 0;
     height: 0;
@@ -107,7 +117,7 @@ import i18n from "project/activity/src/i18n";
     margin-left: 4px;
   }
   .red-color{
-    color: var(--q-gb-bd-c-8) !important;
+    color: var(--q-gb-t-c-17) !important;
   }
   .red-nei{
     background: var(--q-gb-bd-c-8) !important;
@@ -116,7 +126,7 @@ import i18n from "project/activity/src/i18n";
      border: 1px solid var(--q-gb-bd-c-8) !important;
   }
   .green-color{
-    color: var(--q-gb-t-c-2) !important;
+    color: var(--q-gb-t-c-16) !important;
   }
   .green{
     border: 1px solid var(--q-gb-t-c-16) !important;
@@ -127,6 +137,7 @@ import i18n from "project/activity/src/i18n";
   .total-right{
     font-weight: bold;
     margin-left: 0.05rem;
+    font-size: 0.16rem;
   }
   .total-left{
     color: var(--q-gb-t-c-18);
@@ -164,11 +175,12 @@ import i18n from "project/activity/src/i18n";
     color: var(--q-gb-t-c-3);
   }
   .nonebox4-content-left-content-text-two{
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-15);
     font-size: 0.13rem;
+    padding: 0.01rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-18);
+    color: #000000;
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
@@ -199,7 +211,7 @@ import i18n from "project/activity/src/i18n";
   .nonebox4-content-left-content-xian{
     width: 0.15rem;
     height: 0.13rem;
-    border: 1px solid var(--q-gb-bd-c-1);
+    border: 1px solid var(--q-gb-bg-c-1);;
     border-radius: 50%;
     margin-right: 0.15rem;
     margin-top: 0.08rem;
@@ -221,7 +233,7 @@ import i18n from "project/activity/src/i18n";
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      padding: 0 0.15rem;
+      padding: 0 0.05rem;
   }
   .nonebox4-content-right{
     text-align: right;
@@ -230,6 +242,7 @@ import i18n from "project/activity/src/i18n";
     font-size: 0.12rem;
     font-weight: bold;
     color: var(--q-gb-t-c-1);
+    padding: 0 0.05rem;
   }
   </style>
   

@@ -57,7 +57,11 @@ export const get_live_event = (params, config = {}, url = "/v2/statistics/liveEv
   return http.get(`${prefix}${url}`, params, config);
 };
 
-// H5 详情页赛果玩法查询接口 -Mobile( Star)
+/** 
+ * H5 详情页赛果玩法查询接口 -Mobile( Star)
+ * @param {{mid,cuid}} params
+ * @returns {API.Result<API.MatchDetails>}
+ */
 export const get_match_result = (params, config = {}, url = "/v1/m/matchDetail/getMatchResult") => {
   return http.get(`${prefix}${url}`, params, config);
 };

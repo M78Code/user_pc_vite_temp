@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import lodash from 'lodash';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { UserCtr, t, PageSourceData, MenuData } from "src/core/index.js";
@@ -6,6 +6,7 @@ import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-cla
 import { api_common, api_match } from "src/api/index.js";
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 // 前端控制是否禁用收藏功能   ENABLE_COLLECT_API
 const enable_collect_api = ref(false);
@@ -154,6 +155,7 @@ const mx_collect_match = (match) => {
     // 临时注释，参数可能又问题 会return
     // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09")); 
   }
+
   let cur_collect_state = Number(!match.mf);
   let _params = {
     mid: match.mid,
@@ -165,9 +167,11 @@ const mx_collect_match = (match) => {
     let data = lodash.get(res, "data");
     if (code == 200 && data == 1) {
       // 在收藏列表页 移除收藏
-      if (PageSourceData.page_source == "collect" && !cur_collect_state) {
+      if ((PageSourceData.page_source == "collect" || MenuData.is_collect) && !cur_collect_state) {
         // 移除赛事
-        MatchListCard.remove_match(match.mid);
+        MatchListCard.remove_match(match.mid, {
+          length_0_fn
+        });
       } else {
         match.mf = cur_collect_state;
       }
@@ -183,6 +187,22 @@ const mx_collect_match = (match) => {
     }
   });
 };
+
+const length_0_fn = ()=>{
+  // 跳转到首页
+  let obj = {
+    root: 0,
+    filter_tab: 1001, 
+  }
+  MenuData.set_is_collect(false)
+  MenuData.set_menu_root(0);
+  MenuData.set_left_menu_result({})
+  MenuData.set_mid_menu_result(obj)
+  MenuData.set_current_ball_type(0)
+  nextTick(()=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 0)
+  })
+}
 
 /**
  * @description 联赛收藏
@@ -233,9 +253,11 @@ const mx_collect_leagues = (match, is_champion) => {
           match_item.tf = cur_collect_state;
           match_item.mf = cur_collect_state;
           // 在收藏列表页 移除收藏
-          if (PageSourceData.page_source == "collect" && !cur_collect_state) {
+          if ((PageSourceData.page_source == "collect"  || MenuData.is_collect) && !cur_collect_state) {
             // 移除联赛卡片
-            MatchListCard.remove_league(match.tid);
+            MatchListCard.remove_league(match.tid, {
+              length_0_fn
+            });
             let match_length;
             if (MenuData.is_export()) {
               match_length =

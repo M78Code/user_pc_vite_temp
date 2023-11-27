@@ -53,7 +53,6 @@ const api_params = {
  * @return {undefined} undefined
  */
 function match_list_all_params() {
-    // debugger
     // menu_root 一级菜单类型
     // left_menu_result  记录的左侧菜单数据 
     // mid_menu_result 记录的中间菜单数据
@@ -101,12 +100,10 @@ function match_list_all_params() {
             params: {
                 "cuid": UserCtr.get_uid() || '',
                 "sort": UserCtr.sort_type,
-                euid: get_mid_for_euid(menu_current_mi),
-                "selectionHour": filterHeader.open_select_time,
+                // "selectionHour": filterHeader.open_select_time, // 需要的自己在下面加
             },
         }
     }
-   
    
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${menu_current_mi}`] || {};
@@ -128,18 +125,18 @@ function match_list_all_params() {
         }
         if ([3,203].includes(menu_root*1)) {
             // 早盘获取选中的时间
-            lv2_mi_info.md = md
+            lv2_mi_info.md = md+''
+            lv2_mi_info.tid = ''
+            lv2_mi_info.orpt ='0'
             // lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
         }
     } else if (menu_root == 400) {
-        guanjun = "guanjun"
         // 冠军
         lv2_mi_info = {
             selectionHour: null,
-            ...lv2_mi_info,
-            apiType,
-            "sportId": csid,
+            "sportId": current_ball_type,
             "outrightMatches": 1,
+            tid: '',
             "orpt": 18,
         }
     } else if (menu_root == 2000) {
@@ -197,6 +194,12 @@ function match_list_all_params() {
             bymids: {},
         }
     }
+    // 收藏点击冠军时，修改orpt为18
+    if(menu_current_mi == 30401){
+        lv2_mi_info.orpt = '18'
+        lv2_mi_info.sportId = ''
+        lv2_mi_info.outrightMatches = 1
+    }
 
     lodash.merge(
         config.match_list,
@@ -204,7 +207,6 @@ function match_list_all_params() {
             params: lv2_mi_info
         }
     )
-
     return config
 }
 export function get_collet_match_list_params(){

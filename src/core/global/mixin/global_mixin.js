@@ -13,7 +13,7 @@ import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter, useRoute } from "vue-router";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { MatchDetailCalss, LayOutMain_pc,GlobalSwitchClass,MenuData,SearchPCClass,UserCtr } from "src/core"; 
+import { MatchDetailCalss, LayOutMain_pc,GlobalSwitchClass,MenuData,SearchPCClass,UserCtr ,useMittEmit,MITT_TYPES} from "src/core"; 
 //投注类
 import BetData from "src/core/bet/class/bet-data-class.js";
 export const useGetGlobal = ({  back_to }) => {
@@ -239,13 +239,13 @@ export const useGetGlobal = ({  back_to }) => {
     /** 自动选择 */
     let _params = {
       sm,
-      euid: menu_config.match_list_api_config?.match_list.params?.euid,
+      euid: menu_config.get_mid_for_euid(menu_config.menu_current_mi),
       md,
       csid,
       tid,
       sort: match_sort.value,
       keyword: related_keyword.value.substr(5),
-      cuid: get_uid,
+      cuid: get_uid.value,
       mid: remove_mid,
     };
 
@@ -279,7 +279,7 @@ export const useGetGlobal = ({  back_to }) => {
 
       api.then(({ data }) => {
         if (!details.auto_swich_match) return;
-        let { mid = -1, csid: sportId, tid } = lodash.get(data, "data") || {};
+        let { mid = -1, csid: sportId, tid } = data || {};
         // 详情时重载页面
         if (cur_page == "details" || cur_page == "video") {
           if (mid && mid != -1) {
@@ -287,11 +287,12 @@ export const useGetGlobal = ({  back_to }) => {
               router.push({
                 name: "details",
                 params: {
-                  mid,
-                  tid,
-                  csid: sportId,
+                  mid:"2920918", 
+                  tid:"32722",
+                  csid: 1,
                 },
               });
+              // 2920918/32722/1
             }
             // 大视频页面 切换一场有视频的赛事
             else if (cur_page == "video") {
@@ -304,7 +305,8 @@ export const useGetGlobal = ({  back_to }) => {
           }
           return;
         }
-
+        //mid更新触发
+        // useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS) 
         // 切换右侧赛事
         let playId = details_params.value.play_id;
         MatchDetailCalss.set_match_details_params({

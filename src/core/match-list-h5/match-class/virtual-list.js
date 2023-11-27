@@ -6,10 +6,10 @@
  */
 
 import { ref } from 'vue'
+import { MenuData } from 'src/core'
 import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";
-import MenuData from "src/core/menu-app-h5/menu-data-class.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
@@ -118,16 +118,20 @@ class VirtualList {
    * @returns 
    */
   compute_current_page_render_list (scrollTop = 0) {
+
+    // 是否全部折叠状态
+    const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
+
     this.clear_virtual_info()
-    // 计算总高度
-    this.compute_container_total_height()
+    
     // 可视区高度
     let match_count = 0
     let page_count = 18;
     let accrual_height = 0
     let already_folded = 0;
     // 顶部滚动距离减去  上面5个列表赛事  的距离
-    const start_position = scrollTop - 234 * 5
+    // const start_position = scrollTop - 234 * 5
+    const start_position = csid_status ? scrollTop - (window.innerHeight - 150) : scrollTop - 200
     const match_datas = []
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value
@@ -160,8 +164,12 @@ class VirtualList {
       }
       if (match.mid) accrual_height += match_height
     })
+
+    // 计算总高度
+    this.compute_container_total_height()
+
     // 是否到底了
-    const flag = accrual_height >= this.container_total_height || match_datas.length < 17 || MatchMeta.complete_matchs.length < 17
+    const flag = accrual_height >= this.container_total_height || match_datas.length < page_count || MatchMeta.complete_matchs.length < page_count
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, flag);
 
     return match_datas

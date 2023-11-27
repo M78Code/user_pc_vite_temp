@@ -11,7 +11,7 @@
 
     <template v-else>
       <!-- 非收藏页 -->
-      <NoData class="data-get-empty1" v-if='match_is_empty && !is_collect' which='noMatch' height='400'></NoData>
+      <NoData class="data-get-empty1" v-if='match_is_empty && !is_collect' :which='which' height='400'></NoData>
 
       <!-- 收藏页 -->
       <NoData class="data-get-empty2" v-else-if='match_is_empty && is_collect' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></NoData>
@@ -62,6 +62,7 @@ let timer = ref(null)
 let subscription_timer = null
 
 // TODO: 下面需要替换
+const which = ref('noMatch')
 const invok_source = ref('')
 const ws_invoke_key = ref('match_main')
 const match_is_empty = ref(false)
@@ -92,9 +93,11 @@ const target_com = computed(() => {
 /**
  * @description: 赛事列表为空通知事件函数
  */
-const upd_match_is_empty = (result) => {
+const upd_match_is_empty = (obj) => {
   // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
-  match_is_empty.value = result;
+  const { state = false, type = 'noMatch' } = obj
+  which.value = type
+  match_is_empty.value = state;
 }
 
 // 绑定相关事件监听

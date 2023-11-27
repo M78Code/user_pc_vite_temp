@@ -28,8 +28,8 @@
             <div
               v-if="ol_data.oid && ol_data.os != 3"
               :key="ol_index"
-              class="bet-col"
-              style="height: 35px !important"
+              class="bet-col bet-item-wrap-ouzhou"
+              style="height: 46px !important"
             >
               <bet-item v-if="is_mounted && ol_data.oid" :ol_data="ol_data" />
             </div>
@@ -47,7 +47,7 @@
 <script setup>
 import lodash from "lodash";
 import { ref } from "vue";
-import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue";
+import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue";
 import {
   i18n_t,
   MatchDataWarehouse_PC_List_Common as MatchListData,
@@ -59,7 +59,7 @@ const props = defineProps({
     default: null,
   },
 });
-const match = MatchListData.list_to_obj.mid_obj[props.mid + "_"];
+const match = MatchListData.get_quick_mid_obj(props.mid);
 const is_mounted = ref(true)
 const vx_main_menu_toggle = ref('')
 /**
@@ -75,7 +75,7 @@ function compute_match_all_handicap_data_champion(match) {
       let hl_obj = lodash.get(item, "hl", {});
       if (hl_obj.hid) {
         hl_obj.end_time = time_conversion(hl_obj.hmed);
-        hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid).hpn
+        hl_obj.hpn = match.hpsPns.find(option => option.hid == hl_obj.hid)?.hpn
         main_handicap_list.push(hl_obj);
       }
     });
@@ -88,8 +88,8 @@ function compute_match_all_handicap_data_champion(match) {
   display: block !important;
 }
 .play-info {
-  height: 32px;
-  line-height: 32px;
+  height: 36px;
+  line-height: 36px;
   padding: 0 15px;
   .max1 {
     max-width: 530px;
@@ -111,4 +111,35 @@ function compute_match_all_handicap_data_champion(match) {
     }
   }
 }
+
+:deep(.bet-col.bet-item-wrap-ouzhou ){
+    flex: none;
+    .c-bet-item.active .handicap-value .handicap-value-text {
+    color: var(--q-gb-t-c-1);;
+}
+    .c-bet-item {
+      width: 100%;
+      height: 100%;
+      padding: 0 20px;
+      .handicap-value {
+        justify-content: flex-start;
+        height: 46px;
+        line-height: 46px;
+        .handicap-value-text {
+          color: var(--q-gb-t-c-5);
+          font-size: 13px;
+        }
+      }
+      .odds {
+        justify-content: flex-end;
+      }
+      >div {
+        flex: 1;
+        text-align: left;
+      }
+    }
+  }
+
+
+
 </style>

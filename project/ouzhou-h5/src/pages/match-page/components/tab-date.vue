@@ -1,76 +1,75 @@
 <template>
-        <!-- <div class="header" :style="{ height: tabActive == 'league' ? '0.56rem' : '1.0rem' }"> -->
-        <div class="header" >
-            <div class="tabs">
-                <div class="matches" :class="store.tabActive == 'matches' ? 'active' : ''
-                ">
-                    <span @click="changeTab('matches', 0)">{{
-                        "Matches"
-                    }}</span>
+    <!-- <div class="header" :style="{ height: tabActive == 'league' ? '0.56rem' : '1.0rem' }"> -->
+    <div class="header">
+        <div class="tabs">
+            <div class="tabs-item" v-for="(item, index) in store.tabOptions" :key="'tabs' + index"
+                :class="store.tabActive === item ? 'active' : ''">
+                <span @click="changeTab(item, index)">{{
+                    i18n_t(`ouzhou.match.${item.toLowerCase()}`)
+                }}</span>
+            </div>
+            <!-- league的下拉项 -->
+            <div class="select" v-if="store.tabActive == 'League'">
+                <span class="select-text">{{
+                    store.curSelectedOption.label
+                }}</span>
+                <span class="down_arrow" @click="toggerModel"></span>
+            </div>
+            <template v-if="store.tabModel && store.tabActive == 'League'">
+                <ul class="option-list">
+                    <template v-for="(item, index) in store.selectOptions" :key="index">
+                        <li :class="store.dateIndex == index ? 'active' : ''
+                            " @click="changeDate(index)">
+                            {{ item.label }}
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+        <!-- :class="'store.current_menu_mi_' + store.current_menu_mi" -->
+        <div :style="{ backgroundPositionY: `${farmatSportImg(store.current_menu_mi)}px` }"
+            class="menu_list_top_tab_background"></div>
+        <!-- 七天时间 -->
+        <div class="date_time" v-if="store.tabActive == 'Matches'">
+            <q-virtual-scroll ref="scrollDateRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
+                <div @click="changeDatetab(item, index)" class="week"
+                    :class="store.second_tab_index == index ? 'active' : ''">
+                    <span>
+                        <span>{{ item.name }}</span>
+                    </span>
+                    <span class="border_right"></span>
                 </div>
-                <div class="league" :class="store.tabActive == 'league' ? 'active' : ''
-                " @click="changeTab('league', 1)">
-                    <span>{{ "League" }}</span>
+            </q-virtual-scroll>
+        </div>
+        <!-- 联赛的区域选择 -->
+        <div class="date_time" v-if="store.tabActive == 'League'">
+            <q-virtual-scroll ref="scrollRefArea" :items="store.areaList" virtual-scroll-horizontal
+                v-slot="{ item, index }">
+                <div @click="areaListChange(item, index)" class="week"
+                    :class="store.area_tab_index == index ? 'active' : ''">
+                    <span>
+                        <span>{{ item.introduction }}</span>
+                    </span>
+                    <span class="border_right"></span>
                 </div>
-                <!-- league的下拉项 -->
-                <div class="select" v-if="store.tabActive == 'league'">
-                                <span class="select-text">{{
-                                    store.curSelectedOption.label
-                                }}</span>
-                                <span class="down_arrow" @click="toggerModel"></span>
-                            </div>
-                            <template v-if="store.tabModel && store.tabActive == 'league'">
-                                <ul class="option-list">
-                                    <template v-for="(item, index) in store.selectOptions" :key="index">
-                                        <li :class="store.dateIndex == index ? 'active' : ''
-                                        " @click="changeDate(index)">
-                                            {{ item.label }}
-                                        </li>
-                                    </template>
-                                </ul>
-                            </template>
-                        </div>
-                        <!-- :class="'store.current_menu_mi_' + store.current_menu_mi" -->
-                        <div :style="{backgroundPositionY: `${farmatSportImg(store.current_menu_mi)}px`}" class="menu_list_top_tab_background" ></div>
-                        <!-- 七天时间 -->
-                        <div class="date_time" v-if="store.tabActive == 'matches'">
-                            <q-virtual-scroll ref="scrollDateRef" :items="week" virtual-scroll-horizontal v-slot="{ item, index }">
-                                <div @click="changeDatetab(item, index)" class="week" :class="store.second_tab_index == index ? 'active' : ''">
-                                    <span>
-                                        <span>{{ item.name }}</span>
-                                    </span>
-                                    <span class="border_right"></span>
-                                </div>
-                            </q-virtual-scroll>
-                        </div>
-                        <!-- 联赛的区域选择 -->
-                        <div class="date_time" v-if="store.tabActive == 'league'">
-                            <q-virtual-scroll ref="scrollRefArea" :items="store.areaList" virtual-scroll-horizontal v-slot="{ item, index }">
-                                <div @click="areaListChange(item, index)" class="week" :class="store.area_tab_index == index ? 'active' : ''">
-                                    <span>
-                                        <span>{{ item.introduction }}</span>
-                                    </span>
-                                    <span class="border_right"></span>
-                                </div>
-                            </q-virtual-scroll>
-                        </div>
+            </q-virtual-scroll>
+        </div>
     </div>
 </template>
   
 <script setup>
 import {
     ref,
-    reactive,
     watch,
     onMounted,
     onUnmounted,
     defineEmits
 } from "vue";
-import { dateWeekMatchesFormat ,farmatSportImg } from '../utils';
+import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
 import { MenuData } from "src/core/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
-
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
@@ -88,6 +87,9 @@ const changeTab = (name, index) => {
     store.curSelectedOption = store.selectOptions[0]
     store.dateIndex = 0
     emit("changeTab", name);
+    if (name === 'Matches') {
+        changeDatetab(week[0], 0)
+    }
 }
 /**
  * 下拉框
@@ -111,34 +113,37 @@ const changeDate = (index) => {
  * @param {*} index 
  */
 const changeDatetab = (item, index) => {
+    console.log(item, index)
     store.tabModel = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     store.second_tab_index = index;
     // MenuData.set_date_time(item.val, item.type);
     store.menu_time = item?.val
-   
-    // //根据时间筛选列表
-    // if (!item?.val) {
-    //     // 设置菜单对应源数据
-    //     MatchMeta.set_origin_match_data()
-    // } else {
-    //     //根据时间筛选列表
-    //     MatchMeta.filter_match_by_time(item.val)
-    // }
-    MenuData.set_current_lv1_menu(item.type?'3':'2');
+
+    MenuData.set_current_lv1_menu(item.type ? '3' : '2');
     MenuData.set_menu_mi(store.current_menu_mi);
-    // 获取数据
-    MatchMeta.set_origin_match_data(store.menu_time)
+
+    let time = ''
+    if (!item?.val) {
+        const cureent_date = new Date()
+        cureent_date.setHours(12, 0, 0, 0)
+        const today_time = cureent_date.getTime()
+        time = today_time
+    } else {
+      time = item?.val
+    }
+    // 设置菜单对应源数据
+    // MatchMeta.set_origin_match_data(store.menu_time)
+    // 根据时间筛选列表
+    MatchMeta.filter_match_by_time(time)
+    MatchMeta.get_target_match_data(!item?.val ? '' : { md: item?.val })
+    
     emit("changeDate", item.val);
 };
-onMounted(() => {
-    setDefaultData(MenuData.menu_mi.value || '101');//默认足球
-    store.curSelectedOption = store.selectOptions[0]
-})
 
 onUnmounted(() => {
-  Object.values(emitters.value).map((x) => x());
+    Object.values(emitters.value).map((x) => x());
 })
 /**
  * 默认请求今日数据
@@ -151,26 +156,39 @@ const setDefaultData = (val) => {
     //球种改变设置今日
     // MenuData.set_date_time(week[0].val);
     store.menu_time = week[0]
+    store.second_tab_index = 0;
+    scrollDateRef.value && scrollDateRef.value.scrollTo(0, "start-force");
 }
-watch(() => MenuData.menu_mi.value, () => {
-    setDefaultData(MenuData.menu_mi.value)
-}, { immediate: true })
 
 watch(() => store.areaList, () => {
-    areaListChange(store.areaList[0], 0)
+    if (store.areaList.lenght) {
+        const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
+        const offset = index < 0 ? 0 : index
+        areaListChange(store.areaList[offset], offset)
+    }
+})
+onMounted(() => {
+    setDefaultData(MenuData.menu_mi.value || '101');//默认足球
+    store.curSelectedOption = store.selectOptions[0]
+    useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData)
+})
+onUnmounted(() => {
+    useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
 })
 
 /**
  * 地区选择tab
  * @param {*} index 
  */
-const areaListChange = (item,index) => {
-    store.tabModel = false;
-    const move_index = store.areaList.findIndex((t, _index) => _index === index);
-    scrollRefArea.value.scrollTo(move_index - 2, "start-force");
-    store.area_tab_index = index;
-    store.selectArea = item
-    emit("changeArea", item.id);
+const areaListChange = (item, index) => {
+    if (item) {
+        store.tabModel = false;
+        const move_index = store.areaList.findIndex((t, _index) => _index === index);
+        scrollRefArea.value.scrollTo(move_index - 2, "start-force");
+        store.area_tab_index = index;
+        store.selectArea = item
+        emit("changeArea", item.id);
+    }
 }
 </script>
   
@@ -188,7 +206,7 @@ const areaListChange = (item,index) => {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        border-bottom: 1px solid var(--q-gb-bd-c-1);
+        border-bottom: 1px solid var(--q-gb-bg-c-1);
         position: relative;
 
         div {
@@ -245,13 +263,13 @@ const areaListChange = (item,index) => {
             }
         }
 
-        .matches {
-            margin-right: 39px;
+        .tabs-item {
+            margin-right: 22px;
         }
 
-        .league {
-            margin-right: 10px;
-        }
+        // .league {
+        //     margin-right: 10px;
+        // }
 
         .active {
             font-weight: 500;
@@ -334,7 +352,7 @@ const areaListChange = (item,index) => {
         width: 160px;
         height: 204px;
         top: 49px;
-        left: 185px;
+        right: 8px;
         margin: 0;
         padding: 0;
         background-color: rgba(255, 255, 255, 1);
@@ -371,12 +389,10 @@ const areaListChange = (item,index) => {
     .tabs,
     .date_time {
         background-color: rgba(255, 255, 255, 1);
+
         :deep(.scroll) {
             width: 100%;
-        }
-        :deep(.q-virtual-scroll__content) {
             border-bottom: 10px solid #E2E2E2;
-            width: 100%;
         }
     }
 
@@ -419,6 +435,5 @@ const areaListChange = (item,index) => {
     :deep(.empty_page) {
         height: calc(100% - 105px);
     }
-}
-</style>
+}</style>
   

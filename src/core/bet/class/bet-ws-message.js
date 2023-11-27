@@ -1,3 +1,4 @@
+import { UserCtr } from "src/core";
 import BetData from "./bet-data-class"
 import lodash_ from "lodash"
 
@@ -9,6 +10,9 @@ class BetWsMessage {
   init(){
     this.message_fun = null
     this.run()
+    setTimeout(()=>{
+      this.set_bet_c3_message()
+    },1000)
   }
 
   /**
@@ -29,6 +33,44 @@ class BetWsMessage {
     window.addEventListener("message",this.message_fun);
   }
 
+  set_bet_c2_message(obj){
+    // {cmd: "C2", hid: ""}
+    let cmd_obj = {};
+    cmd_obj.cmd = "C2";
+    cmd_obj.hid = obj.hid;
+    cmd_obj.mid = obj.mid;
+    cmd_obj.marketLevel = obj.marketLevel;
+    if (cmd_obj.hid != "" && cmd_obj.mid != "") {
+     this.send_msg(cmd_obj);
+    }
+  }
+
+  // 订单订阅
+  set_bet_c3_message() {
+    let cmd_obj = {};
+    cmd_obj.cmd = "C3";
+    cmd_obj.cuid = UserCtr.get_cuid()
+    if (cmd_obj.cuid) {
+     this.send_msg(cmd_obj);
+    }
+  }
+
+    /**
+   * @Description:发送ws消息到ws服务器
+   * @param: data 消息体
+   * @param: type 消息标记-自定义模拟推送内部命令该值为custom
+   * @return:
+   */
+    send_msg(data,type) {
+      if(data)
+      {
+        if(type){
+          data.type = type;
+        }
+        window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
+      }
+    }
+
   r_ws_msg(obj){
     // 获取window.postMessage自定义命令
     const cmd = lodash_.get(obj, 'data.cmd');
@@ -46,6 +88,9 @@ class BetWsMessage {
           case 'C106':
             this.MSG_C106(data);
             break;
+            case 'C201':
+            this.MSG_C201(data);
+            break;
           default:
             break;
         }
@@ -59,6 +104,23 @@ class BetWsMessage {
   // 投注项变更
   MSG_C106(obj) {
     BetData.set_bet_c106_change(obj.cd)
+  }
+  /**
+   *  C201推动数据
+   * `orderNo` 订单编号
+   * `status` 订单状态(1:投注成功 2:投注失败)
+   * `newTotalMaxWinAmount` 订单最高可赢金额
+   * `isOddsChange` 赔率是否变更，为true时处理赔率变更集合
+   * `newProcessOrder` 是否投注新流程订单 1:是 0:否
+   * `tryNewProcessBet` 是否重试投注新流程订单 1:是 2:投注金额变更 0:否
+   * `refuseCode` 拒单编码
+   * `cuid` 用户Id
+   * `preStatus` 是否提前结算状态：0:原有结算逻辑, 1:是提前结算
+   * `orderStatus` 专指提前结算状态  1:通过  2:拒绝
+   * 
+   ***/
+  MSG_C201(obj) {
+    BetData.set_bet_c201_change(obj.cd)
   }
 }
 

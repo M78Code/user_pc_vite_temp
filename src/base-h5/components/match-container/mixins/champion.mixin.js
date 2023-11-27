@@ -7,7 +7,7 @@ import { menu_type } from 'src/base-h5/mixin/menu.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
-import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
@@ -35,6 +35,9 @@ export default {
       const show_card = lodash.get(MatchFold.match_mid_fold_obj.value, `${key}.show_card`)
       return !show_card
     },
+    league_collect_state ()  {
+      return MatchCollect.get_league_collect_state(this.match_of_list.tid)
+    },
     /**
      * @description 赛事收藏
      */
@@ -49,11 +52,8 @@ export default {
      * @description 赛事收藏
      */
     handle_match_collect ()  {
-      // 获取当前收藏状态
-      const state = MatchCollect.get_match_collect_state(this.match_of_list)
-      MatchCollect.set_match_collect_state(this.match_of_list, !state)
+      MatchCollect.handle_match_collect(this.match_of_list)
     },
-    
     /**
      * @description 球种折叠
      */
@@ -156,9 +156,11 @@ export default {
      * @return {String}
      */
     item_click(match,hp,ol_item) {
+      console.log(match,hp,ol_item)
       if (!ol_item.ov || ol_item.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
       let flag = get_odds_active(0, hp.hs, ol_item.os);
       if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
+        const { match_data_type = 'h5_list' } = match
         const {oid,_hid,_hn,_mid } = ol_item
         let params = {
           oid, // 投注项id ol_obj
@@ -174,8 +176,9 @@ export default {
           // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
           device_type: 1,  
           // 数据仓库类型
-          match_data_type: "h5_list",
+          match_data_type: match_data_type
         }
+        console.log('score-list.vue ',params)
         set_bet_obj_config(params,other)
       }
     },

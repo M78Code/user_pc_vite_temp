@@ -1,16 +1,15 @@
 <!--
- * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
+ * @Description: ouzhou H5 赛果组件
 -->
 <template>
   <div class="match-container m-3 component match-container-main-template3" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match">
-      
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
+          :class="[('league match-indent hairline-border'), { 'no-border': !collapsed}]">
           <div class="league-t-wrap">
             <span class="league-title-text row justify-between">
               <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
@@ -198,7 +197,6 @@ import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
 
 import { IconWapper } from 'src/components/icon'
-import ScoreList from './components/score-list.vue';
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
@@ -230,7 +228,6 @@ export default {
     main_source:String,
   },
   components: {
-    ScoreList,
     IconWapper,
     OddListWrap,
     ImageCacheLoad,
@@ -238,57 +235,10 @@ export default {
     CountingDownSecond,
   },
   setup (ctx) {
-    const select_play = ref('1')
-    const score_length = ref(3)
-    const hps_play_data = ref([])
-
-    // 是否显示球种标题
-    const show_sport_title = computed(() => {
-      const { is_show_ball_title } = ctx.match_of_list
-      return is_show_ball_title
-    })
-    // 玩法
-    const get_match_panel = computed(() => {
-     
-      const hps = ctx.match_of_list.hps
-      const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
-      const hps_item = hps.find(t => t.hpid == hpid)
-
-      const target_item = hps_play_data.value.find(t => t.hpid == hpid)
-      const target_ol = lodash.get(target_item, 'hl[0].ol')
-      score_length.value = lodash.get(target_ol, 'length', 3)
-
-      const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: score_length.value }, () => '{}'))
-
-      return ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
-    })
-    // 计算有玩法的hps
-    const get_hps_play_data = () => {
-      let target_hps = []
-      const { csid } = ctx.match_of_list
-      target_hps = MatchResponsive.ball_seed_play_methods.value[`hps_csid_${csid}`]
-      hps_play_data.value = target_hps
-    }
-
-    watch(() => ctx.match_of_list?.hps, () => {
-      const { is_show_league } = ctx.match_of_list
-      if (!is_show_league) return
-      get_hps_play_data()
-    }, { deep: true, immediate: true })
-
-    // 切换玩法赔率
-    const on_select_play = (item) => {
-      console.log(item)
-      // game.selectTitle = item.hpn
-      select_play.value = item.hpid
-      MatchResponsive.set_match_hpid(item.hpid)
-      // item.panel = handle_odds_data(item)
-    }
-
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, score_length
+      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, no_collect_ouzhou,
+      PageSourceData,
     }
   }
 }
@@ -957,7 +907,7 @@ export default {
           }
 
           .team-t-title-w {
-            font-size: 15px;
+            font-size: 14px;
             height: 24px;
             line-height: 24px;
             width: 100%;

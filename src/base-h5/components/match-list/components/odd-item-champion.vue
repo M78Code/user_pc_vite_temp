@@ -2,7 +2,7 @@
  * @Description: 冠军赛事投注项组件
 -->
 <template>
-  <div class="ol-li-item flex items-center justify-between" :data-oid="ol_item.oid"
+  <div :class="['ol-li-item flex items-center justify-between', {active: BetData.bet_oid_list.includes(ol_item.oid) }]" :data-oid="ol_item.oid"
     :id="DOM_ID_SHOW && `list-${lodash.get(ol_item, 'oid')}`"
     v-if="odd_status !== 3"> <!--关盘 odd_status === 3 移除-->
     <div class="on">
@@ -20,12 +20,13 @@
       </span>
       {{get_odds_value(ol_item)}}
     </div>
-
+    <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
   </div>
 </template>
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch} from "vue";
+import BetData from "src/core/bet/class/bet-data-class.js";
 import lodash from 'lodash'
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
@@ -66,12 +67,13 @@ const odd_status = computed(() => {
   //return $common.odds.get_odds_active(ol_item.ms,hs,ol_item.os);
   return props.ol_item;
 })
-
+1
 const get_odds_value = (ol_item,hsw) => {
   let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
   let csid = props.csid;
-  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw,null,csid);
-  return r1 || 0;
+  let r1 = compute_value_by_cur_odd_type(ov,'','',csid)
+  const result = r1.split('.')[1] === '00' ? r1.split('.')[0] : r1
+  return result || 0;
 }
 
 </script>
@@ -85,6 +87,16 @@ const get_odds_value = (ol_item,hsw) => {
   margin-bottom: 0.02rem;
   border-radius: 0.04rem;
   overflow: hidden;
+
+  &.active {
+    background-color: var(--q-gb-bg-c-1) !important;
+    .odds {
+      color: var(--q-gb-t-c-2)!important;
+    }
+    .on {
+      color: var(--q-gb-t-c-2)!important;
+    }
+  }
 
   &:nth-child(2n-1) {
     width: 48%;

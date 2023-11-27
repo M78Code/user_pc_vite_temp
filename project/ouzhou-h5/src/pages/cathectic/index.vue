@@ -89,7 +89,10 @@
     display: block;
   }
   .content-warp {
-    background-color: var(--q-gb-bg-c-15);
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
   }
   .second-header {
     height: 0.5rem;
@@ -115,7 +118,8 @@
     };
   }
   .content-m {
-    height: calc(100vh - 1.46rem);
+    flex: 1;
+    height: 0;
     background-color: var(--q-gb-bg-c-10);
   }
   </style>

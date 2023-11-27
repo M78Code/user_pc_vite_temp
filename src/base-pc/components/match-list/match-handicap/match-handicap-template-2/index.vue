@@ -13,7 +13,7 @@
         <div :class="['bet-item-wrap-ouzhou', (col.ols).length === 2 && 'bet-item-wrap-ouzhou-bigger']"
           v-for="(ol_data, ol_index) in (col.ols)" :key="ol_index + '_' + ol_data._hpid + '_' + ol_data._ot">
           <!-- 投注项组件 -->
-          <bet-item :ol_data="ol_data" />
+          <bet-item :ol_data="ol_data" match_data_type="pc_list" :is_scroll_ball="MenuData.is_scroll_ball()" />
         </div>
       </div>
     </div>
@@ -21,18 +21,18 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
-import lodash from 'lodash';
+import { ref, computed, inject } from 'vue';
 
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { get_match_status } from 'src/core/utils/index'
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
+import MenuData from "src/core/menu-pc/menu-data-class.js"
 
+const MatchListData=inject("MatchListData")
 const props = defineProps({
   // 盘口列表
   handicap_list: {
@@ -63,22 +63,17 @@ const props = defineProps({
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match)
 // 赛事模板宽度
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
-let MatchListDataInfo = MatchListData
-watch(() => MatchListData.data_version.version, () => {
-  MatchListDataInfo = MatchListData
-
-})
 const col_ols_data = computed(() => {
   try {
     let { hn, mid } = props.match
     let handicap_type = hn || 1
     const many_obj = get_match_to_map_obj(props.match); //非坑位对象
-    const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
+    const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
         if (item.empty) { return }
         // 投注项数据拼接
-        let hn_obj_config = MatchListDataInfo.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
+        let hn_obj_config = MatchListData.get_list_to_obj_key(mid, `${mid}_${item._hpid}_${handicap_type}_${item.ot}`, 'hn')
         // 获取投注项内容 
         return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
       })
@@ -248,66 +243,6 @@ function getCurState(hipo) {
 .c-match-handicap-ouzhou {
   .row {
     height: 100%;
-  }
-}
-
-::v-deep.bet-item-wrap-ouzhou {
-  display: flex;
-  width: 78px;
-  margin: 0 16px;
-  height: 48px;
-  border-radius: 2px;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-
-  .c-bet-item {
-    width: 78px;
-    height: 48px;
-  }
-
-  .c-bet-item.can-hover:hover {
-    background: var(--q-gb-t-c-4);
-    cursor: pointer;
-  }
-
-  &.bet-item-wrap-ouzhou-bigger {
-    .c-bet-item {
-      width: 133px;
-    }
-    
-  }
-
-  .c-bet-item.active {
-    background: var(--q-gb-bg-c-1) !important;
-
-    .handicap-value,
-    .handicap-value-text {
-      color: var(--q-gb-t-c-4);
-    }
-
-    .odds {
-      color: var(--q-gb-t-c-1);
-    }
-  }
-
-  div {
-    color: var(--q-gb-bg-c-7);
-    font-size: 14px;
-  }
-
-  .odds {
-    color: var(--q-gb-t-c-2);
-    font-weight: 500;
-    font-size: 14px;
-
-    &.up {
-      color: var(--q-gb-t-c-7);
-    }
-
-    &.down {
-      color: var(--q-gb-t-c-10);
-    }
   }
 }
 </style>

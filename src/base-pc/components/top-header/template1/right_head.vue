@@ -8,24 +8,27 @@
     <div v-show="false">{{ SearchPCClass.update_time }}{{UserCtr.user_version}}</div>
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
-        <div style="display: flex;">
-          <q-input borderless rounded @focus="show_search" v-model.lazy="text" label-color="primary"
-            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" :class="is_focus ? 'change_width' : ''"
-            @keyup.enter="get_search_data(text)">
-            <template v-slot:prepend>
-              <i class="icon-search q-icon c-icon" size="10px"></i>
-            </template>
-            <template v-slot:append>
-              <i class="icon-close" size="10px" style="margin-right:10px" v-if="text.length" @click="text = ''"></i>
-            </template>
-          </q-input>
+        <div style="display: flex; position: relative;">
+          <input
+            class="search-input"
+            :class="is_focus ? 'change_width' : ''"
+            @focus="show_search"
+            v-model="keyword"
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`"
+            @keyup.enter="get_search_data(keyword)"
+            @input="() => {
+                get_search_data(keyword);
+              }"
+          />
+          <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
+          <img v-show="keyword" @click="clear_keyword" class="icon-close" :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
           <span v-show="is_focus" class="btn" @click="close">{{ i18n_t('ouzhou.search.close') }}</span>
         </div>
         <searchCom v-if="SearchPCClass.search_isShow" />
       </div>
     </div>
     <!-- <div class="s-input-active">
-      <q-input borderless rounded readonly @click="change_input" v-model="text" label-color="primary" placeholder="Enter league or team">
+      <q-input borderless rounded readonly @click="change_input" v-model="keyword" label-color="primary" placeholder="Enter league or team">
         <template v-slot:prepend>
           <i class="icon-search q-icon c-icon" size="10px"></i>
         </template>
@@ -34,13 +37,20 @@
     <div class="h-right">
       <div class="user-info">
         <span class="user-balance">  {{ format_balance(UserCtr.balance) }} </span>
-        <span class="user-name">{{ UserCtr.user_info.nickName }}</span>
+        <span class="user-name">{{ lodash.get(UserCtr.get_user(), "nickName") }}</span>
       </div>
       <q-avatar size="40px"  @click="change_input">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/avator.png`" alt="" srcset="" />
       </q-avatar>
-      <q-menu style="background:#fff;border-radius:2px;box-shadow:0 0 4px 2px rgb(0 0 0 / 10%)">
-          <q-list style="min-width: 280px;">
+      <q-menu
+        style="background:#fff;
+        border-radius:2px;
+        box-shadow:0 0 4px 2px rgb(0 0 0 / 10%);
+        margin-top:15px !important;
+        top: 52px;"
+        anchor="bottom left" self="top middle"
+        >
+          <q-list style="min-width: 280px; ">
             <q-item clickable @click="goto_secondary_module('announcement')">
               <q-item-section>
                 <div class="flex title">
@@ -66,38 +76,40 @@
               </q-item-section>
             </q-item>
             <!--国际化语言   暂时隐藏-->
-            <!-- <q-item clickable  @click="onExpend">
+            <q-item clickable  @click="onExpend">
               <q-item-section class="personal-content">
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
-                  <div>language</div>
+                  <div>语言设置</div>
                 </div>
                 <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
               </q-item-section>
-            </q-item> -->
-            <!-- <q-separator /> -->
-            <!-- <q-item  v-show="visible">
+            </q-item>
+            <q-separator />
+            <q-item  v-show="visible">
               <q-slide-transition >
                 <q-item-section>
-                  <div :class="['language_item', {active: lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
+                  <div v-show="false">{{UserCtr.user_version}}</div>
+                  <div :class="['language_item', {active: UserCtr.lang === key}]" v-for="{ key, language } in languages" :key="key" @click="on_change_lang(key)">
                     <span> <span class="lang-icon" :class="`lang-${key}`"></span> {{ language }} </span>
-                    <img class="lang" v-if="lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
+                    <img class="lang" v-if="UserCtr.lang === key" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/vector.png`" alt="">
                   </div>
                 </q-item-section>
               </q-slide-transition>
-            </q-item> -->
+            </q-item>
             <!--国际化语言结束-->
-            <!-- <q-item>
+            <q-item>
               <q-item-section>
+                <div v-show="false">{{UserCtr.user_version}}</div>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
                 <span class="title">{{ setting.title }}</span>
-                <div class="switch"> 
-                  <span class="bg" :style="{left: setting.index === setting.params[0] ? 0 : '50px'}"></span>
-                  <span v-for="s in setting.params" :key="s" @click="setting.index = s" :class="{active: setting.index === s}">{{ s }}</span>
-                </div>  
-              </div> 
+                <div class="switch">
+                  <span class="bg" :style="{left: UserCtr.odds.cur_odds === setting.params[0] ? 0 : '50px'}"></span>
+                  <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: UserCtr.odds.cur_odds == s}">{{  i18n_t(`odds.${s}`) }}</span>
+                </div>
+              </div>
               </q-item-section>
-            </q-item> -->
+            </q-item>
           </q-list>
       </q-menu>
     </div>
@@ -108,16 +120,14 @@
 import { defineComponent, onMounted, ref,watch, onUnmounted } from "vue";
 import { format_balance,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
-import store from "src/store-redux/index.js";
-import globalAccessConfig from "src/core/access-config/access-config.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
-import { api_account } from 'src/api/index';
-import { loadLanguageAsync } from "src/core/index.js";
+import { api_account,api_betting } from 'src/api/index';
+import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
-import BetData from 'src/core/bet/class/bet-data-class.js';
-import {  LayOutMain_pc } from 'src/core/index.js'
+import { compute_css_obj } from 'src/core/server-img/index.js'
+
 
 export default defineComponent({
   name: "RightHead",
@@ -125,7 +135,7 @@ export default defineComponent({
     searchCom
   },
   setup() {
-    const text = ref('')
+    const keyword = ref('')
     const route=useRoute()
     const userRouter=useRouter()
     const is_search = ref(false)
@@ -139,50 +149,53 @@ export default defineComponent({
         }, {
           key: 'en',
           language: 'English',
-        }, {
-          key: 'tw',
-          language: '繁體中文',
-        }, {
-          key: 'vi',
-          language: 'Tiếng Việt',
-        }, {
-          key: 'th',
-          language: 'ไทย',
-        }, {
-          key: 'ms',
-          language: 'Melayu',
-        }, {
-          key: 'ad',
-          language: 'Indonesia',
-        }, {
-          key: 'md',
-          language: 'Burmese',
-        }, {
-          key: 'ry',
-          language: 'Japanese',
-        }, {
-          key: 'pty',
-          language: 'Portuguese',
-        }, {
-          key: 'hy',
-          language: 'Korean',
-        }]
+        }, 
+        // {
+        //   key: 'tw',
+        //   language: '繁體中文',
+        // }, {
+        //   key: 'vi',
+        //   language: 'Tiếng Việt',
+        // }, {
+        //   key: 'th',
+        //   language: 'ไทย',
+        // }, {
+        //   key: 'ms',
+        //   language: 'Melayu',
+        // }, {
+        //   key: 'ad',
+        //   language: 'Indonesia',
+        // }, {
+        //   key: 'md',
+        //   language: 'Burmese',
+        // }, {
+        //   key: 'ry',
+        //   language: 'Japanese',
+        // }, {
+        //   key: 'pty',
+        //   language: 'Portuguese',
+        // }, {
+        //   key: 'hy',
+        //   language: 'Korean',
+        // }
+      ]
     const settingData = ref([{
           title: 'Odds Display',
           index: 'DEC',
-          params: ['DEC', 'HK']
-        }, {
-          title: 'Bet Slip',
-          index: 'ANY',
-          params: ['ANY', 'HIG']
-        }, {
-          title: 'Version',
-          index: 'EURO',
-          params: ['EURO', 'ASIA']
-        }])
+          params: ['EU', 'HK']
+        }, 
+        // {
+        //   title: 'Bet Slip',
+        //   index: 'ANY',
+        //   params: ['ANY', 'HIG']
+        // }, {
+        //   title: 'Version',
+        //   index: 'EURO',
+        //   params: ['EURO', 'ASIA']
+        // }
+      ])
     //监听输入框内容改变，并搜索
-    watch(
-      () => text.value,
+    watch(() => keyword.value,
       (val) => {
         let trimVal = val.trim();
         get_search_data(trimVal);
@@ -193,7 +206,7 @@ export default defineComponent({
     const get_search_data = (val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
         type: 'result',
-        text: val || text.value
+        text: val || keyword.value
       })
     }
     /**
@@ -206,24 +219,51 @@ export default defineComponent({
     const change_input = () => {}
     //赛果 || 公告 || 体育规则
     const goto_secondary_module = (value) => {
-      LayOutMain_pc.set_layout_secondary_dialog(value)
-      BetData.set_bet_box_draggable({show:false})
-      // userRouter.push("/match_results")
+      localStorage.setItem("secondary_active", value)
+      let _window_width = 1200;
+      let _window_height = 850;
+      let path = userRouter.resolve({ path: '/secondary' }).href;
+      path = path.substr(path.indexOf('#/'))
+      let obj = {rdm:(new Date().getTime())};
+      // 设置激活参数
+      obj.secondary_active = value;
+      let param = UserCtr.get_user_url_parames(obj);
+      let url = `${window.location.pathname}${path}?${param}`;
+      window.open(
+        url,
+        "",
+        `height=${_window_height}, width=${_window_width}, top=100, left=360, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
+      );
     }
     const onExpend = () => {
       visible.value = !visible.value
     }
 
+    const settingclick = (s) => {
+      
+      let params = {
+        userMarketPrefer: s
+      }
+      api_betting.record_user_preference(params).then((res ={}) =>{
+        if(res.code == 200){
+          UserCtr.set_cur_odds(s)
+        }else{
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '请稍后再试！')
+        }
+      })
+    }
+
     // 切换语言
     const on_change_lang = (key) => {
       lang.value = key
-      api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang.value }).then(res => {
+      // 设置国际化语言
+      loadLanguageAsync(key).then().finally(() => {
+        UserCtr.set_lang(key) 
+      })
+      api_account.set_user_lang({ languageName: key }).then(res => {
           let code = lodash.get(res, 'code');
           if (code == 200) {
-              // 设置国际化语言
-              loadLanguageAsync(lang.value).then().finally(() => {
-                UserCtr.set_lang(lang.value) 
-              })
+             
           } else if (code == '0401038') {
               useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
           }
@@ -242,27 +282,37 @@ export default defineComponent({
     }
     // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
-      const target_class_list = ['q-field__native q-placeholder', 'serach-wrap column', 'sports-tab', 'tab', 'tab active', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right', 'q-scrollarea__bar q-scrollarea__bar--v absolute-right q-scrollarea__bar--invisible', 'windows desktop landscape', 'icon-close'];
+      // console.log('e', e.target.className);
+      const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape', 'bet-title', 'f-b-c bet-content'];
       if(is_focus.value && SearchPCClass.search_isShow) {
         if(!target_class_list.includes(e.target.className)) {
           SearchPCClass.set_search_isShow(false);
           is_focus.value = false;
-          text.value = ''
+          keyword.value = ''
         } 
       }
+    }
+    // 清空输入框
+    const clear_keyword = () => {
+      keyword.value = ''
+      useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
+        type: 'init',
+        text: keyword.value
+      })
     }
     // 关闭搜索状态清空值
     const close = () => {
       SearchPCClass.set_search_isShow(false);
       is_focus.value = false
-      text.value = ''
+      keyword.value = ''
       userRouter.push('/')
     }
     const get_props = (props) => {
-      text.value = props.text
+      keyword.value = props.text
     }
     const get_width = (props) => {
       is_focus.value = props.focus
+      keyword.value = props.text
     }
     
     onMounted(() => {
@@ -278,7 +328,7 @@ export default defineComponent({
     })
 
     return {
-      text, 
+      keyword, 
       SearchPCClass, 
       show_search, 
       search_hot_push, 
@@ -289,6 +339,7 @@ export default defineComponent({
       languages,
       onExpend,
       settingData,
+      settingclick,
       visible,
       is_search,
       goto_secondary_module,
@@ -297,7 +348,10 @@ export default defineComponent({
       LOCAL_PROJECT_FILE_PREFIX,
       is_focus,
       get_search_data,
-      close
+      close,
+      compute_local_project_file_path,
+      clear_keyword,
+      compute_css_obj
     };
   
   }
@@ -321,22 +375,33 @@ export default defineComponent({
       font-weight: 500;
       line-height: 19px;
       letter-spacing: 0px;
-      text-align: right;
+      keyword-align: right;
     }
     .user-name{
       font-size: 14px;
       font-weight: 400;
       line-height: 16px;
       letter-spacing: 0px;
-      text-align: right;
+      keyword-align: right;
     }
   }
+  
 }
 .q-item{
-  padding: 8px 0 !important;
+  padding: 0px 0 !important;
+  :deep(.q-focus-helper) {
+    // color: #fff1e6 !important;
+    // background: #fff1e6 !important;
+    opacity: 0 !important;
+    z-index: -1;
+    display: none;
+  }
   .title{
     padding: 0 16px;
   }
+}
+.q-item:hover {
+  background: #fff1e6 !important;
 }
 .icon{
   width: 20px;
@@ -357,8 +422,10 @@ export default defineComponent({
   transition: all 0.25s;
   justify-content: space-between;
   &.active{
-    color: var(--q-gb-t-c-2);
-    background:var(--q-gb-bg-c-5);
+    // color: var(--q-gb-t-c-2);
+    // background:var(--q-gb-bg-c-5);
+    color: #ff7000;
+    background:#fff1e6;
   }
   > span {
     display: flex;
@@ -414,7 +481,8 @@ export default defineComponent({
     height: 30px;
     display: flex;
     align-items: center;
-    background: var(--q-gb-bg-c-6);
+    // background: var(--q-gb-bg-c-6);
+    background:#E2E2E2;
     border-radius: 20px;
     justify-content: space-between;
     margin-right: 16px;
@@ -427,10 +495,12 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       transition: all 0.25s;
-      color: var(--q-gb-t-c-8);
+      // color: var(--q-gb-t-c-8);
+      color: #8A8986 ;
       &.active{
         color: #000;
-        background: var(--q-gb-bg-c-4);
+        // background: var(--q-gb-bg-c-4);
+        background: #ffffff;
         border-radius: 20px;
       }
     }
@@ -438,7 +508,8 @@ export default defineComponent({
       position: absolute;
       top: 0;
       border-radius: 20px;
-      border: 1px solid var(--q-gb-bd-c-1);
+      // border: 1px solid var(--q-gb-bd-c-1);
+      border: 1px solid #ff7000;
       transition: all 0.25s;
     }
   }
@@ -471,7 +542,7 @@ export default defineComponent({
   }
 }
 .change_width {
-  width: 500px;
+  width: 500px !important;
 }
 .search-click .s-input {
   width: 500px;
@@ -490,5 +561,30 @@ export default defineComponent({
 .dialog_box{
   height: 100%;
   width: 100%;
+}
+.search-input {
+  width: 200px;
+  height: 40px;
+  border-radius: 40px;
+  border: none;
+  border: 1px solid #ffb275;
+  background-color: #ff7e19;
+  padding: 14px 15px;
+  padding-left: 30px;
+  outline:none;
+  color: #fff;
+}
+.icon-search {
+  position: absolute;
+  left: 15px;
+  top: 14px;
+}
+.icon-close {
+  position: absolute;
+  right: 52px;
+  top: 13px;
+}
+.search-input::placeholder {
+  color: #ffe5d1;
 }
 </style>

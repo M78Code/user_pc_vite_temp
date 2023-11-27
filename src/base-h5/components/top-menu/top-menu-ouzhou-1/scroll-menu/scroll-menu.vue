@@ -25,14 +25,15 @@
 </template>
 <script setup>
 import lodash from 'lodash'
-import { onMounted, ref ,onUnmounted} from "vue"
+import { onMounted, ref ,onUnmounted, reactive} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData  } from "src/core/";
+import { MenuData , UserCtr} from "src/core/";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
 import { sports_play_data } from 'src/core/constant/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-
+import { api_base_data, api_common } from "src/api/index.js";
+const get_uid =  ref(UserCtr.get_uid())
 const props = defineProps({
     menu_type: {
     },
@@ -43,12 +44,17 @@ const props = defineProps({
 })
 const leftDataList = ref([]);
 const emits = defineEmits(['changeMenu'])
+const contInit = ref([]);
+
+const ref_data = reactive({
+    emit_lsit:{}
+})
 /**
  * 获取滚球数量
  * @param {*} item 
  */
  const get_cont = (item) => {
-    return item.sl.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
+    return item.sl?.filter((n) => { return n.mi == `${item.mi}${props.menu_type}` })?.[0]?.ct || 0;
 }
 /**
  * 列表数据
@@ -60,6 +66,9 @@ const dataList = () =>{
 } 
 const playValue = ref('');
 const scrollRef = ref(null);
+/**
+ * 初始化
+ */
 const get_init_data = () =>{
     leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
@@ -67,29 +76,85 @@ const get_init_data = () =>{
     MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
     playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
 }
-onMounted(()=>{
-    get_init_data();
-    useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data)
-})
-onUnmounted(()=>{
-  useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA).off
-})
 /**
- * 点击获取最新球种
- * @param {*} item 
- * @param {*} index 
+ * 获取最新列表
+ * @param {*} data 
  */
-const set_cont = async (item,index) =>{
-    const cont = await 1;
-    if(cont === get_cont(item))return;
-    leftDataList.value = leftDataList.value.map((n,i)=>{
-        if(index === i){
-            const m = n.sl?.findIndex((k)=>{return k.mi === `${n.mi}${props.menu_type}`});
-            n.sl[m].ct = cont;
-        }
-        return n;
+// const getNewData = (data) =>{
+//     leftDataList.value = leftDataList.value.map((item)=>{
+//         item.sl = data.filter((n)=>{return n.mi === item.mi})?.[0]?.sl;
+//         return item;
+//     })
+// }
+/**
+ * 定时器转换
+ * @param {*} fn 
+ * @param {*} delay 
+ */
+// const get_interval_menu = (fn, delay) =>{
+//     let timer = null
+//     const inside = () => {
+//         clearTimeout(timer)
+//         fn()
+//         timer = setTimeout(inside, delay)
+//     }
+//     timer = setTimeout(inside, delay)
+//     return {
+//         clear() {
+//             clearTimeout(timer)
+//         }
+//     }
+// }
+// /**
+//  * 清除定时器
+//  * @param {*} flagTimer 
+//  */
+// const clearInterval = (flagTimer) => {
+//     flagTimer.clear()
+// }
+// /**
+//  * 获取列表 之后更换ws
+//  */
+// const get_menu_list = async () =>{
+//     const res = await api_base_data.get_base_data_menu_init();
+//     if(res && res.code =="200" && res.data){
+//         getNewData(res.data);
+//     }else{
+//         clearInterval(timer)
+//     }
+// }
+// /**
+//  * 定时器
+//  */
+// const timer = get_interval_menu(get_menu_list,3000);
+/**
+ * ws推送球种数量
+ * @param {*} list 
+ */
+const get_menu_ws_list = (list) =>{
+    list = list.filter((item)=>{return item.mi});
+    leftDataList.value = leftDataList.value.map((item)=>{
+        list.forEach((n)=>{
+            if(item.mi == n.mi.slice(0,3)){
+                let index = item.sl?.findIndex((k)=>{return k.mi == n.mi})
+                item.sl[index].ct = n.count;
+            }
+        })
+        return item;
     })
 }
+onMounted(()=>{
+    get_init_data();
+
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_INIT_DATA, get_init_data).off,
+        emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
+    }
+   
+})
+onUnmounted(()=>{
+    Object.values(ref_data.emit_lsit).map((x) => x());
+})
 /**
  * 滚球选择
  * @param {*} item 
@@ -107,6 +172,7 @@ const on_change_play = (item) => {
     const csid = MenuData.menu_csid
     const hpid = lodash.get(sports_play_data, `[${csid}][0].hpid`, '1')
     MatchResponsive.set_match_hpid(hpid, csid)
+    // set_cont()
 }
 
 </script>

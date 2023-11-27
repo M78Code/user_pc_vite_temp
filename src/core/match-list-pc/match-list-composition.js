@@ -14,10 +14,10 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import {update_collect_data, mx_collect_count} from "./composables/match-list-collect.js";
-import {api_bymids} from "./composables/match-list-featch.js";
+import { update_collect_data, mx_collect_count } from "./composables/match-list-collect.js";
+import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
-import {mx_use_list_res, mx_list_res} from './composables/match-list-processing.js'
+import { mx_use_list_res, mx_list_res } from './composables/match-list-processing.js'
 import { set_base_data_init } from './match-list-metadata.js';
 // import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 // import store from "src/store-redux/index.js";
@@ -28,7 +28,6 @@ import { match_list_handle_set } from './match-handle-data.js'
 import { mx_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
-
 const { load_video_resources } = pre_load_video
 // 数据请求状态
 const load_data_state = ref("loading");
@@ -41,6 +40,7 @@ const is_loading = ref(true);
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
 const api_error_count = ref(0);
+let is_has_base_data = false; //是否有元数据
 let check_match_last_update_timer_id;
 let get_match_list_timeid;
 let hot_match_list_timeout;
@@ -50,13 +50,7 @@ let virtual_list_timeout_id;
 let switch_timer_id
 let mitt_list = [];
 
-let tid_match_list;
-useMittOn(MITT_TYPES.EMIT_MATCH_LIST_UPDATE, () => {
-	clearTimeout(tid_match_list)
-	tid_match_list = setTimeout(() => {
-		fetch_match_list()
-	}, 80);
-})
+
 // watch(() => MenuData.match_list_version.value, () => {
 // 	clearTimeout(tid_match_list)
 // 	tid_match_list = setTimeout(() => {
@@ -101,7 +95,8 @@ export function fetch_match_list(is_socket = false, cut) {
 		// fetch_search_match_list && fetch_search_match_list(is_socket);
 		return false;
 	}
-	if (!is_socket) {
+	//不是 w 并且没有 元数据列表 启动loading
+	if (!is_socket && !is_has_base_data) {
 		load_data_state.value = "loading";
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
@@ -117,7 +112,7 @@ export function fetch_match_list(is_socket = false, cut) {
 	delete _params.lv2_mi;
 	// 近期开赛
 	// console.error('MenuData.menu_root',MenuData.menu_root)
-	if (MenuData.menu_root == 2) {
+	if (MenuData.is_today()) {
 		// _params.selectionHour = filterHeader.open_select_time;
 	} else {
 		_params.selectionHour = null;
@@ -131,6 +126,15 @@ export function fetch_match_list(is_socket = false, cut) {
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
+					if (lodash.get(res, "data.length")!=undefined || lodash.get(res, "data.data.length")!=undefined) {
+						const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
+						load_data_state.value = len ? 'data' : 'empty'
+					}
+					else {
+						const livedata = lodash.get(res, "data.livedata.length", 0)
+						const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
+						load_data_state.value = livedata + nolivedata > 0 ? 'data' : 'empty'
+					}
 					//处理服务器返回的 列表 数据   fetch_match_list
 					handle_match_list_request_when_ok(
 						JSON.parse(JSON.stringify(res)),
@@ -140,9 +144,9 @@ export function fetch_match_list(is_socket = false, cut) {
 				} else if (res.code == "0401038") {
 					// let is_collect = this.vx_layout_list_type == 'collect'
 					// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
-					// if (is_collect && data.code == '0401038') {
-					//     load_data_state.value = "api_limited";
-					// }
+					if (is_collect && data.code == '0401038') {
+						load_data_state.value = "api_limited";
+					}
 					if (!is_socket) {
 						load_data_state.value = "api_limited";
 					}
@@ -151,6 +155,7 @@ export function fetch_match_list(is_socket = false, cut) {
 						load_data_state.value = "empty";
 					}
 				}
+
 				show_refresh_mask.value = false;
 			})
 			.catch((err) => {
@@ -169,7 +174,9 @@ export function fetch_match_list(is_socket = false, cut) {
 					}
 				}
 			});
+
 	};
+	set_load_data_state(load_data_state.value)
 	const match_list_debounce_cache = axios_debounce_cache.get_match_list;
 	if (match_list_debounce_cache && match_list_debounce_cache["ENABLED"]) {
 		let info = match_list_debounce_cache.can_send_request(_params);
@@ -193,7 +200,6 @@ export function fetch_match_list(is_socket = false, cut) {
 };
 
 function handle_destroyed() {
-	
 	// 销毁 ws message通信
 	for (let key in timer_obj.value) {
 		clearTimeout(timer_obj.value[key]);
@@ -213,21 +219,25 @@ function handle_destroyed() {
 	hot_match_list_timeout = null;
 }
 function init_page_when_base_data_first_loaded() {
-	// 元数据 
-	set_base_data_init();
+	//设置元数据 列表 返回boolean
+	is_has_base_data = set_base_data_init()
+	if (is_has_base_data) {
+		MatchListScrollClass.set_scroll_top(0);
+		load_data_state.value = 'data';
+	}
 	//释放试图 
-	load_data_state.value = 'data'
 	// check_match_last_update_timer_id = setInterval(
 	// 	check_match_last_update_time(),
 	// 	30000
 	// );
 }
+let tid_match_list;
 function mounted_fn() {
 	// fetch_match_list();
 	// 开启自动化测试功能
 	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	// 列表数据仓库
-	MatchListData.init();
+	// MatchListData.init();
 	timer_obj.value = {};
 	// store.dispatch({
 	// 	type: "SET_IS_ROLL_SHOW_BANNER",
@@ -245,18 +255,27 @@ function mounted_fn() {
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
 		// 调用列表接口
-		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off,
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({is_socket = undefined}) => {
+			clearTimeout(tid_match_list)
+			tid_match_list = setTimeout(() => {
+				//请求列表接口之前 先设置元数据列表
+				if (!is_socket)
+				init_page_when_base_data_first_loaded()
+				fetch_match_list(is_socket)//请求接口
+			}, 80);
+		}).off,
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match).off,
 		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
 			// 重新订阅C8
 			api_bymids({ is_show_mids_change: true })
 		}, 1000)).off,
-		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_page_when_base_data_first_loaded).off,
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fetch_match_list).off,
+		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 100)).off,
 	]
-	
+
 	load_video_resources();
-	
+
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
 // 		// bug 版本没有变化 也可以进入
@@ -283,15 +302,7 @@ function mounted_fn() {
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
 export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
-	let {
-		match_list_api_config,
-		menu_root,
-		match_list_api_type,
-		left_menu_result,
-	} = MenuData;
-
-	let current_menu = ([2, 3].includes(Number(menu_root)) && left_menu_result.guanjun != "common-guanjun")
-	if (lodash.get(data, "data.livedata")  ||lodash.get(data, "data.nolivedata") ||  ((menu_root == 2000 || current_menu) && !match_list_api_config.is_collect)) {
+	if (lodash.get(data, "data.livedata") || lodash.get(data, "data.nolivedata")) {
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法
@@ -336,45 +347,50 @@ function get_hot_match_list(backend_run = false) {
 			if (MenuData.is_export()) {
 				match_list = lodash.get(res, "data.data.data") || [];
 			}
-			if (code == 200 && match_list.length > 0) {
-				is_show_hot.value = true;
-				match_list_handle_set(match_list)
-				// 设置列表数据仓库
-				MatchListData.set_list(
-					match_list,
-				);
-				if (!backend_run) {
-					// 调用bymids接口
-					api_bymids({ is_first_load: true });
-					// 切换右侧赛事
-					let first_match = match_list[0];
-					// let params = {
-					// 	media_type: "auto",
-					// 	mid: first_match.mid,
-					// 	tid: first_match.tid,
-					// 	sportId: first_match.csid,
-					// };
-					if(first_match){
-						MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
-						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
+			if (code == 200) {
+				if (match_list.length > 0) {
+					load_data_state.value = "data";
+					is_show_hot.value = true;
+					match_list_handle_set(match_list)
+					// 设置列表数据仓库
+					MatchListData.set_list(
+						match_list,
+					);
+					if (!backend_run) {
+						// 调用bymids接口
+						api_bymids({ is_first_load: true });
+						// 切换右侧赛事
+						let first_match = match_list[0];
+						// let params = {
+						// 	media_type: "auto",
+						// 	mid: first_match.mid,
+						// 	tid: first_match.tid,
+						// 	sportId: first_match.csid,
+						// };
+						if (first_match) {
+							MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
+							useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
+						}
+						// this.regular_events_set_match_details_params(null, params);
+					} else {
+						// 更新可视区域赛事盘口数据
+						useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
 					}
-					// this.regular_events_set_match_details_params(null, params);
+					// 计算赛事卡片
+					MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+						match_list,
+						backend_run
+					);
 				} else {
-					// 更新可视区域赛事盘口数据
-					useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
+					load_data_state.value = "empty";
 				}
-				// 计算赛事卡片
-				MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-					match_list,
-					backend_run
-				);
-				load_data_state.value = "data";
 			} else if (!backend_run) {
+				load_data_state.value = "empty";
+			} else {
 				load_data_state.value = "empty";
 			}
 		})
 		.catch((err) => {
-			// console.error(err)
 			show_refresh_mask.value = false;
 			if (!backend_run) {
 				load_data_state.value = "empty";
@@ -413,10 +429,10 @@ function socket_remove_match(match) {
 	MatchListCardClass.remove_match(match.mid);
 	// 更新收藏数量
 	update_collect_data({ type: "remove", match });
-	if (vx_details_params.mid == match.mid) {
-		// 赛事移除时右侧赛事自动切换
-		mx_autoset_active_match({ mid: match.mid });
-	}
+	// if (vx_details_params.mid == match.mid) {
+	// 	// 赛事移除时右侧赛事自动切换
+	// 	mx_autoset_active_match({ mid: match.mid });
+	// }
 };
 
 /**
@@ -460,54 +476,31 @@ function emit_site_tab_active() {
 	fetch_match_list(true);
 };
 
-function get_collect_match_list(){
+function get_collect_match_list() {
 	get_collet_match_list_params()
 
 }
-export default function () {
-	console.log('jiffy-2')
-	/**
+/**
 	 * @Description 设置数据加载状态
 	 * @param {string} 数据加载状态
 	 * @param {undefined} undefined
 	 */
-	function set_load_data_state(data) {
-		load_data_state.value = data;
-	};
-	const match_tpl_component = computed(() => {
-		let match_tpl;
-		let lv2_mi;
-		// 这里判断是从左侧菜单点击的vr 还是中间菜单
-		if (MenuData.left_menu_result.sports == "vr") {
-			lv2_mi = MenuData.left_menu_result.lv2_mi;
-		} else if (MenuData.mid_menu_result.sports == "vr") {
-			lv2_mi = MenuData.mid_menu_result.mi;
-		}
-		// 1001-足球 1002-赛狗 1004-篮球 1007-泥地赛车 1008-卡丁车 1009-泥地摩托车 1010-摩托车 1011-赛马 1012-虚拟马车赛
-		// 足球(1001) | 篮球(1004)  足球菜单ID（30054）篮球菜单ID（30056） 使用 tpl1
-		if ([1001, 1004, 30054, 30056, 31001].includes(+lv2_mi)) {
-			match_tpl = "virtual-match-tpl1";
-		} else {
-			match_tpl = "virtual-match-tpl2";
-		}
-		return match_tpl;
-	});
-	return {
-		is_loading,
-		match_tpl_component,
-		show_refresh_mask,
-		is_show_hot,
-		load_data_state,
-		on_go_top,
-		on_refresh,
-		socket_remove_match,
-		set_load_data_state,
-		check_match_last_update_time,
-		mounted_fn,
-		fetch_match_list,handle_destroyed,
-		mx_use_list_res
-	}
+function set_load_data_state(data) {
+	load_data_state.value = data;
 };
+
+
 export {
-	socket_remove_match
+	load_data_state,
+	is_loading,
+	show_refresh_mask,
+	is_show_hot,
+	on_go_top,
+	on_refresh,
+	socket_remove_match,
+	set_load_data_state,
+	check_match_last_update_time,
+	mounted_fn,
+	handle_destroyed,
+	mx_use_list_res
 }

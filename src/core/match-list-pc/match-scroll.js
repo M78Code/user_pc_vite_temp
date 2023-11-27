@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData, } from 'src/core/index.js';
-
+import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, } from 'src/core/index.js';
+import { load_data_state } from './match-list-composition'
 class MatchListScrollClass {
   constructor() {
     this.init()
@@ -77,6 +77,8 @@ class MatchListScrollClass {
    * @param {undefined} undefined
   */
   show_mids_change(){
+    console.log(MenuData.is_kemp() || MenuData.is_common_kemp() || load_data_state.value != 'data');
+    if (MenuData.is_kemp() || MenuData.is_common_kemp() || load_data_state.value != 'data') return
     useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
     // lodash.debounce(useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE), 400, { leading: true, trailing: true })
     //生产 bymids限蘋目前设置每秒3次， 滚动节流不能超过1秒3次  滚动产生的bymids调用不走全局节流逻辑

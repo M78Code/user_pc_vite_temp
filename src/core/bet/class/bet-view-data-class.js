@@ -7,7 +7,6 @@ import { ref } from "vue";
 import lodash_ from "lodash"
 import BetData from "./bet-data-class"
 
-
 class BetViewData {
   constructor() { 
     this.init()
@@ -27,7 +26,7 @@ class BetViewData {
     this.order_confirm_complete = 0;
     //错误信息
     this.error_message = "";
-    this.tipmsg = "1111"
+    this.tip_message = "";
     this.cur_keyboard_index = "";
     // 最大值获取标志 0: 默认值 1: 正在获取最大最小值 2:获取完成
     this.input_max_flag = 0;
@@ -43,8 +42,11 @@ class BetViewData {
     this.timestap = "";
     //投注项有效无效的标识
     this.is_effect = true;
-    //是否是 合并投注
-    this.bet_is_combine = false;
+
+    // 是否投注完成 投注确认中的时候，轮询和ws还在跑；等轮询和ws回来 会清空投注项内容
+    // 是否上一个投注流程已走完
+    this.is_finally = false;
+
     //tips 数据 */
     this.bet_tips_info = {
       //目标id
@@ -122,7 +124,6 @@ class BetViewData {
   // obj 接口返回数据
   // type 接口类型 min_max 或者最大值 最小值接口 数据结构不同
   set_bet_min_max_money(obj, type = '') {
-    console.error('aaa')
     // 获取query_bet_amount数据对应的限额
     let bet_amount_list = lodash_.get(obj, 'betAmountInfo',[])
     // min_max 或者最大值 最小值接口 数据结构不同
@@ -141,6 +142,21 @@ class BetViewData {
         seriesOdds: item.seriesOdds, // 赔率  // 串关使用 3串1
       }
     })
+    this.bet_min_max_money = bet_amount
+
+    // console.error("最大最小值",this.bet_min_max_money)
+    this.set_bet_view_version()
+  }
+
+  // 设置默认值
+  set_bet_min_max_money_default(oid) {
+    let bet_amount = {}
+    bet_amount[oid] = {
+      min_money: 10, // 最小限额
+      max_money: 8888, // 最大限额
+      globalId: '',  //  风控响应id
+      seriesOdds: '', // 赔率  // 串关使用 3串1
+    }
     this.bet_min_max_money = bet_amount
 
     // console.error("最大最小值",this.bet_min_max_money)
@@ -388,12 +404,30 @@ class BetViewData {
     this.set_bet_view_version()
   }
 
+  // 设置是否走完投注流程
+  set_is_finally(val) {
+    this.is_finally = val
+    this.set_bet_view_version()
+  }
+
   // 清空数据
   set_clear_bet_view_config(){
     this.orderNo_bet_obj = []
     this.bet_order_status = 1
     this.order_confirm_complete = 0
+    this.is_finally = true
     this.set_bet_view_version()
+  }
+
+  //投注的提示信息
+  set_tip_message(array){
+    console.error('array', array)
+    this.tip_message = array.message
+    this.set_bet_view_version()
+    setTimeout(()=>{
+      this.tip_message = ''
+      this.set_bet_view_version()
+    },5000)
   }
 }
 export default new BetViewData();

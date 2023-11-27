@@ -1,20 +1,59 @@
-
 <template>
-    <div class="bet-result" >
-        <div class="w-100 fw-s-b">
-            <div class="w-100 bet-result-info fw-b-c">
-                <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("bet.total_bet")}}</div>
-                <div class="font12 font500 bet-money f-s-c">{{ (items.betMoney).toFixed(2) || '0.00' }}</div>
+    <div class="bet-list">
+        <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
+        <div class="f-b-s bet-content">
+            <div class="fw-s-s bet-left">
+                <div class="w-100 f-s-c text-1a1 h15">
+                    <span class="text-flow">{{ items.playOptionName}}</span> 
+                    <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
+                </div>
+                <div class="w-100 h15 f-s-c my-4">
+                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                    <span class="text-a1a text-flow-none font400">{{ items.playName }}
+                        <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                    </span>
+                </div>
+                <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
+                </div>
             </div>
-            <div class="w-100 bet-result-info fw-b-c mt-8">
-                <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("common.maxn_amount_val") }}</div>
-                <div class="font12 font500 bet-money f-s-c">{{ (items.maxWinMoney).toFixed(2) || '0.00' }}</div>
+
+            <div class="fw-e-s bet-right">
+                <div class="f-c-c bet-odds">
+                    <span class="font14 font700 mr-10">@{{ items.oddsValues }}</span>
+                </div>
+                <div class="bet-result" >
+                    <div class="w-100 fw-s-b">
+                        <div class="w-100 bet-result-info fw-b-c">
+                            <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("bet.total_bet")}}</div>
+                            <div class="font12 font500 bet-money f-s-c">{{ format_money2(mathJs.divide(items.betMoney,100)) || '0.00' }}</div>
+                        </div>
+                        <div class="w-100 bet-result-info fw-b-c mt-8">
+                            <div class="font12 font400 bet-returm f-s-c">{{ i18n_t("common.maxn_amount_val") }}</div>
+                            <div class="font12 font500 bet-money f-s-c">{{ format_money2(mathJs.divide(items.maxWinMoney,100)) || '0.00' }}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="bet-delete bet-icon">
+                <!-- 投注确认中 -->
+                <icon-wapper v-if="BetViewDataClass.bet_order_status == 2" name="icon-sports_snooker" size="12px" color="#FF7000" />
+                <!-- 投注失败 -->
+                <icon-wapper v-if="BetViewDataClass.bet_order_status == 4" name="icon-failure" size="12px" color="#FF4646" />
+                <!-- 投注成功 -->
+                <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" name="icon-success" size="12px" color="#4FC140" />
+            </div>
+           
         </div>
+      
     </div>
 </template>
 
 <script setup> 
+import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
+import {i18n_t,format_money2 } from "src/core/"
+import mathJs from 'src/core/bet/common/mathjs.js'
+import { IconWapper } from 'src/components/icon/index.js'
+
 const props = defineProps({
     items:{
         type: [Object] ,
@@ -28,21 +67,129 @@ const props = defineProps({
 </style>
 
 <style scoped lang="scss">
-    .bet-result{
-        width: 99px;
-        border-left: 0.5px solid var(--q-gb-bd-c-6);
-        padding-left: 16px;
-        .bet-result-info{
-            height: 30px;
-            .bet-returm{
-                height: 16px;
-                margin-bottom: 4px;
-                color: var(--q-gb-t-c-8);
-            }
-            .bet-money{
-                color: var(--q-gb-t-c-5);
+.bet-list {
+    .bet-content {
+        min-height: 76px;
+        padding: 12px;
+        padding-left: 34px;
+        font-size: 13px;
+        font-weight: 500;
+        font-style: normal;
+        position: relative;
+
+        .bet-money {
+            height: 34px;
+        }
+
+        .bet-delete {
+            position: absolute;
+            top: 11px;
+            left: 12px;
+            cursor: pointer;
+
+            img {
+                width: 12px;
                 height: 12px;
+            }
+
+            &.bet-icon {
+                cursor: auto;
+            }
+        }
+
+        .bet-odds {
+            height: 34px;
+        }
+
+        .bet-right {
+            width: 160px;
+        }
+
+        .bet-left {
+            width: 230px;
+        }
+
+    }
+
+    .bet-bet-money {
+        width: 100%;
+        padding: 10px 12px;
+        background: var(--q-gb-bg-c-15);
+
+        .bet-money-li {
+            width: 76px;
+            height: 30px;
+            border: 0.5px solid var(--q-gb-bd-c-5);
+            background: var(--q-gb-bg-c-4);
+            color: #505050;
+            border-radius: 2px;
+            transition: .3s;
+            cursor: pointer;
+
+            &:hover {
+                // border: 1px solid #FF7000;
+                border: 1px solid var(--q-gb-bd-c-1);
+            }
+            &.disabled{
+                background: var(--q-gb-bg-c-19);
             }
         }
     }
+
+    .bet-market{
+        font-family: DIN;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0px;
+        //http://api.sportxxxvo3.com/
+    }
+    .text-flow{
+        max-width: 74%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .text-flow-none{
+        width: 76%;
+        line-height: 12px;
+    }
+    .bet-odds-value{
+        color: var(--q-gb-t-c-2);
+    }
+    .red-up{
+        color: var(--q-gb-t-c-7);
+    }
+    .green-down{
+        color: var(--q-gb-t-c-6);
+    }
+    .show_img{
+        width:12px;
+        padding: 3px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+</style>
+
+<style scoped lang="scss">
+.bet-result{
+    width: 99px;
+    border-left: 0.5px solid var(--q-gb-bd-c-6);
+    padding-left: 16px;
+    .bet-result-info{
+        height: 30px;
+        .bet-returm{
+            height: 16px;
+            margin-bottom: 4px;
+            color: var(--q-gb-t-c-8);
+        }
+        .bet-money{
+            color: var(--q-gb-t-c-5);
+            height: 12px;
+        }
+    }
+}
 </style>

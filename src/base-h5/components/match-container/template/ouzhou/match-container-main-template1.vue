@@ -13,7 +13,7 @@
         </div>
         <div class="select_time">
           <span @click.stop>
-            <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="i18n_t(`ouzhou.match.play_map.${select_play}`)" 
+            <q-btn-dropdown flat outline style="color: #FF7000"  padding="0" :label="i18n_t(`ouzhou.match.play_map.${select_play}`)"
               dropdown-icon="expand_more" content-class="select_time_style">
               <q-list>
                 <q-item v-for="item in hps_play_data" :key="item.hpid" @click.stop="on_select_play(item)"
@@ -102,7 +102,7 @@
                             </div>
 
                             <!--即将开赛 ms = 110-->
-                            
+
                             <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
                               {{ i18n_t(`ms[${match.ms}]`) }}
                             </div>
@@ -116,7 +116,7 @@
                               <CountingDownStart :match="match" :index="i" :mgt_time="match.mgt"></CountingDownStart>
                             </div>
                             <!--倒计时或正计时-->
-                            <div v-if="match.ms != 110 && show_counting_down(match)" 
+                            <div v-if="match.ms != 110 && show_counting_down(match)"
                               :class="['counting-down-up-container relative-position', { 'special-match-container': match.mfo || [0, 31].includes(+match.mmp) }]">
                               <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
                               <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="match.mmp"
@@ -130,7 +130,12 @@
                           <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
                             :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n_t('match_info.match_parlay') }}
                           </div>
+                          <!--中立场图标-->
+                          <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
+                            <img class="neutral-icon-btn" :src="neutral_site" />
+                          </div>
                         </div>
+                   
                         <!--玩法数量-->
                         <div class="goto-detail" @click='goto_details(match)'>
                           <span class="count_span" :class="{ esports: 3000 == menu_type }">
@@ -256,7 +261,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
-import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
+import { have_collect_ouzhou, no_collect_ouzhou, neutral_site } from 'src/base-h5/core/utils/local-image.js'
 import { sports_play_data, sports_play_title } from 'src/core/constant/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
@@ -299,36 +304,19 @@ export default {
     // 玩法
     const get_match_panel = computed(() => {
       const { csid, hps } = ctx.match_of_list
-      // debugger
       const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
-      const plays = sports_play_title[csid]
-      const play_item = plays.find(t => t.hpid === hpid)
+      const plays = lodash.get(sports_play_title, `${csid}`, [])
+      const length = lodash.get(plays, 'length', 0)
+      const play_item = length > 0 && plays.find(t => t.hpid === hpid)
       let target = []
       if (play_item) {
         match_hpid.value = play_item.hpid
         target = play_item.ol
       } else {
         // 切换左侧菜单 则默认第一个
-        target = plays[0].ol
+        target = plays ? plays[0]?.ol : []
       }
       return target
-
-      // const hps_item = hps && hps.find(t => t.hpid == hpid)
-      // const ol_length = hpid === '1' ? 3 : 2
-      // const ol = lodash.get(hps_item, 'hl[0].ol', Array.from({ length: ol_length }, () => '{}'))
-      // let ol_data = undefined
-      // if (ol && ol[0] && ol[0].otd) {
-      //   ol.sort((a, b) => a.otd - b.otd)
-      //   ol_data = ol.map(t => {
-      //     if (t.ot === 'Under' || t.ot === 'Over') {
-      //       return t.ot === 'Under' ? i18n_t('analysis_football_matches.small_ball') : i18n_t('analysis_football_matches.big_ball')
-      //     } else {
-      //       return t.ot
-      //     }
-      //   })
-      // }
-      // const result = ol_data ? ol_data : ol.length === 3 ? ['1', 'X', '2'] : ['1', '2']
-      // return result
     })
     // 计算有玩法的hps
     const get_hps_play_data = () => {
@@ -348,22 +336,13 @@ export default {
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
       select_play.value = item.hpid
-      // const plays = sports_play_title[csid]
-      // const play_item = plays.find(t => t.hpid === item.hpid)
-      // const ol = play_item.ol
-      // ol.forEach(t => {
-      //   const list = MatchDataBaseH5.get_list_to_obj_key(mid, `${mid}_${item.hpid}_${hn || 1}_${t.ot}`, 'hn')
-      //   console.log(list)
-      // })
-      // match_panel.value = play_item
-      // const odds_data = []
       MatchResponsive.set_match_hpid(item.hpid, csid)
     }
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site
     }
   }
 }
@@ -1154,11 +1133,20 @@ export default {
     .count_span {
       display: flex;
       align-items: center;
+      font-size: 12px;
+      .mc-n{
+        color: #1A1A1A;
+      }
     }
   }
   :deep(.start-counting-down){
+    flex: 1;
     .counting-down-start{
-      font-size: 13px;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 70px;
     }
   }
 
@@ -1242,8 +1230,9 @@ export default {
     height: 100%;
     color: #999;
     flex: 1;
+    font-size: 12px;
     .counting-down-wrap{
-      font-size: 13px;
+      font-size: 12px;
     }
 
     &.newer {
@@ -1283,20 +1272,20 @@ export default {
   }
 
   .live-i-b-wrap {
-    height: 0.14rem;
+    height: 0.12rem;
     width: auto;
     display: flex;
-    margin-left: 0.08rem;
+    margin-right: 0.08rem;
 
     .live-icon-btn,
     .live-icon-play-btn {
-      width: 0.18rem;
-      height: 0.14rem;
+      width: 0.12rem;
+      height: 0.12rem;
     }
 
     .neutral-icon-btn {
-      width: 0.18rem;
-      height: 0.14rem;
+      width: 0.12rem;
+      height: 0.12rem;
       /*margin-left: 0.08rem;*/
     }
   }
@@ -1313,6 +1302,9 @@ export default {
     }
 
     .date-time {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
       color: var(--q-color-com-fs-color-37);
     }

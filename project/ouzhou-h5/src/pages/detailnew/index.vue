@@ -10,7 +10,7 @@
     <div v-if="match_detail?.mvs > -1">
       <detail_header_tem2 :get_match_detail="match_detail" />
     </div>
-    <div v-else class="mini-header-container">
+    <div v-else class="mini-header-container"  @click="onClickTest">
       <div class="header-fix" ref="header_fix">
          <!-- v-if="!changeHeader" -->
         <div ref="scroll_video_height" class="relative-position scroll_video_h">
@@ -18,16 +18,13 @@
         </div>
       </div>
     </div>
-    <div class="change-header-fix" ref="change_header_fix"
-      :style="{
-        visibility: changeHeader ? 'visible' : 'hidden',
-      }">
+    <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail"/>
     </div>
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">
         <q-separator />
-        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail.csid)">
+        <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid)">
           <div
             :class="[{ 'tab-active': tab == 'betting' }, 'tabs-item']"
             @click="tabChange('betting')"
@@ -44,11 +41,12 @@
         </div>
         <div class="match-detail-line"></div>
         <!-- tabs 玩法分类切换 -->
-        <div v-if="tab == 'betting'">
-          <detail_tabs :category_list="category_list" :active="tab_selected_obj" @detail_tabs_change="detail_tabs_change"/>
+        <div v-if="tab == 'betting' && category_list?.length > 0 ">
+          <detail_tabs :category_list="category_list" :active="tab_selected_obj"
+            @detail_tabs_change="detail_tabs_change" v-model:allCloseState="allCloseState"/>
         </div>
         <div v-if="tab == 'event_analysis'">
-          <detail_event_tabs @change="detail_event_tabs_change" />
+          <detail_event_tabs :match_detail="match_odds_info" @change="detail_event_tabs_change" />
         </div>
       </div>
       <q-tab-panels v-model="tab" animated>
@@ -56,7 +54,8 @@
           <!-- 玩法模板 -->
           <div ref="fixedHeight" class="match-detail-odds-scroll"
             :class="[match_detail?.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
-            <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail" :loading="loading"/>
+            <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail"
+              :loading="loading" v-model:allCloseState="allCloseState"/>
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->
         </q-tab-panel>
@@ -76,10 +75,14 @@ import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
 import detail_header_tem2 from "./detail_header/detail_header_tem2.vue";
 import detail_tabs from "./components/detail_tabs.vue";
 import detail_event_tabs from "./components/detail_event_tabs.vue";
-import odds_info from "./components/odds_info.vue";
+// import odds_info from "./components/odds_info.vue";
+import odds_info from "./components/bevis_odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
+import { i18n_t } from "src/core/index.js"
+
+// import './index.scss'
 export default {
   components:{
     detail_header_tem0,
@@ -96,6 +99,7 @@ export default {
     const route = useRoute();
     const mid = ref(route?.params?.mid)
     const {
+      allCloseState,
       detail_store,
      match_odds_info,
      match_detail,
@@ -121,6 +125,7 @@ export default {
      changeHeader,
      MatchDataWarehouseInstance
     } = details_main(router,route)
+    console.log(match_detail,"---------------------------------------------------");
     return{
       detail_store,
       match_odds_info,
@@ -146,7 +151,8 @@ export default {
       detail_tabs_change,
       changeHeader,
       mid,
-      MatchDataWarehouseInstance
+      MatchDataWarehouseInstance,
+      allCloseState,
      }
   } 
 }
@@ -155,8 +161,11 @@ export default {
 
 <style lang="scss" scoped>
 .match-detail-container {
+  display: flex;
+  flex-direction: column;
   background: #F1F1F1;
-  height: calc(100vh - 50px - 54px );
+  // height: calc(100vh - 50px - 54px );
+  height: 100%;
   width: 100%;
   // height: 100%;
   -webkit-overflow-scrolling: touch;
@@ -169,12 +178,12 @@ export default {
     width: 100%;
   }
   .header-fix {
-    
+
   }
   .change-header-fix {
     width: 100vw;
     position: fixed;
-    top: 50px;
+    top: 49px;
     z-index: 91;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   }
@@ -182,6 +191,8 @@ export default {
     position: relative;
     z-index: 90;
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   .match-detail-line {
     height: 10px;
@@ -228,7 +239,6 @@ export default {
     background-color: var(--q-gb-bg-c-2);
   }
   .match-detail-odds-scroll {
-    overflow-x: hidden;
     width: 100vw;
     background: #F1F1F1;
     // padding: 14px 0;
@@ -241,8 +251,8 @@ export default {
   //   height: calc(100vh - 210px);
   // }
   .match-detail-odds-height2 {
-    overflow-y: scroll;
-    height: calc(100vh - 325px);
+    // overflow-y: scroll;
+    // height: calc(100vh - 325px);
   }
   // .match-detail-odds-height3 {
   //   height: calc(100vh - 275px);

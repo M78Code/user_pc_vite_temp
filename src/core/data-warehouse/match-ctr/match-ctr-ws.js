@@ -228,7 +228,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.assign_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);        
         // 格式化列表赛事(部分数组转对象)
         this.match_ctr.list_serialized_match_obj([match]);
       }
@@ -360,7 +360,7 @@ export default class MatchDataBaseWS
               }
             });
             // 合并投注项数据信息
-            this.match_ctr.assign_with(quick_hl_obj, hl_obj);
+            // this.match_ctr.assign_with(quick_hl_obj, hl_obj);
           });
         }
         this.match_ctr.match_upd_time_ret_change(match)

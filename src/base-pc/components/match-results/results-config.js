@@ -97,7 +97,7 @@ export const useGetResultConfig = () => {
       endTime: "", //结束时间,毫秒时间戳
       langType: "zh",
       nameStr: "", //模糊查询字符串
-      hot: "", //是否热门
+      hot: null, //是否热门
       isVirtualSport: "",
     },
     activeIndex: -1, //查看表格内详细的index
@@ -209,8 +209,11 @@ export const useGetResultConfig = () => {
   /**
    * 隐藏日期选择组件
    */
-  const hideSelect = () => {
+  const hideSelect = (value) => {
     state.startTimeShow = false;
+    if (value) {
+      showDate(value.from, value.to);
+    }
   };
   // 隐藏冠军赛种输入框内文字
   const input_focus = () => {
@@ -340,6 +343,7 @@ export const useGetResultConfig = () => {
   const get_sportType = () => {
     let params = {
       langType: "zh", //默认zh
+      showem: 1, // 电子赛事
     };
     api_analysis
       .get_sportType(params)
@@ -353,7 +357,7 @@ export const useGetResultConfig = () => {
             // 18-娱乐,28-高尔夫,29-自行车,33-赛车运动
             if (
               [
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1001,
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 90, 91, 1001,
                 1004, 1002, 1011, 1010, 1009, 18, 28, 29, 33,
               ].includes(data[i].id * 1) ||
               is_eports_csid(data[i].id * 1)
@@ -452,6 +456,7 @@ export const useGetResultConfig = () => {
     ).getTime();
     state.pournament_params.runningBar = state.is_bowls ? "1" : "0";
     state.pournament_params.champion = state.current_sport_id == "0" ? 1 : 0;
+    state.pournament_params['showem'] = 1;
     state.league_type = [];
     if (!test_time()) {
       state.cancel = new Date().getTime();
@@ -463,7 +468,7 @@ export const useGetResultConfig = () => {
         const code = lodash.get(res, "code");
         const data = lodash.get(res, "data");
         // 从链接获取联赛 id
-        let { tid } = route.query;
+        let { tid } = route.query ?? null;
         if (code == 200 && data.length) {
           data.sort((a, b) => {
             return a.tournamentName.localeCompare(b.tournamentName, "zh");
@@ -732,7 +737,8 @@ export const useGetResultConfig = () => {
         .catch((err) => {
           state.details_load = "empty";
         });
-      state.$refs.result_ref.change_current_events_type();
+        // state.$refs.result_ref&&state.$refs.result_ref.change_current_events_type();
+        state?.$refs?.result_ref?.change_current_events_type();
       change_playback_type();
     }
   };
@@ -982,7 +988,6 @@ export const useGetResultConfig = () => {
    * @description: 开始日期选择
    */
   const startTimeShowFunc = (type) => {
-    console.error('67762367367327632',type.type)
     useMittEmit(MITT_TYPES.EMIT_SHOW_SELECT);
     // 体育下拉框展开时判断日期选择框是否展开
     if (type.type == "close") {
@@ -994,7 +999,6 @@ export const useGetResultConfig = () => {
       }
     }
     state.startTimeShow = !state.startTimeShow;
-    console.error('state.startTimeShow state.startTimeShow ',state.startTimeShow )
     if (state.startTimeShow == true) {
       useMittEmit(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, "close");
     }
@@ -1072,7 +1076,7 @@ export const useGetResultConfig = () => {
       });
 
       state.init = true;
-      state.get_pournament();
+      get_pournament();
       state.change_runninBar = false;
       state.reset_pagination = Math.random();
     } else {
@@ -1096,25 +1100,25 @@ export const useGetResultConfig = () => {
     ).getTime(); //当时间
 
     if (end_day - start_day > 86400000 * 7) {
-      state.toast(i18n_t("results.error_time")); //日期区间最多跨度为7天
+      toast(i18n_t("results.error_time")); //日期区间最多跨度为7天
       statu = false;
       return statu;
     }
 
     if (end_day < start_day) {
-      state.toast(i18n_t("results.early_time")); //请选择晚于开始的结束时间
+      toast(i18n_t("results.early_time")); //请选择晚于开始的结束时间
       statu = false;
       return statu;
     }
 
     if (start_day > end_day) {
-      state.toast(i18n_t("results.late_time")); //请选择早于结束的开始时间
+      toast(i18n_t("results.late_time")); //请选择早于结束的开始时间
       statu = false;
       return statu;
     }
 
     if (current - start_day > 86400000 * 35) {
-      state.toast(i18n_t("results.max_time")); //最多可以查询近35天的历史比赛
+      toast(i18n_t("results.max_time")); //最多可以查询近35天的历史比赛
       statu = false;
       return statu;
     }
@@ -1138,18 +1142,30 @@ export const useGetResultConfig = () => {
     }, 2000);
   };
 
-  /**
-   * @description: 翻页
-   * @param {Array} tableData 分页组件传过来的值
-   */
-  const changePage = (tableData) => {
-        state.results_params.page = {
-      size: tableData[0], //每页条数
-      current: tableData[2], //当前页码
-    };
-    get_results();
-  };
-
+/**
+ * @description: 页码变化
+ * @param {Array} tableData 分页组件传过来的值
+ */
+const changePage = (v) => {
+  state.results_params.page.current = v.current 
+  get_results();
+}
+/**
+ * @description: 去那页
+ * @param {Array} tableData 分页组件传过来的值
+ */
+const goPageChange = (v) => {
+  state.results_params.page.current = v
+  get_results();
+}
+/**
+ * @description: 每页多少条
+ * @param {Array} tableData 分页组件传过来的值
+ */
+const pageSizeChange = (v) => {
+  state.results_params.page.size = v.value
+  get_results();
+}
   /**
    * @description: 日期升降序
    *
@@ -1175,7 +1191,6 @@ export const useGetResultConfig = () => {
    * 修改当前选中的赛种名字
    */
   const setSport = ({ currentItem, isChampion }) => {
-    // console.log(state.api_sport_type,'state.api_sport_type22');
     state.is_highlights = false;
     if (state.results_params.sportType == "1" && state.is_highlights) {
       state.results_params.isPlayBack = 1;
@@ -1217,6 +1232,8 @@ export const useGetResultConfig = () => {
     isSelectConfirm,
     ipt_search,
     changePage,
+    goPageChange,
+    pageSizeChange,
     input_radio,
     sub_search,
     hideSelect,
@@ -1226,6 +1243,9 @@ export const useGetResultConfig = () => {
     select_submit,
     search_hot,
     highlights_input_radio,
-    change_sort
+    change_sort,
+    get_tr_detail,
+    click_popup,
+    img_mouseleave
   };
 };

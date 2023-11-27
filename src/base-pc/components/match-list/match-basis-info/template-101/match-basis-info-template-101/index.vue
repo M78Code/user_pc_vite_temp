@@ -9,30 +9,34 @@
           v-if="GlobalAccessConfig.get_collectSwitch()">
           <div  class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
         </div>
-
+        <!-- {{ match.mid }} -->
         <!-- 比赛进程 -->
-        <match-process v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
+        <match-process style="cursor:pointer" v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
         periodColor="gray" />
       </div>
       <!-- 玩法数量 -->
-      <div class="right-handle-box flex flex-start items-center">
+      <div class="right-handle-box flex flex-start items-center" v-if="lodash.get(match, 'mhn')">
         <span>{{ handicap_num }}</span>
         <div class="yb-icon-arrow"></div>
       </div>
     </div>
      <!-- 主队信息 -->
      <div class="row-item">
-         <!-- 红牌数 -->
-       <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.home',0)>0"
-          :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
-          <!-- 黄牌数 -->
-       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.home',0)>0&&lodash.get(match, 'msc_obj.S11.home',0)<0"
-          :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
+      <div class="team-logo">
+        <img v-if="show_type == 'all'"
+          v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
+      </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
             {{lodash.get(match, 'mhn')}}
           </div>
+           <!-- 红牌数 -->
+       <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.home',0)>0"
+          :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
+          <!-- 黄牌数 -->
+       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.home',0)>0&&lodash.get(match, 'msc_obj.S11.home',0)<0"
+          :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -40,20 +44,25 @@
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
-          <!-- 红牌数 -->
-          <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away',0) >0"
-            :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
-             <!-- 黄牌数 -->
-       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.away',0)>0&&lodash.get(match, 'msc_obj.S11.away',0)<0"
-          :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
+      <div class="team-logo">
+        <img v-if="show_type == 'all'" 
+          v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
+      </div>  
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div
             class="team-name away ellipsis allow-user-select"
             :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
+              <!-- 红牌数 -->
+       <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away')>0"
+            :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
+             <!-- 黄牌数 -->
+       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.away',0)>0&&lodash.get(match, 'msc_obj.S11.away',0)<0"
+          :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
         </div>
       </div>
+   
       <!-- 主比分 -->
       <div
         class="score"
@@ -77,10 +86,9 @@ import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/ma
 
 import { get_match_status } from 'src/core/utils/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
+import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { i18n_t,compute_local_project_file_path } from "src/core/index.js";
 import { useRouter } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -116,7 +124,8 @@ const is_collect = ref(false) //赛事是否收藏
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'match.mid'))
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    return `+${ lodash.get(props, 'match.mc') || 0}`
+    const mc=lodash.get(props, 'match.mc')
+    return mc?`+${lodash.get(props, 'match.mc')}`:'+0'
   }else{
     return i18n_t('match_info.more')
   }
@@ -163,9 +172,9 @@ is_collect.value = Boolean(lodash.get(props, 'match.mf'))
  * @Description 赛事收藏 
 */
 const collect = () => {
-  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
   //前端修改收藏状态
   is_collect.value = !is_collect.value
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
 }
 
 // 监听收藏变化
@@ -263,6 +272,15 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .basic-wrap {
   padding: 10px 10px;
+  .team-logo {
+      display: flex;
+      align-items: center;
+      margin-right: 6px;
+      img {
+        width: 18px;
+        height: 18px;
+      }
+    }
   .collect-box {
     margin-bottom: 7px;
     .collect-start {
@@ -288,6 +306,7 @@ onUnmounted(() => {
       }
     }
     .right-handle-box {
+      cursor: pointer;
       span {
         font-weight: 500;
         margin-right: 6px;
@@ -304,20 +323,21 @@ onUnmounted(() => {
       margin-top: 4px;
     }
     &.kedui-item {
-      color: var(--q-gb-bg-c-19);
+      color: var(--q-gb-t-c-8);
     }
     .score {
       font-weight: 500;
-      color: var(--q-gb-bg-c-2);
+      color: var(--q-gb-t-c-5);
     }
   }
   .red-ball {
-    position: absolute;
-    top: 0px;
-    left:1px;
+    // position: absolute;
+    // top: 0px;
+    // left:1px;
     height:14px;
     line-height: 14px;
     color:#fff;
+    margin-left: 3px;
     min-width: 10px;
     padding: 0 1px;
     text-align: center;
@@ -331,6 +351,14 @@ onUnmounted(() => {
       animation: 1s text-flash linear infinite normal;
     }
   }
+  :deep(.c-match-process ) {
+    .jingcai ,.process-name {
+      margin-right: 5px;
+    }
+    .date-wrap {
+      padding-left: 0 !important;
+    }
+  }  
 }
 
 </style>

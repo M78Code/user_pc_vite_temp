@@ -3,21 +3,23 @@
  * @Description:
 -->
 <template>
-  <q-layout view="lHh Lpr lFf" class="layout_container">
-    <q-page-container id="ouzhou-h5" class="page_container" :style="`height:${+inner_height / 100}rem`">
+  <q-layout view="lHh Lpr lFf" class="layout_container ouzhou-h5-layout">
+    <!-- 顶部菜单 -->
+    <TopMenuWapper />
+    <q-page-container id="ouzhou-h5" class="page_container" >
       
-      <!-- 顶部菜单 -->
-      <TopMenuWapper />
 
       <router-view />
 
-      <!-- 投注框 -->
-      <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
-      
-       <bet-bar class="bar-top" v-if="tou_show"></bet-bar>
-      <FooterWapper />
-
+     
     </q-page-container>
+    <div class="footer">
+
+       <!-- 投注框 -->
+       <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>
+
+      <FooterWapper />
+    </div>
   </q-layout>
 
   <!-- 吐司提示框 v-if="toast_show" -->
@@ -42,6 +44,7 @@ import { TopMenuWapper } from "src/base-h5/components/top-menu/"
 import { BetBoxWapper } from "src/base-h5/components/bet";
 import { FooterWapper } from "src/base-h5/components/footer-bar/"
 
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { useRoute } from 'vue-router'
 
 import { api_common } from "src/api/index.js";
@@ -56,14 +59,11 @@ var tou_show = ref(true)
 let routerPath = ref<String>('')
 const route = useRoute()
 watch(() => route.path,newRoute => {
+  tou_show.value = false
   if(newRoute == '/home' || newRoute == '/inplay' || newRoute == '/match'){
-    tou_show.value = true
-  }else{
-    tou_show.value = false
+    tou_show.value = BetData.bet_single_list.length>0?true:false
   }
 })
-
-import BetData from "src/core/bet/class/bet-data-class.js";
 
 
 import "./index.scss"
@@ -193,15 +193,21 @@ if (UserCtr.get_user_token()) {
 </script>
 <style lang="scss" scoped>
 
+.footer{
+  position: sticky;
+  bottom: 0;
+  // 不能高于投注框的z-index: 1600
+  // 可能存在列表项超过1000个之后z-index大于下值导致底部栏被遮挡
+  z-index: 1100;
+}
 .bar-top{
-  position: relative;
+    // position: fixed;
     display: flex;
     align-items: center;
     text-align: center;
     height: 56px;
     box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 56px;
+    // bottom: 56px;
     width: 100%;
     z-index: 900;
 }
@@ -214,10 +220,22 @@ if (UserCtr.get_user_token()) {
   left: 0
 }
 
+:deep(.q-drawer-container) {
+  .q-drawer__backdrop {
+    background-color: rgba(56, 55, 50, 0.6) !important;
+    filter: blur(5px);
+  }
+
+  .q-drawer__opener {
+    display: none;
+  }
+}
+
 .layout_container {
   height: 100%;
   overflow: hidden;
-
+  display: flex;
+  flex-direction: column;
   .layouts_header {
     height: 50px;
 
@@ -225,16 +243,6 @@ if (UserCtr.get_user_token()) {
       display: none;
     }
 
-    :deep(.q-drawer-container) {
-      .q-drawer__backdrop {
-        background-color: rgba(56, 55, 50, 0.6) !important;
-        filter: blur(5px);
-      }
-
-      .q-drawer__opener {
-        display: none;
-      }
-    }
   }
 
   :deep(.q-drawer) {
@@ -242,10 +250,15 @@ if (UserCtr.get_user_token()) {
   }
 
   .page_container {
-    height: calc(100% - 50px);
-    overflow: hidden;
+    // height: calc(100% - 50px);
+    // overflow: hidden;
     // margin-top: 50px;
+    flex: 10;
+    height: 0;
     padding-top: 0 !important;
+    display: flex;
+    flex-direction: column;
+    position: relative;
     :deep(.q-drawer-container){
       .q-drawer__backdrop {
         background-color: rgba(56, 55, 50, 0.6) !important;

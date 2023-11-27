@@ -15,6 +15,8 @@ import { ServerTime } from "src/core/";
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { default_theme_key } from "src/core/theme/"
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 // #TODO 接口统一管理的文件，后续替换
 import { api_details, api_account, api_common } from "src/api/";
@@ -69,9 +71,9 @@ class UserCtr {
     this.user_info_data = "";
 
     // 用户语言
-    this.lang = LocalStorage.get("lang", i18n.global.locale);
+    this.lang = LocalStorage.get("lang");
     // 用户主题  日间版本 ，夜间版本 可能有多版本哦 不止二个
-    this.theme = LocalStorage.get("theme", default_theme_key);
+    this.theme = LocalStorage.get("theme");
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 盘口
     this.odds = {
@@ -80,8 +82,9 @@ class UserCtr {
       // 当前赔率
       cur_odds: "EU",
     };
-    //排序	 int 类型 1 按热门排序 2 按时间排序
-    this.sort_type = 1;
+    this.test=1;
+    //排序	 int 类型 1 按热门排序 2 按时间排序 欧洲版默认时间排序
+    this.sort_type = 2;
      //每日活动	 Boolean 类型 ture 开启 false 关闭
      this.daily_activities = false;
     //收藏/关注	true/false
@@ -142,7 +145,9 @@ class UserCtr {
     }
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        this[item] = session_info[item]
+        if(item != 'user_version'){
+          this[item] = session_info[item]
+        }
       }
     }
   }
@@ -209,9 +214,13 @@ class UserCtr {
    * 设置语言变化
   */
   set_lang(data) {
+    if(this.lang == data)return;
     this.lang = data;
     this.user_info.languageName = data;
     useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
+    console.error('EMIT_LANG_CHANGE',data)
+    LocalStorage.set('lang',data)
+    this.update()
   }
   /**
   * 设置主题变化
@@ -230,6 +239,7 @@ class UserCtr {
   set_cur_odds(odd) {
     this.set_pre_odds(this.odds.cur_odds)
     this.odds.cur_odds = odd;
+    this.update()
   }
   set_pre_odds(odd) {
     this.odds.pre_odds = odd
@@ -269,6 +279,7 @@ class UserCtr {
     // 设置用户信息，存入localStorage中
     // this.user_info.token = this.user_token
     this.set_user_base_info(this.user_info);
+    
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
     // 判断是不是新用户登录
@@ -987,14 +998,21 @@ class UserCtr {
    */
   set_user_base_info(obj) {
     if (obj) {
+      let lang_list = ['zh','en']
+      let lang = obj.languageName
+      if(PROJECT_NAME.includes('ouzhou')){
+        if(!lang_list.includes(obj.languageName)){
+          lang = 'zh'
+        }
+      }
       try {
         let data = {
-          languageName: obj.languageName,
+          languageName: this.lang ? this.lang : lang,
           userMarketPrefer: obj.userMarketPrefer,
         };
         // 设置国际化语言
-        this.set_lang(lodash.get(obj,'languageName'));
-        LocalStorage.set(this.local_storage_key, JSON.stringify(data));
+        this.set_lang(data.languageName);
+        LocalStorage.set(this.local_storage_key, data);
       } catch (error) {
         console.error("userCtr  set_user_base_info() 错误:", error);
       }
@@ -1351,13 +1369,7 @@ class UserCtr {
    */
   set_show_balance(state) {
     this.show_balance = state
-    this.set_user_version()
-  }
-  /**
-    * 更新用户信息版本 显示
-    */
-  set_user_version() {
-    this.user_version.value = Date.now()
+    this.update()
   }
 
   get_resources_obj() {
@@ -1513,6 +1525,13 @@ class UserCtr {
     res.lang = this.lang || get_value('lang');
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api'));
+    // 功能附加参数
+    const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
+    PARAM_ADD_KEY.forEach(key => {
+      const val = SEARCH_PARAMS.init_param.get(key);
+      val && (res[key] = val);
+    });
+
     // 参数累加
     const searchParams = new URLSearchParams(res);
     // url编码转换

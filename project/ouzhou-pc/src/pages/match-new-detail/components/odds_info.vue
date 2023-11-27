@@ -4,6 +4,7 @@
  * @Description: 赛事详情页玩法
 -->
 <template>
+  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="match-detail-odds">
     <div v-for="item in matchDetail" :key="item.topKey" class="odds-wrap">
       <q-expansion-item
@@ -14,12 +15,20 @@
         :default-opened="true"
         :header-style="{ backgroundColor: '#ffffff', height: '50px' }"
       >
-        <!-- 赛事玩法名称 -->
+        <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
-          <div style="width: 100%; line-height: 35px; font-weight: 500">
-            {{ item.hpn }}
+          <div class="odds-item" v-if="item.hl[0].hs != 2">
+        {{ item.hpn }}
             <span v-if="item.hps"> ({{ item.hps.split("|")[1] }}) </span>
-            <!-- <img v-if="item.mouse_in" :src="in_muse" alt="" srcset="" class="expand-mouse-in" :style="{transform:item.expanded?'rotate(0deg)':'rotate(180deg)'}" > -->
+            <!-- 一键置顶 -->
+            <img
+              :src="parseInt(item.hton) > 0 ? set_top__active_png : set_top_png"
+              alt=""
+              @click.stop="set_top(item)"
+              srcset=""
+              class="set-icon"
+            />
+            <!-- 折叠 -->
             <img
               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
               alt=""
@@ -31,7 +40,7 @@
             />
           </div>
         </template>
-        <q-card>
+        <q-card v-if="item.hl[0].hs != 2">
           <q-card-section>
             <!-- 详情页玩法名称 -->
             <div
@@ -49,53 +58,64 @@
                   class="odds-title-li"
                 >
                   <span
-                    v-if="![0, 1, 2, 3, 7, 10].includes(item.hpt)"
+                    v-if="![0, 1, 2, 3, 7, 10, 18].includes(item.hpt)"
                     class="handicap-value-text"
                     >{{ opt.osn }}</span
                   >
                   <!-- 模板4 -->
-                  <template v-if="[4, 6].includes(item.hpt)&&sun_ol(item.hl[0].ol, item).length>0">
+                  <template
+                    v-if="
+                      item.hpid == 103 ||
+                      ([4, 6].includes(item.hpt) &&
+                        sun_ol(item.hl[0].ol, item).length > 0)
+                    "
+                  >
                     <div class="temp-simple">
                       <div
                         v-for="ol in sun_ol(item.hl[0].ol, item)"
                         :key="ol.oid"
                       >
-                        <template v-if="ol.otd === opt.otd||ol._otd === opt.otd">
+                        <template
+                          v-if="ol.otd === opt.otd || ol._otd === opt.otd"
+                        >
                           <div
-                            v-show="!item.hl[0].hs"
                             :class="{
                               tem4: true,
-                              'tem4-active': ol.oid == current_ol.oid,
+                              'tem4-active': BetData.bet_oid_list.includes(
+                                ol.oid
+                              ),
+                              'odds-lift':
+                                BetData.bet_oid_list.includes(ol.oid) &&
+                                ol.odds_lift,
                             }"
-                            @click="betItemClick(item.hl[0], ol)"
+                            @click="betItemClick(item.hl[0], ol, item.hpn)"
                           >
                             <span>{{ ol.on }}</span>
 
-                            <span v-if="ol.ov">
+                            <span>
                               <bet-item
                                 :key="`bet_4_${ol.hild}`"
                                 :ol_data="ol"
                                 :current_ol="current_ol"
-                              >
-                              </bet-item>
+                              ></bet-item>
                             </span>
-                            <span v-else></span>
+                            <!-- <span v-else></span> -->
                           </div>
-                          <div
+                          <!-- <div
                             class="tem4"
                             style="
                               justify-content: center;
                               align-items: center;
                               width: 100%;
                             "
-                            v-show="item.hl[0].hs"
+                            v-show="item.hl[0].hs==1||item.hl[0].hs==11"
                           >
                             <img
                               class="vector"
                               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
                               alt=""
                             />
-                          </div>
+                          </div> -->
                         </template>
                       </div>
                     </div>
@@ -105,7 +125,7 @@
             </div>
             <!-- 公共模板 -->
             <common-template
-              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt)"
+              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt) && item.hpid != 103"
               :match_info="item"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
@@ -113,7 +133,15 @@
             <!-- 模板5 -->
             <template5
               v-if="[5].includes(item.hpt)"
-              :match_info="item.hl"
+              :match_info="item"
+              :hpid="item.hpid"
+              :current_ol="current_ol"
+              @betItemClick="betItemClick"
+            />
+            <!-- 模板18 -->
+            <template18
+              v-if="[18].includes(item.hpt)"
+              :match_info="item"
               :hpid="item.hpid"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
@@ -145,12 +173,15 @@
 </template>
 
 <script setup>
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed, inject } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import template5 from "./template5.vue";
+import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";
 import betItem from "./bet-item-list-new-data.vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 const props = defineProps({
   matchDetail: {
@@ -170,11 +201,19 @@ const props = defineProps({
     default: false,
   },
 });
+
+const set_top_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top.png`;
+const set_top__active_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top_active.png`;
+// `mhs` 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+// <!-- ms: 0开 1封 2关 11锁 -->
+//     <!-- hs: 0开 1封 2关 11锁 -->
+//     <!-- os: 1开 2封 3隐藏不显示不占地方-->
 const mouse_in = ref(false);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
-
 let all_hl_item = inject("all_hl_item");
+
+const odds_lift_obj = ref({});
 
 const columnTotal = (item) => {
   let total;
@@ -216,24 +255,32 @@ const sun_ol = (ol, item) => {
         list.push({ otd: Number(key), on: "", oid: key + "-" + index });
       }
     }
-   
+
     obj[key] = [...obj[key], ...list];
     if (key == item.title[item.title.length - 1].otd) {
       if (other_odd.length > 0) {
-        obj[key].push(other_odd[0])
+        obj[key].push(other_odd[0]);
       }
     }
-    result = [...result,...obj[key]];
+    result = [...result, ...obj[key]];
   }
 
   // 其他
-  result[result.length-1]._otd = item.title[item.title.length-2].otd
-   console.log(11111, result);
+  if (other_odd.length > 0) {
+    result[result.length - 1]._otd = item.title[item.title.length - 2].otd;
+  }
+
+  // console.log(1111111111,result)
   return result;
 };
+// 一键置顶
+const set_top = (item) => {
+  useMittEmit(MITT_TYPES.EMIT_SET_PLAT_TOP, item);
+};
+
 //  投注项点击投注,
-const betItemClick = (item, ol) => {
-  if (item.hs) {
+const betItemClick = (item, ol, play_name) => {
+  if (item.hs || ol.os == 2) {
     return;
   }
   if (ol.cds) {
@@ -254,6 +301,7 @@ const betItemClick = (item, ol) => {
       device_type: 2,
       // 数据仓库类型
       match_data_type: "pc_detail", // h5_detail
+      play_name,
     };
     set_bet_obj_config(params, other);
   }
@@ -337,13 +385,14 @@ onMounted(() => {});
 
 .temp-simple {
   margin-left: -1px;
+  border-top: 1px solid var(--q-gb-bd-c-2);
   background: var(--q-gb-bg-c-4);
 }
 
 .tem4 {
   height: 45px;
   line-height: 45px;
-  padding: 0 20px;
+  // padding: 0 20px;
   display: flex;
   font-weight: 500;
   // justify-content: center;
@@ -394,6 +443,20 @@ onMounted(() => {});
     color: var(--q-gb-t-c-1);
   }
 }
+.odds-lift {
+  span {
+    &:nth-child(1) {
+      width: 50%;
+      display: block;
+      text-align: right;
+      margin-right: 10px;
+      overflow: hidden;
+      color: var(--q-gb-t-c-5) !important;
+    }
+  }
+  color: var(--q-gb-t-c-5) !important;
+  background-color: var(--q-gb-bg-c-5) !important;
+}
 
 .bottom-height {
   height: 150px;
@@ -407,6 +470,12 @@ onMounted(() => {});
   left: 50%;
   transform: translate(-50%, 0);
 }
+.odds-item {
+  width: 100%;
+  line-height: 35px;
+  font-weight: 500;
+  position: relative;
+}
 .expand-icon {
   height: 9px;
   float: right;
@@ -417,7 +486,13 @@ onMounted(() => {});
   width: 16px;
   height: 16px;
 }
-
-.expand-mouse-in {
+.set-icon {
+  position: absolute;
+  right: -25px;
+  top: 8px;
+  height: 16px;
+  width: 16px;
+  margin-right: 50px;
+  cursor: pointer;
 }
 </style>

@@ -2,8 +2,8 @@
 
 <template>
     <div>
-        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)"
-        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11"  />
+        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
+        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
     </div>
 
 </template>
@@ -13,9 +13,8 @@ import { reactive,onMounted,onUnmounted } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import mathJs from 'src/core/bet/common/mathjs.js'
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr } from "src/core/"
-
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr, format_money3 } from "src/core/"
+import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 const props = defineProps({
     items:{},
 })
@@ -30,6 +29,15 @@ const ref_data = reactive({
     show_quick: false, // 显示快捷金额
     emit_lsit: {},
 })
+
+// 开启/停止拖拽
+const stop_drap_fn = (state) => {
+    let obj = {
+        ...BetData.bet_box_draggable,
+        draggable: state
+    }
+    BetData.set_bet_box_draggable(obj)
+}
 
 onMounted(() => {
     // set_ref_data_bet_money()
@@ -52,7 +60,15 @@ const set_quick_money = () => {
     }else{
         ref_data.money = BetData.bet_amount
     }
-   
+}
+
+// 键盘回车事件
+const keydown = (e) => {
+    e.preventDefault();
+    // 未投注之前 可以点击
+    if(BetViewDataClass.bet_order_status == 1){
+        submit_handle()
+    }
 }
 
 // 限额改变 修改限额内容
@@ -87,14 +103,20 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    // 输入控制 在2位小数 todo
-    if (ref_data.money > ref_data.max_money) {
-        // 超出最大限额 使用 最大限额 作为投注金额
-        ref_data.money = ref_data.max_money
-        // 修改页面提示 1: 输入金额超出最大限额时
-        BetViewDataClass.set_input_money_state(1)
+    console.error('sss')
+    // 输入控制
+    if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
+        BetData.set_bet_amount(ref_data.money)
+    }else{
+        // 最大限额不能大于余额
+        let money_a = ref_data.max_money
+        if(UserCtr.balance < ref_data.max_money){
+            money_a = UserCtr.balance
+        }
+        ref_data.money = money_a
+        BetData.set_bet_amount(money_a)
     }
-    BetData.set_bet_amount(ref_data.money)
+   
     // 计算最高可赢金额
     // ref_data.win_money = ref_data.money * props.item.oddFinally
 }
@@ -148,7 +170,7 @@ const show_quick_amount = state => {
     border: 0.5px solid var(--q-gb-bd-c-5);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
-    padding: 0 8px;
+    padding: 0 0 0 8px;
     display: flex;
     align-itemss: center;
     transition: .3s;
@@ -159,10 +181,10 @@ const show_quick_amount = state => {
         outline: none;   
        // padding-left: 14px;
         border: 0.5px solid var(--q-gb-bd-c-1);
-        box-shadow: 0px 1px 4px rgba(255, 112, 0, 0.1)
+        box-shadow: 0px 1px 4px rgba(255, 112, 0, 0.1);
+        background: var(--q-gb-bg-c-18);
     }
     &::-webkit-input-placeholder {/*Chrome/Safari*/
-        font-family: 'PingFang SC';
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
@@ -171,7 +193,6 @@ const show_quick_amount = state => {
         color: var(--q-gb-t-c-8);
     }
     &::-moz-placeholder {/*Firefox*/
-        font-family: 'PingFang SC';
         font-style: normal;
         font-weight: 400;
         font-size: 12px;
@@ -180,7 +201,6 @@ const show_quick_amount = state => {
         color: var(--q-gb-t-c-8);
     }
     &::-ms-input-placeholder {/*IE*/
-        font-family: 'PingFang SC';
         font-style: normal;
         font-weight: 400;
         font-size: 12px;

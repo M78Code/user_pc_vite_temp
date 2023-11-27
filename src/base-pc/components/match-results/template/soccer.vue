@@ -108,7 +108,7 @@
             self="center middle"
             :content-style="tooltip_style"
           >
-            <template v-if="lang == 'vi'"> Phạt góc cả trận </template>
+            <template v-if="UserCtr.lang == 'vi'"> Phạt góc cả trận </template>
             <!-- 全场角球 -->
             <template v-else>
               {{ i18n_t("icon_tips.overall") }} {{ i18n_t("list.corner") }}
@@ -146,7 +146,7 @@
             self="center middle"
             :content-style="tooltip_style"
           >
-            <template v-if="lang == 'vi'"> Bàn thắng cả trận </template>
+            <template v-if="UserCtr.lang == 'vi'"> Bàn thắng cả trận </template>
             <!-- 全场进球 -->
             <template v-else>
               {{ i18n_t("icon_tips.overall")
@@ -185,10 +185,10 @@
           <template v-for="(item, index) in results_list" :key="index">
             <div class="table-tr-td" :class="{ active: index == activeIndex }" @click="get_tr_detail(item, index)">
               <!-- 日期 -->
-              <div class="table-col">
+              <div class="table-col_date">
                 <div class="browser" :class="{ del: index == activeIndex }" ></div>
                 <div class="time-wrap">
-                  <div> {{ formatTime( item.matchTime, lang == "vi" ? "hh:MM dd/mm/yyyy" : "yyyy-mm-dd hh:MM" ) }} </div>
+                  <div> {{ formatTime( item.matchTime, UserCtr.lang == "vi" ? "hh:MM dd/mm/yyyy" : "yyyy-mm-dd hh:MM" ) }} </div>
                   <div class="match-stage" :class="item.matchStatus == 1 ? 'roll' : 'cancel'"
                     v-if=" format_mmp(item.matchPeriodId, item.matchStatus) != '' "
                   >
@@ -466,11 +466,12 @@
               </div>
             </div>
             <div v-if="index == activeIndex" class="wrap-load">
-              <div class="tab_change_content"  v-if="item.playBack&&show_play_back">
+              <!--v-if="item.playBack&&show_play_back"-->
+              <div class="tab_change_content"  v-if="false">
                 <tabs :value="current_events_type" :tabs="tab_list" @click="change_video_history_list"></tabs>
               </div>
               <!-- 精彩回放视频滚动列表 -->
-              <div class="play_back_event" v-if="item.playBack&&show_play_back">
+              <!-- <div class="play_back_event" v-if="item.playBack&&show_play_back">
                 <slider-x ref="drag_scroll" v-if="item.playBack && results_playback_list.length">
                   <template v-for="(slotProps,index) in results_playback_list" :key="index">
                     <div class="video-history-item"  @click="handle_item_click(slotProps)">
@@ -492,12 +493,12 @@
                         </div>
                     </div>
                   </template>
-                </slider-x>
+                </slider-x> -->
                 <!-- <no-data v-else :width="'141px'" :height="'80px'"></no-data> -->
-                <div style="width: 100%; height: 100%" class="flex   yb-flex-center" v-else>
+                <!-- <div style="width: 100%; height: 100%" class="flex   yb-flex-center" v-else>
                   <div class="no-data-bg"></div>
                 </div>
-              </div>
+              </div> -->
               <load-data :state="details_load" color="light">
                 <template v-for="(list, i) in results_order_list" :key="i">
                   <div
@@ -554,6 +555,7 @@ export default {
   },
   data() {
     return {
+      UserCtr,
       UserCtrInfo:UserCtr.user_info.merchantEventSwitchVO,
       tab_list: [
         // { title: i18n_t("replay_video.all"), code: "0" },
@@ -566,6 +568,7 @@ export default {
       is_expand_video_list: false,
       slideWidth: "1000px",
       slide: "style",
+      tooltip_style:'', // 不知道干嘛的 先这样写 自己改
       lorem:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo provident incidunt ducimus iusto perferendis porro earum. Totam, numquam?",
     };
@@ -659,7 +662,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.table-col {
+.table-col,.table-col_date {
   position: relative;
   &:first-child {
     display: flex;

@@ -1,5 +1,5 @@
 import { isDate } from "lodash";
-import { i18n_t } from "src/core/index.js"
+import { i18n_t,i18n } from "src/core/index.js"
 import ServerTime from "src/core/server-time/server-time.js"
 
 // 对Date的扩展，将 Date 转化为指定格式的String
@@ -568,3 +568,47 @@ export const time_conversion = (timestap) => {
     return "";
   }
 }
+
+// 海外时间格式 
+export const format_date_base_week = (value) => {
+  let time = new Date(parseInt(value));
+  let y = time.getFullYear();
+  let m = (time.getMonth() + 1 + "").padStart(2, 0);
+  let d = (time.getDate() + "").padStart(2, 0);
+  let h = (time.getHours() + "").padStart(2, 0);
+  let mm = (time.getMinutes() + "").padStart(2, 0);
+  let s = (time.getSeconds() + "").padStart(2, 0);
+  let week = ['日', '一', '二', '三', '四', '五', '六'][time.getDay()]
+  return [y, m, d, h, mm, s, week];
+};
+
+// 示例 Sun 11 Jun 19:00
+export const format_date_overseas = (value) => {
+  let [y, m, d, h, mm, s, week] = format_date_base_week(value);
+  const map_month = {
+    '01': 'Jan',
+    '02': 'Feb',
+    '03': 'Mar',
+    '04': 'Apr',
+    '05': 'May',
+    '06': 'Jun',
+    '07': 'Jul',
+    '08': 'Aug',
+    '09': 'Sep',
+    '10': 'Oct',
+    '11': 'Nov',
+    '12': 'Dec'
+  }
+  const map_week = {
+    '日': 'Sun',
+    '一': 'Mon',
+    '二': 'Tue',
+    '三': 'Wed',
+    '四': 'Thu',
+    '五': 'Fri',
+    '六': 'Sat',
+  }
+  m = map_month[m]
+  week = map_week[week]
+  return `${week} ${d} ${m} ${h}:${mm}`;
+};

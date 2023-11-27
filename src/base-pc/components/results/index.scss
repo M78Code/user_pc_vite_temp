@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column;
   min-width: 960px;
-  height: 100vh;
+  height: 100%;
 
   .font_match_results {
     font-family: "Material Icons";
@@ -28,8 +28,9 @@
 
   .main_wrap {
     display: flex;
-    flex: 1;
+    // flex: 1;
     flex-flow: column;
+    height: 700px;
     /* ************** 筛选条件 *************** -S */
   }
 
@@ -49,6 +50,11 @@
       flex-flow: column;
       height: 100%;
       .table-col:first-child {
+        span {
+          margin-right: 10px;
+        }
+      }
+      .table-col_date:first-child {
         span {
           margin-right: 10px;
         }
@@ -97,8 +103,8 @@
   left: 50%;
   padding: 10px 20px;
   border-radius: 2px;
-  background: #191c24;
-  color: var(--q-gb-t-c-1);
+  background: #C2C2C2;
+  color: var(--q-gb-t-c-1); 
   text-align: center;
   transform: translate(-50%, -50%);
   z-index: 2;

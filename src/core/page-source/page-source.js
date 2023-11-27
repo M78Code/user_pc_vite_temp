@@ -65,7 +65,7 @@ class PageSourceData {
     //初始化 页面根据  page_source 计算出来的 一些参照值
     this.rebase_other_property();
     //排序	 int 类型 1 按热门排序 2 按时间排序
-    this.sort_type = 1 ;
+    this.sort_type = 2 ;
     // //标准版和简版 1为新手版  2为标准版    ['','v2_h5','v2_h5_st']
     this.newer_standard_edition = 2 
     // 列表 搜素 文字 
@@ -144,11 +144,6 @@ class PageSourceData {
   {
     this.list_query_other_params=Object.assign({},this.list_query_other_params,obj)
   }
-  // 设置当前路由名称
-  set_route_name (value) {
-    this.route_name = value
-  }
-
 
   // 列表与收藏切换
 
@@ -160,8 +155,10 @@ class PageSourceData {
   set_from_page(from_page_source) {
     this.from_page_source = from_page_source;
   }
+  // 设置当前路由名称
+
   set_route_name(name){
-    this.router_name = name
+    this.route_name = name
    }
 
   is_search(){

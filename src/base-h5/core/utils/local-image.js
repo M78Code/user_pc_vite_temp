@@ -74,12 +74,17 @@ export const no_data_ouzhou = compute_local_project_file_path('/image/png/no_dat
 
 export const no_data_collect = compute_local_project_file_path('/image/png/no_data_collect.png')
 export const coming_soon = compute_local_project_file_path('/image/png/coming_soon.png')
+export const no_wifi = compute_local_project_file_path('/image/list/no-wifi.png')
 // 角球图标
 export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.svg')
 // app-h5 提前结算
 export const mearlys_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
-// app-h5 中力场
+
 export const midfield_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
+// app-h5 中立场
+export const neutral_site = compute_local_project_file_path('/image/list/neutral_site.png')
+// 回到顶部
+export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')
 
 // ouzhou 收藏 - 空
 export const no_collect_ouzhou = compute_local_project_file_path('/image/list/collect.png')
@@ -89,8 +94,8 @@ export const have_collect_ouzhou = compute_local_project_file_path('/image/list/
 export const odd_lock_ouzhou = compute_local_project_file_path('/image/list/lock.png')
 
 // 欧洲 赔率升高图标
-export const ouzhou_hps_up = compute_local_project_file_path('/image/list/up.png')
-export const ouzhou_hps_down = compute_local_project_file_path('/image/list/down.png')
+export const ouzhou_hps_up = compute_local_project_file_path('/image/list/icon_up.png')
+export const ouzhou_hps_down = compute_local_project_file_path('/image/list/icon_down.png')
 export const ouzhou_white_down = compute_local_project_file_path('/image/list/white_down.png')
 export const ouzhou_white_up = compute_local_project_file_path('/image/list/white_up.png')
 
@@ -111,6 +116,10 @@ export const tennis_bg = compute_local_project_file_path('/image/featured/tennis
 export const table_tennis_bg = compute_local_project_file_path('/image/featured/table_tennis_bg.png')
 export const badminton_bg = compute_local_project_file_path('/image/featured/badminton_bg.png')
 export const baseball_bg = compute_local_project_file_path('/image/featured/baseball_bg.png')
+
+// 无token页面
+export const friendly_reminder_zh = compute_local_project_file_path('/image/common/friendly_reminder_zh.jpg')
+export const friendly_reminder_en = compute_local_project_file_path('/image/common/friendly_reminder_en.jpg')
 
 //弹出框菜单图片
 export const popup_menu = {

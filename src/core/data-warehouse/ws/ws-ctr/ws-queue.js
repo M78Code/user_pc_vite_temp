@@ -3,6 +3,7 @@
  * @Description: ws 消息队列
  */
 import licia from "licia";
+import { wslog } from "src/core/log/";
 export default class WsQueue {
   /**
    * @Description:构造函数
@@ -58,8 +59,8 @@ export default class WsQueue {
           } catch (error) {
             console.error(error);
             // 增加错误信息到日志系统中
-            if (window.wslog && window.wslog.send_msg) {
-              window.wslog.send_msg('WS---E:', { cmd: msg_obj.cmd, err: error.stack });
+            if (wslog && wslog.send_msg) {
+              wslog.send_msg('WS---E:', { cmd: msg_obj.cmd, err: error.stack });
             }
           }
         }

@@ -6,13 +6,8 @@
 import { nextTick } from 'vue'
 import MatchListCardData from "./match-list-card-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js"
-import { LayOutMain_pc } from "src/core/index.js";
+import { LayOutMain_pc ,MenuData} from "src/core/index.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
-
-const MenuData ={
-  is_show_hot :false
-}
-
 
  
 //显示等级 计算参照结果
@@ -77,7 +72,12 @@ export const set_card_show_level = (scroll_top = 0) => {
   // 可视区域赛事ID
   let show_mids_arr = [];
   // 遍历所有卡片
-  MatchListCardData.match_list_card_key_arr.forEach((card_key) => {
+  const list_arry=MatchListCardData.match_list_card_key_arr
+  if(MenuData.is_home())
+  {
+    list_arry.push(...MatchListCardData.five_leagues_card_key_arr)
+  }
+  list_arry.forEach((card_key) => {
     let card_obj = MatchListCardData.all_card_obj[card_key];
     // 是否联赛容器卡片
     if (card_obj.card_type == "league_container") {
@@ -131,6 +131,11 @@ export const set_card_show_level = (scroll_top = 0) => {
     let pre_match_card_obj
     MatchListCardData.match_list_card_key_arr.forEach(card_key => {
       let card_obj = MatchListCardData.all_card_obj[card_key]
+      if(!card_obj){
+        console.log("未找到表征:card_key",card_key);
+        return;
+      }
+      
       // 设置卡片偏移量  顶部偏移量等于上一个卡片 的底部偏移量， 底部偏移量等于自定顶部偏移量加自身高度
       card_obj.offset_top = pre_card_obj.offset_bottom
       card_obj.offset_bottom = card_obj.offset_top + card_obj.card_total_height

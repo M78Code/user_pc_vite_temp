@@ -53,6 +53,7 @@ class LayOutMain {
     this.layout_left_menu_status = 'normal'
     // 页面中间内容高度
     this.layout_content_height = 0
+    this.oz_layout_content_height = 0
     // 页面中间内容宽度
     this.layout_content_width = 1440
     // 布局更新
@@ -85,8 +86,6 @@ class LayOutMain {
      this.oz_right_width = 407
     // 区域大小
     this.oz_layout_content = 1430
-    //公告 赛果 体育规则 弹出框
-    this.layout_secondary_dialog = false
     //公告 赛果 体育规则 当前进入的模块
     this.layout_secondary_active = ''
     // ------------------------------------------ 欧洲版 pc 专用 --------------------------------------------------------------------------------------------
@@ -100,6 +99,7 @@ class LayOutMain {
     this.set_layout_left_menu_status()
     this.set_layout_main_width()
     this.set_layout_search_width()
+    this.set_oz_layout_content_config()
   }
 
   // 设置 中间内容区域 宽度 高度
@@ -107,6 +107,10 @@ class LayOutMain {
     this.layout_content_height = client_height - this.layout_nav_height - this.layout_notice_height
     this.layout_content_width = client_width - this.layout_left_width - this.layout_right_width
     this.set_layout_version()
+  }
+
+  set_oz_layout_content_config() {
+    this.oz_layout_content_height = client_height - 68;
   }
  
   // 设置 左侧列表显示形式
@@ -147,16 +151,9 @@ class LayOutMain {
       this.layout_search_width = 390
     }
   }
-  /** 公告 赛果 体育规则 弹出框设置 */
-  set_layout_secondary_dialog(value='announcement') { 
-    this.layout_secondary_dialog = !this.layout_secondary_dialog
-    this.layout_secondary_active = value
-    this.set_layout_version()
-  }
   /** 公告 赛果 体育规则 激活次要模块设置*/
   set_layout_secondary_active(value) { 
     this.layout_secondary_active = value;
-    console.log('this.layout_secondary_active ',this.layout_secondary_active)
     this.set_layout_version()
   }
 

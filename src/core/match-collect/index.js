@@ -19,6 +19,22 @@ class MatchCollect {
     // 赛事收藏信息
     this.match_collect_obj = { 1: [], 2: [], 3: [] }
   }
+
+  handle_match_collect (value) {
+    const { tid } = value
+    const league_collect = this.get_league_collect_state(tid)
+    api_common.add_or_cancel_tournament({
+      tid,
+      cf: league_collect ? 0 : 1,
+      cuid: UserCtr.get_uid()
+    }).then(res => {
+      if (+res.code !== 200) return
+    })
+    // 收藏页手动处理数据
+    MenuData.is_collect() && MatchMeta.set_collect_match(value, 1)
+    this.handle_league_collect_state(tid)
+  }
+
   /**
    * @description 设置联赛收藏状态
    * @param { match } 赛事对象 
@@ -61,7 +77,9 @@ class MatchCollect {
     // 赛事 是否 收藏
     Object.assign(this.match_mid_collect_obj.value, {
       [match_key]: { match_collect: is_collect }
-    }) 
+    })
+    // console.log(match)
+    // console.log(this.match_mid_collect_obj.value)
   }
   /*
    * @description 获取联赛收藏状态
@@ -85,9 +103,10 @@ class MatchCollect {
 
   /**
    * @description 获取 赛事 收藏数据
+   * @params list 赛事数据
    * @returns 
    */
-  get_collect_match_data () {
+  get_collect_match_data (list = []) {
     api_common.get_new_collect_matches({
       matchType: 0,
       cuid: UserCtr.get_uid()
@@ -97,7 +116,7 @@ class MatchCollect {
         const data = lodash.get(res,'data');
         Object.assign(this.match_collect_obj, { ...data })
         this.set_is_get_collect(true)
-        MatchMeta.complete_matchs.forEach(match => {
+        list && list.length > 0 && list.forEach(match => {
           requestAnimationFrame(() => {
             this.handle_collect_state(match)
           })

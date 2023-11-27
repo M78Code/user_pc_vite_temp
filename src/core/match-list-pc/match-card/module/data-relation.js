@@ -6,6 +6,7 @@ import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2 
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3 } from "./data-relation-type-3.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4 } from "./data-relation-type-4.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5 } from "./data-relation-type-5.js";
+import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type7 } from "./data-relation-type-7.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
@@ -95,16 +96,17 @@ const set_match_list_mapping_relation_obj_type = () => {
     if (
       (page_source == "hot" && MenuData.match_list_api_params.euid != 30199) 
       || ["today", "early", "bet",'match-play-common', 'match-collect'].includes(page_source)
-      || route_name == 'search' || MenuData.is_top_events()
+      || route_name == 'search' || MenuData.is_top_events() || MenuData.is_leagues()
       // || lodash.isUndefined(MenuData.menu_root)|| lodash.isNull(MenuData.menu_root)
       || !MenuData.menu_root
     ) {
       type = 9
+    } else if(MenuData.is_kemp()) {
+      type = 6
     } else {
       type = 8
     }
   }
-  console.log('type', PageSourceData, type);
   return   type
 };
 
@@ -153,7 +155,7 @@ const reset_all_card_data = () => {
  */
 
 export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
-  (match_list, is_ws_call, is_remove_call) => {
+  (match_list, is_ws_call, is_remove_call, is_five_leagues) => {
     let current_csid = MenuData.left_menu_result.lv1_mi;
     // 虚拟体育 不走卡片逻辑
     if (MenuData.is_vr()) {
@@ -164,7 +166,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
     }
   MatchListCardData.match_list_mapping_relation_obj_type = set_match_list_mapping_relation_obj_type();
     // 非ws调用  清空卡片数据
-    if (!is_ws_call) {
+    if (!is_ws_call&&!is_five_leagues) {
       MatchListCardData.match_list_render_key++;
       // 重置 赛事模板配置  开始
       //  let template_id = MenuData.match_tpl_number
@@ -209,10 +211,18 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         is_ws_call
       );
     } else if ([9].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
-      compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4(
-        match_list,
-        is_ws_call
-      );
+      if (is_five_leagues) {
+        compute_match_list_style_obj_and_match_list_mapping_relation_obj_type7(
+          match_list,
+          is_ws_call,
+          is_five_leagues
+        );
+      } else {
+        compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4(
+          match_list,
+          is_ws_call,
+        );
+      }
     } else {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5(
         match_list,

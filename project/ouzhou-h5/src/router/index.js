@@ -20,6 +20,14 @@ const router = createRouter({
           },
         },
         {
+          path: "/champion",
+          name: "champion",
+          component: () => import("../pages/champion/index.vue"),
+          meta: {
+            keepAlive: true, // 需要缓存
+          },
+        },
+        {
           path: "/match",
           name: "matchList",
           component: () => import("../pages/match-page/index.vue"),
@@ -104,6 +112,11 @@ const router = createRouter({
           //   },
           // ],
         },
+        {
+          path: "/result/:mid/:tid/:csid?/:mcid?",
+          name: "result",
+          component: () => import("../pages/detailnew/result/index.vue"),
+        },
         // 投注列表
         {
           path: "/betting_history",
@@ -129,22 +142,15 @@ const router = createRouter({
           },
         },
         //公告
-        // {
-        //   path: "/announcement",
-        //   name: "/announcement",
-        //   component: () => import("../pages/personal/announcement.vue"),
-        //   meta: {
-        //     keepAlive: true // 需要缓存
-        //   },
-        // }
         {
           path: "/announcement",
           name: "announcement",
           component: () => import("../pages/personal/announcement.vue"),
           meta: {
-            keepAlive: true, // 需要缓存
+            keepAlive: true // 需要缓存
           },
-        },
+        }
+
       ],
     },
     //搜索
@@ -169,11 +175,11 @@ const router = createRouter({
  * 路由切换清除默认球种
  */
 router.beforeEach((to, from, next) => {
-  if(to.name !== from.name){
-    SessionStorage.remove("nemu-h5");
-    MenuData.clear_menu_id();
-  }
-  next()
+    if(to.name !== from.name && to.name !== "category" && from.name !=="category"){
+        SessionStorage.remove("nemu-h5");
+        MenuData.clear_menu_id();
+    }
+    next()
 })
 
 export default router;

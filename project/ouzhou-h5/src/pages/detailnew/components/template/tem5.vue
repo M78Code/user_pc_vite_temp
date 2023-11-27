@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <div class="temp3 mx-10 box-style">
+  <div class="temp3 box-style component tem5">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
     <!-- os: 1开 2封 3隐藏不显示不占地方-->
@@ -39,68 +39,57 @@
         <div></div> -->
         <div
           v-if="value.length == 1"
-          @click="go_betting(value)"
+          @click="go_betting(value[0])"
           :class="{
-            'is-active': value[0].oid === active,
+            'is-active':  BetData.bet_oid_list.includes(value[0]?.oid ),
             temp_grid_item: true,
             ol_ov: true,
           }"
         >
-          <template v-if="value[0].os == 1">
+          <template v-if="value[0].os == 1 && value[0].os != 11">
             <span class="o_hv">{{ value[0].hv || key }}</span>
-            <span>{{ get_oddv(value[0]?.ov / 100000) }}</span>
+            <span>{{compute_value_by_cur_odd_type(value[0]?.ov,'','',MatchDetailCalss.params.sportId)}}</span>
             <olStatus :item_ol_data="value[0]" />
           </template>
-          <span v-else
-            ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
-          /></span>
+          <template v-else>
+            <ResultOlItem v-if="value[0].result != (void 0)" :value="value[0]" :hpt="5"></ResultOlItem>
+            <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+          </template>
         </div>
         <template v-else>
-          <div
-            v-for="o in value"
-            :class="{
-              temp_grid_item: true,
-              'is-active': o.oid == active,
-              ol_ov: true,
-            }"
-            :key="o.oid"
-            @click="go_betting(o)"
-          >
-            <template v-if="o.os == 1">
+          <div v-for="o in value" :class="{ temp_grid_item: true, 'is-active': BetData.bet_oid_list.includes(o?.oid ),ol_ov: true,}" :key="o.oid" @click="go_betting(o)">
+            <template v-if="o.os == 1 && o._hs != 11">
               <span class="o_hv">{{ o.on || key }}</span>
-              <span>{{ get_oddv(o?.ov / 100000) }}</span>
+              <span>{{compute_value_by_cur_odd_type(o.ov,'','',MatchDetailCalss.params.sportId)}}</span>
               <olStatus :item_ol_data="o" />
             </template>
-            <span v-else
-              ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
-            /></span>
+            <template v-else>
+              <ResultOlItem v-if="o.result != (void 0)" :value="o" :hpt="5"></ResultOlItem>
+              <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+            </template>
           </div>
         </template>
       </div>
     </template>
 
     <template v-else>
-      <div v-for="ol in item_data.hl[0].ol" :key="ol.oid" class="ol_on">
-        <div
-          @click="go_betting(ol)"
-          :class="[
-            { 'is-active': BetData.bet_oid_list.includes(ol?.oid) },
-            'ol_ov',
-          ]"
-        >
-          <template v-if="ol.os == 1">
-            <span class="ol-on-text">{{ ol.on }}</span>
-            <span class="ol-ov-text">{{ get_oddv(ol.ov / 100000) }}</span>
-            <olStatus
-              :item_ol_data="ol"
-              :active="BetData.bet_oid_list.includes(ol?.oid)"
-            />
-          </template>
-          <span v-if="ol.os == 2"
-            ><img class="lock" :src="odd_lock_ouzhou" alt="lock"
-          /></span>
+      <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
+        <div v-for="ol in hl_item.ol" :key="ol.oid" class="ol_on">
+          <div @click="go_betting(ol)" :class="[ { 'is-active': BetData.bet_oid_list.includes(ol?.oid) },'ol_ov']">
+            <template v-if="ol.os == 1 && ol._hs != 11">
+              <span class="ol-on-text">{{ ol.on }}</span>
+              <span class="ol-ov-text">{{compute_value_by_cur_odd_type(ol?.ov,'','',MatchDetailCalss.params.sportId)}}</span>
+              <olStatus
+                :item_ol_data="ol"
+                :active="BetData.bet_oid_list.includes(ol?.oid)"
+              />
+            </template>
+            <ResultOlItem :value="ol" :hpt="5"></ResultOlItem>
+            <span v-if="ol.os == 2 || ol._hs == 11"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+          </div>
         </div>
-      </div>
+      </template>
+      
     </template>
   </div>
 </template>
@@ -110,6 +99,8 @@ import { onMounted, ref, computed } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
 import olStatus from "../ol_status.vue";
+import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
+import ResultOlItem from "../../result/ResultOlItem.vue";
 const emit = defineEmits(["bet_click_"]);
 const props = defineProps({
   item_data: {
@@ -126,7 +117,7 @@ const go_betting = (data) => {
   if (data.os == 2) return;
   // console.log("payload", data);
   // storage_bet_info(payload)
-  emit("bet_click_", data);
+  emit("bet_click_", data,props.item_data.hpn);
   // EMITTER.emit("show_bet_dialog", true);
 };
 const matchInfo = computed(() => {
@@ -168,6 +159,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.else{
+  border: 1px solid red;
+}
 .odds-wrap {
   background-color: var(--q-gb-bg-c-2);
   box-sizing: border-box;

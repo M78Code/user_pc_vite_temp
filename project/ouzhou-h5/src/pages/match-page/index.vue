@@ -2,18 +2,18 @@
  * 早盘，今日赛事页面
 -->
 <template>
-  <tab-date v-if="!store.isLeagueDetail" @changeTab="onTabChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
-  <div class="league-list" v-else @click="goBackToLeague">
+  <tab-date v-show="!store.isLeagueDetail" @changeTab="onTabChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
+  <div class="league-list" v-show="store.isLeagueDetail" @click="goBackToLeague">
     <!-- {{ store.selectLeague }} -->
     <div class="area">{{ store.selectArea.introduction }}</div>
     <IconWapper color="#888" name="icon-triangle1" size="16px" class="icon-wapper-more" />
     <div class="league">{{ store.selectLeague.nameText }}</div>
   </div>
   <!--二级赛事列表-->
-  <div class="match-list-page">
-    <!--  判断是否是matches页面   ||  判断是否是league页面的二级列表页   -->
-    <MatchContainer v-if="store.tabActive === 'matches' || (store.tabActive !== 'matches' && store.isLeagueDetail)"/>
-    <MatchFirstStep v-else />
+  <div class="match-list-page" :class="[{ 'league-filter': store.tabActive === 'League'  }]">
+    <MatchFirstStep v-if="store.tabActive === 'League' && !store.isLeagueDetail" />
+     <!-- <NoData v-else-if="store.tabActive === 'Outrights'" which='comingSoon' class="data-get-empty2" height='400'></NoData> -->
+    <MatchContainer v-else/>
   </div>
 </template>
 <script setup>
@@ -26,46 +26,95 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import { IconWapper } from 'src/components/icon'
 import BaseData from 'src/core/base-data/base-data.js'
+import { MenuData } from "src/core/index.js";
+import NoData from "src/base-h5/components/common/no-data.vue";
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
+let message_fun = null
+let handler_func = null
 const emitters = ref({})
 
 onMounted(() => {
+
+  MatchMeta.set_prev_scroll(0)
+
+  initMatchPage()
+
   BaseData.is_emit && MatchMeta.set_origin_match_data()
+
+  // 接口请求防抖
+  handler_func = lodash.debounce(({ cmd, data }) => {
+    MatchMeta.handle_ws_directive({ cmd, data })
+  }, 1000)
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+    handler_func({ cmd, data })
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      MatchMeta.handle_remove_match(data)
+    } else {
+      handler_func({ cmd, data })
+    }
+  })
+
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data({})
       }
+      console.log('MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE')
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
-      if (store.tabActive !== 'matches') {
-        onChangeDate(12)
-      }
+        initMatchPage()
     }).off
   }
 })
 onUnmounted(() => {
   Object.values(emitters.value).map((x) => x());
+   // 组件销毁时销毁监听函数
+  ws_message_listener.ws_remove_message_listener(message_fun)
+  message_fun = null
 })
 
 const onTabChange = e => {
-  if (store.tabActive !== 'matches') {
-    onChangeDate(12) // 默认展示12个小时的数据
+  switch (store.tabActive) {
+    case 'Matces':
+      break
+    case 'League':
+      MenuData.set_current_lv1_menu(2);
+      onChangeDate(12) // 默认展示12个小时的数据
+      break
+    case 'Outrights':
+      MenuData.set_current_lv1_menu(400);
+      // MenuData.set_menu_mi('101');
+      // MatchMeta.set_origin_match_data()
+      MatchMeta.get_champion_match()
+      break
   }
 }
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
-  MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-    console.log('onChangeDate', res)
-    if (res) {
-      store.areaList = res
-      onChangeArea(res[0].id)
-    }
-  })
+  if (store.tabActive !== 'Matches') {
+    MatchMeta.get_ouzhou_leagues_data(e).then(res => {
+      console.log('onChangeDate', res)
+      if (res.length) {
+        store.areaList = res
+        store.selectArea = res[0]
+        onChangeArea(res[0].id)
+      } else {
+        store.leaguesMatchs = []
+        store.areaList = []
+      }
+    })
+  }
 }
 
 const onChangeArea = e => {
   const arr = store.areaList.find(i => i.id === e)['tournamentList']
+  if (arr === null) {
+    store.leaguesMatchs = []
+    return
+  }
   arr.forEach(i => {
     i.visible = true
     i.tid = i.id
@@ -73,14 +122,15 @@ const onChangeArea = e => {
   store.leaguesMatchs = arr
 }
 // 初始化matchpage页面
-// const initMatchPage = () => {
-//   store.tabActive = 'matches'
-// }
+const initMatchPage = () => {
+  store.tabActive = 'Matches'
+  store.isLeagueDetail = false
+}
 
 const goBackToLeague = () => {
   onTabChange(1)
   store.isLeagueDetail = false
-  store.tabActive = 'league'
+  store.tabActive = 'League'
 }
 
 </script>
@@ -88,7 +138,7 @@ const goBackToLeague = () => {
 /* ************** 赛事列表包装器 **************** -S */
 .match-list-page {
   width: 100%;
-  height: calc(100% - 2.1rem);
+  height: 100%;
   overflow-y: hidden;
   position: relative;
 
@@ -97,10 +147,18 @@ const goBackToLeague = () => {
     background-color: var(--q-gb-bg-c-2) !important;
 
     :deep(.scroll-wrapper) {
-      background-color: var(--q-gb-bg-c-2) !important;
+      // background-color: var(--q-gb-bg-c-2) !important;
 
       .s-w-item {
         background-color: var(--q-gb-bg-c-2) !important;
+      }
+    }
+  }
+  &.league-filter{
+    :deep(.scroll-wrapper) {
+      .scroll-i-con .s-w-item {
+        position: relative;
+        transform: translateY(0) !important;
       }
     }
   }

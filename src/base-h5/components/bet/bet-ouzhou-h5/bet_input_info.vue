@@ -1,13 +1,13 @@
 <!-- 单关，串关，投注金额输入框 -->
 <template>
-    <div class="bet_input_info flex_input">
+    <div class="bet_input_info flex_input component bet-input-info">
        <div class="info_left">
        <div class="size_16 color_a1a1">{{$t('bet.bet')}}</div>
         <div class="size_14">
            
             <span>{{$t('bet.total_win2')}}</span>
             <!-- <span class="margin_left_4">&thinsp;{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span> -->
-            <span class="margin_left_4">{{ mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally), BetData.bet_amount) || '0.00' }}</span>
+            <span class="margin_left_4">{{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }}</span>
         </div>
        </div>
        <div class="info_right size_14">
@@ -16,7 +16,7 @@
   
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
             
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}} {{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.bet_limit')}} {{ format_money(ref_data.min_money) }}~{{format_money(ref_data.max_money) }}</span>
           
           </div>
           
@@ -27,7 +27,7 @@
 <script setup>
 import lodash_ from "lodash"
 import { onMounted, onUnmounted, reactive,ref } from "vue"
-import {MITT_TYPES,useMittOn } from "src/core/"
+import {MITT_TYPES,useMittOn,format_money2,format_money,UserCtr } from "src/core/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
@@ -42,7 +42,7 @@ const props = defineProps({
     }
 })
 
-const input_click = (item,index,evnet) => {
+const input_click = (item,index,event) => {
     console.error('index', index)
   event.preventDefault()
   BetData.set_bet_keyboard_config(item)
@@ -136,16 +136,21 @@ const set_ref_data_bet_money = () => {
     .info_right{
         width: 152px;
         height: 42px;
-        box-shadow: 0px 1px 4px 0px #FF70001A;
-        border: 0.5px solid var(--q-gb-bd-c-12);
+        box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
+        border: 1px solid var(--q-gb-bg-c-1);
         padding-left: 6px;
-        background: var(--q-gb-t-c-2);
+        background: #FFF6F0;
         caret-color: var(--q-gb-bd-c-1);
         font-family: DIN;
         font-size: 20px;
         font-weight: 500;
         display: flex;
         align-items: center;
+        border-radius: 2px;
+        .content-b {
+            display: flex;
+            align-items: center;
+        }
         .input_place{
             color:  #8A8986;
             font-size: 12px;
@@ -180,18 +185,19 @@ const set_ref_data_bet_money = () => {
     align-items: center;
 }
 .size_14{
-    font-size: 0.11rem;
+    font-size: 0.14rem;
     font-weight: 400;
-    color: var(--q-gb-t-c-4);
+    color: var(--q-gb-t-c-3);
 }
 .margin_left_4{
     margin-left: 4px;
     font-family: "DIN";
 }
 .size_16{
-    font-size: 0.14rem;
-    font-weight: 700;
+    font-size: 0.16rem;
+    font-weight: 500;
     color: var(--q-gb-t-c-4);
+    margin-bottom: .08rem;
 }
 .color_ff700{
     color: var(--q-gb-t-c-1);
@@ -202,12 +208,14 @@ const set_ref_data_bet_money = () => {
 .money-span {
     width: 0.02rem;
     height: 0.16rem;
-    margin: 0 1px;
+    margin-right: 0.05rem;
     background: var(--q-gb-bg-c-1);
     &.money-span3{
-      background: var(--q-gb-bg-c-1);
-      border-left: 2px solid var(--q-gb-bd-c-1);
-      
+      background: #FFF6F0;
     }
   }
+  .limit-txt {
+    color: var(--q-gb-t-c-3);
+  }
+
 </style>

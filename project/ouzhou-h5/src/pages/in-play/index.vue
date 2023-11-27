@@ -10,6 +10,7 @@
   </div>
 </template>
 <script setup>
+import lodash from 'lodash'
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import { MenuData } from "src/core/index.js";
@@ -22,8 +23,9 @@ import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive
 
 const emitters = ref({})
 let message_fun = null
-
+let handler_func = null
 onMounted(() => {
+  MatchMeta.set_prev_scroll(0)
   // 元数据 有缓存得情况下获取数据
   BaseData.is_emit && MatchMeta.set_origin_match_data()
   emitters.value = {
@@ -35,10 +37,20 @@ onMounted(() => {
     }).off
   }
 
-  // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
+  // 接口请求防抖
+  handler_func = lodash.debounce(({ cmd, data }) => {
     MatchMeta.handle_ws_directive({ cmd, data })
-  }, 1000))
+  }, 1000)
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+    handler_func({ cmd, data })
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      MatchMeta.handle_remove_match(data)
+    } else {
+      handler_func({ cmd, data })
+    }
+  })
 
   // 重置所选 球种默认玩法 hpid
   MatchResponsive.reset_match_hpid_by_csid()
@@ -62,14 +74,16 @@ const changeMenu = (mi) =>{
 </script>
 <style lang="scss" scoped>
   .match_page{
-    height: calc(100% - 76px - 97px);
+    // height: calc(100% - 76px - 97px);
+    // height: calc(100% - 116px - 54px);
+    height: 100%;
     overflow-y: hidden;
     position: relative;
     .match-list-container{
       height: 100%;
       background-color: var(--q-gb-bg-c-2) !important;
       :deep(.scroll-wrapper){
-        background-color: var(--q-gb-bg-c-2) !important;
+        // background-color: var(--q-gb-bg-c-2) !important;
         .s-w-item{
           background-color: var(--q-gb-bg-c-2) !important;
         }

@@ -3,14 +3,11 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 项目默认公共样式
  */
- 
-$layout_max_width: 1920px; //内容最大宽度
-$layout_min_width: 1440px; //内容最大宽度
+
 
 body,
 html {
   max-width:  inherit;
-  min-width: $layout_min_width;
   margin: 0 auto;
 }
 
@@ -275,257 +272,69 @@ input::-ms-reveal {
   right: 0;
 }
 
-/*  垂直滚动固定头 */
-.scroll-fixed-header {
-  position: absolute;
-  right: 14px;
-  z-index: 500;
-  top: 0;
-  left: 0;
-}
-.q-virtual-scroll__content {
-  .q-manual-focusable--focused {
-    background: #e3e9ee;
-    .q-focus-helper {
-      opacity: 0 !important;
+
+.bet-item-wrap-ouzhou {
+  display: flex;
+  width: 78px;
+  height: 48px;
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  .c-bet-item {
+    width: 78px;
+    height: 48px;
+    &.active {
+      background: var(--q-gb-bg-c-1) !important;
+      &.up,&.down{
+        background: var(--q-gb-t-c-4) !important;
+        .odds{
+          color: var(--q-gb-t-c-2);
+        }
+        div{
+          color: var(--q-gb-t-c-5);
+        }
+      }
+      .handicap-value,
+      .handicap-value-text {
+        color: var(--q-gb-t-c-4);
+      }
+      .odds {
+        color: var(--q-gb-t-c-1);
+      }
+    }
+    &.can-hover:hover {
+      background: var(--q-gb-t-c-4);
+      cursor: pointer;
     }
   }
-  .q-item--active {
-    color: #17191d;
-    background: #e3e9ee;
-  }
-}
-
-/* *** 直滚动条样式 ************ -S */
-.v-scroll-area {
-  &:after {
-    z-index: 99;
-    content: "";
-    display: block;
-    width: 14px;
-  }
-
-  /*  真实滚动条的 bar 样式 */
-  .q-scrollarea__bar {
-    z-index: 500;
-    opacity: 0;
-    width: 14px;
-  }
-
-  /*  真实滚动条的 拖动条 样式 */
-  .q-scrollarea__thumb {
-    z-index: 501;
-    opacity: 1;
-    width: 7px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  /*  列表页的 拖动条 样式重写 */
-  &.video-wrap {
-    &:after {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-    }
-    .q-scrollarea__thumb {
-      right: 3.5px !important;
+  &.bet-item-wrap-ouzhou-bigger {
+    .c-bet-item {
+      width: 133px;
+      &.scroll-ball-bet-item {
+        width: 122px;
+      }
     }
   }
+  div {
+    color: var(--q-gb-bg-c-7);
+    font-size: 14px;
+  }
+  .odds {
+    color: var(--q-gb-t-c-2);
+    font-weight: 500;
+    font-size: 14px;
 
-  /* *** 直滚动条样式 ************ -E */
-}
-
-/* 体育规则滚动条 */
-.q-scrollarea__thumb {
-  width: 8px;
-  right: 2px;
-  opacity: 1;
-  border-radius: 4px;
-  cursor: pointer;
-  background: rgba(60, 63, 76, 0.3);
-}
-
-/* 所有图片背景大小默认100% */
-img {
-  background-size: 100%;
-}
-.alert-wrap {
-  .btn {
-    background: #ffb001;
-  }
-}
-
-/* *** 虚拟体育 ************ -S */
-/*  排名 icon */
-div[class*="ranking-bg-style"] {
-  background-size: 100% 100%;
-}
-.ranking-bg-style1-1 {
-  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_1.svg");
-  &.csid-1002,
-  &.csid-1010 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_1.svg");
-  }
-  &.csid-1009 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1009_1.svg");
-  }
-}
-.ranking-bg-style1-2 {
-  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_2.svg");
-  &.csid-1002,
-  &.csid-1010 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_2.svg");
-  }
-  &.csid-1009 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1009_2.svg");
-  }
-}
-.ranking-bg-style1-3 {
-  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_3.svg");
-  &.csid-1002,
-  &.csid-1010 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_3.svg");
-  }
-  &.csid-1009 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1009_3.svg");
-  }
-}
-.ranking-bg-style1-4 {
-  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_4.svg");
-  &.csid-1002,
-  &.csid-1010 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_4.svg");
-  }
-  &.csid-1009 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1009_4.svg");
-  }
-}
-.ranking-bg-style1-5 {
-  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_5.svg");
-  &.csid-1002 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_5.svg");
-  }
-  &.csid-1010 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1010_5.svg");
-  }
-}
-.ranking-bg-style1-6 {
-  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_6.svg");
-  &.csid-1002 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_6.svg");
-  }
-  &.csid-1010 {
-    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1010_6.svg");
-  }
-}
-
-/* *** 虚拟体育 ************ -E */
-
-/*  默认联赛logo */
-.theme01 .leagues-logo-default,.theme01_y0 .leagues-logo-default  {
-  background-image: url($SCSSPROJECTPATH+"/image/svg/league_logo_01.svg") !important;
-}
-
-/*  默认联赛logo */
-.theme02 .leagues-logo-default,.theme02_y0 .leagues-logo-default {
-  background-image: url($SCSSPROJECTPATH+"/image/svg/league_logo_02.svg") !important;
-}
-
-/*  足球进球 动图 */
-.yb-goal-gif {
-  margin-left: 5px;
-  min-width: 12px;
-  height: 12px;
-  background-image: url($SCSSPROJECTPATH+"/image/common/png/goal_gif.png");
-  background-repeat: no-repeat;
-  background-position: 0% 0;
-  background-size: auto 100%;
-  animation: 1s goal-gif infinite steps(29, end);
-}
-.theme02_y0,.theme02{
-  .yb-goal-gif{
-    background-image: url($SCSSPROJECTPATH+"/image/common/png/goal_gif_02.png");
-  }
-
-}
-
-@keyframes goal-gif {
-  from {
-    background-position: 0%, 0;
-  }
-  to {
-    background-position: 100%, 0;
-  }
-}
-.yb-site-left-width {
-  &.normal,
-  &.mini-normal {
-    .c-main-menu-mini {
-      display: none;
+    &.up {
+      color: var(--q-gb-t-c-7)!important;
     }
-  }
-  &.mini {
-    .c-main-menu {
-      display: none;
+
+    &.down {
+      color: var(--q-gb-t-c-10)!important;
     }
   }
 }
-.menu_toggle-btn {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  z-index: 400;
-  width: 12px;
-  height: 30px;
-  left: 234px;
-  border-radius: 0 8px 8px 0;
-  cursor: pointer;
-  &.mini {
-    left: 64px;
 
-    img {
-      transform: rotate(180deg);
-    }
-  }
-  &:hover {
-    width: 15px;
-  }
-}
-.theme01,
-.theme01_y0 {
-  .menu_toggle-btn {
-    background: var(--qq--theme-bg-menu-toggle-btn);
-    opacity: 0.9;
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
-.theme02,
-.theme02_y0 {
-  .menu_toggle-btn {
-    background: rgba(255, 255, 255, 0.2);
-    &:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-  }
-}
-.allow-user-select {
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  -khtml-user-select: text;
-  user-select: text;
-  cursor: pointer;
-}
-
-:root {
-  --q-color-primary: var(--qq--y0-btn-hover);  
-}
-.pager{
-  .text-primary {
-    color: var(--qq--activity-text-color-gray) !important;
-  }
+.c-match-card .timer-layout .timer-layout2{
+  padding-left: 0 ;
 }

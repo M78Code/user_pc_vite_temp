@@ -85,23 +85,23 @@ const sportsGenre = reactive([
 const defaultSports = reactive([
   { name: "Football", mi: "101" },
   { name: "Basketball", mi: "102" },
-  { name: "eFootball", mi: "190" },
-  { name: "eBasketball", mi: "191" },
+  // { name: "eFootball", mi: "190" },
+  // { name: "eBasketball", mi: "191" },
   { name: "Tennis", mi: "105" },
-  { name: "Snooker", mi: "107" },
-  { name: "Badminton", mi: "110" },
-  { name: "Table Tennis", mi: "108" },
-  { name: "Baseball", mi: "103" },
-  { name: "Volleyball", mi: "109" },
-  { name: "Handball", mi: "111" },
-  { name: "Boxing/Fighting", mi: "112" },
-  { name: "Beach Volleyball", mi: "113" },
-  { name: "Water Polo", mi: "116" },
-  { name: "Hockey", mi: "115" },
-  { name: "Rugby Union", mi: "114" },
-  { name: "Ice Hockey", mi: "104" },
-  { name: "American Football", mi: "106" },
-  { name: "Entertainment", mi: "118" },
+  // { name: "Snooker", mi: "107" },
+  // { name: "Badminton", mi: "110" },
+  // { name: "Table Tennis", mi: "108" },
+  // { name: "Baseball", mi: "103" },
+  // { name: "Volleyball", mi: "109" },
+  // { name: "Handball", mi: "111" },
+  // { name: "Boxing/Fighting", mi: "112" },
+  // { name: "Beach Volleyball", mi: "113" },
+  // { name: "Water Polo", mi: "116" },
+  // { name: "Hockey", mi: "115" },
+  // { name: "Rugby Union", mi: "114" },
+  // { name: "Ice Hockey", mi: "104" },
+  // { name: "American Football", mi: "106" },
+  // { name: "Entertainment", mi: "118" },
 ])
 const popularList = ref([]);//点击排序
 /**
@@ -112,7 +112,7 @@ const popularListSort = (arr) =>{
   const tem = new Map();
   arr = arr.sort((n,m)=>{return m.num - n.num});
   arr = [...arr,...leftDataList.value]
-  let mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1) && +item.mi<MenuData.conventionalType)
+  let mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1) && MenuData.conventionalType.includes(+item.mi))
   return mergeArr.slice(0,3);
 }
 /**
@@ -150,9 +150,8 @@ const change_current_menu = (item) => {
   setPopularSort(item.mi);
   // 设置菜单对应源数据
   emits('isLeftDrawer');
-  useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE);
+  useMittEmit(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE,item.mi);
   BaseData.set_is_emit(false)
-  MatchMeta.set_origin_match_data()
   // if (route.name === 'matchList') MatchMeta.set_origin_match_data()
 
   // MenuData.set_menu_lv2_mi(item.mi+''+2)
@@ -160,7 +159,14 @@ const change_current_menu = (item) => {
   // 当前页面不做跳转
   // MenuData.set_current_lv1_menu(2);
   // 重置所选 球种默认玩法 hpid
-  MatchResponsive.reset_match_hpid_by_csid()
+  // MatchResponsive.reset_match_hpid_by_csid()
+  if(item.mi == 400){
+    return router.push({name: 'champion'})
+  }else{
+    MatchMeta.set_origin_match_data()
+    // 重置所选 球种默认玩法 hpid
+    MatchResponsive.reset_match_hpid_by_csid()
+  }
   if(route.name != "matchList"){
     //跳转今日列表
     router.push({name: 'matchList'})

@@ -7,6 +7,7 @@ import { i18n_t, i18n } from "src/boot/i18n.js";
 import { nextTick, ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import BaseWsMessage from "./base-ws-message"
 const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
@@ -39,9 +40,19 @@ import {
   useMittOn,
   useMittEmit,
   useMittEmitterGenerator,
-  MITT_TYPES,
+  MITT_TYPES,MenuData,LocalStorage
 } from "src/core/index.js"
-import { MenuData } from "src/core/";
+
+import STANDARD_KEY from "src/core/standard-key";
+const base_data_key = STANDARD_KEY.get("base_data_key");
+
+const base_menu_id_new = {
+  30002: "1011",
+  30003: '1021',
+  30004: '1051',
+  30091: '',
+  30090: ''
+}
 
 class BaseData {
   constructor() {
@@ -135,7 +146,7 @@ class BaseData {
    * 目前 按照约定 走 api
    */
   init() {
-
+    console.error('初始化菜单数据')
     // 用默认数据 初始化
     this.init_by_default_data();
     // console.warn("BaseData.init()--------");
@@ -170,6 +181,15 @@ class BaseData {
       // 5分钟一次
       // this.set_menu_init_time(3000000);
     }, 2000);
+
+    // ws请求订阅
+    BaseWsMessage.init()
+  }
+
+  // 菜单数量变化
+  set_base_c301_change(list = []) {
+    list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
 
   /**
@@ -215,9 +235,12 @@ class BaseData {
     });
     // 等待以上4个接口同时请求完成再通知列表获取
     return Promise.all([p1, p2, p3, p4, p5]).then((res) => {
-      const base_data = localStorage.getItem('base_data')
-      !base_data && this.handle_base_data(res)
-      localStorage.setItem('base_data', JSON.stringify(res))
+      // const base_data = LocalStorage.get(base_data_key)
+      // //   !base_data && this.handle_base_data(res)
+      this.handle_base_data(res)
+      nextTick(()=>{
+        LocalStorage.set(base_data_key,res)
+      })
     }).catch((err) => {
       this.set_default_base_data()
       console.error('err:', '元数据接口请求超时')
@@ -226,11 +249,10 @@ class BaseData {
 
   // 从缓存读取默认数据
   set_default_base_data () {
-    const base_data = localStorage.getItem('base_data')
+    const base_data = LocalStorage.get(base_data_key)
     if (base_data) {
-      const res = JSON.parse(base_data)
       this.set_is_emit(true)
-      this.handle_base_data(res)
+      this.handle_base_data(base_data)
     }
   }
 
@@ -440,7 +462,7 @@ class BaseData {
     // 接口返回值很多没有p值，也就是euid 值，先注释调用接口的，用默认的，
     this.mi_euid_map_res = lodash_.get(res, 'data')
 
-    localStorage.setItem("is_session_base_data", JSON.stringify());
+    // localStorage.setItem("is_session_base_data", JSON.stringify());
     this.resolve_mi_euid_map_res();
   }
   /**
@@ -523,8 +545,21 @@ class BaseData {
        *  一期只有足球篮球  暂定
        *  重置默认数据
        */
-      this.left_menu_base_mi_arr = left_menu ;
-      this.left_menu_base_mi = left_menu_mi;
+      if(BUILD_VERSION){
+        let csid_ = [101,102,105]
+        this.left_menu_base_mi_arr = csid_;
+       
+        let list_mi_lsit = []
+        left_menu_mi.forEach(item=>{
+          if(csid_.includes(item.mi*1)){
+            list_mi_lsit.push(item)
+          }
+        })
+        this.left_menu_base_mi = list_mi_lsit;
+      }else{
+        this.left_menu_base_mi_arr = left_menu ; 
+        this.left_menu_base_mi = left_menu_mi;
+      }
 
       this.sports_mi = sports_mi;
 
@@ -562,7 +597,7 @@ class BaseData {
       // 数据对比替换
 
       // if (old_menu != new_menu) {
-      this.mew_menu_list_res = menu_info;
+      this.mew_menu_list_res = menu_info ;
       // localStorage.setItem("is_session_base_data", JSON.stringify());
       // 计算 live
       this.set_mi_gunqiu();
@@ -573,7 +608,7 @@ class BaseData {
       // 更新版本
       this.base_data_version.value = Date.now();
     }
-    // console.error('this',this)
+    console.error('this',this)
   }
 
   /**
@@ -1015,10 +1050,26 @@ class BaseData {
       114: 14,
       115: 15,
       116: 16,
+      117: 17,
       118: 18,
-      300: 10001,
-      400: 10002,
-      2000: 10003,
+      119: 19,
+      120: 20,
+      121: 21,
+      122: 22,
+      123: 23,
+      128: 28,
+      129: 29,
+      133: 33,
+      134: 34,
+      135: 35,
+      136: 36,
+      137: 37,
+      138: 38,
+      139: 39,
+      300: 300,
+      400: 400,
+      2000: 2000,
+    
     };
     return obj[mi];
   }
@@ -1073,5 +1124,5 @@ class BaseData {
 }
 
 const base_data_instance = new BaseData();
-
+useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>base_data_instance.init())
 export default base_data_instance;

@@ -5,6 +5,7 @@
 -->
 <template>
   <div>
+<!--    <div>{{  }}</div>-->
     <div class="analysis-body">
       <!-- 动画/视频/比分榜 -->
       <venue-box
@@ -27,11 +28,7 @@
       <div v-if="!lodash_.isEmpty(score_list) && detail_info.ms > 0">
         <div
           class="tabs-wrap"
-          v-if="
-            ['1', '2', '5', '9', '10'].includes(
-              String (detail_info.csid)
-            )
-          "
+          v-if="['1', '2', '5', '9', '10'].includes(String(detail_info.csid))"
         >
           <span
             v-for="item in tabList"
@@ -50,9 +47,7 @@
         />
         <!-- 2篮球、5网、9排球、10羽毛球 -->
         <basket-ball-stats
-          v-if="
-            ['2', '5', '9', '10'].includes(String(detail_info.csid))
-          "
+          v-if="['2', '5', '9', '10'].includes(String(detail_info.csid))"
           :detail_info="detail_info"
           :score_list="score_list"
         />
@@ -77,10 +72,14 @@ import BasketBallStats from "./compoments/basketball_stats.vue";
 
 import switchTeam from "./compoments/switch-team.vue";
 
-import venueBox from './compoments/venue-box/index.vue'
-import lodash_ from 'lodash'
-import { useMittOn, MITT_TYPES } from "src/core/mitt"
-import { MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,MenuData,UserCtr } from "src/core/index";
+import venueBox from "./compoments/venue-box/index.vue";
+import lodash_ from "lodash";
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import {
+  MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
+  MenuData,
+  UserCtr,
+} from "src/core/index";
 import { format_mst_data } from "src/core/utils/matches_list.js";
 
 // const props =  defineProps({
@@ -105,10 +104,13 @@ onMounted(() => {
 //   })
 
 // 获取数据
-const get_detail_info = (mid)=>{
+const get_detail_info = (mid) => {
   // 3572298
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
   detail_info.value = infomation
+  // setInterval(function (){
+  //   console.log(infomation,"infomation")
+  // },2000)
 }
 
 // const show_page = ref(false)
@@ -120,27 +122,30 @@ const get_detail_info = (mid)=>{
 // {immediate:true}
 // )
 
+
 // 详情数据msc处理
 const score_list = computed(() => {
   const obj = detail_info.value || {};
   let result = {};
-
+  // msc [ 'S1|1:0', 'S2|1:0', 'S5|0:0', 'S6|0:0', 'S8|0:0' ] --比分（比分类型|比分）
   if (obj.msc && obj.msc.length > 0) {
     for (const item of obj.msc) {
-      const list = item.split('|')
-      const score_list = list[1].split(':')
-      result[list[0]] = {
-        home: score_list[0],
-        away: score_list[1],
-        percentage:
-          (Number(score_list[0]) /
-            (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
-            100 || 0,
-        away_percentage:
-          (Number(score_list[1]) /
-            (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
-            100 || 0,
-      };
+      if (item) {
+        const list = item.split("|");
+        const score_list = list[1].split(":");
+        result[list[0]] = {
+          home: score_list[0],
+          away: score_list[1],
+          percentage:
+            (Number(score_list[0]) /
+              (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
+              100 || 0,
+          away_percentage:
+            (Number(score_list[1]) /
+              (Number(score_list[0]) + Number(score_list[1])).toFixed(2)) *
+              100 || 0,
+        };
+      }
     }
   } else {
     for (const key in obj.msc) {
@@ -156,6 +161,14 @@ const score_list = computed(() => {
       };
     }
   }
+  /*
+  S1: {
+    away: "0"
+    away_percentage: 0
+    home: "1"
+    percentage: 100
+  }
+  */
   return result;
 });
 </script>

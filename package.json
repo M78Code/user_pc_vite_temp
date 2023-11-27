@@ -68,10 +68,19 @@
      
 
 
+    "divider--14--1":"echo  -------------------------SDK 生成 项目  开始----------------------------- ",
+
+    "build-custom-sdk": "run-s custom-merchant-config-version-alert export-merchant-config build-custom-sdk-inner",
+    "build-custom-sdk-inner": "vite  build    --config  ./entries/custom-sdk/custom-sdk.vite.config.js   --mode  production ",
+    "build-full-sdk": "vite  build    --config  ./entries/full-sdk/full-sdk.vite.config.js   --mode  production ",
+    "divider--14--2":"echo  -------------------------SDK 生成 项目  结束----------------------------- ",
 
 
 
 
+
+
+    
   
     "divider--111--1":"echo  -------------------------其他辅助项目  开始----------------------------- ",
     "dev-development-document-inner": "vite    --config  ./entries/development-document/development-document.vite.config.js",
@@ -82,12 +91,12 @@
     "dev-custom-version": "run-p  custom-merchant-config-version-alert export-merchant-config dev-custom-version-inner",
     "build-custom-version-inner": "vite  build    --config  ./entries/custom-version/custom-version.vite.config.js   --mode  production ",
     "build-custom-version": "run-p custom-merchant-config-version-alert export-merchant-config build-custom-version-inner",
-    "build-custom-sdk-inner": "vite  build    --config  ./entries/custom-sdk/custom-sdk.vite.config.js   --mode  production ",
-    "build-custom-sdk": "run-s custom-merchant-config-version-alert export-merchant-config build-custom-sdk-inner",
+
+
     "dev-full-version-inner": "vite    --config  ./entries/full-version/full-version.vite.config.js",
     "dev-full-version": "run-s  export-full-version-open  dev-full-version-inner",
     "build-full-version": "vite  build    --config  ./entries/full-version/full-version.vite.config.js   --mode  production ",
-    "build-full-sdk": "vite  build    --config  ./entries/full-sdk/full-sdk.vite.config.js   --mode  production ",
+
     "dev-check-sdk-esm": "vite    --config  ./entries/check-sdk-esm/check-sdk-esm.vite.config.js",
     "dev-check-sdk-umd": "vite    --config  ./entries/check-sdk-umd/check-sdk-umd.vite.config.js",
     "dev-check-sdk-umd-html": "vite    --config  ./entries/check-sdk-umd-html/check-sdk-umd-html.vite.config.js",
@@ -98,7 +107,8 @@
 
     "divider-line": "echo \" 此命令无用,用于分割区块 。 上面的是语义化全命令，下面是简写命令。不要混着写。 \" && exit 0",
     "dev": "npm run dev-self-use-version",
-    "dev-a": "npm run dev-activity",
+    "dev-huodong": "npm run dev-activity",
+    "dev-donghua": "npm run dev-animation",
     "dev2": "npm run dev-self-use-version-inner",
     "build": "npm run build-self-use-version",
     "build-a": "npm run build-activity",

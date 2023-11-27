@@ -6,9 +6,15 @@
 -->
 <template>
   <div>
-      <q-tabs >
-        <q-tab v-for="(item ,index) in option" :key="index" @click.stop="selectSport(item)">
-          <div>
+      <q-tabs class="select_n_tabs" inline-label
+        outside-arrows
+        mobile-arrows
+>
+        <q-tab v-for="(item ,index) in option" :key="index "
+                @click.stop="selectSport(item,index)"
+                :class="active_sport === index ? 'active' : ''"
+                >
+          <div class="tabs_item">
             {{ item }}
           </div>
         </q-tab>
@@ -57,7 +63,10 @@ import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import { onMounted, onUnmounted, ref,watch,computed } from "vue";
 const props = defineProps({
   // 当前选中的球种
-  sportType: String,
+  sportType: {
+    type: String,
+    default: '1'
+  },
   // 球种名字列表
   options: Array,
   // 是否展示输入框
@@ -70,20 +79,22 @@ const props = defineProps({
     default: 0,
   },
 });
-console.log(props.options,'sportType');
+// console.log(props.options,'sportType');
 // const optionsIsShow = ref(false);
 const sport = ref(props.sportType);
+//激活数据
+const active_sport = ref(0);
 // const { off } = useMittOn(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, (e)=>{
 //   showOption(e)
 // });
 // onUnmounted(off);
 watch(props.sportType,(val)=>{
-  console.log(val,'val');
+  // console.log(val,'val');
 }
 )
 //筛选出空数据
 const option = computed(() => {
-  return props.options.filter(item => item !== '')
+  return props.options.filter(item =>  item !== '')
 })
 
 // 全局点击事件
@@ -103,21 +114,59 @@ const option = computed(() => {
     
 //   } else {
 //     optionsIsShow.value = !optionsIsShow.value;
-//     useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
+    //     useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
 //   }
 // };
 /**
  * @description 下拉框选择球种
  * @param String item 球种名称
  */
-const selectSport = (item) => {
+const selectSport = (item,index) => {
   sport.value = item;
+  active_sport.value = index;
+  // console.error('sportsport',sport)
   // showOption();
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
   useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);
 };
 </script>
 <style lang="scss" scoped>
+html,body{
+  height: 100%;
+}
+.select_n_tabs{
+  background: #ffffff;
+  
+  color: #8A8986;
+  .tabs_item{
+    position: relative;
+    &::before{
+      content: '';
+      width: 2px;
+      height: 12px;
+      background: #D9D9D9;
+      position: absolute;
+      right:  -24px;
+      top: 3px;
+    }
+  }
+  .active{
+    color: #1A1A1A;
+    position: relative;
+      &::after{
+      content: '';
+      background: linear-gradient(180deg, #FF7000 0%, rgba(255, 112, 0, 0) 100%);
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      top: 42px;
+      left: 44%;
+      border-radius: 4px;
+    }
+
+  }
+
+}
 .e-select {
   width: 120px;
   height: 28px;
@@ -136,8 +185,8 @@ const selectSport = (item) => {
     border: 1px solid #d0d8de;
     cursor: pointer;
     &:hover {
-      // border: 1px solid #ff7000;
-      border: 1px solid var(--q-gb-bd-c-1);
+      border: 1px solid #ff7000;
+      -border: 1px solid var(--q-gb-bd-c-1);
     }
   }
   .select-input {

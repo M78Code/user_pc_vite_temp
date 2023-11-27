@@ -4,10 +4,21 @@
  * @Description: 赛事分析页赛事比分
 -->
 <template>
-  <div class="box-bc" :key="refshValue">
-    <q-table :rows="data" separator="none" :columns="columns" row-key="name" hide-pagination
-             no-data-label="暂无比分数据"
-             :table-header-style="{ backgroundColor: '#F1F1F1', height: '28px', color: '#8A8986', fontSize: '13px', fontWeight: 500 }"
+  <div class="box-bc">
+    <q-table
+      :rows="data"
+      separator="none"
+      :columns="columns"
+      row-key="name"
+      hide-pagination
+      no-data-label="暂无比分数据"
+      :table-header-style="{
+        backgroundColor: '#F1F1F1',
+        height: '28px',
+        color: '#8A8986',
+        fontSize: '13px',
+        fontWeight: 500,
+      }"
     >
       <!-- 头部插槽 足球用 -->
       <template v-slot:header="props">
@@ -15,19 +26,47 @@
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
             <div>
               <div v-if="!col.icon">
-                <span v-if="col.field !== 'name'"
-                  :style="{ 'line-height': '30px', color: ['p', 't'].includes(col.field) ? '#ff7000' : '#8A8986' }">
-                    {{ col.label }}
+                <span
+                  v-if="col.field !== 'name'"
+                  :class="
+                    detail_info?.course === col.label ? 'heightLight' : ''
+                  "
+                  :style="{
+                    'line-height': '30px',
+                    color: ['p', 't'].includes(col.field)
+                      ? '#ff7000'
+                      : '#8A8986',
+                  }"
+                >
+                  {{ col.label }}
                 </span>
-                <div v-else style="color: #8a8986">
-<!--                  <span style="margin-right: 6px">{{detail_info.course}}</span>-->
-                  <span style="margin-right: 6px" v-html="computed_process_name"></span>
-                  <span>{{detail_info.mst <= 0 ? "00:00" : detail_info.mstValue}}</span>
+                <div
+                  v-else
+                  style="color: #8a8986; display: flex; align-items: center"
+                >
+                  <!-- 倒/正计时组件 -->
+                  <div style="margin-right: 25px">
+                    <match-process
+                      :match="detail_info"
+                      show_page="match-list"
+                      :rows="1"
+                    />
+                  </div>
+                  <img
+                    :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
+                    alt=""
+                    srcset=""
+                    style="margin: 0 10px; height: 14px"
+                    v-if="detail_info.mng"
+                  />
                 </div>
               </div>
 
               <div v-else>
                 <img :src="get_icon(col.icon)" alt="" class="top-icon" />
+                <q-tooltip v-if="col.tooltip">
+                  {{ col.tooltip }}
+                </q-tooltip>
               </div>
             </div>
           </q-th>
@@ -36,34 +75,91 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span :class="[ `stage-${detail_info.mmp}`,'table-name']">{{ props.row.name }}</span>
+            <span class="table-name">
+              <!-- 发球方小圆点 -->
+              <div
+                style="width: 10px"
+                v-if="
+                  _.get(detail_info, 'mmp') != 0 &&
+                  _.get(detail_info, 'csid') != '4'
+                "
+              >
+                <span
+                  class="round"
+                  v-if="
+                    _.get(detail_info, 'mat') == 'away' && props.rowIndex === 1
+                  "
+                ></span>
+                <span
+                  class="round"
+                  v-if="
+                    _.get(detail_info, 'mat') == 'home' && props.rowIndex === 0
+                  "
+                ></span>
+              </div>
+              {{ props.row.name }}</span
+            >
           </q-td>
           <q-td key="q1" :props="props">
-            <span :class="[detail_info?.course === 'Q1' ? 'heightLight' : '']">{{ props.row.q1 }}</span>
+            <span
+              :class="[detail_info?.course === 'Q1' ? 'heightLight' : '']"
+              >{{ props.row.q1 }}</span
+            >
           </q-td>
           <q-td key="q2" :props="props">
-            <span :class="[detail_info?.course === 'Q2' ? 'heightLight' : '']">{{ props.row.q2 }}</span>
+            <span
+              :class="[detail_info?.course === 'Q2' ? 'heightLight' : '']"
+              >{{ props.row.q2 }}</span
+            >
           </q-td>
           <q-td key="ht" :props="props">
-            <span :class="[detail_info?.course === 'HT' ? 'heightLight' : '']">{{ props.row.ht }}</span>
+            <span
+              :class="[detail_info?.course === 'HT' ? 'heightLight' : '']"
+              >{{ props.row.ht }}</span
+            >
           </q-td>
           <q-td key="q3" :props="props">
-            <span :class="[detail_info?.course === 'Q3' ? 'heightLight' : '']">{{ props.row.q3 }}</span>
+            <span
+              :class="[detail_info?.course === 'Q3' ? 'heightLight' : '']"
+              >{{ props.row.q3 }}</span
+            >
           </q-td>
           <q-td key="q4" :props="props">
-            <span :class="[detail_info?.course === 'Q4' ? 'heightLight' : '']">{{ props.row.q4 }}</span>
+            <span
+              :class="[detail_info?.course === 'Q4' ? 'heightLight' : '']"
+              >{{ props.row.q4 }}</span
+            >
           </q-td>
           <q-td key="q5" :props="props">
-            <span :class="[detail_info?.course === 'Q5' ? 'heightLight' : '']">{{ props.row.q5 }}</span>
+            <span
+              :class="[detail_info?.course === 'Q5' ? 'heightLight' : '']"
+              >{{ props.row.q5 }}</span
+            >
           </q-td>
+          <!--新增加时赛比分和点球大战比分 start-->
+          <q-td key="q5" :props="props" v-if="props.row.x">
+            <span :class="[detail_info?.course === 'x' ? 'heightLight' : '']">{{
+              props.row.x
+            }}</span>
+          </q-td>
+          <q-td key="q5" :props="props" v-if="props.row.y">
+            <span :class="[detail_info?.course === 'y' ? 'heightLight' : '']">{{
+              props.row.y
+            }}</span>
+          </q-td>
+          <!--新增加时赛比分和点球大战比分 end-->
           <q-td key="set" :props="props">
             <span>{{ props.row.set }}</span>
           </q-td>
           <q-td key="t" :props="props">
-            <span style="font-weight: 500; color: #ff7000">{{props.row.t}}</span>
+            <span style="font-weight: 500; color: #ff7000">{{
+              props.row.t
+            }}</span>
           </q-td>
           <q-td key="p" :props="props">
-            <span style="font-weight: 500; color: #ff7000">{{props.row.p}}</span>
+            <span style="font-weight: 500; color: #ff7000">{{
+              props.row.p
+            }}</span>
           </q-td>
         </q-tr>
       </template>
@@ -79,13 +175,12 @@ import {
   i18n_t,
   is_eports_csid,
   LOCAL_PROJECT_FILE_PREFIX,
-  stage_dict
-} from 'src/core/index.js';
+  stage_dict,
+} from "src/core/index.js";
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 
-import { get_mmp_name } from "src/core/format/module/format-msc.js"
 import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import lodash from "lodash";
 
 const props = defineProps({
   detail_info: {
@@ -101,7 +196,6 @@ const props = defineProps({
 });
 
 const data = ref([]);
-const refshValue = ref(1)
 
 const padding_value = ref("1px 0px 1px 6px");
 
@@ -111,17 +205,11 @@ const columns = ref([]);
 const get_base_data = (val) => {
   const detail_info = props.detail_info;
   const list = [
-    {
-      name: detail_info["mhn"],
-      key: "home",
-    },
-    {
-      name: detail_info["man"],
-      key: "away",
-    },
+    { name: detail_info["mhn"], key: "home" },
+    { name: detail_info["man"], key: "away" },
   ];
   let res = "";
-  if (!_.isEmpty(val) && ["1", "2", "3"].includes(detail_info.csid)) {
+  if (!_.isEmpty(val) && ["1", "2", "3"].includes(String(detail_info.csid))) {
     res = get_score_result(list, val);
   } else {
     //   篮球 赛前无数据
@@ -139,34 +227,50 @@ const get_base_data = (val) => {
       });
     }
   }
+  //  console.log(11111111,detail_info)
+  //  console.log(11111111,data.value)
   data.value = res || [];
 };
 
+/*
+ * 数据：
+ * 角球总比分 S5
+ * 黄牌总比分 S12
+ * 红牌总比分 S11
+ * 点球总比分 S10
+ * 半场总比分 S2
+ * 全场总比分 S1
+ * 加时赛比分 S7
+ * 点球大战 S170
+ * */
 const get_score_result = (list, val) => {
+  const msc_obj = val.msc_obj;
+
   let result = [];
   const detail_info = props.detail_info;
-  console.log(detail_info,"detail_info--==-")
   result = list.map((item) => {
     if (detail_info.csid == 1 || detail_info.csid == 3) {
       return {
         name: item.name,
-        q1: val.S5 ? val.S5[item.key] : 0, // 角球
-        q2: val.S12 ? val?.S12[item.key] : 0, // 黄牌
-        ht: val.S11 ? val?.S11[item.key] : 0, // 红牌
-        q3: val.S10 ? val?.S10[item.key] : 0, // 点球
-        q4: val.S2 ? val?.S2[item.key] : 0, // 半场
-        t: val.S1 ? val?.S1[item.key] : 0, // 全场
+        q1: msc_obj && msc_obj["S5"] ? msc_obj["S5"][item.key] : 0, // 角球
+        q2: msc_obj && msc_obj.S12 ? msc_obj.S12[item.key] : 0, // 黄牌
+        ht: msc_obj && msc_obj.S11 ? msc_obj.S11[item.key] : 0, // 红牌
+        q3: msc_obj && msc_obj.S10 ? msc_obj.S10[item.key] : 0, // 点球
+        q4: msc_obj && msc_obj.S2 ? msc_obj.S2[item.key] : 0, // 半场
+        t: msc_obj && msc_obj.S1 ? msc_obj.S1[item.key] : 0, // 全场
+        x: msc_obj && msc_obj.S1 ? msc_obj.S1[item.key] : "", // 加时赛比分
+        y: msc_obj && msc_obj.S1 ? msc_obj.S1[item.key] : "", // 点球大战
       };
     } else if (detail_info.csid == 2) {
       // 48282 【SIT】【欧洲版二期】【PC】篮球详情页比分版未到的赛事阶段比分不需要展示
       return {
         name: item.name,
-        q1: val.S19 ? val.S19[item.key] : '', // Q1
-        q2: val.S20 ? val?.S20[item.key] : '', // Q2
-        ht: val.S2 ? val?.S2[item.key] : '', // 半场
-        q3: val.S21 ? val?.S21[item.key] : '', //Q3
-        q4: val.S22 ? val?.S22[item.key] : '', // Q4
-        t: val.S1 ? val?.S1[item.key] : '', // 全场
+        q1: msc_obj && msc_obj.S19 ? msc_obj.S19[item.key] : "", // Q1
+        q2: msc_obj && msc_obj.S20 ? msc_obj.S20[item.key] : "", // Q2
+        ht: msc_obj && msc_obj.S2 ? msc_obj.S2[item.key] : "", // 半场
+        q3: msc_obj && msc_obj.S21 ? msc_obj.S21[item.key] : "", //Q3
+        q4: msc_obj && msc_obj.S22 ? msc_obj.S22[item.key] : "", // Q4
+        t: msc_obj && msc_obj.S1 ? msc_obj.S1[item.key] : "", // 全场
       };
     } else {
       return {};
@@ -204,7 +308,7 @@ const get_msc_data = (msc_data, current_data) => {
       });
     }
     //乒乓球
-    if (["7", "8", "9"].includes(detail_info.csid)) {
+    if (["7", "8", "9"].includes(detail_info.csid + "")) {
       res = list.map((item) => {
         return {
           name: item.name,
@@ -249,16 +353,10 @@ const format_msc = (detials) => {
   mmp = parseInt(is_sinuoke ? mct : mmp);
   for (var k in dict) {
     if (!msc[dict[k]] && k <= mft && is_sinuoke) {
-      msc[dict[k]] = {
-        home: "",
-        away: "",
-      };
+      msc[dict[k]] = { home: "", away: "" };
     }
     if (k == mmp && !msc[dict[k]]) {
-      msc[dict[k]] = {
-        home: 0,
-        away: 0,
-      };
+      msc[dict[k]] = { home: 0, away: 0 };
     }
   }
 
@@ -283,10 +381,7 @@ const format_msc = (detials) => {
       num_title.push(i + 1);
       // 补全比分和总盘数|总局数的列数
       if (both_data.length - 1 < i) {
-        both_data.push({
-          home: "",
-          away: "",
-        });
+        both_data.push({ home: "", away: "" });
       }
     }
   }
@@ -319,6 +414,7 @@ const computed_score = (res) => {
       current_data.away += parseInt(score[i].away || 0);
     }
   }
+  console.log(11111111, current_data);
   return current_data;
 };
 
@@ -328,7 +424,6 @@ const get_icon = (icon) => {
     import.meta.url
   ).href;
 };
-
 
 watch(
   () => props.detail_info,
@@ -340,10 +435,7 @@ watch(
     }
     const msc_data = [];
     // let active_index = "";
-    let current_data = {
-      home: 0,
-      away: 0,
-    };
+    let current_data = { home: 0, away: 0 };
     if (res.ms != 0 && res.mmp == "0") {
       Object.assign(res, {
         mmp: "8",
@@ -395,130 +487,78 @@ watch(
       }
 
       //   active_index = this.stage_dict(res.csid, res.mmp, res.mct) - 1
-      if (res.msc.S103) {
-        current_data = res.msc.S103;
+      if (props.score_list.S103) {
+        current_data = props.score_list.S103;
       }
       get_msc_data(msc_data, current_data);
     } else {
-      if (!["1", "2", "3"].includes(res.csid)) {
+      if (!["1", "2", "3"].includes(res.csid + "")) {
         format_msc(res);
       }
-
-      //   computed_score(res)// 计算总分
     }
+    if (["1", "2", "3"].includes(res.csid + "")) {
+      get_base_data(res);
+    }
+    // get_base_data(res);
   },
-  { immediate: true }
+  { immediate: false, deep: true }
 );
 
-
+const insetColumnTooltip = () => {
+  const mapping = {
+    q1: i18n_t("icon_tips.corner"),
+    q2: i18n_t("icon_tips.yellow_card"),
+    ht: i18n_t("icon_tips.red_card"),
+    q3: i18n_t("icon_tips.penalty_kick"),
+    q4: i18n_t("icon_tips.half_1"),
+    t: i18n_t("icon_tips.overall"),
+    x: i18n_t("icon_tips.S7"),
+    y: i18n_t("icon_tips.S170"),
+  };
+  columns.value = columns.value.map((v) => {
+    return {
+      ...v,
+      tooltip: mapping[v.name] || "",
+    };
+  });
+};
 watch(
   () => props.score_list,
   (val) => {
+    // console.log(11111, val);
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
-    get_base_data(val);
+    if (detail_info.msc_obj?.S7 && detail_info.csid == 1) {
+      console.log("加时赛");
+      //  加时赛
+      columns.value.push({
+        name: "x",
+        align: "left",
+        label: "T",
+        field: "x",
+        icon: "in_ball",
+        headerStyle: { width: "33px", color: "#ff7000" },
+      });
+    }
+    if (detail_info.msc_obj?.S107 && detail_info.csid == 1) {
+      console.log("加时赛");
+      //  点球大战
+      columns.value.push({
+        name: "y",
+        align: "left",
+        label: "Y",
+        field: "y",
+        icon: "in_ball",
+        headerStyle: { width: "33px", color: "#ff7000" },
+      });
+    }
+    // if (["1", "2", "3"].includes(detail_info.csid + "")) {
+    //   get_base_data(val);
+    //   }
+    insetColumnTooltip();
   },
-  { immediate: true }
+  { immediate: false, deep: true }
 );
-
-
-
-onMounted(() => {
-  setInterval(()=>{
-    ++refshValue.value
-  },2000)
-});
-
-
-// 计算名字
-const computed_process_name = computed(() => {
-  let { detail_info } = props || {};
-  if(!detail_info){
-    return '';
-  }
-  let csid = lodash.get(props, 'detail_info.csid')
-  let mmp = lodash.get(props, 'detail_info.mmp')
-  let mle = lodash.get(props, 'detail_info.mle')
-  let process_name = get_mmp_name(csid, mmp) || "";
-  // 即将开赛
-  if (lodash.get(props, 'match.ms') == 110) {
-    process_name = i18n_t("common.match_soon");
-  }
-  // 滚球 && 未开赛
-  else if (get_match_status(lodash.get(props, 'match.ms')) && match.mmp == 0) {
-    switch (Number(match.csid)) {
-        // 足
-      case 1:
-        process_name = i18n_t("common.up_half");
-        break;
-        // 篮
-      case 2:
-        process_name =
-            match.mle == 17 ? i18n_t("common.up_half") : i18n_t("common.first_match");
-        break;
-        //棒球
-      case 3:
-        process_name = i18n_t("mmp.3.401");
-        break;
-        //冰球
-      case 4:
-        process_name = i18n_t("mmp.4.1");
-        break;
-        // 网球
-      case 5:
-        process_name = i18n_t("mmp.5.8");
-        break;
-        // 美式足球
-      case 6:
-        process_name = i18n_t("mmp.6.13");
-        break;
-        // 斯诺克
-      case 7:
-        process_name = covert_mct(match);
-        break;
-        // 乒乓球
-      case 8:
-        // 排球
-      case 9:
-        // 羽毛球
-      case 10:
-        process_name = i18n_t("mmp.10.8");
-        break;
-    }
-
-    // 电竞
-    if (is_eports_csid(match.csid)) {
-      process_name = i18n_t("mmp.100.1");
-    }
-  } else {
-    // 篮球(2) && 赛制为 17分钟 && 第四节(100) ====> 阶段名称显示 "下半场"
-    if (csid == 2 && mle == 17 && mmp == 100) {
-      process_name = i18n_t("mmp.2.2");
-    }
-
-    // 斯诺克(7) 的滚球(21)
-    if (csid == 7 && mmp == 21) {
-      process_name = covert_mct(match);
-    }
-  }
-
-  // 篮球3X3滚球时显示"全场"
-  if (csid == 2 && mle == 73 && get_match_status(lodash.get(props, 'match.ms'))) {
-    process_name = i18n_t("mmp.2.21");
-  }
-  //是否列表页棒球第X局，换行显示
-  if (
-      lodash.get(props, 'match.csid')== 3 &&
-      props.show_page == "match-list" &&
-      process_name.indexOf("第") == 0
-  ) {
-    //欧洲版，不用换行
-    return props.date_show_type === 'inline' ? process_name : process_name.replace(" ", "<br/>");
-  } else {
-    return process_name;
-  }
-});
-
 </script>
 
 <style lang="scss" scoped>
@@ -559,12 +599,22 @@ const computed_process_name = computed(() => {
   margin-left: 15px;
   width: 180px;
   overflow: hidden;
-  display: inline-block;
+  display: flex;
+  align-items: center;
   text-overflow: ellipsis;
 }
 
-.heightLight{
+.heightLight {
   color: rgb(255, 112, 0) !important;
+}
+
+.round {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 8px;
+  background-color: var(--q-gb-bg-c-12);
+  margin-right: 4px;
 }
 
 //.stage-13,.stage-14,.stage-15,

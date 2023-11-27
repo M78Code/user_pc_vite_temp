@@ -2,7 +2,9 @@
   <div class="record-select">
     <!-- 未结算 -->
     <div class="record-select-main" v-if="current_tab == 'unsettled'">
-      <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" />
+      <!-- <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" /> -->
+      <!-- 占位提前结算 -->
+      <div></div>
       <span style="font-size: 12px;color:#8A8986;">{{i18n_t("ouzhou.record.unpaid_bets")}}</span>
     </div>
     <!-- 已结算 -->
@@ -15,7 +17,9 @@
               }}</span>
           </div>
         </div>
-        <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" />
+        <!-- <q-option-group v-model="cash_value" type="checkbox" :options="options" color="opt-basic" /> -->
+        <!-- 占位提前结算 -->
+        <div></div>
       </div>
       <div class="record-settled-l">
         <div style="width:180px;">
@@ -30,11 +34,17 @@
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" :offset="[200, 10]" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="date" range :minimal="true" ref="dateRef" />
+                  <q-date v-model="date" range :minimal="true" ref="dateRef"
+                          :locale="dateLocal"
+                  />
                 </q-popup-proxy>
               </q-icon>
             </template>
           </q-input>
+        </div>
+        <div class="tips">
+          <span class="dot"></span>
+          {{tipMsg}}
         </div>
         <div class="record-query" @click="search">
           {{i18n_t("bet_record.query")}}
@@ -49,6 +59,15 @@ import { onMounted, ref, watch } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
+const isZH = true
+const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+const months = [...Array(12)].map((v, i) => i + 1 + '月')
+const dateLocal = isZH ? {
+  days,
+  daysShort: days,
+  months,
+  monthsShort: months,
+} : {}
 const props = defineProps({
   current_tab: {
     type: String,
@@ -56,6 +75,15 @@ const props = defineProps({
   }
 })
 const formatYMD = 'YYYY/MM/DD'
+const msgList = [
+  i18n_t("bet_record.msg_1"),
+  i18n_t("bet_record.msg_2"),
+  i18n_t("bet_record.msg_3"),
+  i18n_t("bet_record.msg_4"),
+  i18n_t("bet_record.msg_5"),
+  i18n_t("bet_record.msg_6"),
+]
+const tipMsg = ref(msgList[0])
 const dateRef = ref(null)
 const qDateProxy = ref(null)
 const cash_value = ref([''])
@@ -90,6 +118,7 @@ watch(() => props.current_tab, (newVal) => {
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
   date.value = { from: data, to: data }
+  tipMsg.value = msgList[0]
   setTimeout(() => {
     tabChange.value = false
   }, 500)
@@ -123,6 +152,7 @@ const time_click = (item) => {
   const [from, to] = item.range
   current_time.value = item.value
   params.timeType = item.value
+  tipMsg.value = msgList[item.value]
   date.value = { from, to }
   emitClick()
 }
@@ -135,6 +165,7 @@ const selectInput = (v) => {
   emit('itemFilter', params)
 }
 const search = () => {
+  tipMsg.value = msgList[5]
   const beginTime = date.value.from.split('/')
     .join('-')
   const endTime = date.value.to.split('/')
@@ -195,6 +226,20 @@ div.q-menu {
     display: flex;
     align-items: center;
   }
+  .tips{
+    text-align: right;
+    width: 245px;
+    .dot{
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #ff7000;
+      margin-right: 4px;
+    }
+    font-size: 12px;
+    margin-right: 12px;
+  }
 
   .record-query {
     width: 79px;
@@ -243,7 +288,8 @@ div.q-menu {
 .btn-group {
   height: 34px;
   //width: 330px;
-  background: var(--q-gb-bg-c-6);
+  -background: var(--q-gb-bg-c-6); 
+  background: #E2E2E2; 
   border-radius: 16px;
   box-sizing: border-box;
   display: flex;

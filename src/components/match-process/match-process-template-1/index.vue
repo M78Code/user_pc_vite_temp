@@ -5,7 +5,7 @@
   >
   <template v-if="match">
     <div
-      v-show="lodash.get(match, 'mcid') && show_page == 'match-list'"
+      v-show="lodash.get(match, 'mcid') && lodash.get(match, 'mcid').trim() && show_page == 'match-list'"
       class="jingcai"
     >
       {{ lodash.get(match, 'mcid') }}
@@ -260,8 +260,9 @@ const computed_show_date = computed(() => {
   }
   // 足、篮、冰、美足、手、拳、沙排、英式橄榄球、曲棍球、水球 时才显示【赛事日期】
   // 电竞赛事未开赛也展示赛事日期
+  // 欧洲版网球没有展示未开赛时间，在此处加了5
   else if (
-    [1, 2, 4, 6, 11, 12, 13, 14, 15, 16].includes(csid) ||
+    [1, 2, 4, 5, 6, 11, 12, 13, 14, 15, 16].includes(csid) ||
     is_eports_csid(csid)
   ) {
     show = true;
@@ -375,10 +376,13 @@ onUnmounted(() => {
     flex-shrink: 0;
 
     .date-wrap {
+        position: relative;
       padding: 0 10px;
 
       :deep(.timer-layout) {
-        padding: 0;
+        //padding: 0;
+        //  display: inline-block;
+          // background-color: var(--q-gb-bg-c-10);
       }
     }
   }
@@ -396,5 +400,8 @@ onUnmounted(() => {
 
 .process-name.gray-color {
   color: var(--q-gb-t-c-8);
+}
+.c-match-process{
+    position: relative;
 }
 </style>

@@ -1,34 +1,38 @@
 
 <template>
     <div class="bet-list">
-        <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}</div>
+        <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
-                    <span class="text-flow">{{ items.handicap?items.handicap:items.home }}</span> 
-                    <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
+                    <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
-                <div class="w-100 h15 f-s-c my-4">
-                    <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none font400">{{ items.playName }}</span>
+                <div class="w-100 handicap my-4">
+                    <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
+                        <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                    </span>
+                    <!-- 盘口 -->
+                    <span class="text-a1a text-flow-none text-009 font400">[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                 </div>
-                <div class="w-100 text-8a8 fon12 font400">{{ items.home }} <span class="mx-4">v</span> {{ items.away }}
+                <div class="w-100 fon12 font400 text-8A8986-i" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                 </div>
             </div>
             <div class="fw-e-s bet-right" v-if="BetViewDataClass.bet_order_status == 1">
                 <div class="f-c-c bet-money">
                     <div class="show_img" v-if="items.red_green" >
-                        <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
+                        <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
                         <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
                     </div>
-                    <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'green_down','green-down':items.red_green == 'red_up'}">
-                        {{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}
+                    
+                    <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
+                      @{{ compute_value_by_cur_odd_type(items.odds,'','',items.sportId) }}
                     </span>
                     <BetInput :items="items" />
                 </div>
                 <div class="font12 h12 mt-4">
-                    <span class="font400 mr-4 text-8a8">Highest Win</span>
-                    <span class="text-1a1 font500"> {{ mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount) || '0.00' }} </span>
+                    <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
+                    <span class="text-1a1 font500"> {{ format_money2(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }} </span>
                 </div>
             </div>
 
@@ -36,7 +40,6 @@
                 <div class="f-c-c bet-odds">
                     <span class="font14 font700 mr-10">{{ compute_value_by_cur_odd_type(items.odds_after,'','',items.sportId) }}</span>
                 </div>
-                <!-- <BetResult :items="items" /> -->
             </div>
 
             <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1" @click="set_delete">
@@ -54,7 +57,7 @@
            
         </div>
         <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
-            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money > obj && ref_data.max_money > BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money >= obj && ref_data.max_money >= BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
                 {{index == 'max' ? '' : '+' }}{{obj}}
             </li>
         </ul>
@@ -64,7 +67,7 @@
 <script setup>
 
 import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr } from "src/core/"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,format_money2 } from "src/core/"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import mathJs from 'src/core/bet/common/mathjs.js'
@@ -95,7 +98,7 @@ onMounted(()=>{
     }
     ref_data.emit_lsit = {
         emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-        emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).on
+        emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).off
     }
 })
 
@@ -127,11 +130,16 @@ const set_bet_money = obj => {
     }
     // 计算投注金额
     let money_amount = mathJs.add(money,money_)
-    // 投注金额 不能大于最大投注金额
-    if(money_amount > ref_data.max_money){
-        BetData.set_bet_amount(ref_data.max_money)
-    }else{
+    // 投注金额 不能大于最大投注金额 也不能大于用户约
+    if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
         BetData.set_bet_amount(mathJs.add(money,money_))
+    }else{
+        // 最大限额不能大于余额
+        let money_a = ref_data.max_money
+        if(UserCtr.balance < ref_data.max_money){
+            money_a = UserCtr.balance
+        }
+        BetData.set_bet_amount(money_a)
     }
     useMittEmit(MITT_TYPES.EMIT_SET_QUICK_AMOUNT)
 }
@@ -189,8 +197,14 @@ const set_delete = () => {
 
         .bet-left {
             width: 230px;
+            .text-a1a-i {
+                color: var(--q-gb-t-c-5) !important;
+            }
         }
 
+        .text-8A8986-i {
+            color: var(--q-gb-t-c-8) !important
+        }
     }
 
     .bet-bet-money {
@@ -227,14 +241,25 @@ const set_delete = () => {
         //http://api.sportxxxvo3.com/
     }
     .text-flow{
-        max-width: 74%;
+        max-width: 90%;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
+    }
+    .handicap{
+        max-width: 190px;
     }
     .text-flow-none{
-        width: 76%;
-        line-height: 12px;
+        max-width: 84%;
+        line-height: 16px;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);
@@ -254,4 +279,6 @@ const set_delete = () => {
         }
     }
 }
+
+
 </style>

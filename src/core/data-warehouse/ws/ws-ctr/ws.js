@@ -6,6 +6,7 @@ import WsQueue from "./ws-queue.js";
 import { WsRev } from "./ws-ctr.js";
 import WsSendManger from "./ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key";
+import { wslog } from "src/core/log/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { SessionStorage, LocalStorage } from "src/core/utils/module/web-storage.js";
 import { get_query_string as Qs } from "src/core/index.js";
@@ -293,8 +294,8 @@ export default class Ws {
           }
 
           window.wsmsg && console.log(`WS MSG SEND ---:${JSON.stringify(msg)}`);
-          if (window.wslog && window.wslog.send_msg) {
-            window.wslog.send_msg('WS---S:', msg)
+          if (wslog && wslog.send_msg) {
+            wslog.send_msg('WS---S:', msg)
           }
           if (ws) {
             ws.send(JSON.stringify(msg));
@@ -369,8 +370,8 @@ export default class Ws {
     let msg = e.data;
     // console.log(`---WS REV  MSG---:${msg}`);
     try {
-      if (window.wslog && window.wslog.send_msg) {
-        window.wslog.send_msg('WS---R:', msg)
+      if (wslog && wslog.send_msg) {
+        wslog.send_msg('WS---R:', msg)
         // console.log('------------------------------------onMessage----------------------'+msg)
       }
       WsRev.ws_rev_msg(this_, JSON.parse(msg));

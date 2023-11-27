@@ -15,7 +15,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -29,7 +29,7 @@
       :results_playback_list="results_playback_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_playback_type="change_playback_type"
       @change_sort="change_sort"
       :versions="versions"
@@ -44,7 +44,36 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
+      @change_sort="change_sort"
+      :versions="versions"
+    />
+    <!-- 电子足球 -->
+    <soccer
+      v-if="['90'].includes(sportType)"
+      :load_data_state="load_data_state"
+      :details_load="details_load"
+      :results_list="results_list"
+      :results_order_list="results_order_list"
+      :results_playback_list="results_playback_list"
+      :is_sortUp="is_sortUp"
+      :activeIndex="activeIndex"
+      @get_tr_detail="get_tr_detail"
+      @change_playback_type="change_playback_type"
+      @change_sort="change_sort"
+      :versions="versions"
+      ref="soccer_ref"
+    />
+    <!-- 电子篮球 -->
+    <basketball
+      v-if="sportType == '91'"
+      :load_data_state="load_data_state"
+      :details_load="details_load"
+      :results_list="results_list"
+      :results_order_list="results_order_list"
+      :is_sortUp="is_sortUp"
+      :activeIndex="activeIndex"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -57,7 +86,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -70,7 +99,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -83,7 +112,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -96,7 +125,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
       :sportType="sportType"
@@ -110,7 +139,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
       :sportType="sportType"
@@ -124,7 +153,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -137,7 +166,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -150,7 +179,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -163,7 +192,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
     />
@@ -202,7 +231,7 @@
       :results_order_list="results_order_list"
       :is_sortUp="is_sortUp"
       :activeIndex="activeIndex"
-      @get_tr_detail="get_tr_detail(arguments)"
+      @get_tr_detail="get_tr_detail"
       @change_sort="change_sort"
       :versions="versions"
      />
@@ -285,8 +314,8 @@ export default {
      * @param {Array} data
      * @return {undefined} undefined
      */
-    get_tr_detail(data) {
-      this.$emit("get_tr_detail", data);
+    get_tr_detail(data,index) {
+      this.$emit("get_tr_detail", [data,index]);
     },
     /**
      * @description: 父组件升降排序
@@ -329,7 +358,15 @@ export default {
       .table-col:first-child {
         padding-left: 20px;
       }
+      .table-col_date:first-child {
+        padding-left: 20px;
+      }
       .table-col {
+        .icon {
+          background-size: 100%;
+        }
+      }
+      .table-col_date {
         .icon {
           background-size: 100%;
         }
@@ -355,7 +392,7 @@ export default {
         &:hover {
           background: #f5f7fa;
         }
-        .table-col {
+        .table-col,.table-col_date {
           height: 58px;
           // border-right: 1px solid #d0d8de;
           
@@ -387,7 +424,7 @@ export default {
           &:nth-child(2) {
             display: flex;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 0;
             user-select: text;
           }
           &:nth-child(3) {
@@ -465,6 +502,8 @@ export default {
             background-position: center;
             padding-bottom: 0;
             height: 50px !important;
+            // background-image: url($SCSSPROJECTPATH+"/image/png/no_data_01.png");
+            background-image: url($SCSSPROJECTPATH+"/image/svg/no-data.svg");
           }
           .text-center {
             color: #999;

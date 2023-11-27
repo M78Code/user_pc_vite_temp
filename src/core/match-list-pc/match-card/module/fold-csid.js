@@ -13,7 +13,6 @@ import {conpute_match_list_card_offset ,set_fold_match_list_scroll_top} from  ".
  export const  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie=(click_card_obj,is_no_emit_fold_change)=>{
     // 是否赛种折叠
     let is_sport_fold = !click_card_obj.is_sport_fold
-
     // 赛种已折叠
     if(is_sport_fold){
       // 设置已折叠高度
@@ -26,7 +25,6 @@ import {conpute_match_list_card_offset ,set_fold_match_list_scroll_top} from  ".
       // 设置未折叠高度
       click_card_obj.card_total_height = click_card_obj.card_nofold_height
     }
-
     // 赛种下所有卡片key列表
     let sport_card_keys_arr = MatchListCardData.csid_to_card_key_obj['csid_'+click_card_obj.csid] || []
 

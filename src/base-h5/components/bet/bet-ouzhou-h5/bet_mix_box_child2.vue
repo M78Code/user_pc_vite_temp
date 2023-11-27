@@ -13,9 +13,9 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="BetData.bet_list_remove(items.marketId)"></span>
                   <div class="nonebox4-content-left-info"> 
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap}}</div> <span class="text-one-span">0.25</span></div>
+                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div></div>
                       <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
-                      <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
+                      <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}}</div>
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
@@ -52,6 +52,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    :deep(.ty-span) {
+      margin-left: 4px;
+      color: var(--q-gb-t-c-2);
+    }
   }
   .content-right-duo{
     display: inline-block;
@@ -73,9 +77,9 @@
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
     color: var(--q-gb-t-c-3);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-1);

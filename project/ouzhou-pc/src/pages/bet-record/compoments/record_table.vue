@@ -35,7 +35,7 @@
               <div>
                 <span class="datails-order">{{ props.row.orderNo }}</span>
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/bet_copy.png`" alt="" class="copy_icon"
-                     title="copy" @click="hand_copy(props.row.orderNo)">
+                     :title="i18n_t('ouzhou.record.copy')" @click="hand_copy(props.row.orderNo)">
                 <!-- <img :src="bet_copy" alt="" class="copy_icon" title="copy"  @click="utils.copy(props.row.orderNo)" > -->
                 <!-- <i class="icon-icon_copy copy" color="red" @copy_iconclick="utils.copy(props.row.orderNo)"></i> -->
               </div>
@@ -212,7 +212,10 @@
       <!--分页组件-->
 
       <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"
-                  @pageChange="changePage">
+                  @pageChange="changePage"
+                  @pageSizeChange="pageSizeChange"
+                  @goPageChange="goPageChange"
+      >
       </Pagination>
       <!--      <pagination-wrapper-->
       <!--        v-if="tableData.length > 0"-->
@@ -236,11 +239,12 @@ import Pagination from 'project_path/src/components/Pagination.vue'
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
-// import { copyToClipboard } from 'quasar'
+import { copyToClipboard } from 'quasar'
 import GlobalSwitchClass from 'src/core/global/global.js'
 const lang = computed(() => {
   return UserCtr.lang;
 })
+const pageSize = ref('50')
 const emit = defineEmits(['itemFilter'])
 const props = defineProps({
   current_tab: {
@@ -489,15 +493,30 @@ const order_status = (orderStatus) => {
 const changePage = (arv) => {
   const { current } = arv
   console.log(1111111111, arv)
-  emit('itemFilter', { page: current })
+  emit('itemFilter', {
+    page: current,
+    size: +pageSize.value
+  })
+}
+const goPageChange = (v) => {
+  emit('itemFilter', {
+    page: v,
+    size: +pageSize.value
+  })
+}
+const pageSizeChange = (v) => {
+  pageSize.value = v.value
+  emit('itemFilter', { size: v.value })
 }
 /**
  * 复制id
  * @param data
  */
 const hand_copy = (data) => {
-  // copyToClipboard(data)
-  GlobalSwitchClass.set_tip_show_state(true)
+  copyToClipboard(data)
+  GlobalSwitchClass.set_tip_show_state(true, {
+    text: i18n_t('bet_record.copyed')
+  })
 }
 </script>
 

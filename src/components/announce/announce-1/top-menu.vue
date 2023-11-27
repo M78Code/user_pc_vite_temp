@@ -67,22 +67,25 @@ function sub_click(item, index) {
   
 <style lang="scss" scoped>
 .top-menu-content {
-    height: 50px;
+    height: 48px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
-    background: var(--q-gb-bg-c-4);
-    color: var(--q-gb-t-c-8);
+    // background: var(--q-gb-bg-c-4);  #ffffff
+    // color: var(--q-gb-t-c-8);  #8A8986 
+    background:#ffffff;
+    color:#8A8986 ;
     &:after {
         content: "";
         position: absolute;
         width: 100%;
-        height: 14px;
-        top: 50px;
+        height: 6px;
+        top: 48px;
         right: 0;
-        background-color: var(--q-gb-bg-c-6);
+        // background-color: var(--q-gb-bg-c-6);
+        background-color:#E2E2E2;
     }
-        ::v-deep .q-tab__indicator{
-            display: none;
-        }
+    ::v-deep .q-tab__indicator{
+        display: none;
+    }
     .top-menu-title {
         display: flex;
         justify-content: space-between;
@@ -95,11 +98,19 @@ function sub_click(item, index) {
         }
         &.active {
             font-weight: 600;
-            color: var(--q-gb-t-c-5);
+            // color: var(--q-gb-t-c-5);  
+            color:#1a1a1a;
         }
+        &::before{
+            content: '';
+            width: 2px;
+            height: 12px;
+            background: #D9D9D9;
+            position: absolute;
+            right:  -18px;
+            top: 18px;
+            }
     }
-
-    
     .top-menu-list {
         overflow: hidden;
         max-height: 0px;
@@ -108,12 +119,10 @@ function sub_click(item, index) {
 
         &:hover {
             color: var(--q-gb-t-c-6);
-
             .point {
                 background: var(--q-gb-bg-c-17);
             }
         }
-
         .top-menu-li {
             display: flex;
             align-items: center;
@@ -125,20 +134,20 @@ function sub_click(item, index) {
         }
     }
 }
-      .topmenutitles::after {
-        content: "";
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        position: absolute;
-        bottom: 0rem;
-        left: 50%;
-        top: 90%;
-        transform: translate(-50%, 0);
-        background: #ffb001;
-      }
-      
-    
-    
+.topmenutitles::after {
+content: "";
+width: 8px;
+height: 8px;
+border-radius: 50%;
+position: absolute;
+bottom: 0rem;
+left: 50%;
+top: 90%;
+transform: translate(-50%, 0);
+background: #ffb001;
+}
+::v-deep .q-tabs__content{
+    justify-content: start !important;
+}
 </style>
   

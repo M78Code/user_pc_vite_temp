@@ -30,7 +30,7 @@
  * 
  */
 import MatchDataBaseWS from  "./match-ctr-ws.js"
-import { reactive } from 'vue'
+import { reactive,toRef} from 'vue'
 import {other_play_name_to_playid} from 'src/core/constant/config/data-class-ctr/other-play-id.js'
 export default class MatchDataBase
 {
@@ -273,12 +273,24 @@ init(){
    */
   match_assign(match_old, match_new){
     if(match_old && match_new){
-      this.assign_with(match_old, match_new);
+      // this.assign_with(match_old, match_new);
+      this.match_assign_with_v1(match_old, match_new);
     }
   }
 
+  /**
+   * @description: 赛事数据一级根数据浅合并(都是赋值操作)
+   * @param {Object} match_old 旧赛事
+   * @return {Object} match_new 新赛事
+   */
+  match_assign_with_v1(match_old, match_new){
+    if(match_old && match_new){
+      for (const key in match_new) {
+        match_old[key] = match_new[key];
+      }
+    }
+  }
 
-  
   /**
    * @description: 获取快速查询对象中的指定mid赛事对象
    * @param {String} mid 赛事mid
@@ -288,6 +300,17 @@ init(){
     // 获取指定mid的赛事
     const key = this.get_list_to_obj_key(mid,mid, 'mid')
     return lodash.get(this.list_to_obj.mid_obj, key);
+    // return this.list_to_obj.mid_obj[this.get_list_to_obj_key(mid,mid,'mid')];
+  }
+/**
+   * @description: 获取快速查询对象中的指定mid赛事对象 ref对象
+   * @param {String} mid 赛事mid
+   * @return {TYPES.MatchDetail} 赛事
+   */
+  get_quick_mid_ob_ref(mid){
+    // 获取指定mid的赛事
+    const key = this.get_list_to_obj_key(mid,mid, 'mid')
+    return toRef(this.list_to_obj.mid_obj, key);
     // return this.list_to_obj.mid_obj[this.get_list_to_obj_key(mid,mid,'mid')];
   }
 
@@ -448,7 +471,8 @@ init(){
                                 });
         // 数据赋值和合并逻辑
         if(play_obj){
-          this.assign_with(play_obj, play_obj_temp)
+          // this.assign_with(play_obj, play_obj_temp)
+          this.match_assign_with_v1(play_obj, play_obj_temp);
         } else {
           match.play_obj = play_obj_temp;
         }
@@ -665,7 +689,7 @@ init(){
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list, param={}){
-    console.log('set_list', list)
+    console.log('set_list', list,this.name_code)
     if(list){
       // 索引置换
       let temp = lodash.cloneDeep(this.match_list);
@@ -683,7 +707,7 @@ init(){
       // 列表数据同步到快捷操作对象中
       this._list_to_obj_fun(this.match_list,this.list_to_obj)
       // set_active_mids 报错 DOMException: Failed to execute 'postMessage' on 'Window': Response object could not be clone 先放在这
-      this.mids_ation = list.map(t => t.mid)
+      this.set_active_mids(list.map(t => t.mid))
       // ws命令赛事订阅
       this.ws_ctr.scmd_c8();
       this.upd_data_version();
@@ -880,10 +904,30 @@ init(){
                 if(!lodash.get(item2,'hsw')){
                   item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
+                // 玩法对象补偿
+                let play_obj_key = `hpid_${item2.hpid}`;
+                if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                  if(!item.play_obj){
+                    item.play_obj = {};
+                  }
+                  const obj_temp = {};
+                  for (const key in item2) {
+                    if(!['hl','ol'].includes(key)){
+                      obj_temp[key] = item2[key];
+                    }
+                  }
+                  item.play_obj[play_obj_key] = obj_temp;
+                }
                 // 检查是否有盘口数据
-                if (lodash.get(item2,'hl.length')) {
+                if (lodash.get(item2,'hl.length') || lodash.get(item2,'ol.length')) {
+                  let item_arr = [];
+                  if(lodash.get(item2,'ol.length')){
+                    item_arr = [item2]
+                  } else{
+                    item_arr = item2.hl;
+                  }
                   // 遍历盘口数据
-                  item2.hl.forEach(item3 => {
+                  item_arr.forEach(item3 => {
                     if (item3) {
                       if (item3.hid) {
                         // 增加玩法信息到盘口级别
@@ -939,11 +983,25 @@ init(){
                 if(!lodash.get(item2,'hsw')){
                   item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                 }
+                // 玩法对象补偿
+                let play_obj_key = `hpid_${item2.hpid}`;
+                if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                  if(!item.play_obj){
+                    item.play_obj = {};
+                  }
+                  const obj_temp = {};
+                  for (const key in item2) {
+                    if(!['hl','ol'].includes(key)){
+                      obj_temp[key] = item2[key];
+                    }
+                  }
+                  item.play_obj[play_obj_key] = obj_temp;
+                }
                 // 检查是否有盘口数据
-                if (lodash.get(item2,'hl.ol.length')) {
+                if (lodash.get(item2,'hl.ol.length') || lodash.get(item2,'hl[0].ol.length')) {
                   // if(item2.hl.ol.forEach(item3 => {
                   if(lodash.get(item2,'hl')){
-                    let item3 = item2.hl;
+                    let item3 = lodash.get(item2,'hl[0]') || lodash.get(item2,'hl');
                     if (item3) {
                       if (item3.hid) {
                         // 增加玩法信息到盘口级别
@@ -1044,10 +1102,30 @@ init(){
                   if(!lodash.get(item2,'hsw')){
                     item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                   }
+                  // 玩法对象补偿
+                  let play_obj_key = `hpid_${item2.hpid}`;
+                  if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                    if(!item.play_obj){
+                      item.play_obj = {};
+                    }
+                    const obj_temp = {};
+                    for (const key in item2) {
+                      if(!['hl','ol'].includes(key)){
+                        obj_temp[key] = item2[key];
+                      }
+                    }
+                    item.play_obj[play_obj_key] = obj_temp;
+                  }
                   // 检查是否有盘口数据
-                  if (lodash.get(item2,'hl.length')) {
+                  if (lodash.get(item2,'hl.length') || lodash.get(item2,'ol.length')) {
+                    let item_arr = [];
+                    if(lodash.get(item2,'ol.length')){
+                      item_arr = [item2]
+                    } else{
+                      item_arr = item2.hl;
+                    }
                     // 遍历盘口数据
-                    item2.hl.forEach(item3 => {
+                    item_arr.forEach(item3 => {
                       if (item3) {
                         if (item3.hid) {
                           // 增加玩法信息到盘口级别
@@ -1098,11 +1176,25 @@ init(){
                   if(!lodash.get(item2,'hsw')){
                     item2.hsw = lodash.get(item,`play_obj.hpid_${item2.hpid}.hsw`);
                   }
+                  // 玩法对象补偿
+                  let play_obj_key = `hpid_${item2.hpid}`;
+                  if(!lodash.get(item,`play_obj[${play_obj_key}]`)){
+                    if(!item.play_obj){
+                      item.play_obj = {};
+                    }
+                    const obj_temp = {};
+                    for (const key in item2) {
+                      if(!['hl','ol'].includes(key)){
+                        obj_temp[key] = item2[key];
+                      }
+                    }
+                    item.play_obj[play_obj_key] = obj_temp;
+                  }
                   // 检查是否有盘口数据
-                  if (lodash.get(item2,'hl.ol.length')) {
+                  if (lodash.get(item2,'hl.ol.length')  || lodash.get(item2,'hl[0].ol.length')) {
                     // if(item2.hl.ol.forEach(item3 => {
                     if(lodash.get(item2,'hl')){
-                      let item3 = item2.hl;
+                      let item3 = lodash.get(item2,'hl[0]') || lodash.get(item2,'hl');
                       if (item3) {
                         if (item3.hid) {
                           // 增加玩法信息到盘口级别
@@ -1507,6 +1599,9 @@ init(){
             }
           } else if('array' == type2){
             item && this.assign_with(old_value[i],item);
+          }else {
+            /** #TODO:  数据没有被合并的问题 */
+            old_value[i] = new_value[i]
           }
           // console.error(i,'-old_value=item=>>>=',JSON.stringify(old_value[i]));
           // console.error(i,'-new_value=item=>>>=',JSON.stringify(item));

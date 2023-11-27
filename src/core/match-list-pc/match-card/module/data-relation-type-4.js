@@ -11,6 +11,7 @@
      * 8. 欧洲版 常规
      * 9. 欧洲版 滚球
      * 处理 ： 9 
+     * 因为首页有两个列表  所以不能用同一个表征类  需要新创建一个五大联赛的表征类
      */
     import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
     import MatchListCardData from "./match-list-card-data-class.js";
@@ -30,7 +31,7 @@
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/core/constant/index.js'
     import MenuData from "src/core/menu-pc/menu-data-class.js";
-import {get_match_template_id} from '../../match-handle-data.js'
+    import {get_match_template_id} from '../../match-handle-data.js'
   /**
    * @Description 计算所有卡片样式数据 2. 全部赛种 不区分 是否开赛  4. 列表数据类型为赛事列表   单一赛种，有未开赛 已开赛 ，不区分赛种
    * @param {Array} match_list 赛事列表
@@ -46,7 +47,9 @@ import {get_match_template_id} from '../../match-handle-data.js'
     // 卡片key 到 赛事 id 映射 对象
     let league_card_mids_arr = {}
     // 所有卡片列表
-    let match_list_card_key_arr = []
+    let match_list_card_key_arr = [];
+
+    
     // 所有卡片样式对象
     let all_card_obj = {}
 
@@ -83,7 +86,8 @@ import {get_match_template_id} from '../../match-handle-data.js'
         card_index,
       }
     }
-
+    // 将我们的列表历史存入
+    MatchListCardData.match_list_key = lodash.cloneDeep(match_list)
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
       let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
@@ -97,9 +101,8 @@ import {get_match_template_id} from '../../match-handle-data.js'
       }
       let csid_key = 'csid_'+_match.csid
       // 赛种ID到卡片key的映射
-      csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []
-
-      // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
+      csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []      
+      // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片 且不是5大联赛
       if(MatchListCardData.match_list_mapping_relation_obj_type == 9 && _match.csid != pre_match_csid){
         pre_match_csid = _match.csid
         card_key = `sport_title_${_match.csid}`
@@ -124,7 +127,6 @@ import {get_match_template_id} from '../../match-handle-data.js'
             Object.assign(all_card_obj[card_key],fold_template)
           }
         }
-
       }
       // 是否创建了一个赛事开赛状态标题卡片
       let is_create_match_status_card = false
@@ -200,12 +202,11 @@ import {get_match_template_id} from '../../match-handle-data.js'
         if(!is_ws_call){
           Object.assign(all_card_obj[card_key],fold_template)
         }
-
         // 打入联赛容器卡片
         card_index += 1
         card_key = `league_container_${cus_tid}`
         match_list_card_key_arr.push(card_key)
-        csid_to_card_key_obj[csid_key].push(card_key)
+        csid_to_card_key_obj[csid_key].push(card_key)    
 
         if(match_ms == 1){
           // 已开赛 到卡片key的 映射对象
@@ -244,7 +245,6 @@ import {get_match_template_id} from '../../match-handle-data.js'
     if(all_card_obj['no_start_title']){
       all_card_obj['no_start_title'].match_count = no_start_match_count
     }
-
      // 已开赛 到卡片key的 映射对象
      MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象
@@ -253,7 +253,7 @@ import {get_match_template_id} from '../../match-handle-data.js'
         play_to_card_key_arr,// 已开赛 到卡片key的 映射对象
         no_start_to_card_key_arr,// 未开赛 到卡片key的 映射对象
         //卡片key列表
-        match_list_card_key_arr,
+        match_list_card_key_arr: match_list_card_key_arr,
       })
     // 重新计算所有的联赛卡片样式
     for(let card_key in league_card_mids_arr){

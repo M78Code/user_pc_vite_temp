@@ -27,7 +27,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down, ouzhou_white_up } from 'src/base-h5/core/utils/local-image.js'
+import { odd_lock_ouzhou, ouzhou_hps_up, ouzhou_hps_down } from 'src/base-h5/core/utils/local-image.js'
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, compute_value_by_cur_odd_type } from "src/core/index.js"
 
 const props = defineProps({
@@ -39,23 +39,19 @@ const props = defineProps({
     type: Boolean,
     default: () => false
   },
-  csid: {
-    type: [String, Number],
-    default: () => '1'
-  },
-  match_id: {
-    type: Number,
-    default: () => 1
-  },
   // 盘口状态
   item_hs: {
     type: Number,
     default: () => 0
   },
-  // 赛事状态
-  mhs: {
-    type: Number,
-    default: () => 0
+  // 赛事信息
+  match_info: {
+    type: Object,
+    default: () => {}
+  },
+  custom_type: {
+    type: String,
+    default: () => ''
   }
 })
 
@@ -64,12 +60,14 @@ const is_down = ref(false)
 const old_ov = ref(0)
 
 const is_show_title = computed(() => {
-  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${props.csid}`, '1')
-  return hpid != 1
+   const { csid = '1' } = props.match_info
+  const hpid = lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
+  return hpid != 1 && !props.show_hpn
 })
 
 const is_active = computed(() => {
-  return MatchResponsive.active_odd.value === `${props.match_id}_${props.odd_item.oid}`
+  const { match_id = 1 } = props.match_info.id
+  return MatchResponsive.active_odd.value === `${match_id}_${props.odd_item.oid}`
 })
 
 watch(() => props.odd_item?.ov, (a,b) => {
@@ -91,31 +89,35 @@ const reset_status = () => {
 
 // 显示的赔率
 const get_odd_os = (s) => {
-  return compute_value_by_cur_odd_type(s.ov,'','',props.csid)
+  return compute_value_by_cur_odd_type(s.ov,'','',props.match_info.csid)
 }
 
 const get_item_hpn = (s) => {
-  return s.ot
+  let result = s.ot
+  if (['hots', '15_mintues'].includes(props.custom_type)) result = s.onb.substring(0,1)
+  return result
 }
 
 // 是否锁盘
 const is_lock = computed(() => {
-  return props.odd_item.os != 1 || props.item_hs == 1 || props.mhs == 1
+  const { mhs = 0 } = props.match_info
+  return props.odd_item.os != 1 || props.item_hs == 1 || mhs == 1
 })
 
 const get_icon = (type) => {
   let img_src = ''
   if (type === 'up'){
-    img_src = is_active.value ? ouzhou_white_up : ouzhou_hps_up
+    img_src = ouzhou_hps_up
   } else {
-    img_src = is_active.value ? ouzhou_white_up : ouzhou_hps_down
+    img_src = ouzhou_hps_down
   }
   return img_src
 }
 
 const set_old_submit = () => {
-  console.log(props.odd_item)
   const ol = props.odd_item
+  const { match_data_type = 'h5_list' } = props.match_info
+  console.error('sss',match_data_type)
   if (is_lock.value) return
   // MatchResponsive.set_active_odd(`${props.match_id}_${ol.oid}`)
   const {oid,_hid,_hn,_mid } = ol
@@ -133,7 +135,7 @@ const set_old_submit = () => {
     // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
     device_type: 1,  
     // 数据仓库类型
-    match_data_type: "h5_list", // h5_detail
+    match_data_type: match_data_type, // h5_detail
   }
   console.log('score-list.vue ',params)
   set_bet_obj_config(params,other)
@@ -156,26 +158,29 @@ onUnmounted(() => {
   justify-content: center;
   &.active{
     color: var(--q-gb-t-c-2);
-    background: #FF7000;
     border-radius: 2px;
-    .odd .title{
-      color: #fff;
+    .odd {
+      background: #FF7000;
+      .title{
+        color: #fff;
+      }
+      &.up{
+        background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
+        .hpn{
+          color: #1A1A1A;
+        }
+      }
+      &.down{
+        background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
+        .hpn{
+          color: #1A1A1A;
+        }
+      }
     }
     .hpn{
       position: relative;
-      top: 1px;
-    }
-    .odd.up{
+      top: 0px;
       color: #fff;
-       img {
-        transform: rotateX(0deg);
-      }
-    }
-    .odd.down{
-      color: #fff;
-      img {
-        transform: rotateX(180deg);
-      }
     }
   }
   .hpn{
@@ -195,15 +200,9 @@ onUnmounted(() => {
     }
     &.up{
       color: #FF4646;
-      img {
-        transform: rotateX(-180deg);
-      }
     }
     &.down{
       color: #17A414;
-      img {
-        transform: rotateX(-180deg);
-      }
     }
     .hps_img{
       width: 6px;

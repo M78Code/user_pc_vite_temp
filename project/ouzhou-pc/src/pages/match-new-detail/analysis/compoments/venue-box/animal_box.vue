@@ -132,6 +132,7 @@ const get_video_url = () => {
       // let live_type = this.$utils.get_media_icon_index(media_type)
       let live_type = 1;
 
+      console.log(11111,url_src)
       // 此处为最终处理后的视频url
       media_src.value =
         url_add_param(url_src, "video_type", 1) +
@@ -209,8 +210,13 @@ const get_animation_url = () => {
 .detail-loading {
   position: absolute;
   left: 50%;
-  top: 0%;
-  transform: translate(-50%, -30%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  &::v-deep{
+    .loading_box{
+      padding-top: 0;
+    }
+  }
 }
 .video-iframe {
 }

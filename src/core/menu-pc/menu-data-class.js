@@ -143,10 +143,11 @@ class MenuData {
   set_menu_current_mi(mi) {
     this.menu_current_mi = mi
     // 菜单数据缓存
-    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
     //宽度请求变化 因为请求参数是在这里触发的
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash_.trim(LayOutMain_pc.layout_content_width - 15, 'px'), this.is_scroll_ball())
     this.set_match_list_api_config()
+    
   }
 
   // 设置当前选中的赛种
@@ -170,7 +171,6 @@ class MenuData {
   set_menu_data_version() {
     clearTimeout(this._tid)
     this._tid=setTimeout(() => {
-      useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
       useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)//列表滚动到顶部
       this.menu_data_version.value = Date.now()
       nextTick(()=>{
@@ -405,7 +405,7 @@ class MenuData {
     this.set_multi_column();
     // console.error('set_left_menu_result',JSON.stringify(obj),this.menu_root)
     this.set_menu_data_version();
-    // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    // useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
   }
   /**
    * 中间菜单显示配置 默认的
@@ -463,7 +463,7 @@ class MenuData {
     set_is_collect(is_collect) {
       this.is_collect=is_collect
       if (is_collect) {
-        useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+        useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
       }
     }
   /**
@@ -571,19 +571,26 @@ class MenuData {
       return;
     }
     if (Object.keys(session_info).length) {
-      const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root } = session_info;
+      for(let item in session_info){
+        if(item != 'menu_data_version'){
+          this[item] = session_info[item]
+        }
+      }
+      // const { left_menu_result, menu_root_count, mid_menu_result ,menu_current_mi ,menu_root,current_ball_type } = session_info;
 
-      this.menu_root_count = menu_root_count;
+      // this.menu_root_count = menu_root_count;
 
-      this.set_menu_root(menu_root)
-      // 设置左侧菜单
-      this.set_left_menu_result(left_menu_result);
+      // this.set_menu_root(menu_root)
+      // // 设置左侧菜单
+      // this.set_left_menu_result(left_menu_result);
 
-      // 设置中间件
-      this.set_mid_menu_result(mid_menu_result);
+      // // 设置中间件
+      // this.set_mid_menu_result(mid_menu_result);
 
-      // 设置当前请求的菜单id
-      this.set_menu_current_mi(menu_current_mi)
+      // // 设置当前请求的菜单id
+      // this.set_menu_current_mi(menu_current_mi)
+
+      // this.set_current_ball_type(current_ball_type)
     
     }
   }
@@ -595,8 +602,6 @@ class MenuData {
   set_bet_category() {
    
   }
-
-
 
   // is_multi_column(){
   //   return   this.match_list_api_config.is_multi_column ||false
@@ -712,7 +717,7 @@ class MenuData {
     this.set_bet_category();
 
     // 菜单数据缓存
-    useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_UPDATE)
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
     nextTick(()=>{
       SessionStorage.set(menu_key,this)
     })
@@ -883,6 +888,11 @@ class MenuData {
     return this.mid_menu_result.filter_tab == 1002
   }
 
+  // 是否是 leagues
+  is_leagues() {
+    return this.mid_menu_result.filter_tab == 4002
+  }
+
   //root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
   //内部方法
   _is_cur_mi(mi, param) {
@@ -981,7 +991,14 @@ class MenuData {
   is_home(mi) {
     return this._is_cur_mi(0, mi)
   }
+  // 是不是 常规赛种下的冠军
+  is_common_kemp(mi) {
+    return this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
+  }
 
+  is_collect_kemp() {
+    return this.is_collect && this.menu_root == 400
+  }
 }
 
 export default new MenuData();

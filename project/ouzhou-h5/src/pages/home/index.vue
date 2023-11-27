@@ -8,11 +8,11 @@
       </q-tabs>
     </div>
     <!-- 主内容区 -->
-    <div class="home_content" ref="scrollAreaRef" :visible="false">
+    <div class="home_content" :visible="false">
       <q-tab-panels v-model="tabValue" animated>
         <!-- featured page -->
         <q-tab-panel name="featured">
-          <section class="section-content">
+          <section ref="container" class="section-content"  @scroll="handle_container_scroll">
             <!-- 时间赛事 -->
             <template v-if="time_events.length > 0">
               <HeaderTitle title="15 Mins"></HeaderTitle>
@@ -35,8 +35,8 @@
             </template> -->
             <!-- 5大联赛 -->
             <template v-if="five_league_match.length > 0">
-              <HeaderTitle :title="`${i18n_t('ouzhou.match.top_leagues')}`"></HeaderTitle>
-              <MatchLeagues :fiveLeagues_Matches="five_league_match"/>
+              <HeaderTitle title="Top Leagues"></HeaderTitle>
+              <MatchLeagues :five_league_match="five_league_match"/>
             </template>
           </section>
         </q-tab-panel>
@@ -50,6 +50,8 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
+    <!-- 回到顶部按钮组件 -->
+    <ScrollTop :list_scroll_top="scroll_top" @back-top="goto_top" />
   </div>
 </template>
  
@@ -66,13 +68,21 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import { api_match } from "src/api/index.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
 let message_fun = null
+let handler_func = null
+const container = ref(null)
+const scroll_top = ref(0)
 const play_matchs = ref([])
 const time_events = ref([])
+const five_league_mids = ref([])
 const featured_matches = ref([])
 const five_league_match = ref([])
 const state = reactive({
@@ -95,13 +105,51 @@ onMounted(async () => {
   get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
+  // 接口请求防抖
+  handler_func = lodash.debounce(({ cmd, data }) => {
+    handle_webscoket_cmd(cmd, data)
+  }, 1000)
+
   // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
-    console.log('wswswswswswsws-cmd:', cmd, data)
-    // get_ouzhou_home_data()
-    // get_five_league_matchs()
-  }, 1000))
+  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+    // 赛事删除
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
+      if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
+        get_ouzhou_home_data()
+        // get_ouzhou_home_hots()
+        // get_five_league_matchs()
+      }
+    } else {
+      handler_func({ cmd, data })
+    }
+  })
 })
+
+/**
+ * @description 处理 ws
+ */
+ const handle_webscoket_cmd = (cmd, data) => {
+  // console.log('wswswswswswsws-cmd:', cmd, data)
+  if (['C109', 'C104'].includes(cmd)) {
+    const { cd = [] } = data
+    if (cd.length < 1) return
+    // 欧洲版 二期  只展示 足球、篮球、网球， 球种菜单放开的同时这里也需要增加
+    const item = cd.find(t => [1,2,5].includes(+t.csid) )
+    if (item) {
+      get_ouzhou_home_data()
+      // get_ouzhou_home_hots()
+      // get_five_league_matchs()
+    }
+  }
+
+  // 调用 mids  接口
+  if (['C303', 'C114'].includes(cmd)) {
+    if (five_league_mids.value.length > 0) {
+      MatchMeta.get_match_base_hps_by_mids(five_league_mids.value.toString(), MatchDataBaseFiveLeagueH5)
+    }
+  }
+}
 
 // 设置默认数据
 const set_default_home_data = () => {
@@ -118,15 +166,22 @@ const get_ouzhou_home_data = async () => {
 const handle_ouzhou_home_data = (res) => {
   const { p15_list, dataList } = res
   // 15 分
-  if (p15_list.length > 0) time_events.value = p15_list.map(t => {
-    const match = MatchDataBasel5minsH5.get_quick_mid_obj(t.mid)
-    return match
-  })
+  if (p15_list.length > 0) {
+    const arr_p15 = p15_list.map(t => {
+      const match = MatchDataBasel5minsH5.get_quick_mid_obj(t?.mid)
+      return match
+    })
+    time_events.value = arr_p15.filter(t => t?.mid)
+  }
   // 滚球赛事
-  if (dataList.length > 0) play_matchs.value = dataList.map(t => {
-    const match = MatchDataBaseH5.get_quick_mid_obj(t.mid)
-    return match
-  })
+  if (dataList.length > 0) {
+    const arr_play_matchs = dataList.map(t => {
+      const match = MatchDataBaseH5.get_quick_mid_obj(t?.mid)
+      return match
+    })
+    play_matchs.value = arr_play_matchs.filter(t => t?.mid)
+  }
+  set_ws_active_mids()
 }
 
 // 设置默认数据
@@ -144,43 +199,89 @@ const get_ouzhou_home_hots = async () => {
 // 获取首页热门赛事
 const handle_ouzhou_home_hots = async (data) => {
   // 热门赛事
-  if (data.length > 0) featured_matches.value = data.map(t => {
-    const match = MatchDataBaseHotsH5.get_quick_mid_obj(t.mid)
-    const { home_score, away_score } = MatchUtils.get_match_score(match)
-    return {
-      ...match,
-      home_score, 
-      away_score, 
-     }
-  })
+  if (data && data.length > 0) {
+    const arr_data = data.map(t => {
+      const match = MatchDataBaseHotsH5.get_quick_mid_obj(t?.mid)
+      const { home_score, away_score } = MatchUtils.get_match_score(match)
+      return {
+        ...match,
+        home_score, 
+        away_score
+      }
+    })
+    featured_matches.value = arr_data.filter(t => t?.mid)
+    set_ws_active_mids()
+  }
 }
-
 
 /**
  * @description 获取五大联赛赛事
  */
-const get_five_league_matchs = async () => {
+ const get_five_league_matchs = async () => {
   const list = await MatchMeta.get_five_leagues_list()
-  const mids = []
-  five_league_match.value = list.map(t => {
-    mids.push(t.mid)
-    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t.mid) || t
+  if (list && list.length > 0) five_league_match.value = list.map(t => {
+    five_league_mids.value.push(t?.mid)
+    const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t?.mid) || t
     return match
   })
-  MatchMeta.get_match_base_hps_by_mids(mids.toString(), MatchDataBaseFiveLeagueH5)
+  MatchMeta.get_match_base_hps_by_mids(five_league_mids.value.toString(), MatchDataBaseFiveLeagueH5)
+  set_ws_active_mids()
 }
 
-const tabValue = ref('featured');
+/**
+ * @description 获取热门赛事
+ */
+const get_ouzhou_home_hots11 = () => {
+  const params = {
+    euid: "30199",
+    sort: 1,
+    apiType: 1,
+    orpt: -1,
+    csid:'1',
+    cuid: UserCtr.get_uid(),
+  }
+  api_match.post_fetch_match_list(params).then((res) => {
+    if (+res.code !== 200) return
+    handle_ouzhou_home_hots(res)
+    set_ws_active_mids()
+  })
+}
+
+const tabValue = ref(MenuData.home_menu || 'featured');
 // tabs 切换
 const on_update = (val) => {
+  MenuData.set_home_menu(val);
   if (val === 'featured') {
     MenuData.set_current_lv1_menu(1);
     MenuData.set_menu_mi('101');
     get_ouzhou_home_data()
   } else {
+    // 设置 元数据计算 流程
+    MatchResponsive.set_is_compute_origin(true)
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
     MatchMeta.get_top_events_match(MenuData.top_events_list?.[0]?.csid)
   }
+}
+
+/**
+ * @description 设置 ws 激活的 mids 
+ */
+const set_ws_active_mids = () => {
+  const total_matchs = [].concat(five_league_match.value, time_events.value, featured_matches.value, play_matchs.value)
+  const total_mids = lodash.uniq(total_matchs.filter(t => t.mid).map(t => t.mid))
+  const length = lodash.get(total_mids, 'length', 0)
+  length > 0 && MatchDataBaseH5.set_active_mids(total_mids)
+}
+
+const handle_container_scroll = lodash.debounce(($ev) => {
+  scroll_top.value = $ev.target.scrollTop
+}, 100)
+
+/**
+ * @description: 列表回到顶部
+ */
+const goto_top = () => {
+  container.value.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 onUnmounted(() => {
@@ -195,7 +296,9 @@ onUnmounted(() => {
 .home-page{
   height: 100%;
   overflow: hidden;
-  padding-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  // padding-bottom: 56px;
   .header_tabs{
     border-bottom: 2px solid var(--q-gb-bd-c-1);
     :deep(.q-tabs--dense){
@@ -231,26 +334,30 @@ onUnmounted(() => {
     }
   }
   .home_content{
-    height: calc(100% - 106px);
+    flex: 1;
+    height: 0;
     .q-tab-panels{
       height: 100%;
       .q-tab-panel{
         padding: 0;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
         .section-content{
-          height: calc(100% - 0px);
+          height: 100%;
           overflow-y: auto;
           position: relative;
         }
         .match-page-section{
-          height: calc(100% - 66px - 54px);
+          height: 0;
+          flex: 1;
           overflow-y: hidden;
           position: relative;
           .match-list-container{
             height: 100%;
             background-color: var(--q-gb-bg-c-2) !important;
             :deep(.scroll-wrapper){
-              background-color: var(--q-gb-bg-c-2) !important;
+              // background-color: var(--q-gb-bg-c-2) !important;
               .s-w-item{
                 background-color: var(--q-gb-bg-c-2) !important;
               }

@@ -1,12 +1,13 @@
 <template>
-  <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}{{UserCtr.user_version}}</div>
   <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
     :class="[
       ol_data.class,
       `csid${ol_data.csid}`,
       odds_lift,
       BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
-      odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) && 'can-hover'
+      odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) && 'can-hover',
+      is_scroll_ball && 'scroll-ball-bet-item'
     ]" @click.stop="bet_click_ol" :id="`list-${ol_data.oid}`">
     <!-- 盘口 -->
     <div v-if="odds_state != 'seal'" :class="[
@@ -20,22 +21,30 @@
       },
     ]">
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
-      <div class="handicap-value-text">{{ score }} <span v-show="ol_data._hpid != 1">{{ ol_data.onb }}</span></div>
+      <div class="handicap-value-text" :class="{
+        mvr:score||!['1', '32'].includes(ol_data._hpid)
+      }">{{ score }} <span v-show="!['1', '32'].includes(ol_data._hpid)">{{ ol_data.onb
+      }}</span></div>
     </div>
     <!-- 赔率 -->
     <div class="odds" :class="[odds_lift]" :style="[1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
-      +ol_data._hpid
-    ) && utils.is_iframe
-      ? 'flex:1.5'
-      : ''
+        +ol_data._hpid
+      ) && utils.is_iframe
+        ? 'flex:1.5'
+        : ''
       ">
       <div v-if="['seal'].includes(odds_state)" class="lock" :style="compute_css_obj({ key: 'pc-home-lock' })">
       </div>
       <span v-else-if="ol_data.ov">
-        {{ (ol_data.ov / 100000).toFixed(2) }}
+        <span class="odds_otb" v-if="ol_data.otb">{{ disk_text_replace(UserCtr.lang, ol_data.otb) }}</span>
+        {{ compute_value_by_cur_odd_type(
+          ol_data.ov,
+          '',
+          '',
+          ol_data.csid
+        ) }}
       </span>
       <div>
-
       </div>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
@@ -60,6 +69,7 @@ import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odd
 import { useGetItem } from "./bet_item_hooks.js";
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 import { compute_css_obj } from 'src/core/server-img/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 // 定时器对象
 let timer_obj = {};
@@ -71,31 +81,26 @@ const props = defineProps({
   active_score: {
     type: String,
     default: () => { }
+  },
+  match_data_type: {
+    type: String,
+    default: () => 'MatchDataWarehouse_PC_List_Common'
+  },
+  is_scroll_ball: {
+    type: Boolean,
+    default: () => false
   }
 });
 const is_mounted = ref(true);
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
-    let { _mhs, _hs, os } = props.ol_data||{};
-    return get_odds_state(_mhs, _hs, os);
+  let { _mhs, _hs, os } = props.ol_data || {};
+  return get_odds_state(_mhs, _hs, os);
 });
-// 赔率值
-const match_odds = ref("");
+
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
-
-
 const emit = defineEmits(['update_score'])
-
-
-
-
-
-const {
-  bet_click
-} = useGetItem({ props });
-
-
 //玩法比分
 const score = computed(() => {
   let score = "";
@@ -110,50 +115,27 @@ const score = computed(() => {
   }
   return score;
 });
-
 onMounted(() => {
   // 异步设置组件是否挂载完成
   // setTimeout(() => {
   //   is_mounted.value = true;
   // });
 });
-
 // 监听oid 取消赔率升降
 // 监听玩法ID变化 取消赔率升降 
-watch(() => [props.ol_data._hpid, props.ol_data.oid], () => {
-  clear_odds_lift()
+// 监听oid 取消赔率升降
+// 监听玩法ID变化 取消赔率升降 
+watch(() => [props.ol_data._hpid, props.ol_data.oid], (v, o) => {
+  if (v[0] != o[0] || v[1] != o[1]){ //地址可能会变  但是oid不一定
+    clear_odds_lift()
+  }
 })
-
-
 // 监听投注项赔率变化
 watch(() => props.ol_data.ov, (cur, old) => {
   if (cur == old) return
-  // 赔率值处理
-  format_odds(cur, 1);
   // 红升绿降变化
   set_odds_lift(cur, old);
 }, { deep: true })
-
-/**
- * 赔率转换
- * @param  {number} ov - 赔率值
- * @param  {number} obv - 断档赔率值
- * @return {undefined} undefined
- */
-const format_odds = () => {
-  let ov = lodash.get(props.ol_data, "ov");
-  let obv = lodash.get(props.ol_data, "obv");
-  // 列表取 hsw
-  let hsw = props.ol_data._hsw;
-  let match_odds_info = compute_value_by_cur_odd_type(
-    ov / 100000,
-    obv / 100000 || '',
-    hsw || '',
-    1
-  );
-  match_odds.value = format_odds_value(match_odds_info, props.ol_data.csid);
-};
-
 let tid;
 /**
  * 设置赔率升降
@@ -164,7 +146,12 @@ let tid;
 const set_odds_lift = (cur, old) => {
   if (!["lock", 'seal'].includes(odds_state.value) && old && !is_odds_seal()
   ) {
-    odds_lift.value = cur > old ? "up" : 'down';
+    if (cur > old) {
+      odds_lift.value = 'up'
+    }
+    else if (old > cur) {
+      odds_lift.value = 'down'
+    }
     clearTimeout(tid)
     tid = setTimeout(() => {
       odds_lift.value = "";
@@ -205,6 +192,48 @@ function bet_item_select(id) {
     return BetData.bet_list.includes(id);
   }
 };
+
+/**
+  * @Description 简化盘口文本
+  * @param {string} lang 语言
+  * @param {string} onb 盘口文本
+  * @return  {string} text 盘口文本
+ */
+const disk_text_replace = (lang, onb) => {
+  let text = ''
+  if (onb) {
+    switch (lang) {
+      case 'en':
+      case 'ad':
+      case 'ms':
+        text = onb.replace("Home", "H").replace("Away", "A").replace("Draw", "D")
+        break;
+      case 'vi':
+        text = onb.replace("Chủ", "C").replace("Khách", "K").replace("Hòa", "H")
+        break;
+      case 'th':
+        text = onb.replace("เจ้าบ้าน", "H").replace("แขก", "A").replace("วาด", "D")
+        break;
+      case 'zh':
+      case 'tw':
+        text = onb.replace("胜", "").replace("局", "").replace("勝", "")
+        break;
+      case 'ko':
+        text = onb.replace("홈팀", "H").replace("방문자", "A").replace("무승부", "D")
+        break;
+      case 'es':
+        text = onb.replace("Visitante", "V").replace("Empate", "E").replace("Inicio", "I").replace("sobre", "S").replace("debajo", "D").replace("bajo", "B")
+        break;
+      case 'pt':
+        text = onb.replace('Empate', 'EMP').replace("over", "S").replace('under', 'I')
+        break;
+      default:
+        text = onb
+        break;
+    }
+  }
+  return text
+}
 
 /**
  * @description 获得最新的盘口状态
@@ -257,7 +286,7 @@ const bet_click_ol = () => {
   } else {
     emit('update_score', current_id)
   }
-  set_bet_obj_config(params, {})
+  set_bet_obj_config(params, { match_data_type: props.match_data_type })
   BetData.set_bet_state_show(true)
 };
 
@@ -352,6 +381,16 @@ onUnmounted(() => {
   }
 }
 
+.odds_otb {
+  color: var(--q-gb-t-c-8) !important;
+}
+
+.active {
+  .odds_otb {
+    color: var(--q-gb-t-c-4) !important;
+  }
+}
+
 .null-handicap {
   .handicap-value {
     display: none;
@@ -366,6 +405,9 @@ onUnmounted(() => {
 .handicap-value-text {
   font-weight: 500;
   white-space: nowrap;
+  &.mvr{
+    margin-right: 4px;
+  }
 }
 
 .vertical {
@@ -383,5 +425,4 @@ onUnmounted(() => {
 
 .left_cell {
   text-align: left !important;
-}
-</style>
+}</style>

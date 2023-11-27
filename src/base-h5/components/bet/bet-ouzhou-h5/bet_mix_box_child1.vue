@@ -4,6 +4,7 @@
 -->
 
 <template>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{items.red_green}}{{UserCtr.user_version}} </div>
     <div class="bet-mix-show">
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
@@ -11,28 +12,26 @@
                   <span class="icon-delete nonebox4-content-left-content-xian" @click.stop="del"></span>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
-                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit">{{items.handicap?items.handicap:items.home}}</div> <span class="text-one-span">0.25</span></div>
-                      <div class="nonebox4-content-left-content-text-two">{{items.matchType == 2?'[In-play]':''}} <span class="text-two-span">{{items.playName}}</span></div>
-                      <div class="nonebox4-content-left-content-text-three">{{items.home}} v {{items.away}}</div>
+                      <div class="nonebox4-content-left-content-text-one"><div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div></div>
+                      <div class="nonebox4-content-left-content-text-two">
+                       {{items.matchType == 2? '['+i18n_t("bet.bet_inplay")+']' :''}} 
+                       <span class="text-two-span">{{items.playName}}
+                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                        </span>
+                        [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
+                      </div>
+                      <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{ items.matchType == 2? items.mark_score : ''}}</div>
                     </div>
                     <div>
                         <div class="nonebox4-content-right">
-                            
-                            <div class="nonebox4-content-right-profit">{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
+                          <div class="show_img" v-if="items.red_green" >
+                            <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_up.png`" alt=""/>
+                            <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_down.png`" alt=""/>
+                          </div>
+                          <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">@{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
                         </div>
                     </div>
-                    <!--红色箭头-->
-                      <div class="top" style="display:none">
-                        <div class="jiantou one"></div>
-                        <div class="jiantou two"></div>
-                        <div class="jiantou three"></div>
-                      </div>
-                      <!--绿色箭头-->
-                      <div class="top" style="display:none">
-                        <div class="jiantou onegreen"></div>
-                        <div class="jiantou twogreen"></div>
-                        <div class="jiantou threegreen"></div>
-                      </div>
+                    
                   </div>
               </div>
           </div>
@@ -43,7 +42,7 @@
   <script setup>
   import { compute_value_by_cur_odd_type } from "src/core/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
+  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr } from "src/core/index.js";
 
   const props = defineProps({
     items:{}
@@ -58,6 +57,12 @@
   </script>
   
   <style lang="scss" scoped>
+  .hps_img{
+    width: .08rem;
+    height: .13rem;
+    margin-top: .06rem;
+    transform: rotate(180deg);
+  }
   .jiantou{
     width: 0;
     height: 0;
@@ -105,33 +110,40 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-1);
     padding-left: 0.08rem;
   }
+  .nonebox4-content-left-content-text-one-tit {
+    :deep(.ty-span) {
+      margin-left: 4px;
+      color: var(--q-gb-bg-c-1);
+    }
+  }
   .nonebox4-content-left-content-text-three{
-    font-size: 0.13rem;
+    font-size: 0.16rem;
     color: var(--q-gb-t-c-3);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-15);
-    font-size: 0.13rem;
+    font-size: 0.16rem;
+    margin: .08rem 0;
+    font-weight: 500;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-3);
+    color: var(--q-gb-bg-c-4);
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
     color: var(--q-gb-t-c-4);
-    font-size: 0.15rem;
-    font-weight: 600;
+    font-size: 0.18rem;
+    font-weight: 500;
     display: flex;
   }
   .nonebox4-content-left-info{
     display: flex;
-    justify-content: space-between;
     width: calc(100% - 0.25rem);
   }
   .nonebox4-content{
@@ -152,11 +164,10 @@
   }
   .nonebox4-content-left-content-xian{
       color: var(--q-gb-t-c-4);
-      font-size: 0.12rem;
-      width: 0.1rem;
-      margin-right: 0.15rem;
-      margin-top: 0.06rem;
+      margin-right: 0.16rem;
+      margin-top: 0.08rem;
   }
+  
   .nonebox4-content-left-content-text{
       line-height: 0.25rem;
       margin-top: 0.02rem;
@@ -164,13 +175,28 @@
   }
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
-      font-weight: bold;
-      color: var(--q-gb-t-c-1);
+      font-weight: 700;
       padding: 0 0.15rem;
+      padding-right: 0.1rem;
+      color: var(--q-gb-t-c-1);
+      &.red-up{
+          color: var(--q-gb-t-c-17);
+      }
+      &.green-down{
+          color: var(--q-gb-t-c-16);
+      }
   }
   .nonebox4-content-right{
     display: flex;
     flex-direction: row-reverse;
+  }
+  .show_img{
+    width: 0.08rem;
+    display: flex;
+    align-items: center;
+    img{
+      width: 100%;
+    }
   }
   </style>
   

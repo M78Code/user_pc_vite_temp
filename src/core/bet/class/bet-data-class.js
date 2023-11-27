@@ -37,6 +37,8 @@ class BetData {
     this.is_bet_single = true;
     // 投注金额 h5使用
     this.bet_amount = 0;
+    // 投注记录数量
+    this.bet_record_count = 0
 
     // 是否为合并模式
     this.is_bet_merge = false;
@@ -177,6 +179,7 @@ this.bet_appoint_ball_head= null */
       x: window.innerWidth * 0.6,
       y: window.innerHeight * 0.7,
       isActive: false,
+      draggable:true,
       show: false,
     }
     // console.error('window.innerWidth',window.innerWidth);
@@ -184,12 +187,26 @@ this.bet_appoint_ball_head= null */
     // 默认展开 投注弹窗
     this.bet_state_show = true
     // ---------------------------------- H5 ------------------------------------------------------------------------------------------
+   //显示隐藏H5投注栏
+    this.bet_box_h5_show = false
+    
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = true;
+    // h5 投注栏默认隐藏
+    this.h5_bet_box_show = false
   }
 
+  set_h5_bet_box_show(val) {
+    this.h5_bet_box_show = val
+    this.set_bet_data_class_version()
+  }
 
+  set_bet_box_h5_show (value) {
+    
+    this.bet_box_h5_show = value
+    this.set_bet_data_class_version()
+  }
 
   // 通过  mount_point_key 计算 取值字段映射
   get_fields_map_by_mount_point_type(type) {
@@ -747,20 +764,17 @@ this.bet_appoint_ball_head= null */
    
     this.set_bet_data_class_version()
   }
-  
-  // 设置投注后的数据
-  set_bet_list_info(list) {
-    if(this.is_bet_single){
-      this.bet_single_list = lodash_.cloneDeep(list)
-    }else{
-      this.bet_s_list = lodash_.cloneDeep(list)
-    }
-  } 
 
   // 设置键盘信息 
   // 限额 /
   set_bet_keyboard_config(val) {
     this.bet_keyboard_config = val
+    this.set_bet_data_class_version()
+  }
+
+  // 获取投注记录数量
+  set_bet_record_count(count) {
+    this.bet_record_count = count
     this.set_bet_data_class_version()
   }
 
@@ -773,11 +787,23 @@ this.bet_appoint_ball_head= null */
   // 删除投注项
   // oid 投注项id  index 投注项下标
   set_delete_bet_info(oid,index) {
+    // 删除投注项中的数据
     if(this.is_bet_single){
-      this.bet_single_list.splice(index,1)
+      let index_ = index
+      // 有下标
+      if(index || index == 0){
+        index_ = this.bet_single_list.findIndex(item => item == oid)
+      }
+      this.bet_single_list.splice(index_,1)
     }else{
-      this.bet_s_list.splice(index,1)
+      let index_ = index
+      // 有下标
+      if(index || index == 0){
+        index_ = this.bet_s_list.findIndex(item => item == oid)
+      }
+      this.bet_s_list.splice(index_,1)
     }
+    
     // 获取oid在投注项id集合中的位置
     let index_ = this.bet_oid_list.findIndex(item => item == oid)
     if(index_ != -1){
@@ -796,6 +822,7 @@ this.bet_appoint_ball_head= null */
     let mid_list = []
     // 投注项盘口id
     let market_list = []
+    let time_out = null
     // 单关 切 有投注项
     if(this.is_bet_single && this.bet_single_list.length){
       // 获取单关下的赛事id 多个（单关合并）
@@ -815,7 +842,7 @@ this.bet_appoint_ball_head= null */
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
             if(ws_ol_obj.ov){
-              let time_out = null
+              clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
               //  红升绿降
@@ -823,13 +850,18 @@ this.bet_appoint_ball_head= null */
               if(ol_obj.odds > ws_ol_obj.ov ){
                 ol_obj.red_green = 'green_down'
               }
+
+              // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
+              if(ol_obj.odds == ws_ol_obj.ov ){
+                return
+              }
+             
               // 重新设置赔率
               ol_obj.odds = ws_ol_obj.ov*1
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, '', '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
 
-              clearTimeout(time_out)
               // 5秒后清除 红升绿降
               time_out = setTimeout(()=>{
                 ol_obj.red_green = ''
@@ -838,6 +870,26 @@ this.bet_appoint_ball_head= null */
             }
           }
         })
+      }
+    }
+  }
+
+  set_bet_c201_change( obj={} ) {
+    // 订单id
+    let order_no = lodash_.get(obj,'orderNo')
+    // 订单状态 订单状态(1:投注成功 2:投注失败)
+    let status = lodash_.get(obj,'status', 0)
+    console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
+    // 订单已经完成 不需要去设置 用户点击了 保留选项 或者投注的确定
+    if(!BetViewDataClass.is_finally){
+      // 单关 单注 简单 粗暴 其他的后面做
+      if(status == 1){
+        BetViewDataClass.set_bet_before_message({code:200,message:"投注成功"})
+        BetViewDataClass.set_bet_order_status(3)
+      }
+      if(status == 2){
+        BetViewDataClass.set_bet_before_message({code:'0402018',message:"投注失败"})
+        BetViewDataClass.set_bet_order_status(4)
       }
     }
   }

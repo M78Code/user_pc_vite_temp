@@ -13,7 +13,8 @@
         <!-- 头部 -->
         <header class="header">
           <div class="row items-center justify-between top_tit">
-            <p>personal</p>
+            <!-- <p>{{ i18n_t('ouzhou.set.personal') }}</p> -->
+            <p></p>
             <p>
               <img
                 :src="compute_local_project_file_path('/image/svg/close.svg')"
@@ -29,12 +30,12 @@
               v-for="item in list_data"
               :key="item.id"
               @click="active_change(item.id)"
-            >{{item.name}}</p>
+            >{{ i18n_t(`ouzhou.set.${item.i18filed}`)}}</p>
           </div>
           <q-card></q-card>
         </header>
         <!-- 内容 -->
-        <section>
+        <section class="secondary_content">
           <q-tab-panels v-model="LayOutMain_pc.layout_secondary_active" animated>
           <!-- 公告 -->
             <q-tab-panel name="announcement">
@@ -63,12 +64,13 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import rule from "src/base-pc/components/rule/index.vue";
 import announce from "src/base-pc/components/announce/index.vue";
 import matchResults from "src/base-pc/components/results/match-results.vue";
+import { i18n_t } from "src/boot/i18n.js"
 
 //数据列表
 const list_data = reactive([
-  { id: "announcement", name: "Announcement" },
-  { id: "results", name: "Results" },
-  { id: "sportsrules", name: "Sports rules" }
+  { id: "announcement", name: "Announcement", i18filed: 'announcement' },
+  { id: "results", name: "Results", i18filed: 'results' },
+  { id: "sportsrules", name: "Sports rules", i18filed: 'sport_rules' }
 ]);
 /**
  * @description: 改变激活的数据
@@ -89,13 +91,20 @@ function close_page(value) {
 }
 </script>
 <style lang="scss">
-.secondary_module .q-dialog__inner .dialog_content {
-  min-width: 1200px !important;
+//.q-dialog__inner .dialog_content
+.dialog_content{
+  padding-left: 320px;
+}
+.secondary_module  {
+  max-width: 1200px !important;
   background: var(--q-gb-t-c-1);
+  margin-left: 200px;
+  z-index: 9999 !important;
   .header {
     padding: 10px;
-    width: 100%;
+    width: 1200px;
     height: 80px;
+    border-bottom: 1px solid #ff7000;
     background: url($SCSSPROJECTPATH+"/image/png/secondary_bg.png") no-repeat
       center / cover;
     .top_tit {
@@ -112,26 +121,20 @@ function close_page(value) {
       .active {
         -color: var(--q-gb-t-c-2);
         color: #ff7000;
-        position: relative;
-        &::before {
-          content: "";
-          position: absolute;
-          display: inline-block;
-          width: 40px;
-          height: 2px;
-          -background: var(--q-gb-bg-c-1);
-          background: #ff7000;
-          bottom: -8px;
-          left: 0;
-        }
+        border-bottom:2px solid #ff7000;
       }
     }
   }
+  .q-tab-panels{
+  height: 100% !important;
+}
   .q-tab-panel{
     padding: 0 !important;
 }
+    .secondary_content{
+      height:calc(100% - 80px);
+      width: 1200px;
+    }
 }
-::v-deep.q-tab-panel{
-  padding: 0 ;
-}
+
 </style>

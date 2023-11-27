@@ -382,6 +382,13 @@ export const EMIT_SHOW_SELECT= 'EMIT_SHOW_SELECT'
 
 /**   赛事详情更新   */
 export const EMIT_SHOW_DETAILS= 'EMIT_SHOW_DETAILS'
+
+/**   赛事详情更新一键收起   */
+export const EMIT_SHOW_FOLD= 'EMIT_SHOW_FOLD'
+
+/**   赛事详情更新一键置顶   */
+export const EMIT_SET_PLAT_TOP= 'EMIT_SET_PLAT_TOP'
+
 // WS驱动详情
 export const EMIT_DATAWARE_DETAIL_UPDATE = "EMIT_DATAWARE_DETAIL_UPDATE"
 
@@ -418,3 +425,6 @@ export const EMIT_SET_SEARCH_CHANGE_WIDTH  = 'EMIT_SET_SEARCH_CHANGE_WIDTH'
 export const EMIT_SET_HOME_MATCHES = "EMIT_SET_HOME_MATCHES"
 // 用于C106投注项红绿升级
 export const EMIT_SET_BET_WS_C106_CHANGE = "EMIT_SET_BET_WS_C106_CHANGE"
+
+// 菜单数量变更
+export const EMIT_SET_BESE_MENU_COUNT_CHANGE = "EMIT_SET_BESE_MENU_COUNT_CHANGE"

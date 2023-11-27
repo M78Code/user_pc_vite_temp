@@ -24,7 +24,7 @@
  *
  */
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME } from 'src/core/index.js'
+import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME, time_conversion } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -183,33 +183,85 @@ const compute_style_template_by_matchinfo_template7_lanqiu = (
  * @Description 计算冠军模板赛事高度
  * @param {object} match 赛事
  **/
-const compute_style_template_by_matchinfo_template18 = (match) => {
-	let template_id = MenuData.get_match_tpl_number()
-	// let cur_match = MatchListData.list_to_obj.hl_obj[`${match.mid}_${}`] || {
-	// 	main_handicap_list: [],
-	// };
-	// console.log('cur_match', MatchListData.list_to_obj);
+const compute_style_template_by_matchinfo_template18 = (match, template_id) => {
+	let cur_match = MatchListData.get_quick_mid_obj(match.mid) || {
+		main_handicap_list: [],
+	};
+	let main_handicap_list = []
+	// 遍历主盘口数据
+    lodash.each(cur_match.hpsData, (hpsData) => {
+      lodash.each(hpsData.hps, (item) => {
+        let hl_obj = lodash.get(item, "hl", {});
 
+        if (hl_obj.hid) {
+          hl_obj.end_time = time_conversion(hl_obj.hmed);
+          hl_obj.hpn = lodash.get(cur_match.play_obj, `hid_${hl_obj.hid}.hpn`, "");
+          main_handicap_list.push(hl_obj);
+        }
+      });
+    });
 	// 附加盘口高度
 	let add_handicap_height = 0;
-	// 当前赛事赛事模板
-	let current_match_tpl = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`][`template_${template_id}`]
 	// 投注项数量
 	let ol_count = 0;
-	current_match_tpl.main_handicap_list.forEach((hl_data) => {
-		// if (hl_data._hpid ) {
+	main_handicap_list.forEach((hl_data) => {
+		if (hl_data.hpid ) {
 			// 盘口标题高度
 			add_handicap_height += 32;
 			// 计算投注项数量
 			ol_count = 0;
-			hl_data.ols.forEach((ol) => {
-				// if (ol.os != 3 && ol.oid) {
+			hl_data.ol.forEach((ol) => {
+				if (ol.os != 3 && ol.oid) {
 					ol_count++;
-				// }
+				}
 			});
 			// 累加投注项高度
 			add_handicap_height = add_handicap_height + Math.ceil(ol_count / 2) * 35;
-		// }
+		}
+	});
+	Object.assign(match, main_handicap_list)
+	return { add_handicap_height };
+};
+
+/**
+ * @Description 计算冠军模板赛事高度
+ * @param {object} match 赛事
+ **/
+const compute_style_template_by_matchinfo_template118 = (match, template_id) => {
+	let cur_match = MatchListData.get_quick_mid_obj(match.mid) || {
+		main_handicap_list: [],
+	};
+	let main_handicap_list = []
+	// 遍历主盘口数据
+    lodash.each(cur_match.hpsData, (hpsData) => {
+      lodash.each(hpsData.hps, (item) => {
+        let hl_obj = lodash.get(item, "hl", {});
+
+        if (hl_obj.hid) {
+          hl_obj.end_time = time_conversion(hl_obj.hmed);
+          hl_obj.hpn = lodash.get(cur_match.play_obj, `hid_${hl_obj.hid}.hpn`, "");
+          main_handicap_list.push(hl_obj);
+        }
+      });
+    });
+	// 附加盘口高度
+	let add_handicap_height = 0;
+	// 投注项数量
+	let ol_count = 0;
+	main_handicap_list.forEach((hl_data) => {
+		if (hl_data.hpid ) {
+			// 盘口标题高度
+			add_handicap_height += 36;
+			// 计算投注项数量
+			ol_count = 0;
+			hl_data.ol.forEach((ol) => {
+				if (ol.os != 3 && ol.oid) {
+					ol_count++;
+				}
+			});
+			// 累加投注项高度
+			add_handicap_height = add_handicap_height + Math.ceil(ol_count / 2) * 46;
+		}
 	});
 	return { add_handicap_height };
 };
@@ -328,12 +380,12 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	}
 	// 18号模板 冠军
 	else if (template_id == 18) {
-		let obj = compute_style_template_by_matchinfo_template18(match);
+		let obj = compute_style_template_by_matchinfo_template18(match, template_id);
 		Object.assign(style_obj, obj);
 	}
 	// 欧洲版冠军模板计算
 	else if (template_id == 118) {
-		let obj = compute_style_template_by_matchinfo_template18(match);
+		let obj = compute_style_template_by_matchinfo_template118(match, template_id);
 		Object.assign(style_obj, obj);
 	}
 
@@ -354,7 +406,15 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 		style_obj.tab_play_total_height +
 		6;
 	if (PROJECT_NAME == 'ouzhou-pc') {
-		style_obj.total_height = 80;
+		if (template_id == 118) {
+			style_obj.total_height =
+			style_obj.main_handicap_height +
+			style_obj.cur_handicap_height +
+			style_obj.add_handicap_height +
+			style_obj.tab_play_total_height
+		} else {
+			style_obj.total_height = 80;		
+		}
 	}
 	return style_obj;
 };

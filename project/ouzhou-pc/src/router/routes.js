@@ -65,6 +65,14 @@ const routes = [
         }
       },
       {
+        path: "/league/:sportId/:tid/:type",
+        name: "league",
+        component: () => import('../pages/league/index.vue'),
+        meta: {
+          keepAlive: true, // 需要缓存
+        }
+      },
+      {
         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
         name: "video",
         component: () => import("../pages/video/video.vue")
@@ -106,6 +114,11 @@ const routes = [
     path: "/rule",
     name: "rule",
     component: () => import("../pages/rule/index.vue"),
+  },
+  {
+    path: "/secondary",
+    name: "secondary",
+    component: () => import("../pages/secondary/index.vue"),
   },
   // // 每日成长任务
   // {

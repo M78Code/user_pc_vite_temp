@@ -17,7 +17,7 @@ export const post_search_match = (params, config = {}, url = "/v1/hotSearch/sear
 };
 
 // 列表滚球
-export const post_fetch_match_list = (params, config = {},url="/v1/w/structureLiveMatches") => {
+export const post_fetch_match_list = (params, config = {},url="/v1/w/structureLiveMatchesPB") => {
   return http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_list'});
 };
 
@@ -109,6 +109,8 @@ export const get_ranking_by_league_id = (params, config = {}, url="/v1/tournamen
   return http.get(`${prefix}${url}`, params);
 };
 
+//获取联赛数量统计
+export const get_leagues_list_match = (params, config={}, url = "/yewu11/v3/european/matchesByTidPB") => http.post(url, params);
  
 
 //电竞右侧5场赛事列表

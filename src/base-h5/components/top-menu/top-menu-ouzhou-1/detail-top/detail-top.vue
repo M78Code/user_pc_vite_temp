@@ -1,14 +1,7 @@
-<!--
- * @Author: rise
- * @Date: 2023-11-02 16:27:18
- * @LastEditors: lowen pmtylowen@itcom888.com
- * @LastEditTime: 2023-11-07 21:15:43
- * @Description:  
--->
 <template>
-  <div class="detail-top-info">
+  <div class="component detail-top-info detail-top">
     <div class="sport-info" @click="toHome">
-      <span>{{ BaseData.menus_i18n_map[MenuData.menu_mi.value] }}</span>
+      <span>{{ getCsna}}</span>
       <img class="bakc-icon" src="../img/back.png" alt="" />
     </div>
     <div class="detail-select" v-if="drop_down_list.length">
@@ -34,15 +27,15 @@
       </div>
 
     </div>
-    <div class="refresh" @click="refresh">
-      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""
-        :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']" />
+    <div class="refresh" @click.capture>
+      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""  @touchend="refreshAll"
+       :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch,computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/index";
 import { MatchDataWarehouse_H5_Detail_Common,MatchDataWarehouse_H5_List_Common } from 'src/core/index'
@@ -58,6 +51,9 @@ const detail_top_pop = ref(null);
 
 getDropDownList()
 
+const getCsna = computed(()=>{
+  return MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route?.params?.mid)?.csna
+})
 /** @type {Ref<Array<TYPES.MatchDetail>>} 下拉列表 */
 const drop_down_list = ref([]);
 /** 获取下拉列表 */
@@ -83,6 +79,7 @@ function getDropDownList() {
 
 /** 返回上一页 */
 const toHome = () => {
+    console.log(router,"asdfasdf")
   router.go(-1);
 };
 watch(() => detail_top_pop.value,
@@ -108,14 +105,14 @@ function change_active(item, index) {
   */
   const params = { mid: item.mid, csid: item.csid, tid:item.tid }
   router.replace({ name: 'category', params});
-  refresh(params)
+  refreshAll(params)
 }
 /**
  * @description: 刷新
  * @param {{ mid: string, csid: string, tid: string }} params
  * @return {*}
  */
-const refresh = (params) => {
+const refreshAll = (params) => {
   if(params instanceof Event){
     params = route.params
   }
@@ -154,7 +151,7 @@ const refresh = (params) => {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      width: 80%;
+      max-width: 80%;
       display: inline-block;
       height: 100%;
       line-height: 100%;
@@ -176,14 +173,20 @@ const refresh = (params) => {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    flex: 1;
+    width: 0;
     // flex: 1;
     .detail-select-nav {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
       margin: 0 auto;
+      flex: 1;
+      width: 0;
 
       .btn-label {
         // height: 45px;
         // line-height: 45px;
-        max-width: 200px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -193,10 +196,9 @@ const refresh = (params) => {
       .label {
         padding: 0;
         color: #fff;
-        display: inline-block;
+        // display: inline-block; //杜绝 inline-block
         height: 45px;
         line-height: 45px;
-        max-width: 200px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

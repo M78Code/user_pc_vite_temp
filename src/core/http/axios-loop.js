@@ -63,7 +63,7 @@ export default async function axios_api_loop(opts = {}) {
         }, timers);
       }
     } else {
-      fun_then && fun_then(res.data,res);
+      fun_then && fun_then(res);
     }
   } catch (e) {
     console.log("axios_loop test catch", e);

@@ -28,16 +28,16 @@ export const get_tournament_list = (params, config, url = "/v1/m/tournamentMatch
 };
 //赛事列表接口
 export const post_match_full_list = (params) => {
-  let url = "/v1/m/matches"
+  let url = "/v1/m/matchesPB"
   if(params.query){
     url += params.query;
   }
   // const queryParams = {"cuid":"508169450736300035","euid":"40003,40004,40006,40007,40008,40009,40012,40010,40015,40016,40017,40020,40021,40022,40011,40013","type":1,"sort":2,"device":"v2_h5_st","hpsFlag":0}
-  return http.post(`${prefix_job}${url}`, { ...params }, {axios_debounce_cache_key:'post_match_full_list',type:2});
+  return http.post(`${prefix_job}${url}`, { ...params }, {axios_debounce_cache_key:'post_match_full_listPB',type:2});
 };
 
 // 收藏列表 2739 需求 
-export const get_new_collect_matches = (params,config,url="/v1/w/collectMatches") => {
+export const get_new_collect_matches = (params,config,url="/v1/w/collectMatchesPB") => {
   return http.post(`${prefix}${url}`, params, config);
 };
 
@@ -72,10 +72,10 @@ export const get_match_result_api = (params, config, url = "/v1/m/matcheResult")
 };
 
 //根据赛事id获取赛事列表
-export const get_match_base_info_by_mids = (params, config, url = "/v1/m/getMatchBaseInfoByMids") => http.post(`${prefix_job}${url}`, params, {axios_debounce_cache_key:'get_match_base_info_by_mids',type:2});
+export const get_match_base_info_by_mids = (params, config, url = "/v1/m/getMatchBaseInfoByMidsPB") => http.post(`${prefix_job}${url}`, params, {axios_debounce_cache_key:'get_match_base_info_by_mids',type:2});
 
 //根据赛事id获取电竞赛事详情列表
-export const get_esports_match_by_mids = (params, config, url = "/v1/m/esportsMatchInfoByMids") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_esports_match_by_mids', type: 2});
+export const get_esports_match_by_mids = (params, config, url = "/v1/m/esportsMatchInfoByMidsPB") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_esports_match_by_mids', type: 2});
 
 // 更新菜单数量
 export const get_menu_match_total = (params, config, url="/v1/m/menu/queryNum") => {
@@ -165,7 +165,10 @@ export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url
 
 // 赛事详情页面接口（christion）
 export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
-// 赛果详情页面接口（christion）
+/** 
+ * 赛果详情页面接口（christion）
+ * @returns {Promise<API.MatchDetails>}
+ */
 export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
 
 // 电竞赛事详情页面接口（start）

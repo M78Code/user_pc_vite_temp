@@ -1,6 +1,7 @@
 
   
 <template>
+
 <div>
   <div class="top-menu-content">
         <!-- 体育 -->
@@ -12,6 +13,7 @@
           use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
+      <q-separator class="divider" color="#F2F5F8" inset />
     <div class="search-header">
     <div class="wrap-select">
       
@@ -40,10 +42,11 @@
             <q-icon name="icon-calendar"></q-icon>
           </div>
           <div class="date-picker-wrap relative-position">
+          <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <q-date
               v-icon="{
-                chevron_left: 'icon-arrow-left',
-                chevron_right: 'icon-arrow-right',
+                'chevron_left': 'icon-arrow-left',
+                'chevron_right': 'icon-arrow-right',
               }"
               class="q_data"
               v-model="date"
@@ -52,7 +55,7 @@
               range
               v-if="startTimeShow"
               minimal
-              :locale="locale"
+              :locale="locales"
             />
           </div>
         </div>
@@ -69,10 +72,10 @@
             :sport_id="sport_id"
             popWidth="170"
             @select_submit="select_submit"
-            @ipt_search="ipt_search(arguments)"
+            @ipt_search="ipt_search"
             @search_hot="search_hot"
             @confirm="isSelectConfirm"
-            :hideSelect="cancel"
+            :cancel="cancel"
             :isTimeChanged="timeChanged"
           ></select-y>
         </div>
@@ -113,12 +116,11 @@
           </div> -->
         </div>
       </div>
-      <div class="match-resultstips-wrap">
+      <div class="flex items-center">
+        <div>
         <!-- 提示语 -->
-        <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
-          <template>
+          <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
             <div>{{ i18n_t("results.tips") }}</div>
-          </template>
         </q-tooltip>
         <div
           class="match-resultstips-icon relative-position"
@@ -127,24 +129,28 @@
         >
           <span class="cursor-pointer"></span>
         </div>
-        <!-- 搜索 -->
-        <div class="search-btn" @click="refresh()">
-          {{ i18n_t("results.search") }}
-        </div>
       </div>
+      <!-- 搜索 -->
+      <div class="search-btn" @click="refresh()">
+          {{ i18n_t("results.search") }}
+      </div>
+      </div>
+      
     </div>
   </div>
+</div>
 
-  </div>
+
 </template>
 <script setup>
-import {  ref,computed,onMounted } from 'vue';
+import {  ref,computed,onMounted, reactive,watch } from 'vue';
 import {SelectWrapper} from "src/base-pc/components/match-results/select/index.js";
 import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
-
+import { LayOutMain_pc } from "src/core/index.js";
+import { GlobalSwitchClass} from "src/core/index";
 import {
   i18n_t,
   useMittEmit,
@@ -154,8 +160,14 @@ import {
 import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
+  current_sport_id:{
+    type: String
+  },
+  timeChanged:{
+    type: Boolean
+  },
   cancel:{
-    type:String
+    type:null
   },
   dateValue:{
     type:Object
@@ -195,6 +207,15 @@ const props = defineProps({
   isSelectConfirm:{
     type: Function,
   },
+  click_popup:{
+    type: Function,
+  },
+  img_mouseleave:{
+    type: Function,
+  },
+  search_hot:{
+    type: Function,
+  },
   startTimeShow:{
     type: Boolean,
     default:false
@@ -203,8 +224,7 @@ const props = defineProps({
     default:null // 日期选择框内计算后的日期
   },
   api_league_type:{
-    type:Array,
-    default:()=>[]
+    type:Array
   },
   pournament_params:{
     type:Object
@@ -212,20 +232,64 @@ const props = defineProps({
   sport_id:{
     type:String
   },
-  locale:{
-    type:String
-  },
+
 });
+// 全局点击事件
+  watch(
+    () => GlobalSwitchClass.global_switch_version.version,
+    (new_) => {
+     props.hideSelect()
+     console.log('api_league_typeapi_league_typeapi_league_type',props.api_league_type)
+    },
+    {deep:true, immediate: true }
+  );
   const show_play_back=   computed(()=>{
   return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
 })
-const confirmDate=()=>{
-  props.dateValue.value = date.value
-  useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
-  console.log('6327623767623')
-}
+const locales = {
+        days: i18n_t('time.time_date_week'),
+        daysShort: i18n_t('time.time_date_week'),
+        months: [
+        i18n_t('time.month_1'),
+        i18n_t('time.month_2'),
+          i18n_t('time.month_3'),
+          i18n_t('time.month_4'),
+          i18n_t('time.month_5'),
+          i18n_t('time.month_6'),
+          i18n_t('time.month_7'),
+          i18n_t('time.month_8'),
+          i18n_t('time.month_9'),
+          i18n_t('time.month_10'),
+          i18n_t('time.month_11'),
+          i18n_t('time.month_12')
+        ],
+        monthsShort: [
+          i18n_t('time.month_1'),
+          i18n_t('time.month_2'),
+          i18n_t('time.month_3'),
+          i18n_t('time.month_4'),
+          i18n_t('time.month_5'),
+          i18n_t('time.month_6'),
+          i18n_t('time.month_7'),
+          i18n_t('time.month_8'),
+          i18n_t('time.month_9'),
+          i18n_t('time.month_10'),
+          i18n_t('time.month_11'),
+          i18n_t('time.month_12')
+        ],
+        // 每周的第一天
+        firstDayOfWeek: 7,
+      }
 const  date = ref(props.dateValue)
 const  showBtn = ref(props.is_show)
+/**
+* @description: 时间选择确认
+* @return {}
+*/
+const confirmDate=()=>{
+  useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
+  props.hideSelect(date.value)
+}
 
 /**
 * @description: 
@@ -236,31 +300,40 @@ function refresh() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
+
 @import "./result-header.scss";
 .top-menu-content {
-    height: 50px;
+    height: 40px;
     border-top: 1px solid var(--q-announce-left-menu-color-2);
     background: var(--q-gb-bg-c-11);
     color: var(--q-gb-t-c-6);
     &:after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 14px;
-        top: 111px;
-        right: 0;
-        background-color: var(--q-gb-bd-c-2);
+        -content: "";
+        -position: absolute;
+        -width: 100%;
+        -height: 14px;
+        -top: 111px;
+        -right: 0;
+        -background-color: var(--q-gb-bd-c-2);
     }
     ::v-deep .q-tab__indicator{
             display: none;
         }
   };
 /* ************** 筛选条件 *************** -S */
+.divider{
+  display: inline-block;
+  -width: 100%;
+  height: 6px;
+  margin: 0;
+}
 .search-header {
   display: flex;
   align-items: center;
   padding: 28px 20px 14px 20px;
+  border-bottom:1px solid #ff7000;
+  
 
   /* ************** select *************** -S */
   .wrap-select {
@@ -365,9 +438,18 @@ function refresh() {
         height: 100%;
         border-radius: 2px;
         cursor: pointer;
-
         & :deep(.icon-calendar) {
           font-size: 14px;
+        }
+        &:hover {
+          // border: 1px solid var(--q-gb-bd-c-1);
+          border: 1px solid #ff7000;
+          // color: var(--q-gb-t-c-18);
+          .icon-calendar {
+            &:before {
+              // color: var(--q-gb-t-c-18)
+            }
+          }
         }
       }
 
@@ -375,21 +457,17 @@ function refresh() {
         :deep(.q-date) {
           .q-icon {
             font-size: 12px;
-
             &::before {
               color: var(--qq--yb-text-color3);
             }
           }
         }
-
         .q-date {
           position: relative;
           z-index: 2;
-
           :deep(.q-date__calendar-item > div) {
             width: auto;
           }
-
           /*  星期X 字体颜色正常显示 */
           :deep(.q-date__calendar-weekdays > div) {
             opacity: 1;
@@ -488,6 +566,9 @@ function refresh() {
       cursor: pointer;
       background: #ff7000;
       color:#ffffff;
+      // &:hover {
+      //     background: #ffb001;
+      //   }
     }
   }
 
@@ -496,4 +577,10 @@ function refresh() {
 :deep(.q-date__view){
 background: #ffffff;
 }
+.q_data{
+  :deep(.material-icons){  
+    line-height: 12px !important;
+  }
+}
+
 </style>

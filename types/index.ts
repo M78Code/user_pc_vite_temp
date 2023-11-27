@@ -38,10 +38,14 @@ declare namespace TYPES {
     mearlys: number,
     mft: number,
   }
+  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid {
+    hv:any,
+    ol:T[]
+  }
 
-  /** ol 赔率? */ interface Ol extends K.ot, K.ov, K.oid, K.obv, K.os {
-    /**  */
-
+  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os {
+  }
+  /** Ol投注项 结果 */ interface OlResult extends K.ot,K.oid,K.on,K.result,K.ott,K.otd {
   }
 
   /** 非足球活力值排名 */ interface Rank {
@@ -52,12 +56,10 @@ declare namespace TYPES {
     /** 综合评分 */ star: String
   }
 
-  /** hl 盘口? */ interface Hl extends K.mid, K.t {
+  /** hl 盘口? */ interface Hl extends K.mid, K.t, K.hpid,K.hs {
     /** 盘口ID */ hid: string,
     /** ? */ hmt: number,
     /** ? */ hn: number,
-    /** ? */ hpid: string,
-    /** ? */ hs: number,
     /** 赔率集合? 投注项集合? */ ol: Array<Ol>
   }
 
@@ -72,6 +74,8 @@ declare namespace TYPES {
       /** 时间戳 */ time: string
     }
   }
+  type OlResultArray =  ['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half']
+  type OlResultState= OlResultArray[K.result[keyof K.result]]
 }
 
 /** 属性字段复用注释 */
@@ -111,7 +115,7 @@ declare namespace K {
     /** 投注项id */ oid: any
   };
   /** 投注项状态 */ type os = {
-    /** 投注项状态 */ os: number
+    /** 投注项状态:0开,1封,3隐藏 */ os: number
   };
   /** 赔率 */ type ov = {
     /** 赔率 */ ov: string
@@ -120,8 +124,17 @@ declare namespace K {
     /** 断档赔率 */ obv: string
   };
 
-  /** 投注項类型 */ type ot = {
-    /** 投注項类型 */ ot: string
+  /** 投注項类型? */ type ot = {
+    /** 投注項类型? */ ot: string
+  };
+  /** 投注项的name? */ type on = {
+    /** 投注项的name? */ on: string,
+  };
+    /** 投注项列ID? */ type otd = {
+    /** 投注项列ID? */ otd: string
+  };
+  /** 投注项头名称 */ type ott = {
+    /** 投注项头名称 */ ott: string
   };
   /** 玩法名称 */ type hpn = {
     /** 玩法名称 */ hpn: string
@@ -149,7 +162,8 @@ declare namespace K {
     /** 是否支持赛前盘 */ mp: number
   };
   /** 赛事状态 */ type ms = {
-    /** 赛事状态 */ ms: number
+    /** 赛事状态 0:未开赛 1:赛事进行中  2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 
+     * 9:延期 10:比赛中断 110:即将开赛 */ ms: number
   };
   /** 最近5场的比分 */ type msc = {
     /** 最近5场的比分 */ msc: Array<String>
@@ -172,4 +186,27 @@ declare namespace K {
   /** 第三方赛事id */ type srid = {
     /** 第三方赛事id */ srid: String
   };
+  /** 玩法ID */ type hpid = {
+    /** 玩法ID */ hpid: string
+  };
+  /** 玩法模板 */ type hpt = {
+    /** 玩法模板 */ hpt: number
+  };
+  /** 盘口状态 */ type hs = {
+    /** 盘口状态:0开,1封,2关,11锁 */ hs: number,
+  };
+  /** 用户ID */ type cuid = {
+    /** 用户ID */ cuid: number,
+  };
+  /** 投注项结果:0?,1?,2走水,3输,4赢,5赢半,6输半 */ type result = {
+    /** 投注项结果:0?,1?,2走水,3输,4赢,5赢半,6输半 */ result: 0|1|2|3|4|5|6,
+  };
+
+  /** 盘口ID? */ type hid = {
+    /** 盘口ID? */ hid: number,
+  };
 }
+
+/** annotation */ type template = {
+    /** annotation */ template: number,
+  };

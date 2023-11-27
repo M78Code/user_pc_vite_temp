@@ -1,5 +1,6 @@
 
 import lodash from 'lodash'
+import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES, UserCtr } from  "src/core"
@@ -8,7 +9,7 @@ import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
-import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/core/index.js"
 import { format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
@@ -23,7 +24,7 @@ import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/
 // i: 每个组件的 props 赛事下标， 来源 === 组件
 // match_of_list: 每个组件的 props 赛事对象， 来源 === 组件
 
-export default {
+export default defineComponent({
   data () {
     return {
       timer_super11: null,
@@ -246,6 +247,8 @@ export default {
       }
     },
     'match_of_list.msc': {
+      immediate: true,
+      deep: true,
       handler () {
         this.score_value();
         this.mmp_map_title = matchListClass.match_period_map(this.match_of_list);
@@ -336,17 +339,17 @@ export default {
       }).then(res => {
         if (+res.code !== 200) return
       })
+      //先执行删除收藏 再执行删除收藏页数据
+      MatchCollect.handle_league_collect_state(tid)
       // 收藏页手动处理数据
       MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 1)
-      MatchCollect.handle_league_collect_state(tid)
-      
     },
 
     /**
      * @description: 设置 赛事收藏与否
      */
     async handle_match_collect () {
-      const { mid } = this.match_of_list
+      const { mid,tid } = this.match_of_list
       const match_state = MatchCollect.get_match_collect_state(this.match_of_list)
       api_common.add_or_cancel_match({
         mid,
@@ -367,8 +370,8 @@ export default {
       const { csid, is_virtual = false, start_flag = '', warehouse_type = '' }  = this.match_of_list
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
-      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2 })
-      MatchMeta.get_match_base_hps_by_mids()
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids()
     },
     /**
      * @description 联赛折叠
@@ -379,8 +382,8 @@ export default {
       if (is_hot.value || is_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
-      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2 })
-      MatchMeta.get_match_base_hps_by_mids()
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids()
     },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器
@@ -756,9 +759,13 @@ export default {
         this.away_yellow_score = 0;
         return;
       }
-
+      
       // 比分处理
-      const { home_score, away_score } = MatchUtils.get_match_score(this.match_of_list)
+      // 修改 msc_obj 
+      const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list.msc, true)
+      
+      // 比分处理
+      const { home_score, away_score } = MatchUtils.get_match_score({ ...this.match_of_list, msc_obj })
 
       this.home_score = home_score
       this.away_score = away_score
@@ -927,7 +934,20 @@ export default {
           this.$router.push({ name: 'category_loading', params: { mid: item.mid } });
         }
         else {
-          this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
+          MatchDetailCalss.set_match_details_params( {
+            mid:item.mid,
+            tid:item.tid, // 联赛 id
+            sportId:item.csid, //球类id
+            media_type:"auto", // 直播类型
+            time: Date.now()
+          })
+          let params= { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid }
+          // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
+          let name = 'category' //赛事详情
+          if(item.ms==4){
+            name = 'result'
+          }
+          this.$router.push({name,params})
         }
       }
     },
@@ -954,4 +974,4 @@ export default {
   destroyed() {
     this.clear_timer()
   }
-}
+})

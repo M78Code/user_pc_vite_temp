@@ -13,7 +13,7 @@
       <span>{{ i18n_t("ouzhou.setting_menu.personal") }}</span>
       <span class="line"></span>
       <!-- <span class="f_weight">Announcement</span> -->
-      <span class="f_weight">{{ i18n_t("setting_menu.rule_description") }}</span>
+      <span class="f_weight">{{ personal_name[get_route_name] }}</span>
     </div>
   </template>
   <template v-else>
@@ -22,7 +22,7 @@
         <template v-if="get_route_name == 'category'">
           <detail-top-info />
         </template>
-        
+
         <!-- 个人中心 vr 电竞 头部 -->
         <template v-else-if="is_personal_page">
           <div class="back" @click="go_back">
@@ -63,20 +63,30 @@
 
   <script setup>
 
-import { ref, computed, watch } from "vue";
+import { ref, reactive , computed, onMounted,onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { format_money2,UserCtr } from "src/core/";
 import leftMenu from "./components/left-menu/left-menu.vue";
 import detailTopInfo from "./detail-top/detail-top.vue";
-import { MenuData } from 'src/core/';
+import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
+
 const router = useRouter();
 const route = useRoute()
 const amount = ref(UserCtr.balance)
+const hisLen = ref(history.length)
 
 const leftDrawerOpen = ref(false)
 const emit = defineEmits(["change"]);
-// 事件执行函数
-
+/**
+ * 规则公告
+ */
+const personal_name = reactive({
+  'announcement':i18n_t("common.notice"),
+  'rules':i18n_t("setting_menu.rule_description")
+})
+/**
+ * 路由名称
+ */
 const get_route_name = computed(() => {
   return  router.currentRoute.value.name;
 })
@@ -109,11 +119,15 @@ const to_search_page = () => {
 }
 
 const jump_personal = () => {
-  router.push('/personal')
+    router.push('/personal')
 }
 
 // 回到上一页
 const go_back = () => {
+  if(is_rule_page.value){
+    router.go(hisLen.value - history.length - 1)
+    return ;
+  }
   if (route.path == '/coming_soon' && getSessionItem('routePath')) {
     router.push('/')
   } else {
@@ -124,7 +138,20 @@ const go_back = () => {
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
-
+/**
+ * 监听用户信息版本号
+*/
+const changebalance = (val) =>{
+  amount.value = val;
+}
+onMounted(() => {
+  hisLen.value = history.length
+  useMittOn(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE, changebalance)
+})
+onUnmounted(()=>{
+  hisLen.value = history.length
+  useMittOn(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE).off
+})
 </script>
 
 <style lang="scss" scoped>

@@ -20,11 +20,14 @@
       </div>
       <div class="choose-list" v-if='show_list'>
         <div class="choose-list-item" v-for="item in choose_config[card_style_obj.csid || '1']"
+        :key="item.first_hpid+'_'+item.second_hpid"
           @click.stop="handle_hpid_choose(item)" :class="{
             active: JSON.stringify(current_csid_hpids) == JSON.stringify(item)
           }">
-          {{ i18n_t(`ouzhou.match.play_map.${item.first_hpid}`) }} & {{
+          <div>
+            {{ i18n_t(`ouzhou.match.play_map.${item.first_hpid}`) }} & {{
             i18n_t(`ouzhou.match.play_map.${item.second_hpid}`) }}
+          </div>
         </div>
       </div>
     </div>
@@ -162,16 +165,17 @@ function handle_hpid_choose(item) {
     &-item {
       padding: 0 16px;
       height: 40px;
-
+      >div {
+        border-bottom: 1px solid var(--q-gb-bd-c-2);
+      }
       &:hover {
         background-color: var(--q-gb-bg-c-5);
       }
     }
 
-    div {
-      border-bottom: 1px solid var(--q-gb-bd-c-2);
+    >div {
 
-      &:last-child {
+      &:last-child div {
         border-bottom: none;
       }
     }

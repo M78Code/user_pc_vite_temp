@@ -14,7 +14,6 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
-import { is_results, is_kemp } from 'src/base-h5/mixin/menu.js'
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
@@ -52,14 +51,25 @@ const changeMenu = (item) =>{
     state.currentSlideValue = lodash_.get(item.subList,'[0].field1', '');
     getData( item,lodash_.get(item.subList,'[0].field1', ''));
 }
+/**
+ * 初始化数据
+ * @param {*} scroll_data 
+ */
+const init_data = (scroll_data) =>{
+    state.slideMenu_sport = scroll_data;
+    state.current_mi = scroll_data[0].mi
+    state.slideMenu = scroll_data[0].subList
+    state.currentSlideValue = lodash_.get(scroll_data[0].subList,'[0].field1', '')
+    getData( scroll_data[0],lodash_.get(scroll_data[0].subList,'[0].field1', ''))
+}
 const switchHandle = async ()=> {
     const res = await  api_analysis.get_result_menu();
     //获取 赛果菜单
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
         if(res?.code == 200){
             let scroll_data = res.data.filter((n)=>{return n.sportId != '0'}).map( item => {
-                // <100常规 >3000电竞  vr不处理 冠军400
-                const mi = item.menuType<100?100+item.sportId*1 + '':item.menuType>3000?`${'2'}${item.sportId}`:item.menuType==100?400:item.sportId
+                // <100常规 >=100 < 400电竞  vr不处理 冠军10000
+                const mi = +item.menuId<100?100+item.sportId*1 + '':+item.menuId>=100 && +item.menuId<400?`${'2'}${item.sportId}`:item.menuId=='10000'?400:item.sportId;
                 return {
                     mi: mi,
                     ct: item.count,
@@ -73,12 +83,8 @@ const switchHandle = async ()=> {
                     })
                 }
             })
-            
-            state.slideMenu_sport = scroll_data
-            state.current_mi = scroll_data[0].mi
-            state.slideMenu = scroll_data[0].subList
-            state.currentSlideValue = lodash_.get(scroll_data[0].subList,'[0].field1', '')
-            getData( scroll_data[0],lodash_.get(scroll_data[0].subList,'[0].field1', ''))
+            !MenuData.slideMenu_sport?.length && init_data(scroll_data)
+            MenuData.set_slideMenu_sport(scroll_data);
         }
     // })
 }
@@ -99,14 +105,17 @@ const getData = (item,date) =>{
 onMounted(()=>{
     VirtualList.set_is_show_ball(false)
     MenuData.set_current_lv1_menu(28)
-    switchHandle()
+    MenuData.slideMenu_sport?.length && init_data(MenuData.slideMenu_sport);//优先取缓存
+    switchHandle();//正常加载接口  替换新数据
 })
 
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
 .match-result{
-    height: calc(100% - 1.73rem);
+    // height: calc(100% - 1.73rem);
+    height: 0;
+    flex: 1;
     overflow: hidden;
     overflow-y: auto;
     .match-list-container{
