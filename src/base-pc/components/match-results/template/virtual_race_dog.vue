@@ -193,6 +193,7 @@ export default {
   width: 15%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .table-col:nth-child(4) .num {
   padding: 10px;

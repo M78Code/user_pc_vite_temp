@@ -64,7 +64,7 @@
 				</div>
 			</div>
 			<ul class="list">
-				<div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
+				<div class="title" @click="to_all_matchs">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
 				<!-- 滚球 -->
 				<div v-show="search_data?.bowling && search_data?.bowling.length > 0">
 					<div class="middle_info_tab diff" @click="expand_bowling = !expand_bowling">
@@ -76,7 +76,7 @@
 								<span v-html="red_color(item.tn)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 							</div>
 							<div class="list_bottom">
-								<div style="width: 60%; word-break: break-all">
+								<div style="width: 52%; word-break: break-all">
 									<p>
 										<span class="home" v-html="red_color(item.mhn)"></span>
 										<span class="middle">v</span>
@@ -128,7 +128,7 @@
 									alt="">
 							</div>
 							<div class="list_bottom" v-for="(i, idx) in item.matchList">
-								<div style="width: 60%; word-break: break-all">
+								<div style="width: 52%; word-break: break-all">
 									<p>
 										<span class="home" v-html="red_color(i.mhn)"></span>
 										<span class="middle">v</span>
@@ -176,7 +176,7 @@
 								</div>
 							</div>
 							<div class="list_bottom">
-								<div style="width: 60%; word-break: break-all">
+								<div style="width:52%; word-break: break-all">
 									<p>
 										<span class="home" v-html="red_color(item.mhn)"></span>
 										<span class="middle">v</span>
@@ -273,7 +273,12 @@ const clear_value = () => {
 const to_home = () => {
 	router.push('/')
 }
-
+/**
+ * 查看所有赛事 测试同步不做跳转
+ */
+const to_all_matchs = () =>{
+	// router.push({name: 'matchList'})
+}
 /**
  * @Description:获取搜索历史数据
  */
@@ -298,7 +303,7 @@ const get_menu_type = MenuData.menu_type;
 //  文字特殊处理，颜色操作
 const red_color = (item) => {
 	const reg = new RegExp(input_value.value, "ig");
-	let i_color = 'red';
+	let i_color = '#FF7000';
 	return item?.replace(reg, `<span style="color:${i_color}">${input_value.value}</span>`)
 }
 
@@ -687,18 +692,20 @@ onUnmounted(() => {
 }
 
 li {
-	padding: 7px 10px;
+	padding: 8px 10px;
 	background-color: var(--q-gb-bg-c-2);
 	// border-radius: 6px;
 	font-size: 14px;
 
 	.list_top {
-		margin-bottom: 19px;
 		font-size: 14px;
 		font-weight: 500;
-
+		height: 36px;
+    	line-height: 32px;
 		img {
-			margin-left: 5px;
+			// margin-left: 5px;
+			float: right;
+			margin-top:10px;
 		}
 	}
 
@@ -716,7 +723,8 @@ li {
 		}
 
 		.middle {
-			color: red;
+			// color: red;
+			color: var(--q-gb-t-c-1);
 			margin: 0 5px;
 		}
 		.lock {
@@ -771,6 +779,9 @@ li {
 		font-weight: 500;
 		font-size: 14px;
 		margin-bottom: -8px;
+		color: #A1A3A5;
+		text-align: center;
+
 	}
 }
 
@@ -853,6 +864,7 @@ li {
 }
 .flex_1 {
 	flex: 1;
+	text-align: center;
 }
 .mt50 {
 	margin-top: 50px;
