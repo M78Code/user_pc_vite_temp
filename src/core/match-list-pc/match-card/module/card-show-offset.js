@@ -131,6 +131,11 @@ export const set_card_show_level = (scroll_top = 0) => {
     let pre_match_card_obj
     MatchListCardData.match_list_card_key_arr.forEach(card_key => {
       let card_obj = MatchListCardData.all_card_obj[card_key]
+      if(!card_obj){
+        console.log("未找到表征:card_key",card_key);
+        return;
+      }
+      
       // 设置卡片偏移量  顶部偏移量等于上一个卡片 的底部偏移量， 底部偏移量等于自定顶部偏移量加自身高度
       card_obj.offset_top = pre_card_obj.offset_bottom
       card_obj.offset_bottom = card_obj.offset_top + card_obj.card_total_height
