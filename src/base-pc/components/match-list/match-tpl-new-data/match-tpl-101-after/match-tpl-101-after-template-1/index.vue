@@ -84,7 +84,24 @@ export default {
         handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
       }
     }, { deep: true, immediate: true })
+    const check_match_end = () => {
+      if(props.match.mmp == 999){
+        // 移除赛事
+        socket_remove_match(props.match);
+      }
+      // 赛事状态ms  0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断 110 即将开赛
+      else if(![0, 1, 2, 7, 10, 110].includes(+props.match.ms)) {        
+        // 移除赛事
+        socket_remove_match(props.match);
+      }
+    }
+    watch(props.match?.ms,() => {
+      check_match_end
+    }, { immediate: true, deep: true })
 
+    watch(props.match?.mmp,() => {
+      check_match_end
+    })
     function current_basic_info() {
       if (props.match.csid == 5) {
         return 'BasisInfo105'

@@ -110,7 +110,7 @@ export const get_ranking_by_league_id = (params, config = {}, url="/v1/tournamen
 };
 
 //获取联赛数量统计
-export const get_leagues_list_match = (params, config={}, url = "/yewu11/v3/european/matchesByTid") => http.post(url, params);
+export const get_leagues_list_match = (params, config={}, url = "/yewu11/v3/european/matchesByTidPB") => http.post(url, params);
  
 
 //电竞右侧5场赛事列表

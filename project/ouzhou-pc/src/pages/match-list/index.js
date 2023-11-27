@@ -83,7 +83,6 @@ export const get_five_leagues_list_api = async () => {
     }
   })
   const results = Object.values(filterData).flat()
-  console.log('555results', filterData, results);
 
   return results
 }
