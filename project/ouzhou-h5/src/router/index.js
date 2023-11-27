@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import { MenuData , SessionStorage} from "src/core/";
+import { MenuData , LocalStorage} from "src/core/";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -175,8 +175,8 @@ const router = createRouter({
  * 路由切换清除默认球种
  */
 router.beforeEach((to, from, next) => {
-    if(to.name !== from.name && to.name !== "category" && from.name !=="category"){
-        SessionStorage.remove("nemu-h5");
+    if(!!to.name && !!from.name && to.name !== from.name && to.name !== "category" && from.name !=="category"){
+        LocalStorage.remove("nemu-h5");
         MenuData.clear_menu_id();
     }
     next()
