@@ -34,7 +34,7 @@ const go_betting = (data) => {
         <ul class="list">
             <template v-for="hl_item in item_data.hl" :key="hl_item.hid">
                 <li v-for="ol_item in hl_item.ol.filter(i=>i.os != 3)" :key="ol_item?.oid" @click="go_betting(ol_item)"
-                    :class="[{ 'is-active': BetData.bet_oid_list.includes(ol_item?.oid ) }]"
+                    :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
                     class="list-item"
                 >
                     <template v-if="ol_item?.os == 1 && ol_item._hs != 11">
@@ -58,6 +58,7 @@ const go_betting = (data) => {
 </template>
 
 <style lang="scss" scoped>
+@import "basicTemplateStyle";
 .template0{
     display: grid;
     padding: 8px;
@@ -90,32 +91,6 @@ const go_betting = (data) => {
         }
     }
 
-}
-
-.is-active {
-    background-color: var(--q-gb-bg-c-1) !important;
-    color: var(--q-gb-t-c-2) !important;
-
-    .ov-text {
-        color: var(--q-gb-t-c-2) !important;
-    }
-}
-
-.lock {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 2px;
-}
-
-.textOverflow1{}
-.textOverflow2{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 </style>
 

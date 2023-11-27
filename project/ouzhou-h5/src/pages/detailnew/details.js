@@ -477,20 +477,15 @@ export const details_main = (router, route) => {
       init.value = false;
       switch (cmd) {
         case "C303":
-          socketOddinfo({
-            mcid: 0,
-            cuid: cuid.value,
-            mid: route.params.mid,
-            newUser: 0,
+          const { mid, csid } = route.params;
+          get_category_list_info({
+            sportId: csid,
+            mid,
           });
           break;
         case "C302":
-          socketOddinfo({
-            mcid: 0,
-            cuid: cuid.value,
-            mid: route.params.mid,
-            newUser: 0,
-          });
+          // 赛事状态变化
+          detail_init()
           break;
         case "C104":
           RCMD_C104(data);
