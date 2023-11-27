@@ -71,6 +71,7 @@ export default {
 
     //101号模板 默认就是 101的宽高配置 不会改变
     let match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, 'template_101_config.width_config', {})
+    console.log('match_list_tpl_size', MATCH_LIST_TEMPLATE_CONFIG);
     let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
     let handicap_list = ref([]);
     watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
