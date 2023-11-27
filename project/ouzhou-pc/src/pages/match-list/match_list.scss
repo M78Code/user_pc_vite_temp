@@ -80,21 +80,6 @@
   }
   .row-item {
     /* 队伍logo */
-    .team-logo {
-      width: 22px;
-      margin-right: 8px !important;
-      &.double-logo {
-        width: 39px !important;
-      }
-      .logo2 {
-        margin-left: -5px;
-      }
-
-      img {
-        width: 22px;
-        max-height: 24px;
-      }
-    }
     .neutral-wrap {
       margin-right: 10px;
       /* 收藏 */
@@ -408,6 +393,7 @@
 }
 /*  模板18相关样式 */
 .tpl-118 {
+  border-bottom: 1px solid var(--q-gb-bd-c-1);
   .play-wrap {
     /*  玩法基本信息 */
     .play-info {
@@ -434,12 +420,10 @@
 
   //一个联赛多个小组赛
   .play-wrap {
+
     .bet-list-wrap {
       background: var(--q-gb-bg-c-4);
-      .bet-col:nth-last-child(2),
-      .bet-col:last-child {
-        border-bottom: 1px solid var(--q-gb-bd-c-8);
-      }
+      box-sizing: border-box;
     }
   }
 }

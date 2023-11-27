@@ -59,7 +59,7 @@ import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
   function jump_to_league_list() {
     const { id, sportId, nameText } = props.league_obj
     MatchLeagueData.set_league_name(nameText)
-    router.push(`/league/${sportId}/${id}`)
+    router.push(`/league/${sportId}/${id}/1`)
   }
 </script>
 

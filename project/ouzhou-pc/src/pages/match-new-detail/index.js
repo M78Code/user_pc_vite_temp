@@ -373,10 +373,12 @@ export function usedetailData(route) {
        init.value = false
        switch (cmd) {
          case "C303":
-           get_detail_lists()
+         get_category();
+         get_detail_lists();
            break;
          case "C302":
-          get_detail_lists()
+          // 赛事状态发现变更  ms 
+          init();
           break;
          case "C104":
            RCMD_C104(data)
@@ -446,6 +448,7 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
+    message_fun = null
     // off_init()
   });
 

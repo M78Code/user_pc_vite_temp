@@ -9,6 +9,16 @@
 					<span class="leagues_name">{{ getName() }}</span>
 				</div>
 			</div>
+			<div  class="leagues_filrer" @click.stop="set_show_leagues">
+				{{ getName() }}
+				<span class="yb-icon-arrow"></span>
+				<div class="leagues_filrer_item" v-show="show_leagues">
+					<div v-for="item in league_list" :key="item.id" @click="set_active_league(item)" :class="item.id == active_league ? 'league_acitve': ''">
+						{{ item.nameText }}
+						<div class="leagues_filrer_item_line" v-if="item.id !== league_list[league_list.length -1].id"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -20,15 +30,47 @@ import { MenuData,i18n_t, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from 'vue-router';
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
+import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 
+// route.params.type  1 从联赛列表进入 2 从普通赛事详情进入
 
 const route = useRoute();
 const router = useRouter()
+const show_leagues = ref (false)
+const active_league = ref(route.params.tid)
+const league_list = ref([])
+
+const set_show_leagues = () => {
+	if (!league_list.value.length) return;
+	show_leagues.value = !show_leagues.value
+	if (show_leagues.value) {
+		window.addEventListener('click', (e) => {
+			show_leagues.value = false
+		}, { once: true })
+	}
+}
+
+watch(() => route.params.type, async () => {
+	if (route.params.type == 2) {
+		const list = await get_ouzhou_leagues_data(12)
+		list?.map(item => {
+			item.tournamentList?.map(leagues => {
+				league_list.value.push(leagues)
+			})
+		})
+	} else {
+		league_list.value = JSON.parse(localStorage.getItem("league_list"))
+	}
+}, { immediate: true })
+
+const set_active_league = (item) => {
+	active_league.value = item.id
+	router.push(`/league/${route.params.sportId}/${item.id}/${route.params.type}`)
+}
 
 const getName = () => {
-	let list = MatchLeagueData.get_league_list()
 	let name = ''
-	list.map(item => {
+	league_list.value.map(item => {
 		if (item.id == route.params.tid) {
 			name = item.nameText
 		}
@@ -105,7 +147,7 @@ const jumpTo = ()=>{
 		line-height: 25px;
 		letter-spacing: 0px;
 		text-align: left;
-		margin-bottom: 12px;
+		margin-bottom: 8px;
 	}
 
 
@@ -127,6 +169,57 @@ const jumpTo = ()=>{
 			border-bottom: 3px solid var(--q-gb-bd-c-1);
 			color: var(--q-gb-t-c-2);
 			display: flex;
+		}
+	}
+}
+.leagues_filrer {
+	position: relative;
+	display: flex;
+	align-items: center;
+	color: #fff !important;
+	font-weight: 400 !important;
+	font-size: 18px !important;
+	padding-left: 20px;
+	cursor: pointer;
+	.yb-icon-arrow {
+		color: var(--q-gb-t-c-8) !important;
+		margin-left: 10px !important;
+		transform: rotate(90deg) !important;
+		width: 7px !important;
+		height: 7px !important;
+		display: inline-block;
+	}
+	.leagues_filrer_item {
+		position: absolute;
+		top: 33px;
+		left: 20px;
+		border-radius: 2px;
+		background: #FFF;
+		box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.25);
+		width: 300px;
+		z-index: 9;
+		height: 185px;
+		padding: 12px 0;
+		overflow-y: auto;
+		div {
+			height: 41px;
+			margin: 0px !important;
+			line-height: 40px;
+			color: #1A1A1A !important;
+			font-size: 14px;
+			font-weight: 400 !important;
+			padding: 0 16px;
+		}
+		div:hover {
+			color: #FF7000 !important;
+		}
+		.league_acitve {
+			background: #FFF1E6;
+			color: #1A1A1A !important;
+		}
+		.leagues_filrer_item_line {
+			height: 1px !important;
+			background-color: #E2E2E2 !important;
 		}
 	}
 }

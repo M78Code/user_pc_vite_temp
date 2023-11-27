@@ -31,16 +31,31 @@ import NoData from "src/base-h5/components/common/no-data.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
 let message_fun = null
+let handler_func = null
 const emitters = ref({})
 
 onMounted(() => {
+
+  MatchMeta.set_prev_scroll(0)
+
   initMatchPage()
+
   BaseData.is_emit && MatchMeta.set_origin_match_data()
 
-  // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
+  // 接口请求防抖
+  handler_func = lodash.debounce(({ cmd, data }) => {
     MatchMeta.handle_ws_directive({ cmd, data })
-  }, 1000))
+  }, 1000)
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+    handler_func({ cmd, data })
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      MatchMeta.handle_remove_match(data)
+    } else {
+      handler_func({ cmd, data })
+    }
+  })
 
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
@@ -66,6 +81,7 @@ const onTabChange = e => {
     case 'Matces':
       break
     case 'League':
+      MenuData.set_current_lv1_menu(2);
       onChangeDate(12) // 默认展示12个小时的数据
       break
     case 'Outrights':
@@ -80,9 +96,14 @@ const onTabChange = e => {
 const onChangeDate = e => {
   if (store.tabActive !== 'Matches') {
     MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-      if (res) {
+      console.log('onChangeDate', res)
+      if (res.length) {
         store.areaList = res
+        store.selectArea = res[0]
         onChangeArea(res[0].id)
+      } else {
+        store.leaguesMatchs = []
+        store.areaList = []
       }
     })
   }

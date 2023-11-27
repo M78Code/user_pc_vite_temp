@@ -244,6 +244,7 @@ import GlobalSwitchClass from 'src/core/global/global.js'
 const lang = computed(() => {
   return UserCtr.lang;
 })
+const pageSize = ref('50')
 const emit = defineEmits(['itemFilter'])
 const props = defineProps({
   current_tab: {
@@ -492,12 +493,19 @@ const order_status = (orderStatus) => {
 const changePage = (arv) => {
   const { current } = arv
   console.log(1111111111, arv)
-  emit('itemFilter', { page: current })
+  emit('itemFilter', {
+    page: current,
+    size: +pageSize.value
+  })
 }
 const goPageChange = (v) => {
-  emit('itemFilter', { page: v })
+  emit('itemFilter', {
+    page: v,
+    size: +pageSize.value
+  })
 }
 const pageSizeChange = (v) => {
+  pageSize.value = v.value
   emit('itemFilter', { size: v.value })
 }
 /**

@@ -71,9 +71,9 @@ class UserCtr {
     this.user_info_data = "";
 
     // 用户语言
-    this.lang = LocalStorage.get("lang", i18n.global.locale);
+    this.lang = LocalStorage.get("lang");
     // 用户主题  日间版本 ，夜间版本 可能有多版本哦 不止二个
-    this.theme = LocalStorage.get("theme", default_theme_key);
+    this.theme = LocalStorage.get("theme");
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 盘口
     this.odds = {
@@ -214,9 +214,11 @@ class UserCtr {
    * 设置语言变化
   */
   set_lang(data) {
+    if(this.lang == data)return;
     this.lang = data;
     this.user_info.languageName = data;
     useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
+    console.error('EMIT_LANG_CHANGE',data)
     LocalStorage.set('lang',data)
     this.update()
   }
@@ -1005,7 +1007,7 @@ class UserCtr {
       }
       try {
         let data = {
-          languageName: lang,
+          languageName: this.lang ? this.lang : lang,
           userMarketPrefer: obj.userMarketPrefer,
         };
         // 设置国际化语言
@@ -1523,6 +1525,13 @@ class UserCtr {
     res.lang = this.lang || get_value('lang');
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api'));
+    // 功能附加参数
+    const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
+    PARAM_ADD_KEY.forEach(key => {
+      const val = SEARCH_PARAMS.init_param.get(key);
+      val && (res[key] = val);
+    });
+
     // 参数累加
     const searchParams = new URLSearchParams(res);
     // url编码转换

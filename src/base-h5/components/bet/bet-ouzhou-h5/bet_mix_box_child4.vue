@@ -22,7 +22,11 @@
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">{{item.playOptionName}} <span class="text-one-span">{{ item.marketValue }}</span></div>
-                      <div class="nonebox4-content-left-content-text-two">[{{item.matchType == 2?  i18n_t("bet.bet_inplay") :''}}] <span class="text-two-span">{{item.playName}}</span></div>
+                      <div class="nonebox4-content-left-content-text-two">{{item.matchType == 2?  `[${i18n_t("bet.bet_inplay")}]` :''}}
+                         <span class="text-two-span">{{item.playName}}
+                          <span v-if="[4,19,143,113].includes(item.playId*1)">{{item.matchType == 2? item.mark_score : ''}}</span>
+                         </span>
+                      </div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
                     <div class="flex">

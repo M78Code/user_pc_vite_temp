@@ -502,8 +502,10 @@ class MatchMeta {
       // sportId: 1,
       selectionHour: date
     })
-    MatchCollect.get_collect_match_data()
     const list = lodash.get(res, 'data', [])
+    if (list.length) {
+      MatchCollect.get_collect_match_data()
+    }
     return list
   }
 
@@ -581,7 +583,7 @@ class MatchMeta {
     const res = await api_match_list.get_leagues_list_match({
       sportId: MenuData.menu_csid ? Number(MenuData.menu_csid) : 1,
       tid: tid,
-      selectHour: time
+      selectionHour: time
     })
     // console.log('get_ouzhou_leagues_list_data', res)
     if (res.code !== '200') return this.set_page_match_empty_status({ state: true });
@@ -832,8 +834,6 @@ class MatchMeta {
       return match
     })
 
-    console.log('match_list-match_list', match_list)
-
     // 最终赛事数据
     const matchs_data = lodash.uniqBy(match_list, 'mid')
     const result_mids = matchs_data.map(t => t.mid)
@@ -962,16 +962,25 @@ class MatchMeta {
   }
 
   /**
-   * @description 删除赛事
+   * @description: 0未开始 1滚球阶段 2暂停 7延迟 10比赛中断 110即将开赛  3结束 4关闭 5取消 6比赛放弃 8未知 9延期
+   *              
+   * @param {Number} ms 赛事状态
+   * @return {Boolean}
+   */
+  is_valid_match(ms){
+    return [0,1,2,7,10,110].includes(+ms); //有效状态包括未开赛与进行中
+  }
+
+  /**
+   * @description 删除赛事不能防抖， 删除赛事会同时同事多个 C102 , 但只有一个状态 为 999 
    */
   handle_remove_match (data) {
     // mhs === 2  || mmp === 999 为关盘 则移除赛事
-    const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
-    console.log('8888888888888:', mid, mmp, mhs)
-    if (mhs == 2 || mmp == '999') {
+    const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
+    if (mhs == 2 || mmp == '999' || !this.is_valid_match(ms)) {
       const item = this.match_mids.find(t => t === mid)
       if (item) {
-        const index = this.complete_matchs.findIndex(t => t === mid)
+        const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
         this.handler_match_list_data({ list: this.complete_matchs, is_classify: true })
       }
@@ -989,17 +998,14 @@ class MatchMeta {
       const { cd = [] } = data
       if (cd.length < 1) return
       const item = cd.find(t => t.csid == MenuData.menu_csid)
+      // 调用 matchs  接口
       if (item) this.get_target_match_data({})
     }
-    // 调用 matchs  接口
-    if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
-      this.handle_remove_match(data)
-    }
-
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
       this.get_match_base_hps_by_mids()
     }
+
   }
   /**
    * @description 获取赛事赔率

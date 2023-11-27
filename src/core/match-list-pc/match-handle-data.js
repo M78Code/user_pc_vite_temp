@@ -30,9 +30,9 @@ function get_match_tpl_number(is_hot) {
         match_tpl_number = -1
         //搜索13列玩法
         //&& store.getters.get_unfold_multi_column
-        if (lodash.get(vue, '$route.query.csid', -1) === '1' && MenuData.is_multi_column) {
-            match_tpl_number = 13
-        }
+        // if (lodash.get(vue, '$route.query.csid', -1) === '1' && MenuData.is_multi_column) {
+        //     match_tpl_number = 13
+        // }
     }
     // 竟足赛事 12模板
     else if (mid_menu_result.mi == 30101) {

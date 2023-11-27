@@ -27,7 +27,7 @@ const get_url_no_param = ()=>{
   let url = location.href;
   if(!SEARCH_PARAMS.init_param.get('keep_url')){
     try {
-      if(url && url.indexOf('token')>-1){
+      if(url){
         let hash = location.hash;
         if(hash && hash.indexOf('?') > -1){
           hash = hash.substring(0,hash.indexOf('?'));

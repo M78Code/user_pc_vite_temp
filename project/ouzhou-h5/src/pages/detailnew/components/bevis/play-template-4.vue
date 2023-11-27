@@ -34,10 +34,6 @@ const props = defineProps({
     item_data: {
         type: Object,
         default: () => ({})
-    },
-    active: {
-        type: Number,
-        default: 0,
     }
 })
 
@@ -82,6 +78,7 @@ const go_betting = (data) => {
 </script>
 
 <template>
+    <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <section class="template4 component play-template-4">
         <div class="assemble">
             <ul v-for="item of AssembleData.assemble" :key="item.otd" class="list">
@@ -119,6 +116,7 @@ const go_betting = (data) => {
 </template>
 
 <style scoped lang="scss">
+@import "basicTemplateStyle";
 .template4{
     padding: 8px;
     box-sizing: border-box;
@@ -216,28 +214,5 @@ const go_betting = (data) => {
     .ov-text {
         color: var(--q-gb-t-c-1);
     }
-}
-
-
-.lock {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 2px;
-}
-
-.textOverflow1 {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.textOverflow2 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 </style>
