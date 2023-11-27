@@ -52,7 +52,6 @@
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
-
         <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
           v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
