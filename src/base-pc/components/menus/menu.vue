@@ -40,15 +40,14 @@
       </ul>
     </div>
     <div class="menu-nav-line" />
-
-    <div class="menu-nav-li">
+    <!-- <div class="menu-nav-li">
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
       </ul>
-    </div>
+    </div> -->
 
     <div class="menu-line"></div>
 

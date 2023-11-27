@@ -80,7 +80,7 @@ const ref_data = reactive({
 		{ label: i18n_t('ouzhou.match.inplay'), value: 3001 },
 		{ label: i18n_t('ouzhou.match.today'), value: 3002 },
 		{ label: i18n_t('ouzhou.match.early'), value: 3003 },
-		{ label: i18n_t('menu.match_winner'), value: 3004 }
+		// { label: i18n_t('menu.match_winner'), value: 3004 }
 	],
 	// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
 	inplay:{

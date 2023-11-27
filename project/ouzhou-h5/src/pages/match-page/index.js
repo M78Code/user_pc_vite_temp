@@ -24,6 +24,6 @@ export const store = reactive({
     tabOptions: [
         'Matches',
         'League',
-        'Outrights'
+        // 'Outrights'
     ]
 })
