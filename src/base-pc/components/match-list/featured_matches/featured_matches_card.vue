@@ -72,7 +72,6 @@ const get_featurd_list = async () => {
     const five = lodash.get(res, 'data', []).slice(0, 5)
     MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(five);
     matches_featured_list.value = []
-    console.log('five', five)
     five.forEach(match => {
       mids.push(match.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(match.mid))
