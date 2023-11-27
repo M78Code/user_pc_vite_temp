@@ -77,6 +77,7 @@ import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataB
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
 
 let message_fun = null
+let handler_func = null
 const container = ref(null)
 const scroll_top = ref(0)
 const play_matchs = ref([])
@@ -104,33 +105,41 @@ onMounted(async () => {
   get_five_league_matchs()
   state.current_mi = MenuData.top_events_list[0]?.mi;
 
+  // 接口请求防抖
+  handler_func = lodash.debounce(({ cmd, data }) => {
+    handle_webscoket_cmd(cmd, data)
+  }, 1000)
+
   // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener(lodash.debounce((cmd, data)=>{
-    handle_webscoket_cmd(cmd,data)
-  }, 1000))
+  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+    // 赛事删除
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
+      if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
+        const item = this.match_mids.find(t => t === mid)
+        if (item) {
+          get_ouzhou_home_data()
+          get_ouzhou_home_hots()
+          get_five_league_matchs()
+        }
+      }
+    } else {
+      handler_func({ cmd, data })
+    }
+  })
 })
 
 /**
  * @description 处理 ws
  */
  const handle_webscoket_cmd = (cmd, data) => {
-  console.log('wswswswswswsws-cmd:', cmd, data)
+  // console.log('wswswswswswsws-cmd:', cmd, data)
   if (['C109', 'C104'].includes(cmd)) {
     const { cd = [] } = data
     if (cd.length < 1) return
     // 欧洲版 二期  只展示 足球、篮球、网球， 球种菜单放开的同时这里也需要增加
     const item = cd.find(t => [1,2,5].includes(+t.csid) )
     if (item) {
-      get_ouzhou_home_data()
-      get_ouzhou_home_hots()
-      get_five_league_matchs()
-    }
-  }
-
-  // 调用 matchs  接口
-  if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
-    const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
-    if (mhs == 2 || mmp == '999') {
       get_ouzhou_home_data()
       get_ouzhou_home_hots()
       get_five_league_matchs()
