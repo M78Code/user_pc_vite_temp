@@ -7,7 +7,7 @@
     <div class="detail-select" v-if="drop_down_list.length">
       <div class="detail-select-nav">
         <q-btn class="label">
-          <span class="btn-label">{{ drop_down_list[active].tn }}{{ drop_down_list[active].tn }}{{ drop_down_list[active].tn }}{{ drop_down_list[active].tn }}</span>
+          <span class="btn-label">{{ drop_down_list[active].tn }}</span>
           <q-menu class="detail-top-pop">
             <div class="detail-top-pop-content" ref="detail_top_pop">
               <div class="match_detail_top_list">
