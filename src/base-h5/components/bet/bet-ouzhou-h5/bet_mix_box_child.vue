@@ -365,9 +365,9 @@ background: var(--q-gb-t-c-3) !important;
 .content-box {
   position: relative;
   bottom: 0;
+  z-index: 1000;
   // left: 50%;
   // transform: translateX(-50%);
-  //z-index: var(--private-bet-mix-box-child-z-index);
   overflow: hidden;
   width: 100%;
   -webkit-overflow-scrolling: touch;

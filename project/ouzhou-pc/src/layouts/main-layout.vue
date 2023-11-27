@@ -33,14 +33,15 @@
     <alert-components />
 
     <secondaryModule></secondaryModule>
-
-    <Vue3DraggableResizable v-model:x="BetData.bet_box_draggable.x" v-model:y="BetData.bet_box_draggable.y"
-      v-model:active="BetData.bet_box_draggable.isActive" :draggable="BetData.bet_box_draggable.draggable" :resizable="false" :parent="true"
-      v-if="BetData.bet_box_draggable.show">
-      <div class="ty-bet-box">
-        <bet-box-wapper use_component_key="BetBoxOuZhouPC_1" />
-      </div>
-    </Vue3DraggableResizable>
+  
+      <Vue3DraggableResizable v-model:x="BetData.bet_box_draggable.x" v-model:y="BetData.bet_box_draggable.y"
+        v-model:active="BetData.bet_box_draggable.isActive" :draggable="BetData.bet_box_draggable.draggable" :resizable="false" :parent="true"
+        v-if="BetData.bet_box_draggable.show">
+        <div v-show="false">{{ BetData.bet_data_class_version }}</div>
+        <div class="ty-bet-box" v-show="BetData.bet_oid_list.length">
+          <bet-box-wapper use_component_key="BetBoxOuZhouPC_1" />
+        </div>
+      </Vue3DraggableResizable>
   </div>
 </template>
 <script setup>

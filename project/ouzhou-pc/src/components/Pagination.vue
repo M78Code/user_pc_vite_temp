@@ -7,7 +7,7 @@
 -->
 <template>
   <div>
-    <div class="table-footer-bar">
+    <div class="table-footer-bar" v-if="is_bet_record">
       <span>
         {{ i18n_t('bet_record.total_count') }}
         <!-- 总计单数 -->
@@ -84,17 +84,39 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-    betTotalAmount: String,
-    effectiveFlow: String,
-    profit: String,
-    recordType: Number,
-    random: Number,
-    toolSelected: Number,
+
+    betTotalAmount: {
+      type: String,
+      default: '',
+    },
+    effectiveFlow: {
+      type: String,
+      default: '',
+    },
+    profit: {
+      type: String,
+      default: '',
+    },
+    recordType: {
+      type: Number,
+      default: 0,
+    },
+    random: {
+      type: Number,
+      default: 0,
+    },
+    toolSelected: {
+      type: Number,
+      default: 0,
+    },
     is_bet_record: {
       type: Boolean,
-      default: true,
+      default: false,
     },
-    results_table: Object,
+    results_table: {
+      type: Object,
+      default: ()=>{},
+    },
     reset_pagination: {
       type: String,
       default: '1',

@@ -5,7 +5,12 @@
 -->
 
 <template>
-  <img v-show="is_show_btn" class="list-scroll-to-top" :src="scroll_top_image" @click="back_top">
+  <Teleport to="#page-footer" v-if="!disabled">
+    <img class="component scroll-top list-scroll-to-top"
+      :class="is_show_btn?'show':'hide'"
+      :src="scroll_top_image" @click="back_top"
+    />
+  </Teleport>
 </template>
 
 <script setup>
@@ -27,7 +32,16 @@ const props = defineProps({
  * @description 是否显示按钮
  */
 const is_show_btn = computed(() => {
+  console.log(props.list_scroll_top)
   return props.list_scroll_top >= window.innerHeight
+})
+
+const disabled= ref(true)
+const watchHandle = watch(is_show_btn,(val)=>{
+  if(val){
+    disabled.value = false
+    watchHandle()
+  }
 })
 
 // 通过判断父组件滚动时间间隔控制按钮显示，放在该组件维护
@@ -80,10 +94,15 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .list-scroll-to-top {
   z-index: 86;
-  position: fixed;
+  position: absolute;
   width: 0.3rem;
-  bottom: 1rem;
+  bottom: 0;
   right: .2rem;
   z-index: 999;
+  --private-transition-duration: 1s;
+  transition: bottom var(--private-transition-duration);
+  &.show{
+    bottom: calc(100% + .2rem);
+  }
 }
 </style>

@@ -89,6 +89,45 @@
     },
     "no_data": {
         "coming_soon": "Coming Soon"
+    },
+    "bet_col": {
+      "bet_col_1": {
+        "bet_col_1": "Home",
+        "bet_col_X": "Away",
+        "bet_col_2": "Draw"
+      },
+      "bet_col_2": {
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under"
+      },
+      "bet_col_4": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_37": {
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
+      },
+      "bet_col_38": {
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under"
+      },
+      "bet_col_39": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_153": {
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
+      },
+      "bet_col_154": {
+        "bet_col_1": "Handicap",
+        "bet_col_2": "Handicap"
+      },
+      "bet_col_155": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      }
     }
 },
   "ac_rules": {
@@ -926,6 +965,12 @@
     "msg2": "Stay calm. \"Refresh\" to restore~"
   },
   "list": {
+    "win1": "Home",
+    "win2": "Away",
+    "play": "Market",
+    "play1": "1x2",
+    "play2": "Handicap",
+    "play3": "Total Goals",
     "after_time_start": "Start in {0} minutes",
     "after_time_start2": "Start in {0} minutes",
     "go_to_details": "details",
@@ -1983,6 +2028,7 @@
     "loding_more": "More"
   },
   "search": {
+    "dogfall": "dogfall",
     "clear_search_history": "Clear Search History",
     "hot": "Heat",
     "hot_league": "Popular Leagues",

@@ -54,9 +54,9 @@ export const format_money2 = function (num) {
   }
 };
 /**
- *@description 将金额转化为千位符格式保留2位小数
+ *@description 将金额转化为千位符格式 保留整数
  *@param {Number} num 待格式化的金额
- *@return {String} 转化后的金额 比如 '64,464.95'
+ *@return {String} 转化后的金额 比如 '64,464'
  */
  export const format_money = function (num) {
   try {

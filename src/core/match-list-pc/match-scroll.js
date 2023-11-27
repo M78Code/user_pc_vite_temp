@@ -77,7 +77,6 @@ class MatchListScrollClass {
    * @param {undefined} undefined
   */
   show_mids_change(){
-    console.log(MenuData.is_kemp() || MenuData.is_common_kemp() || load_data_state.value != 'data');
     if (MenuData.is_kemp() || MenuData.is_common_kemp() || load_data_state.value != 'data') return
     useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
     // lodash.debounce(useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE), 400, { leading: true, trailing: true })

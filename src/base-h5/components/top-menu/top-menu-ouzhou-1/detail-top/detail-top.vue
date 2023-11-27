@@ -8,6 +8,7 @@
       <div class="detail-select-nav">
         <q-btn class="label">
           <span class="btn-label">{{ drop_down_list[active].tn }}</span>
+          <img class="down-icon" :class="[{ 'up-icon': show_list }]" src="../img/top-down.png" alt="" />
           <q-menu class="detail-top-pop">
             <div class="detail-top-pop-content" ref="detail_top_pop">
               <div class="match_detail_top_list">
@@ -23,7 +24,6 @@
             </div>
           </q-menu>
         </q-btn>
-        <img :class="['down-icon', { 'up-icon': show_list }]" src="../img/top-down.png" alt="" />
       </div>
 
     </div>
@@ -194,6 +194,7 @@ const refreshAll = (params) => {
       }
 
       .label {
+        position: relative;
         padding: 0;
         color: #fff;
         // display: inline-block; //杜绝 inline-block
@@ -203,9 +204,14 @@ const refreshAll = (params) => {
         white-space: nowrap;
         text-overflow: ellipsis;
         -o-text-overflow: ellipsis;
+        :deep(.q-btn__content){
+          flex-wrap: nowrap;
+        }
       }
 
       .down-icon {
+        position: sticky;
+        right: 0;
         width: 10px;
         height: 6px;
         vertical-align: middle;
