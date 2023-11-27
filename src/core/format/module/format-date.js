@@ -1,4 +1,5 @@
 import { isDate } from "lodash";
+// import i18n from "project/animation/src/i18n";
 import { i18n_t,i18n } from "src/core/index.js"
 import ServerTime from "src/core/server-time/server-time.js"
 
@@ -102,6 +103,7 @@ export const format_M_D_PC = function (payload, that) {
   let d = time.getDate() + "";
   // TODO: time.monthes  国际化不是字符串无法读取[] ----> "[]"
   let monthes = i18n_t(`time.month_${m + 1}`);
+  
   let day = i18n_t(`match_info.day`);
   let format = `${monthes} ${d}${day}`
   // let format = i18n_t("time.time_date_1");

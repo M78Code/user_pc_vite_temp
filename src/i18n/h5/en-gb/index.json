@@ -37,6 +37,7 @@
         "featured": "Featured",
         "top_events": "Top Events",
         "top_leagues": "Top Leagues",
+        "league": "League",
         "15_mins": "15 mins",
         "inplay": "InPlay",
         "home": "Home",
@@ -1121,7 +1122,8 @@
     "video": "Video",
     "video_info": "Video Info",
     "yes": "Yes",
-    "match_parlay": "Parlay"
+    "match_parlay": "Parlay",
+    "day": "Day"
   },
   "match_main": {
     "cut_off": "Bet Closed",
@@ -2152,6 +2154,18 @@
       "November",
       "December"
     ],
+    "month_1": "Januari",
+		"month_10": "Oktober",
+		"month_11": "November",
+		"month_12": "Desember",
+		"month_2": "Februari",
+		"month_3": "Maret",
+		"month_4": "April",
+		"month_5": "Mei",
+		"month_6": "Juni",
+		"month_7": "Juli",
+		"month_8": "Agustus",
+		"month_9": "September",
     "time_date_1": "%month month %date day",
     "time_date_2": "%s month %s day (%s)",
     "time_date_3": "%s month %s day %s:%s",
