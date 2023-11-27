@@ -52,7 +52,6 @@ const matchResults = ref([])
     matchResults.value = res.data
     loading.value = false
   })
-  api_match_list.get_detail_list({mcid:0,cuid,newUser:0,mid}).then(console.log)
 })()
 /** 请求赛事详情 @param {{mid,cuid}} params 请求参数*/
 ;(function getMatchDetail(params) {
