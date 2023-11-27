@@ -6,7 +6,8 @@
       `csid${ol_data.csid}`,
       odds_lift,
       BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
-      odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) && 'can-hover'
+      odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) && 'can-hover',
+      is_scroll_ball && 'scroll-ball-bet-item'
     ]" @click.stop="bet_click_ol" :id="`list-${ol_data.oid}`">
     <!-- 盘口 -->
     <div v-if="odds_state != 'seal'" :class="[
@@ -84,6 +85,10 @@ const props = defineProps({
   match_data_type: {
     type: String,
     default: () => 'MatchDataWarehouse_PC_List_Common'
+  },
+  is_scroll_ball: {
+    type: Boolean,
+    default: () => false
   }
 });
 const is_mounted = ref(true);
@@ -227,7 +232,6 @@ const disk_text_replace = (lang, onb) => {
         break;
     }
   }
-  console.log(text, 'text');
   return text
 }
 

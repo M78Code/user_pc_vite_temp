@@ -174,6 +174,11 @@ const set_order_status_info = (orderNo) => {
         if(res.code == 200){
             let data_list = lodash_.get(res,'data', [])
             let order_status = ''
+            console.error('BetViewDataClass.is_finally',BetViewDataClass.is_finally)
+            // 已经完成了单次投注订单 不需要在执行了
+            if(BetViewDataClass.is_finally){
+               return clearTimeout(time_api_out)
+            }    
             data_list.forEach(item => {
                 // data.status（4:拒单、0:接单、3:待确认、2:取消、1:已处理)
                 order_status = item.status
@@ -417,7 +422,7 @@ const submit_handle = type => {
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
         let order_state = 2
         if (res.code == 200) {
-           
+            BetViewDataClass.set_is_finally(false)
             // 获取
             BetData.set_bet_mode(lodash_.get(res,'data.lock'),-1)
             // 获取投注后的数据列表
@@ -575,7 +580,9 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     if(!oid || !_hid || !_mid){
         return
     }
-
+    // 是否上一个投注流程已走完
+    BetViewDataClass.set_is_finally(true)
+    
     BetViewDataClass.set_bet_order_status(1)
     BetData.set_bet_mode(-1)
     // 重置金额为 0
@@ -699,10 +706,11 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
         play_name = other.play_name
-    }
-    let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
-    if(hpn){
-        play_name = hpn
+    }else{
+        let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+        if(hpn){
+            play_name = hpn
+        }
     }
     return play_name
     
@@ -817,7 +825,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let text = ''
     // 展示用的 + 投注项
     // 两数拼接  
-    let home_away_mark = [2, 4, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199] // 
+    let home_away_mark = [2, 4, 7, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199, 367, 58] // 
     // 首页不需要拼接的
     let home_away_diff = [2, 38]
     // 多位数
@@ -837,7 +845,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
                 text = mid_obj.man
                 break
             default:
-                text = ol_obj.on
+                text = ol_obj.on ? ol_obj.on : ol_obj.otv
                 break
         }
         return text

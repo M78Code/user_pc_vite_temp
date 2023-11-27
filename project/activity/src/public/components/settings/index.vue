@@ -239,7 +239,7 @@ export default {
       this.set_select_time(item.value);
       //清空联赛筛选条件
       this.set_filter_select_obj([]);
-      this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST);
+      this.$root.$emit(this.emit_cmd.EMIT_FETCH_MATCH_LIST, {});
     },
   
 

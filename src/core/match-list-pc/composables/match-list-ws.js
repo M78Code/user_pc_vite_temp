@@ -8,7 +8,7 @@ import { useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_PC_List_Common } 
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 const ws_keys_map = {} //ws map对应表
-function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
+function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common,remove) {
 	//如果已经创建过ws返回原来的
 	if (ws_keys_map[MatchListData.name_code]) {
 		return ws_keys_map[MatchListData.name_code]
@@ -18,15 +18,22 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common) {
 		// 赛事新增
 		if (["C109"].includes(cmd)) {
 			const { cd = [] } = data;
+
 			if (cd.length < 1) return;
-			const item = cd.find((t) => t.csid == MenuData.menu_csid);
-			if (item) useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
+			const item = cd.find((t) => t.csid == MenuData.current_ball_type) || !MenuData.current_ball_type;
+			console.log('88888888888882:', item, cd, MenuData.current_ball_type)
+
+			if (item) useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {is_socket: true});
 		}
 		// 调用 matchs  接口
-		if (['C101', 'C102', 'C104', '901'].includes(cmd)) {
+		if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+			console.log('`C101C102C104`', data);
+			const { cd: { mid = '', mhs = 0, mmp = 1 } } = data
+			console.log('88888888888889:', mid, mmp, mhs, data)
+			if (mhs == 2 || mmp == '999') {
 			// mhs === 2 为关盘
-			if (data.mhs == 2) {
 				socket_remove_match(data.cd, MatchListData);
+				remove&&remove(mid);
 			}
 		}
 		// 调用 mids  接口 303是盘口赔率变更

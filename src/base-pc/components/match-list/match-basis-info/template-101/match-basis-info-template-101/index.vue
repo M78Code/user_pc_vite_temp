@@ -9,7 +9,7 @@
           v-if="GlobalAccessConfig.get_collectSwitch()">
           <div  class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
         </div>
-
+        <!-- {{ match.mid }} -->
         <!-- 比赛进程 -->
         <match-process style="cursor:pointer" v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
         periodColor="gray" />
@@ -22,7 +22,10 @@
     </div>
      <!-- 主队信息 -->
      <div class="row-item">
-        
+      <div class="team-logo">
+        <img v-if="show_type == 'all'"
+          v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
+      </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
@@ -41,7 +44,10 @@
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
-         
+      <div class="team-logo">
+        <img v-if="show_type == 'all'" 
+          v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
+      </div>  
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div
@@ -266,6 +272,15 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .basic-wrap {
   padding: 10px 10px;
+  .team-logo {
+      display: flex;
+      align-items: center;
+      margin-right: 6px;
+      img {
+        width: 18px;
+        height: 18px;
+      }
+    }
   .collect-box {
     margin-bottom: 7px;
     .collect-start {

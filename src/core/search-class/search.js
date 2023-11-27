@@ -7,12 +7,10 @@
 
 import details from 'src/core/match-detail/match-detail-pc/match-detail.js'
 import { api_search } from "src/api/index.js";
-import  store  from "src/store-redux/index.js"
 import { i18n_t} from "src/core/index.js"
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
-import lodash, { reject } from 'lodash'
+import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { resolve } from "licia/Promise";
 
 
 export default {

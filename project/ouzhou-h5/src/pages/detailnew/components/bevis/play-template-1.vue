@@ -45,6 +45,7 @@ const AssembleData = computed(() => {
 </script>
 
 <template>
+    <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <template v-for="olChild of AssembleData" :key="olChild.oid">
         <template v-if="olChild.result != (void 0)">
             <div class="component play-template-1">

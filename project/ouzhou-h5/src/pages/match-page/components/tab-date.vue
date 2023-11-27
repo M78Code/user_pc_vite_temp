@@ -60,7 +60,6 @@
 <script setup>
 import {
     ref,
-    reactive,
     watch,
     onMounted,
     onUnmounted,
@@ -162,9 +161,11 @@ const setDefaultData = (val) => {
 }
 
 watch(() => store.areaList, () => {
-    const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
-    const offset = index < 0 ? 0 : index
-    areaListChange(store.areaList[offset], offset)
+    if (store.areaList.lenght) {
+        const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
+        const offset = index < 0 ? 0 : index
+        areaListChange(store.areaList[offset], offset)
+    }
 })
 onMounted(() => {
     setDefaultData(MenuData.menu_mi.value || '101');//默认足球
@@ -180,12 +181,14 @@ onUnmounted(() => {
  * @param {*} index 
  */
 const areaListChange = (item, index) => {
-    store.tabModel = false;
-    const move_index = store.areaList.findIndex((t, _index) => _index === index);
-    scrollRefArea.value.scrollTo(move_index - 2, "start-force");
-    store.area_tab_index = index;
-    store.selectArea = item
-    emit("changeArea", item.id);
+    if (item) {
+        store.tabModel = false;
+        const move_index = store.areaList.findIndex((t, _index) => _index === index);
+        scrollRefArea.value.scrollTo(move_index - 2, "start-force");
+        store.area_tab_index = index;
+        store.selectArea = item
+        emit("changeArea", item.id);
+    }
 }
 </script>
   
