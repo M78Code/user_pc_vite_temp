@@ -64,17 +64,19 @@ const get_featurd_list = async () => {
     cuid: UserCtr.get_uid()
   }
   let res = await api_details.get_hots(params)
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.data);
   if (res.data && res.data.length) {
     const mids = []
     //使用数据仓库的数据 因为ws会推送数据 会改变数据仓库的数据 用本地没有数据变化哦哦
     // matches_featured_list.value=res.data
     // 只显示5条数据
-    lodash.get(res, 'data', []).slice(0, 5).forEach(match => {
+    const five = lodash.get(res, 'data', []).slice(0, 5)
+    MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(five);
+    matches_featured_list.value = []
+    five.forEach(match => {
       mids.push(match.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(match.mid))
     })
-    SessionStorage.set('get_hots', matches_featured_list.value)
+    SessionStorage.set('get_hots', five)
     //查询赔率接口
     api_bymids({ mids }, null, MatchDataWarehouse_ouzhou_PC_hots_List_Common)
     set_active_mids(mids) //添加ws订阅

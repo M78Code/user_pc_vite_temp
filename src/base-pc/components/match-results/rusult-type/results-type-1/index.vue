@@ -424,16 +424,16 @@ export default {
           &:nth-child(2) {
             display: flex;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 0;
             user-select: text;
           }
           &:nth-child(3) {
             user-select: text;
           }
           .tournament-logo {
-            min-width: 18px;
-            height: 18px;
-            margin-right: 5px;
+            // min-width: 18px;
+            // height: 18px;
+            // margin-right: 5px;
           }
           .ellipsis-line-2 {
             display: -webkit-box;
