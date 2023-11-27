@@ -361,10 +361,9 @@ background: var(--q-gb-t-c-3) !important;
 }
 
 .content-box {
-  position: fixed;
-  bottom: 0.56rem;
+  bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
+  // transform: translateX(-50%);
   z-index: 1600;
   overflow: hidden;
   width: 100%;
