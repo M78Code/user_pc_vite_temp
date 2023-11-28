@@ -351,13 +351,12 @@ export function get_handicap_index_by(match) {
             // 网球csid 5  让盘hpid 154
             if (!hl_item || !hl_item.ol) {
                 if (match.csid == 5) {
-                    hp_item = match.hps.filter((item) => item.hpid == 154)[0];
+                    hp_item = hps.filter((item) => item.hpid == 154)[0];
                     if (hp_item) {
-                        hl_item = hp_item.hl[0];
+                        hl_item =  lodash.get(hp_item,'hl[0]')||lodash.get(hp_item,'hl')
                     }
                 }
             }
-
             if (hl_item && hl_item.ol) {
                 let found_i = 0;
                 hl_item.ol.forEach((ol_item, i) => {
