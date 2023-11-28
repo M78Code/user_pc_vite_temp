@@ -4,7 +4,7 @@
     <div class="current-filter-list" @scroll="on_scroll">
       <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.label">
         <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label }">
-          {{ $t(item.value, {month: item.month, day: item.day}) }}
+          {{ $t(item.value, {month: $t(`ouzhou.time.month_` + item.month), day: item.day}) }}
           <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label}"></div>
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
@@ -77,8 +77,8 @@
           label: date_time,
           value: i == 0 ? 'ouzhou.match.tomorrow' : 'ouzhou.time.date',
           type: 3,
-          month: i == 0 ? '' : month,
-          day: i == 0 ? '' : day
+          month: month,
+          day: day
         };
     }
    

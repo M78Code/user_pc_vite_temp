@@ -65,28 +65,19 @@
           <div class="actionBtns">
             <!-- 重置 -->
             <p class="resetBtn" >
-              <template>
-                <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top.png" alt="">
-                <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top_gray.png" alt="">
-              </template>
-              <template>
-                <img @click="resetSlot" class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm.png" alt="">
-                <img class="btm" v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm_gray.png" alt="">
-              </template>
-
+              <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top.png" alt="">
+              <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top_gray.png" alt="">
+              <img @click="resetSlot" class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm.png" alt="">
+              <img class="btm" v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm_gray.png" alt="">
               <span>{{_.get(currentSlotData[currentSlotIndex], `resetTicketNumber`)}}张{{_.get(currentSlotData[currentSlotIndex], `resetTicketName`)}}</span>
             </p>
             <!-- 开始滚动 -->
             <p v-if="!_.get(currentSlotData[currentSlotIndex], 'beforeGameResult') || !is_init" class="startScreen" >
-              <template>
                 <!-- 置灰按钮 -->
-                <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top_gray.png" alt="">
-                <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top.png" alt="">
-              </template>
-              <template>
-                <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm_gray.png" alt="">
-                <img @click="start('start')" class="btm" v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png" alt="">
-              </template>
+              <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top_gray.png" alt="">
+              <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top.png" alt="">
+              <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm_gray.png" alt="">
+              <img @click="start('start')" class="btm" v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png" alt="">
               <span>{{_.get(currentSlotData[currentSlotIndex], 'lotteryNum')}}张{{_.get(currentSlotData[currentSlotIndex], 'ticketName')}}</span>
             </p>
             <!-- 确认领取 -->
