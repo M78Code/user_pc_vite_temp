@@ -281,14 +281,15 @@ export const useGetGlobal = ({  back_to }) => {
         if (!details.auto_swich_match) return;
         let { mid = -1, csid: sportId, tid } = data || {};
         // 详情时重载页面
+        debugger
         if (cur_page == "details" || cur_page == "video") {
           if (mid && mid != -1) {
             if (cur_page == "details") {
-              router.push({
+              router.replace({
                 name: "details",
                 params: {
-                  mid:"2920918", 
-                  tid:"32722",
+                  mid:"2932286", 
+                  tid:"266",
                   csid: 1,
                 },
               });
@@ -302,11 +303,20 @@ export const useGetGlobal = ({  back_to }) => {
             if (lodash.isFunction(back_to)) {
               // back_to(false);
             }
+            router.replace({
+              name: "details",
+              params: {
+                mid:"2932286", 
+                tid:"266",
+                csid: 1,
+              },
+            });
           }
           return;
         }
         //mid更新触发
-        // useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS) 
+        console.log(MITT_TYPES,'MITT_TYPES');
+        useMittEmit(MITT_TYPES.EMIT_SWITCH_MATCH) 
         // 切换右侧赛事
         let playId = details_params.value.play_id;
         MatchDetailCalss.set_match_details_params({

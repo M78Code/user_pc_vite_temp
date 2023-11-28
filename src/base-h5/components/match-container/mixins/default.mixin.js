@@ -153,6 +153,10 @@ export default defineComponent({
     show_newer_edition () {
       return standard_edition.value == 1 || this.main_source == 'detail_match_list';
     },
+    // 是否显示进球动画
+    is_show_goal_event () {
+      return this.is_show_home_goal || this.is_show_away_goal
+    },
     // 是否是 拳击 或者其他球种
     match_of_list_ascertain ()  {
       if (MenuData.current_menu != 28 && this.match_of_list.csid == 12 && this.match_of_list.hps.length > 1) {
@@ -239,13 +243,13 @@ export default defineComponent({
     }
   },
   watch: {
-    match_of_list: {
-      deep: true,
-      handler (c_match) {
-        this.media_button_button_type_check()
-        this.mmp_map_title = matchListClass.match_period_map(c_match);
-      }
-    },
+    // match_of_list: {
+    //   deep: true,
+    //   handler (c_match) {
+    //     this.media_button_button_type_check()
+    //     this.mmp_map_title = matchListClass.match_period_map(c_match);
+    //   }
+    // },
     'match_of_list.msc': {
       immediate: true,
       deep: true,
@@ -260,34 +264,28 @@ export default defineComponent({
       }
     },
     // 监听主队比分变化
-    home_score: {
-      deep: true,
-      handler (new_,old_) {
-        if (this.is_first_coming) return;
-        if (this.match_of_list.csid != 1) return;
-        if (this.get_footer_sub_changing) return;
-        if (this.match_changing) return;
-        if (new_ > 0 && new_ != old_ && old_ !== null && (menu_type.value == 1 || menu_type.value == 3)) {
-          this.hide_away_goal()
-          this.is_show_home_goal = true
-          this.clear_goal()
-        }
+    home_score (new_,old_) {
+      if (this.is_first_coming) return;
+      if (this.match_of_list.csid != 1) return;
+      if (this.get_footer_sub_changing) return;
+      if (this.match_changing) return;
+      if (new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
+        this.hide_away_goal()
+        this.is_show_home_goal = true
+        this.clear_goal()
       }
     },
     // 监听客队比分变化、
-    away_score: {
-      deep: true,
-      handler (new_,old_) {
-        if (this.is_first_coming) return;
-        if (this.match_of_list.csid != 1) return;
-        if (this.get_footer_sub_changing) return;
-        if (this.match_changing) return;
+    away_score (new_,old_) {
+      if (this.is_first_coming) return;
+      if (this.match_of_list.csid != 1) return;
+      if (this.get_footer_sub_changing) return;
+      if (this.match_changing) return;
 
-        if (new_ > 0 && new_ != old_ && old_ !== null && (menu_type.value == 1 || menu_type.value == 3)) {
-          this.hide_home_goal()
-          this.is_show_away_goal = true
-          this.clear_goal()
-        }
+      if (new_ > 0 && new_ != old_ && old_ !== null && [1,3].includes(+menu_type.value) && this.match_of_list.is_ws) {
+        this.hide_home_goal()
+        this.is_show_away_goal = true
+        this.clear_goal()
       }
     },
     // 监听主队红牌比分变化
@@ -771,7 +769,7 @@ export default defineComponent({
       // 比分处理
       // 修改 msc_obj 
       const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list.msc, true)
-      
+
       // 比分处理
       const { home_score, away_score } = MatchUtils.get_match_score({ ...this.match_of_list, msc_obj })
 

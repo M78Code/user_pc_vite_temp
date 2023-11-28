@@ -62,7 +62,7 @@ const breadCrumbs_firstOne = computed(()=>{
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
         firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.i18n : props.detail_info.csna
     }
-    return firstOneName
+    return String(firstOneName||"-")
 })
 
 const jumpTo = ()=>{
