@@ -1,14 +1,9 @@
-<!--
- * @Date: 2022-03-08 19:14:28
- * @FilePath: /user-h5/src/public/activity_page/activity_task/components/compose.vue
- * @Description:
- * @Author:
--->
+ 
 
 <template>
   <div class="slot_machine_scroll" :class="is_has_scroll && 'has-scroll'" @touchmove="handleTouch">
     <!-- 关闭按钮 -->
-    <img @click="$emit('close_compose')"  src="image/bw3/activity_page_imgs/slot_machine/close_top.png" alt="" class="close" width="38">
+    <img @click="$emit('close_compose')"  src="activity/yazhou-h5/activity/slot_machine/close_top.png" alt="" class="close" width="38">
     <div class="compose-content">
       <!-- 调试位置用 -->
       <!-- <div class="test">
@@ -21,12 +16,12 @@
         <div class="two_lottories_num">
           <!-- 合成材料名称和数量 -->
           <p>
-            <img  src="image/bw3/activity_page_imgs/slot_machine/normal_voucher.png" alt="">
+            <img  src="activity/yazhou-h5/activity/slot_machine/normal_voucher.png" alt="">
             {{currentSynthConfig.baseTicketName}}: {{currentSynthConfig.ownBaseTicket}}
           </p>
           <!-- 幸运奖券 -->
           <p>
-            <img  src="image/bw3/activity_page_imgs/slot_machine/lucky_voucher.png" alt="">
+            <img  src="activity/yazhou-h5/activity/slot_machine/lucky_voucher.png" alt="">
             幸运奖券: {{luckyTicket}}
           </p>
         </div>
@@ -121,10 +116,10 @@
             </div>
             <div class="tips">
               <p>
-                <img  src="image/bw3/activity_page_imgs/slot_machine/msg.svg" alt="" />
+                <img  src="activity/yazhou-h5/activity/slot_machine/msg.svg" alt="" />
                 每消耗{{currentSynthConfig.baseTicketNum}}张{{currentSynthConfig.baseTicketName}}可以合成1张{{currentSynthConfig.ticketName}}</p>
               <p>
-                <img  src="image/bw3/activity_page_imgs/slot_machine/msg.svg" alt="" />
+                <img  src="activity/yazhou-h5/activity/slot_machine/msg.svg" alt="" />
                 每消耗{{currentSynthConfig.syntheticImproveNumber}}张幸运奖券，即可提升{{currentSynthConfig.syntheticImproveRate}}%的合成成功率</p>
             </div>
           </div>
@@ -142,7 +137,7 @@
         <!-- 合成率提升完成 -->
         <div class="upgrade" v-else-if="step == 'upgradeSucc'">
           <span>{{currentSynthConfig.syntheticRate}}%</span>
-          <img  src="image/bw3/activity_page_imgs/slot_machine/top.svg" alt="">
+          <img  src="activity/yazhou-h5/activity/slot_machine/top.svg" alt="">
           <span>提升完成！</span>合成成功率已提升到了{{currentSynthConfig.syntheticRate}}%
         </div>
         <div class="synthSucc" v-else>
@@ -156,7 +151,7 @@
             <span @click="$emit('close_compose')">返回</span>
           </p>
           <p class="tipsMsg">
-            <img  src="image/bw3/activity_page_imgs/slot_machine/msg.svg" alt="" />
+            <img  src="activity/yazhou-h5/activity/slot_machine/msg.svg" alt="" />
             每{{currentSynthConfig.baseTicketNum}}张{{currentSynthConfig.baseTicketName}}可以合成1张{{currentSynthConfig.ticketName}}</p>
         </div>
         <!-- 粒子扩散 -->
@@ -166,14 +161,14 @@
       </div>
     </div>
     <!-- 选中卡片 -->
-    <audio  src="image/bw3/activity_page_imgs/slot_machine/media/selectedCard.mp3" ref="selectedCard"></audio>
+    <audio  src="activity/yazhou-h5/activity/slot_machine/media/selectedCard.mp3" ref="selectedCard"></audio>
     <!-- 卡片旋转展示 -->
-    <audio  src="image/bw3/activity_page_imgs/slot_machine/media/showCard.mp3" ref="showCard"></audio>
+    <audio  src="activity/yazhou-h5/activity/slot_machine/media/showCard.mp3" ref="showCard"></audio>
   </div>
 </template>
 
 <script>
-import {activity_task_api} from "../api/taskapi";
+import {api_activity} from "project/activity/src/public/api/index.js";
 import slider from "./slider.vue";
 import lottery from "./lottery.vue";
 // 生成随机数
@@ -212,19 +207,19 @@ export default {
         '1':{
           type:1,
           name:'白银奖券',
-          img: "image/bw3/activity_page_imgs/slot_machine/silver_card.png",
+          img: "activity/yazhou-h5/activity/slot_machine/silver_card.png",
           key:'silver'
         },
         '2':{
           type:2,
           name:'黄金奖券',
-          img: "image/bw3/activity_page_imgs/slot_machine/gold_card.png",
+          img: "activity/yazhou-h5/activity/slot_machine/gold_card.png",
           key:'gold'
         },
         '3':{
           type:3,
           name:'钻石奖券',
-          img: "image/bw3/activity_page_imgs/slot_machine/diamond_card.png",
+          img: "activity/yazhou-h5/activity/slot_machine/diamond_card.png",
           key:'diamond'
         },
       }
@@ -271,7 +266,7 @@ export default {
     get_lottory_merge() {
       // this.$refs.showCard.play();
       this.$emit('play_show_card')
-      activity_task_api.get_synth_config().then(res => {
+      api_activity.get_synth_config().then(res => {
         let {code, data} = {...res}
         if (code == 200) {
           if (_.get(data, 'synthConfig.length')) {
@@ -338,7 +333,7 @@ export default {
         this.$toast("当前幸运奖券数不足", 1500);
         return;
       }
-      activity_task_api.get_improve_rate({ticketId: this.currTicketId}).then(res => {
+      api_activity.get_improve_rate({ticketId: this.currTicketId}).then(res => {
         let {code, data} = {...res}
         if (code == 200) {
           this.luckyTicket = data.luckyTicket;
@@ -372,7 +367,7 @@ export default {
         synthCount,
         ticketId: this.currTicketId
       }
-      activity_task_api.get_synth_ticket(params).then(res => {
+      api_activity.get_synth_ticket(params).then(res => {
         let {code, data} = {...res}
         if (code == 200) {
           this.is_show_card = false

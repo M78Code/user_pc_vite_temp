@@ -10,14 +10,14 @@
     <div class="introduction text-666">
       <div class="active-object">
       <div>
-        <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动对象：</span>
           <span>本场馆全体会员</span>
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动时间：</span>
           <template v-if="get_user.activityList[activityIndex].period == 1">
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span style="width: 1.91rem">活动内容：</span>
           <span>本场馆内完成任务获得的普通奖券，可在合成系统中向上合成为白银、黄金、钻石奖券，用以参加对应档次的老虎机抽奖</span>
@@ -74,12 +74,12 @@
         </div>
         <!-- 两边的小三角形 -->
         <p class="triangles" v-if="triangle_fade > 0">
-          <img class="left" :src="(`${ $g_image_preffix }/image/bw3/activity_page_imgs/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
-          <img class="right" :src="(`${ $g_image_preffix }/image/bw3/activity_page_imgs/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
+          <img class="left" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
+          <img class="right" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
         </p>
         <p class="triangles" v-else>
-          <img class="left" :src="(`${ $g_image_preffix }/image/bw3/activity_page_imgs/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
-          <img class="right" :src="(`${ $g_image_preffix }/image/bw3/activity_page_imgs/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
+          <img class="left" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
+          <img class="right" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
         </p>
 
         <!-- 当前奖金 -->
@@ -91,12 +91,12 @@
           <!-- 重置 -->
           <p class="resetBtn" @click="resetSlot">
             <template>
-              <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  src="image/bw3/activity_page_imgs/slot_machine/reset_btn_top.png" alt="">
-              <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  src="image/bw3/activity_page_imgs/slot_machine/reset_btn_top_gray.png" alt="">
+              <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  src="activity/yazhou-h5/activity/slot_machine/reset_btn_top.png" alt="">
+              <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  src="activity/yazhou-h5/activity/slot_machine/reset_btn_top_gray.png" alt="">
             </template>
             <template>
-              <img class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')"  src="image/bw3/activity_page_imgs/slot_machine/reset_btn_btm.png" alt="">
-              <img class="btm" v-else  src="image/bw3/activity_page_imgs/slot_machine/reset_btn_btm_gray.png" alt="">
+              <img class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')"  src="activity/yazhou-h5/activity/slot_machine/reset_btn_btm.png" alt="">
+              <img class="btm" v-else  src="activity/yazhou-h5/activity/slot_machine/reset_btn_btm_gray.png" alt="">
             </template>
               <span>{{_.get(currentSlotData[currentSlotIndex], `resetTicketNumber`)}}张{{_.get(currentSlotData[currentSlotIndex], `resetTicketName`)}}</span>
             </p>
@@ -104,28 +104,28 @@
           <p v-if="!_.get(currentSlotData[currentSlotIndex], 'beforeGameResult') || !is_init" class="startScreen" @click="start('start')">
             <template>
               <!-- 置灰按钮 -->
-              <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top"  src="image/bw3/activity_page_imgs/slot_machine/start_btn_top_gray.png" alt="">
-              <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  src="image/bw3/activity_page_imgs/slot_machine/start_btn_top.png" alt="">
+              <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top"  src="activity/yazhou-h5/activity/slot_machine/start_btn_top_gray.png" alt="">
+              <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  src="activity/yazhou-h5/activity/slot_machine/start_btn_top.png" alt="">
             </template>
             <template>
-              <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0"  src="image/bw3/activity_page_imgs/slot_machine/start_btn_btm_gray.png" alt="">
-              <img class="btm" v-else  src="image/bw3/activity_page_imgs/slot_machine/start_btn_btm.png" alt="">
+              <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0"  src="activity/yazhou-h5/activity/slot_machine/start_btn_btm_gray.png" alt="">
+              <img class="btm" v-else  src="activity/yazhou-h5/activity/slot_machine/start_btn_btm.png" alt="">
             </template>
             <span>{{_.get(currentSlotData[currentSlotIndex], 'lotteryNum')}}张{{_.get(currentSlotData[currentSlotIndex], 'ticketName')}}</span>
           </p>
           <!-- 确认领取 -->
           <p v-else class="confirm" @click="start('confirm')">
-            <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  src="image/bw3/activity_page_imgs/slot_machine/confirm_btn_top.png" alt="">
-            <img class="btm"  src="image/bw3/activity_page_imgs/slot_machine/start_btn_btm.png" alt="">
+            <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  src="activity/yazhou-h5/activity/slot_machine/confirm_btn_top.png" alt="">
+            <img class="btm"  src="activity/yazhou-h5/activity/slot_machine/start_btn_btm.png" alt="">
           </p>
         </div>
         <!-- 摇杆 -->
         <div class="rocker">
-          <img :src="(`${ $g_image_preffix }/image/bw3/activity_page_imgs/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1}/0${rocker_anim_index}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1}/0${rocker_anim_index}.png`)" alt="">
         </div>
         <!-- 老虎机周围的装饰 -->
-        <img class="goldmoney"  src="image/bw3/activity_page_imgs/slot_machine/goldmoney.png" alt="">
-        <img class="footbaler"  src="image/bw3/activity_page_imgs/slot_machine/footbaler.png" alt="">
+        <img class="goldmoney"  src="activity/yazhou-h5/activity/slot_machine/goldmoney.png" alt="">
+        <img class="footbaler"  src="activity/yazhou-h5/activity/slot_machine/footbaler.png" alt="">
         <!-- 彩灯 -->
         <span v-for="(item, index) in new Array(26)" :key="index" class="normal_light"
         :class="[`normal_light_${index + 1}`,
@@ -137,8 +137,8 @@
       <!-- 切换老虎机的按钮 -->
       <div class="switch_slots" v-if="currentSlotData.length">
         <p @click="switch_slots(index)" v-for="(item, index) in currentSlotData" :key="index">
-          <img v-if="currentSlotIndex == index && index < 3" :src="(`${ $g_image_preffix }/image/bw3/activity_page_imgs/slot_machine/rocker_${item.slotId}.png`)" />
-          <img v-else  src="image/bw3/activity_page_imgs/slot_machine/grey_rocker.png" />
+          <img v-if="currentSlotIndex == index && index < 3" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/rocker_${item.slotId}.png`)" />
+          <img v-else  src="activity/yazhou-h5/activity/slot_machine/grey_rocker.png" />
           <span :class="currentSlotIndex == index ? 'active': ''">
             <span>{{item.slotName}}</span>
             <br>
@@ -286,7 +286,7 @@
               />
             </div>
           </div>
-          <img class="close"  @click="gameHistory = false"  src="image/wwwassets/activity/lucky/close.png"/>
+          <img class="close"  @click="gameHistory = false"  src="activity/yazhou-h5/activity/lucky/close.png"/>
         </div>
       </div>
     </q-dialog>
@@ -310,19 +310,19 @@
       </div>
     </div>
     <!-- 背景音循环 -->
-    <audio  src="image/bw3/activity_page_imgs/slot_machine/media/slot_bg_loop.mp3" ref="slot_bg_loop" autoplay loop />
+    <audio  src="activity/yazhou-h5/activity/slot_machine/media/slot_bg_loop.mp3" ref="slot_bg_loop" autoplay loop />
     <!-- 开始滚动按钮按下 -->
-    <audio  src="image/bw3/activity_page_imgs/slot_machine/media/start_btn.mp3" ref="audioStart"></audio>
+    <audio  src="activity/yazhou-h5/activity/slot_machine/media/start_btn.mp3" ref="audioStart"></audio>
     <!-- 摇杆 -->
-    <audio  src="image/bw3/activity_page_imgs/slot_machine/media/after_start_btn.mp3" ref="afterAudioStart"></audio>
-    <audio  src="image/bw3/activity_page_imgs/slot_machine/media/showCard.mp3" ref="showCard"></audio>
+    <audio  src="activity/yazhou-h5/activity/slot_machine/media/after_start_btn.mp3" ref="afterAudioStart"></audio>
+    <audio  src="activity/yazhou-h5/activity/slot_machine/media/showCard.mp3" ref="showCard"></audio>
   </div>
 </template>
 <script>
-import {activity_task_api} from "../api/taskapi";
+import {api_activity} from "project/activity/src/public/api/index.js";
 import active_count_down from "./active_count_down.vue";
 import number_scroll from './number_scroll.vue';
-import data_pager from "project/activity/src/public/components/common/data_pager.vue";
+import data_pager from "project/activity/src/components/data_pager.vue";
 import compose from './compose.vue';
 import common from "project/activity/src/public/mixins/constant/module/common.js";
 import formartmixin from 'project/activity/src/public/mixins/module/formartmixin.js';
@@ -556,7 +556,7 @@ export default {
      * * type 0默认情况，不做特殊处理 1抽奖后的调用，不需要判断是否有需要领取的结果
      */
     get_activity_slot_config(type = 0) {
-      activity_task_api.get_activity_slot_config().then(res => {
+      api_activity.get_activity_slot_config().then(res => {
         let {code, data} = {...res}
         if (code == 200 && _.get(data, 'length')) {
           this.currentSlotData = data;
@@ -634,7 +634,7 @@ export default {
       this.gameHistoryLists.params.type = Number(type);
       this.gameHistoryLists.params.current = Number(current);
       this.historyDataState = 'loading';
-      activity_task_api.get_activity_slot_get_game_record(params).then(res => {
+      api_activity.get_activity_slot_get_game_record(params).then(res => {
         let {code, data} = {...res}
         if (code == 200 && _.get(data, 'records')) {
           this.gameHistory = true;
@@ -705,7 +705,7 @@ export default {
         this.runResetSlotAnim = false;
         clearTimeout(timer)
       }, 800);
-      activity_task_api.get_activity_slot_resetprop({slotId: this.currentSlotData[this.currentSlotIndex].slotId}).then(res => {
+      api_activity.get_activity_slot_resetprop({slotId: this.currentSlotData[this.currentSlotIndex].slotId}).then(res => {
         let {code, data} = {...res}
         if (code == 200) {
           // 新的道具名字
@@ -776,9 +776,9 @@ export default {
         if (this.tiger_status == 'stop') {
           this.tiger_status = 'runing'
         }
-        api_ = activity_task_api.get_activity_slot_spin({slotId: this.currentSlotData[this.currentSlotIndex].slotId})
+        api_ = api_activity.get_activity_slot_spin({slotId: this.currentSlotData[this.currentSlotIndex].slotId})
       } else {
-        api_ = activity_task_api.get_activity_slot_get_award({slotId: this.currentAwardSlotId})
+        api_ = api_activity.get_activity_slot_get_award({slotId: this.currentAwardSlotId})
       }
       api_.then(res => {
         let {code, data} = {...res}

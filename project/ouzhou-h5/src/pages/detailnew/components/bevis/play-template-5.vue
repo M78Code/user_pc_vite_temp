@@ -25,27 +25,37 @@ const props = defineProps({
         default: () => ({})
     }
 })
+
+let betInformation = {
+    others: [],
+    assemble: [],
+};
+let baseData = []
 const AssembleData = computed(() => {
-    let betInformation = {
+    betInformation = {
         others: [],
         assemble: [],
-    };
-    const {hl = [], title} = props.item_data;
-    const others = hl[0].ol.filter(ol_item => ol_item.ot == 'Other');
-    const assemble = hl[0].ol.filter(ol_item => ol_item.ot != 'Other');
-    if (others.length) {
-        betInformation.others = lodash.uniqWith(others, 'oid')
     }
-    const baseArr = _.groupBy(assemble.filter(i => i.os != 3), 'otd')
+    baseData = []
+    let ol_list = []
+    const {hl = [], title} = props.item_data;
 
-    title.forEach(item => {
-        betInformation.push({
-            osn: item.osn,
-            otd: item.otd,
-            information: baseArr[item.otd]
-        })
+    hl.forEach(item => {
+        ol_list.push(...item.ol)
     })
 
+
+    baseData = lodash.groupBy(ol_list.filter(i => i.os != 3), 'otd')
+
+    title.forEach(item => {
+        betInformation.assemble.push({
+            osn: item.osn,
+            otd: item.otd,
+            information: baseData[item.otd]
+        })
+    })
+    betInformation.others = baseData['0']
+    console.log("betInformation=baseData卡面", betInformation)
     return betInformation
 })
 
@@ -53,134 +63,87 @@ const AssembleData = computed(() => {
 * 根据title把hl里面每一组的大小合并到title里面
 * 所有数据 大小对应
 * */
-const matchInfo = computed(() => {
-    const {title, hl} = props.item_data
-    title.forEach(titleChild => {
-        titleChild.information = new Array()
-        hl.forEach(hlChild => {
-            if (!!hlChild && (hlChild.ol || []).length) {
-                titleChild.information.push(hlChild.ol.find(olChild => olChild.otd == titleChild.otd))
-            }
-        })
-    })
-
-    console.log(title, "template5--title")
-    return title
-})
 
 const emits = defineEmits(['bet_click_'])
 const go_betting = (data) => {
     if (data.os == 2) return;
     emits("bet_click_", data, props.item_data.hpn);
 }
-setTimeout(function (){
-    console.log("props")
-},2000)
+
 </script>
 
 <template>
+    <span v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</span>
     <section class="template5">
-        <nav class="title">
-            <div class="title-item"></div>
-            <div class="title-item"></div>
-            <div class="title-item"></div>
-        </nav>
+        <div class="assemble">
+            <ul class="list" v-for="assembleChild of AssembleData.assemble" :key="assembleChild?.otd">
+                <li class="title">{{ assembleChild?.osn }}</li>
+                <template v-for="info of assembleChild?.information" :key="info?.oid">
+                    <template v-if="info.os == 1">
+                        <li class="bet" @click="go_betting(info)"
+                            :class="{ 'is-active': BetData.bet_oid_list.includes(info?.oid ) }">
+                            <span class="on-text">{{ info.on }}</span>
+                            <span class="ov-text">{{ compute_value_by_cur_odd_type(info.ov, info._hpid, '', MatchDetailCalss.params.sportId) }}</span>
+                        </li>
+                    </template>
+                    <figure v-if="info?.os == 2 || info._hs == 11">
+                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                    </figure>
+                </template>
+            </ul>
+        </div>
+        <ul class="others" v-if="!!AssembleData.others">
+            <template v-for="otherChild of AssembleData.others">
+                <li v-if="otherChild.os == 1 && compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, '', MatchDetailCalss.params.sportId)"
+                    class="bet" @click="go_betting(otherChild)"
+                    :class="{ 'is-active': BetData.bet_oid_list.includes(otherChild?.oid ) }">
+                    <span class="on-text">{{ otherChild.on }}</span>
+                    <span class="ov-text">{{ compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, '', MatchDetailCalss.params.sportId) }}</span>
+                </li>
+                <figure class="bet" v-if="otherChild?.os == 2">
+                    <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                </figure>
+            </template>
+        </ul>
     </section>
 
 </template>
 
 <style scoped lang="scss">
+@import "basicTemplateStyle";
+
 .template5 {
     width: 100%;
-    padding: 8px;
+    padding: 8px 0;
     box-sizing: border-box;
 
-    .list {
+    .assemble {
         display: flex;
-        height: 48px;
 
-        &-title {
-            width: 120px;
-            height: 48px;
-            line-height: 48px;
-            text-align: center;
-            background: var(--q-gb-bg-c-10);
-            flex-shrink: 0;
-        }
-
-        &-bet {
+        .list {
             flex: 1;
-            height: 48px;
-            display: flex;
-            overflow-x: scroll;
 
-            &--item {
-                min-width: 88px;
-                max-width: 100%;
-                height: 48px;
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                background-color: var(--q-gb-bg-c-2);
-                border: 1px solid var(--q-gb-bd-c-10);
-
-                span {
-                    font: {
-                        size: 13px;
-                        family: DIN;
-                        weight: 500;
-                    }
-
-                    &:nth-child(1) {
-                        color: var(--q-gb-t-c-4);
-                        overflow: hidden;
-                    }
-
-                    &:nth-last-child(2) {
-                        font-size: 12px;
-                    }
-                }
-
-                /*&:hover {
-                    background: #fff1e6;
-                }*/
+            .title {
+                height: 40px;
+                text-align: center;
+                line-height: 40px;
+                background: var(--q-gb-bg-c-10);
             }
 
-            .is-active {
-                background-color: var(--q-gb-bg-c-1);
-                color: var(--q-gb-t-c-2);
-
-                span {
-
-                    &:nth-child(1) {
-                        color: var(--q-gb-t-c-4);
-                        overflow: hidden;
-                    }
-
-                    &:nth-last-child(2) {
-                        color: var(--q-gb-bd-c-2);
-                    }
-                }
-            }
         }
     }
-
-    .title {
-        width: 120px;
-
-        &-item {
-            width: 100%;
-            height: 48px;
-            text-align: center;
-            line-height: 48px;
-            border: 1px solid var(--q-color-border-color-56);
-        }
-    }
-
-
 }
+
+.bet {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--q-gb-bg-c-2);
+    border: 1px solid var(--q-gb-bd-c-10);
+    position: relative;
+}
+
 
 .lock {
     width: 16px;
@@ -189,11 +152,4 @@ setTimeout(function (){
     top: 2px;
 }
 
-.on {
-    color: var(--q-gb-t-c-4);
-}
-
-.ov {
-    color: var(--q-gb-t-c-1);
-}
 </style>
