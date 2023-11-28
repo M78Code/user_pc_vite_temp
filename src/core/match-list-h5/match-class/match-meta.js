@@ -18,7 +18,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/te
 import { useMittEmit, MITT_TYPES,project_name, MenuData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
-  MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
+  MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5, get_punish_score
 } from 'src/core'
 
 class MatchMeta {
@@ -253,14 +253,19 @@ class MatchMeta {
     const is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
     // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
     const handicap_index = MatchUtils.get_handicap_index_by(match);
-    console.log(handicap_index)
     const { home_score, away_score } = MatchUtils.get_match_score(match)
+    const { home_red_score, away_red_score, home_yellow_score, away_yellow_score } = MatchUtils.get_match_red_yellow_card(match)
+    console.log(home_red_score, away_red_score, home_yellow_score, away_yellow_score)
     return {
       source_index: index,
       is_show_no_play,
       is_show_league,
       away_score,
       home_score,
+      home_red_score,
+      away_red_score,
+      home_yellow_score,
+      away_yellow_score,
       handicap_index
     }
   }

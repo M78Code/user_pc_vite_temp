@@ -249,6 +249,34 @@ class MatchUtils {
     return result
   }
   /**
+   * @description 获取赛事红黄牌
+   * @param {*} match 
+   */
+  get_match_red_yellow_card (match) {
+    const { msc = [] } = match
+    let home_red_score = ''
+    let away_red_score = ''
+    let home_yellow_score = ''
+    let away_yellow_score = ''
+    if (msc && msc.length > 0) {
+      match.msc.forEach(score => {
+        //红牌
+        if (score.indexOf('S11|') > -1) {
+          let score2 = score.split('S11|')[1];
+          home_red_score = score2.split(':')[0] * 1;
+          away_red_score = score2.split(':')[1] * 1;
+        }
+        //黄牌
+        if (score.indexOf('S12|') > -1) {
+          let score2 = score.split('S12|')[1];
+          home_yellow_score = score2.split(':')[0] * 1;
+          away_yellow_score = score2.split(':')[1] * 1;
+        }
+      });
+    }
+    return { home_red_score, away_red_score, home_yellow_score, away_yellow_score }
+  }
+  /**
    * @description: 获取赛事的让球方
    * @param {Object} match
    * @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
