@@ -1,7 +1,10 @@
-<!-- ms: 0开 1封 2关 11锁 -->
-<!-- hs: 0开 1封 2关 11锁 -->
-<!-- os: 1开 2封 3隐藏不显示不占地方-->
-<!-- 按ol循环，不考虑按tittle循环-->
+<!-- 
+    ms: 0开 1封 2关 11锁 
+    hs: 0开 1封 2关 11锁
+    os: 1开 2封 3隐藏不显示不占地方
+    有title的情况按照title循环 
+    没有title的情况按ol循环
+-->
 
 <script setup>
 import olStatus from "../ol_status.vue";
@@ -28,7 +31,7 @@ const go_betting = (data) => {
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-    <div class="template0">
+    <div class="component play-template play-template-0 template0">
         <ul class="list">
             <template v-for="hlChild in item_data.hl" :key="hlChild.hid">
                 <li v-for="olChild in hlChild.ol.filter(i=>i.os != 3)" :key="olChild?.oid" @click="go_betting(olChild)"
@@ -59,7 +62,7 @@ const go_betting = (data) => {
 @import "basicTemplateStyle";
 .template0{
     display: grid;
-    padding: 8px;
+    padding: 8px 0;
     box-sizing: border-box;
     overflow: hidden;
     .list{

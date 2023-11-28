@@ -31,15 +31,14 @@
                                                         :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                                                     >
                                                         <div class="ellipsis remark details_t_color6 fz_13 odds-on">
-                              <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
-                                <!-- {{ol_item.on || ol_item.otv || ol_item.ott}} -->
-                                  <!-- 修改为: ott+on的值 来显示  下面的用法相同 -->
-                                {{ ol_item.ott }}{{ ol_item.on }}
-                              </span>
+                                                            <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
+                                                                <!-- {{ol_item.on || ol_item.otv || ol_item.ott}} -->
+                                                                <!-- 修改为: ott+on的值 来显示  下面的用法相同 -->
+                                                                {{ ol_item.ott }}{{ ol_item.on }}
+                                                            </span>
                                                         </div>
                                                         <div class="text-right odds-wrap">
-                                                            <odds-new :item_data="item_data"
-                                                                      :ol_data="ol_item"></odds-new>
+                                                            <odds-new :item_data="item_data" :ol_data="ol_item"></odds-new>
                                                         </div>
                                                     </div>
                                                     <!-- 主程序 end -->
