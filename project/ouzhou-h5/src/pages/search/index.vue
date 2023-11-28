@@ -6,7 +6,7 @@
 				v-model="input_value" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
 			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt="" class="clear_value"
-			  @click.stop.prevent.self="clear_value" v-show="input_value.length > 0"/>
+				@click.stop.prevent.self="clear_value" v-show="input_value.length > 0" />
 			<span class="close_btn" @click="go_back">{{ i18n_t('ouzhou.search.close') }}</span>
 		</div>
 		<!-- 搜索 历史 -->
@@ -94,23 +94,25 @@
 									<div style="display: flex;flex-direction: row; flex: 1">
 										<div class="flex_1"
 											v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-											<div>{{ item?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
+											<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 											<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 										</div>
 										<div class="flex_1" v-else>
 											<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 										</div>
+										<template v-if="item.csid != '2'">
+											<div class="flex_1"
+												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+											</div>
+											<div class="flex_1" v-else>
+												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+											</div>
+										</template>
 										<div class="flex_1"
 											v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-											<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-											<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
-										</div>
-										<div class="flex_1" v-else>
-											<img class="lock" :src="odd_lock_ouzhou" alt="lock">
-										</div>
-										<div class="flex_1"
-											v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-											<div>{{ item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+											<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 											<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 										</div>
 										<div class="flex_1" v-else>
@@ -148,24 +150,27 @@
 									</div>
 									<div style="display: flex;flex-direction: row; flex: 1">
 										<div class="flex_1"
-											v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-											<div>{{ i?.hps?.[0].hl?.[0].ol?.[0]?.on }}</div>
+											v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.os === 1">
+											<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : i?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
 											<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 										</div>
 										<div class="flex_1" v-else>
 											<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 										</div>
+										<template v-if="i.csid != '2'">
+											<div class="flex_1"
+												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+											</div>
+											<div class="flex_1" v-else>
+												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+											</div>
+										</template>
 										<div class="flex_1"
 											v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-											<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-											<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
-										</div>
-										<div class="flex_1" v-else>
-											<img class="lock" :src="odd_lock_ouzhou" alt="lock">
-										</div>
-										<div class="flex_1"
-											v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-											<div>{{ i?.hps?.[0].hl?.[0].ol?.[1]?.on }}</div>
+											<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+											<!-- i?.hps?.[0].hl?.[0].ol?.[1]?.on -->
 											<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 										</div>
 										<div class="flex_1" v-else>
@@ -200,32 +205,29 @@
 										<p>{{ format_date_overseas(item.mgt) }}</p>
 									</div>
 									<div style="display: flex;flex-direction: row; flex: 1">
+										<div class="flex_1"
+											v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+											<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[0].on  }}</div>
+											<!-- }}i18n_t('bet.home_win') -->
+											<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+										</div>
+										<div class="flex_1" v-else>
+											<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+										</div>
 										<template v-if="item.csid != '2'">
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i18n_t('bet.home_win') }}</div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 										</template>
-										<template v-else>
-											<span class="score" v-if="item.msc.S1">{{ lodash.get(item, "msc.S1.home", "0")
-											}}-{{ lodash.get(item, "msc.S1.away", "0") }}</span>
-											<span class="time" v-else>{{ (new Date(+item.mgt)).Format($t('time4')) }}</span>
-										</template>
 										<div class="flex_1"
 											v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-											<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-											<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
-										</div>
-										<div class="flex_1" v-else>
-											<img class="lock" :src="odd_lock_ouzhou" alt="lock">
-										</div>
-										<div class="flex_1"
-											v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-											<div>{{ i18n_t('bet.away_win') }}</div>
+											<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+											<!-- i18n_t('bet.away_win')  -->
 											<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 										</div>
 										<div class="flex_1" v-else>
@@ -298,7 +300,7 @@ const clear_value = () => {
 /**
  * 关闭清除tab
  */
-const go_back = () =>{
+const go_back = () => {
 	router.go(-1)
 	store.tabIndex = 0;
 }
@@ -477,6 +479,7 @@ const get_match_base_hps_by_mids = async () => {
 		!(search_data.value?.bowling && search_data.value?.bowling.length > 0)
 	) return;
 	// 拿到所有滚球，联赛，队伍 mid
+	match_mid_Arr = []
 	search_data.value?.teamH5.forEach((item, index) => {
 		match_mid_Arr.push(item.mid)
 	})
@@ -488,6 +491,7 @@ const get_match_base_hps_by_mids = async () => {
 	search_data.value?.bowling.forEach((item, index) => {
 		match_mid_Arr.push(item.mid)
 	})
+	// console.log('match_mid_Arr', match_mid_Arr);
 	if (match_mid_Arr.length < 1) return;
 	// match_mid_Arr 数组去重
 	match_mid_Arr = Array.from(new Set(match_mid_Arr))

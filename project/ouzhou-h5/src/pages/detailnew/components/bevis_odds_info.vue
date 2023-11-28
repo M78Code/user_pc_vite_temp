@@ -49,8 +49,8 @@
         </template>
         <template v-else>
             <div v-if="!loading">
-                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/no-data.png`" alt="">
-                <div class="no-data-text">No Data</div>
+                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/handcip_lock.png`" alt="">
+                <div class="no-data-text"> {{i18n_t('detail.odd_all_closed')}}</div>
             </div>
         </template>
     </div>

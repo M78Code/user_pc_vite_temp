@@ -1,5 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
+		<div v-show="false">{{ BaseData.base_data_version }}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: route.params.sportId })"></div>
 			<div class="matches-title">
@@ -29,7 +30,6 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from 'vue-router';
-import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 
 // route.params.type  1 从联赛列表进入 2 从普通赛事详情进入
@@ -48,20 +48,24 @@ const set_show_leagues = () => {
 		}, { once: true })
 	}
 }
-async function get_league(type){
-	if (route.params.type == 2||type==2) {
-		const list = await get_ouzhou_leagues_data(12)
-		league_list.value=[]
-		list?.map(item => {
+async function get_league(){
+	let date = route.params.type == 1 ? localStorage.getItem('league_hours') : 12
+	const list = await get_ouzhou_leagues_data(date)
+	league_list.value=[]
+	list?.map(item => {
+		if (route.params.type == 1) {
+			if (item.id == localStorage.getItem('league_id')) {
+				league_list.value = item.tournamentList
+			}
+		} else {
 			item.tournamentList?.map(leagues => {
 				league_list.value.push(leagues)
 			})
-		})
-	} else {
-		league_list.value = JSON.parse(localStorage.getItem("league_list"))
-	}
+		}
+	})
+
 }
-const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>get_league(2)).off
+const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>get_league()).off
 watch(() => route.params.type, async () => {
 	get_league()
 }, { immediate: true })
@@ -80,50 +84,10 @@ const getName = () => {
 			name = item.nameText
 		}
 	})
-	return name || MatchLeagueData.league_name.value
+	return name
 }
 const jumpTo = ()=>{
 	router.go(-1)
-}
-
-/**
- * 
- * @param {Object} payload 菜单信息 
- * @description 点击菜单item 存储当前菜单信息
- * @returns {undefind} 无返回值
- */
- const jump_func = (payload ={},type) => {
-  if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
-    return
-  }
-   // 点击菜单的时候如果在详情页应跳转出来先
-  if (['league','details','search'].includes(route.name)) {
-    router.push('/home')
-  }
-  let obj = {
-    lv1_mi : payload.mi,
-    has_mid_menu: true, // 有中间菜单
-    lv2_mi: payload.mi +''+ 2, // 二级菜单id
-    menu_type: type, // 左侧热门或者赛种
-  }
-  //太多了 后续做优化
-  MenuData.set_menu_root(202, true)
-  MenuData.set_is_collect(false)
-  MenuData.set_left_menu_result(obj)
-  MenuData.set_menu_current_mi(obj.lv2_mi)
-  MenuData.set_current_ball_type(payload.mi*1 - 100)
-
-  let mid_config = {
-    ...MenuData.mid_menu_result,
-    md: '',
-    filter_tab: 4001
-  }
-  MenuData.set_mid_menu_result(mid_config)
-
-  nextTick(()=>{
-    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
-  })
-  
 }
 
 </script>

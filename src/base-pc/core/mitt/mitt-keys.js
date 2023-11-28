@@ -383,6 +383,7 @@ export const EMIT_SHOW_SELECT= 'EMIT_SHOW_SELECT'
 /**   赛事详情更新   */
 export const EMIT_SHOW_DETAILS= 'EMIT_SHOW_DETAILS'
 
+
 /**   赛事详情更新一键收起   */
 export const EMIT_SHOW_FOLD= 'EMIT_SHOW_FOLD'
 
@@ -428,3 +429,6 @@ export const EMIT_SET_BET_WS_C106_CHANGE = "EMIT_SET_BET_WS_C106_CHANGE"
 
 // 菜单数量变更
 export const EMIT_SET_BESE_MENU_COUNT_CHANGE = "EMIT_SET_BESE_MENU_COUNT_CHANGE"
+
+/**   切换赛事更新   */
+export const EMIT_SWITCH_MATCH= 'EMIT_SWITCH_MATCH'
