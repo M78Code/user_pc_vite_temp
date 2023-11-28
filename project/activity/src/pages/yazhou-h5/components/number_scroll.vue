@@ -22,7 +22,7 @@
       ></div>
     </div>
     <!-- 老虎机停止时的音效 -->
-    <audio  src="image/bw3/activity_page_imgs/slot_machine/media/num_scroll_stop.mp3" ref="num_scroll_stop"></audio>
+    <audio  src="activity/yazhou-h5/activity/slot_machine/media/num_scroll_stop.mp3" ref="num_scroll_stop"></audio>
   </div>
 </template>
 
@@ -383,7 +383,7 @@ export default {
   //     @if $number == 10 {
   //       background-image: var(--q-color-com-img-bg-166);
   //     } @else {
-  //       background-image: url('~public/image/bw3/activity_page_imgs/slot_machine/numbers/#{$number}.png');
+  //       background-image: url('~public/activity/yazhou-h5/activity/slot_machine/numbers/#{$number}.png');
   //     }
   //   }
   // }

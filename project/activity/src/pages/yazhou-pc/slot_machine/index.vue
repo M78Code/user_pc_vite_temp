@@ -298,7 +298,7 @@
   </div>
 </template>
 <script>
-import * as api_activity from "project/activity/src/pages/yazhou-pc/api/index";
+import {api_activity} from "project/activity/src/public/api/index.js";
 import common from "project/activity/src/pages/yazhou-pc/common";
 import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
 import format_date_base from "project/activity/src/public/mixins/common/time_format";
@@ -1955,3 +1955,4 @@ export default {
   }
 }
 </style>
+project/activity/src/api/module/activity/index

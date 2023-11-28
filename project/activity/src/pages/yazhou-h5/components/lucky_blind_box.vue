@@ -7,9 +7,9 @@
   <div class="lucky_blind_box">
     <!-- 图片预加载   -->
     <div style="display: none">
-      <img  src="public/yazhou-h5/image/activity/lucky/gift1.png" alt="">
-      <img  src="public/yazhou-h5/image/activity/lucky/gift2.png" alt="">
-      <img  src="public/yazhou-h5/image/activity/lucky/gift3.png" alt="">
+      <img  src="activity/yazhou-h5/activity/lucky/gift1.png" alt="">
+      <img  src="activity/yazhou-h5/activity/lucky/gift2.png" alt="">
+      <img  src="activity/yazhou-h5/activity/lucky/gift3.png" alt="">
     </div>
     <!-- 抽奖按钮点击时loading   -->
     <div v-show="lottery_loading" class="fullscreen">
@@ -20,14 +20,14 @@
     </div>
     <div class="active-object">
       <div>
-        <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动对象：</span>
           <span>本场馆全体会员</span>
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动时间：</span>
           <template v-if="get_user.activityList[activityIndex].period == 1">
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span style="width: 1.91rem">活动内容：</span>
           <span>本场馆内满足任务条件的会员可以获得奖券，消耗奖券可以兑换不同等级的盲盒，并抽取盲盒的随机奖金，每个盲盒100%中奖，让您的奖金收获不停刺激不断！</span>
@@ -70,9 +70,9 @@
           开抢
         </div>
         <div class="wait-for-u">
-          <img class="line-left" src="public/yazhou-h5/image/activity/lucky/line-left.png" alt="">
+          <img class="line-left" src="activity/yazhou-h5/activity/lucky/line-left.png" alt="">
           <span>大奖等您拿</span>
-          <img class="line-right" src="public/yazhou-h5/image/activity/lucky/line-right.png" alt="">
+          <img class="line-right" src="activity/yazhou-h5/activity/lucky/line-right.png" alt="">
         </div>
         <div class="Gift-box">
           <div v-for="(item, i ) in lihe_list" :key="i+'i'" @click="lihe_list_click(item, i, 'frequent_clicks')">
@@ -103,7 +103,7 @@
             </p>
             <div class="Token-history">
               <div>
-                <img  src="public/yazhou-h5/image/activity/diamond.png" alt="">
+                <img  src="activity/yazhou-h5/activity/diamond.png" alt="">
                 <span>奖券:{{ get_Lucky_box.tokenNum || 0}}</span>
               </div>
               <div class="zoom_in"
@@ -116,7 +116,7 @@
                      }">
                 <span>{{btn_click ? '拆盒1次' :`${count_down_click}s后再次拆盒`}}</span>
                 <div class="flex align_items" v-if="btn_click">
-                  <img  src="public/yazhou-h5/image/activity/diamond1.png" alt="">
+                  <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
                   <span>x {{lihe_name.Number_tokens_consumed}}</span>
                 </div>
               </div>
@@ -196,7 +196,7 @@
             :pageSize = 7
             @change="data_page_changed"
           />
-          <img class="close"  @click="history_alert = false"  src="public/yazhou-h5/image/activity/lucky/close.png"/>
+          <img class="close"  @click="history_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png"/>
         </div>
       </div>
     </q-dialog>
@@ -212,14 +212,14 @@
         <div class="gift-btn" v-if="false">
           <p>再拆1次</p>
           <div class="flex align_items justify-center">
-            <img  src="public/yazhou-h5/image/activity/diamond1.png" alt="">
+            <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
             <span>x {{lihe_name.Number_tokens_consumed}}</span>
           </div>
         </div>
         <div class="get-more-tokens" v-else @click="gift_box_alert = false">
           我知道了
         </div>
-        <img class="close-img" @click="gift_box_alert = false"  src="public/yazhou-h5/image/activity/lucky/close.png" alt="">
+        <img class="close-img" @click="gift_box_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png" alt="">
       </div>
     </q-dialog>
     <!--活动规则-->
@@ -229,37 +229,37 @@
       </div>
       <div class="rules-object">
         <div>
-          <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>会员可根据完成任务获得的奖券数量，抽取三种不同等级盲盒，每种盲盒皆为100%中奖；</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>盲盒数量将于每日12:00、15:00、18:00、21:00、00:00添加数量，先抽先得，如抽完后需待下次更新时间；</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>盲盒奖励实时派发，仅需在本场馆完成1倍流水即可出款；</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<font color="#ff7000">1.5</font>或香港盘<font color="#ff7000">0.5</font>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，在活动期间仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回彩金及所产生利润的权利；</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/public/yazhou-h5/image/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>为避免文字理解差异，本场馆保留本活动最终解释权。</span>
           </div>
@@ -273,16 +273,16 @@
 /**
  *  get_user.activityList[activityIndex].period  1 未开始  2 进行中   3 已结束
  */
-import {activity_task_api} from "../api/taskapi";
-let lh1 =  "public/yazhou-h5/image/activity/lucky/lh1.png";
-let lh2 =  "public/yazhou-h5/image/activity/lucky/lh2.png";
-let lh3 =  "public/yazhou-h5/image/activity/lucky/lh3.png";
-let gift1 =  "public/yazhou-h5/image/activity/lucky/gift1.png";
-let gift2 =  "public/yazhou-h5/image/activity/lucky/gift2.png";
-let gift3 =  "public/yazhou-h5/image/activity/lucky/gift3.png";
+import {api_activity} from "project/activity/src/public/api/index.js";
+let lh1 =  "activity/yazhou-h5/activity/lucky/lh1.png";
+let lh2 =  "activity/yazhou-h5/activity/lucky/lh2.png";
+let lh3 =  "activity/yazhou-h5/activity/lucky/lh3.png";
+let gift1 =  "activity/yazhou-h5/activity/lucky/gift1.png";
+let gift2 =  "activity/yazhou-h5/activity/lucky/gift2.png";
+let gift3 =  "activity/yazhou-h5/activity/lucky/gift3.png";
 
 import acticity_mixin from "../mixin/acticity_mixin";
-import data_pager from "project/activity/src/public/components/common/data_pager.vue";
+import data_pager from "project/activity/src/components/data_pager.vue";
 import active_count_down from "./active_count_down.vue";
 import common from "project/activity/src/public/mixins/constant/module/common.js";
 import formartmixin from 'project/activity/src/public/mixins/module/formartmixin.js';
@@ -476,7 +476,7 @@ export default {
     async get_Lucky_box_init(Unboxing) {
       try {
         // diamonds 钻石盲盒 golds 黄金盲盒 silvers 白银盲盒
-        let {code , data} = await activity_task_api.get_Lucky_box_index_param({userId: this.get_user.userId})
+        let {code , data} = await api_activity.get_Lucky_box_index_param({userId: this.get_user.userId})
         if(code == 200 && Object.keys(data).length > 0) {
           // 处理下个盲盒的剩下时间
           let blind_box_time = []
@@ -534,7 +534,7 @@ export default {
         try {
           this.lottery_loading = true
           // boxType	盲盒类型，1：白银盲盒  2：黄金盲盒  3：钻石盲盒
-          let {code , data, msg} = await activity_task_api.get_open_lucky_box1({boxType: this.lihe_name.box_type})
+          let {code , data, msg} = await api_activity.get_open_lucky_box1({boxType: this.lihe_name.box_type})
           if(code == 200 && Object.keys(data).length > 0) {
             // costTokenNum 消耗奖券数
             this.amount_of_winning = data.award
@@ -591,7 +591,7 @@ export default {
           activityId: this.get_user.activityList[this.activityIndex].activityId,
           inStartTime: nineDaysAgo.getTime()
         }
-        let {code , data} = await activity_task_api.get_lucky_box_history(parameter)
+        let {code , data} = await api_activity.get_lucky_box_history(parameter)
         if(code == 200 && data.records.length > 0) {
           this.history_records = data.records
           this.$set(this.result_page_info, 'pages' , +data.total )
@@ -616,7 +616,7 @@ export default {
           inEndTime: (this.get_user.activityList[this.activityIndex].period != 3 && this.inEndTime) ? this.inEndTime : null,
           activityId: this.get_user.activityList[this.activityIndex].activityId
         }
-        let {code , data} = await activity_task_api.get_lucky_box_top50(parameter)
+        let {code , data} = await api_activity.get_lucky_box_top50(parameter)
         if(code == 200 && Object.keys(data).length > 0) {
           this.lucky_top_50 = data
           this.$set(this.top50_page_info, 'pages' , +data.length )

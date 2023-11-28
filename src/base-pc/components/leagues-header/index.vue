@@ -257,11 +257,11 @@ const jumpTo = ()=>{
 			padding: 0 16px;
 		}
 		div:hover {
-			color: #FF7000 !important;
-		}
-		.league_acitve {
 			background: #FFF1E6;
 			color: #1A1A1A !important;
+		}
+		.league_acitve {
+			color: #FF7000 !important;
 		}
 		.leagues_filrer_item_line {
 			height: 1px !important;

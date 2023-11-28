@@ -11,7 +11,7 @@
             <!-- league的下拉项 -->
             <div class="select" v-if="store.tabActive == 'League'" @click="toggerModel">
                 <span class="select-text" ref="dateOptionsRef">{{
-                    store.curSelectedOption.label
+                    i18n_t(store.curSelectedOption.label)
                 }}</span>
                 <span class="down_arrow"></span>
             </div>
@@ -20,7 +20,7 @@
                     <template v-for="(item, index) in store.selectOptions" :key="index">
                         <li :class="store.dateIndex == index ? 'active' : ''
                             " @click="changeDate(index)">
-                            {{ item.label }}
+                            {{ i18n_t(item.label) }}
                         </li>
                     </template>
                 </ul>

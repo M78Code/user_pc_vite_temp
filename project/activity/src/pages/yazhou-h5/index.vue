@@ -83,10 +83,10 @@
 </template>
 
 <script>
-let over =  "public/yazhou-h5/image/activity/over.png";
-let stay_tuned = "public/yazhou-h5/image/activity/stay_tuned.png";
-let playing = "public/yazhou-h5/image/activity/playing.png";
-import { api_admin } from "project/activity/src/public/api/module/admin/adminApi.js";
+let over =  "activity/yazhou-h5/activity/over.png";
+let stay_tuned = "activity/yazhou-h5/activity/stay_tuned.png";
+let playing = "activity/yazhou-h5/activity/playing.png";
+import { api_admin } from "project/activity/src/public/api/index.js";
 import lucky_blind_box from "./components/lucky_blind_box.vue";
 import growth_task from "./components/growth_task.vue";
 import slot_machine from './components/slot_machine.vue'
