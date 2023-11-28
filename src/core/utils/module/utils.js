@@ -1153,59 +1153,96 @@ export const utils = {
   }
     set_bet_obj_config(params,other)
   },
+  
   /**
-   * 获取队伍中的让球方
-   * @param {Object} match   赛事详情数据
-   * @param {string} play_id  玩法id
-   * @returns {string}   让球方(T1|T2|'')
+   * @description: 获取赛事的让球方
+   * @param {Object} match
+   * @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
    */
-  get_team_let_ball(match, play_id, hn_obj_data){
-    let team_let_ball = ''
-    if(play_id){
-      lodash.each([`${match.mid}_${match.mid}_${play_id}_1_1`,`${match.mid}_${match.mid}_${play_id}_1_2`], hn => {
-        let ol_data = hn_obj_data[hn] || {}
-        if(ol_data.on && (ol_data.on.trim()).startsWith('-')) {
-          team_let_ball = ol_data.ots;
+  get_handicap_index_by (match) {
+    let result = 0;
+    if (match && match.hps) {
+      let hpid = this.get_handicap_w_id(match.csid);
+      let hp_item = match.hps.filter((item) => item.hpid == hpid)[0];
+      if (hp_item) {
+        let hl_item = hp_item.hl[0];
+        
+        // 网球csid 5  让盘hpid 154
+        if (!hl_item || !hl_item.ol) {
+          if (match.csid == 5) {
+            hp_item = match.hps.filter((item) => item.hpid == 154)[0];
+            if (hp_item) {
+              hl_item = hp_item.hl[0];
+            }
+          }
         }
-      })
+
+        if (hl_item && hl_item.ol) {
+          let found_i = 0;
+          hl_item.ol.forEach((ol_item, i) => {
+            if (ol_item.on) {
+              let on_str = String(ol_item.on);
+              if (on_str[0] == "-") {
+                found_i = i + 1;
+              }
+            }
+          });
+          result = found_i;
+        }
+      }
     }
-    return  team_let_ball
+    return result;
   },
   /**
-   * 计算队伍中的让球方
-   * @param {object} match 赛事对象
+   * 根据体育类型的csid获取赛事的让球玩法id
+   * @param {Number} csid 体育类型id
    */
-  computed_team_let_ball(match, hn_obj_data) {
-    let team_let_ball = ''
-    let other_team_let_ball = ''
-    // 让球玩法ID
-    let match_template_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${get_ouzhou_data_tpl_id(match.csid)}_config`][`template_${get_ouzhou_data_tpl_id(match.csid)}`];
-    //常规玩法让球方
-    // team_let_ball =  this.get_team_let_ball(match,let_ball_play_id)
-    //足球特殊玩法
-    // if( match.csid == 1 &&  (match.cosCorner || match.cosPunish)){
-    //    let other_hpid = lodash.get(match,'other_handicap_list.1.ols.1._hpid')
-    //    other_team_let_ball = this.get_team_let_ball(match,other_hpid);
-    // }
-    //当前局玩法
-    if(match.is_show_cur_handicap || 1){
-      let other_hpid = lodash.get(match_template_info,'cur_handicap_list.1.ols.1._hpid')
-      //网球
-      if(match.csid == 5){
-         other_hpid = lodash.get(match_template_info,'cur_handicap_list.2.ols.1._hpid')
-      }
-      other_team_let_ball = this.get_team_let_ball(match,other_hpid, hn_obj_data);
+  get_handicap_w_id(csid){
+    const sport_id = csid * 1;
+    let sport_id_convert = 4;
+    switch(sport_id){
+      // 网球
+      case 5:
+        sport_id_convert = 154  //让盘154 让局155
+        break;
+      // 羽毛球
+      case 10:
+        sport_id_convert = 172
+        break;
+      // 乒乓球
+      case 8:
+        sport_id_convert = 172
+        break;
+      // 斯诺克
+      case 7:
+        sport_id_convert = 181
+        break;
+      // 篮球
+      case 2:
+        sport_id_convert = 39
+        break;
+      // 足球
+      case 1:
+        sport_id_convert = 4;
+        break;
+      // 3、4、6、9棒冰美排
+      case 3:  //棒
+        sport_id_convert = 243
+        break;
+      case 4:  //冰
+        sport_id_convert = 4;
+        break;
+      case 6:  //美
+        sport_id_convert = 39
+        break;
+      case 9: //排
+        sport_id_convert = 172
+        break;
+      default:
+        sport_id_convert = 4;
+        break;
     }
-    let special_play = {
-      other_team_let_ball
-    }
-    Object.assign(match, special_play)
-
-    //主盘让球方
-    // match.team_let_ball = team_let_ball
-    //  //足球罚牌角球 | 篮球等当前局
-    // match.other_team_let_ball = other_team_let_ball
-    return match
-  },
+    return sport_id_convert;
+  }
 };
 

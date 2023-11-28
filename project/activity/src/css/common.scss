@@ -9,8 +9,16 @@
   .q-tooltip {
     z-index: 10003 !important;
   }
-  
-  
+  p {
+    margin: 0 0 0;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .relative-position {
+    position: relative;
+  }
+
   .sport-img {
     background-image: var(--qq--menu-bg-image1);
     // &.img36 {

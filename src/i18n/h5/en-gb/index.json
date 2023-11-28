@@ -20,7 +20,15 @@
         "exciting_different": "Exciting and different",
         "close_handicap": "Close the Handicap",
         "betting":"Betting",
-        "event_analysis":"Event Analysis"
+        "assault": "Assault",
+        "possession_ball": "Ball Right",
+        "shot_wide_goal": "Shot Wide Goal",
+        "shots_on_goal": "Shot On Goal",
+        "event_analysis":"Event Analysis",
+        "foul": "Foul",
+        "point": "Point",
+        "penalty": "Free Throw",
+        "pause": "Time Out"
     },
     "bet": {
         "place_bet": "Place Bet"
@@ -52,10 +60,10 @@
           "3h": "Within 3 hrs",
           "6h": "Within 6 hrs",
           "9h": "Within 9 hrs",
-          "12h": "Within 12 hrs",
-          "24h": "Within 24 hrs",
-          "72h": "within three days",
-          "168h": "Within seven days"
+          "12h": "Next 12 Hours",
+          "24h": "Next 24 Hours",
+          "72h": "3 Days",
+          "168h": "7 Days"
         },
         
         "play_map": {
@@ -99,66 +107,66 @@
     },
     "no_data": {
         "coming_soon": "Coming Soon"
-    },
-    "bet_col": {
-      "bet_col_1": {
-        "bet_col_1": "Home",
-        "bet_col_X": "Away",
-        "bet_col_2": "Draw"
       },
-      "bet_col_2": {
-        "bet_col_Over": "Over",
-        "bet_col_Under": "Under"
+      "bet_col": {
+        "bet_col_1": {
+          "bet_col_1": "Home",
+          "bet_col_X": "Away",
+          "bet_col_2": "Draw"
+        },
+        "bet_col_2": {
+          "bet_col_Over": "Over",
+          "bet_col_Under": "Under"
+        },
+        "bet_col_4": {
+          "bet_col_1": "HDP",
+          "bet_col_2": "HDP"
+        },
+        "bet_col_37": {
+          "bet_col_1": "Home",
+          "bet_col_2": "Away"
+        },
+        "bet_col_38": {
+          "bet_col_Over": "Over",
+          "bet_col_Under": "Under"
+        },
+        "bet_col_39": {
+          "bet_col_1": "HDP",
+          "bet_col_2": "HDP"
+        },
+        "bet_col_153": {
+          "bet_col_1": "Home",
+          "bet_col_2": "Away"
+        },
+        "bet_col_154": {
+          "bet_col_1": "Handicap",
+          "bet_col_2": "Handicap"
+        },
+        "bet_col_155": {
+          "bet_col_1": "HDP",
+          "bet_col_2": "HDP"
+        }
       },
-      "bet_col_4": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      },
-      "bet_col_37": {
-        "bet_col_1": "Home",
-        "bet_col_2": "Away"
-      },
-      "bet_col_38": {
-        "bet_col_Over": "Over",
-        "bet_col_Under": "Under"
-      },
-      "bet_col_39": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      },
-      "bet_col_153": {
-        "bet_col_1": "Home",
-        "bet_col_2": "Away"
-      },
-      "bet_col_154": {
-        "bet_col_1": "Handicap",
-        "bet_col_2": "Handicap"
-      },
-      "bet_col_155": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      }
-    },
-    "search": {
-      "change": "Change",
-      "clear_search_history": "Clear search history",
-      "league": "League",
-      "null1": "Search results are empty",
-      "null2": "Try a different term search",
-      "other": "Other search",
-      "search_hot": "Hot search",
-      "search_play": "Search mode",
-      "search_record": "Search history",
-      "search_sports": "Ball searching",
-      "team": "Team",
-      "placeholder": "Please enter the league name or team name",
-      "close": "Close",
-      "view_all_match": "View all matches",
-      "underway": "Underway",
-      "no_search_rezult": "No results found. Please try another search term.",
-      "dogfall": "draw",
-      "search_history": "Search history"
-   }
+      "search": {
+        "change": "Change",
+        "clear_search_history": "Clear search history",
+        "league": "League",
+        "null1": "Search results are empty",
+        "null2": "Try a different term search",
+        "other": "Other search",
+        "search_hot": "Hot search",
+        "search_play": "Search mode",
+        "search_record": "Search history",
+        "search_sports": "Ball searching",
+        "team": "Team",
+        "placeholder": "Please enter the league name or team name",
+        "close": "Close",
+        "view_all_match": "View all matches",
+        "underway": "Underway",
+        "no_search_rezult": "No results found. Please try another search term.",
+        "dogfall": "draw",
+        "search_history": "Search history"
+     }
 },
   "ac_rules": {
     "auto": "Automatically accept higher odds",
@@ -378,8 +386,8 @@
     "wanyi": "Trillion",
     "total_bet": "Total Stake",
     "total_income": "To Return",
-    "bet_retract": "Bet Retract",
-    "bet_inplay": "In-Play"
+    "bet_inplay": "In-Play",
+    "bet_retract": "Bet Retract"
   },
   "bet_record": {
     "30day": "30 days",
@@ -1198,8 +1206,8 @@
     "video": "Video",
     "video_info": "Video Info",
     "yes": "Yes",
-    "match_parlay": "Parlay",
-    "day": ""
+    "day": "",
+    "match_parlay": "Parlay"
   },
   "match_main": {
     "cut_off": "Bet Closed",
@@ -1974,7 +1982,7 @@
   "odds": {
     "EU": "DEC",
     "GB": "British Odds",
-    "HK": "HK",
+    "HK": "Hk",
     "ID": "Indo Odds",
     "MY": "Malay Odds",
     "US": "American Odds"

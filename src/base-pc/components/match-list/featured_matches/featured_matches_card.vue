@@ -17,10 +17,10 @@
           <match-process v-if="item" :match="item" source='match_list' show_page="match-list" :rows="1" :date_rows="1"
             date_show_type="inline" periodColor="gray" />
         </div>
-        <div class="club-name">
+        <div class="club-name" :class="{'bold': utils.get_handicap_index_by(item) == 1}">
           <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.home`) }}</span>
         </div>
-        <div class="union-name">
+        <div class="union-name" :class="{'bold': utils.get_handicap_index_by(item) == 2}">
           <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.away`) }}</span>
         </div>
         <div class="odds_box">
@@ -49,6 +49,8 @@ import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
+import { utils } from "src/core/index.js"
+
 const router = useRouter();
 
 const cache_data = SessionStorage.get('get_hots', []);
@@ -220,6 +222,9 @@ get_featurd_list()
       letter-spacing: 0px;
       text-align: left;
       padding: 0 14px;
+      &.bold {
+        color: var(--q-gb-t-c-2);
+      }
 
       span {
         &:last-child {

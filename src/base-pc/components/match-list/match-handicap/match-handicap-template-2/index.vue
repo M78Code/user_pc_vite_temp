@@ -33,16 +33,12 @@ import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.j
 import MenuData from "src/core/menu-pc/menu-data-class.js"
 
 const MatchListData=inject("MatchListData")
+const match=inject("match")
 const props = defineProps({
   // 盘口列表
   handicap_list: {
     type: Array,
     default: () => [],
-  },
-  // 赛事
-  match: {
-    type: Object,
-    default: () => { },
   },
   // 是否显示比分
   is_show_score: {
@@ -60,14 +56,14 @@ const props = defineProps({
     default: () => false,
   }
 })
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match)
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(match.value)
 // 赛事模板宽度
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 const col_ols_data = computed(() => {
   try {
-    let { hn, mid } = props.match
+    let { hn, mid } = match.value
     let handicap_type = hn || 1
-    const many_obj = get_match_to_map_obj(props.match); //非坑位对象
+    const many_obj = get_match_to_map_obj(match.value); //非坑位对象
     const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
     return lodash.cloneDeep(props.handicap_list || []).map(col => {
       col.ols = col.ols.map(item => {
@@ -87,7 +83,7 @@ const col_ols_data = computed(() => {
 // 组件是否已挂载
 const cur_esports_mode = ref(BetData.cur_esports_mode);
 function deal_width_handicap_ols(payload, many_obj) {
-  let { hn, mid } = props.match
+  let { hn, mid } = match.value
   /*let handicap_type = hn || 1
   const hn_obj = lodash.get(MatchListDataInfo, "list_to_obj.hn_obj", {})
   let new_ols = payload.map(item => {
@@ -128,7 +124,7 @@ function deal_width_handicap_ols(payload, many_obj) {
 function get_5min_classname() {
   let className = ''
   if (
-    props.other_play && ['hps5Minutes'].includes(props.match.play_current_key) // 5分钟玩法
+    props.other_play && ['hps5Minutes'].includes(match.value.play_current_key) // 5分钟玩法
   ) {
     // 滚球 不需要背景色
     if (get_match_status(lodash.get(props, 'match.ms'), [110]) == 1) {
