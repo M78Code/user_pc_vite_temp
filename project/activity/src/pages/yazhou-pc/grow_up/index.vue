@@ -51,7 +51,7 @@
           <p>任务事项</p>
           <p>状态</p>
           <p>奖券数量</p>
-          <p>&nbsp;</p>
+          <p>领取状态</p>
         </div>
         <load-data :state="load_data_state">
           <div class="table-body relative-position" v-for="(item, i) in taskList" :key="i">
@@ -595,6 +595,7 @@ export default {
         background: var(--qq--activity-bg-color-4);
         height: 100%;
         width: 100%;
+        height: 46px;
         line-height: 46px;
         display: flex;
         margin: 0;
