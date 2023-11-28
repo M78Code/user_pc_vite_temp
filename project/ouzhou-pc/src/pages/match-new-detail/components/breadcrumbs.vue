@@ -38,12 +38,6 @@ const bread_list = ref([])
 const last_label = computed(() => {
   return `${props.detail_info.mhn} vs ${props.detail_info.man}`
 })
-const nav_i18n = {
-home:"ouzhou.match.home",
-in_play: "menu.match_playing",
-bet_record :'common.betting_record'}
-    
-
 // 面包屑导航第一项展示
 /*
 * 面包屑导航第一项内容展示
@@ -66,9 +60,8 @@ const breadCrumbs_firstOne = computed(()=>{
     if(!!lv1_mi&&BaseData.base_data_version.value){
         firstOneName = BaseData.menus_i18n_map[lv1_mi]
     }else {
-      
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
-        firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? nav_i18n[history[1]?.name] : props.detail_info.csna
+        firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.i18n : props.detail_info.csna
     }
     return firstOneName
 })
