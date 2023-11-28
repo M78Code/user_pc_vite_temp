@@ -423,6 +423,7 @@ const get_match_base_hps_by_mids = async () => {
 		!(search_data.value?.bowling && search_data.value?.bowling.length > 0)
 	) return;
 	// 拿到所有滚球，联赛，队伍 mid
+	match_mid_Arr = []
 	search_data.value?.team.forEach((item, index) => {
 		match_mid_Arr.push(item.matchList[0].mid)
 	})

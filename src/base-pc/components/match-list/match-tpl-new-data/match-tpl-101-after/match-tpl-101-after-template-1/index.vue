@@ -79,11 +79,12 @@ export default {
       }
     }, { deep: true, immediate: true })
     
-    watch(() => [props.match?.ms, props.match?.mmp],() => {
-      if (props.match) {
-        check_match_end(props.match, socket_remove_match)      
+    watch(() => [match.value.ms, match.value.mmp],() => {
+      console.log('adsasdhsdfsdfsdjfhbs', match.value.ms, match.value.mmp);
+      if (match.value) {
+        check_match_end(match.value, socket_remove_match)      
       }
-    }, { immediate: true })
+    }, { immediate: true, deep: true })
     function current_basic_info() {
       if (match.value.csid == 5) {
         return 'BasisInfo105'

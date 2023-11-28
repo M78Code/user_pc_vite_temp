@@ -228,7 +228,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.assign_with(match, cd_obj);        
+        this.match_ctr.assign_with(match, { ...cd_obj, is_ws: true });        
         // 格式化列表赛事(部分数组转对象)
         this.match_ctr.list_serialized_match_obj([match]);
       }
