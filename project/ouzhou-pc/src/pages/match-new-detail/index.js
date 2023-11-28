@@ -7,6 +7,7 @@ import {
   MenuData,
   UserCtr,
   MatchDetailCalss,
+  SearchPCClass
 } from "src/core/index";
 import {
   filter_odds_func,
@@ -154,7 +155,7 @@ export function usedetailData(route) {
     const { isNeedLoading = true } = par || {};
     try {
       const params = {
-        mid: mid,
+        mid: route.params.mid,
         cuid: user_info.userId,
         t: new Date().getTime(),
       };
@@ -206,8 +207,8 @@ export function usedetailData(route) {
   const get_category = async () => {
     try {
       const params = {
-        sportId,
-        mid,
+        sportId:route.params.csid,
+        mid:route.params.mid,
         t: new Date().getTime(),
       };
       const res = await get_detail_category(params);
@@ -233,7 +234,7 @@ export function usedetailData(route) {
       const params = {
         mcid: 0,
         cuid: user_info.userId,
-        mid,
+        mid:route.params.mid,
         newUser: 0,
         t: new Date().getTime(),
       };
@@ -436,14 +437,13 @@ export function usedetailData(route) {
    * @return {*}
    */
    function RCMD_C102(obj) {
-    // let skt_data = obj.cd;
-    // if (skt_data.mmp == 999) {
+    let skt_data = obj.cd;
+    if (skt_data.mmp == 999) {
       //切换赛事
       mx_autoset_active_match({ mid: route.params.mid });
-    // }  
+    }  
   } 
-  // let timer1 =  setTimeout(() => {
-  //   clearTimeout(timer1)
+  // setTimeout(() => {
   //   RCMD_C102()
   // }, 10000);
   //todo mitt 触发ws更新
@@ -453,7 +453,6 @@ export function usedetailData(route) {
   );
   //  赛事切换刷新数据
   const refresh = () => {
-    console.log(refresh,'refresh');
     all_list_toggle = {};
     detail_list.value = [];
     sportId = route.params.csid;
@@ -477,8 +476,10 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
+    // clearTimeout(timer1)
     message_fun.forEach(i=>i())
     off_init()
+    clearTimeout(back_to_timer);
   });
 
   /**
@@ -489,19 +490,20 @@ export function usedetailData(route) {
   /**
    * @description 返回上一页
    */
+  let back_to_timer = null
   const back_to = (is_back = true) => {
     // 重新请求相应接口
-    if (play_media.value.media_type === "topic") {
-      video.send_message({
-        cmd: "record_play_info",
-        val: {
-          record_play_time: true,
-        },
-      });
-    }
+    // if (play_media.value.media_type === "topic") {
+    //   video.send_message({
+    //     cmd: "record_play_info",
+    //     val: {
+    //       record_play_time: true,
+    //     },
+    //   });
+    // }
 
-    clearTimeout(state.back_to_timer);
-    state.back_to_timer = setTimeout(() => {
+    clearTimeout(back_to_timer);
+    back_to_timer = setTimeout(() => {
       // 退出页面时清空用户操作状态
       window.sessionStorage.setItem("handle_state", JSON.stringify([]));
       // 如果是从搜索结果进来的
