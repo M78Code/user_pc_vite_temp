@@ -14,8 +14,7 @@ import ResultOlItem from "../../result/ResultOlItem.vue";
 const props = defineProps({
     item_data: {
         type: Object,
-        default: () => {
-        },
+        default: () => ({}),
     }
 })
 
@@ -24,7 +23,6 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 };
-
 </script>
 
 

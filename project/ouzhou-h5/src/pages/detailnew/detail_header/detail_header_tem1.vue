@@ -111,6 +111,7 @@ const props = defineProps({
 });
   // 赛事收藏状态
 const  is_collect = computed(()=>{
+  if(lodash.isEmpty(props.get_match_detail)) return
   return MatchCollect.get_match_collect_state(props.get_match_detail)
 }) 
 const show_time_counting = computed(() => {
