@@ -1,7 +1,7 @@
 namespace AXIOS {
   export interface Resource<T> {
-    /** "200"|"0000000" 表示请求成功 */
-    code: "200" | "0000000" | String
+    /** "200"|"0000000" 表示请求成功, code会被处理成200 */
+    code: "200" | String
     /** 接口返回的数据体 */
     data: T
     gcuuid: string
