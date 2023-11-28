@@ -29,6 +29,7 @@ import {
   MatchDataWarehouse_H5_List_Common,
   MenuData,
   SearchData,
+useMittEmit,
 } from "src/core/index";
 import { onMounted, ref, toRaw, watch, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -55,7 +56,11 @@ useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS,initial)
 function initial(){
   loading.value = true
   api_analysis.get_match_result({mid,cuid}).then(res=>{
-    matchResults.value = res.data
+    if(res.code == '200'){
+      matchResults.value = res.data
+    }else {
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.message)
+    }
     loading.value = false
   })
 }
