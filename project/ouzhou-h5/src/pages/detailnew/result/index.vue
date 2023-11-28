@@ -5,7 +5,7 @@
       <div class="header-fix" ref="header_fix">
         <!-- v-if="!changeHeader" -->
         <div ref="scroll_video_height" class="relative-position scroll_video_h">
-          <detail_header_tem1 :get_match_detail="matchDetail" />
+          <detail_header_tem1 :get_match_detail="matchDetail" :show_collect="false"/>
         </div>
       </div>
       <div class="separate"></div>
