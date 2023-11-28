@@ -282,6 +282,7 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   overflow-y: auto;
+  overflow-anchor: none;
   // background-color: #f5f5f5;
   &.data-get-empty {
     min-height: 0 !important;

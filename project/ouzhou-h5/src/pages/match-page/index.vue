@@ -163,7 +163,10 @@ const goBackToLeague = () => {
   }
   &.league-filter{
     :deep(.scroll-wrapper) {
+      overflow-y: hidden;
       .scroll-i-con {
+        height: 100% !important;
+         overflow-y: auto;
         .s-w-item {
           position: relative;
           transform: translateY(0) !important;

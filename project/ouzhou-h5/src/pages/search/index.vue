@@ -6,8 +6,8 @@
 				v-model="input_value" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
 			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt="" class="clear_value"
-				@click.stop.prevent.self="clear_value" v-show="input_value.length > 0" />
-			<span class="close_btn" @click="$router.go(-1)">{{ i18n_t('ouzhou.search.close') }}</span>
+			  @click.stop.prevent.self="clear_value" v-show="input_value.length > 0"/>
+			<span class="close_btn" @click="go_back">{{ i18n_t('ouzhou.search.close') }}</span>
 		</div>
 		<!-- 搜索 历史 -->
 		<div class="content" v-show="(show_history && history_data &&
@@ -296,6 +296,13 @@ const clear_value = () => {
 	get_hot_search()
 }
 /**
+ * 关闭清除tab
+ */
+const go_back = () =>{
+	router.go(-1)
+	store.tabIndex = 0;
+}
+/**
  * 查看所有赛事 测试同步不做跳转
  */
 const to_all_matchs = () => {
@@ -384,7 +391,7 @@ watch(
 	() => input_value.value,
 	(val) => {
 		let trimVal = val.trim();
-		get_search_data(store.tabIndex, 1, trimVal);
+		get_search_data(store.tabIndex, sport_kind_data.value[store.tabIndex]?.id, trimVal);
 	}
 )
 

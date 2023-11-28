@@ -1510,8 +1510,8 @@ class UserCtr {
   get_user_url_parames(obj={}){
     let res = {}
     const get_value =function(key){
-      res = SessionStorage.get(key) || LocalStorage.getItem(key);
-      return res;
+      let res_ = SessionStorage.get(key) || LocalStorage.get(key);
+      return res_;
     }
     // 参数合并
     Object.assign(res, obj)

@@ -255,7 +255,6 @@ class MatchMeta {
     const handicap_index = MatchUtils.get_handicap_index_by(match);
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     const { home_red_score, away_red_score, home_yellow_score, away_yellow_score } = MatchUtils.get_match_red_yellow_card(match)
-    console.log(home_red_score, away_red_score, home_yellow_score, away_yellow_score)
     return {
       source_index: index,
       is_show_no_play,
@@ -401,6 +400,7 @@ class MatchMeta {
       "sort": PageSourceData.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
+    if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
     this.handle_custom_matchs(res)
   }
 
@@ -413,6 +413,7 @@ class MatchMeta {
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
     const category = MenuData.result_menu_lv1_mi ? 0 : 1
+    this.current_euid = `${euid}_${md}`
     if (!md) return
     const params = this.get_base_params()
     const res = await api_common.get_match_result_api({
@@ -423,10 +424,9 @@ class MatchMeta {
       euid: euid,
       showem: 1, // 新增的参数
     })
-    this.current_euid = euid
-    if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
+    if (this.current_euid !== `${euid}_${md}`) return
+    if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
     // 避免接口慢导致的数据错乱
-    if (this.current_euid !== euid) return
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status({ state: true });
@@ -672,7 +672,7 @@ class MatchMeta {
     }
     const params = this.get_base_params(euid)
     const res = await api_common.get_collect_matches(params)
-    if (res.code !== '200') return this.set_page_match_empty_status({ state: true });
+    if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
     const list = lodash.get(res, 'data', [])
     
     if (list.length > 0) {

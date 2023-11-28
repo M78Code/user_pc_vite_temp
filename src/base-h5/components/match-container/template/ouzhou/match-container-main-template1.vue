@@ -162,7 +162,7 @@
                               {{ home_red_score }}
                             </span>
                             <!-- 黄牌 -->
-                            <span class='score-punish' v-show="home_yellow_score">
+                            <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
                               {{ home_yellow_score }}
                             </span>
                           </template>
@@ -175,11 +175,12 @@
                           <div class='team-t-title-w' :class="{
                             'is-handicap': match.handicap_index == 1,
                             'is-handicap-1': match.handicap_index == 2,
+                            'is-show-goal': is_show_home_goal
                           }">
                             {{ match.mhn }}
                           </div>
                           <!-- 进球动画 -->
-                          <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
+                          <div class="yb-flex-center" v-if="is_show_home_goal">
                             <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                             <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                           </div>
@@ -196,11 +197,11 @@
                         <div class="team-left">
                           <template v-if="home_red_score || home_yellow_score">
                             <!-- 红牌 -->
-                            <span class='score-punish' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results }">
+                            <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results }">
                               {{ away_red_score }}
                             </span>
                             <!-- 黄牌 -->
-                            <span class='score-punish' v-show="away_yellow_score">
+                            <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
                               {{ away_yellow_score }}
                             </span>
                           </template>
@@ -213,11 +214,12 @@
                           <div class='team-t-title-w visiting' :class="{
                             'is-handicap': match.handicap_index == 2,
                             'is-handicap-1': match.handicap_index == 1,
+                            'is-show-goal': is_show_home_goal
                           }">
                             {{ match.man }}
                           </div>
                           <!-- 进球动画 -->
-                          <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
+                          <div class="yb-flex-center" v-if="is_show_away_goal">
                             <div class="yb-goal-gif yb-goal-yo"></div>
                             <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                           </div>
@@ -908,6 +910,8 @@ export default {
           width: 20px;
           flex-shrink: 0;
           margin-left: 2px;
+          display: flex;
+          align-items: center;
         }
 
         &.simple {
@@ -934,6 +938,12 @@ export default {
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          .yb-goal-gif{
+            background-image: url($SCSSPROJECTPATH+"/image/common/goal_gif.png");
+          }
+          .gif-text{
+            color: #FF7000 !important;
+          }
 
           /*图标*/
           .team-icon {
@@ -978,7 +988,7 @@ export default {
             font-size: 14px;
             height: 24px;
             line-height: 24px;
-            width: 100%;
+            max-width: 1.31rem;
             overflow: hidden;
             flex-shrink: 0;
             align-items: center;
@@ -986,6 +996,9 @@ export default {
             white-space: nowrap;
             font-weight: 500;
             color: #8a8986;
+            &.is-show-goal{
+              max-width: 0.9rem;
+            }
             &.visiting {
               color: #8a8986;
             }
@@ -996,22 +1009,21 @@ export default {
         }
 
         .score-punish {
-          width: 0.12rem;
+          width: 0.1rem;
           height: 0.14rem;
-          color: var(--q-gb-t-c-18);
           flex-shrink: 0;
-          background: var(--q-color-com-bg-color-43);
           display: flex;
           justify-content: center;
           align-items: center;
           font-size: 0.1rem;
           border-radius: 0.02rem;
-          margin-left: 0.04rem;
-
+          color: #fff;
           &.yellow {
-            background: var(--q-color-com-bg-color-23);
+            background: #FFA800;
           }
-
+          &.red{
+            background: #f00;
+          }
           &.flash {
             animation: 1s text-flash linear infinite normal;
           }
