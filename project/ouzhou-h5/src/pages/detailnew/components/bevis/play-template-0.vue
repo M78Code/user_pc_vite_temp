@@ -6,7 +6,7 @@
     没有title的情况按ol循环
 -->
 
-<script setup>
+<script setup name="play-template-0">
 import olStatus from "../ol_status.vue";
 import {computed, defineEmits, defineProps} from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -65,7 +65,7 @@ const go_betting = (data) => {
                         :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
                     >
                         <spna class="on-text">
-                            {{ olChild.on }}
+                            {{ olChild?.on || olChild.ott }}
                         </spna>
                         <spna class="ov-text">
                             {{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}
