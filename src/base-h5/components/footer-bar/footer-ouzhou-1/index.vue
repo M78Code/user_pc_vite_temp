@@ -13,7 +13,7 @@
       <div class="item_img" :class="item.value" />
       <!-- 菜单名 -->
       <div class="name">
-        {{ item.value !== 'home_page' ? item.label : '' }}
+        {{ item.value !== 'home_page' ? i18n_t(`${item.label}`) : '' }}
       </div>
     </div>
   </div>
@@ -26,14 +26,16 @@ import { MenuData } from 'src/core/'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { i18n_t } from "src/core/index.js"
 const router = useRouter();
 // 底部菜单集合
-const tab_list = reactive([
-  { label: i18n_t("menu_itme_name.inplay"), value: 'rollball', route: '/inPlay', type: 1 },
-  { label: i18n_t("ouzhou.menu.my_bets"), value: 'bet', route: '/betting_history' },
+const tab_list = ref([
+  { label: "menu_itme_name.inplay", value: 'rollball', route: '/inPlay', type: 1 },
+  { label: "ouzhou.menu.my_bets", value: 'bet', route: '/betting_history' },
   { label: 'Home-Page', value: 'home_page', route: '/home', type: 1 },
-  { label: i18n_t("menu_itme_name.results"), value: 'results', route: '/matchResults', type: 28 },
-  { label: i18n_t("ouzhou.match.favorites"), value: 'favorites', route: '/collect', type: 50000 },
+  { label: "menu_itme_name.results", value: 'results', route: '/matchResults', type: 28 },
+  { label: "ouzhou.match.favorites", value: 'favorites', route: '/collect', type: 50000 },
 ])
 const get_route_path = computed(() => {
   return  router.currentRoute.value.path;
