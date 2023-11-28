@@ -14,8 +14,7 @@ import ResultOlItem from "../../result/ResultOlItem.vue";
 const props = defineProps({
     item_data: {
         type: Object,
-        default: () => {
-        },
+        default: () => ({}),
     }
 })
 
