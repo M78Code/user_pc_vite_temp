@@ -28,7 +28,7 @@
           <!-- 有效流水 -->
           ：{{ effectiveFlow }}
         </span>
-        <span>
+        <span v-if="!isUnsettled">
           {{ profit.indexOf("-") != -1 ? i18n_t('bet_record.lose') : i18n_t('bet_record.win') }}：
           <span
             class="footer-text"
@@ -108,6 +108,10 @@ export default defineComponent({
     toolSelected: {
       type: Number,
       default: 0,
+    },
+    isUnsettled: {
+      type: Boolean,
+      default: false,
     },
     is_bet_record: {
       type: Boolean,
@@ -321,6 +325,7 @@ export default defineComponent({
   padding-right: 20px;
   height: 36px;
   font-size: 14px;
+  background-color: #f6f7fa;
 
   span {
     margin-left: 20px;
