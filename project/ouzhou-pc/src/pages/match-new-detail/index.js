@@ -444,10 +444,10 @@ export function usedetailData(route) {
       mx_autoset_active_match({ mid: route.params.mid });
     // }  
   } 
-  let timer1 =  setTimeout(() => {
-    clearTimeout(timer1)
-    RCMD_C102()
-  }, 10000);
+  // let timer1 =  setTimeout(() => {
+  //   clearTimeout(timer1)
+  //   RCMD_C102()
+  // }, 10000);
   //todo mitt 触发ws更新
   const { off } = useMittOn(
     MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,
