@@ -17,7 +17,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onUnmounted, ref  } from "vue"
+import { onMounted, onUnmounted, ref } from "vue"
 import tabDate from './components/tab-date.vue';
 import MatchFirstStep from "./components/match-first-step.vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
@@ -96,11 +96,18 @@ const onTabChange = e => {
 const onChangeDate = e => {
   if (store.tabActive !== 'Matches') {
     MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-      console.log('onChangeDate', res)
+      console.log('onChangeDate', res, store.selectArea)
       if (res.length) {
         store.areaList = res
-        store.selectArea = res[0]
-        onChangeArea(res[0].id)
+        if (JSON.stringify(store.selectArea) === '{}') {
+          store.selectArea = res[0]
+          onChangeArea(res[0])
+        } else {
+          const index = res.findIndex(i => i.id === store.selectArea.id)
+          const offset = index < 0 ? 0 : index
+          store.selectArea = res[offset]
+          onChangeArea(res[offset])
+        }
       } else {
         store.leaguesMatchs = []
         store.areaList = []
@@ -109,8 +116,8 @@ const onChangeDate = e => {
   }
 }
 
-const onChangeArea = e => {
-  const arr = store.areaList.find(i => i.id === e)['tournamentList']
+const onChangeArea = (obj) => {
+  const arr = obj.tournamentList
   if (arr === null) {
     store.leaguesMatchs = []
     return
@@ -128,9 +135,9 @@ const initMatchPage = () => {
 }
 
 const goBackToLeague = () => {
-  onTabChange(1)
-  store.isLeagueDetail = false
   store.tabActive = 'League'
+  store.isLeagueDetail = false
+  onTabChange()
 }
 
 </script>
@@ -139,7 +146,7 @@ const goBackToLeague = () => {
 .match-list-page {
   width: 100%;
   height: 100%;
-  overflow-y: hidden;
+  overflow-y: scroll;
   position: relative;
 
   .match-list-container {
@@ -156,9 +163,11 @@ const goBackToLeague = () => {
   }
   &.league-filter{
     :deep(.scroll-wrapper) {
-      .scroll-i-con .s-w-item {
-        position: relative;
-        transform: translateY(0) !important;
+      .scroll-i-con {
+        .s-w-item {
+          position: relative;
+          transform: translateY(0) !important;
+        }
       }
     }
   }

@@ -16,7 +16,7 @@
           />
           </span>
     
-        <div class="match-detail-time-collect" @click="collect_click">
+        <div class="match-detail-time-collect" v-if="show_collect" @click="collect_click">
           <img
             v-if="is_collect"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"
@@ -108,6 +108,10 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  show_collect: {
+    type: Object,
+    default : true
+  }
 });
   // 赛事收藏状态
 const  is_collect = computed(()=>{

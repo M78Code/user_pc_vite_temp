@@ -21,7 +21,7 @@ const go_betting = (data) => {
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-    <section class="template2">
+    <section class="component play-template play-template-2 template2">
         <nav class="title" v-if="item_data?.title">
             <div class="text-title textOverflow1">{{ item_data.title[0].osn }}</div>
             <div class="text-title textOverflow1">{{ item_data.title[1].osn }}</div>
@@ -49,7 +49,7 @@ const go_betting = (data) => {
 @import "basicTemplateStyle";
 .template2 {
     width: 100%;
-    padding: 8px;
+    padding: 8px 0;
     box-sizing: border-box;
     .title{
         display: flex;
