@@ -149,13 +149,13 @@ export default {
 
     const { ws_destroyed: ws_destroyed_common } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
-    const five_leagues_card_key_arr = ref([]);
+    // const five_leagues_card_key_arr = ref([]);
     const match_list_top = ref("76px");
     let mitt_list = null
     const MatchListCardDataClass_match_list_card_key_arr = () => {
       nextTick(() => {
         match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
-        five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
+        // five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
       })
     };
     const is_conming_soon = computed(() => {
@@ -199,7 +199,7 @@ export default {
       matches_15mins_list,
       match_count,
       match_list_card_key_arr,
-      five_leagues_card_key_arr,
+      // five_leagues_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass,
       load_data_state,
