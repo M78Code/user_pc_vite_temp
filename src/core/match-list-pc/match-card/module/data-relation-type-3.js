@@ -12,15 +12,15 @@
      * 
      * 处理  13
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+    import { MatchDataWarehouse_PC_List_Common as MatchListData,i18n_t } from 'src/core/index.js'
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
+    import BaseData from "src/core/base-data/base-data.js";
 
     import {get_league_title_card_height,compute_style_template_by_matchinfo } from  "./compute-style-template.js"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {get_match_template_id} from '../../match-handle-data.js'
     import {set_new_league_fold} from  "./fold-tid.js"
-    import { utils } from 'src/core/utils/module/utils.js';
     import {
       ouzhou_match_status_title_card_template,
       ouzhou_league_title_template,
@@ -145,7 +145,7 @@
             // 卡片索引
             card_index,
             // 球种名称
-            csna: utils.csid_to_sport_name(league_obj.csid),
+            csna: lodash.get(BaseData.csids_map,`csid_${league_obj.csid}`,{}).csna,
             // 球种ID
             csid:league_obj.csid,
           }

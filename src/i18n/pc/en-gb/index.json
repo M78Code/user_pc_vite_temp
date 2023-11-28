@@ -46,6 +46,7 @@
       "inplay": "InPlay",
       "home": "Home",
       "today": "Today",
+      "early": "Early",
       "tomorrow": "Tomorrow",
       "all_matches": "All Matches",
       "play_map": {
@@ -84,6 +85,9 @@
         "36h": "3 days",
         "84h": "7 days"
       }
+    },
+    "time": {
+      "date": "{day}/{month}"
     },
     "search": {
       "change": "Change",
