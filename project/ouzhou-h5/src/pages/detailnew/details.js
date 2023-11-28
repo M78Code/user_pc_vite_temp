@@ -463,6 +463,18 @@ export const details_main = (router, route) => {
       match_odds_info.value = [];
     }
   }
+  /**
+   * @description: 赛事事件C102)  
+   * @param {*} obj
+   * @return {*}
+   */
+  function RCMD_C102(obj) {
+    let skt_data = obj.cd;
+    if (skt_data.mmp == 999) {
+      //切换赛事
+      event_switch()
+    }  
+  }
   let message_fun = null;
   onMounted(() => {
     console.log(MatchDataBaseH5.get_quick_mid_obj(mid.value),'MatchDataBaseH5.get_quick_mid_obj(mid)');
@@ -503,6 +515,9 @@ export const details_main = (router, route) => {
             mid:mid.value,
           });
           break; 
+         case "C102":
+            RCMD_C102(data);
+            break;  
         default:
           break;
       }
@@ -514,7 +529,7 @@ export const details_main = (router, route) => {
     (_new, _old) => {
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {
-        event_switch();
+        // event_switch();
       }
       // 否则更新玩法集
       else {
@@ -579,6 +594,9 @@ export const details_main = (router, route) => {
 
     api_common.get_detail_video(params).then((res) => {
       let event_data = lodash.get(res, "data", {});
+   
+  
+    
       if (event_data && event_data.mid) {
         // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型
         let flag1 = [100, 101, 103].includes(+event_data.csid);
@@ -600,12 +618,14 @@ export const details_main = (router, route) => {
             }
           }
         }
+        router.replace( { name: "category", params: { mid: event_data.mid,csid:event_data.csid ,tid:event_data.tid} })
         // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-        get_matchDetail_MatchInfo({ mid: event_data.mid, cuid: cuid.value });
+        get_matchDetail_MatchInfo({ mid: event_data.mid, cuid: event_data.csid  });
         // this.get_match_details({ mid: event_data.mid, cuid: this.get_uid });
         // 重新调用 详情页面玩法集接口(/v1/m/category/getCategoryList)
         // this.get_odds_list({ sportId: event_data.csid, mid: event_data.mid });
         // 存储设置新的赛事id
+        MatchDetailCalss.set_match_details_params({ mid: event_data.mid,csid:event_data.csid ,tid:event_data.tid})
         // this.set_goto_detail_matchid(event_data.mid);
       } else {
         // 如果不是演播厅的，才有退出回到 列表
@@ -616,6 +636,10 @@ export const details_main = (router, route) => {
       }
     });
   }
+  watch(()=>route.params,(params)=>{
+    mid.value = params.mid
+    csid.value = params.csid
+  })
   onUnmounted(() => {
     clear_all_timer();
     // 组件销毁时销毁监听函数
