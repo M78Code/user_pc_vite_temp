@@ -22,7 +22,7 @@ class VirtualList {
     // 赛事 mid 高度 映射 对象
     this.match_mid_map_height = ref({})
     // 容器总高度
-    this.container_total_height = 0;
+    this.container_total_height = ref(0);
     // 是否需要显示球种类别 (欧洲版 有的需要，有的不需要， 默认需要， 不需要得页面需提前设置)
     this.is_show_ball = true
 
@@ -169,7 +169,7 @@ class VirtualList {
     this.compute_container_total_height()
 
     // 是否到底了
-    const flag = accrual_height >= this.container_total_height || match_datas.length < page_count || MatchMeta.complete_matchs.length < page_count
+    const flag = accrual_height >= this.container_total_height.value || match_datas.length < page_count || MatchMeta.complete_matchs.length < page_count
     useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, flag);
 
     return match_datas
@@ -182,7 +182,7 @@ class VirtualList {
       const total = this.get_match_total_height(match, index)
       total_height += total
     })
-    this.container_total_height = total_height + 181
+    this.container_total_height.value = total_height + 181
   }
 
   /**
@@ -199,7 +199,7 @@ class VirtualList {
    */
   clear_virtual_info () {
     this.mid_top_map = {}
-    this.container_total_height = 0
+    this.container_total_height.value = 0
     this.match_mid_map_height.value = {}
   }
 
@@ -217,7 +217,7 @@ class VirtualList {
       return p_total + this.get_match_dom_height_by_match_data(map_obj);
     }, 0);
     //页面容器 总高度
-    this.container_total_height = total_height;
+    this.container_total_height.value = total_height;
   }
 
   // 赛事卡片高度
@@ -322,7 +322,7 @@ class VirtualList {
       }
 
       // 如果当前赛事折叠超过 8场赛事 并且 高度 大于5.5  走  虚拟滚动 真正的滑动 算法，和上边 aaaaaaa 逻辑一模一样
-      // if (this.already_folded > 7 && this.container_total_height > 550) {
+      // if (this.already_folded > 7 && this.container_total_height.value > 550) {
       //   current_match_dom_top = 0; // 可视区域的赛事的top 值  18场
       //   get_match_total = 0; // 当前页面的赛事数量
       //   this.mid_top_map = {}; // 对应的 赛事id 的  偏移 位置值
