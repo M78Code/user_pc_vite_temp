@@ -6,7 +6,7 @@
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
 			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt="" class="clear_value"
 			  @click.stop.prevent.self="clear_value" v-show="input_value.length > 0"/>
-			<span class="close_btn" @click="$router.go(-1)">{{ i18n_t('ouzhou.search.close') }}</span>
+			<span class="close_btn" @click="go_back">{{ i18n_t('ouzhou.search.close') }}</span>
 		</div>
 		<!-- 搜索 历史 -->
 		<div class="content" v-show="(show_history && history_data &&
@@ -120,7 +120,7 @@
 					</div>
 					<div v-show="expand_league">
 						<li v-for="(item, index) in search_data?.league" :key="index"
-						@click="default_method_jump(item.leagueName, item.matchList[index])">
+						@click="default_method_jump(item.leagueName, item.matchList[0])">
 							<div class="list_top">
 								<!-- 联赛icon -->
 								<!-- <img class="match_logo"
@@ -129,7 +129,7 @@
 								<span v-html="red_color(item.leagueName)"></span><img :src="compute_local_project_file_path('image/svg/right_arrow.svg')"
 									alt="">
 							</div>
-							<div class="list_bottom" v-for="(i, idx) in item.matchList">
+							<div class="list_bottom" v-for="(i, idx) in item.matchList" @click.stop="default_method_jump('', i)">
 								<div style="width: 52%; word-break: break-all">
 									<p>
 										<span class="home" v-html="red_color(i.mhn)"></span>
@@ -274,6 +274,13 @@ const clear_value = () => {
 	get_hot_search()
 }
 /**
+ * 关闭清除tab
+ */
+const go_back = () =>{
+	router.go(-1)
+	store.tabIndex = 0;
+}
+/**
  * 查看所有赛事 测试同步不做跳转
  */
 const to_all_matchs = () =>{
@@ -362,7 +369,7 @@ watch(
 	() => input_value.value,
 	(val) => {
 		let trimVal = val.trim();
-		get_search_data(store.tabIndex, 1, trimVal);
+		get_search_data(store.tabIndex, sport_kind_data.value[store.tabIndex]?.id, trimVal);
 	}
 )
 
@@ -386,7 +393,6 @@ function league_icon_error($event) {
 // 联赛 和 队名 默认跳转方法,去到详情页
 function default_method_jump(name, item) {
 	if (!item) return;
-
 	/*
 	if (item.mid) {
 		set_goto_detail_matchid(item.mid);
