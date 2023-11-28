@@ -4,7 +4,7 @@
     <div class="current-filter-list" @scroll="on_scroll">
       <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.label">
         <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label }">
-          {{ item.value }}
+          {{ $t(item.value, {month: item.month, day: item.day}) }}
           <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label}"></div>
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
@@ -32,6 +32,7 @@
   import { UserCtr,MenuData, i18n_t} from 'src/core/index.js'
   import { handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { format_M_D_PC } from "src/core/format"
+  import BaseData from "src/core/base-data/base-data.js";
 
     // 是否显示左边按钮
   const show_left_btn = ref(false);
@@ -69,11 +70,15 @@
   const dateWeekFormat = (day) => {
     let result = [];
     Date.prototype.getMonthDay = function (i) {
-        let date_time = new Date(this.setHours(12, 0, 0, 0)).getTime()
+        let date_time = new Date(this.setHours(12, 0, 0, 0))
+        let month = date_time.getMonth() + 1;
+        let day = date_time.getDate();
         return {
           label: date_time,
-          value: i == 0 ? i18n_t('ouzhou.match.tomorrow') : `${format_M_D_PC(date_time)}`,
-          type: 3
+          value: i == 0 ? 'ouzhou.match.tomorrow' : 'ouzhou.time.date',
+          type: 3,
+          month: i == 0 ? '' : month,
+          day: i == 0 ? '' : day
         };
     }
    
@@ -86,7 +91,7 @@
 
   const update_time = (time) => {
 
-    let arr = [{label:'',value: i18n_t('ouzhou.match.today'),type:2},...dateWeekFormat(new Date(time))];
+    let arr = [{label:'',value: 'ouzhou.match.today',type:2},...dateWeekFormat(new Date(time))];
 
     current_filter_list.value = arr
   }

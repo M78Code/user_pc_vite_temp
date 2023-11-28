@@ -80,11 +80,14 @@
     },
     "filter": {
       "select_time": {
-        "12h": "next 12 hours",
-        "24h": "next 24 hours",
+        "12h": "Next 12 hours",
+        "24h": "Next 24 hours",
         "36h": "3 days",
         "84h": "7 days"
       }
+    },
+    "time": {
+      "date": "{day}/{month}"
     },
     "search": {
       "change": "Change",
