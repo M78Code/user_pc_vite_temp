@@ -9,7 +9,6 @@
           v-if="GlobalAccessConfig.get_collectSwitch()">
           <div  class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
         </div>
-        <!-- {{ match.mid }} -->
         <!-- 比赛进程 -->
         <match-process style="cursor:pointer" v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
         periodColor="gray" />
@@ -28,7 +27,7 @@
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
+          <div class="team-name home ellipsis allow-user-select" :class="{'bold': handicap_index == 1}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
             {{lodash.get(match, 'mhn')}}
           </div>
            <!-- 红牌数 -->
@@ -52,7 +51,7 @@
         <div class="row no-wrap absolute-full">
           <div
             class="team-name away ellipsis allow-user-select"
-            :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}"
+            :class="{'bold': handicap_index == 2}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
               <!-- 红牌数 -->
        <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away')>0"
@@ -86,7 +85,7 @@ import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/ma
 
 import { get_match_status } from 'src/core/utils/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t } from "src/core/index.js"
+import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, utils } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { useRouter } from "vue-router";
@@ -268,8 +267,10 @@ function hide_away_goal () {
   is_show_away_goal.value = false;
 }
 
+let handicap_index = ref(0)
 onMounted(()=>{
   // use_polling_mst(props.match);
+  handicap_index.value = utils.get_handicap_index_by(props.match);
 })
 
 onUnmounted(() => {
@@ -334,6 +335,9 @@ onUnmounted(() => {
 
     .team-name {
       max-width: 180px;
+      &.bold {
+        color: var(--q-gb-t-c-2);
+      }
     }
     &.kedui-item {
       color: var(--q-gb-t-c-8);
