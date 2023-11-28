@@ -26,6 +26,7 @@
         "shots_on_goal": "Shot On Goal",
         "event_analysis":"Event Analysis",
         "foul": "Foul",
+        "point": "Point",
         "penalty": "Free Throw",
         "pause": "Time Out"
     },
@@ -44,7 +45,6 @@
         "featured": "Featured",
         "top_events": "Top Events",
         "top_leagues": "Top Leagues",
-        "league": "League",
         "15_mins": "15 mins",
         "inplay": "InPlay",
         "home": "Home",
@@ -55,16 +55,6 @@
         "bet_col_Under": "Under",
         "home_handicap": "H Handicap",
         "away_handicap": "A Handicap",
-        "select_time": {
-          "3h": "Within 3 hrs",
-          "6h": "Within 6 hrs",
-          "9h": "Within 9 hrs",
-          "12h": "Within 12 hrs",
-          "24h": "Within 24 hrs",
-          "72h": "within three days",
-          "168h": "Within seven days"
-        },
-        
         "play_map": {
             "1": "Winner",
             "2": "Total Goals",
@@ -106,66 +96,7 @@
     },
     "no_data": {
         "coming_soon": "Coming Soon"
-    },
-    "bet_col": {
-      "bet_col_1": {
-        "bet_col_1": "Home",
-        "bet_col_X": "Away",
-        "bet_col_2": "Draw"
-      },
-      "bet_col_2": {
-        "bet_col_Over": "Over",
-        "bet_col_Under": "Under"
-      },
-      "bet_col_4": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      },
-      "bet_col_37": {
-        "bet_col_1": "Home",
-        "bet_col_2": "Away"
-      },
-      "bet_col_38": {
-        "bet_col_Over": "Over",
-        "bet_col_Under": "Under"
-      },
-      "bet_col_39": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      },
-      "bet_col_153": {
-        "bet_col_1": "Home",
-        "bet_col_2": "Away"
-      },
-      "bet_col_154": {
-        "bet_col_1": "Handicap",
-        "bet_col_2": "Handicap"
-      },
-      "bet_col_155": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      }
-    },
-    "search": {
-      "change": "Change",
-      "clear_search_history": "Clear search history",
-      "league": "League",
-      "null1": "Search results are empty",
-      "null2": "Try a different term search",
-      "other": "Other search",
-      "search_hot": "Hot search",
-      "search_play": "Search mode",
-      "search_record": "Search history",
-      "search_sports": "Ball searching",
-      "team": "Team",
-      "placeholder": "Please enter the league name or team name",
-      "close": "Close",
-      "view_all_match": "View all matches",
-      "underway": "Underway",
-      "no_search_rezult": "No results found. Please try another search term.",
-      "dogfall": "draw",
-      "search_history": "Search history"
-   }
+    }
 },
   "ac_rules": {
     "auto": "Automatically accept higher odds",
@@ -385,8 +316,7 @@
     "wanyi": "Trillion",
     "total_bet": "Total Stake",
     "total_income": "To Return",
-    "bet_retract": "Bet Retract",
-    "bet_inplay": "In-Play"
+    "bet_retract": "Bet Retract"
   },
   "bet_record": {
     "30day": "30 days",
@@ -1003,12 +933,6 @@
     "msg2": "Stay calm. \"Refresh\" to restore~"
   },
   "list": {
-    "win1": "Home",
-    "win2": "Away",
-    "play": "Market",
-    "play1": "1x2",
-    "play2": "Handicap",
-    "play3": "Total Goals",
     "after_time_start": "Start in {0} minutes",
     "after_time_start2": "Start in {0} minutes",
     "go_to_details": "details",
@@ -1205,8 +1129,7 @@
     "video": "Video",
     "video_info": "Video Info",
     "yes": "Yes",
-    "match_parlay": "Parlay",
-    "day": ""
+    "match_parlay": "Parlay"
   },
   "match_main": {
     "cut_off": "Bet Closed",
@@ -1979,9 +1902,9 @@
   },
   "nativeName": "English (US)",
   "odds": {
-    "EU": "DEC",
+    "EU": "Decimal",
     "GB": "British Odds",
-    "HK": "HK",
+    "HK": "Hongkong",
     "ID": "Indo Odds",
     "MY": "Malay Odds",
     "US": "American Odds"
@@ -2066,7 +1989,6 @@
     "loding_more": "More"
   },
   "search": {
-    "dogfall": "Dogfall",
     "clear_search_history": "Clear Search History",
     "hot": "Heat",
     "hot_league": "Popular Leagues",
@@ -2238,18 +2160,6 @@
       "November",
       "December"
     ],
-    "month_1": "Jan",
-		"month_10": "Oct",
-		"month_11": "Nov",
-		"month_12": "Dec",
-		"month_2": "Feb",
-		"month_3": "Mar",
-		"month_4": "Apr",
-		"month_5": "May",
-		"month_6": "Jun",
-		"month_7": "Jul",
-		"month_8": "Aug",
-		"month_9": "Sep",
     "time_date_1": "%month month %date day",
     "time_date_2": "%s month %s day (%s)",
     "time_date_3": "%s month %s day %s:%s",
