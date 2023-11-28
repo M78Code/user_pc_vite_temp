@@ -59,7 +59,7 @@ const breadCrumbs_firstOne = computed(()=>{
     * 全部菜单类型为1
     * */
     //i18n 球种名称要等 元数据的值 所有要等元数据变化才能拿到i18n的值
-    if(!!lv1_mi&&aseData.base_data_version.value){
+    if(!!lv1_mi&&BaseData.base_data_version.value){
         firstOneName = BaseData.menus_i18n_map[lv1_mi]
     }else {
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
