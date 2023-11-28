@@ -6,7 +6,7 @@
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
 			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt="" class="clear_value"
 			  @click.stop.prevent.self="clear_value" v-show="input_value.length > 0"/>
-			<span class="close_btn" @click="to_home">{{ i18n_t('ouzhou.search.close') }}</span>
+			<span class="close_btn" @click="$router.go(-1)">{{ i18n_t('ouzhou.search.close') }}</span>
 		</div>
 		<!-- 搜索 历史 -->
 		<div class="content" v-show="(show_history && history_data &&
@@ -273,9 +273,6 @@ const clear_value = () => {
 	get_history()
 	get_hot_search()
 }
-const to_home = () => {
-	router.push('/')
-}
 /**
  * 查看所有赛事 测试同步不做跳转
  */
@@ -323,7 +320,6 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	expand_bowling.value = true;
 	expand_league.value = true;
 	expand_team.value = true
-	// console.log('111');
 	show_history.value = false;
 	show_hot.value = false;
 	tabIndex.value = index;
