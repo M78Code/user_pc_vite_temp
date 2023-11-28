@@ -260,28 +260,34 @@ export default defineComponent({
       }
     },
     // 监听主队比分变化
-    home_score (new_,old_) {
-      if (this.is_first_coming) return;
-      if (this.match_of_list.csid != 1) return;
-      if (this.get_footer_sub_changing) return;
-      if (this.match_changing) return;
-
-      if (new_ > 0 && new_ != old_ && old_ !== null && (menu_type.value == 1 || menu_type.value == 3)) {
-        this.is_show_home_goal = true
-        this.hide_home_goal()
+    home_score: {
+      deep: true,
+      handler (new_,old_) {
+        if (this.is_first_coming) return;
+        if (this.match_of_list.csid != 1) return;
+        if (this.get_footer_sub_changing) return;
+        if (this.match_changing) return;
+        if (new_ > 0 && new_ != old_ && old_ !== null && (menu_type.value == 1 || menu_type.value == 3)) {
+          this.hide_away_goal()
+          this.is_show_home_goal = true
+          this.clear_goal()
+        }
       }
     },
-
     // 监听客队比分变化、
-    away_score (new_,old_) {
-      if (this.is_first_coming) return;
-      if (this.match_of_list.csid != 1) return;
-      if (this.get_footer_sub_changing) return;
-      if (this.match_changing) return;
+    away_score: {
+      deep: true,
+      handler (new_,old_) {
+        if (this.is_first_coming) return;
+        if (this.match_of_list.csid != 1) return;
+        if (this.get_footer_sub_changing) return;
+        if (this.match_changing) return;
 
-      if (new_ > 0 && new_ != old_ && old_ !== null && (menu_type.value == 1 || menu_type.value == 3)) {
-        this.is_show_away_goal = true
-        this.hide_away_goal()
+        if (new_ > 0 && new_ != old_ && old_ !== null && (menu_type.value == 1 || menu_type.value == 3)) {
+          this.hide_home_goal()
+          this.is_show_away_goal = true
+          this.clear_goal()
+        }
       }
     },
     // 监听主队红牌比分变化
@@ -950,6 +956,15 @@ export default defineComponent({
           this.$router.push({name,params})
         }
       }
+    },
+
+    clear_goal () {
+      let timer = setTimeout(() => {
+        this.is_show_away_goal = false
+        this.is_show_home_goal = false
+        clearTimeout(timer)
+        timer = null
+      }, 5000)
     },
 
     // 清除当前组件所有定时器
