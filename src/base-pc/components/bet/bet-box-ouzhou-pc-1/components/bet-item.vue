@@ -58,7 +58,7 @@
            
         </div>
         <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
-            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="(ref_data.max_money >= obj && ref_data.max_money >= BetData.bet_amount) || index == 'max' ? '' : 'disabled'" >
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
                 {{index == 'max' ? '' : '+' }}{{obj}}
             </li>
         </ul>
@@ -118,6 +118,14 @@ const set_show_quick_money = (obj = {}) => {
     obj.money_list.max = 'MAX'
     ref_data.money_list = obj.money_list
     ref_data.max_money = obj.max_money
+}
+
+// 判断快捷金额按钮是否可点击
+const bet_money_btn_class = (obj, index) => {
+    if((ref_data.max_money >= obj && ref_data.max_money >= BetData.bet_amount) || index == 'max' || UserCtr.balance >= obj ) {
+        return ''
+    }
+    return 'disabled'
 }
 
 // 快捷金额

@@ -90,7 +90,7 @@ export const dateWeekMatchesFormat = (day) => {
         let date_time = i === 0 ? "" : new Date(this.setHours(12, 0, 0, 0)).getTime()
         return {
           val: date_time,
-          name:  i == 0 ? i18n_t('today') : i == 1 ? i18n_t('tomorrow') : `${format_M_D_PC(date_time)}`,
+          name:  i == 0 ? i18n_t('ouzhou.match.today') : i == 1 ? i18n_t('ouzhou.match.tomorrow') : `${format_M_D_PC(date_time)}`,
           type:i === 0?0:1
         };
     }
