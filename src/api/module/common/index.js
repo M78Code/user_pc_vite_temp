@@ -157,6 +157,7 @@ export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/
  * @description 详情页下拉列表
  * @param {Object} params
  * @param {String} params.tId 联赛 id
+ * @param {1|Number} [params.type] 1:赛果
  * @param {*} [config]
  * @param {*} [url]
  * @returns {Promise<API.MatchDetails>}
