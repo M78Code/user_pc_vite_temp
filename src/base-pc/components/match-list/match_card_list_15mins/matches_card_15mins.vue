@@ -7,10 +7,10 @@
         <div class="begin-time din_font">{{ get_mmp(match.mst) }}</div>
       </div>
     </div>
-    <div class="club-name" :class="{'bold': utils.get_handicap_index_by(match) == 1}" @click="jump_to_details()">
+    <div class="club-name" :class="{'bold': get_handicap_index_by(match) == 1}" @click="jump_to_details()">
       {{ match.mhn }}
     </div>
-    <div class="union-name" :class="{'bold': utils.get_handicap_index_by(match) == 2}" @click="jump_to_details()">
+    <div class="union-name" :class="{'bold': get_handicap_index_by(match) == 2}" @click="jump_to_details()">
       {{ match.man }}
     </div>
     <div class="odds-box din_font">
@@ -36,7 +36,7 @@ import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t } fro
 import { get_min15_handicap_type } from 'src/core/match-list-pc/composables/match-list-other.js'
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
-import { utils } from "src/core/index.js"
+import { get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
 
 const router = useRouter()
 const props = defineProps({
