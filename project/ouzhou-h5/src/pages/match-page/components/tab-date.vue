@@ -44,9 +44,9 @@
         <!-- 联赛的区域选择 -->
         <div class="date_time" v-if="store.tabActive == 'League'">
             <q-virtual-scroll ref="scrollRefArea" :items="store.areaList" virtual-scroll-horizontal
-                v-slot="{ item, index }">
-                <div @click="areaListChange(item, index)" class="week"
-                    :class="store.area_tab_index == index ? 'active' : ''">
+                v-slot="{ item }">
+                <div @click="areaListChange(item)" class="week"
+                    :class="store.selectArea.id == item.id ? 'active' : ''">
                     <span>
                         <span>{{ item.introduction }}</span>
                     </span>
@@ -161,11 +161,12 @@ const setDefaultData = (val) => {
 }
 
 watch(() => store.areaList, () => {
-    if (store.areaList.lenght) {
-        const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
-        const offset = index < 0 ? 0 : index
-        areaListChange(store.areaList[offset], offset)
-    }
+    console.log(store.areaList.lenght)
+    // if (store.areaList.lenght) {
+    //     const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
+    //     const offset = index < 0 ? 0 : index
+    //     areaListChange(store.areaList[offset], offset)
+    // }
 })
 onMounted(() => {
     setDefaultData(MenuData.menu_mi.value || '101');//默认足球
@@ -180,16 +181,16 @@ onUnmounted(() => {
  * 地区选择tab
  * @param {*} index 
  */
-const areaListChange = (item, index) => {
+const areaListChange = (item) => {
+    store.tabModel = false;
+    const index = store.areaList.findIndex(i => i.id === item.id)
     if (item) {
-        store.tabModel = false;
-        const move_index = store.areaList.findIndex((t, _index) => _index === index);
-        scrollRefArea.value.scrollTo(move_index - 2, "start-force");
-        store.area_tab_index = index;
+        scrollRefArea.value.scrollTo(index - 2, "start-force");
         store.selectArea = item
-        emit("changeArea", item.id);
+        emit("changeArea", item);
     }
 }
+
 </script>
   
 <style lang="scss" scoped>
