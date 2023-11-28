@@ -86,6 +86,9 @@
         "84h": "7 days"
       }
     },
+    "time": {
+      "date": "{day}/{month}"
+    },
     "search": {
       "change": "Change",
       "clear_search_history": "Clear history",

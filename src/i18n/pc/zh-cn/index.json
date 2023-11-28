@@ -114,6 +114,9 @@
       },
       "empty": "该时间内暂无赛事!"
     },
+    "time": {
+      "date": "{month}月 {day}日"
+    },
     "search": {
       "change": "换一换",
       "clear_search_history": "清除历史记录",
