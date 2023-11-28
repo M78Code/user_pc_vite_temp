@@ -494,6 +494,13 @@ export const details_main = (router, route) => {
         case "C109":
           RCMD_C109(data);
           break;
+         //  玩法集变更(C112)    
+         case "C112":
+          get_category_list_info({
+            sportId: csid.value,
+            mid:mid.value,
+          });
+          break; 
         default:
           break;
       }

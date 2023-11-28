@@ -35,18 +35,21 @@ const props = defineProps({
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: #303442;
-        font-size: 15px;
+        color: var(--q-gb-t-c-3);
+        font-size: 14px;
         font-weight: 500;
         span:nth-last-child(1){
             font-weight: bold;
-            font-size: 17px;
+            font-size: 22px;
+            color: var(--q-gb-t-c-18);
         }
     }
     .others{
-        border-left: 2px solid #179CFF;
+        border-left: 2px solid var(--q-gb-bg-c-13);
         padding-left: 4px;
         box-sizing: border-box;
+        height: 0.38rem;
+        font-size: 0.12rem;
     }
 }
 </style>

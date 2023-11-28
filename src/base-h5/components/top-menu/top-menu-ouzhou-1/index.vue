@@ -63,7 +63,7 @@
 
   <script setup>
 
-import { ref, reactive , computed, onMounted,onUnmounted } from "vue";
+  import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter, useRoute } from "vue-router";
 import { format_money2,UserCtr } from "src/core/";
 import leftMenu from "./components/left-menu/left-menu.vue";
@@ -144,12 +144,13 @@ const toggleLeftDrawer = () => {
 const changebalance = (val) =>{
   amount.value = val;
 }
-onMounted(() => {
+watch(() => route.path, (val) => {
   hisLen.value = history.length
+})
+onMounted(() => {
   useMittOn(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE, changebalance)
 })
 onUnmounted(()=>{
-  hisLen.value = history.length
   useMittOn(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE).off
 })
 </script>
