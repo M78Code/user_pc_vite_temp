@@ -1,42 +1,25 @@
+<!--
+ * @Description:copy bevis_odds_info.vue 供赛果详情使用
+-->
 <template>
-    <div class="match-detail-odds component odds-info">
+    <div class="component odds-info match-detail-odds ">
         <template v-if="match_odds_info && match_odds_info.length > 0">
-            <!--
-            <div v-for="(item, index) in match_odds_info" :key="item.topKey" class="odds-wrap">
-                <q-separator color="orange" v-if="index != 0" />
-                <div class="odds-hpn" @click="expend_toggle(item)">
-                    <span class="odds-hpn-text">{{ item.hpn }}</span>
-                    <span class="odds-hpn-icon"
-                          :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'" ></span>
-                </div>
-                <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-                {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}
-                    <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" :play="item" :active="active"
-                               :sport_id="MatchDetailCalss.params.sportId" @bet_click_="bet_click_" />
-                    <component :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
-                            :item_data="item" :active="active" @bet_click_="bet_click_" />
-                </div>
-            </div>
-            -->
             <template v-for="(item, index) in match_odds_info" :key="item.topKey">
-                <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2||item.hs == 11))">
+                <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
                     <q-separator color="orange" v-if="index != 0"/>
                     <div class="odds-hpn" @click="expend_toggle(item)">
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
-                        <span class="odds-hpn-icon" :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
+                        <span class="odds-hpn-icon"
+                              :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
+                    <!-- {{ computedPlayComponent(item.hpt) }} -->
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-<!--                        {{ `tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}   ${ index }` }}-->
-                        <component
-                            :is="componentArr[`tem${[0, 1, 5, 10].includes(item.hpt) ? tem_choice(item.hpt) : '_other'}`]"
-                            :item_data="item"
-                            :active="active"
-                            @bet_click_="bet_click_"
-                        />
+                        <component :is="playComponent[computedPlayComponent(item.hpt)]"
+                                   :item_data="item" @bet_click_="bet_click_" />
                     </div>
                 </div>
             </template>
-            <!-- <div class="match-detail-odds-bottom"></div> -->
+
         </template>
         <template v-else>
             <div v-if="!loading">
@@ -49,19 +32,19 @@
 
 <script setup>
 import {onMounted, ref, markRaw, watch, nextTick} from "vue";
-import temp0 from "./template/tem0.vue";
-import temp1 from "./template/tem1.vue";
 import temp3 from "./template/tem3.vue";
 import temp5 from "./template/tem5.vue";
 import tem_other from "./template/tem_other.vue";
 
+import {playTemplate0, playTemplate1, playTemplate2, playTemplate3, playTemplate4, playTemplate5} from "./bevis/index.js"
 
 import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
 // import EMITTER from "src/global/mitt.js";
-import {useMittEmit, MITT_TYPES} from "src/core/mitt/index.js"
+import {useMittEmit, MITT_TYPES} from "src/core/mitt"
 import {LOCAL_PROJECT_FILE_PREFIX} from "src/core";
-import {MatchDetailCalss} from "src/core/index.js"
+import {MatchDetailCalss} from "src/core"
+import _ from "lodash"
 
 // /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
 const props = defineProps({
@@ -84,21 +67,45 @@ const props = defineProps({
         default: false
     }
 });
+
+/*setTimeout(function (){
+    let baseData = []
+    baseData = _.groupBy(props.match_odds_info,'hpt')
+    console.log(baseData,"baseData")
+    console.log(props.match_odds_info,"props.match_odds_info")
+},2000)*/
 const emit = defineEmits(["change", "update:allCloseState"]);
 const active = ref(1);
-const componentArr = ref({
-    tem0: markRaw(temp0),
-    tem1: markRaw(temp1),
-    tem3: markRaw(temp3),
-    tem5: markRaw(temp5),
-    tem_other: markRaw(tem_other),
-});
-
-const tem_choice = (hpt) => {
-    if ([0, 1, 5].includes(hpt)) {
-        return hpt;
+/*
+* 新组件使用hpid 玩法集ID
+* 原来组件使用hpt 玩法展示模板
+* 【0, 1, 5, 10】
+* */
+/*
+* 新组件使用hpid 玩法集ID
+* 原来组件使用hpt 玩法展示模板
+* 【0, 1, 5, 10】
+* */
+const playComponent = ref({
+    template0: markRaw(playTemplate0),
+    template1: markRaw(playTemplate1),
+    template2: markRaw(playTemplate2),
+    template3: markRaw(temp3),
+    template4: markRaw(playTemplate4),
+    template5: markRaw(temp5),
+    template_other: markRaw(tem_other)
+})
+const hptArr = [0,1,2,3,5,4]
+const computedPlayComponent = function (hpt) {
+    let componentName = '';
+    if (hptArr.includes(hpt)) {
+        componentName = `template${hpt}`
+    } else if(hpt == 10){
+        componentName = 'template3'
+    } else {
+        componentName = 'template_other'
     }
-    return 3;
+    return componentName
 }
 // 事件执行函数
 const topKey_active = ref({});
@@ -204,9 +211,8 @@ onMounted(() => {
 
     .no-data-text {
         text-align: center;
-        font-weight: bold;
-        font-size: 15px;
-        line-height: 0;
+        color: #A1A3A5;
+        font-size: 16px;
     }
 }
 
@@ -230,7 +236,7 @@ onMounted(() => {
             white-space: nowrap;
             text-overflow: ellipsis;
             color: var(--q-gb-t-c-4);
-            font-weight: 500;
+            font-weight: 800; //设计图的500无效
         }
 
         .odds-hpn-icon {

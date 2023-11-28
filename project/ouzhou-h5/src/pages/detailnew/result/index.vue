@@ -34,7 +34,7 @@ import { onMounted, ref, toRaw, watch, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import detail_header_tem1 from "../detail_header/detail_header_tem1.vue";
 // import odds_info from "./components/odds_info.vue";
-import odds_info from "../components/bevis_odds_info.vue";
+import odds_info from "../components/odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import { api_match_list, api_common, api_analysis } from "src/api/index.js";
 

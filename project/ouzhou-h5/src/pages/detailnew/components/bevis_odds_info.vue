@@ -1,10 +1,11 @@
 <!--
- * @Description: 欧洲h5赛果详情共用该模板, 动态component中的template模板需要兼容赛果详情
+ * @Description: 欧洲h5赛果详情已不再共用该模板, 仍共用component中的template
+ * 动态component中的template模板需要兼容赛果详情
  * import ResultOlItem from "../../result/ResultOlItem.vue";
  * 于OlItem位置引入ResultOlItem组件即可
 -->
 <template>
-    <div class="match-detail-odds component odds-info">
+    <div class="component  odds-info bevis-odds-info match-detail-odds">
         <template v-if="match_odds_info && match_odds_info.length > 0">
          <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
