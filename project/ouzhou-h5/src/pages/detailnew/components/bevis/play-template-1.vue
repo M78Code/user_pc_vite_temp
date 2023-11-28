@@ -34,7 +34,7 @@ const go_betting = (data) => {
 };
 
 setTimeout(function (){
-    console.log(props.item_data,"item-data")
+    // console.log(props.item_data,"item-data")
 },1200)
 </script>
 

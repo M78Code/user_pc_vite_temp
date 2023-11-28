@@ -6,7 +6,7 @@
 <template>
   <div class="detail-bread">
     <div class="detail-bread-item " style="cursor: pointer;" @click="jumpTo">
-      <span >{{ breadCrumbs_firstOne }}</span>
+      <span >{{ $t(breadCrumbs_firstOne) }}</span>
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
     </div>
     <div class="detail-bread-item" @click="jumpToLeagues()">
@@ -38,8 +38,6 @@ const bread_list = ref([])
 const last_label = computed(() => {
   return `${props.detail_info.mhn} vs ${props.detail_info.man}`
 })
-
-
 // 面包屑导航第一项展示
 /*
 * 面包屑导航第一项内容展示
@@ -63,7 +61,7 @@ const breadCrumbs_firstOne = computed(()=>{
         firstOneName = BaseData.menus_i18n_map[lv1_mi]
     }else {
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
-        firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.title : props.detail_info.csna
+        firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.i18n : props.detail_info.csna
     }
     return firstOneName
 })

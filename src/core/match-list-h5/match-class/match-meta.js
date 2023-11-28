@@ -255,7 +255,6 @@ class MatchMeta {
     const handicap_index = MatchUtils.get_handicap_index_by(match);
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     const { home_red_score, away_red_score, home_yellow_score, away_yellow_score } = MatchUtils.get_match_red_yellow_card(match)
-    console.log(home_red_score, away_red_score, home_yellow_score, away_yellow_score)
     return {
       source_index: index,
       is_show_no_play,
