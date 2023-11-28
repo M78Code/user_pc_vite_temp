@@ -46,7 +46,7 @@
 </template>
 <script setup>
 import lodash from "lodash";
-import { ref } from "vue";
+import { ref,inject } from "vue";
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue";
 import {
   i18n_t,
@@ -59,7 +59,7 @@ const props = defineProps({
     default: null,
   },
 });
-const match = MatchListData.get_quick_mid_obj(props.mid);
+const match =inject("match");
 const is_mounted = ref(true)
 const vx_main_menu_toggle = ref('')
 /**

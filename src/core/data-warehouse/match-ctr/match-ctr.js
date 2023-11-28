@@ -307,7 +307,7 @@ init(){
    * @param {String} mid 赛事mid
    * @return {TYPES.MatchDetail} 赛事
    */
-  get_quick_mid_ob_ref(mid){
+get_quick_mid_obj_ref(mid){
     // 获取指定mid的赛事
     const key = this.get_list_to_obj_key(mid,mid, 'mid')
     return toRef(this.list_to_obj.mid_obj, key);
