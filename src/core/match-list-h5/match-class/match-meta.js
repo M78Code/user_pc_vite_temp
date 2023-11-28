@@ -18,7 +18,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/te
 import { useMittEmit, MITT_TYPES,project_name, MenuData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
-  MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5, get_punish_score
+  MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
 } from 'src/core'
 
 class MatchMeta {
@@ -626,7 +626,6 @@ class MatchMeta {
       dataList.forEach(t => {
         t.match_data_type = 'h5_in_play_league'
       })
-      MatchDataBaseInPlayH5.clear()
       match_list = MatchUtils.get_home_in_play_data(dataList)
       // this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
       this.handler_match_list_data({ list: match_list, warehouse: MatchDataBaseInPlayH5, type: 2, is_virtual: false, merge: 'cover' })
@@ -1018,7 +1017,8 @@ class MatchMeta {
     }
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
-      this.get_match_base_hps_by_mids()
+      const { mid = '' } = data
+      if (this.match_mids.includes(mid)) this.get_match_base_hps_by_mids()
     }
 
   }
@@ -1093,6 +1093,7 @@ class MatchMeta {
     // ws 订阅
     // warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
+    warehouse.clear()
     warehouse.set_list(list)
     // 获取赛事赔率
     this.get_match_base_hps_by_mids()
