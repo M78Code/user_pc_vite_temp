@@ -1,14 +1,14 @@
 <template>
   <div class="component detail-top-info detail-top">
     <div class="sport-info" @click="toHome">
-      <span>{{ getCsna}}</span>
+      <span>{{ getCsna }}</span>
       <img class="bakc-icon" src="../img/back.png" alt="" />
     </div>
-    <div class="detail-select" v-if="drop_down_list.length">
+    <div class="detail-select" v-if="drop_down_list.length||true">
       <div class="detail-select-nav">
         <q-btn class="label">
-          <span class="btn-label">{{ drop_down_list[active].tn }}</span>
-          <img class="down-icon" :class="[{ 'up-icon': show_list }]" src="../img/top-down.png" alt="" />
+          <span class="btn-label">{{ lengueName }}</span>
+          <img v-if="drop_down_list.length" class="down-icon" :class="[{ 'up-icon': show_list }]" src="../img/top-down.png" alt="" />
           <q-menu class="detail-top-pop">
             <div class="detail-top-pop-content" ref="detail_top_pop">
               <div class="match_detail_top_list">
@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, watch,computed } from "vue";
+import { ref, watch,computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
   useMittEmit, MITT_TYPES,
@@ -48,37 +48,29 @@ import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
 const route = useRoute()
 const router = useRouter();
+const mid = route.params.mid;
 const refresh_is_active = ref(false);
 const active = ref(0);
 const show_list = ref(false);
 const detail_top_pop = ref(null);
-const isMatchResultRoute = route.name == 'result'
 const leagueName = ref('')
+const isMatchResultRoute = route.name == 'result'
 
 getDropDownList()
-getMatchDetail({
-  mid: route.params.mid,
-  cuid: route.params.cuid,
-})
 
 const getCsna = computed(()=>{
   return MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route?.params?.mid)?.csna
 })
+const lengueName = computed(()=>{
+  return MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route?.params?.mid)?.tn
+})
 /** @type {Ref<Array<TYPES.MatchDetail>>} 下拉列表 */
 const drop_down_list = ref([]);
 
-/** 请求赛事详情 @param {{mid,cuid}} params 请求参数*/
-function getMatchDetail(params){
-  if(isMatchResultRoute){
-    api_common.get_matchResultDetail_MatchInfo(params).then(
-      (res) => MatchDataWarehouseInstance.set_match_details(toRaw(matchDetail.value = res.data), [])
-    );
-  }
-}
 /** 获取下拉列表 */
 function getDropDownList() {
   api_common.get_matchDetail_getMatchDetailByTournamentId({
-    tId: 13115,
+    tId: route.params.tid,
     type: isMatchResultRoute? 1 : (void 0),
     dateTime: Date.now()
   }).then(res => {
@@ -90,7 +82,6 @@ function getDropDownList() {
   }).then((data)=>{
     if(data.length){
       leagueName.value = data[0].tn
-      const mid = route.params.mid
       res.data.forEach((item,index)=>{
         if(item.mid == mid){
           active.value = index
