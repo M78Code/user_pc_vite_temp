@@ -91,22 +91,22 @@ export function get_match_template_id({ csid }) {
         if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
             return tpl_id
         }
-        return 101    
+        return 101
     }
     return tpl_id
 }
 
 export const check_match_end = (match, callback) => {
-    if(match?.mmp == 999){
-      // 移除赛事
-      callback(match);
+    if (match?.mmp == 999) {
+        // 移除赛事
+        callback(match);
     }
     // 赛事状态ms  0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断 110 即将开赛
-    else if(![0, 1, 2, 7, 10, 110].includes(+match?.ms)) {        
-      // 移除赛事
-      callback(match);
+    else if (![0, 1, 2, 7, 10, 110].includes(+match?.ms)) {
+        // 移除赛事
+        callback(match);
     }
-  }
+}
 
 /**
  * 
@@ -334,7 +334,97 @@ export function get_match_to_map_obj(match, key_arr) {
     }
     return map_obj;
 }
+/**
+* @description: 获取赛事的让球方
+* @param {Object} match
+* @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
+*/
+export function get_handicap_index_by(match) {
+    let result = 0;
+    if (match ) {
+        let hpid = get_handicap_w_id(match.csid);
+        const hps= lodash.get(match,'hps')||lodash.get(match,'hpsData[0].hps',[])
+        let hp_item =hps.find((item) => item.hpid == hpid);
+        if (hp_item) {
+            let hl_item = lodash.get(hp_item,'hl[0]')||lodash.get(hp_item,'hl');
 
+            // 网球csid 5  让盘hpid 154
+            if (!hl_item || !hl_item.ol) {
+                if (match.csid == 5) {
+                    hp_item = hps.filter((item) => item.hpid == 154)[0];
+                    if (hp_item) {
+                        hl_item =  lodash.get(hp_item,'hl[0]')||lodash.get(hp_item,'hl')
+                    }
+                }
+            }
+            if (hl_item && hl_item.ol) {
+                let found_i = 0;
+                hl_item.ol.forEach((ol_item, i) => {
+                    if (ol_item.on) {
+                        let on_str = String(ol_item.on);
+                        if (on_str[0] == "-") {
+                            found_i = i + 1;
+                        }
+                    }
+                });
+                result = found_i;
+            }
+        }
+        console.log(hps,hpid,'hpshps',result)
+    }
+    return result;
+}
+/**
+ * 根据体育类型的csid获取赛事的让球玩法id
+ * @param {Number} csid 体育类型id
+ */
+export function get_handicap_w_id(csid) {
+    const sport_id = csid * 1;
+    let sport_id_convert = 4;
+    switch (sport_id) {
+        // 网球
+        case 5:
+            sport_id_convert = 154  //让盘154 让局155
+            break;
+        // 羽毛球
+        case 10:
+            sport_id_convert = 172
+            break;
+        // 乒乓球
+        case 8:
+            sport_id_convert = 172
+            break;
+        // 斯诺克
+        case 7:
+            sport_id_convert = 181
+            break;
+        // 篮球
+        case 2:
+            sport_id_convert = 39
+            break;
+        // 足球
+        case 1:
+            sport_id_convert = 4;
+            break;
+        // 3、4、6、9棒冰美排
+        case 3:  //棒
+            sport_id_convert = 243
+            break;
+        case 4:  //冰
+            sport_id_convert = 4;
+            break;
+        case 6:  //美
+            sport_id_convert = 39
+            break;
+        case 9: //排
+            sport_id_convert = 172
+            break;
+        default:
+            sport_id_convert = 4;
+            break;
+    }
+    return sport_id_convert;
+}
 
 /*额外给赛事添加对象*/
 export function match_list_handle_set(match_list) {

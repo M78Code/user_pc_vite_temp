@@ -61,7 +61,6 @@
           :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
         </div>
       </div>
-   
       <!-- 主比分 -->
       <div
         class="score"
@@ -92,7 +91,7 @@ import { useRouter } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
-
+import {get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
 const router = useRouter()
 const match=inject('match');
 const props = defineProps({
@@ -117,11 +116,11 @@ const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'match.mid'))
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match.value, 'mid'))
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    const mc=lodash.get(props, 'match.mc')
-    return mc?`+${lodash.get(props, 'match.mc')}`:'+0'
+    const mc=lodash.get(match.value, 'mc')
+    return mc?`+${lodash.get(match.value, 'mc')}`:'+0'
   }else{
     return i18n_t('match_info.more')
   }
@@ -172,7 +171,7 @@ const play_name_obj = computed(() => {
   return play_name_obj
 })
 
-is_collect.value = Boolean(lodash.get(props, 'match.mf'))
+is_collect.value = Boolean(lodash.get(match.value, 'mf'))
 
 /**
  * @Description 赛事收藏 
@@ -264,12 +263,9 @@ function hide_away_goal () {
   is_show_away_goal.value = false;
 }
 
-let handicap_index = ref(0)
-onMounted(()=>{
-  // use_polling_mst(match.value);
-  handicap_index.value = utils.get_handicap_index_by(match.value);
+let handicap_index = computed(()=>{
+  return  get_handicap_index_by(match.value)
 })
-
 onUnmounted(() => {
   clearInterval(timer);
   timer = null;

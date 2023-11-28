@@ -188,7 +188,7 @@
 </template>
 
 <script>
-import * as api_activity from "project/activity/src/pages/yazhou-pc/api/index";
+import {api_activity} from "project/activity/src/public/api/index.js";
 import slider from "project/activity/src/pages/yazhou-pc/slot_machine/slider.vue"
 import lottery from "project/activity/src/pages/yazhou-pc/slot_machine/lottery.vue"
 import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
@@ -1141,3 +1141,4 @@ svg {
   color: #fff;
 }
 </style>
+project/activity/src/api/module/activity/index

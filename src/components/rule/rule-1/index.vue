@@ -45,7 +45,7 @@ const get_pc_rule_url = () => {
     let domain = lodash.get(window, `env.config.static_serve[0]`)
     if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
         // 生产环境
-        domain = "http://sports-rules-ouzhou-test.sportxxx3pk.com"
+        domain = "https://9wutrx6jpfaslmvi.9ps7bak.com"
     } else if (current_env == 'idc_sandbox' || current_env == 'idc_pre') {
         // 试玩环境
         // domain = "https://sports-rules-new-shiwan.sportxxx3pk.com"

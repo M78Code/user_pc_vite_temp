@@ -131,7 +131,7 @@ class VirtualList {
     let already_folded = 0;
     // 顶部滚动距离减去  上面5个列表赛事  的距离
     // const start_position = scrollTop - 234 * 5
-    const start_position = csid_status ? scrollTop - (window.innerHeight - 150) : scrollTop - 200
+    const start_position = csid_status ? scrollTop - (window.innerHeight - 150) : scrollTop - 800
     const match_datas = []
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value

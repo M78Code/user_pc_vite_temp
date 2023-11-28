@@ -97,7 +97,8 @@ const go_betting = (data) => {
             </ul>
         </div>
         <div v-for="_item of AssembleData.others" :key="_item.oid" @click="go_betting(_item)"
-             :class="['other',{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]">
+             class="other"
+             :class="{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }">
             <template v-if="_item?.os == 1 && _item._hs != 11">
                 <span class="on-text">{{ _item.on ?? _item.ott }}</span>
                 <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}</span>

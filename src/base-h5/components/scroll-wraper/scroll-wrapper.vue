@@ -105,7 +105,7 @@ const get_index_f_data_source = (mid) => {
 }
 
 // 赛事列表容器滚动事件
-const handler_match_container_scroll = lodash.debounce(($ev) => {
+const handler_match_container_scroll = lodash.throttle(($ev) => {
   scroll_top.value = $ev.target.scrollTop
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
   if (get_is_static() || length < 17) return
@@ -115,7 +115,7 @@ const handler_match_container_scroll = lodash.debounce(($ev) => {
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2 })
     if (!is_export.value) get_match_base_hps()
   }
-}, 100)
+}, 300)
 
 // 获取赔率
 const get_match_base_hps = lodash.debounce(() => {

@@ -17,10 +17,10 @@
           <match-process v-if="item" :match="item" source='match_list' show_page="match-list" :rows="1" :date_rows="1"
             date_show_type="inline" periodColor="gray" />
         </div>
-        <div class="club-name" :class="{'bold': utils.get_handicap_index_by(item) == 1}">
+        <div class="club-name" :class="{'bold': get_handicap_index_by(item) == 1}">
           <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.home`) }}</span>
         </div>
-        <div class="union-name" :class="{'bold': utils.get_handicap_index_by(item) == 2}">
+        <div class="union-name" :class="{'bold': get_handicap_index_by(item) == 2}">
           <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.away`) }}</span>
         </div>
         <div class="odds_box">
@@ -48,7 +48,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
+import { get_ouzhou_data_tpl_id ,get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
 import { utils } from "src/core/index.js"
 
 const router = useRouter();

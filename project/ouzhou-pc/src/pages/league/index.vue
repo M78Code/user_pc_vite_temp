@@ -29,8 +29,9 @@ import {
 } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import LeaguesHeader from "src/base-pc/components/leagues-header/index.vue";
-import { LayOutMain_pc, MenuData } from 'src/core/index.js';
+import { LayOutMain_pc, useMittOn,MITT_TYPES } from 'src/core/index.js';
 import { api_match } from "src/api/index.js";
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import "../match-list/match_list.scss";
 export default {
   components: {
@@ -46,11 +47,10 @@ export default {
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      MenuData.set_menu_current_mi('')
+      MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
       mounted_fn()
-
     })
-
+   const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,fetch_league_match_list).off
     watch(() => route.params, () => {
       fetch_league_match_list()
     }, { immediate: true, deep: true })
@@ -84,6 +84,7 @@ export default {
     }
     onUnmounted(() => {
       handle_destroyed()
+      off()
     })
     return {
       match_list_card_key_arr,
