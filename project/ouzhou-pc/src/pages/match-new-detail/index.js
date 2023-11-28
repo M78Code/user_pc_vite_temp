@@ -154,7 +154,7 @@ export function usedetailData(route) {
     const { isNeedLoading = true } = par || {};
     try {
       const params = {
-        mid: mid,
+        mid: route.params.mid,
         cuid: user_info.userId,
         t: new Date().getTime(),
       };
@@ -206,8 +206,8 @@ export function usedetailData(route) {
   const get_category = async () => {
     try {
       const params = {
-        sportId,
-        mid,
+        sportId:route.params.csid,
+        mid:route.params.mid,
         t: new Date().getTime(),
       };
       const res = await get_detail_category(params);
@@ -233,7 +233,7 @@ export function usedetailData(route) {
       const params = {
         mcid: 0,
         cuid: user_info.userId,
-        mid,
+        mid:route.params.mid,
         newUser: 0,
         t: new Date().getTime(),
       };
@@ -436,14 +436,13 @@ export function usedetailData(route) {
    * @return {*}
    */
    function RCMD_C102(obj) {
-    // let skt_data = obj.cd;
-    // if (skt_data.mmp == 999) {
+    let skt_data = obj.cd;
+    if (skt_data.mmp == 999) {
       //切换赛事
       mx_autoset_active_match({ mid: route.params.mid });
-    // }  
+    }  
   } 
-  // let timer1 =  setTimeout(() => {
-  //   clearTimeout(timer1)
+  // setTimeout(() => {
   //   RCMD_C102()
   // }, 10000);
   //todo mitt 触发ws更新
@@ -453,7 +452,6 @@ export function usedetailData(route) {
   );
   //  赛事切换刷新数据
   const refresh = () => {
-    console.log(refresh,'refresh');
     all_list_toggle = {};
     detail_list.value = [];
     sportId = route.params.csid;
@@ -477,6 +475,7 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
+    clearTimeout(timer1)
     message_fun.forEach(i=>i())
     off_init()
   });
