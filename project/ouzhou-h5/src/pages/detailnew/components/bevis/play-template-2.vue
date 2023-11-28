@@ -39,6 +39,7 @@ const go_betting = (data) => {
                     <template v-if="olChild.os == 2 || olChild._hs == 11">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </template>
+                    <ResultOlItem :value="olChild" :hpt="2"></ResultOlItem>
                 </li>
             </template>
         </ul>

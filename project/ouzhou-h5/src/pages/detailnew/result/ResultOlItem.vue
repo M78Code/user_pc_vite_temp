@@ -93,13 +93,13 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
     color: #000000;
   }
 }
-.hpt-1,.hpt-3{
+.hpt-1{
   &.component.result-ol-item{
     --privete-flex-direction: row-reverse;
   }
 }
 
-.hpt-1,.hpt-3{
+.hpt-1{
   height: 100%;
   /** play-template-1继承来的css 变量 */
   padding: var(--private-container-padding);
@@ -110,7 +110,7 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
   }
 }
 .hpt-0{
-  --private-inner-container-padding: 0px 10px;
+  --private-inner-container-padding: 0px 0px;
   justify-content: center;
   @extend .overflow;
   // @extend .content-overflow;

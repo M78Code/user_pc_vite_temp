@@ -92,7 +92,7 @@ const go_betting = (data) => {
                     <figure v-if="_item?.os == 2 || _item._hs == 11">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </figure>
-<!--                    <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>-->
+                    <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>
                 </li>
             </ul>
         </div>

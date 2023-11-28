@@ -76,7 +76,7 @@ const go_betting = (data) => {
                 <figure class="lockBox" v-if="olChild.os == 2 || compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) == 0">
                     <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                 </figure>
-                <ResultOlItem :value="olChild" :hpt="0"></ResultOlItem>
+                <ResultOlItem class="list-item onePxBorder" :value="olChild" :hpt="0"></ResultOlItem>
             </template>
         </ul>
     </section>

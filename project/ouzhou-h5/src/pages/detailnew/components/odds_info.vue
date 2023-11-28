@@ -90,7 +90,7 @@ const playComponent = ref({
     template0: markRaw(playTemplate0),
     template1: markRaw(playTemplate1),
     template2: markRaw(playTemplate2),
-    template3: markRaw(temp3),
+    template3: markRaw(playTemplate3),
     template4: markRaw(playTemplate4),
     template5: markRaw(temp5),
     template_other: markRaw(tem_other)

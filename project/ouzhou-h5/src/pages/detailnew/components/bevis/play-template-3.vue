@@ -12,6 +12,7 @@ import {computed, defineProps} from "vue";
 import olStatus from "../ol_status.vue";
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
+import ResultOlItem from "../../result/ResultOlItem.vue";
 
 const props = defineProps({
     item_data: {
@@ -38,7 +39,7 @@ const AssembleData = computed(()=>{
         <ul class="list">
             <template v-for="olChild of item_data.hl[0].ol" :key="olChild?.oid">
                 <template v-if="olChild.result != (void 0)">
-                    <ResultOlItem :value="olChild" :hpt="3"></ResultOlItem>
+                    <ResultOlItem class="list-item result-ol-item" :value="olChild" :hpt="3"></ResultOlItem>
                 </template>
                 <template v-else>
                     <li v-if="olChild.os == 1" class="list-item" @click="go_betting(olChild)"
@@ -75,6 +76,9 @@ const AssembleData = computed(()=>{
             justify-content: center;
             background-color: var(--q-gb-bg-c-2);
             border: 1px solid var(--q-gb-bd-c-10);
+        }
+        .result-ol-item{
+            height: 48px;
         }
     }
 }

@@ -123,25 +123,21 @@ const AssembleData = computed(() => {
         </section>-->
 
 
-    <section class="play-template-1 haveTitle" v-if="AssembleData?.haveTitle">
+    <section class="component play-template play-template-1 haveTitle" v-if="AssembleData?.haveTitle">
         <ul class="list" v-for="(item,index) of AssembleData.assemble" :key="index">
             <li class="list-title textOverflow1">{{ item.osn }}</li>
             <template v-for="_item of item.information" :key="_item.oid">
-                <template v-if="_item.result != (void 0)">
-                    <div>
-                        <ResultOlItem :value="_item" :hpt="1"></ResultOlItem>
-                    </div>
-                </template>
                 <li :class="{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }"
                     class="list-item onePxBorder"
                     @click="go_betting(_item)"
-                    v-else
                 >
                     <template v-if="_item.os == 1">
+                        <!-- 既然有了表头，应该就不需要展示投注项名了吧
                         <span class="on-text textOverflow1">
                             {{ useOtv.includes(_item._hpid) ? `${_item.otv}` : `${_item?.on}${_item?.ott}` }}
                         </span>
-                            <span class="ov-text">
+                        -->
+                        <span class="ov-text">
                             {{ compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}
                         </span>
                         <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
@@ -149,21 +145,16 @@ const AssembleData = computed(() => {
                     <template v-if="_item?.os == 2">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </template>
+                    <ResultOlItem :value="_item" :hpt="1"></ResultOlItem>    
                 </li>
             </template>
         </ul>
     </section>
-    <section v-else class="play-template-1 noTitle">
+    <section v-else class="component play-template play-template-1 noTitle">
         <ul class="list" v-for="(_item,index) of AssembleData.assemble" :key="index">
-            <template v-if="_item.result != (void 0)">
-                <div>
-                    <ResultOlItem :value="_item" :hpt="1"></ResultOlItem>
-                </div>
-            </template>
             <li :class="{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }"
                 class="list-item onePxBorder"
                 @click="go_betting(_item)"
-                v-else
             >
                 <template v-if="_item.os == 1 && compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) > 0">
                     <span class="on-text textOverflow1">
@@ -177,6 +168,7 @@ const AssembleData = computed(() => {
                 <template v-if="_item?.os == 2 || compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) == 0">
                     <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                 </template>
+                <ResultOlItem :value="_item" :hpt="1"></ResultOlItem>
             </li>
         </ul>
     </section>
@@ -186,7 +178,7 @@ const AssembleData = computed(() => {
 @import "basicTemplateStyle";
 
 .component.play-template-1 {
-    --private-container-padding: 8px 16px;
+    --private-container-padding: 0px 4px;
 }
 
 .haveTitle{
@@ -205,7 +197,8 @@ const AssembleData = computed(() => {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 4px;
+            /** 会引起ResultOlItem无法占满元素 */
+            // padding: 0 4px;
             box-sizing: border-box;
         }
     }

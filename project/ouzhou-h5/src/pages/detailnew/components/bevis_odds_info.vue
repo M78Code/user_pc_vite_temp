@@ -107,6 +107,12 @@ const active = ref(1);
 * 【0, 1, 5, 10】
 * */
 const playComponent = ref({
+    /** @Description: 欧洲h5赛果详情已不再共用该模板, 仍共用component中的template
+     * template模板改动请同步 ./odds_info.vue
+     * 动态component中的template模板需要兼容赛果详情
+     * import ResultOlItem from "../../result/ResultOlItem.vue";
+     * 于OlItem位置引入ResultOlItem组件即可 
+     */
     template0: markRaw(playTemplate0),
     template1: markRaw(playTemplate1),
     template2: markRaw(playTemplate2),
