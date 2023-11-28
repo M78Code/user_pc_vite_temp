@@ -113,6 +113,7 @@ const filter_20_match_new = (data) => {
   // 足球最多15个
   const max_football_count = 15;
   let football_count = 0;
+  let other_count = 0;
   // 别的球种5个
   const max_other_count = 5;
 
@@ -120,18 +121,19 @@ const filter_20_match_new = (data) => {
   const basketball_csid = '2';
 
   for (const item of data) {
-    if (item.csid === football_csid && football_count < max_football_count) {
+    if (item.csid == football_csid && football_count < max_football_count) {
       result.push(item);
       football_count++;
-    } else if (item.csid === basketball_csid && result.length < 20) {
+    } else if (item.csid == basketball_csid && result.length < 20 && other_count < max_other_count) {
       result.push(item);
+      other_count++
     }
     // 大于20条时，跳出循环
     if (result.length >= 20) {
       break;
     }
   }
-
+  result.sort((x, y) => x.csid - y.csid)
   return result;
 }
 
