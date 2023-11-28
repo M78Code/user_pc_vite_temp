@@ -230,16 +230,18 @@ export const details_main = (router, route) => {
       // axios中then回调方法
       fun_then: (res) => {
         get_match_odds_info.value = res.data;
+        console.log(tab_selected_obj.value.marketName,"tab_selected_obj.value.marketName");
+        sessionStorage.setItem("match_oddinfo", JSON.stringify(res.data));
         if (tab_selected_obj.value.marketName) {
           detail_tabs_change(tab_selected_obj.value);
         } else {
           match_odds_info.value = res.data;
         }
-        sessionStorage.setItem("match_oddinfo", JSON.stringify(res.data));
-        MatchDataWarehouseInstance.value.set_match_details(
-          getMidInfo(params.mid),
-          res.data
-        );
+   
+        // MatchDataWarehouseInstance.value.set_match_details(
+        //   getMidInfo(params.mid),
+        //   res.data
+        // );
         // 第一次加载显示进度条
         loading.value = false;
       },
@@ -495,7 +497,7 @@ export const details_main = (router, route) => {
           RCMD_C109(data);
           break;
          //  玩法集变更(C112)    
-         case "C112":
+        case "C112":
           get_category_list_info({
             sportId: csid.value,
             mid:mid.value,
@@ -506,7 +508,6 @@ export const details_main = (router, route) => {
       }
     });
   });
-
   // 监听赛事状态mmp的值
   watch(
     () => match_detail.value?.mmp,

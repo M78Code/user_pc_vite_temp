@@ -58,9 +58,9 @@
             </div>
           </div>
           <div class="row justify-between" style="color:#8A8986">
-            <span>Time Out</span>
-            <span>Free Throw</span>
-            <span>Time Out</span>
+            <span>{{ i18n_t('ouzhou.detail.pause') }}</span>
+            <span>{{ i18n_t('ouzhou.detail.penalty') }}</span>
+            <span>{{ i18n_t('ouzhou.detail.pause') }}</span>
           </div>
         </div>
       </div>
@@ -86,29 +86,29 @@ const value = ref(50);
 const standard = ref(15)
 const sliderList = ref([
   {
-    title: "2 Point",
+    title: `2 ${i18n_t('ouzhou.detail.point')}`,
     value_key:'S107'
   },
   {
-    title: "3 Point",
+    title: `3 ${i18n_t('ouzhou.detail.point')}`,
     value_key:'S108'
   },
   {
-    title: "Foul",
+    title: i18n_t('ouzhou.detail.foul'),
     value_key:'S106'
   },
 ])
 const statsList = ref([
   {
-    value: "2 Point",
+    value: `2 ${i18n_t('ouzhou.detail.point')}`,
     value_key:'S107'
   },
   {
-    value: "3 Point",
+    value: `"3 ${i18n_t('ouzhou.detail.point')}`,
     value_key:'S108'
   },
   {
-    value: "Foul",
+    value: i18n_t('ouzhou.detail.foul'),
     value_key:'S106'
   },
 ]);
