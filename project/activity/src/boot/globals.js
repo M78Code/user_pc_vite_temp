@@ -12,7 +12,7 @@ import matchlist from "project/activity/src/public/utils/matchlist/matchlist.js"
 import Icon from "project/activity/src/public/components/icon/icon.vue"
 import load_data from "project/activity/src/public/components/load_data/load_data.vue";
 import * as emit_cmd from "project/activity/src/public/utils/http/emit_cmd.js";
-import * as error_mapping from "project/activity/src/public/config/mapping/error_code_mapping.js";
+import * as error_mapping from "project/activity/src/config/error_code_mapping.js";
 import * as yabo_common from "project/activity/src/public/mixins/common/common.js";
 import * as virtual_common from "project/activity/src/public/mixins/common/virtual_common.js";
 // 该文件再 bet_item_mixin.js, bet_item_mixin.js 中使用由于最小投注单元会导致引入次数过多,因此暂时提出为公共的
