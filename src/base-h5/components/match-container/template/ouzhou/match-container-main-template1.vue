@@ -989,6 +989,9 @@ export default {
             &.visiting {
               color: #8a8986;
             }
+            &.is-handicap {
+              color: #000;
+            }
           }
         }
 

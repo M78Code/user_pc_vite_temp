@@ -78,7 +78,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <section class="template6">
+    <section class="component play-template play-template-6 template6">
         <nav class="title">
             <div></div>
             <div></div>

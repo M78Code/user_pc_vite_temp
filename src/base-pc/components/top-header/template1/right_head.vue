@@ -80,7 +80,7 @@
               <q-item-section class="personal-content">
                 <div class="flex title">
                   <img class="icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/language.png`" alt="" />
-                  <div>语言设置</div>
+                  <div>{{$t('ouzhou.setting_menu.language')}}</div>
                 </div>
                 <img :class="['arrow', { expend: visible }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/arrow.png`" alt="" />
               </q-item-section>
@@ -102,7 +102,7 @@
               <q-item-section>
                 <div v-show="false">{{UserCtr.user_version}}</div>
                 <div class="setting_item" v-for="setting in settingData" :key="setting.title">
-                <span class="title">{{ setting.title }}</span>
+                <span class="title">{{ i18n_t(setting.title) }}</span>
                 <div class="switch">
                   <span class="bg" :style="{left: UserCtr.odds.cur_odds === setting.params[0] ? 0 : '50px'}"></span>
                   <span v-for="s in setting.params" :key="s" @click="settingclick(s,setting.index)" :class="{active: UserCtr.odds.cur_odds == s}">{{  i18n_t(`odds.${s}`) }}</span>
@@ -180,7 +180,7 @@ export default defineComponent({
         // }
       ]
     const settingData = ref([{
-          title: i18n_t("ouzhou.setting_menu.odds_display"),
+          title: "ouzhou.setting_menu.odds_display",
           index: 'DEC',
           params: ['EU', 'HK']
         }, 

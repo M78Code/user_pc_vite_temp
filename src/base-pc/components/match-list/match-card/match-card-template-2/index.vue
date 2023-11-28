@@ -6,7 +6,7 @@
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;
             width:${LayOutMain_pc.oz_layout_content - LayOutMain_pc.oz_right_width - LayOutMain_pc.oz_left_width}px  !important;`">
     <!--改成101用来打包调试-->
-    <component :is="`MatchTpl${get_current_template_number()}After`" :match="get_match_item(mid)" :mid="mid" />
+    <component :is="`MatchTpl${get_current_template_number()}After`"  :mid="mid" />
   </div>
 </template>
 
@@ -37,10 +37,9 @@ export default {
   setup(props) {
     const MatchListData = inject("MatchListData")
     const get_match_item = (mid) => {
-      // let special_ball = utils.computed_team_let_ball(MatchListData.get_quick_mid_obj(mid))
-      let hn_obj_data = MatchListData.list_to_obj.hn_obj;
-      return utils.computed_team_let_ball(MatchListData.get_quick_mid_obj(mid), hn_obj_data)
+      return MatchListData.get_quick_mid_obj(mid)
     }
+    provide("match",MatchListData.get_quick_mid_obj_ref(props.mid))
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
     const match = get_match_item(props.mid)

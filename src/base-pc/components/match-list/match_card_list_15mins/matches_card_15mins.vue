@@ -7,10 +7,10 @@
         <div class="begin-time din_font">{{ get_mmp(match.mst) }}</div>
       </div>
     </div>
-    <div class="club-name" @click="jump_to_details(current_tab)">
+    <div class="club-name" :class="{'bold': utils.get_handicap_index_by(match) == 1}" @click="jump_to_details(current_tab)">
       {{ match.mhn }}
     </div>
-    <div class="union-name" @click="jump_to_details(match)">
+    <div class="union-name" :class="{'bold': utils.get_handicap_index_by(match) == 2}" @click="jump_to_details(match)">
       {{ match.man }}
     </div>
     <div class="odds-box din_font">
@@ -36,6 +36,8 @@ import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t } fro
 import { get_min15_handicap_type } from 'src/core/match-list-pc/composables/match-list-other.js'
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
+import { utils } from "src/core/index.js"
+
 const router = useRouter()
 const props = defineProps({
   mid: String,
@@ -53,7 +55,7 @@ const jump_to_details = (item) => {
     }
   })
 }
-const match = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_ob_ref(props.mid)
+const match = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_obj_ref(props.mid)
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 let handicap_list = ref(lodash.cloneDeep(match_tpl_info.get_15mins_odds_list())) //只有一个数组哦
@@ -156,6 +158,12 @@ const get_mmp = (mst) => {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.union-name, .club-name {
+  &.bold {
+        color: var(--q-gb-t-c-2);
+      }
+}
+
 
 .odds-box {
   display: flex;
