@@ -8,7 +8,7 @@
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
-    <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl && false">
+    <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl || true">
       <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
       <!-- 临时调试用 -->
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">
@@ -42,9 +42,7 @@
         </div>
         <!-- 头部Featured Matches模块 -->
         <FeaturedMatches v-if="MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp())" />
-
         <!-- </template> -->
-
         <!-- 滚球标题 -->
         <Match-Main-Title :title="$t('menu.match_playing')" :match_count="match_count"
           v-show="match_list_card_key_arr.length && MenuData.is_home()" />
@@ -52,11 +50,11 @@
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
-        <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
+        <!-- <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
           v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
-        </div>
+        </div> -->
         <template v-slot:after>
           <div style="height: 15px"></div>
           <div class="pager-wrap row justify-end">
