@@ -87,7 +87,7 @@ const defaultSports = reactive([
   { name: "Basketball", mi: "102" },
   // { name: "eFootball", mi: "190" },
   // { name: "eBasketball", mi: "191" },
-  { name: "Tennis", mi: "105" },
+  // { name: "Tennis", mi: "105" },
   // { name: "Snooker", mi: "107" },
   // { name: "Badminton", mi: "110" },
   // { name: "Table Tennis", mi: "108" },

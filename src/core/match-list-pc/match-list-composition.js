@@ -25,7 +25,7 @@ import ServerTime from 'src/core/server-time/server-time.js';
 // import filterHeader from 'src/core/filter-header/filter-header.js'
 import get_match_list_params from './match-list-params.js'
 import { match_list_handle_set } from './match-handle-data.js'
-import { mx_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
+import { mx_collect_match, fethc_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
 const { load_video_resources } = pre_load_video
@@ -55,7 +55,7 @@ useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({is_socket = undefined}) => {
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
 		//请求列表接口之前 先设置元数据列表
-		if (!is_socket)
+		if (!is_socket&&!MenuData.is_leagues())
 		init_page_when_base_data_first_loaded()
 		fetch_match_list(is_socket)//请求接口
 	}, 80);
@@ -100,7 +100,8 @@ export function fetch_match_list(is_socket = false, cut) {
 		return;
 	}
 	// 【搜索列表】 WS 之类的调用 fetch_match_list 转向到 fetch_search_match_list
-	if (page_source == "search") {
+	 //热门联赛不走此方法
+	if (page_source == "search"||MenuData.is_leagues()) {
 		// fetch_search_match_list && fetch_search_match_list(is_socket);
 		return false;
 	}
@@ -112,6 +113,7 @@ export function fetch_match_list(is_socket = false, cut) {
 	}
 	let match_api = match_list_params.match_list || {};
 	// let match_api = MenuData.match_list_api_config.match_list || {};
+	fethc_collect_match()
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};

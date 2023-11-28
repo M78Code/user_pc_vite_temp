@@ -16,10 +16,10 @@
 }
 
 .is-active {
-  background-color: var(--q-gb-bg-c-1) !important;
+  background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF !important;
 
   .ov-text {
-    color: var(--q-gb-t-c-2);
+    // color: var(--q-gb-t-c-2) !important;
     margin: 0 6px;
   }
 }

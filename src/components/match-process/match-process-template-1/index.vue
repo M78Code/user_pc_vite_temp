@@ -4,12 +4,13 @@
     :class="rows == 1 ? 'row a-row' : 'column'"
   >
   <template v-if="match">
-    <div
+    <!-- 不展示额外时间 -->
+    <!-- <div
       v-show="lodash.get(match, 'mcid') && lodash.get(match, 'mcid').trim() && show_page == 'match-list'"
       class="jingcai"
     >
       {{ lodash.get(match, 'mcid') }}
-    </div>
+    </div> -->
     <!-- ms值3-比赛结束 4-比赛关闭 -->
     <div
       v-show="
@@ -18,6 +19,7 @@
       "
       class="process-name"
       :class="[periodColor === 'gray' && 'gray-color']"
+      v-if="computed_process_name?.length"
       v-html="computed_process_name"
     >
     </div>

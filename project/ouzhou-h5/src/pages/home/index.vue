@@ -15,17 +15,17 @@
           <section ref="container" class="section-content"  @scroll="handle_container_scroll">
             <!-- 时间赛事 -->
             <template v-if="time_events.length > 0">
-              <HeaderTitle title="15 Mins"></HeaderTitle>
+              <HeaderTitle :title="i18n_t('ouzhou.match.15_mins')"></HeaderTitle>
               <TimeEvents :time_events="time_events" />
             </template>
             <!-- 特色赛事 -->
             <template v-if="featured_matches.length > 0">
-              <HeaderTitle title="Featured Matches"></HeaderTitle>
+              <HeaderTitle :title="i18n_t('ouzhou.match.top_events')"></HeaderTitle>
               <FeaturedMatches :featured_matches="featured_matches" />
             </template>
             <!-- 赛事列表 -->
            <template v-if="play_matchs.length > 0">
-              <HeaderTitle title="In-Play"></HeaderTitle>
+              <HeaderTitle :title="i18n_t('ouzhou.match.inplay')"></HeaderTitle>
               <MatchPlay :play_matchs="play_matchs" />
            </template>
             <!-- 特色赛事 -->
@@ -35,7 +35,7 @@
             </template> -->
             <!-- 5大联赛 -->
             <template v-if="five_league_match.length > 0">
-              <HeaderTitle title="Top Leagues"></HeaderTitle>
+              <HeaderTitle :title="i18n_t('ouzhou.match.top_leagues')"></HeaderTitle>
               <MatchLeagues :five_league_match="five_league_match"/>
             </template>
           </section>
@@ -70,6 +70,7 @@ import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import { i18n_t } from "src/core/index.js"
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';

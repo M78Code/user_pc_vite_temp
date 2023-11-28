@@ -46,6 +46,7 @@
       "inplay": "InPlay",
       "home": "Home",
       "today": "Today",
+      "early": "Early",
       "tomorrow": "Tomorrow",
       "all_matches": "All Matches",
       "play_map": {
@@ -77,6 +78,17 @@
       "results": "Results",
       "sport_rules": "Sport Rules"
     },
+    "filter": {
+      "select_time": {
+        "12h": "next 12 hours",
+        "24h": "next 24 hours",
+        "36h": "3 days",
+        "84h": "7 days"
+      }
+    },
+    "time": {
+      "date": "{day}/{month}"
+    },
     "search": {
       "change": "Change",
       "clear_search_history": "Clear history",
@@ -96,6 +108,21 @@
       "no_search_rezult": "No results found. please try a different search term.",
       "dogfall": "dogfall"
     },
+    "setting_menu": {
+      "personal": "Personal",
+      "back": "Back",
+      "money": "Money",
+      "language": "Language",
+      "odds_setting": "Odds Settings",
+      "odds_display": "Odds Display",
+      "dec": "DEC",
+      "hk": "HK",
+      "any": "ANY",
+      "hig": "HIG",
+      "version": "Version",
+      "euro": "EURO",
+      "asia": "ASIA"
+    },
     "15minutes_bet_col": [
       "Start~14:59",
       "15:00~29:59",
@@ -106,6 +133,11 @@
     ],
     "bet_col": {
       "bet_col_1": {
+        "bet_col_1": "Home",
+        "bet_col_X": "Away",
+        "bet_col_2": "Draw"
+      },
+      "bet_col_32": {
         "bet_col_1": "Home",
         "bet_col_X": "Away",
         "bet_col_2": "Draw"

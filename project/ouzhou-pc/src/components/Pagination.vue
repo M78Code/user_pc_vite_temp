@@ -7,7 +7,36 @@
 -->
 <template>
   <div>
-
+    <div class="table-footer-bar" v-if="is_bet_record">
+      <span>
+        {{ i18n_t('bet_record.total_count') }}
+        <!-- 总计单数 -->
+        ：
+        <span class="footer-text">{{ count }}</span>
+      </span>
+      <span>
+        {{ toolSelected == '2' ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
+        <!-- 总投注额/预约总投资额 -->
+        ：
+        <span class="footer-text">{{ betTotalAmount }}</span>
+        <!-- <span class="footer-text">{{ format_balance(betTotalAmount) }}</span> -->
+      </span>
+      <div>
+        <!-- 目前屏蔽有效流水展示 -->
+        <span v-if="0">
+          {{ i18n_t('bet_record.effective_water') }}
+          <!-- 有效流水 -->
+          ：{{ effectiveFlow }}
+        </span>
+        <span>
+          {{ profit.indexOf("-") != -1 ? i18n_t('bet_record.lose') : i18n_t('bet_record.win') }}：
+          <span
+            class="footer-text"
+          >{{ profit }}</span>
+        </span>
+        <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
+      </div>
+    </div>
     <div class="pagination-wrap" :style="results_table">
       <q-pagination v-model="current" color="basic" :max="max" size="sm" :max-pages="9" direction-links ellipses
         icon-prev="icon-triangle2" icon-next="icon-triangle3" />
@@ -55,21 +84,57 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-    betTotalAmount: String,
-    effectiveFlow: String,
-    profit: String,
-    recordType: Number,
-    random: Number,
-    toolSelected: Number,
+
+    betTotalAmount: {
+      type: String,
+      default: '',
+    },
+    effectiveFlow: {
+      type: String,
+      default: '',
+    },
+    profit: {
+      type: String,
+      default: '',
+    },
+    recordType: {
+      type: Number,
+      default: 0,
+    },
+    random: {
+      type: Number,
+      default: 0,
+    },
+    toolSelected: {
+      type: Number,
+      default: 0,
+    },
     is_bet_record: {
       type: Boolean,
-      default: true,
+      default: false,
     },
-    results_table: Object,
+    results_table: {
+      type: Object,
+      default: ()=>{},
+    },
     reset_pagination: {
-      type: Number,
-      default: 1,
+      type: String,
+      default: '1',
     }
+  },
+  filters: {
+    format_balance(num) {
+  		if(num) {
+  			let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
+
+  			// 保留两位小数
+  			let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
+
+  			let _num = _split[1] + '.' + decimal
+  			return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+  		}
+  		return '';
+    },
   },
   setup(props, context) {
     const state = reactive({
@@ -103,10 +168,13 @@ export default defineComponent({
     // 监听页码变化
     watch(() => state.current, (newVal) => {
       console.log('页码变了: ', newVal)
-      context.emit('pageChange', { 
+      context.emit('pageChange', {
         ...state,
         current: newVal || 1
       })
+    })
+    watch(() => props.reset_pagination, (newVal) => {
+      state.current = +newVal
     })
 
 
@@ -140,13 +208,13 @@ export default defineComponent({
     onMounted(() => {
       //  console.log(1111111111,context )
     })
-
     return {
       ...toRefs(state),
       perPageNum,
       goToPage,
       // page,
-      max
+      max,
+      
     }
   }
 
@@ -174,21 +242,6 @@ export default defineComponent({
   //       this.pagination.offset = 0;
   //     },
   //     immediate: true,
-  //   },
-  // },
-
-  // filters: {
-  //   format_balance(num) {
-  // 		if(num) {
-  // 			let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-
-  // 			// 保留两位小数
-  // 			let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
-
-  // 			let _num = _split[1] + '.' + decimal
-  // 			return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-  // 		}
-  // 		return '';
   //   },
   // },
 

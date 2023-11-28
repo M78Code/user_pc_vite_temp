@@ -12,10 +12,10 @@
         detail_list: is_detail, simple: standard_edition == 1,
         'static': get_is_static() 
       }]"
-      :style="{ 'height': get_is_static() ? 'auto' : `${VirtualList.container_total_height}px`}">
-      <template v-if="match_meta.match_mids.length > 0" >
-        <div v-for="(match_mid, index) in match_meta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
-          :class="['s-w-item', {last: index == match_meta.match_mids.length - 1 }]" 
+      :style="{ 'height': get_is_static() ? 'auto' : container_total_height}">
+      <template v-if="MatchMeta.match_mids.length > 0" >
+        <div v-for="(match_mid, index) in MatchMeta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
+          :class="['s-w-item', {last: index == MatchMeta.match_mids.length - 1 }]" 
           :style="{ transform: `translateY(${get_match_top_by_mid(match_mid)}px)`, zIndex: `${100 + index}` }">
           <!-- 调试用 -->
           <div v-if="test" class="debug-head data_mid" :data-mid="match_mid" :class="{ first: index === 0 }">
@@ -32,7 +32,7 @@
         </div>
       </template>
       <!-- 到底了容器-->
-      <div :class="['loading-more-container']" v-if="max_height && !get_is_static()">
+      <div :class="['loading-more-container']" v-if="is_show_out">
         <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
       </div>
     </div>
@@ -88,11 +88,6 @@ const max_height = ref(false)
 const scroll_timer = ref(0)
 const emitters = ref({})
 const container = ref(null)
-const match_meta = ref(MatchMeta)
-
-const match_mids = computed(() => {
-  return match_meta.value?.match_mids
-})
 
 onMounted(() => {
   test.value = sessionStorage.getItem('wsl') == '9999';
@@ -199,6 +194,15 @@ const goto_top = () => {
 const get_is_static = () => {
   return is_kemp.value || is_collect.value || route?.name === 'collect' || MatchResponsive.is_compute_origin.value
 }
+
+const is_show_out = computed(() => {
+  return max_height && !get_is_static() && VirtualList.container_total_height.value > window.innerHeight
+})
+
+const container_total_height = computed(() => {
+  return `${VirtualList.container_total_height.value}px`
+})
+
 // 计算每个赛事id 对应的 容器高度 top 值
 const get_match_top_by_mid1 = (mid) => {
   let r = 0;
@@ -222,7 +226,7 @@ const get_match_top_by_mid = (mid) => {
 const set_ishigh_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片
   let flag = false;
-  if (is_detail.vlaue || (match_mids.value && match_mids.value <= 0)) {
+  if (is_detail.vlaue || (MatchMeta.match_mids && MatchMeta.match_mids.length <= 0)) {
     flag = false;
   } else {
     flag = get_to_bottom_space > 350 && !is_kemp.value
@@ -286,7 +290,7 @@ onUnmounted(() => {
   }
   .scroll-i-con {
     width: 100%;
-    height: 10000px;
+    // height: 10000px;
     position: relative;
     background-repeat: repeat-y;
     &.high_scrolling {

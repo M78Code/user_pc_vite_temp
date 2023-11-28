@@ -3,6 +3,7 @@
   <div class="personal_page"> 
     <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;"> 
       <!-- 用户名称 --> 
+
       <header> 
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, {{ lodash.get(UserCtr.get_user(), "nickName") }}
       </header> 
@@ -48,7 +49,7 @@
           </template>
           <template v-slot:content>
             <div class="setting_item" v-for="(setting,idx) in settingData" :key="setting.title">
-              <span>{{ setting.title }}</span>
+              <span>{{ i18n_t(setting.title) }}</span>
               <div class="switch"> 
                 <span class="bg" :style="{left: UserCtr.odds.cur_odds == setting.options[0] ? 0 : '50px'}"></span>
                 <span v-for="s in setting.options" :key="s" @click="handel_change(s,idx)" :class="{active: UserCtr.odds.cur_odds == s}">{{ i18n_t(`odds.${s}`) }}</span>
@@ -117,7 +118,7 @@ const languages = [{
 // }
 ]
 const settingData = ref([{
-  title: i18n_t("ouzhou.setting_menu.odds_display"),
+  title:"ouzhou.setting_menu.odds_display",
   index: UserCtr.odds.cur_odds, //用户已选中值
   options:["EU","HK"], //盘口
   params: [i18n_t("ouzhou.setting_menu.dec"), i18n_t("ouzhou.setting_menu.hk")]

@@ -13,7 +13,7 @@
 
      
     </q-page-container>
-    <div class="footer">
+    <div class="footer" id="page-footer">
 
        <!-- 投注框 -->
        <BetBoxWapper use_component_key="BetOuzhouH5"></BetBoxWapper>

@@ -1,5 +1,4 @@
 import { i18n_t } from "src/core/index.js"
-
 // KEY = 球种
 // VALUE = {
 //  label = 多语言 赛果 玩法,
@@ -293,87 +292,89 @@ export const sports_play_data = {
     ],
 }
 
-export const sports_play_title = {
-  // 足球
-  "1": [  
-    {
-      hpid: '1',
-      label: i18n_t('list.play1'), //'全场独赢',
-      ol: [
-        { ot: '1', title: i18n_t('list.win1') }, //"主胜"
-        { ot: 'X', title: i18n_t('search.dogfall') }, // "平局"
-        { ot: '2', title: i18n_t('list.win2')} // "客胜"
-      ]
-    },
-    {
-      hpid: '2',
-      label: i18n_t('list.play3'), // '全场大小',
-      ol: [
-        { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "全场大"
-        { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "全场小"
-      ]
-    },
-    {
-      hpid: '4',
-      label: i18n_t('list.play2'), // '全场让球',
-      ol: [
-        { ot: '1', title: i18n_t('bet_col.bet_col_4.bet_col_1') }, // "主队让球"
-        { ot: '2', title: i18n_t('bet_col.bet_col_4.bet_col_2') }, // "客队让球"
-      ]
-    },
-  ],
-  // 篮球
-  "2": [
-    {
-      hpid: '37',
-      label: i18n_t('list.play1'),//'全场独赢',
-      ol: [
-        { ot: '1', title: i18n_t('list.win1') },
-        { ot: '2', title: i18n_t('list.win2')}
-      ]
-    },
-    {
-      hpid: '38',
-      label: i18n_t('ouzhou.match.play_map.38'),// '全场总分',
-      ol: [
-        { ot: 'Over', title: i18n_t('bet_col.bet_col_38.bet_col_Over') }, // "主队总分"
-        { ot: 'Under', title: i18n_t('bet_col.bet_col_38.bet_col_Under') }, // "客队总分"
-      ]
-    },
-    {
-      hpid: '39',
-      label: i18n_t('list.play2'), // '全场让球',
-      ol: [
-        { ot: '1', title: i18n_t('ouzhou.match.home_handicap') }, // "主队让分"
-        { ot: '2', title: i18n_t('ouzhou.match.away_handicap') }, // "客队让分"
-      ]
-    },
-  ],
-  // 网球
-  "5": [
-    {
-      hpid: '153',
-      label: i18n_t('list.play1'),//'全场独赢',
-      ol: [
-        { ot: '1', title: i18n_t('list.win1') },
-        { ot: '2', title: i18n_t('list.win2')}
-      ]
-    },
-    {
-      hpid: '154',
-      label: i18n_t('ouzhou.match.play_map.154'),// '全场让盘',
-      ol: [
-        { ot: '1', title: i18n_t('bet_col.bet_col_154.bet_col_1') }, // "主队让盘"
-        { ot: '2', title: i18n_t('bet_col.bet_col_154.bet_col_2') }, // "客队让盘"
-      ]
-    },
-    {
-      hpid: '155',
-      label: i18n_t('ouzhou.match.play_map.155'),// '全场让局',
-      ol: [
-        { ot: '1', title: i18n_t('bet_col.bet_col_155.bet_col_1') }, // "主队让局"
-        { ot: '2', title: i18n_t('bet_col.bet_col_155.bet_col_2') }, // "客队让局"
-      ]
-    },
-  ],
+export const use_sports_play_title = () => {
+  return {
+    // 足球
+    "1": [  
+      {
+        hpid: '1',
+        label: i18n_t('list.play1'), //'全场独赢',
+        ol: [
+          { ot: '1', title: i18n_t('list.win1') }, //"主胜"
+          { ot: 'X', title: i18n_t('search.dogfall') }, // "平局"
+          { ot: '2', title: i18n_t('list.win2')} // "客胜"
+        ]
+      },
+      {
+        hpid: '2',
+        label: i18n_t('list.play3'), // '全场大小',
+        ol: [
+          { ot: 'Over', title: i18n_t('ouzhou.match.bet_col_Over') }, // "全场大"
+          { ot: 'Under', title: i18n_t('ouzhou.match.bet_col_Under') }, // "全场小"
+        ]
+      },
+      {
+        hpid: '4',
+        label: i18n_t('list.play2'), // '全场让球',
+        ol: [
+          { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_1') }, // "主队让球"
+          { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_4.bet_col_2') }, // "客队让球"
+        ]
+      },
+    ],
+    // 篮球
+    "2": [
+      {
+        hpid: '37',
+        label: i18n_t('list.play1'),//'全场独赢',
+        ol: [
+          { ot: '1', title: i18n_t('list.win1') },
+          { ot: '2', title: i18n_t('list.win2')}
+        ]
+      },
+      {
+        hpid: '38',
+        label: i18n_t('ouzhou.match.play_map.38'),// '全场总分',
+        ol: [
+          { ot: 'Over', title: i18n_t('ouzhou.bet_col.bet_col_38.bet_col_Over') }, // "主队总分"
+          { ot: 'Under', title: i18n_t('ouzhou.bet_col.bet_col_38.bet_col_Under') }, // "客队总分"
+        ]
+      },
+      {
+        hpid: '39',
+        label: i18n_t('list.play2'), // '全场让球',
+        ol: [
+          { ot: '1', title: i18n_t('ouzhou.match.home_handicap') }, // "主队让分"
+          { ot: '2', title: i18n_t('ouzhou.match.away_handicap') }, // "客队让分"
+        ]
+      },
+    ],
+    // 网球
+    "5": [
+      {
+        hpid: '153',
+        label: i18n_t('list.play1'),//'全场独赢',
+        ol: [
+          { ot: '1', title: i18n_t('list.win1') },
+          { ot: '2', title: i18n_t('list.win2')}
+        ]
+      },
+      {
+        hpid: '154',
+        label: i18n_t('ouzhou.match.play_map.154'),// '全场让盘',
+        ol: [
+          { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_154.bet_col_1') }, // "主队让盘"
+          { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_154.bet_col_2') }, // "客队让盘"
+        ]
+      },
+      {
+        hpid: '155',
+        label: i18n_t('ouzhou.match.play_map.155'),// '全场让局',
+        ol: [
+          { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_155.bet_col_1') }, // "主队让局"
+          { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_155.bet_col_2') }, // "客队让局"
+        ]
+      },
+    ],
+  }
 }

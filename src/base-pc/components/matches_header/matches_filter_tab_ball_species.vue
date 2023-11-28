@@ -2,7 +2,8 @@
   <div class="current-filter-wrap" ref="area_obj_wrap">
     <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
       <!-- 常规体育 -->
-      <template v-for="(item, index) in mi_100_arr" :key="index">
+      <!-- 暂时只显示足、篮 => [101, 102] -->
+      <template v-for="(item, index) in mi_100_arr.filter(item => [101, 102].includes(+item.mif))" :key="index">
         <div class="current-filter-tab" v-if=" item.ct > 0 " >
           <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
             <div class="filter-tab-item">

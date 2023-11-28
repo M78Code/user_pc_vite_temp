@@ -289,10 +289,10 @@ input::-ms-reveal {
       &.up,&.down{
         background: var(--q-gb-t-c-4) !important;
         .odds{
-          color: var(--q-gb-t-c-2);
+          color: var(--q-gb-t-c-2) !important;
         }
-        div{
-          color: var(--q-gb-t-c-5);
+        div,.odds_otb{
+          color: var(--q-gb-t-c-5) !important;
         }
       }
       .handicap-value,
@@ -337,4 +337,7 @@ input::-ms-reveal {
 
 .c-match-card .timer-layout .timer-layout2{
   padding-left: 0 ;
+}
+.img-loading {
+  background-image: url($SCSSPROJECTPATH+"/image/loading1.gif");
 }

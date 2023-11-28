@@ -95,7 +95,7 @@ class MatchCollect {
    * @param { match } 赛事 对象
    */
   get_match_collect_state (match) {
-    const { mid } = match
+    const { mid = '' } = match
     const match_key = `collect_mid_${mid}`
     const match_collect = lodash.get(this.match_mid_collect_obj.value, `${match_key}.match_collect`, false)
     return match_collect

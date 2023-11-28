@@ -51,7 +51,7 @@
 
       <div
         style="text-align: center; width: 100%"
-        v-if="['seal'].includes(odds_state)"
+        v-if="['seal','close'].includes(odds_state)"
       >
         <img
           class="vector"
@@ -68,7 +68,7 @@
             active: BetData.bet_oid_list.includes(ol_data.oid),
           }"
         >
-          {{ compute_value_by_cur_odd_type(ol_data.ov, "", "", ol_data.csid) }}
+          {{ compute_value_by_cur_odd_type(ol_data.ov, ol_data._hpid, "", ol_data.csid) }}
         </span>
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
@@ -143,7 +143,7 @@ const score = computed(() => {
  */
 const match_odds = computed(() => {
   let ov = lodash.get(props.ol_data, "ov");
-  let obv = lodash.get(props.ol_data, "obv");
+  let obv = lodash.get(props.ol_data, "_hpid");
   // 列表取 hsw
   let hsw = props.ol_data._hsw;
   let match_odds_info = compute_value_by_cur_odd_type(

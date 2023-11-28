@@ -9,14 +9,14 @@
                 }}</span>
             </div>
             <!-- league的下拉项 -->
-            <div class="select" v-if="store.tabActive == 'League'">
-                <span class="select-text">{{
+            <div class="select" v-if="store.tabActive == 'League'" @click="toggerModel">
+                <span class="select-text" ref="dateOptionsRef">{{
                     store.curSelectedOption.label
                 }}</span>
-                <span class="down_arrow" @click="toggerModel"></span>
+                <span class="down_arrow"></span>
             </div>
             <template v-if="store.tabModel && store.tabActive == 'League'">
-                <ul class="option-list">
+                <ul class="option-list" :style="DateOptionsOffset">
                     <template v-for="(item, index) in store.selectOptions" :key="index">
                         <li :class="store.dateIndex == index ? 'active' : ''
                             " @click="changeDate(index)">
@@ -44,9 +44,9 @@
         <!-- 联赛的区域选择 -->
         <div class="date_time" v-if="store.tabActive == 'League'">
             <q-virtual-scroll ref="scrollRefArea" :items="store.areaList" virtual-scroll-horizontal
-                v-slot="{ item, index }">
-                <div @click="areaListChange(item, index)" class="week"
-                    :class="store.area_tab_index == index ? 'active' : ''">
+                v-slot="{ item }">
+                <div @click="areaListChange(item)" class="week"
+                    :class="store.selectArea.id == item.id ? 'active' : ''">
                     <span>
                         <span>{{ item.introduction }}</span>
                     </span>
@@ -63,7 +63,8 @@ import {
     watch,
     onMounted,
     onUnmounted,
-    defineEmits
+    defineEmits,
+    computed
 } from "vue";
 import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
 import { MenuData } from "src/core/";
@@ -74,9 +75,22 @@ const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
+const dateOptionsRef = ref(null);
 const week = dateWeekMatchesFormat();
 
-
+const DateOptionsOffset = computed(() => {
+    const domWidth = document.body.clientWidth || document.documentElement.clientWidth
+    const selfWitdh = 160
+    const offset = dateOptionsRef.value.offsetLeft
+    const exceed = domWidth - (selfWitdh + offset)
+    let result = offset
+    if (exceed < 0) { // 超出
+        result = offset + exceed
+    }
+    return {
+        'left': result + 'px'
+    }
+})
 /**
  * tab点击
  * @param {*} name 
@@ -161,11 +175,12 @@ const setDefaultData = (val) => {
 }
 
 watch(() => store.areaList, () => {
-    if (store.areaList.lenght) {
-        const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
-        const offset = index < 0 ? 0 : index
-        areaListChange(store.areaList[offset], offset)
-    }
+    console.log(store.areaList.lenght)
+    // if (store.areaList.lenght) {
+    //     const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
+    //     const offset = index < 0 ? 0 : index
+    //     areaListChange(store.areaList[offset], offset)
+    // }
 })
 onMounted(() => {
     setDefaultData(MenuData.menu_mi.value || '101');//默认足球
@@ -180,16 +195,16 @@ onUnmounted(() => {
  * 地区选择tab
  * @param {*} index 
  */
-const areaListChange = (item, index) => {
+const areaListChange = (item) => {
+    store.tabModel = false;
+    const index = store.areaList.findIndex(i => i.id === item.id)
     if (item) {
-        store.tabModel = false;
-        const move_index = store.areaList.findIndex((t, _index) => _index === index);
-        scrollRefArea.value.scrollTo(move_index - 2, "start-force");
-        store.area_tab_index = index;
+        scrollRefArea.value.scrollTo(index - 2, "start-force");
         store.selectArea = item
-        emit("changeArea", item.id);
+        emit("changeArea", item);
     }
 }
+
 </script>
   
 <style lang="scss" scoped>
@@ -278,15 +293,15 @@ const areaListChange = (item, index) => {
         }
     }
 
-    .menu_list_top_tab_background {
-        width: 140px;
-        height: 49px;
-        position: absolute;
-        top: 50px;
-        right: 0;
-        background-size: cover;
-        background: url($SCSSPROJECTPATH+"/image/list/league_bg.png") no-repeat;
-    }
+    // .menu_list_top_tab_background {
+    //     width: 140px;
+    //     height: 49px;
+    //     position: absolute;
+    //     top: 50px;
+    //     right: 0;
+    //     background-size: cover;
+    //     background: url($SCSSPROJECTPATH+"/image/list/league_bg.png") no-repeat;
+    // }
 
     // 七天时间tabs样式
     .date_time {
@@ -352,7 +367,6 @@ const areaListChange = (item, index) => {
         width: 160px;
         height: 204px;
         top: 49px;
-        right: 8px;
         margin: 0;
         padding: 0;
         background-color: rgba(255, 255, 255, 1);

@@ -5,7 +5,7 @@
       <div class="header-fix" ref="header_fix">
         <!-- v-if="!changeHeader" -->
         <div ref="scroll_video_height" class="relative-position scroll_video_h">
-          <detail_header_tem1 :get_match_detail="matchDetail" />
+          <detail_header_tem1 :get_match_detail="matchDetail" :show_collect="false"/>
         </div>
       </div>
       <div class="separate"></div>
@@ -29,12 +29,13 @@ import {
   MatchDataWarehouse_H5_List_Common,
   MenuData,
   SearchData,
+useMittEmit,
 } from "src/core/index";
 import { onMounted, ref, toRaw, watch, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import detail_header_tem1 from "../detail_header/detail_header_tem1.vue";
 // import odds_info from "./components/odds_info.vue";
-import odds_info from "../components/bevis_odds_info.vue";
+import odds_info from "../components/odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import { api_match_list, api_common, api_analysis } from "src/api/index.js";
 
@@ -46,20 +47,29 @@ const loading = ref(true)
 const matchDetail = ref({})
 const matchResults = ref([])
 
+//#region 初始化
+getMatchDetail({ mid, cuid })
+initial()
+useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS,initial)
+//#endregion
 
-;(function initial(){
+function initial(){
+  loading.value = true
   api_analysis.get_match_result({mid,cuid}).then(res=>{
-    matchResults.value = res.data
+    if(res.code == '200'){
+      matchResults.value = res.data
+    }else {
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.message)
+    }
     loading.value = false
   })
-  api_match_list.get_detail_list({mcid:0,cuid,newUser:0,mid}).then(console.log)
-})()
+}
 /** 请求赛事详情 @param {{mid,cuid}} params 请求参数*/
-;(function getMatchDetail(params) {
+function getMatchDetail(params) {
   api_common.get_matchResultDetail_MatchInfo(params).then(
     (res) => MatchDataWarehouseInstance.set_match_details(toRaw(matchDetail.value = res.data), [])
   );
-})({ mid, cuid })
+}
 
 </script>
 

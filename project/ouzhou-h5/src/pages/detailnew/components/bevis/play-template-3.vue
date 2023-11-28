@@ -34,7 +34,7 @@ const AssembleData = computed(()=>{
 </script>
 <template>
     <span v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</span>
-    <section class="template3" v-if="item_data?.hl[0]?.ol">
+    <section class="component play-template play-template-3 template3" v-if="item_data?.hl[0]?.ol">
         <ul class="list">
             <template v-for="olChild of item_data.hl[0].ol" :key="olChild?.oid">
                 <template v-if="olChild.result != (void 0)">
@@ -45,7 +45,7 @@ const AssembleData = computed(()=>{
                         :class="{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }"
                     >
                         <span class="on-text textOverflow2">{{ olChild?.on || olChild?.ott }}</span>
-                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
+                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </li>
                     <li v-else class="list-item">
@@ -61,7 +61,7 @@ const AssembleData = computed(()=>{
 @import "basicTemplateStyle";
 .template3{
     overflow: hidden;
-    padding: 8px;
+    padding: 8px 0;
     box-sizing: border-box;
     .list{
         width: 100%;

@@ -10,13 +10,14 @@
 		</div>
 		<!-- 搜索 历史 -->
 		<div class="content" v-show="(show_history && history_data &&
+				!(search_data?.bowling && search_data?.bowling.length) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
 			<!-- <div class="middle_info_tab">EXAMPLE SEARCHES</div> -->
 			<!-- 球类 tabs -->
 			<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">
+					:class="['tab', store.tabIndex === index ? 'active' : '']">
 					{{ item.sportName }}
 					<span class="round"></span>
 				</div>
@@ -51,14 +52,15 @@
 		</div>
 
 		<!-- 搜索展示 -->
-		<div style="height: 100%; overflow-y: auto;" v-show="(search_data?.teamH5 && search_data?.teamH5.length > 0) ||
+		<div style="height: 100%; overflow-y: auto;" v-show="(search_data?.bowling && search_data?.bowling.length > 0) || 
+			(search_data?.teamH5 && search_data?.teamH5.length > 0) ||
 			(search_data?.league && search_data?.league.length > 0)">
 
 			<div class="content">
 			<!-- 球类 tabs -->
 			<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">
+					:class="['tab', store.tabIndex === index ? 'active' : '']">
 					{{ item.sportName }}
 					<span class="round"></span>
 				</div>
@@ -215,15 +217,16 @@
 		</div>
 		</div>
 		<!-- 搜索 无结果 -->
-		<div class="content not-data" v-show="(!(search_data?.teamH5 && search_data.teamH5?.length > 0) &&
-			!(search_data?.league && search_data.league?.length > 0) &&
+		<div class="content not-data" v-show="(!(search_data?.bowling && search_data?.bowling.length) && 
+			!(search_data?.teamH5 && search_data?.teamH5.length > 0) &&
+			!(search_data?.league && search_data?.league.length > 0) &&
 			(!show_hot || 
 			!show_history))"
 		>
 			<!-- 球类 tabs -->
 			<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
-					:class="['tab', tabIndex === index ? 'active' : '']">
+					:class="['tab', store.tabIndex === index ? 'active' : '']">
 					{{ item.sportName }}
 					<span class="round"></span>
 				</div>
@@ -236,7 +239,7 @@
 </template>
 <script setup>
 import lodash from 'lodash'
-import { onMounted, ref, watch, onUnmounted } from 'vue';
+import { onMounted, ref, watch, onUnmounted,reactive } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
 import { format_date_overseas } from "src/core/format/module/format-date.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
@@ -248,10 +251,10 @@ import { compute_value_by_cur_odd_type } from "src/core/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
+import { store } from "./index.js"
 const { get_insert_history, get_fetch_hot_search } = api_search || {};
 
 const input_value = ref('');
-const tabIndex = ref(0);
 const tab_growp = ref(null);
 const show_history = ref(true);
 const show_hot = ref(true);
@@ -323,7 +326,8 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	// console.log('111');
 	show_history.value = false;
 	show_hot.value = false;
-	tabIndex.value = index;
+	store.tabIndex = index
+	// tabIndex.value = index;
 	sport_kind_id = sport_id;
 	// tab 默认居中及移动动画
 	utils.tab_move2(index, tab_growp.value);
@@ -362,7 +366,7 @@ watch(
 	() => input_value.value,
 	(val) => {
 		let trimVal = val.trim();
-		get_search_data(0, 1, trimVal);
+		get_search_data(store.tabIndex, 1, trimVal);
 	}
 )
 
@@ -696,7 +700,8 @@ li {
 	background-color: var(--q-gb-bg-c-2);
 	// border-radius: 6px;
 	font-size: 14px;
-
+	border-bottom: 1px solid #E2E2E2;
+        // border-image: linear-gradient(to bottom,transparent 50%, #E2E2E2 50%) 0 0 100%/1px 0;
 	.list_top {
 		font-size: 14px;
 		font-weight: 500;
@@ -737,6 +742,7 @@ li {
 		.red {
 			//color: #FF7000;
 			color: var(--q-gb-t-c-1);
+			font-weight: 600;
 		}
 	}
 	.list_bottom:last-child {

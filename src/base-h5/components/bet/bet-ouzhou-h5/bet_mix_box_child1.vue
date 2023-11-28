@@ -18,7 +18,10 @@
                        <span class="text-two-span">{{items.playName}}
                          <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
-                        [{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]
+                        <br>
+                        <span v-if="[1].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span>
+                        <span v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span>
+                        
                       </div>
                       <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{ items.matchType == 2? items.mark_score : ''}}</div>
                     </div>
@@ -28,7 +31,7 @@
                             <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_up.png`" alt=""/>
                             <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_down.png`" alt=""/>
                           </div>
-                          <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">@{{compute_value_by_cur_odd_type(items.odds,'','',items.sportId)}}</div>
+                          <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">@{{compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId)}}</div>
                         </div>
                     </div>
                     

@@ -18,7 +18,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/te
 import { useMittEmit, MITT_TYPES,project_name, MenuData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
-  MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
+  MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5, get_punish_score
 } from 'src/core'
 
 class MatchMeta {
@@ -251,13 +251,22 @@ class MatchMeta {
     // 是否展示联赛标题
     const is_show_league = MatchUtils.get_match_is_show_league(index, mids)
     const is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
+    // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
+    const handicap_index = MatchUtils.get_handicap_index_by(match);
     const { home_score, away_score } = MatchUtils.get_match_score(match)
+    const { home_red_score, away_red_score, home_yellow_score, away_yellow_score } = MatchUtils.get_match_red_yellow_card(match)
+    console.log(home_red_score, away_red_score, home_yellow_score, away_yellow_score)
     return {
       source_index: index,
       is_show_no_play,
       is_show_league,
       away_score,
-      home_score
+      home_score,
+      home_red_score,
+      away_red_score,
+      home_yellow_score,
+      away_yellow_score,
+      handicap_index
     }
   }
 
@@ -617,6 +626,7 @@ class MatchMeta {
       dataList.forEach(t => {
         t.match_data_type = 'h5_in_play_league'
       })
+      MatchDataBaseInPlayH5.clear()
       match_list = MatchUtils.get_home_in_play_data(dataList)
       // this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
       this.handler_match_list_data({ list: match_list, warehouse: MatchDataBaseInPlayH5, type: 2, is_virtual: false, merge: 'cover' })
@@ -882,7 +892,7 @@ class MatchMeta {
     MatchResponsive.clear_ball_seed_league_count()
 
     // 赛事归类开赛、未开赛
-    const target_data = this.is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list
+    const target_data = this.is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list.filter((t) => t.mid)
     // 过滤赛事 
     this.complete_mids = mids
     this.complete_matchs = target_data.map((t, index) => {

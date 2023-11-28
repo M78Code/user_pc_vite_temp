@@ -486,12 +486,12 @@ background: var(--q-gb-t-c-3) !important;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   margin-bottom: -1px;
-  //background-color: var(--q-gb-t-c-7);
+  background-color: var(--q-gb-t-c-7);
   //padding: 12px;
   border-radius: 0.04rem;
 }
 .scroll-box-center{
-  margin: 0 0 0.1rem 0;
+  //margin: 0 0 0.1rem 0;
 }
 
 .full-shadow2 {

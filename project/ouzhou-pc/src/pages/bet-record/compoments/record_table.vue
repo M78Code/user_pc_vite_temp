@@ -25,7 +25,9 @@
           <q-tr :props="props">
             <!-- 编号 -->
             <q-td key="sn" :props="props">
-              <span @click="labelClick(props)">{{ props.rowIndex + 1 }}</span>
+              <span @click="labelClick(props)">
+                {{getRowIndex(props.rowIndex)}}
+              </span>
             </q-td>
             <!-- 投注详情 -->
             <q-td key="datails" :props="props">
@@ -211,11 +213,14 @@
       </q-table>
       <!--分页组件-->
 
-      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="total" :betTotalAmount="40"
+      <Pagination v-if="tableData.length > 0" class="record-pagination" :count="records.total" 
+                  :betTotalAmount="records.betTotalAmount"
                   @pageChange="changePage"
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
-      >
+                  :profit="records.profit"
+                  :reset_pagination="pageCurrent"
+                  :is_bet_record="true">
       </Pagination>
       <!--      <pagination-wrapper-->
       <!--        v-if="tableData.length > 0"-->
@@ -245,9 +250,17 @@ const lang = computed(() => {
   return UserCtr.lang;
 })
 const pageSize = ref('50')
+const pageCurrent = ref('1')
+const getRowIndex = (rowIndex) => {
+  return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
+}
 const emit = defineEmits(['itemFilter'])
 const props = defineProps({
   current_tab: {
+    type: String,
+    default: ''
+  },
+  timeType: {
     type: String,
     default: ''
   }
@@ -258,10 +271,13 @@ const match_type = {
   2: i18n_t("list.list_today_play_title"),
   3: i18n_t("menu.match_winner")
 }
-const { columns, tableData, total, loading, handle_fetch_order_list } = useGetOrderList()
+const { columns, tableData, loading, handle_fetch_order_list,records } = useGetOrderList()
 const labelClick = (row) => {
   console.log(row)
 }
+watch(() => props.timeType, (newVal) => {
+  pageCurrent.value = '1'
+})
 // 监听tab 切换表格头数据
 watch(() => props.current_tab, (newVal) => {
   tableData.value = []
@@ -492,21 +508,28 @@ const order_status = (orderStatus) => {
 // 页码变化
 const changePage = (arv) => {
   const { current } = arv
+  pageCurrent.value = current
   console.log(1111111111, arv)
   emit('itemFilter', {
     page: current,
-    size: +pageSize.value
+    size: +pageSize.value,
+    timeType: props.timeType
   })
 }
 const goPageChange = (v) => {
+  pageCurrent.value = v
   emit('itemFilter', {
     page: v,
-    size: +pageSize.value
+    size: +pageSize.value,
+    timeType: props.timeType
   })
 }
 const pageSizeChange = (v) => {
   pageSize.value = v.value
-  emit('itemFilter', { size: v.value })
+  emit('itemFilter', {
+    size: v.value,
+    timeType: props.timeType
+  })
 }
 /**
  * 复制id
@@ -612,7 +635,7 @@ const hand_copy = (data) => {
     position: fixed;
     bottom: 0;
     left: 50%;
-    width: 1430px;
+    width: 1360px;
     transform: translate(-50%, 0);
     background-color: var(--q-gb-bg-c-4);
     box-shadow: 0 -4px 8px var(--q-gb-bg-c-15);

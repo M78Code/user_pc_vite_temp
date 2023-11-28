@@ -37,7 +37,7 @@
           <span>{{ i18n_t("select.hot") }}</span>
         </div>
       </div>
-      <q-scroll-area ref="scrollArea" :style="{ flex: '1' }">
+      <q-scroll-area ref="scrollArea" :style="{ flex: '1' }" v-if="list.length > 0">
         <div
           class="wrap-item"
           v-for="(item, index) in list"
@@ -49,6 +49,7 @@
           <div class="select-item">{{ item.tournamentName }}</div>
         </div>
       </q-scroll-area>
+      <no_data v-else :width="'130px'" :height="'156px'" />
       <div class="btn-confrim">
         <span class="cancel" @click="cancel">
           {{
@@ -66,6 +67,7 @@ import { onMounted, onUnmounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { IconWapper } from "src/components/icon";
 import { GlobalSwitchClass} from "src/core/index";
+import no_data from "src/components/no_data/no_data.vue";
 const route = useRoute();
 
 import { i18n_t } from "src/core/index";
@@ -238,7 +240,7 @@ const checkHot = n => {
   } else {
     init.value = false;
     is_hot.value = !is_hot.value;
-    // emit("search_hot", Number(is_hot.value));
+    emit("search_hot", Number(is_hot.value));
   }
 };
 const { off: offInit } = useMittOn(MITT_TYPES.EMIT_INIT_SELECT, () => {
@@ -334,7 +336,6 @@ onMounted(() => {
 watch(
   props.list,
   res => {
-     console.log('resresresresresres',res)
     let _no_active = active_tournament.value.length == 0;
     // 当前是不是反选
     let is_invert = menu.value == "invert";

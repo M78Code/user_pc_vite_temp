@@ -1793,7 +1793,7 @@ init(){
    * @return {undefined} undefined
    */
   listSortNew(mid){
-    let list = this.get_quick_mid_obj(mid).odds_info;
+    let list = this.get_quick_mid_obj(mid)?.odds_info;
     var list_ = [];
     if(list && (list instanceof Array))
     {
@@ -1832,7 +1832,7 @@ init(){
    * @return {undefined} undefined
    */
   listSortNormal(mid){
-   let list = this.get_quick_mid_obj(mid).odds_info;
+   let list = this.get_quick_mid_obj(mid)?.odds_info;
    var list_normal = [];
    if(list && (list instanceof Array))
    {

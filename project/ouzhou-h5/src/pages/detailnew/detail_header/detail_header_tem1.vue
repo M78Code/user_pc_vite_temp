@@ -2,8 +2,8 @@
   <div class="detail_header_tem1">
     <div class="match-detail-head">
       <div
-        v-show="get_match_detail.csid"
-        :class="['sport_bg', `${get_sports_bg(get_match_detail.csid)}`]"
+        v-show="get_match_detail?.csid"
+        :class="['sport_bg', `${get_sports_bg(get_match_detail?.csid)}`]"
       ></div>
       <div class="match-detail-time">
           <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
@@ -16,7 +16,7 @@
           />
           </span>
     
-        <div class="match-detail-time-collect" @click="collect_click">
+        <div class="match-detail-time-collect" v-if="show_collect" @click="collect_click">
           <img
             v-if="is_collect"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"
@@ -108,9 +108,14 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  show_collect: {
+    type: Object,
+    default : true
+  }
 });
   // 赛事收藏状态
 const  is_collect = computed(()=>{
+  if(lodash.isEmpty(props.get_match_detail)) return
   return MatchCollect.get_match_collect_state(props.get_match_detail)
 }) 
 const show_time_counting = computed(() => {

@@ -16,6 +16,7 @@ export function useGetOrderList () {
   // const userInfo = state.userReducer?.userInfo || {}; // 用户数据
   const { user_info: userInfo } = UserCtr // 用户数据
   const tableData = ref([])
+  const records = ref({})
   const total = ref(0)
   const loading = ref(false)
   const columns = ref([
@@ -71,7 +72,7 @@ export function useGetOrderList () {
       // tableData.value = responseData.data.records;
       const params = {
         enablePreSettle: false,
-        orderBy: 1,
+        orderBy: 2,
         orderStatus: 0,
         page: 1,
         size: 50,
@@ -94,6 +95,7 @@ export function useGetOrderList () {
         // return;
       }
       tableData.value = res.data?.records || []
+      records.value = res.data || {}
       total.value = res.data?.total
     } catch (error) {
       console.error(error)
@@ -109,6 +111,7 @@ export function useGetOrderList () {
     tableData,
     total,
     loading,
+    records,
     handle_fetch_order_list
   }
 }
