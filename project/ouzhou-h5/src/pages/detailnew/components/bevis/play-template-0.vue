@@ -26,6 +26,14 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 };
+
+setTimeout(function (){
+    if(props.item_data?.title){
+        console.log(props.item_data,"props.item_data==有title")
+    }else {
+        console.log(props.item_data,"props.item_data==没有title")
+    }
+},1200)
 </script>
 
 
@@ -64,12 +72,12 @@ const go_betting = (data) => {
                         @click="go_betting(olChild)"
                         :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
                     >
-                        <spna class="on-text">
+                        <span class="on-text">
                             {{ olChild?.on || olChild.ott }}
-                        </spna>
-                        <spna class="ov-text">
+                        </span>
+                        <span class="ov-text">
                             {{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}
-                        </spna>
+                        </span>
                         <olStatus style="position: absolute;right: 12%;" :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </li>
                 </template>

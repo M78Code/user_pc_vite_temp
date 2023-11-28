@@ -63,7 +63,6 @@ const AssembleData = computed(() => {
         betInformation.haveTitle = false
         betInformation.assemble = ol_list.filter(i => i.os != 3)
     }
-    console.log(betInformation,"betInformation")
     return betInformation
 })
 </script>
@@ -139,10 +138,12 @@ const AssembleData = computed(() => {
                     v-else
                 >
                     <template v-if="_item.os == 1">
+                        <!--
                         <span class="on-text textOverflow1">
                             {{ useOtv.includes(_item._hpid) ? `${_item.otv}` : `${_item?.on}${_item?.ott}` }}
                         </span>
-                            <span class="ov-text">
+                        -->
+                        <span class="ov-text">
                             {{ compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}
                         </span>
                         <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>

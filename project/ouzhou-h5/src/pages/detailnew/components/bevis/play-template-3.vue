@@ -12,7 +12,7 @@ import {computed, defineProps} from "vue";
 import olStatus from "../ol_status.vue";
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
-
+import ResultOlItem from "../../result/ResultOlItem.vue";
 const props = defineProps({
     item_data: {
         type: Object,
@@ -24,17 +24,19 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 }
-const AssembleData = computed(()=>{
-    const { title,hl } = props.item_data
-    const ol_list = hl[0].ol.filter(item=>item.os != 3)
-
-
-    // const
-})
+setTimeout(function (){
+    if(props.item_data?.title){
+        console.log(props.item_data,"props.item_data==有title")
+    }else {
+        console.log(props.item_data,"props.item_data==没有title")
+    }
+},1200)
 </script>
 <template>
     <span v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</span>
     <section class="component play-template play-template-3 template3" v-if="item_data?.hl[0]?.ol">
+        <template v-if="item_data?.title"></template>
+        <template v-else></template>
         <ul class="list">
             <template v-for="olChild of item_data.hl[0].ol" :key="olChild?.oid">
                 <template v-if="olChild.result != (void 0)">

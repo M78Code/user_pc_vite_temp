@@ -32,8 +32,12 @@ const go_betting = (data) => {
                     @click="go_betting(olChild)"
                     v-for="olChild of hlChild.ol" :key="olChild.oid">
                     <template v-if="olChild.os == 1 && olChild._hs != 11">
-                        <span class="on-text textOverflow2">{{ olChild.on }}</span>
-                        <span class="ov-text">{{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}</span>
+                        <span class="on-text textOverflow1">
+                            {{ olChild.on }}
+                        </span>
+                        <span class="ov-text">
+                            {{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}
+                        </span>
                         <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </template>
                     <template v-if="olChild.os == 2 || olChild._hs == 11">
