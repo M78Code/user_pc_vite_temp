@@ -3,7 +3,7 @@ import { Quasar } from "quasar";
 import "./src/css/app.scss"
 import './style.css'
 import App from './App.vue'
-import router from 'project/activity/src/router/index.js'
+ 
 import _ from 'lodash';
 import { HackError } from './hack-error';
 import { i18n, loadLanguageAsync } from "./src/boot/i18n.js";
@@ -19,7 +19,7 @@ window.vue = app;
 
 app.use(global);
 app.use(i18n);
-app.use(router);
+ 
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });

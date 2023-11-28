@@ -79,9 +79,10 @@ export default {
       }
     }, { deep: true, immediate: true })
     
-    watch(() => [match.value?.ms, match.value?.mmp],() => {
-      console.log('进来了11111');
-      check_match_end(match.value, socket_remove_match)
+    watch(() => [props.match?.ms, props.match?.mmp],() => {
+      if (props.match) {
+        check_match_end(props.match, socket_remove_match)      
+      }
     }, { immediate: true })
     function current_basic_info() {
       if (match.value.csid == 5) {

@@ -1,7 +1,7 @@
 <!-- 欧洲版 主列表页面 -->
 <template>
   <div>
-    <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }}</div>
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}{{ LayOutMain_pc.layout_version }} {{ card_type }}</div>
     <div class="list-card-wrap v-scroll-item relative-position" :class="{
       'matc-type-card': [
         'sport_title',
@@ -12,6 +12,7 @@
     width:${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)
   }px  !important;${card_style}`" v-if="card_style_obj.is_show_card">
       <div  :class="{ 'list-card-inner': !MatchListCardData.is_champion }">
+        <div v-if="['split_line'].includes(card_type)" :style="{'height': '100px'}"></div>
         <!-- 赛事状态 | 赛种类型 -->
         <div v-if="['sport_title', 'play_title', 'no_start_title'].includes(card_type)">
           <play-match-type :card_style_obj="card_style_obj" />
