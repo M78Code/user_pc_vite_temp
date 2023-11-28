@@ -6,7 +6,7 @@
 <template>
   <div class="detail-bread">
     <div class="detail-bread-item " style="cursor: pointer;" @click="jumpTo">
-      <span >{{ breadCrumbs_firstOne() }}</span>
+      <span >{{ breadCrumbs_firstOne }}</span>
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
     </div>
     <div class="detail-bread-item" @click="jumpToLeagues()">
@@ -47,7 +47,7 @@ const last_label = computed(() => {
 * 页面刷新路由重复添加一次，解决该问题
 * 48448 【SIT】【欧洲版二期】【PC】经常访问，足球，详情页面，没有菜单导航
 * */
-const breadCrumbs_firstOne = function (){
+const breadCrumbs_firstOne = computed(()=>{
     // console.log(BaseData.left_menu_base_mi,"==BaseData.left_menu_base_mi")
     // console.log(BaseData.menus_i18n_map,"==BaseData.menus_i18n_map")
     // console.log(MenuData.left_menu_result,"==MenuData.left_menu_result")   // 表示选中的菜单
@@ -58,14 +58,15 @@ const breadCrumbs_firstOne = function (){
     * 经常访问菜单类型为0
     * 全部菜单类型为1
     * */
-    if(!!lv1_mi){
+    //i18n 球种名称要等 元数据的值 所有要等元数据变化才能拿到i18n的值
+    if(!!lv1_mi&&aseData.base_data_version.value){
         firstOneName = BaseData.menus_i18n_map[lv1_mi]
     }else {
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
         firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.title : props.detail_info.csna
     }
     return firstOneName
-}
+})
 
 const jumpTo = ()=>{
   router.go(-1)

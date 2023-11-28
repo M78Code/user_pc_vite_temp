@@ -1,6 +1,5 @@
 import { reactive } from "vue"
 import { i18n_t } from "src/core/index.js"
-
 export const store = reactive({
     tabModel: false, //下拉框
     dateIndex: 0, //下拉框选择

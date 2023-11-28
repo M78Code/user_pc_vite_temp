@@ -56,7 +56,7 @@ export const get_match_status = (ms, exclude) => {
 	if (all_ms.includes(_ms)) {
 		is_play = 1;
 	}
-	return 1;
+	return is_play;
 };
 
  

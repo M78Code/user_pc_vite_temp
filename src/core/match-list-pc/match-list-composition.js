@@ -25,7 +25,7 @@ import ServerTime from 'src/core/server-time/server-time.js';
 // import filterHeader from 'src/core/filter-header/filter-header.js'
 import get_match_list_params from './match-list-params.js'
 import { match_list_handle_set } from './match-handle-data.js'
-import { mx_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
+import { mx_collect_match, fethc_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
 const { load_video_resources } = pre_load_video
@@ -113,6 +113,7 @@ export function fetch_match_list(is_socket = false, cut) {
 	}
 	let match_api = match_list_params.match_list || {};
 	// let match_api = MenuData.match_list_api_config.match_list || {};
+	fethc_collect_match()
 	// 设置列表接口 和 参数
 	let api = api_match[match_api.api_name];
 	let _params = lodash.clone(match_api.params) || {};

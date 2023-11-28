@@ -285,7 +285,7 @@ input::-ms-reveal {
     width: 78px;
     height: 48px;
     &.active {
-      background: var(--q-gb-bg-c-1) !important;
+      background: var(--q-gb-t-c-4) !important;
       &.up,&.down{
         background: var(--q-gb-t-c-4) !important;
         .odds{
@@ -297,10 +297,10 @@ input::-ms-reveal {
       }
       .handicap-value,
       .handicap-value-text {
-        color: var(--q-gb-t-c-4);
+        // color: var(--q-gb-t-c-4);
       }
       .odds {
-        color: var(--q-gb-t-c-1);
+        // color: var(--q-gb-t-c-1);
       }
     }
     &.can-hover:hover {
@@ -337,4 +337,7 @@ input::-ms-reveal {
 
 .c-match-card .timer-layout .timer-layout2{
   padding-left: 0 ;
+}
+.img-loading {
+  background-image: url($SCSSPROJECTPATH+"/image/loading1.gif");
 }

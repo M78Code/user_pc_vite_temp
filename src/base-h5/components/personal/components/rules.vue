@@ -1,6 +1,6 @@
 <template>
     <div class="rule_page">
-      <iframe class="rules-iframe" src="http://sports-rules-ouzhou-test.sportxxx3pk.com/#/zh_cn" />
+      <iframe class="rules-iframe" src="http://sports-rules-ouzhou-test.sportxxx3pk.com/#/zh_cn?source=ouzhou" />
 
       <!-- <section>
         <div class="title">General Sports Explanation</div>

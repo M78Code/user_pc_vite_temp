@@ -231,9 +231,9 @@ onMounted(() => {
     }
     .is-active {
       //background: #ff7000;
-      background-color: var(--q-gb-bg-c-1);
+      background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF !important;
       //color: #fff;
-      color: var(--q-gb-t-c-2);
+      // color: var(--q-gb-t-c-2);
       .ol-on-text {
         padding-right: 5px;
         font-weight: 500;
@@ -294,9 +294,9 @@ onMounted(() => {
     cursor: pointer;
     font-weight: 500;
 
-    &:hover {
-      background: #fff1e6;
-    }
+    // &:hover {
+    //   background: #fff1e6;
+    // }
   }
 }
 .lock {
