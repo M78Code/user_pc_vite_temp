@@ -71,23 +71,13 @@
           v-if="['2', '6'].includes(get_match_detail.csid+'')"
         >
           <div class="line"></div>
-          <div
-            class="list-item"
-            v-for="item in basketball_score_icon_list"
-            :key="item.msc_key"
-          >
-            <span>{{
-              scoew_icon_list[item.msc_key]
-                ? scoew_icon_list[item.msc_key]["home"]
-                : ""
-            }}</span>
-            <span v-if="scoew_icon_list[item.msc_key]">-</span>
-            <span>{{
-              scoew_icon_list[item.msc_key]
-                ? scoew_icon_list[item.msc_key]["away"]
-                : ""
-            }}</span>
-          </div>
+          <template v-for="item in basketball_score_icon_list" :key="item.msc_key">
+            <div class="list-item" v-if="scoew_icon_list[item.msc_key]" >
+              <span>{{scoew_icon_list[item.msc_key]["home"]}}</span>
+              <span>-</span>
+              <span>{{scoew_icon_list[item.msc_key]["away"]}}</span>
+            </div>
+          </template>
         </div>
       </template>
     </div>
@@ -345,6 +335,9 @@ onMounted(()=>{
 </script>
 
 <style lang="scss" scoped>
+.current-score-color{
+  color: var(--q-gb-t-c-1);
+}
 .detail_header_tem1 {
   .match-detail-head {
     position: relative;
@@ -424,9 +417,10 @@ onMounted(()=>{
       }
       .match-detail-num {
         //color: #ff7000;
-        color: var(--q-gb-t-c-1);
-        font-weight: 500;
+        /** 设计图的500无效 */
+        font-weight: 700;
         font-size: 15px;
+        @extend .current-score-color;
       }
     }
     .match-detail-item-list {
@@ -472,7 +466,11 @@ onMounted(()=>{
       justify-content: flex-start;
       .list-item {
         padding: 0 15px 0 0;
+        font-weight: 700;
         // font-weight: 500; //已在父节点设置font-weight
+        &:last-child{
+          @extend .current-score-color;
+        }
       }
       .line {
         position: absolute;
