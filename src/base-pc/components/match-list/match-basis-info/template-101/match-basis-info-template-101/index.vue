@@ -79,7 +79,7 @@
 
 <script setup>
 
-import { computed, ref, watch, onMounted, onUnmounted } from 'vue';
+import { computed, ref, watch,inject, onMounted, onUnmounted } from 'vue';
 import lodash from 'lodash'
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
@@ -94,11 +94,8 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 
 const router = useRouter()
+const match=inject('match');
 const props = defineProps({
-  match: {
-    type: Object,
-    default: () => {}
-  },
   show_type: {
     type: String,
     default: () => ''
@@ -131,12 +128,12 @@ const handicap_num = computed(() => {
 })
 
 const home_avatar = computed(()=>{
-  const url = ((lodash.get(props.match, 'match_logo') || {}) || {}).home_1_logo || (lodash.get(props.match, 'match_logo') || {}).home_1_letter;
+  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo || (lodash.get(match.value, 'match_logo') || {}).home_1_letter;
   return url
 })
 
 const away_avatar = computed(()=>{
-  const url = (lodash.get(props.match, 'match_logo') || {}).away_1_logo ||  (lodash.get(props.match, 'match_logo') || {}).away_1_letter
+  const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo ||  (lodash.get(match.value, 'match_logo') || {}).away_1_letter
   return url
 })
 
@@ -146,7 +143,7 @@ const play_name_obj = computed(() => {
     suffix_name: '',
     score_key: ''
   }
-  let {ms, hSpecial}  =  props.match || {}
+  let {ms, hSpecial}  =  match.value || {}
   //滚球
   if (get_match_status(ms, [110]) == 1) {
       //角球后缀
@@ -183,11 +180,11 @@ is_collect.value = Boolean(lodash.get(props, 'match.mf'))
 const collect = () => {
   //前端修改收藏状态
   is_collect.value = !is_collect.value
-  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, match.value)
 }
 
 // 监听收藏变化
-watch(() => props.match.mf, (n) => {
+watch(() => match.value.mf, (n) => {
   is_collect.value = Boolean(n)
 })
 
@@ -197,27 +194,27 @@ watch(() => props.match.mf, (n) => {
 
 // 监听收藏数量，更新收藏icon 颜色
 // watch(get_collect_count, () => {
-//   const cur = props.match_list_data.mid_obj
-//   is_collect.value = Boolean (cur['mid_'+props.match.mid].mf)
+//   const cur = match.value_list_data.mid_obj
+//   is_collect.value = Boolean (cur['mid_'+match.value.mid].mf)
 // })
 
 // 监听主比分变化
-// watch(props.match.home_score, (n) => {
+// watch(match.value.home_score, (n) => {
 //   //推送时间是否过期
-//   let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
+//   let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
 //   // 足球 并且已开赛
-//   if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1 && n!=0 && is_time_out ){
+//   if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1 && n!=0 && is_time_out ){
 //     is_show_home_goal.value = true;
 //     hide_home_goal();
 //   }
 // })
 
 // // 监听主比分变化
-// watch(props.match.away_score, (n) => {
+// watch(match.value.away_score, (n) => {
 //   //推送时间是否过期
-//   let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
+//   let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
 //   // 足球 并且已开赛
-//   if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1  && n!=0 && is_time_out ){
+//   if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1  && n!=0 && is_time_out ){
 //     is_show_away_goal.value = true;
 //     hide_away_goal();
 //   }
@@ -269,8 +266,8 @@ function hide_away_goal () {
 
 let handicap_index = ref(0)
 onMounted(()=>{
-  // use_polling_mst(props.match);
-  handicap_index.value = utils.get_handicap_index_by(props.match);
+  // use_polling_mst(match.value);
+  handicap_index.value = utils.get_handicap_index_by(match.value);
 })
 
 onUnmounted(() => {
