@@ -348,7 +348,9 @@ export default defineComponent({
       //先执行删除收藏 再执行删除收藏页数据
       MatchCollect.handle_league_collect_state(tid)
       // 收藏页手动处理数据
-      MenuData.is_collect() && MatchMeta.set_collect_match(this.match_of_list, 1)
+      if (MenuData.is_collect()) {
+        !this.league_collect_state && MatchMeta.set_collect_match(this.match_of_list, 1)
+      }
     },
 
     /**
