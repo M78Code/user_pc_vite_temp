@@ -11,7 +11,7 @@
         <div class="header-nav">
           <div v-for="item in navList" :key="item.id" @click="nav_click(item)"
             :class="{ 'active-nav': route.name == item.name }">
-            <span class="header-nav-title"> {{ item.label }}
+            <span class="header-nav-title"> {{ i18n_t(item.label) }}
               <!-- <span class="bet_record" v-if="item.name == 'bet_record'">{{ BetData.bet_record_count }}</span> -->
             </span>
           </div>
@@ -46,9 +46,9 @@ export default defineComponent({
     const route = useRoute()
 
     const navList = ref([
-      { label: i18n_t("ouzhou.match.home"), id:0, name: 'home' },
-      { label: i18n_t("menu.match_playing"), id:1, name: 'in_play' },
-      { label: i18n_t("common.betting_record"), id: 102, name: 'bet_record' },
+      { label: "ouzhou.match.home", id:0, name: 'home' },
+      { label: "menu.match_playing", id:1, name: 'in_play' },
+      { label: "common.betting_record", id: 102, name: 'bet_record' },
     ]);
     const nav_click = (item = {}) => {
       // 清空数据 

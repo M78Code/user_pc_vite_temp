@@ -6,7 +6,7 @@
 <template>
   <div class="wrap" :class="type_name" :style="{marginBottom:`${marginBottom}`}">
     <div class="img" :class="color" :style="{width: width,height:height}"></div>
-    <div class="text-center"  :style="{color: textColor}">{{msg?msg:i18n_t('nodata_msg.no_data_msg_1')}}</div>
+    <div class="text-center"  :style="{color: textColor}" style="width:100%">{{msg?msg:i18n_t('nodata_msg.no_data_msg_1')}}</div>
     <div class="nodata-text2" v-if="msg2">{{msg2}}</div>
     <slot />
   </div>
@@ -55,14 +55,17 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-  text-align: center;
   font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .img {
     margin-bottom: 10px;
     width: 130px;
     height: 0px;
     background-size: 100%;
-    background-repeat:no-repeat
+    background-repeat:no-repeat;
+    background-image: url($SCSSPROJECTPATH+"/image/svg/no-data.svg");
   }
   &.esports-size {
     .img {
