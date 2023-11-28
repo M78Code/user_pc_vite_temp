@@ -113,7 +113,6 @@ const filter_20_match_new = (data) => {
   // 足球最多15个
   const max_football_count = 15;
   let football_count = 0;
-  let other_count = 0;
   // 别的球种5个
   const max_other_count = 5;
 
@@ -124,16 +123,15 @@ const filter_20_match_new = (data) => {
     if (item.csid == football_csid && football_count < max_football_count) {
       result.push(item);
       football_count++;
-    } else if (item.csid == basketball_csid && result.length < 20 && other_count < max_other_count) {
+    } else if (item.csid == basketball_csid && result.length < 20) {
       result.push(item);
-      other_count++
     }
     // 大于20条时，跳出循环
     if (result.length >= 20) {
       break;
     }
   }
-  result.sort((x, y) => x.csid - y.csid)
+
   return result;
 }
 
@@ -197,6 +195,7 @@ export const init_home_matches = async () => {
         //过滤前20条数据
         sort_list = filter_20_match_new(sort_list);
         match_list.push(...sort_list)
+        console.log('match_list', match_list);
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
         SessionStorage.set('get_home_matches', sort_list)
