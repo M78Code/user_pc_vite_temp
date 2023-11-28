@@ -23,6 +23,7 @@
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
                       <!--   {{ `template${item.hpt}` }}-->
+                      <!-- {{ computedPlayComponent(item.hpt) }} -->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" @bet_click_="bet_click_" />       
                     </div>
                 </div>
@@ -40,6 +41,7 @@
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
                         <!-- {{ `template${item.hpt}` }} -->
+                        <!-- {{ computedPlayComponent(item.hpt) }} -->
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :item_data="item" @bet_click_="bet_click_" />
                     </div>
