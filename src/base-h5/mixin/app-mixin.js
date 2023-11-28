@@ -77,16 +77,15 @@ export default {
         http.setApiDomain();
         enter_params(async(user)=>{
           await loadLanguageAsync(lang);
+          MenuData.init();
+          BetData.init_core()
+          BetViewDataClass.init()
+          BetWsMessage.init()
           this.set_init_load(true);
         })
       });
      // 启动域名检测功能
      AllDomain.run();
-     
-      MenuData.init();
-      BetData.init_core()
-      BetViewDataClass.init()
-      BetWsMessage.init()
   },
   
   beforeUnmount() {
