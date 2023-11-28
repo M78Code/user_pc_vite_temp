@@ -5,7 +5,6 @@
 -->
 <template>
   <div class="box-bc">
-   
     <q-table
       :rows="data"
       separator="none"
@@ -103,37 +102,37 @@
           </q-td>
           <q-td key="q1" :props="props">
             <span
-              :class="[course === 'Q1' ? 'heightLight' : '']"
+              :class="[course === props.cols[1]?.course ? 'heightLight' : '']"
               >{{ props.row.q1 }}</span
             >
           </q-td>
           <q-td key="q2" :props="props">
             <span
-              :class="[course === 'Q2' ? 'heightLight' : '']"
+              :class="[course === props.cols[2]?.course  ? 'heightLight' : '']"
               >{{ props.row.q2 }}</span
             >
           </q-td>
           <q-td key="ht" :props="props">
             <span
-              :class="[course === 'HT' ? 'heightLight' : '']"
+              :class="[course ==='HT'  ? 'heightLight' : '']"
               >{{ props.row.ht }}</span
             >
           </q-td>
           <q-td key="q3" :props="props">
             <span
-              :class="[course === 'Q3' ? 'heightLight' : '']"
+              :class="[course === props.cols[csid==2?4:3]?.course  ? 'heightLight' : '']"
               >{{ props.row.q3 }}</span
             >
           </q-td>
           <q-td key="q4" :props="props">
             <span
-              :class="[course === 'Q4' ? 'heightLight' : '']"
+              :class="[course === props.cols[csid==2?5:4]?.course  ? 'heightLight' : '']"
               >{{ props.row.q4 }}</span
             >
           </q-td>
           <q-td key="q5" :props="props">
             <span
-              :class="[course === 'Q5' ? 'heightLight' : '']"
+              :class="[course === props.cols[csid==2?6:5]?.course? 'heightLight' : '']"
               >{{ props.row.q5 }}</span
             >
           </q-td>
@@ -205,6 +204,12 @@ const columns = ref([]);
 const course = computed(()=>{
   return handle_course_data(props.detail_info)
 })
+
+const csid = computed(()=>{
+  return props.detail_info.csid
+})
+
+
 
 //   足球篮球
 const get_base_data = (val) => {
@@ -419,7 +424,6 @@ const computed_score = (res) => {
       current_data.away += parseInt(score[i].away || 0);
     }
   }
-  console.log(11111111, current_data);
   return current_data;
 };
 
