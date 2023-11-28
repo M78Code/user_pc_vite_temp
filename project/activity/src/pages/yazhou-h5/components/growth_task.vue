@@ -7,14 +7,14 @@
   <div class="daily-betting-Payouts">
     <div class="active-object">
       <div>
-        <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动对象：</span>
           <span>本场馆全体会员</span>
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动时间：</span>
           <template v-if="get_user.activityList[activityIndex].period == 1">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span :style="{width: actId == 1? '.85rem' : '.94rem'}">活动内容：</span>
           <span>{{actId == 1 ? '『每日』达成指定任务，即可获得对应数量的普通奖券，普通奖券可至『老虎机』进行合成并参与老虎机抽奖。' : '『每周/月』达成指定任务，即可获得对应数量的普通奖券，普通奖券可至『老虎机』进行合成并参与老虎机抽奖。'}}</span>
@@ -73,7 +73,7 @@
           <span v-html="v.taskName"></span>
           <span :class="{'to-be-completed': [2].includes(v.bonusType),completed: [1,3].includes(v.bonusType)}">
             <template v-if="[1,3].includes(v.bonusType)">
-              <img class="completed"  :src="(`${ $g_image_preffix }/image/wwwassets/activity/completed${get_theme.includes('y0') ? '_y0' : ''}.svg`)" alt="">
+              <img class="completed"  :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/completed${get_theme.includes('y0') ? '_y0' : ''}.svg`)" alt="">
               <div class="to-be-completed-stata">已完成</div>
             </template>
             <template v-else>
@@ -139,7 +139,7 @@
             :pageSize = 7
             @change="data_page_changed"
           />
-          <img class="close"  @click="history_alert = false"  src="image/wwwassets/activity/lucky/close.png"/>
+          <img class="close"  @click="history_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png"/>
         </div>
       </div>
     </q-dialog>
@@ -152,7 +152,7 @@
           <img :src="pop_parameter.ticket >= 0 ? pop_parameter.success : pop_parameter.failure" alt="">
           <div class="Go-to-lottery" :class="{'failure': pop_parameter.ticket<0}" @click="Reclaim">{{pop_parameter.ticket>=0 ? '我知道了': '重新领取'}}</div>
         </div>
-        <img class="colse2" @click="daily_task_success = false"  src="image/wwwassets/activity/colse2.png"/>
+        <img class="colse2" @click="daily_task_success = false"  src="activity/yazhou-h5/activity/colse2.png"/>
       </div>
     </q-dialog>
     <div class="activity-rules">
@@ -161,40 +161,40 @@
       </div>
       <div class="rules-object">
         <div>
-          <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>{{actId == 1 ? '会员每日达成指定任务，即可获得对应数量的普通奖券；' : '会员周期内达成指定任务，即可获得对应数量的普通奖券；'}}</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span v-if="actId == 1">单笔注单投注<font color="#ff7000">≥100</font>元，方可视为每日任务活动有效注单；</span>
             <span v-else>每日在本场馆累计投注<font color="#ff7000">≥100</font>元，即视为投注1天； </span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span v-if="actId == 1">每日任务数据每<font color="#ff7000">5</font>分钟更新一次，在次日数据将自动清零重新计算，请会员每日提前<font color="#ff7000">30</font>分钟完成任务并领取奖券，避免因数据延迟导致领取失败；</span>
             <span v-else>成长任务数据每小时更新一次，在下个自然周/自然月数据将自动清零重新计算，请会员于自然周期最后一天提前<font color="#ff7000">一小时</font>完成任务并领取奖券，避免因数据延迟导致领取失败；</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span v-if="actId == 1">每日任务活动有效注单以结算时间为准，且需满足单笔投注金额<font color="#ff7000">≥100</font>元。任何低于欧洲盘<font color="#ff7000">1.5</font>(香港盘<font color="#ff7000">0.5</font>)水位、同场赛事中投注对等盘口、串关注单，皆不予计算；</span>
             <span v-else>成长任务活动有效注单以结算时间为准。任何低于欧洲盘<font color="#ff7000">1.5</font>(香港盘<font color="#ff7000">0.5</font>)水位、同场赛事中投注对等盘口、串关注单，皆不予计算；</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回奖金及所产生利润的权利；</span>
           </div>
         </div>
         <div>
-          <img :src="(`${ $g_image_preffix }/image/wwwassets/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
             <span>为避免文字理解差异，本场馆保留本活动最终解释权。</span>
           </div>
@@ -206,8 +206,8 @@
 
 <script>
 
-import {activity_task_api} from "../api/taskapi";
-import data_pager from "project/activity/src/public/components/common/data_pager.vue";
+import {api_activity} from "project/activity/src/public/api/index.js";
+import data_pager from "project/activity/src/components/data_pager.vue";
 import acticity_mixin from "../mixin/acticity_mixin";
 import active_count_down from "./active_count_down.vue";
 import utils from 'project/activity/src/public/utils/utils.js';
@@ -247,7 +247,7 @@ export default {
       // 任务领取的弹框
       daily_task_success: false,
       // 任务领取弹框 的图片及奖励
-      pop_parameter:{failure:"image/wwwassets/activity/failure.png", success: "image/wwwassets/activity/success.png", ticket: -1},
+      pop_parameter:{failure:"activity/yazhou-h5/activity/failure.png", success: "activity/yazhou-h5/activity/success.png", ticket: -1},
       // 任务列表
       get_everyDay_list: [],
       has_data: true,
@@ -297,7 +297,7 @@ export default {
         // 跟产品沟通接口有限频，前端不用做限制
         if(utils.is_time_limit()) return //  防止调用多次接口
         let parameter = {current, size: 7,  actId: this.actId}
-        let {code , data} = await activity_task_api.get_receiveRecord(parameter)
+        let {code , data} = await api_activity.get_receiveRecord(parameter)
         if(code == 200 && data.records.length > 0) {
           // data.records.map((item, index) => {
           //   if (item.taskName.includes("\n")) {
@@ -349,7 +349,7 @@ export default {
         const param = {
           actId: this.actId
         }
-        let {code , data} = await activity_task_api.get_details(param, {type: 1})
+        let {code , data} = await api_activity.get_details(param, {type: 1})
         if(code == 200 && data.length > 0) {
           if(this.isDuringDate(this.inStartTime, this.inEndTime) == 1 || day_week_month_time_limit){
             data.forEach( (v, i)=> {
@@ -383,7 +383,7 @@ export default {
       if(this.isDuringDate(this.inStartTime, this.inEndTime) == 3) return this.$toast('任务已结束', 1500)
       try {
         const parameter = {ids, ty: this.actId == 1 ? 0 : 1, rdm : new Date().getTime()}
-        let {code , data, msg} = await activity_task_api.get_task_receive(parameter)
+        let {code , data, msg} = await api_activity.get_task_receive(parameter)
         if(code == 200 && Object.keys(data).length > 0) {
           Object.assign(this.pop_parameter, data)
           this.timer1_ = setTimeout(() => {
@@ -439,7 +439,7 @@ export default {
     },
     // 用户每周每月的统计
     async get_task_every_week() {
-      let {code , data} = await activity_task_api.get_task_everyWeek()
+      let {code , data} = await api_activity.get_task_everyWeek()
       if(code == 200 && Object.keys(data).length > 0) {
         this.cumulative_betting_list.forEach((item,i) => {
           if(i == 0) {

@@ -117,11 +117,11 @@ const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
 
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(props, 'match.mid'))
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match.value, 'mid'))
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    const mc=lodash.get(props, 'match.mc')
-    return mc?`+${lodash.get(props, 'match.mc')}`:'+0'
+    const mc=lodash.get(match.value, 'mc')
+    return mc?`+${lodash.get(match.value, 'mc')}`:'+0'
   }else{
     return i18n_t('match_info.more')
   }
@@ -172,7 +172,7 @@ const play_name_obj = computed(() => {
   return play_name_obj
 })
 
-is_collect.value = Boolean(lodash.get(props, 'match.mf'))
+is_collect.value = Boolean(lodash.get(match.value, 'mf'))
 
 /**
  * @Description 赛事收藏 

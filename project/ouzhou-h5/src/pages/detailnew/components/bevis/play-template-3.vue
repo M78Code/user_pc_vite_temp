@@ -35,8 +35,8 @@ setTimeout(function (){
 <template>
     <span v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</span>
     <section class="component play-template play-template-3 template3" v-if="item_data?.hl[0]?.ol">
-        <template v-if="item_data?.title"></template>
-        <template v-else></template>
+<!--        <template v-if="item_data?.title"></template>-->
+<!--        <template v-else></template>-->
         <ul class="list">
             <template v-for="olChild of item_data.hl[0].ol" :key="olChild?.oid">
                 <template v-if="olChild.result != (void 0)">
@@ -69,9 +69,9 @@ setTimeout(function (){
         width: 100%;
         display: grid;
         grid-template-columns: repeat(2,1fr);
-        grid-template-rows: 48px;
         &-item{
             flex: 1;
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;

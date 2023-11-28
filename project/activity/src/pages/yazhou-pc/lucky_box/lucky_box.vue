@@ -400,7 +400,7 @@
   </div>
 </template>
 <script>
-import * as api_activity from "project/activity/src/pages/yazhou-pc/api/index";
+import {api_activity} from "project/activity/src/public/api/index.js";
 import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
 import common from "project/activity/src/pages/yazhou-pc/common";
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
@@ -1936,3 +1936,4 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
+project/activity/src/api/module/activity/index
