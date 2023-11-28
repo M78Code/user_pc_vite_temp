@@ -8,14 +8,14 @@
 import { ref, onMounted, computed } from "vue";
 import { friendly_reminder_zh, friendly_reminder_en} from 'src/base-h5/core/utils/local-image.js'
 
-const lang = ref('en')
-
+const lang = SEARCH_PARAMS.init_param.get("lang") || 'en';
 const get_no_token_image = computed(() => {
-  return lang.value === 'zh' ? friendly_reminder_zh : friendly_reminder_en
+  return (lang == 'zh') ? friendly_reminder_zh : friendly_reminder_en
 })
 
 onMounted(() => {
-  lang.value =  sessionStorage.getItem('h5_lang')
+  // 设置 title
+  document.title = '';
 })
 
 </script>
