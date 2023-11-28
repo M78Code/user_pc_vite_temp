@@ -1952,9 +1952,9 @@
   },
   "nativeName": "English (US)",
   "odds": {
-    "EU": "Decimal",
+    "EU": "DEC",
     "GB": "British Odds",
-    "HK": "Hongkong",
+    "HK": "HK",
     "ID": "Indo Odds",
     "MY": "Malay Odds",
     "US": "American Odds"
