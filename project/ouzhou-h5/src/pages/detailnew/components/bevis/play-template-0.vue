@@ -6,7 +6,7 @@
     没有title的情况按ol循环
 -->
 
-<script setup>
+<script setup name="play-template-0">
 import olStatus from "../ol_status.vue";
 import {computed, defineEmits, defineProps} from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -31,31 +31,6 @@ const go_betting = (data) => {
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-<!--    <div class="component play-template play-template-0 template0">
-        <ul class="list">
-            <template v-for="hlChild in item_data.hl" :key="hlChild.hid">
-                <li v-for="olChild in hlChild.ol.filter(i=>i.os != 3)" :key="olChild?.oid" @click="go_betting(olChild)"
-                    :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
-                    class="list-item"
-                >
-                    <template v-if="olChild?.os == 1 && olChild._hs != 11">
-                        <span class="on-text textOverflow2">
-                            {{ olChild?.on || olChild?.ott }}
-                        </span>
-                        <span class="ov-text">
-                            {{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}
-                        </span>
-                        <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
-                    </template>
-                    <span v-if="olChild?.os == 2 || olChild._hs == 11">
-                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-                    </span>
-                    <ResultOlItem :value="olChild" :hpt="0"></ResultOlItem>
-                </li>
-            </template>
-        </ul>
-    </div>-->
-
     <section class="play-template-0" v-if="item_data?.hl">
         <ul v-for="hlChild of item_data.hl" :key="hlChild?.hid" class="list">
             <template v-for="olChild of hlChild?.ol" :key="olChild?.oid">
@@ -64,12 +39,12 @@ const go_betting = (data) => {
                         @click="go_betting(olChild)"
                         :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
                     >
-                        <spna class="on-text">
-                            {{ olChild.on }}
-                        </spna>
-                        <spna class="ov-text">
+                        <span class="on-text">
+                            {{ olChild?.on || olChild.ott }}
+                        </span>
+                        <span class="ov-text">
                             {{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}
-                        </spna>
+                        </span>
                         <olStatus style="position: absolute;right: 12%;" :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </li>
                 </template>

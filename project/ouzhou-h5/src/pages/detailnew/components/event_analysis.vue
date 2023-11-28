@@ -61,7 +61,7 @@
           </div>
         </template>
         <template v-else>
-            <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/no_data.png`" alt="">
+            <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/no-data.png`" alt="">
             <div class="no-data-text">No Data</div>
         </template>
       </template>

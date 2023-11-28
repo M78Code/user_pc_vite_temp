@@ -38,3 +38,15 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+
+.onePxBorder{
+  background-color: var(--q-gb-bg-c-2);
+  border: 1px solid var(--q-gb-bd-c-10);
+}
+
+.lockBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+}

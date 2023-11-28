@@ -22,26 +22,24 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-                      <!--   {{ `template${item.hpt}` }}-->
-                      <!-- {{ computedPlayComponent(item.hpt) }} -->
-                        <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" @bet_click_="bet_click_" />       
+                        {{ `template${item.hpt} -- ${item.hpid}` }}
+                        <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" @bet_click_="bet_click_" />
                     </div>
                 </div>
           </template>
           <!-- 非置顶 -->
           <template v-for="(item, keyscorll) in match_list_normal">
                 <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
-                    <q-separator color="orange" />               
+                    <q-separator color="orange" />
                     <div class="odds-hpn">
                         <!-- 置顶按钮 -->
                         <!-- v-if="!item_data.hotName" -->
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
                         <set-top :item_data="item" :match_odds_info="match_odds_info" :match_detail="match_detail" />
-                        <span class="odds-hpn-icon"  @click="expend_toggle(item)"  :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>      
+                        <span class="odds-hpn-icon"  @click="expend_toggle(item)"  :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-                        <!-- {{ `template${item.hpt}` }} -->
-                        <!-- {{ computedPlayComponent(item.hpt) }} -->
+                        {{ `template${item.hpt} -- ${item.hpid}` }}
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :item_data="item" @bet_click_="bet_click_" />
                     </div>
@@ -70,7 +68,7 @@ import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
 import { useRoute } from "vue-router";
 // import EMITTER from "src/global/mitt.js";
 import {useMittEmit, MITT_TYPES,MatchDetailCalss,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common} from "src/core/"
-const MatchDataWarehouseInstance =ref(MatchDataWarehouse_H5_Detail_Common) 
+const MatchDataWarehouseInstance =ref(MatchDataWarehouse_H5_Detail_Common)
 const route = useRoute()
 // /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
 const props = defineProps({

@@ -125,7 +125,6 @@ export default {
      changeHeader,
      MatchDataWarehouseInstance
     } = details_main(router,route)
-    console.log(match_detail,"---------------------------------------------------");
     return{
       detail_store,
       match_odds_info,
