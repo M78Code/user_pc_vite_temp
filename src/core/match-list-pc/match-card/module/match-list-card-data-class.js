@@ -100,7 +100,7 @@ class MatchListCardDataClass {
     this.set_list_version()
   }
   set_list_version() {
-    this.list_version.value = Date.now();
+    this.list_version.value = Date.now() + '';
   }
   get_csid_current_hpids(csid) {
     //如果保存过模板旧使用保存的

@@ -25,9 +25,7 @@
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <load-data  v-if="MenuData.menu_root_show_shoucang != 300&& !MenuData.is_leagues()" :state="load_data_state" :style="{
-      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-    }">
+    <load-data  v-if="MenuData.menu_root_show_shoucang != 300&& !MenuData.is_leagues()" :state="load_data_state">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
       <scroll-list
@@ -42,9 +40,7 @@
         </div>
         <!-- 头部Featured Matches模块 -->
         <FeaturedMatches v-if="MenuData.is_featured() && !(MenuData.is_kemp() && !MenuData.is_common_kemp())" />
-
         <!-- </template> -->
-
         <!-- 滚球标题 -->
         <Match-Main-Title :title="$t('menu.match_playing')" :match_count="match_count"
           v-show="match_list_card_key_arr.length && MenuData.is_home()" />
@@ -52,11 +48,11 @@
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
-        <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
+        <!-- <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
           v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
-        </div>
+        </div> -->
         <template v-slot:after>
           <div style="height: 15px"></div>
           <div class="pager-wrap row justify-end">
@@ -153,13 +149,13 @@ export default {
 
     const { ws_destroyed: ws_destroyed_common } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
-    const five_leagues_card_key_arr = ref([]);
+    // const five_leagues_card_key_arr = ref([]);
     const match_list_top = ref("76px");
     let mitt_list = null
     const MatchListCardDataClass_match_list_card_key_arr = () => {
       nextTick(() => {
         match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
-        five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
+        // five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
       })
     };
     const is_conming_soon = computed(() => {
@@ -203,7 +199,7 @@ export default {
       matches_15mins_list,
       match_count,
       match_list_card_key_arr,
-      five_leagues_card_key_arr,
+      // five_leagues_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass,
       load_data_state,

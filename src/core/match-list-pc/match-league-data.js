@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-
+import MatchListCardData from "./match-card/module/match-list-card-data-class";
 // 联赛页面操作及数据 及展示
 class MatchLeagueData {
   constructor() {
@@ -24,6 +24,7 @@ class MatchLeagueData {
     this.choose_league_obj = payload;
     this.regionId = payload.regionId;
     // 当前选中区域下的所有 联赛信息
+    MatchListCardData.set_list_version()
     this.league_list.value = payload.tournamentList;
     localStorage.setItem("league_list", JSON.stringify(payload.tournamentList))
   }
