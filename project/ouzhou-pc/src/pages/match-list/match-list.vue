@@ -8,7 +8,7 @@
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
-    <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl && false">
+    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl && false">
       <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
       <!-- 临时调试用 -->
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">
@@ -23,6 +23,7 @@
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
       length--- {{ match_list_card_key_arr.length }}
     </div>
+    <div v-show="false"> {{ MenuData.menu_data_version }}{{ MatchListCardDataClass.list_version }}</div>
     <MatchesHeader />
     <!-- 列表容器 -->
     <load-data  v-if="MenuData.menu_root_show_shoucang != 300&& !MenuData.is_leagues()" :state="load_data_state">
