@@ -79,6 +79,7 @@ body {
   /** 数据加载组件 -S*/
   .load-data-wrap {
     color: var(--q-layout-color-1);
+    width: 100%;
     /* 列表右侧暂无数据 */
     .list_right_empty {
       .img {
@@ -136,7 +137,7 @@ body {
     }
 
     .img-loading {
-      background-image: var(--qq--bg-image-url10); // TODO: loading_theme01.gif
+      background-image: url($SCSSPROJECTPATH+"/image/loading1.gif");
     }
 
     .refresh {
