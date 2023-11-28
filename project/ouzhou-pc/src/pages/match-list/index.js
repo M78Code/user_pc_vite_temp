@@ -120,10 +120,10 @@ const filter_20_match_new = (data) => {
   const basketball_csid = '2';
 
   for (const item of data) {
-    if (item.csid === football_csid && football_count < max_football_count) {
+    if (item.csid == football_csid && football_count < max_football_count) {
       result.push(item);
       football_count++;
-    } else if (item.csid === basketball_csid && result.length < 20) {
+    } else if (item.csid == basketball_csid && result.length < 20) {
       result.push(item);
     }
     // 大于20条时，跳出循环
@@ -191,9 +191,12 @@ export const init_home_matches = async () => {
           return item;
         });
         match_count = data.dataList.length || 0;
-        let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
+        // 过滤没有csid的数据
+        let sort_list = data.dataList.filter(item => item.csid);
+        sort_list = sort_list.sort((x, y) => x.csid - y.csid);
         //过滤前20条数据
         sort_list = filter_20_match_new(sort_list);
+        
         match_list.push(...sort_list)
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(match_list);

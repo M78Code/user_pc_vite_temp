@@ -74,7 +74,7 @@
         let month = date_time.getMonth() + 1;
         let day = date_time.getDate();
         return {
-          label: date_time,
+          label: date_time.getTime(),
           value: i == 0 ? 'ouzhou.match.tomorrow' : 'ouzhou.time.date',
           type: 3,
           month: month,

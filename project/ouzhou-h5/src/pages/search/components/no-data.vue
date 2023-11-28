@@ -4,7 +4,7 @@
     <section v-for="item in arr_const" :key="item.key">
         <div v-if="code === item.code" class="no-data_centent">
         <img class="no_data_img" :src="compute_local_project_file_path(item.url)" alt="">
-        <p class="title">{{item.txt}}</p>
+        <p class="title">{{ i18n_t(`ouzhou.search.${item.txt}`) }}</p>
         </div>
         </section>
     </div>
