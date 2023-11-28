@@ -278,6 +278,10 @@ class MatchMeta {
     // 初始化赛事折叠
     MatchFold.set_match_mid_fold_obj(match)
 
+    // const key = MatchFold.get_match_fold_key(match)
+    // if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
+    // 初始化赛事折叠
+
     const fold_key = MatchFold.get_fold_key(match)
 
     //  初始化全部球种折叠状态
