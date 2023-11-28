@@ -23,6 +23,7 @@
       {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
       length--- {{ match_list_card_key_arr.length }}
     </div>
+    <div v-show="false"> {{ MenuData.menu_data_version }}{{ MatchListCardDataClass.list_version }}</div>
     <MatchesHeader />
     <!-- 列表容器 -->
     <load-data  v-if="MenuData.menu_root_show_shoucang != 300&& !MenuData.is_leagues()" :state="load_data_state">

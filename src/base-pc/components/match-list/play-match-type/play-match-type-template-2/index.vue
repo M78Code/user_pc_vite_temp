@@ -6,6 +6,7 @@
       <sport_icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
         :sport_id="card_style_obj.csid" size="18px" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
+      
       <span>{{ cur_title_info.name }}</span>
       <!-- 赛事数量 -->
     </div>
@@ -47,6 +48,8 @@ import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { t, useEventListener } from "src/core/index.js";
+import BaseData from "src/core/base-data/base-data.js";
+
 const route = useRoute()
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
@@ -65,12 +68,13 @@ function handle_click() {
   }
 }
 const cur_title_info = computed(() => {
-  let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
+  let { card_type = 'no_start_title', csid, match_count } = props.card_style_obj;
   let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
   let title_obj = {
     //球种标题
     sport_title: {
-      name: csna,
+      version:BaseData.base_data_version.value,
+      name: lodash.get(BaseData.csids_map,`csid_${csid}`,{}).csna,
       match_count: lodash.get(MatchListCardData, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
       show_num: MenuData.menu_root != 400 && route.name != "search",
       func_name: 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie'
