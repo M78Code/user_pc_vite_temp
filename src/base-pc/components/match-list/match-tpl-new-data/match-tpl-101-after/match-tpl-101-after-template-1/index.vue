@@ -81,7 +81,7 @@ export default {
     
     watch(() => [match.value.ms, match.value.mmp],() => {
       console.log('adsasdhsdfsdfsdjfhbs', match.value.ms, match.value.mmp);
-      if (match.value) {
+      if (match.value?.mmp || match.value?.ms) {
         check_match_end(match.value, socket_remove_match)      
       }
     }, { immediate: true, deep: true })
