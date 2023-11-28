@@ -20,7 +20,14 @@
         "exciting_different": "Exciting and different",
         "close_handicap": "Close the Handicap",
         "betting":"Betting",
-        "event_analysis":"Event Analysis"
+        "assault": "Assault",
+        "possession_ball": "Ball Right",
+        "shot_wide_goal": "Shot Wide Goal",
+        "shots_on_goal": "Shot On Goal",
+        "event_analysis":"Event Analysis",
+        "foul": "Foul",
+        "penalty": "Free Throw",
+        "pause": "Time Out"
     },
     "bet": {
         "place_bet": "Place Bet"

@@ -20,7 +20,15 @@
       "exciting_different": "令人兴奋且与众不同",
       "close_handicap": "关闭让分盘",
       "betting":"投注",
-      "event_analysis":"赛事分析"
+      "assault": "进攻",
+      "possession_ball": "球权",
+      "shot_wide_goal": "射偏球门",
+      "shots_on_goal": "射正球门",
+      "event_analysis":"赛事分析",
+      "foul": "犯规",
+      "point": "分",
+      "penalty": "罚球",
+      "pause": "暂停"
      },
      "bet": {
          "place_bet": "下注"
