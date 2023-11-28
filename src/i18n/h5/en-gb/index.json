@@ -348,7 +348,8 @@
     "wanyi": "Trillion",
     "total_bet": "Total Stake",
     "total_income": "To Return",
-    "bet_retract": "Bet Retract"
+    "bet_retract": "Bet Retract",
+    "bet_inplay": "In-Play"
   },
   "bet_record": {
     "30day": "30 days",
