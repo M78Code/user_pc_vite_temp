@@ -205,7 +205,21 @@ export const ouzhou_match_status_title_card_template = {
   show_level:1,
   // 可能未来要加上他自己下面的所有联赛的内容高度
 }
-
+// 欧洲版球种标题间距卡片
+export const ouzhou_split_line_card_template = {
+  // 卡片索引
+  card_index:0,
+  // 卡片类型
+  card_type:'sport_line',
+  card_total_height:10,
+  // 卡片顶部到列表顶部的偏移量
+  offset_top:0,
+  // 卡片底部到列表顶部的偏移量
+  offset_bottom:0,
+  // 卡片在前端的显示等级
+  show_level:1,
+  // 可能未来要加上他自己下面的所有联赛的内容高度
+}
 // 欧洲版球种标题卡片
 export const ouzhou_sport_title_card_template = {
   // 卡片索引
@@ -232,6 +246,7 @@ export const ouzhou_sport_title_card_template = {
   show_level:1,
   // 可能未来要加上他自己下面的所有联赛的内容高度
 }
+
 // 欧洲版联赛标题卡片
 export const ouzhou_league_title_template = {
   // 卡片索引
