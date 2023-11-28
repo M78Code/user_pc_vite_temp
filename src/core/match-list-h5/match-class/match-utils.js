@@ -248,6 +248,124 @@ class MatchUtils {
     })
     return result
   }
+  /**
+   * @description 获取赛事红黄牌
+   * @param {*} match 
+   */
+  get_match_red_yellow_card (match) {
+    const { msc = [] } = match
+    let home_red_score = ''
+    let away_red_score = ''
+    let home_yellow_score = ''
+    let away_yellow_score = ''
+    if (msc && msc.length > 0) {
+      match.msc.forEach(score => {
+        //红牌
+        if (score.indexOf('S11|') > -1) {
+          let score2 = score.split('S11|')[1];
+          home_red_score = score2.split(':')[0] * 1;
+          away_red_score = score2.split(':')[1] * 1;
+        }
+        //黄牌
+        if (score.indexOf('S12|') > -1) {
+          let score2 = score.split('S12|')[1];
+          home_yellow_score = score2.split(':')[0] * 1;
+          away_yellow_score = score2.split(':')[1] * 1;
+        }
+      });
+    }
+    return { home_red_score, away_red_score, home_yellow_score, away_yellow_score }
+  }
+  /**
+   * @description: 获取赛事的让球方
+   * @param {Object} match
+   * @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
+   */
+  get_handicap_index_by (match) {
+    let result = 0;
+    if (match && match.hps) {
+      let hpid = this.get_handicap_w_id(match.csid);
+      let hp_item = match.hps.filter((item) => item.hpid == hpid)[0];
+      if (hp_item) {
+        let hl_item = hp_item.hl[0];
+
+        // 网球csid 5  让盘hpid 154
+        if (!hl_item || !hl_item.ol) {
+          if (match.csid == 5) {
+            hp_item = match.hps.filter((item) => item.hpid == 154)[0];
+            if (hp_item) {
+              hl_item = hp_item.hl[0];
+            }
+          }
+        }
+
+        if (hl_item && hl_item.ol) {
+          let found_i = 0;
+          hl_item.ol.forEach((ol_item, i) => {
+            if (ol_item.on) {
+              let on_str = String(ol_item.on);
+              if (on_str[0] == "-") {
+                found_i = i + 1;
+              }
+            }
+          });
+          result = found_i;
+        }
+      }
+    }
+    return result;
+  }
+  /**
+   * 根据体育类型的csid获取赛事的让球玩法id
+   * @param {Number} csid 体育类型id
+   */
+  get_handicap_w_id(csid){
+    const sport_id = csid * 1;
+    let sport_id_convert = 4;
+    switch(sport_id){
+      // 网球
+      case 5:
+        sport_id_convert = 154  //让盘154 让局155
+        break;
+      // 羽毛球
+      case 10:
+        sport_id_convert = 172
+        break;
+      // 乒乓球
+      case 8:
+        sport_id_convert = 172
+        break;
+      // 斯诺克
+      case 7:
+        sport_id_convert = 181
+        break;
+      // 篮球
+      case 2:
+        sport_id_convert = 39
+        break;
+      // 足球
+      case 1:
+        sport_id_convert = 4;
+        break;
+      // 3、4、6、9棒冰美排
+      case 3:  //棒
+        sport_id_convert = 243
+        break;
+      case 4:  //冰
+        sport_id_convert = 4;
+        break;
+      case 6:  //美
+        sport_id_convert = 39
+        break;
+      case 9: //排
+        sport_id_convert = 172
+        break;
+      default:
+        sport_id_convert = 4;
+        break;
+    }
+    return sport_id_convert;
+  }
 }
 
 export default new MatchUtils()

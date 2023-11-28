@@ -14,54 +14,6 @@ import MatchMeta from './match-meta'
 import { get_now_server } from 'src/core/utils/module/other.js'
 
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
-/** TODO临时放置
- * @description: 获取赛事的让球方
- * @param {Object} match
- * @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
- */
-export const get_handicap_index_by = (match) => {
-  let result = 0;
-  if (match && match.hps) {
-    let hpid = get_handicap_w_id(match.csid);
-    let hp_item = match.hps.filter((item) => item.hpid == hpid)[0];
-    if (hp_item) {
-      let hl_item = hp_item.hl[0];
-
-      // 网球csid 5  让盘hpid 154
-      if (!hl_item || !hl_item.ol) {
-        if (match.csid == 5) {
-          hp_item = match.hps.filter((item) => item.hpid == 154)[0];
-          if (hp_item) {
-            hl_item = hp_item.hl[0];
-          }
-        }
-      }
-
-      if (hl_item && hl_item.ol) {
-        let found_i = 0;
-        hl_item.ol.forEach((ol_item, i) => {
-          if (ol_item.on) {
-            let on_str = String(ol_item.on);
-            if (on_str[0] == "-") {
-              found_i = i + 1;
-            }
-          }
-        });
-        result = found_i;
-      }
-    }
-  }
-  return result;
-};
-/**
- * 根据体育类型的csid获取赛事的让球玩法id
- * @param {Number} csid 体育类型id
- */
-const get_handicap_w_id = (csid) => {
-  return csid_map_concede_points_id[+csid]
-    ? csid_map_concede_points_id[+csid]
-    : 4;
-};
 class MatchPage {
   //当前调用的赛事列表接口方法
   current_invoke_api_func = null

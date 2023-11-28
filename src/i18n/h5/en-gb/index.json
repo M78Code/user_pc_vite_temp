@@ -48,6 +48,16 @@
         "bet_col_Under": "Under",
         "home_handicap": "H Handicap",
         "away_handicap": "A Handicap",
+        "select_time": {
+          "3h": "Within 3 hrs",
+          "6h": "Within 6 hrs",
+          "9h": "Within 9 hrs",
+          "12h": "Within 12 hrs",
+          "24h": "Within 24 hrs",
+          "72h": "within three days",
+          "168h": "Within seven days"
+        },
+        
         "play_map": {
             "1": "Winner",
             "2": "Total Goals",
@@ -128,7 +138,27 @@
         "bet_col_1": "HDP",
         "bet_col_2": "HDP"
       }
-    }
+    },
+    "search": {
+      "change": "Change",
+      "clear_search_history": "Clear search history",
+      "league": "League",
+      "null1": "Search results are empty",
+      "null2": "Try a different term search",
+      "other": "Other search",
+      "search_hot": "Hot search",
+      "search_play": "Search mode",
+      "search_record": "Search history",
+      "search_sports": "Ball searching",
+      "team": "Team",
+      "placeholder": "Please enter the league name or team name",
+      "close": "Close",
+      "view_all_match": "View all matches",
+      "underway": "Underway",
+      "no_search_rezult": "No results found. Please try another search term.",
+      "dogfall": "draw",
+      "search_history": "Search history"
+   }
 },
   "ac_rules": {
     "auto": "Automatically accept higher odds",
@@ -348,7 +378,8 @@
     "wanyi": "Trillion",
     "total_bet": "Total Stake",
     "total_income": "To Return",
-    "bet_retract": "Bet Retract"
+    "bet_retract": "Bet Retract",
+    "bet_inplay": "In-Play"
   },
   "bet_record": {
     "30day": "30 days",
@@ -1168,7 +1199,7 @@
     "video_info": "Video Info",
     "yes": "Yes",
     "match_parlay": "Parlay",
-    "day": "Day"
+    "day": ""
   },
   "match_main": {
     "cut_off": "Bet Closed",
@@ -1941,9 +1972,9 @@
   },
   "nativeName": "English (US)",
   "odds": {
-    "EU": "Decimal",
+    "EU": "DEC",
     "GB": "British Odds",
-    "HK": "Hongkong",
+    "HK": "HK",
     "ID": "Indo Odds",
     "MY": "Malay Odds",
     "US": "American Odds"
@@ -2028,7 +2059,7 @@
     "loding_more": "More"
   },
   "search": {
-    "dogfall": "dogfall",
+    "dogfall": "Dogfall",
     "clear_search_history": "Clear Search History",
     "hot": "Heat",
     "hot_league": "Popular Leagues",
@@ -2200,18 +2231,18 @@
       "November",
       "December"
     ],
-    "month_1": "Januari",
-		"month_10": "Oktober",
-		"month_11": "November",
-		"month_12": "Desember",
-		"month_2": "Februari",
-		"month_3": "Maret",
-		"month_4": "April",
-		"month_5": "Mei",
-		"month_6": "Juni",
-		"month_7": "Juli",
-		"month_8": "Agustus",
-		"month_9": "September",
+    "month_1": "Jan",
+		"month_10": "Oct",
+		"month_11": "Nov",
+		"month_12": "Dec",
+		"month_2": "Feb",
+		"month_3": "Mar",
+		"month_4": "Apr",
+		"month_5": "May",
+		"month_6": "Jun",
+		"month_7": "Jul",
+		"month_8": "Aug",
+		"month_9": "Sep",
     "time_date_1": "%month month %date day",
     "time_date_2": "%s month %s day (%s)",
     "time_date_3": "%s month %s day %s:%s",

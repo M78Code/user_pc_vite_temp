@@ -130,7 +130,7 @@ const onChangeArea = (obj) => {
 }
 // 初始化matchpage页面
 const initMatchPage = () => {
-  store.tabActive = 'Matches'
+  // store.tabActive = 'Matches'
   store.isLeagueDetail = false
 }
 
