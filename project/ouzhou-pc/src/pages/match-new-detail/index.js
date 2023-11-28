@@ -62,6 +62,7 @@ export function usedetailData(route) {
     mid = 2858623,
     tid;
 
+  let route_parmas = ref(route.params)  
   // 监听分类切换数据
   watch(current_key, (val) => {
     if (!val) return;
@@ -155,7 +156,7 @@ export function usedetailData(route) {
     const { isNeedLoading = true } = par || {};
     try {
       const params = {
-        mid: route.params.mid,
+        mid: route_parmas.value.mid,
         cuid: user_info.userId,
         t: new Date().getTime(),
       };
@@ -207,8 +208,8 @@ export function usedetailData(route) {
   const get_category = async () => {
     try {
       const params = {
-        sportId:route.params.csid,
-        mid:route.params.mid,
+        sportId:route_parmas.value.csid,
+        mid:route_parmas.value.mid,
         t: new Date().getTime(),
       };
       const res = await get_detail_category(params);
@@ -234,7 +235,7 @@ export function usedetailData(route) {
       const params = {
         mcid: 0,
         cuid: user_info.userId,
-        mid:route.params.mid,
+        mid:route_parmas.value.mid,
         newUser: 0,
         t: new Date().getTime(),
       };
@@ -442,9 +443,9 @@ export function usedetailData(route) {
       //切换赛事
       mx_autoset_active_match({ mid: route.params.mid });
     }  
-  } 
+  }
   // setTimeout(() => {
-  //   RCMD_C102()
+  //   back_to(false);
   // }, 10000);
   //todo mitt 触发ws更新
   const { off } = useMittOn(
@@ -467,7 +468,9 @@ export function usedetailData(route) {
   /* 赛事结束之后调取详情接口 */
   const { off:off_init } = useMittOn(
     MITT_TYPES.EMIT_SWITCH_MATCH,
-    (()=>{
+    ((parmas)=>{
+      console.log(parmas,'parmas');
+      route_parmas.value = parmas
       refresh()
       console.error('-----------aaaaa');
     })
@@ -476,7 +479,6 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
-    // clearTimeout(timer1)
     message_fun.forEach(i=>i())
     off_init()
     clearTimeout(back_to_timer);
@@ -490,6 +492,7 @@ export function usedetailData(route) {
   /**
    * @description 返回上一页
    */
+  const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
   let back_to_timer = null
   const back_to = (is_back = true) => {
     // 重新请求相应接口

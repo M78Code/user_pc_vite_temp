@@ -293,7 +293,11 @@ export const useGetGlobal = ({  back_to }) => {
                 },
               });
                     //mid更新触发
-            useMittEmit(MITT_TYPES.EMIT_SWITCH_MATCH) 
+            useMittEmit(MITT_TYPES.EMIT_SWITCH_MATCH, {
+              mid, 
+              tid,
+              csid,
+            }) 
             }
             // 大视频页面 切换一场有视频的赛事
             else if (cur_page == "video") {
