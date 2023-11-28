@@ -16,7 +16,6 @@ class MatchLeagueData {
     // 当前选中的区域id
     this.regionId = null;
     this.choose_league_obj = {};
-    this.league_name = ref(localStorage.getItem("league_name"))
   }
 
   set_league_obj(payload) {
@@ -26,7 +25,7 @@ class MatchLeagueData {
     // 当前选中区域下的所有 联赛信息
     MatchListCardData.set_list_version()
     this.league_list.value = payload.tournamentList;
-    localStorage.setItem("league_list", JSON.stringify(payload.tournamentList))
+    localStorage.setItem('league_id', payload.id)
   }
 
   set_select_hours(payload) {
@@ -34,19 +33,11 @@ class MatchLeagueData {
   }
 
   get_league_list() {
-    // if (JSON.parse(localStorage.getItem("league_list"))?.length) {
-    //   this.league_list.value = JSON.parse(localStorage.getItem("league_list"))
-    // }
     return this.league_list.value
   }
 
   get_select_hours() {
     return this.selectHours;
-  }
-
-  set_league_name (name) {
-    localStorage.setItem("league_name", name)
-    this.league_name.value = name
   }
 }
 

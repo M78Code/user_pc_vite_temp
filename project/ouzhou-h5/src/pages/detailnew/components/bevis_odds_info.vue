@@ -22,8 +22,7 @@
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-<!--                        {{ `template${item.hpt} &#45;&#45; ${item.hpid}` }}-->
-                      <!-- {{ computedPlayComponent(item.hpt) }} -->
+                        {{ `template${item.hpt} -- ${item.hpid}` }}
                         <component :is="playComponent[computedPlayComponent(item.hpt)]" :item_data="item" @bet_click_="bet_click_" />
                     </div>
                 </div>
@@ -40,8 +39,7 @@
                         <span class="odds-hpn-icon"  @click="expend_toggle(item)"  :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
-<!--                        {{ `template${item.hpt} &#45;&#45; ${item.hpid}` }}-->
-                        <!-- {{ computedPlayComponent(item.hpt) }} -->
+                        {{ `template${item.hpt} -- ${item.hpid}` }}
                         <component :is="playComponent[computedPlayComponent(item.hpt)]"
                                    :item_data="item" @bet_click_="bet_click_" />
                     </div>
@@ -51,8 +49,8 @@
         </template>
         <template v-else>
             <div v-if="!loading">
-                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/no-data.png`" alt="">
-                <div class="no-data-text">No Data</div>
+                <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/handcip_lock.png`" alt="">
+                <div class="no-data-text"> {{i18n_t('detail.odd_all_closed')}}</div>
             </div>
         </template>
     </div>

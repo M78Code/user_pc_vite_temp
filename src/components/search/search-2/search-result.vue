@@ -765,6 +765,7 @@ watch(
 		height: 100%;
 		div {
 			margin-top: 10px;
+			font-weight: bold;
 		}
 	}
 }

@@ -127,7 +127,7 @@ function get_5min_classname() {
     props.other_play && ['hps5Minutes'].includes(match.value.play_current_key) // 5分钟玩法
   ) {
     // 滚球 不需要背景色
-    if (get_match_status(lodash.get(props, 'match.ms'), [110]) == 1) {
+    if (get_match_status(lodash.get(match.value, 'ms'), [110]) == 1) {
       className = 'not-bg-handicap min5-roll-handicap'
     } else {
       // not-bg-handicap 清除被影响的背景色

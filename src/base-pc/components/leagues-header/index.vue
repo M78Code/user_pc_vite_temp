@@ -1,5 +1,6 @@
 <template>
 	<div class="matches_header_wrap">
+		<div v-show="false">{{ BaseData.base_data_version }}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: route.params.sportId })"></div>
 			<div class="matches-title">
@@ -26,10 +27,9 @@
 <script setup>
 import { ref,onMounted,onUnmounted, watch } from 'vue';
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { MenuData,i18n_t, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from 'vue-router';
-import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 
 // route.params.type  1 从联赛列表进入 2 从普通赛事详情进入
@@ -39,7 +39,6 @@ const router = useRouter()
 const show_leagues = ref (false)
 const active_league = ref(route.params.tid)
 const league_list = ref([])
-
 const set_show_leagues = () => {
 	if (!league_list.value.length) return;
 	show_leagues.value = !show_leagues.value
@@ -49,25 +48,35 @@ const set_show_leagues = () => {
 		}, { once: true })
 	}
 }
-
-watch(() => route.params.type, async () => {
-	if (route.params.type == 2) {
-		const list = await get_ouzhou_leagues_data(12)
-		list?.map(item => {
+async function get_league(){
+	let date = route.params.type == 1 ? localStorage.getItem('league_hours') : 12
+	const list = await get_ouzhou_leagues_data(date)
+	league_list.value=[]
+	list?.map(item => {
+		if (route.params.type == 1) {
+			if (item.id == localStorage.getItem('league_id')) {
+				league_list.value = item.tournamentList
+			}
+		} else {
 			item.tournamentList?.map(leagues => {
 				league_list.value.push(leagues)
 			})
-		})
-	} else {
-		league_list.value = JSON.parse(localStorage.getItem("league_list"))
-	}
+		}
+	})
+
+}
+const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>get_league()).off
+watch(() => route.params.type, async () => {
+	get_league()
 }, { immediate: true })
 
 const set_active_league = (item) => {
 	active_league.value = item.id
 	router.push(`/league/${route.params.sportId}/${item.id}/${route.params.type}`)
 }
-
+onUnmounted(()=>{
+	off()
+})
 const getName = () => {
 	let name = ''
 	league_list.value.map(item => {
@@ -75,11 +84,12 @@ const getName = () => {
 			name = item.nameText
 		}
 	})
-	return name || MatchLeagueData.league_name.value
+	return name
 }
 const jumpTo = ()=>{
 	router.go(-1)
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -211,11 +221,11 @@ const jumpTo = ()=>{
 			padding: 0 16px;
 		}
 		div:hover {
-			color: #FF7000 !important;
-		}
-		.league_acitve {
 			background: #FFF1E6;
 			color: #1A1A1A !important;
+		}
+		.league_acitve {
+			color: #FF7000 !important;
 		}
 		.leagues_filrer_item_line {
 			height: 1px !important;

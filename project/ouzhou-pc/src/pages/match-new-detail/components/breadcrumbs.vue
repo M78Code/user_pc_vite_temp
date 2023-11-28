@@ -24,7 +24,6 @@ import { onMounted, ref, computed, watch } from "vue";
 import { useRoute,useRouter } from 'vue-router'
 import {LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core/index.js'
 import BaseData from "src/core/base-data/base-data.js";
-import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
 const props = defineProps({
   detail_info: {
@@ -63,7 +62,7 @@ const breadCrumbs_firstOne = computed(()=>{
         let history = JSON.parse(window.sessionStorage.getItem('RouteHistory'))
         firstOneName = ['home','in_play','bet_record'].includes(history[1]?.name) ? history[1]?.i18n : props.detail_info.csna
     }
-    return firstOneName
+    return String(firstOneName||"-")
 })
 
 const jumpTo = ()=>{
@@ -71,7 +70,6 @@ const jumpTo = ()=>{
 }
 const jumpToLeagues  = () => {
   const { csid = 1, tid, tn } = props.detail_info
-  MatchLeagueData.set_league_name(tn)
   let mid_config = {
     ...MenuData.mid_menu_result,
     md: '',

@@ -220,7 +220,9 @@
                   @goPageChange="goPageChange"
                   :profit="records.profit"
                   :reset_pagination="pageCurrent"
-                  :is_bet_record="true">
+                  :is_bet_record="true"
+                  :isUnsettled="current_tab === 'unsettled'"
+      >
       </Pagination>
       <!--      <pagination-wrapper-->
       <!--        v-if="tableData.length > 0"-->
@@ -600,7 +602,7 @@ const hand_copy = (data) => {
 
   &:deep(.q-table) {
     // min-height: 650px !important;
-
+    padding-bottom: 41px;
   }
 
   &:deep(.q-table__card) {
@@ -634,8 +636,8 @@ const hand_copy = (data) => {
   .record-pagination {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    width: 1360px;
+    left: calc(50% - 5px);
+    width: 1430px;
     transform: translate(-50%, 0);
     background-color: var(--q-gb-bg-c-4);
     box-shadow: 0 -4px 8px var(--q-gb-bg-c-15);
