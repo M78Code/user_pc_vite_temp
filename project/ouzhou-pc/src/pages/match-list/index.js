@@ -204,30 +204,31 @@ export const init_home_matches = async () => {
       }
     }
   })
-  axios_loop({
-    axios_api: get_five_leagues_list_api,
-    fun_then: function (res) {
-      try {
-        console.log('resresres', res);
+  // 暂时隐藏五大联赛
+  // axios_loop({
+  //   axios_api: get_five_leagues_list_api,
+  //   fun_then: function (res) {
+  //     try {
+  //       console.log('resresres', res);
 
-        //五大联赛，只显示滚球数据
-        if (res?.length) {
-          res = res.filter(match =>  {
-            console.log('get_match_status(match.ms)', get_match_status(match.ms));
-            if (get_match_status(match.ms)) return match
-          })
-        }
-        match_list.push(...res)
-        SessionStorage.set('get_five_leagues_list', res)
-        MatchDataWarehouse_PC_List_Common.set_list(match_list);
-        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-          res, null, null, true
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    },
-  })
+  //       //五大联赛，只显示滚球数据
+  //       if (res?.length) {
+  //         res = res.filter(match =>  {
+  //           console.log('get_match_status(match.ms)', get_match_status(match.ms));
+  //           if (get_match_status(match.ms)) return match
+  //         })
+  //       }
+  //       match_list.push(...res)
+  //       SessionStorage.set('get_five_leagues_list', res)
+  //       MatchDataWarehouse_PC_List_Common.set_list(match_list);
+  //       MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+  //         res, null, null, true
+  //       );
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+  // })
 
 };
 export {

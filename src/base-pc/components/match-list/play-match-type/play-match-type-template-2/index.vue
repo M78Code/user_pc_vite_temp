@@ -10,7 +10,7 @@
       <!-- 赛事数量 -->
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
-    <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'">
+    <div class="choose-csid-hpids" v-if="card_style_obj?.card_type == 'sport_title'&& !MenuData.is_kemp()">
       <div class="active flex flex-start items-center" @click.stop="handle_click">
         <div>
           {{ i18n_t(`ouzhou.match.play_map.${current_csid_hpids.first_hpid}`) }} & {{
@@ -18,7 +18,7 @@
         </div>
         <div class="yb-icon-arrow"></div>
       </div>
-      <div class="choose-list" v-if='show_list'>
+      <div class="choose-list" v-if='show_list && !MenuData.is_kemp() && !MenuData.is_collect'>
         <div class="choose-list-item" v-for="item in choose_config[card_style_obj.csid || '1']"
         :key="item.first_hpid+'_'+item.second_hpid"
           @click.stop="handle_hpid_choose(item)" :class="{

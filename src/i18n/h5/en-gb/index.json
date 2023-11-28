@@ -48,6 +48,16 @@
         "bet_col_Under": "Under",
         "home_handicap": "H Handicap",
         "away_handicap": "A Handicap",
+        "select_time": {
+          "3h": "Within 3 hrs",
+          "6h": "Within 6 hrs",
+          "9h": "Within 9 hrs",
+          "12h": "Within 12 hrs",
+          "24h": "Within 24 hrs",
+          "72h": "within three days",
+          "168h": "Within seven days"
+        },
+        
         "play_map": {
             "1": "Winner",
             "2": "Total Goals",
@@ -348,7 +358,8 @@
     "wanyi": "Trillion",
     "total_bet": "Total Stake",
     "total_income": "To Return",
-    "bet_retract": "Bet Retract"
+    "bet_retract": "Bet Retract",
+    "bet_inplay": "In-Play"
   },
   "bet_record": {
     "30day": "30 days",
