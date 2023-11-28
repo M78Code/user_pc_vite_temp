@@ -387,7 +387,7 @@ onUnmounted(() => {
 
 .active {
   .odds_otb {
-    color: var(--q-gb-t-c-4) !important;
+    // color: var(--q-gb-t-c-4) !important;
   }
 }
 

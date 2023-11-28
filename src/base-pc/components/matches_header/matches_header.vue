@@ -164,7 +164,12 @@ const set_tab_list = (news_) =>{
 		}
 	}
 }
-
+watch(BaseData.base_data_version,()=>{
+	//元数据变化后 需要改变球种的ii8n 翻译是i18n来的
+	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
+		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
+	}
+})
 const checked_current_tab = payload => {
 // debugger
 	let obj = {

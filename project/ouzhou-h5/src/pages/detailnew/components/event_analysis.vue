@@ -94,14 +94,14 @@ const props = defineProps({
 const xx = ref(10)
 const sliderList = ref([
 {
-    title: "Shot On Goal",
+    title: i18n_t('ouzhou.detail.shots_on_goal'),
     lValue: 20,
     rValue: 40,
     value:15,
     value_key:'S18'
   },
   {
-    title: "Shot Wide Goal",
+    title: i18n_t('ouzhou.detail.shot_wide_goal'),
     lValue: 11,
     rValue: 25,
     value:26,
@@ -110,21 +110,21 @@ const sliderList = ref([
 ])
 const statsList = ref([
   {
-    value: "Assault",
+    value: i18n_t('ouzhou.detail.assault'),
     lValue: 20,
     rValue: 40,
     percentage: (40 / (20 + 40)) * 100,
     value_key:'S104'
   },
   {
-    value: "Dangerous Attack",
+    value: i18n_t('match_result.dangerous_offense'),
     lValue: 30,
     rValue: 40,
     percentage: (40 / (30 + 40)) * 100,
     value_key:'S8'
   },
   {
-    value: "Ball Right",
+    value: i18n_t('ouzhou.detail.possession_ball'),
     lValue: 50,
     rValue: 40,
     percentage: (40 / (40 + 40)) * 100,

@@ -176,8 +176,9 @@ const change_current_menu = (item) => {
 /**
  * 初始化
  */
-const get_init_data = () =>{
-  leftDataList.value = MenuData.menu_list && MenuData.menu_list.length?MenuData.menu_list:defaultSports;
+const get_init_data = (val) =>{
+  const list = val || MenuData.menu_list;
+  leftDataList.value = list && list.length?list:defaultSports;
   const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
   popularList.value = popularListSort(popularSortListH5);
 }
