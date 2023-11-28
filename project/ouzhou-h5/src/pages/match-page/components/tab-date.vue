@@ -9,14 +9,14 @@
                 }}</span>
             </div>
             <!-- league的下拉项 -->
-            <div class="select" v-if="store.tabActive == 'League'">
-                <span class="select-text">{{
+            <div class="select" v-if="store.tabActive == 'League'" @click="toggerModel">
+                <span class="select-text" ref="dateOptionsRef">{{
                     store.curSelectedOption.label
                 }}</span>
-                <span class="down_arrow" @click="toggerModel"></span>
+                <span class="down_arrow"></span>
             </div>
             <template v-if="store.tabModel && store.tabActive == 'League'">
-                <ul class="option-list">
+                <ul class="option-list" :style="DateOptionsOffset">
                     <template v-for="(item, index) in store.selectOptions" :key="index">
                         <li :class="store.dateIndex == index ? 'active' : ''
                             " @click="changeDate(index)">
@@ -63,7 +63,8 @@ import {
     watch,
     onMounted,
     onUnmounted,
-    defineEmits
+    defineEmits,
+    computed
 } from "vue";
 import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
 import { MenuData } from "src/core/";
@@ -74,9 +75,22 @@ const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
+const dateOptionsRef = ref(null);
 const week = dateWeekMatchesFormat();
 
-
+const DateOptionsOffset = computed(() => {
+    const domWidth = document.body.clientWidth || document.documentElement.clientWidth
+    const selfWitdh = 160
+    const offset = dateOptionsRef.value.offsetLeft
+    const exceed = domWidth - (selfWitdh + offset)
+    let result = offset
+    if (exceed < 0) { // 超出
+        result = offset + exceed
+    }
+    return {
+        'left': result + 'px'
+    }
+})
 /**
  * tab点击
  * @param {*} name 
@@ -353,7 +367,6 @@ const areaListChange = (item) => {
         width: 160px;
         height: 204px;
         top: 49px;
-        right: 8px;
         margin: 0;
         padding: 0;
         background-color: rgba(255, 255, 255, 1);
