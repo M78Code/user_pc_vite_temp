@@ -3,6 +3,7 @@
   <div class="personal_page"> 
     <q-scroll-area ref="scrollAreaRef" :visible="false" style="height: 100%;"> 
       <!-- 用户名称 --> 
+
       <header> 
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/avatar.png`" alt="" />  Hi, {{ lodash.get(UserCtr.get_user(), "nickName") }}
       </header> 

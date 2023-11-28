@@ -19,7 +19,7 @@
         <template v-slot:header>
           <div class="odds-item" v-if="item.hl[0].hs != 2">
         {{ item.hpn }}
-            <span v-if="item.hps"> ({{ item.hps.split("|")[1] }}) </span>
+            <span v-if="item.hps&&get_match_status(detail_info.ms) == 1"> ({{ item.hps.split("|")[1] }}) </span>
             <!-- 一键置顶 -->
             <img
               :src="parseInt(item.hton) > 0 ? set_top__active_png : set_top_png"
@@ -175,7 +175,7 @@
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed, inject } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX ,get_match_status} from "src/core/index.js";
 import template5 from "./template5.vue";
 import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";
