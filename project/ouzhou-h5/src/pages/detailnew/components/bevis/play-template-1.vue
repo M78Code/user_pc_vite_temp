@@ -63,7 +63,6 @@ const AssembleData = computed(() => {
         betInformation.haveTitle = false
         betInformation.assemble = ol_list.filter(i => i.os != 3)
     }
-    console.log(betInformation,"betInformation")
     return betInformation
 })
 </script>
