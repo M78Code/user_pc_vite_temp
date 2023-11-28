@@ -107,6 +107,10 @@ onMounted(()=>{
     MenuData.set_current_lv1_menu(28)
     MenuData.slideMenu_sport?.length && init_data(MenuData.slideMenu_sport);//优先取缓存
     switchHandle();//正常加载接口  替换新数据
+}) 
+
+onUnmounted(() => {
+    VirtualList.set_is_show_ball(true)
 })
 
 </script>
