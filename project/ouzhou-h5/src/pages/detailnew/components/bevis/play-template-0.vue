@@ -1,7 +1,10 @@
-<!-- ms: 0开 1封 2关 11锁 -->
-<!-- hs: 0开 1封 2关 11锁 -->
-<!-- os: 1开 2封 3隐藏不显示不占地方-->
-<!-- 按ol循环，不考虑按tittle循环-->
+<!-- 
+    ms: 0开 1封 2关 11锁 
+    hs: 0开 1封 2关 11锁
+    os: 1开 2封 3隐藏不显示不占地方
+    有title的情况按照title循环 
+    没有title的情况按ol循环
+-->
 
 <script setup>
 import olStatus from "../ol_status.vue";
