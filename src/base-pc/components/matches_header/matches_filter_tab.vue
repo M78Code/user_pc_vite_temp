@@ -86,7 +86,6 @@
         day.setDate(day.getDate() + 1);
         result.push(day.getMonthDay(i))
     }
-    console.log(result, 'result')
     return result;
   };
 
