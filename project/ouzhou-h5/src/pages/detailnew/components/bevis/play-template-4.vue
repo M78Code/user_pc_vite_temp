@@ -75,7 +75,7 @@ const go_betting = (data) => {
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-    <section class="component play-template-4 template4" v-if="!!AssembleData.assemble">
+    <section class="component play-template play-template-4 template4" v-if="!!AssembleData.assemble">
         <div class="assemble">
             <ul v-for="item of AssembleData.assemble" :key="item.otd" class="list">
                 <li class="list-title textOverflow2">{{ item.osn }}</li>

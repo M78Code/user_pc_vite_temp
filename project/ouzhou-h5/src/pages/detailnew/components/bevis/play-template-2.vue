@@ -21,7 +21,7 @@ const go_betting = (data) => {
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-    <section class="component play-template-2 template2">
+    <section class="component play-template play-template-2 template2">
         <nav class="title" v-if="item_data?.title">
             <div class="text-title textOverflow1">{{ item_data.title[0].osn }}</div>
             <div class="text-title textOverflow1">{{ item_data.title[1].osn }}</div>
