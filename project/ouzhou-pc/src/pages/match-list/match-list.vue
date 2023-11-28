@@ -25,9 +25,7 @@
     </div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <load-data  v-if="MenuData.menu_root_show_shoucang != 300&& !MenuData.is_leagues()" :state="load_data_state" :style="{
-      width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`,
-    }">
+    <load-data  v-if="MenuData.menu_root_show_shoucang != 300&& !MenuData.is_leagues()" :state="load_data_state">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
       <scroll-list
