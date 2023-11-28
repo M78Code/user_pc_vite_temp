@@ -349,7 +349,6 @@ export default defineComponent({
       MatchCollect.handle_league_collect_state(tid)
       // 收藏页手动处理数据
       if (MenuData.is_collect()) {
-        console.log(this.league_collect_state)
         !this.league_collect_state && MatchMeta.set_collect_match(this.match_of_list, 1)
       }
     },
