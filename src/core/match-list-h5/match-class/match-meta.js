@@ -251,13 +251,17 @@ class MatchMeta {
     // 是否展示联赛标题
     const is_show_league = MatchUtils.get_match_is_show_league(index, mids)
     const is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
+    // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
+    const handicap_index = MatchUtils.get_handicap_index_by(match);
+    console.log(handicap_index)
     const { home_score, away_score } = MatchUtils.get_match_score(match)
     return {
       source_index: index,
       is_show_no_play,
       is_show_league,
       away_score,
-      home_score
+      home_score,
+      handicap_index
     }
   }
 
@@ -617,6 +621,7 @@ class MatchMeta {
       dataList.forEach(t => {
         t.match_data_type = 'h5_in_play_league'
       })
+      MatchDataBaseInPlayH5.clear()
       match_list = MatchUtils.get_home_in_play_data(dataList)
       // this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
       this.handler_match_list_data({ list: match_list, warehouse: MatchDataBaseInPlayH5, type: 2, is_virtual: false, merge: 'cover' })
