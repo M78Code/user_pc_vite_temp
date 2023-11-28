@@ -46,19 +46,25 @@ const loading = ref(true)
 const matchDetail = ref({})
 const matchResults = ref([])
 
+//#region 初始化
+getMatchDetail({ mid, cuid })
+initial()
+useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS,initial)
+//#endregion
 
-;(function initial(){
+function initial(){
+  loading.value = true
   api_analysis.get_match_result({mid,cuid}).then(res=>{
     matchResults.value = res.data
     loading.value = false
   })
-})()
+}
 /** 请求赛事详情 @param {{mid,cuid}} params 请求参数*/
-;(function getMatchDetail(params) {
+function getMatchDetail(params) {
   api_common.get_matchResultDetail_MatchInfo(params).then(
     (res) => MatchDataWarehouseInstance.set_match_details(toRaw(matchDetail.value = res.data), [])
   );
-})({ mid, cuid })
+}
 
 </script>
 
