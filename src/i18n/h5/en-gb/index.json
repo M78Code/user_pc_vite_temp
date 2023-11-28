@@ -20,7 +20,15 @@
         "exciting_different": "Exciting and different",
         "close_handicap": "Close the Handicap",
         "betting":"Betting",
-        "event_analysis":"Event Analysis"
+        "assault": "Assault",
+        "possession_ball": "Ball Right",
+        "shot_wide_goal": "Shot Wide Goal",
+        "shots_on_goal": "Shot On Goal",
+        "event_analysis":"Event Analysis",
+        "foul": "Foul",
+        "point": "Point",
+        "penalty": "Free Throw",
+        "pause": "Time Out"
     },
     "bet": {
         "place_bet": "Place Bet"
@@ -37,7 +45,6 @@
         "featured": "Featured",
         "top_events": "Top Events",
         "top_leagues": "Top Leagues",
-        "league": "League",
         "15_mins": "15 mins",
         "inplay": "InPlay",
         "home": "Home",
@@ -89,45 +96,6 @@
     },
     "no_data": {
         "coming_soon": "Coming Soon"
-    },
-    "bet_col": {
-      "bet_col_1": {
-        "bet_col_1": "Home",
-        "bet_col_X": "Away",
-        "bet_col_2": "Draw"
-      },
-      "bet_col_2": {
-        "bet_col_Over": "Over",
-        "bet_col_Under": "Under"
-      },
-      "bet_col_4": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      },
-      "bet_col_37": {
-        "bet_col_1": "Home",
-        "bet_col_2": "Away"
-      },
-      "bet_col_38": {
-        "bet_col_Over": "Over",
-        "bet_col_Under": "Under"
-      },
-      "bet_col_39": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      },
-      "bet_col_153": {
-        "bet_col_1": "Home",
-        "bet_col_2": "Away"
-      },
-      "bet_col_154": {
-        "bet_col_1": "Handicap",
-        "bet_col_2": "Handicap"
-      },
-      "bet_col_155": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
-      }
     }
 },
   "ac_rules": {
@@ -965,12 +933,6 @@
     "msg2": "Stay calm. \"Refresh\" to restore~"
   },
   "list": {
-    "win1": "Home",
-    "win2": "Away",
-    "play": "Market",
-    "play1": "1x2",
-    "play2": "Handicap",
-    "play3": "Total Goals",
     "after_time_start": "Start in {0} minutes",
     "after_time_start2": "Start in {0} minutes",
     "go_to_details": "details",
@@ -1167,8 +1129,7 @@
     "video": "Video",
     "video_info": "Video Info",
     "yes": "Yes",
-    "match_parlay": "Parlay",
-    "day": "Day"
+    "match_parlay": "Parlay"
   },
   "match_main": {
     "cut_off": "Bet Closed",
@@ -2028,7 +1989,6 @@
     "loding_more": "More"
   },
   "search": {
-    "dogfall": "dogfall",
     "clear_search_history": "Clear Search History",
     "hot": "Heat",
     "hot_league": "Popular Leagues",
@@ -2200,18 +2160,6 @@
       "November",
       "December"
     ],
-    "month_1": "Januari",
-		"month_10": "Oktober",
-		"month_11": "November",
-		"month_12": "Desember",
-		"month_2": "Februari",
-		"month_3": "Maret",
-		"month_4": "April",
-		"month_5": "Mei",
-		"month_6": "Juni",
-		"month_7": "Juli",
-		"month_8": "Agustus",
-		"month_9": "September",
     "time_date_1": "%month month %date day",
     "time_date_2": "%s month %s day (%s)",
     "time_date_3": "%s month %s day %s:%s",

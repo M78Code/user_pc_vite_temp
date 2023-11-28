@@ -72,7 +72,7 @@ export function useGetOrderList () {
       // tableData.value = responseData.data.records;
       const params = {
         enablePreSettle: false,
-        orderBy: 1,
+        orderBy: 2,
         orderStatus: 0,
         page: 1,
         size: 50,

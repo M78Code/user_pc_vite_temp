@@ -46,6 +46,7 @@
       "inplay": "InPlay",
       "home": "Home",
       "today": "Today",
+      "early": "Early",
       "tomorrow": "Tomorrow",
       "all_matches": "All Matches",
       "play_map": {
@@ -76,6 +77,17 @@
       "announcement": "Announcement",
       "results": "Results",
       "sport_rules": "Sport Rules"
+    },
+    "filter": {
+      "select_time": {
+        "12h": "Next 12 hours",
+        "24h": "Next 24 hours",
+        "36h": "3 days",
+        "84h": "7 days"
+      }
+    },
+    "time": {
+      "date": "{day}/{month}"
     },
     "search": {
       "change": "Change",

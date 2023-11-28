@@ -27,8 +27,6 @@ const props = defineProps({
 });
 const is_up = ref(false);
 const is_down = ref(false);
-const active_score = ref("");
-
 watch(
   () => props.item_ol_data?.ov,
   (a, b) => {

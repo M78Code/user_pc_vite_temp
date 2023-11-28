@@ -68,7 +68,7 @@ export const get_match_result = (params, config = {}, url = "/v1/m/matchDetail/g
 
 // 获取赛果二级菜单
 export const get_result_menu = (params, config = {}, url = "/v2/m/menu/resultMenu") => {
-  return http.get(`${prefix}${url}`, params, config);
+  return http.get(`${prefix}${url}`, { ...params, showem: 1 }, config);
 };
 
 // 赛事分析 阵容 接口

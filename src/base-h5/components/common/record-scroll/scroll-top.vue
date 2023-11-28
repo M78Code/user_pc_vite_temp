@@ -32,7 +32,6 @@ const props = defineProps({
  * @description 是否显示按钮
  */
 const is_show_btn = computed(() => {
-  console.log(props.list_scroll_top)
   return props.list_scroll_top >= window.innerHeight
 })
 

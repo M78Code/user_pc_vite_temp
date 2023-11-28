@@ -62,16 +62,26 @@ const init_data = (scroll_data) =>{
     state.currentSlideValue = lodash_.get(scroll_data[0].subList,'[0].field1', '')
     getData( scroll_data[0],lodash_.get(scroll_data[0].subList,'[0].field1', ''))
 }
+/**
+ * 格式化球种id
+ * @param {*} item 
+ */
+const menuTypeFormat = (item) =>{
+    const menuType = item.menuType;
+    if(menuType<100)return +item.sportId+100;//常规
+    if(menuType == 100)return 400;//冠军
+    if(menuType>3000)return `2${item.sportId}`;//电竞
+    return item.sportId;//默认vr 其他
+}
+
 const switchHandle = async ()=> {
     const res = await  api_analysis.get_result_menu();
     //获取 赛果菜单
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
         if(res?.code == 200){
             let scroll_data = res.data.filter((n)=>{return n.sportId != '0'}).map( item => {
-                // <100常规 >=100 < 400电竞  vr不处理 冠军10000
-                const mi = +item.menuId<100?100+item.sportId*1 + '':+item.menuId>=100 && +item.menuId<400?`${'2'}${item.sportId}`:item.menuId=='10000'?400:item.sportId;
                 return {
-                    mi: mi,
+                    mi: menuTypeFormat(item),
                     ct: item.count,
                     sport: item.sportId,
                     name:item.name,
@@ -107,6 +117,10 @@ onMounted(()=>{
     MenuData.set_current_lv1_menu(28)
     MenuData.slideMenu_sport?.length && init_data(MenuData.slideMenu_sport);//优先取缓存
     switchHandle();//正常加载接口  替换新数据
+}) 
+
+onUnmounted(() => {
+    VirtualList.set_is_show_ball(true)
 })
 
 </script>
