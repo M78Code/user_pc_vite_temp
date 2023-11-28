@@ -13,12 +13,12 @@
           <template v-for="(item,keyscorll) in match_list_new">
                 <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
                     <q-separator color="orange" v-if="keyscorll != 0"/>
-                    <div class="odds-hpn">
+                    <div class="odds-hpn" @click="expend_toggle(item)">
                         <!-- 置顶按钮 -->
                          <!-- v-if="!item_data.hotName" -->
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
                         <set-top :item_data="item" :match_odds_info="match_odds_info" :match_detail="match_detail" />
-                        <span class="odds-hpn-icon"  @click="expend_toggle(item)"
+                        <span class="odds-hpn-icon"  @click.stop="expend_toggle(item)"
                               :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
@@ -31,12 +31,12 @@
           <template v-for="(item, keyscorll) in match_list_normal">
                 <div class="odds-wrap" v-if="!(item.hl.every(item=>item.hs == 2))">
                     <q-separator color="orange" />
-                    <div class="odds-hpn">
+                    <div class="odds-hpn" @click="expend_toggle(item)">
                         <!-- 置顶按钮 -->
                         <!-- v-if="!item_data.hotName" -->
                         <span class="odds-hpn-text">{{ item.hpn }}</span>
                         <set-top :item_data="item" :match_odds_info="match_odds_info" :match_detail="match_detail" />
-                        <span class="odds-hpn-icon"  @click="expend_toggle(item)"  :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
+                        <span class="odds-hpn-icon"  @click.stop="expend_toggle(item)"  :class="topKey_active[item.topKey] || props.allCloseState?'up':'down'"></span>
                     </div>
                     <div :class="[{ 'is-expend': topKey_active[item.topKey] || props.allCloseState }, 'odds-expend']">
                         <!-- {{ `template${item.hpt} -- ${item.hpid}` }} -->
