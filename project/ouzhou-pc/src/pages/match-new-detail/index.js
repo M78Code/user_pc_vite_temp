@@ -19,7 +19,7 @@ import { LayOutMain_pc } from "src/core/";
 import lodash_ from "lodash";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import {addWsMessageListener} from "src/core/utils/module/ws-message.js";
 export function usedetailData(route) {
   const router = useRouter();
   const category_list = ref([]); //分类数据
@@ -354,7 +354,7 @@ export function usedetailData(route) {
     },
     { deep: true }
   );
-  let message_fun = null;
+  let message_fun = [];
   onMounted(() => {
     sportId = route.params.csid;
     mid = route.params.mid;
@@ -364,13 +364,11 @@ export function usedetailData(route) {
     LayOutMain_pc.set_oz_show_left(true); // 显示菜单
     init();
     // 一键折叠监听
-    useMittOn(MITT_TYPES.EMIT_SHOW_FOLD, set_odds_fold);
+    message_fun.push(useMittOn(MITT_TYPES.EMIT_SHOW_FOLD, set_odds_fold).off);
     // 一键置顶监听
-    useMittOn(MITT_TYPES.EMIT_SET_PLAT_TOP, set_top);
-
-
+    message_fun.push(useMittOn(MITT_TYPES.EMIT_SET_PLAT_TOP, set_top).off) ;
       // 增加监听接受返回的监听函数
-     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+     message_fun.push(addWsMessageListener((cmd, data) => {
      if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
      // handler_ws_cmd(cmd, data);
      // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
@@ -397,7 +395,7 @@ export function usedetailData(route) {
         default:
           break;
       }
-    });
+    }));
   });
   /**
    * @description: RCMD_C109
@@ -456,7 +454,7 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
-    message_fun = null;
+    message_fun.forEach(i=>i())
     // off_init()
   });
 
