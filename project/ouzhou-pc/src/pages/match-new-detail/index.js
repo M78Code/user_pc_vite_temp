@@ -394,6 +394,9 @@ export function usedetailData(route) {
         case "C112":
           get_category()
           break;
+        case "C102":
+          RCMD_C102(data);
+          break;    
         default:
           break;
       }
@@ -429,6 +432,22 @@ export function usedetailData(route) {
       show_close_thehand.value = true;
     }
   }
+   /**
+   * @description: 赛事事件C102)  
+   * @param {*} obj
+   * @return {*}
+   */
+   function RCMD_C102(obj) {
+    // let skt_data = obj.cd;
+    // if (skt_data.mmp == 999) {
+      //切换赛事
+      mx_autoset_active_match({ mid: route.params.mid });
+    // }  
+  } 
+  let timer1 =  setTimeout(() => {
+    clearTimeout(timer1)
+    RCMD_C102()
+  }, 10000);
   //todo mitt 触发ws更新
   const { off } = useMittOn(
     MITT_TYPES.EMIT_DATAWARE_DETAIL_UPDATE,
@@ -436,6 +455,7 @@ export function usedetailData(route) {
   );
   //  赛事切换刷新数据
   const refresh = () => {
+    console.log(refresh,'refresh');
     all_list_toggle = {};
     detail_list.value = [];
     sportId = route.params.csid;
@@ -448,16 +468,19 @@ export function usedetailData(route) {
     init();
   };
   /* 赛事结束之后调取详情接口 */
-  // const { off:off_init } = useMittOn(
-  //   MITT_TYPES.EMIT_SHOW_DETAILS,
-  //   refresh
-  // );
+  const { off:off_init } = useMittOn(
+    MITT_TYPES.EMIT_SWITCH_MATCH,
+    (()=>{
+      refresh()
+      console.error('-----------aaaaa');
+    })
+  );
   onUnmounted(() => {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
     message_fun = null;
-    // off_init()
+    off_init()
   });
 
   /**
@@ -511,7 +534,7 @@ export function usedetailData(route) {
     (_new, _old) => {
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {
-        mx_autoset_active_match({ mid: route.params.mid });
+        // mx_autoset_active_match({ mid: route.params.mid });
       }
       // 否则更新玩法集
       else {
