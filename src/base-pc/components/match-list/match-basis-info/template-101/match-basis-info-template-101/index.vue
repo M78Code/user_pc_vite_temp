@@ -61,7 +61,6 @@
           :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
         </div>
       </div>
-   
       <!-- 主比分 -->
       <div
         class="score"
@@ -92,7 +91,7 @@ import { useRouter } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
-
+import {get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
 const router = useRouter()
 const match=inject('match');
 const props = defineProps({
@@ -264,12 +263,9 @@ function hide_away_goal () {
   is_show_away_goal.value = false;
 }
 
-let handicap_index = ref(0)
-onMounted(()=>{
-  // use_polling_mst(match.value);
-  handicap_index.value = utils.get_handicap_index_by(match.value);
+let handicap_index = computed(()=>{
+  return  get_handicap_index_by(match.value)
 })
-
 onUnmounted(() => {
   clearInterval(timer);
   timer = null;
