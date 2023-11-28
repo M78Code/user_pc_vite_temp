@@ -30,7 +30,7 @@ export const get_detail_list = (params, config={}, url = "/yewu11/v1/w/matchDeta
 export const get_order_list = (params, config={}, url = "/yewu12/order/betRecord/getOrderList") => http.post(url, params);
 
 //获取联赛数量统计(新)
-export const get_leagues_list = (params, config={}, url = "/yewu11/v3/european/getLeagues") => http.post(url, params);
+export const get_leagues_list = (params, config={}, url = "/yewu11/v3/european/getLeaguesPB") => http.post(url, params);
 
 //获取联赛数量统计
 export const get_leagues_list_match = (params, config={}, url = "/yewu11/v3/european/matchesByTidPB") => http.post(url, params);
