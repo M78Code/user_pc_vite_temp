@@ -530,8 +530,8 @@
     "total_income": "预计总收益",
     "bet_retract": "赌注收回",
     "bet_inplay": "滚球",
-    "bet_limit":"限额"
-
+    "bet_limit":"限额",
+    "error_message": "投注项盘口、赔率或有效性产生变化！"
 
   },
   "bet_record": {

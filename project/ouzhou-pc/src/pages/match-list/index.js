@@ -191,11 +191,13 @@ export const init_home_matches = async () => {
           return item;
         });
         match_count = data.dataList.length || 0;
-        let sort_list = data.dataList.sort((x, y) => x.csid - y.csid)
+        // 过滤没有csid的数据
+        let sort_list = data.dataList.filter(item => item.csid);
+        sort_list = sort_list.sort((x, y) => x.csid - y.csid);
         //过滤前20条数据
         sort_list = filter_20_match_new(sort_list);
+        
         match_list.push(...sort_list)
-        console.log('match_list', match_list);
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
         SessionStorage.set('get_home_matches', sort_list)

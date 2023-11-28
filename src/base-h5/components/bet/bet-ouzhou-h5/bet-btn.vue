@@ -5,7 +5,7 @@
 <template>
   <div class="tip component bet-btn-item">
     <div :class="BetViewDataClass.error_code == 200 ? 'bet-success' : 'bet-error'">
-      {{ BetViewDataClass.error_message }}
+      {{ BetViewDataClass.error_message?$t('bet.error_message'):'' }}
     </div>
   </div> 
     <div class="bet_content_bottom component bet-btn-item">

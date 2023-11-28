@@ -388,7 +388,8 @@
     "total_bet": "Total Stake",
     "total_income": "To Return",
     "bet_inplay": "In-Play",
-    "bet_retract": "Bet Retract"
+    "bet_retract": "Bet Retract",
+    "error_message": "The selected betting odds, market or validity has changed."
   },
   "bet_record": {
     "30day": "30 days",
