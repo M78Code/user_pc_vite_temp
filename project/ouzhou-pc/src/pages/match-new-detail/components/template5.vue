@@ -58,13 +58,13 @@
             >
             </bet-item>
           </span>
-          <div style="text-align: center; width: 100%" v-show="o.hs">
+          <!-- <div style="text-align: center; width: 100%" v-show="o.hs">
             <img
               class="vector"
               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
               alt=""
             />
-          </div>
+          </div> -->
         </div>
       </template>
     </div>
