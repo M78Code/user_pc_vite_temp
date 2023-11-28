@@ -7,6 +7,7 @@ import {
   MenuData,
   UserCtr,
   MatchDetailCalss,
+  SearchPCClass
 } from "src/core/index";
 import {
   filter_odds_func,
@@ -475,9 +476,10 @@ export function usedetailData(route) {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
-    clearTimeout(timer1)
+    // clearTimeout(timer1)
     message_fun.forEach(i=>i())
     off_init()
+    clearTimeout(back_to_timer);
   });
 
   /**
@@ -488,19 +490,20 @@ export function usedetailData(route) {
   /**
    * @description 返回上一页
    */
+  let back_to_timer = null
   const back_to = (is_back = true) => {
     // 重新请求相应接口
-    if (play_media.value.media_type === "topic") {
-      video.send_message({
-        cmd: "record_play_info",
-        val: {
-          record_play_time: true,
-        },
-      });
-    }
+    // if (play_media.value.media_type === "topic") {
+    //   video.send_message({
+    //     cmd: "record_play_info",
+    //     val: {
+    //       record_play_time: true,
+    //     },
+    //   });
+    // }
 
-    clearTimeout(state.back_to_timer);
-    state.back_to_timer = setTimeout(() => {
+    clearTimeout(back_to_timer);
+    back_to_timer = setTimeout(() => {
       // 退出页面时清空用户操作状态
       window.sessionStorage.setItem("handle_state", JSON.stringify([]));
       // 如果是从搜索结果进来的

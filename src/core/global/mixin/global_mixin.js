@@ -301,7 +301,7 @@ export const useGetGlobal = ({  back_to }) => {
             }
           } else {
             if (lodash.isFunction(back_to)) {
-              // back_to(false);
+              back_to(false);
             }
           }
           return;
