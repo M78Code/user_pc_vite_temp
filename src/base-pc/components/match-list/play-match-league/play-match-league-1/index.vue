@@ -34,15 +34,15 @@
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
       <div class="play-name-ouzhou" v-if="!card_style_obj.is_league_fold">
-          <div class="play-name-title-box"
-            v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
-            :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
-            <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
-              <!-- {{ item_title.otb }} -->
-              <!-- {{ item_title }} -->
-              {{ $t(`ouzhou.bet_col.bet_col_${item_title._hpid}.bet_col_${item_title.ot}`) }}
-            </div>
+        <div class="play-name-title-box"
+          v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
+          :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
+          <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
+            <!-- {{ item_title.otb }} -->
+            <!-- {{ item_title }} -->
+            {{ $t(`ouzhou.bet_col.bet_col_${item_title._hpid}.bet_col_${item_title.ot}`) }}
           </div>
+        </div>
       </div>
       <!-- 赛事数量 -->
       <div v-else class="league-match-count">

@@ -91,7 +91,7 @@ const current_time = ref(1)
 const date = ref({ from: '', to: '' })
 const date_value = ref('')
 const select_options = [
-  { value: i18n_t("bet_record.sort_by_settled_time"), label: i18n_t("ouzhou.record.settled_time"), id: 2 },
+  { value: i18n_t("bet_record.sort_by_settled_time"), label: i18n_t("bet_record.sort_by_settled_time"), id: 2 },
   { value: i18n_t("bet_record.sort_by_bet_time"), label: i18n_t("ouzhou.record.bet_time"), id: 1 },
   { value: i18n_t("bet_record.sort_by_match_time"), label: i18n_t("bet_record.match_time"), id: 3 }
 ]
@@ -106,14 +106,14 @@ const select_value = ref(i18n_t("bet_record.sort_by_settled_time"))
 let params = {
   enablePreSettle: false,
   timeType: 1,
-  orderBy: 1
+  orderBy: 2
 }
 watch(() => props.current_tab, (newVal) => {
   tabChange.value = true
   params = {
     enablePreSettle: false,
     timeType: 1,
-    orderBy: 1
+    orderBy: 2
   }
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
