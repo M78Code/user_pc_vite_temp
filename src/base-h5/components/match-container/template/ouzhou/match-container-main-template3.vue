@@ -105,13 +105,13 @@
                         <div class="team-left">
                           <template v-if="home_red_score || home_yellow_score">
                             <!-- 红牌 -->
-                            <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            <!-- <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
                               {{ home_red_score }}
-                            </span>
+                            </span> -->
                             <!-- 黄牌 -->
-                            <span class='score-punish' v-show="home_yellow_score">
+                            <!-- <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
                               {{ home_yellow_score }}
-                            </span>
+                            </span> -->
                           </template>
                           <!--发球方绿点-->
                           <template v-else>
@@ -144,13 +144,13 @@
                         <div class="team-left">
                           <template v-if="home_red_score || home_yellow_score">
                             <!-- 红牌 -->
-                            <span class='score-punish' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results }">
+                            <!-- <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results }">
                               {{ away_red_score }}
-                            </span>
+                            </span> -->
                             <!-- 黄牌 -->
-                            <span class='score-punish' v-show="away_yellow_score">
+                            <!-- <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
                               {{ away_yellow_score }}
-                            </span>
+                            </span> -->
                           </template>
                           <!--发球方绿点-->
                           <template v-else>
@@ -925,22 +925,21 @@ export default {
         }
 
         .score-punish {
-          width: 0.12rem;
+          width: 0.1rem;
           height: 0.14rem;
-          color: var(--q-gb-t-c-2);
           flex-shrink: 0;
-          background: var(--q-match-fs-color-13);
           display: flex;
           justify-content: center;
           align-items: center;
           font-size: 0.1rem;
           border-radius: 0.02rem;
-          margin-left: 0.04rem;
-
+          color: #fff;
           &.yellow {
-            background: var(--q-gb-t-c-18);
+            background: #FFA800;
           }
-
+          &.red{
+            background: #f00;
+          }
           &.flash {
             animation: 1s text-flash linear infinite normal;
           }
