@@ -55,6 +55,16 @@
         "bet_col_Under": "Under",
         "home_handicap": "H Handicap",
         "away_handicap": "A Handicap",
+        "select_time": {
+          "3h": "Within 3 hrs",
+          "6h": "Within 6 hrs",
+          "9h": "Within 9 hrs",
+          "12h": "Next 12 Hours",
+          "24h": "Next 24 Hours",
+          "72h": "3 Days",
+          "168h": "7 Days"
+        },
+        
         "play_map": {
             "1": "Winner",
             "2": "Total Goals",
