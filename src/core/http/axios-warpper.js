@@ -10,7 +10,7 @@ import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
 import { usePageVisibilityChange } from "src/core/utils/module/event-hook.js";
 import domain from "./domain";
-import { SessionStorage  } from "src/core/index.js";
+import { IS_PC, SessionStorage  } from "src/core/index.js";
 // import ws from "../ws/ws.js";
 
 import STANDARD_KEY from "src/core/standard-key";
@@ -115,7 +115,7 @@ class AxiosHttp {
     // 设置系统类型缩写
     return {
       "request-code": JSON.stringify({
-        "panda-bss-source": "2",
+        "panda-bss-source": IS_PC? "2" : "1",
       }),
     };
   }
