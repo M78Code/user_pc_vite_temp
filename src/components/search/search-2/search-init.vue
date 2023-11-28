@@ -216,12 +216,13 @@ onMounted(init)
     margin-bottom: 10px;
     background-color: #fff;
     font-size: 14px;
+    font-weight: bold;
     .init-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #282b37;
-        height: 50px;
+        height: 46px;
         margin-bottom: 8px;
         .line {
             height: 14px;
@@ -235,12 +236,13 @@ onMounted(init)
             align-items: center;
             line-height: 14px;
             padding-left: 20px;
+            font-size: 16px;
         }
-
         .clear-history {
             color: #5a6074;
             cursor: pointer;
             padding-right: 20px;
+            font-weight: normal;
             &:hover {
                 color: #99a3b1;
             }
@@ -254,6 +256,7 @@ onMounted(init)
         height: 36px;
         padding: 0 20px;
         border-radius: 2px;
+        font-size: 14px;
         cursor: pointer;
 
         &:hover {
@@ -267,7 +270,7 @@ onMounted(init)
 
         .search_deleteIcon {
             cursor: pointer;
-
+            font-weight: normal;
             &:before {
                 color: #5a6074;
             }
@@ -281,4 +284,5 @@ onMounted(init)
             margin-left: 10px;
         }
     }
-}</style>
+}
+</style>
