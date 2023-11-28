@@ -100,9 +100,9 @@ export const sport_columns = {
     {
       name: "ht",
       align: "left",
-      label: "HT",
       courseIndex: 'HT',
       course: "HT",
+      label: i18n_t("common.half_"),
       field: "ht",
       headerStyle: "width: 33px",
     },
@@ -127,7 +127,7 @@ export const sport_columns = {
     {
       name: "t",
       align: "left",
-      label: "T",
+      label: i18n_t("common.total"),
       field: "t",
       headerStyle: { width: "33px", color: "#ff7000" },
     },
