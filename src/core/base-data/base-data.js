@@ -546,7 +546,7 @@ class BaseData {
        *  重置默认数据
        */
       if(BUILD_VERSION){
-        let csid_ = [101,102,105]
+        let csid_ = [101,102]
         this.left_menu_base_mi_arr = csid_;
        
         let list_mi_lsit = []

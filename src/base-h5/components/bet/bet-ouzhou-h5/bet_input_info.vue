@@ -7,7 +7,12 @@
            
             <span>{{$t('bet.total_win2')}}</span>
             <!-- <span class="margin_left_4">&thinsp;{{ format_currency(parseFloat(item.maxWinMoney)/100) }}</span> -->
-            <span class="margin_left_4">{{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }}</span>
+            <span class="margin_left_4" v-if="[1].includes(items.playId*1)">
+                {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally), BetData.bet_amount)) || '0.00' }}
+            </span>
+            <span class="margin_left_4" v-else>
+                {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,item.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }}
+            </span>
         </div>
        </div>
        <div class="info_right size_14">
@@ -16,7 +21,7 @@
   
             <span class="money-span" ref="money_span" :style="{ opacity:  '1' }"></span>
             
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.bet_limit')}} {{ format_money(ref_data.min_money) }}~{{format_money(ref_data.max_money) }}</span>
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('bet.bet_limit')}} {{ ref_data.min_money }}~{{formatMoney(ref_data.max_money) }}</span>
           
           </div>
           
@@ -27,7 +32,7 @@
 <script setup>
 import lodash_ from "lodash"
 import { onMounted, onUnmounted, reactive,ref } from "vue"
-import {MITT_TYPES,useMittOn,formatMoney,format_money,UserCtr } from "src/core/"
+import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/core/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'

@@ -390,6 +390,9 @@ export function usedetailData(route) {
           break;
         case "C109":
           RCMD_C109(data);
+         //  玩法集变更(C112)    
+        case "C112":
+          get_category()
           break;
         default:
           break;

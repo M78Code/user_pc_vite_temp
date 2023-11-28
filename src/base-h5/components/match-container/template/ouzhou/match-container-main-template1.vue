@@ -262,7 +262,7 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou, neutral_site } from 'src/base-h5/core/utils/local-image.js'
-import { sports_play_data, sports_play_title } from 'src/core/constant/index.js'
+import { sports_play_data, use_sports_play_title } from 'src/core/constant/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -292,10 +292,11 @@ export default {
     CountingDownSecond,
   },
   setup (ctx) {
+
     const match_hpid = ref('')
     const select_play = ref('1')
     const hps_play_data = ref([])
-   
+    const sports_play_title = use_sports_play_title()
     // 是否显示球种标题
     const show_sport_title = computed(() => {
       const { is_show_ball_title } = ctx.match_of_list

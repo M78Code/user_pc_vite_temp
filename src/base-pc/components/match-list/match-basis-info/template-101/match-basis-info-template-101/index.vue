@@ -285,7 +285,7 @@ onUnmounted(() => {
   .team-logo {
       display: flex;
       align-items: center;
-      margin-right: 6px;
+      margin-right: 8px;
       img {
         width: 18px;
         height: 18px;
@@ -328,9 +328,12 @@ onUnmounted(() => {
     display: flex;
     height: 16px;
     align-items: center;
-    padding-left: 25px;
     &+.row-item {
       margin-top: 4px;
+    }
+
+    .team-name {
+      max-width: 180px;
     }
     &.kedui-item {
       color: var(--q-gb-t-c-8);

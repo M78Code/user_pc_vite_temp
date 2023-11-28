@@ -44,11 +44,12 @@ const props = defineProps({
 * */
 const isLocked = ref(false)
 
-const betInformation = {
-    others: [],
-    assemble: [],
-}
+
 const AssembleData = computed(() => {
+    let betInformation = {
+        others: [],
+        assemble: [],
+    }
     const {hl = [], title} = props.item_data;
     const baseData = lodash.groupBy(hl[0].ol.filter(ol_item => ol_item.os != 3),'otd')
     title.forEach(item => {
@@ -61,7 +62,6 @@ const AssembleData = computed(() => {
     if(!!baseData['-1']){
         betInformation.others = baseData['-1']
     }
-    console.log(betInformation,"betInformation")
     return betInformation
 })
 
@@ -71,16 +71,11 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 };
-setTimeout(function (){
-    if(props.item_data.hpt == 4){
-        console.log(props.item_data,"props.item_data")
-    }
-},1200)
 </script>
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-    <section class="template4 component play-template-4" v-if="!!AssembleData.assemble">
+    <section class="component play-template play-template-4 template4" v-if="!!AssembleData.assemble">
         <div class="assemble">
             <ul v-for="item of AssembleData.assemble" :key="item.otd" class="list">
                 <li class="list-title textOverflow2">{{ item.osn }}</li>
@@ -97,7 +92,7 @@ setTimeout(function (){
                     <figure v-if="_item?.os == 2 || _item._hs == 11">
                         <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                     </figure>
-                    <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>
+<!--                    <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>-->
                 </li>
             </ul>
         </div>
@@ -119,7 +114,7 @@ setTimeout(function (){
 <style scoped lang="scss">
 @import "basicTemplateStyle";
 .template4{
-    padding: 8px;
+    padding: 8px 0;
     box-sizing: border-box;
 }
 .assemble {
