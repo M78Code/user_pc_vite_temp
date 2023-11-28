@@ -164,8 +164,9 @@
         "view_all_match": "View all matches",
         "underway": "Underway",
         "no_search_rezult": "No results found. Please try another search term.",
-        "dogfall": "draw",
-        "search_history": "Search history"
+        "dogfall": "Draw",
+        "search_history": "Search history",
+        "No results": "No results"
      }
 },
   "ac_rules": {
@@ -387,7 +388,8 @@
     "total_bet": "Total Stake",
     "total_income": "To Return",
     "bet_inplay": "In-Play",
-    "bet_retract": "Bet Retract"
+    "bet_retract": "Bet Retract",
+    "error_message": "The selected betting odds, market or validity has changed."
   },
   "bet_record": {
     "30day": "30 days",
@@ -2067,7 +2069,7 @@
     "loding_more": "More"
   },
   "search": {
-    "dogfall": "Dogfall",
+    "dogfall": "Draw",
     "clear_search_history": "Clear Search History",
     "hot": "Heat",
     "hot_league": "Popular Leagues",
