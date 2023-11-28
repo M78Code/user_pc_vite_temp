@@ -106,14 +106,14 @@ const select_value = ref(i18n_t("bet_record.sort_by_settled_time"))
 let params = {
   enablePreSettle: false,
   timeType: 1,
-  orderBy: 1
+  orderBy: 2
 }
 watch(() => props.current_tab, (newVal) => {
   tabChange.value = true
   params = {
     enablePreSettle: false,
     timeType: 1,
-    orderBy: 1
+    orderBy: 2
   }
   const data = formatTime(new Date().getTime(), 'yyyy/mm/dd')
   date_value.value = data + '-' + data
