@@ -14,8 +14,7 @@ import ResultOlItem from "../../result/ResultOlItem.vue";
 const props = defineProps({
     item_data: {
         type: Object,
-        default: () => {
-        },
+        default: () => ({}),
     }
 })
 
@@ -24,13 +23,12 @@ const go_betting = (data) => {
     if (data.os == 2) return
     emits("bet_click_", data, props.item_data.hpn);
 };
-
 </script>
 
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
-    <div class="template0">
+    <div class="component play-template play-template-0 template0">
         <ul class="list">
             <template v-for="hlChild in item_data.hl" :key="hlChild.hid">
                 <li v-for="olChild in hlChild.ol.filter(i=>i.os != 3)" :key="olChild?.oid" @click="go_betting(olChild)"
@@ -61,7 +59,7 @@ const go_betting = (data) => {
 @import "basicTemplateStyle";
 .template0{
     display: grid;
-    padding: 8px;
+    padding: 8px 0;
     box-sizing: border-box;
     overflow: hidden;
     .list{

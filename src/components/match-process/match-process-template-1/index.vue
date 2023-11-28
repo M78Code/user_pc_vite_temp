@@ -19,6 +19,7 @@
       "
       class="process-name"
       :class="[periodColor === 'gray' && 'gray-color']"
+      v-if="computed_process_name?.length"
       v-html="computed_process_name"
     >
     </div>

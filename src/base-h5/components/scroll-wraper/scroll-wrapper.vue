@@ -12,7 +12,7 @@
         detail_list: is_detail, simple: standard_edition == 1,
         'static': get_is_static() 
       }]"
-      :style="{ 'height': get_is_static() ? 'auto' : `${VirtualList.container_total_height}px`}">
+      :style="{ 'height': get_is_static() ? 'auto' : container_total_height}">
       <template v-if="match_meta.match_mids.length > 0" >
         <div v-for="(match_mid, index) in match_meta.match_mids" :index="index" :key="match_mid" :data-mid="match_mid"
           :class="['s-w-item', {last: index == match_meta.match_mids.length - 1 }]" 
@@ -32,7 +32,7 @@
         </div>
       </template>
       <!-- 到底了容器-->
-      <div :class="['loading-more-container']" v-if="max_height && !get_is_static()">
+      <div :class="['loading-more-container']" v-if="is_show_out">
         <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
       </div>
     </div>
@@ -111,6 +111,7 @@ const get_index_f_data_source = (mid) => {
 
 // 赛事列表容器滚动事件
 const handler_match_container_scroll = lodash.debounce(($ev) => {
+  console.log($ev.target.scrollTop)
   scroll_top.value = $ev.target.scrollTop
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
   if (get_is_static() || length < 17) return
@@ -199,6 +200,15 @@ const goto_top = () => {
 const get_is_static = () => {
   return is_kemp.value || is_collect.value || route?.name === 'collect' || MatchResponsive.is_compute_origin.value
 }
+
+const is_show_out = computed(() => {
+  return max_height && !get_is_static() && VirtualList.container_total_height.value > window.innerHeight
+})
+
+const container_total_height = computed(() => {
+  return `${VirtualList.container_total_height.value}px`
+})
+
 // 计算每个赛事id 对应的 容器高度 top 值
 const get_match_top_by_mid1 = (mid) => {
   let r = 0;
@@ -286,7 +296,7 @@ onUnmounted(() => {
   }
   .scroll-i-con {
     width: 100%;
-    height: 10000px;
+    // height: 10000px;
     position: relative;
     background-repeat: repeat-y;
     &.high_scrolling {

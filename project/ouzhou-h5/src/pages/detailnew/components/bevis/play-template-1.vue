@@ -51,7 +51,7 @@ setTimeout(function (){
                 :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
 
                 <template v-if="olChild.result != (void 0)">
-                    <div class="component play-template-1">
+                    <div class="component play-template play-template-1">
                         <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
                     </div>
                 </template>
@@ -70,12 +70,12 @@ setTimeout(function (){
         </ul>
     </section>-->
 
-    <section class="template1" v-if="item_data?.hl">
+    <section class="component play-template play-template-1 template1" v-if="item_data?.hl">
         <template v-for="hlChild of item_data?.hl" :key="hlChild.hid">
             <template class="bet" v-for="olChild of hlChild.ol" :key="olChild.oid"
                       :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
                 <template v-if="olChild.result != (void 0)">
-                    <div class="component play-template-1">
+                    <div>
                         <ResultOlItem :value="olChild" :hpt="1"></ResultOlItem>
                     </div>
                 </template>
