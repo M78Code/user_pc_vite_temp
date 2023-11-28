@@ -37,9 +37,7 @@ export default {
   setup(props) {
     const MatchListData = inject("MatchListData")
     const get_match_item = (mid) => {
-      // let special_ball = utils.computed_team_let_ball(MatchListData.get_quick_mid_obj(mid))
-      let hn_obj_data = MatchListData.list_to_obj.hn_obj;
-      return utils.computed_team_let_ball(MatchListData.get_quick_mid_obj(mid), hn_obj_data)
+      return MatchListData.get_quick_mid_obj(mid)
     }
     // 赛事样式对象
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
