@@ -17,7 +17,8 @@ const routes = [
         meta: {
           keepAlive: true, // 需要缓存,
           title: '体育投注',
-          needRemember: true
+          needRemember: true,
+          i18n:'ouzhou.match.home',
         },
       },
       //滚球
@@ -28,6 +29,7 @@ const routes = [
         meta: {
           keepAlive: true, // 需要缓存
           title: '滚球',
+          i18n:'menu.match_playing',
           needRemember: true
         },
       },
@@ -39,6 +41,7 @@ const routes = [
         meta: {
           keepAlive: true, // 需要缓存
           title: '投注记录',
+          i18n:'common.betting_record',
           needRemember: true
         },
       },
