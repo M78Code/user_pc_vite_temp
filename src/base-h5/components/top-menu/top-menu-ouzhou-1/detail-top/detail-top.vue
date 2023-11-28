@@ -80,7 +80,7 @@ function getDropDownList() {
     }
   }).then((data)=>{
     if(data.length){
-      res.data.forEach((item,index)=>{
+      data.forEach((item,index)=>{
         if(item.mid == mid){
           active.value = index
         }
