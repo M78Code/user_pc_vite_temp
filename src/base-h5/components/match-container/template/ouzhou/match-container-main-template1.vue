@@ -175,6 +175,7 @@
                           <div class='team-t-title-w' :class="{
                             'is-handicap': match.handicap_index == 1,
                             'is-handicap-1': match.handicap_index == 2,
+                            'is-show-goal': is_show_home_goal
                           }">
                             {{ match.mhn }}
                           </div>
@@ -213,6 +214,7 @@
                           <div class='team-t-title-w visiting' :class="{
                             'is-handicap': match.handicap_index == 2,
                             'is-handicap-1': match.handicap_index == 1,
+                            'is-show-goal': is_show_home_goal
                           }">
                             {{ match.man }}
                           </div>
@@ -986,7 +988,7 @@ export default {
             font-size: 14px;
             height: 24px;
             line-height: 24px;
-            max-width: 0.9rem;
+            max-width: 1.31rem;
             overflow: hidden;
             flex-shrink: 0;
             align-items: center;
@@ -994,6 +996,9 @@ export default {
             white-space: nowrap;
             font-weight: 500;
             color: #8a8986;
+            &.is-show-goal{
+              max-width: 0.9rem;
+            }
             &.visiting {
               color: #8a8986;
             }

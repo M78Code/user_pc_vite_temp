@@ -117,7 +117,11 @@ onMounted(async () => {
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
       if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
-        get_ouzhou_home_data()
+        if (tabValue === 'featured') {
+          get_ouzhou_home_data()
+        } else {
+          get_top_events_match(MenuData.menu_csid)
+        }
         // get_ouzhou_home_hots()
         // get_five_league_matchs()
       }
@@ -138,7 +142,11 @@ onMounted(async () => {
     // 欧洲版 二期  只展示 足球、篮球、网球， 球种菜单放开的同时这里也需要增加
     const item = cd.find(t => [1,2,5].includes(+t.csid) )
     if (item) {
-      get_ouzhou_home_data()
+      if (tabValue === 'featured') {
+        get_ouzhou_home_data()
+      } else {
+        get_top_events_match(MenuData.menu_csid)
+      }
       // get_ouzhou_home_hots()
       // get_five_league_matchs()
     }
@@ -229,25 +237,6 @@ const handle_ouzhou_home_hots = async (data) => {
   set_ws_active_mids()
 }
 
-/**
- * @description 获取热门赛事
- */
-const get_ouzhou_home_hots11 = () => {
-  const params = {
-    euid: "30199",
-    sort: 1,
-    apiType: 1,
-    orpt: -1,
-    csid:'1',
-    cuid: UserCtr.get_uid(),
-  }
-  api_match.post_fetch_match_list(params).then((res) => {
-    if (+res.code !== 200) return
-    handle_ouzhou_home_hots(res)
-    set_ws_active_mids()
-  })
-}
-
 const tabValue = ref(MenuData.home_menu || 'featured');
 // tabs 切换
 const on_update = (val) => {
@@ -258,10 +247,19 @@ const on_update = (val) => {
     get_ouzhou_home_data()
   } else {
     // 设置 元数据计算 流程
-    MatchResponsive.set_is_compute_origin(true)
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
-    MatchMeta.get_top_events_match(MenuData.top_events_list?.[0]?.csid)
+    get_top_events_match(MenuData.top_events_list?.[0]?.csid)
   }
+}
+
+/**
+ * @description 获取热门赛事
+ */
+const get_top_events_match = (csid = '1') => {
+  // 设置 元数据计算 流程
+  MatchResponsive.set_is_compute_origin(true)
+  state.current_mi = MenuData.top_events_list?.[0]?.mi;
+  MatchMeta.get_top_events_match(csid)
 }
 
 /**
