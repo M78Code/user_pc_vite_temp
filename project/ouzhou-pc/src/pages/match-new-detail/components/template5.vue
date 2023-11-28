@@ -17,7 +17,7 @@
       <div
         v-if="
           value.length == 1 &&
-          !['340', '359', '383'].includes(props.match_info.hpid)
+          !hpidList.includes(props.match_info.hpid)
         "
         style="width: 200%"
         @click="betItemClick(key, value[0])"
@@ -91,13 +91,14 @@ const props = defineProps({
     default: "",
   },
 });
+const hpidList = ["340", "359", "383","200","209","211","212"]
 const matchInfo = computed(() => {
   let obj = {};
   props.match_info.hl.forEach((item) => {
     if (item && item.ol.length > 0) {
       item.ol.forEach((i) => {
         i.hs = item.hs;
-        if (!["340", "359", "383"].includes(props.match_info.hpid)) {
+        if (!hpidList.includes(props.match_info.hpid)) {
           i.on = item.hv;
         }
 
@@ -110,7 +111,9 @@ const matchInfo = computed(() => {
       });
     }
   });
-  // console.log(11111111111,obj)
+
+//   console.log(11111111111,obj)
+//   console.log(11111111111,props.match_info)
   return obj;
 });
 const emit = defineEmits(["betItemClick"]);
