@@ -23,6 +23,7 @@
     import {get_match_status} from "src/core/index.js"
     import {
       ouzhou_match_status_title_card_template,
+      ouzhou_split_line_card_template,
       ouzhou_sport_title_card_template,
       ouzhou_league_title_template,
       fold_template,
@@ -104,6 +105,16 @@
       csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []      
       // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片 且不是5大联赛
       if(MatchListCardData.match_list_mapping_relation_obj_type == 9 && _match.csid != pre_match_csid){
+        // 如果当前球种不等于上一个球种且上一个球种已经存在 则 增加一个分割线的key
+        if (pre_match_csid&& _match.csid != pre_match_csid) {
+          card_key = 'split_line';
+          match_list_card_key_arr.push(card_key)
+          // 打入球种间分割线卡片特征
+          all_card_obj[card_key] = {
+            ...ouzhou_split_line_card_template
+          }
+          csid_to_card_key_obj[csid_key].push(card_key)
+        }
         pre_match_csid = _match.csid
         card_key = `sport_title_${_match.csid}`
         // 判断球种标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复球种标题卡片
