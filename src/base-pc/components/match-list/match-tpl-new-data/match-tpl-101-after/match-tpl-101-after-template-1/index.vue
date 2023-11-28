@@ -16,7 +16,7 @@
       <icon-box :match="match"></icon-box>
     </div>
     <!-- 投注信息 -->
-    <match-handicap :handicap_list="handicap_list" :match="match" use_component_key="MatchHandicap2" />
+    <match-handicap :handicap_list="handicap_list" use_component_key="MatchHandicap2" />
     <!-- 比分板 -->
     <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
@@ -28,13 +28,14 @@
 
 <script>
 
-import { ref, watch, defineProps } from 'vue';
+import { ref, watch, inject } from 'vue';
 import lodash from 'lodash'
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 
 import { MatchBasisInfo101FullVersionWapper as BasisInfo101 } from 'src/base-pc/components/match-list/match-basis-info/template-101/index.js'
 import { MatchBasisInfo105FullVersionWapper as BasisInfo105 } from 'src/base-pc/components/match-list/match-basis-info/template-105/index.js'
@@ -42,7 +43,7 @@ import IconBox from '../modules/iconBox/index.vue'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { useRouter } from 'vue-router';
-import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
+import { get_ouzhou_data_tpl_id, check_match_end } from 'src/core/match-list-pc/match-handle-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 export default {
   components: {
@@ -52,30 +53,23 @@ export default {
     IconBox
   },
   props: {
-    mid: {
-        type: [String, Number],
-        default: null,
-      },
       is_show_more: {
         type: Boolean,
         default: () => false
       },
-      match: {
-        type: [Object],
-        default: () => { },
-      }
   },
   setup(props) {
     const router = useRouter()
-    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
-
+    const match=inject("match")
+    const {mid}=match.value||{}
+    let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
     //101号模板 默认就是 101的宽高配置 不会改变
     let match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, 'template_101_config.width_config', {})
     let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
     let handicap_list = ref([]);
     watch(() => MatchListCardDataClass.list_version, (new_value, old_value) => {
-      if (props.match) {
-        const csid = lodash.get(props.match, 'csid')
+      if (match.value) {
+        const csid = lodash.get(match.value, 'csid')
         //获取欧洲要显示的数据
         const tpl_id = get_ouzhou_data_tpl_id(csid)
         //101 视图模板 却是对应不同的数据模板ID 所以要重新取
@@ -84,26 +78,13 @@ export default {
         handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
       }
     }, { deep: true, immediate: true })
-    const check_match_end = () => {
-      if(props.match.mmp == 999){
-        // 移除赛事
-        socket_remove_match(props.match);
-      }
-      // 赛事状态ms  0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断 110 即将开赛
-      else if(![0, 1, 2, 7, 10, 110].includes(+props.match.ms)) {        
-        // 移除赛事
-        socket_remove_match(props.match);
-      }
-    }
-    // watch(props.match?.ms,() => {
-    //   check_match_end
-    // }, { immediate: true, deep: true })
-
-    // watch(props.match?.mmp,() => {
-    //   check_match_end
-    // })
+    
+    watch(() => [match.value?.ms, match.value?.mmp],() => {
+      console.log('进来了11111');
+      check_match_end(match.value, socket_remove_match)
+    }, { immediate: true })
     function current_basic_info() {
-      if (props.match.csid == 5) {
+      if (match.value.csid == 5) {
         return 'BasisInfo105'
       } else {
         return 'BasisInfo101'
@@ -115,17 +96,17 @@ export default {
     //   }
     // })
     function jump_to_details() {
-      const { tid, csid } = props.match;
+      const { tid, csid } = match.value;
       if(MenuData.is_scroll_ball()){
         // 控制右侧比分板
-        MatchDataWarehouseInstance.set_match_details(props.match,[])
-        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, props.match.mid);
+        MatchDataWarehouseInstance.set_match_details(match.value,[])
+        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, match.value.mid);
       }else {
         //比分板跳转到详情页
         router.push({
           name: 'details',
           params: {
-            mid: props.mid,
+            mid: mid,
             tid: tid,
             csid: csid
           }
@@ -141,7 +122,7 @@ export default {
       match_list_tpl_size,
       compute_css_obj,
       handicap_list,
-      i18n_t
+      match
     }
   }
 }

@@ -80,14 +80,26 @@
     },
     "filter": {
       "select_time": {
-        "12h": "Next 12 hours",
-        "24h": "Next 24 hours",
-        "36h": "3 days",
-        "84h": "7 days"
+        "12h": "Next 12 Hours",
+        "24h": "Next 24 Hours",
+        "36h": "3 Days",
+        "84h": "7 Days"
       }
     },
     "time": {
-      "date": "{day}/{month}"
+      "date": "{month} {day}",
+      "month_1": "Jan",
+      "month_2": "Feb",
+      "month_3": "Mar",
+      "month_4": "Apr",
+      "month_5": "May",
+      "month_6": "Jun",
+      "month_7": "Jul",
+      "month_8": "Aug",
+      "month_9": "Sep",
+      "month_10": "Oct",
+      "month_11": "Nov",
+      "month_12": "Dec"
     },
     "search": {
       "change": "Change",

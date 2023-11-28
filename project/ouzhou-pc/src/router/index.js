@@ -30,6 +30,7 @@ router.beforeEach((to, from, next) => {
     const routeData = new Object()
     routeData.name = to.name
     routeData.title = to.meta.title;
+    routeData.i18n = to.meta.i18n;
     routeData.router = new Object()
     routeData.router.name = to.name;
     routeData.router.params = to.params;
