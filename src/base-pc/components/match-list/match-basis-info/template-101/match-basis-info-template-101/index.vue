@@ -228,26 +228,26 @@ watch(() => match.value.mf, (n) => {
 // })
 
 // 监听主比分变化
-watch(match.value.home_score, (n) => {
-  //推送时间是否过期
-  let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
-  // 足球 并且已开赛
-  if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1 && n!=0 && is_time_out ){
-    reset_event();
-    is_show_home_goal.value = true;
-  }
-})
+// watch(match.value.home_score, (n) => {
+//   //推送时间是否过期
+//   let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
+//   // 足球 并且已开赛
+//   if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1 && n!=0 && is_time_out ){
+//     reset_event();
+//     is_show_home_goal.value = true;
+//   }
+// })
 
-// 监听主比分变化
-watch(match.value.away_score, (n) => {
-  //推送时间是否过期
-  let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
-  // 足球 并且已开赛
-  if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1  && n!=0 && is_time_out ){
-    reset_event();
-    is_show_away_goal.value = true;
-  }
-})
+// // 监听主比分变化
+// watch(match.value.away_score, (n) => {
+//   //推送时间是否过期
+//   let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
+//   // 足球 并且已开赛
+//   if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1  && n!=0 && is_time_out ){
+//     reset_event();
+//     is_show_away_goal.value = true;
+//   }
+// })
 
 let timer;
 
