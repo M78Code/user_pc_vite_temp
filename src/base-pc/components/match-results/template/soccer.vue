@@ -182,7 +182,7 @@
     <load-data :state="load_data_state" color="light">
       <q-scroll-area ref="scrollArea" class="rule-scroll-area" :style="{ height: '100%',color:'red' }">
         <div class="tbale-body">
-          <template v-for="(item, index) in results_list" :key="index">
+          <div v-for="(item, index) in results_list" :key="index">
             <div class="table-tr-td" :class="{ active: index == activeIndex }" @click="get_tr_detail(item, index)">
               <!-- 日期 -->
               <div class="table-col_date">
@@ -523,7 +523,7 @@
                 </template>
               </load-data>
             </div>
-          </template>
+          </div>
         </div>
       </q-scroll-area>
     </load-data>
