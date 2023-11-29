@@ -102,7 +102,7 @@ export const check_match_end = (match, callback) => {
         callback(match);
     }
     // 赛事状态ms  0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断 110 即将开赛
-    else if (![0, 1, 2, 7, 10, 110].includes(+match?.ms)) {
+    else if (![0, 1, 2, 7, 10, 110].includes(+match?.ms) && !match.ms) {
         // 移除赛事
         callback(match);
     }
