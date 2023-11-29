@@ -7,7 +7,7 @@
                     <span class="text-flow">{{ items.playOptionName}}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
-                <div class="w-100 h15 f-s-c my-4">
+                <div class="w-100 f-s-c my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
@@ -152,7 +152,7 @@ const props = defineProps({
     }
     .text-flow-none{
         width: 76%;
-        line-height: 12px;
+        line-height: 14px;
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);
