@@ -81,7 +81,7 @@
         </div>
         <div
           class="search relative-position"
-          v-if="!pournament_params.champion && Number(sport_id) < 17"
+          v-if="!pournament_params.champion && (Number(sport_id) < 17 || [90, 91].includes(+sport_id))"
         >
           <!-- 赛事 -->
           <span class="label">{{ i18n_t("results.match") }}</span>
@@ -94,7 +94,7 @@
             maxlength="150"
           />
         </div>
-        <div class="date-time-choice" v-if="Number(sport_id) < 17">
+        <div class="date-time-choice" v-if="(Number(sport_id) < 17 || [90, 91].includes(+sport_id))">
           <!-- 仅虚拟赛事不能查询滚球 -->
           <div
             v-if="!results_params.isVirtualSport"
