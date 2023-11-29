@@ -377,7 +377,7 @@ export default defineComponent({
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
-      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids()
+      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     /**
      * @description 联赛折叠
@@ -388,8 +388,8 @@ export default defineComponent({
       if (is_hot.value || is_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
-      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
-      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids()
+      MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
+      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器

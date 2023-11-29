@@ -156,7 +156,7 @@ onMounted(async () => {
   // 调用 mids  接口
   if (['C303', 'C114'].includes(cmd)) {
     if (five_league_mids.value.length > 0) {
-      MatchMeta.get_match_base_hps_by_mids(five_league_mids.value.toString(), MatchDataBaseFiveLeagueH5)
+      MatchMeta.get_match_base_hps_by_mids({ mids: five_league_mids.value.toString(), warehouse: MatchDataBaseFiveLeagueH5 })
     }
   }
 }
@@ -234,7 +234,7 @@ const handle_ouzhou_home_hots = async (data) => {
     const match = MatchDataBaseFiveLeagueH5.get_quick_mid_obj(t?.mid) || t
     return match
   })
-  MatchMeta.get_match_base_hps_by_mids(five_league_mids.value.toString(), MatchDataBaseFiveLeagueH5)
+  MatchMeta.get_match_base_hps_by_mids({mids: five_league_mids.value.toString(), warehouse: MatchDataBaseFiveLeagueH5})
   set_ws_active_mids()
 }
 

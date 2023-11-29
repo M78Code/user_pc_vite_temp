@@ -678,6 +678,7 @@ export const useGetResultConfig = () => {
         .then((res) => {
           const code = lodash.get(res, "code");
           const data = lodash.get(res, "data");
+          
           if (code == 200 && data.length) {
             data.forEach((item) => {
               if (item.posrList) {
@@ -700,8 +701,8 @@ export const useGetResultConfig = () => {
                   playOptionName: "",
                   scoreResult: "",
                 };
-                if ([367, 368, 369].includes(+item.playId)) {
-                  item.posrList = state.sort_plays_data(
+                if ([367, 368, 369].includes(Number(item.playId))) {
+                  item.posrList = sort_plays_data(
                     item.posrList,
                     default_obj
                   );
