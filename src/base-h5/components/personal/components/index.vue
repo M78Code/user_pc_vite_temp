@@ -15,7 +15,7 @@
           <img v-else @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
         </div> 
         <div class="amount" v-if="show">{{ format_money2(UserCtr.balance) }}</div> 
-        <div class="amount"  v-else>{{format_money2(showMount).replace(/[\d.,]/g, '*') }} </div> 
+        <div class="amount"  v-else>{{format_money2(UserCtr.balance).replace(/[\d.,]/g, '*') }} </div> 
       </div> 
       <div class="bg_line tips-content">
         <img class="tips-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips-icon.png`" alt="" @click="goto_announcement" /> 

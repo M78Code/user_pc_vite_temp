@@ -66,10 +66,10 @@ onMounted(get_marquee_data)
     overflow: hidden; //超出内容隐藏
     position: absolute;
     z-index: 100;
-    left: 0.35rem;
+    left: 0.5rem;
     // width: 80%;
     // margin-right: 0.3rem;
-    right: 0.25rem;
+    right: 0.5rem;
 
     .user-list {
         width: fit-content; // Q1
