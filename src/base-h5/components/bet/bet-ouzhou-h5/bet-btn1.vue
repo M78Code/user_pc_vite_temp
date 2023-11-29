@@ -4,9 +4,8 @@
 -->
 <template>
   <div class="tip component bet-btn-item">
-    <div :class="BetViewDataClass.error_code == 200 ? 'bet-success' : 'bet-error'">
-      <!-- {{ BetViewDataClass.error_message }} -->
-      {{BetViewDataClass.error_message?BetViewDataClass.bet_order_status==4?$t('bet.bet_err'):BetViewDataClass.bet_order_status==2?$t('bet.bet_loading'):$t('bet.bet_suc'):''}}
+    <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': [200,'0000000'].includes(BetViewDataClass.error_code)}">
+      {{ BetViewDataClass.error_message }}
     </div>
   </div> 
   <div class="bet_content_bottom">

@@ -367,13 +367,24 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
-      
+
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
     let pre_type = 0
     let milt_single = 0
     if(BetData.is_bet_single){
+        let oid = lodash_.get(BetData.bet_single_list,'[0].playOptionsId','')
+        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${oid}`, {})
+        if(BetData.bet_amount){
+            // 投注金额未达最低限额
+            if(BetData.bet_amount*1 < min_max.min_money*1 ){
+                return set_error_message_config({code:"M400010"},'bet')
+            }
+        }else{
+            // 请您输入投注金额
+            return set_error_message_config({code:"M400005"},'bet')
+        }
         pre_type = BetData.is_bet_pre ? 1 : 0
         milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
     }
@@ -561,7 +572,7 @@ const set_error_message_config = (res ={},type,order_state) => {
             obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
         }
     }
-
+    console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
     BetViewDataClass.set_bet_before_message(obj)
 
@@ -569,7 +580,7 @@ const set_error_message_config = (res ={},type,order_state) => {
     if(clear_time){
         time_out = setTimeout(()=>{
             BetViewDataClass.set_bet_before_message({})
-        },5000)
+        },3000)
     }
    
 }
@@ -584,7 +595,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
     const { oid, _hid, _hn, _mid } = params
 
     // 没有投注内容 点击无效
-    if(!oid || !_hid || !_mid){
+    if( !oid ){
         return
     }
     // 是否上一个投注流程已走完
