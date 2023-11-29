@@ -341,7 +341,9 @@ export const details_main = (router, route) => {
         toRaw(match_detail.value),
         []
       );
-    });
+    }).catch((err)=>{
+      console.log(err,'err');
+    })
     //初次调用成功后 赋值init未false
     get_category_list_info({
       sportId: csid.value,

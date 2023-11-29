@@ -34,7 +34,6 @@ const go_betting = (data) => {
     <section class="play-template-0" v-if="item_data?.hl">
         <ul v-for="hlChild of item_data.hl" :key="hlChild?.hid" class="list">
             <template v-for="olChild of hlChild?.ol" :key="olChild?.oid">
-                <template v-if="olChild.os == 1 && compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) > 0">
                     <li class="list-item onePxBorder"
                         @click="go_betting(olChild)"
                         :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
@@ -42,15 +41,12 @@ const go_betting = (data) => {
                         <span class="on-text textOverflow1">
                             {{ olChild?.on || olChild.ott }}
                         </span>
-                        <span class="ov-text">
+                        <span class="ov-text" v-if="olChild.os == 1 && compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) > 0">
                             {{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}
                         </span>
-                        <olStatus style="position: absolute;right: 12%;" :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
+                        <img v-if="olChild.os == 2 || compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) == 0" class="lock ov-text" :src="odd_lock_ouzhou" alt="lock"/>
+                        <olStatus style="position: absolute;right: 2%;" :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </li>
-                </template>
-                <figure class="lockBox" v-if="olChild.os == 2 || compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) == 0">
-                    <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-                </figure>
                 <ResultOlItem class="list-item onePxBorder" :value="olChild" :hpt="0"></ResultOlItem>
             </template>
         </ul>
