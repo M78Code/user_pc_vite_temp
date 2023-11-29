@@ -86,6 +86,7 @@ const time_events = ref([])
 const five_league_mids = ref([])
 const featured_matches = ref([])
 const five_league_match = ref([])
+const tabValue = ref(MenuData.home_menu || 'featured');
 const state = reactive({
     current_mi:"",
 })
@@ -117,7 +118,7 @@ onMounted(async () => {
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
       if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
-        if (tabValue === 'featured') {
+        if (tabValue.value === 'featured') {
           get_ouzhou_home_data()
         } else {
           get_top_events_match(MenuData.menu_csid)
@@ -142,7 +143,7 @@ onMounted(async () => {
     // 欧洲版 二期  只展示 足球、篮球、网球， 球种菜单放开的同时这里也需要增加
     const item = cd.find(t => [1,2,5].includes(+t.csid) )
     if (item) {
-      if (tabValue === 'featured') {
+      if (tabValue.value === 'featured') {
         get_ouzhou_home_data()
       } else {
         get_top_events_match(MenuData.menu_csid)
@@ -237,7 +238,6 @@ const handle_ouzhou_home_hots = async (data) => {
   set_ws_active_mids()
 }
 
-const tabValue = ref(MenuData.home_menu || 'featured');
 // tabs 切换
 const on_update = (val) => {
   MenuData.set_home_menu(val);
