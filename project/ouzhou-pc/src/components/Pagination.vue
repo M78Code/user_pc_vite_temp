@@ -206,7 +206,7 @@ export default defineComponent({
 
     const goToPage = (v) => {
       let num = Math.ceil(props.count / perPageNum.value)
-      if(v<num){
+      if(v<=num){
       state.current = +v || 1
       state.goPage = +v || 1
       context.emit('goPageChange',  +v || 1)

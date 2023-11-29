@@ -25,6 +25,8 @@ import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/core/index.js"
 let time_out = null
 let time_api_out = null
 let count_api = 0 
+// 是否点击了投注按钮
+let submit_btn = false
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
@@ -367,21 +369,29 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
-
+    // 
+    if(submit_btn) return
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
     let pre_type = 0
     let milt_single = 0
+    submit_btn = true
     if(BetData.is_bet_single){
-        let oid = lodash_.get(BetData.bet_single_list,'[0].playOptionsId','')
-        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${oid}`, {})
+        let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
+        if(ol_obj.ol_os != 1){
+            set_submit_btn()
+            return set_error_message_config({code:"0402001"},'bet')
+        }
+        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionId}`, {})
         if(BetData.bet_amount){
             // 投注金额未达最低限额
             if(BetData.bet_amount*1 < min_max.min_money*1 ){
+                set_submit_btn()
                 return set_error_message_config({code:"M400010"},'bet')
             }
         }else{
+            set_submit_btn()
             // 请您输入投注金额
             return set_error_message_config({code:"M400005"},'bet')
         }
@@ -523,9 +533,18 @@ const submit_handle = type => {
             }
         }
         set_error_message_config(res,'bet',order_state)
+        set_submit_btn()
     }).catch(()=>{
         set_error_message_config({code:"0401038"},'bet')
+        set_submit_btn()
     })
+}
+
+//错误提示 设置为可以点击
+const set_submit_btn = () => {
+    setTimeout(()=>{
+        submit_btn = false
+    },500)
 }
 
 // 设置错误信息 
@@ -572,7 +591,7 @@ const set_error_message_config = (res ={},type,order_state) => {
             obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
         }
     }
-    console.error('set_bet_before_message',obj)
+    // console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
     BetViewDataClass.set_bet_before_message(obj)
 
@@ -590,7 +609,7 @@ const set_error_message_config = (res ={},type,order_state) => {
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('投注项需要数据', params, 'other', other);
+    // console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -693,7 +712,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         handicap: get_handicap(ol_obj,other.is_detail,mid_obj), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
-        oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
+        ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+        // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
     // 冠军 
     if(MenuData.is_kemp()){

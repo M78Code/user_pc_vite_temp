@@ -29,7 +29,7 @@ import { component_symbol, need_register_props } from "../config/index.js";
 const props = defineProps(need_register_props);
 const test = useRegistPropsHelper(component_symbol, props);
 setTimeout(() => {
-  console.error("testt", test.value);
+  // console.error("testt", test.value);
   test.value.title = "2222"; //修改不起作用哦
 }, 3000);
 //-------------------- 对接参数 prop 注册  结束  --------------------

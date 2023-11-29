@@ -84,7 +84,7 @@ const get_match_params_detail = (params, main_menu_type) => {
 
   //如果是在筛选的过程中
   if (PageSourceData.is_in_filtering()) {
-    console.error("如果是在筛选的过程中")
+    // console.error("如果是在筛选的过程中")
     // 如果筛选不是全部，并且 当前主菜单 等于(上一次 选择的主菜单，或者上一次选中的主菜单 不是 今日，早盘，串关），则执行下边代码块
 
     let filter_list = PageSourceData.list_query_other_params.filter_list

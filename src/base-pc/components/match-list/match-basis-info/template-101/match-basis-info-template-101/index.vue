@@ -30,11 +30,21 @@
           <div class="team-name home ellipsis allow-user-select" :class="{'bold': handicap_index == 1}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
             {{lodash.get(match, 'mhn')}}
           </div>
+          <!-- 进球动画 -->
+          <div class="yb-flex-center" v-if="is_show_home_goal && false">
+            <div class="yb-goal-gif" >
+              <img :src="compute_img_url('goal_image')" />
+            </div>
+            <div class="gif-text">{{i18n_t('common.goal')}}</div>
+          </div>
+          <div class="yb-flex-center" v-if="is_show_home_var"  v-tooltip="{content:var_text,overflow:1}">
+            <div class="gif-text"> {{ var_text }} </div>
+          </div>
            <!-- 红牌数 -->
-       <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.home',0)>0"
+           <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.home',0)>0"
           :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S11.home') }}</span>
           <!-- 黄牌数 -->
-       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.home',0)>0&&lodash.get(match, 'msc_obj.S11.home',0)<0"
+          <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.home',0)>0&&lodash.get(match, 'msc_obj.S11.home',0)<0"
           :class="{ flash: is_show_home_red }">{{ lodash.get(match, 'msc_obj.S12.home') }}</span>
         </div>
       </div>
@@ -52,9 +62,19 @@
           <div
             class="team-name away ellipsis allow-user-select"
             :class="{'bold': handicap_index == 2}"
-          >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
-              <!-- 红牌数 -->
-       <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away')>0"
+          >
+            {{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}
+          </div>
+          <!-- 进球动画 -->
+          <div class="yb-flex-center" v-if="is_show_away_goal">
+            <div class="yb-goal-gif"></div>
+            <div class="gif-text">{{i18n_t('common.goal')}}</div>
+          </div>
+          <div class="yb-flex-center" v-if="is_show_away_var" v-tooltip="{content:var_text,overflow:1}">
+            <div class="gif-text"> {{ var_text }} </div>
+          </div>
+            <!-- 红牌数 -->
+            <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away')>0"
             :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
              <!-- 黄牌数 -->
        <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.away',0)>0&&lodash.get(match, 'msc_obj.S11.away',0)<0"
@@ -84,12 +104,12 @@ import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/ma
 
 import { get_match_status } from 'src/core/utils/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, utils } from "src/core/index.js"
+import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, compute_img_url, UserCtr } from "src/core/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { useRouter } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
-import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import {get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
 const router = useRouter()
@@ -114,7 +134,11 @@ const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
+const is_show_away_var = ref(false) // 客队var事件
+const is_show_home_var = ref(false) // 主队var事件
+const var_text = ref(false) // var事件名称
 const is_collect = ref(false) //赛事是否收藏
+let mitt_list = []
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match.value, 'mid'))
 const handicap_num = computed(() => {
@@ -173,6 +197,12 @@ const play_name_obj = computed(() => {
 
 is_collect.value = Boolean(lodash.get(match.value, 'mf'))
 
+onMounted(() => {
+  mitt_list = [
+    useMittOn(MITT_TYPES.EMIT_VAR_EVENT, handle_var_event).off
+  ]
+})
+
 /**
  * @Description 赛事收藏 
 */
@@ -203,8 +233,8 @@ watch(() => match.value.mf, (n) => {
 //   let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
 //   // 足球 并且已开赛
 //   if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1 && n!=0 && is_time_out ){
+//     reset_event();
 //     is_show_home_goal.value = true;
-//     hide_home_goal();
 //   }
 // })
 
@@ -214,38 +244,74 @@ watch(() => match.value.mf, (n) => {
 //   let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
 //   // 足球 并且已开赛
 //   if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1  && n!=0 && is_time_out ){
+//     reset_event();
 //     is_show_away_goal.value = true;
-//     hide_away_goal();
 //   }
 // })
 
 let timer;
 
 /**
-   * @description 开赛时间自动加1
-   * @param {object} payload 
-   */
-   const use_polling_mst = payload => {
-    if (payload.cmec === 'timeout' ) return payload.mstValue = format_mst_data(payload.mst)
-    // mlet 每个阶段的时间
-    if ([301, 302, 303].includes(payload.mle)) return payload.mstValue = payload.mlet;
-    if (Number(payload.mst) <= 0 || payload.ms !== 1) return
-    if (payload.csid === '2') {
-      
-      timer = setInterval(() => {
-      if (payload.mst <= 0) return
-        payload.mst--
-        payload.mstValue = format_mst_data(payload.mst)
-      }, 1000)
-    } else {
-      timer = setInterval(() => {
-        payload.mst++
-        payload.mstValue = format_mst_data(payload.mst)
-        
-      }, 1000)
-    }
+ * @description 开赛时间自动加1
+ * @param {object} payload 
+ */
+  const use_polling_mst = payload => {
+  if (payload.cmec === 'timeout' ) return payload.mstValue = format_mst_data(payload.mst)
+  // mlet 每个阶段的时间
+  if ([301, 302, 303].includes(payload.mle)) return payload.mstValue = payload.mlet;
+  if (Number(payload.mst) <= 0 || payload.ms !== 1) return
+  if (payload.csid === '2') {
     
+    timer = setInterval(() => {
+    if (payload.mst <= 0) return
+      payload.mst--
+      payload.mstValue = format_mst_data(payload.mst)
+    }, 1000)
+  } else {
+    timer = setInterval(() => {
+      payload.mst++
+      payload.mstValue = format_mst_data(payload.mst)
+      
+    }, 1000)
   }
+}
+
+// var 事件处理
+function handle_var_event (ws_data) {
+      const { skt_data: { mat, mid }, var_item } = ws_data
+      if (match.mid !== mid) return
+      if (mat === 'home') {
+        is_show_home_var.value = true
+      } else if (mat === 'away') {
+        is_show_away_var.value = true
+      } else {
+        // 不确定队伍，则都显示
+        is_show_home_var.value = true
+        is_show_away_var.value = true
+      }
+      var_text.value = var_item[UserCtr.lang]
+      clear_var_event()
+    }
+    /**
+     * @description 清除var事件状态
+     */
+    function clear_var_event () {
+      let timer = setTimeout(() => {
+        is_show_home_var.value = false
+        is_show_away_var.value = false
+        clearTimeout(timer)
+        timer = null
+      }, 10000)
+    }
+    // 重置事件
+    function reset_event () {
+      is_show_home_goal.value = false
+      is_show_away_goal.value = false
+      is_show_home_var.value = false
+      is_show_away_var.value = false
+      is_show_home_red.value = false
+      is_show_away_red.value = false
+    }
 
 /**
  * @Description 隐藏主队进球动画
@@ -269,6 +335,7 @@ let handicap_index = computed(()=>{
 onUnmounted(() => {
   clearInterval(timer);
   timer = null;
+  mitt_list.forEach(i => i());
   // this.debounce_throttle_cancel(hide_home_goal());
   // this.debounce_throttle_cancel(hide_away_goal());
 })
@@ -370,5 +437,15 @@ onUnmounted(() => {
     }
   }  
 }
-
+/*  足球进球 动图 */
+.yb-goal-gif {
+  margin-left: 5px;
+  min-width: 12px;
+  height: 12px;
+  background-image: url($SCSSPROJECTPATH+"/image/common/png/goal_gif.png");
+  background-repeat: no-repeat;
+  background-position: 0% 0;
+  background-size: auto 100%;
+  animation: 1s goal-gif infinite steps(29, end);
+}
 </style>

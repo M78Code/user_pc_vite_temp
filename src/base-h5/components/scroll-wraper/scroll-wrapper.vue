@@ -112,14 +112,14 @@ const handler_match_container_scroll = lodash.throttle(($ev) => {
   const scrollTop = $ev.target.scrollTop
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 200) || Math.abs(scrollTop - prev_scroll.value) >= 200) {
     prev_scroll.value = scrollTop
-    MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2 })
+    MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2, is_again: false })
     if (!is_export.value) get_match_base_hps()
   }
 }, 300)
 
 // 获取赔率
 const get_match_base_hps = lodash.debounce(() => {
-  MatchMeta.get_match_base_hps_by_mids()
+  MatchMeta.get_match_base_hps_by_mids({})
   clearTimeout(scroll_timer.value)
   scroll_timer.value = null
 }, 800)

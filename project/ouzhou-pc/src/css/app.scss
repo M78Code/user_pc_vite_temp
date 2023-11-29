@@ -341,3 +341,7 @@ input::-ms-reveal {
 .img-loading {
   background-image: url($SCSSPROJECTPATH+"/image/loading1.gif");
 }
+
+[class^="card_key_sport_title_"]{
+  margin-top: 10px;
+}

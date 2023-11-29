@@ -49,6 +49,13 @@ class MatchMeta {
     this.other_complete_mids = []
     // 当前接口 euid
     this.current_euid = ''
+    // 接口最大调用次数  赛事列表  matchs 接口； byMids  赔率接口
+    this.error_http_count = {
+      match: 1,
+      bymids: 1
+    }
+    // 是否ws触发
+    this.is_ws_trigger = false
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -276,10 +283,10 @@ class MatchMeta {
   match_assistance_operations (match) {
     const { tid, csid, mid, ms } = match
     // 初始化赛事折叠
-    MatchFold.set_match_mid_fold_obj(match)
+    // MatchFold.set_match_mid_fold_obj(match)
 
-    // const key = MatchFold.get_match_fold_key(match)
-    // if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
+    const key = MatchFold.get_match_fold_key(match)
+    if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
     // 初始化赛事折叠
 
     const fold_key = MatchFold.get_fold_key(match)
@@ -297,7 +304,7 @@ class MatchMeta {
     VirtualList.set_match_mid_map_base_info(match, template_config.match_template_config)
 
     // 球种 默认玩法 
-    MatchResponsive.reset_match_hpid_by_csid(csid)
+    if (!this.is_ws_trigger) MatchResponsive.reset_match_hpid_by_csid(csid)
 
   }
 
@@ -465,23 +472,40 @@ class MatchMeta {
    *  ouzhou-h5 不需要
    *  yazhou-h5 需要
    */
-  async get_target_match_data ({is_classify = false, md = ''}) {
+  async get_target_match_data ({is_classify = false, scroll_top = 0, md = ''}) {
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     const params = this.get_base_params()
-    this.current_euid = euid
-    const res = await api_common.post_match_full_list({ 
-      ...params,
-      md
-    })
-    if (this.current_euid !== euid) return
-    if (res.code == '0401038') return this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
-    // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
-    // if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
-    const list = lodash.get(res, 'data', [])
-    const length = lodash.get(list, 'length', 0)
-    if (length < 1) return this.set_page_match_empty_status({ state: true });
-    if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data(list)
-    this.handler_match_list_data({ list: list, is_classify })
+    this.current_euid = `${euid}_${md}`
+    try {
+      const res = await api_common.post_match_full_list({ 
+        ...params,
+        md
+      })
+      if (this.current_euid !== `${euid}_${md}`) return
+      if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
+      // 接口请求成功，重置接口限频次数
+      this.error_http_count.match = 1
+      // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
+      // if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
+      const list = lodash.get(res, 'data', [])
+      const length = lodash.get(list, 'length', 0)
+      if (length < 1) return this.set_page_match_empty_status({ state: true });
+      if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data(list)
+      this.handler_match_list_data({ list: list, is_classify, scroll_top })
+    } catch {
+      if (this.current_euid !== `${euid}_${md}`) return
+      // 当接口 报错，或者出现限频， 调用3次
+      if (this.error_http_count.match >= 3) {
+        if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
+      } else {
+        this.error_http_count.match++
+        let timer = setTimeout(() => {
+          this.get_target_match_data({is_classify, scroll_top, md})
+          clearTimeout(timer)
+          timer = null
+        }, 3000)
+      }
+    }
   }
 
   /**
@@ -805,7 +829,7 @@ class MatchMeta {
    */
   handler_match_list_data(config) {
 
-    const { list = [], type = 1, is_virtual = true, is_classify = false, warehouse = MatchDataBaseH5, merge = '' } = config
+    const { list = [], type = 1, is_virtual = true, is_classify = false, warehouse = MatchDataBaseH5, scroll_top = 0 ,merge = '' } = config
 
     // 清除联赛下得赛事数量
     if (this.is_other_warehouse(warehouse.name_code)) {
@@ -878,7 +902,7 @@ class MatchMeta {
       }
     } else {
       // 计算所需渲染数据
-      this.compute_page_render_list({ scrollTop: 0, type }) 
+      this.compute_page_render_list({ scrollTop: scroll_top, type }) 
     }
 
     // 重置数据为空状态
@@ -923,7 +947,7 @@ class MatchMeta {
    */
   compute_page_render_list (config) {
 
-    const { scrollTop = 0, type = 1, is_scroll = true,  warehouse = MatchDataBaseH5 } = config
+    const { scrollTop = 0, type = 1, is_scroll = true, is_again = true,  warehouse = MatchDataBaseH5 } = config
 
     // 计算当前页所需渲染数据
     const scroll_top = is_scroll ? scrollTop : this.prev_scroll
@@ -951,7 +975,7 @@ class MatchMeta {
     if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse })
 
     // 获取赔率
-    if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse })
+    if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse, is_again })
   
   }
 
@@ -1001,7 +1025,7 @@ class MatchMeta {
       if (item) {
         const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
-        this.handler_match_list_data({ list: this.complete_matchs, is_classify: true })
+        this.handler_match_list_data({ list: this.complete_matchs, is_classify: true, scroll_top: this.prev_scroll, type: 2, merge: 'cover' })
       }
     }
   }
@@ -1018,12 +1042,15 @@ class MatchMeta {
       if (cd.length < 1) return
       const item = cd.find(t => t.csid == MenuData.menu_csid)
       // 调用 matchs  接口
-      if (item) this.get_target_match_data({})
+      if (item) {
+        this.is_ws_trigger = true
+        this.get_target_match_data({scroll_top: this.prev_scroll})
+      }
     }
     // 调用 mids  接口
     if (['C303', 'C114'].includes(cmd)) {
       const { mid = '' } = data
-      if (this.match_mids.includes(mid)) this.get_match_base_hps_by_mids()
+      if (this.match_mids.includes(mid)) this.get_match_base_hps_by_mids({})
     }
 
   }
@@ -1031,34 +1058,46 @@ class MatchMeta {
    * @description 获取赛事赔率
    * @param { mids } mids
    */
-  async get_match_base_hps_by_mids (mids = [], warehouse) {
-    // 赛果页不需要获取赔率
-    if (MenuData.is_results()) return
-    if (this.match_mids.length < 1 && mids.length < 1) return
-    const match_mids = this.match_mids.join(',')
-    // 冠军不需要调用
-    if (MenuData.is_export()) return
-    // 竞足409 不需要euid
-    const params = {
-      mids: mids.length > 0 ? mids : match_mids,
-      cuid: UserCtr.get_uid(),
-      sort: PageSourceData.sort_type,
-      euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
-      device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
-    };
-    let res = ''
-    // 赛果
-    if (MenuData.is_export()) {
-      res = await api_common.get_esports_match_by_mids(params)
-    } else {
-      res = await api_common.get_match_base_info_by_mids(params)
+  async get_match_base_hps_by_mids ({ mids = [], warehouse, is_again = true }) {
+    try {
+      // 赛果页不需要获取赔率
+      if (MenuData.is_results()) return
+      if (this.match_mids.length < 1 && mids.length < 1) return
+      const match_mids = this.match_mids.join(',')
+      // 冠军不需要调用
+      if (MenuData.is_export()) return
+      // 竞足409 不需要euid
+      const params = {
+        mids: mids.length > 0 ? mids : match_mids,
+        cuid: UserCtr.get_uid(),
+        sort: PageSourceData.sort_type,
+        euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
+        device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
+      };
+      let res = ''
+      // 赛果
+      if (MenuData.is_export()) {
+        res = await api_common.get_esports_match_by_mids(params)
+      } else {
+        res = await api_common.get_match_base_info_by_mids(params)
+      }
+      if (!res) return
+      const { code, data } = res
+      if (+code !== 200) return
+      this.error_http_count.bymids = 1
+      // 设置仓库渲染数据
+      this.handle_update_match_info({ list: data, merge: 'cover', warehouse })
+    } catch {
+      // 当接口 报错，或者出现限频， 调用3次
+      if (is_again && this.error_http_count.bymids < 3) {
+        this.error_http_count.bymids++
+        let timer = setTimeout(() => {
+          this.get_match_base_hps_by_mids({})
+          clearTimeout(timer)
+          timer = null
+        }, 3000)
+      }
     }
-    if (!res) return
-    const { code, data } = res
-    if (+code !== 200) return
-    // const list = MatchPage.get_obj(data)
-    // 设置仓库渲染数据
-    this.handle_update_match_info({ list: data, merge: 'cover', warehouse })
   }
 
   /**
@@ -1094,14 +1133,23 @@ class MatchMeta {
    * @param { warehouse } 仓库类型
    */
   handle_submit_warehouse(config) {
-    let { list = [], warehouse = MatchDataBaseH5 } = config
+    let { list = [], warehouse = MatchDataBaseH5, is_again = true } = config
     // ws 订阅
     // warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
-    warehouse.clear()
-    warehouse.set_list(list)
+    let matchs_list = list
+    if (this.is_ws_trigger) {
+      matchs_list.map(t => {
+        const { hps } = warehouse.get_quick_mid_obj(t.mid)
+        return Object.assign(t, { hps })
+      })
+    } else {
+      warehouse.clear()
+    }
+    warehouse.set_list(matchs_list)
+    this.is_ws_trigger = false
     // 获取赛事赔率
-    this.get_match_base_hps_by_mids()
+    this.get_match_base_hps_by_mids({is_again})
   }
 }
 

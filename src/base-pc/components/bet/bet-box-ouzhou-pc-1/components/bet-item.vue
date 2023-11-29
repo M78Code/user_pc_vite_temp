@@ -2,7 +2,7 @@
 <template>
     <div class="bet-list">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
-        <div class="f-b-s bet-content">
+        <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
                 <div class="w-100 f-s-c text-1a1 h15">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
@@ -16,16 +16,16 @@
                     <span class="text-a1a text-flow-none text-009 font400" v-if="[1].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
                     <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                 </div>
+                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.tid_name }}</div>
                 <div class="w-100 fon12 font400 text-8A8986-i" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                 </div>
             </div>
-            <div class="fw-e-s bet-right">
+            <div class="fw-e-s bet-right" v-if="items.ol_os == 1">
                 <div class="f-c-c bet-money">
-                    <div class="show_img" v-if="items.red_green" >
+                    <div class="show_img">
                         <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
-                        <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
+                        <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
                     </div>
-                    
                     <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                         @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
                     </span>
@@ -39,6 +39,12 @@
                     <span class="text-1a1 font500" v-else>
                         {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }} 
                     </span>
+                </div>
+            </div>
+
+            <div class="fw-e-s bet-right bet-invalid" v-else>
+                <div class="bet-disabled">
+                    <span>{{ i18n_t('bet.bet_invalid') }}</span>
                 </div>
             </div>
           
@@ -175,6 +181,9 @@ const set_delete = () => {
         font-weight: 500;
         font-style: normal;
         position: relative;
+        &.bet-disable{
+            align-items: center;
+        }
 
         .bet-money {
             height: 34px;
@@ -202,6 +211,30 @@ const set_delete = () => {
 
         .bet-right {
             width: 160px;
+            &.bet-invalid{
+                height: 100%;
+                .bet-disabled{
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-content: center;
+                    align-items: center;
+                    span{
+                        display: inline-block;
+                        padding: 0 20px;
+                        height: 26px;
+                        display: inline-block;
+                        border-radius: 2px;
+                        line-height: 26px;
+                        background: var(--q-gb-bg-c-10);
+                        font-size: 12px;
+                        font-weight: 500;
+                        letter-spacing: 0px;
+                        color: var(--q-gb-t-c-8);
+                    }
+                }
+            }
         }
 
         .bet-left {
