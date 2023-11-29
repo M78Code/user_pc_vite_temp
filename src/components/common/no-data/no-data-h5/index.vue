@@ -23,7 +23,7 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 
 
-console.error('nodata++++', props);
+
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
   which: {

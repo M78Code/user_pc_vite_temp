@@ -516,6 +516,7 @@ class MatchMeta {
       // sportId: 1,
       selectionHour: date
     })
+    if (res.code === '0400500') return
     const list = lodash.get(res, 'data', [])
     if (list.length) {
       MatchCollect.get_collect_match_data()
