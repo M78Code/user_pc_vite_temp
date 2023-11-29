@@ -196,7 +196,7 @@
 							</div>
 							<div v-show="expand_team">
 								<li v-for="(item, index) in search_data?.teamH5" :key="index"
-									@click="go_detail_or_reslut(item.name, item)">
+									@click="go_detail_or_reslut(item)">
 									<div v-if="item.tn">
 										<div class="list_top">
 											<span v-html="red_color(item.tn)"></span><img
@@ -405,6 +405,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 }, 500)
 
 const render_match_results_list = (res) => {
+	MatchMeta.match_mids = []
 	if (+res.code !== 200) return MatchMeta.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res.data.data, 'teamH5', [])
@@ -822,9 +823,10 @@ li {
 }
 
 .match-results-list {
+	margin-top: .1rem;
 	.match-list-container {
 		z-index: 0;
-		height: calc(100% - 102px);
+		height: calc(100% - 1.02rem);
 	}
 }
 

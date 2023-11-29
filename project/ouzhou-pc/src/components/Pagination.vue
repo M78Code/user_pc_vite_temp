@@ -205,10 +205,18 @@ export default defineComponent({
     })
 
     const goToPage = (v) => {
+      let num = Math.ceil(props.count / perPageNum.value)
+      if(v<num){
       state.current = +v || 1
       state.goPage = +v || 1
       context.emit('goPageChange',  +v || 1)
+      }
+      else{
+        state.goPage = state.current
+      }
+   
     }
+
     onMounted(() => {
       //  console.log(1111111111,context )
     })
@@ -343,7 +351,6 @@ export default defineComponent({
   height: 60px;
   font-size: 12px;
   z-index: 1100;
-  margin-right: 10px;
   background-color: var(--q-gb-bg-c-4);
   box-shadow: 0px -4px 8px var(--q-gb-bg-c-15);
 
