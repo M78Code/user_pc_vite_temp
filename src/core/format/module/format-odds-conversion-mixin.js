@@ -81,7 +81,7 @@ export const compute_value_by_cur_odd_type = (val, hpid, arr=[], csid) => {
         str = change_EU_HK(str);
       }
     }
-    return str;
+    return format_odds(str,csid);
   }
 
   if (arr.includes(oddsTable[cur_odd]) && cur_odd) {
@@ -89,7 +89,7 @@ export const compute_value_by_cur_odd_type = (val, hpid, arr=[], csid) => {
   } else {
     str = calc_odds(odds_val, csid);
   }
-  return str;
+  return format_odds(str,csid);
   // return get_accuracy(str);
 }
 
