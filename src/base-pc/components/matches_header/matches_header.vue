@@ -153,7 +153,7 @@ const set_tab_list = (news_) =>{
 			tab_list.value = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', []) 
 		}else{
 			let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', [])  
-			ouzhou_filter_config.push( { label: 'menu.match_winner', value: 3004 })
+			// ouzhou_filter_config.push( { label: 'menu.match_winner', value: 3004 })
 			 tab_list.value = ouzhou_filter_config
 		}
 		
