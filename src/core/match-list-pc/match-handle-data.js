@@ -370,7 +370,6 @@ export function get_handicap_index_by(match) {
                 result = found_i;
             }
         }
-        console.log(hps,hpid,'hpshps',result)
     }
     return result;
 }

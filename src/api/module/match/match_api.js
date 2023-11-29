@@ -22,7 +22,7 @@ export const post_fetch_match_list = (params, config = {},url="/v1/w/structureLi
 };
 
 // 今日，早盘，串关 联赛列表
-export const post_league_list = (params, config = {},url="/v1/w/structureTournamentMatches") => {
+export const post_league_list = (params, config = {},url="/v2/w/structureTournamentMatches") => {
   return http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_list'});
 };
 

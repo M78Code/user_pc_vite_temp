@@ -14,7 +14,7 @@
 				{{ getName() }}
 				<span class="yb-icon-arrow"></span>
 				<div class="leagues_filrer_item" v-show="show_leagues">
-					<div v-for="item in league_list" :key="item.id" @click="set_active_league(item)" :class="item.id == active_league ? 'league_acitve': ''">
+					<div v-for="item in league_list" :key="item.id" @click="set_active_league(item)" class="leagues_item" :class="item.id == active_league ? 'league_acitve': ''">
 						{{ item.nameText }}
 						<div class="leagues_filrer_item_line" v-if="item.id !== league_list[league_list.length -1].id"></div>
 					</div>
@@ -211,16 +211,24 @@ const jumpTo = ()=>{
 		height: 185px;
 		padding: 12px 0;
 		overflow-y: auto;
-		div {
+		.leagues_item {
 			height: 41px;
 			margin: 0px !important;
-			line-height: 40px;
 			color: #1A1A1A !important;
 			font-size: 14px;
 			font-weight: 400 !important;
+			text-overflow: ellipsis;
+			// border-bottom: 1px solid #ccc;
+			display: -webkit-flex;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+			flex-direction: column;
+			/*! autoprefixer: off */
+			-webkit-box-orient: vertical;
+			justify-content: center;
 			padding: 0 16px;
 		}
-		div:hover {
+		.leagues_item:hover {
 			background: #FFF1E6;
 			color: #1A1A1A !important;
 		}
