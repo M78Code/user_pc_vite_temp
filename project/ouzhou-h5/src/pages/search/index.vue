@@ -69,11 +69,9 @@
 					</div>
 				</div>
 				<template v-if="is_results">
-					<ul class="list">
-						<div class="match-results-list">
-							<match-container />
-						</div>
-					</ul>
+					<div class="match-results-list">
+						<match-container />
+					</div>
 				</template>
 				<template v-else>
 					<ul class="list">
@@ -658,6 +656,7 @@ onUnmounted(() => {
 .content {
 	color: var(--q-gb-t-c-4);
 	padding-top: 50px;
+	height: 100%;
 }
 
 .content.not-data {
@@ -823,10 +822,13 @@ li {
 }
 
 .match-results-list {
-	margin-top: .1rem;
+	padding-top: .5rem;
+	height: 100%;
 	.match-list-container {
 		z-index: 0;
-		height: calc(100% - 1.02rem);
+		overflow: hidden;
+		height: 100%;
+    	position: relative;
 	}
 }
 
