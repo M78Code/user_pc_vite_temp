@@ -8,18 +8,18 @@
   >
     <loading_page v-show="loading" />
     <div v-if="match_detail?.mvs > -1">
-      <detail_header_tem2 :get_match_detail="match_detail" />
+      <detail_header_tem2 :get_match_detail="match_detail || {}" />
     </div>
     <div v-else class="mini-header-container"  @click="onClickTest">
       <div class="header-fix" ref="header_fix">
          <!-- v-if="!changeHeader" -->
         <div ref="scroll_video_height" class="relative-position scroll_video_h">
-          <detail_header_tem1 :get_match_detail="match_detail" />
+          <detail_header_tem1 :get_match_detail="match_detail || {}" />
         </div>
       </div>
     </div>
     <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
-      <detail_header_tem0 :get_match_detail="match_detail"/>
+      <detail_header_tem0 :get_match_detail="match_detail || {}"/>
     </div>
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">

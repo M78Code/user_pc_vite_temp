@@ -5,7 +5,7 @@ import {
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
+import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common, PROJECT_NAME } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
@@ -18,7 +18,7 @@ import { update_collect_data, mx_collect_count } from "./composables/match-list-
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
 import { mx_use_list_res, mx_list_res } from './composables/match-list-processing.js'
-import { set_base_data_init } from './match-list-metadata.js';
+import { set_base_data_init, set_base_data_init_ouzhou } from './match-list-metadata.js';
 // import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 // import store from "src/store-redux/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
@@ -232,6 +232,9 @@ function handle_destroyed() {
 function init_page_when_base_data_first_loaded() {
 	//设置元数据 列表 返回boolean
 	is_has_base_data = set_base_data_init()
+	if (PROJECT_NAME == 'ouzhou-pc') {
+		is_has_base_data = set_base_data_init_ouzhou()
+	}
 	if (is_has_base_data) {
 		MatchListScrollClass.set_scroll_top(0);
 		load_data_state.value = 'data';

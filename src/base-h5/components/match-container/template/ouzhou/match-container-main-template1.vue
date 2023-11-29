@@ -192,9 +192,9 @@
                               <div class="gif-text">{{$root.$t('match_result.goal')}}</div>
                             </template>
                             <!-- VAR事件 -->
-                            <template v-if="is_show_home_var && is_show_var_event">
+                            <!-- <template v-if="is_show_home_var && is_show_var_event">
                               <div class="gif-text"> {{ var_text }} </div>
-                            </template>
+                            </template> -->
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
@@ -1357,13 +1357,14 @@ export default {
       :deep(.counting-down-wrap){
         width: auto !important;
         .title-space-1{
-          font-size: 13px;
+          font-size: 12px;
         }
         .counting{
           max-width: 40px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+          font-size: 12px;
         }
       }
 

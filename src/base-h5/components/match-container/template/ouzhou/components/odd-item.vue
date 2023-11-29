@@ -159,27 +159,12 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-2);
     border-radius: 2px;
     .odd {
-      background: #FF7000;
-      .title{
-        color: #fff;
-      }
-      &.up{
-        background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
-        .hpn{
-          color: #1A1A1A;
-        }
-      }
-      &.down{
-        background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
-        .hpn{
-          color: #1A1A1A;
-        }
-      }
+      background: linear-gradient(0deg, rgba(255, 112, 0, 0.10) 0%, rgba(255, 112, 0, 0.10) 100%), #FFF;
     }
     .hpn{
       position: relative;
       top: 0px;
-      color: #fff;
+      color: #1A1A1A;
     }
   }
   .hpn{
@@ -192,6 +177,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    color: var(--q-gb-t-c-1);
     .title{
       color: #8A8986;
       font-size: 14px;
