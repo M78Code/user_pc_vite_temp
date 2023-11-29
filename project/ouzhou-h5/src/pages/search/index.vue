@@ -196,7 +196,7 @@
 							</div>
 							<div v-show="expand_team">
 								<li v-for="(item, index) in search_data?.teamH5" :key="index"
-									@click="go_detail_or_reslut(item.name, item)">
+									@click="go_detail_or_reslut(item)">
 									<div v-if="item.tn">
 										<div class="list_top">
 											<span v-html="red_color(item.tn)"></span><img
