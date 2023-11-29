@@ -575,7 +575,7 @@ const set_error_message_config = (res ={},type,order_state) => {
             obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
         }
     }
-    console.error('set_bet_before_message',obj)
+    // console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
     BetViewDataClass.set_bet_before_message(obj)
 
@@ -593,7 +593,7 @@ const set_error_message_config = (res ={},type,order_state) => {
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('投注项需要数据', params, 'other', other);
+    // console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 

@@ -47,7 +47,7 @@ function use_init_menu() {
     });
 
     menu_vr_mi.value = list_data;
-    console.error("list_datalist_data", menu_vr_mi);
+    // console.error("list_datalist_data", menu_vr_mi);
   }
 
   // 接口默认数据
@@ -79,7 +79,7 @@ function use_init_menu() {
         pids: item.s || "", // 玩法ID
       };
     }
-    console.error("mi_euid_res", obj);
+    // console.error("mi_euid_res", obj);
   }
   // 体育类型
   function compute_label_by_csid(csid) {

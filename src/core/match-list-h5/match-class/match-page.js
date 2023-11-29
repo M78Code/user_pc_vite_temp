@@ -429,7 +429,7 @@ class MatchPage {
    * @return {Undefined} Undefined
    */
   get_match_data_list(cb) {
-    console.error('get_match_data_list')
+    // console.error('get_match_data_list')
     // 接口请求前置处理，接口参数处理
     const params = MatchListParams.get_match_list_params_all();
     // 赛事接口调用前置条件处理  1.次要玩法折叠   2 重置到联赛折叠状态； 3. 骨架屏 显示
