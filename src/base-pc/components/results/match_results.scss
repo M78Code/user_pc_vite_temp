@@ -80,7 +80,8 @@ body {
         .color-highlight {
           color: var(--q-gb-t-c-16);
         }
-          .browser {
+        .table-col,.table-col_date {
+          .browser {  
             margin-right: 5px;
             width: 12px;
             height: 12px !important;
@@ -94,6 +95,7 @@ body {
               background-image: url($SCSSPROJECTPATH+"/image/svg/theme02_y0_del.svg");
             }
           }
+        }
         .table-tr-td {
           border-bottom: 1px solid var(--q-match-result-boreder-1);//#d0d8de
           border-left: 1px solid var(--q-match-result-boreder-1);

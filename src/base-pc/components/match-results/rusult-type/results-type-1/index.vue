@@ -424,7 +424,7 @@ export default {
           &:nth-child(2) {
             display: flex;
             align-items: center;
-            padding: 0 0;
+            //padding: 0 0;
             user-select: text;
           }
           &:nth-child(3) {
