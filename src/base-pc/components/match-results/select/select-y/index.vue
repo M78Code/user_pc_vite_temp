@@ -27,7 +27,7 @@
       />
       <icon-wapper name="icon-search" color="#99A3B1" size="12px" />
     </div>
-1111
+
     <div class="select-content" v-if="isShow">
       <div class="top-btn">
         <!-- 全选 -->
@@ -241,10 +241,12 @@ const checkHot = (n) => {
     $emit("search_hot", Number(is_hot.value));
   }
 };
-const { off: offInit } = useMittOn(MITT_TYPES.EMIT_INIT_SELECT, () => {
-  checkHot();
+mitt_list = [
+  useMittOn(MITT_TYPES.EMIT_INIT_SELECT, checkHot).off
+]
+onUnmounted(() => {
+  mitt_list.forEach(i => i());
 });
-onUnmounted(offInit);
 /**
  * @description: 展开联赛下拉框
  * @return {undefined} undefined
