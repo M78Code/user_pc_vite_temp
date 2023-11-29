@@ -18,13 +18,13 @@
     <div class="wrap-select">
       
       <!-- 冠军球种才展示这个下拉选择框 -->
-      <div class="r-select ball-games" v-if="current_sport_id == '0'">
+      <div class="r-select ball-games" v-if="false">
         <!-- 球种 -->
         <span class="label ball-games-label">{{
           i18n_t("results.ball_games")
         }}</span>
         <Select-Wrapper
-          :value="champion_sport"
+          :sportType="champion_sport"
           :options="champion_sport_type"
           :isChampion="1"
           :showInput="true"
@@ -161,7 +161,7 @@ import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
   current_sport_id:{
-    type: String
+    type: null
   },
   timeChanged:{
     type: Boolean
@@ -181,6 +181,13 @@ const props = defineProps({
   sport_type: {
     type: Array,
     default: () => [],
+  },
+  champion_sport_type: {
+    type: Array,
+    default: () => [],
+  },
+  champion_sport: {
+    type: null,
   },
   sport:{
     type:String

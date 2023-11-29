@@ -128,7 +128,8 @@ class MenuData {
       type_name: '',
       pre_name: ''
     }
-
+    // 菜单路由数据 
+    this.router_info = {}
     // ---------------------------- 欧洲版-pc 专用 --------------------------------
    
     // 15mins 与 featured-matched 投注选项保存字段
@@ -177,14 +178,6 @@ class MenuData {
         SessionStorage.set(menu_key,this)
       })
     }, 20);
-  }
-  /**
-   * @Description 设置 api参数的版本
-   * @param {undefined} undefined
-   */
-  set_api_config_version(version) {
-    console.log('version', version);
-    this.api_config_version.value = version;
   }
 
   /**
@@ -563,6 +556,13 @@ class MenuData {
     this.set_left_menu_result(config);
   }
 
+  set_router_info(obj) {
+    this.router_info = {
+      ...this.router_info,
+      ...obj
+    }
+    this.set_menu_data_version();
+  }
   // 获取数据缓存 ，用于刷新
   get_new_data() {
     // 获取菜单数据缓存

@@ -136,7 +136,7 @@
 							</div>
 							<div v-show="expand_league">
 								<li v-for="(item, index) in search_data?.league" :key="index"
-									@click="go_detail_or_reslut(item.leagueName, item.matchList[index])">
+									@click="go_detail_or_reslut(item.matchList[index])">
 									<div class="list_top">
 										<!-- 联赛icon -->
 										<!-- <img class="match_logo"

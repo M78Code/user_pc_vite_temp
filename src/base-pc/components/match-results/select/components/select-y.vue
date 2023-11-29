@@ -98,6 +98,7 @@ const init = ref(false); // 是否处理从 url 获取的数据
 const selectedIds = ref([]); // 已选中的联赛
 const initSport = ref(0); // 当前更新是否是切换球种
 const isAllSelect = ref(1); // 1 全选 0反选
+let mitt_list = []
 const itemAllSelect = ref("all"); // 针对选项的判断 all 全部选中  part 部分选中
 const props = defineProps({
   list: {
@@ -243,10 +244,12 @@ const checkHot = n => {
     emit("search_hot", Number(is_hot.value));
   }
 };
-const { off: offInit } = useMittOn(MITT_TYPES.EMIT_INIT_SELECT, () => {
-  checkHot();
+mitt_list = [
+  useMittOn(MITT_TYPES.EMIT_INIT_SELECT, checkHot).off
+]
+onUnmounted(() => {
+  mitt_list.forEach(i => i());
 });
-onUnmounted(offInit);
 /**
  * @description: 展开联赛下拉框
  * @return {undefined} undefined

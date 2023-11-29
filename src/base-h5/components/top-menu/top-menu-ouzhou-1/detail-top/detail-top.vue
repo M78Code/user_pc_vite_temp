@@ -46,6 +46,8 @@ import {
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 const route = useRoute()
 const router = useRouter();
 const mid = route.params.mid;
@@ -96,6 +98,10 @@ function getDropDownList() {
 
 /** 返回上一页 */
 const toHome = () => {
+  // 设置 元数据计算 流程
+  BaseData.set_is_emit(true)
+  // MatchMeta.clear_match_info()
+  MatchResponsive.set_is_compute_origin(true)
   router.back()
 };
 watch(() => detail_top_pop.value,

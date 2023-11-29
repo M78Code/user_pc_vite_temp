@@ -14,8 +14,8 @@
           <img v-if="show" @click="on_show_money(false)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/show.png`" alt="" />
           <img v-else @click="on_show_money(true)" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/hide.png`" alt="" />
         </div> 
-        <div class="amount" v-if="show">{{ format_money2(showMount) }}</div> 
-        <div class="amount"  v-else>{{format_money2(showMount).replace(/[\d.,]/g, '*') }} </div> 
+        <div class="amount" v-if="show">{{ format_money2(UserCtr.balance) }}</div> 
+        <div class="amount"  v-else>{{format_money2(UserCtr.balance).replace(/[\d.,]/g, '*') }} </div> 
       </div> 
       <div class="bg_line tips-content">
         <img class="tips-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips-icon.png`" alt="" @click="goto_announcement" /> 
@@ -156,7 +156,9 @@ function handel_change(s,idx){
 onMounted(() => {
   //初始化金额隐藏
   on_show_money(UserCtr.show_balance)
+
 })
+
 
 // 金额显示与隐藏
 const on_show_money = (flag) => {

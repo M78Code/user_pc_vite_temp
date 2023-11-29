@@ -146,7 +146,7 @@ class BaseData {
    * 目前 按照约定 走 api
    */
   init() {
-    console.error('初始化菜单数据')
+    // console.error('初始化菜单数据')
     // 用默认数据 初始化
     this.init_by_default_data();
     // console.warn("BaseData.init()--------");
@@ -608,7 +608,7 @@ class BaseData {
       // 更新版本
       this.base_data_version.value = Date.now();
     }
-    console.error('this',this)
+    // console.error('this',this)
   }
 
   /**

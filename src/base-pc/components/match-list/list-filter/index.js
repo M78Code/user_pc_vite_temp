@@ -65,7 +65,7 @@ function handle_click_menu_mi_pre_process() {
  * 解析菜单数据
  */
 function resolve_mew_menu_res() {
-    console.error('resolve_mew_menu_res')
+    // console.error('resolve_mew_menu_res')
 
     if(MenuData.is_top_events()){
         resolve_mew_menu_res_mi_5000()
@@ -192,7 +192,6 @@ function compute_quanbu_euid() {
  * 解析 新接口返回值  冠军页面
  */
 function resolve_mew_menu_res_mi_400() {
-   console.error('sss')
     let mi_400_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
         sl: [],
     };

@@ -38,6 +38,7 @@
                         <span v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span>
                         
                       </div>
+                      <div class="nonebox4-content-left-content-text-three">{{items.tid_name}}</div>
                       <div class="nonebox4-content-left-content-text-three" v-if="items.home">{{items.home}} v {{items.away}} {{ items.matchType == 2? items.mark_score : ''}}</div>
                     </div>
                    

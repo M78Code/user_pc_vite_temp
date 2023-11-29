@@ -3,8 +3,6 @@
  * @Date: 2020-08-22 09:31:03
  * @Description: 赛事详情相关操作类
  */
-
-import store from "src/store-redux/index.js";
 import { api_details } from "src/api/index";
 import { UserCtr, MITT_TYPES,useMittEmit, MenuData } from "src/core/index.js"; 
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
@@ -21,7 +19,7 @@ export default {
   * @param:match  赛事详情
   * @return:
   */
-  on_go_detail(match,keyword,router) {
+  on_go_detail(match,keyword,router,route) {
     let { mid, tid= -1, csid, go_detail_type, varl, vurl, mms, ms, mvs } = match;
     if((+mid === 0) ||!csid){
       return
@@ -59,7 +57,12 @@ export default {
       let media_type = mvs > -1 ? 'animation' : 'auto'
       this.on_switch_match(media_type,match);
     }
+
+    let obj = {
+      pre_route : route.name
+    }
     
+    MenuData.set_router_info(obj)
   },
   /**
    * @Description 同步时间 

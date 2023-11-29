@@ -10,9 +10,13 @@
     let frame_id = undefined;
     const frame_count = ref(1)
     function update_frame_count () {
+      const start = Date.now()
       frame_id = requestAnimationFrame(() => {
-        frame_count.value++
-        if (frame_count.value >= max) return
+        // 当前渲染帧 有剩余 则 渲染
+        if (Date.now() - start < 16.6) {
+          frame_count.value++
+          if (frame_count.value >= max) return
+        } 
         update_frame_count()
       })
     }
