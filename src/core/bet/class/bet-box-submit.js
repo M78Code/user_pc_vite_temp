@@ -374,8 +374,11 @@ const submit_handle = type => {
     let pre_type = 0
     let milt_single = 0
     if(BetData.is_bet_single){
-        let oid = lodash_.get(BetData.bet_single_list,'[0].playOptionsId','')
-        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${oid}`, {})
+        let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
+        if(ol_obj.ol_os != 1){
+            return set_error_message_config({code:"0402001"},'bet')
+        }
+        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionId}`, {})
         if(BetData.bet_amount){
             // 投注金额未达最低限额
             if(BetData.bet_amount*1 < min_max.min_money*1 ){
@@ -693,7 +696,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         handicap: get_handicap(ol_obj,other.is_detail,mid_obj), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
-        oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
+        ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+        // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
     // 冠军 
     if(MenuData.is_kemp()){

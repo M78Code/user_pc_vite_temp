@@ -15,14 +15,17 @@
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div>
                         <div>
-                            <div class="nonebox4-content-right">
+                            <div class="nonebox4-content-right" v-if="items.ol_os == 1">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                                 @{{compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId)}}
                               </div>
-                              <div class="show_img" v-if="items.red_green" >
+                              <div class="show_img">
                                 <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_up.png`" alt=""/>
-                                <img v-else :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_down.png`" alt=""/>
+                                <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/icon_down.png`" alt=""/>
                               </div>
+                            </div>
+                            <div class="nonebox4-content-right" v-else>
+                              <span class="bet-disabled">{{ i18n_t('bet.disabled') }}</span>
                             </div>
                         </div>
                       </div>
@@ -197,23 +200,30 @@
       }
   }
   .nonebox4-content-right{
-    //display: flex;
+    display: flex;
     //flex-direction: row-reverse;
-    margin-right: 0.3rem;
     height: 0.26rem;
     list-style: 0.26rem;
-    display: inline-block;
-    position: relative;
     .show_img{
-      width: 0.08rem;
       display: flex;
+      height: 0.26rem;
       align-items: center;
-      position: absolute;
-      top: 0.06rem;
-      right: -0.18rem;
+      width: 0.24rem;
+      justify-content: center;
       img{
-        width: 100%;
+        width: 0.08rem;
       }
+    }
+    .bet-disabled{
+      padding: 0 0.2rem;
+      height: .26rem;
+      display: inline-block;
+      border-radius: 0.02rem;
+      background: var(--q-gb-bg-c-19);
+      font-size: 0.12rem;
+      font-weight: 500;
+      letter-spacing: 0px;
+      color: var(--q-gb-t-c-3);
     }
   }
   

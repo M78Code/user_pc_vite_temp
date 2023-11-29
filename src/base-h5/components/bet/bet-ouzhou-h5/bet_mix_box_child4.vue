@@ -249,6 +249,7 @@
     font-weight: bold;
     color: var(--q-gb-t-c-1);
     padding: 0 0.05rem;
+  text-align: right;
   }
   </style>
   

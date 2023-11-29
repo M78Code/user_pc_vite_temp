@@ -344,7 +344,7 @@ class BetViewData {
         break
 
       case '0401038':
-        text = '网路异常，请再试一次!'
+        text = '网络异常，请再试一次!'
         break
 
       case 'DJ001':
