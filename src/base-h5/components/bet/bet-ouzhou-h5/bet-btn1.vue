@@ -11,7 +11,7 @@
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @click.self="set_retain_selection">{{$t('bet.save')}}</p>
     <!-- <p class="bet_cancel"  @touchmove.prevent>{{$t('bet.save')}}</p> -->
-    <p class="place_bet" @click.self="pack_up">
+    <p class="place_bet" @click="pack_up">
       <span>{{$t('bet.understand')}}</span>
     </p>
   </div>
@@ -51,6 +51,9 @@ const set_retain_selection = () => {
   width: 100%;
   height: .36rem;
   line-height: 0.36rem;
+  .bet-loading {
+    color: var(--q-gb-t-c-11);
+  }
   .bet-error {
     color: var(--q-gb-t-c-17);
   }
@@ -60,29 +63,32 @@ const set_retain_selection = () => {
   }
 }
 .bet_content_bottom{
-    height: 0.6rem;
-    display: flex;
-    align-items: center;
-    text-align: center;
+  height: 0.58rem;
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+  align-content: space-between;
+  padding: 0 0.12rem .12rem;
     // margin-top: 26px;
    .bet_cancel{
-      width: 100px;
-      line-height: 0.3rem;
-      border-radius: 2px;
-      font-size: 0.13rem;
+      width: 1rem;
+      line-height: 0.46rem;
+      border-radius: 0.02rem;
+      font-size: 0.16rem;
       font-weight: 400;
+      height: 0.46rem;
       letter-spacing: 0px;
       border: 0.5px solid var(--q-gb-t-c-5);
       margin: 0 0.11rem 0 0.12rem;
       line-height: 0.4rem;
     }
     .place_bet{
+      height: 0.46rem;
       font-size: 0.14rem;
       font-weight: 500;
-      line-height: 0.4rem;
-      width: 2.37rem;
-      // height: 46px;
-      border-radius: 2px;
+      line-height: 0.46rem;
+      width: 2.35rem;
+      border-radius: 0.02rem;
       background: var(--q-gb-bg-c-1);
       color:  var(--q-gb-t-c-2);
       .right_amount{
