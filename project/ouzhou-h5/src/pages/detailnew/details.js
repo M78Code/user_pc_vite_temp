@@ -9,7 +9,6 @@ import {
   MITT_TYPES,
   utils,
   UserCtr,
-  MatchDataWarehouse_H5_List_Common,
   MenuData,
   SearchData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5
@@ -475,12 +474,43 @@ export const details_main = (router, route) => {
       event_switch()
     }  
   }
+ //赛事玩法数量
+ /**
+  * @description: RCMD_C110 锁盘 mc==0
+  * @param {*} obj
+  * @return {*}
+  */
+ function RCMD_C110(obj){
+  if(obj.cd.mc == 0){
+    //锁盘展示
+    
+    match_odds_info.value = [];
+    //清除玩法缓存
+    sessionStorage.removeItem("match_oddinfo")
+  }
+  }
+ /**
+  * @description:  // 视频/动画状态推送（C107
+  * @param {*} obj
+  * @return {*}
+  */
+ function RCMD_C107(obj) {
+    if (!obj || this.matchid != obj.cd.mid) {
+      return;
+    }
+    let skt_data = obj.cd;
+    /**
+     * mvs - 赛事动画状态   0:不可用 1:可用，暂未播放 2：可用，播放中
+     * mms - 赛事视频动态   0:不可用 1:可用，暂未播放 2：可用，播放中
+     */
+    this.updata_detail_data(skt_data);
+  }
   let message_fun = null;
   onMounted(() => {
     console.log(MatchDataBaseH5.get_quick_mid_obj(mid.value),'MatchDataBaseH5.get_quick_mid_obj(mid)');
     // match_odds_info.value = lodash.get(MatchDataBaseH5.get_quick_mid_obj(mid.value),"hps","[]")
     // match_detail.value = MatchDataBaseH5.get_quick_mid_obj(mid.value) || []
-    MatchDataWarehouse_H5_List_Common.set_active_mids([]);
+    MatchDataBaseH5.set_active_mids([]);
     loading.value = true;
     init.value = true;
     // 增加监听接受返回的监听函数
@@ -517,12 +547,16 @@ export const details_main = (router, route) => {
           break; 
          case "C102":
             RCMD_C102(data);
-            break;  
+            break;
+         case "C110":
+           RCMD_C110(data);
+           break;     
         default:
           break;
       }
     });
   });
+
   // 监听赛事状态mmp的值
   watch(
     () => match_detail.value?.mmp,
@@ -628,6 +662,7 @@ export const details_main = (router, route) => {
         MatchDetailCalss.set_match_details_params({ mid: event_data.mid,csid:event_data.csid ,tid:event_data.tid})
         // this.set_goto_detail_matchid(event_data.mid);
       } else {
+        console.error('切换赛事');
         // 如果不是演播厅的，才有退出回到 列表
         // if (lodash.get(this.get_video_url, "active") != "lvs") {
         // 没有返回赛事数据就跳转到列表页
