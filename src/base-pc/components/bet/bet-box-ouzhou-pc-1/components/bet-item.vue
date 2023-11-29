@@ -16,6 +16,7 @@
                     <span class="text-a1a text-flow-none text-009 font400" v-if="[1].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
                     <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                 </div>
+                <div class="w-100 fon12 font400 text-8A8986-i">{{ items.tid_name }}</div>
                 <div class="w-100 fon12 font400 text-8A8986-i" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                 </div>
             </div>
