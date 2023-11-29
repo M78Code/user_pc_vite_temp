@@ -137,7 +137,7 @@ const set_ref_data_bet_money = () => {
     padding: 0 0.15rem;
 
     .info_right{
-        width: 152px;
+        width: 162px;
         height: 42px;
         box-shadow: 0px 1px 4px 0px rgba(255, 112, 0, 0.10);
         border: 1px solid var(--q-gb-bg-c-1);
@@ -219,6 +219,7 @@ const set_ref_data_bet_money = () => {
   }
   .limit-txt {
     color: var(--q-gb-t-c-3);
+    white-space: nowrap;
   }
 
 </style>

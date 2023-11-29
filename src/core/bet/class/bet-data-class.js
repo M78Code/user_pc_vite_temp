@@ -851,7 +851,7 @@ this.bet_appoint_ball_head= null */
                 ol_obj.red_green = 'green_down'
               }
 
-              // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
+              console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
               if(ol_obj.odds == ws_ol_obj.ov ){
                 return
               }

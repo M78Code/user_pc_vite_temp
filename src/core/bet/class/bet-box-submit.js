@@ -682,6 +682,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         handicap: get_handicap(ol_obj,other.is_detail,mid_obj), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
+        oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
     // 冠军 
     if(MenuData.is_kemp()){
