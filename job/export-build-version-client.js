@@ -1,8 +1,15 @@
 /**
  * 创建 本次打包的 客户端版本
  */
+
+let DEV_TARGET_ENV_CONFIG={} 
+try {
+    DEV_TARGET_ENV_CONFIG = await import( "../dev-target-env.js"  );
+} catch (error) {
+}
+const {DEV_TARGET_VERSION} = DEV_TARGET_ENV_CONFIG
 import { ensure_write_folder_exist, write_file } from "./write-folder-file.js";
-import { DEV_TARGET_VERSION } from "../dev-target-env.js";
+
 import { RESOLVE_BUILD_VERSION_COMMON_FN } from "./build-version-common.js";
 // jenkins env 变量  配置的   构建 zip 版本参数   , 一般是运维那边 配置打包使用的    模块化打包  构建 zip 版本参数
 let ENV_MODULE_SDK_VERSION = (process.env.MODULE_SDK_VERSION || "").trim();

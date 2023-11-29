@@ -670,7 +670,8 @@ export default {
     width: 13%;
   }
   &:nth-child(2) {
-    padding-left: 20px;
+    //padding-left: 20px;
+    padding-left: 8px;
     width: 18%;
   }
   &:nth-child(3) {
