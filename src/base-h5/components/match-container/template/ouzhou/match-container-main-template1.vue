@@ -1357,13 +1357,14 @@ export default {
       :deep(.counting-down-wrap){
         width: auto !important;
         .title-space-1{
-          font-size: 13px;
+          font-size: 12px;
         }
         .counting{
           max-width: 40px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
+          font-size: 12px;
         }
       }
 
