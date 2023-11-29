@@ -74,7 +74,7 @@ export const compute_value_by_cur_odd_type = (val, hpid, arr=[], csid) => {
   if ([2].includes(oddsTable[cur_odd]*1) && cur_odd == 'HK') {
     str = calc_odds(odds_val, csid);
    
-    if(![1].includes(parseInt(hpid))){
+    if(![1, 37, 153].includes(parseInt(hpid))){
       str = change_EU_HK(str);
       //聊天室跟单特殊处理
       if (arr && arr.includes(oddsTable[cur_odd]) && bet_chat_room_type == "HK") {
