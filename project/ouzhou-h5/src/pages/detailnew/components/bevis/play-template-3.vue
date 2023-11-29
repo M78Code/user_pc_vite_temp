@@ -27,9 +27,9 @@ const go_betting = (data) => {
 }
 setTimeout(function (){
     if(props.item_data?.title){
-        console.log(props.item_data,"props.item_data==有title")
+        // console.log(props.item_data,"props.item_data==有title")
     }else {
-        console.log(props.item_data,"props.item_data==没有title")
+        // console.log(props.item_data,"props.item_data==没有title")
     }
 },1200)
 </script>
