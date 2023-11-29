@@ -12,6 +12,8 @@ import NODE_ENV_CONFIG from "./output/node-env/index.js"
     project_8: "ouzhou-h5", // 欧洲版-H5
     activity: "activity", // 活动
     animation: "animation", // 动画
+    'client-sdk-dev': "client-sdk", // SDK 本地开发调试
+    'client-sdk-build': "client-sdk", // SDK 本地开发调试
   };
   //布局名字
   const PROJECT_NAME = PROJECT_MAP[PROJECT];
@@ -73,7 +75,9 @@ const ENVSTR_MAP = {
   
 
 export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
-    const VERSION_STR = format_date(new Date().getTime());
+  //是否需要 BUILD_VERSION 版本素材隔离
+    const NEED_BUILD_VERSION = config.NEED_BUILD_VERSION
+    const VERSION_STR =  NEED_BUILD_VERSION? format_date(new Date().getTime()):'';
     //是否是开发环境
     const IS_DEV = NODE_ENV_CONFIG.IS_DEV 
     //构建版本号
@@ -81,9 +85,9 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
     //构建目录名字
     const BUILD_DIR_NAME =config.BUILD_DIR_NAME
     //打包构建输出目录
-    const BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_VERSION}` 
+    const BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_VERSION?`${BUILD_VERSION}/`:""}` 
     //开发或生产环境服务的公共基础路径
-    const BUILD_BASE = IS_DEV ? '/' : `/${BUILD_VERSION}/`
+    const BUILD_BASE = IS_DEV ? '/' : (   BUILD_VERSION?`/${BUILD_VERSION}/`:"/" )
     return {
         ...RESOLVE_PROJECT_FN(config.PROJECT),
         ...RESOLVE_ENV_FN(config.ENVSTR),

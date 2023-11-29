@@ -3,13 +3,15 @@ import vue from '@vitejs/plugin-vue'
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 import path from "path"
  
-
+//本地开发端口
+const port = 28500
 console.log("---------启动文件入口目录-------------", __dirname);
 
 import COMPUTE_ENTRY_CONFIG from "../../job/entry-config.js";
 //入口配置
 const  { project, outDir, base,} = COMPUTE_ENTRY_CONFIG({port})
 // https://vitejs.dev/config/
+// https://cn.vitejs.dev/guide/build
 export default defineConfig({
   plugins: [
     vue({
@@ -22,7 +24,7 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: path.resolve( __dirname, "../../project/client-sdk/main.js" ),
+      entry: path.resolve( __dirname, "../../project/client-sdk/main-build.js" ),
       name: "TY_JSSDK",
       fileName: (format) => `TY_JSSDK.${format}.js`,
     },
@@ -31,10 +33,7 @@ export default defineConfig({
  
     rollupOptions: {
       // external: ["vue"],
-      // input:{
-    
-      //   index: path.resolve(__dirname,'index.html')
-      // },
+ 
       output: {
         // Provide global variables to use in the UMD build
         // Add external deps here
