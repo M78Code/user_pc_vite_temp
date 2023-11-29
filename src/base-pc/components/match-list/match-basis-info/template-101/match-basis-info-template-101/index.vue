@@ -31,9 +31,9 @@
             {{lodash.get(match, 'mhn')}}
           </div>
           <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_home_goal && false">
-            <div class="yb-goal-gif" >
-              <img :src="compute_img_url('goal_image')" />
+          <div class="yb-flex-center" v-if="is_show_home_goal">
+            <div class="yb-goal-gif" :style="compute_css_obj({key: 'goal_image'})" >
+              <!-- <img :src="compute_img_url('goal_image')" /> -->
             </div>
             <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
@@ -112,6 +112,7 @@ import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import {get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
+import background from 'src/css-variables/base-h5/global/background';
 const router = useRouter()
 const match=inject('match');
 const props = defineProps({
@@ -228,26 +229,26 @@ watch(() => match.value.mf, (n) => {
 // })
 
 // 监听主比分变化
-// watch(match.value.home_score, (n) => {
-//   //推送时间是否过期
-//   let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
-//   // 足球 并且已开赛
-//   if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1 && n!=0 && is_time_out ){
-//     reset_event();
-//     is_show_home_goal.value = true;
-//   }
-// })
+watch(() => match.value.home_score, (n) => {
+  //推送时间是否过期
+  let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
+  // 足球 并且已开赛
+  if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1 && n!=0 && is_time_out ){
+    reset_event();
+    is_show_home_goal.value = true;
+  }
+})
 
-// // 监听主比分变化
-// watch(match.value.away_score, (n) => {
-//   //推送时间是否过期
-//   let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
-//   // 足球 并且已开赛
-//   if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1  && n!=0 && is_time_out ){
-//     reset_event();
-//     is_show_away_goal.value = true;
-//   }
-// })
+// 监听主比分变化
+watch(() => match.value.away_score, (n) => {
+  //推送时间是否过期
+  let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
+  // 足球 并且已开赛
+  if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1  && n!=0 && is_time_out ){
+    reset_event();
+    is_show_away_goal.value = true;
+  }
+})
 
 let timer;
 
@@ -437,15 +438,14 @@ onUnmounted(() => {
     }
   }  
 }
-/*  足球进球 动图 */
-.yb-goal-gif {
-  margin-left: 5px;
-  min-width: 12px;
-  height: 12px;
-  background-image: url($SCSSPROJECTPATH+"/image/common/png/goal_gif.png");
-  background-repeat: no-repeat;
-  background-position: 0% 0;
-  background-size: auto 100%;
-  animation: 1s goal-gif infinite steps(29, end);
-}
+.gif-text {
+    white-space: nowrap;
+    padding-left: 3px;
+    animation: 1s text-flash linear infinite normal;
+    color: #ff7000;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 </style>

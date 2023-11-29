@@ -967,8 +967,8 @@ export const useGetResultConfig = () => {
    * @return {}
    */
   const search_hot = (data) => {
-    // state.pournament_params.hot = data;
-    // get_pournament(0);
+    state.pournament_params.hot = data;
+    get_pournament(0);
   };
 
   /**
