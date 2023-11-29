@@ -34,7 +34,7 @@
       <!-- 日期 -->
       <div class="r-select">
         <div class="label time-search-label">
-          {{ i18n_t("results.date") }}
+          {{ i18n_t("results.date") }}{{current_sport_id}}
         </div>
         <div class="search-date-wrapper">
           <div class="date-wrap" @click.stop="startTimeShowFunc">
@@ -161,7 +161,7 @@ import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
   current_sport_id:{
-    type: String
+    type: null
   },
   timeChanged:{
     type: Boolean

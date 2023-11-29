@@ -474,3 +474,23 @@
     /*  投注项列 名称 */
   }
 }
+
+/*  足球进球 动图 */
+.yb-goal-gif {
+  margin-left: 5px;
+  min-width: 12px;
+  height: 12px;
+  background-repeat: no-repeat;
+  background-position: 0% 0;
+  background-size: auto 100%;
+  animation: 1s goal-gif infinite steps(29, end);
+}
+
+@keyframes goal-gif {
+  from {
+    background-position: 0%, 0;
+  }
+  to {
+    background-position: 100%, 0;
+  }
+}
