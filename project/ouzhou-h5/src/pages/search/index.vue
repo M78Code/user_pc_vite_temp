@@ -70,7 +70,7 @@
 				</div>
 				<template v-if="is_results">
 					<ul class="list">
-						<div class="match-results-list" v-show="search_data?.teamH5 && search_data.teamH5?.length > 0">
+						<div class="match-results-list">
 							<match-container />
 						</div>
 					</ul>
