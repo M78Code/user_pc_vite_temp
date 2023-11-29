@@ -39,7 +39,7 @@ const go_betting = (data) => {
                         @click="go_betting(olChild)"
                         :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
                     >
-                        <span class="on-text">
+                        <span class="on-text textOverflow1">
                             {{ olChild?.on || olChild.ott }}
                         </span>
                         <span class="ov-text">

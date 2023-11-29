@@ -1025,7 +1025,7 @@ class MatchMeta {
       if (item) {
         const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
-        this.handler_match_list_data({ list: this.complete_matchs, is_classify: true, scroll_top: this.prev_scroll, type: 2 })
+        this.handler_match_list_data({ list: this.complete_matchs, is_classify: true, scroll_top: this.prev_scroll, type: 2, merge: 'cover' })
       }
     }
   }
