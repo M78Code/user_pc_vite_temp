@@ -38,7 +38,6 @@ import * as TemplateCommon from "./template-common.js"
 // 这里传入的 是我们的玩法id
 export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
   let odds_list =  TemplateCommon.get_current_odds_list(template_102.main_handicap_list, { first_hpid, second_hpid })
-  console.log(odds_list, 'odds_listodds_list')
   return odds_list
 }
 
