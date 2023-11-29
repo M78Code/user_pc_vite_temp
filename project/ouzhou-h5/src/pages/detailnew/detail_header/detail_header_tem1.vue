@@ -99,7 +99,7 @@ const props = defineProps({
     default: () => {},
   },
   show_collect: {
-    type: Object,
+    type:Boolean,
     default : true
   }
 });
