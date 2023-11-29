@@ -49,6 +49,10 @@ class MatchMeta {
     this.other_complete_mids = []
     // 当前接口 euid
     this.current_euid = ''
+    // 传入参数
+    this.http_params = {
+      md: ''
+    }
     // 接口最大调用次数  赛事列表  matchs 接口； byMids  赔率接口
     this.error_http_count = {
       match: 1,
@@ -87,6 +91,7 @@ class MatchMeta {
     }
 
     // 获取真实数据
+    this.http_params.cd = md
     this.get_target_match_data({md})
 
     // 滚球全部
@@ -492,6 +497,16 @@ class MatchMeta {
       if (length < 1) return this.set_page_match_empty_status({ state: true });
       if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data(list)
       this.handler_match_list_data({ list: list, is_classify, scroll_top })
+
+      // 模拟删除赛事
+      // setInterval(() => {
+      //   let randomNumber = Math.floor(Math.random() * 3)
+      //   const item  = this.complete_matchs.splice(randomNumber, 1)
+      //   console.log(randomNumber, item)
+      //   this.is_ws_trigger = true
+      //   this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+      // }, 7000)
+
     } catch {
       if (this.current_euid !== `${euid}_${md}`) return
       // 当接口 报错，或者出现限频， 调用3次
@@ -624,7 +639,6 @@ class MatchMeta {
       tid: tid,
       selectionHour: time
     })
-    // console.log('get_ouzhou_leagues_list_data', res)
     if (res.code !== '200') return this.set_page_match_empty_status({ state: true });
     const list = lodash.get(res.data, 'data', [])
     MatchCollect.get_collect_match_data(list)
@@ -902,7 +916,7 @@ class MatchMeta {
       }
     } else {
       // 计算所需渲染数据
-      this.compute_page_render_list({ scrollTop: scroll_top, type }) 
+      this.compute_page_render_list({ scrollTop: scroll_top, merge, type }) 
     }
 
     // 重置数据为空状态
@@ -947,7 +961,7 @@ class MatchMeta {
    */
   compute_page_render_list (config) {
 
-    const { scrollTop = 0, type = 1, is_scroll = true, is_again = true,  warehouse = MatchDataBaseH5 } = config
+    const { scrollTop = 0, type = 1, is_scroll = true, is_again = true, merge = '',  warehouse = MatchDataBaseH5 } = config
 
     // 计算当前页所需渲染数据
     const scroll_top = is_scroll ? scrollTop : this.prev_scroll
@@ -972,7 +986,7 @@ class MatchMeta {
     MatchResponsive.set_is_compute_origin(false)
 
     // 不获取赔率
-    if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse })
+    if (type === 2) return this.handle_update_match_info({ list: match_datas, warehouse, merge })
 
     // 获取赔率
     if (type === 1) return this.handle_submit_warehouse({ list: match_datas, warehouse, is_again })
@@ -1025,7 +1039,9 @@ class MatchMeta {
       if (item) {
         const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
-        this.handler_match_list_data({ list: this.complete_matchs, is_classify: true, scroll_top: this.prev_scroll, type: 2, merge: 'cover' })
+        // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
+        this.is_ws_trigger = true
+        this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
       }
     }
   }
@@ -1044,7 +1060,7 @@ class MatchMeta {
       // 调用 matchs  接口
       if (item) {
         this.is_ws_trigger = true
-        this.get_target_match_data({scroll_top: this.prev_scroll})
+        this.get_target_match_data({scroll_top: this.prev_scroll, cd: this.http_params.cd})
       }
     }
     // 调用 mids  接口
@@ -1085,6 +1101,13 @@ class MatchMeta {
       const { code, data } = res
       if (+code !== 200) return
       this.error_http_count.bymids = 1
+      data.forEach(t => {
+        const item = lodash.find(this.complete_matchs, (match) => match.mid === t.mid)
+        if (item) {
+          const index = lodash.findIndex(this.complete_matchs, (match) => match.mid === t.mid)
+          if (index > -1) this.complete_matchs[index] = Object.assign({}, item, t)
+        }
+      })
       // 设置仓库渲染数据
       this.handle_update_match_info({ list: data, merge: 'cover', warehouse })
     } catch {
@@ -1112,7 +1135,7 @@ class MatchMeta {
     list = lodash.map(list, t => {
       // MatchResponsive.get_ball_seed_methods(t)
       const match = warehouse.get_quick_mid_obj(t.mid)
-      // match.is_meta
+      // match.is_meta  TODO: 后续删除判断逻辑
       let target = {}
       if (merge === 'cover') {
         target = Object.assign({}, match, t)
@@ -1124,7 +1147,9 @@ class MatchMeta {
     // ws 订阅
     // MatchDataBaseH5.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
+    // this.is_ws_trigger = false
     warehouse.set_list(list)
+    this.is_ws_trigger = false
   }
 
   /**
@@ -1137,17 +1162,9 @@ class MatchMeta {
     // ws 订阅
     // warehouse.set_active_mids(this.match_mids)
     // 设置仓库渲染数据
-    let matchs_list = list
-    if (this.is_ws_trigger) {
-      matchs_list.map(t => {
-        const { hps } = warehouse.get_quick_mid_obj(t.mid)
-        return Object.assign(t, { hps })
-      })
-    } else {
-      warehouse.clear()
-    }
-    warehouse.set_list(matchs_list)
+    warehouse.set_list(list)
     this.is_ws_trigger = false
+    // this.is_ws_trigger = false
     // 获取赛事赔率
     this.get_match_base_hps_by_mids({is_again})
   }
