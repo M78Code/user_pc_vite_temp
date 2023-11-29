@@ -924,10 +924,6 @@ export const useGetResultConfig = () => {
       sportType: id,
       tournamentId: "",
       champion: state.current_sport_id == "0" ? 1 : 0,
-      page: {
-        current: 1,
-        size: 50,
-      },
     });
     state.page_random = Math.random();
     state.league_type = [i18n_t("common.all")]; // 全部
