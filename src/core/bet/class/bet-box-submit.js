@@ -25,6 +25,8 @@ import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/core/index.js"
 let time_out = null
 let time_api_out = null
 let count_api = 0 
+// 是否点击了投注按钮
+let submit_btn = false
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
@@ -367,24 +369,29 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
-
+    // 
+    if(submit_btn) return
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
     let pre_type = 0
     let milt_single = 0
+    submit_btn = true
     if(BetData.is_bet_single){
         let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
         if(ol_obj.ol_os != 1){
+            set_submit_btn()
             return set_error_message_config({code:"0402001"},'bet')
         }
         let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionId}`, {})
         if(BetData.bet_amount){
             // 投注金额未达最低限额
             if(BetData.bet_amount*1 < min_max.min_money*1 ){
+                set_submit_btn()
                 return set_error_message_config({code:"M400010"},'bet')
             }
         }else{
+            set_submit_btn()
             // 请您输入投注金额
             return set_error_message_config({code:"M400005"},'bet')
         }
@@ -526,9 +533,18 @@ const submit_handle = type => {
             }
         }
         set_error_message_config(res,'bet',order_state)
+        set_submit_btn()
     }).catch(()=>{
         set_error_message_config({code:"0401038"},'bet')
+        set_submit_btn()
     })
+}
+
+//错误提示 设置为可以点击
+const set_submit_btn = () => {
+    setTimeout(()=>{
+        submit_btn = false
+    },500)
 }
 
 // 设置错误信息 
