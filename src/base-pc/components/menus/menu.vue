@@ -40,14 +40,14 @@
       </ul>
     </div>
     <div class="menu-nav-line" />
-    <!-- <div class="menu-nav-li">
+    <div class="menu-nav-li" v-if="!BUILD_VERSION">
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
       </ul>
-    </div> -->
+    </div>
 
     <div class="menu-line"></div>
 
@@ -62,6 +62,9 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
 // 菜单配置
 import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
+
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 const popular = ([{mi:101},{mi:102}])
 
@@ -134,7 +137,7 @@ const jump_func = (payload ={},type) => {
 
 // 冠军
 const outrights = () => {
-  if(MenuData.menu_root == 400)return
+  if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return
  // 点击菜单的时候如果在详情页应跳转出来先
  if (['league','details'].includes(route.name)) {
     router.push('/home')

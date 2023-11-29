@@ -1,5 +1,5 @@
 <template>
-	<div class="matches_header_wrap">
+	<div class="matches_header_wrap" :style="`height:${match_list_top}`">
 		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{ MenuData.is_collect_kemp() }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}--{{ BaseData.base_data_version }}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted, toRef, reactive, watch } from 'vue';
+import { ref,onMounted,onUnmounted, reactive, watch } from 'vue';
 import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
@@ -47,6 +47,8 @@ import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
 import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 const tab_list = ref([])
 
@@ -147,7 +149,14 @@ const set_tab_list = (news_) =>{
 	// 收藏
 	if (MenuData.is_collect) {
 		matches_header_title.value = 'ouzhou.menu.collect'
-		tab_list.value = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', [])  
+		if(BUILD_VERSION){
+			tab_list.value = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', []) 
+		}else{
+			let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', [])  
+			ouzhou_filter_config.push( { label: 'menu.match_winner', value: 3004 })
+			 tab_list.value = ouzhou_filter_config
+		}
+		
 	}
 	// 冠军
 	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
@@ -244,7 +253,7 @@ const checked_current_tab = payload => {
 
 <style lang="scss" scoped>
 .matches_header_wrap {
-	height: v-bind('match_list_top');
+	//height: v-bind('match_list_top');
 	// padding-right: 7px;
 	box-sizing: border-box;
 }
