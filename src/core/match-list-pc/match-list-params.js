@@ -207,6 +207,7 @@ function match_list_all_params() {
             params: lv2_mi_info
         }
     )
+    console.log('asdasbdahsfgbdhfbdf', config);
     return config
 }
 export function get_collet_match_list_params(){

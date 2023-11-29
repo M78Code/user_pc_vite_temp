@@ -192,9 +192,9 @@
                               <div class="gif-text">{{$root.$t('match_result.goal')}}</div>
                             </template>
                             <!-- VAR事件 -->
-                            <template v-if="is_show_home_var && is_show_var_event">
+                            <!-- <template v-if="is_show_home_var && is_show_var_event">
                               <div class="gif-text"> {{ var_text }} </div>
-                            </template>
+                            </template> -->
                           </div>
                         </div>
                         <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
