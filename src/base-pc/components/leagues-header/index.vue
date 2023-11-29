@@ -214,18 +214,13 @@ const jumpTo = ()=>{
 		.leagues_item {
 			height: 41px;
 			margin: 0px !important;
+			line-height: 40px;
 			color: #1A1A1A !important;
 			font-size: 14px;
 			font-weight: 400 !important;
 			text-overflow: ellipsis;
-			// border-bottom: 1px solid #ccc;
-			display: -webkit-flex;
-			-webkit-line-clamp: 2;
+			white-space: nowrap;
 			overflow: hidden;
-			flex-direction: column;
-			/*! autoprefixer: off */
-			-webkit-box-orient: vertical;
-			justify-content: center;
 			padding: 0 16px;
 		}
 		.leagues_item:hover {

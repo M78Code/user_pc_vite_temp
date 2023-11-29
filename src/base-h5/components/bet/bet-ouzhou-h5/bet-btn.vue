@@ -4,8 +4,8 @@
 -->
 <template>
   <div class="tip component bet-btn-item">
-    <div :class="BetViewDataClass.error_code == 200 ? 'bet-success' : 'bet-error'">
-      {{ BetViewDataClass.error_message?$t('bet.error_message'):'' }}
+    <div class="bet-error" v-if="BetViewDataClass.error_message">
+      {{ BetViewDataClass.error_message }}
     </div>
   </div> 
     <div class="bet_content_bottom component bet-btn-item">
@@ -47,12 +47,13 @@ const pack_up = (val) => {
   width: 100%;
   height: .36rem;
   line-height: 0.36rem;
-  .bet-error {
-    color: var(--q-gb-t-c-4);
+
+ .bet-error {
+    color: var(--q-gb-t-c-17);
   }
 
   .bet-success {
-    color: var(--q-gb-t-c-4);
+    color: var(--q-gb-t-c-16);
   }
 }
 .bet_content_bottom{
