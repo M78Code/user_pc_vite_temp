@@ -841,7 +841,7 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            if(ws_ol_obj.ov){
+            if(parseFloat(ws_ol_obj.ov)){
               clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
@@ -851,14 +851,16 @@ this.bet_appoint_ball_head= null */
                 ol_obj.red_green = 'green_down'
               }
 
-              console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
+              // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
               if(ol_obj.odds == ws_ol_obj.ov ){
                 return
               }
              
               // 重新设置赔率
               ol_obj.odds = ws_ol_obj.ov*1
-              ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, '', '', ol_obj.sportId)
+              // 设置 投注项状态  1：开 2：封 3：关 4：锁
+              ol_obj.ol_os = ws_ol_obj.os
+              ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
 
@@ -879,7 +881,7 @@ this.bet_appoint_ball_head= null */
     let order_no = lodash_.get(obj,'orderNo')
     // 订单状态 订单状态(1:投注成功 2:投注失败)
     let status = lodash_.get(obj,'status', 0)
-    console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
+    // console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
     // 订单已经完成 不需要去设置 用户点击了 保留选项 或者投注的确定
     if(!BetViewDataClass.is_finally){
       // 单关 单注 简单 粗暴 其他的后面做

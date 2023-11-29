@@ -99,7 +99,7 @@ const props = defineProps({
     default: () => {},
   },
   show_collect: {
-    type: Object,
+    type:Boolean,
     default : true
   }
 });
@@ -312,7 +312,7 @@ const collect_click = () => {
   MatchCollect.set_match_collect_state(props.get_match_detail, !is_collect.value)
     api_common.add_or_cancel_match({
         mid: props.get_match_detail.mid,
-        cf: is_collect.value ? 0 : 1,
+        cf: !is_collect.value ? 0 : 1,
         cuid: UserCtr.get_uid()
     }).then(res => {
         if (res.code != 200) return

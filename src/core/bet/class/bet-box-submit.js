@@ -367,13 +367,27 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
-      
+
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
     let pre_type = 0
     let milt_single = 0
     if(BetData.is_bet_single){
+        let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
+        if(ol_obj.ol_os != 1){
+            return set_error_message_config({code:"0402001"},'bet')
+        }
+        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionId}`, {})
+        if(BetData.bet_amount){
+            // 投注金额未达最低限额
+            if(BetData.bet_amount*1 < min_max.min_money*1 ){
+                return set_error_message_config({code:"M400010"},'bet')
+            }
+        }else{
+            // 请您输入投注金额
+            return set_error_message_config({code:"M400005"},'bet')
+        }
         pre_type = BetData.is_bet_pre ? 1 : 0
         milt_single = BetData.bet_single_list.length > 1 ? 1 : 0
     }
@@ -561,7 +575,7 @@ const set_error_message_config = (res ={},type,order_state) => {
             obj.message = BetViewDataClass.set_code_message_config(res.code,res.message)
         }
     }
-
+    // console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
     BetViewDataClass.set_bet_before_message(obj)
 
@@ -569,7 +583,7 @@ const set_error_message_config = (res ={},type,order_state) => {
     if(clear_time){
         time_out = setTimeout(()=>{
             BetViewDataClass.set_bet_before_message({})
-        },5000)
+        },3000)
     }
    
 }
@@ -579,12 +593,12 @@ const set_error_message_config = (res ={},type,order_state) => {
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
 const set_bet_obj_config = (params = {}, other = {}) => {
-    console.error('投注项需要数据', params, 'other', other);
+    // console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
     // 没有投注内容 点击无效
-    if(!oid || !_hid || !_mid){
+    if( !oid ){
         return
     }
     // 是否上一个投注流程已走完
@@ -682,7 +696,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         handicap: get_handicap(ol_obj,other.is_detail,mid_obj), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
-        oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
+        ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+        // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
     // 冠军 
     if(MenuData.is_kemp()){

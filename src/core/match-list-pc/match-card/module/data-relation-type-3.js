@@ -122,6 +122,34 @@
      
       // 遍历联赛列表
       let league_list = lodash.get(all_league_obj,match_status_type,[])
+
+      let sort_league_list = lodash.cloneDeep(league_list);
+      sort_league_list.push({})
+      // 上一个联赛
+      let pre_league_info = {}
+      // 判断是否是相同的联赛
+      let same_tid = {}
+      // 是相同联赛且相邻的元素合并出来的数组
+      let same_adjacent_tid_list = []
+      // 遍历联赛列表
+      sort_league_list.forEach( (league_obj) => {
+        // 如果上一个联赛对象id不等于当前的联赛对象id
+        if (pre_league_info.tid != league_obj.tid) {
+          // 重新给上一个联赛对象赋值
+          pre_league_info = league_obj
+          if (same_tid['mids']) {
+            same_adjacent_tid_list.push(same_tid)          
+          }
+          same_tid = lodash.cloneDeep(league_obj);
+        } else {
+          same_tid['mids'] += ',' + league_obj.mids;
+        }
+      })
+      sort_league_list = same_adjacent_tid_list;
+
+      // 将组合好的数据赋值给用来计算的数组
+      league_list = lodash.cloneDeep(sort_league_list);
+      
       league_list.forEach( (league_obj,league_index) => {
         let csid_key = 'csid_'+league_obj.csid
         csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []

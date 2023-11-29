@@ -70,7 +70,7 @@ const AssembleData = computed(() => {
 <template>
     <span v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</span>
     <section class="component play-template play-template-1 haveTitle" v-if="AssembleData?.haveTitle">
-        <ul class="list" v-for="(item,index) of AssembleData.assemble" :key="index">
+        <ul class="list textOverflow1" v-for="(item,index) of AssembleData.assemble" :key="index">
             <li class="list-title textOverflow1">{{ item.osn }}</li>
             <template v-for="_item of item.information" :key="_item.oid">
                 <li :class="{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }"
@@ -92,7 +92,7 @@ const AssembleData = computed(() => {
         </ul>
     </section>
     <section v-else class="component play-template play-template-1 noTitle">
-        <ul class="list" v-for="(_item,index) of AssembleData.assemble" :key="index">
+        <ul class="list textOverflow1" v-for="(_item,index) of AssembleData.assemble" :key="index">
             <li :class="{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }"
                 class="list-item onePxBorder"
                 @click="go_betting(_item)"

@@ -218,7 +218,7 @@ class UserCtr {
     this.lang = data;
     this.user_info.languageName = data;
     useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
-    console.error('EMIT_LANG_CHANGE',data)
+    // console.error('EMIT_LANG_CHANGE',data)
     LocalStorage.set('lang',data)
     this.update()
   }

@@ -166,7 +166,7 @@ onMounted(() => {
 .announce-content {
     width: 100%;
     height: 100%;
-    background: var(--q-gb-bg-c-4);
+    // background: var(--q-gb-bg-c-4);
 
     .main-page {
         color: #5a6074;

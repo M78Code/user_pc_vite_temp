@@ -307,7 +307,7 @@ export default {
   },
   methods: {
     getCsid (val){
-      is_eports_csid(val)
+      return is_eports_csid(val)
     },
     /**
      * @description: 获取父组件点击行详情
@@ -424,7 +424,7 @@ export default {
           &:nth-child(2) {
             display: flex;
             align-items: center;
-            padding: 0 0;
+            //padding: 0 0;
             user-select: text;
           }
           &:nth-child(3) {

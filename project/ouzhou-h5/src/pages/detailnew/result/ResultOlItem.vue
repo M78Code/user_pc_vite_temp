@@ -18,11 +18,10 @@ import { utils } from 'src/core/index'
 
 const props = withDefaults(defineProps<{
   value: TYPES.OlResult,
-  /** 玩法模板 */ hpt: -1|0|1|3,
+  /** 玩法模板 */ hpt?: -1|0|1|3,
 }>(),{
   hpt: -1
 })
-
 let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
 
 
