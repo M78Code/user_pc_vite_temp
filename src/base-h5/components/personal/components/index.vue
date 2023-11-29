@@ -268,7 +268,7 @@ const goto_announcement = () => {
       background-color: rgb(242, 206, 165, .4);
       margin-left: -.2rem;
       .lucky-user {
-        margin-top: .04rem;
+        margin-top: .046rem;
       }
     }
   }
