@@ -205,10 +205,18 @@ export default defineComponent({
     })
 
     const goToPage = (v) => {
+      let num = Math.ceil(props.count / perPageNum.value)
+      if(v<num){
       state.current = +v || 1
       state.goPage = +v || 1
       context.emit('goPageChange',  +v || 1)
+      }
+      else{
+        state.goPage = state.current
+      }
+   
     }
+
     onMounted(() => {
       //  console.log(1111111111,context )
     })

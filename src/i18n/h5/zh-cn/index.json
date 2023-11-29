@@ -487,6 +487,7 @@
     "match_max": "最多选择%s场比赛",
     "match_max2": "投注项数量已达上限",
     "match_min": "至少选择{0}场比赛",
+    "money_range": "限额",
     "max": "最大",
     "millions": "百万",
     "millions_10": "千万",
