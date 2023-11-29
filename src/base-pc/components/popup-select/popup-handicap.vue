@@ -107,7 +107,7 @@ function on_popup() {
  * @return {undefined} undefined
  */
 function on_click_handicap(row) {
-    console.error(row.value, cur_odd.value);
+    // console.error(row.value, cur_odd.value);
     const curr_odd = row.value
     if (cur_odd.value == curr_odd) return
     UserCtr.set_pre_odds(curr_odd);

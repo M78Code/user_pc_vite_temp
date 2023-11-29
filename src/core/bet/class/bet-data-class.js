@@ -851,7 +851,7 @@ this.bet_appoint_ball_head= null */
                 ol_obj.red_green = 'green_down'
               }
 
-              console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
+              // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
               if(ol_obj.odds == ws_ol_obj.ov ){
                 return
               }
@@ -881,7 +881,7 @@ this.bet_appoint_ball_head= null */
     let order_no = lodash_.get(obj,'orderNo')
     // 订单状态 订单状态(1:投注成功 2:投注失败)
     let status = lodash_.get(obj,'status', 0)
-    console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
+    // console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
     // 订单已经完成 不需要去设置 用户点击了 保留选项 或者投注的确定
     if(!BetViewDataClass.is_finally){
       // 单关 单注 简单 粗暴 其他的后面做

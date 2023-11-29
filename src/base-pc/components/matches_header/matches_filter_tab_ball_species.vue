@@ -106,8 +106,6 @@ onMounted(() => {
     show_right_btn.value = true;
   }
 
-  console.error('mi_100_arr.value',mi_100_arr.value)
-
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
 
