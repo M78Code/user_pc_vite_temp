@@ -4,7 +4,7 @@
     <div class="bet-footer">
         <div v-show="false">  {{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}</div>
         <div class="bet-state" v-show="BetViewDataClass.error_message">
-            <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': [200,'0000000'].includes(BetViewDataClass.error_code)}">
+            <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
                 {{ BetViewDataClass.error_message }}
             </div>
         </div>

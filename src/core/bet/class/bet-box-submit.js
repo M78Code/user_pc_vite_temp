@@ -374,8 +374,11 @@ const submit_handle = type => {
     let pre_type = 0
     let milt_single = 0
     if(BetData.is_bet_single){
-        let oid = lodash_.get(BetData.bet_single_list,'[0].playOptionsId','')
-        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${oid}`, {})
+        let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
+        if(ol_obj.ol_os != 1){
+            return set_error_message_config({code:"0402001"},'bet')
+        }
+        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionId}`, {})
         if(BetData.bet_amount){
             // 投注金额未达最低限额
             if(BetData.bet_amount*1 < min_max.min_money*1 ){

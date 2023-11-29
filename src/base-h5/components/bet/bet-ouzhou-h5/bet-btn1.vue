@@ -4,7 +4,7 @@
 -->
 <template>
   <div class="tip component bet-btn-item">
-    <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': [200,'0000000'].includes(BetViewDataClass.error_code)}">
+    <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
       {{ BetViewDataClass.error_message }}
     </div>
   </div> 
