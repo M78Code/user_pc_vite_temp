@@ -17,8 +17,11 @@
         <div class="amount" v-if="show">{{ format_money2(showMount) }}</div> 
         <div class="amount"  v-else>{{format_money2(showMount).replace(/[\d.,]/g, '*') }} </div> 
       </div> 
-      <div class="bg_line"> 
-        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips.png`" alt="" @click="goto_announcement" /> 
+      <div class="bg_line tips-content">
+        <img class="tips-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips-icon.png`" alt="" @click="goto_announcement" /> 
+        <div class="tips-bg">
+          <v-marquee />
+        </div>
       </div>
       <!-- 设置 -->
       <section> 
@@ -70,6 +73,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_account,api_betting } from 'src/api/index';
 import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,format_money2 } from "src/core";
+import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
 //语言设置
 const lang = ref(UserCtr.lang)
 const router = useRouter();
@@ -230,21 +234,45 @@ const goto_announcement = () => {
       color: #fff;
     }
   }
-  .bg_line{
-    height: 87px;
-    margin-top: -40px;
-    position: relative;
-    background-repeat: no-repeat;
-    background-image: url($SCSSPROJECTPATH + "/image/personal/bg_line.png");
-    background-size: cover;
-    > img {
-      width: 343px;
-      height: 30px;
-      position: absolute;
-      bottom: 0;
-      left: 16px;
+  // .bg_line{
+  //   height: 87px;
+  //   margin-top: -40px;
+  //   position: relative;
+  //   background-repeat: no-repeat;
+  //   background-image: url($SCSSPROJECTPATH + "/image/personal/bg_line.png");
+  //   background-size: cover;
+  //   > img {
+  //     width: 343px;
+  //     height: 30px;
+  //     position: absolute;
+  //     bottom: 0;
+  //     left: 16px;
+  //   }
+  // }
+
+  .tips-content {
+    display: flex;
+    width: 3.43rem;
+    height: .3rem;
+    margin: 0 auto;
+    margin-top: .26rem;
+    align-items: center;
+    .tips-icon {
+      z-index: 101;
+    }
+    .tips-bg {
+      width: 100%;
+      // padding: .1rem;
+      border-radius: .28rem;
+      height: .28rem;
+      background-color: rgb(242, 206, 165, .4);
+      margin-left: -.2rem;
+      .lucky-user {
+        margin-top: .04rem;
+      }
     }
   }
+
   section{
     margin-top: 30px;
     margin-bottom: 60px;
