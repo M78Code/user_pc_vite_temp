@@ -866,12 +866,18 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
-    // 两数拼接  
-    let home_away_mark = [2, 4, 7, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199, 367, 58] // 
+    // 区分赛种
+    let home_away_mark = []
+    switch(mid_obj.csid*1){
+        case 1:
+            home_away_mark = [2, 4, 7, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199, 367, 58,13] 
+            break
+        case 2:
+            home_away_mark = [38,39,64,198,199,58,57,145,146,19,18,87,52,51,63,97,46,45,97,] 
+    }
     // 首页不需要拼接的
     let home_away_diff = [2, 38]
-    // 多位数
-    let home_mark_more = [351, 347]
+
     // 主客队
     let home_away_only = [1, 37, 32]
 
@@ -901,11 +907,19 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
         if(home_away_mark.includes(ol_obj._hpid*1)){
             let handicap = text.split(' ')
             handicap = handicap.filter(item => item)
-    
-            text = `${handicap[0]}${handicap[1] ? `<span class='ty-span'>${handicap[1]}</span>`:''}`
-    
-            if(home_mark_more.includes(ol_obj._hpid*1)){
-                text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
+            // 足球特殊组合玩法
+            switch(handicap.length){
+                case 2:
+                    text = `${handicap[0]} <span class='ty-span'>${handicap[1]}</span>`
+                    break
+                
+                case 3:
+                    text = `${handicap[0]} ${handicap[1]} <span class='ty-span'>${handicap[2]}</span>`
+                    break
+
+                case 4:
+                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
+                    break
             }
         }
         return text
@@ -947,7 +961,7 @@ const get_mark_score = (ol_obj,mid_obj) => {
     // let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
     let play_id = [18, 19, 37, 42, 188, 189, 199]
     // 足球没有  38, 39,这些玩法 篮球的这些玩法要显示比分 
-    // 
+    // 需要区分赛种的话 可以在mid_obj 里面取 csid
     // 判断需要显示基准分的玩法
     if(!play_id.includes(Number(ol_obj._hpid))){
         let obj = lodash_.get(mid_obj,'msc_obj.S1',{})
