@@ -713,6 +713,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+        match_ctr: other.match_data_type, // 数据仓库 获取比分
+        device_type: other.device_type, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
     // 冠军 
@@ -870,7 +872,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let home_away_mark = []
     switch(mid_obj.csid*1){
         case 1:
-            home_away_mark = [2, 4, 7, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199, 367, 58,13] 
+            home_away_mark = [2,3,4,7,10,11,12,13,18,19,26,33,34,38,45,39,58,69,71,87,88,97,98,102,109,110,114,115,116,122,123,124,127,134,143,198,199,233,307,309,314,315,325,328,331,335,347,351,367, ] 
             break
         case 2:
             home_away_mark = [38,39,64,198,199,58,57,145,146,19,18,87,52,51,63,97,46,45,97,] 
@@ -965,9 +967,25 @@ const get_mark_score = (ol_obj,mid_obj) => {
     // 判断需要显示基准分的玩法
     if(!play_id.includes(Number(ol_obj._hpid))){
         let obj = lodash_.get(mid_obj,'msc_obj.S1',{})
-        score = `(${obj.home}-${obj.away})`
+        score = `(${obj.home || ''}-${obj.away|| ''})`
     }
     return score
+}
+
+// 获取投注项比分
+const get_score_config = (obj={}) => {
+    let query = null;
+    if(obj.device_type == 1){
+        // h5 数据仓库
+        query = h5_match_data_switch(obj.match_data_type)
+    }else{
+        // pc 数据仓库
+        query = pc_match_data_switch(obj.match_data_type)
+    }
+    const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${obj.matchId}_`, {})
+    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${obj.matchId}_${obj.playOptionId}`, {})
+
+    return get_mark_score(ol_obj,mid_obj)
 }
 
 export {
@@ -976,4 +994,5 @@ export {
     get_query_bet_amount_esports_or_vr,
     submit_handle,
     set_bet_obj_config,
+    get_score_config,
 }

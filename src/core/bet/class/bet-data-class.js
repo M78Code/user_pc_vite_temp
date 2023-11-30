@@ -1,7 +1,7 @@
 import { PageSourceData, fileds_map_common } from "src/core/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { get_score_config } from "./bet-box-submit"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { ref } from "vue"
 import lodash_ from "lodash"
@@ -813,6 +813,7 @@ this.bet_appoint_ball_head= null */
   }
 
   // 投注项赔率变动
+  // 盘口变动  每次回来 都需要用投注项盘口去数据仓库中 找到对应的盘口；要是找不到就直接判断为投注项失效 ；找到了 再进行 投注项筛选
   set_bet_c106_change( obj={} ) {
     // ws 每次推送的 mid只有一个 
     let mid = lodash_.get(obj,'mid')
@@ -862,6 +863,9 @@ this.bet_appoint_ball_head= null */
               ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
               // 设置 投注项状态  1：开 2：封 3：关 4：锁
               ol_obj.ol_os = ws_ol_obj.os
+              // 获取新的比分
+              ol_obj.mark_score = get_score_config(ol_obj)
+
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
@@ -880,7 +884,6 @@ this.bet_appoint_ball_head= null */
 
   set_bet_c201_change( obj={} ) {
     // 订单id
-    let order_no = lodash_.get(obj,'orderNo')
     // 订单状态 订单状态(1:投注成功 2:投注失败)
     let status = lodash_.get(obj,'status', 0)
     // console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)
