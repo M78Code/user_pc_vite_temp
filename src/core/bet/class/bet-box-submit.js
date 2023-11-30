@@ -714,7 +714,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
         match_ctr: other.match_data_type, // 数据仓库 获取比分
-        device_type: other.device_type, // 设备号
+        device_type: BetData.deviceType, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
     // 冠军 
@@ -977,15 +977,30 @@ const get_score_config = (obj={}) => {
     let query = null;
     if(obj.device_type == 1){
         // h5 数据仓库
-        query = h5_match_data_switch(obj.match_data_type)
+        query = h5_match_data_switch(obj.match_ctr)
     }else{
         // pc 数据仓库
-        query = pc_match_data_switch(obj.match_data_type)
+        query = pc_match_data_switch(obj.match_ctr)
     }
     const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${obj.matchId}_`, {})
     const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${obj.matchId}_${obj.playOptionId}`, {})
 
     return get_mark_score(ol_obj,mid_obj)
+}
+
+// 查询当前盘口是否健在
+const get_market_is_show = (obj={}) =>{
+    let query = null;
+    if(obj.device_type == 1){
+        // h5 数据仓库
+        query = h5_match_data_switch(obj.match_ctr)
+    }else{
+        // pc 数据仓库
+        query = pc_match_data_switch(obj.match_ctr)
+    }
+    const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${obj.matchId}_${obj.marketId}`, {})
+
+    return !!hl_obj.hid
 }
 
 export {
@@ -995,4 +1010,5 @@ export {
     submit_handle,
     set_bet_obj_config,
     get_score_config,
+    get_market_is_show,
 }

@@ -1,7 +1,7 @@
 import { PageSourceData, fileds_map_common } from "src/core/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
-import { get_score_config } from "./bet-box-submit"
+import { get_score_config,get_market_is_show } from "./bet-box-submit"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { ref } from "vue"
 import lodash_ from "lodash"
@@ -832,6 +832,17 @@ this.bet_appoint_ball_head= null */
       if( mid_list.includes(mid)){
         // 投注项盘口id 多个（单关合并）
         market_list = this.bet_single_list.map(item => item.marketId) || []
+        // 查询投注项中的 投注项id 
+        // this.bet_single_list.forEach((item,ol_index) => {
+        //    // 匹配盘口是否健在
+        //   if(!get_market_is_show(item)){
+        //     // 设置 投注项状态  1：开 2：封 3：关 4：锁
+        //     item.ol_os = 3
+        //     // 更新投注项内容
+        //     this.set_ws_message_bet_info(item,ol_index)
+        //   }
+        // });
+       
         // 获取ws推送中的 盘口项 进行筛选匹配
         // 对比盘口和投注项
         hls.forEach(item => {
