@@ -609,7 +609,7 @@ const set_error_message_config = (res ={},type,order_state) => {
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
 const set_bet_obj_config = (params = {}, other = {}) => {
-    // console.error('投注项需要数据', params, 'other', other);
+    console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -945,7 +945,9 @@ const get_mark_score = (ol_obj,mid_obj) => {
     // 显示基准分
     // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
     // let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
-    let play_id = [18, 19, 37, 38, 39, 42, 188, 189, 199]
+    let play_id = [18, 19, 37, 42, 188, 189, 199]
+    // 足球没有  38, 39,这些玩法 篮球的这些玩法要显示比分 
+    // 
     // 判断需要显示基准分的玩法
     if(!play_id.includes(Number(ol_obj._hpid))){
         let obj = lodash_.get(mid_obj,'msc_obj.S1',{})
