@@ -1,12 +1,26 @@
 <template>
   <div>
 
-     <h1>客户端模块化+SDK版本</h1>
+     <h1>SDK 本地 调试   check-sdk-umd  ```</h1>
 
   </div>
 </template>
 
-<script setup>
+<script  >
+
+
+export default {
+  data() {
+    return {
+      // key: value
+    }
+  },
+  created () {
+    console.log('TY_JSSDK------222----',window);  ;
+  },
+}
+
+
 
 </script>
 

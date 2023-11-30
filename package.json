@@ -59,7 +59,7 @@
 
 
     "divider--13--1":"echo  -------------------------动画项目  开始----------------------------- ",
-    "export-build-version-animation": "node ./job/export-build-version-animation.js dev",
+    "export-build-version-animation": "node ./job/export-build-version-animation.js",
     "dev-animation-inner": "vite    --config  ./entries/animation/animation.vite.config.js",
     "build-animation-inner": "vite   build --config  ./entries/animation/animation.vite.config.js  --mode  production",
     "dev-animation": "run-s remove-output  env-dev  export-build-version-animation   remove-dist copy-oss-3   copy-oss  export-build-in-config dev-animation-inner",
@@ -69,14 +69,23 @@
 
 
     "divider--14--1":"echo  -------------------------SDK 生成 项目  开始----------------------------- ",
-
-    "build-custom-sdk": "run-s custom-merchant-config-version-alert export-merchant-config build-custom-sdk-inner",
-    "build-custom-sdk-inner": "vite  build    --config  ./entries/custom-sdk/custom-sdk.vite.config.js   --mode  production ",
-    "build-full-sdk": "vite  build    --config  ./entries/full-sdk/full-sdk.vite.config.js   --mode  production ",
+    "export-build-version-client-sdk-dev": "node ./job/export-build-version-client-sdk-dev.js",
+    "export-build-version-client-sdk-build": "node ./job/export-build-version-client-sdk-build.js",
+    "dev-client-sdk-inner": "vite    --config  ./entries/client-sdk-dev/client-sdk-dev.vite.config.js",
+    "dev-client-sdk": "run-s remove-output  env-dev  export-build-version-client-sdk-dev   remove-dist copy-oss-3   copy-oss  export-build-in-config dev-client-sdk-inner",
+    "build-client-sdk-inner": "vite  build    --config  ./entries/client-sdk-build/client-sdk-build.vite.config.js   --mode  production ",
+    "build-client-sdk": "run-s  remove-output env-prod  export-build-version-client-sdk-build   remove-dist  copy-oss-3 copy-oss   export-merchant-config  export-build-in-config resolve-merchant-config  export-full-version-close build-client-sdk-inner copy-oss-2  remove-dist-assets",
+ 
+   
     "divider--14--2":"echo  -------------------------SDK 生成 项目  结束----------------------------- ",
 
 
+    "divider--15--1":"echo  -------------------------SDK 验证 项目  开始----------------------------- ",
 
+   
+    "dev-check-sdk-umd": "vite    --config  ./entries/check-sdk-umd/check-sdk-umd.vite.config.js",
+    "dev-check-sdk-umd-html": "vite    --config  ./entries/check-sdk-umd-html/check-sdk-umd-html.vite.config.js",
+    "divider--15--2":"echo  -------------------------SDK 验证 项目  结束----------------------------- ",
 
 
 
@@ -98,8 +107,7 @@
     "build-full-version": "vite  build    --config  ./entries/full-version/full-version.vite.config.js   --mode  production ",
 
     "dev-check-sdk-esm": "vite    --config  ./entries/check-sdk-esm/check-sdk-esm.vite.config.js",
-    "dev-check-sdk-umd": "vite    --config  ./entries/check-sdk-umd/check-sdk-umd.vite.config.js",
-    "dev-check-sdk-umd-html": "vite    --config  ./entries/check-sdk-umd-html/check-sdk-umd-html.vite.config.js",
+
     "dev-postmessage-test": "vite    --config  ./entries/postmessage-test/postmessage-test.vite.config.js",
     "export-full-version-open": "node ./job/export-full-version-config.js full",
     "export-full-version-close": "node ./job/export-full-version-config.js",
