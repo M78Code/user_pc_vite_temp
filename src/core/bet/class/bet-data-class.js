@@ -841,7 +841,8 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            if(parseFloat(ws_ol_obj.ov)){
+            // console.error('sssss',ws_ol_obj)
+            if(ws_ol_obj.ov){
               clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
@@ -852,12 +853,13 @@ this.bet_appoint_ball_head= null */
               }
 
               // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
-              if(ol_obj.odds == ws_ol_obj.ov ){
+              // 投注项和状态一致不更新数据 
+              if(ol_obj.odds == ws_ol_obj.ov &&  ol_obj.ol_os == ws_ol_obj.os){
                 return
               }
              
               // 重新设置赔率
-              ol_obj.odds = ws_ol_obj.ov*1
+              ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
               // 设置 投注项状态  1：开 2：封 3：关 4：锁
               ol_obj.ol_os = ws_ol_obj.os
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, '', ol_obj.sportId)
