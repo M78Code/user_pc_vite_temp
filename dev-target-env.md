@@ -111,11 +111,18 @@ DEV_TARGET_ENV='online'
 
 
 
+//是否是用于内部测试  是：true ，否：false
+
+let DEV_IS_FOR_NEIBU_TEST= true
+
+
+//  DEV_IS_FOR_NEIBU_TEST= false
 export {
  
  
   DEV_TARGET_VERSION,
-  DEV_TARGET_ENV
+  DEV_TARGET_ENV,
+  DEV_IS_FOR_NEIBU_TEST
  
  
 };
