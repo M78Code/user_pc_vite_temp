@@ -136,7 +136,8 @@ const on_bootom = lodash.debounce(() => {
  * @param {undefined} undefined
  */
  const update_list_card_offset = lodash.debounce((e) => {
-  MatchListCard.set_card_show_level(e);
+  MatchListScrollClass.set_scroll_top(e);
+  MatchListCard.set_card_show_level();
 }, 300);
 /**
  * @Description 滚动条滚动事件

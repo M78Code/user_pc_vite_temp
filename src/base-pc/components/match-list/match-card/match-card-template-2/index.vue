@@ -6,7 +6,7 @@
     :style="`height:${lodash.get(match_style_obj, `total_height`)}px !important;
             width:${LayOutMain_pc.oz_layout_content - LayOutMain_pc.oz_right_width - LayOutMain_pc.oz_left_width}px  !important;`">
     <!--改成101用来打包调试-->
-    <component :is="`MatchTpl${get_current_template_number()}After`"  :mid="mid" />
+    <component v-if="[1, 2].includes(match_style_obj.show_level)" :is="`MatchTpl${get_current_template_number()}After`"  :mid="mid" />
   </div>
 </template>
 
