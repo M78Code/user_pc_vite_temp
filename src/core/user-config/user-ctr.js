@@ -29,7 +29,7 @@ import { i18n_t, i18n } from "..";
 
 import STANDARD_KEY from "src/core/standard-key";
 const user_key = STANDARD_KEY.get("user_info");
-
+import store from "src/store-redux/index.js";
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
