@@ -4,7 +4,7 @@
   <div class="header-main">
     <div class="header-content">
       <div class="logo">
-        <img :src="logo" alt="" srcset="" class="" />
+        <img :src="compute_img_url(logo)" alt="" srcset="" class="" />
       </div>
       <div class="header-right">
         <!-- 头部菜单 -->
@@ -28,12 +28,12 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onUnmounted, onMounted } from "vue";
 import right_head from "./right_head.vue";
-import logo from "src/assets/images/logo.png";
 import { useRouter, useRoute } from 'vue-router'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { MenuData,useMittEmit,MITT_TYPES,UserCtr  } from "src/core/"
+import { MenuData,useMittEmit,MITT_TYPES,UserCtr, i18n, useMittOn  } from "src/core/"
+import { compute_img_url } from 'src/core/server-img/index.js'
 
 export default defineComponent({
   name: "TopHeaderTemplate1",
@@ -44,7 +44,7 @@ export default defineComponent({
   setup(props, context) {
     const userRouter = useRouter()
     const route = useRoute()
-
+    const logo = ref('pc-home-logo-en')
     const navList = ref([
       { label: "ouzhou.match.home", id:0, name: 'home' },
       { label: "menu.match_playing", id:1, name: 'in_play' },
@@ -83,13 +83,29 @@ export default defineComponent({
       //   useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, item.id)
       // })
     };
+    const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>get_logo()).off
+
+    const get_logo = () => {
+      if (i18n.global.locale == 'zh') {
+        logo.value = 'pc-home-logo-zh'
+      } else {
+        logo.value = 'pc-home-logo-en'
+      }
+    }
+    onMounted(() => {
+      get_logo()
+    })
+    onUnmounted(()=>{
+      off()
+    })
 
     return {
       logo,
       navList,
       nav_click,route,
       BetData,
-      UserCtr
+      UserCtr,
+      compute_img_url
     };
   },
 });
