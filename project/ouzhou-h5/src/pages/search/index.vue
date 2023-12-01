@@ -1,5 +1,5 @@
 <template>
-	<div class="search-container">
+	<div class="page search-index search-container">
 		<!-- 头部搜索 -->
 		<div class="top_info_search">
 			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`"
@@ -27,10 +27,12 @@
 				<div class="middle_info_tab diff text">
 					<div>{{ i18n_t('ouzhou.search.search_history') }}</div>
 				</div>
-				<li v-for="(item, index) in history_data" :key="item.cuid">
-					<span style="display: inline-block; width: 90%;" @click="get_search_data(store.tabIndex, sport_kind_data[store.tabIndex]?.id, item.keyword)">{{
-						item.keyword }}</span><img :src="compute_local_project_file_path('/image/svg/close10.svg')" alt=""
-						@click="_delete_history_search(item.keyword)">
+				<li class="list-item" v-for="(item, index) in history_data" :key="item.cuid">
+					<span class="inner-text" @click="get_search_data(store.tabIndex, sport_kind_data[store.tabIndex]?.id, item.keyword)">
+						{{item.keyword }}
+					</span>
+					<img class="inner-delete" :src="compute_local_project_file_path('/image/svg/close10.svg')" alt=""
+						@click="_delete_history_search(item.keyword)" />
 				</li>
 				<li class="del" @click="_delete_history_search('')">{{ i18n_t('ouzhou.search.clear_search_history') }}</li>
 			</ul>
@@ -810,12 +812,20 @@ li {
 
 .list1 {
 	// margin-top: 50px;
-
-	li {
+	.list-item {
 		margin-bottom: 0;
 		padding: 12px 10px;
+		display: flex;
+		.inner-text{
+			flex: 1;
+			width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		.inner-delete{
+			padding: 0 10px;
+		}
 	}
-
 	.del {
 		width: 100%;
 		background-color: #fff;
@@ -824,9 +834,6 @@ li {
 		font-size: 12px;
 	}
 
-	img {
-		margin-left: 10px;
-	}
 
 	.text {
 		border-color: var(--q-gb-bd-c-1);
