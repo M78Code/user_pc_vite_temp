@@ -69,8 +69,8 @@
 					</div>
 				</div>
 				<template v-if="is_results">
-					<div class="match-results-list">
-						<match-container />
+					<div class="match-results-list" @click="resultsJumpDetailHandle">
+						<match-container/>
 					</div>
 				</template>
 				<template v-else>
@@ -384,7 +384,6 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 		searchSportType: sport_id || 1,
 		isPc: false
 	}
-	console.log('goto_detailsgoto_detailsgoto_details', is_results)
 	if (is_results.value) params.from = 2
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
@@ -429,6 +428,12 @@ const get_sport_kind = () => {
 function league_icon_error($event) {
 	$event.target.src = compute_img_url('match-cup')
 	$event.target.onerror = null
+}
+
+function resultsJumpDetailHandle() {
+	sessionStorage.setItem('search_params', JSON.stringify({
+		keyword: input_value.value
+	}));
 }
 
 // 滚球跳转
