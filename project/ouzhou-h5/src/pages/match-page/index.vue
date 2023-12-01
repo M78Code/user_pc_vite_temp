@@ -60,7 +60,7 @@ onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
       if (!BaseData.is_emit) {
-        MatchMeta.set_origin_match_data({})
+        MatchMeta.set_origin_match_data()
       }
       console.log('MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE')
     }).off,
