@@ -3,7 +3,7 @@
     <div class="mathc_results_visuals">
       <template v-if="active_tab.id == '1'">
         <template v-if="match_detail && match_detail.msc && match_detail.msc.length > 0">
-          <div v-if="['1'].includes(match_detail.csid)">
+          <div v-if="match_detail.csid == 1">22
             <div class="designation">
               <span class="ellipsis">{{ match_detail.mhn }}</span>
               <span class="ellipsis">{{ match_detail.man }}</span>
@@ -32,7 +32,7 @@
             </div>
           </div>
           <!-- 篮球比赛分析图 -->
-          <div v-if="['2'].includes(match_detail.csid)">
+          <div v-if="match_detail.csid == 2">
             <basket_ball_stats :detail_info="match_detail" :score_list="detail_info" />
           </div>
           <div v-else>

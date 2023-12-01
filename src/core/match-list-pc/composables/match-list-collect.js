@@ -210,12 +210,108 @@ const length_0_fn = () => {
     useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 0);
   });
 };
+
+/**
+  * @Description: 根据赛事信息返回赛事类型 1：常规，2：冠军，3：电竞, 99:虚拟体育
+  */
+const match_collect_type = (match)=>{
+  let res = '1';
+  // 获取是否冠军赛事
+  let champion = lodash.get(match,'tpl_id', 0);
+  let menu_type = lodash.get(match,'menu_type', 0);
+  if(champion == 18 || menu_type == 100){
+    res =  '2';
+  } else {
+    // 获取赛种
+    let csid = lodash.get(match,'csid', 0)*1;
+    if(csid>=1000){
+      // 虚拟体育
+      res =  '99';
+    } else if(csid>=100){
+      // 电竞赛事
+      res =  '3';
+    } else {
+      // 常规赛事
+      res =  '1';
+    }
+  }
+  return res;
+}
+
+/**
+  * @Description:获取赛事收藏信息并设置赛事mf和联赛tf收藏信息
+  * param{Object} obj 赛事数据(元数据直接操作) {tid:'888',mid:'222'}
+  * param{Object} obj 收藏数据对象 {"1":{"tids":{"6666":1},"mids":{"3544337":1},"exclude":{"822459":{"tids":"822459","mids":{"222":1}}}}}
+  * param{String} type 赛事类型 // 1：常规，2：冠军，3：电竞
+  * return {Object} 收藏信息 {tf:false,mf:false}
+  */
+export const match_collect_status = (match, obj, type=-1) =>{
+  // match={tid:'888',mid:'222'};
+  // obj= {"1":{"tids":{"888":1},"mids":{"222":1},"exclude":{"888":{"tids":"888","mids":{"2221":1}}}}}
+
+  if(!obj){
+    obj = match_collect_data.data;
+  }
+
+  let res = {tf:false,mf:false};
+  if(match && obj){
+    try {
+      let tid = lodash.get(match,'tid', 0);
+      let mid = lodash.get(match,'mid', 0);
+      //0:全部，1：常规，2：冠军，3：电竞
+      if(type==-1){
+        type = match_collect_type(match);
+      }
+      let data = lodash.get(obj,`${type}`);
+      if(data){
+        const tids = lodash.get(data,'tids');
+        const exclude = lodash.get(data,'exclude');
+        // tids联赛里面有
+        if(tids && tids[tid]) {
+          res.tf=true;
+          res.mf = true;
+          // exclude检测还发有
+          if(exclude){
+            const temp_mid = lodash.get(exclude,`${tid}.mids.${mid}`);
+            // if(lodash.get(exclude,`${tid}`)){
+            //   res.tf = false;
+            // }
+            if(temp_mid){
+              res.mf = false;
+            }
+          }
+        }
+        // 赛事收藏检测
+        const mids = lodash.get(data,'mids');
+        if(mids && mids[mid]){
+          res.mf = true;
+        } else {
+          if(!mid){
+            res.mf = false;
+          }
+        }
+      }
+      //0:全部，1：常规，2：冠军，3：电竞
+      if(type==2 && res.mf){
+        res.tf = true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  // console.error(type,'赛-事收藏信息:',match, res);
+  // 数据合并
+  Object.assign(match, res);
+  console.log('adashfdf', match);
+
+  return res;
+}
 /**
  * @Description 本地统计收藏数量并设置
  * @param {undefined} undefined
  */
 // function local_statistics_collect_count() {
-//   let match_list_len = _.get(this.match_list_data, "match_list.length", 0);
+//   let match_list_len = lodash.get(this.match_list_data, "match_list.length", 0);
 //   if (match_list_len) {
 //     let count_mf = 0;
 //     this.match_list_data.match_list.forEach((match) => {
@@ -231,16 +327,16 @@ const length_0_fn = () => {
 //   } else {
 //     let all_league_list = [];
 //     all_league_list.push(
-//       ..._.get(this.match_list_data, "league_list_obj.livedata", [])
+//       ...lodash.get(this.match_list_data, "league_list_obj.livedata", [])
 //     );
 //     all_league_list.push(
-//       ..._.get(this.match_list_data, "league_list_obj.nolivedata", [])
+//       ...lodash.get(this.match_list_data, "league_list_obj.nolivedata", [])
 //     );
 //     let count_mf = 0;
 //     try {
 //       // 组装所有赛事,检测赛事收藏,算总共的收藏赛事数量
 //       all_league_list.forEach((item) => {
-//         let mids_ = _.get(item, "mids", "").split(",");
+//         let mids_ = lodash.get(item, "mids", "").split(",");
 //         mids_.forEach((mid_) => {
 //           // 组装所有赛事
 //           const temp_match = { mid: mid_, csid: item.csid, tid: item.tid };
@@ -390,7 +486,7 @@ export const set_global_collect_data = (obj) =>{
   // 列表转对象
   const fun_list2obj = function(list) {
     const obj = {};
-    if(list){
+    if(list && list?.length){
       try {
         list.forEach(item => {
           if(item){
@@ -404,24 +500,24 @@ export const set_global_collect_data = (obj) =>{
     return obj;
   }
   if(obj){
-    obj = _.cloneDeep(obj);
+    obj = lodash.cloneDeep(obj);
     // 所有列表转对象
     for (const key in obj) {
       const temp = obj[key];
       if (temp) {
         // tids所有列表转对象
-        const tids = _.get(temp,'tids');
+        const tids = lodash.get(temp,'tids');
         temp.tids= fun_list2obj(tids);
         // mids所有列表转对象
-        const mids = _.get(temp,'mids');
+        const mids = lodash.get(temp,'mids');
         temp.mids = fun_list2obj(mids);
         // exclude所有列表转对象
-        const exclude = _.get(temp,'exclude');
+        const exclude = lodash.get(temp,'exclude');
         if(exclude){
           const obj = {};
           exclude.forEach(item => {
-            const tids =  _.get(item,'tids');
-            const mids =  _.get(item,'mids');
+            const tids =  lodash.get(item,'tids');
+            const mids =  lodash.get(item,'mids');
             if(tids && mids){
               item.mids = fun_list2obj(mids);
               obj[tids] = item;
@@ -441,8 +537,8 @@ function fethc_collect_match() {
   api_match
     .post_fetch_collect_list_high_light({ matchType, cuid: UserCtr.get_cuid() })
     .then((res) => {
-      if (res.data.code == 200) {
-        let data = _.get(res, 'data.data');
+      if (res.code == 200) {
+        let data = lodash.get(res, 'data');
         // 格式化接口返回的收藏对象
         set_global_collect_data(data);
       }

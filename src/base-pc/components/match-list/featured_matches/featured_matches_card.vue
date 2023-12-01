@@ -8,20 +8,20 @@
         :key="item.tid" :class="{ 'margin-box': index != matches_featured_list.length - 1 }">
         <div class="right-top-img" :style="compute_css_obj({ key: 'pc-home-icon-sport-top', position: item.csid })"></div>
         <div class="matches_description">
-          <div class="matches_type">{{ item.tn }}</div>
+          <div class="matches_type">{{ get_match_item(item.mid)?.tn }}</div>
           <!-- <div class="matches_time din_font">
             <span>{{ item.course }}</span>
             <span v-show="Number(item.mmp)">{{ item.mstValue }}</span>
           </div> -->
           <!-- 比赛进程 -->
-          <match-process v-if="item" :match="item" source='match_list' show_page="match-list" :rows="1" :date_rows="1"
+          <match-process v-if="item" :match="get_match_item(item.mid)" source='match_list' show_page="match-list" :rows="1" :date_rows="1"
             date_show_type="inline" periodColor="gray" />
         </div>
         <div class="club-name" :class="{'bold': get_handicap_index_by(item) == 1}">
-          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.home`) }}</span>
+          <span>{{ get_match_item(item.mid)?.mhn }}</span><span class="din_font">{{get_match_score(get_match_item(item.mid)).home_score }}</span>
         </div>
         <div class="union-name" :class="{'bold': get_handicap_index_by(item) == 2}">
-          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.away`) }}</span>
+          <span>{{ get_match_item(item.mid)?.man }}</span><span class="din_font">{{get_match_score(get_match_item(item.mid)).away_score }}</span>
         </div>
         <div class="odds_box">
           <div class="top-line"></div>
@@ -47,7 +47,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { get_ouzhou_data_tpl_id ,get_handicap_index_by, get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
+import { get_ouzhou_data_tpl_id ,get_handicap_index_by, get_match_to_map_obj, get_match_score} from 'src/core/match-list-pc/match-handle-data.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { utils } from "src/core/index.js"
 
@@ -87,7 +87,9 @@ const get_featurd_list = async () => {
   }
 }
 const mitt_list = [useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, get_featurd_list).off]
-
+const get_match_item = (mid) => {
+  return MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(mid)
+}
 const current_check_betId = ref(MenuData.current_check_betId.value)
 // 监听 当前投注项ID的变化
 watch(

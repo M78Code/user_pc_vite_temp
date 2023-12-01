@@ -568,7 +568,7 @@ const set_error_message_config = (res ={},type,order_state) => {
                 case 2:
                     obj = {
                         code: '0000000',
-                        message: i18n_t('ouzhou.bet.bet_loading')
+                        message: i18n_t('bet.bet_loading')
                     }
                     break
                  

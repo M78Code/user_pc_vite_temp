@@ -6,6 +6,7 @@ import { api_bymids } from "./match-list-featch.js";
 // import { fetch_match_list } from '../match-list-composition.js'
 import { useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_PC_List_Common } from 'src/core/index.js';
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
+import { match_collect_status } from './match-list-collect.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 const ws_keys_map = {} //ws map对应表
 function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common,remove) {
@@ -60,6 +61,9 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common,rem
 			MatchListData.set_active_mids(_mids)
 		},
 		set_list(match_list) {
+			match_list.forEach(match => {
+				match_collect_status(match)        
+			  })
 			MatchListData.set_list(match_list)
 		},
 		// 将新的可视区域赛事id 设置为活跃
