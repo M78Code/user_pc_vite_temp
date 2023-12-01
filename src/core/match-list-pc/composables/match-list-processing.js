@@ -5,7 +5,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { virtual_sport_format } from 'src/core/format/module/format-match.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import {mx_collect_count, set_collect_count} from "./match-list-collect.js";
+import {mx_collect_count, set_collect_count, match_collect_status} from "./match-list-collect.js";
 import virtual_composable_fn from './match-list-virtual.js'
 import {api_bymids, set_league_list_obj} from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -109,11 +109,23 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// 设置收藏数量
 		// lockie
 		if (vx_filter_select_obj.value.length > 0) {
-			// 只有预加载会传 true
-			if (!collect) {
-				mx_collect_count();
-			}
+			mx_collect_count();
 		} else {
+			try {
+				// 组装所有赛事,检测赛事收藏,算总共的收藏赛事数量
+			  all_league_list.forEach(item => {
+				let mids_ = lodash.get(item,'mids','').split(',');
+				mids_.forEach(mid_ => {
+					// 组装所有赛事
+				  const temp_match = {mid:mid_,csid:item.csid,tid:item.tid}
+				  // 设置收藏信息
+				  match_collect_status(temp_match)
+				});
+			  });
+			} catch (error) {
+			  count_mf = lodash.get(data,'data.collectCount',0)
+			  console.error(error);
+			}
 			set_collect_count({
 				type: "set",
 				count: lodash.get(data, "data.collectCount", 0),
@@ -247,10 +259,9 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collect, backend_run }) => {
 	is_show_hot.value = false;
-	let all_league_list = [];
-	all_league_list.push(...lodash.get(match_list, "livedata", []));
-	all_league_list.push(...lodash.get(match_list, "nolivedata", []));
-	deal_with_list_data(all_league_list)
+  match_list.forEach(match => {
+	  match_collect_status(match)        
+	})
 	if(Array.isArray(match_list)){ //有时候是 {}
 		MatchListData.set_list(match_list)
 	}

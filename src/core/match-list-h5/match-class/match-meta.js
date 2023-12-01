@@ -722,9 +722,9 @@ class MatchMeta {
       this.handler_match_list_data({ list: list, is_virtual: false, merge: 'cover' })
       await MatchCollect.get_collect_match_data(list)
       // 该赛事是否收藏
-      list.forEach((t) => {
-        MatchCollect.set_match_collect_state(t, true)
-      })
+      // list.forEach((t) => {
+      //   MatchCollect.set_match_collect_state(t, true)
+      // })
     } else {
       this.set_page_match_empty_status({ state: true });
     }

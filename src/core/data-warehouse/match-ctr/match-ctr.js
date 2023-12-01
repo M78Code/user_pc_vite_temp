@@ -32,6 +32,7 @@
 import MatchDataBaseWS from  "./match-ctr-ws.js"
 import { reactive,toRef} from 'vue'
 import {other_play_name_to_playid} from 'src/core/constant/config/data-class-ctr/other-play-id.js'
+import { match_collect_status } from 'src/core/match-list-pc/composables/match-list-collect.js'
 export default class MatchDataBase
 {
   /**
@@ -693,6 +694,9 @@ get_quick_mid_obj_ref(mid){
    */
   set_list(list, param={}){
     console.log('set_list', list,this.name_code)
+    list.forEach(match => {
+      match_collect_status(match)        
+    })
     if(list){
       // 索引置换
       let temp = lodash.cloneDeep(this.match_list);

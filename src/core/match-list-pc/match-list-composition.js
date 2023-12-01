@@ -14,7 +14,7 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { update_collect_data, mx_collect_count } from "./composables/match-list-collect.js";
+import { update_collect_data, mx_collect_count, mx_collect_match, match_collect_status, fethc_collect_match } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
 import { mx_use_list_res, mx_list_res } from './composables/match-list-processing.js'
@@ -25,7 +25,6 @@ import ServerTime from 'src/core/server-time/server-time.js';
 // import filterHeader from 'src/core/filter-header/filter-header.js'
 import get_match_list_params from './match-list-params.js'
 import { match_list_handle_set } from './match-handle-data.js'
-import { mx_collect_match, fethc_collect_match } from 'src/core/match-list-pc/composables/match-list-collect.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
 const { load_video_resources } = pre_load_video

@@ -196,7 +196,6 @@ class MatchUtils {
    // 
   get_match_15_minute_stage (ms, mst)  {
     const playingMethods_15 = use_playingMethods_15()
-    console.log(playingMethods_15)
     let isLock = false
     let title = ''
     if (ms !== 1) {

@@ -156,6 +156,7 @@ class MenuData {
         csid:`${+item.mi-5000}`
       }
     });
+    // top_events_list.push({...top_events_list[0],...{mi:102,csid:1}})
     champion_list = champion_list
     .filter((n)=>{return this.conventionalType.includes(+n.mi-300)})
     .map((item)=>{
