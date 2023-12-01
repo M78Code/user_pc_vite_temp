@@ -25,6 +25,7 @@
         }}</span>
         <Select-Wrapper
           :value="champion_sport"
+          :sportType="champion_sport"
           :options="champion_sport_type"
           :isChampion="1"
           :showInput="true"
@@ -48,7 +49,7 @@
                 'chevron_left': 'icon-arrow-left',
                 'chevron_right': 'icon-arrow-right',
               }"
-              class="q_data"
+              class="q_data date_class"
               v-model="date"
               @click.stop
               @range-end="confirmDate"
@@ -60,7 +61,7 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <div class="wrap-handel">
       <div class="condition">
         <div class="r-select ml-30" style="margin-right: 5px">

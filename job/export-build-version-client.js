@@ -7,7 +7,7 @@ try {
     DEV_TARGET_ENV_CONFIG = await import( "../dev-target-env.js"  );
 } catch (error) {
 }
-const {DEV_TARGET_VERSION} = DEV_TARGET_ENV_CONFIG
+const {DEV_TARGET_VERSION  } = DEV_TARGET_ENV_CONFIG
 import { ensure_write_folder_exist, write_file } from "./write-folder-file.js";
 
 import { RESOLVE_BUILD_VERSION_COMMON_FN } from "./build-version-common.js";

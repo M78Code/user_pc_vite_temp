@@ -61,8 +61,12 @@ export function usedetailData(route) {
   let sportId = 1,
     mid = 2858623,
     tid;
-
-  let route_parmas = ref(route.params)  
+    let route_parmas = ref(route.params)  
+    watch(()=>route.params,val=>{
+       route_parmas.value = val
+       init()
+    },{deep:true})
+ 
   // 监听分类切换数据
   watch(current_key, (val) => {
     if (!val) return;
@@ -174,16 +178,18 @@ export function usedetailData(route) {
       detail_loading.value = false;
       detail_info.value = { ...detail_info.value, ...res.data };
       detail_info.value["course"] = handle_course_data(detail_info.value);
-
-      LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
+      setTimeout(() => {
+        LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
+      }, 200);
+      
       //存取赛事详情基础信息
       // console.log(detail_info.value,'detail_info.value')
 
       MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
 
-      // 刷新按钮不刷新右侧视频动画
+      // detail_info.value = getMidInfo(mid);
       if (is_fresh.value) {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
+        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, route_parmas.value.mid);
       }
     } catch (error) {
       console.error("get_detail_data", error);
@@ -362,6 +368,7 @@ export function usedetailData(route) {
   );
   let message_fun = [];
   onMounted(() => {
+    console.log(11111111111111)
     sportId = route.params.csid;
     mid = route.params.mid;
     tid = route.params.tid;
@@ -470,21 +477,21 @@ export function usedetailData(route) {
     init();
   };
   /* 赛事结束之后调取详情接口 */
-  const { off:off_init } = useMittOn(
+  message_fun.push(useMittOn(
     MITT_TYPES.EMIT_SWITCH_MATCH,
     ((parmas)=>{
       console.log(parmas,'parmas');
-      route_parmas.value = parmas
+      // route_parmas.value = parmas
       refresh()
       console.error('-----------aaaaa');
     })
-  );
+  ).off)
   onUnmounted(() => {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
     message_fun.forEach(i=>i())
-    off_init()
+    // off_init()
     clearTimeout(back_to_timer);
   });
 
@@ -541,7 +548,7 @@ export function usedetailData(route) {
     (_new, _old) => {
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {
-        // mx_autoset_active_match({ mid: route.params.mid });
+        mx_autoset_active_match({ mid: route.params.mid });
       }
       // 否则更新玩法集
       else {

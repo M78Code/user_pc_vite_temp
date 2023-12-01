@@ -92,7 +92,7 @@ class MatchMeta {
     }
 
     // 获取真实数据
-    this.http_params.cd = md
+    this.http_params.md = md
     is_match && this.get_target_match_data({md})
 
     // 滚球全部
@@ -473,28 +473,28 @@ class MatchMeta {
 
   /**
    * @description 获取实际渲染赛事
-   * @param { Boolean } is_classify 是否需要进行 开赛 / 未开赛归类
+   * @param { Boolean } is_classify 是否需要进行 开赛 / 未开赛归类, is_error 是否限频或者接口报错
    *  app-h5: 需要
    *  ouzhou-h5 不需要
    *  yazhou-h5 需要
    */
-  async get_target_match_data ({is_classify = false, scroll_top = 0, md = ''}) {
+  async get_target_match_data ({is_classify = false, scroll_top = 0, md = '', is_error = false}) {
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     const params = this.get_base_params()
-    this.current_euid = `${euid}_${md}`
+    this.http_params.md = md
+    if (!is_error) this.current_euid = `${euid}_${md}`
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,
-        md
+        md: this.http_params.md
       })
       if (this.current_euid !== `${euid}_${md}`) return
       if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
       // 接口请求成功，重置接口限频次数
       this.error_http_count.match = 1
-      // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
-      // if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
       const list = lodash.get(res, 'data', [])
       const length = lodash.get(list, 'length', 0)
+      // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
       if (length < 1) return this.set_page_match_empty_status({ state: true });
       if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data(list)
       this.handler_match_list_data({ list: list, is_classify, scroll_top })
@@ -509,18 +509,18 @@ class MatchMeta {
       // }, 7000)
 
     } catch {
-      // if (this.current_euid !== `${euid}_${md}`) return
-      // // 当接口 报错，或者出现限频， 调用3次
-      // if (this.error_http_count.match >= 3) {
-      //   if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
-      // } else {
-      //   this.error_http_count.match++
-      //   let timer = setTimeout(() => {
-      //     this.get_target_match_data({is_classify, scroll_top, md})
-      //     clearTimeout(timer)
-      //     timer = null
-      //   }, 3000)
-      // }
+      if (this.current_euid !== `${euid}_${md}`) return
+      // 当接口 报错，或者出现限频， 调用3次
+      if (this.error_http_count.match >= 3) {
+        if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 
+      } else {
+        this.error_http_count.match++
+        let timer = setTimeout(() => {
+          this.get_target_match_data({is_classify, scroll_top, md, is_error: true})
+          clearTimeout(timer)
+          timer = null
+        }, 3000)
+      }
     }
   }
 
@@ -720,7 +720,7 @@ class MatchMeta {
     
     if (list.length > 0) {
       this.handler_match_list_data({ list: list, is_virtual: false, merge: 'cover' })
-      MatchCollect.get_collect_match_data(list)
+      await MatchCollect.get_collect_match_data(list)
       // 该赛事是否收藏
       list.forEach((t) => {
         MatchCollect.set_match_collect_state(t, true)
@@ -782,6 +782,10 @@ class MatchMeta {
    */
   set_is_classify (val) {
     this.is_classify = val
+  }
+
+  set_current_euid (val) {
+    this.current_euid = val
   }
 
   /**
@@ -1068,7 +1072,7 @@ class MatchMeta {
       // 调用 matchs  接口
       if (item) {
         this.is_ws_trigger = true
-        this.get_target_match_data({scroll_top: this.prev_scroll, cd: this.http_params.cd})
+        this.get_target_match_data({scroll_top: this.prev_scroll, md: this.http_params.md})
       }
     }
     // 调用 mids  接口
@@ -1126,7 +1130,7 @@ class MatchMeta {
       if (is_again && this.error_http_count.bymids < 3) {
         this.error_http_count.bymids++
         let timer = setTimeout(() => {
-          this.get_match_base_hps_by_mids({})
+          this.get_match_base_hps_by_mids({mids, warehouse })
           clearTimeout(timer)
           timer = null
         }, 3000)

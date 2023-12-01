@@ -107,21 +107,24 @@ class MatchCollect {
    * @returns 
    */
   get_collect_match_data (list = []) {
-    api_common.get_new_collect_matches({
-      matchType: 0,
-      cuid: UserCtr.get_uid()
-    }).then(res => {
-      if(lodash.get(res,'code') == 200){
-        this.clear_collect_info()
-        const data = lodash.get(res,'data');
-        Object.assign(this.match_collect_obj, { ...data })
-        this.set_is_get_collect(true)
-        list && list.length > 0 && list.forEach(match => {
-          requestAnimationFrame(() => {
-            this.handle_collect_state(match)
+    return new Promise((resolve, reject) => {
+      api_common.get_new_collect_matches({
+        matchType: 0,
+        cuid: UserCtr.get_uid()
+      }).then(res => {
+        if(lodash.get(res,'code') == 200){
+          this.clear_collect_info()
+          const data = lodash.get(res,'data');
+          Object.assign(this.match_collect_obj, { ...data })
+          this.set_is_get_collect(true)
+          list && list.length > 0 && list.forEach(match => {
+            requestAnimationFrame(() => {
+              this.handle_collect_state(match)
+            })
           })
-        })
-      }
+          resolve()
+        }
+      })
     })
   }
   /**

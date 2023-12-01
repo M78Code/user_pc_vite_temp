@@ -1,4 +1,68 @@
 import NODE_ENV_CONFIG from "./output/node-env/index.js"
+
+let DEV_TARGET_ENV_CONFIG={} 
+try {
+  DEV_TARGET_ENV_CONFIG = await import( "../dev-target-env.js"  );
+} catch (error) {
+}
+const {   DEV_IS_FOR_NEIBU_TEST } = DEV_TARGET_ENV_CONFIG
+
+
+//jenkins env 变量  配置的  是否是用于内部测试  是：1 ，否：-1 
+let ENV_IS_FOR_NEIBU_TEST= ( process.env.IS_FOR_NEIBU_TEST || "").trim();
+
+
+
+
+
+/**
+ * 计算是否启用 自测模式
+ * @param {*} ENVSTR 
+ * @returns 
+ */
+const COMPUTE_IS_FOR_NEIBU_TEST_FN=(ENVSTR)=>{
+
+  //默认 环境 自测开关
+const FOR_NEIBU_TEST_MAP = {
+  dev: true,
+  test: true,
+  geli: false,
+  mini: false,
+  shiwan: false,
+  online: false,
+};
+//代码内预设的环境自测启用情况
+ 
+// 是否是用于内部测试  是：true ，否：false
+let IS_FOR_NEIBU_TEST =    false
+ 
+//如果构建参数内有自测参数 并且 值为1 则开启自测
+ if(ENV_IS_FOR_NEIBU_TEST==1){
+  IS_FOR_NEIBU_TEST =true
+ }else{
+  //如果构建参数内没有有自测参数
+  if(NODE_ENV_CONFIG.IS_DEV){
+    //本地开发
+    IS_FOR_NEIBU_TEST =  DEV_IS_FOR_NEIBU_TEST   
+  }else{
+    //如果构建参数内有自测参数 并且 值不为1 则关闭自测
+    if(ENV_IS_FOR_NEIBU_TEST){
+      IS_FOR_NEIBU_TEST = false
+    }else{
+    //如果构建参数内没有有自测参数 , 则 使用 代码内预设的环境自测设置
+    IS_FOR_NEIBU_TEST =FOR_NEIBU_TEST_MAP[ENVSTR]
+    }
+
+  }
+
+ }
+
+ return IS_FOR_NEIBU_TEST
+
+}
+
+
+
   const RESOLVE_PROJECT_FN = (PROJECT) => {
   //数字对应的项目
   const PROJECT_MAP = {
@@ -88,10 +152,17 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
     const BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_VERSION?`${BUILD_VERSION}/`:""}` 
     //开发或生产环境服务的公共基础路径
     const BUILD_BASE = IS_DEV ? '/' : (   BUILD_VERSION?`/${BUILD_VERSION}/`:"/" )
+    //是否是用于内部测试
+    const IS_FOR_NEIBU_TEST  = COMPUTE_IS_FOR_NEIBU_TEST_FN(config.ENVSTR)
+
+
     return {
         ...RESOLVE_PROJECT_FN(config.PROJECT),
         ...RESOLVE_ENV_FN(config.ENVSTR),
         ...NODE_ENV_CONFIG,
+        CURRENT_ENV, 
+        OSS_FILE_NAME,
+        IS_FOR_NEIBU_TEST,
         BUILD_DIR_NAME,
         BUILD_VERSION,
         BUILD_OUTDIR ,
