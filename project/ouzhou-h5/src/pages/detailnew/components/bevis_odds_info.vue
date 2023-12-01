@@ -7,7 +7,7 @@
 -->
 <template>
     <div class="component  odds-info bevis-odds-info match-detail-odds">
-        <template v-if="match_odds_info && match_odds_info.length > 0">
+        <template v-if="match_odds_info && match_odds_info.length > 0 && match_detail?.ms !=2 ">
          <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
           <template v-for="(item,keyscorll) in match_list_new">
@@ -91,7 +91,6 @@ const props = defineProps({
         default: false
     }
 });
-
 const emit = defineEmits(["change", "update:allCloseState"]);
 const active = ref(1);
 /*

@@ -225,7 +225,7 @@ export default {
 
   >div {
     width: 16px;
-    height: 12px;
+    height: 16px;
     background-size: 100%;
   }
 
