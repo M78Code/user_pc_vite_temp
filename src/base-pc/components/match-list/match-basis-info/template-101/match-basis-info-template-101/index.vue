@@ -23,6 +23,7 @@
      <div class="row-item">
       <div class="team-logo">
         <img v-if="show_type == 'all' && home_avatar"
+        :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
           v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
@@ -55,6 +56,7 @@
     <div class="row-item kedui-item">
       <div class="team-logo">
         <img v-if="show_type == 'all' && away_avatar"
+          :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
           v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
       </div>  
       <div class="ellipsis-wrap">
@@ -143,23 +145,24 @@ const var_text = ref(false) // var事件名称
 const is_collect = ref(false) //赛事是否收藏
 let mitt_list = []
 
-let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match, 'mid'))
+let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match.value, 'mid'))
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
-    const mc=lodash.get(match, 'mc')
-    return mc?`+${lodash.get(match, 'mc')}`:'+0'
+    const mc=lodash.get(match.value, 'mc')
+    return mc?`+${lodash.get(match.value, 'mc')}`:'+0'
   }else{
     return i18n_t('match_info.more')
   }
 })
 
 const home_avatar = computed(()=>{
-  const url = ((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo || (lodash.get(match, 'match_logo') || {}).home_1_letter;
+  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo || (lodash.get(match.value, 'match_logo') || {}).home_1_letter;
+  
   return url
 })
 
 const away_avatar = computed(()=>{
-  const url = (lodash.get(match, 'match_logo') || {}).away_1_logo ||  (lodash.get(match, 'match_logo') || {}).away_1_letter
+  const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo ||  (lodash.get(match.value, 'match_logo') || {}).away_1_letter
   return url
 })
 
@@ -169,7 +172,7 @@ const play_name_obj = computed(() => {
     suffix_name: '',
     score_key: ''
   }
-  let {ms, hSpecial}  =  match || {}
+  let {ms, hSpecial}  =  match.value || {}
   //滚球
   if (get_match_status(ms, [110]) == 1) {
       //角球后缀
@@ -197,7 +200,7 @@ const play_name_obj = computed(() => {
   }
   return play_name_obj
 })
-is_collect.value = Boolean(lodash.get(match, 'mf'))
+is_collect.value = Boolean(lodash.get(match.value, 'mf'))
 
 onMounted(() => {
   mitt_list = [
@@ -210,11 +213,11 @@ onMounted(() => {
 const collect = () => {
   //前端修改收藏状态
   is_collect.value = !is_collect.value
-  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, match)
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, match.value)
 }
 
 // 监听收藏变化
-watch(() => match.mf, (n) => {
+watch(() => match.value.mf, (n) => {
   is_collect.value = Boolean(n)
 })
 
@@ -229,22 +232,22 @@ watch(() => match.mf, (n) => {
 // })
 
 // 监听主比分变化
-watch(() => get_match_score(match).home_score, (n) => {
+watch(() => get_match_score(match.value).home_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time()-match.ws_update_time)<3000
+  let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
   // 足球 并且已开赛
-  if(match.csid == 1 && get_match_status(match.ms,[110]) == 1 && n!=0 && is_time_out ){
+  if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1 && n!=0 && is_time_out ){
     reset_event();
     is_show_home_goal.value = true;
   }
 })
 
 // 监听主比分变化
-watch(() => get_match_score(match).away_score, (n) => {
+watch(() => get_match_score(match.value).away_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time()-match.ws_update_time)<3000
+  let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000
   // 足球 并且已开赛
-  if(match.csid == 1 && get_match_status(match.ms,[110]) == 1  && n!=0 && is_time_out ){
+  if(match.value.csid == 1 && get_match_status(match.value.ms,[110]) == 1  && n!=0 && is_time_out ){
     reset_event();
     is_show_away_goal.value = true;
   }
@@ -280,7 +283,7 @@ let timer;
 // var 事件处理
 function handle_var_event (ws_data) {
       const { skt_data: { mat, mid }, var_item } = ws_data
-      if (match.mid !== mid) return
+      if (match.value.mid !== mid) return
       if (mat === 'home') {
         is_show_home_var.value = true
       } else if (mat === 'away') {
@@ -331,7 +334,7 @@ function hide_away_goal () {
 }
 
 let handicap_index = computed(()=>{
-  return  get_handicap_index_by(match)
+  return  get_handicap_index_by(match.value)
 })
 onUnmounted(() => {
   clearInterval(timer);
@@ -351,6 +354,7 @@ onUnmounted(() => {
       img {
         width: 18px;
         height: 18px;
+        background-size: 100%;
       }
     }
   .collect-box {

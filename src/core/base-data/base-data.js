@@ -8,7 +8,7 @@ import { nextTick, ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import BaseWsMessage from "./base-ws-message"
-const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
 
@@ -545,7 +545,7 @@ class BaseData {
        *  一期只有足球篮球  暂定
        *  重置默认数据
        */
-      if(BUILD_VERSION){
+      if(!IS_FOR_NEIBU_TEST){
         let csid_ = [101,102]
         this.left_menu_base_mi_arr = csid_;
        

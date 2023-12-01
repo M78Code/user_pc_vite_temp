@@ -6,7 +6,7 @@
   <q-dialog v-model="is_show" :persistent="backDrop">
     <div class="dialog_content">
       <div class="alert-wrap">
-        <img :src="imgSrc[lang]" alt="" width="100%">
+        <img :src="imgSrc[lang]" alt="" style="width: 100%;">
         <div class="row items-center  relative-position">
           <div class="text">{{ i18n_t("login.login_out_dear_user") }}</div>
           <!-- 域名错误弹窗 -->
@@ -71,11 +71,10 @@ const imgSrc = reactive({
 })
 /* 是否域名错误弹窗 */
 const is_domain_error = ref(false)
-
 /** 
  * 语言
  */
-const lang = ref(UserCtr.lang)
+const lang = ref(UserCtr.lang||'en')
 
 /** 
  * 判断是否是登录状态 default: false
@@ -88,7 +87,6 @@ onMounted(() => {
     backDrop.value = true;
   }
 })
-
 
 /* 监听mitt */
 const { emitters_off } = useMittEmitterGenerator([
@@ -168,7 +166,7 @@ function confirm() {
 .alert-wrap {
   text-align: center;
   border-radius: 4px;
-  width: 380px;
+  width: 320px;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
@@ -181,9 +179,9 @@ function confirm() {
 
   .items-center {
     padding: 12px 0 20px;
-    background-color: var(--q-gb-bg-c-1);
+    // background-color: var(--q-gb-bg-c-1);
+    background-color: #fff;
     position: relative;
-    top: -27px;
     border-radius: 0 0 8px 8px;
     width: 320px;
   }

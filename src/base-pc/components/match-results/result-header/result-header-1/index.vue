@@ -45,23 +45,25 @@
           <div class="date-picker-wrap relative-position">
           <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <q-date
+              color="orange"
               v-icon="{
                 'chevron_left': 'icon-arrow-left',
                 'chevron_right': 'icon-arrow-right',
               }"
-              class="q_data"
+              class="q_data date_class"
               v-model="date"
               @click.stop
               @range-end="confirmDate"
               range
               v-if="startTimeShow"
+              
               minimal
               :locale="locales"
             />
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <div class="wrap-handel">
       <div class="condition">
         <div class="r-select ml-30" style="margin-right: 5px">

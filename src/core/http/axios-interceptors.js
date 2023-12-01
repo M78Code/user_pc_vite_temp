@@ -8,7 +8,6 @@ import domain from "./domain";
 import { SessionStorage, LocalStorage } from "src/core/utils/module/web-storage.js";
 import { get_query_string } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "../mitt";
-// import userCtr from "../user-config/user-ctr";
 const token_key = STANDARD_KEY.get("token"); //token键
 const lang_key =  'lang'; // 语言key
 
@@ -99,7 +98,7 @@ const responseHook = {
     }
 
     // 用户相关 控制类  统计 用户 token 失效相关 流程
-    // userCtr.record_token_if_expired(res);
+    UserCtr.record_token_if_expired(res);
 
     // 常规的业务 的 url 是不带 http 前缀的 不是完整域名 ，其他的都是完整域名
     // 单独的 外层的一些逻辑 并不走这个 axios 实例，比如外层的OSS 内的 api 逻辑

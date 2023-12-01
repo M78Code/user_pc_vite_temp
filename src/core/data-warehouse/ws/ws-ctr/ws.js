@@ -155,6 +155,9 @@ export default class Ws {
    */
   connect(type) {
     console.log('-----ws--connect----------' + type)
+    if (wslog && wslog.send_msg) {
+      wslog.send_msg('WS---SERVER:', {msg:'ws connect!!!', type:type})
+    }
     if (this.ws) {
       // console.error(`--------readyState:${this.ws.readyState}-----------CONNECTING:${WebSocket.CONNECTING}----------------OPEN:${WebSocket.OPEN}`);
       // ws处于可用状态时,不需要重新创建和连接
@@ -185,12 +188,18 @@ export default class Ws {
       //打开
       this.ws.onopen = function (e) {
         // console.log('------------------------------------onopen----------------------')
+        if (wslog && wslog.send_msg) {
+          wslog.send_msg('WS---SERVER:', {msg:'ws onopen!!!'})
+        }
         Ws.err_count = 0;
         this_.onConnect(this_, e)
       };
       //关闭
       this.ws.onclose = function (e) {
         // console.log('------------------------------------onclose----------------------')
+        if (wslog && wslog.send_msg) {
+          wslog.send_msg('WS---SERVER:', {msg:'ws onclose!!!'})
+        }
         this_.onClose(this_, e)
       };
       //接收消息

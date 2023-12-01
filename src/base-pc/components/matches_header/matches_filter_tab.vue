@@ -13,14 +13,14 @@
 
     <div class="prev-btn-box" v-show="show_left_btn" @click="filter_tab_scroll('prev')">
       <div class="prev-btn">
-        <img src="../../../assets/images/tr_right_arrow.png" alt="">
+        <img :src="compute_img_url('pc-home-right-arrow')" alt="">
       </div>
       <div class="shadow-box"></div>
     </div>
     <div class="next-btn-box" v-show="show_right_btn" @click="filter_tab_scroll('next')">
       <div class="shadow-box"></div>
       <div class="next-btn">
-        <img src="../../../assets/images/tr_right_arrow.png" alt="">
+        <img :src="compute_img_url('pc-home-right-arrow')" alt="">
       </div>
     </div>
    
@@ -31,8 +31,7 @@
   import { ref,onMounted } from 'vue';
   import { UserCtr,MenuData, i18n_t} from 'src/core/index.js'
   import { handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
-  import { format_M_D_PC } from "src/core/format"
-  import BaseData from "src/core/base-data/base-data.js";
+  import { compute_img_url } from 'src/core/server-img/index.js'
 
     // 是否显示左边按钮
   const show_left_btn = ref(false);

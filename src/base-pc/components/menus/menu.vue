@@ -40,7 +40,7 @@
       </ul>
     </div>
     <div class="menu-nav-line" />
-    <div class="menu-nav-li" v-if="!BUILD_VERSION">
+    <div class="menu-nav-li" v-if="IS_FOR_NEIBU_TEST">
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
@@ -64,7 +64,7 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const popular = ([{mi:101},{mi:102}])
 

@@ -393,6 +393,7 @@ export default {
           background: #f5f7fa;
         }
         .table-col,.table-col_date {
+          position: relative;
           height: 58px;
           // border-right: 1px solid #d0d8de;
           
@@ -403,6 +404,7 @@ export default {
           &:first-child {
             padding-left: 8px;
             user-select: text;
+            position: static;
             .time-icon {
               margin-right: 5px;
             }
