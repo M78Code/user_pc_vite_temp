@@ -19,8 +19,6 @@ const item = {A:0,B:1,C:2,D:3,E:4,F:5,G:6,H:7,I:8,J:9,K:10,L:11,M:12,N:13,O:14,P
  * @returns
  */
 function compute_position(position) {
-  console.log('positionv', position);
-  
   const top = 0; // 雪碧图 距离顶部的 空白距离
   const left = 0; //左侧
   const width = 0; //表示是 横 向
