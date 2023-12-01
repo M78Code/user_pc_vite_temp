@@ -175,9 +175,9 @@ const router = createRouter({
  * 路由切换清除默认球种
  */
 router.beforeEach((to, from, next) => {
-    if(!!to.name && !!from.name && to.name !== from.name && to.name !== "category" && from.name !=="category"){
-        // LocalStorage.remove("nemu-h5");
-        // MenuData.clear_menu_id();
+    if(!!to.name && !!from.name && to.name !== from.name && to.name !== "matchList" && to.name !== "category" && from.name !=="category"){
+        LocalStorage.remove("nemu-h5");
+        MenuData.clear_menu_id();
     }
     next()
 })

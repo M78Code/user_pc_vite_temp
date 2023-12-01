@@ -127,7 +127,6 @@ const changeDate = (index) => {
  * @param {*} index 
  */
 const changeDatetab = (item, index) => {
-    console.log(item, index)
     store.tabModel = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
@@ -148,10 +147,10 @@ const changeDatetab = (item, index) => {
       time = item?.val
     }
     // 设置菜单对应源数据
-    // MatchMeta.set_origin_match_data(store.menu_time)
+    // MatchMeta.set_origin_match_data({md: store.menu_time})
     // 根据时间筛选列表
     MatchMeta.filter_match_by_time(time)
-    MatchMeta.get_target_match_data(!item?.val ? '' : { md: item?.val })
+    MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
     
     emit("changeDate", item.val);
 };

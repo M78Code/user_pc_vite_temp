@@ -146,6 +146,8 @@ export function get_ouzhou_data_tpl_id(csid) {
      * @return {[主,客]} [主，客]
      */
 export function get_main_score(match) {
+    console.log('_home_score', match);
+
     let _home_score = ""
     let _away_score = ""
     if (get_match_status(match.ms)) {
@@ -431,4 +433,30 @@ export function match_list_handle_set(match_list) {
         match_list.forEach(match => {
             match.tpl_id = get_match_template_id(match)
         })
+}
+
+ /**
+* @description 获取比分 比分变化 或者 赛事阶段变化时调用
+* @param  {object} match  当场赛事信息
+*/
+export const get_match_score = (match) => {
+if (!match) return {home_score: '0', away_score: '0'}
+   let key = "S1";
+   let { csid, mmp, msc_obj = {} } = match;
+   // 足球 | 手球
+   if ([1, 11].includes(+csid)) {
+       // S7:加时赛比分
+       if ([32, 33, 41, 42, 110].includes(+mmp)) {
+           key = "S7";
+       }
+       // S170:点球大战比分
+       else if ([34, 50, 120].includes(+mmp)) {
+           key = "S170";
+       }
+   }
+   // 主队比分
+let home_score = lodash.get(msc_obj, `${key}.home`, "0")
+// 客队比分
+let away_score = lodash.get(msc_obj, `${key}.away`, "0")
+return { home_score, away_score }
 }

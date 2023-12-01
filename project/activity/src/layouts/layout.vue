@@ -13,13 +13,12 @@
   
   
   import { defineComponent, defineAsyncComponent } from "vue";
-  import userStore from "project/activity/src/public/store/module/user/index";
-  import langStore from "project/activity/src/public/store/module/languages/languages.js";
-  import themeStore from "project/activity/src/public/store/module/theme/theme.js";
-  import globalStore from "project/activity/src/public/store/module/global/global.js";
+  import userStore from "project/activity/src/store/module/user/index.js";
+  import langStore from "project/activity/src/store/module/languages/languages.js";
+  import themeStore from "project/activity/src/store/module/theme/theme.js";
   import _ from 'lodash';
-  import utils from 'project/activity/src/public/utils/utils.js';
-  import userCtr from 'project/activity/src/public/utils/user/userCtr.js';
+  import utils from 'project/activity/src/utils/utils.js';
+  import userCtr from 'project/activity/src/utils/user/userCtr.js';
   
   export default defineComponent({
     name: "IndexPage",
@@ -83,7 +82,7 @@
       this.set_lang(_info2 || (_info && _info.languageName) || "");
       let foo =
         (_info3 && _info3.toLowerCase()) || (_info && _info.userMarketPrefer);
-      foo && this.set_cur_odd(foo == "hk" ? "HK" : "EU");
+      // foo && this.set_cur_odd(foo == "hk" ? "HK" : "EU");
       // 设置全局变量this
       window.vue = this;
       this.user_handle_last_time = new Date().getTime();
@@ -121,8 +120,8 @@
       }
       this.currentComponent = defineAsyncComponent(() =>
         ismobile()
-          ? import("./yazhou-h5/index.vue")
-          : import("./yazhou-pc/index.vue")
+          ? import("../pages/yazhou-h5/index.vue")
+          : import("project/activity/src/pages/yazhou-pc/index.vue")
       );
     },
     methods: {
@@ -135,18 +134,18 @@
       set_user_token(...arg) {
         return userStore.mutations.set_user_token(...arg);
       },
-      set_cur_odd(...arg) {
-        return globalStore.mutations.set_cur_odd(...arg);
-      },
+      // set_cur_odd(...arg) {
+      //   return globalStore.mutations.set_cur_odd(...arg);
+      // },
       set_uuid(...arg) {
         return userStore.mutations.set_uuid(...arg);
       },
       set_is_user_no_handle(...arg) {
         return userStore.mutations.set_is_user_no_handle(...arg);
       },
-      set_var_event_i18n(...arg) {
-        return globalStore.mutations.set_var_event_i18n(...arg);
-      },
+      // set_var_event_i18n(...arg) {
+      //   return globalStore.mutations.set_var_event_i18n(...arg);
+      // },
       set_theme(...arg) {
         return themeStore.actions.set_theme(...arg);
       },
@@ -315,7 +314,7 @@
         _this.set_is_accept(userBetPrefer);
         // 用户默认赔率
         let userMarketPrefer = res.data.userMarketPrefer || "EU";
-        _this.set_cur_odd(userMarketPrefer);
+        // _this.set_cur_odd(userMarketPrefer);
         let lang =
           ([
             "zh",
@@ -387,7 +386,7 @@
       get_var_event_i18n() {
         api_common.get_var_event_i18n().then((res) => {
           if (res.code !== 200) return;
-          this.set_var_event_i18n(res.data);
+          // this.set_var_event_i18n(res.data);
         });
       },
       // userinfo  用户信息接口调用

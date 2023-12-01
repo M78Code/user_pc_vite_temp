@@ -341,6 +341,9 @@ input::-ms-reveal {
 .img-loading {
   background-image: url($SCSSPROJECTPATH+"/image/loading1.gif");
 }
+.record_api_limited .img {
+  background-image: url($SCSSPROJECTPATH+"/image/theme01/img/png/user_api_limited.png");
+}
 
 [class^="card_key_sport_title_"]{
   margin-top: 10px;

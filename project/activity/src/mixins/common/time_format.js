@@ -3,10 +3,9 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 时间格式化操作
  */
-import LanguageStore from 'project/activity/src/public/store/module/languages/languages';
-import GlobalStore from 'project/activity/src/public/store/module/global/global';
+import LanguageStore from 'project/activity/src/store/module/languages/languages.js';
 import licia_format from 'licia-es/format';
-import utils from 'project/activity/src/public/utils/utils'
+import utils from 'project/activity/src/utils/utils.js'
 export default {
   computed: {
     lang: function() {

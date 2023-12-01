@@ -52,10 +52,10 @@ import GrowUp from "project/activity/src/pages/yazhou-pc/grow_up/index.vue";
 import SlotMachine from "project/activity/src/pages/yazhou-pc/slot_machine/index.vue";
 import Alert from "./public_alert.vue";
 // import { mapGetters } from "vuex";
-import UserStore from 'project/activity/src/public/store/module/user/index';
-import time_format_mixin from "project/activity/src/public/mixins/common/time_format";
-import { api_account } from "project/activity/src/public/api/index.js";
-import utils from 'project/activity/src/public/utils/utils'
+import UserStore from 'project/activity/src/store/module/user/index.js';
+import time_format_mixin from "project/activity/src/mixins/common/time_format.js";
+import { api_account } from "project/activity/src/api/index.js";
+import utils from 'project/activity/src/utils/utils.js'
 
 // let BUILD_VERSION = window.env.config.BUILD_VERSION
 let BUILD_VERSION = '';

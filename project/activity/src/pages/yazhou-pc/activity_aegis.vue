@@ -22,7 +22,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import utils from 'project/activity/src/public/utils/utils'
+import utils from 'project/activity/src/utils/utils.js'
 export default {
   data() {
     return {

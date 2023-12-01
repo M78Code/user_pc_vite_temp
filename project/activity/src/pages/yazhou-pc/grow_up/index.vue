@@ -157,13 +157,13 @@
   </div>
 </template>
 <script>
-import {api_activity} from "project/activity/src/public/api/index.js"
+import {api_activity} from "project/activity/src/api/index.js"
 import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue"
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
 import LotteryDialog from "project/activity/src/pages/yazhou-pc/lottery_dialog.vue";
 import common from "project/activity/src/pages/yazhou-pc/common";
-import format_date_base from "project/activity/src/public/mixins/common/time_format";
-import utils from 'project/activity/src/public/utils/utils'
+import format_date_base from "project/activity/src/mixins/common/time_format.js";
+import utils from 'project/activity/src/utils/utils.js'
 export default {
   name: 'BettingEveryday',
   mixins: [common, format_date_base],

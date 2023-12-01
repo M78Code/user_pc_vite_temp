@@ -11,11 +11,11 @@
  *
  */
 
-import { get_file_path } from "project/activity/src/public/utils/get_file_path.js"
+import { get_file_path } from "project/activity/src/utils/get_file_path.js"
 
 import axios from "axios";
-import pako_pb from "project/activity/src/public/utils/custom_pb_pako.js";
-import infoUpload from 'project/activity/src/public/utils/http/information_upload.js';
+import pako_pb from "project/activity/src/utils/custom_pb_pako.js";
+import infoUpload from 'project/activity/src/utils/http/information_upload.js';
 const axios_instance = axios.create()
 
 

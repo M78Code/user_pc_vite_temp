@@ -11,7 +11,7 @@ import { i18n_t} from "src/core/index.js"
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
-
+import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 
 export default {
   //搜索结果数据模板
@@ -208,6 +208,10 @@ export default {
    */
   get_hot_search(callback) {
     api_search.get_hot_search().then(res => {
+      // 限频提示
+      if(res.code == '0400500') {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t('common.limited'))
+      }
       let data = lodash.get(res, "data") || [];
       if (data.length > 0) {
         callback(data)

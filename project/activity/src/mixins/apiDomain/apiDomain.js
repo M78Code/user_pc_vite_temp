@@ -6,16 +6,16 @@
 
 console.log('测试执行------------2----0');
 
-import http from "src/public/utils/http/axios_warpper";
-http.init_window_env()
-import AllDomain from 'src/public/utils/http/all_domain.js'
+import http from "project/activity/src/utils/http/axios_warpper.js";
+// http.init_window_env()
+import AllDomain from 'project/activity/src/utils/http/all_domain.js'
 import {   loadLanguageAsync } from 'src/boot/i18n'
-import utils from 'project/activity/src/public/utils/utils'
+import utils from 'project/activity/src/utils/utils.js'
 import axios from "axios";
 
 const axios_instance = axios.create()
 console.log('测试执行------------2----1');
-import { mapGetters} from "vuex";
+// import { mapGetters} from "vuex";
 export default {
   data() {
     console.log('测试执行------------2----2');
@@ -34,10 +34,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      // 登录是否失效
-      vx_get_is_invalid: "get_is_invalid",
-    }),
+    // ...mapGetters({
+    //   // 登录是否失效
+    //   vx_get_is_invalid: "get_is_invalid",
+    // }),
     /**
     * @description: 首屏loading动画是否显示
     * @return {boolean} 是否显示首屏loading中动画
@@ -66,16 +66,16 @@ export default {
     this.app_init_loading = true;
     // 抖动处理
     // 重新设置api域名函数
-    this.resetApiDemo = this.throttle(this.resetApiDemo,12000, {leading: true, trailing: true});
+    // this.resetApiDemo = this.throttle(this.resetApiDemo,12000, {leading: true, trailing: true});
 
     // 发送api错误消息函数
-    this.send_api_error_data = this.throttle(this.send_api_error_data,10*1000, {leading: true, trailing: true});
+    // this.send_api_error_data = this.throttle(this.send_api_error_data,10*1000, {leading: true, trailing: true});
     // 接受ws断开命令
-    this.$root.$on('EMIT_API_DOMAIN_UPD_CMD', this.resetApiDemo);
+    // this.$root.$on('EMIT_API_DOMAIN_UPD_CMD', this.resetApiDemo);
     // 发送用户基本信息到服务命令
-    this.$root.$on('EMIT_API_USER_PRO_INFO_CMD', this.send_user_pro_info);
+    // this.$root.$on('EMIT_API_USER_PRO_INFO_CMD', this.send_user_pro_info);
     // 调用用户接口，更新 域名流程
-    this.$root.$on('set_getuserinfo_oss_api', this.set_getuserinfo_oss_api);
+    // this.$root.$on('set_getuserinfo_oss_api', this.set_getuserinfo_oss_api);
     //当出现异常兜底 12 秒显示页面
     this.init_load_timer = setTimeout(() => {
       this.set_init_load(true);
@@ -152,7 +152,7 @@ export default {
       // 首次初始化时调用
       if(!this.init_load){
         //初始化window.env
-        http.init_window_env()
+        // http.init_window_env()
         // http初始化方法
         http.init();
       }
