@@ -51,7 +51,8 @@ const get_show_level = (card_obj) => {
  * 四级   列表可视区域 加前2000px 和后2000px
  * 五级   列表可视区域 加前3000px 和后3000px
  */
-export const set_card_show_level = (scroll_top = 0) => {
+export const set_card_show_level = () => {
+  let scroll_top = MatchListScrollClass.scroll_top;
   // 列表高度
   let list_content_height = LayOutMain_pc.layout_content_height;
   // 一级区域offset_top

@@ -4,7 +4,9 @@
  * @Description: 用户模块相关api定义
  */
 import http from "project/activity/src/utils/http/axios_warpper.js";
-
+console.error(window.BUILDIN_CONFIG);
+// const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+// const { API_PREFIX_ACTIVITY: prefix } = API_PREFIX;
 
 // let prefix = window.env.config.api.API_PREFIX_API;
 // let prefix_user = window.env.config.api.API_PREFIX_USER;

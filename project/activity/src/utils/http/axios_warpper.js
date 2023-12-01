@@ -390,7 +390,7 @@ class Http {
      */
     init_window_env() {
         console.error(window);
-        init_window_env();
+        // init_window_env();
     }
 
     /**

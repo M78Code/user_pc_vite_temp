@@ -86,14 +86,14 @@
 let over =  "activity/yazhou-h5/activity/over.png";
 let stay_tuned = "activity/yazhou-h5/activity/stay_tuned.png";
 let playing = "activity/yazhou-h5/activity/playing.png";
-import { api_admin } from "project/activity/src/public/api/index.js";
+import { api_admin } from "project/activity/src/api/index.js";
 import lucky_blind_box from "./components/lucky_blind_box.vue";
 import growth_task from "./components/growth_task.vue";
 import slot_machine from './components/slot_machine.vue'
 import acticity_mixin from "./mixin/acticity_mixin.js";
-import userStore from 'project/activity/src/public/store/module/user/index.js';
+import userStore from 'project/activity/src/store/module/user/index.js.js';
 import _ from 'lodash';
-import utils from 'project/activity/src/public/utils/utils.js';
+import utils from 'project/activity/src/utils/utils.js.js';
 import { get_file_path } from 'project/activity/src/public/utils/get_file_path.js'
 
 

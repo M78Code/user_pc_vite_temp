@@ -52,7 +52,7 @@ const set_retain_selection = () => {
   height: .36rem;
   line-height: 0.36rem;
   .bet-loading {
-    color: var(--q-gb-t-c-11);
+    color: var(--q-gb-t-c-1);
   }
   .bet-error {
     color: var(--q-gb-t-c-17);

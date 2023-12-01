@@ -319,16 +319,16 @@
   </div>
 </template>
 <script>
-import {api_activity} from "project/activity/src/public/api/index.js";
+import {api_activity} from "project/activity/src/api/index.js";
 import active_count_down from "./active_count_down.vue";
 import number_scroll from './number_scroll.vue';
 import data_pager from "project/activity/src/components/data_pager.vue";
 import compose from './compose.vue';
 import common from "project/activity/src/public/mixins/constant/module/common.js";
 import formartmixin from 'project/activity/src/public/mixins/module/formartmixin.js';
-import utils from 'project/activity/src/public/utils/utils.js';
+import utils from 'project/activity/src/utils/utils.js.js';
 import themeStore from 'project/activity/src/public/store/module/theme/theme.js';
-import userStore from 'project/activity/src/public/store/module/user/index.js';
+import userStore from 'project/activity/src/store/module/user/index.js.js';
 
 
 export default {
