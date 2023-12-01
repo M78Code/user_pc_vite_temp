@@ -17,7 +17,7 @@
             </div>
             <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" src="../../../assets/images/mask_group.png" alt="">
           </div>
-          <div class="filter-tab-split-line"></div>
+          <div class="filter-tab-split-line" v-show="index != mi_100_arr.length - 1"></div>
         </div>
       </template>
       <!-- 电竞 -->

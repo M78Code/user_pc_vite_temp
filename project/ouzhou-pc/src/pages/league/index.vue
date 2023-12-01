@@ -95,7 +95,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .scroll {
   overflow-y: scroll;
   padding-right: 3px;
@@ -109,6 +109,9 @@ export default {
     background-color: var(--q-gb-bg-c-11);
     border-radius: 4px;
   }
+}
+.yb-match-list {
+  padding-bottom: 100px;
 }
 
 .leagues-tabs {

@@ -12,6 +12,8 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const vx_filter_select_obj = ref([])
 
@@ -251,6 +253,10 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 	deal_with_list_data(all_league_list)
 	if(Array.isArray(match_list)){ //有时候是 {}
 		MatchListData.set_list(match_list)
+	}
+	// 设置第一条数据为当前mid，给分数板高亮用
+	if(match_list.length){
+		MatchListCardDataClass.set_current_mid(match_list[0].mid); 
 	}
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(

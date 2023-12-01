@@ -31,6 +31,7 @@ const default_value = {
   sortCut: true,  // 排序方式切换
   statisticsSwitch: true,  // 统计/赛事分析
   is_roll_show_banner: false, // pc 滚动是否显示banner
+  is_vue_hidden_run: false,
 };
 class GlobalAccessConfig {
   config = {
@@ -94,6 +95,10 @@ class GlobalAccessConfig {
     this.other = Object.assign({}, LOCAL_FUNCTION_SWITCH, data);
     this.other.wsl=false
   }
+  // 设置页面是否进入休眠状态
+  set_vue_hidden_run(payload) {
+    this.is_vue_hidden_run = payload
+  }
   get_http_log() {
     return this.other?.httplog;
   }
@@ -150,6 +155,9 @@ class GlobalAccessConfig {
   }
   get_show_banner() {
     return this.config?.is_roll_show_banner
+  }
+  get_is_vue_hidden_run() {
+    return this.is_vue_hidden_run
   }
 }
 export default new GlobalAccessConfig();

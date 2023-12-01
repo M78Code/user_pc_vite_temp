@@ -12,7 +12,7 @@
             </div>
             <img class="current-mark" :class="{ 'show-mark': select_id == item.id }" src="../../../assets/images/mask_group.png" alt="">
           </div>
-          <div class="filter-tab-split-line"></div>
+          <div class="filter-tab-split-line" v-show="index != leagues.length - 1"></div>
         </div>
       </template>
     </div>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, onMounted, onBeforeUnmount, watch, nextTick } from "vue";
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 
@@ -65,12 +65,17 @@ watch(() => props.date, async () => {
     select_id.value = list[0].id
     choose_filter_tab(list[0])
   }
+  nextTick(() => {
+    if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
+      show_right_btn.value = true;
+    }
+  })
 }, { immediate: true })
 
 onMounted(() => {
-  if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
-    show_right_btn.value = true;
-  }
+  // if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
+  //   show_right_btn.value = true;
+  // }
 })
 /**
  * 
@@ -259,7 +264,7 @@ onBeforeUnmount(() => {
   top: 0;
   .shadow-box {
     width: 10px;
-    height: 55px;
+    height: 44px;
     background: var(--q-gb-bg-lg-12);
     opacity: 0.1;
   }
@@ -267,7 +272,7 @@ onBeforeUnmount(() => {
 .prev-btn, .next-btn {
   background: var(--q-gb-bg-c-4);
   width: 16px;
-  height: 55px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;

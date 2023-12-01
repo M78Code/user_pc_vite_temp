@@ -11,13 +11,13 @@
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
                   <div class="bet-result-state">
-                    <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 2">
+                    <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 21">
                       <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" />
                     </div>
-                    <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 3">
+                    <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 31">
                       <span class="icon-success"></span>
                     </div>
-                    <div class="nonebox4-content-left-content-xian red" v-if="BetViewDataClass.bet_order_status == 4">
+                    <div class="nonebox4-content-left-content-xian red" >
                       <span class="icon-failure"></span>
                     </div>
                   </div>
