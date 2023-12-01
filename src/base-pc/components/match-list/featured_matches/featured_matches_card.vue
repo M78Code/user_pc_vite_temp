@@ -8,20 +8,20 @@
         :key="item.tid" :class="{ 'margin-box': index != matches_featured_list.length - 1 }">
         <div class="right-top-img" :style="compute_css_obj({ key: 'pc-home-icon-sport-top', position: item.csid })"></div>
         <div class="matches_description">
-          <div class="matches_type">{{ item.tn }}</div>
+          <div class="matches_type">{{ get_match_item(item.mid)?.tn }}</div>
           <!-- <div class="matches_time din_font">
             <span>{{ item.course }}</span>
             <span v-show="Number(item.mmp)">{{ item.mstValue }}</span>
           </div> -->
           <!-- 比赛进程 -->
-          <match-process v-if="item" :match="item" source='match_list' show_page="match-list" :rows="1" :date_rows="1"
+          <match-process v-if="item" :match="get_match_item(item.mid)" source='match_list' show_page="match-list" :rows="1" :date_rows="1"
             date_show_type="inline" periodColor="gray" />
         </div>
         <div class="club-name" :class="{'bold': get_handicap_index_by(item) == 1}">
-          <span>{{ item.mhn }}</span><span class="din_font">{{get_match_score(get_match_item(item.mid)).home_score }}</span>
+          <span>{{ get_match_item(item.mid)?.mhn }}</span><span class="din_font">{{get_match_score(get_match_item(item.mid)).home_score }}</span>
         </div>
         <div class="union-name" :class="{'bold': get_handicap_index_by(item) == 2}">
-          <span>{{ item.man }}</span><span class="din_font">{{get_match_score(get_match_item(item.mid)).away_score }}</span>
+          <span>{{ get_match_item(item.mid)?.man }}</span><span class="din_font">{{get_match_score(get_match_item(item.mid)).away_score }}</span>
         </div>
         <div class="odds_box">
           <div class="top-line"></div>
@@ -73,6 +73,7 @@ const get_featurd_list = async () => {
     // 只显示5条数据
     const five = lodash.get(res, 'data', []).slice(0, 5)
     MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(five);
+    matches_featured_list.value = []
     five.forEach(match => {
       mids.push(match.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(match.mid))
