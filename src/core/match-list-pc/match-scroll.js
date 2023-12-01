@@ -1,6 +1,7 @@
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, } from 'src/core/index.js';
+import MatchListCardData from "./match-card/module/match-list-card-data-class";
 import { load_data_state } from './match-list-composition'
 class MatchListScrollClass {
   constructor() {
@@ -14,7 +15,9 @@ class MatchListScrollClass {
     // 列表加载时间记录
     this.list_loading_time_record =  []
     // 可视区域赛事ID
-    this.show_mids = []
+    this.show_mids = [],
+    // 当前是否是首页 且是否有15分钟和特色赛事卡片 的高度
+    this.special_offset = 0
   }
 
   /**
@@ -95,6 +98,19 @@ class MatchListScrollClass {
       }
     }
   }
+  /**
+   * 设置当前的页面是否有特殊高度
+   */
+  set_special_offset(special_height, is_add) {
+    // 如果是叠加在原来的高度上  加等special_height
+    if (is_add) {
+      this.special_offset += special_height;
+    } else {
+      this.special_offset = special_height
+    }
+    MatchListCardData.set_list_version()
+  }
+
   /**
    * @Description 开始loading
    * @param {undefined} undefined

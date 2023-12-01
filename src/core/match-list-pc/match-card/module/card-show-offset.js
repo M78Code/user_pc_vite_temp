@@ -130,7 +130,8 @@ export const set_card_show_level = () => {
     // 上一个卡片对象
     let pre_card_obj = {
       // 卡片底部 距离列表顶部的距离
-      offset_bottom:0,
+      // offset_bottom: MatchListScrollClass.special_offset,
+      offset_bottom: 0,
     }
     // 上一个赛事卡片对象
     let pre_match_card_obj
