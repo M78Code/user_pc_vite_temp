@@ -136,7 +136,7 @@
 							</div>
 							<div v-show="expand_league">
 								<li v-for="(item, index) in search_data?.league" :key="index"
-									@click="go_detail_or_reslut(item.leagueName, item.matchList[index])">
+									@click="go_detail_or_reslut(item.matchList[index])">
 									<div class="list_top">
 										<!-- 联赛icon -->
 										<!-- <img class="match_logo"
@@ -384,6 +384,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 		searchSportType: sport_id || 1,
 		isPc: false
 	}
+	if (is_results) params.from = 2
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;

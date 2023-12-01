@@ -37,7 +37,7 @@ const emitters = ref({})
 onMounted(() => {
 
   MatchMeta.set_prev_scroll(0)
-
+  onTabChange()
   initMatchPage()
 
   BaseData.is_emit && MatchMeta.set_origin_match_data()
@@ -60,12 +60,12 @@ onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
       if (!BaseData.is_emit) {
-        MatchMeta.set_origin_match_data({})
+        MatchMeta.set_origin_match_data()
       }
       console.log('MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE')
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
-        initMatchPage()
+      onTabChange()
     }).off
   }
 })
@@ -82,7 +82,7 @@ const onTabChange = e => {
       break
     case 'League':
       MenuData.set_current_lv1_menu(2);
-      const time = store.curSelectedOption ? store.curSelectedOption : 12
+      const time = store.curSelectedOption ? store.curSelectedOption.timestamp : 12
       onChangeDate(time) // 默认展示12个小时的数据
       break
     case 'Outrights':
@@ -97,7 +97,7 @@ const onTabChange = e => {
 const onChangeDate = e => {
   if (store.tabActive !== 'Matches') {
     MatchMeta.get_ouzhou_leagues_data(e).then(res => {
-      console.log('onChangeDate', res, store.selectArea)
+      // console.log('onChangeDate', res, store.selectArea)
       if (res.length) {
         store.areaList = res
         if (JSON.stringify(store.selectArea) === '{}') {
@@ -118,6 +118,10 @@ const onChangeDate = e => {
 }
 
 const onChangeArea = (obj) => {
+  if (obj.id === '-1000') {
+    store.leaguesMatchs = []
+    return
+  }
   const arr = obj.tournamentList
   if (arr === null) {
     store.leaguesMatchs = []

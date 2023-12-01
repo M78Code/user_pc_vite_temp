@@ -8,6 +8,7 @@
 import { ref ,reactive} from "vue"
 import { SessionStorage } from "src/core/utils/index.js"
 import { debounce } from "lodash";
+import { MatchDataWarehouse_H5_Detail_Common } from "src/core/index";
 export default class MatchDetailCtr {
  
   constructor( ) {
@@ -441,5 +442,13 @@ export default class MatchDetailCtr {
   */
   handler_details_ws_cmd(cmd){
     return ["C101","C102","C104","C109","C302","C303"].includes(cmd)
+  }
+  /**
+   * @description:   ms: 0开 1封 2关 11锁  hs: 0开 1封 2关 11锁   os 1开 2封 3隐藏不显示不占地方  
+   *  ms  0 和 11正常显示   hs0显示  ol 为 1 
+   * @return {*}   
+  */
+  get_show_ol_handcip(ol){
+    return o.os == 1 && o._hs != 11
   }
 }

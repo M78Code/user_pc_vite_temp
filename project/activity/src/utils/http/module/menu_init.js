@@ -3,7 +3,7 @@
  * 菜单接口  缓存、限频、节流
  */
 
- import AxiosDebounceCache from "project/activity/src/public/utils/http/module/AxiosDebounceCache.js"
+ import AxiosDebounceCache from "project/activity/src/utils/http/module/AxiosDebounceCache.js"
 
 
 

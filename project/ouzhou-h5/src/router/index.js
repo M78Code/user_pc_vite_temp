@@ -176,8 +176,8 @@ const router = createRouter({
  */
 router.beforeEach((to, from, next) => {
     if(!!to.name && !!from.name && to.name !== from.name && to.name !== "category" && from.name !=="category"){
-        LocalStorage.remove("nemu-h5");
-        MenuData.clear_menu_id();
+        // LocalStorage.remove("nemu-h5");
+        // MenuData.clear_menu_id();
     }
     next()
 })

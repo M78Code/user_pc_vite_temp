@@ -320,9 +320,14 @@ export default {
   setup (ctx) {
 
     const match_hpid = ref('')
-    const select_play = ref('1')
     const hps_play_data = ref([])
     const sports_play_title = use_sports_play_title()
+
+    const select_play = computed(() => {
+      const { csid } = ctx.match_of_list
+      return lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
+    })
+
     // 是否显示球种标题
     const show_sport_title = computed(() => {
       const { is_show_ball_title } = ctx.match_of_list
@@ -362,7 +367,7 @@ export default {
     // 切换玩法赔率
     const on_select_play = (item) => {
       const { hps, csid, mid, hn } = ctx.match_of_list
-      select_play.value = item.hpid
+      // select_play.value = item.hpid
       MatchResponsive.set_match_hpid(item.hpid, csid)
     }
 

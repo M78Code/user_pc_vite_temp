@@ -1,10 +1,21 @@
-
-
-
-export {TestComponentFullVersionWapper} from "src/components/test-component/test-component-1/index.vue";
-// export {default as BetBoxDialog} from "src/components/test/bet-box-dialog.vue";
-
-
-
-// export {default as  TestPcListFootballTemp1} from "src/components/test/test-pc-list-football-temp1.vue";
-// export {default as  StoreTestSetup} from "src/components/test/store-test-setup.vue";
+const H5_modules = import.meta.glob("./src/components-h5/*/index.js",{ eager: true });
+const PC_modules = import.meta.glob("./src/components-pc/*/index.js",{ eager: true });
+const all_components = {};
+console.log("H5_modules-------", H5_modules);
+console.log("PC_modules-------", PC_modules);
+for (let key in H5_modules) {
+  console.log(`H5_modules[${key}]--`);
+  let components = H5_modules[key].default;
+  for (let i in components) {
+    all_components[i] = components[i];
+  }
+}
+for (let key in PC_modules) {
+  console.log(`PC_modules[${key}]--`);
+  let components = PC_modules[key].default;
+  for (let i in components) {
+    all_components[i] = components[i];
+  }
+}
+console.log("all_components-------", all_components);
+export default all_components;

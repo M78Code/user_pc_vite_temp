@@ -170,7 +170,7 @@ export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDeta
  * 赛果详情页面接口（christion）
  * @returns {Promise<API.MatchDetails>}
  */
-export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
+export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetailPB") => http.get(`${prefix_job}${url}`, params, config)
 
 // 电竞赛事详情页面接口（start）
 export const get_DJ_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params, config)

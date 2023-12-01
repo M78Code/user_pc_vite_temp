@@ -153,7 +153,7 @@ const set_tab_list = (news_) =>{
 			tab_list.value = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', []) 
 		}else{
 			let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', [])  
-			ouzhou_filter_config.push( { label: 'menu.match_winner', value: 3004 })
+			// ouzhou_filter_config.push( { label: 'menu.match_winner', value: 3004 })
 			 tab_list.value = ouzhou_filter_config
 		}
 		
@@ -299,7 +299,6 @@ const checked_current_tab = payload => {
 	}
 	.match_all_matches{
 		color: var(--q-gb-t-c-1);
-		font-family: "PingFang SC";
 		font-size: 18px;
 		font-weight: 500;
 		line-height: 25px;

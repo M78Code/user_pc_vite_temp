@@ -67,7 +67,7 @@ setTimeout(() => {
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
-    min-height: 44px;
+    min-height: 45px;
     .detail-home {
       flex: 1;
       line-height: 20px;

@@ -193,15 +193,12 @@
 }
 .icon-tips4:before {
   content: "\e924";
-  color: #fff;
 }
 .icon-list1:before {
   content: "\e925";
-  color: #fff;
 }
 .icon-list2:before {
   content: "\e94d";
-  color: #fff;
 }
 .icon-small:before {
   content: "\e951";
@@ -209,7 +206,6 @@
 }
 .icon-big:before {
   content: "\e952";
-  color: #fff;
 }
 .icon-icon_copy:before {
   content: "\e923";
@@ -463,7 +459,6 @@
 }
 .icon-plus:before {
   content: "\e937";
-  color: #fff;
 }
 .icon-search:before {
   content: "\e90e";
@@ -517,7 +512,6 @@
 }
 .icon-football:before {
   content: "\e965";
-  color: #fff;
 }
 .icon-circle1:before {
   content: "\e92c";

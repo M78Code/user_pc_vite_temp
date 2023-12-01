@@ -99,7 +99,8 @@ function getDropDownList() {
 /** 返回上一页 */
 const toHome = () => {
   // 设置 元数据计算 流程
-  MatchMeta.clear_match_info()
+  BaseData.set_is_emit(true)
+  // MatchMeta.clear_match_info()
   MatchResponsive.set_is_compute_origin(true)
   router.back()
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router)" >
+  <div class="basic-wrap" @click.stop="details.on_go_detail(match,null,router,route)" >
 
     <!-- 赛事信息 -->
     <div class="collect-box flex items-center justify-between">
@@ -108,13 +108,14 @@ import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, compute_img_url, U
 import { get_remote_time } from "src/core/format/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import {get_handicap_index_by , get_match_score} from 'src/core/match-list-pc/match-handle-data.js'
 import background from 'src/css-variables/base-h5/global/background';
 const router = useRouter()
+const route = useRoute()
 const match=inject('match');
 const props = defineProps({
   show_type: {

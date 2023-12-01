@@ -24,6 +24,7 @@ import { onMounted, ref, computed, watch } from "vue";
 import { useRoute,useRouter } from 'vue-router'
 import {LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core/index.js'
 import BaseData from "src/core/base-data/base-data.js";
+import lodash_ from "lodash"
 
 const props = defineProps({
   detail_info: {
@@ -66,7 +67,10 @@ const breadCrumbs_firstOne = computed(()=>{
 })
 
 const jumpTo = ()=>{
-  router.go(-1)
+  // router.go(-1)
+  let route_name = lodash_.get(MenuData.router_info,'pre_route')
+  router.push({name:route_name})
+
 }
 const jumpToLeagues  = () => {
   const { csid = 1, tid, tn } = props.detail_info
