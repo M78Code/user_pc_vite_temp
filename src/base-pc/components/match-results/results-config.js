@@ -418,6 +418,7 @@ export const useGetResultConfig = () => {
           }
           //获取联赛数据
           get_pournament();
+          console.error('sport_typesport_type',state.champion_sport_type)
         } else {
           state.load_data_state = "empty";
         }
@@ -426,6 +427,7 @@ export const useGetResultConfig = () => {
         // 接口报错时页面展示为空
         state.load_data_state = "empty";
       });
+      
   };
 
   /**
@@ -859,11 +861,11 @@ export const useGetResultConfig = () => {
    * @param {n} 0 体育下拉框 1 冠军球种
    */
   const choose_sport = (n = 0) => {
+    console.error('nnnn',n)
     // 如果查询的时间不在支持查询的时间区间内
     if (!test_time()) {
       return;
     }
-    console.log('nnnnnnnn',n)
     // 重置分页组件
     state.reset_pagination = Math.random();
     // 切换球种时让联赛选择框清除选中热门
@@ -892,7 +894,6 @@ export const useGetResultConfig = () => {
       } else {
         id = state.api_sport_type[index].id;
       }
-      console.log(71678632732,state.current_sport_id)
     } else {
       // 如果当前冠军赛种下拉框的选项是 全部
       if (state.champion_sport == _name) {
@@ -928,7 +929,6 @@ export const useGetResultConfig = () => {
       tournamentId: "",
       champion: state.current_sport_id == "0" ? 1 : 0,
     });
-    console.error('6372367327632',state.current_sport_id )
     state.page_random = Math.random();
     state.league_type = [i18n_t("common.all")]; // 全部
     state.league = i18n_t("common.all"); // 全部
@@ -937,7 +937,7 @@ export const useGetResultConfig = () => {
     state.pournament_params.nameStr = "";
     state.init = true; //查询赛事
    get_pournament(1); //联动调取联赛数据
-   console.error('53333333333',state.current_sport_id )
+   console.error('533333333334444',state.champion_sport_type )
   };
 
   /**
@@ -1192,8 +1192,7 @@ const pageSizeChange = (v) => {
    * 修改当前选中的赛种名字
    */
   const setSport = ({ currentItem, isChampion }) => {
-    console.log('currentItem, isChampion',currentItem)
-    console.log(' isChampion',isChampion)
+    console.log('currentItem, isChampion',currentItem, isChampion)
     state.is_highlights = false;
     if (state.results_params.sportType == "1" && state.is_highlights) {
       state.results_params.isPlayBack = 1;
@@ -1206,9 +1205,6 @@ const pageSizeChange = (v) => {
       sport.value = currentItem;
       let index = state.sport_type.indexOf(currentItem);
       state.current_sport_id = state.api_sport_type[index].id;
-      console.log('state.current_sport_idstate.current_sport_id',state.current_sport_id)
-      console.log('state.api_sport_type',state.api_sport_type)
-      console.log('index',index)
     }
   };
   //生成事件监听
