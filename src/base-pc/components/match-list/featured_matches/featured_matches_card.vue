@@ -36,7 +36,6 @@
 </template>
 <script setup>
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
-import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { ref, watch, onBeforeUnmount, computed } from 'vue';
@@ -48,7 +47,8 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { get_ouzhou_data_tpl_id ,get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
+import { get_ouzhou_data_tpl_id ,get_handicap_index_by, get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
+import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { utils } from "src/core/index.js"
 
 const router = useRouter();
@@ -78,6 +78,8 @@ const get_featurd_list = async () => {
       mids.push(match.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(match.mid))
     })
+    // 如果有数据加上特色赛事的高度 防止可视区域计算不对
+    MatchListScrollClass.set_special_offset(195, true)
     SessionStorage.set('get_hots', five)
     //查询赔率接口
     api_bymids({ mids }, null, MatchDataWarehouse_ouzhou_PC_hots_List_Common)

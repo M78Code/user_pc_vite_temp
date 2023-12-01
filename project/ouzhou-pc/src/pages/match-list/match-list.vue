@@ -8,7 +8,7 @@
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
-    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl || 1">
+    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl && false">
       <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
       <!-- 临时调试用 -->
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">
@@ -56,7 +56,7 @@
         </div> -->
         <template v-slot:after>
           <div style="height: 15px"></div>
-          <div class="pager-wrap row justify-end">
+          <div class="pager-wrap row justify-center">
             <div class="go-top-btn yb-flex-center" @click="on_go_top">
               <icon-wapper name="icon-go_top" size="14px" />
               <div class="msg">{{ $t("common.back_top") || "" }}</div>
@@ -108,7 +108,7 @@ import {
 } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import {
-  PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,
+  PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
 } from "src/core/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
@@ -190,6 +190,9 @@ export default {
         await init_home_matches();
       }
     }
+    function on_go_top(){
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)
+    }
     function get_league_list() {
       return MatchLeagueData.get_league_list()||[]
     }
@@ -207,6 +210,7 @@ export default {
       match_list_top,
       match_list_card,
       MenuData,
+      on_go_top,
       get_league_list,
       LayOutMain_pc,
       MatchDataWarehouse_ouzhou_PC_five_league_List_Common

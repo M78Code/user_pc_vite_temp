@@ -19,13 +19,13 @@
         <div :class="{ 'none-thumb': !has_thumb }" ref="after">
           <slot name="after"></slot>
         </div>
-        <!-- <resize-observer v-if="is_mounted" @resize="scroll_height_change" /> -->
+        <resize-observer v-if="is_mounted" @resize="scroll_height_change" />
       </div>
     </div>
   </div>
 </template>
 <script setup>
-// import resizeObserver from "src/base-pc/components/match-results/resize-observer/resize-observer.vue"
+import resizeObserver from "src/base-pc/components/match-results/resize-observer/resize-observer.vue"
 // import {mapGetters,mapActions} from 'vuex'
 // import { store } from "src/store/index.js"
 import { onMounted, onUnmounted, ref } from "vue";
@@ -129,16 +129,16 @@ const on_bootom = lodash.debounce(() => {
  * @param {number}
  */
  const emit_on_scroll = lodash.throttle(() => {
-  useMittEmit(MITT_TYPES.EMIT_LIST_ON_SCROLL);
+  // useMittEmit(MITT_TYPES.EMIT_LIST_ON_SCROLL);
 }, 3000);
 /**
  * @Description 更新列表卡片偏移量
  * @param {undefined} undefined
  */
- const update_list_card_offset = lodash.debounce((e) => {
+ const update_list_card_offset = (e) => {
   MatchListScrollClass.set_scroll_top(e);
   MatchListCard.set_card_show_level();
-}, 300);
+};
 /**
  * @Description 滚动条滚动事件
  * @param {object} e 滚动事件

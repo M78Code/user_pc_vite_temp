@@ -13,7 +13,7 @@
       <span>{{ i18n_t("ouzhou.setting_menu.personal") }}</span>
       <span class="line"></span>
       <!-- <span class="f_weight">Announcement</span> -->
-      <span class="f_weight">{{ personal_name[get_route_name] }}</span>
+      <span class="f_weight">{{ i18n_t(personal_name[get_route_name]) }}</span>
     </div>
   </template>
   <template v-else>
@@ -81,8 +81,8 @@ const emit = defineEmits(["change"]);
  * 规则公告
  */
 const personal_name = reactive({
-  'announcement':i18n_t("common.notice"),
-  'rules':i18n_t("setting_menu.rule_description")
+  'announcement':"common.notice",
+  'rules':"setting_menu.rule_description"
 })
 /**
  * 路由名称
