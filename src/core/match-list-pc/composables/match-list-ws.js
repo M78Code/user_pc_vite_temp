@@ -20,9 +20,9 @@ function use_match_list_ws(MatchListData = MatchDataWarehouse_PC_List_Common,rem
 			const { cd = [] } = data;
 
 			if (cd.length < 1) return;
-			const item = cd.find((t) => t.csid == MenuData.current_ball_type) || !MenuData.current_ball_type;
+			const item = cd.find((t) => t.csid == MenuData.current_ball_type);
 			if (MenuData.is_home()) {
-				useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES)
+				// useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES)
 			} else {
 				if (item) useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {is_socket: true});			
 			}
