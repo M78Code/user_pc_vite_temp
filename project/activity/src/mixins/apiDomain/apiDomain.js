@@ -6,16 +6,16 @@
 
 console.log('测试执行------------2----0');
 
-import http from "src/public/utils/http/axios_warpper";
+import http from "project/activity/src/utils/http/axios_warpper.js";
 http.init_window_env()
-import AllDomain from 'src/public/utils/http/all_domain.js'
+import AllDomain from 'project/activity/src/utils/http/all_domain.js'
 import {   loadLanguageAsync } from 'src/boot/i18n'
-import utils from 'project/activity/src/public/utils/utils'
+import utils from 'project/activity/src/utils/utils.js'
 import axios from "axios";
 
 const axios_instance = axios.create()
 console.log('测试执行------------2----1');
-import { mapGetters} from "vuex";
+// import { mapGetters} from "vuex";
 export default {
   data() {
     console.log('测试执行------------2----2');
@@ -34,10 +34,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      // 登录是否失效
-      vx_get_is_invalid: "get_is_invalid",
-    }),
+    // ...mapGetters({
+    //   // 登录是否失效
+    //   vx_get_is_invalid: "get_is_invalid",
+    // }),
     /**
     * @description: 首屏loading动画是否显示
     * @return {boolean} 是否显示首屏loading中动画
