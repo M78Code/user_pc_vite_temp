@@ -3,7 +3,7 @@
 		<!-- 头部搜索 -->
 		<div class="top_info_search">
 			<input ref="input_ref" type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`"
-				v-model="input_value" />
+				v-model="input_value" @input="get_search_data(store.tabIndex, sport_kind_data[store.tabIndex]?.id, input_value)" />
 			<img :src="compute_local_project_file_path('image/home/top_seach.png')" alt="" />
 			<img :src="compute_local_project_file_path('image/svg/bet_close3.svg')" alt="" class="clear_value"
 				@click.stop.prevent.self="clear_value" v-show="input_value.length > 0" />
@@ -100,7 +100,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -118,7 +118,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -157,7 +157,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
+												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
 												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -175,7 +175,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<!-- i?.hps?.[0].hl?.[0].ol?.[1]?.on -->
 												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
@@ -213,7 +213,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[0].on  }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[0].on  }}</div>
 												<!-- }}i18n_t('bet.home_win') -->
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
@@ -232,7 +232,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<!-- i18n_t('bet.away_win')  -->
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
@@ -392,7 +392,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			// 插入搜索历史
 			get_insert_history({ keyword })
 			// 搜索前清空会话仓库数据
-			sessionStorage.removeItem('search_txt');
+			// sessionStorage.removeItem('search_txt');
 			if (is_results.value) {
 				render_match_results_list(res)
 				return
@@ -413,15 +413,6 @@ const render_match_results_list = (res) => {
     if (length < 1) return MatchMeta.set_page_match_empty_status({ state: true });
     MatchMeta.handler_match_list_data({ list: list, type: 1 })
 }
-
-//监听输入框内容改变，并搜索
-watch(
-	() => input_value.value,
-	(val) => {
-		let trimVal = val.trim();
-		get_search_data(store.tabIndex, sport_kind_data.value[store.tabIndex]?.id, trimVal);
-	}
-)
 
 // 获取球赛的种类
 const sport_kind_data = ref([]);
@@ -463,7 +454,10 @@ function suggestion_bowling_click(item) {
 
 // 跳转到 详情页 或者 赛果页面
 function go_detail_or_reslut(item) {
-	sessionStorage.setItem('search_txt', input_value.value);
+	sessionStorage.setItem('search_params', JSON.stringify({
+		keyword: input_value.value,
+		csid: item.csid
+	}));
 	const query = get_search_txt ? { search_term: get_search_txt } : {}
 	if (get_menu_type.value == 28) {
 		router.push({
@@ -489,9 +483,10 @@ function go_detail_or_reslut(item) {
 
 const hot_list = ref([]);  //热门搜索列表
 // 获取热门搜索
-function get_hot_search() {
-	get_fetch_hot_search().then(({ data }) => {
-		hot_list.value = data || [];
+const get_hot_search = async () => {
+	await get_fetch_hot_search().then((res) => {
+		show_hot.value = true
+		hot_list.value = res.data;
 	})
 }
 
@@ -578,9 +573,10 @@ onMounted(() => {
 	get_sport_kind();
 	// 从详情返回时原搜索结果会丢失
 	// 所以需要从会话仓库拿到搜索字段，重新搜索
-	if (sessionStorage.getItem('search_txt')) {
-		const search_txt = sessionStorage.getItem('search_txt')
-		input_value.value = search_txt
+	if (sessionStorage.getItem('search_params')) {
+		const search_params = JSON.parse(sessionStorage.getItem('search_params'))
+		input_value.value = search_params.keyword
+		get_search_data(store.tabIndex, search_params.csid, search_params.keyword)
 	}
 })
 
@@ -667,7 +663,7 @@ onUnmounted(() => {
 .middle_info_tab {
 	padding: 9px 18px;
 	display: flex;
-	// border-bottom: 1px solid var(--q-gb-bg-c-1);
+	border-bottom: 1px solid var(--q-gb-bg-c-1);
 	background-color: var(--q-gb-bg-c-2);
 	font-size: 14px;
 	font-weight: 500;
