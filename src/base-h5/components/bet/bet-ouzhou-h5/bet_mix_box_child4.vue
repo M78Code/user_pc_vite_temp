@@ -10,14 +10,16 @@
           <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-content">
-                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 2">
-                    <div class="nonebox4-content-left-content-nei"></div>
-                  </div>
-                  <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 3">
-                    <span class="icon-success"></span>
-                  </div>
-                  <div class="nonebox4-content-left-content-xian red" v-if="BetViewDataClass.bet_order_status == 4">
-                    <span class="icon-failure"></span>
+                  <div class="bet-result-state">
+                    <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 2">
+                      <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" />
+                    </div>
+                    <div class="nonebox4-content-left-content-xian" v-if="BetViewDataClass.bet_order_status == 3">
+                      <span class="icon-success"></span>
+                    </div>
+                    <div class="nonebox4-content-left-content-xian red" v-if="BetViewDataClass.bet_order_status == 4">
+                      <span class="icon-failure"></span>
+                    </div>
                   </div>
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
@@ -56,7 +58,7 @@
   <script setup>
   
     import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-      import { compute_value_by_cur_odd_type } from "src/core/index.js"
+      import { compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
       import { format_currency } from "src/core/format/index.js"
 // import i18n from "project/activity/src/i18n";
 
@@ -212,14 +214,14 @@
       display: flex;
       margin-top: 5px;
       width: 100%;
+      .bet-result-state{
+        width: 0.38rem;
+        margin-top: 0.05rem;
+      }
   }
   .nonebox4-content-left-content-xian{
-    width: 0.15rem;
-    height: 0.13rem;
-    border: 1px solid var(--q-gb-bg-c-1);;
-    border-radius: 50%;
-    margin-right: 0.15rem;
-    margin-top: 0.08rem;
+    width: 0.18rem;
+    height: 0.18rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -230,8 +232,7 @@
     background: var(--q-gb-bg-c-1);
     border-radius: 50%;
   }
-  .nonebox4-content-left-content-t
-  ext{
+  .nonebox4-content-left-content-text{
       line-height: 0.25rem;
         margin-top: 0.02rem;
   }
@@ -250,6 +251,10 @@
     color: var(--q-gb-t-c-1);
     padding: 0 0.05rem;
   text-align: right;
+  }
+  .icon_loading{
+    width: 0.18rem;
+    height: 0.18rem;
   }
   </style>
   

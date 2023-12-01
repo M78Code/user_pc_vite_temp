@@ -43,7 +43,7 @@
                     <olStatus :item_ol_data="ol" :active="ol.oid == active" />
                   </template>
                   <span v-if="ol?.os == 2 || ol?._hs == 11">
-                      <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                    <lockImg :ol_item="ol" />
                   </span>
                   <ResultOlItem :value="ol"></ResultOlItem>
                 </div>
@@ -63,7 +63,7 @@
                 <span class="ol-ov-text"> {{compute_value_by_cur_odd_type(ol.ov,ol._hpid,'',MatchDetailCalss.params.sportId)}}</span>
                 <olStatus :item_ol_data="ol" :active="BetData.bet_oid_list.includes(ol?.oid )" />
               </template>
-              <span v-if="ol?.os == 2"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+              <span v-if="ol?.os == 2"> <lockImg :ol_item="ol" /></span>
               <ResultOlItem :value="ol"></ResultOlItem>
             </div>
           </div>
@@ -74,6 +74,7 @@
 </template>
 
 <script setup>
+import lockImg from "../lock_img.vue";
 import { onMounted, ref, computed } from "vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";

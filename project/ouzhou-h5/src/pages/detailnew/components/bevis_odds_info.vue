@@ -116,7 +116,7 @@ const playComponent = ref({
     template2: markRaw(playTemplate2),
     template3: markRaw(playTemplate3),
     template4: markRaw(playTemplate4),
-    template5: markRaw(temp5),
+    template5: markRaw(playTemplate5),
     template_other: markRaw(tem_other)
 })
 const hptArr = [0,1,2,3,5,4]
@@ -164,6 +164,9 @@ function useWatchAllCloseState() {
 }
 
 const bet_click_ = (data, play_name) => {
+    console.log(data,'data');
+    // 赛事hs为1的时候锁盘  os为2的时候锁盘
+    if(lodash.get(data,"os" ) == 2 ||  lodash.get(data,"_hs" ) == 1) return
     active.value = +data.oid;
     // storage_bet_info({
     //   payload: {

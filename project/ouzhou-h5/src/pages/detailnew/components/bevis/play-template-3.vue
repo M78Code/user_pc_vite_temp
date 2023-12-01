@@ -13,7 +13,7 @@ import olStatus from "../ol_status.vue";
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 import ResultOlItem from "../../result/ResultOlItem.vue";
-
+import lockImg from "../lock_img.vue";
 const props = defineProps({
     item_data: {
         type: Object,
@@ -44,7 +44,7 @@ setTimeout(function (){
                     <ResultOlItem class="list-item result-ol-item" :value="olChild" :hpt="3"></ResultOlItem>
                 </template>
                 <template v-else>
-                    <li v-if="olChild.os == 1" class="list-item" @click="go_betting(olChild)"
+                    <li v-if="olChild.os == 1 &&  olChild?._hs != 1" class="list-item" @click="go_betting(olChild)"
                         :class="{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }"
                     >
                         <span class="on-text textOverflow2">{{ olChild?.on || olChild?.ott }}</span>
@@ -52,7 +52,7 @@ setTimeout(function (){
                         <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </li>
                     <li v-else class="list-item">
-                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                        <lockImg :ol_item="olChild" />
                     </li>
                 </template>
             </template>

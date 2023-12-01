@@ -17,8 +17,7 @@ import olStatus from "../ol_status.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
-import _ from "lodash"
-
+import lockImg from "../lock_img.vue";
 const props = defineProps({
     item_data: {
         type: Object,
@@ -55,7 +54,6 @@ const AssembleData = computed(() => {
         })
     })
     betInformation.others = baseData['0']
-    console.log("betInformation=baseData卡面", betInformation)
     return betInformation
 })
 
@@ -79,29 +77,28 @@ const go_betting = (data) => {
             <ul class="list" v-for="assembleChild of AssembleData.assemble" :key="assembleChild?.otd">
                 <li class="title">{{ assembleChild?.osn }}</li>
                 <template v-for="info of assembleChild?.information" :key="info?.oid">
-                    <template v-if="info.os == 1">
+                    <template v-if="info.os == 1 && info._hs != 1">
                         <li class="bet" @click="go_betting(info)"
                             :class="{ 'is-active': BetData.bet_oid_list.includes(info?.oid ) }">
-                            <span class="on-text">{{ info.on }}</span>
+
                             <span class="ov-text">{{ compute_value_by_cur_odd_type(info.ov, info._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                         </li>
                     </template>
                     <figure v-if="info?.os == 2 || info._hs == 11">
-                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                       <lockImg :ol_item="info" />
                     </figure>
                 </template>
             </ul>
         </div>
         <ul class="others" v-if="!!AssembleData.others">
-            <template v-for="otherChild of AssembleData.others">
-                <li v-if="otherChild.os == 1 && compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, '', MatchDetailCalss.params.sportId)"
-                    class="bet" @click="go_betting(otherChild)"
+            <template v-for="otherChild of AssembleData.others" >
+                <li v-if="otherChild.os == 1" class="bet" @click="go_betting(otherChild)"
                     :class="{ 'is-active': BetData.bet_oid_list.includes(otherChild?.oid ) }">
                     <span class="on-text">{{ otherChild.on }}</span>
                     <span class="ov-text">{{ compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                 </li>
                 <figure class="bet" v-if="otherChild?.os == 2">
-                    <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
+                   <lockImg :ol_item="otherChild" />
                 </figure>
             </template>
         </ul>
@@ -152,4 +149,11 @@ const go_betting = (data) => {
     top: 2px;
 }
 
+.on {
+    color: var(--q-gb-t-c-4);
+}
+
+.ov {
+    color: var(--q-gb-t-c-1);
+}
 </style>

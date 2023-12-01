@@ -541,8 +541,8 @@ class MatchMeta {
       if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
       const data = lodash.get(res, 'data', [])
       // 一期只做  足球、篮球、网球、冠军
-      const list = data.filter((t) => ['1','2','5'].includes(t.csid))
-      this.handler_match_list_data({ list: list })
+      const list = data.filter((t) => ['1','2'].includes(t.csid))
+      this.handler_match_list_data({ list: list, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
     })
   }
 
@@ -557,7 +557,7 @@ class MatchMeta {
     })
     if (res.code === '0400500') return
     const list = lodash.get(res, 'data', [])
-    if (list.length) {
+    if (Array.isArray(list) && list.length > 0 && list !== null) {
       MatchCollect.get_collect_match_data()
     }
     return list
@@ -1010,6 +1010,13 @@ class MatchMeta {
   }
 
   /**
+   * @description 设置 ws 改变标志
+   */
+  set_is_ws_trigger (val) {
+    this.is_ws_trigger = val
+  }
+
+  /**
    * @description 清除赛事信息
    */
   clear_match_info () {
@@ -1164,7 +1171,6 @@ class MatchMeta {
     // 设置仓库渲染数据
     warehouse.set_list(list)
     this.is_ws_trigger = false
-    // this.is_ws_trigger = false
     // 获取赛事赔率
     this.get_match_base_hps_by_mids({is_again})
   }
