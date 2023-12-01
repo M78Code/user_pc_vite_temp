@@ -1,4 +1,5 @@
 import { reactive } from "vue"
+import { MenuData } from "src/core/";
 export const store = reactive({
     tabModel: false, //下拉框
     dateIndex: 0, //下拉框选择
@@ -22,6 +23,6 @@ export const store = reactive({
     tabOptions: [
         'Matches',
         'League',
-        // 'Outrights'
-    ]
+        'Outrights'
+    ],
 })
