@@ -557,7 +557,7 @@ class MatchMeta {
     })
     if (res.code === '0400500') return
     const list = lodash.get(res, 'data', [])
-    if (list.length) {
+    if (Array.isArray(list) && list.length > 0 && list !== null) {
       MatchCollect.get_collect_match_data()
     }
     return list

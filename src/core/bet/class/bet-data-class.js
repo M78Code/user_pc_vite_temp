@@ -1,7 +1,7 @@
 import { PageSourceData, fileds_map_common } from "src/core/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { get_score_config,get_market_is_show } from "./bet-box-submit"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { ref } from "vue"
 import lodash_ from "lodash"
@@ -813,6 +813,7 @@ this.bet_appoint_ball_head= null */
   }
 
   // 投注项赔率变动
+  // 盘口变动  每次回来 都需要用投注项盘口去数据仓库中 找到对应的盘口；要是找不到就直接判断为投注项失效 ；找到了 再进行 投注项筛选
   set_bet_c106_change( obj={} ) {
     // ws 每次推送的 mid只有一个 
     let mid = lodash_.get(obj,'mid')
@@ -831,6 +832,17 @@ this.bet_appoint_ball_head= null */
       if( mid_list.includes(mid)){
         // 投注项盘口id 多个（单关合并）
         market_list = this.bet_single_list.map(item => item.marketId) || []
+        // 查询投注项中的 投注项id 
+        // this.bet_single_list.forEach((item,ol_index) => {
+        //    // 匹配盘口是否健在
+        //   if(!get_market_is_show(item)){
+        //     // 设置 投注项状态  1：开 2：封 3：关 4：锁
+        //     item.ol_os = 3
+        //     // 更新投注项内容
+        //     this.set_ws_message_bet_info(item,ol_index)
+        //   }
+        // });
+       
         // 获取ws推送中的 盘口项 进行筛选匹配
         // 对比盘口和投注项
         hls.forEach(item => {
@@ -841,7 +853,8 @@ this.bet_appoint_ball_head= null */
             // 查询ws投注项 中 匹配到的投注项id 
             let ws_ol_obj = (item.ol||[]).find(obj => ol_obj.playOptionsId == obj.oid ) || {}
             // WS推送中包含 投注项中的投注项内容
-            if(parseFloat(ws_ol_obj.ov)){
+            // console.error('sssss',ws_ol_obj)
+            if(ws_ol_obj.ov){
               clearTimeout(time_out)
               // "odds": item.odds,  // 赔率 万位
               // "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
@@ -852,14 +865,18 @@ this.bet_appoint_ball_head= null */
               }
 
               // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
-              if(ol_obj.odds == ws_ol_obj.ov ){
+              // 投注项和状态一致不更新数据 
+              if(ol_obj.odds == ws_ol_obj.ov &&  ol_obj.ol_os == ws_ol_obj.os){
                 return
               }
              
               // 重新设置赔率
-              ol_obj.odds = ws_ol_obj.ov*1
+              ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
               // 设置 投注项状态  1：开 2：封 3：关 4：锁
               ol_obj.ol_os = ws_ol_obj.os
+              // 获取新的比分
+              ol_obj.mark_score = get_score_config(ol_obj)
+
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
@@ -878,7 +895,6 @@ this.bet_appoint_ball_head= null */
 
   set_bet_c201_change( obj={} ) {
     // 订单id
-    let order_no = lodash_.get(obj,'orderNo')
     // 订单状态 订单状态(1:投注成功 2:投注失败)
     let status = lodash_.get(obj,'status', 0)
     // console.error('BetViewDataClass.set_bet_c201_change',BetViewDataClass.is_finally)

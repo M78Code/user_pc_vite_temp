@@ -55,7 +55,6 @@ const AssembleData = computed(() => {
         })
     })
     betInformation.others = baseData['0']
-    console.log("betInformation=baseData卡面", betInformation)
     return betInformation
 })
 
@@ -82,7 +81,7 @@ const go_betting = (data) => {
                     <template v-if="info.os == 1">
                         <li class="bet" @click="go_betting(info)"
                             :class="{ 'is-active': BetData.bet_oid_list.includes(info?.oid ) }">
-                            <span class="on-text">{{ info.on }}</span>
+
                             <span class="ov-text">{{ compute_value_by_cur_odd_type(info.ov, info._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                         </li>
                     </template>
@@ -93,9 +92,8 @@ const go_betting = (data) => {
             </ul>
         </div>
         <ul class="others" v-if="!!AssembleData.others">
-            <template v-for="otherChild of AssembleData.others">
-                <li v-if="otherChild.os == 1 && compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, '', MatchDetailCalss.params.sportId)"
-                    class="bet" @click="go_betting(otherChild)"
+            <template v-for="otherChild of AssembleData.others" >
+                <li v-if="otherChild.os == 1" class="bet" @click="go_betting(otherChild)"
                     :class="{ 'is-active': BetData.bet_oid_list.includes(otherChild?.oid ) }">
                     <span class="on-text">{{ otherChild.on }}</span>
                     <span class="ov-text">{{ compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, '', MatchDetailCalss.params.sportId) }}</span>
@@ -152,4 +150,11 @@ const go_betting = (data) => {
     top: 2px;
 }
 
+.on {
+    color: var(--q-gb-t-c-4);
+}
+
+.ov {
+    color: var(--q-gb-t-c-1);
+}
 </style>

@@ -36,7 +36,8 @@
             </div>
             <div class="bet-delete bet-icon">
                 <!-- 投注确认中 -->
-                <icon-wapper v-if="BetViewDataClass.bet_order_status == 2" name="icon-sports_snooker" size="12px" color="#FF7000" />
+                <img class="icon_loading" v-if="BetViewDataClass.bet_order_status == 2" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt="" />
+                <!-- <icon-wapper v-if="BetViewDataClass.bet_order_status == 3" class="icon-loading-no" size="12px" color="#FF7000" /> -->
                 <!-- 投注失败 -->
                 <icon-wapper v-if="BetViewDataClass.bet_order_status == 4" name="icon-failure" size="12px" color="#FF4646" />
                 <!-- 投注成功 -->
@@ -50,7 +51,7 @@
 
 <script setup> 
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import {i18n_t,format_money2 } from "src/core/"
+import {i18n_t,format_money2,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { IconWapper } from 'src/components/icon/index.js'
 
@@ -190,6 +191,10 @@ const props = defineProps({
             color: var(--q-gb-t-c-5);
             height: 12px;
         }
+    }
+    .icon_loading{
+        width: 12px;
+        height: 12px;
     }
 }
 </style>

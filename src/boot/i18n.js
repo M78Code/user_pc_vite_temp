@@ -78,7 +78,7 @@ try {
       lodash.set(msg, v, message[v])
     }
   }
-  console.error('ssss',lang)
+  // console.error('ssss',lang)
   i18n.global.setLocaleMessage(lang, { ...langfile, ...msg });
   i18n.global.locale = lang;
   // 设置语种

@@ -609,7 +609,7 @@ const set_error_message_config = (res ={},type,order_state) => {
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
 const set_bet_obj_config = (params = {}, other = {}) => {
-    // console.error('投注项需要数据', params, 'other', other);
+    console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
     const { oid, _hid, _hn, _mid } = params
 
@@ -713,6 +713,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+        match_ctr: other.match_data_type, // 数据仓库 获取比分
+        device_type: BetData.deviceType, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
     // 冠军 
@@ -866,12 +868,18 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
-    // 两数拼接  
-    let home_away_mark = [2, 4, 7, 12, 18, 114, 26, 10, 3 , 33 ,34, 11, 347, 351, 127, 38, 45, 39, 198, 199, 367, 58] // 
+    // 区分赛种
+    let home_away_mark = []
+    switch(mid_obj.csid*1){
+        case 1:
+            home_away_mark = [2,3,4,7,10,11,12,13,18,19,26,33,34,38,45,39,58,69,71,87,88,97,98,102,109,110,114,115,116,122,123,124,127,134,143,198,199,233,307,309,314,315,325,328,331,335,347,351,367, ] 
+            break
+        case 2:
+            home_away_mark = [38,39,64,198,199,58,57,145,146,19,18,87,52,51,63,97,46,45,97,] 
+    }
     // 首页不需要拼接的
     let home_away_diff = [2, 38]
-    // 多位数
-    let home_mark_more = [351, 347]
+
     // 主客队
     let home_away_only = [1, 37, 32]
 
@@ -901,11 +909,19 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
         if(home_away_mark.includes(ol_obj._hpid*1)){
             let handicap = text.split(' ')
             handicap = handicap.filter(item => item)
-    
-            text = `${handicap[0]}${handicap[1] ? `<span class='ty-span'>${handicap[1]}</span>`:''}`
-    
-            if(home_mark_more.includes(ol_obj._hpid*1)){
-                text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
+            // 足球特殊组合玩法
+            switch(handicap.length){
+                case 2:
+                    text = `${handicap[0]} <span class='ty-span'>${handicap[1]}</span>`
+                    break
+                
+                case 3:
+                    text = `${handicap[0]} ${handicap[1]} <span class='ty-span'>${handicap[2]}</span>`
+                    break
+
+                case 4:
+                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
+                    break
             }
         }
         return text
@@ -945,13 +961,46 @@ const get_mark_score = (ol_obj,mid_obj) => {
     // 显示基准分
     // 玩法id 34 33 32 114 92 78 91 77 107 101 13 102 336 28 80 79 11 10 15 5 6 3 12 9 8 14 68 367 7 1 4 2 
     // let playId = [34, 33, 32, 114, 92, 78, 91, 77, 107, 101, 13, 102, 336, 28, 80, 79, 11, 10, 15, 5, 6, 3, 12, 9, 8, 14, 68, 367, 7, 1, 4, 2]
-    let play_id = [18, 19, 37, 38, 39, 42, 188, 189, 199]
+    let play_id = [18, 19, 37, 42, 188, 189, 199]
+    // 足球没有  38, 39,这些玩法 篮球的这些玩法要显示比分 
+    // 需要区分赛种的话 可以在mid_obj 里面取 csid
     // 判断需要显示基准分的玩法
     if(!play_id.includes(Number(ol_obj._hpid))){
         let obj = lodash_.get(mid_obj,'msc_obj.S1',{})
-        score = `(${obj.home}-${obj.away})`
+        score = `(${obj.home || ''}-${obj.away|| ''})`
     }
     return score
+}
+
+// 获取投注项比分
+const get_score_config = (obj={}) => {
+    let query = null;
+    if(obj.device_type == 1){
+        // h5 数据仓库
+        query = h5_match_data_switch(obj.match_ctr)
+    }else{
+        // pc 数据仓库
+        query = pc_match_data_switch(obj.match_ctr)
+    }
+    const mid_obj = lodash_.get(query.list_to_obj, `mid_obj.${obj.matchId}_`, {})
+    const ol_obj = lodash_.get(query.list_to_obj, `ol_obj.${obj.matchId}_${obj.playOptionId}`, {})
+
+    return get_mark_score(ol_obj,mid_obj)
+}
+
+// 查询当前盘口是否健在
+const get_market_is_show = (obj={}) =>{
+    let query = null;
+    if(obj.device_type == 1){
+        // h5 数据仓库
+        query = h5_match_data_switch(obj.match_ctr)
+    }else{
+        // pc 数据仓库
+        query = pc_match_data_switch(obj.match_ctr)
+    }
+    const hl_obj = lodash_.get(query.list_to_obj, `hl_obj.${obj.matchId}_${obj.marketId}`, {})
+
+    return !!hl_obj.hid
 }
 
 export {
@@ -960,4 +1009,6 @@ export {
     get_query_bet_amount_esports_or_vr,
     submit_handle,
     set_bet_obj_config,
+    get_score_config,
+    get_market_is_show,
 }
