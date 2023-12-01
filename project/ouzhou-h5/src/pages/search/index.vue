@@ -36,13 +36,13 @@
 			</ul>
 
 			<!-- 热门搜索 -->
-			<div class='searchHot' :class="[(history_data.length > 0) ? '' : 'mt50']" v-show="show_hot &&
+			<div class='searchHot' v-show="show_hot &&
 				(hot_list && hot_list.length > 0) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) &&
 				!input_value">
 				<div>
-					<div class="text-bol">{{ i18n_t('ouzhou.search.search_hot') }}</div>
+					<div class="text-bol" :class="[(history_data.length > 0) ? '' : 'mt0']">{{ i18n_t('ouzhou.search.search_hot') }}</div>
 					<!-- 热门内容 -->
 					<ul>
 						<li class="hotItem" v-for="(item, index) in hot_list" :key="index"
@@ -667,14 +667,14 @@ onUnmounted(() => {
 .middle_info_tab {
 	padding: 9px 18px;
 	display: flex;
-	border-bottom: 1px solid var(--q-gb-bg-c-1);
+	// border-bottom: 1px solid var(--q-gb-bg-c-1);
 	background-color: var(--q-gb-bg-c-2);
 	font-size: 14px;
 	font-weight: 500;
 	overflow-x: scroll;
-	position: fixed;
+	// position: fixed;
 	width: 100%;
-	z-index: 1;
+	// z-index: 1;
 	color: var(--q-gb-t-c-4);
 
 	&.top_tab {
@@ -726,7 +726,7 @@ onUnmounted(() => {
 	&.diff {
 		padding: 11px 0 11px 20px;
 		position: unset;
-		margin-top: 8px;
+		// margin-top: 8px;
 	}
 
 	.color {
@@ -797,7 +797,7 @@ li {
 }
 
 .list1 {
-	margin-top: 50px;
+	// margin-top: 50px;
 
 	li {
 		margin-bottom: 0;
@@ -835,15 +835,15 @@ li {
 
 .list {
 	overflow-y: scroll;
-	padding-top: 40px;
+	// padding-top: 40px;
 
 	.title {
-		height: 36px;
-		line-height: 36px;
+		height: 26px;
+		line-height: 16px;
 		padding-left: 20px;
 		font-weight: 500;
 		font-size: 14px;
-		margin-bottom: -8px;
+		// margin-bottom: -8px;
 		color: #A1A3A5;
 		text-align: center;
 
@@ -883,7 +883,7 @@ li {
 
 
 	.text-bol {
-		margin-top: .1rem;
+		margin-top: 0.09rem;
 		font-size: 0.14rem;
 		height: 0.44rem;
 		line-height: 0.44rem;
@@ -935,8 +935,8 @@ li {
 	text-align: center;
 }
 
-.mt50 {
-	margin-top: 50px;
+.mt0{
+	margin-top: 0 !important;
 }
 </style>
   
