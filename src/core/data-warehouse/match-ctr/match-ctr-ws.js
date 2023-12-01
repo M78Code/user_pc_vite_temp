@@ -22,6 +22,8 @@ export default class MatchDataBaseWS
     this.init();
     // 启动ws数据同步
     this.run();
+    // 延时器
+    this.ws_timer = 0;
   }
 
 
@@ -59,7 +61,16 @@ export default class MatchDataBaseWS
   r_ws_msg(obj){
     // 获取window.postMessage自定义命令
     const cmd = lodash.get(obj, 'data.cmd');
-    if(cmd == 'WS_MSG_REV'){
+    if(cmd == 'WS_STATUS_CHANGE_EVENT'){ // ws链接状态变化 (0-断开,1-连接,2-断网续连状态)
+      let ws_status = lodash.get(obj.data.data,'ws_status');
+      // ws重新链接后,发送赛事订阅命令(后期扩展使用)
+      if(ws_status){
+        // clearTimeout(this.ws_timer);
+        // this.ws_timer= setTimeout((ws_status) => {
+        //   this.scmd_c8();
+        // }, 1500);
+      }
+    } else if(cmd == 'WS_MSG_REV'){
       // 是ws推送过来的消息
       // 获取消息数据体
       const data = lodash.get(obj, 'data.data');
@@ -753,5 +764,6 @@ export default class MatchDataBaseWS
   destroy(){
     // 移除ws消息监听
     window.removeEventListener("message",this.message_fun);
+    clearTimeout(this.ws_timer);
   }
 }

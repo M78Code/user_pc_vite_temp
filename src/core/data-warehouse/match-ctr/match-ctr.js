@@ -28,6 +28,9 @@
  * 获取快速查询对象中的指定mid赛事对象
  * get_quick_mid_obj(mid)
  * 
+ * 强行发送C8赛事订阅命令(ws断开后重新链接使用,默认缓存上次的订阅数据)
+ * scmd_c8_ws_reconnect()
+ * 
  */
 import MatchDataBaseWS from  "./match-ctr-ws.js"
 import { reactive,toRef} from 'vue'
@@ -1861,6 +1864,13 @@ get_quick_mid_obj_ref(mid){
      }
    }
    return list_normal;
+  }
+  /**
+   * @description: 强行发送C8赛事订阅命令(ws断开后重新链接使用,默认缓存上次的订阅数据)
+   */
+  scmd_c8_ws_reconnect(){
+    // 发送C8赛事订阅命令
+    this.ws_ctr.scmd_c8();
   }
 }
 
