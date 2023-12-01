@@ -21,14 +21,14 @@
     <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
       :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
       <!-- 图片资源有问题，先用文字替代  -->
-      <div :style="compute_css_obj({ key: 'pc-home-score-board' })"></div>
+      <div :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })"></div>
     </div>
   </div>
 </template>
 
 <script>
 
-import { ref, watch, inject } from 'vue';
+import { ref, watch, defineProps, nextTick, inject } from 'vue';
 import lodash from 'lodash'
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/core/index.js";
@@ -63,6 +63,7 @@ export default {
     const match=inject("match")
     const {mid}=match.value||{}
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
+    let current_mid = MatchListCardDataClass.current_mid;
     //101号模板 默认就是 101的宽高配置 不会改变
     let match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG, 'template_101_config.width_config', {})
     let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
@@ -77,6 +78,10 @@ export default {
         //获取要展示的赔率数据
         handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
       }
+    }, { deep: true, immediate: true })
+    
+    watch(() => MatchListCardDataClass.current_mid, (new_value, old_value) => {
+      current_mid = new_value
     }, { deep: true, immediate: true })
     
     watch(() => [match.value.ms, match.value.mmp],() => {
@@ -97,11 +102,12 @@ export default {
     //   }
     // })
     function jump_to_details() {
-      const { tid, csid } = match.value;
+      const { tid, csid, mid } = match.value;
+      MatchListCardDataClass.set_current_mid(mid); 
       if(MenuData.is_scroll_ball()){
         // 控制右侧比分板
-        MatchDataWarehouseInstance.set_match_details(match.value,[])
-        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, match.value.mid);
+        MatchDataWarehouseInstance.set_match_details(match.value, [])
+        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       }else {
         //比分板跳转到详情页
         router.push({
@@ -123,7 +129,9 @@ export default {
       match_list_tpl_size,
       compute_css_obj,
       handicap_list,
-      match
+      match,
+      MenuData,
+      current_mid
     }
   }
 }
