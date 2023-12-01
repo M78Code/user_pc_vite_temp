@@ -551,7 +551,6 @@ export const details_main = (router, route) => {
           });
           break; 
          case "C102":
-          console.error('aaaaaa');
             RCMD_C102(data);
             break;
          case "C110":

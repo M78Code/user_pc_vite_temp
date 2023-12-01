@@ -26,7 +26,7 @@ const go_betting = (data) => {
             <div class="text-title textOverflow1">{{ item_data.title[0].osn }}</div>
             <div class="text-title textOverflow1">{{ item_data.title[1].osn }}</div>
         </nav>
-        <ul class="bet" v-for="(hlChild,hlIndex) of item_data.hl" :key="hlIndex">{{hlChild.hs}}
+        <ul class="bet" v-for="(hlChild,hlIndex) of item_data.hl" :key="hlIndex">
             <template v-if="!!hlChild">
                 <template v-for="olChild of hlChild.ol.filter(i=>i.os != 3)" :key="olChild.oid">
                     <li class="bet-item" :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
