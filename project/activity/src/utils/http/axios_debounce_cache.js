@@ -22,12 +22,12 @@
  */
 
 
-import menu_init from "project/activity/src/public/utils/http/module/menu_init.js"
-import match_odds_Info2 from "project/activity/src/public/utils/http/module/match_odds_Info2.js"
-import get_match_base_info_by_mids from "project/activity/src/public/utils/http/module/get_match_base_info_by_mids.js"
-import get_match_list from "project/activity/src/public/utils/http/module/get_match_list.js"
-import get_match_details from "project/activity/src/public/utils/http/module/get_match_details.js"
-import get_category_list from "project/activity/src/public/utils/http/module/get_category_list.js"
+import menu_init from "project/activity/src/utils/http/module/menu_init.js"
+import match_odds_Info2 from "project/activity/src/utils/http/module/match_odds_Info2.js"
+import get_match_base_info_by_mids from "project/activity/src/utils/http/module/get_match_base_info_by_mids.js"
+import get_match_list from "project/activity/src/utils/http/module/get_match_list.js"
+import get_match_details from "project/activity/src/utils/http/module/get_match_details.js"
+import get_category_list from "project/activity/src/utils/http/module/get_category_list.js"
 
 // 定义挂载点
 const  axios_debounce_cache={

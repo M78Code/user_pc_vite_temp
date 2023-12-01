@@ -1,13 +1,14 @@
 import { createApp } from 'vue'
 import { Quasar } from "quasar";
 import "./src/css/app.scss"
-import './style.css'
+// import './style.css'
 import App from './App.vue'
  
 import _ from 'lodash';
 import { HackError } from './hack-error';
 import { i18n, loadLanguageAsync } from "./src/boot/i18n.js";
 import global from './src/boot/globals';
+
 
 new HackError();
 

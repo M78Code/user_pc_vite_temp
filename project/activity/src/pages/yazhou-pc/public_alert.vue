@@ -27,7 +27,7 @@
   </q-dialog>
 </template>
 <script>
-import utils from 'project/activity/src/public/utils/utils'
+import utils from 'project/activity/src/utils/utils.js'
 export default {
   name: 'Alert',
   props: {

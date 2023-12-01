@@ -70,6 +70,8 @@ class MatchListCardDataClass {
     };
     // 赛事列表队列数据
     this.match_list_key = []
+    // 滚球页当前选中的赛事id
+    this.current_mid = ref('')
   }
   set_all_card_obj({
     all_card_obj, play_to_card_key_arr, no_start_to_card_key_arr, match_list_card_key_arr, five_leagues_card_key_arr, csid_to_card_key_obj
@@ -114,6 +116,9 @@ class MatchListCardDataClass {
   //获取单个卡片对象
   get_card_obj_bymid(mid) {
     return this.all_card_obj[mid] || this.all_card_obj[mid + '_'] || {}
+  }
+  set_current_mid(mid) {
+    return this.current_mid.value = mid;
   }
 }
 export default new MatchListCardDataClass();

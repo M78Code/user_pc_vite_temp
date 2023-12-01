@@ -95,7 +95,8 @@ const state = reactive({
  */
 const changeMenu = (item) =>{
   state.current_mi = item.mi;
-  MatchMeta.get_top_events_match(item.csid)
+  // MatchMeta.get_top_events_match(item.csid)
+  get_top_events_match(item.csid)
 }
 onMounted(async () => {
   MenuData.set_current_lv1_menu(1);
@@ -118,7 +119,6 @@ onMounted(async () => {
     if (tabValue.value === 'featured') {
       get_ouzhou_home_data()
     } else {
-      console.log(tabValue.value)
       get_top_events_match(MenuData.menu_csid)
     }
   }, 1000)
@@ -252,6 +252,7 @@ const on_update = (val) => {
     MenuData.set_current_lv1_menu(1);
     MenuData.set_menu_mi('101');
     get_ouzhou_home_data()
+    get_five_league_matchs()
   } else {
     // 设置 元数据计算 流程
     state.current_mi = MenuData.top_events_list?.[0]?.mi;
@@ -264,7 +265,7 @@ const on_update = (val) => {
  */
 const get_top_events_match = (csid = '1') => {
   // 设置 元数据计算 流程
-  MatchMeta.set_origin_match_data()
+  MatchMeta.set_origin_match_data({ is_match: false })
   MatchResponsive.set_is_compute_origin(true)
   state.current_mi = MenuData.top_events_list?.[0]?.mi;
   MatchMeta.get_top_events_match(csid)
@@ -272,7 +273,7 @@ const get_top_events_match = (csid = '1') => {
     MatchMeta.get_match_base_hps_by_mids({})
     clearTimeout(timer)
     timer = null
-  }, 1000)
+  }, 500)
 }
 
 /**

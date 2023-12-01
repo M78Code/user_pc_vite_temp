@@ -5,12 +5,12 @@
  */
 import axios from "axios";
 import { uid } from 'quasar';
-import pako_pb from "project/activity/src/public/utils/custom_pb_pako.js";
-import init_window_env from "project/activity/src/public/utils/window_env/window_env.js"
+import pako_pb from "project/activity/src/utils/custom_pb_pako.js";
+import init_window_env from "project/activity/src/utils/window_env/window_env.js"
 
 
-import axios_debounce_cache from "project/activity/src/public/utils/http/axios_debounce_cache.js"
-import userCtr from "project/activity/src/public/utils/user/userCtr.js"
+import axios_debounce_cache from "project/activity/src/utils/http/axios_debounce_cache.js"
+import userCtr from "project/activity/src/utils/user/userCtr.js"
 //其他非  缓存、限频、节流  相关的 一些常规接口的 cancel 逻辑
 
 
@@ -389,7 +389,8 @@ class Http {
      *
      */
     init_window_env() {
-        init_window_env();
+        console.error(window);
+        // init_window_env();
     }
 
     /**

@@ -4,17 +4,19 @@
 
 <script>
 import { defineComponent } from "vue";
-import Layout from "'project/activity/src/layouts/layout.vue'";
-
+import Layout from "project/activity/src/layouts/layout.vue";
+import apiDomain from "project/activity/src/mixins/apiDomain/apiDomain.js";
  
 
 
 export default defineComponent({
   name: "App",
+  mixins:[apiDomain],
   components: {
     Layout,
   },
   created () {
+    console.error(this);
      this.test_init()  ;
   },
   methods: {

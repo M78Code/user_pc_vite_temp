@@ -4,9 +4,8 @@
  * @Description: 公共方法对象定义
  */
 import { uid } from "quasar";
-import globalStore from 'project/activity/src/public/store/module/global/global';
-import userStore from 'project/activity/src/public/store/module/user/index';
-import { api_details, api_account } from "project/activity/src/public/api/index"
+import userStore from 'project/activity/src/store/module/user/index.js';
+// import { api_details, api_account } from "project/activity/src/api/index.js"
 
 const utils = {
     // 是否内嵌
@@ -15,71 +14,7 @@ const utils = {
     is_load_player_js: false,
     // 是否已加载视频动画资源
     is_load_video_resources: false,
-    /**
-     * @Description 加载视频动画资源
-     * @param {object} aa
-     * @param {undefined} undefined
-    */
-    load_video_resources() {
-        if (this.is_load_video_resources) return
-        this.is_load_video_resources = true
-        if (this.timer_load_video) {
-            clearTimeout(this.timer_load_video)
-            this.timer_load_video = null
-        }
-        this.timer_load_video = setTimeout(() => {
-            api_details.post_video_refer().then(res => {
-                // 获取视频动画域名
-                let video_src = window.env.config.live_domains[0] || _.get(res, "data.data.referUrl", '')
-                video_src = video_src.replace(/https?:/, "") + '?is_preload=1'
-                let animation_src = _.get(res, "data.data.aniUrl", '')
-                let obj = {
-                    video_src,
-                    animation_src
-                }
-                window.vue.$root.$emit('set_pre_video_src', obj)
-            })
-        }, 10000)
-    },
-    /**
-     * @Description 加载视频播放器js
-     * @param {undefined} undefined
-    */
-    load_player_js() {
-        if (this.is_load_player_js) return
-        this.is_load_player_js = true
-        let dplayer_el = document.createElement('script');
-        let hls_el = document.createElement('script');
-
-        let BUILD_VERSION = window.env.config.BUILD_VERSION
-
-
-        dplayer_el.src = `${BUILD_VERSION ? '/' + BUILD_VERSION : ''}/lib/video/DPlayer.min.js`
-        hls_el.src = `${BUILD_VERSION ? '/' + BUILD_VERSION : ''}/lib/video/hls.js`
-        document.head.appendChild(dplayer_el)
-        document.head.appendChild(hls_el)
-    },
-    /**
-     * @description 获取 icon 的 url
-     * @param  {type} var  desc
-     * @return {string} url
-     */
-    get_icon_url(menu) {
-        let url = ''
-        // 竞彩足球
-        let domain = window.env.config.domain[window.env.config.current_env][0]
-        let prefix_job = window.env.config.api.API_PREFIX_JOB
-        let is_jing_cai = _.get(menu, 'chinaBetting') == 1
-
-        if (is_jing_cai) {
-            url = `${domain}/${prefix_job}/${menu.field3}`
-
-        } else {
-            url = vue.get_file_path(menu.field3)
-        }
-
-        return url
-    },
+    
 
 
     /**
@@ -312,9 +247,9 @@ const utils = {
         // console.error(match.cds,'----------',match.man);
         // !['B03',C01,'O01','B02'].includes(match.cds)  B03 == BE电子足球、C01、O01==OD、B02等要屏蔽赛事分析 B02暂不屏蔽
         let ret = false;
-        if ([1, 2].includes(+match.csid) && globalStore.getters.get_global_switch().statistics_switch && !['BE', 'C01', 'OD'].includes(match.cds)) {
-            ret = true;
-        }
+        // if ([1, 2].includes(+match.csid) && globalStore.getters.get_global_switch().statistics_switch && !['BE', 'C01', 'OD'].includes(match.cds)) {
+        //     ret = true;
+        // }
         if (!(window.env && window.env.config && window.env.config.FINAL_TARGET_PROJECT_NAME == 'yabo')) { // 只有专业版显示sr标志入口图标
             ret = false;
         }
@@ -792,12 +727,12 @@ const utils = {
         });
     },
     //获取服务器时间
-    get_remote_time() {
-        let { local_time, remote_time } = globalStore.getters.get_timestamp();
-        let now = new Date().getTime()
-        let time = remote_time + (now - local_time);
-        return time;
-    },
+    // get_remote_time() {
+    //     let { local_time, remote_time } = globalStore.getters.get_timestamp();
+    //     let now = new Date().getTime()
+    //     let time = remote_time + (now - local_time);
+    //     return time;
+    // },
     // 获取不同环境的商户id
     get_zhuge_config_obj() {
         let zhuge_obj = { app_key: '', mid: '' };

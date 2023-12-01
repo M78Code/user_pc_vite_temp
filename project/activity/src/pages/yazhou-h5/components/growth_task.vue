@@ -206,13 +206,13 @@
 
 <script>
 
-import {api_activity} from "project/activity/src/public/api/index.js";
+import {api_activity} from "project/activity/src/api/index.js";
 import data_pager from "project/activity/src/components/data_pager.vue";
 import acticity_mixin from "../mixin/acticity_mixin";
 import active_count_down from "./active_count_down.vue";
-import utils from 'project/activity/src/public/utils/utils.js';
+import utils from 'project/activity/src/utils/utils.js.js';
 import themeStore from 'project/activity/src/public/store/module/theme/theme.js';
-import userStore from 'project/activity/src/public/store/module/user/index.js';
+import userStore from 'project/activity/src/store/module/user/index.js.js';
 
 export default {
   name: "daily_betting_payouts",
