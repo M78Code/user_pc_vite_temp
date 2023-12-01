@@ -159,7 +159,6 @@ export function usedetailData(route) {
   const get_detail = async (par) => {
     const { isNeedLoading = true } = par || {};
     try {
-      console.log(1111111111,route_parmas.value)
       const params = {
         mid: route_parmas.value.mid,
         cuid: user_info.userId,
