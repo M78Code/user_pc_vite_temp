@@ -19,7 +19,7 @@
  */
 
 
-import AxiosDebounceCache from  "project/activity/src/public/utils/http/module/AxiosDebounceCache.js"
+import AxiosDebounceCache from  "project/activity/src/utils/http/module/AxiosDebounceCache.js"
 
 
 // 实例化

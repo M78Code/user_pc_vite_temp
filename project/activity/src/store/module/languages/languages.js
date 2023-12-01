@@ -4,7 +4,7 @@
  * @Description: 用户语言设置
  */
 import { reactive } from 'vue';
-import BaseUserInfo from "project/activity/src/public/utils/user/base_user_info.js"
+import BaseUserInfo from "project/activity/src/utils/user/base_user_info.js"
 
 const state = reactive({
   lang:localStorage.getItem('lang') || 'zh',//语言
