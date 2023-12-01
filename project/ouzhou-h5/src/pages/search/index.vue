@@ -69,7 +69,7 @@
 					</div>
 				</div>
 				<template v-if="is_results">
-					<div class="match-results-list" @click="resultsJumpDetailHandle">
+					<div class="match-results-list" >
 						<match-container/>
 					</div>
 				</template>
@@ -431,9 +431,10 @@ function league_icon_error($event) {
 	$event.target.onerror = null
 }
 
-function resultsJumpDetailHandle() {
+function resultsJumpDetailHandle(item) {
 	sessionStorage.setItem('search_params', JSON.stringify({
-		keyword: input_value.value
+		keyword: input_value.value,
+		csid: item.csid
 	}));
 }
 
@@ -584,14 +585,20 @@ onMounted(() => {
 		input_value.value = search_params.keyword
 		get_search_data(store.tabIndex, search_params.csid, search_params.keyword)
 	}
-	if (is_results.value) VirtualList.set_is_show_ball(false)
+	if (is_results.value) {
+		VirtualList.set_is_show_ball(false)
+		useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, resultsJumpDetailHandle)
+	}
 })
 
 onUnmounted(() => {
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = null
 	input_value.value = ''
-	if (is_results.value) VirtualList.set_is_show_ball(true)
+	if (is_results.value) {
+		VirtualList.set_is_show_ball(true)
+		useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, resultsJumpDetailHandle).off
+	}
 })
 </script>
 <style lang="scss" scoped>
