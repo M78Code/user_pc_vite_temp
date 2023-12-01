@@ -123,42 +123,42 @@
 							</div>
 							<div v-show="expand_team">
 								<li v-for="(item, index) in search_data?.team" :key="index">
-									<div v-if="item.matchList[0].tn">
+									<!-- <div v-if="item.matchList[0].tn">
 										<div class="list_top" @click="match_top_click(item)">
-											<span v-html="red_color(item.matchList[0].tn)"></span><img
-												:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
+											<span v-html="red_color(item.matchList[0].tn)"></span>
+											<img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 										</div>
-									</div>
-									<div class="list_bottom" @click="match_click(item)">
+									</div> -->
+									<div class="list_bottom"  v-for="(list, i) in item?.matchList" @click="match_click(item)">
 										<div style="width: 60%; word-break: break-all">
 											<p>
-												<span class="home" v-html="red_color(item?.matchList?.[0]?.mhn)"></span>
+												<span class="home" v-html="red_color(list.mhn)"></span>
 												<span class="middle">v</span>
-												<span class="away" v-html="red_color(item?.matchList?.[0]?.man)"></span>
+												<span class="away" v-html="red_color(list.man)"></span>
 											</p>
-											<p>{{ (new Date(+item.matchList[0].mgt)).Format('MM/dd hh:mm') }}</p>
+											<p>{{ (new Date(+list.mgt)).Format('MM/dd hh:mm') }}</p>
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="item?.matchList[0]?.hps?.[0]?.hl.length > 0 && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div v-html="red_color(item?.matchList?.[0].mhn)"></div>
-												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
-												v-if="lodash.get(item,'matchList[0].hps[0].hl.length' ) > 0 && lodash.get(item,'matchList[0].hps[0].hl[0].ol[1].ov' ) && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="lodash.get(item,'list.hps[0].hl.length' ) > 0 && lodash.get(item,'list.hps[0].hl[0].ol[1].ov' ) && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+												<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
 											<div class="flex_1"
-												v-if="item?.matchList[0]?.hps?.[0]?.hl.length > 0 && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.matchList[0]?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div v-html="red_color(item?.matchList?.[0]?.man)"></div>
-												<div class="red">{{ get_odd_os(item?.matchList[0]?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												<div v-html="red_color(list.man)"></div>
+												<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -425,7 +425,9 @@ const get_match_base_hps_by_mids = async () => {
 	// 拿到所有滚球，联赛，队伍 mid
 	match_mid_Arr = []
 	search_data.value?.team.forEach((item, index) => {
-		match_mid_Arr.push(item.matchList[0].mid)
+		item.matchList.forEach((i, idx) => {
+			match_mid_Arr.push(i.mid)
+		})
 	})
 	search_data.value?.league.forEach((item, index) => {
 		item.matchList.forEach((i, idx) => {
@@ -452,9 +454,11 @@ const get_match_base_hps_by_mids = async () => {
 			// 使用获得比分的 mid 和搜索结果的 mid 做比较，将赔率信息返回给搜索结果
 			for (let i = 0; i < data.length; i++) {
 				for (let j = 0; j < search_data.value.team.length; j++) {
-					if (data[i].mid === search_data.value.team[j].matchList[0].mid) {
-						search_data.value.team[j].matchList[0] = data[i]
-					}
+					search_data.value.team[j].matchList.forEach((item, index) => {
+						if (data[i].mid === item.mid) {
+							search_data.value.team[j].matchList[index] = data[i]
+						}
+					})
 				}
 				for (let k = 0; k < search_data.value.league.length; k++) {
 					search_data.value.league[k].matchList.forEach((item, index) => {
@@ -724,6 +728,7 @@ watch(
 		.list {
 			margin: 0 auto;
 			background-color: #e2e2e2;
+			padding-bottom: 40px;
 		}
 	}
 }
