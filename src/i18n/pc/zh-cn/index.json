@@ -29,7 +29,8 @@
       "close_handicap": "当前赛事盘口已全部关闭"
      },
      "bet": {
-         "place_bet": "投注"
+         "place_bet": "投注",
+         "bet_loading": "投注确认中"
      },
      "menu": {
          "collect": "收藏",

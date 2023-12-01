@@ -384,7 +384,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 		searchSportType: sport_id || 1,
 		isPc: false
 	}
-	if (is_results) params.from = 2
+	if (!is_results) params.from = 2
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
@@ -392,7 +392,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			get_insert_history({ keyword })
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_txt');
-			if (is_results) {
+			if (!is_results) {
 				render_match_results_list(res)
 				return
 			}
@@ -823,7 +823,7 @@ li {
 }
 
 .match-results-list {
-	padding-top: .5rem;
+	// padding-top: .5rem;
 	height: 100%;
 	.match-list-container {
 		z-index: 0;

@@ -48,7 +48,7 @@
 import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount } from "vue";
 import lodash_ from "lodash"
 import { useRoute } from "vue-router";
-import { LayOutMain_pc, UserCtr } from "src/core/index.js";
+import { LayOutMain_pc, UserCtr, GlobalAccessConfig } from "src/core/index.js";
 import { api_betting } from "src/api/"
 
 import layoutHeader from "./layout-header.vue";
@@ -63,14 +63,27 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
+
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'layout' })
 
+let timeout_vue_hidden_run_flg = null
+let vue_hidden_run_flg = null
+
+const background_run_time = ref('')
 const route = useRoute();
 
 const ref_data = reactive({
   emit_lsit:{}
 })
+
+timeout_vue_hidden_run_flg = setTimeout(() => {
+  vue_hidden_run_flg = true;
+}, 4000);
+
+// 监听页面是否转入休眠状态
+document.addEventListener('visibilitychange', event_listener_visibilitychange);
+document.addEventListener('pagehide', event_listener_visibilitychange);
 
 // 屏蔽视频移动组件(视频回播功能)
 const show_move_video = computed(() => {
@@ -123,11 +136,51 @@ const get_unsettle_tickets_count_config = () => {
     });
   };
 
+  function event_listener_visibilitychange(){
+       if (!vue_hidden_run_flg) { return false }
+       let _is_hidden = document.visibilityState == 'hidden'
+      //  document.visibilityState == 'visible'
+       if (_is_hidden) {
+         window.DOCUMENT_HIDDEN = new Date().getTime()
+       } else {
+         // 获取 焦点后 ，页面激活 ，次开关打开 ，HTTP,WS 就会自动 打开开关
+         window.DOCUMENT_HIDDEN = ''
+       }
+
+       // 设置当前页面是否后台运行中状态
+       GlobalAccessConfig.set_vue_hidden_run(_is_hidden);
+       //页面失去焦点 ，隐藏   后台运行
+       if (_is_hidden) {
+         background_run_time.value = new Date().getTime()
+         // 在后台运行超过 over_timer 分钟后才广播刷新数据指令
+       } else {
+         // 页面 唤起  这里流程分 二种：
+         // 流程一：   离开不到30分钟 ，  列表或者详情 ，监听到 页面聚焦时间 变更 ，重新拉取当前的接口
+         // 流程二：   离开超过30分钟 ，  页面直接刷新 重走流程
+         // 30分钟  重载刷新  页面
+         let over_timer = 30 * (60 * 1000)
+         let now_time = new Date().getTime()
+         // 在后台共运行了多少时间
+         let run_time = now_time - background_run_time.value
+         // 页面需要 重载刷新
+         let need_reload = run_time > over_timer
+         //如果需要 重载刷新
+         if (need_reload) {
+          window.location.reload()
+         } else {
+           // 站点 tab 休眠状态转激活  ，
+           useMittEmit(MITT_TYPES.EMIT_SITE_TAB_ACTIVE )
+         }
+       }
+}
+
   onBeforeMount(()=>{
     clearInterval(upd_time_refresh_timer)
   })
   onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
+    document.removeEventListener('visibilitychange', event_listener_visibilitychange);
+    document.removeEventListener('pagehide', event_listener_visibilitychange);
     clearInterval(upd_time_refresh_timer)
 })
 

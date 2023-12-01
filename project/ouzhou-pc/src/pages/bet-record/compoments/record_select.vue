@@ -60,7 +60,7 @@ import { formatTime } from 'src/core/format/index.js'
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
 const isZH = true
-const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+const days = i18n_t('time.time_date_week')
 const months = [...Array(12)].map((v, i) => i + 1 + '月')
 const dateLocal = isZH ? {
   days,
