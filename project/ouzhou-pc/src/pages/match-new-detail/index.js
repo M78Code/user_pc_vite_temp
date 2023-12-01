@@ -466,7 +466,7 @@ export function usedetailData(route) {
     init();
   };
   /* 赛事结束之后调取详情接口 */
-  const { off:off_init } = useMittOn(
+  message_fun.push(useMittOn(
     MITT_TYPES.EMIT_SWITCH_MATCH,
     ((parmas)=>{
       console.log(parmas,'parmas');
@@ -474,13 +474,13 @@ export function usedetailData(route) {
       refresh()
       console.error('-----------aaaaa');
     })
-  );
+  ).off)
   onUnmounted(() => {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
     message_fun.forEach(i=>i())
-    off_init()
+    // off_init()
     clearTimeout(back_to_timer);
   });
 
@@ -537,7 +537,7 @@ export function usedetailData(route) {
     (_new, _old) => {
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {
-        // mx_autoset_active_match({ mid: route.params.mid });
+        mx_autoset_active_match({ mid: route.params.mid });
       }
       // 否则更新玩法集
       else {
