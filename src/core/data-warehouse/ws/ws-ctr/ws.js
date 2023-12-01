@@ -277,6 +277,14 @@ export default class Ws {
               }
               // 增加缓存信息,并获取组装后信息
               msg = this.ws_send_manger_objs[msg.cmd].push_obj(msg.key, msg, msg.ctr_cmd);
+            } else {
+              if(msg){
+                // 删除无用key值数据
+                let keys = ['key','module','one_send','ctr_cmd'];
+                keys.forEach((key) => {
+                  delete msg[key];
+                });
+              }
             }
             break;
           case 'C2':
