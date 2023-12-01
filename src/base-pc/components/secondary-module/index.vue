@@ -92,10 +92,11 @@ function close_page(value) {
 </script>
 <style lang="scss">
 //.q-dialog__inner .dialog_content
-.dialog_content{
-  padding-left: 320px;
-}
+
 .secondary_module  {
+  .dialog_content{
+    padding-left: 320px;
+  }
   max-width: 1200px !important;
   background: var(--q-gb-t-c-1);
   margin-left: 200px;

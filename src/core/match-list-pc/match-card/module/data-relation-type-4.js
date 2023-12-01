@@ -91,7 +91,6 @@
     MatchListCardData.match_list_key = lodash.cloneDeep(match_list)
     // 遍历所有赛事列表
     lodash.each(match_list, _match => {
-      let match = MatchListData.list_to_obj.mid_obj[_match.mid + '_']
       league_repeat_count_obj[_match.tid] = league_repeat_count_obj[_match.tid] || 0
       let match_ms =  get_match_status(_match.ms)
       // 赛事数量统计
