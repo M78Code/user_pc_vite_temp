@@ -11,6 +11,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { nextTick } from "vue";
 
 /**
  * @Description 设置是哪种列表类型
@@ -229,7 +230,10 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         is_ws_call
       );
     }
+    conpute_match_list_card_offset();    
 
     // 设置列表总高度
-    conpute_match_list_card_offset();
+    // nextTick(() => {
+    //   conpute_match_list_card_offset();    
+    // })
   };

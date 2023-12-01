@@ -11,7 +11,6 @@
     <p class="font_match_results">12222</p>
     <!-- 赛果 -->
     <!-- <simple-header @refresh="sub_search" :data_loaded="refresh_finish" :title="i18n_t('common.amidithion')"></simple-header> -->
-
     <!-- 中间内容 S-->
     <div class="main_wrap">
       <!-- 筛选条件 S-->

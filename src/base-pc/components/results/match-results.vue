@@ -18,6 +18,8 @@
       <result-header
         :sport_type="sport_type"
         :sport="sport"
+        :champion_sport_type="champion_sport_type"
+        :champion_sport="champion_sport"
         :startTimeShowFunc="startTimeShowFunc"
         :current_sport_id="current_sport_id"
         :startTimeShow="startTimeShow"
@@ -108,6 +110,8 @@ const {
   current_sport_id,
   sport,
   sport_type,
+  champion_sport_type,
+  champion_sport,
   refresh_finish,
   results_data,
   tips,

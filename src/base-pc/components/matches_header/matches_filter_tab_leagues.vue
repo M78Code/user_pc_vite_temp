@@ -10,7 +10,7 @@
                 {{ item.introduction }}
               </div>
             </div>
-            <img class="current-mark" :class="{ 'show-mark': select_id == item.id }" src="../../../assets/images/mask_group.png" alt="">
+            <div class="current-mark" :class="{'show-mark':  select_id == item.id}"></div>
           </div>
           <div class="filter-tab-split-line" v-show="index != leagues.length - 1"></div>
         </div>
@@ -18,14 +18,14 @@
     </div>
     <div class="prev-btn-box" v-show="show_left_btn" @click="filter_tab_scroll('prev')">
       <div class="prev-btn">
-        <img src="../../../assets/images/tr_right_arrow.png" alt="">
+        <img :src="compute_img_url('pc-home-right-arrow')" alt="">
       </div>
       <div class="shadow-box"></div>
     </div>
     <div class="next-btn-box" v-show="show_right_btn" @click="filter_tab_scroll('next')">
       <div class="shadow-box"></div>
       <div class="next-btn">
-        <img src="../../../assets/images/tr_right_arrow.png" alt="">
+        <img :src="compute_img_url('pc-home-right-arrow')" alt="">
       </div>
     </div>
   </div>
@@ -36,6 +36,8 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from "vue";
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
+import { compute_img_url } from 'src/core/server-img/index.js'
+
 
 let area_obj = ref();
 let area_obj_wrap = ref();

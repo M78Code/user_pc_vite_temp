@@ -65,7 +65,7 @@
             default: true,
             up: odds_lift == 'up',
             down: odds_lift == 'down',
-            active: BetData.bet_oid_list.includes(ol_data.oid),
+          
           }"
         >
           {{ compute_value_by_cur_odd_type(ol_data.ov, ol_data._hpid, "", ol_data.csid) }}
@@ -213,11 +213,11 @@ let tid;
 const set_odds_lift = (cur, old) => {
   if (!["lock", "seal"].includes(odds_state.value) && old && !is_odds_seal()) {
     odds_lift.value = cur > old ? "up" : "down";
-    props.ol_data.odds_lift =  odds_lift.value
+    // props.ol_data.odds_lift =  odds_lift.value
      clearTimeout(tid);
     tid = setTimeout(() => {
       odds_lift.value = "";
-      props.ol_data.odds_lift = ''
+      // props.ol_data.odds_lift = ''
 
     }, 3000);
   }

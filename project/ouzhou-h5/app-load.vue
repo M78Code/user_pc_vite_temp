@@ -82,7 +82,7 @@ onBeforeMount(() => {
   }
   // 发送日志
   // window.wslog.sendMsg('xxx');
-  // set_vue_hidden_run(false);
+  GlobalAccessConfig.set_vue_hidden_run(false);
   timer2 = setTimeout(() => {
     vue_hidden_run_flg = true;
   }, 4000);
@@ -162,7 +162,7 @@ function visibilitychange_handle() {
     window.DOCUMENT_HIDDEN = "";
   }
   // 设置当前页面是否后台运行中状态
-  // set_vue_hidden_run(is_hidden);
+  GlobalAccessConfig.set_vue_hidden_run(is_hidden);
 
   //页面失去焦点 ，隐藏   后台运行
   if (is_hidden) {
