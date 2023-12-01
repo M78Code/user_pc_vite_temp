@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:50
  * @Description: 注部分公共方法提取(包括与列表,详情,投注项三部分)
  */
-import play_mapping from "project/activity/src/public/config/mapping/play_mapping.js";
+
 /**
  * @description: 更新投注项状态
  * @param {Object} that 视图对象
@@ -169,125 +169,7 @@ const get_handicap_id = (that) => {
   if(!bet_obj || !bet_obj.cs) return '';
   return bet_obj.cs.handicap_id;
 }
-/**
- * @description: 获取盘口值
- * @param {Object} that 视图对象
- * @return {String} 盘口值
- */
-const get_handicap = (that) => {
-  let bet_obj = that.vx_is_bet_single? _.get(that,`vx_get_bet_single_obj.${that.id}`):_.get(that,`vx_get_bet_obj.${that.id}`),item_bs,item_cs,team_name='',handicap='',hpid, target_side;
-  if(!_.has(bet_obj,'bs') || !_.has(bet_obj,'cs')) return '';
-  item_bs = bet_obj.bs;
-  item_cs = bet_obj.cs;
-  if(item_cs && item_bs) {
-    handicap = _.get(item_cs, 'handicap_value', '');
-    hpid = `${_.get(item_cs, 'play_id')}`;
-    if([340, 141,7, 341, 20].includes(hpid*1)){
-      return '';
-    }
-    target_side = _.get(item_cs, 'target_side', '');
-    console.log('正常投注参数playOptionName处理------------99',handicap,item_cs.source);
-    console.log('正常投注参数playOptionName处理------------990',handicap,item_cs );
-    // 1-1比分形式
-    if(handicap && ((handicap.includes('-') && !handicap.startsWith('-') && !handicap.endsWith('-')) || that.$root.$t('list.other')== handicap) || (handicap && item_cs.source == 'is_chat_room')) {
-      if (item_cs.source == 'is_chat_room') {
-        const otv = _.get(item_bs, 'hps[0].hl[0].ol[0].otv', '');
-        handicap =otv?'': _.get(item_bs, 'hps[0].hl[0].ol[0].on', '');
-      }
-      return handicap;
-    }
-    // 以下逻辑同 列表中tips的显示逻辑 非赛事详情
-    if(!['details','match_details','is_chat_room'].includes(item_cs.source)) {
-      // 让球玩法数组中PLAY_LET_BALL中包含的则显示队伍名称与盘口值 具体注释请见\user-pc\src\project\yabo\config\mapping\play_id_mapping.js
-      if(play_mapping.PLAY_LET_BALL.includes(hpid) || !play_mapping.PLAY_GOAL.includes(hpid) || (play_mapping.PLAY_GOAL.includes(hpid) && target_side=='')) {
-        team_name = `${_.get(item_bs, 'hps[0].hl[0].ol[0].on', '')}`;
-      }
-      //玩法名称存在 盘口存在 并且玩法id不是在PLAY_ALL_KINDS中包含 具体注释请见\user-pc\src\project\yabo\config\mapping\play_id_mapping.js
-      if(team_name && handicap && handicap!='' && !play_mapping.PLAY_ALL_KINDS.includes(hpid)) {
-        // 如果盘口存在且可以转化成数字,则去掉正负号后进行匹配(防止接口hv字段的盘口值与on或者otv字段中盘口值正负号不一致造成页面显示问题)
-        if(!handicap.includes('/') && !isNaN(handicap)){
-          if (handicap.includes('.')) { // 精度问题
-            handicap = Math.abs(handicap).toFixed(1);
-          } else {
-            handicap = Math.abs(handicap);
-          }
-        } else if(handicap.includes('/') && (handicap.startsWith('+') || handicap.startsWith('-'))) {
-          handicap = handicap.substr(1,handicap.length);
-        }
-        //以+结尾
-        if(team_name.endsWith(`+${handicap}`) || _.trim(team_name) ==`+${handicap}`) {
-          return `+${handicap}`;
-        } else if (team_name.endsWith(`${handicap}+`) || _.trim(team_name) ==`${handicap}+`) {
-          return `${handicap}+`;
-        } else if (team_name.endsWith(`-${handicap}`) || _.trim(team_name) ==`-${handicap}`) {
-          return `-${handicap}`;
-        } else if (team_name.endsWith(`${handicap}-`) || _.trim(team_name) ==`${handicap}-`) {
-          return `${handicap}-`;
-        } else if(team_name.endsWith(handicap) || _.trim(team_name) ==handicap) {
-          return handicap;
-        } else if(team_name.includes(`+${handicap}`)) {
-          return `+${handicap}`;
-        } else if(team_name.includes(`-${handicap}`)) {
-          return `-${handicap}`;
-        }
-      } else {
-        if([7,20,74,341,342].includes(+hpid)){
-          handicap = `${_.get(item_bs, 'hps[0].hl[0].ol[0].ot', '')}`;
-          handicap = handicap.replace(':', '-')
-        }else{
-          handicap = '';
-        }
-      }
-    } else {
-      //如果是详情部分特殊玩法
-      if(play_mapping.PLAY_RESULT.includes(hpid)){
-        console.log('正常投注参数playOptionName处理------------991',handicap );
-        //投注项显示值
-        let on = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '');
-        //投注时所需展示的信息
-        let otv = _.get(item_bs, 'hps[0].hl[0].ol[0].otv', '');
-        //投注项类型
-        let ot = _.get(item_bs, 'hps[0].hl[0].ol[0].ot', '');
-        let hpid = _.get(item_bs, 'hps[0].hpid', '');
-        if(otv && on && otv.endsWith(on)&& !['383','359'].includes(hpid) ) {
-          handicap = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '');
-        }else {
-          handicap = '';
-        }
-      } else {
-        //盘口值
-        let hv = _.get(item_bs, 'hps[0].hl[0].hv', '');
-        // if(item_cs.source=="is_chat_room"){
-        //   hv = _.get(item_bs, 'hps[0].hl[0].ol[0].hv', '')
-        //   console.log(hv);
 
-        // }
-
-        console.log('正常投注参数playOptionName处理------------992',handicap,'****',hv,item_bs ,item_cs);
-        console.log('正常投注参数playOptionName处理------------996',handicap,'****', JSON.stringify(_.get(item_bs, 'hps[0].hl[0].ol[0]')));
-        if(hv || hv=='0') {
-
-          handicap = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '');
-          console.log('正常投注参数playOptionName处理------------994',handicap,'****',hv);
-          // 盘口中间不能包含‘-’ 不能以'+'结尾
-          if(handicap && isNaN(parseFloat(handicap))) {
-            handicap = '';
-          }
-
-        }
-        // else if(['341', '342'].includes(hpid)){
-        //   // handicap = _.get(item_bs, 'hps[0].hl[0].ol[0].ot', '');
-        // }
-        else {
-          handicap = '';
-        }
-        console.log('正常投注参数playOptionName处理------------993',handicap,'****',hv);
-      }
-    }
-  }
-  //  console.log('handicap===', handicap);
-  return handicap;
-}
 /**
  * @description: 获取投注项显示的状态
  * @param {Object} that 视图对象
@@ -333,132 +215,7 @@ const get_serial_type = (that) => {
   let bet_obj = that.vx_get_bet_obj[that.id];
   return _.get(bet_obj, 'cs.serial_type', false);
 }
-/**
- * @description: 获取投注一方的队名
- * @param {Object} that 视图对象
- * @return {String} 队伍名称
- */
-const get_team_name = (that) => {
 
-  //获取当前下注对象数据
-  let bet_obj = that.vx_is_bet_single? _.get(that,`vx_get_bet_single_obj.${that.id}`):_.get(that,`vx_get_bet_obj.${that.id}`),      team_name = '',hpid='', handicap='';
-  if(_.has(bet_obj,'bs') && _.has(bet_obj,'cs')) {
-    // target_side值为T1是主队 T2是客队
-    let item_cs = bet_obj.cs,item_bs = bet_obj.bs,target_side =  _.get(item_cs, 'target_side');
-    if(target_side=='T1') {
-      team_name = _.get(item_bs, 'mhn', '');
-    } else if(target_side=='T2') {
-      team_name = _.get(item_bs, 'man', '');
-    }
-    // hpid玩法id handicap_value 
-    hpid = `${_.get(item_bs, 'hps[0].hpid') || _.get(item_bs, 'hps[0].hl[0].ol.hpid')}`;
-    //盘口值
-    handicap = _.get(item_cs, 'handicap_value');
-    // 以下逻辑同 列表中tips的显示逻辑 非赛事详情（没有T1,T2）
-    if(item_cs.source == 'is_chat_room'){//聊天室
-      // team_name = `${team_name} ${_.get(item_bs, 'hps[0].hl[0].ol.ott')}`;
-      if (_.get(item_bs, 'hps[0].hl[0].ol.otv')) {
-        team_name = `${_.get(item_bs, 'hps[0].hl[0].ol.otv')}`
-        }else{
-          team_name = `${team_name} ${_.get(item_bs, 'hps[0].hl[0].ol.ott')}`;
-        }
-        
-    }else//非聊天室
-    if(!['details','match_details'].includes(item_cs.source)) {
-      // 让球玩法数组中PLAY_LET_BALL中包含的则显示队伍名称与盘口值 具体注释请见\user-pc\src\project\yabo\config\mapping\play_id_mapping.js
-      if(play_mapping.PLAY_LET_BALL.includes(hpid)) {
-        team_name = `${team_name} ${_.get(item_bs, 'hps[0].hl[0].ol[0].on')}`;
-      }else if(['341','342'].includes(hpid)) {
-        let arr = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '') || _.get(item_bs, 'hps[0].hl[0].ol[0].ot');
-        if(arr.split(':').length > 1){
-          team_name = arr.split(':')[0] + '' + '-' + arr.split(':')[1];  
-        }else{
-          team_name = arr;
-        }
-      }
-      // 进球玩法
-       else if(!play_mapping.PLAY_GOAL.includes(hpid) ||(play_mapping.PLAY_GOAL.includes(hpid) && target_side=='')) {//如果不在进球玩法中且target_side值不存在
-        if (['1','17'].includes(hpid)&&target_side=='') {  //如果1，17 hpid并且 target_side为空
-          team_name = _.get(item_bs, 'hps[0].hl[0].ol[0].on') || _.get(item_bs, 'hps[0].hl[0].ol[0].ot');
-        }
-           if (!['1','17'].includes(hpid)) {
-            team_name = _.get(item_bs, 'hps[0].hl[0].ol[0].on') || _.get(item_bs, 'hps[0].hl[0].ol[0].ot');
-            //on没取到就去取ot 这个是玩法id为7得时候会取到ot，然后把冒号替换成-  这里做个标记5分钟可能改动这里
-           if(team_name.indexOf(':') > -1 && !['361', '362'].includes(hpid)){
-             team_name = team_name.split(':')[0] + '' + '-' + team_name.split(':')[1]
-           }
-           }
-      }
-      //玩法名称存在 盘口存在 并且玩法id不是在PLAY_ALL_KINDS中包含 具体注释请见\user-pc\src\project\yabo\config\mapping\play_id_mapping.js
-      if(team_name && handicap && handicap!='' && !play_mapping.PLAY_ALL_KINDS.includes(hpid)) {
-        if(!handicap.includes('/') && !isNaN(handicap)){
-          if (handicap.includes('.')) { // 精度问题
-            handicap = Math.abs(handicap).toFixed(1);
-          } else {
-            handicap = Math.abs(handicap)
-          }
-        } else if(handicap.includes('/') && (handicap.startsWith('+') || handicap.startsWith('-'))) {
-          handicap = handicap.substr(1,handicap.length)
-        }
-        let len1 = team_name.length;
-        // 盘口值为正时
-        if(team_name.endsWith(`+${handicap}`) || _.trim(team_name) ==`+${handicap}`) {
-          let len2 = `+${handicap}`.length;
-          team_name = team_name.substr(0,(len1-len2)); // 去掉盘口值(获取玩法名称)
-        } else if (team_name.endsWith(`${handicap}+`) || _.trim(team_name) ==`${handicap}+`) { // 盘口值以+结尾(例如:进球数玩法最后一个投注项为3+)
-          let len2 = `${handicap}+`.length;
-          team_name = team_name.substr(0,(len1-len2)); // 去掉盘口值(获取玩法名称)
-        } else if (team_name.endsWith(`-${handicap}`) || _.trim(team_name) ==`-${handicap}`) {   // 盘口值为负数时
-          let len2 = `-${handicap}`.length;
-          team_name = team_name.substr(0,(len1-len2));  // 去掉盘口值(获取玩法名称)
-        } else if (team_name.endsWith(`${handicap}-`) || _.trim(team_name) ==`${handicap}-`) { // 盘口值以-结尾(暂无此种场景)
-          let len2 = `${handicap}-`.length;
-          team_name = team_name.substr(0,(len1-len2));
-        } else if(team_name.endsWith(handicap) || _.trim(team_name) == handicap) { // 盘口值不带正负号且玩法名称就是盘口值
-          let len2 = `${handicap}`.length;
-          team_name = team_name.substr(0,(len1-len2)); // 相当月对盘口值去空即:team_name=""
-        } else if(team_name.includes(`+${handicap}`)) {  // 队伍名称中包含盘口值
-          team_name = team_name.replace(`+${handicap}`, '');
-        } else if(team_name.includes(`-${handicap}`)) {   // 队伍名称中包含盘口值
-          team_name = team_name.replace(`-${handicap}`, '');
-        }
-      }
-    } else {
-      //详情部分特殊玩法
-      if(play_mapping.PLAY_RESULT.includes(hpid)){
-        // 投注项显示值
-        let on = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '');
-        // 投注时所需展示的信息
-        let otv = _.get(item_bs, 'hps[0].hl[0].ol[0].otv', '');
-        // 投注项类型
-        let ot = _.get(item_bs, 'hps[0].hl[0].ol[0].ot', '');
-        
-        if(otv && on && otv.endsWith(on) && ![340,141,7,359,383].includes(hpid*1)) {
-          team_name = _.get(item_bs, 'hps[0].hl[0].ol[0].ott', '');   
-        }else if([7].includes(hpid*1)){
-          team_name = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '');
-        }else  
-        {
-          team_name = _.get(item_bs, 'hps[0].hl[0].ol[0].otv', '');
-          if([340,141].includes(hpid*1) && that.lang == 'zh') team_name = team_name.replace(/\s*/g,"");
-        }
-      } else {
-        // 球员玩法id
-        if(play_mapping.PLAYER_ID.includes(hpid)) {
-          team_name = `${_.get(item_bs, 'hps[0].hl[0].ad2', '')}-${_.get(item_bs, 'hps[0].hl[0].ol[0].ott', '')}` ;
-        } else {
-          // 如果是详情部分则取ott字段进行投注项名称显示
-          team_name = _.get(item_bs, 'hps[0].hl[0].ol[0].ott', '');
-          if(_.isEmpty(team_name)) {
-            team_name = _.get(item_bs, 'hps[0].hl[0].ol[0].on', '');
-          }
-        }
-      }
-    }
-  }
- console.log('team_name===', team_name);
-  return team_name;
-}
 
 /**
  * @description: 获取数据源
@@ -666,57 +423,7 @@ const del_bet_item = (that) => {
     }
   }
 }
-/**
- * @description:更新赛事列表以及赛事详情的赔率(前端模拟C105进行发送) 目的: 解决赔率不同步问题
- * @param {Object} that 视图对象
- * @return {undefined} undefined
- */
-const update_odds_info = (that) => {
-  return;
-  if (!that.id) return;
-  if(window.ws) {
-    let bet_obj = that.vx_is_bet_single? _.get(that,`vx_get_bet_single_obj.${that.id}`):_.get(that,`vx_get_bet_obj.${that.id}`);
-    // console.log(`=========is_bet_single:${that.vx_is_bet_single}=========bet_obj:${JSON.stringify(bet_obj)}`);
-    if(_.has(bet_obj,'bs') && _.has(bet_obj,'cs')) {
-      let cs = _.get(bet_obj,'cs', {});
-      let bs = _.get(bet_obj,'bs', {});
-      let hps;
-      //游戏和今日里面玩法
-      if(play_mapping.PLAY_TODAY_SCORE.includes(cs.play_id) && _.has(cs,'score_type')) {
-        hps = `${_.get(cs,'score_type')}|${_.get(cs,'home_score','0')}:${_.get(cs,'away_score','0')}`;
-      }
-      // 模拟发送C105用来同步项目各模块的投注项信息
-       let cmd_obj = {
-          "cd":{
-            "mid": _.get(cs, 'match_id'),
-            "send":"my_self", // 自定义属性send取值为my_self表示有用户模拟发送的指令
-            "hls": [{
-              "hid": _.get(cs, 'handicap_id'), // 盘口id
-              "hpid": _.get(cs, 'play_id'), // 玩法id
-              "hmt": _.get(cs, 'market_type'), // 盘口类型
-              "hs":  _.get(cs, 'handicap_status'), // 盘口状态
-              "mid": _.get(cs, 'match_id'), // 赛事id
-              "hn": _.get(bs, 'hps[0].hl[0].hn'), // 坑位值
-              "hps": _.isEmpty(_.get(cs,'score_type'))?'':hps, // 盘口比分
-              "ol": [{
-                "obv": _.get(cs, 'break_odds_value'), // 断档赔率
-                "oid": _.get(cs, 'oid'), // 投注项oid
-                "os": _.get(cs, 'active'), // 投注项状态
-                "ot": _.get(bs, 'hps[0].hl[0].ol[0].ot'), // 投注项类型
-                "ov": _.get(cs, 'odds_value') // 赔率
-              }]
-            }]
-          },
-          "ctsp": `${new Date().getTime()}`,
-          "cmd":"C105"
-      }
-      if(window.ws) {
-        console.log('模拟发送的C105',{ ...cmd_obj });
-        window.ws.customWsCmdData(cmd_obj);
-      }
-    }
-  }
-}
+
 /**
  * @description:更新赛事列表以及赛事详情的赔率(前端模拟C105进行发送) 目的: 解决赔率不同步问题
  * @param {Object} that 视图对象
@@ -1875,7 +1582,6 @@ const remove_invalid_item = () => {
 }
 export {
   update_bet_item_status,
-  get_team_name,
   get_operate_type,
   format_str,
   reset_hadicap_change,
@@ -1893,9 +1599,7 @@ export {
   get_play_name,
   get_odds_value,
   get_handicap_id,
-  get_handicap,
   get_active,
-  update_odds_info,
   update_odds_info2,
   update_handicap,
   update_match_time,
