@@ -4,12 +4,12 @@
  * @Description: 用户信息操作使用
  */
 import { reactive } from 'vue';
-import { api_account } from "project/activity/src/public/api/index";
+import { api_account } from "project/activity/src/api/index.js";
 import { uid } from 'quasar';
-import BaseUserInfo from "project/activity/src/public/utils/user/base_user_info"
+import BaseUserInfo from "project/activity/src/utils/user/base_user_info.js"
 import { loadLanguageAsync } from 'project/activity/src/boot/i18n'
 import langs from "project/activity/src/i18n/langs/index";
-import userCtr from 'project/activity/src/public/utils/user/userCtr';
+import userCtr from 'project/activity/src/utils/user/userCtr.js';
 
 const state = reactive({
     uuid: "",

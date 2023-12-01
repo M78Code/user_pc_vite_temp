@@ -18,13 +18,13 @@
     <div class="wrap-select">
       
       <!-- 冠军球种才展示这个下拉选择框 -->
-      <div class="r-select ball-games" v-if="false">
+      <div class="r-select ball-games" v-if="current_sport_id == 0">
         <!-- 球种 -->
         <span class="label ball-games-label">{{
           i18n_t("results.ball_games")
         }}</span>
         <Select-Wrapper
-          :sportType="champion_sport"
+          :value="champion_sport"
           :options="champion_sport_type"
           :isChampion="1"
           :showInput="true"
@@ -246,7 +246,6 @@ const props = defineProps({
     () => GlobalSwitchClass.global_switch_version.version,
     (new_) => {
      props.hideSelect()
-     console.log('api_league_typeapi_league_typeapi_league_type',props.api_league_type)
     },
     {deep:true, immediate: true }
   );

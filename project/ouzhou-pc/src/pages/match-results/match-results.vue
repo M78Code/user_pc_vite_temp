@@ -18,6 +18,8 @@
       <result-header
         :sport_type="sport_type"
         :sport="sport"
+        :champion_sport_type="champion_sport_type"
+        :champion_sport="champion_sport"
         :startTimeShowFunc="startTimeShowFunc"
         :current_sport_id="current_sport_id"
         :startTimeShow="startTimeShow"
@@ -97,6 +99,8 @@ page_style.value = compute_css_variables({ category: 'component', module: 'match
 const {
   //变量
   current_sport_id,
+  champion_sport_type,
+  champion_sport,
   sport,
   sport_type,
   refresh_finish,

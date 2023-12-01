@@ -6,7 +6,12 @@
   if(!window.env)
   {
     // console.error("window.env--------1"   );
-    window.env = {config : JSON.parse(process.env.config),NODE_ENV:process.env.NODE_ENV,DEV:process.env.DEV,VUE_ROUTER_MODE:process.env.VUE_ROUTER_MODE,VUE_ROUTER_BASE:process.env.VUE_ROUTER_BASE};
+    window.env = {
+      config : JSON.parse(process.env.config),
+      NODE_ENV: process.env.NODE_ENV,DEV:process.env.DEV,
+      VUE_ROUTER_MODE:process.env.VUE_ROUTER_MODE,
+      VUE_ROUTER_BASE:process.env.VUE_ROUTER_BASE
+    };
 
     // console.error("window.env--------1---0",JSON.stringify(window.env)    );
 

@@ -5,7 +5,7 @@
  */
 import { reactive } from 'vue';
 import $class from  "licia-es/$class"
-import setTheme from "project/activity/src/public/utils/theme/theme.js"
+import setTheme from "project/activity/src/utils/theme/theme.js"
 import userStore from '../user';
 
 const state = reactive({
