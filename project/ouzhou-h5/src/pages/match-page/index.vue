@@ -65,7 +65,7 @@ onMounted(() => {
       console.log('MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE')
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
-        initMatchPage()
+      onTabChange()
     }).off
   }
 })
@@ -118,6 +118,10 @@ const onChangeDate = e => {
 }
 
 const onChangeArea = (obj) => {
+  if (obj.id === '-1000') {
+    store.leaguesMatchs = []
+    return
+  }
   const arr = obj.tournamentList
   if (arr === null) {
     store.leaguesMatchs = []

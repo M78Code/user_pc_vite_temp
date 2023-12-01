@@ -29,7 +29,7 @@ import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import _ from "lodash"
 import ResultOlItem from "../../result/ResultOlItem.vue";
-
+import lockImg from "../lock_img.vue";
 const props = defineProps({
     item_data: {
         type: Object,
@@ -83,15 +83,13 @@ const go_betting = (data) => {
                     :class="[{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }]"
                     class="list-bet"
                 >
-                    <template v-if="_item?.os == 1 && _item._hs != 11">
+                    <template v-if="_item?.os == 1 && _item._hs != 11 && _item._hs != 1">
                         <span class="on-text textOverflow2">{{ _item.on ?? _item.ott }}</span>
                         <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                         <olStatus style="position: absolute;right: 16px;" :item_ol_data="_item"
                                   :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                     </template>
-                    <figure v-if="_item?.os == 2 || _item._hs == 11">
-                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-                    </figure>
+                    <lockImg :ol_item="_item" />
                     <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>
                 </li>
             </ul>
@@ -99,14 +97,12 @@ const go_betting = (data) => {
         <div v-for="_item of AssembleData.others" :key="_item.oid" @click="go_betting(_item)"
              class="other"
              :class="{ 'is-active': BetData.bet_oid_list.includes(_item?.oid ) }">
-            <template v-if="_item?.os == 1 && _item._hs != 11">
+            <template v-if="_item?.os == 1 && _item._hs != 11 && _item._hs != 1">
                 <span class="on-text">{{ _item.on ?? _item.ott }}</span>
                 <span class="ov-text">{{compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                 <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
             </template>
-            <figure v-if="_item?.os == 2 || _item._hs == 11">
-                <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-            </figure>
+            <lockImg :ol_item="_item" />
             <ResultOlItem :value="_item" :hpt="4"></ResultOlItem>
         </div>
     </section>

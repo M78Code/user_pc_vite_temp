@@ -361,6 +361,8 @@ export default class MatchDataBaseWS
             });
             // 合并投注项数据信息
             // this.match_ctr.assign_with(quick_hl_obj, hl_obj);
+            quick_hl_obj.hs = hl_obj.hs;
+            quick_hl_obj.hps = hl_obj.hps;
           });
         }
         this.match_ctr.match_upd_time_ret_change(match)

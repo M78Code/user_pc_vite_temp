@@ -264,6 +264,7 @@ const on_update = (val) => {
  */
 const get_top_events_match = (csid = '1') => {
   // 设置 元数据计算 流程
+  MatchMeta.set_origin_match_data()
   MatchResponsive.set_is_compute_origin(true)
   state.current_mi = MenuData.top_events_list?.[0]?.mi;
   MatchMeta.get_top_events_match(csid)

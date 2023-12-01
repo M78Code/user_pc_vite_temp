@@ -31,7 +31,7 @@
                   <span class="ol-ov">{{compute_value_by_cur_odd_type(ol_item.ov,ol_item._hpid,'',MatchDetailCalss.params.sportId)}}</span>
                   <olStatus :item_ol_data="ol_item" :active="BetData.bet_oid_list.includes(ol_item?.oid )"/>
                 </template>
-                <span v-if="ol_item.os == 2 || hl_item?.item == 11"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+                <span v-if="ol_item.os == 2 || hl_item?.item == 11"> <lockImg :ol_item="ol" /></span>
               </div>
             </div>
             <!-- 主程序 end -->
@@ -50,6 +50,7 @@
 </template>
 
 <script setup>
+import lockImg from "../lock_img.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
 import olStatus from "../ol_status.vue";

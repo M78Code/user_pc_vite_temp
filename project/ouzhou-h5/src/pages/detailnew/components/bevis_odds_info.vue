@@ -164,6 +164,9 @@ function useWatchAllCloseState() {
 }
 
 const bet_click_ = (data, play_name) => {
+    console.log(data,'data');
+    // 赛事hs为1的时候锁盘  os为2的时候锁盘
+    if(lodash.get(data,"os" ) == 2 ||  lodash.get(data,"_hs" ) == 1) return
     active.value = +data.oid;
     // storage_bet_info({
     //   payload: {
