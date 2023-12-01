@@ -473,7 +473,7 @@
               <!-- 精彩回放视频滚动列表 -->
               <!-- <div class="play_back_event" v-if="item.playBack&&show_play_back">
                 <slider-x ref="drag_scroll" v-if="item.playBack && results_playback_list.length">
-                  <template v-for="(slotProps,index) in results_playback_list" :key="index">
+                  <section v-for="(slotProps,index) in results_playback_list" :key="index">
                     <div class="video-history-item"  @click="handle_item_click(slotProps)">
                       <div class="video-history-item_bg" :style="`background:url(${slotProps.fragmentPic}); background-size: cover;`">
                         <div
@@ -492,15 +492,15 @@
                           {{ slotProps.firstNum }}
                         </div>
                     </div>
-                  </template>
+                  </section>
                 </slider-x> -->
                 <!-- <no-data v-else :width="'141px'" :height="'80px'"></no-data> -->
                 <!-- <div style="width: 100%; height: 100%" class="flex   yb-flex-center" v-else>
                   <div class="no-data-bg"></div>
-                </div>
-              </div> -->
+                </div> -->
+              <!-- </div> -->
               <load-data :state="details_load" color="light">
-                <template v-for="(list, i) in results_order_list" :key="i">
+                <div v-for="(list, i) in results_order_list" :key="i">
                   <div
                     class="table-tr-detail"
                     v-if="list.posrList.length"
@@ -520,7 +520,7 @@
                       </div>
                     </div>
                   </div>
-                </template>
+                </div>
               </load-data>
             </div>
           </div>
@@ -623,7 +623,7 @@ export default {
       }
     },
     change_current_events_type() {
-      this.current_events_type = "0"
+      this.current_events_type = "0";
     },
   },
   mounted() {
