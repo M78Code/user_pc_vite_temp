@@ -5,7 +5,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import ResultOlItem from "../../result/ResultOlItem.vue";
-
+import lockImg from "../lock_img.vue";
 const props = defineProps({
     item_data: {
         type: Object,
@@ -18,7 +18,7 @@ const go_betting = (data) => {
     emits("bet_click_", data, props.item_data.hpn);
 };
 </script>
-
+<!-- _hs == 1 要锁盘啊-->
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}{{ MatchDetailCalss.details_data_version.version }}</div>
     <section class="component play-template play-template-2 template2">
@@ -26,13 +26,13 @@ const go_betting = (data) => {
             <div class="text-title textOverflow1">{{ item_data.title[0].osn }}</div>
             <div class="text-title textOverflow1">{{ item_data.title[1].osn }}</div>
         </nav>
-        <ul class="bet" v-for="(hlChild,hlIndex) of item_data.hl" :key="hlIndex">
+        <ul class="bet" v-for="(hlChild,hlIndex) of item_data.hl" :key="hlIndex">{{hlChild.hs}}
             <template v-if="!!hlChild">
                 <template v-for="olChild of hlChild.ol.filter(i=>i.os != 3)" :key="olChild.oid">
                     <li class="bet-item" :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
                         @click="go_betting(olChild)"
                     >
-                        <template v-if="olChild.os == 1">
+                        <template v-if="olChild.os == 1 && olChild?._hs  != 1 ">
                             <span class="on-text textOverflow1">
                                 {{ olChild.on }}
                             </span>
@@ -41,9 +41,10 @@ const go_betting = (data) => {
                             </span>
                             <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                         </template>
-                        <template v-if="olChild.os == 2">
+                        <!-- <template v-if="olChild.os == 2 || olChild._hs == 1">
                             <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-                        </template>
+                        </template> -->
+                        <lockImg :ol_item="olChild" />
                         <ResultOlItem :value="olChild" :hpt="2"></ResultOlItem>
                 </li>
                 </template>

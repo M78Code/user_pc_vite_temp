@@ -228,14 +228,14 @@ export const details_main = (router, route) => {
       error_codes: ["0401038"],
       // axios中then回调方法
       fun_then: (res) => {
-        get_match_odds_info.value = res.data;
+       
         console.log(tab_selected_obj.value.marketName,"tab_selected_obj.value.marketName");
         sessionStorage.setItem("match_oddinfo", JSON.stringify(res.data));
-        if (tab_selected_obj.value.marketName) {
+        // if (tab_selected_obj.value.marketName) {
           detail_tabs_change(tab_selected_obj.value);
-        } else {
-          match_odds_info.value = res.data;
-        }
+        // } else {
+        //   match_odds_info.value = res.data;
+        // }
    
         // MatchDataWarehouseInstance.value.set_match_details(
         //   getMidInfo(params.mid),
@@ -470,6 +470,7 @@ export const details_main = (router, route) => {
    * @return {*}
    */
   function RCMD_C102(obj) {
+    console.error(obj,'obj');
     let skt_data = obj.cd;
     if (skt_data.mmp == 999) {
       //切换赛事
@@ -516,8 +517,10 @@ export const details_main = (router, route) => {
     loading.value = true;
     init.value = true;
     // 增加监听接受返回的监听函数
+    //C105移除玩法集 从数据仓库移除
     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-      if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
+      if (lodash.get(data, "cd.mid") != mid.value || cmd == "C105") return;
+      console.error(data,'cmd')
       // handler_ws_cmd(cmd, data);
       // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
       // console.error(flag,'flag','cmd:',cmd,data);
@@ -548,6 +551,7 @@ export const details_main = (router, route) => {
           });
           break; 
          case "C102":
+          console.error('aaaaaa');
             RCMD_C102(data);
             break;
          case "C110":
@@ -585,7 +589,7 @@ export const details_main = (router, route) => {
     () => match_detail.value?.ms,
     (_new, _old) => {
       let arr_ms = [0, 1, 2, 7, 10, 110];
-      if (!arr_ms.includes(Number(_new))) {
+      if (!arr_ms.includes(Number(_new)) && !_new) {
         event_switch();
       }
       // 赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集

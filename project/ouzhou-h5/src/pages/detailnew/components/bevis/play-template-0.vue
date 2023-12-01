@@ -13,7 +13,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 import ResultOlItem from "../../result/ResultOlItem.vue";
-
+import lockImg from "../lock_img.vue";
 const props = defineProps({
     item_data: {
         type: Object,
@@ -44,7 +44,7 @@ const go_betting = (data) => {
                         <span class="ov-text" v-if="olChild.os == 1 && compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) > 0">
                             {{ compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) }}
                         </span>
-                        <img v-if="olChild.os == 2 || compute_value_by_cur_odd_type(olChild.ov, olChild._hpid, '', MatchDetailCalss.params.sportId) == 0" class="lock ov-text" :src="odd_lock_ouzhou" alt="lock"/>
+                        <lockImg :ol_item="olChild" />
                         <olStatus style="position: absolute;right: 2%;" :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
                     </li>
                 <ResultOlItem class="list-item onePxBorder" :value="olChild" :hpt="0"></ResultOlItem>
