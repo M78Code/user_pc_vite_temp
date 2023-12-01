@@ -77,8 +77,11 @@ export default class MatchDataBase
           match._action = true;
         }
       });
-      // ws命令赛事订阅
-      this.ws_ctr.scmd_c8(mids);
+      // 不等于赛事详情时,赛事详情再设置数据时发送一次就行
+      if('match' != this.type){
+        // ws命令赛事订阅
+        this.ws_ctr.scmd_c8(mids);
+      }
     }
   }
   /**
@@ -709,7 +712,7 @@ get_quick_mid_obj_ref(mid){
       // set_active_mids 报错 DOMException: Failed to execute 'postMessage' on 'Window': Response object could not be clone 先放在这
       this.set_active_mids(list.map(t => t.mid))
       // ws命令赛事订阅
-      this.ws_ctr.scmd_c8();
+      // this.ws_ctr.scmd_c8();
       this.upd_data_version();
     }
   }

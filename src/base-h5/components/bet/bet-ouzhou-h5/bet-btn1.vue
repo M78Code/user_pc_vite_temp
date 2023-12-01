@@ -5,8 +5,12 @@
 <template>
   <div class="tip component bet-btn-item">
     <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
-      {{ BetViewDataClass.error_message }}
+      <div class="displayflex">
+        {{ BetViewDataClass.error_message }}
+        <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt=""  v-if="BetViewDataClass.bet_order_status == 2"/>
+      </div>
     </div>
+    
   </div> 
   <div class="bet_content_bottom">
     <p class="bet_cancel"  @click.self="set_retain_selection">{{$t('bet.save')}}</p>
@@ -23,6 +27,7 @@
 import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 
 const pack_up = (val) => {
   // TODO: 临时调试用
@@ -44,6 +49,15 @@ const set_retain_selection = () => {
 </script>
 
 <style lang="scss" scoped>
+.icon_loading{
+    width: 0.18rem;
+    height: 0.18rem;
+    margin-top: 0.08rem;
+    margin-left: 0.05rem;
+  }
+.displayflex{
+  display: flex;
+}
 .tip{
   color: var(--q-gb-t-c-4);
   text-align: center;
@@ -53,13 +67,19 @@ const set_retain_selection = () => {
   line-height: 0.36rem;
   .bet-loading {
     color: var(--q-gb-t-c-1);
+    display: flex;
+    justify-content: center;
   }
   .bet-error {
     color: var(--q-gb-t-c-17);
+    display: flex;
+    justify-content: center;
   }
 
   .bet-success {
     color: var(--q-gb-t-c-16);
+    display: flex;
+    justify-content: center;
   }
 }
 .bet_content_bottom{

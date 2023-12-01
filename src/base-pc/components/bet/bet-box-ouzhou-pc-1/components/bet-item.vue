@@ -128,10 +128,9 @@ const set_show_quick_money = (obj = {}) => {
 
 // 判断快捷金额按钮是否可点击
 const bet_money_btn_class = (obj, index) => {
-    if((ref_data.max_money >= obj && ref_data.max_money >= BetData.bet_amount && UserCtr.balance >= obj) || index == 'max' ) {
-        return ''
-    }
-    return 'disabled'
+    if(index == 'max') return ''
+    if(ref_data.max_money < obj && ref_data.max_money < BetData.bet_amount && UserCtr.balance < obj ) return 'disabled'
+    return ''
 }
 
 // 快捷金额
