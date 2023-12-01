@@ -720,7 +720,7 @@ class MatchMeta {
     
     if (list.length > 0) {
       this.handler_match_list_data({ list: list, is_virtual: false, merge: 'cover' })
-      MatchCollect.get_collect_match_data(list)
+      await MatchCollect.get_collect_match_data(list)
       // 该赛事是否收藏
       list.forEach((t) => {
         MatchCollect.set_match_collect_state(t, true)
