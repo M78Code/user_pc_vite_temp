@@ -283,14 +283,15 @@ const api_bymids = (
           //   }
           // });
           if(match_list.length > 0){
+            match_list.forEach( match => {
+              match_collect_status(match)
+            })
             MatchListData.set_list(
               match_list,
             );
             set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
           }
-          match_list.forEach( match => {
-            match_collect_status(match)
-          })
+          
         } else if (code == "0400500" && by_mids_fun_count++ < 3) {
           by_mids_fun();
           league_load_status = "empty";

@@ -248,9 +248,11 @@ const match_collect_type = (match)=>{
 export const match_collect_status = (match, obj, type=-1) =>{
   // match={tid:'888',mid:'222'};
   // obj= {"1":{"tids":{"888":1},"mids":{"222":1},"exclude":{"888":{"tids":"888","mids":{"2221":1}}}}}
+
   if(!obj){
     obj = match_collect_data.data;
   }
+
   let res = {tf:false,mf:false};
   if(match && obj){
     try {
@@ -265,8 +267,7 @@ export const match_collect_status = (match, obj, type=-1) =>{
         const tids = lodash.get(data,'tids');
         const exclude = lodash.get(data,'exclude');
         // tids联赛里面有
-        if(tids && tids[tid])
-        {
+        if(tids && tids[tid]) {
           res.tf=true;
           res.mf = true;
           // exclude检测还发有
@@ -301,6 +302,8 @@ export const match_collect_status = (match, obj, type=-1) =>{
   // console.error(type,'赛-事收藏信息:',match, res);
   // 数据合并
   Object.assign(match, res);
+  console.log('adashfdf', match);
+
   return res;
 }
 /**
@@ -483,7 +486,7 @@ export const set_global_collect_data = (obj) =>{
   // 列表转对象
   const fun_list2obj = function(list) {
     const obj = {};
-    if(list){
+    if(list && list?.length){
       try {
         list.forEach(item => {
           if(item){
@@ -534,8 +537,8 @@ function fethc_collect_match() {
   api_match
     .post_fetch_collect_list_high_light({ matchType, cuid: UserCtr.get_cuid() })
     .then((res) => {
-      if (res.data.code == 200) {
-        let data = lodash.get(res, 'data.data');
+      if (res.code == 200) {
+        let data = lodash.get(res, 'data');
         // 格式化接口返回的收藏对象
         set_global_collect_data(data);
       }

@@ -21,7 +21,8 @@
   </template>
 </template>
 <script setup>
-import { computed } from 'vue'
+import lodash from 'lodash'
+import { computed, watch, inject } from 'vue'
 import { useRouter } from "vue-router";
 import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/components/score-list.vue';
 import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
@@ -34,6 +35,8 @@ const props = defineProps({
   }
 })
 
+const get_hots_data = inject('get_hots_data')
+
 const get_item_hps = computed(() => {
   const hps15Minutes = lodash.get(props.item, 'hps15Minutes', [])
   const length = lodash.get(hps15Minutes, 'length', 0)
@@ -41,6 +44,15 @@ const get_item_hps = computed(() => {
   const hps_item = hps15Minutes.find(t => t.hpid === '32')
   const hps = lodash.get(hps_item, 'hl[0].ol', [])
   return hps
+})
+
+const hSpecial = computed(() => {
+  const hSpecial = lodash.get(props.item, 'hps15Minutes[0].hSpecial', '1')
+  return hSpecial
+})
+
+watch(() => hSpecial.value, () => {
+  get_hots_data()
 })
 
 

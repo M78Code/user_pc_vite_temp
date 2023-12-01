@@ -259,12 +259,12 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collect, backend_run }) => {
 	is_show_hot.value = false;
+  match_list.forEach(match => {
+	  match_collect_status(match)        
+	})
 	if(Array.isArray(match_list)){ //有时候是 {}
 		MatchListData.set_list(match_list)
 	}
-	match_list.forEach(match => {
-	  match_collect_status(match)        
-	})
 	// 设置第一条数据为当前mid，给分数板高亮用
 	if(match_list.length){
 		MatchListCardDataClass.set_current_mid(match_list[0].mid); 

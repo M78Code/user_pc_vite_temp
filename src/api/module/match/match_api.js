@@ -89,7 +89,7 @@ export const post_fetch_collect_count = (params, config = {}, url = "/v1/w/menu/
 export const post_collect_count_es = (params, config = {}, url = "/v1/w/menu/escct") => {
     return http.post(`${prefix}${url}`, params);
 };
-export const post_fetch_collect_list_high_light = (params, config = {}, url = "/v1/w/collectMatchesPB") => {
+export const post_fetch_collect_list_high_light = (params, config = {}, url = "/v1/w/collectMatches") => {
   return http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_list'});
 };
 //联赛收藏 | 取消收藏
