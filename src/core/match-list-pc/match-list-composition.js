@@ -155,7 +155,7 @@ export function fetch_match_list(is_socket = false, cut) {
 				} else if (res.code == "0401038") {
 					// let is_collect = this.vx_layout_list_type == 'collect'
 					// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
-					if (is_collect && data.code == '0401038') {
+					if (MenuData.is_collect && res.code == '0401038') {
 						load_data_state.value = "api_limited";
 					}
 					if (!is_socket) {

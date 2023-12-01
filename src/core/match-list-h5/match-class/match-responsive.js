@@ -50,6 +50,7 @@ class MatchResponsive {
   reset_match_hpid_by_csid (csid = '') {
     const sports_play_title = use_sports_play_title()
     const id = csid ? csid : MenuData.menu_csid
+    if (!id) return
     const item = sports_play_title[id]
     const key = this.get_hpid_key(csid)
     const hpid = lodash.get(item, '[0].hpid', '1')

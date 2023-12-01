@@ -11,7 +11,7 @@ import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
 const { BUILD_VERSION, NEED_DELETE_PROJECT=[] ,PROJECT_NAME,BUILD_DIR_NAME } = BUILD_VERSION_CONFIG;
  
 //打包后的资源文件所在的基础路径
-let  base_folder=`./dist/${BUILD_DIR_NAME}/${BUILD_VERSION}/`
+let  base_folder=  BUILD_VERSION? `./dist/${BUILD_DIR_NAME}/${BUILD_VERSION}/` :`./dist/${BUILD_DIR_NAME}/`
 
 
 console.log(

@@ -63,7 +63,7 @@
             </div>
            
         </div>
-        <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money">
+        <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money && items.ol_os == 1">
             <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
                 {{index == 'max' ? '' : '+' }}{{obj}}
             </li>

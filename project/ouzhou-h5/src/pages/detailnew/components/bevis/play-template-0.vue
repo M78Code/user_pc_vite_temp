@@ -61,7 +61,7 @@ const go_betting = (data) => {
     .list{
         .list-item{
             width: 100%;
-            height: 48px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;

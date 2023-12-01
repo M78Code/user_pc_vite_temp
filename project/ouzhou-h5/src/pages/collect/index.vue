@@ -22,7 +22,7 @@
 </template>
 <script setup>
 
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, onUnmounted } from "vue";
 import { i18n_t, MenuData } from "src/core/index.js";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
@@ -76,6 +76,9 @@ onMounted(()=>{
   MenuData.set_collect_id(50000);
   const index = tabData.findIndex(n=>{return n.val == MenuData.collect_menu});
   on_update(tabData[index].val,1)
+})
+onUnmounted(() => {
+  MenuData.set_collect_id('')
 })
 </script>
 <style scoped lang="scss">
