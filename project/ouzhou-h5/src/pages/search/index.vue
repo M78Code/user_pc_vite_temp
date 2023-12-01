@@ -10,7 +10,7 @@
 			<span class="close_btn" @click="go_back">{{ i18n_t('ouzhou.search.close') }}</span>
 		</div>
 		<!-- 搜索 历史 -->
-		<div class="content" v-show="(show_history && history_data &&
+		<div class="content" v-if="(show_history && history_data &&
 			!(search_data?.bowling && search_data?.bowling.length) &&
 			!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 			!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
@@ -23,7 +23,7 @@
 					<span class="round"></span>
 				</div>
 			</div>
-			<ul class="list1" v-show="history_data && history_data.length > 0">
+			<ul class="list1" v-if="history_data && history_data.length > 0">
 				<div class="middle_info_tab diff text">
 					<div>{{ i18n_t('ouzhou.search.search_history') }}</div>
 				</div>
@@ -36,11 +36,7 @@
 			</ul>
 
 			<!-- 热门搜索 -->
-			<div class='searchHot' v-show="show_hot &&
-				(hot_list && hot_list.length > 0) &&
-				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
-				!(search_data.league && search_data.league.length > 0) &&
-				!input_value">
+			<div class='searchHot' v-if="hot_list && hot_list.length > 0">
 				<div>
 					<div class="text-bol" :class="[(history_data.length > 0) ? '' : 'mt0']">{{ i18n_t('ouzhou.search.search_hot') }}</div>
 					<!-- 热门内容 -->
@@ -55,10 +51,10 @@
 		</div>
 
 		<!-- 搜索展示 -->
-		<div style="height: 100%; overflow-y: auto;" v-show="(search_data?.bowling && search_data?.bowling.length > 0) ||
+		<div v-if="search_loading" class="loading search_loading"><img :src="compute_local_project_file_path('/image/gif/loading_ou.gif')" alt=""></div>
+		<div style="height: 100%; overflow-y: auto;" v-if="(search_data?.bowling && search_data?.bowling.length > 0) ||
 			(search_data?.teamH5 && search_data?.teamH5.length > 0) ||
 			(search_data?.league && search_data?.league.length > 0)">
-
 			<div class="content">
 				<!-- 球类 tabs -->
 				<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
@@ -77,11 +73,11 @@
 					<ul class="list">
 						<div class="title" @click="to_all_matchs">{{ i18n_t('ouzhou.search.view_all_match') }}</div>
 						<!-- 滚球 -->
-						<div v-show="search_data?.bowling && search_data?.bowling.length > 0">
+						<div v-if="search_data?.bowling && search_data?.bowling.length > 0">
 							<div class="middle_info_tab diff" @click="expand_bowling = !expand_bowling">
 								<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
 							</div>
-							<div v-show="expand_bowling">
+							<div v-if="expand_bowling">
 								<li v-for="(item, index) in search_data?.bowling" :key="index"
 									@click="suggestion_bowling_click(item)">
 									<div class="list_top">
@@ -130,11 +126,11 @@
 							</div>
 						</div>
 						<!-- 搜索 联赛 -->
-						<div v-show="search_data?.league && search_data?.league.length > 0">
+						<div v-if="search_data?.league && search_data?.league.length > 0">
 							<div class="middle_info_tab diff" @click="expand_league = !expand_league">
 								<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
 							</div>
-							<div v-show="expand_league">
+							<div v-if="expand_league">
 								<li v-for="(item, index) in search_data?.league" :key="index"
 									@click="go_detail_or_reslut(item.matchList[index])">
 									<div class="list_top">
@@ -188,11 +184,11 @@
 							</div>
 						</div>
 						<!-- 搜索 队伍 -->
-						<div v-show="search_data?.teamH5 && search_data.teamH5?.length > 0">
+						<div v-if="search_data?.teamH5 && search_data.teamH5?.length > 0">
 							<div class="middle_info_tab diff" @click="expand_team = !expand_team">
 								<div class="color">{{ i18n_t('ouzhou.search.team') }}</div>
 							</div>
-							<div v-show="expand_team">
+							<div v-if="expand_team">
 								<li v-for="(item, index) in search_data?.teamH5" :key="index"
 									@click="go_detail_or_reslut(item)">
 									<div v-if="item.tn">
@@ -249,11 +245,11 @@
 			</div>
 		</div>
 		<!-- 搜索 无结果 -->
-		<div class="content not-data" v-show="(!(search_data?.bowling && search_data?.bowling.length) &&
+		<div class="content not-data" v-if="(!(search_data?.bowling && search_data?.bowling.length) &&
 			!(search_data?.teamH5 && search_data?.teamH5.length > 0) &&
 			!(search_data?.league && search_data?.league.length > 0) &&
-			(!show_hot ||
-				!show_history))">
+			(!show_hot || !show_history) &&
+			!search_loading)">
 			<!-- 球类 tabs -->
 			<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
 				<div v-for="(item, index) in sport_kind_data" :key="item.id" @click="get_search_data(index, item.id)"
@@ -269,11 +265,9 @@
 	</div>
 </template>
 <script setup>
-import lodash from 'lodash'
 import { onMounted, ref, watch, onUnmounted, reactive } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
 import { format_date_overseas } from "src/core/format/module/format-date.js";
-import { get_server_file_path } from "src/core/file-path/file-path.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -305,8 +299,8 @@ let go_detail_or_result_timer;
 
 const clear_value = () => {
 	input_value.value = '';
-	get_history()
 	get_hot_search()
+	get_history()
 }
 /**
  * 关闭清除tab
@@ -358,6 +352,7 @@ const red_color = (item) => {
  */
 const search_data = ref([]);
 const sport_kind_id = ref(1);
+let search_loading = false
 const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	expand_bowling.value = true;
 	expand_league.value = true;
@@ -386,13 +381,15 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 		isPc: false
 	}
 	if (is_results.value) params.from = 2
+	search_loading = true
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
+			search_loading = false
 			// 插入搜索历史
 			get_insert_history({ keyword })
 			// 搜索前清空会话仓库数据
-			// sessionStorage.removeItem('search_params');
+			sessionStorage.removeItem('search_params');
 			if (is_results.value) {
 				render_match_results_list(res)
 				return
@@ -400,6 +397,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			get_match_base_hps_by_mids()
 		}
 	}).catch((e) => {
+		search_loading = false
 		console.log(e);
 	});
 }, 500)
@@ -490,10 +488,13 @@ function go_detail_or_reslut(item) {
 
 const hot_list = ref([]);  //热门搜索列表
 // 获取热门搜索
-const get_hot_search = async () => {
-	await get_fetch_hot_search().then((res) => {
-		show_hot.value = true
-		hot_list.value = res.data;
+const get_hot_search = () => {
+	get_fetch_hot_search().then((res) => {
+		let data = lodash.get(res, "data") || [];
+		hot_list.value = data;
+		if (data.length > 0) {
+			show_hot.value = true;
+		}
 	})
 }
 
@@ -948,6 +949,10 @@ li {
 
 .mt0{
 	margin-top: 0 !important;
+}
+.search_loading {
+	background-color: rgba(255, 255, 255, 1);
+	position: unset;
 }
 </style>
   
