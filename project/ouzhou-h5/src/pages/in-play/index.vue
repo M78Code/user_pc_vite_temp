@@ -32,7 +32,7 @@ onMounted(() => {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
       // 元数据无缓冲得情况
       if (!BaseData.is_emit) {
-        MatchMeta.set_origin_match_data({})
+        MatchMeta.set_origin_match_data()
       }
     }).off
   }
