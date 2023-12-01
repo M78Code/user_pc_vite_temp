@@ -110,6 +110,9 @@ function event_listener_visibilitychange(){
  */
 function get_vue_hidden_run() {
   // console.log(`---------------------进入了get_vue_hidden_run方法-------------------`);
+  if (wslog && wslog.send_msg) {
+    wslog.send_msg('WS---VUE:', {msg:'get_vue_hidden_run ',view:document.visibilityState})
+  }
   if (document.visibilityState == 'hidden') {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -119,6 +122,9 @@ function get_vue_hidden_run() {
         window.postMessage({event: 'WS', cmd:`WS_STATUS_CHANGE_EVENT`, data},'*');
         // console.log('---未在当前网站--关闭WS---',_.get(window.ws,'ws.url'));
         // WsMan.ws && window.ws.retInitData(true);
+        if (wslog && wslog.send_msg) {
+          wslog.send_msg('WS---VUE:', {msg:'get_vue_hidden_run send!',data, view:document.visibilityState})
+        }
       }
     }, DOCUMENT_HIDDEN_WS_CLOSE_TIME);
   } else {
@@ -127,6 +133,9 @@ function get_vue_hidden_run() {
       let data =  {ws_status:2, ws_status_old:ws_status || 0};
       // 发送ws连接状态(0-断开,1-连接,2-断网续连状态)
       window.postMessage({event: 'WS', cmd:`WS_STATUS_CHANGE_EVENT`, data},'*');
+      if (wslog && wslog.send_msg) {
+        wslog.send_msg('WS---VUE:', {msg:'get_vue_hidden_run send !!',data, view:document.visibilityState})
+      }
       // console.log('---进入当前网站--开启WS---',_.get(window.ws,'ws.url'));
         WsMan.ws && WsMan.ws.connect('vue_hidden_to_show');
     // }
@@ -142,10 +151,10 @@ function socket_status(status, old_status) {
   ws_status.value = status;
   if (status) {
     if ((new Date().getTime() - lase_socket_close_time) > (1 * 1000)) {
-      this.set_socket_status(2);
+      // this.set_socket_status(2);
       console.log('--------WS---断网太久重新刷新数据----------------');
     } else {
-      this.set_socket_status(1);
+      // this.set_socket_status(1);
     }
     // 发送刷新菜单数量命令
     useMittEmit(MITT_TYPES.EMIT_MENU_REFRESH_COUNT_CMD);
@@ -153,7 +162,7 @@ function socket_status(status, old_status) {
     lase_socket_close_time = new Date().getTime();
   }
   // 监听sockect连接状态
-  if (status && old_status) {
+  if (status) {
     //当sockect重新连接时自动发送消息
     // 发送注单信息命令
     clearTimeout(timer);
@@ -171,9 +180,11 @@ function rev_event_msg(event) {
   if(event && event.data && event.data.event == 'WS'){
     switch (event.data.cmd) {
       case 'WS_STATUS_CHANGE_EVENT': // ws链接状态变化 (0-断开,1-连接,2-断网续连状态)
-        let ws_status = lodash.get(event,'ws_status');
-        let ws_status_old = lodash.get(event,'ws_status_old');
+        let ws_status = lodash.get(event.data.data,'ws_status');
+        let ws_status_old = lodash.get(event.data.data,'ws_status_old');
         socket_status(ws_status, ws_status_old);
+        // websocket链接状态变化
+        useMittEmit(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,{ws_status, ws_status_old});
         break;
       case 'WS_RESEND_SCMD_EVENT': // 重新定义所以赛事事件
         scmd_all();

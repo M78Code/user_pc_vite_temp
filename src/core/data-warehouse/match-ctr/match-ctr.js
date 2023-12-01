@@ -28,10 +28,14 @@
  * 获取快速查询对象中的指定mid赛事对象
  * get_quick_mid_obj(mid)
  * 
+ * 强行发送C8赛事订阅命令(ws断开后重新链接使用,默认缓存上次的订阅数据)
+ * scmd_c8_ws_reconnect()
+ * 
  */
 import MatchDataBaseWS from  "./match-ctr-ws.js"
 import { reactive,toRef} from 'vue'
 import {other_play_name_to_playid} from 'src/core/constant/config/data-class-ctr/other-play-id.js'
+import { match_collect_status } from 'src/core/match-list-pc/composables/match-list-collect.js'
 export default class MatchDataBase
 {
   /**
@@ -693,6 +697,9 @@ get_quick_mid_obj_ref(mid){
    */
   set_list(list, param={}){
     console.log('set_list', list,this.name_code)
+    list.forEach(match => {
+      match_collect_status(match)        
+    })
     if(list){
       // 索引置换
       let temp = lodash.cloneDeep(this.match_list);
@@ -1861,6 +1868,13 @@ get_quick_mid_obj_ref(mid){
      }
    }
    return list_normal;
+  }
+  /**
+   * @description: 强行发送C8赛事订阅命令(ws断开后重新链接使用,默认缓存上次的订阅数据)
+   */
+  scmd_c8_ws_reconnect(){
+    // 发送C8赛事订阅命令
+    this.ws_ctr.scmd_c8();
   }
 }
 

@@ -2,16 +2,16 @@
     <!-- <div class="header" :style="{ height: tabActive == 'league' ? '0.56rem' : '1.0rem' }"> -->
     <div class="header">
         <div class="tabs">
-            <div class="tabs-item" v-for="(item, index) in store.tabOptions" :key="'tabs' + index"
+            <div v-for="(item, index) in tabList" :key="'tabs' + index" class="tabs-item"  
                 :class="store.tabActive === item ? 'active' : ''">
                 <span @click="changeTab(item, index)">{{
-                    i18n_t(`ouzhou.match.${item.toLowerCase()}`)
+                    i18n_t(`ouzhou.match.${item?.toLowerCase()}`)
                 }}</span>
             </div>
             <!-- league的下拉项 -->
             <div class="select" v-if="store.tabActive == 'League'" @click="toggerModel">
                 <span class="select-text" ref="dateOptionsRef">{{
-                    i18n_t(store.curSelectedOption.label)
+                    i18n_t(store.curSelectedOption.label)   
                 }}</span>
                 <span class="down_arrow"></span>
             </div>
@@ -77,7 +77,9 @@ const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
 const dateOptionsRef = ref(null);
 const week = dateWeekMatchesFormat();
-
+const tabList = computed(()=>{
+    return MenuData.conventionalType.includes(400)?store.tabOptions:store.tabOptions.filter(n=>{return n !=='Outrights'})
+})
 const DateOptionsOffset = computed(() => {
     const domWidth = document.body.clientWidth || document.documentElement.clientWidth
     const selfWitdh = 160

@@ -48,7 +48,7 @@ import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/ind
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const tab_list = ref([])
 
@@ -74,7 +74,7 @@ const ref_data = reactive({
 	sport_tab: [
 		{ label: ('ouzhou.match.matches'), value: 4001 },
 		{ label: ('ouzhou.match.top_leagues'), value: 4002 },
-		// { label: i18n_t('menu.match_winner'), value: 4003 },
+		{ label: ('menu.match_winner'), value: 4003 },
 		// { label: 'Next 24 Hours', value: 4003 },
 	], 
 	// 收藏 i18n_t('ouzhou.match.inplay')  i18n_t('ouzhou.match.today')  i18n_t('ouzhou.match.early')
@@ -82,7 +82,7 @@ const ref_data = reactive({
 		{ label: ('ouzhou.match.inplay'), value: 3001 },
 		{ label: ('ouzhou.match.today'), value: 3002 },
 		{ label: ('ouzhou.match.early'), value: 3003 },
-		// { label: i18n_t('menu.match_winner'), value: 3004 }
+		{ label: ('menu.match_winner'), value: 3004 }
 	],
 	// i18n_t('ouzhou.match.inplay')   i18n_t('ouzhou.match.all_matches')
 	inplay:{
@@ -141,19 +141,26 @@ const set_tab_list = (news_) =>{
 	
 	// 左侧菜单
 	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
-		tab_list.value = lodash_.get( ref_data.ouzhou_filter_config,'sport_tab', [])  
+		let sport_tab = lodash_.get( ref_data.ouzhou_filter_config,'sport_tab', [])  
+		if(IS_FOR_NEIBU_TEST){
+			tab_list.value = sport_tab; 
+		}else{
+			sport_tab = sport_tab.filter((n)=>{return n.value != 4003})
+			tab_list.value = sport_tab
+		}
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
 
 	// 收藏
 	if (MenuData.is_collect) {
-		matches_header_title.value = 'ouzhou.menu.collect'
-		if(BUILD_VERSION){
-			tab_list.value = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', []) 
+		matches_header_title.value = 'ouzhou.menu.collect';
+		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', [])  
+		if(IS_FOR_NEIBU_TEST){
+			tab_list.value = ouzhou_filter_config; 
 		}else{
-			let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', [])  
 			// ouzhou_filter_config.push( { label: 'menu.match_winner', value: 3004 })
+			ouzhou_filter_config = ouzhou_filter_config.filter((n)=>{return n.value != 3004})
 			 tab_list.value = ouzhou_filter_config
 		}
 		

@@ -35,7 +35,9 @@ export default class Ws {
     // 开始启动消息队列服务
     this.ws_queue.start();
     // 网络链接状态
-    this.wsStatus = false;
+    this.ws_status = false;
+    // 网络链接状态历史
+    this.ws_status_old = false;
     // 网络链接状态回调方法
     this.ws_status_call = '';
     // 是否手动操作ws
@@ -155,6 +157,9 @@ export default class Ws {
    */
   connect(type) {
     console.log('-----ws--connect----------' + type)
+    if (wslog && wslog.send_msg) {
+      wslog.send_msg('WS---SERVER:', {msg:'ws connect!!!', type:type})
+    }
     if (this.ws) {
       // console.error(`--------readyState:${this.ws.readyState}-----------CONNECTING:${WebSocket.CONNECTING}----------------OPEN:${WebSocket.OPEN}`);
       // ws处于可用状态时,不需要重新创建和连接
@@ -185,12 +190,18 @@ export default class Ws {
       //打开
       this.ws.onopen = function (e) {
         // console.log('------------------------------------onopen----------------------')
+        if (wslog && wslog.send_msg) {
+          wslog.send_msg('WS---SERVER:', {msg:'ws onopen!!!'})
+        }
         Ws.err_count = 0;
         this_.onConnect(this_, e)
       };
       //关闭
       this.ws.onclose = function (e) {
         // console.log('------------------------------------onclose----------------------')
+        if (wslog && wslog.send_msg) {
+          wslog.send_msg('WS---SERVER:', {msg:'ws onclose!!!'})
+        }
         this_.onClose(this_, e)
       };
       //接收消息
@@ -205,11 +216,12 @@ export default class Ws {
   //连接ws成功回调函数
   onConnect(this_) {
     console.log(`--------------------------------------onConnect---------------------this.url=${this.url}`);
+    this.ws_status_old = this_.ws_status;
     // 设置ws链接状态
-    this_.wsStatus = 1;
+    this_.ws_status = 1;
 
     if (this_.ws_status_call) {
-      this_.ws_status_call(this_.wsStatus)
+      this_.ws_status_call(this_.ws_status, this.ws_status_old)
     }
     if (!this_.headbeet_timer) {
       clearInterval(this_.headbeet_timer);
@@ -222,10 +234,11 @@ export default class Ws {
   //关闭ws回调函数
   onClose(this_) {
     console.log(`--------------------------------------onClose------------this.url=${this.url}`);
+    this.ws_status_old = this_.ws_status;
     // 设置ws链接状态
-    this_.wsStatus = 0;
+    this_.ws_status = 0;
     if (this_.ws_status_call) {
-      this_.ws_status_call(this_.wsStatus)
+      this_.ws_status_call(this_.ws_status,this.ws_status_old)
     }
     this_.ret_init_data();
     // 不允许执行时阻止自动重启功能
@@ -240,7 +253,7 @@ export default class Ws {
       window.postMessage({ event: 'WS', cmd: `WS_DOMAIN_UPD_CMD`, data: { name: 'api域名切换命令' } }, '*');
     }
     this.ctr = false;
-    if (!this_.wsStatus && document.visibilityState == 'visible') {
+    if (!this_.ws_status && document.visibilityState == 'visible') {
       Ws.err_count++;
       clearTimeout(this.timer_ws);
       if (Ws.err_count > 10) {

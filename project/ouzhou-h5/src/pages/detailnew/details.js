@@ -385,46 +385,28 @@ export const details_main = (router, route) => {
     }
   };
   /**
-   *@description // 调用: /v1/m/matchDetail/getMatchOddsInfoPB接口 //赛果页面调用赛果玩法详情接口
+   *@description 获取详情页面玩法集接口(/v1/m/category/getCategoryList)
    *@param {obj} params 请求参数
    *@return {obj}
    */
   const socketOddinfo = lodash.debounce((params) => {
-    //赛果页面调用赛果玩法详情接口
-    // match_odds_info.value = get_match_odds_info.value;
-    //接口调用
-    let obj_ = {
-      // axios api对象
-      axios_api: api_match_list.get_detail_list,
-      // axios api对象参数
-      params: params,
-      // 唯一key值
-      key: "details",
-      error_codes: ["0401038"],
-      // axios中then回调方法
-      fun_then: (res) => {
-        get_match_odds_info.value = res.data;
-        if (tab_selected_obj.value.marketName) {
-          detail_tabs_change(tab_selected_obj.value);
-        } else {
-          match_odds_info.value = res.data;
+    // category_list.value = get_category_list.value;
+    api_match_list
+      .get_detail_category(params)
+      .then((res) => {
+        // console.log("get_category_list", res);
+        category_list.value = res.data;
+        if (!tab_selected_obj.value.id) {
+          tab_selected_obj.value = lodash.get(res, "data[0]", {});
         }
-        sessionStorage.setItem("match_oddinfo", JSON.stringify(res.data));
-        MatchDataWarehouseInstance.value.set_match_details(
-          getMidInfo(params.mid),
-          res.data
-        );
-      },
-      // axios中catch回调方法
-      fun_catch: (e) => {
-        console.log(e);
-      },
-      // 最大循环调用次数(异常时会循环调用),默认3次
-      max_loop: 1,
-      // 异常调用时延时时间,毫秒数,默认1000
-      timers: 1100,
-    };
-    utils.axios_api_loop(obj_);
+        get_matchDetail_getMatchOddsInfo({
+          mcid: 0,
+          cuid: cuid.value,
+          mid: params.mid,
+          newUser: 0,
+        });
+      })
+      .catch((err) => console.log(err));
   }, 1000);
   /**
    * @description: RCMD_C109
@@ -526,10 +508,10 @@ export const details_main = (router, route) => {
       init.value = false;
       switch (cmd) {
         case "C303":
-          get_category_list_info({
+          socketOddinfo({
             sportId: csid.value,
             mid:mid.value,
-          });
+          })
           break;
         case "C302":
           // 赛事状态变化

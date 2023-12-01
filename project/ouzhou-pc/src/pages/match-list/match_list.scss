@@ -116,14 +116,14 @@
     /*    margin-right 15px  */
   }
   /*  滚动条样式 */
-  &:after {
-    content: "";
-    position: absolute;
-    width: 14px;
-    height: 100%;
-    right: 0;
-    top: 0;
-  }
+  // &:after {
+  //   content: "";
+  //   position: absolute;
+  //   width: 14px;
+  //   height: 100%;
+  //   right: 0;
+  //   top: 0;
+  // }
 
 	/*  文字闪烁 */
   @keyframes text-flash {

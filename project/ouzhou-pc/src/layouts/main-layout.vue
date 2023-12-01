@@ -18,7 +18,9 @@
         height: `calc(100vh - 68px)`
       }">
         <!-- 中间区域 -->
-        <router-view></router-view>
+        <!-- https://www.cnblogs.com/yg_zhang/p/10867617.html -->
+        <!-- 修复49535，搜索后如果本来在详情页，不会刷新页面 -->
+        <router-view :key="route.fullPath"></router-view>
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
       <div v-if="LayOutMain_pc.oz_show_right" :style="`width:${LayOutMain_pc.oz_right_width}px`" class="layout_main_right">
