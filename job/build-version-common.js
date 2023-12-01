@@ -160,8 +160,7 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
         ...RESOLVE_PROJECT_FN(config.PROJECT),
         ...RESOLVE_ENV_FN(config.ENVSTR),
         ...NODE_ENV_CONFIG,
-        CURRENT_ENV, 
-        OSS_FILE_NAME,
+ 
         IS_FOR_NEIBU_TEST,
         BUILD_DIR_NAME,
         BUILD_VERSION,
