@@ -40,7 +40,7 @@ export default defineConfig({
       input: {
 
       index: path.resolve(__dirname, `../../project/${project}/index.html`),
-      // index: path.resolve(__dirname, `index.html`),
+   
      
       },
       output: {

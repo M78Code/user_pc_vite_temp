@@ -16,7 +16,7 @@
                         <sport-icon size="24" :status="item.mi === current_mi" :sport_id="item.mi" />
                         <span class="badge" v-if="props.is_show_badge"><q-badge rounded :label="item.ct || 0" /></span>
                     </span>
-                    <div class="label">{{ item.name || BaseData.menus_i18n_map[item.mi] }} </div>
+                    <div class="label">{{BaseData.menus_i18n_map[+item.mi>1000 && +item.mi<2000?`3${item.mi}`:item.mi] }} </div>
                     <span class="round"></span>
                 </div>
             </q-virtual-scroll>

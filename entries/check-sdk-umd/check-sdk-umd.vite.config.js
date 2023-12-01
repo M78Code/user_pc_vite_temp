@@ -1,39 +1,33 @@
 // FILE: vite.config.js
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 import path from "path"
-
-  
 //本地开发端口
-const port = 38400
-// entries\check-sdk-umd\index.html
-// http://localhost:38400/project/ouzhou-h5/index.html
-// http://localhost:38400/entries/check-sdk-umd/index.html
-
-console.log(`调试需要打开全路径：http://localhost:38400/entries/check-sdk-umd/index.html`);
-
+const port = 38700
+//目标项目
+const project = "check-sdk-umd"
+//输出目录
+const outDir="dist/check-sdk-umd/"
+//基础路径
+const base='/'
+console.log(`调试需要打开全路径：http://localhost:${port}/project/${project}/index.html`);
 // https://vitejs.dev/config/
 export default defineConfig({
+  base,
   plugins: [
     vue({
       template: { transformAssetUrls }
     }),
-
     quasar({
-
     })
   ],
   build: {
- 
-    outDir: "dist/check-sdk-umd",
- 
+    outDir ,
     rollupOptions: {
       // external: ["vue"],
       input:{
-   
-        index: path.resolve(__dirname,'index.html')
+        index: path.resolve(__dirname, `../../project/${project}/index.html`),
       },
       output: {
         // Provide global variables to use in the UMD build
@@ -57,8 +51,7 @@ export default defineConfig({
 server: {
     port,
     open: `./index.html`,
-    open: `../../entries/check-sdk-umd/index.html`,
+    open: `../../project/${project}/index.html`,
     hmr: true,
 },
-
 })
