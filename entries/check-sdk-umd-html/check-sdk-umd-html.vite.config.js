@@ -1,37 +1,35 @@
 // FILE: vite.config.js
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 import path from "path"
+//本地开发端口
+const port = 38800
+//目标项目
+const project = "check-sdk-umd-html"
+//输出目录
+const outDir="dist/check-sdk-umd-html/"
+//基础路径
+const base='/'
+
+console.log(`调试需要打开全路径：http://localhost:${port}/project/${project}/index.html`);
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  base,
   plugins: [
     vue({
       template: { transformAssetUrls }
     }),
-
     quasar({
-      sassVariables: 'src/css/quasar-variables.scss'
     })
   ],
   build: {
-    // lib: {
-    //   entry: path.resolve(
-    //     __dirname,
-    //     "./build/build-jssdk/build-jssdk.install.js"
-    //   ),
-    //   name: "TY_JSSDK",
-    //   fileName: (format) => `TY_JSSDK.${format}.js`,
-    // },
-    // transpileDependencies: ["quasar"],
-    outDir: "dist/check-sdk-umd-html",
- 
+    outDir ,
     rollupOptions: {
       // external: ["vue"],
       input:{
-   
-        index: path.resolve(__dirname,'index.html')
+        index: path.resolve(__dirname, `../../project/${project}/index.html`),
       },
       output: {
         // Provide global variables to use in the UMD build
@@ -44,23 +42,17 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-   
-      src: "./src",
-      app: "./",
-      dist: "./dist",
-      node_modules: "./node_modules",
-      public: "./public",
-      // project_path: path.join(   
-     
-      //   __dirname,
-      //   `./src/${final_config.project_path}`
-      // ),
+        src: path.resolve(process.cwd(), "./src"),
+        app: path.resolve(process.cwd(), "./"),
+        dist: path.resolve(process.cwd(), "./dist"),
+        project: path.resolve(__dirname, '../../project'),
+        node_modules: path.resolve(process.cwd(), "./node_modules"),
+        public: path.resolve(__dirname, '../../public')
     },
-  },
-  server:{
-    port:28300,
-    open: 'entries/check-sdk-umd-html/index.html',
-    hmr:true
-  }
-
+},
+server: {
+    port,
+    open: `../../project/${project}/index.html`,
+    hmr: true,
+},
 })

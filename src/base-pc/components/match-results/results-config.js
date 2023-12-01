@@ -683,7 +683,7 @@ export const useGetResultConfig = () => {
           
           if (code == 200 && data.length) {
             data.forEach((item) => {
-              if (item.posrList) {
+              if (item && item.posrList && item.posrList.length > 0) {
                 /**
                  * @只展示 走水、赢、赢半、输半的盘口
                  * 2-走水  3-输 4-赢 5-赢一半 6-输一半 7-赛事取消 8-赛事延期 11-比赛延迟 12-比赛中断 13-未知 15-比赛放弃 16-异常盘口
@@ -753,7 +753,6 @@ export const useGetResultConfig = () => {
     if (data && data.code) {
       state.paramsVideo.eventCode = data.code - 0;
     }
-
     api_analysis
       .post_playback_video_url(state.paramsVideo)
       .then((res) => {
@@ -826,11 +825,11 @@ export const useGetResultConfig = () => {
     });
     return {
       left_data: [
-        ...state.sort_score(main_win),
-        ...state.sort_score(flat, 2),
+        ...sort_score(main_win),
+        ...sort_score(flat, 2),
         ...other,
       ],
-      right_data: state.sort_score(guest_win, 1),
+      right_data: sort_score(guest_win, 1),
     };
   };
   /**
@@ -1192,7 +1191,6 @@ const pageSizeChange = (v) => {
    * 修改当前选中的赛种名字
    */
   const setSport = ({ currentItem, isChampion }) => {
-    console.log('currentItem, isChampion',currentItem, isChampion)
     state.is_highlights = false;
     if (state.results_params.sportType == "1" && state.is_highlights) {
       state.results_params.isPlayBack = 1;
