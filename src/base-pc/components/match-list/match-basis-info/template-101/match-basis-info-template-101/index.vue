@@ -23,6 +23,7 @@
      <div class="row-item">
       <div class="team-logo">
         <img v-if="show_type == 'all' && home_avatar"
+        :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
           v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
       </div>
       <div class="ellipsis-wrap">
@@ -55,6 +56,7 @@
     <div class="row-item kedui-item">
       <div class="team-logo">
         <img v-if="show_type == 'all' && away_avatar"
+          :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
           v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
       </div>  
       <div class="ellipsis-wrap">
@@ -352,6 +354,7 @@ onUnmounted(() => {
       img {
         width: 18px;
         height: 18px;
+        background-size: 100%;
       }
     }
   .collect-box {
