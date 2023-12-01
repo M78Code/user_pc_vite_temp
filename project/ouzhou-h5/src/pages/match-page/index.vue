@@ -118,6 +118,10 @@ const onChangeDate = e => {
 }
 
 const onChangeArea = (obj) => {
+  if (obj.id === '-1000') {
+    store.leaguesMatchs = []
+    return
+  }
   const arr = obj.tournamentList
   if (arr === null) {
     store.leaguesMatchs = []
