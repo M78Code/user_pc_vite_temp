@@ -100,7 +100,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -118,7 +118,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -157,7 +157,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : i?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
+												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
 												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -175,7 +175,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<!-- i?.hps?.[0].hl?.[0].ol?.[1]?.on -->
 												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
@@ -213,7 +213,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[0].on  }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[0].on  }}</div>
 												<!-- }}i18n_t('bet.home_win') -->
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
@@ -232,7 +232,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<!-- i18n_t('bet.away_win')  -->
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
