@@ -569,8 +569,7 @@ export default defineComponent({
   border: none;
   border: 1px solid #ffb275;
   background-color: #ff7e19;
-  padding: 14px 15px;
-  padding-left: 30px;
+  padding: 14px 30px;
   outline:none;
   color: #fff;
 }
