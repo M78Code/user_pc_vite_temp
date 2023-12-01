@@ -45,6 +45,7 @@
           <div class="date-picker-wrap relative-position">
           <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
             <q-date
+              color="orange"
               v-icon="{
                 'chevron_left': 'icon-arrow-left',
                 'chevron_right': 'icon-arrow-right',
@@ -55,6 +56,7 @@
               @range-end="confirmDate"
               range
               v-if="startTimeShow"
+              
               minimal
               :locale="locales"
             />
