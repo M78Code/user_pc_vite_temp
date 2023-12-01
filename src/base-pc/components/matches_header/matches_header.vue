@@ -180,6 +180,8 @@ watch(BaseData.base_data_version,()=>{
 	}
 })
 const checked_current_tab = payload => {
+	//切换滚球 今日 早盘  球种初始化为足球背景
+	MenuData.set_current_ball_type(1)
 // debugger
 	let obj = {
 		...MenuData.mid_menu_result,
