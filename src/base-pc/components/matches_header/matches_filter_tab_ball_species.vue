@@ -178,7 +178,7 @@ const on_scroll = (e) => {
   }else{
     show_left_btn.value = false;
   }
-  if(scrollLeft == (area_obj.scrollWidth - area_obj.clientWidth)){
+  if(scrollLeft == (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
     show_right_btn.value = false;
   }else{
     show_right_btn.value = true;
@@ -192,7 +192,7 @@ const on_scroll = (e) => {
  */
 const filter_tab_scroll = payload => {
   clearInterval(interval_id)
-  let scrollLeft = area_obj.scrollLeft;
+  let scrollLeft = area_obj.value.scrollLeft;
   for_count = 0
   // 滚动动画
   interval_id = setInterval(() => {
@@ -205,7 +205,7 @@ const filter_tab_scroll = payload => {
     } else {
       scrollLeft += 15;
     }
-    area_obj.scrollLeft = scrollLeft;
+    area_obj.value.scrollLeft = scrollLeft;
   }, 16)
 }
 

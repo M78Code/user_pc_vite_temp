@@ -94,7 +94,6 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
     flex-grow: 1;
     position: relative;
   }
-
   .league-match-count {
       height: 100%;
       position: absolute;

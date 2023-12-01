@@ -10,6 +10,7 @@ import { MatchDataWarehouse_PC_List_Common  } from "src/core/index.js";
 import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-list-other.js';
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
+import { match_collect_status } from './match-list-collect'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
@@ -282,11 +283,15 @@ const api_bymids = (
           //   }
           // });
           if(match_list.length > 0){
+            match_list.forEach( match => {
+              match_collect_status(match)
+            })
             MatchListData.set_list(
               match_list,
             );
             set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
           }
+          
         } else if (code == "0400500" && by_mids_fun_count++ < 3) {
           by_mids_fun();
           league_load_status = "empty";

@@ -65,7 +65,8 @@ const time_tab = (item) => {
         .time-list-item {
             display: flex;
             align-items: center;
-            flex: 1;
+            // flex: 1;
+            width: 14.2857%;
             .item-text {
                 height: 25px;
                 line-height: 25px;
