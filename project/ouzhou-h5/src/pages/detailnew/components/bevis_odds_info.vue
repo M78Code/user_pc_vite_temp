@@ -116,7 +116,7 @@ const playComponent = ref({
     template2: markRaw(playTemplate2),
     template3: markRaw(playTemplate3),
     template4: markRaw(playTemplate4),
-    template5: markRaw(temp5),
+    template5: markRaw(playTemplate5),
     template_other: markRaw(tem_other)
 })
 const hptArr = [0,1,2,3,5,4]
