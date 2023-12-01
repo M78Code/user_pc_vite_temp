@@ -3,7 +3,7 @@
  * @Date: 2020-08-20 18:35:53
  * @Description: 时间格式化处理
  */
-import utils from 'project/activity/src/utils/utils.js.js';
+import utils from 'project/activity/src/utils/utils.js';
 
 export default {
   methods: {
