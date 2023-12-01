@@ -58,7 +58,7 @@
 </template>
  
 <script setup> 
-import { onMounted, ref ,reactive, onUnmounted, nextTick } from "vue";
+import { onMounted, ref ,reactive, onUnmounted, nextTick, provide } from "vue";
 import { watch } from "vue";
 import lodash from 'lodash'
 import TimeEvents from './components/time-events.vue'
@@ -79,6 +79,10 @@ import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
   MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5 } from "src/core/index.js";
 
+provide('get_hots_data', () => {
+  get_ouzhou_home_data()
+})
+
 let message_fun = null
 let handler_func = null
 const is_first = ref(false)
@@ -93,6 +97,8 @@ const tabValue = ref(MenuData.home_menu || 'featured');
 const state = reactive({
     current_mi:"",
 })
+
+
 /**
  * 球种点击
  */
@@ -166,15 +172,13 @@ onMounted(async () => {
       } else {
         get_top_events_match(MenuData.menu_csid)
       }
-      // get_ouzhou_home_hots()
-      // get_five_league_matchs()
     }
   }
 
   // 调用 mids  接口
   if (['C303', 'C114'].includes(cmd)) {
     if (five_league_mids.value.length > 0) {
-      MatchMeta.get_match_base_hps_by_mids({ mids: five_league_mids.value.toString(), warehouse: MatchDataBaseFiveLeagueH5 })
+      // MatchMeta.get_match_base_hps_by_mids({ mids: five_league_mids.value.toString(), warehouse: MatchDataBaseFiveLeagueH5 })
     }
   }
 }

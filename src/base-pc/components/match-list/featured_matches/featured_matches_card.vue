@@ -18,10 +18,10 @@
             date_show_type="inline" periodColor="gray" />
         </div>
         <div class="club-name" :class="{'bold': get_handicap_index_by(item) == 1}">
-          <span>{{ item.mhn }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.home`) }}</span>
+          <span>{{ item.mhn }}</span><span class="din_font">{{get_match_score(get_match_item(item.mid)).home_score }}</span>
         </div>
         <div class="union-name" :class="{'bold': get_handicap_index_by(item) == 2}">
-          <span>{{ item.man }}</span><span class="din_font">{{ lodash.get(item, `msc_obj.S1.away`) }}</span>
+          <span>{{ item.man }}</span><span class="din_font">{{get_match_score(get_match_item(item.mid)).away_score }}</span>
         </div>
         <div class="odds_box">
           <div class="top-line"></div>
@@ -47,7 +47,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { get_ouzhou_data_tpl_id ,get_handicap_index_by, get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
+import { get_ouzhou_data_tpl_id ,get_handicap_index_by, get_match_to_map_obj, get_match_score} from 'src/core/match-list-pc/match-handle-data.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { utils } from "src/core/index.js"
 
@@ -73,7 +73,6 @@ const get_featurd_list = async () => {
     // 只显示5条数据
     const five = lodash.get(res, 'data', []).slice(0, 5)
     MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(five);
-    matches_featured_list.value = []
     five.forEach(match => {
       mids.push(match.mid)
       matches_featured_list.value.push(MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(match.mid))
@@ -87,7 +86,9 @@ const get_featurd_list = async () => {
   }
 }
 const mitt_list = [useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, get_featurd_list).off]
-
+const get_match_item = (mid) => {
+  return MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(mid)
+}
 const current_check_betId = ref(MenuData.current_check_betId.value)
 // 监听 当前投注项ID的变化
 watch(
