@@ -15,7 +15,8 @@
                 {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif] || "" }}
               </div>
             </div>
-            <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" src="../../../assets/images/mask_group.png" alt="">
+            <!-- <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" :style="compute_css_obj({key: 'pc-home-mask-group'})" alt=""> -->
+            <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.current_mi == item.mi}"></div>
           </div>
           <div class="filter-tab-split-line" v-show="index != mi_100_arr.length - 1"></div>
         </div>
@@ -35,7 +36,7 @@
               {{ BaseData.menus_i18n_map[item.mif] || "" }}
             </div>
           </div>
-          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" src="../../../assets/images/mask_group.png" alt="">
+          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mi }" :style="compute_css_obj({key: 'pc-home-mask-group'})" alt="">
         </div>
         <div class="filter-tab-split-line"></div>
       </div> -->
@@ -54,7 +55,7 @@
               {{ item.name || "" }}
             </div>
           </div>
-          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mif }" src="../../../assets/images/mask_group.png" alt="">
+          <img class="current-mark" :class="{ 'show-mark': current_choose_tab == item.mif }" :style="compute_css_obj({key: 'pc-home-mask-group'})" alt="">
         </div>
         <div class="filter-tab-split-line" v-show="index != vr_menu_data.length - 1"></div>
       </div> -->
@@ -83,6 +84,7 @@ import BaseData from "src/core/base-data/base-data.js";
 import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/components/match-list/list-filter/index.js"
 import { MenuData ,useMittOn,MITT_TYPES, } from "src/core/"
 import { compute_sport_id } from 'src/core/constant/index.js'
+import { compute_css_obj } from 'src/core/server-img/index.js'
 
 let area_obj = ref();
 let area_obj_wrap = ref();
@@ -322,15 +324,17 @@ onBeforeUnmount(() => {
 }
 
 .current-mark {
-  width: 10px;
-  height: 4px;
-  // border-radius: 4px 4px 0 0;
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  display: none;
-  margin-left: -5px;
-}
+    width: 8px;
+    height: 8px;
+    // border-radius: 4px 4px 0 0;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    display: none;
+    margin-left: -4px;
+    background: var(--q-gb-bg-c-1);
+    clip-path: circle(50% at 50% 100%);
+  }
 .show-mark {
   display: block;
 }
