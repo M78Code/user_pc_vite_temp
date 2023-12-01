@@ -384,7 +384,8 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 		searchSportType: sport_id || 1,
 		isPc: false
 	}
-	if (!is_results) params.from = 2
+	console.log('goto_detailsgoto_detailsgoto_details', is_results)
+	if (is_results.value) params.from = 2
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
@@ -392,7 +393,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			get_insert_history({ keyword })
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_txt');
-			if (!is_results) {
+			if (is_results.value) {
 				render_match_results_list(res)
 				return
 			}
@@ -409,7 +410,6 @@ const render_match_results_list = (res) => {
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res.data.data, 'teamH5', [])
     const length = lodash.get(list, 'length', 0)
-	console.log('render_match_results_list', list)
     if (length < 1) return MatchMeta.set_page_match_empty_status({ state: true });
     MatchMeta.handler_match_list_data({ list: list, type: 1 })
 }
