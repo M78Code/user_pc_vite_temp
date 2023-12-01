@@ -258,6 +258,8 @@ onMounted(init)
         border-radius: 2px;
         font-size: 14px;
         cursor: pointer;
+        width: 1470px;
+        overflow: hidden;
 
         &:hover {
             color: var(--q-gb-t-c-2);

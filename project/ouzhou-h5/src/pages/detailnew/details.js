@@ -470,7 +470,6 @@ export const details_main = (router, route) => {
    * @return {*}
    */
   function RCMD_C102(obj) {
-    console.error(obj,'obj');
     let skt_data = obj.cd;
     if (skt_data.mmp == 999) {
       //切换赛事
@@ -520,7 +519,6 @@ export const details_main = (router, route) => {
     //C105移除玩法集 从数据仓库移除
     message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
       if (lodash.get(data, "cd.mid") != mid.value || cmd == "C105") return;
-      console.error(data,'cmd')
       // handler_ws_cmd(cmd, data);
       // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
       // console.error(flag,'flag','cmd:',cmd,data);
