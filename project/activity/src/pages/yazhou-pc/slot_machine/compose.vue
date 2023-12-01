@@ -1141,4 +1141,3 @@ svg {
   color: #fff;
 }
 </style>
-project/activity/src/api/module/activity/index

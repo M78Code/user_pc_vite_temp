@@ -3,7 +3,7 @@
  * @Date: 2020-09-07 12:36:01
  * @Description: 用户操作相关
  */
-import { api_details } from "src/public/api/index";
+import { api_details } from "src/api/index";
 export default {
   /**
   * @Description:判断用户是否登录

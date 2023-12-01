@@ -1955,4 +1955,3 @@ export default {
   }
 }
 </style>
-project/activity/src/api/module/activity/index

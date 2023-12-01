@@ -16,7 +16,7 @@
 
 <script>
 
-import common from "project/activity/src/public/mixins/constant/module/common.js";
+import common from "project/activity/src/mixins/constant/module/common.js";
 import acticity_mixin from "../mixin/acticity_mixin";
 
 export default {

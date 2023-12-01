@@ -15,7 +15,7 @@ const { API_PREFIX_JOB: prefix, API_PREFIX_USER: prefix_12 } = API_PREFIX;
 
 
 //首页常规赛事列表接口(新)
-export const get_home_matches = (params, config={}, url = "/yewu11/v3/m/homeMatchesPB") => http.post(url, params,{axios_debounce_cache_key:'get_home_matches'});
+export const get_home_matches = (params, config={}, url = "/yewu11/v3/m/homeMatches") => http.post(url, params,{axios_debounce_cache_key:'get_home_matches'});
 
 //详情页获取玩法分类接口(新)
 export const get_detail_category = (params, config={}, url = "/yewu11/v1/w/category/getCategoryList") => http.get(url, params);
