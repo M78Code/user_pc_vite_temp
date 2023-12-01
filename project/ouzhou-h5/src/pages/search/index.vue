@@ -392,7 +392,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			// 插入搜索历史
 			get_insert_history({ keyword })
 			// 搜索前清空会话仓库数据
-			// sessionStorage.removeItem('search_txt');
+			// sessionStorage.removeItem('search_params');
 			if (is_results.value) {
 				render_match_results_list(res)
 				return
