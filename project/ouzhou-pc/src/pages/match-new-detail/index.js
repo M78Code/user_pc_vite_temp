@@ -61,8 +61,11 @@ export function usedetailData(route) {
   let sportId = 1,
     mid = 2858623,
     tid;
-
-  let route_parmas = ref(route.params)  
+    let route_parmas = ref(route.params)  
+    watch(()=>route.params,val=>{
+       route_parmas.value = val
+    },{deep:true})
+ 
   // 监听分类切换数据
   watch(current_key, (val) => {
     if (!val) return;
@@ -156,6 +159,7 @@ export function usedetailData(route) {
   const get_detail = async (par) => {
     const { isNeedLoading = true } = par || {};
     try {
+      console.log(1111111111,route_parmas.value)
       const params = {
         mid: route_parmas.value.mid,
         cuid: user_info.userId,
@@ -174,14 +178,16 @@ export function usedetailData(route) {
       detail_loading.value = false;
       detail_info.value = { ...detail_info.value, ...res.data };
       detail_info.value["course"] = handle_course_data(detail_info.value);
-
-      LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
+      setTimeout(() => {
+        LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
+      }, 200);
+      
       //存取赛事详情基础信息
       // console.log(detail_info.value,'detail_info.value')
 
       MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
 
-      // 刷新按钮不刷新右侧视频动画
+      // detail_info.value = getMidInfo(mid);
       if (is_fresh.value) {
         useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
       }
@@ -474,7 +480,7 @@ export function usedetailData(route) {
     MITT_TYPES.EMIT_SWITCH_MATCH,
     ((parmas)=>{
       console.log(parmas,'parmas');
-      route_parmas.value = parmas
+      // route_parmas.value = parmas
       refresh()
       console.error('-----------aaaaa');
     })

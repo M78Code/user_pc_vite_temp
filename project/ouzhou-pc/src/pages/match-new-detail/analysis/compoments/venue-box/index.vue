@@ -112,7 +112,8 @@ const show_type = ref("");
 watch(
   () => props.detail_info,
   (val) => {
-    // 有动画优先播放动画
+    if (val) {
+      // 有动画优先播放动画
     if (val.mvs > -1) {
       animal_key.value = false;
       setTimeout(() => {
@@ -123,6 +124,8 @@ watch(
       animal_key.value = false;
       score_key.value = true;
       show_type.value = "";
+    }
+      
     }
   }
 );
