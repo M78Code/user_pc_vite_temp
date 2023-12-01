@@ -1060,4 +1060,3 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
-project/activity/src/api/module/activity/index

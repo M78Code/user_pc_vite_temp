@@ -10,7 +10,8 @@ import {
   write_file,
   remove_file,
 } from "./write-folder-file.js";
-// 商户版本 最终配置
+ 
+
  
 console.log(colors.bgRed("export-js-config.js----------resolve_merchant_config_js  ----"));
  
@@ -19,10 +20,13 @@ const IS_DEV = ("" + process.argv[2]).trim() == "development";
  
 
 
+
+
  let config_obj={
   IS_DEV,
   IS_PROD: !IS_DEV,
   NODE_ENV: IS_DEV ? "development" : "production",
+
  }
 
  

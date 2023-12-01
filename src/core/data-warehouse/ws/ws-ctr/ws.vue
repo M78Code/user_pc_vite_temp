@@ -110,6 +110,9 @@ function event_listener_visibilitychange(){
  */
 function get_vue_hidden_run() {
   // console.log(`---------------------进入了get_vue_hidden_run方法-------------------`);
+  if (wslog && wslog.send_msg) {
+    wslog.send_msg('WS---VUE:', {msg:'get_vue_hidden_run ',view:document.visibilityState})
+  }
   if (document.visibilityState == 'hidden') {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -119,6 +122,9 @@ function get_vue_hidden_run() {
         window.postMessage({event: 'WS', cmd:`WS_STATUS_CHANGE_EVENT`, data},'*');
         // console.log('---未在当前网站--关闭WS---',_.get(window.ws,'ws.url'));
         // WsMan.ws && window.ws.retInitData(true);
+        if (wslog && wslog.send_msg) {
+          wslog.send_msg('WS---VUE:', {msg:'get_vue_hidden_run send!',data, view:document.visibilityState})
+        }
       }
     }, DOCUMENT_HIDDEN_WS_CLOSE_TIME);
   } else {
@@ -127,6 +133,9 @@ function get_vue_hidden_run() {
       let data =  {ws_status:2, ws_status_old:ws_status || 0};
       // 发送ws连接状态(0-断开,1-连接,2-断网续连状态)
       window.postMessage({event: 'WS', cmd:`WS_STATUS_CHANGE_EVENT`, data},'*');
+      if (wslog && wslog.send_msg) {
+        wslog.send_msg('WS---VUE:', {msg:'get_vue_hidden_run send !!',data, view:document.visibilityState})
+      }
       // console.log('---进入当前网站--开启WS---',_.get(window.ws,'ws.url'));
         WsMan.ws && WsMan.ws.connect('vue_hidden_to_show');
     // }
