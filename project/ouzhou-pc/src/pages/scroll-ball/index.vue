@@ -35,7 +35,7 @@
                 </div>
                 <template v-slot:after>
                     <div style="height:15px"></div>
-                    <div class="pager-wrap row justify-end">
+                    <div class="pager-wrap row justify-center">
                         <div class="go-top-btn yb-flex-center" @click="on_go_top">
                             <icon-wapper name="icon-go_top" size="14px" />
                             <div class="msg">{{ $t("common.back_top") || "" }}</div>
@@ -61,9 +61,9 @@ import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "s
 
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import {mounted_fn, handle_destroyed,load_data_state,  is_show_hot, on_refresh } from "src/core/match-list-pc/match-list-composition.js";
+import {mounted_fn, handle_destroyed,load_data_state,   on_refresh } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj, LayOutMain_pc } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj,useMittEmit,MITT_TYPES, LayOutMain_pc } from "src/core/index.js";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import "../match-list/match_list.scss";
 const { page_source } = PageSourceData;
@@ -108,6 +108,9 @@ export default {
             LayOutMain_pc.set_oz_show_right(true)
             LayOutMain_pc.set_oz_show_left(false)
         })
+        function on_go_top(){
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)
+    }
         watch(
             MatchListCardDataClass.list_version,
             (list_version) => {
@@ -119,10 +122,10 @@ export default {
         return {
             MenuData,
             MatchListData,
-            is_show_hot,
             page_source,
             GlobalAccessConfig,
             on_refresh,
+            on_go_top,
             match_list_card_key_arr,
             compute_css_obj, match_list_card,
             MatchListCardDataClass,
