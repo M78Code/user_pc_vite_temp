@@ -274,6 +274,7 @@ import { onMounted, ref, watch, onUnmounted, reactive } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
 import { format_date_overseas } from "src/core/format/module/format-date.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_delete_history_search, get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
@@ -583,12 +584,14 @@ onMounted(() => {
 		input_value.value = search_params.keyword
 		get_search_data(store.tabIndex, search_params.csid, search_params.keyword)
 	}
+	if (is_results.value) VirtualList.set_is_show_ball(false)
 })
 
 onUnmounted(() => {
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = null
 	input_value.value = ''
+	if (is_results.value) VirtualList.set_is_show_ball(true)
 })
 </script>
 <style lang="scss" scoped>
