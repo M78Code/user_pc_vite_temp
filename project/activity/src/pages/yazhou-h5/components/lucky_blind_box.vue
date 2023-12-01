@@ -284,11 +284,11 @@ let gift3 =  "activity/yazhou-h5/activity/lucky/gift3.png";
 import acticity_mixin from "../mixin/acticity_mixin";
 import data_pager from "project/activity/src/components/data_pager.vue";
 import active_count_down from "./active_count_down.vue";
-import common from "project/activity/src/public/mixins/constant/module/common.js";
-import formartmixin from 'project/activity/src/public/mixins/module/formartmixin.js';
-import utils from 'project/activity/src/utils/utils.js.js';
-import themeStore from 'project/activity/src/public/store/module/theme/theme.js';
-import userStore from 'project/activity/src/store/module/user/index.js.js';
+import common from "project/activity/src/mixins/constant/module/common.js";
+import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
+import utils from 'project/activity/src/utils/utils.js';
+import themeStore from 'project/activity/src/store/module/theme/theme.js';
+import userStore from 'project/activity/src/store/module/user/index.js';
 
 export default {
   name: "lucky_blind_box",

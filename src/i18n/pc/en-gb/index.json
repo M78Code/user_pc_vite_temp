@@ -29,7 +29,8 @@
       "close_handicap": "Close the Handicap"
     },
     "bet": {
-      "place_bet": "Place Bet"
+      "place_bet": "Place Bet",
+      "bet_loading": "Processing"
     },
     "menu": {
       "collect": "Favourites",

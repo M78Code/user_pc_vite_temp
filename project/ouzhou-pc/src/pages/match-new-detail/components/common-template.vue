@@ -14,7 +14,6 @@
         :class="{
           'temp-active': BetData.bet_oid_list.includes(o.oid),
           temp: true,
-          'odds-lift': BetData.bet_oid_list.includes(o.oid) && o.odds_lift,
         }"
         @click="betItemClick(match_info.hl[0], o)"
       >
@@ -68,8 +67,6 @@
                   item.ol.length % 2 !== 0 &&
                   index == item.ol.length - 1 &&
                   columnNum == 2,
-                'odds-lift':
-                  BetData.bet_oid_list.includes(o.oid) && o.odds_lift,
               }"
               @click="betItemClick(item, o)"
             >
@@ -250,32 +247,18 @@ onMounted(() => {
 }
 
 .temp-active {
-  background: var(--q-gb-bg-c-1);
-  color: var(--q-gb-t-c-1);
+  background-color: var(--q-gb-bg-c-5) !important;
+  // color: var(--q-gb-t-c-1);
   border-bottom-color: var(--q-gb-bg-c-1) !important;
   &:hover {
-    background: var(--q-gb-bg-c-1) !important;
-    color: var(--q-gb-t-c-1);
+    background-color: var(--q-gb-bg-c-5) !important;
+    // color: var(--q-gb-t-c-1);
   }
 
   .temp-on {
-    color: var(--q-gb-t-c-1) !important;
+    // color: var(--q-gb-t-c-1) !important;
     // margin-left: 10px;
   }
-}
-.odds-lift {
-  // span {
-  //   &:nth-child(1) {
-  //     width: 50%;
-  //     display: block;
-  //     text-align: right;
-  //     margin-right: 10px;
-  //     overflow: hidden;
-  //     color: var(--q-gb-t-c-5) !important;
-  //   }
-  // }
-  color: var(--q-gb-t-c-5) !important;
-  background-color: var(--q-gb-bg-c-5) !important;
 }
 
 

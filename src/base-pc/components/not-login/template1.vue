@@ -1,12 +1,30 @@
 <template>
     <div class="no-token-wrap">
-        <img class="no-token-img" v-if="lang == 'zh' || lang == 'tw'" :src="compute_img_url('not-login-zh')" />
-        <img class="no-token-img" v-else :src="compute_img_url('not-login')" />
+        <img class="no-token-img" :src="imgSrc[lang]" />
     </div>
 </template>
 <script setup>
-import { compute_img_url } from "src/core/";
-const lang = sessionStorage.getItem('lang')
+import { UserCtr, compute_local_project_file_path } from "src/core/index.js";
+import {ref,reactive} from 'vue'
+const lang = ref(UserCtr.lang||'en')
+/* 退出登录通知-中文 */
+const logout_notice = compute_local_project_file_path('/image/image/not_login_zh.png')
+/* 退出登录通知-英文 */
+const logout_notice_en = compute_local_project_file_path('/image/image/not_login_en.png')
+/* 退出登录通知-越南语 */
+const logout_notice_vi = compute_local_project_file_path('/image/image/not_login_en.png')
+/* 退出登录通知-泰语 */
+const logout_notice_th = compute_local_project_file_path('/image/image/not_login_en.png')
+/* 退出登录通知-马来语 */
+// const logout_notice_ma = compute_local_project_file_path('/image/image/logout_notice_ma.png')
+const imgSrc = reactive({
+  zh: logout_notice,
+  tw: logout_notice,
+  en: logout_notice_en,
+  vi: logout_notice_vi,
+  th: logout_notice_th,
+  // ma: logout_notice_ma,
+})
 </script>
 <style lang="scss">
 .no-token-img {

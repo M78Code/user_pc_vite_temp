@@ -10,7 +10,7 @@
                 {{ item.introduction }}
               </div>
             </div>
-            <img class="current-mark" :class="{ 'show-mark': select_id == item.id }" src="../../../assets/images/mask_group.png" alt="">
+            <div class="current-mark" :class="{'show-mark':  select_id == item.id}"></div>
           </div>
           <div class="filter-tab-split-line" v-show="index != leagues.length - 1"></div>
         </div>
@@ -36,6 +36,7 @@
 import { ref, onMounted, onBeforeUnmount, watch, nextTick } from "vue";
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
+import { compute_css_obj } from 'src/core/server-img/index.js'
 
 let area_obj = ref();
 let area_obj_wrap = ref();
