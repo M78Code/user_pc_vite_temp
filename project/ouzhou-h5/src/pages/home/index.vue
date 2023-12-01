@@ -112,19 +112,24 @@ onMounted(async () => {
     handle_webscoket_cmd(cmd, data)
   }, 1000)
 
+  // 删除赛事防抖
+  const handler_remove = () => lodash.debounce(() => {
+    MatchMeta.set_is_ws_trigger(true)
+    if (tabValue.value === 'featured') {
+      get_ouzhou_home_data()
+    } else {
+      console.log(tabValue.value)
+      get_top_events_match(MenuData.menu_csid)
+    }
+  }, 1000)
+
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
     // 赛事删除
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
       if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
-        if (tabValue.value === 'featured') {
-          get_ouzhou_home_data()
-        } else {
-          get_top_events_match(MenuData.menu_csid)
-        }
-        // get_ouzhou_home_hots()
-        // get_five_league_matchs()
+        handler_remove()
       }
     } else {
       handler_func({ cmd, data })
@@ -143,6 +148,7 @@ onMounted(async () => {
     // 欧洲版 二期  只展示 足球、篮球、网球， 球种菜单放开的同时这里也需要增加
     const item = cd.find(t => [1,2,5].includes(+t.csid) )
     if (item) {
+      MatchMeta.set_is_ws_trigger(true)
       if (tabValue.value === 'featured') {
         get_ouzhou_home_data()
       } else {
@@ -241,6 +247,7 @@ const handle_ouzhou_home_hots = async (data) => {
 // tabs 切换
 const on_update = (val) => {
   MenuData.set_home_menu(val);
+  MatchDataBaseH5.set_active_mids([])
   if (val === 'featured') {
     MenuData.set_current_lv1_menu(1);
     MenuData.set_menu_mi('101');
@@ -260,6 +267,11 @@ const get_top_events_match = (csid = '1') => {
   MatchResponsive.set_is_compute_origin(true)
   state.current_mi = MenuData.top_events_list?.[0]?.mi;
   MatchMeta.get_top_events_match(csid)
+  let timer = setTimeout(() => {
+    MatchMeta.get_match_base_hps_by_mids({})
+    clearTimeout(timer)
+    timer = null
+  }, 1000)
 }
 
 /**
@@ -285,6 +297,7 @@ const goto_top = () => {
 
 onUnmounted(() => {
   // 组件销毁时销毁监听函数
+  MatchDataBaseH5.set_active_mids([])
   ws_message_listener.ws_remove_message_listener(message_fun)
   message_fun = null
 })
