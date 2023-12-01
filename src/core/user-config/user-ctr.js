@@ -514,7 +514,7 @@ class UserCtr {
 
         //显示登录失效弹窗
         setTimeout(() => {
-          //  window.vue.show_fail_alert();
+          this.show_fail_alert();
         }, 100);
 
         // 关闭WS
@@ -964,7 +964,7 @@ class UserCtr {
         callback: () => {
           location.href = callbackUrl;
           // 清除旧的登录信息
-          this.vx_clear_user();
+          this.clear_user();
         },
       });
       // }
