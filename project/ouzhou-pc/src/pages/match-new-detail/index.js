@@ -64,6 +64,7 @@ export function usedetailData(route) {
     let route_parmas = ref(route.params)  
     watch(()=>route.params,val=>{
        route_parmas.value = val
+       init()
     },{deep:true})
  
   // 监听分类切换数据
@@ -188,7 +189,7 @@ export function usedetailData(route) {
 
       // detail_info.value = getMidInfo(mid);
       if (is_fresh.value) {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
+        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, route_parmas.value.mid);
       }
     } catch (error) {
       console.error("get_detail_data", error);
@@ -367,6 +368,7 @@ export function usedetailData(route) {
   );
   let message_fun = [];
   onMounted(() => {
+    console.log(11111111111111)
     sportId = route.params.csid;
     mid = route.params.mid;
     tid = route.params.tid;

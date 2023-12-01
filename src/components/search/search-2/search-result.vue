@@ -11,7 +11,7 @@
 					<ul class="list">
 						<!-- <div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div> -->
 						<!-- 滚球 -->
-						<div v-show="!lodash.isEmpty(show_bowling_list)" style="margin-bottom: 10px;">
+						<div v-show="!lodash.isEmpty(show_bowling_list)">
 							<div @click="expand_bowling = !expand_bowling">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
@@ -129,6 +129,9 @@
 											<img :src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 										</div>
 									</div> -->
+									<div class="list_top">
+											<span v-html="red_color(item.teamName)"></span>
+										</div>
 									<div class="list_bottom"  v-for="(list, i) in item?.matchList" @click="match_click(item)">
 										<div style="width: 60%; word-break: break-all">
 											<p>
@@ -198,6 +201,7 @@ import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
+
 const props = defineProps({
 	show_type: {
 		type: String,
@@ -737,7 +741,7 @@ watch(
 	padding: 9px 18px;
 	display: flex;
 	border-bottom: 1px solid var(--q-header-search-color-5);
-	background-color: #fff;
+	background-color: var(--q-header-search-color-5);
 	font-size: 14px;
 	font-weight: 500;
 	overflow-x: scroll;
@@ -746,7 +750,7 @@ watch(
 	z-index: 1;
 	color: var(--q-gb-t-c-5);
 	&.diff {
-		padding: 9px 0 9px 20px;
+		padding: 10px 20px;
 		position: unset;
 		overflow: auto;
 	}
@@ -776,7 +780,7 @@ watch(
 }
 
 li {
-	padding: 13px 20px;
+	padding: 13px 20px 0;
 	background-color: #fff;
 	// border-radius: 6px;
 	font-size: 14px;
