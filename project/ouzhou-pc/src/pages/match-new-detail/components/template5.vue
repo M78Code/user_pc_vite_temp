@@ -24,7 +24,6 @@
         :class="{
           'temp-active': BetData.bet_oid_list.includes(value[0].oid),
           temp_grid_item: true,
-          'odds-lift': BetData.bet_oid_list.includes(value[0].oid) && value[0].odds_lift,
         }"
       >
         <span v-show="value[0].hs">
@@ -44,7 +43,6 @@
           :class="{
             temp_grid_item: true,
             'temp-active': BetData.bet_oid_list.includes(o.oid),
-            'odds-lift': BetData.bet_oid_list.includes(o.oid) && o.odds_lift,
           }"
           :style="{ width: value.length > 1 ? '100%' : '200%' }"
           :key="o.oid"
@@ -174,11 +172,11 @@ onMounted(() => {});
 }
 
 .temp-active {
-  background-color: var(--q-gb-bg-c-1);
+  background-color: var(--q-gb-bg-c-5) !important;
   color: var(--q-gb-t-c-1) ;
   border-bottom: none !important;
   &:hover {
-    background: var(--q-gb-bg-c-1) !important;
+    background-color: var(--q-gb-bg-c-5) !important;
     color: var(--q-gb-t-c-1);
   }
 }

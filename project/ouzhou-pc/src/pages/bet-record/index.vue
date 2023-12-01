@@ -29,9 +29,16 @@ const tab_change = (val) => {
   current_tab.value = val
 }
 const itemFilter = (obj) => {
-  timeType.value = obj.timeType
+  const {timeType: objTimeType, ...rest} = obj || {}
+  timeType.value = objTimeType;
   const orderStatus = current_tab.value == 'settled' ? 1 : 0
-  tableRef.value.getTableData({ ...obj, orderStatus })
+  tableRef.value.getTableData({
+    ...(current_tab.value == 'settled' ? {
+      timeType: objTimeType || ''
+    } : {}),
+    ...rest,
+    orderStatus
+  })
 }
 
 onMounted(() => {
