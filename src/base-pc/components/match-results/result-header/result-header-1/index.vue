@@ -25,6 +25,7 @@
         }}</span>
         <Select-Wrapper
           :value="champion_sport"
+          :sportType="champion_sport"
           :options="champion_sport_type"
           :isChampion="1"
           :showInput="true"
