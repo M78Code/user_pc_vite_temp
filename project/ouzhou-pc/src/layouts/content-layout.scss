@@ -181,12 +181,13 @@ body {
 
     .record_api_limited {
       color: var(--q-gb-t-c-8);
+      background-color: var(--q-gb-bg-c-4);
       text-align: center;
 
       .img {
         width: 180px;
         height: 130px;
-        background-image: var(--qq--public-bg-image2); // TODO: png/no_data_01.png
+        // background-image: var(--qq--public-bg-image2); // TODO: png/no_data_01.png
         background-size: 100%;
         background-repeat: no-repeat;
       }

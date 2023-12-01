@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <div class="temp3 box-style component tem5">
+  <div class=" box-style component tem5">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
     <!-- os: 1开 2封 3隐藏不显示不占地方-->
@@ -53,19 +53,19 @@
           </template>
           <template v-else>
             <ResultOlItem v-if="value[0].result != (void 0)" :value="value[0]" :hpt="5"></ResultOlItem>
-            <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+            <span v-else><lockImg :ol_item="value[0]" /></span>
           </template>
         </div>
         <template v-else>
           <div v-for="o in value" :class="{ temp_grid_item: true, 'is-active': BetData.bet_oid_list.includes(o?.oid ),ol_ov: true,}" :key="o.oid" @click="go_betting(o)">
-            <template v-if="o.os == 1 && o._hs != 11">
+            <template v-if="o.os == 1 && o._hs != 11 && o._hs != 1 ">
               <span class="o_hv">{{ o.on || key }}</span>
               <span>{{compute_value_by_cur_odd_type(o.ov,o._hpid,'',MatchDetailCalss.params.sportId)}}</span>
               <olStatus :item_ol_data="o" />
             </template>
             <template v-else>
               <ResultOlItem v-if="o.result != (void 0)" :value="o" :hpt="5"></ResultOlItem>
-              <span v-else><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+              <span v-else><lockImg :ol_item="o" /></span>
             </template>
           </div>
         </template>
@@ -85,7 +85,7 @@
               />
             </template>
             <ResultOlItem :value="ol" :hpt="5"></ResultOlItem>
-            <span v-if="ol.os == 2 || ol._hs == 11"><img class="lock" :src="odd_lock_ouzhou" alt="lock"/></span>
+            <span v-if="ol.os == 2 || ol._hs == 11"><lockImg :ol_item="ol" /></span>
           </div>
         </div>
       </template>
@@ -95,6 +95,7 @@
 </template>
 
 <script setup>
+import lockImg from "../lock_img.vue";
 import { onMounted, ref, computed } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";

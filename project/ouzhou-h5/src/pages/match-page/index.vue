@@ -65,7 +65,7 @@ onMounted(() => {
       console.log('MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE')
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
-        initMatchPage()
+      onTabChange()
     }).off
   }
 })
@@ -82,8 +82,8 @@ const onTabChange = e => {
       break
     case 'League':
       MenuData.set_current_lv1_menu(2);
-      const time = store.curSelectedOption ? store.curSelectedOption : 12
-      onChangeDate(time.timestamp) // 默认展示12个小时的数据
+      const time = store.curSelectedOption ? store.curSelectedOption.timestamp : 12
+      onChangeDate(time) // 默认展示12个小时的数据
       break
     case 'Outrights':
       MenuData.set_current_lv1_menu(400);
@@ -118,6 +118,10 @@ const onChangeDate = e => {
 }
 
 const onChangeArea = (obj) => {
+  if (obj.id === '-1000') {
+    store.leaguesMatchs = []
+    return
+  }
   const arr = obj.tournamentList
   if (arr === null) {
     store.leaguesMatchs = []

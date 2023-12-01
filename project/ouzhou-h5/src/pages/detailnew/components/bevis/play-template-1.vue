@@ -23,7 +23,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import ResultOlItem from "../../result/ResultOlItem.vue";
-
+import lockImg from "../lock_img.vue";
 const props = defineProps({
     item_data: {
         type: Object,
@@ -77,15 +77,13 @@ const AssembleData = computed(() => {
                     class="list-item onePxBorder"
                     @click="go_betting(_item)"
                 >
-                    <template v-if="_item.os == 1">
+                    <template v-if="_item.os == 1 && _item._hs != 1 ">
                         <span class="ov-text">
                             {{ compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) }}
                         </span>
                         <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                     </template>
-                    <template v-if="_item?.os == 2">
-                        <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
-                    </template>
+                    <lockImg :ol_item="_item" />
                     <ResultOlItem :value="_item" :hpt="1"></ResultOlItem>    
                 </li>
             </template>
@@ -106,7 +104,7 @@ const AssembleData = computed(() => {
                     </span>
                     <olStatus :item_ol_data="_item" :active="BetData.bet_oid_list.includes(_item?.oid )"/>
                 </template>
-                <template v-if="_item?.os == 2 || compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) == 0">
+                <template v-if="_item?.os == 2 || compute_value_by_cur_odd_type(_item.ov, _item._hpid, '', MatchDetailCalss.params.sportId) == 0 || _item?._hs == 1 ">
                     <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                 </template>
                 <ResultOlItem :value="_item" :hpt="1"></ResultOlItem>
