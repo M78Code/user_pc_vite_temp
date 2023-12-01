@@ -73,6 +73,7 @@
 
 
         "divider--15--1": "echo  -------------------------SDK 验证 项目  开始----------------------------- ",
+        "dev-check-sdk-esm": "vite    --config  ./entries/check-sdk-esm/check-sdk-esm.vite.config.js",
         "dev-check-sdk-umd": "vite    --config  ./entries/check-sdk-umd/check-sdk-umd.vite.config.js",
         "dev-check-sdk-umd-html": "vite    --config  ./entries/check-sdk-umd-html/check-sdk-umd-html.vite.config.js",
         "divider--15--2": "echo  -------------------------SDK 验证 项目  结束----------------------------- ",
