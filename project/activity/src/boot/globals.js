@@ -5,21 +5,21 @@
  */
 import lodash from "lodash";
 
-import utils from "project/activity/src/public/utils/utils.js";
-import tooltip from "project/activity/src/public/utils/tooltip.js"
-import matchlist from "project/activity/src/public/utils/matchlist/matchlist.js"
+import utils from "project/activity/src/utils/utils.js";
+import tooltip from "project/activity/src/utils/tooltip.js"
+// import matchlist from "project/activity/src/public/utils/matchlist/matchlist.js"
 
-import Icon from "project/activity/src/public/components/icon/icon.vue"
-import load_data from "project/activity/src/public/components/load_data/load_data.vue";
-import * as emit_cmd from "project/activity/src/public/utils/http/emit_cmd.js";
+// import Icon from "project/activity/src/public/components/icon/icon.vue"
+// import load_data from "project/activity/src/public/components/load_data/load_data.vue";
+import * as emit_cmd from "project/activity/src/utils/http/emit_cmd.js";
 import * as error_mapping from "project/activity/src/config/error_code_mapping.js";
-import * as yabo_common from "project/activity/src/public/mixins/common/common.js";
-import * as virtual_common from "project/activity/src/public/mixins/common/virtual_common.js";
+import * as yabo_common from "project/activity/src/mixins/common/common.js";
+// import * as virtual_common from "project/activity/src/public/mixins/common/virtual_common.js";
 // 该文件再 bet_item_mixin.js, bet_item_mixin.js 中使用由于最小投注单元会导致引入次数过多,因此暂时提出为公共的
 // 导入自定义高精度计算工具js
-import math from "project/activity/src/boot/mathjs"
+import math from "project/activity/src/boot/mathjs.js"
 // import userCtr from 'project/activity/src/public/utils/user/userCtr.js';
-import {get_file_path} from "project/activity/src/public/utils/get_file_path.js"
+import {get_file_path} from "project/activity/src/utils/get_file_path.js"
 // 加载公共样式
 import 'project/activity/src/css/common.scss';
 
@@ -117,7 +117,7 @@ export default async (app) => {//app, router, store,
   window._ = lodash;
 
   window.$utils = utils
-  window.$matchlist = matchlist
+  // window.$matchlist = matchlist
   // 高精度运算工具对象(例子:this.$mathjs.multiply(1.13,100000))
   window.$mathjs = math;
   // 用户相关的 全局 单实例 类
@@ -239,7 +239,7 @@ export default async (app) => {//app, router, store,
   /** 组件  **************************/
 
   // 可变色和大小的 icon
-  app.component("icon", Icon);
+  // app.component("icon", Icon);
 //   app.component("load-data", load_data);
 
   /** JS  **************************/

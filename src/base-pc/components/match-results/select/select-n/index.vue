@@ -5,7 +5,8 @@
  * @Author: Echo
 -->
 <template>
-  <div>
+<div>
+  <div v-if="!showInput">
       <q-tabs class="select_n_tabs" inline-label
         outside-arrows
         mobile-arrows
@@ -20,15 +21,16 @@
         </q-tab>
       </q-tabs>
   </div>
-  <!-- <div
+  <div
     class="e-select relative-position"
     :class="optionsIsShow ? 'up' : 'down'"
     @click.stop
+    v-else
   >
     <input
-      v-if="showInput"
       type="text"
       v-model="sport"
+      v-if="showInput"
       class="select-value select-input handel-select ellipsis"
       @focus="showOption"
     />
@@ -41,34 +43,43 @@
         class="rule-scroll-area"
         :style="{ height: '100%' }"
       >
-        <template v-for="(item, index) in options">
+        <div v-for="(item, index) in options" :key="index">
+        <!-- v-tooltip="{ content: item, overflow: 1, m_width: 15 }" -->
           <p
             v-if="item !== ''"
             class="item ellipsis"
-            v-tooltip="{ content: item, overflow: 1, m_width: 15 }"
             :class="{ active: value == item }"
             :key="index"
             @click.stop="selectSport(item)"
           >
             {{ item }}
           </p>
-        </template>
+        </div>
       </q-scroll-area>
     </div>
-  </div> -->
+  </div>
+  </div>
 </template>
 <script setup>
 // import { mapGetters } from "vuex";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import { onMounted, onUnmounted, ref,watch,computed } from "vue";
+import { GlobalSwitchClass} from "src/core/index";
 const props = defineProps({
   // 当前选中的球种
   sportType: {
     type: String,
     default: '1'
   },
+  value: {
+    type: String,
+    default: ''
+  },
   // 球种名字列表
-  options: Array,
+  options: {
+    type: Array,
+    default: () => [],
+  },
   // 是否展示输入框
   showInput: {
     type: Boolean,
@@ -80,14 +91,14 @@ const props = defineProps({
   },
 });
 // console.log(props.options,'sportType');
-// const optionsIsShow = ref(false);
+const optionsIsShow = ref(false);
 const sport = ref(props.sportType);
 //激活数据
 const active_sport = ref(0);
-// const { off } = useMittOn(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, (e)=>{
-//   showOption(e)
-// });
-// onUnmounted(off);
+const { off } = useMittOn(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, (e)=>{
+  showOption(e)
+});
+onUnmounted(off);
 watch(props.sportType,(val)=>{
   // console.log(val,'val');
 }
@@ -98,25 +109,29 @@ const option = computed(() => {
 })
 
 // 全局点击事件
-// get_global_click(){
-//   this.optionsIsShow = false
-// }
-
+  watch(
+    () => GlobalSwitchClass.global_switch_version.version,
+    (new_) => {
+     optionsIsShow.value = false;
+    },
+    {deep:true, immediate: true }
+  );
 /**
  * 展示或隐藏下拉框
  */
-// const showOption = (type) => {
-//   if (type == "close") {
-//     if (optionsIsShow.value == true) {
-//       optionsIsShow.value = false;
-//       return;
-//     }
-    
-//   } else {
-//     optionsIsShow.value = !optionsIsShow.value;
-    //     useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
-//   }
-// };
+const showOption = (type) => {
+  console.error('typetypetypetypetype',type)
+  if (type == "close") {
+    if (optionsIsShow.value == true) {
+      optionsIsShow.value = false;
+      return;
+    }
+  } else {
+    optionsIsShow.value = !optionsIsShow.value;
+    console.error('props.options9999999',props.options)
+    useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
+  }
+};
 /**
  * @description 下拉框选择球种
  * @param String item 球种名称
@@ -125,7 +140,7 @@ const selectSport = (item,index) => {
   sport.value = item;
   active_sport.value = index;
   // console.error('sportsport',sport)
-  // showOption();
+  showOption();
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
   useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);
 };

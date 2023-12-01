@@ -65,7 +65,7 @@
 
 
 import axios from "axios";
-import userCtr from 'src/public/utils/user/userCtr.js';
+import userCtr from 'project/activity/src/utils/user/userCtr.js';
 
 const axios_instance = axios.create()
 const   DOMAIN_API = "domain_api01"
