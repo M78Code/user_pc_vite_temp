@@ -4,7 +4,7 @@
  * @Description: 公共方法
  * @Author: Echo
  */
-import time_format_mixin from "project/activity/src/public/mixins/common/time_format";
+import time_format_mixin from "project/activity/src/mixins/common/time_format.js";
 export default {
   data() {
     return {

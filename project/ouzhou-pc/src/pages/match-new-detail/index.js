@@ -141,10 +141,11 @@ export function usedetailData(route) {
   /**
    * 获取数据
    */
+  const is_fresh = ref(false)
   const init = async (params) => {
     const { isNeedLoading = true } = params || {};
-
     // all_list_toggle = {}
+    is_fresh.value = isNeedLoading
     detail_loading.value = isNeedLoading;
     get_detail(params);
     await get_category();
@@ -177,10 +178,13 @@ export function usedetailData(route) {
       LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
       //存取赛事详情基础信息
       // console.log(detail_info.value,'detail_info.value')
+
       MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
 
-      // detail_info.value = getMidInfo(mid);
-      useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
+      // 刷新按钮不刷新右侧视频动画
+      if (is_fresh.value) {
+        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
+      }
     } catch (error) {
       console.error("get_detail_data", error);
     }
@@ -466,7 +470,7 @@ export function usedetailData(route) {
     init();
   };
   /* 赛事结束之后调取详情接口 */
-  const { off:off_init } = useMittOn(
+  message_fun.push(useMittOn(
     MITT_TYPES.EMIT_SWITCH_MATCH,
     ((parmas)=>{
       console.log(parmas,'parmas');
@@ -474,13 +478,13 @@ export function usedetailData(route) {
       refresh()
       console.error('-----------aaaaa');
     })
-  );
+  ).off)
   onUnmounted(() => {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
     message_fun.forEach(i=>i())
-    off_init()
+    // off_init()
     clearTimeout(back_to_timer);
   });
 
@@ -537,7 +541,7 @@ export function usedetailData(route) {
     (_new, _old) => {
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {
-        // mx_autoset_active_match({ mid: route.params.mid });
+        mx_autoset_active_match({ mid: route.params.mid });
       }
       // 否则更新玩法集
       else {

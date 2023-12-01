@@ -28,7 +28,7 @@
 					<div>{{ i18n_t('ouzhou.search.search_history') }}</div>
 				</div>
 				<li v-for="(item, index) in history_data" :key="item.cuid">
-					<span style="display: inline-block; width: 90%;" @click="get_search_data(0, 1, item.keyword)">{{
+					<span style="display: inline-block; width: 90%;" @click="get_search_data(store.tabIndex, sport_kind_data[store.tabIndex]?.id, item.keyword)">{{
 						item.keyword }}</span><img :src="compute_local_project_file_path('/image/svg/close10.svg')" alt=""
 						@click="_delete_history_search(item.keyword)">
 				</li>
@@ -36,17 +36,17 @@
 			</ul>
 
 			<!-- 热门搜索 -->
-			<div class='searchHot' :class="[(history_data.length > 0) ? '' : 'mt50']" v-show="show_hot &&
+			<div class='searchHot' v-show="show_hot &&
 				(hot_list && hot_list.length > 0) &&
 				!(search_data.teamH5 && search_data.teamH5.length > 0) &&
 				!(search_data.league && search_data.league.length > 0) &&
 				!input_value">
 				<div>
-					<div class="text-bol">{{ i18n_t('ouzhou.search.search_hot') }}</div>
+					<div class="text-bol" :class="[(history_data.length > 0) ? '' : 'mt0']">{{ i18n_t('ouzhou.search.search_hot') }}</div>
 					<!-- 热门内容 -->
 					<ul>
 						<li class="hotItem" v-for="(item, index) in hot_list" :key="index"
-							@click="get_search_data(0, 1, item.keyWord)">
+							@click="get_search_data(store.tabIndex, sport_kind_data[store.tabIndex]?.id, item.keyWord)">
 							{{ index + 1 }}.{{ item.keyWord }}
 						</li>
 					</ul>
@@ -100,7 +100,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -118,7 +118,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -157,7 +157,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : i?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
+												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
 												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
@@ -175,7 +175,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<!-- i?.hps?.[0].hl?.[0].ol?.[1]?.on -->
 												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
@@ -213,7 +213,7 @@
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[0].on  }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[0].on  }}</div>
 												<!-- }}i18n_t('bet.home_win') -->
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
@@ -232,7 +232,7 @@
 											</template>
 											<div class="flex_1"
 												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? '主胜' : '客胜' : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
 												<!-- i18n_t('bet.away_win')  -->
 												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
@@ -356,7 +356,7 @@ const red_color = (item) => {
  * keyword搜索的关键字
  */
 const search_data = ref([]);
-let sport_kind_id = null;
+const sport_kind_id = ref(1);
 const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	expand_bowling.value = true;
 	expand_league.value = true;
@@ -365,7 +365,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	show_hot.value = false;
 	store.tabIndex = index
 	// tabIndex.value = index;
-	sport_kind_id = sport_id;
+	sport_kind_id.value = sport_id;
 	// tab 默认居中及移动动画
 	utils.tab_move2(index, tab_growp.value);
 	if (keyword) {
@@ -384,7 +384,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 		searchSportType: sport_id || 1,
 		isPc: false
 	}
-	if (is_results) params.from = 2
+	if (!is_results) params.from = 2
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
@@ -392,7 +392,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			get_insert_history({ keyword })
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_txt');
-			if (is_results) {
+			if (!is_results) {
 				render_match_results_list(res)
 				return
 			}
@@ -667,14 +667,14 @@ onUnmounted(() => {
 .middle_info_tab {
 	padding: 9px 18px;
 	display: flex;
-	border-bottom: 1px solid var(--q-gb-bg-c-1);
+	// border-bottom: 1px solid var(--q-gb-bg-c-1);
 	background-color: var(--q-gb-bg-c-2);
 	font-size: 14px;
 	font-weight: 500;
 	overflow-x: scroll;
-	position: fixed;
+	// position: fixed;
 	width: 100%;
-	z-index: 1;
+	// z-index: 1;
 	color: var(--q-gb-t-c-4);
 
 	&.top_tab {
@@ -726,7 +726,7 @@ onUnmounted(() => {
 	&.diff {
 		padding: 11px 0 11px 20px;
 		position: unset;
-		margin-top: 8px;
+		// margin-top: 8px;
 	}
 
 	.color {
@@ -797,7 +797,7 @@ li {
 }
 
 .list1 {
-	margin-top: 50px;
+	// margin-top: 50px;
 
 	li {
 		margin-bottom: 0;
@@ -823,7 +823,7 @@ li {
 }
 
 .match-results-list {
-	padding-top: .5rem;
+	// padding-top: .5rem;
 	height: 100%;
 	.match-list-container {
 		z-index: 0;
@@ -835,15 +835,15 @@ li {
 
 .list {
 	overflow-y: scroll;
-	padding-top: 40px;
+	// padding-top: 40px;
 
 	.title {
-		height: 36px;
-		line-height: 36px;
+		height: 26px;
+		line-height: 16px;
 		padding-left: 20px;
 		font-weight: 500;
 		font-size: 14px;
-		margin-bottom: -8px;
+		// margin-bottom: -8px;
 		color: #A1A3A5;
 		text-align: center;
 
@@ -883,7 +883,7 @@ li {
 
 
 	.text-bol {
-		margin-top: .1rem;
+		margin-top: 0.09rem;
 		font-size: 0.14rem;
 		height: 0.44rem;
 		line-height: 0.44rem;
@@ -935,8 +935,8 @@ li {
 	text-align: center;
 }
 
-.mt50 {
-	margin-top: 50px;
+.mt0{
+	margin-top: 0 !important;
 }
 </style>
   

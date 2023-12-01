@@ -298,14 +298,14 @@
   </div>
 </template>
 <script>
-import {api_activity} from "project/activity/src/public/api/index.js";
+import {api_activity} from "project/activity/src/api/index.js";
 import common from "project/activity/src/pages/yazhou-pc/common";
 import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
-import format_date_base from "project/activity/src/public/mixins/common/time_format";
+import format_date_base from "project/activity/src/mixins/common/time_format.js";
 import NumberScroll from "project/activity/src/pages/yazhou-pc/slot_machine/number_scroll.vue"
 import compose from "project/activity/src/pages/yazhou-pc/slot_machine/compose.vue"
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
-import utils from 'project/activity/src/public/utils/utils';
+import utils from 'project/activity/src/utils/utils.js';
 import _ from 'lodash';
 
 export default {

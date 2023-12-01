@@ -5,7 +5,7 @@
 
   if(!window.env)
   {
-    // console.error("window.env--------1"   );
+    console.error("window.env--------1"   );
     window.env = {
       config : JSON.parse(process.env.config),
       NODE_ENV: process.env.NODE_ENV,DEV:process.env.DEV,
