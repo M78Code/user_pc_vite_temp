@@ -69,8 +69,8 @@
 					</div>
 				</div>
 				<template v-if="is_results">
-					<div class="match-results-list">
-						<match-container />
+					<div class="match-results-list" >
+						<match-container/>
 					</div>
 				</template>
 				<template v-else>
@@ -274,6 +274,7 @@ import { onMounted, ref, watch, onUnmounted, reactive } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
 import { format_date_overseas } from "src/core/format/module/format-date.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_delete_history_search, get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
@@ -384,7 +385,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 		searchSportType: sport_id || 1,
 		isPc: false
 	}
-	if (!is_results) params.from = 2
+	if (is_results.value) params.from = 2
 	get_search_result(params).then(res => {
 		if (res.code === '200') {
 			search_data.value = res.data.data;
@@ -392,7 +393,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			get_insert_history({ keyword })
 			// 搜索前清空会话仓库数据
 			// sessionStorage.removeItem('search_params');
-			if (!is_results) {
+			if (is_results.value) {
 				render_match_results_list(res)
 				return
 			}
@@ -409,7 +410,6 @@ const render_match_results_list = (res) => {
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res.data.data, 'teamH5', [])
     const length = lodash.get(list, 'length', 0)
-	console.log('render_match_results_list', list)
     if (length < 1) return MatchMeta.set_page_match_empty_status({ state: true });
     MatchMeta.handler_match_list_data({ list: list, type: 1 })
 }
@@ -429,6 +429,13 @@ const get_sport_kind = () => {
 function league_icon_error($event) {
 	$event.target.src = compute_img_url('match-cup')
 	$event.target.onerror = null
+}
+
+function resultsJumpDetailHandle(item) {
+	sessionStorage.setItem('search_params', JSON.stringify({
+		keyword: input_value.value,
+		csid: item.csid
+	}));
 }
 
 // 滚球跳转
@@ -578,12 +585,20 @@ onMounted(() => {
 		input_value.value = search_params.keyword
 		get_search_data(store.tabIndex, search_params.csid, search_params.keyword)
 	}
+	if (is_results.value) {
+		VirtualList.set_is_show_ball(false)
+		useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, resultsJumpDetailHandle)
+	}
 })
 
 onUnmounted(() => {
 	clearTimeout(go_detail_or_result_timer)
 	go_detail_or_result_timer = null
 	input_value.value = ''
+	if (is_results.value) {
+		VirtualList.set_is_show_ball(true)
+		useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, resultsJumpDetailHandle).off
+	}
 })
 </script>
 <style lang="scss" scoped>
