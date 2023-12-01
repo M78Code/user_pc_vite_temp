@@ -24,7 +24,7 @@
     </div>
 </template>
 <script setup>
-import { ref } from "vue"
+import { ref , watch } from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData  } from "src/core/";
@@ -86,6 +86,9 @@ defineExpose({
     reset
 })
 
+watch(()=>props.current_mi,()=>{
+    playValue.value = props.current_mi;
+})
 </script>
   
 <style scoped lang="scss">

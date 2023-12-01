@@ -15,7 +15,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import { match_list_handle_set } from '../match-handle-data'
-const { page_source } = PageSourceData;
+import {set_load_data_state} from '../match-list-composition'
 
 
 /**
@@ -291,6 +291,9 @@ const api_bymids = (
           by_mids_fun();
           league_load_status = "empty";
         } else if (code == "0401038") {
+          if(is_league_first&& by_mids_fun_count++ < 3){
+            by_mids_fun();
+          }
           // 限流
           league_load_status = "api_limited";
         } else {
@@ -302,7 +305,7 @@ const api_bymids = (
         }
         // 如果是第一次加载设置数据加载状态
         if (is_league_first) {
-          // load_data_state.value = "data";
+          set_load_data_state('data')
         }
         // 回调函数
         if (callback) {
@@ -313,7 +316,7 @@ const api_bymids = (
         set_home_loading_time_record("err");
         // 如果是第一次加载设置数据加载状态
         if (is_league_first) {
-          // load_data_state.value = "data";
+          set_load_data_state('data')
         }
         // 展开联赛数据加载状态
         let league_load_status = "";

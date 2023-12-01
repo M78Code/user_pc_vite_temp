@@ -32,7 +32,7 @@ const state = reactive({
   current_mi:'',//默认赛种
   slideMenu_sport: [], // 赛种
 })
-const tabValue = ref(MenuData.collect_menu);
+const tabValue = ref(MenuData.collect_menu || 1);
 const scrollListRef = ref(null)
 const tabData = reactive([
   {
@@ -56,11 +56,11 @@ const tabData = reactive([
  * @param {*} val 
  */
 const on_update = (val,type) => {
-  MenuData.set_collect_menu(val);
   state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
   MenuData.set_current_lv1_menu(val)
-  const index = state.slideMenu_sport?.findIndex(n=>{return n.mi == MenuData.menu_mi.value});
+  const index = MenuData.collect_menu?state.slideMenu_sport?.findIndex(n=>{return n.mi == MenuData.menu_mi.value}):0;
   changeMenu(state.slideMenu_sport?.[index !== -1 && type?index:0])
+  MenuData.set_collect_menu(val);
   if(scrollListRef.value) scrollListRef.value.reset(state.slideMenu_sport?.[0].mi)
 }
 /**
@@ -74,7 +74,7 @@ const changeMenu = (item) =>{
 }
 onMounted(()=>{
   MenuData.set_collect_id(50000);
-  const index = tabData.findIndex(n=>{return n.val == MenuData.collect_menu});
+  const index = tabData.findIndex(n=>{return n.val == tabValue.value});
   on_update(tabData[index].val,1)
 })
 onUnmounted(() => {

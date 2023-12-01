@@ -4,7 +4,6 @@
  * @Description: 公共方法对象定义
  */
 import { uid } from "quasar";
-// import globalStore from 'project/activity/src/public/store/module/global/global';
 import userStore from 'project/activity/src/store/module/user/index.js';
 // import { api_details, api_account } from "project/activity/src/api/index.js"
 
