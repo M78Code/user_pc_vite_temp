@@ -69,7 +69,7 @@ class MenuData {
     //home tab
     this.home_menu = 'featured';
     //收藏tab
-    this.collect_menu = 1;
+    this.collect_menu = '';
 
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
@@ -219,7 +219,7 @@ class MenuData {
    * 收藏页面tab
    */
   set_collect_menu(val){
-    this.collect_menu = val || '1';
+    this.collect_menu = val || '';
     this.update();
   }
   /**
@@ -290,7 +290,7 @@ class MenuData {
     this.menu_mi.value = "";
     this.collect_id = "";
     this.home_menu = 'featured';
-    this.collect_menu = 1;
+    this.collect_menu = '';
   }
   /**
    * 设置时间 并且设置时间请求参数
@@ -330,7 +330,8 @@ class MenuData {
         }
       })
     })
-    this.menu_lv_mi_lsit = menu_lv_mi_lsit
+    this.menu_lv_mi_lsit = menu_lv_mi_lsit;
+    this.update();
     return menu_lv_mi_lsit
   }
   /**
