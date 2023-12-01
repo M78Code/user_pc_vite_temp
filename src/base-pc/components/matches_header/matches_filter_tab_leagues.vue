@@ -65,12 +65,15 @@ watch(() => props.date, async () => {
     select_id.value = list[0].id
     choose_filter_tab(list[0])
   }
-}, { immediate: true })
-
-onMounted(() => {
   if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
     show_right_btn.value = true;
   }
+}, { immediate: true })
+
+onMounted(() => {
+  // if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
+  //   show_right_btn.value = true;
+  // }
 })
 /**
  * 
