@@ -250,7 +250,7 @@ export default async (app) => {//app, router, store,
   window.error_mapping = error_mapping;
   // 公共方法映射
   window.yabo_common = yabo_common;
-  window.virtual_common = virtual_common;
+  // window.virtual_common = virtual_common;
 
 
 

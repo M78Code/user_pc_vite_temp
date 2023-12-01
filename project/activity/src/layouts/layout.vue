@@ -16,7 +16,6 @@
   import userStore from "project/activity/src/store/module/user/index.js";
   import langStore from "project/activity/src/store/module/languages/languages.js";
   import themeStore from "project/activity/src/store/module/theme/theme.js";
-  // import globalStore from "project/activity/src/public/store/module/global/global.js";
   import _ from 'lodash';
   import utils from 'project/activity/src/utils/utils.js';
   import userCtr from 'project/activity/src/utils/user/userCtr.js';
