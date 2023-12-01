@@ -28,7 +28,7 @@
 					<div>{{ i18n_t('ouzhou.search.search_history') }}</div>
 				</div>
 				<li v-for="(item, index) in history_data" :key="item.cuid">
-					<span style="display: inline-block; width: 90%;" @click="get_search_data(0, 1, item.keyword)">{{
+					<span style="display: inline-block; width: 90%;" @click="get_search_data(store.tabIndex, sport_kind_data[store.tabIndex]?.id, item.keyword)">{{
 						item.keyword }}</span><img :src="compute_local_project_file_path('/image/svg/close10.svg')" alt=""
 						@click="_delete_history_search(item.keyword)">
 				</li>
@@ -46,7 +46,7 @@
 					<!-- 热门内容 -->
 					<ul>
 						<li class="hotItem" v-for="(item, index) in hot_list" :key="index"
-							@click="get_search_data(0, 1, item.keyWord)">
+							@click="get_search_data(store.tabIndex, sport_kind_data[store.tabIndex]?.id, item.keyWord)">
 							{{ index + 1 }}.{{ item.keyWord }}
 						</li>
 					</ul>
@@ -356,7 +356,7 @@ const red_color = (item) => {
  * keyword搜索的关键字
  */
 const search_data = ref([]);
-let sport_kind_id = null;
+const sport_kind_id = ref(1);
 const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	expand_bowling.value = true;
 	expand_league.value = true;
@@ -365,7 +365,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	show_hot.value = false;
 	store.tabIndex = index
 	// tabIndex.value = index;
-	sport_kind_id = sport_id;
+	sport_kind_id.value = sport_id;
 	// tab 默认居中及移动动画
 	utils.tab_move2(index, tab_growp.value);
 	if (keyword) {
