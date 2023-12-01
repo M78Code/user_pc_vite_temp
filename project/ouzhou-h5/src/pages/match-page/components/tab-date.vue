@@ -175,7 +175,7 @@ const setDefaultData = (val) => {
 }
 
 watch(() => store.areaList, () => {
-    console.log(store.areaList.lenght)
+    // console.log(store.areaList.lenght)
     // if (store.areaList.lenght) {
     //     const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
     //     const offset = index < 0 ? 0 : index
