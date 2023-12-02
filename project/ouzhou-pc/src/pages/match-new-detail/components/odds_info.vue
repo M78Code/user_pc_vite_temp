@@ -443,7 +443,7 @@ onMounted(() => {});
     &:nth-child(1) {
       width: 50%;
       display: block;
-      text-align: right;
+      text-align: center;
       margin-right: 10px;
       overflow: hidden;
       color: var(--q-gb-t-c-5);
