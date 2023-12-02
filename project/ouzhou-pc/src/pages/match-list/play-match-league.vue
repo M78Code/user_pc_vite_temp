@@ -38,7 +38,7 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import { useRouter } from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
 
 import { GlobalAccessConfig, LayOutMain_pc, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 
@@ -47,6 +47,8 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 
 
   const router = useRouter();
+  const route = useRoute();
+
   const props = defineProps({
     league_obj: {
       type: [Object],
@@ -58,6 +60,11 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
   function jump_to_league_list() {
     const { id, sportId, nameText } = props.league_obj
     router.push(`/league/${sportId}/${id}/1`)
+    let obj = {
+      pre_route : route.name
+    }
+    
+    MenuData.set_router_info(obj)
   }
 </script>
 
