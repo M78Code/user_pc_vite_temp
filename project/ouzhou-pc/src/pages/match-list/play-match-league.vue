@@ -72,7 +72,6 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
   }
 
   const handle_error = ()=>{
-    console.log('666', leagueIcon.value);
   }
 </script>
 

@@ -60,7 +60,6 @@ const is_fold = ref(false);
 
 // 筛选点击
 const tab_click = (item) => {
-  console.log(item);
   active_value.value = item.value;
   emits("update:modelValue", item.value);
 };
