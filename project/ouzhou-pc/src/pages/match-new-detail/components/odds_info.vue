@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <div class="match-detail-odds">
+  <div class="match-detail-odds" ref="scrollRef">
     <div v-for="item in matchDetail" :key="item.topKey" class="odds-wrap">
       <q-expansion-item
         v-model="item.expanded"
@@ -167,6 +167,12 @@
     <!-- <div class="detail-loading" v-if="loading">
       <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
     </div> -->
+    <div class="back-top">
+      <div class="btn-back" @click="backTop">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/t-arrow.svg`">
+        <span class="txt">返回顶部</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -207,11 +213,18 @@ const set_top__active_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top_
 //     <!-- hs: 0开 1封 2关 11锁 -->
 //     <!-- os: 1开 2封 3隐藏不显示不占地方-->
 const mouse_in = ref(false);
+const scrollRef = ref(null);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
 let all_hl_item = inject("all_hl_item");
 
 const odds_lift_obj = ref({});
+const backTop = () => {
+  scrollRef.value.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
 
 const columnTotal = (item) => {
   let total;
@@ -309,6 +322,33 @@ onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
+.back-top{
+  padding-top: 19px;
+  padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .btn-back{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 108px;
+    height: 36px;
+    padding: 10px 0;
+    border-radius: 100px;
+    cursor: pointer;
+    background: #FFF;
+    img{
+      margin-right: 4px;
+    }
+    .txt{
+      color: #8A8986;
+      text-align: right;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+}
 .match-detail-odds {
   height: calc(100vh - 248px);
   overflow-y: auto;
@@ -457,8 +497,9 @@ onMounted(() => {});
 .odds-item {
   width: 100%;
   line-height: 35px;
-  font-weight: 500;
   position: relative;
+  font-weight: 500;
+  font-size: 15px;
 }
 .expand-icon {
   height: 9px;

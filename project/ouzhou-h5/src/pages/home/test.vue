@@ -65,7 +65,7 @@ onMounted(() => {
   const start = Date.now()
   requestAnimationFrame(() => {
     // 当前渲染帧 有剩余 则 渲染
-    if (Date.now() - start < 32) {
+    if (Date.now() - start < 16.6) {
       Object.assign(show_match_info.value, {
         [key]: falg
       })
