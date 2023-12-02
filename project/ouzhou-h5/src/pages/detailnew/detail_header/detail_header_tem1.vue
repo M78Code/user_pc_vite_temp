@@ -5,7 +5,7 @@
         v-show="get_match_detail?.csid"
         :class="['sport_bg', `${get_sports_bg(get_match_detail?.csid)}`]"
       ></div>
-     <right-actions class="actions" :is-show="actionsStatus" :is-collect="is_collect" @handle-type="handle_type"/>
+     
       <div class="match-detail-time">
           <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
             <match-stage :detail_data="get_match_detail" ></match-stage>
@@ -82,6 +82,8 @@
         </div>
       </template>
     </div>
+
+
   </div>
 </template>
 
@@ -92,7 +94,6 @@ import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
 import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zone  } from "src/core";
-import RightActions from "./components/right_actions.vue";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -159,26 +160,6 @@ const show_time_counting = computed(() => {
     return ![0,30,31,32,33,34,50,61,80,90,100,110,120,301,302,303,445].includes(mmp);
   }
 })
-
-/**
- * 点击右侧的actions
- * @param {'animation' | 'score' | 'collect'} label 
- */
-const handle_type = (label) => {
-  switch (label) {
-    // 点击动画
-    case 'animation':
-      break;
-    // 点击比分
-    case 'score':
-      break;
-    // 点击收藏
-    case 'collect':
-      break;
-    default:
-      break;
-  }
-}
 
 // 意义不明的两行代码
 const current_ball_type = ref(0);
