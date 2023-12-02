@@ -602,7 +602,7 @@ const hand_copy = (data) => {
 
   &:deep(.q-table) {
     // min-height: 650px !important;
-    padding-bottom: 41px;
+    padding-bottom: 51px;
   }
 
   &:deep(.q-table__card) {
