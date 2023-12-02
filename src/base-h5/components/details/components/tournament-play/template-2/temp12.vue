@@ -30,7 +30,7 @@
                        :key="ol_index"
                        class="on-name-osn"
                        @click="go_to_bet(ol_item)"
-                       :class="[get_bet_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
+                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
@@ -154,7 +154,7 @@
                        :key="ol_index"
                        class="on-name-osn"
                        @click="go_to_bet(ol_item)"
-                       :class="[get_bet_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
+                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
@@ -290,10 +290,7 @@ export default defineComponent({
     });
     // #TODO vuex
     // computed: {
-    // ...mapGetters(["get_bet_list","get_detail_data"]),
-    const get_bet_list = computed(() => {
-      return []
-    });
+    // ...mapGetters(["BetData.bet_oid_list","get_detail_data"]),
     const route = useRoute()
     const get_detail_data = computed(() => {
       return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
@@ -328,7 +325,7 @@ export default defineComponent({
     };
     return {
       ...toRefs(data),
-      get_bet_list,
+      BetData,
       get_detail_data,
       home_name,
       away_name,

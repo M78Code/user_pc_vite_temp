@@ -30,12 +30,12 @@
                                 class="play-box-style details_color warp"
                                 @click="utils.go_to_bet(ol_list_0[ol_index0 - 1])"
                                 :class="{
-                                  'details-bg5 first-rad': get_bet_list.includes(ol_list_0[ol_index0 - 1].id_),
+                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
                                   'win': utils.calc_win(ol_list_0[ol_index0 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }">
-                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':get_bet_list.includes(ol_list_0[ol_index0 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)}]">
                                 {{ol_list_0[ol_index0 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -113,13 +113,13 @@
                                 class="play-box-style details_color warp"
                                 @click="utils.go_to_bet(ol_list_1[ol_index1 - 1])"
                                 :class="{
-                                  'details-bg5 first-rad': get_bet_list.includes(ol_list_1[ol_index1 - 1].id_),
+                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
                                   'win': utils.calc_win(ol_list_1[ol_index1 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
-                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':get_bet_list.includes(ol_list_1[ol_index1 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)}]">
                                 {{ol_list_1[ol_index1 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -195,13 +195,13 @@
                                 class="play-box-style details_color"
                                 @click="utils.go_to_bet(ol_list_2[ol_index2 - 1])"
                                 :class="{
-                                  'details-bg5 first-rad': get_bet_list.includes(ol_list_2[ol_index2 - 1].id_),
+                                  'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
                                   'win': utils.calc_win(ol_list_2[ol_index2 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
-                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':get_bet_list.includes(ol_list_2[ol_index2 - 1].id_)}]">
+                              <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].id_)}]">
                                 {{ol_list_2[ol_index2 - 1].on}}
                               </div>
                               <div class="odds-wrap" :class="{'text-right': !['344'].includes(item_data.hpid)}">
@@ -275,9 +275,9 @@
                     <div
                         class="play-box-style details_color"
                         @click="utils.go_to_bet(ol_item)"
-                        :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
+                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
                       <div class="ellipsis details_t_color6 fz_13" :class="{'text-right': !['344'].includes(item_data.hpid)}">
-                        <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
+                        <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                           {{ol_item.on}}
                         </span>
                       </div>
@@ -356,11 +356,11 @@ import oddsNew from "src/base-h5/components/details/components/tournament-play/u
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance  } from 'src/core/index.js';
 import lodash from "lodash";
-import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { useRoute } from "vue-router";
+import BetData from "src/core/bet/class/bet-data-class.js";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -377,14 +377,11 @@ export default defineComponent({
     const max_count_ol = ref([])
     // #TODO vuex
     // computed: {
-    //   ...mapGetters(["get_bet_list","get_cur_odd","get_flag_get_ol_list", "get_menu_type","get_detail_data"]),
+    //   ...mapGetters(["BetData.bet_oid_list","get_cur_odd","get_flag_get_ol_list", "get_menu_type","get_detail_data"]),
     //   change_ms(){
     //     return lodash.get(props.item_data,'hl[0].ol[0].os')
     //   }
     // },
-    const get_bet_list = computed(() => {
-      return []
-    });
     const get_cur_odd = computed(() => {
       return ""
     });
@@ -461,7 +458,7 @@ export default defineComponent({
       ol_list_0,
       ol_list_1,
       ol_list_2,
-      get_bet_list,
+      BetData,
       get_cur_odd,
       get_flag_get_ol_list,
       get_menu_type,
