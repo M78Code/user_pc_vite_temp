@@ -486,6 +486,13 @@ export function usedetailData(route) {
       console.error('-----------aaaaa');
     })
   ).off)
+  // 监听ws断连
+  message_fun.push(useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
+    // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
+    if(ws_status != 1){
+      MatchDataWarehouseInstance.scmd_c8_ws_reconnect()
+    }
+  }).off)
   onUnmounted(() => {
     off();
     clearInterval(timer);
@@ -493,6 +500,8 @@ export function usedetailData(route) {
     message_fun.forEach(i=>i())
     // off_init()
     clearTimeout(back_to_timer);
+     // 关闭详情订阅
+     MatchDataWarehouseInstance.set_active_mids([])
   });
 
   /**
