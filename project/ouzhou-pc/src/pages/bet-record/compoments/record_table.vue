@@ -44,15 +44,20 @@
             </q-td>
             <!-- 投注玩法 -->
             <q-td key="bettingType" :props="props">
-              <template v-for="(item, index) in props.row.orderVOS">
-                <div>{{ match_type[item.matchType] }}</div>
-                <span>
+              <!-- 串关 -->
+              <template v-if="props.row.seriesType != '1' || props.row.seriesType == '3'">{{props.row.seriesValue}}</template>
+              <!-- 单关 -->
+              <template v-else>
+                <template v-for="(item, index) in props.row.orderVOS">
+                  <div>{{ match_type[item.matchType] }}</div>
+                  <span>
                   {{ item.playName }}
                   <span
                     v-if="item.matchType != 1 && item.scoreBenchmark && item.playId != '334'"
                     :key="index"
                   >({{format_score(item.scoreBenchmark) }})</span>
                 </span>
+                </template>
               </template>
             </q-td>
             <!-- 投注选项 -->
