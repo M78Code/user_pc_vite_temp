@@ -20,18 +20,32 @@ const props = defineProps({
     isShow: {
         type: Boolean,
         default: false
+    },
+    // 右侧显示状态 0 -> 显示全部 1 -> 展示动画内 2 -> 展示比分 3 -> 只展示收藏
+    status: {
+        type: Number,
+        default: 0
     }
 });
 
 const emits = defineEmits(['handleType'])
+// 展示的项,根据不同的值显示不同的actions
+const mapObj = computed(() => {
+    return  {
+        0: [0,1,2],
+        1: [0,1,2],
+        2: [0,1,2],
+        3: [2]
+    }
+})
 
 const list = computed(() => {
-
-    return [
-        {label: 'animation', img: '/ouzhou-h5/image/detail/animation.png'},
-        {label: 'score', img: '/ouzhou-h5/image/detail/score.png'},
-        {label: 'collect', img: '/ouzhou-h5/image/detail/collect.png', active: '/ouzhou-h5/image/detail/collected.png'},
+    const res = [
+        {label: 'animation', img: '/ouzhou-h5/image/detail/animation.png', value: 0},
+        {label: 'score', img: '/ouzhou-h5/image/detail/score.png', value: 1},
+        {label: 'collect', img: '/ouzhou-h5/image/detail/collect.png', active: '/ouzhou-h5/image/detail/collected.png', value: 2},
     ];
+    return res.filter(e => mapObj.value[props.status].includes(e.value));
 })
 
 const handleClick = (item) => {

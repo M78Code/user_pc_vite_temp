@@ -105,6 +105,11 @@ const props = defineProps({
     default : true
   }
 });
+
+watch(() => props.get_match_detail, (newV) => {
+  console.log(newV, "newV");
+})
+
 // 比赛开始，显示右侧actions状态
 const actionsStatus = ref(true);
   // 赛事收藏状态
