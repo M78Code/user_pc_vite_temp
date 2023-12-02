@@ -122,16 +122,31 @@ class VirtualList {
     // 是否全部折叠状态
     const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
 
+    const is_result = MenuData.is_results()
+
     this.clear_virtual_info()
-    
+
+    let position = 0
+
+    if (is_result) {
+      // 赛果
+      position = scrollTop - 800
+    } else if (csid_status) {
+      // 球种非折叠状态
+      position = scrollTop - 700
+    } else {
+      // 球种折叠
+      position = scrollTop - 200
+    }
+
     // 可视区高度
     let match_count = 0
     let page_count = 18;
     let accrual_height = 0
     let already_folded = 0;
-    // 顶部滚动距离减去  上面5个列表赛事  的距离
+    // 顶部滚动距离减去  上面5个列表赛事  的距离; 
     // const start_position = scrollTop - 234 * 5
-    const start_position = csid_status ? scrollTop - (window.innerHeight - 150) : scrollTop - 300
+    const start_position = position
     const match_datas = []
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value

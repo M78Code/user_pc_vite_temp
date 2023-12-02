@@ -96,7 +96,7 @@ import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zo
 const props = defineProps({
   get_match_detail: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
   show_collect: {
     type:Boolean,
