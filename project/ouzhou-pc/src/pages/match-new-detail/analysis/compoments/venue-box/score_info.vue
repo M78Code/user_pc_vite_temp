@@ -75,29 +75,24 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span class="table-name">
+            <span class="table-name" :class="{
+              [`csid_${_.get(detail_info, 'csid')}`] : true
+            }">
               <!-- 发球方小圆点 -->
-              <div
-                style="width: 10px"
+              <span
+                class="round"
                 v-if="
                   _.get(detail_info, 'mmp') != 0 &&
-                  _.get(detail_info, 'csid') != '4'
+                  _.get(detail_info, 'csid') != '4' &&
+                  (
+                    _.get(detail_info, 'mat') == 'away' && props.rowIndex === 1 ||
+                    _.get(detail_info, 'mat') == 'away' && props.rowIndex === 0
+                 )
                 "
               >
-                <span
-                  class="round"
-                  v-if="
-                    _.get(detail_info, 'mat') == 'away' && props.rowIndex === 1
-                  "
-                ></span>
-                <span
-                  class="round"
-                  v-if="
-                    _.get(detail_info, 'mat') == 'home' && props.rowIndex === 0
-                  "
-                ></span>
-              </div>
-              {{ props.row.name }}</span
+              </span>
+              <span class="txt">{{ props.row.name }}</span>
+            </span
             >
           </q-td>
           <q-td key="q1" :props="props">
@@ -237,8 +232,6 @@ const get_base_data = (val) => {
       });
     }
   }
-  //  console.log(11111111,detail_info)
-  //  console.log(11111111,data.value)
   data.value = res || [];
 };
 
@@ -534,11 +527,9 @@ const insetColumnTooltip = () => {
 watch(
   () => props.score_list,
   (val) => {
-    // console.log(11111, val);
     const detail_info = props.detail_info;
     columns.value = sport_columns[detail_info.csid];
     if (detail_info.msc_obj?.S7 && detail_info.csid == 1) {
-      console.log("加时赛");
       //  加时赛
       columns.value.push({
         name: "x",
@@ -550,7 +541,6 @@ watch(
       });
     }
     if (detail_info.msc_obj?.S107 && detail_info.csid == 1) {
-      console.log("加时赛");
       //  点球大战
       columns.value.push({
         name: "y",
@@ -611,6 +601,9 @@ watch(
   display: flex;
   align-items: center;
   text-overflow: ellipsis;
+  &.csid_1{
+    margin-left: 11px;
+  }
 }
 
 .heightLight {

@@ -14,7 +14,6 @@ import { Quasar } from "quasar";
 import "@quasar/extras/roboto-font/roboto-font.css";
 import "@quasar/extras/material-icons/material-icons.css";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
-console.log("BUILDIN_CONFIG-----------pc---", BUILDIN_CONFIG);
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 // Import Quasar css
 import "quasar/src/css/index.sass";
@@ -45,7 +44,6 @@ import filters from 'src/core/filters/global_filters.js'
 app.config.globalProperties.$filters = filters;
 // 使用自定义指令
 useDirective(app)
-console.log(app,'app');
 app.use(i18n);
 app.use(Vue3DraggableResizable);
 app.use(router);
