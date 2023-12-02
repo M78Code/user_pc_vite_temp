@@ -102,7 +102,7 @@ const on_scroll = (e) => {
   }else{
     show_left_btn.value = false;
   }
-  if(scrollLeft == (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
+  if((scrollLeft + 2) == (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
     show_right_btn.value = false;
   }else{
     show_right_btn.value = true;
