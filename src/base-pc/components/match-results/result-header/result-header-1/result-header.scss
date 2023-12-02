@@ -131,7 +131,7 @@
           color: #999;
         }
         .check-wrap {
-          background:var(--q-gb-bg-c-4) ; // var(--qq--bg-check-wrap)
+          // background:var(--q-gb-bg-c-1) ; // var(--qq--bg-check-wrap)
           border: 1px solid  #d1d5d8  !important; //var(--qq--bd-check-wrap)
           &:hover {
             // border-color: var(--q-gb-bd-c-13) !important;
@@ -139,11 +139,11 @@
           }
           &.active {
             // background-color: var(--q-gb-bg-c-11);
-            // background-color:#ff7000;
+            background-color:#ff7000;
             border: none;
             &:before {
               // border-color: #ff7000;
-              border-color: var(--q-gb-bd-c-1);
+              border-color: var(--q-gb-bd-c-3);
             }
           }
         }
