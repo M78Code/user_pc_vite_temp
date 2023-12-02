@@ -26,6 +26,7 @@
 
 <script setup>
 import { ref,onMounted,onUnmounted, watch } from 'vue';
+import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
@@ -87,7 +88,8 @@ const getName = () => {
 	return name
 }
 const jumpTo = ()=>{
-	router.go(-1)
+	let route_name = lodash_.get(MenuData.router_info,'pre_route')
+  router.push({name:route_name})
 }
 
 </script>

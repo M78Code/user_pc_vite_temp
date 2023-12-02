@@ -132,13 +132,13 @@ class VirtualList {
       // 赛果
       position = scrollTop - 800
     } else if (csid_status) {
-      // 球种折叠
-      position = scrollTop - (window.innerHeight - 150)
-    } else {
       // 球种非折叠状态
       position = scrollTop - 700
+    } else {
+      // 球种折叠
+      position = scrollTop - 200
     }
-    
+
     // 可视区高度
     let match_count = 0
     let page_count = 18;

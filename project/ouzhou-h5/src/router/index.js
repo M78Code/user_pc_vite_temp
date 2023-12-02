@@ -149,6 +149,12 @@ const router = createRouter({
           meta: {
             keepAlive: true // 需要缓存
           },
+        },
+        //测试用
+        {
+          path: "/test",
+          name: "test",
+          component: () => import("../pages/home/test.vue"),
         }
 
       ],

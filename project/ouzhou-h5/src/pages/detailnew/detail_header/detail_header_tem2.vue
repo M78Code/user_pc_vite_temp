@@ -71,7 +71,7 @@ import SwitchButtons from "./components/SwitchButtons.vue"
 const props = defineProps({
   get_match_detail: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
 });
 const scoew_icon_list = ref({});
