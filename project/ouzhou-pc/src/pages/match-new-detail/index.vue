@@ -48,25 +48,22 @@
             </span>
         </div>
         <div>
-          <q-expansion-item ref="expansion_ref" expand-separator :expand-icon-toggle="false" :hide-expand-icon="true">
-            <template v-slot:header>
-              <div class="expansion_ref_slotHeader" style="">
-                <div @click="show_item">
+          <div class="expansion_ref_slotHeader expansion-vs" @click.stop="show_item">
+                <div>
                   <span class="home-vs-away">{{ detail_info.mhn }} </span>
                   <span class="match-detail-head-name m-10">v</span>
                   <span class="home-vs-away">{{ detail_info.man }}</span>
                 </div>
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" class="expand-icon" />
               </div>
-            </template>
-            <q-card class="match-name-list">
+             <!-- 显示赛事卡片 -->
+              <q-card class="match-name-list" :style="{maxHeight:showDetailList?'500px':'0px'}">
               <div v-for="item in matchDetailList" :key="item.mid">
                 <div :class="{ 'card-item': true, 'active-nav': current_id == item.mid }" @click="match_click(item)">
                   {{ item.mhn + " v " + item.man }}
                 </div>
               </div>
             </q-card>
-          </q-expansion-item>
         </div>
         <div class="header_banne sport_bg" :style="`background-position:0 -${sport_ball_type[sportId]}px`"></div>
       </div>
@@ -115,10 +112,8 @@ export default{
   setup(ctx){
     const router = useRouter();
     const route = useRoute();
-    const expansion_ref = ref(null);
     const refresh_data = ref(false);
     const sportId = route.params.csid
-    console.log(route);
     const {
       tabList,
       detail_list,
@@ -136,7 +131,7 @@ export default{
     } = usedetailData(route);
     provide("all_hl_item", all_hl_item);
 
-   
+  const showDetailList = ref(false) 
     const match_click = (item) => {
       current_id.value = item.mid;
       const { mid, tid, csid } = item;
@@ -150,7 +145,6 @@ export default{
         name: "details",
         params,
       });
-      expansion_ref.value.hide();
       setTimeout(() => {
         refresh();
       }, 200);
@@ -165,9 +159,19 @@ export default{
         refresh_data.value = false;
       }, 1000);
     },500);
+
+
+
+    const show_item = ()=>{
+      showDetailList.value = !showDetailList.value
+    }
     const detail_mitt=useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,init).off
-    function mousedown_fun(val){
-        expansion_ref.value&&expansion_ref.value.hide();
+    function mousedown_fun(e){
+      if (e.target.className!='home-vs-away') {
+        showDetailList.value = false
+        
+      }
+        // expansion_ref.value&&expansion_ref.value.hide();
     }
     onMounted(()=>{
       window.addEventListener('mousedown',mousedown_fun )
@@ -201,12 +205,14 @@ export default{
       current_id,
       refresh,
       sport_ball_type,
-      expansion_ref,
+   
       refresh_data,
       LOCAL_PROJECT_FILE_PREFIX,
       formatTime,
       match_click,
-      refresh_click
+      refresh_click,
+      show_item,
+      showDetailList
     }
   }
 }
@@ -427,9 +433,10 @@ export default{
   background-color: var(--q-gb-bg-c-8);
   width: 75%;
   z-index: 1000;
-  margin-top: -10px;
-  max-height: 500px;
+  margin-top: -8px;
+  // max-height: 500px;
   overflow-y: auto;
+  transition: all 0.3s linear;
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -452,6 +459,9 @@ export default{
     .q-focus-helper {
         visibility: hidden;
     }
+}
+.expansion-vs{
+  cursor: pointer;
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
 </style>
