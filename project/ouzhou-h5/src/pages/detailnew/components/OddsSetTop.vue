@@ -1,5 +1,7 @@
 <template>
-  <div class="component odds-set-top" @click.stop="onClick" :class="value.hton ? 'icon_zd_select' : 'icon_zd_default'">
+  <div class="component odds-set-top" @click.stop="onClick" 
+    :class="value.hton!='0' ? 'icon_zd_select' : 'icon_zd_default'"
+  >
 
   </div>
 </template>
@@ -17,12 +19,14 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 function onClick() {
-  if (props.value.hton) {
+  if (props.value.hton != '0') {
     props.value.hton = '0'
   } else {
     useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
     useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
     props.value.hton = Date.now().toString()
+    console.log(props.value.hton)
+
   }
   // 置顶状态变化时，更新相应玩法存储状态  todo  后续再优化
   const { hton,mid, hpid, topKey } = props.value

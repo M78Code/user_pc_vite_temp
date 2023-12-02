@@ -1,5 +1,7 @@
 <template>
-  <div class="component odds-item odds-wrap" v-if="!(data.hl.every(item => item.hs == 2))">
+  <div class="component odds-item odds-wrap" v-if="!(data.hl.every(item => item.hs == 2))"
+    :style="{'order': -Number(data.hton.substring(3))}"
+  >
     <q-separator color="orange" />
     <div class="odds-hpn">
       <!-- 置顶按钮 -->
@@ -31,4 +33,5 @@ const emit = defineEmits({
 
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>
