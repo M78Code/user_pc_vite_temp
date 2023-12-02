@@ -98,7 +98,7 @@ import RightActions from "./components/right_actions.vue";
 const props = defineProps({
   get_match_detail: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
   show_collect: {
     type:Boolean,

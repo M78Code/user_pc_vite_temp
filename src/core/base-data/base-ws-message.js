@@ -1,9 +1,11 @@
 import BaseData from "src/core/base-data/base-data.js";
 import lodash_ from "lodash"
+import { nextTick } from "vue"
+import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 
 class BaseWsMessage {
   constructor(){
-   
+    this.count = 0
   }
 
   init(){
@@ -47,12 +49,25 @@ class BaseWsMessage {
    * @return:
    */
     send_msg(data,type) {
-      if(data)
-      {
+      if(data){
         if(type){
           data.type = type;
         }
-        window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
+        // 发起订阅前 查看ws是否链接中 没有就发起订阅
+        // console.error('WsMan.ws.ws_status',WsMan.ws.ws_status)
+        if(WsMan.ws.ws_status){
+          this.count = 0
+          window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
+        }else{
+          // 断线重连 
+          if(this.count < 5){
+            WsMan.ws.connect('vue_hidden_to_show')
+            nextTick(()=>{
+              this.send_msg(data,type)
+              this.count++
+            })
+          }
+        }
       }
     }
 

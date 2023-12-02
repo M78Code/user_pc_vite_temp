@@ -405,7 +405,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 }, 500)
 
 const render_match_results_list = (res) => {
-	MatchMeta.match_mids = []
+	MatchMeta.set_match_mid([])
 	if (+res.code !== 200) return MatchMeta.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res.data.data, 'teamH5', [])

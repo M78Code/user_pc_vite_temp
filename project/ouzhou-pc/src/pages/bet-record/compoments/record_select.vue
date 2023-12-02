@@ -35,7 +35,7 @@
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" :offset="[200, 10]" transition-show="scale" transition-hide="scale">
                   <q-date v-model="date" range :minimal="true" ref="dateRef"
-                          :locale="dateLocal"
+                          :locale="dateLocal" color="orange"
                   />
                 </q-popup-proxy>
               </q-icon>
