@@ -1,10 +1,14 @@
 import { UserCtr } from "src/core";
 import BetData from "./bet-data-class"
 import lodash_ from "lodash"
+import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+import { nextTick } from "vue";
+
 
 class BetWsMessage {
   constructor(){
-   
+    // ws调用次数
+    this.count = 0
   }
 
   init(){
@@ -55,21 +59,36 @@ class BetWsMessage {
     }
   }
 
-    /**
+  /**
    * @Description:发送ws消息到ws服务器
    * @param: data 消息体
    * @param: type 消息标记-自定义模拟推送内部命令该值为custom
    * @return:
    */
-    send_msg(data,type) {
-      if(data)
-      {
-        if(type){
-          data.type = type;
-        }
+  send_msg(data,type) {
+    if(data)
+    {
+      if(type){
+        data.type = type;
+      }
+      // console.error('Ws_.ws_status',WsMan.ws.ws_status)
+      // 发起订阅前 查看ws是否链接中 没有就发起订阅
+      if(WsMan.ws.ws_status){
+        this.count = 0
         window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
+      }else{
+        // 断线重连 
+        if(this.count < 5){
+          WsMan.ws.connect('vue_hidden_to_show')
+          nextTick(()=>{
+            this.send_msg(data,type)
+            this.count++
+          })
+        }
       }
     }
+  }
+
 
   r_ws_msg(obj){
     // 获取window.postMessage自定义命令

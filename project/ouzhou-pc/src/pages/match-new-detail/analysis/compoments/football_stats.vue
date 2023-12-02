@@ -89,11 +89,6 @@ const statsList = ref([
   },
 ]);
 onMounted(()=>{
- console.log(1111111,props.score_list)
-
- 
- 
-
 })
 
 

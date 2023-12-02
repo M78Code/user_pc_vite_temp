@@ -2,10 +2,10 @@
 
 <template>
     <div class="bet-footer">
-        <div v-show="false">  {{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}</div>
+        <div v-show="false">  {{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{i18n_t.locale}}-{{UserCtr.user_version}}</div>
         <div class="bet-state" v-show="BetViewDataClass.error_message">
             <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
-                {{ BetViewDataClass.error_message }}
+                {{ BetViewDataClass.error_message ? i18n_t(BetViewDataClass.error_message):'' }}
             </div>
         </div>
         <div class="f-b-c bet-content" v-if="BetViewDataClass.bet_order_status == 1">
@@ -24,6 +24,7 @@ import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { i18n_t,UserCtr } from "src/core/"
 
 // 提交投注信息
 const set_bet_submit = () => {

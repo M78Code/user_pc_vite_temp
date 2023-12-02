@@ -171,7 +171,6 @@ export default defineComponent({
     })
     // 监听页码变化
     watch(() => state.current, (newVal) => {
-      console.log('页码变了: ', newVal)
       context.emit('pageChange', {
         ...state,
         current: newVal || 1
@@ -218,7 +217,6 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      //  console.log(1111111111,context )
     })
     return {
       ...toRefs(state),

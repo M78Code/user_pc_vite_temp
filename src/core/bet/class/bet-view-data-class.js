@@ -209,7 +209,7 @@ class BetViewData {
     let text = ''
     switch (code) {
       case 200:
-        text = '下注成功'
+        text = "bet_message.loading"
         break
 
       case '0402001':
@@ -237,7 +237,7 @@ class BetViewData {
       case '0400452':
       case '0400461':
       case 'DJ006':
-        text = '已失效'
+        text = "bet_message.已失效"
         break
 
       case '0402009':
@@ -245,10 +245,10 @@ class BetViewData {
       case '0402023':
       case '0402027':
       case '0402028':
-        text = '投注项盘口、赔率或有效性产生变化!'
+        text = "bet_message.m_0402009"
         break
       case '0402014':
-        text = '网络异常，请在注单中查看投注结果'
+        text = "bet_message.m_0402014"
         break
 
       case '0402015':
@@ -265,102 +265,102 @@ class BetViewData {
       case '0400463':
       case 'XXXXXX':
       case 'DJ999':
-        text = '投注未成功~再试一次吧！'
+        text = "bet_message.m_0402015"
         break
 
       case '0402018':
       case '0402019':
       case '0402038':
       case '0400450':
-        text = '投注未成功,请稍后再试'
+        text = "bet_message.m_0402018"
         break
 
       case '132113':
-        text = '投注失败，请重新选择投注项'
+        text = "bet_message.m_132113"
         break
 
       case '0402035':
       case '0400454':
       case '0400455':
-        text = '余额不足,请您先充值'
+        text = "bet_message.m_0402035"
         break
 
       case '0402042':
-        text = '网络异常,请联系客服'
+        text = "bet_message.m_0402042"
         break
 
       case '0400453':
-        text = '账户异常,请联系客服'
+        text = "bet_message.m_0400453"
         break
 
       case '0400459':
-        text = '盘口确认中，请稍等'
+        text = "bet_message.m_0400459"
         break
 
       case '0400460':
-        text = '拒绝投注'
+        text = "bet_message.m_0400460"
         break
 
       case '0400464':
       case '0400475':
-        text = '额度已变更,再试一次吧~'
+        text = "bet_message.m_0400464"
         break
 
       case '0400468':
-        text = '比分已变更 再试一次吧'
+        text = "bet_message.m_0400468"
         break
 
       case '0400469':
-        text = '投注项盘口、赔率或有效性产生变化!'
+        text = "bet_message.m_0400469"
         break
 
       case 'M400004':
-        text = '赔率更新中'
+        text = "bet_message.m_M400004"
         break
 
       case 'M400005':
-        text = '请您输入投注金额'
+        text = "bet_message.m_M400005"
         break
 
       case 'M400007':
-        text = '请您留意每个选项的投注范围'
+        text = "bet_message.m_M400007"
         break
 
       case 'M400009':
-        text = '该选项当前不可投注，请选择其他选项'
+        text = "bet_message.m_M400009"
         break
 
       case 'M400010':
       case 'DJ002':
-        text = '投注金额未达最低限额'
+        text = "bet_message.m_M400010"
         break
 
       case 'M400011':
-        text = '投注金额超过最高限额'
+        text = "bet_message.m_M400011"
         break
 
       case 'M400012':
-        text = '限额获取中请稍后'
+        text = "bet_message.m_M400012"
         break
 
       case '0401038':
-        text = '网络异常，请再试一次!'
+        text = "bet_message.m_0401038"
         break
 
       case 'DJ001':
-        text = '您无法投注电竞赛事'
+        text = "bet_message.m_DJ001"
         break
 
       case 'DJ003':
-        text = '投注金额只能为整数'
+        text = "bet_message.m_DJ003"
         break
 
       case 'DJ004':
-        text = '存在不支持串关赛事'
+        text = "bet_message.m_DJ004"
         break
 
       case 'DJ005':
-        text = '存在不支持串关盘口'
+        text = "bet_message.m_DJ005"
         break
 
       default:

@@ -109,7 +109,6 @@ const get_detail_info = (mid) => {
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
   detail_info.value = infomation
   // setInterval(function (){
-  //   console.log(infomation,"infomation")
   // },2000)
 }
 
@@ -169,6 +168,7 @@ const score_list = computed(() => {
     percentage: 100
   }
   */
+
   return result;
 });
 </script>

@@ -33,7 +33,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { PROJECT_NAME, MatchDataWarehouse_H5_List_Common } from "src/core/index.js"
+import { PROJECT_NAME, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
 import { is_collect, menu_type } from 'src/base-h5/mixin/menu.js'
 
 // yazhou-h5 赛事列表
@@ -106,6 +106,10 @@ const on_listeners = () => {
     emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
     emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, MatchPage.bet_odd_synchronize_handle).off,
     emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
+    emitter_1: useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
+      // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
+      if(ws_status != 1) MatchDataBaseH5.scmd_c8_ws_reconnect()
+    }).off
   };
 };
 

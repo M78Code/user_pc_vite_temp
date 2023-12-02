@@ -31,7 +31,6 @@ export default {
       let url_token = location.search.indexOf('token');
       // session token
       let session_stroage_token = sessionStorage.getItem('pc_token') || sessionStorage.getItem('token');
-      console.log('session_stroage_token', session_stroage_token);
       return url_token >= 0 || session_stroage_token;
     }
   }
