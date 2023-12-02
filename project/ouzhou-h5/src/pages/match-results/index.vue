@@ -18,6 +18,7 @@ import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
 import { api_analysis } from "src/api/"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 
 const inner_height = window.innerHeight;  // 视口高度
 const props = defineProps({})
@@ -36,6 +37,7 @@ const selectFinishHandle = (val) => {
  * @param {*} item 
  */
 const changeDate = (item) =>{
+    useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
     if (state.currentSlideValue === item.val) return
     state.currentSlideValue = item.val
      getData(state.slideMenu_sport.filter((n)=>{return n.mi === state.current_mi})[0],item.val)

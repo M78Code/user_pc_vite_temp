@@ -699,41 +699,41 @@ export const allBallObj = {
   ],
   5: [
     {
-      title: "破发成功率",
+      title: `${i18n_t("msc.S114")}`,
       value_key: "S114",
     },
     {
-      title: "双发失误",
+      title: `${i18n_t('fault.fault')}`,
       value_key: "S202",
     },
     {
-      title: "发球得分",
+      title: `${i18n_t('common.ace')}`,
       value_key: "S4",
     },
   ],
   7: [
     {
-      title: "发球得分",
+      title: `${i18n_t('common.ace')}`,
       value_key: "S4",
     },
     {
-      title: "发球失误",
+      title: `${i18n_t('common.sigle_fault')}`,
       value_key: "S113",
     }
   ],
   9: [
     {
-      title: "发球得分",
+      title: `${i18n_t('common.ace')}`,
       value_key: "S4",
     },
     {
-      title: "发球失误",
+      title: `${i18n_t('common.sigle_fault')}`,
       value_key: "S113",
     }
   ],
   10: [
     {
-      title: "得分",
+      title: `${i18n_t('common.score_')}`,
       value_key: "S115",
     },
     {
@@ -741,7 +741,7 @@ export const allBallObj = {
       value_key: "S116",
     },
     {
-      title: "发球得分",
+      title: `${i18n_t('common.ace')}`,
       value_key: "S117",
     },
   ],

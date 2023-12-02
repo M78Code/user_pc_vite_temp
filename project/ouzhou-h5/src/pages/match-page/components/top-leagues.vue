@@ -49,6 +49,7 @@ const handle_match_collect = (value) => {
 const handle_jump_match = (item) => {
   store.isLeagueDetail = true
   store.selectLeague = item
+  MatchMeta.clear_match_info()
   MatchMeta.get_ouzhou_leagues_list_data(item.tid, store.curSelectedOption.timestamp)
 }
 </script>

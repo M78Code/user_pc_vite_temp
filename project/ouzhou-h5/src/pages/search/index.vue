@@ -390,6 +390,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_params');
 			if (is_results.value) {
+				MatchMeta.clear_match_info()
 				render_match_results_list(res)
 				return
 			}
@@ -402,7 +403,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 }, 500)
 
 const render_match_results_list = (res) => {
-	MatchMeta.set_match_mid([])
+	// MatchMeta.match_mids = []
 	if (+res.code !== 200) return MatchMeta.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res.data.data, 'teamH5', [])

@@ -55,7 +55,7 @@ class MenuData {
     //当前的菜单 lv2  注意  二级菜单 可能 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {};
     this.current_lv_2_menu_i = '';
-   
+    this.menu_csid = '';
     //-----------------------------------VR 电竞 收藏--------------------------------------//
     this.top_menu_title = {}
     this.collect_list = []
@@ -124,6 +124,7 @@ class MenuData {
         (item.sl || {}).find(obj=>{
           // 菜单id最后一位为顶级菜单的id
           if(obj.mi.substr(obj.mi.length-1,1) == mid){
+            obj.mif = item.mi
             menu_lv_mi_lsit.push(obj)
           }
         })
@@ -182,6 +183,7 @@ class MenuData {
   set_current_lv_2_menu_i(val = {}){
     this.current_lv_2_menu_i = val.mi;
     this.current_lv_2_menu = val;
+    this.set_menu_csid(val.mi);
     this.update()
   }
    // 设置三级菜单id
@@ -189,6 +191,19 @@ class MenuData {
     this.current_lv_special_menu_mi = val.mi;
     this.current_lv_special_menu = val;
     console.log("特殊点击",val)
+    this.update()
+  }
+  /**
+   * 设置csid
+   */
+  set_menu_csid(mi){
+    let csid = "",
+        v1_mi = [0,300,2000,50000];
+    if(v1_mi.includes(+mi))return;//全部 vr 电竞 收藏
+    if(+mi>1000 && +mi<2000){csid = Number(this.recombine_menu_desc(mi))-100;}//常规
+    else if(+mi>400 && +mi<1000){csid = +mi-400}//冠军
+    else{csid = mi};//vr 电竞球种
+    this.menu_csid = mi;
     this.update()
   }
   /**
@@ -375,12 +390,17 @@ class MenuData {
    * @param {*} mi 
    * @returns 
    */
-  get_menus_i18n_map(mi) {
+  get_menus_i18n_map(item={}) {
     //二级菜单
-    if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi) ) {
-      return BaseData.menus_i18n_map[+mi]
+    // if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi) ) {
+    //   return BaseData.menus_i18n_map[+mi]
+    // }
+    // console.error('item',item)
+    let text = BaseData.menus_i18n_map[item.mif];
+    if(this.is_kemp() || this.is_kemp_mi() || this.is_vr() || this.is_export()){
+      text = BaseData.menus_i18n_map[item.mi]
     }
-    return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
+    return text
   }
   /**
    * 获取后台接口所对应的名称mi

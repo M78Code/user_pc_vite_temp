@@ -277,6 +277,8 @@ export const EMIT_HOME_TAB = "EMIT_HOME_TAB";
 export const EMIT_MAIN_LIST_MATCH_IS_EMPTY = "EMIT_MAIN_LIST_MATCH_IS_EMPTY";
 // 到底了
 export const EMIT_MAIN_LIST_MAX_HEIGHT = "EMIT_MAIN_LIST_MAX_HEIGHT";
+// 赛事列表回到顶部
+export const EMIT_GOT_TO_TOP = "EMIT_GOT_TO_TOP";
 /**
  * 触发toast弹框
  */
