@@ -56,13 +56,9 @@
         :detail_info="detail_info"
       />
       <!-- 比分 -->
-      
+
       <score_info
-        v-show="
-          score_key &&
-          !lodash_.isEmpty(score_list) &&
-          [1, 3].includes(Number(detail_info.ms))
-        "
+        v-show="score_key && [1, 3].includes(Number(detail_info.ms))"
         :score_list="score_list"
         :detail_info="detail_info"
       />
@@ -114,18 +110,17 @@ watch(
   (val) => {
     if (val) {
       // 有动画优先播放动画
-    if (val.mvs > -1) {
-      animal_key.value = false;
-      setTimeout(() => {
-        tab_click("animal");
-      }, 100);
-      // tab_click('animal')
-    } else {
-      animal_key.value = false;
-      score_key.value = true;
-      show_type.value = "";
-    }
-      
+      if (val.mvs > -1) {
+        animal_key.value = false;
+        setTimeout(() => {
+          tab_click("animal");
+        }, 100);
+        // tab_click('animal')
+      } else {
+        animal_key.value = false;
+        score_key.value = true;
+        show_type.value = "";
+      }
     }
   }
 );

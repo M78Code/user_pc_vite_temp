@@ -169,6 +169,7 @@ const score_list = computed(() => {
     percentage: 100
   }
   */
+
   return result;
 });
 </script>
