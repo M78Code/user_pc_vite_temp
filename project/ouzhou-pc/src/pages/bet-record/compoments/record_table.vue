@@ -511,7 +511,6 @@ const order_status = (orderStatus) => {
 const changePage = (arv) => {
   const { current } = arv
   pageCurrent.value = current
-  console.log(1111111111, arv)
   emit('itemFilter', {
     page: current,
     size: +pageSize.value,

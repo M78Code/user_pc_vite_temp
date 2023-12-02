@@ -187,7 +187,6 @@ const getOn = (match_info, o) => {
 };
 
 const odds_change = (obj) => {
-  console.log(obj);
 };
 
 // 事件执行函数
@@ -195,7 +194,6 @@ const odds_change = (obj) => {
 const active = ref(1);
 
 onMounted(() => {
-  // console.log(11111111, props.match_info);
 });
 </script>
 
