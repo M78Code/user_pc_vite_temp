@@ -24,7 +24,7 @@
       <div class="record-settled-l">
         <div style="width:180px;">
           <q-select outlined v-model="select_value" @update:model-value="selectInput" :options="select_options"
-                    option-label="value" :dense="false" :options-dense="false" map-options>
+                    option-label="value" :dense="false" :options-dense="false" map-options color="orange">
           </q-select>
         </div>
         <div class="q-pa-md time-select">
@@ -35,7 +35,7 @@
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" :offset="[200, 10]" transition-show="scale" transition-hide="scale">
                   <q-date v-model="date" range :minimal="true" ref="dateRef"
-                          :locale="dateLocal"
+                          :locale="dateLocal" color="orange"
                   />
                 </q-popup-proxy>
               </q-icon>

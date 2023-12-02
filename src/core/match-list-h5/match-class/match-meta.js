@@ -29,7 +29,7 @@ class MatchMeta {
 
   init () {
     // 当前页面数据mids集合
-    this.match_mids = ref([])
+    this.match_mids = []
     // 早盘下的 mids
     this.zaopan_mids = []
     // 联赛 id 对应的 mids
@@ -107,6 +107,14 @@ class MatchMeta {
     if (MenuData.is_export() || MenuData.is_results()) return
 
     this.get_origin_match_mids_by_mi(menu_lv_v2)
+  }
+
+  /**
+   * @description 重置 match_mids
+   * @param {*} val 
+   */
+  set_match_mids (val) {
+    this.match_mids = val
   }
 
   /**
@@ -425,7 +433,7 @@ class MatchMeta {
    * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率，需要虚拟列表计算
    */
   async get_results_match () {
-    this.match_mids = []
+    this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
@@ -604,8 +612,9 @@ class MatchMeta {
     hots_list.map(t => {
       t.match_data_type = 'h5_hots_list' 
     })
-    // const hots_mids = hots_list.map(t => t.mid)
-    // hots_mids.length && hots_mids.length > 0 && MatchDataBaseHotsH5.set_active_mids(hots_mids)
+    const hots_mids = hots_list.map(t => t.mid)
+    hots_mids.length && hots_mids.length > 0 && this.set_ws_active_mids({ list: hots_mids, warehouse: MatchDataBaseHotsH5})
+    
     // 热门赛事数据
     MatchDataBaseHotsH5.set_list(hots_list)
     return hots_list
@@ -659,8 +668,8 @@ class MatchMeta {
     // 15分钟玩法赛事数据
     const p15_list = this.assemble_15_minute_data(p15)
     // ws 订阅
-    // const p_15_mids = p15_list.map(t => t.mid)
-    // p_15_mids.length && p_15_mids.length > 0 && MatchDataBasel5minsH5.set_active_mids(p_15_mids)
+    const p_15_mids = p15_list.map(t => t.mid)
+    p_15_mids.length && p_15_mids.length > 0 && this.set_ws_active_mids({ list: p_15_mids, warehouse: MatchDataBasel5minsH5})
     MatchDataBasel5minsH5.set_list(p15_list.slice(0, 5))
     
     // 首页滚球赛事
@@ -670,7 +679,8 @@ class MatchMeta {
       dataList.forEach(t => {
         t.match_data_type = 'h5_in_play_league'
       })
-      match_list = MatchUtils.get_home_in_play_data(dataList)
+      const arr_list = MatchUtils.handler_match_classify_by_csid(dataList)
+      match_list = MatchUtils.get_home_in_play_data(arr_list)
       // this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
       this.handler_match_list_data({ list: match_list, warehouse: MatchDataBaseInPlayH5, type: 2, is_virtual: false, merge: 'cover' })
     }
@@ -1022,6 +1032,15 @@ class MatchMeta {
   }
 
   /**
+   * @description 设置ws激活的 赛事mids
+   */
+  set_ws_active_mids ({list = [], warehouse = MatchDataBaseH5}) {
+    if (MenuData.is_results()) return
+    const mids = list.map(t => t)
+    warehouse.set_active_mids(mids)
+  }
+
+  /**
    * @description 清除赛事信息
    */
   clear_match_info () {
@@ -1160,7 +1179,7 @@ class MatchMeta {
       return target
     })
     // ws 订阅
-    // MatchDataBaseH5.set_active_mids(this.match_mids)
+    this.set_ws_active_mids({ list: this.match_mids, warehouse})
     // 设置仓库渲染数据
     // this.is_ws_trigger = false
     warehouse.set_list(list)
@@ -1175,7 +1194,7 @@ class MatchMeta {
   handle_submit_warehouse(config) {
     let { list = [], warehouse = MatchDataBaseH5, is_again = true } = config
     // ws 订阅
-    // warehouse.set_active_mids(this.match_mids)
+    this.set_ws_active_mids({ list: this.match_mids, warehouse})
     // 设置仓库渲染数据
     warehouse.set_list(list)
     this.is_ws_trigger = false

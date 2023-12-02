@@ -716,8 +716,9 @@ class MenuData {
     // 设置投注类别
     this.set_bet_category();
 
-    // 菜单数据缓存
-    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {})
+    // 菜单数据缓存 //从元数据拿值
+    useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, {})
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
     nextTick(()=>{
       SessionStorage.set(menu_key,this)
     })

@@ -511,7 +511,6 @@ const order_status = (orderStatus) => {
 const changePage = (arv) => {
   const { current } = arv
   pageCurrent.value = current
-  console.log(1111111111, arv)
   emit('itemFilter', {
     page: current,
     size: +pageSize.value,
@@ -602,7 +601,7 @@ const hand_copy = (data) => {
 
   &:deep(.q-table) {
     // min-height: 650px !important;
-    padding-bottom: 41px;
+    padding-bottom: 51px;
   }
 
   &:deep(.q-table__card) {

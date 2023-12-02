@@ -93,7 +93,8 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
-import { default as BetRecordClass, calc_text, outcome, bet_result } from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { calc_text, outcome, bet_result } from "src/core/bet-record/util.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { formatTime, format_money2, format_balance } from 'src/core/format/index.js'
 
