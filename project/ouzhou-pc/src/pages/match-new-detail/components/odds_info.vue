@@ -441,8 +441,8 @@ onMounted(() => {});
     &:nth-child(1) {
       width: 50%;
       display: block;
-      text-align: center;
-      margin-right: 10px;
+      text-align: right;
+      padding-right: 20px;
       overflow: hidden;
       color: var(--q-gb-t-c-5);
     }
@@ -451,7 +451,7 @@ onMounted(() => {});
       width: 50%;
       min-width: 100px;
       display: block;
-      text-align: left;
+      margin-left: -40px;
       color: var(--q-gb-t-c-2);
     }
   }

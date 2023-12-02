@@ -124,6 +124,7 @@ class MenuData {
         (item.sl || {}).find(obj=>{
           // 菜单id最后一位为顶级菜单的id
           if(obj.mi.substr(obj.mi.length-1,1) == mid){
+            obj.mif = item.mi
             menu_lv_mi_lsit.push(obj)
           }
         })
@@ -375,12 +376,17 @@ class MenuData {
    * @param {*} mi 
    * @returns 
    */
-  get_menus_i18n_map(mi) {
+  get_menus_i18n_map(item={}) {
     //二级菜单
-    if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi) ) {
-      return BaseData.menus_i18n_map[+mi]
+    // if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi) ) {
+    //   return BaseData.menus_i18n_map[+mi]
+    // }
+    // console.error('item',item)
+    let text = BaseData.menus_i18n_map[item.mif];
+    if(this.is_kemp() || this.is_kemp_mi() || this.is_vr() || this.is_export()){
+      text = BaseData.menus_i18n_map[item.mi]
     }
-    return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
+    return text
   }
   /**
    * 获取后台接口所对应的名称mi
