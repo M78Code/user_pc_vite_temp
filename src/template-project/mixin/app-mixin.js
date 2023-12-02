@@ -7,7 +7,7 @@ import { enter_params,  LocalStorage } from "src/core/index.js";
  
  
  
-import { http, AllDomain } from "src/core/http/";
+import { http, AllDomain } from "src/core/http/index.js";
  
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 
@@ -28,10 +28,36 @@ export default {
   created() {
     // 参数控制处理和跳转逻辑
     url_param_ctr_init(this);
+   this.init_process() ;
+
+
+    
+  },
+  watch: {
+    '$route'(to, from) {
+      watch_route_fun(to, from);
+    },
+  },
+ 
+  
+  beforeUnmount() {
+    this.off_listeners();
+    this.unbind_debounce_throttle();
+    // 清除定时器
+    clearTimeout(this.init_load_timer);
+    this.init_load_timer = null;
+    if (AllDomain) {
+      // 销毁停止对象功能
+      AllDomain.clear_timer && AllDomain.clear_timer();
+    }
+  },
+  methods: {
+    async init_process() {
     // 设置wslog 默认函数防止提前调用报错
     window.wslog = { sendMsg: () => {} };
     // 设置商户分割信息
-    let gr = (window.SEARCH_PARAMS.init_param.get('gr')?.toLocaleUpperCase()) || sessionStorage.getItem(STANDARD_KEY.get("gr")) || "COMMON";
+  
+    let gr =  ( window.SEARCH_PARAMS.init_param.get('gr')||'').toUpperCase() || sessionStorage.getItem(STANDARD_KEY.get("gr")) || "COMMON";
 
     BUILDIN_CONFIG.DOMAIN_RESULT.gr = gr;
 
@@ -42,16 +68,8 @@ export default {
       this.set_init_load(true);
     }, 11000);
 
-    
-  },
-  watch: {
-    '$route'(to, from) {
-      watch_route_fun(to, from);
-    },
-  },
-  async beforeMount () {
-     
-    // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
+
+        // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
     // 后面如果确实有需要就自己处理 。目前这个是兼容某些异常场景下 接口先返回来回
     // 文件后返回回来 的显示异常，不管 前端缓存，资源文件丢失的场景，生产无此场景
     const lang = window.SEARCH_PARAMS.init_param.get('lang') || LocalStorage.get('lang');
@@ -76,20 +94,9 @@ export default {
       });
      // 启动域名检测功能
      AllDomain.run();
-  },
-  
-  beforeUnmount() {
-    this.off_listeners();
-    this.unbind_debounce_throttle();
-    // 清除定时器
-    clearTimeout(this.init_load_timer);
-    this.init_load_timer = null;
-    if (AllDomain) {
-      // 销毁停止对象功能
-      AllDomain.clear_timer && AllDomain.clear_timer();
-    }
-  },
-  methods: {
+
+
+    },
     /**
      * @description: 设置this.init_load变量的状态
      * @param {*} status 布尔值
@@ -164,14 +171,10 @@ export default {
           MITT_TYPES.EMIT_SET_GETUSERINFO_OSS_API,
           this.set_getuserinfo_oss_api
         ).off,
-        //注册 允许显示主页面事件
-        emitter_3: useMittOn(
-          MITT_TYPES.EMIT_ALLOW_INIT_LOAD,
-          this.handle_init_load
-        ).off,
-        emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off,
+    
+ 
 
-        // emitter_4: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, this.init_match_callback).off
+ 
       };
     },
     // 移除相应监听事件

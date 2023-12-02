@@ -1,11 +1,7 @@
-<!--
- * @Author: success
- * @Date: 2020-08-04 17:13:55
- * @Description: 项目入口html页面
--->
 <!DOCTYPE html>
 <html style="font-size: 100px; height: 100%">
   <head>
+
     <meta charset="utf-8" />
     <!-- 禁止谷歌翻译 自动翻译 -->
     <meta name="google" content="notranslate" />
@@ -16,7 +12,7 @@
     <meta name="version-branch" content="%VITE_APP_BRANCH%" />
     <meta name="version-tag" content="%VITE_APP_TAG%" />
     <meta name="version-PROJECT_NAME" content="%VITE_APP_PROJECT_NAME%" />
-      <meta name="version-BUILD_VERSION" content="%VITE_APP_BUILD_VERSION%" />
+    <meta name="version-BUILD_VERSION" content="%VITE_APP_BUILD_VERSION%" />
     <meta name="version-MODULE_SDK_VERSION" content="%VITE_APP_MODULE_SDK_VERSION%" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
@@ -70,10 +66,10 @@
         height: 100%;
       }
       .theme01-root-loading {
-        background-color: #fff;
+        background-color: var(--q-gb-bg-c-2);
       }
       .theme01_y0-root-loading {
-        background-color: #fff;
+        background-color: var(--q-gb-bg-c-2);
       }
       .theme02-root-loading {
         background-color: #191919;
@@ -202,6 +198,9 @@
         margin: 6px;
         margin-top: 0;
         margin-bottom: 0;
+      }
+      #ty-app {
+        height: inherit;
       }
       /*
       * Animation
@@ -436,7 +435,7 @@
  
 
     <script>
-      window.CURRENT_ENV_BUILD_IN_OSS = "%VITE_APP_current_env_build_in_oss%";
+      window.CURRENT_ENV_BUILD_IN_OSS = "%VITE_APP_current_env_build_in_oss %";
     </script>
   </head>
   <body class="custom-format-">
@@ -506,16 +505,15 @@
         // 清除缓存的参数
         SEARCH_PARAMS.init_param_del(['clearcache']);
         let token = url_search.get("token");
-
         // 设置 loading 动画 主题
         set_root_loading_theme(url_search);
         if (token) {
           // 有 keep_url 代表不需要优化（缩短）url
           if (
-            !url_search.get("keep_url") ||
+            !location.search.includes("keep_url") ||
             token != sessionStorage.h5_token
           ) {
-            // sessionStorage.clear();
+            sessionStorage.clear();
           }
           sessionStorage.setItem("h5_token", token);
         }
