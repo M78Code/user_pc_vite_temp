@@ -824,8 +824,9 @@ export default {
   min-height: 1.11rem;
 
   .odd-list-time {
+    display: block;
     color: var(--q-gb-t-c-4);
-    margin-top: .04rem;
+    margin-top: .05rem;
   }
 
   &.simple,
