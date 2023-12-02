@@ -304,7 +304,6 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const route = useRoute()
-    const store_state = store.getState()
     let state_data = reactive({
       show_more:true,
     })
@@ -333,7 +332,7 @@ export default defineComponent({
       return ""
     });
     const get_detail_data = computed(() => {
-      return store_state.detailsReducer.details_data || {}
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
     const hide_show_more_layout = computed(() => {
       let ret = true;

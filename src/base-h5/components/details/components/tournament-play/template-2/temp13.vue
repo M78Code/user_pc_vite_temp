@@ -233,17 +233,12 @@
   </div>
 </template>
 <script>
-// #TODO vuex
-// import { mapGetters } from "vuex";
-// 引入redux
-import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
 export default defineComponent({
   name: "temp13",
   props:{
@@ -255,7 +250,6 @@ export default defineComponent({
     "odds-new": odds_new
   },
   setup(props, evnet) {
-    const store_state = store.getState()
     const route = useRoute()
     let init_data = reactive({
       utils,
@@ -270,7 +264,7 @@ export default defineComponent({
       return []
     });
     const get_detail_data = computed(() => {
-      return store_state.detailsReducer.details_data || {}
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
     const get_is_hengping = computed(() => {
       return ""

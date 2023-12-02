@@ -12,15 +12,13 @@
           <q-menu class="detail-top-pop">
             <div class="detail-top-pop-content" ref="detail_top_pop">
               <div class="match_detail_top_list">
-                <div class="match_detail_top_list_item" v-for="(item, index) in drop_down_list" :class="[
-                    { active: active == index },
-                  ]" 
-                  :key="index" @click="change_active(item, index)" v-close-popup
-                >
-                  <div class="item_team_name">{{ item.mhn }}</div>
-                  <div>v</div>
-                  <div class="item_team_name">{{ item.man }}</div>
-                </div>
+                <DetailTopMsOptions v-for="(item, index) in drop_down_list" 
+                  :key="index" :detail_data="item" 
+                  :active="active == index"
+                  :index="index"
+                  v-close-popup
+                  @ChangeActive="change_active(item, index)"
+                />
               </div>
             </div>
           </q-menu>
@@ -48,6 +46,7 @@ import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import DetailTopMsOptions from "./detail-top-ms-options.vue";
 const route = useRoute()
 const router = useRouter();
 const mid = route.params.mid;
@@ -77,6 +76,7 @@ function getDropDownList() {
     dateTime: Date.now()
   }).then(res => {
     if(res.code == '200'){
+      console.log(res.data,"drop_down_list")
       return drop_down_list.value = res.data
     }else {
       console.error(res)

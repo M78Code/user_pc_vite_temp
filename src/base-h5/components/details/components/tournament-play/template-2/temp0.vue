@@ -1,4 +1,5 @@
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp0 mx-5 box-style">
     <div class="item-wrap">
       {{void(odds_conut=0)}}
@@ -21,15 +22,15 @@
                           <!-- <div
                             class="play-box-style details_color"
                             @click="go_to_bet(ol_item)"
-                            :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                            :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           > -->
                           <div
                             class="play-box-style details_color"
                             @click="utils.go_to_bet(ol_item)"
-                            :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                            :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_13 odds-on">
-                              <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
+                              <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                                 <!-- {{ol_item.on || ol_item.otv || ol_item.ott}} -->
                                 <!-- 修改为: ott+on的值 来显示  下面的用法相同 -->
                                 {{ol_item.ott}}{{ol_item.on}}
@@ -107,10 +108,10 @@
                     <div
                       class="play-box-style details_color"
                       @click="utils.go_to_bet(ol_item)"
-                      :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                      :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_13">
-                        <span class="size-color" :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
+                        <span class="size-color" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                           {{ol_item.ott}}{{ol_item.on}}
                         </span>
                       </div>
@@ -184,14 +185,13 @@
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // #TODO mixins
 import lodash from "lodash";
-import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittEmit, MITT_TYPES ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/core/index.js"
 //国际化
 
 
@@ -204,7 +204,6 @@ export default defineComponent({
   },
   props: ["item_data", "title"],
   setup(props, evnet) {
-    const store_state = store.getState()
     const route = useRoute()
     let data = reactive({
       utils,
@@ -215,15 +214,11 @@ export default defineComponent({
       show_more:true,
       len:0,  //一共有多少个投注项
     })
-    // #TODO vuex
-    // computed: {
-    // ...mapGetters(["get_bet_list","get_cur_odd","get_detail_data"]),
-    const get_bet_list = ref(BetData.bet_list)
     const get_cur_odd = computed(() => {
       return ""
     });
     const get_detail_data = computed(() => {
-      return store_state.detailsReducer.details_data || {}
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
     /**
      * @description: 判断是否隐藏加载更多和收起功能
@@ -300,7 +295,6 @@ export default defineComponent({
     };
     return {
       ...toRefs(data),
-      get_bet_list,
       get_cur_odd,
       get_detail_data,
       i18n_t,
@@ -308,6 +302,7 @@ export default defineComponent({
       change_show,
       hide_show_more_layout,
       LOCAL_PROJECT_FILE_PREFIX,
+      BetData
     }
   }
 })

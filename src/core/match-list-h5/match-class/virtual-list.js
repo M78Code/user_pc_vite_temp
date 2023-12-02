@@ -6,7 +6,7 @@
  */
 
 import { ref } from 'vue'
-import { MenuData } from 'src/core'
+import { MenuData, project_name } from 'src/core'
 import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -119,34 +119,15 @@ class VirtualList {
    */
   compute_current_page_render_list (scrollTop = 0) {
 
-    // 是否全部折叠状态
-    const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
-
-    const is_result = MenuData.is_results()
-
     this.clear_virtual_info()
-
-    let position = 0
-
-    if (is_result) {
-      // 赛果
-      position = scrollTop - 800
-    } else if (csid_status) {
-      // 球种非折叠状态
-      position = scrollTop - 700
-    } else {
-      // 球种折叠
-      position = scrollTop - 200
-    }
 
     // 可视区高度
     let match_count = 0
     let page_count = 18;
     let accrual_height = 0
     let already_folded = 0;
-    // 顶部滚动距离减去  上面5个列表赛事  的距离; 
-    // const start_position = scrollTop - 234 * 5
-    const start_position = position
+    // 顶部滚动距离减去  上面5个列表赛事  的距离
+    const start_position = this.get_scorll_position(scrollTop)
     const match_datas = []
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value
@@ -198,6 +179,38 @@ class VirtualList {
       total_height += total
     })
     this.container_total_height.value = total_height + 181
+  }
+
+  // 计算虚拟滚动初始计算高度
+  get_scorll_position (scrollTop) {
+    let position = 0
+    // 是否全部折叠状态
+    const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
+    const is_result = MenuData.is_results()
+    if (project_name === 'ouzhou_h5') {  // 欧洲版
+      if (is_result) {
+        // 赛果
+        position = scrollTop - 800
+      } else if (csid_status) {
+        // 球种非折叠状态
+        position = scrollTop - 700
+      } else {
+        // 球种折叠
+        position = scrollTop - 200
+      }
+    } else if (project_name === 'app-h5') { // 复刻版
+      if (is_result) {
+        // 赛果
+        position = scrollTop - 800
+      } else if (csid_status) {
+        // 球种非折叠状态
+        position = scrollTop - 234 * 5
+      } else {
+        // 球种折叠
+        position = scrollTop - 234 * 5
+      }
+    }
+    return position
   }
 
   /**
