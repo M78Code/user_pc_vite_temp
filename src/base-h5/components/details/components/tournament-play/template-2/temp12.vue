@@ -30,7 +30,7 @@
                        :key="ol_index"
                        class="on-name-osn"
                        @click="go_to_bet(ol_item)"
-                       :class="[get_bet_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
+                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
@@ -154,7 +154,7 @@
                        :key="ol_index"
                        class="on-name-osn"
                        @click="go_to_bet(ol_item)"
-                       :class="[get_bet_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
+                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
@@ -265,7 +265,7 @@
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX} from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from 'src/core/index.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -281,7 +281,6 @@ export default defineComponent({
   // #TODO mixins
   // mixins:[ odd_convert ],
   setup(props, evnet) {
-    const store_state = store.getState()
     let data = reactive({
       utils,
       // 主队是否显示
@@ -291,12 +290,10 @@ export default defineComponent({
     });
     // #TODO vuex
     // computed: {
-    // ...mapGetters(["get_bet_list","get_detail_data"]),
-    const get_bet_list = computed(() => {
-      return []
-    });
+    // ...mapGetters(["BetData.bet_oid_list","get_detail_data"]),
+    const route = useRoute()
     const get_detail_data = computed(() => {
-      return store_state.detailsReducer.details_data || {}
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
     const home_name = computed(() => {
       return item_data.title[0]
@@ -328,7 +325,7 @@ export default defineComponent({
     };
     return {
       ...toRefs(data),
-      get_bet_list,
+      BetData,
       get_detail_data,
       home_name,
       away_name,

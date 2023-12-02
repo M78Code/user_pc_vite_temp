@@ -20,7 +20,7 @@ import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
 import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt"
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/core/index.js";
+import { PageSourceData, GlobalAccessConfig, ServerTime,LocalStorage } from "src/core/index.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -63,7 +63,6 @@ watch(
 // 设置主题
 const set_global_theme_change = () => {
   Object.assign(page_style, global_color_obj());
-  console.error('ssss',page_style)
 }
 
 onBeforeMount(() => {
@@ -71,7 +70,8 @@ onBeforeMount(() => {
   timer = null;
   timer2 = null;
   // 设置商户样式
-
+  // 复刻版默认中文
+  LocalStorage.set('lang','zh')
   // this.init_version_name();
   on_listeners();
   // 公共主题色

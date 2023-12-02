@@ -149,7 +149,7 @@ onMounted(() => {
       width: 50%;
       display: block;
       text-align: right;
-      margin-right: 10px;
+      padding-right: 20px;
       overflow: hidden;
       color: var(--q-gb-t-c-5);
     }
@@ -158,7 +158,7 @@ onMounted(() => {
       width: 50%;
       min-width: 100px;
       display: block;
-      text-align: left;
+      margin-left: -40px;
       color: var(--q-gb-t-c-2);
     }
   }
