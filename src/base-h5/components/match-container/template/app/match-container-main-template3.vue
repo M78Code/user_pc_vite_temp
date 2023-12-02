@@ -100,6 +100,7 @@
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
               <div class="odd-list match-indent" :class="{ 'simple': show_newer_edition, result: is_results }">
+                <span class="odd-list-time">{{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} </span>
                 <div class="odd-list-inner odd" :class="{ 'n-s-edition': !show_newer_edition, result: is_results }">
                   <!--赛果-->
                   <div v-if="is_results && match.tonum && menu_lv2.mi == 29" class="triangle-wrapper flex items-center justify-center">
@@ -764,6 +765,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    color: var(--q-gb-bg-c-3) !important;
     .icon-wapper{
       transform: rotate(90deg);
     }
@@ -820,6 +822,12 @@ export default {
   height: auto;
   position: relative;
   min-height: 1.11rem;
+
+  .odd-list-time {
+    display: block;
+    color: var(--q-gb-t-c-4);
+    margin-top: .05rem;
+  }
 
   &.simple,
   &.result {
@@ -1055,7 +1063,7 @@ export default {
 
           .team-t-title-w {
             font-size: 0.12rem;
-            height: 0.3rem;
+            // height: 0.3rem;
             -webkit-line-clamp: 2;
             display: flex;
             flex-direction: column-reverse;

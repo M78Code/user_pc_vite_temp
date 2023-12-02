@@ -24,7 +24,7 @@ function compute_position(position) {
   const width = 0; //表示是 横 向
   const x_space = 0; //每张图的间距 x
 
-  const height = 18; //表示是 纵 向
+  const height = 16; //表示是 纵 向
   const y_space = 2; //每张图的间距 y
   const _v = item[position];
   if (_v > -1) {

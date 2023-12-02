@@ -24,7 +24,7 @@
       <div class="record-settled-l">
         <div style="width:180px;">
           <q-select outlined v-model="select_value" @update:model-value="selectInput" :options="select_options"
-                    option-label="value" :dense="false" :options-dense="false" map-options>
+                    option-label="value" :dense="false" :options-dense="false" map-options color="orange">
           </q-select>
         </div>
         <div class="q-pa-md time-select">

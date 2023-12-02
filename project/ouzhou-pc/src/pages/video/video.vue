@@ -147,7 +147,6 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 //   show_video_replay() {
 //     // 配置信息
 //     const replayInfo = UserCtr.user_info.merchantEventSwitchVO
-//     console.log('this.$route.params.video_size', this.$route.params.video_size)
 //     return replayInfo && replayInfo.eventSwitch && this.vx_play_media.media_type === 'video' && Number(this.$route.params.video_size) !== 1
 //   },
 //     /**

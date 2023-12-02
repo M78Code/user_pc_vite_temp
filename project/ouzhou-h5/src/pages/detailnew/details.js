@@ -320,30 +320,47 @@ export const details_main = (router, route) => {
     getMatchDetailMatchInfo(params);
   };
   function getMatchDetailMatchInfo(params) {
-    api_match_list.get_detail_data(params).then((res) => {
-      const res_data = lodash.get(res, "data");
-      if (res_data && res_data.mhid) {
-        match_detail.value = res_data;
-        match_detail.value.course =
-          lodash.get(res_data, "ms") == 110
-            ? "Soon"
-            : courseData[lodash.get(res_data, "csid")][
-                lodash.get(res_data, "mmp")
-              ] || "";
-        match_detail.value.mstValueTime = format_mst_data(match_detail.value);
-        use_polling_mst(match_detail.value);
-      } else {
-        clear_all_timer();
-        router.replace("/");
-      }
-      // detail_store.get_detail_params
-      MatchDataWarehouseInstance.value.set_match_details(
-        toRaw(match_detail.value),
-        []
-      );
-    }).catch((err)=>{
-      console.log(err,'err');
-    })
+    let obj_ = {
+      // axios api对象
+      axios_api: api_match_list.get_detail_data,
+      // axios api对象参数
+      params: params,
+      // 唯一key值
+      key: "details",
+      error_codes: ["0401038"],
+      // axios中then回调方法
+      fun_then: (res) => {
+        const res_data = lodash.get(res, "data");
+        if (res_data && res_data.mhid) {
+          match_detail.value = res_data;
+          match_detail.value.course =
+            lodash.get(res_data, "ms") == 110
+              ? "Soon"
+              : courseData[lodash.get(res_data, "csid")][
+                  lodash.get(res_data, "mmp")
+                ] || "";
+          match_detail.value.mstValueTime = format_mst_data(match_detail.value);
+          use_polling_mst(match_detail.value);
+        } else {
+          clear_all_timer();
+          router.replace("/");
+        }
+        // detail_store.get_detail_params
+        MatchDataWarehouseInstance.value.set_match_details(
+          toRaw(match_detail.value),
+          []
+        );
+      },
+      // axios中catch回调方法
+      fun_catch: (e) => {
+        console.log(e);
+      },
+      // 最大循环调用次数(异常时会循环调用),默认3次
+      max_loop: 3,
+      // 异常调用时延时时间,毫秒数,默认1000
+      timers: 1100,
+    };
+    utils.axios_api_loop(obj_);
     //初次调用成功后 赋值init未false
     get_category_list_info({
       sportId: csid.value,
