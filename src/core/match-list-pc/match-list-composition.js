@@ -53,12 +53,10 @@ let tid_match_list;
 useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
-		//请求列表接口之前 先设置元数据列表
-		if (!is_socket && !MenuData.is_leagues())
-			init_page_when_base_data_first_loaded()
 		fetch_match_list(is_socket)//请求接口
 	}, 80);
 })
+useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 100));
 // watch(() => MenuData.match_list_version.value, () => {
 // 	clearTimeout(tid_match_list)
 // 	tid_match_list = setTimeout(() => {
@@ -233,13 +231,12 @@ function handle_destroyed() {
 }
 function init_page_when_base_data_first_loaded() {
 	//设置元数据 列表 返回boolean
-	is_has_base_data = set_base_data_init()
-	if (PROJECT_NAME == 'ouzhou-pc') {
+	// is_has_base_data = set_base_data_init()
+	// if (PROJECT_NAME == 'ouzhou-pc') {
 		is_has_base_data = set_base_data_init_ouzhou()
-	}
-	if (is_has_base_data) {
-		MatchListScrollClass.set_scroll_top(0);
-		load_data_state.value = 'data';
+	// }
+	if(is_has_base_data){
+		load_data_state.value = "data";
 	}
 	//释放试图 
 	// check_match_last_update_timer_id = setInterval(
@@ -277,7 +274,6 @@ function mounted_fn() {
 			api_bymids({ is_show_mids_change: true })
 		}, 1000)).off,
 		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fetch_match_list).off,
-		useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 100)).off,
 	]
 
 	load_video_resources();
