@@ -238,7 +238,6 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
           useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
           const code = lodash.get(res, "code");
           const data = lodash.cloneDeep(lodash.get(res, "data"));
-          console.log(res,'data');
           if (code == "0400500" || !data || Object.keys(data).length == 0) {
             // 自动切换赛事
             emit_autoset_match(0);

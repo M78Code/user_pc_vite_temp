@@ -4,7 +4,7 @@
 <template>
   <div class="bet-menu-wrap" :class="{ 'bet-menu-wrap-mix': !BetData.is_bet_single }">
     <!-- 错误信息 -->
-    <div class="bet-message">{{ BetViewDataClass.error_message }}</div>
+    <div class="bet-message">{{ i18n_t(BetViewDataClass.error_message) }}</div>
 
     <div class="full-width cursor-pointer bet-submit" @click.stop="submit_handle('submit')">
       <template

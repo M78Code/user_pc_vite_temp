@@ -42,7 +42,6 @@ const detailInfo = computed(()=>{
       for (const item of obj.msc) {
         const list = item.split('|')
         const score_list = list[1].split(':')
-        console.log(list)
         result[list[0]] = {
           home:score_list[0],
           away:score_list[1],

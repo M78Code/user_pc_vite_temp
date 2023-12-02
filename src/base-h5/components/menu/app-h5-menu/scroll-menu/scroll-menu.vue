@@ -23,7 +23,7 @@
                     </div>
                   </div>
                   <div class="s-w-i-title">
-                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item.mi) }}
+                    {{ (item.btn ?item.title : item.name) || MenuData.get_menus_i18n_map(item) }}
                   </div>
                 </div>
 
@@ -34,14 +34,15 @@
       </div>
 </template>
 <script setup>
-import { ref,onUnmounted } from "vue";
+import { ref,reactive,onMounted,onUnmounted } from "vue";
 import lodash_ from "lodash";
 import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/core/index.js";
 import {scrollMenuEvent} from "../utils";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-
-const emitters = ref({});
+import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
+const ref_data = reactive({
+    emit_lsit:{}
+})
 
 const props = defineProps({
   // 滑动菜单数据
@@ -55,7 +56,7 @@ const props = defineProps({
     default: ''
   }
 })
-
+const emits = defineEmits(['changeList'])
 /**
  * 二级菜单事件
 */
@@ -93,9 +94,30 @@ const format_type = ( item = {} ) => {
   //电竞背景处理
   return MenuData.recombine_menu_bg(item, true)
 }
-
-onUnmounted(() => {
-  Object.values(emitters.value).map((x) => x());
+/**
+ * ws推送球种数量
+ * @param {*} list 
+ */
+const get_menu_ws_list = (list) =>{
+    list = list.filter((item)=>{return item.mi});
+    const wsList = props.scrollDataList.map((item)=>{
+        list.forEach((n)=>{
+            if(item.mi == n.mi){
+                item.ct = n.count;
+            }
+        })
+        return item;
+    })
+    emits('changeList',wsList)
+}
+onMounted(()=>{
+    ref_data.emit_lsit = {
+        emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, get_menu_ws_list).off,
+    }
+   
+})
+onUnmounted(()=>{
+    Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
 
@@ -177,6 +199,7 @@ onUnmounted(() => {
               white-space: nowrap;
               position: relative;
               top: -0.01rem;
+              padding: 0 1px;
             }
           }
         }

@@ -1,5 +1,5 @@
 <!--
- * @Description: 投注想列表
+ * @Description: 投注项列表 112 20 20 25
 -->
 <template>
   <div class="odd-list-wrap"

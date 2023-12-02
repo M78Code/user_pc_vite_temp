@@ -26,6 +26,7 @@
 
 <script setup>
 import { ref,onMounted,onUnmounted, watch } from 'vue';
+import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js";
@@ -50,7 +51,7 @@ const set_show_leagues = () => {
 }
 async function get_league(){
 	let date = route.params.type == 1 ? localStorage.getItem('league_hours') : 12
-	const list = await get_ouzhou_leagues_data(date)
+  const list = await get_ouzhou_leagues_data(date, route.params.sportId)
 	league_list.value=[]
 	list?.map(item => {
 		if (route.params.type == 1) {
@@ -87,7 +88,8 @@ const getName = () => {
 	return name
 }
 const jumpTo = ()=>{
-	router.go(-1)
+	let route_name = lodash_.get(MenuData.router_info,'pre_route')
+  router.push({name:route_name})
 }
 
 </script>

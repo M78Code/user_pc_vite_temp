@@ -123,7 +123,6 @@ import {
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 const { page_source } = PageSourceData;
-console.log('load_data_state', load_data_state.value != 'loading', load_data_state.value)
 export default {
   components: {
     LeagueTab,

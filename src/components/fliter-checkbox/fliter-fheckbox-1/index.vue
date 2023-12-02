@@ -45,7 +45,7 @@ export default {
       left: 4px;
       width: 6px;
       height: 4px;
-      top: 4px;
+      top: 3px;
       border-top: 2px solid transparent;
       border-right: 2px solid transparent;
       transform: rotate(135deg);

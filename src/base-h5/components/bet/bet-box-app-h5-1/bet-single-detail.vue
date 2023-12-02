@@ -25,13 +25,13 @@
     </div>
 
      <!--加减-->
-     <bet-mix-box-child6 v-if="ref_data.is_bet_pre" :item='item'></bet-mix-box-child6>
+     <bet-mix-box-addition-subtraction v-if="ref_data.is_bet_pre" :item='item'></bet-mix-box-addition-subtraction>
 
   </div>
 </template>
 
 <script setup>
-import betMixBoxChild6 from './bet_mix_box_child6.vue';
+import betMixBoxAdditionSubtraction from './bet_mix_box_addition_subtraction.vue';
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";

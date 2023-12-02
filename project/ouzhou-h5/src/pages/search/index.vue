@@ -80,44 +80,43 @@
 								<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
 							</div>
 							<div v-if="expand_bowling">
-								<li v-for="(item, index) in search_data?.bowling" :key="index"
-									@click="suggestion_bowling_click(item)">
+								<li v-for="(item, index) in show_bowling_list" :key="index">
 									<div class="list_top">
 										<span v-html="red_color(item.tn)"></span><img
 											:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 									</div>
-									<div class="list_bottom">
+									<div class="list_bottom" v-for="(i, idx) in item.children" @click="suggestion_bowling_click(i, idx)">
 										<div style="width: 52%; word-break: break-all">
 											<p>
-												<span class="home" v-html="red_color(item.mhn)"></span>
+												<span class="home" v-html="red_color(i.mhn)"></span>
 												<span class="middle">v</span>
-												<span class="away" v-html="red_color(item.man)"></span>
+												<span class="away" v-html="red_color(i.man)"></span>
 											</p>
-											<p>{{ format_date_overseas(item.mgt) }}</p>
+											<p>{{ formatTime(i.mgt, 'mm/dd hh:MM') }}</p>
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="item.csid != '2'">
+											<template v-if="i.csid != '2'">
 												<div class="flex_1"
-													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+													<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
 											</template>
 											<div class="flex_1"
-												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
+												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -133,8 +132,7 @@
 								<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
 							</div>
 							<div v-if="expand_league">
-								<li v-for="(item, index) in search_data?.league" :key="index"
-									@click="go_detail_or_reslut(item.matchList[index])">
+								<li v-for="(item, index) in search_data?.league" :key="index">
 									<div class="list_top">
 										<!-- 联赛icon -->
 										<!-- <img class="match_logo"
@@ -143,14 +141,14 @@
 										<span v-html="red_color(item.leagueName)"></span><img
 											:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 									</div>
-									<div class="list_bottom" v-for="(i, idx) in item.matchList">
+									<div class="list_bottom" v-for="(i, idx) in item.matchList" @click="go_detail_or_reslut(item.matchList[idx], idx)">
 										<div style="width: 52%; word-break: break-all">
 											<p>
 												<span class="home" v-html="red_color(i.mhn)"></span>
 												<span class="middle">v</span>
 												<span class="away" v-html="red_color(i.man)"></span>
 											</p>
-											<p>{{ format_date_overseas(i.mgt) }}</p>
+											<p>{{ formatTime(i.mgt, 'mm/dd hh:MM') }}</p>
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
@@ -191,22 +189,21 @@
 								<div class="color">{{ i18n_t('ouzhou.search.team') }}</div>
 							</div>
 							<div v-if="expand_team">
-								<li v-for="(item, index) in search_data?.teamH5" :key="index"
-									@click="go_detail_or_reslut(item)">
+								<li v-for="(item, index) in search_data?.teamH5" :key="index">
 									<div v-if="item.tn">
 										<div class="list_top">
 											<span v-html="red_color(item.tn)"></span><img
 												:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
 										</div>
 									</div>
-									<div class="list_bottom">
+									<div class="list_bottom" @click="go_detail_or_reslut(item, index)">
 										<div style="width:52%; word-break: break-all">
 											<p>
 												<span class="home" v-html="red_color(item.mhn)"></span>
 												<span class="middle">v</span>
 												<span class="away" v-html="red_color(item.man)"></span>
 											</p>
-											<p>{{ format_date_overseas(item.mgt) }}</p>
+											<p>{{ formatTime(item.mgt, 'mm/dd hh:MM') }}</p>
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
@@ -267,9 +264,8 @@
 	</div>
 </template>
 <script setup>
-import { onMounted, ref, watch, onUnmounted, reactive } from 'vue';
+import { onMounted, ref, watch, computed, onUnmounted, reactive } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
-import { format_date_overseas } from "src/core/format/module/format-date.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -284,6 +280,7 @@ const { get_insert_history, get_fetch_hot_search } = api_search || {};
 import { is_results } from 'src/base-h5/mixin/menu.js'
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+import { formatTime } from 'src/core/format/module/format-date.js';
 
 const input_value = ref('');
 const tab_growp = ref(null);
@@ -393,6 +390,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_params');
 			if (is_results.value) {
+				MatchMeta.clear_match_info()
 				render_match_results_list(res)
 				return
 			}
@@ -405,7 +403,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 }, 500)
 
 const render_match_results_list = (res) => {
-	MatchMeta.match_mids = []
+	// MatchMeta.match_mids = []
 	if (+res.code !== 200) return MatchMeta.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res.data.data, 'teamH5', [])
@@ -413,6 +411,26 @@ const render_match_results_list = (res) => {
     if (length < 1) return MatchMeta.set_page_match_empty_status({ state: true });
     MatchMeta.handler_match_list_data({ list: list, type: 1 })
 }
+
+
+// 进行中同联赛下的赛事放在一起
+const show_bowling_list = computed(() => {
+	const obj = {}
+	const bowling = search_data.value?.bowling || []
+	bowling.forEach(item => {
+		const {csid, tn } = item;
+		if(!obj[tn]) {
+			obj[tn] = {
+				tn,
+				csid,
+				children: [item]
+			}
+		} else {
+			obj[tn].children.push(item)
+		}
+	})
+	return obj;
+});
 
 // 获取球赛的种类
 const sport_kind_data = ref([]);
@@ -439,7 +457,7 @@ function resultsJumpDetailHandle(item) {
 }
 
 // 滚球跳转
-function suggestion_bowling_click(item) {
+function suggestion_bowling_click(item, index) {
 	let item_name;
 
 	if (item.type == 'tour') {
@@ -454,13 +472,19 @@ function suggestion_bowling_click(item) {
 		//set_goto_detail_matchid(item.mid);
 		//set_details_item(0);
 		SearchData.set_search_term(get_search_txt)
-		go_detail_or_reslut(item)
+		go_detail_or_reslut(item, index)
 		useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, false)
 	}, 200)
 }
 
+/**
+ * @Description:点击滚球搜索
+ * @param {string} league 点击联赛标题
+ * @return {undefined} undefined
+ */
+
 // 跳转到 详情页 或者 赛果页面
-function go_detail_or_reslut(item) {
+function go_detail_or_reslut(item, index) {
 	sessionStorage.setItem('search_params', JSON.stringify({
 		keyword: input_value.value,
 		csid: item.csid
@@ -470,7 +494,7 @@ function go_detail_or_reslut(item) {
 		router.push({
 			name: 'match_result',
 			params: {
-				mid: item.mid ? item.mid : item.matchList[0].mid,
+				mid: item.mid ? item.mid : item.matchList[index].mid,
 			},
 			query
 		})

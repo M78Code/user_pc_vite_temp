@@ -5,6 +5,7 @@
         v-show="get_match_detail?.csid"
         :class="['sport_bg', `${get_sports_bg(get_match_detail?.csid)}`]"
       ></div>
+     
       <div class="match-detail-time">
           <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
             <match-stage :detail_data="get_match_detail" ></match-stage>
@@ -15,7 +16,7 @@
             style="margin-left:5px"
           />
           </span>
-    
+          
         <div class="match-detail-time-collect" v-if="show_collect" @click="collect_click">
           <img
             v-if="is_collect"
@@ -81,6 +82,8 @@
         </div>
       </template>
     </div>
+
+
   </div>
 </template>
 
@@ -96,13 +99,16 @@ import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zo
 const props = defineProps({
   get_match_detail: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
   show_collect: {
     type:Boolean,
     default : true
   }
 });
+
+// 比赛开始，显示右侧actions状态
+const actionsStatus = ref(true);
   // 赛事收藏状态
 const  is_collect = computed(()=>{
   if(lodash.isEmpty(props.get_match_detail)) return
@@ -154,6 +160,7 @@ const show_time_counting = computed(() => {
     return ![0,30,31,32,33,34,50,61,80,90,100,110,120,301,302,303,445].includes(mmp);
   }
 })
+
 // 意义不明的两行代码
 const current_ball_type = ref(0);
 const sport_ball = {
@@ -341,9 +348,10 @@ onMounted(()=>{
 .detail_header_tem1 {
   .match-detail-head {
     position: relative;
-    min-height: 100px;
-    padding: 15px 14px 0 14px;
-    line-height: 23px;
+    width: 100%;
+    height: 245px;
+    flex-shrink: 0;
+    // line-height: 23px;
     background-color: var(--q-gb-bg-c-2);
     font-weight: 700; //使用设计稿的500不明显，故使用700. 初步判断为苹方字体不包含500字重的缘故
     // background: linear-gradient(
@@ -354,6 +362,10 @@ onMounted(()=>{
     // .sports_bg0 {
     //   background:url('src/assets/images/detail/baseball_bg.png') no-repeat;
     // }
+    .actions {
+      position: absolute;
+      right: 0;
+    }
     .sports_bg2 {
       background: url($SCSSPROJECTPATH + "/image/detail/basketball_bg.png")
         no-repeat;

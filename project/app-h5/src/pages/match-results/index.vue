@@ -10,6 +10,7 @@
         </template>
         <template v-slot:right>
                 <img
+                    class="right-icon"
                     @click="state.select_dialog = true"
                     :src="compute_local_project_file_path('/image/svg/navbar_icon.svg')"
                     alt=""
@@ -46,7 +47,7 @@ import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
-
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
@@ -136,9 +137,11 @@ onMounted(()=>{
     MenuData.set_current_lv1_menu(28)
     switchHandle(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
+    VirtualList.set_is_show_ball(true)
 })
 
 onUnmounted(()=>{
+    VirtualList.set_is_show_ball(false)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
 })
 

@@ -55,3 +55,43 @@ export const remove_file = (file_path) => {
     console.log(`删除文件 ${file_path}  出错 ：`, error);
   }
 };
+
+
+ 
+
+ 
+
+// 递归创建文件夹
+const mkdir = function(dirname) {
+  if (fs.existsSync(dirname)) {
+    return true;
+  } else {
+    if (mkdir(path.dirname(dirname))) {
+      fs.mkdirSync(dirname);
+      return true;
+    }
+  }
+}
+
+// 复制文件
+const copyFile = function(src,copy){
+  mkdir(path.dirname(copy));//创建目录
+  fs.copyFile(src,copy,function(err){
+    if(err) console.log('error')
+  })
+}
+
+// 复制文件夹
+const copyDir = function(src,dist){
+  var paths = fs.readdirSync(src)
+  paths.forEach( p => {
+    var _src = src + '/' +p;
+    var _dist = dist + '/' +p;
+    var stat = fs.statSync(_src)
+    if(stat.isFile()) {// 判断是文件还是目录
+      copyFile(_src,_dist)
+    } else if(stat.isDirectory()) {
+      copyDir(_src, _dist)// 当是目录是，递归复制
+    }
+  })
+}

@@ -24,4 +24,12 @@ export const EMIT_UPDATE_CURRENT_LIST_METADATA = "EMIT_UPDATE_CURRENT_LIST_METAD
 
 //初始化数据加载
 export const EMIT_UPDATE_INIT_DATA = "EMIT_UPDATE_INIT_DATA";
+
+// 发送api域名切换命令命令
+export const EMIT_API_DOMAIN_UPD_CMD = "EMIT_API_DOMAIN_UPD_CMD";
+
+// 发送用户基本信息到服务器
+export const EMIT_API_USER_PRO_INFO_CMD = "EMIT_API_USER_PRO_INFO_CMD";
+// apis域名全部不可用
+export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

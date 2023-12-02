@@ -5,7 +5,7 @@
 -->
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <div class="match-detail-odds">
+  <div class="match-detail-odds" ref="scrollRef">
     <div v-for="item in matchDetail" :key="item.topKey" class="odds-wrap">
       <q-expansion-item
         v-model="item.expanded"
@@ -18,7 +18,7 @@
         <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
           <div class="odds-item" v-if="item.hl[0].hs != 2">
-        {{ item.hpn }} 
+        {{ item.hpn }}
             <span v-if="item.hps&&get_match_status(detail_info.ms) == 1"> ({{ item.hps.split("|")[1] }}) </span>
             <!-- 一键置顶 -->
             <img
@@ -167,6 +167,12 @@
     <!-- <div class="detail-loading" v-if="loading">
       <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
     </div> -->
+    <div class="back-top">
+      <div class="btn-back" @click="backTop">
+        <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/t-arrow.svg`">
+        <span class="txt">返回顶部</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -203,15 +209,22 @@ const props = defineProps({
 const set_top_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top.png`;
 const set_top__active_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top_active.png`;
 // `mhs` 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-// <!-- ms: 0开 1封 2关 11锁 -->
+// <!-- ms: 0未开赛，1 进行中 -->
 //     <!-- hs: 0开 1封 2关 11锁 -->
 //     <!-- os: 1开 2封 3隐藏不显示不占地方-->
 const mouse_in = ref(false);
+const scrollRef = ref(null);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
 let all_hl_item = inject("all_hl_item");
 
 const odds_lift_obj = ref({});
+const backTop = () => {
+  scrollRef.value.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
 
 const columnTotal = (item) => {
   let total;
@@ -268,7 +281,6 @@ const sun_ol = (ol, item) => {
     result[result.length - 1]._otd = item.title[item.title.length - 2].otd;
   }
 
-  // console.log(1111111111,result)
   return result;
 };
 // 一键置顶
@@ -289,7 +301,6 @@ const betItemClick = (item, ol, play_name) => {
       _hn: ol._hn, // hn_obj
       _mid: ol._mid, //赛事id mid_obj
     };
-    console.log("odds_info.vue", ol, params);
     let other = {
       is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
@@ -309,6 +320,33 @@ onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
+.back-top{
+  padding-top: 19px;
+  padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .btn-back{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 108px;
+    height: 36px;
+    padding: 10px 0;
+    border-radius: 100px;
+    cursor: pointer;
+    background: #FFF;
+    img{
+      margin-right: 4px;
+    }
+    .txt{
+      color: #8A8986;
+      text-align: right;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+}
 .match-detail-odds {
   height: calc(100vh - 248px);
   overflow-y: auto;
@@ -404,7 +442,7 @@ onMounted(() => {});
       width: 50%;
       display: block;
       text-align: right;
-      margin-right: 10px;
+      padding-right: 20px;
       overflow: hidden;
       color: var(--q-gb-t-c-5);
     }
@@ -413,7 +451,7 @@ onMounted(() => {});
       width: 50%;
       min-width: 100px;
       display: block;
-      text-align: left;
+      margin-left: -40px;
       color: var(--q-gb-t-c-2);
     }
   }
@@ -457,8 +495,9 @@ onMounted(() => {});
 .odds-item {
   width: 100%;
   line-height: 35px;
-  font-weight: 500;
   position: relative;
+  font-weight: 500;
+  font-size: 15px;
 }
 .expand-icon {
   height: 9px;

@@ -186,10 +186,12 @@ const search_early_money = () => {
  * @description 检查订单中是否存在符合条件的提前结算订单号
  */
 const check_early_order = () => {
+  // 如果用户未开启提前结算
   if (!UserCtr.user_info.settleSwitch) {
     orderNumberItemList.value = []
     return;
   }
+  // 循环列表查询需要提前结算的单号
   let tempList = []
   lodash.forEach(BetRecordClass.list_data, (value, key) => {
     lodash.forEach(value.data, (item) => {

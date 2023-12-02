@@ -141,8 +141,7 @@ export const EMIT_HOT_STOP_PLAY = "EMIT_HOT_STOP_PLAY";
 // 热门推荐收藏功能
 export const EMIT_HOT_COLLECT = "EMIT_HOT_COLLECT";
 
-// 发送api域名切换命令命令
-export const EMIT_API_DOMAIN_UPD_CMD = "EMIT_API_DOMAIN_UPD_CMD";
+ 
 
 // 触发清除串关输入框金额
 export const EMIT_BET_MIX_CLEAR_HANDLE_CMD = "EMIT_BET_MIX_CLEAR_HANDLE_CMD";
@@ -203,8 +202,7 @@ export const EMIT_BET_MIX_INPUT_MAX_MONEY = "EMIT_BET_MIX_INPUT_MAX_MONEY";
 export const EMIT_MATCH_CURRENT_PLAY_CMD = "EMIT_MATCH_CURRENT_PLAY_CMD";
 // 初始化玩法
 export const EMIT_INIT_PLAY_INFO_CMD = "EMIT_INIT_PLAY_INFO_CMD";
-// apis域名全部不可用
-export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
+
 // 更改联赛筛选单选框选中状态
 export const EMIT_CHANGE_CHECK = "EMIT_CHANGE_CHECK";
 // 选择查询的数据类型
@@ -275,8 +273,7 @@ export const EMIT_GET_ESPORTS_VIDEO_LIST = "EMIT_GET_ESPORTS_VIDEO_LIST";
 export const EMIT_NET_ERR = "EMIT_NET_ERR";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
 
-// 发送用户基本信息到服务命令
-export const EMIT_API_USER_PRO_INFO_CMD = "EMIT_API_USER_PRO_INFO_CMD";
+ 
 // 调用用户接口，更新 域名流程
 export const EMIT_SET_GETUSERINFO_OSS_API = "EMIT_SET_GETUSERINFO_OSS_API";
 
