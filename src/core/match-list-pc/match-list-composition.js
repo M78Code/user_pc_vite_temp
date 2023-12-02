@@ -54,15 +54,10 @@ useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
 		fetch_match_list(is_socket)//请求接口
-	}, 80);
+	}, 100);
 })
-useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 100));
-// watch(() => MenuData.match_list_version.value, () => {
-// 	clearTimeout(tid_match_list)
-// 	tid_match_list = setTimeout(() => {
-// 		fetch_match_list()
-// 	}, 20);
-// })
+//请求元数据
+useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 70));
 /**
 * @description 请求数据
 * @param  {boolean} is_socket   是否 socket 调用
@@ -104,7 +99,7 @@ export function fetch_match_list(is_socket = false, cut) {
 	}
 	//不是 w 并且没有 元数据列表 启动loading
 	if (!is_socket && !is_has_base_data) {
-		load_data_state.value = "loading";
+		set_load_data_state('loading')
 		// 设置列表滚动条scrollTop
 		MatchListScrollClass.set_scroll_top(0);
 	}
@@ -143,12 +138,12 @@ export function fetch_match_list(is_socket = false, cut) {
 					} finally {
 						if (lodash.get(res, "data.length") != undefined || lodash.get(res, "data.data.length") != undefined) {
 							const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
-							load_data_state.value = len ? 'data' : 'empty'
+							set_load_data_state(len ? 'data' : 'empty')
 						}
 						else {
 							const livedata = lodash.get(res, "data.livedata.length", 0)
 							const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
-							load_data_state.value = livedata + nolivedata > 0 ? 'data' : 'empty'
+							set_load_data_state(livedata + nolivedata > 0 ? 'data' : 'empty')
 						}
 					}
 
@@ -156,14 +151,16 @@ export function fetch_match_list(is_socket = false, cut) {
 					// let is_collect = this.vx_layout_list_type == 'collect'
 					// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
 					if (MenuData.is_collect && res.code == '0401038') {
-						load_data_state.value = "api_limited";
+						set_load_data_state("api_limited")
+
 					}
 					if (!is_socket) {
-						load_data_state.value = "api_limited";
+						set_load_data_state("api_limited")
 					}
 				} else {
 					if (!is_socket) {
-						load_data_state.value = "empty";
+						set_load_data_state("empty")
+
 					}
 				}
 
@@ -181,7 +178,8 @@ export function fetch_match_list(is_socket = false, cut) {
 							// fetch_match_list();
 						}, 3000);
 					} else {
-						load_data_state.value = "refresh";
+						set_load_data_state("refresh")
+
 					}
 				}
 			});
@@ -230,13 +228,16 @@ function handle_destroyed() {
 	hot_match_list_timeout = null;
 }
 function init_page_when_base_data_first_loaded() {
+	set_load_data_state("loading")
 	//设置元数据 列表 返回boolean
-	// is_has_base_data = set_base_data_init()
-	// if (PROJECT_NAME == 'ouzhou-pc') {
+	if (PROJECT_NAME == 'ouzhou-pc') {
 		is_has_base_data = set_base_data_init_ouzhou()
-	// }
-	if(is_has_base_data){
-		load_data_state.value = "data";
+	} else {
+		is_has_base_data = set_base_data_init()
+	}
+	if (is_has_base_data) {  //如果元数据有ianh
+		set_load_data_state("data")
+
 	}
 	//释放试图 
 	// check_match_last_update_timer_id = setInterval(
@@ -352,7 +353,7 @@ function get_hot_match_list(backend_run = false) {
 			}
 			if (code == 200) {
 				if (match_list.length > 0) {
-					load_data_state.value = "data";
+					set_load_data_state("data")
 					is_show_hot.value = true;
 					match_list_handle_set(match_list)
 					// 设置列表数据仓库

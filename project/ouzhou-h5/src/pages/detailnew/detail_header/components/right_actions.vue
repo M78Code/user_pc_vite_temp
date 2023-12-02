@@ -1,6 +1,6 @@
 <template>
-    <div class="right-actions" v-if="props.isShow">
-        <ul>
+    <div class="right-actions">
+        <ul class="list">
             <li v-for="(item, i) in list" :key="i" class="item" @click="handleClick(item)">
                 <img :src="props.isCollect && item.label == 'collect' ? item.active : item.img" alt="" class="icon" v-if="item.img" />
             </li>
@@ -9,7 +9,9 @@
 </template>
 
 <script setup>
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core';
 import { computed } from 'vue';
+// import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
 const props = defineProps({
     // 是否收藏
     isCollect: {
@@ -21,10 +23,14 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    // 右侧显示状态 0 -> 显示全部 1 -> 展示动画内 2 -> 展示比分 3 -> 只展示收藏
+    // 右侧显示状态 0 -> 显示全部 1 -> 展示动画内 2 -> 展示比分 3 -> 只展示收藏 
     status: {
         type: Number,
-        default: 0
+        default: 1
+    },
+    isVideo: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -41,14 +47,15 @@ const mapObj = computed(() => {
 
 const list = computed(() => {
     const res = [
-        {label: 'animation', img: '/ouzhou-h5/image/detail/animation.png', value: 0},
-        {label: 'score', img: '/ouzhou-h5/image/detail/score.png', value: 1},
-        {label: 'collect', img: '/ouzhou-h5/image/detail/collect.png', active: '/ouzhou-h5/image/detail/collected.png', value: 2},
+        {label: 'animation', img: props.isVideo ? `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video.png` :  `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation.png`, value: 0},
+        {label: 'score', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/score.png`, value: 1},
+        {label: 'collect', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect_gray.png`, active: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`, value: 2},
     ];
     return res.filter(e => mapObj.value[props.status].includes(e.value));
 })
 
 const handleClick = (item) => {
+    console.log(111);
     switch (item.label) {
         // 切换动画
         case 'animation':
@@ -70,11 +77,22 @@ const handleClick = (item) => {
 </script>
 
 <style scoped lang="scss">
+.detail {
+    width: 100%;
+    height: 245px;
+}
 .right-actions {
     height: 100%;
+    top: 0px;
+    position: absolute;
+    right: 0;
+    z-index: 999;
+    width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
+    .list {
+        padding-top: 30px;
+    }
     .item {
         width: 40px;
         height: 40px;
@@ -82,7 +100,8 @@ const handleClick = (item) => {
         background: rgba(26, 26, 26, 0.49);
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: center;    
+        
         .icon {
             height: 16px;
         }
