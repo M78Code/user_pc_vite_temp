@@ -123,6 +123,7 @@ watch(toRef_get_match_detail, (new_value, old_value) => {
   scoew_icon_list.value = {};
   set_scoew_icon_list(new_value);
 })
+
 const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
   /**
   * @Description:获取动画播放地址
