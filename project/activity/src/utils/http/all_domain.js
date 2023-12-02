@@ -172,17 +172,31 @@ class AllDomain {
     },30000)
   }
 
-  /**
+   /**
    *    getuserinfo接口 内的 oss  配置 内的 oss   写入 方法
    */
-  set_getuserinfo_oss(obj = { api: [] }) {
-    if( Array.isArray(obj.api)&& obj.api.length>0){
-
+   set_getuserinfo_oss(obj = { api: [], img:[] ,live_h5:'',live_pc:''}) {
+    if (Array.isArray(obj.api) && obj.api.length > 0) {
       this.GETUSERINFO_OSS = obj;
       // 计算当前的 域名池子
       this.compute_current_local_api_pool();
     }
-
+    if(Array.isArray(obj.img)&& obj.img.length>0){
+    	//更新图片域名
+      BUILDIN_CONFIG.DOMAIN_RESULT.img_domains = obj.img;
+    }
+    if(window.BUILDIN_CONFIG.IS_PC){
+      if(obj.live_pc){
+        // //更新视频项目域名
+        window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] = obj.live_pc;
+      }
+    } else {
+      if(obj.live_h5){
+        //更新视频项目域名
+        window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] = obj.live_h5;
+      }
+    }
+    // window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0]
   }
 
   /**
@@ -239,7 +253,7 @@ class AllDomain {
     let reqs = [];
     url_api.map((item) =>
       reqs.push(
-        axios_instance.get(`${item}/yewu12/user/getUserInfo`, {
+        axios_instance.get(`${item}/yewu12/user/getUserInfoPB`, {
           params: { token: token   },
           timeout:6000,
           headers: {

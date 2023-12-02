@@ -68,10 +68,10 @@ import { colors } from 'quasar';
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 import store from "src/store-redux/index.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import { useRoute } from "vue-router"
 export default defineComponent({
   name: "temp15",
   props: ["item_data"],
@@ -81,7 +81,6 @@ export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
-    const store_state = store.getState()
     const init_data = reactive({
       utils,
       name_: '',  //计算类名
@@ -93,8 +92,9 @@ export default defineComponent({
     const get_bet_list = computed(() => {
       return []
     });
+    const route = useRoute()
     const get_detail_data = computed(() => {
-      return store_state.detailsReducer.details_data || {}
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
     const olitem_name = computed(() => {
       return function (val) {

@@ -7,7 +7,7 @@ import {
   MenuData,
   UserCtr,
   MatchDetailCalss,
-  SearchPCClass
+  SearchPCClass,
 } from "src/core/index";
 import {
   filter_odds_func,
@@ -20,7 +20,7 @@ import { LayOutMain_pc } from "src/core/";
 import lodash_ from "lodash";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
-import {addWsMessageListener} from "src/core/utils/module/ws-message.js";
+import { addWsMessageListener } from "src/core/utils/module/ws-message.js";
 export function usedetailData(route) {
   const router = useRouter();
   const category_list = ref([]); //分类数据
@@ -61,12 +61,18 @@ export function usedetailData(route) {
   let sportId = 1,
     mid = 2858623,
     tid;
-    let route_parmas = ref(route.params)  
-    watch(()=>route.params,val=>{
-       route_parmas.value = val
-       init()
-    },{deep:true})
- 
+  let route_parmas = ref(route.params);
+  watch(
+    () => route.params,
+    (val) => {
+      if (val && val.mid) {
+        route_parmas.value = val;
+        init();
+      }
+    },
+    { deep: true }
+  );
+
   // 监听分类切换数据
   watch(current_key, (val) => {
     if (!val) return;
@@ -74,7 +80,6 @@ export function usedetailData(route) {
   });
   // 监听分类切换数据
   // watch(()=>route.query, (val) => {
-  //   console.log(11111111,val)
   //   // todo
   //   // sportId = val.sportId
   //   // mid = val.mid
@@ -118,7 +123,6 @@ export function usedetailData(route) {
     detail_list.value =
       lodash_.get(getMidInfo(route.params.mid), "odds_info") || [];
 
-    // console.log(1111111111,detail_list.value)
 
     show_close_thehand.value = list.length == 0;
 
@@ -139,17 +143,16 @@ export function usedetailData(route) {
         }
       }
     }
-    // console.log(11111111,all_hl_item.value)
   };
 
   /**
    * 获取数据
    */
-  const is_fresh = ref(false)
+  const is_fresh = ref(false);
   const init = async (params) => {
     const { isNeedLoading = true } = params || {};
     // all_list_toggle = {}
-    is_fresh.value = isNeedLoading
+    is_fresh.value = isNeedLoading;
     detail_loading.value = isNeedLoading;
     get_detail(params);
     await get_category();
@@ -167,29 +170,31 @@ export function usedetailData(route) {
       };
       detail_loading.value = isNeedLoading;
       const res = await get_detail_data(params);
-      // 空赛事数据跳转回首页
-      if (lodash_.isEmpty(res.data)) {
-        router.push({
-          name: "home",
-        });
-        return;
-      }
-      getMatchDetailList(res.data);
-      detail_loading.value = false;
-      detail_info.value = { ...detail_info.value, ...res.data };
-      detail_info.value["course"] = handle_course_data(detail_info.value);
-      setTimeout(() => {
-        LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
-      }, 200);
-      
-      //存取赛事详情基础信息
-      // console.log(detail_info.value,'detail_info.value')
+      if (res.code == "0401038") {
+        // 限频重新请求
+        setTimeout(() => {
+          get_detail(par);
+        }, 1000);
+      } else {
+        // 空赛事数据跳转回首页
+        if (lodash_.isEmpty(res.data)) {
+          router.push({
+            name: "home",
+          });
+          return;
+        }
+        getMatchDetailList(res.data);
+        detail_loading.value = false;
+        detail_info.value = { ...detail_info.value, ...res.data };
+        detail_info.value["course"] = handle_course_data(detail_info.value);
+        setTimeout(() => {
+          LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
+        }, 200);
 
-      MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
-
-      // detail_info.value = getMidInfo(mid);
-      if (is_fresh.value) {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, route_parmas.value.mid);
+        MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
+        if (is_fresh.value) {
+          useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, route_parmas.value.mid);
+        }
       }
     } catch (error) {
       console.error("get_detail_data", error);
@@ -206,7 +211,14 @@ export function usedetailData(route) {
         t: new Date().getTime(),
       };
       const res = await getMatchDetailByTournamentId(params);
-      matchDetailList.value = res.data;
+      if (res.code == "0401038") {
+        // 限频重新请求
+        setTimeout(() => {
+          getMatchDetailList(data);
+        }, 1000);
+      } else {
+        matchDetailList.value = res.data;
+      }
     } catch (error) {
       console.error("getMatchDetailByTournamentId", error);
     }
@@ -218,8 +230,8 @@ export function usedetailData(route) {
   const get_category = async () => {
     try {
       const params = {
-        sportId:route_parmas.value.csid,
-        mid:route_parmas.value.mid,
+        sportId: route_parmas.value.csid,
+        mid: route_parmas.value.mid,
         t: new Date().getTime(),
       };
       const res = await get_detail_category(params);
@@ -245,17 +257,17 @@ export function usedetailData(route) {
       const params = {
         mcid: 0,
         cuid: user_info.userId,
-        mid:route_parmas.value.mid,
+        mid: route_parmas.value.mid,
         newUser: 0,
         t: new Date().getTime(),
       };
       const res = await get_detail_list(params);
       all_list.value = res.data || [];
-      res.data&&res.data.forEach((item) => (item.expanded = true));
+      res.data && res.data.forEach((item) => (item.expanded = true));
       detail_loading.value = false;
       current_key.value = current_key.value
         ? current_key.value
-        : tabList.value.length>0
+        : tabList.value.length > 0
         ? tabList.value[0].value
         : null;
 
@@ -359,7 +371,6 @@ export function usedetailData(route) {
   watch(
     () => MatchDataWarehouseInstance.data_version,
     (val, oldval) => {
-      console.log("data_version", val.version);
       if (val.version) {
         update_data(route.params.mid);
       }
@@ -368,7 +379,6 @@ export function usedetailData(route) {
   );
   let message_fun = [];
   onMounted(() => {
-    console.log(11111111111111)
     sportId = route.params.csid;
     mid = route.params.mid;
     tid = route.params.tid;
@@ -379,39 +389,41 @@ export function usedetailData(route) {
     // 一键折叠监听
     message_fun.push(useMittOn(MITT_TYPES.EMIT_SHOW_FOLD, set_odds_fold).off);
     // 一键置顶监听
-    message_fun.push(useMittOn(MITT_TYPES.EMIT_SET_PLAT_TOP, set_top).off) ;
-      // 增加监听接受返回的监听函数
-     message_fun.push(addWsMessageListener((cmd, data) => {
-     if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
-     // handler_ws_cmd(cmd, data);
-     // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
-     // console.error(flag,'flag','cmd:',cmd,data);
-     //如果ms mmp变更了 就手动调用ws
-       init.value = false
-       switch (cmd) {
-         case "C303":
-         get_category();
-           break;
-         case "C302":
-          // 赛事状态发现变更  ms 
-          init();
-          break;
-        case "C104":
-          RCMD_C104(data);
-          break;
-        case "C109":
-          RCMD_C109(data);
-         //  玩法集变更(C112)    
-        case "C112":
-          get_category()
-          break;
-        case "C102":
-          RCMD_C102(data);
-          break;    
-        default:
-          break;
-      }
-    }));
+    message_fun.push(useMittOn(MITT_TYPES.EMIT_SET_PLAT_TOP, set_top).off);
+    // 增加监听接受返回的监听函数
+    message_fun.push(
+      addWsMessageListener((cmd, data) => {
+        if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
+        // handler_ws_cmd(cmd, data);
+        // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
+        // console.error(flag,'flag','cmd:',cmd,data);
+        //如果ms mmp变更了 就手动调用ws
+        init.value = false;
+        switch (cmd) {
+          case "C303":
+            get_category();
+            break;
+          case "C302":
+            // 赛事状态发现变更  ms
+            init();
+            break;
+          case "C104":
+            RCMD_C104(data);
+            break;
+          case "C109":
+            RCMD_C109(data);
+          //  玩法集变更(C112)
+          case "C112":
+            get_category();
+            break;
+          case "C102":
+            RCMD_C102(data);
+            break;
+          default:
+            break;
+        }
+      })
+    );
   });
   /**
    * @description: RCMD_C109
@@ -425,7 +437,7 @@ export function usedetailData(route) {
     if (!skt_data || skt_data.length < 1) return;
     // 重新拉取数据;
     get_category();
-  };
+  }
   /**
    * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
    * @param {*} obj
@@ -436,24 +448,24 @@ export function usedetailData(route) {
     // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
     if (skt_data.mhs == 0 || skt_data.mhs == 11) {
       // 重新拉取数据;
-     get_category();
-    }else if(skt_data.mhs == 1){
+      get_category();
+    } else if (skt_data.mhs == 1) {
       // 设置盘口状态
     } else if (skt_data.mhs == 2) {
       show_close_thehand.value = true;
     }
   }
-   /**
-   * @description: 赛事事件C102)  
+  /**
+   * @description: 赛事事件C102)
    * @param {*} obj
    * @return {*}
    */
-   function RCMD_C102(obj) {
+  function RCMD_C102(obj) {
     let skt_data = obj.cd;
     if (skt_data.mmp == 999) {
       //切换赛事
       mx_autoset_active_match({ mid: route.params.mid });
-    }  
+    }
   }
   // setTimeout(() => {
   //   back_to(false);
@@ -477,22 +489,28 @@ export function usedetailData(route) {
     init();
   };
   /* 赛事结束之后调取详情接口 */
-  message_fun.push(useMittOn(
-    MITT_TYPES.EMIT_SWITCH_MATCH,
-    ((parmas)=>{
-      console.log(parmas,'parmas');
+  message_fun.push(
+    useMittOn(MITT_TYPES.EMIT_SWITCH_MATCH, (parmas) => {
       // route_parmas.value = parmas
-      refresh()
-      console.error('-----------aaaaa');
-    })
-  ).off)
+      refresh();
+    }).off
+  );
+    // 监听ws断连
+  message_fun.push(useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
+      // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
+      if(ws_status != 1){
+        MatchDataWarehouseInstance.scmd_c8_ws_reconnect()
+      }
+  }).off)
   onUnmounted(() => {
     off();
     clearInterval(timer);
     clearInterval(mst_timer);
-    message_fun.forEach(i=>i())
+    message_fun.forEach((i) => i());
     // off_init()
     clearTimeout(back_to_timer);
+     // 关闭详情订阅
+     MatchDataWarehouseInstance.set_active_mids([])
   });
 
   /**
@@ -503,8 +521,8 @@ export function usedetailData(route) {
   /**
    * @description 返回上一页
    */
-  const cur_menu_type = ref(LayOutMain_pc.layout_current_path )
-  let back_to_timer = null
+  const cur_menu_type = ref(LayOutMain_pc.layout_current_path);
+  let back_to_timer = null;
   const back_to = (is_back = true) => {
     // 重新请求相应接口
     // if (play_media.value.media_type === "topic") {

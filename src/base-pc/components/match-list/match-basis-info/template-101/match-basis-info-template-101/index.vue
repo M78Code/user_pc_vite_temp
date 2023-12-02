@@ -22,10 +22,11 @@
      <!-- 主队信息 -->
      <div class="row-item">
       <div class="team-logo">
-        <img v-if="show_type == 'all' && home_avatar"
-          v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter]" />
-        <div v-else :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"></div>
-      </div>
+        <img v-if="show_type == 'all' && home_avatar" 
+          :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
+          v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter, null, update_show_default]" />
+          <div v-else v-show="lodash.get(match, 'mhn')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"></div>
+        </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold': handicap_index == 1}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
@@ -56,9 +57,9 @@
     <div class="row-item kedui-item">
       <div class="team-logo">
         <img v-if="show_type == 'all' && away_avatar"
-          :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
-          v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter]" />
-          <div v-else :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"></div>
+          :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
+          v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter,  null, update_show_default]" />
+          <div v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"></div>
         </div>  
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -80,8 +81,8 @@
             <span  class="red-ball" v-show="lodash.get(match, 'msc_obj.S11.away')>0"
             :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S11.away') }}</span>
              <!-- 黄牌数 -->
-       <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.away',0)>0&&lodash.get(match, 'msc_obj.S11.away',0)<0"
-          :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
+            <span  class="red-ball yellow" v-show="lodash.get(match, 'msc_obj.S12.away',0)>0&&lodash.get(match, 'msc_obj.S11.away',0)<0"
+                :class="{ flash: is_show_away_red }">{{ lodash.get(match, 'msc_obj.S12.away') }}</span>
         </div>
       </div>
       <!-- 主比分 -->
@@ -144,6 +145,12 @@ const is_show_away_var = ref(false) // 客队var事件
 const is_show_home_var = ref(false) // 主队var事件
 const var_text = ref(false) // var事件名称
 const is_collect = ref(false) //赛事是否收藏
+const show_default_img = ref(false); //是否显示默认队伍头像
+
+const update_show_default = (value)=>{
+  show_default_img.value = value;
+}
+
 let mitt_list = []
 
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match.value, 'mid'))
@@ -353,8 +360,8 @@ onUnmounted(() => {
       align-items: center;
       margin-right: 8px;
       img,div {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         background-size: 100%;
       }
     }

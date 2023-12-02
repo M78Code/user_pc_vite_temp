@@ -34,10 +34,10 @@
                               <div
                                   class="play-box-style details_color warp bor-style"
                                   @click="utils.go_to_bet(ol_list_0[ol_index0 - 1])"
-                                  :class="[get_bet_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_list_0[ol_index0 - 1].result)}]"
+                                  :class="[BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_list_0[ol_index0 - 1].result)}]"
                               >
                                 <div class="ellipsis-t remark details_t_color6 fz_16">
-                                <span :class="[{'is-score':check_score(ol_list_0[ol_index0 - 1].on),'white_text':get_bet_list.includes(ol_list_0[ol_index0 - 1].id_)},'size-color']">
+                                <span :class="[{'is-score':check_score(ol_list_0[ol_index0 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)},'size-color']">
                                   {{ ol_list_0[ol_index0 - 1].on }}
                                 </span>
                                 </div>
@@ -117,9 +117,9 @@
                               <div
                                   class="play-box-style details_color bor-style"
                                   @click="utils.go_to_bet(ol_list_1[ol_index1 - 1])"
-                                  :class="[get_bet_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':utils.calc_win(ol_list_1[ol_index1 - 1].result)}]">
+                                  :class="[BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':utils.calc_win(ol_list_1[ol_index1 - 1].result)}]">
                                 <div class="ellipsis-t remark details_t_color6 fz_16">
-                                <span :class="[{'is-score':check_score(ol_list_1[ol_index1 - 1].on),'white_text':get_bet_list.includes(ol_list_1[ol_index1 - 1].id_)},'size-color']">
+                                <span :class="[{'is-score':check_score(ol_list_1[ol_index1 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)},'size-color']">
                                   {{ ol_list_1[ol_index1 - 1].on }}
                                 </span>
                                 </div>
@@ -199,9 +199,9 @@
                             <div
                                 class="play-box-style details_color"
                                 @click="utils.go_to_bet(ol_item)"
-                                :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
+                                :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
                               <div class="ellipsis-t remark details_t_color6 fz_16">
-                              <span :class="[{'is-score':check_score(ol_item.on),'white_text':get_bet_list.includes(ol_item.id_)}]">
+                              <span :class="[{'is-score':check_score(ol_item.on),'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                                 {{ ol_item.on }}
                               </span>
                               </div>
@@ -279,7 +279,7 @@
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {utils, LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance  } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
@@ -287,7 +287,7 @@ import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 //国际化
-
+import BetData from "src/core/bet/class/bet-data-class.js"
 
 export default defineComponent({
   // #TODO mixins
@@ -304,7 +304,6 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const route = useRoute()
-    const store_state = store.getState()
     let state_data = reactive({
       show_more:true,
     })
@@ -317,15 +316,12 @@ export default defineComponent({
     // #TODO vuex
     // computed: {
     // ...mapGetters([
-    // "get_bet_list",
     // "get_cur_odd",
     // "get_detail_data",
     // // 收到C105推送赔率,生成一个浮点, 伪随机数在范围从0到小于1
     // "get_flag_get_ol_list"
     // ]),
-    const get_bet_list = computed(() => {
-      return []
-    });
+
     const get_cur_odd = computed(() => {
       return ""
     });
@@ -333,7 +329,7 @@ export default defineComponent({
       return ""
     });
     const get_detail_data = computed(() => {
-      return store_state.detailsReducer.details_data || {}
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
     const hide_show_more_layout = computed(() => {
       let ret = true;
@@ -439,7 +435,7 @@ export default defineComponent({
       ...toRefs(state_data),
       utils,
       i18n_t,
-      get_bet_list,
+      BetData,
       get_cur_odd,
       max_count_ol,
       ol_list_0,

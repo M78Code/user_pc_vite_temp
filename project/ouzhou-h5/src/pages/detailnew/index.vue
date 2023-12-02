@@ -7,19 +7,33 @@
     @touchend.passive="touchend"
   >
     <loading_page v-show="loading" />
-    <div v-if="match_detail?.mvs > -1">
-      <detail_header_tem2 :get_match_detail="match_detail || {}" />
-    </div>
-    <div v-else class="mini-header-container"  @click="onClickTest">
-      <div class="header-fix" ref="header_fix">
-         <!-- v-if="!changeHeader" -->
-        <div ref="scroll_video_height" class="relative-position scroll_video_h">
-          <detail_header_tem1 :get_match_detail="match_detail || {}" />
-        </div>
+    <div class="detail-header-container">
+      <!--  v-if="match_detail?.mvs > -1" -->
+      <div v-if="!is_video && action_status != 2">
+        <!-- 动画 -->
+        <detail_header_tem2 :get_match_detail="match_detail || {}" />
       </div>
-    </div>
-    <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
-      <detail_header_tem0 :get_match_detail="match_detail || {}"/>
+      
+      <!-- v-else -->
+      <template v-else>
+        <div v-if="action_status == 2" class="mini-header-container"  @click="onClickTest">
+          <div class="header-fix" ref="header_fix">
+            <!-- v-if="!changeHeader" -->
+            <div ref="scroll_video_height" class="relative-position scroll_video_h">
+              <!-- 比分 -->
+              <detail_header_tem1 :get_match_detail="match_detail || {}" />
+            </div>
+          </div>
+        </div>
+        <div v-else-if="action_status == 0">
+          <detail_header_video />
+        </div>
+        <!-- <div class="change-header-fix" ref="change_header_fix" 
+            :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
+          <detail_header_tem0 :get_match_detail="match_detail || {}"/>
+        </div> -->
+    </template>
+      <right_actions :status="action_status" @handle-type="handle_type" :is-collect="is_collect" :is-video="is_video"/>
     </div>
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">
@@ -68,7 +82,7 @@
 </template>
 
 <script >
-import { onMounted, ref, watch, onUnmounted } from "vue";
+import { computed, ref, watch, onUnmounted } from "vue";
 import { useRouter,useRoute } from "vue-router";
 import detail_header_tem0 from "./detail_header/detail_header_tem0.vue";
 import detail_header_tem1 from "./detail_header/detail_header_tem1.vue";
@@ -81,6 +95,8 @@ import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
 import { i18n_t } from "src/core/index.js"
+import right_actions from "./detail_header/components/right_actions.vue";
+import detail_header_video from "./detail_header/detail_header_video.vue";
 
 // import './index.scss'
 export default {
@@ -92,7 +108,9 @@ export default {
     detail_event_tabs,
     odds_info,
     loading_page,
-    event_analysis
+    event_analysis,
+    right_actions,
+    detail_header_video
   },
   setup(ctx){
     const router = useRouter();
@@ -125,7 +143,50 @@ export default {
      changeHeader,
      MatchDataWarehouseInstance
     } = details_main(router,route)
+    const is_video = ref(false);
+    // 收藏状态
+    const is_collect = ref(false);
+    const action_status = ref(0);
+    // changeHeader||match_detail?.mvs > -1 [默认状态只展示收藏 -> 2]
+    // match_detail?.mvs > -1 动画 [展示视频 -> 1]
+    // else 展示视频 [0]
+    const right_actions_status = computed( () =>  (changeHeader||match_detail?.mvs > -1 )? 2 : match_detail?.mvs > -1 ? 1 : 0);
+    watch(right_actions_status, (value) => {
+      action_status.value = value;
+    });
+    /**
+     * 
+     * @param {'animation' | 'score' | 'collect'} label 
+     */
+    const handle_type = (label) => {
+      console.log(action_status.value, "action_status");
+      switch (label) {
+        case 'animation':
+          // 展示视频切换为动画
+          if (action_status.value  == 2) {
+            action_status.value = 0;
+          }else {
+            is_video.value = !is_video.value;
+          }
+          break;
+        case 'collect':
+          // 修改收藏状态
+          is_collect.value = !is_collect.value;
+          break;
+        case 'score':
+          // 展示比分
+          action_status.value = 2;
+          break;
+        default:
+          break;
+      }
+    }
+    
     return{
+      action_status,
+      is_collect,
+      is_video,
+      handle_type,
       detail_store,
       match_odds_info,
       match_detail,
@@ -152,6 +213,7 @@ export default {
       mid,
       MatchDataWarehouseInstance,
       allCloseState,
+      right_actions_status
      }
   } 
 }
@@ -270,5 +332,10 @@ export default {
 .overflow_hidden {
   // overflow: hidden;
   // height: 100vh;
+}
+
+.detail-header-container {
+  height: 230px;
+  position: relative;
 }
 </style>

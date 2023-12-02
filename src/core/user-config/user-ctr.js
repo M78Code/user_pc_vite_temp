@@ -29,7 +29,7 @@ import { i18n_t, i18n } from "..";
 
 import STANDARD_KEY from "src/core/standard-key";
 const user_key = STANDARD_KEY.get("user_info");
-import store from "src/store-redux/index.js";
+
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
@@ -134,6 +134,9 @@ class UserCtr {
     // 次要玩法盘口状态变化
     this.c305_data_change = ''
 
+    nextTick(()=>{
+      this.get_system_time()
+    })
   }
   
   // 刷新后 获取缓存数据
@@ -427,6 +430,7 @@ class UserCtr {
    * @param {*} res 请求 返回 拦截器内的 全部 res 实体
    */
   record_token_if_expired(res) {
+    try{
     // #TODO 不纳入统计的接口，这些接口无关紧要 或者 不验证token
     let whitelist = ["/yewu11/v1/getSystemTime/currentTimeMillis"];
     // 统一规则计算后的 url
@@ -468,6 +472,9 @@ class UserCtr {
         data_temp && (res.data.data = data_temp);
         this.set_getuserinfo_res(res);
       }
+    }}catch(e)
+    {
+      console.error("user",e)
     }
   }
   /**
@@ -1079,10 +1086,7 @@ class UserCtr {
     oss.gr = lodash.get(res, "data.data.gr", "").toUpperCase();
     useMittEmit(MITT_TYPES.EMIT_SET_GETUSERINFO_OSS_API, oss);
     // 保存userinfo
-    store.dispatch({
-      type: "set_user",
-      data: res.data.data,
-    });
+    this.set_user_info(lodash.get(res, "data.data", {}))
     //上传数据
     infoUpload.upload_data(lodash.get(res, "data.data", {}));
   }
@@ -1541,7 +1545,9 @@ class UserCtr {
 
   async get_system_time () {
     let res = await api_common.get_time_server()
-    return res.ts
+    let ts = lodash.get(res,'ts','')
+    LocalStorage.set('server_time',ts)
+    return ts
   }
 }
 

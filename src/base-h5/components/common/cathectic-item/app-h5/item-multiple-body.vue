@@ -67,25 +67,8 @@
           <span :class="[calc_amount_settle(data_b).color]">{{ calc_amount_settle(data_b).text }}</span>
         </p>
       </template>
-      <p>
-        <label>{{ i18n_t('app_h5.cathectic.bet_status')}}：</label> 
-        <template>
-          <!-- 预约中、预约失效页 -->
-          <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
-            <template v-if="[2,3].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.booked_fail')}}</template>
-            <template v-else-if="[4].includes(data_b.preOrderStatus)">{{i18n_t('pre_record.canceled')}}</template>
-            <template v-else>{{i18n_t('pre_record.booking')}}</template>
-          </span>
-          <!-- 未结算页 -->
-          <span v-else-if="BetRecordClass.selected === 0"> 
-            {{ calc_text(data_b).text }} 
-          </span>
-          <!-- 已结算页 -->
-          <span v-else> 
-            {{ calc_text_settle(data_b) }} 
-          </span>
-        </template>
-      </p>
+      <!-- 注单状态： -->
+      <item-footer :data_f="data_b"></item-footer>
     </div>
   </div>
 </template>
@@ -93,10 +76,11 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
-import { default as BetRecordClass, calc_text, outcome, bet_result } from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { calc_text, outcome, bet_result } from "src/core/bet-record/util.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { formatTime, format_money2, format_balance } from 'src/core/format/index.js'
-
+import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开
@@ -133,29 +117,6 @@ const toggle_box = () => {
     btn_text.value = i18n_t("bet_record.pack_down");
   }
 }
-
-  // 已结算 => 注单状态
-  const calc_text_settle = (data_b) => {
-    let text = ''
-    switch (data_b.orderStatus) {
-      case '0':
-      case '1':
-        text = i18n_t('bet_record.successful_betting')
-        break;
-      case '2':
-        text = i18n_t('bet_record.invalid_bet')
-        break
-      case '3':
-        text = i18n_t('bet_record.confirming')
-        break
-      case '4':
-        text =  i18n_t('bet.bet_err')
-        break
-      default:
-        break
-    }
-    return text
-  }
 
   // 已结算 => 结算金额
   const calc_amount_settle = (data_b) => {

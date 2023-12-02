@@ -20,7 +20,7 @@
         <div
           :title="o.ott"
           :style="{
-            color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#ff7000',
+            color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#484848',
           }"
           v-show="!match_info.hl[0].hs"
           class="oid-width"
@@ -187,7 +187,6 @@ const getOn = (match_info, o) => {
 };
 
 const odds_change = (obj) => {
-  console.log(obj);
 };
 
 // 事件执行函数
@@ -195,7 +194,6 @@ const odds_change = (obj) => {
 const active = ref(1);
 
 onMounted(() => {
-  // console.log(11111111, props.match_info);
 });
 </script>
 

@@ -254,7 +254,7 @@
                   </div>
                 </div>
                 <!-- 右边盘口组件 -->
-                <odd-list-wrap :main_source="main_source" :match="match_of_list" />
+                <OddListWrap :main_source="main_source" :match="match_of_list" />
                 </div>
               </div>
             </div>
@@ -276,13 +276,13 @@ import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
-import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-wrap.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import { icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
+import OddListWrap from 'src/base-h5/components/match-container/template/app/components/default-odd-template/odd-list-wrap.vue';
 import { in_progress, not_begin, animation_icon, video_icon, 
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
@@ -292,7 +292,7 @@ import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_m
 import default_mixin from '../../mixins/default.mixin.js'
 
 export default {
-  name: "match-container-main-template4",
+  name: "match-container-main-template1",
   mixins: [default_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事
