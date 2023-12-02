@@ -33,10 +33,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import { compute_img_url } from 'src/core/server-img/index.js'
+import { useMittOn,MITT_TYPES } from 'src/core/index.js';
 
 
 let area_obj = ref();
@@ -59,7 +60,8 @@ const props = defineProps({
   date: Number,
 });
 
-watch(() => props.date, async () => {
+
+async function get_list () {
   const list = await get_ouzhou_leagues_data(props.date)
   localStorage.setItem('league_hours', props.date)
   leagues.value = list
@@ -72,6 +74,11 @@ watch(() => props.date, async () => {
       show_right_btn.value = true;
     }
   })
+}
+
+const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,get_list).off
+watch(() => props.date, async () => {
+  get_list()
 }, { immediate: true })
 
 onMounted(() => {
@@ -102,7 +109,7 @@ const on_scroll = (e) => {
   }else{
     show_left_btn.value = false;
   }
-  if(scrollLeft == (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
+  if((scrollLeft + 2) >= (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
     show_right_btn.value = false;
   }else{
     show_right_btn.value = true;
@@ -133,9 +140,10 @@ const filter_tab_scroll = payload => {
   }, 16)
 }
 
-onBeforeUnmount(() => {
+onUnmounted(() => {
   clearInterval(interval_id);
   interval_id = null;
+  off()
 })
 </script>
 
