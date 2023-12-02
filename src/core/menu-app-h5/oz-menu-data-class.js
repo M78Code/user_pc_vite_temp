@@ -172,6 +172,7 @@ class MenuData {
     if(session_info){//取session球种id
       this.current_lv_2_menu_i = `${session_info.menu_mi}${this.menu_type.value}`;
       this.menu_mi.value = session_info.menu_mi;
+      this.menu_csid = +session_info.menu_mi - 100
     }
     !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA,menu_list);
   }
