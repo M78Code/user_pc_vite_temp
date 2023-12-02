@@ -419,11 +419,10 @@ export const details_main = (router, route) => {
     let skt_data = obj.cd;
     if (!skt_data || skt_data.length < 1) return;
     // 重新拉取数据;
-    const { mid, csid } = route.params;
-    get_category_list_info({
-      sportId: csid,
-      mid,
-    });
+    socketOddinfo({
+      sportId: csid.value,
+      mid:mid.value,
+    })
   }
   /**
    * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
@@ -435,11 +434,10 @@ export const details_main = (router, route) => {
     // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
     if (skt_data.mhs == 0 || skt_data.mhs == 11) {
       // 重新拉取数据;
-      const { mid, csid } = route.params;
-      get_category_list_info({
-        sportId: csid,
-        mid,
-      });
+      socketOddinfo({
+        sportId: csid.value,
+        mid:mid.value,
+      })
     } else if (skt_data.mhs == 1) {
       // 设置盘口状态
     } else if (skt_data.mhs == 2) {
@@ -474,7 +472,7 @@ export const details_main = (router, route) => {
   }
   }
  /**
-  * @description:  // 视频/动画状态推送（C107
+  * @description:  // 视频/动画状态推送（C107  暂时不单独处理
   * @param {*} obj
   * @return {*}
   */
@@ -494,7 +492,6 @@ export const details_main = (router, route) => {
     console.log(MatchDataBaseH5.get_quick_mid_obj(mid.value),'MatchDataBaseH5.get_quick_mid_obj(mid)');
     // match_odds_info.value = lodash.get(MatchDataBaseH5.get_quick_mid_obj(mid.value),"hps","[]")
     // match_detail.value = MatchDataBaseH5.get_quick_mid_obj(mid.value) || []
-    MatchDataBaseH5.set_active_mids([]);
     loading.value = true;
     init.value = true;
     // 增加监听接受返回的监听函数
@@ -525,10 +522,10 @@ export const details_main = (router, route) => {
           break;
          //  玩法集变更(C112)    
         case "C112":
-          get_category_list_info({
+          socketOddinfo({
             sportId: csid.value,
             mid:mid.value,
-          });
+          })
           break; 
          case "C102":
             RCMD_C102(data);
@@ -541,7 +538,19 @@ export const details_main = (router, route) => {
       }
     });
   });
-
+  // 监听ws断连
+  const {off} = useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
+    // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
+    if(ws_status != 1){
+      MatchDataWarehouseInstance.value.scmd_c8_ws_reconnect()
+    }
+  });
+  onUnmounted(()=>{
+    //关闭监听
+    off()
+    // 关闭详情订阅
+    MatchDataWarehouseInstance.value.set_active_mids([])
+  })
   // 监听赛事状态mmp的值
   watch(
     () => match_detail.value?.mmp,
