@@ -20,7 +20,7 @@
             {{ hl_data.hpn }}
           </div>
           <!--盘口结束时间-->
-          <div>{{ `${hl_data.end_time} ${i18n_t("list.bet_close")}` }}</div>
+          <div class="hl-end-time">{{ `${hl_data.end_time} ${i18n_t("list.bet_close")}` }}</div>
         </div>
         <!-- 投注列表 -->
         <div class="bet-list-wrap row">
@@ -91,6 +91,9 @@ function compute_match_all_handicap_data_champion(match) {
   height: 36px;
   line-height: 36px;
   padding: 0 15px;
+  .hl-end-time {
+    color: var(--q-gb-t-c-2);
+  }
   .max1 {
     max-width: 530px;
   }
@@ -115,7 +118,7 @@ function compute_match_all_handicap_data_champion(match) {
 :deep(.bet-col.bet-item-wrap-ouzhou ){
     flex: none;
     .c-bet-item.active .handicap-value .handicap-value-text {
-    color: var(--q-gb-t-c-1);;
+    // color: var(--q-gb-t-c-1);
 }
     .c-bet-item {
       width: 100%;
