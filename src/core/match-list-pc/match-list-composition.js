@@ -1,7 +1,5 @@
 import {
-	ref,
-	computed,
-	watch
+	ref
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
@@ -38,7 +36,7 @@ const is_loading = ref(true);
 
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
-const api_error_count = ref(0);
+let api_error_count =0;
 let is_has_base_data = false; //是否有元数据
 let check_match_last_update_timer_id;
 let get_match_list_timeid;
@@ -127,7 +125,7 @@ export function fetch_match_list(is_socket = false, cut) {
 			.then((res) => {
 				// 组件和路由不匹配 菜单id不匹配aa
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
-				api_error_count.value = 0;
+				api_error_count = 0;
 				if (res.code == 200) {
 					try {				//处理服务器返回的 列表 数据   fetch_match_list
 						handle_match_list_request_when_ok(
@@ -171,15 +169,14 @@ export function fetch_match_list(is_socket = false, cut) {
 				show_refresh_mask.value = false;
 				// 如果是用户切换菜单
 				if (!is_socket) {
-					api_error_count.value++;
+					api_error_count++;
 					// 重复拉列表的次数小于5   3秒后再次拉接口
-					if (api_error_count.value < 5) {
+					if (api_error_count < 5) {
 						get_match_list_timeid = setTimeout(() => {
-							// fetch_match_list();
+							fetch_match_list(is_socket, cut);
 						}, 3000);
 					} else {
 						set_load_data_state("refresh")
-
 					}
 				}
 			});
@@ -227,17 +224,19 @@ function handle_destroyed() {
 	axios_debounce_timer = null;
 	hot_match_list_timeout = null;
 }
+/**
+ * 元数据加载的方法
+ */
 function init_page_when_base_data_first_loaded() {
-	set_load_data_state("loading")
+	set_load_data_state("loading") //loading
 	//设置元数据 列表 返回boolean
 	if (PROJECT_NAME == 'ouzhou-pc') {
 		is_has_base_data = set_base_data_init_ouzhou()
 	} else {
 		is_has_base_data = set_base_data_init()
 	}
-	if (is_has_base_data) {  //如果元数据有ianh
+	if (is_has_base_data === true) {  //如果元数据有数据就设定为data
 		set_load_data_state("data")
-
 	}
 	//释放试图 
 	// check_match_last_update_timer_id = setInterval(
@@ -260,7 +259,7 @@ function mounted_fn() {
 	// 	type: "SET_IS_SHOW_BANNER",
 	// 	data: false,
 	// });
-	api_error_count.value = 0;
+	api_error_count = 0;
 	// is_vr_numer.value = 0;
 	mitt_list = [
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data).off,
