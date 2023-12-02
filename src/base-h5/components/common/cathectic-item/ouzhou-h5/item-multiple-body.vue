@@ -98,7 +98,8 @@
 <script setup>
 import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
-import {default as BetRecordClass, bet_result} from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { bet_result } from "src/core/bet-record/util.js";
 import { i18n_t, project_name } from 'src/core/index.js'
 import { IconWapper } from 'src/components/icon'
 import { itemFooter, itemOrder, earlySettle, earlySettledDetail } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
