@@ -177,7 +177,7 @@ onMounted(() => {
   }).off;
  
   // 处理ws订单状态推送
-  mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
+  mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE_BET_RECORD, c201_handle).off;
   // mitt_c210_handle = useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
 })
 onUnmounted(() => {
@@ -191,7 +191,7 @@ onUnmounted(() => {
 // ...mapMutations(["set_toast","set_early_moey_data"]),
 /**
  *@description 处理ws订单状态推送
- *@param {Object} · orderNo - 订单号, orderStatus - 订单状态
+ *@param {Object} · orderNo - 订单号, orderStatus - 提前结算状态  1:通过  2:拒绝
  */
 const c201_handle = ({ orderNo, orderStatus }) => {
   if (props.item_data.orderNo == orderNo && status.value == 3) {

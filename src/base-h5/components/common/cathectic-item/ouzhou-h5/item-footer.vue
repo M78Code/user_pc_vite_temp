@@ -63,7 +63,8 @@
 import { format_money2 } from "src/core/format/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import { reactive, onMounted, onUnmounted } from 'vue'
-import { default as BetRecordClass, calc_text} from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { calc_text } from "src/core/bet-record/util.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 
   const props = defineProps({
@@ -80,15 +81,15 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
   let mitt_c201_handle = null
   /**
    *@description 处理ws订单状态推送
-  *@param {Object} · orderNo - 订单号, orderStatus - 订单状态
+  *@param {Object} · orderNo - 订单号, status - 订单状态(1:投注成功 2:投注失败)
   */
-  const c201_handle = ({ orderNo, orderStatus }) => {
+  const c201_handle = ({ orderNo, status }) => {
     if (props.data_f.orderNo == orderNo ) {
-      if (orderStatus == 1) {
+      if (status == 1) {
         // 成功
         confirming.color = 'green'
         confirming.text = i18n_t('bet_record.successful_betting')
-      } else if (orderStatus == 2) {
+      } else if (status == 2) {
         // 失败
         confirming.color = 'red'
         confirming.text = i18n_t('bet_record.bet_err')
@@ -98,9 +99,7 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 
   onMounted(() => {
     // 如果注单状态是确认中，ws监听注单状态变化
-    if(props.data_f.orderStatus == '3') {
-      mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).on;
-    }
+    mitt_c201_handle = useMittOn(MITT_TYPES.EMIT_C201_HANDLE_BET_RECORD, c201_handle).on;
   })
   onUnmounted(() => {
     mitt_c201_handle && mitt_c201_handle()
