@@ -51,7 +51,7 @@ const set_show_leagues = () => {
 }
 async function get_league(){
 	let date = route.params.type == 1 ? localStorage.getItem('league_hours') : 12
-	const list = await get_ouzhou_leagues_data(date)
+  const list = await get_ouzhou_leagues_data(date, route.params.sportId)
 	league_list.value=[]
 	list?.map(item => {
 		if (route.params.type == 1) {

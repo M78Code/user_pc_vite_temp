@@ -187,7 +187,7 @@ class VirtualList {
     // 是否全部折叠状态
     const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
     const is_result = MenuData.is_results()
-    if (project_name === 'ouzhou_h5') {  // 欧洲版
+    if (project_name === 'ouzhou-h5') {  // 欧洲版
       if (is_result) {
         // 赛果
         position = scrollTop - 800
