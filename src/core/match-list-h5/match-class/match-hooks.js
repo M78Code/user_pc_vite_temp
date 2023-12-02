@@ -6,7 +6,7 @@
   /**
    * @description 按 浏览器帧渲染
    */
-  export const use_defer_render = (max = 500) => {
+  export const use_defer_render = (max = 1000) => {
     let frame_id = undefined;
     const frame_count = ref(1)
     function update_frame_count () {
