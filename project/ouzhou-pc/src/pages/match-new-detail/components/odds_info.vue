@@ -457,8 +457,9 @@ onMounted(() => {});
 .odds-item {
   width: 100%;
   line-height: 35px;
-  font-weight: 500;
   position: relative;
+  font-weight: 500;
+  font-size: 15px;
 }
 .expand-icon {
   height: 9px;
