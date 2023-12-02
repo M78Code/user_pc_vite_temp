@@ -31,7 +31,7 @@ import { defineComponent, onMounted, ref, toRef, watch } from "vue";
 const props = defineProps({
   get_match_detail: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
 });
 const scoew_icon_list = ref({});

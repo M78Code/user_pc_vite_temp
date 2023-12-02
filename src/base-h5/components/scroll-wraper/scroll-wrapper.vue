@@ -271,6 +271,7 @@ const update_max_height = (flag) => {
 
 // 触发本组件销毁之前回调
 onUnmounted(() => {
+  MatchDataBaseH5.set_active_mids([])
   clearTimeout(scroll_frame_timer);
   scroll_frame_timer = null;
   Object.values(emitters.value).map((x) => x());
