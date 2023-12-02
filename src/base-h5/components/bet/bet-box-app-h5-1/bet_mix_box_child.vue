@@ -10,7 +10,7 @@
     <!-- 投注中的蒙层，所有不能点击 -->
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
 
-    <div style="display: none;">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
+    <div v-show="false">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
 
     <div class="content-box">
       <div>
@@ -32,9 +32,10 @@
       <!-- 中间可滚动区域 -->
       <div class="scroll-box scroll-box-center" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
+        
           <div v-if="BetData.is_bet_single">
             <!-- 单关投注项列表 -->
-            <bet-mix-box-child3 :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-child3>
+            <bet-mix-box-single-pass :item="BetData.bet_single_list[0]" :key='0'></bet-mix-box-single-pass>
           </div>
           <div v-else>
             <!--
@@ -83,11 +84,11 @@
       <div class="scroll-box" ref="scroll_box" v-if="BetViewDataClass.bet_order_status != 1">
         <div v-if="BetData.is_bet_pre">
           <!--投注成功后的预约金额和可用金额-->
-          <bet-mix-box-child5></bet-mix-box-child5>
+          <bet-mix-box-successful-betting></bet-mix-box-successful-betting>
         </div>
         <!-- 常规投注 -->
         <div v-else>
-          <bet-mix-box-child4 v-if=" BetViewDataClass.orderNo_bet_obj.length "></bet-mix-box-child4>
+          <bet-mix-box-convention v-if=" BetViewDataClass.orderNo_bet_obj.length "></bet-mix-box-convention>
         </div>
       </div>
 
@@ -156,9 +157,9 @@
 </template>
 
 <script setup>
-import betMixBoxChild3 from './bet_mix_box_child3.vue';
-import betMixBoxChild4 from './bet_mix_box_child4.vue';
-import betMixBoxChild5 from './bet_mix_box_child5.vue';
+import betMixBoxSinglePass from './bet_mix_box_single_pass.vue';
+import betMixBoxConvention from './bet_mix_box_convention.vue';
+import betMixBoxSuccessfulBetting from './bet_mix_box_successful_betting.vue';
 import betAfterStatus from './bet-after-status.vue';
 
 // import betInfoList from "./bet_info_list.vue";
@@ -168,14 +169,14 @@ import bevisBettedConfig from "./bevis/bevis-betted-config.vue"
 
 
 import betMixShow from './bet_mix_show3.vue';
-import keyBoard from './/bet-keyboard.vue';
-import ballSpin from './/ball-spin.vue';
-import betBar from ".//bet-bar.vue";
+import keyBoard from './bet-keyboard.vue';
+import ballSpin from './ball-spin.vue';
+import betBar from "./bet-bar.vue";
 import betSingleDetail from './bet-single-detail.vue';
 import betConflictTips from './bet-conflict-tips.vue'
 import betCollusionInput from './bet-collusion-input.vue'
-import betCollusionInput1 from './bet-collusion-input1.vue'
-import betCollusionInput2 from './bet-collusion-input2.vue'
+// import betCollusionInput1 from './bet-collusion-input1.vue'
+// import betCollusionInput2 from './bet-collusion-input2.vue'
 
 
 
@@ -188,7 +189,7 @@ import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.j
 import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-import acceptRules from ".//accept-rules.vue"
+import acceptRules from "./accept-rules.vue"
 
 //串关的按钮
 const is_strand = ref(true)
@@ -264,9 +265,10 @@ const set_is_bet_single = () =>{
 }
 // 投注事件
 const pack_up = (val) => {
+  console.error('关弹窗');
   // TODO: 临时调试用
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   BetData.set_bet_state_show(false)
+  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   // BetData.set_clear_bet_info()
   // BetViewDataClass.set_clear_bet_view_config()
 }
