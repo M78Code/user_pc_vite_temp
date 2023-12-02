@@ -302,7 +302,7 @@ export const match_collect_status = (match, obj, type=-1) =>{
   // console.error(type,'赛-事收藏信息:',match, res);
   // 数据合并
   Object.assign(match, res);
-  console.log('adashfdf', match);
+  // console.log('adashfdf', match);
 
   return res;
 }
