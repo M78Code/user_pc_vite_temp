@@ -72,6 +72,8 @@ async function get_list () {
   nextTick(() => {
     if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
       show_right_btn.value = true;
+    } else {
+      show_right_btn.value = false;
     }
   })
 }
