@@ -65,6 +65,7 @@ onMounted(() => {
       console.log('MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE')
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
+      store.isLeagueDetail = false
       onTabChange()
     }).off
   }

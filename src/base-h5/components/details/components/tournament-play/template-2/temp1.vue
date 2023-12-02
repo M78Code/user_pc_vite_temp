@@ -1,5 +1,6 @@
 <template>
   <!-- hpt: 1 -->
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp1 mx-5" v-cloak>
     <div class="item-wrap">
       <div v-for="(item,index) in item_data.hl" :key="index">
@@ -18,7 +19,7 @@
                       <div
                         class="play-box-style details_color first-radius warp"
                         @click="utils.go_to_bet(ol_item)"
-                        :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
                       >
                         <div class="text-center odds-wrap">
                           <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -91,7 +92,7 @@
                         <div
                           class="play-box-style details_color first-radius warp"
                           @click="utils.go_to_bet(ol_item)"
-                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -166,7 +167,7 @@
                         <div
                           class="play-box-style details_color warp"
                           @click="utils.go_to_bet(ol_item)"
-                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':utils.calc_win(ol_item.result)}]"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':utils.calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -241,7 +242,7 @@
                         <div
                           class="play-box-style details_color last-radius"
                           @click="utils.go_to_bet(ol_item)"
-                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(ol_item.result)}]"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -315,11 +316,11 @@
 import lodash from "lodash"
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/core/odds-conversion/odds_conversion-mixin.js";
-import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
@@ -333,15 +334,12 @@ export default defineComponent({
     const { menu_type } = MenuData; //菜单选中项
     // #TODO vuex 
     // computed: {
-    // ...mapGetters(["get_bet_list","get_cur_odd","menu_type","get_detail_data"]),
-    const get_bet_list = computed(() => {
-      return ""
-    });
+    // ...mapGetters(["BetData.bet_oid_list","get_cur_odd","menu_type","get_detail_data"]),
     const get_cur_odd = computed(() => {
       return ""
     });
     const get_detail_data = computed(() => {
-      return ""
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes(route.name)
@@ -349,12 +347,12 @@ export default defineComponent({
     return {
       utils,
       lodash,
-      get_bet_list,
       get_cur_odd,
       menu_type,
       get_detail_data,
       is_match_result,
       LOCAL_PROJECT_FILE_PREFIX,
+      BetData
     }
   }
 })
