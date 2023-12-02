@@ -360,8 +360,8 @@ onUnmounted(() => {
       align-items: center;
       margin-right: 8px;
       img,div {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         background-size: 100%;
       }
     }

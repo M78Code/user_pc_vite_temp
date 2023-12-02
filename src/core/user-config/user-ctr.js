@@ -134,6 +134,9 @@ class UserCtr {
     // 次要玩法盘口状态变化
     this.c305_data_change = ''
 
+    nextTick(()=>{
+      this.get_system_time()
+    })
   }
   
   // 刷新后 获取缓存数据

@@ -18,7 +18,7 @@
         <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
           <div class="odds-item" v-if="item.hl[0].hs != 2">
-        {{ item.hpn }} 
+        {{ item.hpn }}
             <span v-if="item.hps&&get_match_status(detail_info.ms) == 1"> ({{ item.hps.split("|")[1] }}) </span>
             <!-- 一键置顶 -->
             <img
@@ -209,7 +209,7 @@ const props = defineProps({
 const set_top_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top.png`;
 const set_top__active_png = `${LOCAL_PROJECT_FILE_PREFIX}/image/details/set_top_active.png`;
 // `mhs` 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-// <!-- ms: 0开 1封 2关 11锁 -->
+// <!-- ms: 0未开赛，1 进行中 -->
 //     <!-- hs: 0开 1封 2关 11锁 -->
 //     <!-- os: 1开 2封 3隐藏不显示不占地方-->
 const mouse_in = ref(false);
@@ -281,7 +281,6 @@ const sun_ol = (ol, item) => {
     result[result.length - 1]._otd = item.title[item.title.length - 2].otd;
   }
 
-  // console.log(1111111111,result)
   return result;
 };
 // 一键置顶
@@ -302,7 +301,6 @@ const betItemClick = (item, ol, play_name) => {
       _hn: ol._hn, // hn_obj
       _mid: ol._mid, //赛事id mid_obj
     };
-    console.log("odds_info.vue", ol, params);
     let other = {
       is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"

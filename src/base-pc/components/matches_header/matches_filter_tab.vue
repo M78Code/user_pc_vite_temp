@@ -2,7 +2,7 @@
   <div v-show="false"> {{ MenuData.menu_data_version }} {{ MenuData.mid_menu_result.md }}</div>
   <div class="current-filter-wrap">
     <div class="current-filter-list" @scroll="on_scroll">
-      <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="item.label">
+      <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="index">
         <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label }">
           {{ $t(item.value, {month: $t(`ouzhou.time.month_` + item.month), day: item.day}) }}
           <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label}"></div>

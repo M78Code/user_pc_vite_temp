@@ -28,9 +28,7 @@
               <div v-if="!col.icon">
                 <span
                   v-if="col.field !== 'name'"
-                  :class="
-                    course === col.label ? 'heightLight' : ''
-                  "
+                  :class="course === col.label ? 'heightLight' : ''"
                   :style="{
                     'line-height': '30px',
                     color: ['p', 't'].includes(col.field)
@@ -103,44 +101,44 @@
           </q-td>
           <q-td key="q2" :props="props">
             <span
-              :class="[course === props.cols[2]?.course  ? 'heightLight' : '']"
+              :class="[course === props.cols[2]?.course ? 'heightLight' : '']"
               >{{ props.row.q2 }}</span
             >
           </q-td>
           <q-td key="ht" :props="props">
-            <span
-              :class="[course ==='HT'  ? 'heightLight' : '']"
-              >{{ props.row.ht }}</span
-            >
+            <span :class="[course === 'HT' ? 'heightLight' : '']">{{
+              props.row.ht
+            }}</span>
           </q-td>
           <q-td key="q3" :props="props">
             <span
-              :class="[course === props.cols[csid==2?4:3]?.course  ? 'heightLight' : '']"
+              :class="[
+                course === props.cols[csid == 2 ? 4 : 3]?.course
+                  ? 'heightLight'
+                  : '',
+              ]"
               >{{ props.row.q3 }}</span
             >
           </q-td>
           <q-td key="q4" :props="props">
             <span
-              :class="[course === props.cols[csid==2?5:4]?.course  ? 'heightLight' : '']"
+              :class="[
+                course === props.cols[csid == 2 ? 5 : 4]?.course
+                  ? 'heightLight'
+                  : '',
+              ]"
               >{{ props.row.q4 }}</span
             >
           </q-td>
           <q-td key="q5" :props="props">
             <span
-              :class="[course === props.cols[csid==2?6:5]?.course? 'heightLight' : '']"
+              :class="[
+                course === props.cols[csid == 2 ? 6 : 5]?.course
+                  ? 'heightLight'
+                  : '',
+              ]"
               >{{ props.row.q5 }}</span
             >
-          </q-td>
-          <!--新增加时赛比分和点球大战比分 start-->
-          <q-td key="q5" :props="props" v-if="props.row.x">
-            <span :class="[course === 'x' ? 'heightLight' : '']">{{
-              props.row.x
-            }}</span>
-          </q-td>
-          <q-td key="q5" :props="props" v-if="props.row.y">
-            <span :class="[course === 'y' ? 'heightLight' : '']">{{
-              props.row.y
-            }}</span>
           </q-td>
           <!--新增加时赛比分和点球大战比分 end-->
           <q-td key="set" :props="props">
@@ -154,6 +152,17 @@
           <q-td key="p" :props="props">
             <span style="font-weight: 500; color: #ff7000">{{
               props.row.p
+            }}</span>
+          </q-td>
+           <!--新增加时赛比分和点球大战比分 start-->
+           <q-td key="x" :props="props">
+            <span :class="[course === 'x' ? 'heightLight' : '']">{{
+              props.row.x
+            }}</span>
+          </q-td>
+          <q-td key="y" :props="props">
+            <span :class="[course === 'y' ? 'heightLight' : '']">{{
+              props.row.y
             }}</span>
           </q-td>
         </q-tr>
@@ -196,15 +205,13 @@ const padding_value = ref("1px 0px 1px 6px");
 
 const columns = ref([]);
 
-const course = computed(()=>{
-  return handle_course_data(props.detail_info)
-})
+const course = computed(() => {
+  return handle_course_data(props.detail_info);
+});
 
-const csid = computed(()=>{
-  return props.detail_info.csid
-})
-
-
+const csid = computed(() => {
+  return props.detail_info.csid;
+});
 
 //   足球篮球
 const get_base_data = (val) => {
@@ -232,8 +239,6 @@ const get_base_data = (val) => {
       });
     }
   }
-  //  console.log(11111111,detail_info)
-  //  console.log(11111111,data.value)
   data.value = res || [];
 };
 
@@ -263,8 +268,8 @@ const get_score_result = (list, val) => {
         q3: msc_obj && msc_obj.S10 ? msc_obj.S10[item.key] : 0, // 点球
         q4: msc_obj && msc_obj.S2 ? msc_obj.S2[item.key] : 0, // 半场
         t: msc_obj && msc_obj.S1 ? msc_obj.S1[item.key] : 0, // 全场
-        x: msc_obj && msc_obj.S1 ? msc_obj.S1[item.key] : "", // 加时赛比分
-        y: msc_obj && msc_obj.S1 ? msc_obj.S1[item.key] : "", // 点球大战
+        x: msc_obj && msc_obj.S7 ? msc_obj.S7[item.key] : 0, // 加时赛比分
+        y: msc_obj && msc_obj.S170 ? msc_obj.S170[item.key] : 0, // 点球大战
       };
     } else if (detail_info.csid == 2) {
       // 48282 【SIT】【欧洲版二期】【PC】篮球详情页比分版未到的赛事阶段比分不需要展示
@@ -529,36 +534,41 @@ const insetColumnTooltip = () => {
 watch(
   () => props.score_list,
   (val) => {
-    // console.log(11111, val);
     const detail_info = props.detail_info;
-    columns.value = sport_columns[detail_info.csid];
-    if (detail_info.msc_obj?.S7 && detail_info.csid == 1) {
-      console.log("加时赛");
+    columns.value =[]
+    columns.value = JSON.parse(JSON.stringify(sport_columns[detail_info.csid])) ;
+   
+    //加时赛
+    if (["32", "41", "33", "42", "110"].includes(detail_info.mmp)) {
       //  加时赛
       columns.value.push({
         name: "x",
         align: "left",
         label: "T",
         field: "x",
-        icon: "in_ball",
+        icon: "jiashi",
         headerStyle: { width: "33px", color: "#ff7000" },
       });
     }
-    if (detail_info.msc_obj?.S107 && detail_info.csid == 1) {
-      console.log("加时赛");
-      //  点球大战
-      columns.value.push({
+      //点球大战,点球大战一定会有加时赛
+      if (["34", "50", "120"].includes(detail_info.mmp) ) {
+        columns.value.push({
+        name: "x",
+        align: "left",
+        label: "T",
+        field: "x",
+        icon: "jiashi",
+        headerStyle: { width: "33px", color: "#ff7000" },
+      });
+        columns.value.push({
         name: "y",
         align: "left",
         label: "Y",
         field: "y",
-        icon: "in_ball",
+        icon: "detail_point",
         headerStyle: { width: "33px", color: "#ff7000" },
       });
-    }
-    // if (["1", "2", "3"].includes(detail_info.csid + "")) {
-    //   get_base_data(val);
-    //   }
+        }
     insetColumnTooltip();
   },
   { immediate: false, deep: true }

@@ -89,7 +89,7 @@ const props = defineProps({
     default: "",
   },
 });
-const hpidList = ["340", "359", "383","200","209","211","212"]
+const hpidList = ["340", "359", "383","200","209","211","212",'238']
 const matchInfo = computed(() => {
   let obj = {};
   props.match_info.hl.forEach((item) => {
@@ -110,8 +110,6 @@ const matchInfo = computed(() => {
     }
   });
 
-//   console.log(11111111111,obj)
-//   console.log(11111111111,props.match_info)
   return obj;
 });
 const emit = defineEmits(["betItemClick"]);
@@ -126,7 +124,6 @@ const betItemClick = (key, o) => {
   if (o.os != 1) {
     return;
   }
-  console.log(props.match_info.hpn, "hpt");
   bet_oid.value = o.oid;
 
   let obj = "";
