@@ -29,7 +29,7 @@
 
 <script setup>
   import { ref,onMounted } from 'vue';
-  import { UserCtr,MenuData, i18n_t} from 'src/core/index.js'
+  import { UserCtr,MenuData, i18n_t,LocalStorage} from 'src/core/index.js'
   import { handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { compute_img_url } from 'src/core/server-img/index.js'
 
@@ -51,7 +51,7 @@
       show_right_btn.value = true;
     }
 
-    time = await UserCtr.get_system_time()
+    time = LocalStorage.get('server_time')
     update_time(time)
 
     let obj = {
