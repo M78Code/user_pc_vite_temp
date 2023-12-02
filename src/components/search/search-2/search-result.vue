@@ -7,11 +7,12 @@
 			(search_data?.league && search_data?.league.length > 0) || (search_data?.bowling && search_data?.bowling.length > 0)" class="fit rule-scroll-area" ref="scrollRef">
 			<div class="serach-background" @click.stop>
 				<!-- 搜索展示 -->
+				<div v-if="search_loading" class="loading search_loading"><img :src="compute_local_project_file_path('/image/gif/loading_ou.gif')" alt=""></div>
 				<div class="content">
 					<ul class="list">
 						<!-- <div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div> -->
 						<!-- 滚球 -->
-						<div v-show="!lodash.isEmpty(show_bowling_list)">
+						<div  v-if="!lodash.isEmpty(show_bowling_list)">
 							<div @click="expand_bowling = !expand_bowling">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
@@ -29,7 +30,7 @@
 													<span class="middle">v</span>
 													<span class="away" v-html="red_color(item.man)"></span>
 												</p>
-												<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
+												<p> {{ i18n_t(`mmp.${item.csid}.${item.mmp}`) }} {{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }} <span class="red">{{ get_match_score(item).home_score }}-{{ get_match_score(item).away_score }}</span> </p>
 											</div>
 											<div style="display: flex;flex-direction: row; flex: 1">
 												<div class="flex_1"
@@ -40,14 +41,16 @@
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
-												<div class="flex_1"
-													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
-												</div>
-												<div class="flex_1" v-else>
-													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
-												</div>
+												<template v-if="item.csid != '2'">
+													<div class="flex_1"
+														v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+														<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+														<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+													</div>
+													<div class="flex_1" v-else>
+														<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+													</div>
+												</template>
 												<div class="flex_1"
 													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div v-html="red_color(item?.man)"></div>
@@ -63,7 +66,7 @@
 							</div>
 						</div>
 						<!-- 搜索 联赛 -->
-						<div v-show="search_data?.league && search_data?.league.length > 0" style="margin-bottom: 10px;">
+						<div v-if="search_data?.league && search_data?.league.length > 0" style="margin-bottom: 10px;">
 							<div @click="expand_league = !expand_league">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
@@ -93,14 +96,16 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<div class="flex_1"
-												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
-											</div>
-											<div class="flex_1" v-else>
-												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
-											</div>
+											<template v-if="i.csid != '2'">
+												<div class="flex_1"
+													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+													<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+												</div>
+												<div class="flex_1" v-else>
+													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+												</div>
+											</template>
 											<div class="flex_1"
 												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div v-html="red_color(i?.man)"></div>
@@ -115,7 +120,7 @@
 							</div>
 						</div>
 						<!-- 搜索 队伍 -->
-						<div v-show="search_data?.team && search_data.team?.length > 0">
+						<div v-if="search_data?.team && search_data.team?.length > 0">
 							<div @click="expand_team = !expand_team">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.team') }}</div>
@@ -143,21 +148,23 @@
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[0]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div v-html="red_color(item?.matchList?.[0].mhn)"></div>
 												<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<div class="flex_1"
-												v-if="lodash.get(item,'list.hps[0].hl.length' ) > 0 && lodash.get(item,'list.hps[0].hl[0].ol[1].ov' ) && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-												<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
-											</div>
-											<div class="flex_1" v-else>
-												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
-											</div>
+											<template v-if="list.csid != '2'">
+												<div class="flex_1"
+													v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[2]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
+													<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+												</div>
+												<div class="flex_1" v-else>
+													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
+												</div>
+											</template>
 											<div class="flex_1"
 												v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 												<div v-html="red_color(list.man)"></div>
@@ -176,7 +183,9 @@
 			</div>
 		</q-scroll-area>
 		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
-			!(search_data?.league && search_data.league?.length > 0) && !(search_data?.bowling && search_data?.bowling?.length > 0)"
+			!(search_data?.league && search_data.league?.length > 0) && 
+			!(search_data?.bowling && search_data?.bowling?.length > 0) &&
+			!search_loading"
 			 class="no-result-warp">
 			 <!-- <p>{{ i18n_t('ouzhou.search.no_search_rezult') }}</p> -->
 			 <div class="result">
@@ -201,6 +210,7 @@ import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
+import { get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 
 const props = defineProps({
 	show_type: {
@@ -369,6 +379,7 @@ const timer = ref(null)
 const load_data_state = ref('data')
 /** 搜索结果数据 */
 const search_data = ref([])
+let search_loading = false;
 const _get_search_result = lodash.debounce((keyword, is_loading) => {
 	if (!keyword) {
 		update_show_type('init')
@@ -386,19 +397,22 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 		isPc: true,
 		searchSportType: props.search_csid
 	}
+	search_loading = true
 	//调用接口获取获取搜索结果数据
 	get_search_result(params).then(res => {
 		update_show_type('result')
 		load_data_state.value = 'data'
 		const { bowling, league, team } = res.data.data
+		search_data.value = res.data.data
 		if (!res.data.data || (!bowling && !league && !team)) {
 			load_data_state.value = 'empty'
+			search_loading = false
 			return
 		}
-		search_data.value = res.data.data
 		expand_bowling.value = true;
 		expand_league.value = true;
 		expand_team.value = true
+		search_loading = false
 		// console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;
@@ -414,6 +428,9 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 				_ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
 			}
 		})
+	}).catch(err => {
+		search_loading = false
+		console.log(err);
 	})
 }, 500)
 
@@ -740,8 +757,8 @@ watch(
 .middle_info_tab {
 	padding: 9px 18px;
 	display: flex;
-	border-bottom: 1px solid var(--q-header-search-color-5);
-	background-color: var(--q-header-search-color-5);
+	border-bottom: 1px solid var(--q-gb-bg-c-15);
+	background-color: var(--q-gb-bg-c-15);
 	font-size: 14px;
 	font-weight: 500;
 	overflow-x: scroll;
@@ -773,8 +790,9 @@ watch(
 		justify-content: center;
 		height: 100%;
 		div {
-			margin-top: 10px;
-			font-weight: bold;
+			margin-top: 39px;
+			font-weight: 500;
+			font-size: 16px;
 		}
 	}
 }
@@ -831,5 +849,7 @@ li {
 
 .flex_1 {
 	flex: 1;
-}</style>
+	text-align: center;
+}
+</style>
   
