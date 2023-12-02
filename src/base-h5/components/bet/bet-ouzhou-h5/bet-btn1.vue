@@ -6,7 +6,7 @@
   <div class="tip component bet-btn-item">
     <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
       <div class="displayflex">
-        {{ BetViewDataClass.error_message }}
+        {{ BetViewDataClass.error_message ? i18n_t(BetViewDataClass.error_message):'' }}
         <img class="icon_loading" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/gif/icon_loading.gif`" alt=""  v-if="BetViewDataClass.bet_order_status == 2"/>
       </div>
     </div>
@@ -19,15 +19,15 @@
       <span>{{$t('bet.understand')}}</span>
     </p>
   </div>
-  <div style="display:none">{{ BetData.bet_data_class_version }}</div>
+  <div style="display:none">{{ BetData.bet_data_class_version }}-{{UserCtr.user_version}}</div>
   <div style="display:none">{{ BetViewDataClass.bet_view_version }}</div>
 </template>
 
 <script setup>
-import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES,i18n_t  } from "src/core/index.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core/index.js"
 
 const pack_up = (val) => {
   // TODO: 临时调试用

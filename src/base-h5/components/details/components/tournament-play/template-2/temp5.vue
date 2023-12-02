@@ -2,6 +2,7 @@
  * @Description: 模板id=5 --用于多重条件&多个投注项的玩法，例如全场大小、进球大小···
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp5 mx-5">
     <div class="hairline-border">
       <div class="content-wrapper">
@@ -34,7 +35,7 @@
                       <div 
                       class="play-box-style" 
                       @click="utils.go_to_bet(ol_item)" 
-                      :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win': utils.calc_win(ol_item.result)}]">
+                      :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win': utils.calc_win(ol_item.result)}]">
                         <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                       </div>
                       <!-- 主程序 end -->
@@ -84,7 +85,7 @@
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box-style" @click="utils.go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box-style" @click="utils.go_to_bet(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]">
                         <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                       </div>
                       <!-- 主程序 end -->
@@ -136,7 +137,7 @@
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
                     <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div @click="utils.go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]" class="play-box-style col">
+                    <div @click="utils.go_to_bet(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]" class="play-box-style col">
                       <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                     </div>
                     <!-- 主程序 end -->
@@ -199,18 +200,12 @@ export default defineComponent({
     oddsNew,
   },
   setup(props, evnet) {
-    const store_state = store.getState()
-    // #TODO vuex 
-    // computed: {
-    //   ...mapGetters(["get_bet_list"])
-    // },
-    const get_bet_list = ref(BetData.bet_list)
     const change_ms = computed(() => {
       return lodash.get(item_data,'hl[0].ol[0].os')
     });
     return {
       utils,
-      get_bet_list,
+      BetData,
       LOCAL_PROJECT_FILE_PREFIX,
     }
   }

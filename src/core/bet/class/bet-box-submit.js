@@ -579,21 +579,21 @@ const set_error_message_config = (res ={},type,order_state) => {
                 case 2:
                     obj = {
                         code: '0000000',
-                        message: i18n_t('bet.bet_loading')
+                        message: "bet_message.loading"
                     }
                     break
                  
                 case 3:
                     obj = {
                         code: 200,
-                        message: i18n_t('bet.bet_suc')
+                        message: "bet_message.success"
                     }
                     break
             
                 case 4:
                     obj = {
                         code: 500,
-                        message: i18n_t('bet.bet_fail')
+                        message: "bet_message.error"
                     }
                     break
             }

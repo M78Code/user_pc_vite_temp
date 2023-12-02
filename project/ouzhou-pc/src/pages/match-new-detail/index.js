@@ -80,7 +80,6 @@ export function usedetailData(route) {
   });
   // 监听分类切换数据
   // watch(()=>route.query, (val) => {
-  //   console.log(11111111,val)
   //   // todo
   //   // sportId = val.sportId
   //   // mid = val.mid
@@ -124,7 +123,6 @@ export function usedetailData(route) {
     detail_list.value =
       lodash_.get(getMidInfo(route.params.mid), "odds_info") || [];
 
-    // console.log(1111111111,detail_list.value)
 
     show_close_thehand.value = list.length == 0;
 
@@ -145,7 +143,6 @@ export function usedetailData(route) {
         }
       }
     }
-    // console.log(11111111,all_hl_item.value)
   };
 
   /**
@@ -374,7 +371,6 @@ export function usedetailData(route) {
   watch(
     () => MatchDataWarehouseInstance.data_version,
     (val, oldval) => {
-      console.log("data_version", val.version);
       if (val.version) {
         update_data(route.params.mid);
       }
@@ -495,10 +491,8 @@ export function usedetailData(route) {
   /* 赛事结束之后调取详情接口 */
   message_fun.push(
     useMittOn(MITT_TYPES.EMIT_SWITCH_MATCH, (parmas) => {
-      console.log(parmas, "parmas");
       // route_parmas.value = parmas
       refresh();
-      console.error("-----------aaaaa");
     }).off
   );
     // 监听ws断连

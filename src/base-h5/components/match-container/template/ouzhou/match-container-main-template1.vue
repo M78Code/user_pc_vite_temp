@@ -1,5 +1,5 @@
 <!--
- * @Description: app-h5 赛事组件，用于赛事列表展示赛事信息
+ * @Description: ouzhou-h5 赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
   <div class="match-container component match-container-main-template1" 

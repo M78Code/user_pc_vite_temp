@@ -93,7 +93,7 @@
 												<span class="middle">v</span>
 												<span class="away" v-html="red_color(item.man)"></span>
 											</p>
-											<p>{{ format_date_overseas(item.mgt) }}</p>
+											<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
@@ -150,7 +150,7 @@
 												<span class="middle">v</span>
 												<span class="away" v-html="red_color(i.man)"></span>
 											</p>
-											<p>{{ format_date_overseas(i.mgt) }}</p>
+											<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
@@ -206,7 +206,7 @@
 												<span class="middle">v</span>
 												<span class="away" v-html="red_color(item.man)"></span>
 											</p>
-											<p>{{ format_date_overseas(item.mgt) }}</p>
+											<p>{{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }}</p>
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
@@ -269,7 +269,6 @@
 <script setup>
 import { onMounted, ref, watch, onUnmounted, reactive } from 'vue';
 import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
-import { format_date_overseas } from "src/core/format/module/format-date.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -393,6 +392,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 			// 搜索前清空会话仓库数据
 			sessionStorage.removeItem('search_params');
 			if (is_results.value) {
+				MatchMeta.clear_match_info()
 				render_match_results_list(res)
 				return
 			}
@@ -405,7 +405,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 }, 500)
 
 const render_match_results_list = (res) => {
-	MatchMeta.match_mids = []
+	// MatchMeta.match_mids = []
 	if (+res.code !== 200) return MatchMeta.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' });
     // 避免接口慢导致的数据错乱
     const list = lodash.get(res.data.data, 'teamH5', [])

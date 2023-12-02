@@ -5,7 +5,7 @@
 <template>
   <div class="tip component bet-btn-item">
     <div class="bet-error" v-if="BetViewDataClass.error_message">
-      {{ BetViewDataClass.error_message }}
+      {{ BetViewDataClass.error_message ? i18n_t(BetViewDataClass.error_message):'' }}
     </div>
   </div> 
     <div class="bet_content_bottom component bet-btn-item">
@@ -15,14 +15,14 @@
         <span class="right_amount">{{BetData.bet_amount}}</span> 
       </p>
     </div>
-  <div style="display:none">{{ BetData.bet_data_class_version }} {{ BetViewDataClass.bet_view_version }}</div>
+  <div style="display:none">{{ BetData.bet_data_class_version }} -{{UserCtr.user_version}}-{{ BetViewDataClass.bet_view_version }}</div>
 </template>
 
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js" 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES,i18n_t,UserCtr  } from "src/core/index.js";
 
 const place_bet = () => {
   // 未投注之前 可以点击

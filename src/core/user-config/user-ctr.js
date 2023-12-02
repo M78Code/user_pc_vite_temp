@@ -134,6 +134,9 @@ class UserCtr {
     // 次要玩法盘口状态变化
     this.c305_data_change = ''
 
+    nextTick(()=>{
+      this.get_system_time()
+    })
   }
   
   // 刷新后 获取缓存数据
@@ -1542,7 +1545,9 @@ class UserCtr {
 
   async get_system_time () {
     let res = await api_common.get_time_server()
-    return res.ts
+    let ts = lodash.get(res,'ts','')
+    LocalStorage.set('server_time',ts)
+    return ts
   }
 }
 
