@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 // 电竞赛种csid
 const e_sport_csids = [101, 100, 102, 103];
-import { AllDomain, UserCtr } from 'src/core/'
+import { UserCtr } from 'src/core/'
  
  
 // 目前环境信息
@@ -47,8 +47,6 @@ const get_server_file_path = (path, csid = 0) => {
   if (!path || path == 'undefined') {
     return '';
   }
-  return `https://image.bricblogy.com/${path}`;
-  const { oss_file_content } = AllDomain
   // 如果是http开头 直接返回地址
   if (lodash.toString(path).indexOf('http') == 0) {
     return path
@@ -62,16 +60,8 @@ const get_server_file_path = (path, csid = 0) => {
   if (e_sport_csids.includes(1 * csid)) {
     return `${UserCtr.e_sports_domain_img}/${path}`;
   }
-  // 优先使用oss返回的有效图片域名地址
-  let domain_img_str = '';
-  if (oss_file_content) {
-    domain_img_str = oss_file_content.img[0];
-  }
-  if (domain_img_str) {
-    return `${domain_img_str}/${path}`;
-  }
   //新配置是 数组
-  domain_img_str = DOMAIN_RESULT.img_domains[0];
+  const domain_img_str = DOMAIN_RESULT.img_domains[0];
   if (!lodash.isEmpty(domain_img_str)) {
     return `${domain_img_str}/${path}`;
   }
