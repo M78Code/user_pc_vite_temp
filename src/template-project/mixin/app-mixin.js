@@ -3,13 +3,12 @@ import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { enter_params, compute_css_variables, PROJECT_NAME,LocalStorage } from "src/core/index.js";
-import BetData from "src/core/bet/class/bet-data-class.js";
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import MenuData from "src/core/menu-h5/menu-data-class.js";
-import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
+import { enter_params,  LocalStorage } from "src/core/index.js";
+ 
+ 
+ 
 import { http, AllDomain } from "src/core/http/";
-import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
+ 
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
 
 export default {
@@ -70,10 +69,8 @@ export default {
         http.setApiDomain();
         enter_params(async(user)=>{
           await loadLanguageAsync(lang);
-          MenuData.init();
-          BetData.init_core()
-          BetViewDataClass.init()
-          BetWsMessage.init()
+         
+  
           this.set_init_load(true);
         })
       });
@@ -113,13 +110,7 @@ export default {
       // ws和http域名切换逻辑
       http.setApiDomain();
     },
-    /**
-     * @description 元数据请求回来 初始化赛事加载
-     * @remarks: 不能在这注册， 每个页面都会调用， 这里拿不到 路由信息 
-     */
-    init_match_callback () {
-      MatchMeta.set_origin_match_data()
-    },
+ 
     /** 触发切网络api域名动作
      * @description:
      * @param {undefined}  data 消息体

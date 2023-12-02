@@ -14,11 +14,11 @@ let ENV_TARGET_ENV = (process.env.TARGET_ENV || "").trim();
 //最终计算的 目标环境 参数
 let ENVSTR = ENV_TARGET_ENV || DEV_TARGET_ENV;
 //项目
-const PROJECT ='animation'
+const PROJECT ='template-project'
 //项目启动文件入口目录名字
-const ENTRY_DIR_NAME = 'animation'
+const ENTRY_DIR_NAME = 'template-project'
  //构建目录名字
-const BUILD_DIR_NAME = 'animation'
+const BUILD_DIR_NAME = 'template-project'
 //是否需要 BUILD_VERSION 版本素材隔离
 const NEED_BUILD_VERSION = true
 //构建版本基础参数

@@ -1024,7 +1024,11 @@ const utils = {
      */
     loading_animation_hidden() {
         // 隐藏首屏loading动画
-        document.getElementById('loading-root-ele').style.visibility = 'hidden';
+        let dom_obj= document.getElementById('loading-root-ele')
+        if(dom_obj){
+            dom_obj.style.visibility = 'hidden';
+        }
+    
     },
     /**
      * 设置隐藏多余文字（q-pagination bug）
