@@ -17,9 +17,9 @@ const installer = (app) => {
     // 当元素被插入到DOM中时
     mounted(el, binding) {
       if (IntersectionObserver) {
-        img_observe(el);
+        img_observe(el, binding);
       } else {
-        load_img_src(el);
+        load_img_src(el, binding);
       }
     },
     // 当元素更新时
@@ -31,9 +31,9 @@ const installer = (app) => {
       el.setAttribute("data-team", binding.value[1]);
       el.setAttribute("data-csid", binding.value[2]);
       if (IntersectionObserver) {
-        img_observe(el);
+        img_observe(el, binding);
       } else {
-        load_img_src(el);
+        load_img_src(el, binding);
       }
     },
     // 组件销毁
@@ -45,10 +45,10 @@ const installer = (app) => {
   });
 
   // 利用IntersectionObserver监听el 是否可视
-  const img_observe = function (el) {
+  const img_observe = function (el, binding) {
     el.is_show_io = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        load_img_src(el);
+        load_img_src(el, binding);
         el.is_show_io.disconnect();
       }
     });
@@ -90,7 +90,7 @@ const installer = (app) => {
    * @param {object} el dom元素
    * @param {undefined} undefined
    */
-  const load_img_src = function (el) {
+  const load_img_src = function (el, binding) {
     let self_img = el.dataset.src;
     // 绝对地址时直接使用，否则需要重新获取地址
     let img_url =
@@ -106,9 +106,14 @@ const installer = (app) => {
     }
     image_is_exist(img_url, el).then((res) => {
       el.style.opacity = 1;
+      const update_show_default = binding.value[3];
+      // 图片Onload成功，不显示默认图片
+      update_show_default && update_show_default(false)
       if (res) return;
       el.src =
         "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+      // 图片error时，才显示默认图
+      update_show_default && update_show_default(true)
       // 队名图标的处理逻辑
       let team_letter = el.dataset.team;
       if (team_letter != "undefined") {
