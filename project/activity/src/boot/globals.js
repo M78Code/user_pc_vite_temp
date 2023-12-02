@@ -9,8 +9,8 @@ import utils from "project/activity/src/utils/utils.js";
 import tooltip from "project/activity/src/utils/tooltip.js"
 // import matchlist from "project/activity/src/public/utils/matchlist/matchlist.js"
 
-// import Icon from "project/activity/src/public/components/icon/icon.vue"
-// import load_data from "project/activity/src/public/components/load_data/load_data.vue";
+import Icon from "project/activity/src/components/icon/icon.vue"
+import load_data from "project/activity/src/components/load_data/load_data.vue";
 import * as emit_cmd from "project/activity/src/utils/http/emit_cmd.js";
 import * as error_mapping from "project/activity/src/config/error_code_mapping.js";
 import * as yabo_common from "project/activity/src/mixins/common/common.js";
@@ -239,8 +239,8 @@ export default async (app) => {//app, router, store,
   /** 组件  **************************/
 
   // 可变色和大小的 icon
-  // app.component("icon", Icon);
-//   app.component("load-data", load_data);
+  app.component("icon", Icon);
+  app.component("load-data", load_data);
 
   /** JS  **************************/
 

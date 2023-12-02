@@ -19,7 +19,7 @@ export const login = (params, config={}, url = `/api/user/loginBak?userName=${pa
 export const check_balance = (params, config={}, url = "/user/amount") => http.get(`${prefix_user}${url}`, params, config);
 
 // 根据 token 获取用户信息
-export const get_user_info = (params, config={}, url = "/user/getUserInfo") => http.get(`${prefix_user}${url}`, params, config);
+export const get_user_info = (params, config={}, url = "/user/getUserInfoPB") => http.get(`${prefix_user}${url}`, params, config);
 
 // 设置以及获取用户设置的语言
 export const set_user_lang = (params, config={}, url = "/user/setUserLanguage") => http.get(`${prefix_user}${url}`, params, config);
@@ -43,7 +43,7 @@ export const post_addOrCancelMatch = (params, config, url = "/v1/w/userCollectio
 //------------------欧宝版--------------E------------
 
 // 通过用户token获取用户信息
-export const get_user_info_bytoken = (params, config, url='/user/getUserInfo') => {
+export const get_user_info_bytoken = (params, config, url='/user/getUserInfoPB') => {
   return http.get(`${prefix}${url}`, params, config);
 };
 // 存储登录用户浏览器指纹信息 (cruise)

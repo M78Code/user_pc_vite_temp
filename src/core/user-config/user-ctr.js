@@ -1542,7 +1542,9 @@ class UserCtr {
 
   async get_system_time () {
     let res = await api_common.get_time_server()
-    return res.ts
+    let ts = lodash.get(res,'ts','')
+    LocalStorage.set('server_time',ts)
+    return ts
   }
 }
 

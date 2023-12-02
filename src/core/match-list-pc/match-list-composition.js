@@ -50,12 +50,12 @@ let switch_timer_id
 let mitt_list = [];
 let tid_match_list;
 // 调用列表接口
-useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({is_socket = undefined}) => {
+useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
 		//请求列表接口之前 先设置元数据列表
-		if (!is_socket&&!MenuData.is_leagues())
-		init_page_when_base_data_first_loaded()
+		if (!is_socket && !MenuData.is_leagues())
+			init_page_when_base_data_first_loaded()
 		fetch_match_list(is_socket)//请求接口
 	}, 80);
 })
@@ -99,8 +99,8 @@ export function fetch_match_list(is_socket = false, cut) {
 		return;
 	}
 	// 【搜索列表】 WS 之类的调用 fetch_match_list 转向到 fetch_search_match_list
-	 //热门联赛不走此方法
-	if (page_source == "search"||MenuData.is_leagues()) {
+	//热门联赛不走此方法
+	if (page_source == "search" || MenuData.is_leagues()) {
 		// fetch_search_match_list && fetch_search_match_list(is_socket);
 		return false;
 	}
@@ -136,21 +136,24 @@ export function fetch_match_list(is_socket = false, cut) {
 				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
-					if (lodash.get(res, "data.length")!=undefined || lodash.get(res, "data.data.length")!=undefined) {
-						const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
-						load_data_state.value = len ? 'data' : 'empty'
+					try {				//处理服务器返回的 列表 数据   fetch_match_list
+						handle_match_list_request_when_ok(
+							JSON.parse(JSON.stringify(res)),
+							is_socket,
+							cut
+						);
+					} finally {
+						if (lodash.get(res, "data.length") != undefined || lodash.get(res, "data.data.length") != undefined) {
+							const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
+							load_data_state.value = len ? 'data' : 'empty'
+						}
+						else {
+							const livedata = lodash.get(res, "data.livedata.length", 0)
+							const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
+							load_data_state.value = livedata + nolivedata > 0 ? 'data' : 'empty'
+						}
 					}
-					else {
-						const livedata = lodash.get(res, "data.livedata.length", 0)
-						const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
-						load_data_state.value = livedata + nolivedata > 0 ? 'data' : 'empty'
-					}
-					//处理服务器返回的 列表 数据   fetch_match_list
-					handle_match_list_request_when_ok(
-						JSON.parse(JSON.stringify(res)),
-						is_socket,
-						cut
-					);
+
 				} else if (res.code == "0401038") {
 					// let is_collect = this.vx_layout_list_type == 'collect'
 					// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
@@ -266,7 +269,7 @@ function mounted_fn() {
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count).off,
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
-		
+
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match).off,
 		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
@@ -336,6 +339,7 @@ function get_hot_match_list(backend_run = false) {
 	let _params = lodash.clone(match_list_api_config.params);
 	api(_params)
 		.then((res) => {
+			console.log('backend_run', backend_run)
 			// 组件和路由不匹配
 			if (page_source == "details" && page_source != "details") {
 				return;
@@ -359,17 +363,12 @@ function get_hot_match_list(backend_run = false) {
 					MatchListData.set_list(
 						match_list,
 					);
+
 					if (!backend_run) {
 						// 调用bymids接口
-						api_bymids({ is_first_load: true });
+						useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, { is_first_load: true })
 						// 切换右侧赛事
 						let first_match = match_list[0];
-						// let params = {
-						// 	media_type: "auto",
-						// 	mid: first_match.mid,
-						// 	tid: first_match.tid,
-						// 	sportId: first_match.csid,
-						// };
 						if (first_match) {
 							MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
 							useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
