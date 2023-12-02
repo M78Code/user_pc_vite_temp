@@ -78,11 +78,12 @@ onMounted(get_pc_rule_url)
     height: 100vh;
     display: flex;
     flex-direction: column;
-
+    padding-bottom: 100px;
     .rule-content {
         width: 100%;
         flex: 1;
         background-color: #fff;
+        
     }
 }
 </style>

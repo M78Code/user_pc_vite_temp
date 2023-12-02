@@ -425,7 +425,7 @@ class MatchMeta {
    * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率，需要虚拟列表计算
    */
   async get_results_match () {
-    this.match_mids = []
+    this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
     // 电竞的冠军
