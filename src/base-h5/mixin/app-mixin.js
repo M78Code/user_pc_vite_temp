@@ -1,10 +1,3 @@
-/*
- * @Author: success
- * @Date: 2020-08-28 20:51:01
- * @Description: http相关API Domain动态更新逻辑
- */
-
- 
 import { loadLanguageAsync } from "src/core/index.js";
 import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;

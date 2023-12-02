@@ -281,7 +281,6 @@ const sun_ol = (ol, item) => {
     result[result.length - 1]._otd = item.title[item.title.length - 2].otd;
   }
 
-  // console.log(1111111111,result)
   return result;
 };
 // 一键置顶
@@ -302,7 +301,6 @@ const betItemClick = (item, ol, play_name) => {
       _hn: ol._hn, // hn_obj
       _mid: ol._mid, //赛事id mid_obj
     };
-    console.log("odds_info.vue", ol, params);
     let other = {
       is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"

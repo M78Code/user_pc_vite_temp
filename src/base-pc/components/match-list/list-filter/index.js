@@ -267,9 +267,9 @@ function set_menu_config(obj = {}) {
 /**
    * @description 获取欧洲版联赛数量统计
    */
-const get_ouzhou_leagues_data = async (date) => {
+const get_ouzhou_leagues_data = async (date, sportId) => {
     const res = await api_match_list.get_leagues_list({
-      sportId: MenuData.current_ball_type ? Number(MenuData.current_ball_type) : 1,
+      sportId: sportId ?? (MenuData.current_ball_type ? Number(MenuData.current_ball_type) : 1),
       selectionHour: date
     })
     console.log('rewrewrwerwerw', res);

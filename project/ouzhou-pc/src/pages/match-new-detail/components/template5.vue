@@ -110,8 +110,6 @@ const matchInfo = computed(() => {
     }
   });
 
-//   console.log(11111111111,obj)
-//   console.log(11111111111,props.match_info)
   return obj;
 });
 const emit = defineEmits(["betItemClick"]);
@@ -126,7 +124,6 @@ const betItemClick = (key, o) => {
   if (o.os != 1) {
     return;
   }
-  console.log(props.match_info.hpn, "hpt");
   bet_oid.value = o.oid;
 
   let obj = "";

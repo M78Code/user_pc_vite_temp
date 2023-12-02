@@ -12,7 +12,7 @@
         </div> -->
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <img :src="get_server_file_path(league_obj.picUrlthumb)" />
+          <img :src="leagueIcon" @error="handle_error" />
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
@@ -37,10 +37,10 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref, computed} from 'vue';
 import { useRouter,useRoute } from 'vue-router'
 
-import { GlobalAccessConfig, LayOutMain_pc, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import { GlobalAccessConfig, LayOutMain_pc, LOCAL_PROJECT_FILE_PREFIX, compute_img_url } from 'src/core/index.js';
 
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { get_server_file_path } from "src/core/file-path/file-path.js";
@@ -55,6 +55,10 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
       default: () => {}
     }
   })
+ const leagueIcon = computed(()=>{
+    const url =  get_server_file_path(props.league_obj.picUrlthumb);
+    return url ? url : compute_img_url('pc-home-league-default')
+  })
   const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 
   function jump_to_league_list() {
@@ -65,6 +69,9 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
     }
     
     MenuData.set_router_info(obj)
+  }
+
+  const handle_error = ()=>{
   }
 </script>
 
