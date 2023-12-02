@@ -4,6 +4,7 @@
  * @Description: 模板id=7 --用于有盘口&3个投注项玩法
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp7 mx-5">
     <div class="content hairline-border">
       <div class="row title-style ">
@@ -29,10 +30,10 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="utils.go_to_bet(ol_item)"
-                              :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win': utils.calc_win(ol_item.result)}]"
+                              :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win': utils.calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
-                            <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)},'size-color']">
+                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)},'size-color']">
                               {{ol_item.on}}
                             </span>
                             </div>
@@ -106,10 +107,10 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="utils.go_to_bet(ol_item)"
-                              :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                              :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
-                            <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)},'size-color']">
+                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)},'size-color']">
                               {{ol_item.on}}
                             </span>
                             </div>
@@ -183,10 +184,10 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="utils.go_to_bet(ol_item)"
-                              :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]"
+                              :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
-                            <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)},'size-color']">
+                            <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)},'size-color']">
                               {{ol_item.on || ol_item.otv || ol_item.ott}}
                             </span>
                             </div>
@@ -276,10 +277,9 @@ export default defineComponent({
     }
   },
   setup(props, evnet) {
-    const get_bet_list = ref(BetData.bet_list)
     return {
       utils,
-      get_bet_list
+      BetData
     }
   }
 })

@@ -354,12 +354,13 @@
 // import { mapGetters, mapMutations } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance  } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+import { useRoute } from "vue-router";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -369,7 +370,6 @@ export default defineComponent({
     oddsNew,
   },
   setup(props, evnet) {
-    const store_state = store.getState()
     const other_item_list = ref([])
     const ol_list_0 = ref([])
     const ol_list_1 = ref([])
@@ -394,8 +394,9 @@ export default defineComponent({
     const get_menu_type = computed(() => {
       return ""
     });
+      const route = useRoute()
     const get_detail_data = computed(() => {
-      return store_state.detailsReducer.details_data || {}
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
 
 
