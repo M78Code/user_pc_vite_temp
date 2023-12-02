@@ -97,6 +97,7 @@ export const EMIT_CHANGE_RECORD_SHOW = "EMIT_CHANGE_RECORD_SHOW";
 export const EMIT_WINDOW_RESIZE = "EMIT_WINDOW_RESIZE";
 //
 export const EMIT_C201_HANDLE = "EMIT_C201_HANDLE";
+export const EMIT_C201_HANDLE_BET_RECORD = "EMIT_C201_HANDLE_BET_RECORD";
 //
 export const EMIT_C210_HANDLE = "EMIT_C210_HANDLE";
 // 详情页储存时间，保证时间同步
@@ -276,6 +277,8 @@ export const EMIT_HOME_TAB = "EMIT_HOME_TAB";
 export const EMIT_MAIN_LIST_MATCH_IS_EMPTY = "EMIT_MAIN_LIST_MATCH_IS_EMPTY";
 // 到底了
 export const EMIT_MAIN_LIST_MAX_HEIGHT = "EMIT_MAIN_LIST_MAX_HEIGHT";
+// 赛事列表回到顶部
+export const EMIT_GOT_TO_TOP = "EMIT_GOT_TO_TOP";
 /**
  * 触发toast弹框
  */

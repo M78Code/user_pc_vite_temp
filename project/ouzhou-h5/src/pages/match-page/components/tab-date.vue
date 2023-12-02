@@ -157,14 +157,13 @@ const changeDatetab = (item, index) => {
     emit("changeDate", item.val);
 };
 
-onUnmounted(() => {
-    Object.values(emitters.value).map((x) => x());
-})
 /**
  * 默认请求今日数据
  * @param {*} mi 
  */
 const setDefaultData = (val) => {
+    // 重置
+    store.tabActive = 'Matches'
     MenuData.set_current_lv1_menu(2);
     // MenuData.set_menu_mi(val);
     store.current_menu_mi = val;
@@ -186,12 +185,13 @@ watch(() => store.areaList, () => {
 onMounted(() => {
     setDefaultData(MenuData.menu_mi.value || '101');//默认足球
     store.curSelectedOption = store.selectOptions[0]
-    useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData)
+    emitters.value = {
+        emitters_1: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
+    }
 })
 onUnmounted(() => {
-    useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
+    Object.values(emitters.value).map((x) => x());
 })
-
 /**
  * 地区选择tab
  * @param {*} index 
