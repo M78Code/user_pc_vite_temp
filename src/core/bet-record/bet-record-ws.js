@@ -69,7 +69,7 @@ export default class BetRecordWs {
                 const ws_cmd = lodash.get(data, 'cmd')
                 switch (ws_cmd) {
                     case 'C201':
-                        useMittEmit(MITT_TYPES.EMIT_C201_HANDLE, data)
+                        useMittEmit(MITT_TYPES.EMIT_C201_HANDLE_BET_RECORD, data)
                         break;
                     case 'C210':
                         // useMittEmit(MITT_TYPES.EMIT_C210_HANDLE, data)

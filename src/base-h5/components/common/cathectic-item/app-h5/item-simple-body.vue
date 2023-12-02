@@ -86,7 +86,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { default as BetRecordClass, calc_text, outcome } from "src/core/bet-record/bet-record.js";
+import BetRecordClass from "src/core/bet-record/bet-record.js";
+import { calc_text, outcome } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { project_name } from 'src/core'
 import { formatTime, format_money2, format_balance } from 'src/core/format/index.js'
