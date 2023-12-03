@@ -28,10 +28,13 @@ Object.values(html_config).map((x) => {
 });
 
 all_config.map((x) => {
-  x.placeholder && all_placeholder.push(x.placeholder);
+  x.placeholder = x.placeholder.trim()
+  x.placeholder && all_placeholder.push(x.placeholder.trim());
 });
 
 all_placeholder = Array.from(new Set(all_placeholder));
+
+// console.log('all_placeholder-',all_placeholder);
 let template_file_path = `./job/template-html/template.html`;
 
 let html_file = fs.readFileSync(template_file_path);
@@ -39,16 +42,16 @@ let html_file = fs.readFileSync(template_file_path);
 html_file = html_file.toString()
 // console.log(html_file);
 Object.values(project_html_config).map((x) => {
-  if (x && x.placeholder && x.content) {
-
+  if (x && x.placeholder ) {
+ 
     // console.log(x.placeholder);
    
     // 匹配替换
-    html_file = html_file.replace("" + x.placeholder, x.content);
+    html_file = html_file.replace("" + x.placeholder, x.content||'');
   }
 });
 all_placeholder.map((x) => {
-    html_file = html_file.replace(x, "");
+    html_file = html_file.replace(''+ x, "");
 });
 
 let output_file_path= `./project/${PROJECT_NAME}/index.html`
