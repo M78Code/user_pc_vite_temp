@@ -486,7 +486,7 @@ export const set_global_collect_data = (obj) =>{
   // 列表转对象
   const fun_list2obj = function(list) {
     const obj = {};
-    if(list && list?.length){
+    if(list && list.length && typeof list != 'string'){
       try {
         list.forEach(item => {
           if(item){

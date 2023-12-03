@@ -10,8 +10,8 @@
     <!-- <div class="search-tab-wap"> -->
         <div class="search-tab-content">
             <ul class="search-tab-content-ul">
-                <li :class="{ active: activeOn === item.val }" v-for="(item, index) in dataList" :key="index"
-                    @click="changeTab(item.val,index,$event)">
+                <li :class="{ active: activeOn === item.tid }" v-for="(item, index) in dataList" :key="index"
+                    @click="changeTab(item.tid,index,$event)">
                     <img v-show="item.img" :src="item.img" />
                     {{ item.name }}
                 </li>
@@ -48,6 +48,7 @@ import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES } from "src/core/index.js";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import  screenModal from './screen-modal.vue'
+import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({
     dataList: {
         type: Array,
@@ -55,43 +56,44 @@ const props = defineProps({
             {
                 name: "全部",
                 val: 0,
-                img: ""
+                img: "",
+                tid: '0'
             },
             {
                 name: "欧冠",
                 val: 1,
-                tid: '352541568130764801',
+                tid: '6408',
                 img: ""
             },
             {
                 name: "英超",
                 val: 2,
                 img: "",
-                tid: '471,401,412,460,475',
+                tid: '180',
 
             },
             {
                 name: "意甲",
                 val: 3,
-                tid: '324',
+                tid: '239',
                 img: ""
             },
             {
                 name: "西甲",
                 val: 4,
                 img: "",
-                tid: '927'
+                tid: '320'
             },
             {
                 name: "法甲",
                 val: 5,
                 img: "",
-                tid: '269'
+                tid: '79'
             },
             {
-                name: "中超",
+                name: "德甲",
                 val: 6,
-                img: ""
+                tid: "276"
             }
         ]
     },
@@ -101,7 +103,7 @@ const props = defineProps({
     }
 });
 const drawerRight = ref(false)
-const activeOn = ref(props.defaultVal || 0);//默认值
+const activeOn = ref(props.defaultVal || '0');//默认值
 const league_data = ref([])
 
 /**
@@ -116,11 +118,15 @@ const select_change = (value) => {
  * 选中事件
  * @param {*} val
  */
-const changeTab = (val,i,event) => {
-    console.log(`${props.dataList[val].name}-${val}`)
-    if(activeOn.value === val)return;
-    activeOn.value = val;
+const changeTab = (tid,i,event) => {
+    if(activeOn.value === tid)return;
+    activeOn.value = tid;
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
+    if (tid === '0') {
+        MatchMeta.set_origin_match_data({})
+    } else {
+        MatchMeta.filter_hot_match_by_tid(tid)
+    }
 }
 
 /**

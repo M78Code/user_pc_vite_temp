@@ -227,6 +227,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
     // 设置菜单对应源数据
     MatchMeta.set_origin_match_data()
+
+    // 今日 下 得足球  提前设置 热门联赛
+    if (MenuData.current_lv_2_menu_i === '1012') MatchMeta.set_tid_map_mids()
   }
 
 </script>
