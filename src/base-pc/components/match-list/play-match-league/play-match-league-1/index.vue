@@ -1,6 +1,5 @@
 <template>
-  <div class="ouzhou-match-league" :style="`height:${match_list_tpl_size.league_title_height}px !important;`"
-    v-if="lodash.get(card_style_obj, 'league_obj.csid')">
+  <div class="ouzhou-match-league" :style="`height:${match_list_tpl_size.league_title_height}px !important;`">
     <!-- 第一行 -->
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
@@ -26,14 +25,15 @@
             <!-- 联赛数量 -->
             <span class="ellipsis allow-user-select leagues-name"
               v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
-              {{ card_style_obj.league_obj.tn || card_style_obj.league_obj.tid }}
+              {{ card_style_obj.league_obj.tn }}
+              <!-- || card_style_obj.league_obj.tid  -->
             </span>
           </div>
         </div>
       </div>
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
-      <div class="play-name-ouzhou" v-if="!card_style_obj.is_league_fold">
+      <div class="play-name-ouzhou" v-if="csid&&!card_style_obj.is_league_fold">
         <div class="play-name-title-box"
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">

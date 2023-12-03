@@ -373,9 +373,9 @@ function set_base_data_init_ouzhou(play_num = '01') {
 		// 赛事列表 卡片数据
 		// 设置列表数据仓库
 		match_list_handle_set(matchs_list)
-		MatchListData.set_list(
-			matchs_list,
-		);
+		// MatchListData.set_list(
+		// 	matchs_list,
+		// );
 		handle_match_list_request_when_ok(data, false, true, true);
 
 		let ts1 = Date.now();
