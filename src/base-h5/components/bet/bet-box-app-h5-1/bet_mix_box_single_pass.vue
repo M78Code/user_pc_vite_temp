@@ -8,7 +8,7 @@
      <div v-show="false"> {{BetData.bet_data_class_version }}</div>
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
-              <div class="nonebox4-content-left-title">{{ item.handicap }}</div>
+              <div class="nonebox4-content-left-title" v-html="item.handicap"></div>
               <div class="nonebox4-content-left-content">
                   <div class="nonebox4-content-left-content-xian"></div>
                   <div class="nonebox4-content-left-content-text">
@@ -47,7 +47,7 @@
       //margin-top: 10px;
       display: flex;
       justify-content: space-between;
-      background: var(--q-gb-bg-c-11);
+      background: var(--q-gb-bg-c-9);
       padding: 10px;
       border-radius: 0.12rem;
   }
