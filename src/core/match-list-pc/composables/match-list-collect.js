@@ -245,15 +245,21 @@ const match_collect_type = (match)=>{
   * param{String} type 赛事类型 // 1：常规，2：冠军，3：电竞
   * return {Object} 收藏信息 {tf:false,mf:false}
   */
-export const match_collect_status = (match, obj, type=-1) =>{
+export const match_collect_status = (match, obj) =>{
   // match={tid:'888',mid:'222'};
   // obj= {"1":{"tids":{"888":1},"mids":{"222":1},"exclude":{"888":{"tids":"888","mids":{"2221":1}}}}}
 
   if(!obj){
     obj = match_collect_data.data;
   }
-
+  let type=-1
+  if([MenuData.is_kemp(),MenuData.is_collect_kemp(),MenuData.is_common_kemp(),MenuData.is_esports_champion()].includes(true)){
+    type=2
+  }else if(MenuData.is_export()){
+    type=3
+  }
   let res = {tf:false,mf:false};
+  
   if(match && obj){
     try {
       let tid = lodash.get(match,'tid', 0);
@@ -486,7 +492,7 @@ export const set_global_collect_data = (obj) =>{
   // 列表转对象
   const fun_list2obj = function(list) {
     const obj = {};
-    if(list && list?.length){
+    if(list && list.length && typeof list != 'string'){
       try {
         list.forEach(item => {
           if(item){

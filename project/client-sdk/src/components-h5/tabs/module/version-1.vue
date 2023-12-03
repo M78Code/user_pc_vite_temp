@@ -55,15 +55,19 @@
     </div>
   </template>
   
-  <script>
-  import { ref } from 'vue'
-  
-  export default {
-    setup () {
-      return {
-        tab: ref('mails')
-      }
+  <script setup>
+  import { ref, onMounted } from 'vue'
+  const tab = ref('mails')
+
+  const props = defineProps({
+    text: {
+      type: String,
+      default: ''
     }
-  }
+  })
+
+  onMounted(() => {
+    console.log('props', props)
+  })
   </script>
   

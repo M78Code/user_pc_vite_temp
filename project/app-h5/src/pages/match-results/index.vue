@@ -94,14 +94,16 @@ const slideHandle = (val, e) => {
 const set_scroll_data_list = (data_list = []) => {
     let scroll_data = data_list.map( item => {
         return {
+            ...item,
             mi: 100+item.sportId*1 + ''+'1',
             ct: item.count,
             md: item.date,
             sport: item.sportId,
+            mif:100+item.sportId*1
         }
     })
     state.slideMenu_sport = scroll_data
-    state.current_mi = scroll_data[0].mi
+    state.current_mi = scroll_data[0]?.mi
 
     MenuData.set_result_menu_api_params(scroll_data[0])
 
@@ -111,7 +113,6 @@ const set_scroll_data_list = (data_list = []) => {
 // 设置滑动菜单的选中id
 const set_scroll_current = val => {
     state.current_mi = val.mi
-
     MenuData.set_result_menu_api_params(val)
 
     set_result_menu_api()
@@ -137,11 +138,13 @@ onMounted(()=>{
     MenuData.set_current_lv1_menu(28)
     switchHandle(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
-    VirtualList.set_is_show_ball(true)
+    VirtualList.set_is_show_ball(false)
+    VirtualList.set_is_change_handicap_height(-22)
 })
 
 onUnmounted(()=>{
-    VirtualList.set_is_show_ball(false)
+    VirtualList.set_is_show_ball(true)
+    VirtualList.set_is_change_handicap_height(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
 })
 

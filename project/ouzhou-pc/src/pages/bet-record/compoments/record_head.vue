@@ -4,7 +4,7 @@
     <div class="record-head-title">{{i18n_t("ouzhou.record.my_bet")}}</div>
     <div class="tabs-wrap">
       <span v-for="item in tabList" :key="item.id" @click="tabClick(item)"
-            :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ item.label }}
+            :class="[{ 'is-active': item.id === active }, 'tabs-item']">{{ i18n_t(item.label)}}
       </span>
     </div>
   </div>
@@ -21,8 +21,8 @@ const tabClick = (item) => {
   emits('tab_change', item.id)
 }
 const tabList = ref([
-  { label: i18n_t("ouzhou.record.unsettled"), id: 'unsettled' },
-  { label: i18n_t("ouzhou.record.settled"), id: 'settled' }
+  { label: "ouzhou.record.unsettled", id: 'unsettled' },
+  { label: "ouzhou.record.settled", id: 'settled' }
 ])
 // 监听tab切换
 

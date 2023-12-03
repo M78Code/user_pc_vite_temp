@@ -83,13 +83,12 @@ const is_limit = ref(false)
 const sort_active = ref(2)
 // 展示多长时间的注单记录  (1:今天 2:昨日 3:七日内 4:一月内)
 const timeType = ref(1)
-//需要查绚提前结算金额的订单集合
-const orderNumberItemList = ref([])
+
 let useMitt = null
 let wsObj = null
 
 // 延时器
-const timer = ref(null)
+const timer = null
 
 onMounted(() => {
   // 首次进入获取数据
@@ -103,7 +102,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  clearInterval(timer.value)
+  timer && clearInterval(timer)
   useMitt && useMitt()
   // 初始化BetRecordClass状态
   BetRecordClass.init_core()
@@ -123,12 +122,12 @@ const init_data = (_index) => {
   //请求注单记录接口
   get_order_list(_index, params, url_api)
 
-  // 未结算时，轮休获取提前结算列表金额
+  // 未结算时，轮询获取提前结算列表金额
   if(_index === 0) {
-    clearInterval(timer.value)
-    timer.value = setInterval(() => {
+    timer && clearInterval(timer)
+    timer = setInterval(() => {
       if (document.visibilityState == 'visible') {
-        check_early_order()
+        BetRecordClass.check_early_order()
       }
     }, 5000)
   }
@@ -169,43 +168,6 @@ const sortChange = (index, reset) => {
 }
 
 /**
- * @description 查询提前结算金额
- */
-const search_early_money = () => {
-  let params = { orderNo: orderNumberItemList.value.join(',') }
-  if (orderNumberItemList.value.length === 0) return
-  api_betting.get_cashout_max_amount_list(params).then(reslut => {
-    let res = reslut.status ? reslut.data : reslut
-    if (res.code == 200 && res.data) {
-      // 通知提前结算组件 => 数据金额变化
-      useMittEmit(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, res.data)
-    }
-  })
-}
-/**
- * @description 检查订单中是否存在符合条件的提前结算订单号
- */
-const check_early_order = () => {
-  // 如果用户未开启提前结算
-  if (!UserCtr.user_info.settleSwitch) {
-    orderNumberItemList.value = []
-    return;
-  }
-  // 循环列表查询需要提前结算的单号
-  let tempList = []
-  lodash.forEach(BetRecordClass.list_data, (value, key) => {
-    lodash.forEach(value.data, (item) => {
-      if (item.enablePreSettle) {
-        tempList.push(item.orderNo)
-      }
-    })
-  })
-  orderNumberItemList.value = tempList
-  //  查询提前结算金额
-  search_early_money()
-}
-
-/**
    * @description 请求注单记录接口
    * @param {Undefined} Undefined
    * @return {Undefined} undefined
@@ -231,7 +193,7 @@ const get_order_list = (_index, params, url_api) => {
       // 给列表赋值
       BetRecordClass.set_list_data(record)
       // 如果是未结算页面, 获取提前结算列表金额
-      _index === 0 && check_early_order()
+      _index === 0 && BetRecordClass.check_early_order()
     } else if (res.code == '0401038') {
       is_limit.value = true
       is_loading.value = false
