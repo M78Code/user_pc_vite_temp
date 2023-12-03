@@ -380,8 +380,10 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
+    console.error('进来了')
     // 
     if(submit_btn) return
+    console.error('111111')
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
