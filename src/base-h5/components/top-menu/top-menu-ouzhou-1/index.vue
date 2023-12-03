@@ -100,7 +100,7 @@ const is_personal_page = computed(() => {
  * 公告  规则
  */
 const is_rule_page = computed(() => {
-  return ['/rules', '/notice','/announcement'].includes(router.currentRoute.value.path)
+  return ['/rules','/announcement'].includes(router.currentRoute.value.path)
 })
 /**
  * 主页的路由

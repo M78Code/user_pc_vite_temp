@@ -46,7 +46,7 @@
           </div>
           <div class="detail-slider-line">
             <div class="home-stop stop">
-              <span class="dot dot-h" v-for="item in  5" :key="item"></span>
+              <span class="dot" :class="{'dot-h': (5 - stop_obj.home) >= item}" v-for="item in  5" :key="item"></span>
             </div>
             <div class="slider-main" >
               <q-slider readonly reverse :model-value="score_list['S111']['home']+'%'" :min="0" :max="50" track-size="5px" color="amber-7"
@@ -55,7 +55,7 @@
                 :thumb-size="0" />
             </div>
             <div class="home-stop stop">
-              <span class="dot dot-h-r" v-for="item in  5" :key="item"></span>
+              <span class="dot" :class="{'dot-h-r': (5 - stop_obj.away) >= item}" v-for="item in  5" :key="item"></span>
             </div>
           </div>
           <div class="row justify-between" style="color:#8A8986">
@@ -70,7 +70,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref,watch } from "vue";
+import { computed, onMounted, ref,watch } from "vue";
 import lodash from "lodash"
 import {allBallObj} from '../compoments/venue-box/score_config'
 const props =  defineProps({
@@ -99,6 +99,75 @@ const tab = ref("mails");
 const tabClick = (item) => {
   active.value = item.id;
 };
+
+// 找寻当前比赛的双方暂停次数
+const dict = {
+  13: {
+    foul: "S10601",
+    stop: "S10901",
+  }, //第一节
+  301: {
+    foul: "S10602",
+    stop: "S10902",
+  }, //第一节结束
+  14: {
+    foul: "S10602",
+    stop: "S10902",
+  }, //第二节
+  302: {
+    foul: "S10603",
+    stop: "S10903",
+  }, //第二节结束
+  15: {
+    foul: "S10603",
+    stop: "S10903",
+  }, //第三节
+  303: {
+    foul: "S10604",
+    stop: "S10904",
+  }, //第三节结束
+  16: {
+    foul: "S10604",
+    stop: "S10904",
+  }, //第四节
+  100: {
+    foul: "S10604",
+    stop: "S10904",
+  }, //第四节结束
+  32: {
+    foul: "S10605",
+    stop: "S10906",
+  }, //等待加时
+  40: {
+    foul: "S10605",
+    stop: "S10906",
+  }, //加时赛
+  110: {
+    foul: "S10605",
+    stop: "S10906",
+  }, //加时赛结束
+  1: {
+    foul: "S10606",
+    stop: "S109",
+  }, //上半场
+  2: {
+    foul: "S10607",
+    stop: "S109",
+  }, //下半场
+  31: {
+    foul: "S10606",
+    stop: "S109",
+  }, //中场休息
+};
+const stop_obj = computed(()=>{
+  let { mmp } = props.detail_info
+  const stop_key = dict[mmp].stop
+  let obj = {
+    home: props.score_list[stop_key].home,
+    away: props.score_list[stop_key].away
+  }
+  return obj
+}) 
 </script>
 
 <style lang="scss" scoped>

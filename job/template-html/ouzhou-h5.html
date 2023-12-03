@@ -1,8 +1,3 @@
-<!--
- * @Author: success
- * @Date: 2020-08-04 17:13:55
- * @Description: 项目入口html页面
--->
 <!DOCTYPE html>
 <html style="font-size: 100px; height: 100%">
   <head>
@@ -71,10 +66,10 @@
         height: 100%;
       }
       .theme01-root-loading {
-        background-color: #fff;
+        background-color: var(--q-gb-bg-c-2);
       }
       .theme01_y0-root-loading {
-        background-color: #fff;
+        background-color: var(--q-gb-bg-c-2);
       }
       .theme02-root-loading {
         background-color: #191919;
@@ -203,6 +198,9 @@
         margin: 6px;
         margin-top: 0;
         margin-bottom: 0;
+      }
+      #ty-app {
+        height: inherit;
       }
       /*
       * Animation
@@ -507,7 +505,6 @@
         // 清除缓存的参数
         SEARCH_PARAMS.init_param_del(['clearcache']);
         let token = url_search.get("token");
-
         // 设置 loading 动画 主题
         set_root_loading_theme(url_search);
         if (token) {

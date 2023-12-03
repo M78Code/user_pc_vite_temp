@@ -37,10 +37,7 @@ export const EMIT_X_BTN_HIDE_CMD = 'X_BTN_HIDE';
 export const EMIT_IS_DELETE_CMD = 'IS_DELETE';
 /** 筛选 resultItem 组件点击时 emit*/
 export const EMIT_MATCH_ROW_CLICK_CMD = 'MATCH_ROW_CLICK';
-// 发送api域名切换命令命令
-export const EMIT_API_DOMAIN_UPD_CMD = "EMIT_API_DOMAIN_UPD_CMD";
-// apis域名全部不可用
-export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
+
 // 更新init_load
 export const EMIT_ALLOW_INIT_LOAD = "EMIT_ALLOW_INIT_LOAD";
 // c201消息处理
@@ -255,8 +252,7 @@ export const EMIT_XU_NI_TY_STANDARD_ODD_STATUS = "EMIT_XU_NI_TY_STANDARD_ODD_STA
 export const EMIT_SUB_LOADING_RESULT = "EMIT_SUB_LOADING_RESULT";
 //
 export const EMIT_TO_MAINTENANCE = "EMIT_TO_MAINTENANCE";
-// 发送用户基本信息到服务器
-export const EMIT_API_USER_PRO_INFO_CMD = "EMIT_API_USER_PRO_INFO_CMD";
+
 // 调用用户接口，更新 域名流程
 export const EMIT_SET_GETUSERINFO_OSS_API = "EMIT_SET_GETUSERINFO_OSS_API";
 //

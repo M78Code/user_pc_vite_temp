@@ -703,7 +703,7 @@ export const allBallObj = {
       value_key: "S114",
     },
     {
-      title: `${i18n_t('fault.fault')}`,
+      title: `${i18n_t('common.fault')}`,
       value_key: "S202",
     },
     {

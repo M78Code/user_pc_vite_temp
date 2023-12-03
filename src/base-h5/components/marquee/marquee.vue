@@ -25,7 +25,7 @@ const router = useRouter()
 function to_notice() {
     if (!parameters.value) return;
     router.push({
-        name: "notice",
+        name: "announcement",
         query: { noticeTypeName: parameters.value },
     });
 }

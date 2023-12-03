@@ -3,13 +3,13 @@
     <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
       <!-- 常规体育 -->
       <!-- 暂时只显示足、篮 => [101, 102] -->
-      <template v-for="(item, index) in mi_100_arr.filter(item => [101, 102].includes(+item.mif))" :key="index">
-        <div class="current-filter-tab" v-if=" item.ct > 0 " >
+      <template v-for="(item, index) in mi_100_arr" :key="index">
+        <div class="current-filter-tab" v-if="!MenuData.is_scroll_ball() || item.ct > 0 " >
           <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
             <div class="filter-tab-item">
               <div class="filter-icon">
                 <sport_icon :sport_id="BaseData.compute_sport_id(item.mif)" :status="MenuData.mid_menu_result.current_mi == item.mi"  size="24px" class="icon" />
-                <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
+                <div class="filter-count">{{ item.ct || 0 }}</div>
               </div>
               <div :class="{ checked_text: MenuData.mid_menu_result.current_mi == item.mi }" class="label-text">
                 {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif] || "" }}
@@ -126,13 +126,16 @@ onMounted(() => {
 
 // 菜单数量修改
 const set_ref_base_menu = (list=[] ) => {
-  mi_100_arr.value = mi_100_arr.value.map(item => {
-    let obj = list.find( ob => ob.mi == item.mi) || {}
-    if(obj.mi){
-      item.ct = obj.count
-    }
-    return item
-  })
+  // 欧洲版 滚球
+  if(MenuData.is_scroll_ball()){
+    mi_100_arr.value = mi_100_arr.value.map(item => {
+      let obj = list.find( ob => ob.mi == item.mi) || {}
+      if(obj.mi){
+        item.ct = obj.count
+      }
+      return item
+    })
+  }
 }
 /**
  * 

@@ -6,7 +6,7 @@
 </template>
 <script>
 import appload from "./app-load.vue";
-import app_mixin from "src/base-pc/mixin/app-mixin.js";
+import app_mixin from "src/template-project/mixin/app-mixin.js";
 
 import "./src/css/common.scss";
 

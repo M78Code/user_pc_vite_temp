@@ -18,15 +18,15 @@ window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 import App from "./App.vue";
 import router from './src/router/index'
 import lodash from "lodash";
-import { i18n_t , i18n } from "src/boot/i18n.js";
-import { createPinia } from 'pinia'
-const pinia = createPinia()
+import { i18n_t , i18n } from "./src/boot/i18n.js";
+ 
+ 
 const app = createApp(App);
 app.config.globalProperties.lodash = lodash;
 app.config.globalProperties.i18n_t = i18n_t;
 window.lodash = lodash;
 window.i18n_t = i18n_t;
-app.use(pinia)
+ 
 app.use(i18n);
 app.use(router);
 app.use(router);
