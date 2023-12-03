@@ -14,7 +14,7 @@
                     :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === playValue" :sport_id="item.mi" />
-                        <span class="badge" v-if="props.is_show_badge"><q-badge rounded :label="item.ct || 0" /></span>
+                        <span class="badge" v-if="props.is_show_badge && item.ct"><q-badge rounded :label="item.ct || 0" /></span>
                     </span>
                     <div class="label">{{BaseData.menus_i18n_map[+item.mi>1000 && +item.mi<2000?`3${item.mi}`:item.mi] }} </div>
                     <span class="round"></span>
