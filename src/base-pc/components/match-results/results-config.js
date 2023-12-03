@@ -860,7 +860,6 @@ export const useGetResultConfig = () => {
    * @param {n} 0 体育下拉框 1 冠军球种
    */
   const choose_sport = (n = 0) => {
-    console.error('nnnn',n)
     // 如果查询的时间不在支持查询的时间区间内
     if (!test_time()) {
       return;
@@ -934,9 +933,9 @@ export const useGetResultConfig = () => {
     //重置筛选条件
     state.pournament_params.tournamentId = "";
     state.pournament_params.nameStr = "";
+    console.error('state.pournament_params',state.results_params)
     state.init = true; //查询赛事
    get_pournament(1); //联动调取联赛数据
-   console.error('533333333334444',state.champion_sport_type )
   };
 
   /**

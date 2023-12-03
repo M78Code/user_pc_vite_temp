@@ -34,7 +34,7 @@
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" :offset="[200, 10]" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="date" range :minimal="true" ref="dateRef"
+                  <q-date v-model="date" color="orange" range :minimal="true" ref="dateRef"
                           :locale="dateLocal"
                   />
                 </q-popup-proxy>

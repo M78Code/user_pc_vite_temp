@@ -82,6 +82,7 @@
                   @pageSizeChange="pageSizeChange"
                   @goPageChange="goPageChange"
                   :is_bet_record="false"
+                  :reset_pagination="reset_pagination"
       >
       </Pagination>
     </div>
