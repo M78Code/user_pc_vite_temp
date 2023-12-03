@@ -6,7 +6,7 @@
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div class="img" v-if="!is_export" :style="compute_css_obj('menu-icon')"></div>
+      <div class="img" v-if="!is_esports" :style="compute_css_obj('menu-icon')"></div>
       <div class="img esports" v-else></div>
       <!-- //电竞的时候 底色黑色 所以图标换了 -->
     </div>
@@ -188,7 +188,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { loadLanguageAsync, compute_css_obj, useMittOn, useMittEmit, MITT_TYPES, MenuData, UserCtr } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { lang, sort_type, theme, standard_edition, user_info } from "src/base-h5/mixin/userctr";
-import {is_export } from "src/base-h5/mixin/menu";
+import {is_esports } from "src/base-h5/mixin/menu";
 
 
 let route = useRoute();

@@ -21,11 +21,11 @@
           <basis-info1 v-if="is_mounted && match" :match="match" show_type="all" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"
+        <match-handicap
           :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].main_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col">
-          <match-media v-if="match" :match="match" />
+          <match-media :match="match" />
         </div>
       </div>
       <!-- 附加盘1 -->
@@ -35,7 +35,7 @@
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"
+        <match-handicap
           :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
@@ -47,7 +47,7 @@
           <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"
+        <match-handicap
           :handicap_list="match_tpl_info[`template_${match_style_obj.data_tpl_id}`].add_handicap_list" :match="match" />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
@@ -93,18 +93,19 @@
           <basis-info4 v-if="is_mounted && match" :is_other_concede="true" :match="match" :is_show_score="true" />
         </div>
         <!-- 赛事盘口投注项 -->
-        <match-handicap v-if="match"  :handicap_list="compute_other_play_data" :match="match" other_play />
+        <match-handicap  :handicap_list="compute_other_play_data" :match="match" other_play />
         <!-- 视频按钮 -->
         <div class="media-col"></div>
       </div>
 
     </div>
   </div>
+
 </template>
 
 <script setup>
 
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, inject } from 'vue';
 import lodash from 'lodash'
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr, compute_local_project_file_path } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
@@ -114,13 +115,14 @@ import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-
+import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { MatchBasisInfo1FullVersionWapper as BasisInfo1 } from 'src/base-pc/components/match-list/match-basis-info/template-1/index.js'
 import { MatchBasisInfo4FullVersionWapper as BasisInfo4 } from 'src/base-pc/components/match-list/match-basis-info/template-4/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
 import { CommonTabFullVersionWapper as Tab } from "src/base-pc/components/tab/common-tab/index.js";
+import { check_match_end } from 'src/core/match-list-pc/match-handle-data.js'
 import { switch_other_play, get_compute_other_play_data, set_match_play_current_index, get_play_current_play } from 'src/core/match-list-pc/composables/match-list-other.js'
 const props = defineProps({
   mid: {
@@ -132,43 +134,46 @@ const props = defineProps({
     default: () => false
   }
 })
+const match=inject("match")
 const play_name_list = ref([]);
 //当前选中的次要玩法
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`]
-let match = MatchListData.get_quick_mid_obj(props.mid);
-match && set_play_name_list(match.tab_play_keys)
+match.value && set_play_name_list(match.value.tab_play_keys)
 const is_mounted = ref(true);
-let compute_other_play_data = get_compute_other_play_data(match) //玩法数据
+let compute_other_play_data = get_compute_other_play_data(match.value) //玩法数据
 const has_other_play = computed(() => { //是否有其他玩法
   return play_name_list.value&&play_name_list.value.length > 0
 });
-watch(() => MatchListData.data_version.version, (new_value, old_value) => {
-  match = MatchListData.get_quick_mid_obj(props.mid);
-  compute_other_play_data = get_compute_other_play_data(match)
-  match && set_play_name_list(match.tab_play_keys) //其他玩法key
+watch(() => match.value.tab_play_keys, (new_value, old_value) => {
+  set_play_name_list(new_value)
 })
+watch(() => [match.value.ms, match.value.mmp],() => {
+  if (match.value?.mmp || match.value?.ms) {
+    check_match_end(match.value, socket_remove_match)      
+  }
+}, { immediate: true, deep: true })
 // 其他玩法标题
 const bet_col = computed(() => {
   let bet_col = []
   //是否多列
   let multi_column = lodash.get(match_style_obj, 'data_tpl_id') == 13
-  let _play_current_key = get_play_current_play(match)
+  let _play_current_key = get_play_current_play(match.value)
   if (MatchListCardDataClass.list_version.value) { }
   // 5分钟玩法
   if (_play_current_key == 'hps5Minutes') {
     let hpid = 361
-    if (get_match_status(lodash.get('match.ms'), [110]) == 1) {
+    if (get_match_status(lodash.get('match.value.ms'), [110]) == 1) {
       hpid = 362
     }
-    bet_col = [lodash.get(match, `play_obj.hpid_${hpid}.hpn`, '')]
+    bet_col = [lodash.get(match.value, `play_obj.hpid_${hpid}.hpn`, '')]
     if (multi_column) {
       bet_col.push('')
     }
     // 波胆
   } else if (_play_current_key == 'hpsBold') {
-    let { mhn, man } = match
+    let { mhn, man } = match.value
     let [draw, ht_draw] = t('list.match_tpl_title.tpl1.bold_bet_col')
     bet_col = [mhn, draw, man, mhn, ht_draw, man]
     if (multi_column) {
@@ -176,30 +181,30 @@ const bet_col = computed(() => {
     }
     // 15分钟玩法
   } else if (_play_current_key == 'hps15Minutes') {
-    let start = match.hSpecial - 1,
-      end = match.hSpecial + (multi_column ? 3 : 1);
+    let start = match.value.hSpecial - 1,
+      end = match.value.hSpecial + (multi_column ? 3 : 1);
     bet_col = [...t('list.match_tpl_title.tpl1.15minutes_bet_col')]
-    if (match.hSpecial > 3) {
+    if (match.value.hSpecial > 3) {
       start -= 1
       end -= 1
     }
-    if (match.hSpecial > 1) {
+    if (match.value.hSpecial > 1) {
       bet_col.splice(2, 1)
     }
     bet_col = bet_col.slice(start, end)
     if (multi_column) {
-      if (match.hSpecial > 1) {
+      if (match.value.hSpecial > 1) {
         bet_col[bet_col.length - 1] = ''
       }
-      if ([3, 4].includes(match.hSpecial)) {
+      if ([3, 4].includes(match.value.hSpecial)) {
         bet_col.push(...[''])
       }
-      if (match.hSpecial == 5) {
+      if (match.value.hSpecial == 5) {
         bet_col.push(...['', ''])
       }
       bet_col.push(...[''])
     } else {
-      if (match.hSpecial == 5) {
+      if (match.value.hSpecial == 5) {
         bet_col[bet_col.length - 1] = ''
       }
     }
@@ -274,7 +279,7 @@ function set_play_name_list(tab_play_keys = '') {
     // 波胆
     hpsBold: { play_name: t('list.bold'), field: 'hpsBold' },
     // 5分钟玩法 5minutes_roll
-    hps5Minutes: { play_name: get_match_status(lodash.get(match, 'ms'), [110]) == 1 ? t('list.5minutes_roll') : t('list.5minutes'), field: 'hps5Minutes' },
+    hps5Minutes: { play_name: get_match_status(lodash.get(match.value, 'ms'), [110]) == 1 ? t('list.5minutes_roll') : t('list.5minutes'), field: 'hps5Minutes' },
   }
   tab_play_keys = tab_play_keys.split(',')
   tab_play_keys.forEach(key => {
@@ -284,14 +289,14 @@ function set_play_name_list(tab_play_keys = '') {
   // 是否有其他玩法
   if (play_name_list_info.length > 0) {
     // 当前选中的其他的玩法
-    let play_key = get_play_current_play(match)
+    let play_key = get_play_current_play(match.value)
     //玩法关闭时选择第一个
     if (!tab_play_keys.includes(play_key)) {
       play_key = tab_play_keys[0]
     }
-    set_match_play_current_index(match, play_key)
+    set_match_play_current_index(match.value, play_key)
   } else {
-    set_match_play_current_index(match, '')
+    set_match_play_current_index(match.value, '')
   }
 }
 
@@ -302,7 +307,7 @@ function set_play_name_list(tab_play_keys = '') {
 */
 function set_secondary_bg(index, length) {
   let bg_status = false
-  if ([2, 5].includes(length) && index == 1 && lodash.get('match.play_current_key') !== 'hps5Minutes') {
+  if ([2, 5].includes(length) && index == 1 && lodash.get('match.value.play_current_key') !== 'hps5Minutes') {
     bg_status = true
   } else if ([3, 4, 5].includes(index) && length > 5) {
     bg_status = true
@@ -358,20 +363,20 @@ function get_bet_width(index, length) {
 */
 function play_tab_click(obj) {
   // 当前已选中
-  if (match.play_current_index == obj.index) {
+  if (match.value.play_current_index == obj.index) {
     return
   }
   let play_key = play_name_list.value[obj.index].field
   // 切换玩法
-  switch_other_play(match.mid, play_key)
-  if (match.csid == 1) {
+  switch_other_play(match.value.mid, play_key)
+  if (match.value.csid == 1) {
     let zhugeObj = {
       "玩法集名称": play_name_list.value[obj.index].play_name,
       "玩法集ID": '',
       "区域位置": "主列表"
     }
   }
-  MatchListCardData && MatchListCardData.update_match_cur_card_style(match.mid, play_key)
+  MatchListCardData && MatchListCardData.update_match_cur_card_style(match.value.mid, play_key)
 }
 
 /**
@@ -379,7 +384,7 @@ function play_tab_click(obj) {
  * @param {undefined} undefined
 */
 function fold_tab_play() {
-  MatchListCardData && MatchListCardData.fold_tab_play(match.mid)
+  MatchListCardData && MatchListCardData.fold_tab_play(match.value.mid)
 }
 onMounted(() => {
   // 异步设置组件是否挂载完成

@@ -22,9 +22,6 @@ import STANDARD_KEY from "src/core/standard-key";
 const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 
-const { IS_FOR_NEIBU_TEST  } = BUILD_VERSION_CONFIG;
-
-console.error('BUILD_VERSION_CONFIG',BUILD_VERSION_CONFIG)
 const menu_type_config = {
   1: 1,
   2: 3,
@@ -53,8 +50,6 @@ class MenuData {
     // 菜单赛种对应的赛种id
     this.menu_csid = 0
     //----------------------------------- 常规球种 --------------------------------------//
-    // this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
-    this.conventionalType = [101,102]; 
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
@@ -122,15 +117,11 @@ class MenuData {
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
-    if(!IS_FOR_NEIBU_TEST){
-      menu_list =  data.filter((item)=>{return this.conventionalType.includes(+item.mi)});
-    }else{
-      menu_list = data
-    }
+    menu_list = BaseData.left_menu_base_mi
     //热门球种
-    top_events_list =  data.filter((item)=>{return item.mi==5000})?.[0].sl || [];
+    top_events_list = data.find((item)=>{return item.mi==5000}).sl || [];
     //冠军
-    champion_list =  data.filter((item)=>{return item.mi==400})?.[0].sl || [];
+    champion_list = data.find((item)=>{return item.mi==400}).sl || [];
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {
@@ -157,10 +148,6 @@ class MenuData {
     // });
     //正常取热门球种 3
     
-    if(!IS_FOR_NEIBU_TEST){
-      top_events_list = top_events_list.filter((n)=>{return this.conventionalType.includes(+n.mi-4900)})
-    }
-    
     top_events_list = top_events_list.map((item)=>{
       return {
         ...item,
@@ -170,10 +157,6 @@ class MenuData {
       }
     });
     // top_events_list.push({...top_events_list[0],...{mi:102,csid:1}})
-
-    if(!IS_FOR_NEIBU_TEST){
-      champion_list = champion_list.filter((n)=>{return this.conventionalType.includes(+n.mi-300)})
-    }
 
     champion_list = champion_list.map((item)=>{
       return {
@@ -486,7 +469,7 @@ class MenuData {
    * 是否选中了电竞
    *  mi [number|string] 要比对的值
   */
-  is_export(mi) {
+  is_esports(mi) {
     return this._is_cur_mi(2000, mi)
   }
   /**
