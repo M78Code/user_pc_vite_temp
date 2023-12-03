@@ -39,3 +39,13 @@ public/app-h5/server-resource/*
 /yarn.lock
 
 ./dev-target-env.js
+
+project/ouzhou-pc/index.html
+project/ouzhou-h5/index.html
+project/yazhou-pc/index.html
+project/yazhou-h5/index.html
+project/new-pc/index.html
+project/app-h5/index.html
+project/activity/index.html
+project/animation/index.html
+project/template-project/index.html
