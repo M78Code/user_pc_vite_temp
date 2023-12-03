@@ -110,8 +110,10 @@ class MenuData {
   set_init_menu_list(arr){
     let menu_list = [],
         top_events_list = [],
-        champion_list = [];
-    let data = arr || BaseData.mew_menu_list_res;
+        champion_list = [],
+        data = arr || BaseData.mew_menu_list_res,
+        conventionalType = [...data?.filter((item)=>{return +item.mi <300}).map((n)=>{return +n.mi}),400];
+    this.conventionalType = IS_FOR_NEIBU_TEST ?conventionalType:[101,102];
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
@@ -173,6 +175,11 @@ class MenuData {
       this.menu_csid = +session_info.menu_mi - 100
     }
     !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA,menu_list);
+  }
+  // 根据菜单id 获取对应的euid
+  get_mid_for_euid(mi) {
+    let obj = lodash_.get(BaseData.mi_euid_map_res,`[${mi}]`, {})
+    return obj.p || 30001
   }
   /**
    * 收藏
