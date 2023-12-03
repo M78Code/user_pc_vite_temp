@@ -198,7 +198,7 @@ const get_animation_url = () => {
 }
 .iframe_box {
   width: 100%;
-  height: 243px;
+  height: 223px;
   overflow: hidden;
   position: relative;
   // display: flex;
