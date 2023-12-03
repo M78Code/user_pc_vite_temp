@@ -280,9 +280,11 @@ export default class Ws {
       let ws = this.ws;
       if (ws && ws.readyState == 1) {
         let mk_level = lodash.get(UserCtr.user_info, 'marketLevel', 0);
+        let es_mk_level = lodash.get(UserCtr.user_info, 'esMarketLevel', 0);
         switch (msg.cmd) {
           case 'C8':
             msg.marketLevel = mk_level;  //行情等级有值的时候传值 其他时候传0
+            msg.esMarketLevel = es_mk_level;  //行情等级有值的时候传值 其他时候传0
             // 是否一条一条发送
             if (!msg.one_send) {
               if (!this.ws_send_manger_objs[msg.cmd]) {
@@ -302,6 +304,7 @@ export default class Ws {
             break;
           case 'C2':
             msg.marketLevel = mk_level;  //行情等级有值的时候传值 其他时候传0
+            msg.esMarketLevel = es_mk_level;  //行情等级有值的时候传值 其他时候传0
             break;
           default:
             break;

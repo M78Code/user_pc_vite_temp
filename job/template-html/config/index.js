@@ -3,50 +3,35 @@
 import BUILD_VERSION_CONFIG from "../../output/version/build-version.js";
 let { PROJECT_NAME, IS_PC } = BUILD_VERSION_CONFIG;
 
+ import app_h5_config from  "./mondule/app-h5.js"
+ import ouzhou_h5_config from  "./mondule/ouzhou-h5.js"
+ import ouzhou_pc_config from  "./mondule/ouzhou-pc.js"
+import {default_all_placeholder_obj}from  "./config.js"
+ 
 
 
-let  config_h5 ={
-     
-     meta:{
-        placeholder:'[[[[[meta]]]]]',
-        content:   `
-        <meta name="msapplication-tap-highlight" content="no" />
-    
-        <meta name="apple-mobile-web-app-capable" content="no" />
-        <meta name="hid-api" content="%VITE_APP_hidApi%" />
-        <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
-        <!-- uc强制竖屏 -->
-        <meta name="screen-orientation" content="portrait" />
-        <!-- QQ强制竖屏 -->
-        <meta name="x5-orientation" content="portrait" />
-        <!-- UC强制全屏 -->
-        <meta name="full-screen" content="yes" />
-        <!-- QQ强制全屏 -->
-        <meta name="x5-fullscreen" content="true" />
-        <!-- UC应用模式 -->
-        <meta name="browsermode" content="application" />
-        <!-- QQ应用模式 -->
-        <meta name="x5-page-mode" content="app" />
-        <!-- windows phone 点击无高光  -->
-        <meta name="msapplication-tap-highlight" content="no" />
-        `
-     }
 
 
-}
+// project/ouzhou-pc/index.html
+// project/ouzhou-h5/index.html
+// project/yazhou-pc/index.html
+// project/yazhou-h5/index.html
+// project/new-pc/index.html
+// project/app-h5/index.html
+// project/activity/index.html
+// project/animation/index.html
+// project/template-project/index.html
+// 这几个入口文件  这些自动生成 ， 不要在 project/*/index.html 改代码
 
 
-let  config_pc ={
-    meta:{
-        placeholder:'[[[[[meta]]]]]',
-        content: ""
-    },
-}
+ 
 
 
 export const html_config=   {
-    config_h5,
-    config_pc
+     'app-h5':app_h5_config,
+     'ouzhou-h5':ouzhou_h5_config,
+     'ouzhou-pc':ouzhou_pc_config,
+     'default-key':default_all_placeholder_obj
 }
 
-export  const config_key = 'config_h5'
+export  const config_key = PROJECT_NAME
