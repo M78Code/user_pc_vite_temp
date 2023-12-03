@@ -23,6 +23,7 @@
  * 最好是写 配置文件
  *
  */
+let count = 0
 
 import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME, time_conversion } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
@@ -38,7 +39,6 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
  */
 const get_tab_play_height = (mid) => {
 	let template_id = MenuData.get_match_tpl_number()
-
 	let { play_current_key, other_handicap_list = [] } =
 		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
 	let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]["match_template_config"] || {};
@@ -48,6 +48,7 @@ const get_tab_play_height = (mid) => {
 		// 计算0号模板次要玩法 盘口+玩法标题高度
 		handicap_height = length * 35 + (40 - (!["en", "ad", "ms"].includes(localStorage.getItem("get_lang")) ? 16 : 0));
 	}
+
 	return handicap_height;
 };
 

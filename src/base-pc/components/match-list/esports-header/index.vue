@@ -4,7 +4,7 @@
   <div
     class="c-esports-header"
     :style="compute_css_obj(`pc-img-esports-${current_menu.csid}-banner`)"
-    v-show="MenuData.is_export()"
+    v-show="MenuData.is_esports()"
   >
     <!-- 游戏种类列表 -->
     <div class="sport-tab">

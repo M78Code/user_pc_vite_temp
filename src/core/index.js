@@ -51,6 +51,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js";
 // pc
 
 import MenuData_PC from "src/core/menu-pc/menu-data-class.js";
+import MenuData_PC_Yazhou from "src/core/menu-pc-yazhou/menu-data-class.js";
 import MatchListCard_PC from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardData_PC from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 // 搜索组件类
@@ -68,12 +69,20 @@ let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
 // if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
 //   MenuData = MenuData_App_h5
 // }
+console.log('dgsduhgbsdgsdfasd', PROJECT_NAME);
+
 switch (PROJECT_NAME) {
   case 'ouzhou-h5':
     MenuData = OZ_MenuData_App_h5
     break;
   case 'app-h5':
     MenuData = MenuData_App_h5
+    break;
+  case 'yazhou-pc': 
+    MenuData = MenuData_PC_Yazhou
+    break;
+  case 'ouzhou-pc':
+    MenuData = MenuData_PC
     break;
   default:
     break;
@@ -267,6 +276,7 @@ export * from "src/core/server-img/";
  *
  */
 import ServerTime from './server-time/server-time'
+import { M } from "licia/moment";
 
 export {
   //

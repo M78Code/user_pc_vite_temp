@@ -9,7 +9,7 @@
     :class="{
       guanjun: is_kemp,
       jingzu: is_jinzu,
-      esport: is_export,
+      esport: is_esports,
       animation: animation,
       detail_match_list: is_hot || is_detail,
       zaopan: [3, 11, 28, 3000].includes(menu_type) && !is_hot,
@@ -42,7 +42,7 @@ import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MenuData, score_switch_handle, utils } from "src/core/index.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_export, is_kemp } from 'src/base-h5/mixin/menu.js'
+import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
 
