@@ -188,7 +188,7 @@ watch(BaseData.base_data_version,()=>{
 })
 const checked_current_tab = payload => {
 	//切换滚球 今日 早盘  球种初始化为足球背景
-	MenuData.set_current_ball_type(1)
+	// MenuData.set_current_ball_type(1)  不要在这里切 要在球种那里切 为什么默认1 应该是当前球种的 id
 // debugger
 	let obj = {
 		...MenuData.mid_menu_result,
