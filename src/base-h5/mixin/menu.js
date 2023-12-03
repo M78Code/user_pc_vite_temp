@@ -10,8 +10,8 @@ const is_scroll_ball = computed(() => {
     return MenuData.is_scroll_ball(menu_type.value);
 });
 //是否 电竞
-const is_export = computed(() => {
-    return MenuData.is_export(menu_type.value);
+const is_esports = computed(() => {
+    return MenuData.is_esports(menu_type.value);
 });
 //是否 vr
 const is_vr = computed(() => {
@@ -67,5 +67,5 @@ watch(update_time, () => {
     menu_lv4.value = MenuData.current_lv_4_menu;//4级
 });
 export { update_time, footer_menu_id,
-    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_export, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail, is_collect
+    is_jinzu, is_kemp, is_mix, is_vr, is_zaopan, is_esports, is_scroll_ball, is_today, is_results, menu_type, menu_lv1, menu_lv2, is_hot, is_detail, is_collect
 }

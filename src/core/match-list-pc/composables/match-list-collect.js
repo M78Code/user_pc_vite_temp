@@ -34,7 +34,7 @@ const mx_collect_count = (data) => {
     !collect_switch.value ||
     MenuData.is_vr() ||
     PageSourceData.page_source == "search" ||
-    (PageSourceData.page_source == "play" && MenuData.is_export())
+    (PageSourceData.page_source == "play" && MenuData.is_esports())
   ) {
     return;
   }
@@ -46,7 +46,7 @@ const mx_collect_count = (data) => {
   let match_list_api_config = MenuData.match_list_api_config.match_list;
   let _params = lodash.clone(match_list_api_config.params) || {};
   // 电竞
-  if (MenuData.is_export()) {
+  if (MenuData.is_esports()) {
     api = api_match.post_collect_count_es;
   } else {
     api = api_match.post_fetch_collect_count;
@@ -255,7 +255,7 @@ export const match_collect_status = (match, obj) =>{
   let type=-1
   if([MenuData.is_kemp(),MenuData.is_collect_kemp(),MenuData.is_common_kemp(),MenuData.is_esports_champion()].includes(true)){
     type=2
-  }else if(MenuData.is_export()){
+  }else if(MenuData.is_esports()){
     type=3
   }
   let res = {tf:false,mf:false};
@@ -420,7 +420,7 @@ const mx_collect_leagues = (match, is_champion) => {
         length_0_fn,
       });
       let match_length;
-      if (MenuData.is_export()) {
+      if (MenuData.is_esports()) {
         match_length =
           lodash.get(MatchListData.league_list_obj, "livedata.length", 0) +
           lodash.get(MatchListData.league_list_obj, "nolivedata.length", 0);

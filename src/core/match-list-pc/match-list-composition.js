@@ -12,7 +12,7 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { update_collect_data, mx_collect_count, mx_collect_match, match_collect_status, fethc_collect_match } from "./composables/match-list-collect.js";
+import { update_collect_data, mx_collect_count, mx_collect_match, collect_count, fethc_collect_match } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
 import { mx_use_list_res, mx_list_res } from './composables/match-list-processing.js'
@@ -64,6 +64,7 @@ useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_pag
 */
 export function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
+	console.log('match_list_params', match_list_params);
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -245,7 +246,7 @@ function init_page_when_base_data_first_loaded() {
 	// );
 }
 function mounted_fn() {
-	// fetch_match_list();
+	fetch_match_list();
 	// 开启自动化测试功能
 	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	// 列表数据仓库
@@ -347,7 +348,7 @@ function get_hot_match_list(backend_run = false) {
 			let code = lodash.get(res, "data.code");
 			// 赛事列表
 			let match_list = lodash.get(res, "data.data") || [];
-			if (MenuData.is_export()) {
+			if (MenuData.is_esports()) {
 				match_list = lodash.get(res, "data.data.data") || [];
 			}
 			if (code == 200) {
@@ -495,6 +496,7 @@ export {
 	is_loading,
 	show_refresh_mask,
 	is_show_hot,
+	collect_count,
 	on_go_top,
 	on_refresh,
 	socket_remove_match,

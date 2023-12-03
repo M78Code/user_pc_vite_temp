@@ -51,7 +51,7 @@
               <img v-if='league_collect_state' :src="normal_img_is_favorite">
             </div>
             <span class="league-title-text row justify-between">
-              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
                 </span>
@@ -97,7 +97,7 @@
                     <img v-if='match_collect_state' :src="normal_img_is_favorite">
                   </div>
                   <!-- 赛事日期标准版 -->
-                  <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
+                  <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
                     <!-- 赛事回合数mfo -->
                     <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
@@ -299,7 +299,7 @@ import { in_progress, not_begin, animation_icon, video_icon,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id, is_zaopan } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id, is_zaopan } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 
@@ -331,7 +331,7 @@ export default {
     })
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
     }
   }

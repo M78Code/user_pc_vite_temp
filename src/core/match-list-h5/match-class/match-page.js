@@ -334,7 +334,7 @@ class MatchPage {
     let api_func = get_match_base_info_by_mids;
     // if (MenuData.menu_type == 3000) {
       //判断电竞
-    if (MenuData.is_export()) {
+    if (MenuData.is_esports()) {
       api_func = get_esports_match_by_mids;
       api_axios_flg = 'get_esports_match_by_mids';
       if (lodash.get(this.get_current_menu, 'date_menu.menuType') == 100) {
@@ -729,7 +729,7 @@ class MatchPage {
         // 赛事比分排序
         this.msc_sort(item.msc);
         // 如果是电竞
-        if (MenuData.is_export()) {
+        if (MenuData.is_esports()) {
           other_status_match.push(item);
         } else if (MenuData.is_results()) { // 如果是赛果
           started.push(item);
