@@ -49,7 +49,7 @@
             <div class="esport" v-else-if="match_of_list.csid == 100"
               :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
             <span class="league-title-text row justify-between">
-              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
                 </span>
@@ -89,7 +89,7 @@
                 </template>
               </div>
               <!-- 赛事日期标准版 -->
-              <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
+              <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
                 <!-- 赛事回合数mfo -->
                 <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                   {{ match.mfo }}
@@ -230,7 +230,7 @@ import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 import _ from 'lodash'
@@ -320,7 +320,7 @@ export default {
       let hsw = lodash.get(play_data, `hl._play.hsw`) || "";
       let sport_id = lodash.get(props.match_of_list, "csid");
       // 电竞赔率精度处理
-      // if (lodash.isUndefined(sport_id) && menu_config.is_export()) {
+      // if (lodash.isUndefined(sport_id) && menu_config.is_esports()) {
       //   sport_id = "101";
       // }
       const match_odds = compute_value_by_cur_odd_type(
@@ -356,7 +356,7 @@ export default {
       curMatchOdds,
       _,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, footer_menu_id
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, mearlys_icon, footer_menu_id
     }
   }
 }

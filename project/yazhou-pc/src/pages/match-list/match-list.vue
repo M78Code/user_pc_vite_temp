@@ -10,13 +10,21 @@
     <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div>
-    <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
-      <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
-      <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
-      <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
-      <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
-      <div> load_data_state {{ load_data_state }}</div>
-    </div> -->
+    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl || 1">
+      <!-- <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div> -->
+      <!-- 临时调试用 -->
+      <div class="fold-btn" @click="match_list_card.unfold_all_league()">
+        展开联赛
+      </div>
+      <div class="fold-btn" @click="match_list_card.fold_all_league()">
+        折叠联赛
+      </div>
+      <div class="fold-btn" @click="match_list_card.test_log_data()">
+        打印数据
+      </div>
+      {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
+      length--- {{ match_list_card_key_arr.length }}
+    </div>
     <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }">
       <!-- banner -->
       <div class="banner-box" :style="{height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px'}" v-if="GlobalAccessConfig.get_show_banner()"></div>

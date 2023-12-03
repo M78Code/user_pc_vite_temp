@@ -46,7 +46,7 @@
                 <img v-if='league_collect_state' :src="have_collect_ouzhou">
               </div>
               <span class="league-title-text row justify-between">
-                <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+                <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                   <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                     {{ match.tn }}
                   </span>
@@ -94,7 +94,7 @@
                             <img v-if='match_collect_state' :src="have_collect_ouzhou">
                           </div>
                           <!-- 赛事日期标准版 -->
-                          <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
+                          <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
                             <!-- 赛事回合数mfo -->
                             <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
@@ -292,7 +292,7 @@ import { sports_play_data, use_sports_play_title } from 'src/core/constant/index
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 import lodash from 'lodash'
 import default_mixin from '../../mixins/default.mixin.js'
 
@@ -373,7 +373,7 @@ export default {
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
       PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site
     }
   }

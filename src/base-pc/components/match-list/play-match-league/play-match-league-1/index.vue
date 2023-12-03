@@ -8,14 +8,14 @@
         <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
           <!-- 联赛是否收藏 -->
           <div @click.stop="collect"
-            class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_export() && GlobalAccessConfig.get_collectSwitch">
+            class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
             <div class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
           </div>
         </div>
           <!-- 联赛图标 -->
           <div class="league-icon-wrap">
             <span class="soprts_id_icon"
-            v-if="menu_config.is_export()"
+            v-if="menu_config.is_esports()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
         </div>

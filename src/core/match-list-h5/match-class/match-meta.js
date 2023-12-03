@@ -106,7 +106,7 @@ class MatchMeta {
     // 对应 球种 mi 
     if (typeof menu_lv_v2 !== 'string') return
     // 电竞、赛果 return
-    if (MenuData.is_export() || MenuData.is_results()) return
+    if (MenuData.is_esports() || MenuData.is_results()) return
 
     this.get_origin_match_mids_by_mi(menu_lv_v2)
   }
@@ -1124,7 +1124,7 @@ class MatchMeta {
       if (this.match_mids.length < 1 && mids.length < 1) return
       const match_mids = this.match_mids.join(',')
       // 冠军不需要调用
-      if (MenuData.is_export()) return
+      if (MenuData.is_esports()) return
       // 竞足409 不需要euid
       const params = {
         mids: mids.length > 0 ? mids : match_mids,
@@ -1135,7 +1135,7 @@ class MatchMeta {
       };
       let res = ''
       // 赛果
-      if (MenuData.is_export()) {
+      if (MenuData.is_esports()) {
         res = await api_common.get_esports_match_by_mids(params)
       } else {
         res = await api_common.get_match_base_info_by_mids(params)
