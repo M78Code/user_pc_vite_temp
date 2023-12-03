@@ -229,7 +229,7 @@ const checkInvert = () => {
  */
 const checkHot = n => {
   emit("confirm", 0);
-  menu.value = "hot";
+  // menu.value = "hot";
   initSport.value = n;
   if (n == 1) {
     is_hot.value = false;
