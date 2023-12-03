@@ -187,8 +187,7 @@ watch(BaseData.base_data_version,()=>{
 	}
 })
 const checked_current_tab = payload => {
-	//切换滚球 今日 早盘  球种初始化为足球背景
-	MenuData.set_current_ball_type(1)
+
 // debugger
 	let obj = {
 		...MenuData.mid_menu_result,
@@ -237,6 +236,8 @@ const checked_current_tab = payload => {
 
 	// 收藏切换tab
 	if(MenuData.is_collect){
+		//切换滚球 今日 早盘  球种初始化为足球背景
+	 	MenuData.set_current_ball_type(1)
 		if( payload.value == 3001){
 			obj.current_mi = 1011
 		}
