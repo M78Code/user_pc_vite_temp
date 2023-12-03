@@ -1,12 +1,13 @@
 
 import { ref, watch } from "vue";
+import lodash_ from "lodash"
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { functions } from "lodash";
-import { api_match_list } from "src/api/index.js";
-
+import { api_match_list,api_common } from "src/api/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
@@ -21,7 +22,7 @@ const vr_menu_obj = ref([]);
 resolve_mew_menu_res();
 
 watch(MenuData.menu_data_version, () => {
-    resolve_mew_menu_res();
+        resolve_mew_menu_res();
 })
 
 /**
@@ -118,7 +119,7 @@ function resolve_mew_menu_res_mi_5000() {
 /**
  * 解析 新接口返回值     常规 +电竞
  */
-function resolve_mew_menu_res_mi_100_2000(type) {
+async function resolve_mew_menu_res_mi_100_2000(type) {
     //过滤常规球类
     let mi_100_list = [];
     let mi_2000_list = [];
@@ -142,6 +143,10 @@ function resolve_mew_menu_res_mi_100_2000(type) {
             mi_2000_arr.value.push(item);
         }
     });
+    // 收藏
+    if(MenuData.is_collect){
+        mi_100_list = await get_menu_of_favorite_count(mi_100_list,type)
+    }
    
     //常规体育
     mi_100_arr.value = mi_100_list;
@@ -188,6 +193,53 @@ function compute_quanbu_euid() {
         euid: euids.join(","),
     };
 }
+
+// 收藏切换获取最新的赛种数量数据
+async function  get_menu_of_favorite_count(list,type) {
+    let euid_list = ''
+    // 获取对应的旧菜单id    
+    list.forEach(item =>{
+        euid_list += MenuData.get_mid_for_euid(item.mi) + ','
+    })
+    let type_ = {
+        1:1,
+        2:3,
+        3:4,
+        400:100,
+    }
+    let parmas = {
+        euid: euid_list,
+        //排序	 int 类型 1 按热门排序 2 按时间排序
+        sort: PageSourceData.sort_type,
+        //1：滚球，2：即将开赛，3：今日赛事，4：早盘，100：冠军
+        type: type_[type], 
+        cuid: UserCtr.get_cuid(),
+    }
+    const { code,data } = await api_common.get_menu_of_favorite_count(parmas)
+    if(code == 200){
+        let collect_list = data || []
+       
+        list = list.map(item=>{
+            collect_list.forEach(obj=>{
+                if(obj.sportId){
+                    if(type == 400){
+                        if(item.mi == (type + obj.sportId*1)){
+                            item.ct = obj.count
+                        }
+                    }else{
+                        if(item.mi == (100 + obj.sportId*1)+''+type){
+                            item.ct = obj.count
+                        }
+                    }
+                }
+            })
+            return item
+        })
+    }
+    console.error("ssss",list)
+    return list
+}
+
 /**
  * 解析 新接口返回值  冠军页面
  */
@@ -202,10 +254,9 @@ function resolve_mew_menu_res_mi_400() {
    
     mi_400_obj.value = mi_400_obj
 
-    mi_100_arr.value = (mi_400_obj.sl || []).map(item => {
-        item.mif = (item.mi - 400 + 100)
-        return item
-    } )
+    get_menu_of_favorite_count(mi_400_obj.sl,400)
+
+    mi_100_arr.value = get_menu_of_favorite_count(mi_400_obj.sl,400)
 }
 /**
  *全部 数量计算 冠军
@@ -272,7 +323,7 @@ const get_ouzhou_leagues_data = async (date, sportId) => {
       sportId: sportId ?? (MenuData.current_ball_type ? Number(MenuData.current_ball_type) : 1),
       selectionHour: date
     })
-    console.log('rewrewrwerwerw', res);
+    // console.log('rewrewrwerwerw', res);
     const list = lodash.get(res, 'data', [])
     return list
 }
