@@ -43,7 +43,7 @@ function get_match_tpl_number(is_hot) {
         match_tpl_number = 18
     }
     // 电竞常规赛事
-    else if (MenuData.is_export()) {
+    else if (MenuData.is_esports()) {
         match_tpl_number = 'esports'
     }
     //13列玩法菜单 && store.getters.get_unfold_multi_column
@@ -146,8 +146,6 @@ export function get_ouzhou_data_tpl_id(csid) {
      * @return {[主,客]} [主，客]
      */
 export function get_main_score(match) {
-    console.log('_home_score', match);
-
     let _home_score = ""
     let _away_score = ""
     if (get_match_status(match.ms)) {

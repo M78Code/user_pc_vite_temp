@@ -2,31 +2,31 @@
   <div class="menu  match-main-menu" :style="{ 'z-index': 501 }">
     <div class="menu-inner-wrap">
       <!--  电竞背景图片  -->
-      <div class="m-i-background" v-if="is_export" :style="compute_css_obj('menu-bg-' + dj_back_type)"></div>
-      <div class="main-wrap flex" :class="{ is_export }">
+      <div class="m-i-background" v-if="is_esports" :style="compute_css_obj('menu-bg-' + dj_back_type)"></div>
+      <div class="main-wrap flex" :class="{ is_esports }">
         <!--  返回按鈕  -->
         <slot name="menu-left" >
           <div class="goback-icon-wrapper  column justify-center" @click="handle_go_back">
             <div class="img" :style="compute_css_obj('menu-go-back-icon')"></div>
           </div>
         </slot>
-        <div class="main-menu-container" :class="{ is_export }">
+        <div class="main-menu-container" :class="{ is_esports }">
           <template v-for="(item, index) in menu_list" :key="lodash.get(item, 'mi')">
-            <div class="m-menu-item" :class="{ current: lodash.get(item, 'mi') == menu_type, esport: is_export }"
+            <div class="m-menu-item" :class="{ current: lodash.get(item, 'mi') == menu_type, esport: is_esports }"
               v-show="show_dianjing(item, index)">
               <span class="i-title" @click="set_menu_lv1(item, index)">
                 {{ i18n_t("new_menu." + lodash.get(item, 'mi')) || lodash.get(item, 'mi') }}
               </span>
               <div class="m-menu-count">
                 <span class="count" :style="{ visibility: show_favorite_list }"
-                  :class="{ is_unit: MenuData.count_menu(item) < 10 && index == 1, esport: is_export }">
+                  :class="{ is_unit: MenuData.count_menu(item) < 10 && index == 1, esport: is_esports }">
                   <!-- show_favorite_list || main_m.menuId==408 ||
                     3000 == main_m.menuType ? 'hidden' : 'visible'
                      -->
                   {{ MenuData.count_menu(item) }}
                 </span><!---->
                 <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle"
-                  :class="{ open: show_selector_sub, arrow_esport: is_export || UserCtr.theme == 'night' }">
+                  :class="{ open: show_selector_sub, arrow_esport: is_esports || UserCtr.theme == 'night' }">
                 </i>
               </div>
 
@@ -40,14 +40,14 @@
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
       <div class="sub-menu-date-w" v-if="!is_jinzu" :class="{
-        simple: menu_wrap_simple && !is_export,
-        zaopan: is_mix || is_kemp || is_results || is_export,
-        esport: is_export,
+        simple: menu_wrap_simple && !is_esports,
+        zaopan: is_mix || is_kemp || is_results || is_esports,
+        esport: is_esports,
       }">
         <!-- 二级菜单, 三级菜单, 四级菜单  -->
         <div class="sport-m-container" :class="{
-          simple: sport_container_simple && !is_export,
-          'shadow-down': !is_export,
+          simple: sport_container_simple && !is_esports,
+          'shadow-down': !is_esports,
         }">
           <div class="s-menu-container flex" ref="sub_menu_scroller">
             <!--二级菜单 除了‘全部’按钮的其他所有 二级菜单  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
@@ -62,7 +62,7 @@
                 "></span>
             </sub-menu-specially>
             <template v-for="( item, index ) in  current_menu " :key="lodash.get(item, 'mi')">
-              <div class="sport-menu-item flex justify-center" v-show="!is_export && !is_results ? item.ct > 0 : true"
+              <div class="sport-menu-item flex justify-center" v-show="!is_esports && !is_results ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)">
                 <div class="inner-w flex justify-between items-center" :class="{
                   favorite: show_favorite_list,
@@ -80,8 +80,8 @@
                     </div>
                   </div>
                   <div class="s-w-i-title" :class="{
-                    esport: is_export,
-                    'din-regular': is_export
+                    esport: is_esports,
+                    'din-regular': is_esports
                   }
                     ">
                     {{ item.name || MenuData.get_menus_i18n_map(item?.mi) }}
@@ -92,15 +92,15 @@
             </template>
           </div>
           <!-- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
-          <div class="d-c-wrapper" :class="{ esport: is_export }" v-if="is_show_three_menu">
-            <div class="date-container" ref="date_menu_container" :class="{ esport: is_export }">
+          <div class="d-c-wrapper" :class="{ esport: is_esports }" v-if="is_show_three_menu">
+            <div class="date-container" ref="date_menu_container" :class="{ esport: is_esports }">
               <div class="date-menu-item" v-for="( date_menu_item, date_index ) of  date_menu_list " :key="date_index"
                 :class="{
                   focus: date_menu_curr_i === date_index,
                   'is-favorite': show_favorite_list,
                   'hidden-champion':
                     show_favorite_list &&
-                    is_export &&
+                    is_esports &&
                     date_menu_item.menuId == '-999',
                 }
                   " @click="set_menu_lv3(date_menu_item, date_index, 'date_click')">
@@ -163,7 +163,7 @@ import lodash from "lodash"
 import MatchFold from 'src/core/match-fold'
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { is_scroll_ball, update_time, is_export, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
+import { is_scroll_ball, update_time, is_esports, is_mix,is_results, is_kemp, is_jinzu, menu_type } from 'src/base-h5/mixin/menu.js'
 const show_favorite_list = ref(UserCtr.show_favorite_list)//是否收藏
 const route = useRoute();
 const router = useRouter();
@@ -213,7 +213,7 @@ const two_menu_show = (sub) => {
   }
   // 滚球下足球处理 1011足球
   let mi_list = MenuData.is_scroll_ball() ? [1001, 1002, 1004, 1010] : [1001, 1002, 1004, 1011, 1010]
-  return ![is_export.value, is_results.value, is_export.value].includes(true) && !mi_list.includes(+sub.mi)
+  return ![is_esports.value, is_results.value, is_esports.value].includes(true) && !mi_list.includes(+sub.mi)
 }
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
 watch(update_time, (v) => {
@@ -327,7 +327,7 @@ const handle_match_render_data = () => {
   // 赛果不走元数据， 直接拉取接口
   if (MenuData.is_results()) return MatchMeta.get_results_match()
   // 电竞不走元数据， 直接拉取接口
-  if (MenuData.is_export()) return MatchMeta.get_esports_match()
+  if (MenuData.is_esports()) return MatchMeta.get_esports_match()
 
   const mi_tid_mids_res = lodash.get(BaseData, 'mi_tid_mids_res')
   if (lodash.isEmpty(mi_tid_mids_res)) return
@@ -353,7 +353,7 @@ function set_menu_lv3(item, index, type = "click") {
   // 赛果 三级菜单 请求接口
   if (MenuData.is_results()) return MatchMeta.get_results_match()
   // 电竞 三级菜单 请求接口
-  if (MenuData.is_export()) return MatchMeta.get_esports_match()
+  if (MenuData.is_esports()) return MatchMeta.get_esports_match()
 }
 /**
  * 四级菜单事件
@@ -364,7 +364,7 @@ function set_menu_lv4(item, index, type = "click") {
 //判断后台是否展示 VR / 电竞
 const show_dianjing = (item, index) => {
   // return MenuData.is_vr(item.mi) ? false : true
-  if (MenuData.is_export(item.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
+  if (MenuData.is_esports(item.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
   if (MenuData.is_vr(item.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
   return ![2, 3, 6, 7].includes(index);
 };
@@ -407,7 +407,7 @@ function get_sport_menu(all_menu) {
   let pop_main_items = [];
   all_menu.forEach((m_m) => {
     // 滚球 虚拟体育 電競 放入一级菜单
-    if (MenuData.is_scroll_ball(m_m.mi) || MenuData.is_vr(m_m.mi) || MenuData.is_export(m_m.mi)) {
+    if (MenuData.is_scroll_ball(m_m.mi) || MenuData.is_vr(m_m.mi) || MenuData.is_esports(m_m.mi)) {
       top_menu.push(lodash.cloneDeep(m_m));
     } else {
       //热门 不放进来
@@ -530,7 +530,7 @@ if (MenuData.is_hot()) {
     z-index: 2;
 
     &.esport,
-    &.is_export {
+    &.is_esports {
       background-color: transparent;
     }
 
@@ -562,7 +562,7 @@ if (MenuData.is_hot()) {
       margin-left: 0.15rem;
 
       &.esport,
-      &.is_export {
+      &.is_esports {
         background-color: transparent;
       }
 

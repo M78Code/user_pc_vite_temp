@@ -112,7 +112,7 @@ const get_match_params_detail = (params, main_menu_type) => {
 
   if (main_menu_type) {
     // 主菜单 == 3000 时 竞技
-    if (MenuData.is_export(main_menu_type)) {
+    if (MenuData.is_esports(main_menu_type)) {
       // 电竞保存csid,否则不用保存csid
       params.csid = MenuData.get_current_esport_csid();
 

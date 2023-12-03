@@ -79,7 +79,7 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
 const get_data_menu_result = async () => {
     let params = compute_get_date_menu_list_params();
     let api_fn_name = ''
-    if (MenuData.is_export()) {
+    if (MenuData.is_esports()) {
       //电竞
       api_fn_name = "get_esports_date_menu"
     } else {

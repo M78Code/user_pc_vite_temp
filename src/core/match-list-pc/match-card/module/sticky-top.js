@@ -29,7 +29,7 @@ export const set_sticky_top = () => {
     };
   }
   // 非滚球电竞
-  else if (MenuData.is_export() && !["hot", "play"].includes(page_source)) {
+  else if (MenuData.is_esports() && !["hot", "play"].includes(page_source)) {
     obj = {
       type: 196,
       league: 196,
@@ -117,7 +117,7 @@ export const set_sticky_top = () => {
       league: 74,
     };
     // 电竞收藏
-    if (MenuData.is_export()) {
+    if (MenuData.is_esports()) {
       obj = {
         type: 196,
         league: 196,
