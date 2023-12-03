@@ -200,6 +200,7 @@ async function  get_menu_of_favorite_count(list,type) {
     // 获取对应的旧菜单id    
     list.forEach(item =>{
         euid_list += MenuData.get_mid_for_euid(item.mi) + ','
+        item.ct = 0
     })
     let type_ = {
         1:1,
@@ -220,6 +221,7 @@ async function  get_menu_of_favorite_count(list,type) {
         let collect_list = data || []
        
         list = list.map(item=>{
+            item.ct = 0
             collect_list.forEach(obj=>{
                 if(obj.sportId){
                     if(type == 400){
@@ -236,7 +238,6 @@ async function  get_menu_of_favorite_count(list,type) {
             return item
         })
     }
-    console.error("ssss",list)
     return list
 }
 
@@ -247,7 +248,6 @@ function resolve_mew_menu_res_mi_400() {
     let mi_400_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
         sl: [],
     };
-console.error('ss')
     let mi_400_arr = mi_400_obj.sl.filter( item=>{
         item.mif = item.mi*1 - 400 + 100
         return item

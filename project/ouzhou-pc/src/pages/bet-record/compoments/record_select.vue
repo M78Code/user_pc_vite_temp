@@ -13,7 +13,7 @@
         <div class="btn-group">
           <div v-for="item in btn_options" :key="item.value" class="btn-group-item" @click="time_click(item)">
             <span :class="{ 'btn-group-item-ls': true, 'btn-group-item-ls-active': current_time == item.value }">{{
-                item.label
+               i18n_t( item.label)
               }}</span>
           </div>
         </div>
@@ -44,7 +44,7 @@
         </div>
         <div class="tips">
           <span class="dot"></span>
-          {{tipMsg}}
+          {{i18n_t(tipMsg)}}
         </div>
         <div class="record-query" @click="search">
           {{i18n_t("bet_record.query")}}
@@ -76,12 +76,12 @@ const props = defineProps({
 })
 const formatYMD = 'YYYY/MM/DD'
 const msgList = [
-  i18n_t("bet_record.msg_1"),
-  i18n_t("bet_record.msg_2"),
-  i18n_t("bet_record.msg_3"),
-  i18n_t("bet_record.msg_4"),
-  i18n_t("bet_record.msg_5"),
-  i18n_t("bet_record.msg_6"),
+  "bet_record.msg_1",
+  "bet_record.msg_2",
+  "bet_record.msg_3",
+  "bet_record.msg_4",
+  "bet_record.msg_5",
+  "bet_record.msg_6",
 ]
 const tipMsg = ref(msgList[1])
 const dateRef = ref(null)
@@ -143,10 +143,10 @@ const options = [
   }
 ]
 const btn_options = [
-  { label: i18n_t("ouzhou.record.today"), value: 1, range: [_dayjs.startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
-  { label: i18n_t("ouzhou.record.yesterday"), value: 2, range: [_dayjs.subtract(1, 'day').startOf('day').format(formatYMD), _dayjs.subtract(1, 'day').endOf('day').format(formatYMD)] },
-  { label: i18n_t("ouzhou.record.7_days"), value: 3, range: [_dayjs.subtract(6, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
-  { label: i18n_t("ouzhou.record.30_days"), value: 4, range: [_dayjs.subtract(29, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] }
+  { label: "ouzhou.record.today", value: 1, range: [_dayjs.startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
+  { label: "ouzhou.record.yesterday", value: 2, range: [_dayjs.subtract(1, 'day').startOf('day').format(formatYMD), _dayjs.subtract(1, 'day').endOf('day').format(formatYMD)] },
+  { label: "ouzhou.record.7_days", value: 3, range: [_dayjs.subtract(6, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] },
+  { label: "ouzhou.record.30_days", value: 4, range: [_dayjs.subtract(29, 'day').startOf('day').format(formatYMD), _dayjs.endOf('day').format(formatYMD)] }
 ]
 // 时间筛选点击
 const time_click = (item) => {
