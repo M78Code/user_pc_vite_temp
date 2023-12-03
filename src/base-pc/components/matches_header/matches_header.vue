@@ -187,7 +187,6 @@ watch(BaseData.base_data_version,()=>{
 	}
 })
 const checked_current_tab = payload => {
-
 // debugger
 	let obj = {
 		...MenuData.mid_menu_result,
