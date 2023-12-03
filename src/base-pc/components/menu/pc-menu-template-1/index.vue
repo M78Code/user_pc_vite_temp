@@ -738,7 +738,6 @@ const lv_2_click_common = (detail = {}) => {
 
   // 获取 euid orpt tid
   let obj = BaseData.mi_info_map[`mi_${lv2_mi}`];
-
   //电子竞技没有 euis
   if (lv1_mi != 2000) {
     // 常规赛种 euid
@@ -794,6 +793,7 @@ const lv_2_click_common = (detail = {}) => {
     result.mid_menu_refer_params = mid_menu_refer_params;
   }
   // jinri_zaopan_men_result.value = result; ????????
+  MenuData.set_menu_current_mi(lv2_mi)
   MenuData.set_left_menu_result(result);
 };
 

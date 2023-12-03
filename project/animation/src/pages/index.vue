@@ -1,7 +1,14 @@
 <!-- 事件组件，必须参数： 赛种ID：sportId 赛事id：matchId 数据源：dataSourceCode -->
 <template>
-    <div>
-        <div @click="get_data_list">拉取数据</div>
+    <div class="row q-pa-lg" style="background: #1a1a1a;">
+        <!-- <div class="col-12" @click="get_data_list" style="">拉取数据</div> -->
+        <div class="col-6" style="height: 100vh;overflow: auto;">
+            <timeline
+                class="components-item" 
+                :list="dataObj"
+            />
+        </div>
+       <div class="col q-ml-sm" style="height: 100vh;overflow: auto;">
         <div
             v-for="(item, index) in dataObj"
             :key="index"
@@ -11,27 +18,30 @@
           >
             <div class="content-list-item-circle"></div>
             <div class="content-list-item-time">
-              <!-- {{ format_time(item.eventTime) }} -->
             </div>
             <div class="content-list-item-info">
               <span>
-                <!-- {{ item }} -->
                 {{ item.currentTime }}' - {{ item.eventName }}
               </span>
             </div>
         </div>
+       </div>
     </div>
 </template>
 <script>
 import { api_event } from "project/animation/src/public/api/index"
 import { defineComponent } from "vue";
 import websocket_base from "project/animation/src/mixins/modules/websocket/websocket_base.js"
+import timeline from "project/animation/src/pages/components/timeline.vue"
 import _ from 'lodash';
 import axios from "axios";
 import { uid } from "quasar"
 let WEB_ENV = axios.prototype.WS_DOMAIN_FRNGKONG_1
 export default defineComponent({
-mixins:[websocket_base],
+    components: {
+        timeline,
+    },
+    mixins:[websocket_base],
  data() {
     // sportId=1&dataSourceCode=PA&matchId=2928959
     return {
@@ -63,6 +73,7 @@ mixins:[websocket_base],
         this.get_query_params()
         this.websocket_connection_connect(1);
         console.warn(this.websocket_connection_connect)
+        this.get_data_list()
     }
     
  },
@@ -147,3 +158,11 @@ mixins:[websocket_base],
     }
 })
 </script>
+<style lang="scss" scoped>
+.components-item {
+    max-width: 850px;
+    // bug单 7658 要求这样做
+    padding-left: 30px;
+    // margin auto
+}
+</style>

@@ -180,7 +180,7 @@ export const useGetGlobal = ({  back_to }) => {
       (route_name === "video" && [3, 4, 5].includes(+cur_params.play_type)) ||
       (route_name === "details" &&
         ["studio", "topic", "anchor"].includes(play_media.value.media_type)) ||
-      menu_config.is_export();
+      menu_config.is_esports();
     // 电竞不用调自动切右侧接口
     if (return_status) {
       return;

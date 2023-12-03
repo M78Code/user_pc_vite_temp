@@ -103,7 +103,7 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="i.csid != '2' || i.csid != '5'">
+											<template v-if="i.csid != '2' && i.csid != '5'">
 												<div class="flex_1"
 													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
@@ -159,7 +159,7 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="i.csid != '2' || i.csid != '5'">
+											<template v-if="i.csid != '2' && i.csid != '5'">
 												<div class="flex_1"
 													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
@@ -215,7 +215,7 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="item.csid != '2' || item.csid != '5'">
+											<template v-if="item.csid != '2' && item.csid != '5'">
 												<div class="flex_1"
 													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
@@ -281,6 +281,7 @@ import { is_results } from 'src/base-h5/mixin/menu.js'
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { formatTime } from 'src/core/format/module/format-date.js';
+import BaseData from "src/core/base-data/base-data.js";
 
 const input_value = ref('');
 const tab_growp = ref(null);
@@ -438,7 +439,7 @@ const get_sport_kind = () => {
 	get_search_sport().then(res => {
 		let data = lodash.get(res, "data") || [];
 		if (data.length > 0) {
-			sport_kind_data.value = data.filter(item => MenuData.conventionalType.includes(+item.id + 100))
+			sport_kind_data.value = data.filter(item => BaseData.conventionalType.includes(+item.id + 100))
 		}
 	});
 }

@@ -36,6 +36,7 @@ const user_list = ref(null)
  * @return {undefined} undefined
  */
 function get_marquee_data() {
+    luckyUsers.value = ''
     api_home.post_marquee_data().then((res) => {
         let { code, data } = res || {};
         if (code == 200 && data && data[0]) {
@@ -57,7 +58,7 @@ function get_marquee_data() {
 }
 /** 钩子触发 */
 onMounted(get_marquee_data)
-
+defineExpose({ get_marquee_data })
 </script>
   
 <style lang="scss" scoped>

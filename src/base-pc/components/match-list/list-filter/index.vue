@@ -59,7 +59,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            v-if="MenuData.is_export()"
+            v-if="MenuData.is_esports()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(item.mif)}` })"></span>
             <!-- 是否新上玩法 -->
             <!-- <img  class="menu-new-icon" v-if="menu.coppertone == 1" :src="`${LOCAL_PROJECT_FILE_PREFIX}/img/yabo/svg/virtual/menu_new.svg`"/> -->
@@ -208,7 +208,7 @@
         >
           <div class="icon-wrap list-filter menu-inline">
             <span class="soprts_id_icon"
-            v-if="MenuData.is_export()"
+            v-if="MenuData.is_esports()"
             :style="compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${compute_mi_400_sl_mi_csid(item.mi)}` })"></span>
             <!-- <sport-icon
               :sport_id="compute_mi_400_sl_mi_csid(item.mi)"

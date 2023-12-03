@@ -18,7 +18,7 @@
         <DateTab :dataList="dataList[MenuData.current_lv_2_menu_i]"  />
     </div>
     <!-- 滑动菜单组件 -->
-    <ScrollMenu :scrollDataList.sync="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
+    <ScrollMenu :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
     <!--  -->
     <!-- <SwitchWap /> -->
     <!--  -->
@@ -114,8 +114,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
         case 50000:
           val.title = '我的收藏'
           let menu_list_res = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
-
-          menu_list_res.unshift({mi:0,btn:1, ct:"",title:"全部"})
+          const all_ct = menu_list_res.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
+          menu_list_res.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
           ref_data.scroll_data_list = menu_list_res
           
           MenuData.set_collect_list(menu_list_res)
@@ -137,7 +137,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     
     set_menu_mi_change_get_api_data()
   }
-
   watch(()=> MenuData.current_lv_1_menu_mi.value, new_ => {
     // 今日 滚球 冠军
     if( [1,2,400].includes(1*new_) ){
@@ -221,13 +220,16 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 赛果不走元数据， 直接拉取接口
     if (MenuData.is_results()) return MatchMeta.get_results_match()
     // 电竞不走元数据， 直接拉取接口
-    if (MenuData.is_export()) return MatchMeta.get_esports_match()
+    if (MenuData.is_esports()) return MatchMeta.get_esports_match()
 
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return
 
     // 设置菜单对应源数据
     MatchMeta.set_origin_match_data()
+
+    // 今日 下 得足球  提前设置 热门联赛
+    if (MenuData.current_lv_2_menu_i === '1012') MatchMeta.set_tid_map_mids()
   }
 
 </script>

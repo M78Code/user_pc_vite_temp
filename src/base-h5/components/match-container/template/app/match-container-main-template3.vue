@@ -22,7 +22,7 @@
           :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
           <div class="league-t-wrap right-border">
             <span class="league-title-text row justify-between">
-              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
                 </span>
@@ -61,7 +61,7 @@
                     <span class="din-regular"> {{ lodash.get(match,'mcid')}} </span>
                   </div>
                   <!-- 赛事日期标准版 -->
-                  <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
+                  <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
                     <!-- 赛事回合数mfo -->
                     <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
@@ -199,7 +199,7 @@ import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, no
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { format_msc, foot_ball_score_handle } from "src/core/format/index.js"
-import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 
@@ -258,7 +258,7 @@ export default {
 
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, mearlys_icon, compute_css_obj, show_sport_title,
       normal_img_not_favorite_white, normal_img_is_favorite
     }
   }
@@ -826,7 +826,7 @@ export default {
   .odd-list-time {
     display: block;
     color: var(--q-gb-t-c-4);
-    margin-top: .05rem;
+    padding: 0.12rem 2% 0 2%;
   }
 
   &.simple,

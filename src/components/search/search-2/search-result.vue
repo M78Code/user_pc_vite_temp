@@ -30,7 +30,7 @@
 													<span class="middle">v</span>
 													<span class="away" v-html="red_color(item.man)"></span>
 												</p>
-												<p> {{ i18n_t(`mmp.${item.csid}.${item.mmp}`) }} {{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }} <span class="red">{{ get_match_score(item).home_score }}-{{ get_match_score(item).away_score }}</span> </p>
+												<p> {{ i18n_t(`mmp.${item.csid}.${item.mmp}`) }} {{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }} <span class="red">{{ get_match_score(item, true).home_score }}-{{ get_match_score(item, true).away_score }}</span> </p>
 											</div>
 											<div style="display: flex;flex-direction: row; flex: 1">
 												<div class="flex_1"
@@ -41,7 +41,7 @@
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
-												<template v-if="item.csid != '2' || item.csid != '5'">
+												<template v-if="item.csid != '2' && item.csid != '5'">
 													<div class="flex_1"
 														v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 														<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
@@ -66,7 +66,7 @@
 							</div>
 						</div>
 						<!-- 搜索 联赛 -->
-						<div v-if="search_data?.league && search_data?.league.length > 0" style="margin-bottom: 10px;">
+						<div v-if="search_data?.league && search_data?.league.length > 0">
 							<div @click="expand_league = !expand_league">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
@@ -96,7 +96,7 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="i.csid != '2' || i.csid != '5'">
+											<template v-if="i.csid != '2' && i.csid != '5'">
 												<div class="flex_1"
 													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
@@ -155,7 +155,7 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="list.csid != '2' || list.csid != '5'">
+											<template v-if="list.csid != '2' && list.csid != '5'">
 												<div class="flex_1"
 													v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[2]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
