@@ -21,6 +21,9 @@ export default {
           .theme02_y0-root-loading #loading-root-main {
             color: #569ffd;
           }
+          html{
+            font-size: 100px; height: 100%
+          }
     `
      },
  
