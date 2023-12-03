@@ -1,6 +1,5 @@
 <template>
-  <div class="ouzhou-match-league" :style="`height:${match_list_tpl_size.league_title_height}px !important;`"
-    v-if="lodash.get(card_style_obj, 'league_obj.csid')">
+  <div class="ouzhou-match-league" :style="`height:${match_list_tpl_size.league_title_height}px !important;`">
     <!-- 第一行 -->
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
@@ -26,14 +25,15 @@
             <!-- 联赛数量 -->
             <span class="ellipsis allow-user-select leagues-name"
               v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
-              {{ card_style_obj.league_obj.tn || card_style_obj.league_obj.tid }}
+              {{ card_style_obj.league_obj.tn }}
+              <!-- || card_style_obj.league_obj.tid  -->
             </span>
           </div>
         </div>
       </div>
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
-      <div class="play-name-ouzhou" v-if="!card_style_obj.is_league_fold">
+      <div class="play-name-ouzhou" v-if="csid&&!card_style_obj.is_league_fold">
         <div class="play-name-title-box"
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
@@ -55,7 +55,7 @@
 <script setup>
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import lodash from 'lodash';
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted, watch } from 'vue';
 import sprite_img from "src/core/server-img/sprite-img/index.js"
 import BaseData from "src/core/base-data/base-data.js"
 import { t, compute_css_obj } from "src/core/index.js";
@@ -88,8 +88,11 @@ let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 const is_collect = ref(false);
-//第一次进页面时，收藏从接口获取状态，后续点击前端控制
-is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+
+watch(() => props.card_style_obj, () => {
+  //第一次进页面时，收藏从接口获取状态，后续点击前端控制
+  is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+})
 // 获取菜单类型
 if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)

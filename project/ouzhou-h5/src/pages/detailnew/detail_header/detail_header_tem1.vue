@@ -349,7 +349,7 @@ onMounted(()=>{
   .match-detail-head {
     position: relative;
     width: 100%;
-    height: 245px;
+    // height: 245px;
     flex-shrink: 0;
     // line-height: 23px;
     background-color: var(--q-gb-bg-c-2);

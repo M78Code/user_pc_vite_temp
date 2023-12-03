@@ -55,7 +55,7 @@ template {
   border-radius: 0.1rem;
   background-color: var(--q-gb-bg-c-15);
   opacity: 0;
-  animation: opacityAnimate 1.5s linear;
+  animation: opacityAnimate 0.5s linear;
   animation-fill-mode: forwards;
   img {
     width: 1.8rem;

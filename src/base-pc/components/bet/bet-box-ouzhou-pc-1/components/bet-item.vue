@@ -4,7 +4,7 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c text-1a1 h15">
+                <div class="w-100 f-s-c text-1a1 ">
                     <span class="text-flow-none" v-html="items.handicap"></span> 
                 </div>
                 <div class="w-100 handicap my-4">
