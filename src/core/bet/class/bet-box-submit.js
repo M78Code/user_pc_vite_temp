@@ -27,6 +27,8 @@ let time_api_out = null
 let count_api = 0 
 // 是否点击了投注按钮
 let submit_btn = false
+// 独赢类玩法
+const only_win = [1, 37, 153]
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
@@ -97,7 +99,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "placeNum": item.placeNum, //盘口坑位
                     "marketId": item.marketId,  //盘口id
                     "playOptionsId": item.playOptionsId,   // 投注项id
-                    "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
+                    "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
                     "odds": item.odds,  // 赔率 万位
                     "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, '', item.sportId),  //赔率
                     "playName": item.playName, //玩法名称
@@ -110,7 +112,10 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "playId": item.playId,   // 玩法id
                     "dataSource": item.dataSource,   // 数据源
                 }
-               
+                // 独赢类玩法 只有欧洲版
+                if(only_win.includes(item.playId *1)){
+                    bet_s_obj.marketTypeFinally = 'EU'
+                }
                 bet_s_list.push(bet_s_obj)
             })
 
@@ -134,7 +139,7 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "placeNum": item.placeNum, //盘口坑位
                 "marketId": item.marketId,  //盘口id
                 "playOptionsId": item.playOptionsId,   // 投注项id
-                "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
+                "marketTypeFinally": UserCtr.odds.cur_odds,     // 欧洲版默认是欧洲盘 HK代表香港盘
                 "odds": item.odds,  // 赔率 万位
                 "oddFinally": compute_value_by_cur_odd_type(item.odds, item.playId, '', item.sportId),  //赔率
                 "playName": item.playName, //玩法名称
@@ -147,6 +152,12 @@ const set_bet_order_list = (bet_list, is_single) => {
                 "playId": item.playId,   // 玩法id
                 "dataSource": item.dataSource,   // 数据源
             }
+
+            // 独赢类玩法 只有欧洲版
+            if(only_win.includes(item.playId *1)){
+                bet_s_obj.marketTypeFinally = 'EU'
+            }
+
             // 预约投注
             // 需要用对应的数据 对投注数据进行覆盖
             bet_s_obj = {
@@ -568,21 +579,21 @@ const set_error_message_config = (res ={},type,order_state) => {
                 case 2:
                     obj = {
                         code: '0000000',
-                        message: i18n_t('bet.bet_loading')
+                        message: "bet_message.loading"
                     }
                     break
                  
                 case 3:
                     obj = {
                         code: 200,
-                        message: i18n_t('bet.bet_suc')
+                        message: "bet_message.success"
                     }
                     break
             
                 case 4:
                     obj = {
                         code: 500,
-                        message: i18n_t('bet.bet_fail')
+                        message: "bet_message.error"
                     }
                     break
             }
@@ -688,7 +699,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         marketId: hl_obj.hid, //盘口ID
         marketValue: hl_obj.hv,
         playOptionsId: ol_obj.oid, //投注项id
-        marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
+        marketTypeFinally: UserCtr.odds.cur_odds,  // 欧洲版默认是欧洲盘 HK代表香港盘
         odds: ol_obj.ov,  //十万位赔率
         oddFinally: compute_value_by_cur_odd_type(ol_obj.ov,ol_obj._hpid, '', mid_obj.csid), //最终赔率
         sportName: mid_obj.csna, //球种名称
@@ -872,7 +883,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
     let home_away_mark = []
     switch(mid_obj.csid*1){
         case 1:
-            home_away_mark = [2,3,4,7,10,11,12,13,18,19,26,33,34,38,45,39,58,69,71,87,88,97,98,102,109,110,114,115,116,122,123,124,127,134,143,198,199,233,307,309,314,315,325,328,331,335,347,351,367, ] 
+            home_away_mark = [2,3,4,7,10,11,12,13,18,19,26,33,34,38,45,39,58,69,71,87,88,97,98,102,109,110,114,115,116,122,123,124,127,134,143,198,199,233,307,309,314,315,325,328,331,335,346,347,348,349,351,367, ] 
             break
         case 2:
             home_away_mark = [38,39,64,198,199,58,57,145,146,19,18,87,52,51,63,97,46,45,97,] 
@@ -1011,4 +1022,6 @@ export {
     set_bet_obj_config,
     get_score_config,
     get_market_is_show,
+    // 订阅投注项的 ws
+    set_market_id_to_ws,
 }

@@ -320,30 +320,47 @@ export const details_main = (router, route) => {
     getMatchDetailMatchInfo(params);
   };
   function getMatchDetailMatchInfo(params) {
-    api_match_list.get_detail_data(params).then((res) => {
-      const res_data = lodash.get(res, "data");
-      if (res_data && res_data.mhid) {
-        match_detail.value = res_data;
-        match_detail.value.course =
-          lodash.get(res_data, "ms") == 110
-            ? "Soon"
-            : courseData[lodash.get(res_data, "csid")][
-                lodash.get(res_data, "mmp")
-              ] || "";
-        match_detail.value.mstValueTime = format_mst_data(match_detail.value);
-        use_polling_mst(match_detail.value);
-      } else {
-        clear_all_timer();
-        router.replace("/");
-      }
-      // detail_store.get_detail_params
-      MatchDataWarehouseInstance.value.set_match_details(
-        toRaw(match_detail.value),
-        []
-      );
-    }).catch((err)=>{
-      console.log(err,'err');
-    })
+    let obj_ = {
+      // axios api对象
+      axios_api: api_match_list.get_detail_data,
+      // axios api对象参数
+      params: params,
+      // 唯一key值
+      key: "details",
+      error_codes: ["0401038"],
+      // axios中then回调方法
+      fun_then: (res) => {
+        const res_data = lodash.get(res, "data");
+        if (res_data && res_data.mhid) {
+          match_detail.value = res_data;
+          match_detail.value.course =
+            lodash.get(res_data, "ms") == 110
+              ? "Soon"
+              : courseData[lodash.get(res_data, "csid")][
+                  lodash.get(res_data, "mmp")
+                ] || "";
+          match_detail.value.mstValueTime = format_mst_data(match_detail.value);
+          use_polling_mst(match_detail.value);
+        } else {
+          clear_all_timer();
+          router.replace("/");
+        }
+        // detail_store.get_detail_params
+        MatchDataWarehouseInstance.value.set_match_details(
+          toRaw(match_detail.value),
+          []
+        );
+      },
+      // axios中catch回调方法
+      fun_catch: (e) => {
+        console.log(e);
+      },
+      // 最大循环调用次数(异常时会循环调用),默认3次
+      max_loop: 3,
+      // 异常调用时延时时间,毫秒数,默认1000
+      timers: 1100,
+    };
+    utils.axios_api_loop(obj_);
     //初次调用成功后 赋值init未false
     get_category_list_info({
       sportId: csid.value,
@@ -419,11 +436,10 @@ export const details_main = (router, route) => {
     let skt_data = obj.cd;
     if (!skt_data || skt_data.length < 1) return;
     // 重新拉取数据;
-    const { mid, csid } = route.params;
-    get_category_list_info({
-      sportId: csid,
-      mid,
-    });
+    socketOddinfo({
+      sportId: csid.value,
+      mid:mid.value,
+    })
   }
   /**
    * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
@@ -435,11 +451,10 @@ export const details_main = (router, route) => {
     // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
     if (skt_data.mhs == 0 || skt_data.mhs == 11) {
       // 重新拉取数据;
-      const { mid, csid } = route.params;
-      get_category_list_info({
-        sportId: csid,
-        mid,
-      });
+      socketOddinfo({
+        sportId: csid.value,
+        mid:mid.value,
+      })
     } else if (skt_data.mhs == 1) {
       // 设置盘口状态
     } else if (skt_data.mhs == 2) {
@@ -474,7 +489,7 @@ export const details_main = (router, route) => {
   }
   }
  /**
-  * @description:  // 视频/动画状态推送（C107
+  * @description:  // 视频/动画状态推送（C107  暂时不单独处理
   * @param {*} obj
   * @return {*}
   */
@@ -494,7 +509,6 @@ export const details_main = (router, route) => {
     console.log(MatchDataBaseH5.get_quick_mid_obj(mid.value),'MatchDataBaseH5.get_quick_mid_obj(mid)');
     // match_odds_info.value = lodash.get(MatchDataBaseH5.get_quick_mid_obj(mid.value),"hps","[]")
     // match_detail.value = MatchDataBaseH5.get_quick_mid_obj(mid.value) || []
-    MatchDataBaseH5.set_active_mids([]);
     loading.value = true;
     init.value = true;
     // 增加监听接受返回的监听函数
@@ -525,10 +539,10 @@ export const details_main = (router, route) => {
           break;
          //  玩法集变更(C112)    
         case "C112":
-          get_category_list_info({
+          socketOddinfo({
             sportId: csid.value,
             mid:mid.value,
-          });
+          })
           break; 
          case "C102":
             RCMD_C102(data);
@@ -541,7 +555,19 @@ export const details_main = (router, route) => {
       }
     });
   });
-
+  // 监听ws断连
+  const {off} = useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
+    // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
+    if(ws_status != 1){
+      MatchDataWarehouseInstance.value.scmd_c8_ws_reconnect()
+    }
+  });
+  onUnmounted(()=>{
+    //关闭监听
+    off()
+    // 关闭详情订阅
+    MatchDataWarehouseInstance.value.set_active_mids([])
+  })
   // 监听赛事状态mmp的值
   watch(
     () => match_detail.value?.mmp,

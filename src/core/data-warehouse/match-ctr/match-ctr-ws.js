@@ -65,10 +65,10 @@ export default class MatchDataBaseWS
       let ws_status = lodash.get(obj.data.data,'ws_status');
       // ws重新链接后,发送赛事订阅命令(后期扩展使用)
       if(ws_status){
-        // clearTimeout(this.ws_timer);
-        // this.ws_timer= setTimeout((ws_status) => {
-        //   this.scmd_c8();
-        // }, 1500);
+        clearTimeout(this.ws_timer);
+        this.ws_timer= setTimeout((ws_status) => {
+          this.scmd_c8();
+        }, 1500);
       }
     } else if(cmd == 'WS_MSG_REV'){
       // 是ws推送过来的消息

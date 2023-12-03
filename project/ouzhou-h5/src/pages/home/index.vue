@@ -73,6 +73,7 @@ import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { i18n_t } from "src/core/index.js"
+import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
@@ -84,6 +85,7 @@ provide('get_hots_data', () => {
 })
 
 let message_fun = null
+let message_fun_connect = null
 let handler_func = null
 const is_first = ref(false)
 const container = ref(null)
@@ -153,6 +155,12 @@ onMounted(async () => {
       handler_func({ cmd, data })
     }
   })
+
+  // 监听ws断连
+  message_fun_connect = useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
+    // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
+    if(ws_status != 1) MatchDataBaseH5.scmd_c8_ws_reconnect()
+  }).off
 })
 
 /**
@@ -326,6 +334,7 @@ onUnmounted(() => {
   MatchDataBaseH5.set_active_mids([])
   ws_message_listener.ws_remove_message_listener(message_fun)
   message_fun = null
+  message_fun_connect()
 })
 
 </script>

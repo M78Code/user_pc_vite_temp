@@ -77,6 +77,7 @@ import detail_tabs from "./components/detail_tabs.vue";
 import detail_event_tabs from "./components/detail_event_tabs.vue";
 // import odds_info from "./components/odds_info.vue";
 import odds_info from "./components/bevis_odds_info.vue";
+import OddsListContrainer from "./components/OddsListContrainer.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
@@ -92,7 +93,8 @@ export default {
     detail_event_tabs,
     odds_info,
     loading_page,
-    event_analysis
+    event_analysis,
+    OddsListContrainer,
   },
   setup(ctx){
     const router = useRouter();

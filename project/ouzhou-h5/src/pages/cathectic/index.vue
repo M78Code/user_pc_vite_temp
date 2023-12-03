@@ -65,12 +65,7 @@
       } 
     })
   })
-
-  onUnmounted(() => {
-    // 离开路由时，如果有ws监听实例，取消监听
-    BetRecordClass.ws_ctr && BetRecordClass.ws_ctr.destroy()
-  })
-  
+ 
   const change_record = (key) => {
     //已选中状态下不能点击
     if (BetRecordClass.selected === key) return;

@@ -18,7 +18,7 @@
         <DateTab :dataList="dataList[MenuData.current_lv_2_menu_i]"  />
     </div>
     <!-- 滑动菜单组件 -->
-    <ScrollMenu :scrollDataList="ref_data.scroll_data_list" :current_mi="ref_data.current_mi" />
+    <ScrollMenu :scrollDataList.sync="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
     <!--  -->
     <!-- <SwitchWap /> -->
     <!--  -->
@@ -90,6 +90,9 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     current_mi: ''
   })
 
+  const changeList = (list) =>{
+    ref_data.scroll_data_list = list;
+  }
   // 设置滑动菜单的选中id
   const set_scroll_current = val => {
     ref_data.current_mi = val.mi

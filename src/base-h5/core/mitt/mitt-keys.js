@@ -37,10 +37,7 @@ export const EMIT_X_BTN_HIDE_CMD = 'X_BTN_HIDE';
 export const EMIT_IS_DELETE_CMD = 'IS_DELETE';
 /** 筛选 resultItem 组件点击时 emit*/
 export const EMIT_MATCH_ROW_CLICK_CMD = 'MATCH_ROW_CLICK';
-// 发送api域名切换命令命令
-export const EMIT_API_DOMAIN_UPD_CMD = "EMIT_API_DOMAIN_UPD_CMD";
-// apis域名全部不可用
-export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
+
 // 更新init_load
 export const EMIT_ALLOW_INIT_LOAD = "EMIT_ALLOW_INIT_LOAD";
 // c201消息处理
@@ -97,6 +94,7 @@ export const EMIT_CHANGE_RECORD_SHOW = "EMIT_CHANGE_RECORD_SHOW";
 export const EMIT_WINDOW_RESIZE = "EMIT_WINDOW_RESIZE";
 //
 export const EMIT_C201_HANDLE = "EMIT_C201_HANDLE";
+export const EMIT_C201_HANDLE_BET_RECORD = "EMIT_C201_HANDLE_BET_RECORD";
 //
 export const EMIT_C210_HANDLE = "EMIT_C210_HANDLE";
 // 详情页储存时间，保证时间同步
@@ -254,8 +252,7 @@ export const EMIT_XU_NI_TY_STANDARD_ODD_STATUS = "EMIT_XU_NI_TY_STANDARD_ODD_STA
 export const EMIT_SUB_LOADING_RESULT = "EMIT_SUB_LOADING_RESULT";
 //
 export const EMIT_TO_MAINTENANCE = "EMIT_TO_MAINTENANCE";
-// 发送用户基本信息到服务器
-export const EMIT_API_USER_PRO_INFO_CMD = "EMIT_API_USER_PRO_INFO_CMD";
+
 // 调用用户接口，更新 域名流程
 export const EMIT_SET_GETUSERINFO_OSS_API = "EMIT_SET_GETUSERINFO_OSS_API";
 //
@@ -276,6 +273,8 @@ export const EMIT_HOME_TAB = "EMIT_HOME_TAB";
 export const EMIT_MAIN_LIST_MATCH_IS_EMPTY = "EMIT_MAIN_LIST_MATCH_IS_EMPTY";
 // 到底了
 export const EMIT_MAIN_LIST_MAX_HEIGHT = "EMIT_MAIN_LIST_MAX_HEIGHT";
+// 赛事列表回到顶部
+export const EMIT_GOT_TO_TOP = "EMIT_GOT_TO_TOP";
 /**
  * 触发toast弹框
  */

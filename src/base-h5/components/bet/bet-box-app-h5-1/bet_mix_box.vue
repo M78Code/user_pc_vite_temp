@@ -8,11 +8,11 @@
     <!-- <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1> -->
     <!-- 普通赛事菜单 -->
     <!-- <betMixBoxChild2 v-else></betMixBoxChild2> -->
-    <div v-show="false">-{{ BetData.bet_data_class_version }}-{{BetData.bet_state_show}}</div>
+    <div v-show="false">-{{ BetData.bet_data_class_version }}-{{BetData.h5_bet_box_show}}</div>
     <!-- <div class="bet-mix-box " v-if="BetData.h5_bet_box_show && BetData.bet_oid_list.length">
       <betMixBoxChild></betMixBoxChild>
     </div> -->
-    <betMixBoxChild2 v-if="BetData.h5_bet_box_show && BetData.bet_oid_list.length"></betMixBoxChild2>
+    <betMixBoxChild v-if="BetData.h5_bet_box_show && BetData.bet_oid_list.length"></betMixBoxChild>
   </div>
 </template>
 
@@ -20,7 +20,7 @@
 
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 // import betMixBoxChild1 from "./bet_mix_box_child1.vue";
-import betMixBoxChild2 from "./bet_mix_box_child2.vue";
+import betMixBoxChild from "./bet_mix_box_child.vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 

@@ -46,9 +46,6 @@ const last_label = computed(() => {
 * 48448 【SIT】【欧洲版二期】【PC】经常访问，足球，详情页面，没有菜单导航
 * */
 const breadCrumbs_firstOne = computed(()=>{
-    // console.log(BaseData.left_menu_base_mi,"==BaseData.left_menu_base_mi")
-    // console.log(BaseData.menus_i18n_map,"==BaseData.menus_i18n_map")
-    // console.log(MenuData.left_menu_result,"==MenuData.left_menu_result")   // 表示选中的菜单
     const { lv1_mi = void (0) } = MenuData.left_menu_result
     let firstOneName = ''
     // 经常访问菜单类型为0

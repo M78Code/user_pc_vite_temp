@@ -38,9 +38,12 @@ declare namespace TYPES {
     mearlys: number,
     mft: number,
   }
-  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid {
+  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid,K.hpid,K.mid,K.hpn {
     hv:any,
     ol:T[]
+    hl:Hl[]
+    /** 置顶时间戳 */ hton: string
+    /** 用于玩法置顶的key */ topKey: string
   }
 
   /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os {

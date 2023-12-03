@@ -216,7 +216,7 @@ onMounted(init)
     margin-bottom: 10px;
     background-color: #fff;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 500;
     .init-row {
         display: flex;
         justify-content: space-between;
@@ -237,6 +237,7 @@ onMounted(init)
             line-height: 14px;
             padding-left: 20px;
             font-size: 16px;
+            font-weight: 600;
         }
         .clear-history {
             color: #5a6074;

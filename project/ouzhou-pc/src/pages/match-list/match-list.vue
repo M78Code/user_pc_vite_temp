@@ -56,12 +56,7 @@
         </div> -->
         <template v-slot:after>
           <div style="height: 15px"></div>
-          <div class="pager-wrap row justify-center">
-            <div class="go-top-btn yb-flex-center" @click="on_go_top">
-              <icon-wapper name="icon-go_top" size="14px" />
-              <div class="msg">{{ $t("common.back_top") || "" }}</div>
-            </div>
-          </div>
+          <back-top :onClick="on_go_top" />
         </template>
       </scroll-list>
     </load-data>
@@ -88,6 +83,7 @@
 <script>
 import { onMounted, onActivated, onUnmounted, ref, watch, computed, nextTick } from "vue";
 import { IconWapper } from "src/components/icon";
+import { BackTop } from "src/components/back-top";
 import LoadData from "src/components/load_data/load_data.vue";
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/index.vue"; //热门赛事列表 头部筛选
@@ -123,7 +119,6 @@ import {
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 const { page_source } = PageSourceData;
-console.log('load_data_state', load_data_state.value != 'loading', load_data_state.value)
 export default {
   components: {
     LeagueTab,
@@ -134,6 +129,7 @@ export default {
     LoadData,
     ScrollList,
     IconWapper,
+    BackTop,
     LoadData,
     EsportsHeader,
     ListHeader,

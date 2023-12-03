@@ -95,6 +95,7 @@ onMounted(() => {
   if (is_detail.value) list_wrap_height.value = 8;
   emitters.value = {
     emitter: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MAX_HEIGHT, update_max_height).off,
+    emitter_1: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, goto_top).off,
   }
 })
 const get_match_item = (mid) => {
@@ -271,6 +272,7 @@ const update_max_height = (flag) => {
 
 // 触发本组件销毁之前回调
 onUnmounted(() => {
+  MatchDataBaseH5.set_active_mids([])
   clearTimeout(scroll_frame_timer);
   scroll_frame_timer = null;
   Object.values(emitters.value).map((x) => x());
