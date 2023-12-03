@@ -137,11 +137,13 @@ onMounted(()=>{
     MenuData.set_current_lv1_menu(28)
     switchHandle(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
-    VirtualList.set_is_show_ball(true)
+    VirtualList.set_is_show_ball(false)
+    VirtualList.set_is_change_handicap_height(-22)
 })
 
 onUnmounted(()=>{
-    VirtualList.set_is_show_ball(false)
+    VirtualList.set_is_show_ball(true)
+    VirtualList.set_is_change_handicap_height(0)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
 })
 

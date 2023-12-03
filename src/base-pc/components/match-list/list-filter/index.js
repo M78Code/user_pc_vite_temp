@@ -247,16 +247,27 @@ function resolve_mew_menu_res_mi_400() {
     let mi_400_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
         sl: [],
     };
+console.error('ss')
+    let mi_400_arr = mi_400_obj.sl.filter( item=>{
+        item.mif = item.mi*1 - 400 + 100
+        return item
+    })
+    // 后期删除 
     if(BUILD_VERSION){
         let csid_ = [401,402,405]
-        mi_400_obj.sl = mi_400_obj.sl.filter( item=>csid_.includes(item.mi*1))
+        mi_400_arr = mi_400_arr.filter( item=>csid_.includes(item.mi*1))
     }
    
-    mi_400_obj.value = mi_400_obj
+    mi_400_obj.value = mi_400_arr
 
-    get_menu_of_favorite_count(mi_400_obj.sl,400)
+    // 收藏
+    if(MenuData.is_collect){
+        get_menu_of_favorite_count(mi_400_arr,400)
+        mi_100_arr.value = get_menu_of_favorite_count(mi_400_arr,400)
+    }
 
-    mi_100_arr.value = get_menu_of_favorite_count(mi_400_obj.sl,400)
+    mi_100_arr.value = mi_400_arr
+   
 }
 /**
  *全部 数量计算 冠军
