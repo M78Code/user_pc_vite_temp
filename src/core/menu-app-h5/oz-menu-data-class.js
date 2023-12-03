@@ -302,6 +302,7 @@ class MenuData {
     this.collect_id = "";
     this.home_menu = 'featured';
     this.collect_menu = '';
+    this.result_menu =  0;
   }
   /**
    * 设置时间 并且设置时间请求参数

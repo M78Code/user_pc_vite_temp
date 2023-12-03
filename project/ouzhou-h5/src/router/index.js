@@ -179,7 +179,7 @@ const router = createRouter({
 /**
  * 不清除menuid路由
  */
-const detailsName = ['category','matchResults'];
+const detailsName = ['category','result'];
 /**
  * 路由切换清除默认球种
  */
