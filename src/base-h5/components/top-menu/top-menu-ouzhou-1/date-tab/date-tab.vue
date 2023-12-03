@@ -2,7 +2,7 @@
     <div class="date-tab">
         <section>
             <div v-for="item in dateList" :key="item.val" class="time-list-item">
-                <div @click="time_tab(item)" :class="[{ 'time_active': defaultVal == item.val }, 'item-text']">{{ item.name }}
+                <div @click="time_tab(item,index)" :class="[{ 'time_active': defaultVal == item.val }, 'item-text']">{{ item.name }}
                 </div>
             </div>
         </section>
@@ -38,10 +38,10 @@ const emits = defineEmits(['changeDate']);
  * 时间选择
  * @param {*} item 
  */
-const time_tab = (item) => {
+const time_tab = (item,index) => {
     // if(time_active.value === item.val)return;
     // time_active.value = item.val;
-    emits('changeDate',item)
+    emits('changeDate',item,index)
     // 设置日期
     // MenuData.set_date_time(props.dataList[i].val)
 }

@@ -70,6 +70,8 @@ class MenuData {
     this.home_menu = 'featured';
     //收藏tab
     this.collect_menu = '';
+    //赛果tab
+    this.result_menu = 0;
 
     this.menu_mi = ref(''); //常规球种选中
     this.menu_type = ref(2); //id   2今日(左侧抽屉) 1滚球(滚动tab) 3早盘 8VR() 7电竞() 28赛果() 500热门
@@ -222,6 +224,13 @@ class MenuData {
    */
   set_collect_menu(val){
     this.collect_menu = val || '';
+    this.update();
+  }
+   /**
+   * 赛果页面tab
+   */
+   set_result_menu(val){
+    this.result_menu = val || 0;
     this.update();
   }
   /**
