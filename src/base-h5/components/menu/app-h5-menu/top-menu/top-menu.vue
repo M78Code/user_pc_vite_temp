@@ -118,7 +118,7 @@ const set_menu_lv1 = item => {
     z-index: 2;
 
     &.esport,
-    &.is_export {
+    &.is_esports {
         background-color: transparent;
     }
 
@@ -154,7 +154,7 @@ const set_menu_lv1 = item => {
         //   margin-left: 0.15rem;
         
         &.esport,
-        &.is_export {
+        &.is_esports {
             background-color: transparent;
         }
 

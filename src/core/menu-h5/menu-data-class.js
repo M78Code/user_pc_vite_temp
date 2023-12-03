@@ -309,7 +309,7 @@ class MenuData {
    */
   get_menus_i18n_map(mi) {
     //"7": "电竞" 直接可以返回不做处理 slice(0,3)
-    if (this.is_export()) {
+    if (this.is_esports()) {
       return BaseData.menus_i18n_map[mi]
     }
     return BaseData.menus_i18n_map[this.recombine_menu_desc(mi)];
@@ -580,7 +580,7 @@ class MenuData {
    * 是否选中了电竞
    *  mi [number|string] 要比对的值
   */
-  is_export(mi) {
+  is_esports(mi) {
     return this._is_cur_mi(7, mi)
   }
   /**
@@ -667,11 +667,11 @@ class MenuData {
   async get_date_menu_api_when_subchange(item, type) {
     // 如果是早盘，串关，电竞的话
     const euid = this.get_euid(item.mi)
-    if ([this.is_zaopan(), this.is_mix(), this.is_export()].includes(true) && euid) {
+    if ([this.is_zaopan(), this.is_mix(), this.is_esports()].includes(true) && euid) {
       // 三级菜单先显示骨架屏，接口回来后，再隐藏骨架屏
       let api_func = null,
         params = { euid: euid };
-      if (this.is_export()) { //电竞
+      if (this.is_esports()) { //电竞
         api_func = api_common.get_esports_date_menu;
         let value = item.mi.slice(1, 4);
         params = { csid: value };
@@ -885,7 +885,7 @@ class MenuData {
    * 电竞菜单要保留 电竞菜单 的 csid
    */
   get_csid() {
-    if (this.is_export()) {
+    if (this.is_esports()) {
       return this.current_lv_2_menu?.csid
     }
     // if (BaseData.csids_map

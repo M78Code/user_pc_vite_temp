@@ -75,7 +75,7 @@
             <image-cache-load :csid="match_of_list.csid" :path="match_of_list.lurl" type="league"></image-cache-load>
           </div>
           <span class="league-title-text row justify-between">
-            <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+            <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
               <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                 {{ match.tn }}
               </span>
@@ -124,7 +124,7 @@
                     <img v-if='match_collect_state' :src="compute_img_url('icon-favorite-s')">
                   </div>
                   <!-- 赛事日期标准版 -->
-                  <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
+                  <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
                     <!-- 赛事回合数mfo -->
                     <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
@@ -449,7 +449,7 @@ import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 
@@ -477,7 +477,7 @@ export default {
     const footer_sub_menu_id = ''
     return { 
       lang, theme, i18n_t, menu_lv2, menu_type, compute_img_url, format_time_zone, GlobalAccessConfig, footer_sub_menu_id,LOCAL_PROJECT_FILE_PREFIX,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, mearlys_icon
     }
   }
 }

@@ -456,7 +456,7 @@ class MenuData {
    * 是否选中了电竞
    *  mi [number|string] 要比对的值
   */
-  is_export(mi) {
+  is_esports(mi) {
     return this._is_cur_mi(2000, mi)
   }
   /**

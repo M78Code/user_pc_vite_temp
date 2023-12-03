@@ -10,8 +10,8 @@ export const get_sport_menu = (all_menu) => {
             is_today = MenuData.is_today(mi),//今日
             is_scroll_ball = MenuData.is_scroll_ball(mi),//滚球
             is_vr = MenuData.is_vr(mi),//VR
-            is_export = MenuData.is_export(mi);//电竞
-        return is_today || is_scroll_ball || is_vr || is_export;
+            is_esports = MenuData.is_esports(mi);//电竞
+        return is_today || is_scroll_ball || is_vr || is_esports;
     })
     return [top_menu]
 }

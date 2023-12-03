@@ -428,7 +428,7 @@
       footer_menulist.value.forEach((f_m) => {
         // 电竞下冠军不可点击关注
         if (
-          f_m.id === 1 && MenuData.is_export() &&
+          f_m.id === 1 && MenuData.is_esports() &&
           lodash.get(MenuData.current_lv_3_menu, "menuType") == 100
         ) {
           f_m.is_disabled = true;
@@ -439,7 +439,7 @@
           }
         }
         // 电竞放开 筛选
-        if (f_m.id === 3 && MenuData.is_export()) {
+        if (f_m.id === 3 && MenuData.is_esports()) {
           f_m.is_disabled = true;
         }
         if (f_m.id == 1 && !GlobalAccessConfig.get_collectSwitch()) {
@@ -458,7 +458,7 @@
     let is_result_virtual = MenuData.is_results_virtual_sports();
     let is_saiguo_gz = MenuData.is_results() &&
       [100].includes(MenuData.get_current_sub_menuid());
-    let is_electronicSports = MenuData.is_export(); // 电竞
+    let is_electronicSports = MenuData.is_esports(); // 电竞
     if (init_footer_menulist_data) {
       footer_menulist.value = [
         // 玩法菜单(独赢|大小|让球|角球等)
@@ -522,7 +522,7 @@
   // 是否展示 底部菜单 选项
   const bottom_option_show = computed(() => {
     return function (item) {
-      return !(MenuData.is_export() &&
+      return !(MenuData.is_esports() &&
         lodash.get(MenuData.current_lv_3_menu, "menuType") == 100 &&
         item.id == 0
       );
@@ -636,7 +636,7 @@
     }
   );
   const is_kemp = ref(MenuData.is_kemp()) //是否冠军
-  const is_vr_export = ref(MenuData.is_export() || MenuData.is_vr())
+  const is_vr_export = ref(MenuData.is_esports() || MenuData.is_vr())
   watch(
     [
       menu_type, //一级菜单变化
@@ -646,7 +646,7 @@
     ],
     () => {
       is_kemp.value = MenuData.is_kemp()
-      is_vr_export.value = MenuData.is_export() || MenuData.is_vr()
+      is_vr_export.value = MenuData.is_esports() || MenuData.is_vr()
       if (get_sport_all_selected.value) {
         /**
          * 滚球菜单是否选中全部菜单变化

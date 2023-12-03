@@ -79,7 +79,7 @@ const menu_data_config = (data) => {
   // 如果是串关去除串关 热门 赛果
 
   const filter = data.filter(i => {
-    if (MenuData.is_export(i.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
+    if (MenuData.is_esports(i.mi)) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
     if (MenuData.is_vr(i.mi)) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
     return !MenuData.is_mix(i.mi) && !MenuData.is_hot(i.mi) && !MenuData.is_results(i.mi)
   })

@@ -202,7 +202,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			if (MenuData.is_kemp()) {
 				// 冠军玩法 调用接口切换右侧
 				// this.mx_autoset_active_match();
-			} else if (!MenuData.is_export()) {
+			} else if (!MenuData.is_esports()) {
 				// 非电竞切换右侧 为列表第一场赛事
 				let first_league = all_league_list[0];
 				let mids = first_league.mids.split(",");
