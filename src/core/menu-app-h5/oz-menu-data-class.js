@@ -23,6 +23,8 @@ const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 
 const { IS_FOR_NEIBU_TEST  } = BUILD_VERSION_CONFIG;
+
+console.error('BUILD_VERSION_CONFIG',BUILD_VERSION_CONFIG)
 const menu_type_config = {
   1: 1,
   2: 3,
@@ -52,7 +54,7 @@ class MenuData {
     this.menu_csid = 0
     //----------------------------------- 常规球种 --------------------------------------//
     // this.conventionalType = BUILD_VERSION?103:300; //默认300  一期只上足球篮球
-    this.conventionalType = IS_FOR_NEIBU_TEST?[101,102,105,400]:[101,102]; 
+    this.conventionalType = [101,102]; 
     // 欧洲版 h5 默认 今日
     this.current_lv_1_menu_i = 2;
     this.current_lv_2_menu_i = '';
@@ -113,12 +115,18 @@ class MenuData {
   set_init_menu_list(arr){
     let menu_list = [],
         top_events_list = [],
-        champion_list = [];
-    let data = arr || BaseData.mew_menu_list_res;
+        champion_list = [],
+        data = arr || BaseData.mew_menu_list_res,
+        conventionalType = [...data?.filter((item)=>{return +item.mi <300}).map((n)=>{return +n.mi}),400];
+    this.conventionalType = IS_FOR_NEIBU_TEST ?conventionalType:[101,102];
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
-    menu_list =  data.filter((item)=>{return this.conventionalType.includes(+item.mi)});
+    if(!IS_FOR_NEIBU_TEST){
+      menu_list =  data.filter((item)=>{return this.conventionalType.includes(+item.mi)});
+    }else{
+      menu_list = data
+    }
     //热门球种
     top_events_list =  data.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     //冠军
@@ -148,9 +156,12 @@ class MenuData {
     //   }
     // });
     //正常取热门球种 3
-    top_events_list = top_events_list
-    .filter((n)=>{return this.conventionalType.includes(+n.mi-4900)})
-    .map((item)=>{
+    
+    if(!IS_FOR_NEIBU_TEST){
+      top_events_list = top_events_list.filter((n)=>{return this.conventionalType.includes(+n.mi-4900)})
+    }
+    
+    top_events_list = top_events_list.map((item)=>{
       return {
         ...item,
         mi:`${+item.mi-4900}`,
@@ -159,15 +170,19 @@ class MenuData {
       }
     });
     // top_events_list.push({...top_events_list[0],...{mi:102,csid:1}})
-    champion_list = champion_list
-    .filter((n)=>{return this.conventionalType.includes(+n.mi-300)})
-    .map((item)=>{
+
+    if(!IS_FOR_NEIBU_TEST){
+      champion_list = champion_list.filter((n)=>{return this.conventionalType.includes(+n.mi-300)})
+    }
+
+    champion_list = champion_list.map((item)=>{
       return {
         ...item,
         mi:`${+item.mi-300}`,
         defaultMi:item.mi
       }
     });
+    console.error('menu_list',menu_list)
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
     this.champion_list = champion_list;
@@ -177,6 +192,11 @@ class MenuData {
       this.menu_csid = +session_info.menu_mi - 100
     }
     !arr && useMittEmit(MITT_TYPES.EMIT_UPDATE_INIT_DATA,menu_list);
+  }
+  // 根据菜单id 获取对应的euid
+  get_mid_for_euid(mi) {
+    let obj = lodash_.get(BaseData.mi_euid_map_res,`[${mi}]`, {})
+    return obj.p || 30001
   }
   /**
    * 收藏

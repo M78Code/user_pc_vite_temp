@@ -1,6 +1,7 @@
 <!-- 事件组件，必须参数： 赛种ID：sportId 赛事id：matchId 数据源：dataSourceCode -->
 <template>
     <div class="row q-pa-lg" style="background: #1a1a1a;">
+        <!-- <div class="col-12" @click="get_data_list" style="">拉取数据</div> -->
         <div class="col-6" style="height: 100vh;overflow: auto;">
             <timeline
                 class="components-item" 
@@ -25,8 +26,6 @@
             </div>
         </div>
        </div>
-        <!-- <div @click="get_data_list">拉取数据</div> -->
-        
     </div>
 </template>
 <script>
@@ -74,6 +73,7 @@ export default defineComponent({
         this.get_query_params()
         this.websocket_connection_connect(1);
         console.warn(this.websocket_connection_connect)
+        this.get_data_list()
     }
     
  },
