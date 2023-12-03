@@ -79,7 +79,7 @@ const get_server_file_path = (path, csid = 0) => {
     // let api_domain = config.domain[CURRENT_ENV][0]; //config没有赋值domain 从老项目迁移
     const { img_domains } = DOMAIN_RESULT
     let api_domain = img_domains[0]
-    api_domain = api_domain.replace(/\/\/.*?\./, '//image.');
+    api_domain = api_domain && api_domain.replace(/\/\/.*?\./, '//image.');
     return `${api_domain}/${path}`;
   }
   let arr = location.host.split(".");
