@@ -472,7 +472,9 @@ function check_match_last_update_time() {
  * 发送站点选项卡事件
  */
 function emit_site_tab_active() {
-	fetch_match_list(true);
+	if(!MenuData.is_home()){
+		fetch_match_list(true);
+	}
 };
 
 function get_collect_match_list() {

@@ -20,7 +20,7 @@
       <BetBoxWapper use_component_key='BetBoxAppH5_1' />
 
       <!--页脚-->
-      <Tabbar class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports'].includes(route.name)">
+      <Tabbar class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports','category'].includes(route.name)">
       </Tabbar>
 
       <!-- 筛选+搜索   已脱离文档流-->
@@ -49,7 +49,6 @@
   <!-- 吐司提示框 v-if="toast_show" -->
   <toast></toast>
 
-  <web-socket />
   <!-- 商户活动的弹层,只在home页展示，两个都已 脱离文档流-->
   <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
     :count_down_time="userBannerTimer" />
@@ -74,7 +73,6 @@ import selectDia from "src/base-h5/components/match-list/components/select-dia.v
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 // import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import layoutTop from "./top.vue"
-import WebSocket from "./websocket.vue"
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import { api_common } from "src/api/index.js";

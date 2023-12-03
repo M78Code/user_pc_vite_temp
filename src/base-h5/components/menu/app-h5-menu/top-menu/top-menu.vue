@@ -53,7 +53,6 @@ import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } fr
 import TopHeader from './top-header.vue';
 
 const router = useRouter();
-
 //一级菜单list
 const menu_list = reactive([
     {

@@ -2,17 +2,22 @@
   <div>
 
      <h1>SDK 本地 调试   check-sdk-umd  ```</h1>
-
+     <H5Tabs4 :list="list" />
   </div>
 </template>
 
-<script  >
+<script>
 
 
 export default {
   data() {
     return {
       // key: value
+      list: [
+        'aaa',
+        'bbb',
+        'ccc'
+      ]
     }
   },
   created () {

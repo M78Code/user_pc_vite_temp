@@ -606,7 +606,10 @@ class MenuData {
     return false
   }
   is_common_kemp() {
-    return 
+    return false
+  }
+  is_collect_kemp() {
+    return this.is_collect && this.menu_root == 400
   }
   // is_multi_column(){
   //   return   this.match_list_api_config.is_multi_column ||false

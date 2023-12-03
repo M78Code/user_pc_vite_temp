@@ -189,6 +189,7 @@ const api_bymids = (
     mids.splice(24);
   }
   if (mids.length == 0) return;
+  mids=lodash.uniq(mids)//去除重复
   // is_show_mids_change &&
   // 	mids.forEach((mid) => {
   // 		// 从列表触发详情接口同步数据

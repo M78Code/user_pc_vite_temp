@@ -43,6 +43,7 @@ const draw_component = (config) => {
     plugins: {},
   });
   instance.mount(dom_id);
+  return instance
 };
 function init_env() {
   window.env = final_config_env;
@@ -52,10 +53,12 @@ function init_env() {
 
 const  install=(app, options)=>{
   //https://cn.vuejs.org/guide/reusability/plugins.html
-// 通过 app.component() 和 app.directive() 注册一到多个全局组件或自定义指令。
-// 通过 app.provide() 使一个资源可被注入进整个应用。
-// 向 app.config.globalProperties 中添加一些全局实例属性或方法
-
+  // 通过 app.component() 和 app.directive() 注册一到多个全局组件或自定义指令。
+  // 通过 app.provide() 使一个资源可被注入进整个应用。
+  // 向 app.config.globalProperties 中添加一些全局实例属性或方法
+  ALL_COMPONENTS_NAMES.forEach(item => {
+    app.component(item, ALL_COMPONENTS[item])
+  })
 }
 
 console.log('ALL_COMPONENTS_NAMES',ALL_COMPONENTS_NAMES);

@@ -55,7 +55,7 @@
 <script setup>
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import lodash from 'lodash';
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted, watch } from 'vue';
 import sprite_img from "src/core/server-img/sprite-img/index.js"
 import BaseData from "src/core/base-data/base-data.js"
 import { t, compute_css_obj } from "src/core/index.js";
@@ -88,8 +88,11 @@ let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 const is_collect = ref(false);
-//第一次进页面时，收藏从接口获取状态，后续点击前端控制
-is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+
+watch(() => props.card_style_obj, () => {
+  //第一次进页面时，收藏从接口获取状态，后续点击前端控制
+  is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+})
 // 获取菜单类型
 if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)

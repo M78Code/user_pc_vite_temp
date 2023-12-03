@@ -36,10 +36,11 @@ const selectFinishHandle = (val) => {
  * 时间点击
  * @param {*} item 
  */
-const changeDate = (item) =>{
+const changeDate = (item,index) =>{
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
     if (state.currentSlideValue === item.val) return
     state.currentSlideValue = item.val
+    MenuData.set_result_menu(index);
      getData(state.slideMenu_sport.filter((n)=>{return n.mi === state.current_mi})[0],item.val)
 }
 /**
@@ -49,6 +50,7 @@ const changeDate = (item) =>{
 const changeMenu = (item) =>{
     if (state.current_mi === item.mi) return
     state.current_mi = item.mi;
+    MenuData.set_menu_mi(item.mi)
     state.slideMenu = item.subList;
     state.currentSlideValue = lodash_.get(item.subList,'[0].field1', '');
     getData( item,lodash_.get(item.subList,'[0].field1', ''));
@@ -59,10 +61,11 @@ const changeMenu = (item) =>{
  */
 const init_data = (scroll_data) =>{
     state.slideMenu_sport = scroll_data;
-    state.current_mi = scroll_data[0].mi
-    state.slideMenu = scroll_data[0].subList
-    state.currentSlideValue = lodash_.get(scroll_data[0].subList,'[0].field1', '')
-    getData( scroll_data[0],lodash_.get(scroll_data[0].subList,'[0].field1', ''))
+    const index = scroll_data.findIndex(n=>{return n.mi == MenuData.menu_mi.value});
+    state.current_mi = scroll_data[index!= -1?index:0].mi
+    state.slideMenu = scroll_data[index!= -1?index:0].subList
+    state.currentSlideValue = lodash_.get(scroll_data[index!= -1?index:0].subList,`[${MenuData.result_menu}].field1`, '')
+    getData( scroll_data[index!= -1?index:0],state.currentSlideValue)
 }
 /**
  * 格式化球种id

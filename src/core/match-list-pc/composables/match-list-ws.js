@@ -94,9 +94,14 @@ useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT, ({ ws_status, ws_status_old })
 	// ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
 	if (ws_status == 1 && ws_status_old == 2) {
 		for (key in ws_keys_map) {
-			const ws_map = ws_keys_map[key]
+			const ws_map = ws_keys_map[key];
 			ws_map.addWsMessageListener(false)
-			ws_map.set_active_mids(ws_map.mids)
+			if (key == 'MatchDataWarehouse_PC_List_Common') {
+				ws_map.set_active_mids(MatchListScrollClass.show_mids)
+			}
+			else {
+				ws_map.set_active_mids(ws_map.mids)
+			}
 		}
 	}
 })
