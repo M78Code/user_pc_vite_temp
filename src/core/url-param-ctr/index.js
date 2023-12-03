@@ -211,7 +211,7 @@ const to_corresponding_router_ouzhou_pc = (that, params_obj) => {
     } else if (params_obj.get('mid')) {
       // 去赛事详情
       const csid = params_obj.get('csid');
-      that.$router.push({name:'category',params:{flag:1, mid:params_obj.get('mid'),csid}});
+      that.$router.push({name:'details',params:{flag:1, mid:params_obj.get('mid'),csid}});
     } else if (params_obj.get('activity')){
       // 去活动页面
       let act = params_obj.get('activity').split(',')[0]
