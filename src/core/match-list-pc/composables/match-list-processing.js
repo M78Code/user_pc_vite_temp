@@ -83,7 +83,7 @@ const deal_with_list_data = (data) => {
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
  * @param {object} data   服务器返回数据
- * @param {boolean} backend_run   是否静默拉取
+ * @param {boolean} backend_run / is_socket 是否静默拉取 
  * @param  {boolean} cut   是否 切换右侧详情  true 不切换
  * @param  {boolean} collect   是否 请求收藏数量  true 不请求
  * @return {undefined} undefined
@@ -101,7 +101,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	if (MenuData.is_kemp()) {
 		all_league_list.push(...lodash.get(res_data, "data", []));
 	}
-	deal_with_list_data(all_league_list);
+	!backend_run&&deal_with_list_data(all_league_list);
 	// 设置数据仓库 联赛列表对象
 	set_league_list_obj(res_data)
 	if (code == 200 && all_league_list.length > 0) {
