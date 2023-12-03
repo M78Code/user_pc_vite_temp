@@ -1022,4 +1022,6 @@ export {
     set_bet_obj_config,
     get_score_config,
     get_market_is_show,
+    // 订阅投注项的 ws
+    set_market_id_to_ws,
 }

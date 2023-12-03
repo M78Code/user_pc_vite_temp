@@ -21,6 +21,7 @@ import WsMan from './ws-man.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+import { set_market_id_to_ws } from "src/core/bet/class/bet-box-submit.js"
 
 // 页面 失去 焦点后  WS 断开时间
 const DOCUMENT_HIDDEN_WS_CLOSE_TIME = 5 * 60 * 1000;
@@ -200,8 +201,8 @@ function rev_event_msg(event) {
  * @return {undefined} undefined
  */
 function scmd_c2() {
-  let obj = {};
-  WsMan.skt_send_bat_handicap_odds(obj);
+  // 投注项订阅
+  set_market_id_to_ws();
 }
 /**
  * @description: 订单订阅(C3)-未结算订单数(C202)
@@ -249,6 +250,7 @@ function scmd_c7() {
     scmd_c4();
     scmd_c5();
     scmd_c7();
+    scmd_c2();
   } else {
     clearTimeout(timer_ws_msg);
     timer_ws_msg = setTimeout(() => {
