@@ -23,6 +23,8 @@ const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 
 const { IS_FOR_NEIBU_TEST  } = BUILD_VERSION_CONFIG;
+
+console.error('BUILD_VERSION_CONFIG',BUILD_VERSION_CONFIG)
 const menu_type_config = {
   1: 1,
   2: 3,
@@ -120,7 +122,11 @@ class MenuData {
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
-    menu_list =  data.filter((item)=>{return this.conventionalType.includes(+item.mi)});
+    if(!IS_FOR_NEIBU_TEST){
+      menu_list =  data.filter((item)=>{return this.conventionalType.includes(+item.mi)});
+    }else{
+      menu_list = data
+    }
     //热门球种
     top_events_list =  data.filter((item)=>{return item.mi==5000})?.[0].sl || [];
     //冠军
@@ -150,9 +156,12 @@ class MenuData {
     //   }
     // });
     //正常取热门球种 3
-    top_events_list = top_events_list
-    .filter((n)=>{return this.conventionalType.includes(+n.mi-4900)})
-    .map((item)=>{
+    
+    if(!IS_FOR_NEIBU_TEST){
+      top_events_list = top_events_list.filter((n)=>{return this.conventionalType.includes(+n.mi-4900)})
+    }
+    
+    top_events_list = top_events_list.map((item)=>{
       return {
         ...item,
         mi:`${+item.mi-4900}`,
@@ -161,15 +170,19 @@ class MenuData {
       }
     });
     // top_events_list.push({...top_events_list[0],...{mi:102,csid:1}})
-    champion_list = champion_list
-    .filter((n)=>{return this.conventionalType.includes(+n.mi-300)})
-    .map((item)=>{
+
+    if(!IS_FOR_NEIBU_TEST){
+      champion_list = champion_list.filter((n)=>{return this.conventionalType.includes(+n.mi-300)})
+    }
+
+    champion_list = champion_list.map((item)=>{
       return {
         ...item,
         mi:`${+item.mi-300}`,
         defaultMi:item.mi
       }
     });
+    console.error('menu_list',menu_list)
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
     this.champion_list = champion_list;

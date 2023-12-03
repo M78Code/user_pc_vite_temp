@@ -200,6 +200,7 @@ async function  get_menu_of_favorite_count(list,type) {
     // 获取对应的旧菜单id    
     list.forEach(item =>{
         euid_list += MenuData.get_mid_for_euid(item.mi) + ','
+        item.ct = 0
     })
     let type_ = {
         1:1,
@@ -237,7 +238,6 @@ async function  get_menu_of_favorite_count(list,type) {
             return item
         })
     }
-    console.error("ssss",list)
     return list
 }
 
