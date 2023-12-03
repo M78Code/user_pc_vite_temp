@@ -26,9 +26,9 @@ function location_href_param_set(obj={}){
 function location_href_param_del(keys=[]){
   // 全局获取url参数值使用
   const search_params = window.SEARCH_PARAMS.init_param;
-  for (var key of search_params.keys()) {
-    keys.includes(key) && search_params.delete(key);
-  }
+  keys.forEach(key => {
+    search_params.has(key) && search_params.delete(key);
+  });
   sessionStorage.setItem('LOCATION_SEARCH', decodeURIComponent(search_params.toString()))
 }
 
