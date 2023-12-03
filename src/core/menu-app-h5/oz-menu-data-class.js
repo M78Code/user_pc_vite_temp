@@ -111,9 +111,8 @@ class MenuData {
     let menu_list = [],
         top_events_list = [],
         champion_list = [],
-        data = arr || BaseData.mew_menu_list_res,
-        conventionalType = [...data?.filter((item)=>{return +item.mi <300}).map((n)=>{return +n.mi}),400];
-    this.conventionalType = IS_FOR_NEIBU_TEST ?conventionalType:[101,102];
+        data = arr || BaseData.mew_menu_list_res
+      
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种

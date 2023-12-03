@@ -66,7 +66,7 @@
 							</div>
 						</div>
 						<!-- 搜索 联赛 -->
-						<div v-if="search_data?.league && search_data?.league.length > 0" style="margin-bottom: 10px;">
+						<div v-if="search_data?.league && search_data?.league.length > 0">
 							<div @click="expand_league = !expand_league">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
