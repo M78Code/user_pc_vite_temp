@@ -100,7 +100,7 @@ const router = createRouter({
         // },
         // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选, 添加tid(联赛id)用于服务联赛筛选功能
         {
-          path: "/details/:mid/:tid/:csid?/:mcid?",
+          path: "/details/:mid/:csid/:tid?/:mcid?",
           name: "category",
           component: () => import("../pages/detailnew/index.vue"),
           // children: [
