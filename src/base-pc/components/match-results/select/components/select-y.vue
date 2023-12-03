@@ -32,7 +32,7 @@
           <span class>{{ i18n_t("select.invert") }}</span>
         </div>
         <!-- 热门 -->
-        <div class="btn-item checkbox" @click="checkHot()">
+        <div class="btn-item hot-item checkbox " @click="checkHot()">
           <div class="y-checkbox" :class="{ active: is_hot }" />
           <span>{{ i18n_t("select.hot") }}</span>
         </div>
@@ -540,6 +540,14 @@ onUnmounted(() => {
       .active {
         background-image: url($SCSSPROJECTPATH+"/image/svg/radio-checked.svg");
       }
+    }
+    .hot-item {
+      .y-checkbox {
+        border-radius: 0%;
+      }
+      .active {
+          background-image: url($SCSSPROJECTPATH+"/image/svg/checkbox-checked.svg") !important;
+        }
     }
   }
   .wrap-item {
