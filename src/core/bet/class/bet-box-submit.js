@@ -760,6 +760,14 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
         play_name = other.play_name
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+          // 冠军玩法 部分玩法hpid相同 
+        if(MenuData.is_kemp()){
+            let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
+            let hpn_obj = hpn_list.find(item => item.hid == ol_obj._hid) || {}
+            if(hpn_obj.hid){
+                hpn = hpn_obj.hpn
+            }
+        }
         if(hpn){
             play_name = hpn
         }
