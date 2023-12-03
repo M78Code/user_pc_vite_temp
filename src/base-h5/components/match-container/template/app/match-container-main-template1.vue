@@ -167,15 +167,22 @@
                         }">
                           {{ match.mhn }}
                         </div>
+                        <template v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            {{ home_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                            {{ home_yellow_score }}
+                          </span>
+                        </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                           <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
-                        <span class='score-punish' v-show="home_red_score"
-                          :class="{ flash: is_show_home_red && !is_results }">
-                          {{ home_red_score }}
-                        </span>
+                       
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                       <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
@@ -198,19 +205,24 @@
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
                         }">
-                          {{ match.man }}
+                          <span>{{ match.man }}</span>
                         </div>
+                        <template v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
+                            {{ away_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                            {{ away_yellow_score }}
+                          </span>
+                        </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-
                       <div class="yb-goal-gif yb-goal-yo"></div>
                       <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                     </div>
-                    <!--进行中的赛事显示比分-->
-                    <span class='score-punish' v-show="away_red_score"
-                      :class="{ flash: is_show_away_red && !is_results }">
-                      {{ away_red_score }}
-                    </span>
+                   
                   </div>
                   <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                   <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
@@ -727,7 +739,6 @@ export default {
         height: 14px;
         margin: 0 10px 0 12px;
         position: relative;
-        top: 1px;
         flex-shrink: 0;
         > img {
           width: 0.14rem;
@@ -833,6 +844,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    font-weight: 600;
     .icon-wapper{
       transform: rotate(90deg);
     }
@@ -851,17 +863,13 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
+      color: #303442;
       max-width: 2.8rem;
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
       }
     }
-
-
-    color: var(--q-color-com-fs-color-26);
-
-    font-weight: 600;
   }
 
   .match-type {
@@ -1055,7 +1063,7 @@ export default {
       }
 
       .team-title-container {
-        height: 0.31rem;
+        height: 0.32rem;
         display: flex;
         justify-content: space-between;
         position: relative;
@@ -1133,17 +1141,13 @@ export default {
 
           .team-t-title-w {
             font-size: 0.12rem;
-            height: 0.3rem;
-            display: flex;
-            width: 100%;
-            overflow: hidden;
             flex-shrink: 0;
-            font-weight: 600;
-            flex-direction: column-reverse;
+            max-width: 90%;
             text-overflow: ellipsis;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             word-break: break-all;
+            color: #303442;
 
             &.is-handicap {
               font-weight: bold;
@@ -1154,18 +1158,20 @@ export default {
         .score-punish {
           width: 0.12rem;
           height: 0.14rem;
-          color: var(--q-gb-t-c-18);
           flex-shrink: 0;
-          background: var(--q-color-com-bg-color-43);
-          display: flex;
+          display: inline-flex;
           justify-content: center;
           align-items: center;
           font-size: 0.1rem;
           border-radius: 0.02rem;
           margin-left: 0.04rem;
+          color: #fff;
 
           &.yellow {
-            background: var(--q-color-com-bg-color-23);
+            background: #FFA800;
+          }
+          &.red{
+            background: #f00;
           }
 
           &.flash {
@@ -1195,7 +1201,6 @@ export default {
           position: absolute;
           right: 0.07rem;
           bottom: 0;
-          flex-direction: column-reverse;
           font-weight: 600;
 
           &.simple {
@@ -1388,6 +1393,9 @@ export default {
     &>div {
       height: auto;
     }
+    .date-time{
+      font-size: 12px
+    }
   }
 
   .favorite-icon-top {
@@ -1397,7 +1405,6 @@ export default {
     flex-shrink: 0;
     margin-right: .07rem;
     position: relative;
-    top: 1px;
 
     img {
       width: 100%;
@@ -1440,16 +1447,23 @@ export default {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    font-size: 0.1rem;
 
     .favorite-icon {
       position: relative;
-      top: -.01rem;
     }
 
     .date-time {
       white-space: nowrap;
       color: var(--q-color-com-fs-color-37);
+    }
+    .coming-soon{
+      font-size: 11px;
+    }
+
+    :deep(.start-counting-down){
+      .counting-down-start{
+        font-size: 11px;
+      }
     }
 
     .counting-down-up-container {
@@ -1466,6 +1480,11 @@ export default {
 
       .match-type {
         margin-right: 0.14rem;
+      }
+      :deep(.counting-down-wrap){
+        .counting{
+          font-size: 11px;
+        }
       }
     }
 
