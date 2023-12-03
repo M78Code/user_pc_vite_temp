@@ -220,6 +220,7 @@ async function  get_menu_of_favorite_count(list,type) {
         let collect_list = data || []
        
         list = list.map(item=>{
+            item.ct = 0
             collect_list.forEach(obj=>{
                 if(obj.sportId){
                     if(type == 400){
@@ -247,7 +248,6 @@ function resolve_mew_menu_res_mi_400() {
     let mi_400_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
         sl: [],
     };
-console.error('ss')
     let mi_400_arr = mi_400_obj.sl.filter( item=>{
         item.mif = item.mi*1 - 400 + 100
         return item
