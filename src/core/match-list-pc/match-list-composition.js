@@ -52,10 +52,10 @@ useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
 		fetch_match_list(is_socket)//请求接口
-	}, 100);
+	}, 80);
 })
 //请求元数据
-useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 70));
+useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 50));
 /**
 * @description 请求数据
 * @param  {boolean} is_socket   是否 socket 调用
