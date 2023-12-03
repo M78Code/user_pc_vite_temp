@@ -826,7 +826,7 @@ export default {
   .odd-list-time {
     display: block;
     color: var(--q-gb-t-c-4);
-    margin-top: .05rem;
+    padding: 0.12rem 2% 0 2%;
   }
 
   &.simple,

@@ -6,7 +6,7 @@
 <template>
   <div class="match-search">
     <div class="search-top">
-      <div class="btn-group">
+      <div class="btn-group" ref="BtnGroupRef" >
         <div
           v-for="item in tab_options"
           :key="item.value"
@@ -18,8 +18,9 @@
               'btn-group-item-ls': true,
               'btn-group-item-ls-active': active_value == item.value,
             }"
-            >{{ item.label }}</span
           >
+            {{ item.label }}
+          </span>
         </div>
       </div>
     </div>
@@ -34,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted, nextTick, computed } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 const props = defineProps({
@@ -48,6 +49,8 @@ const props = defineProps({
 });
 
 const active_value = ref("");
+const BtnGroupRef = ref(null)
+const hasHorizontalScrollbar = ref(false)
 
 watch(
   () => props.modelValue,
@@ -69,9 +72,25 @@ const fold_odds = () => {
     useMittEmit(MITT_TYPES.EMIT_SHOW_FOLD, is_fold.value);
 
 };
+
+const getHorizontalScrollbar = function(){
+  hasHorizontalScrollbar.value = false;
+  if (BtnGroupRef.value) {
+    hasHorizontalScrollbar.value = BtnGroupRef.value.scrollWidth > BtnGroupRef.value.clientWidth;
+  }
+}
+onMounted(()=>{
+  setTimeout(() => {
+    getHorizontalScrollbar()
+  }, 160);
+})
 </script>
 
 <style lang="scss" scoped>
+::-webkit-scrollbar {
+  width: 0;
+  height: 0px;
+}
 .match-search {
 
   display: flex;
@@ -122,8 +141,11 @@ const fold_odds = () => {
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    overflow-x: auto;
 
     .btn-group-item {
+      flex-shrink: 0;
+      flex-grow: 0;
       font-size: 12px;
       // margin-right: 20px;
       padding: 4px 5px;
