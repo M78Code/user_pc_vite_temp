@@ -23,7 +23,7 @@
     </div>
     <div class="detail-container-position">
       <div class="match-detail-tabs-header">
-        <q-separator />
+        <div class="separator" style="height: 1px; background-color: #F5F5F5;"></div>
         <div class="match-detail-tabs" v-if="[1,2,'1','2'].includes(match_detail?.csid)">
           <div
             :class="[{ 'tab-active': tab == 'betting' }, 'tabs-item']"
