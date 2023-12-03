@@ -99,7 +99,10 @@ export const get_menu_of_favorite = (params, config, url="/v1/m/menu/countCollec
   params.sys = 3; //系统（1.panda-H5菜单  2.panda老PC-菜单 3.188菜单  4-新版PC菜单   7-H5 v2.0）
   return http.get(`${prefix}${url}`, params, config);
 };
-
+// 更新收藏列表菜单赛事数量
+export const get_menu_of_favorite_count = (params, config, url="/v1/m/menu/countCollectPB") => {
+  return http.post(`${prefix}${url}`, params, config);
+};
 //
 export const collectNewH5ListBottom = (params,config,url="/v1/m/collectNewH5ListBottom") => {
   params.sys = 7; //系统（1.panda-H5菜单  2.panda老PC-菜单 3.188菜单  4-新版PC菜单   7-H5 v2.0）
