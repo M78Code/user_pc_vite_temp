@@ -38,29 +38,7 @@
       <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
       <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
-      <!-- 可赢额、结算 -->
-      <template>
-        <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
-        <!-- 非已结算页 -->
-        <p v-if="BetRecordClass.selected !== 3" class="acount">
-          <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
-          <template v-if="data_b.orderStatus == 1 || data_b.orderStatus == 2 || data_b.orderStatus == 4">
-            <span>
-              <template v-if="data_b.backAmount !== null">{{format_money2(data_b.backAmount)}}{{ i18n_t('common.unit') }}</template>
-              <template v-else>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</template>
-            </span>
-          </template>
-          <template v-else>
-            <span>{{format_money2(data_b.maxWinAmount)}}{{ i18n_t('common.unit') }}</span>
-          </template>
-        </p>
-        <!-- 已结算页 -->
-        <p v-else class="acount">
-          <label>{{ i18n_t('app_h5.cathectic.settle') }}：</label> 
-          <span :class="[calc_amount_settle(data_b).color]">{{ calc_amount_settle(data_b).text }}</span>
-        </p>
-      </template>
-      <!-- 注单状态： -->
+      <!-- 可赢额、结算, 注单状态： -->
       <item-footer :data_f="data_b"></item-footer>
     </div>
   </div>
@@ -69,7 +47,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { outcome } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { formatTime, format_money2, format_balance } from 'src/core/format/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
@@ -91,17 +68,6 @@ let props = defineProps({
     } else {
       return false
     }
-  }
-
-  // 已结算 => 结算金额
-  const calc_amount_settle = (data_b) => {
-    let text = ''
-    let color = 'black'
-    text = `${outcome[data_b.outcome]} ${format_balance(data_b.profitAmount)}${i18n_t('common.unit')}`
-    if(data_b.outcome == 4 || data_b.outcome == 5) {
-      color = ''
-    }
-    return { text, color }
   }
 
 </script>

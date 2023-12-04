@@ -24,6 +24,7 @@
   
   <script setup>
   import BetRecordClass from "src/core/bet-record/bet-record.js";
+  import { enum_order_by, enum_time_type } from "src/core/bet-record/util.js";
   import { api_betting } from "src/api/index.js";
   import cathecticItemAll from "src/base-h5/components/cathectic/ouzhou-h5/cathectic-item-all.vue"
   import daysSelect from "src/base-h5/components/cathectic/ouzhou-h5/days-select.vue"
@@ -45,11 +46,26 @@
 
   // 已结算页面切换时间，获取新列表
   const cathecticItem = ref(null)
+
+  // 时间切换 (今天、昨日、七日内、一月内)
   const changeDays = (dayValue) => {
     const $el = cathecticItem.value
     if($el.timeType === dayValue) return
     $el.timeType = dayValue
     $el.init_data(1)
+  }
+
+  // 已结算、未结算切换
+  const change_record = (key) => {
+    //已选中状态下不能点击
+    if (BetRecordClass.selected === key) return;
+    // 已结算页面切换=>未结算页面，重置未结算页面筛选条件
+    if(key === 0) {
+      const $el = cathecticItem.value
+      $el.timeType = enum_time_type[0]
+      $el.sortChange(enum_order_by[1], true)
+    }
+    BetRecordClass.set_selected(key);  
   }
 
   const page_style = ref('')
@@ -66,17 +82,6 @@
     })
   })
  
-  const change_record = (key) => {
-    //已选中状态下不能点击
-    if (BetRecordClass.selected === key) return;
-    // 已结算页面切换=>未结算页面，重置未结算页面筛选条件
-    if(key === 0) {
-      const $el = cathecticItem.value
-      $el.timeType = 1
-      $el.sortChange(2, true)
-    }
-    BetRecordClass.set_selected(key);  
-  }
   </script>
   
   <style lang="scss" scoped>

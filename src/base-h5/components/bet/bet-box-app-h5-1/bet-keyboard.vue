@@ -9,7 +9,7 @@
           <div class="nonebox4-fourth-a">
               <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
           </div>
-          <!--
+          
           <div class="nonebox4-fourth-a">
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
@@ -35,15 +35,15 @@
                   <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
               </div>
           </div>
-          -->
-          <ul class="keyboard-box">
+          
+          <!-- <ul class="keyboard-box">
               <li v-for="item of test" :key="item.value"
                   :style="`grid-area: ${item.area}`"
                   :data-number="item.value"
                   class="keyboard-box-item">
                   {{item.label }}
               </li>
-          </ul>
+          </ul> -->
       </div>
   </div>
 </template>
@@ -322,7 +322,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-15);
     color: #2394fc;
     font-size: 16px;
     font-weight: bold;
@@ -349,7 +349,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-15);
     box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 16px;
@@ -364,7 +364,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-15);
     box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 14px;
@@ -396,7 +396,7 @@ onUnmounted(() => {
 .key-cell {
   &:first-child {
     // 左侧第一排MAX的样式
-    background: #F5F5F5;
+    background: var(--q-gb-bg-c-11);
   }
 
   &:last-child {
@@ -445,7 +445,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fff;
+    background: var(--q-gb-bg-c-15);
     box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 16px;
