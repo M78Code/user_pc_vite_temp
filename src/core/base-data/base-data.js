@@ -54,7 +54,6 @@ const base_menu_id_new = {
   30091: '1911',
   30090: '1901'
 }
-
 class BaseData {
   constructor() {
     //基础数据返回值
@@ -188,10 +187,19 @@ class BaseData {
     // ws请求订阅
     BaseWsMessage.init()
   }
-
+  /**
+   * 新旧菜单映射关系
+   * @returns 
+   */
+  base_menu_id_togger = () =>{
+    const data = mi_euid_mapping_default.data;//静态json
+    const base_menu_obj =Object.fromEntries(Object.keys(data).map(item => [data[item].p || data[item].h, item]));
+    return base_menu_obj;
+  }
   // 菜单数量变化
   set_base_c301_change(list = []) {
-    list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    // list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
 
