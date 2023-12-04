@@ -96,6 +96,7 @@ function compute_match_all_handicap_data_champion(match) {
   }
   .max1 {
     max-width: 530px;
+    font-weight: bold
   }
   .max2 {
     max-width: 700px;

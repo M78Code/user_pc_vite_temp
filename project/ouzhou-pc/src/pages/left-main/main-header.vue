@@ -1,5 +1,6 @@
 <template>
   <!-- 昵称、余额 -->
+  <div v-show="false">{{ UserCtr.user_version }}</div>
   <div class="header-wrap scroll-fixed-bg" :class="UserCtr.is_invalid && 'invalid'">
     <div class="user-info" :token="`?token=${get(UserCtr.user_info, 'token')}`" >
       <!-- 昵称 -->
@@ -12,7 +13,7 @@
         <div v-show="UserCtr.show_balance" class="balance-text-hide">******</div>
         <!-- 余额 -->
         <div v-show="!UserCtr.show_balance" class="balance-text-show yb-family-odds">
-          {{ format_balance(UserCtr.balance) }}
+          {{ format_balance(balance) }}
         </div>
         <!-- 余额是否隐藏图标 -->
         <icon-wapper class="icon balance-btn-eye cursor-pointer" :name="!UserCtr.show_balance?'icon-eye_hide':'icon-eye_show'" size="14px" @click="set_show_balance" />
@@ -32,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount, computed, onMounted, reactive } from "vue";
+import { ref, onBeforeUnmount, onMounted } from "vue";
 import { get } from "lodash";
 import { UserCtr,format_balance  } from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -49,17 +50,27 @@ const { off, emit: set_balance_refresh } = useMittOn(
     UserCtr.get_balance()
   }
 );
-//默认进来获取一次用户余额
-set_balance_refresh();
-
+const balance=ref(UserCtr.balance)
+//获取最新的余额变化
+const { off:offx} = useMittOn(
+  MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE,
+  () => {
+    balance.value=UserCtr.balance;
+  }
+);
 //隐藏显示用户余额
 const set_show_balance = () => {
   UserCtr.set_show_balance(!UserCtr.show_balance)
 }
+//默认进来获取一次用户余额
 
+onMounted(()=>{
+  set_balance_refresh()
+})
 // 销毁事件
 onBeforeUnmount(() => {
   off();
+  offx()
 });
 </script>
 

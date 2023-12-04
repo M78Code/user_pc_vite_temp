@@ -156,9 +156,10 @@ onUnmounted(()=>{
           min-width: 0.5rem;
           height: 100%;
           flex-shrink: 0;
-          color: var(--q-gb-t-c-4);
+          color: var(--q-gb-t-c-19);
           .current {
-            color: var(--q-gb-bd-c-2);
+            //color: var(--q-gb-bd-c-2);
+            color: var(--q-gb-bd-c-20);
             .inner-w {
               position: relative;
               font-size: 0.1rem;
