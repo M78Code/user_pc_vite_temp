@@ -253,10 +253,11 @@ export const match_collect_status = (match, obj) =>{
     obj = match_collect_data.data;
   }
   let type=-1
-  if([MenuData.is_kemp(),MenuData.is_collect_kemp(),MenuData.is_common_kemp(),MenuData.is_esports_champion()].includes(true)){
+  //冠军
+  if(MenuData.is_kemp()||MenuData.is_collect_kemp()||MenuData.is_common_kemp()||MenuData.is_esports_champion()){
     type=2
   }else if(MenuData.is_esports()){
-    type=3
+    type=3//电竞
   }
   let res = {tf:false,mf:false};
   
