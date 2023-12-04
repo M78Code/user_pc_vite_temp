@@ -93,6 +93,17 @@ export default {
         const { proxy } = getCurrentInstance()
         const MatchListCardDataClass_match_list_card_key_arr = () => {
             match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
+            // 获取mid 设置右侧赛事资讯 当ws赛事移除 设置当前第一个mid为右侧赛事资讯
+            const mids_arr = []
+            match_list_card_key_arr.value.map(item => {
+                const card_style_obj = MatchListCardDataClass.get_card_obj_bymid(item)
+                if (card_style_obj?.card_type == "league_container") {
+                    mids_arr.push(...card_style_obj?.mids.split(","))
+                }
+            })
+            if (mids_arr.length) {
+                useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids_arr[0]);
+            }
         }
         onMounted(() => {
             LayOutMain_pc.set_oz_show_right(true)
@@ -109,8 +120,8 @@ export default {
             LayOutMain_pc.set_oz_show_left(false)
         })
         function on_go_top(){
-      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)
-    }
+            useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)
+        }
         watch(
             MatchListCardDataClass.list_version,
             (list_version) => {
