@@ -151,11 +151,11 @@ const to_corresponding_router_app_h5 = (that, params_obj) => {
         that.$router.replace({ name: "activity_task", params:  { act: act,isAPP:params_obj.get('isAPP')}, query: { rdm: new Date().getTime() } });
       }
     }
-    // 删除多余参数
-    SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','isAPP','activity','label','sy']);
   } catch (error) {
     console.error(error)
   }
+  // 删除多余参数
+  SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','isAPP','activity','label','sy']);
 }
 
 //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
@@ -188,11 +188,11 @@ const to_corresponding_router_ouzhou_h5 = (that, params_obj) => {
         that.$router.replace({ name: "activity_task", params:  { act: act,isAPP:params_obj.get('isAPP')}, query: { rdm: new Date().getTime() } });
       }
     }
-    // 删除多余参数
-    SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','tid','csid','isAPP','activity','label','sy']);
   } catch (error) {
     console.error(error)
   }
+  // 删除多余参数
+  SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','tid','csid','isAPP','activity','label','sy']);
 }
 
 //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
@@ -219,11 +219,11 @@ const to_corresponding_router_ouzhou_pc = (that, params_obj) => {
         that.$router.replace({ name: "activity_task", params:  { act: act}, query: { rdm: new Date().getTime() } });
       }
     }
-    // 删除多余参数
-    SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','activity']);
   } catch (error) {
     console.error(error)
   }
+  // 删除多余参数
+  SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','activity']);
 }
 let timer = 0;
 const watch_route_fun = (to, from)=>{
