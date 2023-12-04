@@ -318,7 +318,7 @@ onUnmounted(() => {
 .key-cell {
   &:first-child { // 左侧第一排MAX的样式
     background: var(--q-gb-bg-c-10);
-    color: var(--q-gb-t-c-19);
+    color: var(--q-gb-t-c-4);
     font-size: .2rem;
   }
   &:last-child {

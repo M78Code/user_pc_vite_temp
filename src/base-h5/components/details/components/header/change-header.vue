@@ -121,7 +121,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .eports_scoring_tip {
   text-align: center;
-  color: var(--q-gb-t-c-20);
+  color: var(--q-gb-t-c-18);
 }
 .change-header {
   height: 0.44rem;
@@ -172,7 +172,7 @@ export default defineComponent({
 
 .header-font {
   font-size: 0.16rem;
-  color: var(--q-gb-t-c-20);
+  color: var(--q-gb-t-c-18);
   letter-spacing: 0;
   font-weight: 600;
 }

@@ -148,7 +148,7 @@
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{
-    color: var(--q-gb-t-c-19);
+    color: var(--q-gb-t-c-4);
     font-size: 0.18rem;
     font-weight: 500;
     display: flex;
@@ -175,7 +175,7 @@
       width: 100%;
   }
   .nonebox4-content-left-content-xian{
-      color: var(--q-gb-t-c-19);
+      color: var(--q-gb-t-c-4);
       margin-right: 0.16rem;
       margin-top: 0.08rem;
       font-size: 0.12rem;

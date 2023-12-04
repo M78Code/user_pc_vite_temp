@@ -73,7 +73,7 @@ const pack_up = (val) => {
       letter-spacing: 0px;
       border: 0.5px solid var(--q-gb-bd-c-12);
       text-align: center;
-      color: var(--q-gb-t-c-19);
+      color: var(--q-gb-t-c-4);
     }
     .place_bet{
       height: 0.46rem;

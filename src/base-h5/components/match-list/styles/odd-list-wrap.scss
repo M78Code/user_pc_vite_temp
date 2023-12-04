@@ -13,7 +13,7 @@
       >span{
         flex: 1;
         font-size: 10px;
-        color: var(--q-gb-t-c-19);
+        color: var(--q-gb-t-c-4);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -92,7 +92,7 @@
               color:var(--q-gb-t-c-13);
             }
             .odd-value{
-              color: var(--q-gb-t-c-19);
+              color: var(--q-gb-t-c-4);
               &.red{
                 color: var(--q-color-com-fs-color-17) !important;
               }
@@ -193,7 +193,7 @@
           color:var(--q-gb-t-c-13);
         }
         .odd-value{
-          color: var(--q-gb-t-c-19);
+          color: var(--q-gb-t-c-4);
           &.red{
             color: var(--q-color-com-fs-color-17) !important;
           }

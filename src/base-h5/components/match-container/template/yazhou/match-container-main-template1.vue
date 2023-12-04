@@ -1247,7 +1247,7 @@ export default {
         .score-punish {
           width: 0.12rem;
           height: 0.14rem;
-          color: var(--q-gb-t-c-20);
+          color: var(--q-gb-t-c-18);
           flex-shrink: 0;
           background: var(--q-color-com-bg-color-43);
           display: flex;

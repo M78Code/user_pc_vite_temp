@@ -167,7 +167,7 @@ const set_ref_data_bet_money = () => {
         }
         .input_amount{
             //color:#1A1A1A ;
-            color: var(--q-gb-t-c-19);
+            color: var(--q-gb-t-c-4);
             
         }
     }
@@ -199,7 +199,7 @@ const set_ref_data_bet_money = () => {
 .size_16{
     font-size: 0.16rem;
     font-weight: 500;
-    color: var(--q-gb-t-c-19);
+    color: var(--q-gb-t-c-4);
     margin-bottom: .08rem;
 }
 .color_ff700{

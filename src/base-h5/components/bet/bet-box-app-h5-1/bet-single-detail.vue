@@ -318,7 +318,7 @@ onUnmounted(() => {
     position: relative;
     display: flex;
     align-items: center;
-    color: var(--q-gb-t-c-19);
+    color: var(--q-gb-t-c-4);
   }
 }
 .bet-single-detail {

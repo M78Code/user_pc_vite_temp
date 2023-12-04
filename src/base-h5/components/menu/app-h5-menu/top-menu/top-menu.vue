@@ -166,7 +166,7 @@ const set_menu_lv1 = item => {
             // display: flex;
             text-align: center;
             font-size: 0.14rem;
-            color: var(--q-gb-t-c-19);
+            color: var(--q-gb-t-c-4);
             &.current {
                 .i-title {
                     font-weight: 500;

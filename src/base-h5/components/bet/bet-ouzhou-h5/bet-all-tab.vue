@@ -35,10 +35,10 @@
     }
     .del-info-name{
       margin-left: 0.15rem;
-      color: var(--q-gb-t-c-20);
+      color: var(--q-gb-t-c-18);
     }
     .del-info-icon{
-      color: var(--q-gb-t-c-20);
+      color: var(--q-gb-t-c-18);
     }
     .del-info{
       display: flex;

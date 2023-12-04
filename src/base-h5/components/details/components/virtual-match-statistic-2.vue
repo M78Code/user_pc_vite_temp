@@ -134,7 +134,7 @@ export default defineComponent({
 
       font-size: 0.12rem;
       font-weight: 700;
-      color: var(--q-gb-t-c-20);
+      color: var(--q-gb-t-c-18);
       margin-bottom: 0.12rem;
       .score-header{
         padding: .05rem 0;

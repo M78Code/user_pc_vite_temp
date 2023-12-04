@@ -59,7 +59,7 @@ const set_retain_selection = () => {
   display: flex;
 }
 .tip{
-  color: var(--q-gb-t-c-19);
+  color: var(--q-gb-t-c-4);
   text-align: center;
   font-size: 0.14rem;
   width: 100%;
