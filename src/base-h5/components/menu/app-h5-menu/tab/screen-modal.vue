@@ -275,7 +275,7 @@ async function get_search_result() {
 .setting-filter {
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: var(--q-gb-bg-c-15);
   //头部标题样式
   .top_title {
     font-size: 16px;
@@ -394,7 +394,7 @@ async function get_search_result() {
     bottom: 0;
     height: 1rem;
     width: 100%;
-    background: #ffffff;
+    background: var(--q-gb-bg-c-15);
     div{
       width: 1.29rem;
       height: 0.36rem;

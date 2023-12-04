@@ -8,9 +8,10 @@ import {conpute_match_list_card_offset ,set_fold_match_list_scroll_top} from  ".
  /**
     * 赛种 折叠
     *   click_card_obj 点击折叠的卡片对象
+    * is_flod_title 是否显示联赛标题
     */
 
- export const  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie=(click_card_obj,is_no_emit_fold_change)=>{
+ export const  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie=(click_card_obj,is_no_emit_fold_change,is_flod_title=false)=>{
     // 是否赛种折叠
     let is_sport_fold = !click_card_obj.is_sport_fold
     // 赛种已折叠
@@ -40,6 +41,9 @@ import {conpute_match_list_card_offset ,set_fold_match_list_scroll_top} from  ".
         if(is_sport_fold){
           // 赛种已折叠
           card_obj.is_show_card = false
+          if(card_obj.card_type=='league_title' && is_flod_title==true){
+            card_obj.is_show_card = true
+          }
         }else{
           // 赛种未折叠
           // 如果是联赛标题卡片则显示 ， 联赛容器卡片是否显示等于自身是否折叠

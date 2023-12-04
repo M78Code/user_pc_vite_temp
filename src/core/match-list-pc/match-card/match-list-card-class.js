@@ -227,8 +227,8 @@ class MatchListCardInfo {
     );
   }
   // 球种折叠
-  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(click_card_obj) {
-    recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(click_card_obj)
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(click_card_obj,is_no_emit_fold_change,is_flod_mids) {
+    recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(click_card_obj,is_no_emit_fold_change,is_flod_mids)
   }
   /**
    * @Description 移除一场赛事
