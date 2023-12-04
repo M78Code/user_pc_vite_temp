@@ -58,7 +58,7 @@
           <!-- 玩法模板 -->
           <div ref="fixedHeight" class="match-detail-odds-scroll"
             :class="[match_detail?.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
-            <OddsListContrainer :match_odds_info="match_odds_info" :match_detail="match_detail"
+            <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail"
               :loading="loading" v-model:allCloseState="allCloseState"/>
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->
