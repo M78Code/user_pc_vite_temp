@@ -867,7 +867,7 @@ const compute_num = (mi, mif) => {
  */
 const set_route_url = () => {
   let { name } = route;
-  if (["details", "search", "video", "virtual_details"].includes(name)) {
+  if ((!route?.query?.flag) && ["details", "search", "video", "virtual_details"].includes(name)) {
     router.push({
       name: 'home'
     });

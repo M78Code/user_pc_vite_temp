@@ -45,13 +45,13 @@ class UserCtr {
     //接口会去 清除 这个 统计 ， 连续累计 一定 次数才会弹出 token 失效
     this.all_expired_count = 0;
     //相邻接口报用户token 失效累计次数上限
-    this.all_expired_count_max = 5;
+    this.all_expired_count_max = 2;
     //最后一次 调用 getuserinfo 接口 返回用户 token 失效
     this.last_getuserinfo_expired = false;
     // token 过期 累加达到 上限， 延迟 xx秒 执行的  弹出 用户token 失效对应的弹窗  等 流程的  定时器
     this.token_expired_max_process_timer = null;
     // token 过期 累加达到 上限， 延迟 15秒 执行的  弹出 用户token 失效对应的弹窗  等 流程的  延迟时间
-    this.token_expired_max_process_delay_time = 15000;
+    this.token_expired_max_process_delay_time = 5000;
     // getUserInfo 原始数据备份 备份数据
     this.getuserinfo_res_backup = null;
     // uid
@@ -148,7 +148,7 @@ class UserCtr {
     }
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        if(item != 'user_version'){
+        if(!['user_version','token_expired_max_process_timer'].includes(item) ){
           this[item] = session_info[item]
         }
       }
@@ -423,61 +423,6 @@ class UserCtr {
     };
   }
   /**
-   * 通过 res.config.url  判定哪些纳入统计
-   *   计算 all_expired_count
-   *        last_getuserinfo_expired
-   *  有些接口不纳入 统计
-   * @param {*} res 请求 返回 拦截器内的 全部 res 实体
-   */
-  record_token_if_expired(res) {
-    try{
-    // #TODO 不纳入统计的接口，这些接口无关紧要 或者 不验证token
-    let whitelist = ["/yewu11/v1/getSystemTime/currentTimeMillis"];
-    // 统一规则计算后的 url
-    let jiexi_result = this.jie_xi_url(res.config.url);
-    // 计算后的 url 片段
-    let url_temp = jiexi_result.new_url_temp;
-    // 在白名单内 不纳入统计
-    if (whitelist.includes(url_temp)) {
-      return false;
-    }
-    // 以前的逻辑
-    // res.data.code == "0401013" ||
-    // (res.data.code == "0400500" &&
-    //   url_temp.includes("user/getUserInfo"))
-    // token失效
-    if (res.data.code == "0401013") {
-      // #TODO 接口链接
-      if (url_temp.includes("user/getUserInfo")) {
-        //最后一次 调用 getuserinfo 接口 返回用户 token 失效
-        this.last_getuserinfo_expired = true;
-      }
-      //所有接口上报的 用户信息失效
-      this.all_expired_count += 1;
-      //检查 token 失效 是否 上限 流程
-      this.check_if_token_expired_max();
-    }
-    // 返回数据 绝对正常 ，这个执行在 code 被重写之前
-    if (res.data.code == "0000000") {
-      //所有接口上报的 用户信息失效 清零
-      this.all_expired_count = 0;
-      // 如果有  token 过期 累加达到 上限 的 流程的定时器 就清除
-      if (this.token_expired_max_process_timer) {
-        clearTimeout(this.token_expired_max_process_timer);
-        this.token_expired_max_process_timer = null;
-      }
-      //#TODO 调用 getuserinfo 接口返回值  数据备份
-      if (url_temp.includes("user/getUserInfo")) {
-        let data_temp = pako_pb.unzip_data(lodash.get(res, "data.data"));
-        data_temp && (res.data.data = data_temp);
-        this.set_getuserinfo_res(res);
-      }
-    }}catch(e)
-    {
-      console.error("user",e)
-    }
-  }
-  /**
    * @Description:判断用户是否登录
    * @Author Cable
    * @param {function} callback  回调函数
@@ -495,49 +440,6 @@ class UserCtr {
       callback(false, true);
     }
   }
-  /**
-   * 检查 token 失效 是否 上限 流程
-   *
-   * 连续累加token失效次数 判定 是否 弹出 token失效框 执行相关流程
-   */
-  check_if_token_expired_max() {
-    //统计所有接口 相邻接口累积 报用户token 失效 次数  小于上限 则 不用执行 后面逻辑
-    if (this.all_expired_count < this.all_expired_count_max) {
-      return false;
-    }
-    // 当大于上限次数  ，开启计时器
-    // 如果已经 有计时器 不用执行后面逻辑
-    if (this.token_expired_max_process_timer) {
-      return false;
-    }
-    // token 过期 累加达到 上限， 延迟 xx秒 执行的  弹出 用户token 失效对应的弹窗  等 流程的  定时器
-    this.token_expired_max_process_timer = setTimeout(() => {
-      // 执行前再次判断 是否超限
-      // 如果超限
-      if (this.all_expired_count >= this.all_expired_count_max) {
-        // 设置登录无效
-
-        this.is_invalid = true;
-
-        //显示登录失效弹窗
-        setTimeout(() => {
-          this.show_fail_alert();
-        }, 100);
-
-        // 关闭WS
-        if (window.ws) {
-          //  window.ws.destroy(true);
-        }
-      } else {
-        //如果不超限 //清除定时器
-        if (this.token_expired_max_process_timer) {
-          clearTimeout(this.token_expired_max_process_timer);
-          this.token_expired_max_process_timer = null;
-        }
-      }
-    }, this.token_expired_max_process_delay_time);
-  }
-
   /**
    *  用户信息的  内的 视频多久 无操作 时间判定
    */
@@ -955,7 +857,6 @@ class UserCtr {
   show_fail_alert() {
     let ret = false;
     let callbackUrl = this.user_info.callbackUrl;
-
     if (this.is_invalid) {
       //是否失效
       // if ((!callbackUrl) && (callbackUrl != undefined)) {
@@ -1202,6 +1103,12 @@ class UserCtr {
       if (this.all_expired_count >= this.all_expired_count_max) {
         // 跳转商户
         useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
+        //设置登录无效
+         this.is_invalid=true;
+        //显示登录失效弹窗
+        setTimeout(() => {
+          this.show_fail_alert();
+        }, 100);
         // 关闭WS
         if (window.ws) {
           window.ws.destroy(true);

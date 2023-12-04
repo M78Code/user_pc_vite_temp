@@ -35,8 +35,8 @@ export const useGetConfig = (router,cur_menu_type,details_params,play_media) => 
     // 菜单数据
     // menu_data: $menu.menu_data,
     // MatchDataWarehouseInstance: "",
-    mid: "", //赛事id
-    sportId: 0, //球类id
+    mid: (route?.params?.mid) || "" , //赛事id
+    sportId: (route?.params?.csid) || 0, //球类id
     match_infoData: {}, //赛事状态比分信息
     category_list: [], //玩法集
     mcid: 0, //默认玩法集id
