@@ -8,7 +8,8 @@
         <div>{{tab_item.name}}</div>
       </div>
     </div>
-    <div class="tab-title">
+    <div class="virtual-content-wrapper">
+      <div class="tab-title">
       <div class="league-name right-border">{{ lengue_name }}</div>
       <div class="status">
         <!-- <span class="num">第10轮</span>
@@ -34,6 +35,19 @@
       <div class="test-line" v-if="show_debug">
         {{current_match.mid}}
       </div>
+
+      <div class="virtual-sports-menu">
+          <div class="vsm-options" v-for="n in 4" :key="n">
+            <div class="teams">
+              <span>name1</span>
+              <span>{{n}}</span>
+            </div>
+            <div class="teams">
+              <span>name2</span>
+              <span>0</span>
+            </div>
+          </div>
+        </div>
       <!--赛事轮|期菜单-->
       <match-tab
         :is_reset_tab_i="is_reset_tab_i"
@@ -104,6 +118,7 @@
       <!-- 占位撑开高度 -->
     </template>
     <no-data v-else which='noMatch' height='500'></no-data>
+    </div>
 
   </div>
 </template>
@@ -606,6 +621,7 @@ export default defineComponent({
   .league-name{
     color: #303442;
     font-weight: 600;
+    padding-left: 0.07rem;
   }
   .status{
     .state{
@@ -631,4 +647,35 @@ export default defineComponent({
 .v-sports-main-list-style {
   padding-bottom: .48rem;
 }
+
+.virtual-sports-menu {
+    display: flex;
+    margin-bottom: .08rem;
+    padding: .1rem;
+    padding-bottom: 0;
+    background: var(--q-gb-bd-c-1);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    border-bottom-left-radius: .04rem;
+    border-bottom-right-radius: .04rem;
+    .vsm-options {
+      width: 1.76rem;
+      height: .4rem;
+      background: var(--q-gb-bg-c-18);
+      border-radius: .04rem;
+      margin-bottom: .08rem;
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      flex-direction: column;
+      font-size: .12rem;
+      padding: .02rem .12rem;
+      .teams {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+  }
 </style>

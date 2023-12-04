@@ -7,16 +7,15 @@
       ></div>
      
       <div class="match-detail-time">
-          <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
-            <match-stage :detail_data="get_match_detail" ></match-stage>
-            <q-badge
+        <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
+          <match-stage :detail_data="get_match_detail" ></match-stage>
+          <q-badge
             v-if="get_match_detail.mng == 1"
             text-color="white"
             label="N"
             style="margin-left:5px"
           />
-          </span>
-          
+        </span>
         <div class="match-detail-time-collect" v-if="show_collect" @click="collect_click">
           <img
             v-if="is_collect"
@@ -52,19 +51,11 @@
             v-for="item in football_score_icon_list"
             :key="item.msc_key"
           >
-            <span>{{
-              scoew_icon_list[item.msc_key]
-                ? scoew_icon_list[item.msc_key]["home"]
-                : ""
-            }}</span>
+            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["home"] : "" }}</span>
             <span :class="[item.bg_url, 'score-icon']">
               <!-- <img class="score-icon" :src="item.url" alt="" /> -->
             </span>
-            <span>{{
-              scoew_icon_list[item.msc_key]
-                ? scoew_icon_list[item.msc_key]["away"]
-                : ""
-            }}</span>
+            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["away"] : ""}}</span>
           </div>
         </div>
         <div
@@ -84,9 +75,9 @@
           </template>
         </div>
       </template>
+      <!-- 比分组件 目前只写了网球比分组件 -->
+      <matchScore v-if="get_match_detail.msid == 5" :detail_data="get_match_detail" />
     </div>
-
-
   </div>
 </template>
 
@@ -97,6 +88,7 @@ import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
 import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zone  } from "src/core";
+import matchScore from "./match-score/index.vue"
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({

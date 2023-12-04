@@ -51,10 +51,9 @@ const base_menu_id_new = {
   30002: "1011",
   30003: '1021',
   30004: '1051',
-  30091: '',
-  30090: ''
+  30091: '1911',
+  30090: '1901'
 }
-
 class BaseData {
   constructor() {
     //基础数据返回值
@@ -136,6 +135,8 @@ class BaseData {
 
     // 是否通知元数据处理完成
     this.is_emit = false
+
+    this.conventionalType = [101,102,190,191]; 
   }
   /**
    * 初始化数据
@@ -186,10 +187,19 @@ class BaseData {
     // ws请求订阅
     BaseWsMessage.init()
   }
-
+  /**
+   * 新旧菜单映射关系
+   * @returns 
+   */
+  base_menu_id_togger = () =>{
+    const data = mi_euid_mapping_default.data;//静态json
+    const base_menu_obj =Object.fromEntries(Object.keys(data).map(item => [data[item].p || data[item].h, item]));
+    return base_menu_obj;
+  }
   // 菜单数量变化
   set_base_c301_change(list = []) {
-    list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    // list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
 
@@ -393,6 +403,7 @@ class BaseData {
 
       // this.resolve_menus(menu_i18n_default)
     }
+    this.conventionalType = [101,102,190,191]; 
   }
   /**
    * 滚球赛事的赛种id
@@ -518,7 +529,7 @@ class BaseData {
       // 左侧菜单id
       menu_info.forEach((item) => {
         // vr300 冠军400 2000 电竞 500热门
-        if (Number(item.mi) < 118 ) {
+        if (Number(item.mi) < 300 ) {
           // 过滤 商户 屏蔽的赛种数据
           if (!this.filterSport_arr.includes(item.mi)) {
             left_menu.push(Number(item.mi));
@@ -547,12 +558,11 @@ class BaseData {
        *  重置默认数据
        */
       if(!IS_FOR_NEIBU_TEST){
-        let csid_ = [101,102]
-        this.left_menu_base_mi_arr = csid_;
+        this.left_menu_base_mi_arr = this.conventionalType;
        
         let list_mi_lsit = []
         left_menu_mi.forEach(item=>{
-          if(csid_.includes(item.mi*1)){
+          if(this.conventionalType.includes(item.mi*1)){
             list_mi_lsit.push(item)
           }
         })
@@ -1067,6 +1077,8 @@ class BaseData {
       137: 37,
       138: 38,
       139: 39,
+      190: 90,
+      191: 91,
       300: 300,
       400: 400,
       2000: 2000,

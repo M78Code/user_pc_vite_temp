@@ -17,4 +17,6 @@ export default {
   'gb-t-c-15': 'tranparent',
   'gb-t-c-16': 'unset',
   'gb-t-c-18': '#414655',
+  'gb-t-c-19': '#AFB3C8',
+  'gb-t-c-20': '#303442',
 }

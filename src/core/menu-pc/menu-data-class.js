@@ -154,6 +154,7 @@ class MenuData {
   // 设置当前选中的赛种
   set_current_ball_type(val) {
     this.current_ball_type = val
+    console.error('ssss',val)
     this.set_menu_data_version();
   }
 
@@ -336,7 +337,7 @@ class MenuData {
     //   r = 1
     // }
     // // 电竞常规赛事
-    // if (this.is_export()) {
+    // if (this.is_esports()) {
     //   r = "esports";
     // }
     // //搜索13列玩法
@@ -678,8 +679,8 @@ class MenuData {
    * 计算当前菜单 是否显示  联赛过滤
    */
   compute_if_can_show_league_fliter() {
-    let state = !this.is_export() && !this.is_vr();
-    // vx_layout_list_type!='collect' && !is_search_page &&!this.is_export() && !menu_data.is_virtual_sport && !is_show_hot && get_global_switch.filter_switch
+    let state = !this.is_esports() && !this.is_vr();
+    // vx_layout_list_type!='collect' && !is_search_page &&!this.is_esports() && !menu_data.is_virtual_sport && !is_show_hot && get_global_switch.filter_switch
     return state;
   }
   /**
@@ -688,10 +689,10 @@ class MenuData {
    */
   compute_if_can_show_sort() {
     ////  console.warn("冠军 ",this.is_kemp() )
-    ////  console.warn("电子竞技 ",this.is_export() )
+    ////  console.warn("电子竞技 ",this.is_esports() )
     ////  console.warn("vr ",this.is_vr() )
-    let state = !this.is_export() && !this.is_vr();
-    // !is_search_page && !this.is_export() && !menu_data.is_virtual_sport && !is_show_hot &&!vx_show_filter_popup
+    let state = !this.is_esports() && !this.is_vr();
+    // !is_search_page && !this.is_esports() && !menu_data.is_virtual_sport && !is_show_hot &&!vx_show_filter_popup
     return state;
   }
   /**
@@ -970,7 +971,7 @@ class MenuData {
    * 是否选中了电竞
    *  mi [number|string] 要比对的值
   */
-  is_export(mi) {
+  is_esports(mi) {
     // return (
     //   this.menu_root == 2000 ||
     //   (this.match_list_api_config || {}).sports == "dianjing"

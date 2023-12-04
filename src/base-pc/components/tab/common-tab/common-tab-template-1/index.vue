@@ -467,6 +467,7 @@ onBeforeUnmount(() => {
       height: 24px;
       line-height: 24px;
       border-radius: 15px;
+      color: var(--q-gb-t-c-5);
       &.active {
         font-weight: 600;
         line-height: 24px;

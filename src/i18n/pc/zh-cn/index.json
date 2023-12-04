@@ -199,6 +199,10 @@
       "bet_col_155": {
         "bet_col_1": "主队让局",
         "bet_col_2": "客队让局"
+      },
+      "bet_col_173": {
+        "bet_col_Over": "主队总分",
+        "bet_col_Under": "客队总分"
       }
     }
   },

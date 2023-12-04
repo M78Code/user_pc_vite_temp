@@ -902,11 +902,11 @@ this.bet_appoint_ball_head= null */
     if(!BetViewDataClass.is_finally){
       // 单关 单注 简单 粗暴 其他的后面做
       if(status == 1){
-        BetViewDataClass.set_bet_before_message({code:200,message:"投注成功"})
+        BetViewDataClass.set_bet_before_message({code:200,message:"bet_message.success"})
         BetViewDataClass.set_bet_order_status(3)
       }
       if(status == 2){
-        BetViewDataClass.set_bet_before_message({code:'0402018',message:"投注失败"})
+        BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet_message.error"})
         BetViewDataClass.set_bet_order_status(4)
       }
     }

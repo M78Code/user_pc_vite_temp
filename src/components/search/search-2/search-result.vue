@@ -30,7 +30,11 @@
 													<span class="middle">v</span>
 													<span class="away" v-html="red_color(item.man)"></span>
 												</p>
-												<p> {{ i18n_t(`mmp.${item.csid}.${item.mmp}`) }} {{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }} <span class="red">{{ get_match_score(item).home_score }}-{{ get_match_score(item).away_score }}</span> </p>
+												<p class="flex"> 
+													<!-- 比赛时间 -->
+													<match-process style="cursor:pointer" v-if="item" :match="item" :rows="1" :date_rows="1" date_show_type="inline" periodColor="gray" />
+													<span class="red">{{ get_match_score(item, true).home_score }}-{{ get_match_score(item, true).away_score }}</span> 
+												</p>
 											</div>
 											<div style="display: flex;flex-direction: row; flex: 1">
 												<div class="flex_1"
@@ -41,7 +45,7 @@
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
-												<template v-if="item.csid != '2' || item.csid != '5'">
+												<template v-if="item.csid != '2' && item.csid != '5'">
 													<div class="flex_1"
 														v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 														<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
@@ -66,7 +70,7 @@
 							</div>
 						</div>
 						<!-- 搜索 联赛 -->
-						<div v-if="search_data?.league && search_data?.league.length > 0" style="margin-bottom: 10px;">
+						<div v-if="search_data?.league && search_data?.league.length > 0">
 							<div @click="expand_league = !expand_league">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
@@ -96,7 +100,7 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="i.csid != '2' || i.csid != '5'">
+											<template v-if="i.csid != '2' && i.csid != '5'">
 												<div class="flex_1"
 													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
@@ -155,7 +159,7 @@
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="list.csid != '2' || list.csid != '5'">
+											<template v-if="list.csid != '2' && list.csid != '5'">
 												<div class="flex_1"
 													v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[2]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
@@ -211,6 +215,7 @@ import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
 const props = defineProps({
 	show_type: {
@@ -237,6 +242,7 @@ const search_type = ref(null)
 const keyword = ref('')
 const get_props = (props) => {
 	keyword.value = props.text
+	_get_search_result(keyword.value, true)
 	search_type.value = props.type
 }
 // 展开/收起 bowling 滚球 league 联赛 team 队伍
@@ -262,14 +268,6 @@ const show_bowling_list = computed(() => {
 	})
 	return obj;
 });
-
-// 监听搜索关键词改变
-watch(
-	() => keyword.value,
-	(res) => {
-		_get_search_result(res, true)
-	}
-)
 /**
  * @Description:点击滚球搜索
  * @param {string} league 点击联赛标题
@@ -510,15 +508,13 @@ const get_odd_os = (ov) => {
 	return compute_value_by_cur_odd_type(ov, '', '', props.search_csid)
 }
 
-onMounted(() => {
-	useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
-})
+const {off}=useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props);
 onBeforeUnmount(() => {
 	if (timer.value) {
 		clearTimeout(timer.value)
 		timer.value = null
 	}
-	useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
+	off()
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
 		text: ''

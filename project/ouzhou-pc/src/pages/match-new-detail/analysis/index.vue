@@ -81,6 +81,7 @@ import {
   UserCtr,
 } from "src/core/index";
 import { format_mst_data } from "src/core/utils/matches_list.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 // const props =  defineProps({
 //   detail_info: {  // 赛事详情
@@ -106,6 +107,7 @@ onMounted(() => {
 // 获取数据
 const get_detail_info = (mid) => {
   // 3572298
+  MatchListCardDataClass.set_current_mid(mid)
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
   detail_info.value = infomation
   // setInterval(function (){

@@ -8,6 +8,7 @@ import {
   UserCtr,
   MatchDetailCalss,
   SearchPCClass,
+  utils
 } from "src/core/index";
 import {
   filter_odds_func,
@@ -161,44 +162,56 @@ export function usedetailData(route) {
    * 获取赛事详情数据
    */
   const get_detail = async (par) => {
+    //赛果页面调用赛果玩法详情接口
+    // match_odds_info.value = get_match_odds_info.value;
+    //接口调用
     const { isNeedLoading = true } = par || {};
-    try {
-      const params = {
-        mid: route_parmas.value.mid,
-        cuid: user_info.userId,
-        t: new Date().getTime(),
-      };
-      detail_loading.value = isNeedLoading;
-      const res = await get_detail_data(params);
-      if (res.code == "0401038") {
-        // 限频重新请求
-        setTimeout(() => {
-          get_detail(par);
-        }, 1000);
-      } else {
-        // 空赛事数据跳转回首页
-        if (lodash_.isEmpty(res.data)) {
-          router.push({
-            name: "home",
-          });
-          return;
-        }
-        getMatchDetailList(res.data);
-        detail_loading.value = false;
-        detail_info.value = { ...detail_info.value, ...res.data };
-        detail_info.value["course"] = handle_course_data(detail_info.value);
-        setTimeout(() => {
-          LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
-        }, 200);
-
-        MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
-        if (is_fresh.value) {
-          useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, route_parmas.value.mid);
-        }
-      }
-    } catch (error) {
-      console.error("get_detail_data", error);
-    }
+    detail_loading.value = isNeedLoading;
+    const params = {
+      mid: route_parmas.value.mid,
+      cuid: user_info.userId,
+      t: new Date().getTime(),
+    };
+    let obj_ = {
+      // axios api对象
+      axios_api: get_detail_data,
+      // axios api对象参数
+      params: params,
+      // 唯一key值
+      key: "details",
+      error_codes: ["0401038"],
+      // axios中then回调方法
+      fun_then: (res) => {
+          // 空赛事数据跳转回首页
+          if (lodash_.isEmpty(res.data)) {
+            router.push({
+              name: "home",
+            });
+            return;
+          }
+          getMatchDetailList(res.data);
+          // detail_loading.value = false;
+          detail_info.value = { ...detail_info.value, ...res.data };
+          detail_info.value["course"] = handle_course_data(detail_info.value);
+          setTimeout(() => {
+            LayOutMain_pc.set_oz_show_right(detail_info.value.ms > 0); // 显示右侧
+          }, 200);
+  
+          MatchDataWarehouseInstance.set_match_details(detail_info.value, []);
+          if (is_fresh.value) {
+            useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, route_parmas.value.mid);
+          }
+      },
+      // axios中catch回调方法
+      fun_catch: (e) => {
+        console.log(e);
+      },
+      // 最大循环调用次数(异常时会循环调用),默认3次
+      max_loop: 3,
+      // 异常调用时延时时间,毫秒数,默认1000
+      timers: 1100,
+    };
+    utils.axios_api_loop(obj_);
   };
 
   /**
@@ -210,18 +223,36 @@ export function usedetailData(route) {
         tId: data.tid,
         t: new Date().getTime(),
       };
-      const res = await getMatchDetailByTournamentId(params);
-      if (res.code == "0401038") {
-        // 限频重新请求
-        setTimeout(() => {
-          getMatchDetailList(data);
-        }, 1000);
-      } else {
-        matchDetailList.value = res.data;
-      }
-    } catch (error) {
-      console.error("getMatchDetailByTournamentId", error);
+      let obj_ = {
+        // axios api对象
+        axios_api: getMatchDetailByTournamentId,
+        // axios api对象参数
+        params: params,
+        // 唯一key值
+        key: "details-list",
+        error_codes: ["0401038"],
+        // axios中then回调方法
+        fun_then: (res) => {
+            // 空赛事数据跳转回首页
+            matchDetailList.value = res.data;
+        },
+        // axios中catch回调方法
+        fun_catch: (e) => {
+          console.log(e);
+        },
+        // 最大循环调用次数(异常时会循环调用),默认3次
+        max_loop: 3,
+        // 异常调用时延时时间,毫秒数,默认1000
+        timers: 1100,
+      };
+
+      utils.axios_api_loop(obj_);
     }
+    catch (error) {
+      console.error("details-list", error);
+    }
+
+     
   };
 
   /**
@@ -253,7 +284,7 @@ export function usedetailData(route) {
    * 获取赛事列表数据
    */
   const get_detail_lists = async () => {
-    try {
+  
       const params = {
         mcid: 0,
         cuid: user_info.userId,
@@ -261,22 +292,66 @@ export function usedetailData(route) {
         newUser: 0,
         t: new Date().getTime(),
       };
-      const res = await get_detail_list(params);
-      all_list.value = res.data || [];
-      res.data && res.data.forEach((item) => (item.expanded = true));
-      detail_loading.value = false;
-      current_key.value = current_key.value
-        ? current_key.value
-        : tabList.value.length > 0
-        ? tabList.value[0].value
-        : null;
+    let obj_ = {
+      // axios api对象
+      axios_api: get_detail_list,
+      // axios api对象参数
+      params: params,
+      // 唯一key值
+      key: "details",
+      error_codes: ["0401038"],
+      // axios中then回调方法
+      fun_then: (res) => {
+        all_list.value = res.data || [];
+        res.data && res.data.forEach((item) => (item.expanded = true));
+        detail_loading.value = false;
+        current_key.value = current_key.value
+          ? current_key.value
+          : tabList.value.length > 0
+          ? tabList.value[0].value
+          : null;
+  
+        current_key.value && get_match_detail(current_key.value);
+      },
+      // axios中catch回调方法
+      fun_catch: (e) => {
+        console.log(e);
+      },
+      // 最大循环调用次数(异常时会循环调用),默认3次
+      max_loop: 1,
+      // 异常调用时延时时间,毫秒数,默认1000
+      timers: 1100,
+    };
+    utils.axios_api_loop(obj_);
 
-      current_key.value && get_match_detail(current_key.value);
-    } catch (error) {
-      console.error("get_detail_list", error);
-    }
   };
-
+    /**
+   * 获取赛事列表数据
+   */
+    const socketOddinfo = lodash.throttle(async()=>{
+      try {
+        const params = {
+          mcid: 0,
+          cuid: user_info.userId,
+          mid: route_parmas.value.mid,
+          newUser: 0,
+          t: new Date().getTime(),
+        };
+        const res = await get_detail_list(params);
+        all_list.value = res.data || [];
+        res.data && res.data.forEach((item) => (item.expanded = true));
+        detail_loading.value = false;
+        current_key.value = current_key.value
+          ? current_key.value
+          : tabList.value.length > 0
+          ? tabList.value[0].value
+          : null;
+  
+        current_key.value && get_match_detail(current_key.value);
+      } catch (error) {
+        console.error("get_detail_list", error);
+      }
+    },2000)
   /**
    * @description: 通过mid获取从仓库获取最新的数据
    * @param {*} val  mid参数
@@ -401,7 +476,7 @@ export function usedetailData(route) {
         init.value = false;
         switch (cmd) {
           case "C303":
-            get_category();
+            socketOddinfo();
             break;
           case "C302":
             // 赛事状态发现变更  ms
@@ -414,17 +489,32 @@ export function usedetailData(route) {
             RCMD_C109(data);
           //  玩法集变更(C112)
           case "C112":
-            get_category();
+            socketOddinfo();
             break;
           case "C102":
             RCMD_C102(data);
             break;
+          case "C110":
+           RCMD_C110(data);
+           break;       
           default:
             break;
         }
       })
     );
   });
+   //赛事玩法数量
+ /**
+  * @description: RCMD_C110 锁盘 mc==0
+  * @param {*} obj
+  * @return {*}
+  */
+ function RCMD_C110(obj){
+    if(obj.cd.mc == 0){
+      //锁盘展示
+      detail_list.value = [];
+    }
+  }
   /**
    * @description: RCMD_C109
    * @return {*}
@@ -498,8 +588,9 @@ export function usedetailData(route) {
     // 监听ws断连
   message_fun.push(useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
       // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
-      if(ws_status != 1){
+      if(ws_status.ws_status != 1){
         MatchDataWarehouseInstance.scmd_c8_ws_reconnect()
+        socketOddinfo();
       }
   }).off)
   onUnmounted(() => {
@@ -570,8 +661,8 @@ export function usedetailData(route) {
       }
       // 否则更新玩法集
       else {
-        if (_old != undefined) {
-          // get_category();
+        if (_old != undefined && _new!=_old) {
+          get_category();
         }
       }
     },

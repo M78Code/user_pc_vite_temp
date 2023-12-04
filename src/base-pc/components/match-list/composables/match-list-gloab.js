@@ -38,7 +38,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 		(route_name === "video" && [3, 4, 5].includes(+cur_params.play_type)) ||
 		(route_name === "details" &&
 			["studio", "topic", "anchor"].includes(this.vx_play_media.media_type)) ||
-		NewMenu.is_export();
+		NewMenu.is_esports();
 	// 电竞不用调自动切右侧接口
 	if (return_status) {
 		return;

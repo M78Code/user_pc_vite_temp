@@ -86,7 +86,7 @@
           <!--投注成功后的预约金额和可用金额-->
           <bet-mix-box-successful-betting></bet-mix-box-successful-betting>
         </div>
-        <!-- 常规投注 -->
+        <!-- 常规投注11 -->
         <div v-else>
           <bet-mix-box-convention v-if=" BetViewDataClass.orderNo_bet_obj.length "></bet-mix-box-convention>
         </div>
@@ -125,11 +125,13 @@
               <!-- 投注 -->
               <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
                 class="row justify-center items-center content-center yb-info">
+                <div class="jiantou">></div>
                 <div>{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
                 <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
               </div>
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
               <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
+                <div class="jiantou jiantouhui">></div>
                 <div>{{ i18n_t('bet.betting') }} <span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
                 <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
               </div>
@@ -185,11 +187,11 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
-import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
+import { get_query_bet_amount_common, submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
-import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import acceptRules from "./accept-rules.vue"
+
 
 //串关的按钮
 const is_strand = ref(true)
@@ -274,6 +276,7 @@ const pack_up = (val) => {
 }
 
 const submit_order = (type) => {
+  console.error('touzhule')
   submit_handle()
 }
 
@@ -346,6 +349,20 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss" scoped>
+.jiantou{
+  height: 0.4rem;
+  width: 0.4rem;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--q-gb-t-c-1);
+  font-size: 0.2rem;
+}
+.jiantouhui{
+  color: var(--q-gb-t-c-5);
+}
 .yb_delete{
   width: 0.5rem;
   height: 0.5rem;
@@ -401,15 +418,17 @@ onUnmounted(() => {
   justify-content: space-between;
   padding: 0 0.3rem;
   border-radius: 0.7rem;
-  color: var(--q-gb-t-c-1);
+  color: var(--q-gb-t-c-14);
   font-size: 0.14rem;
+  padding-left: 0.1rem;
 }
 .yb-info-hui{
-background: var(--q-gb-t-c-3) !important;
+background: var(--q-gb-t-c-5) !important;
 }
 .yb-info-money{
   font-size: 0.12rem;
   color: var(--q-gb-bg-c-9);
+  margin-left: 0.05rem;
 }
 
 .yb-info-one{
@@ -457,7 +476,7 @@ background: var(--q-gb-t-c-3) !important;
   -webkit-overflow-scrolling: touch;
   border-radius: 24px 24px 0 0;
   //border: 1px solid;
-  background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-8);
   ;
 
   .yb_pl14 {
@@ -488,9 +507,9 @@ background: var(--q-gb-t-c-3) !important;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   margin-bottom: -1px;
-  background-color: var(--q-gb-t-c-7);
+  //background-color: var(--q-gb-t-c-7);
   //padding: 12px;
-  border-radius: 0.04rem;
+  //border-radius: 0.04rem;
 }
 .scroll-box-center{
   //margin: 0 0 0.1rem 0;

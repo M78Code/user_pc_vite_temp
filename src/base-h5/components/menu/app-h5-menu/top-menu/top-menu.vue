@@ -53,7 +53,6 @@ import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } fr
 import TopHeader from './top-header.vue';
 
 const router = useRouter();
-
 //一级菜单list
 const menu_list = reactive([
     {
@@ -118,7 +117,7 @@ const set_menu_lv1 = item => {
     z-index: 2;
 
     &.esport,
-    &.is_export {
+    &.is_esports {
         background-color: transparent;
     }
 
@@ -154,7 +153,7 @@ const set_menu_lv1 = item => {
         //   margin-left: 0.15rem;
         
         &.esport,
-        &.is_export {
+        &.is_esports {
             background-color: transparent;
         }
 
@@ -167,7 +166,7 @@ const set_menu_lv1 = item => {
             // display: flex;
             text-align: center;
             font-size: 0.14rem;
-            color: var(--q-gb-t-c-4);
+            color: var(--q-gb-t-c-19);
             &.current {
                 .i-title {
                     font-weight: 500;
