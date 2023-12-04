@@ -1,6 +1,12 @@
 import lodash from "lodash"
 import { t } from "src/boot/i18n.js";
 
+// 按什么排序  1-投注时间  2-默认排序（结算时间）  3-开赛时间
+export const enum_order_by = [1, 2, 3]
+// 展示多长时间的注单记录  (1:今天 2:昨日 3:七日内 4:一月内)
+export const enum_time_type = [1, 2, 3, 4]
+
+
 export const bet_result = {
     "2": t("bet_record.bet_no_status02"), //'走水',
     "3": t("bet_record.bet_no_status03"), //'输',

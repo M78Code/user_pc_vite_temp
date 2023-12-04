@@ -1,9 +1,15 @@
 import lodash from "lodash"
 import { UserCtr } from "src/core";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+import { nextTick } from "vue";
 
 export default class BetRecordWs {
     constructor() {
+        // ws调用次数
+        this.count = 0
+        this.message_fun = null
+
         this.run()
         setTimeout(()=>{
             this.set_bet_c3_message()
@@ -48,7 +54,20 @@ export default class BetRecordWs {
         if(type){
           data.type = type;
         }
-        window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
+        // 发起订阅前 查看ws是否链接中 没有就发起订阅
+        if(WsMan.ws.ws_status){
+            this.count = 0
+            window.postMessage({event: 'WS', cmd:`WS_MSG_SEND`, data},'*');
+        } else {
+            // 断线重连 
+            if(this.count < 5){
+                WsMan.ws.connect('vue_hidden_to_show')
+                nextTick(()=>{
+                    this.send_msg(data,type)
+                    this.count++
+                })
+            }
+        }
       }
     }
 
