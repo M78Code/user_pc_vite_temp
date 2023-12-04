@@ -29,8 +29,8 @@
         <div v-else-if="card_type == 'league_container'&&mids_arr.length">
           <!-- 数据加载状态 -->
           <!-- 赛事列表 -->
-          <!-- {{ card_style_obj.mids.split(',') }}
-          {{ mids_arr }} -->
+          <!-- {{ card_style_obj.mids.split(',') }} -->
+          <!-- {{ mids_arr }} -->
           <match-card v-for="mid in card_style_obj.mids.split(',')" :key="mid" :mid="mid" />
         </div>
       </div>

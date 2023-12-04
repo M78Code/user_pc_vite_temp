@@ -454,7 +454,7 @@ export default {
       overflow: hidden;
     }
     &.border-top{
-      border-top: 1px solid #e9e9e9;
+      border-top: 1px solid var(--q-gb-bd-c-4);
     }
 
     .eports_scoring_tip {
@@ -771,8 +771,8 @@ export default {
     color: #303442;
     flex-direction: row-reverse;
     background: var(--q-match-page-bg-color-10);
-    border-top: 1px solid #e9e9e9;
-    border-bottom: 1px solid #e9e9e9;
+    border-top: 1px solid var(--q-gb-bd-c-4);
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     .odd-title-i-w {
       width: 50%;
