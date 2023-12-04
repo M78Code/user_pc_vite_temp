@@ -132,6 +132,7 @@ onUnmounted(()=>{
     max-height: 1.35rem;
     padding: 0 0.05rem;
     transition: transform 0.6s, max-height 0.3s;
+    background-color: var(--q-gb-bg-c-1);
 
     // 二级菜单
     .sport-m-container {

@@ -125,7 +125,7 @@
               <!-- 投注 -->
               <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
                 class="row justify-center items-center content-center yb-info">
-                
+                <div class="">></div>
                 <div>{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
                 <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
               </div>

@@ -156,12 +156,14 @@ function key_down(event) {
     overflow: hidden;
     padding: 0 0.05rem;
     position: relative;
+    background-color: var(--q-gb-bg-c-1);
 
     .search-tab-content {
         width: 100%;
         height: 0.32rem;
         line-height: 0.32rem;
         display: flex;
+        
 
         ul {
             flex: 1;
