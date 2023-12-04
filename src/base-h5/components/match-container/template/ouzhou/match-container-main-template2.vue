@@ -274,7 +274,7 @@ export default {
       height: auto;
       justify-content: flex-start;
       :deep(.on) {
-        color: var(--q-gb-t-c-4);
+        color: var(--q-gb-t-c-19);
       }
       // padding-bottom: 0.08rem;
       .ol-li-item {

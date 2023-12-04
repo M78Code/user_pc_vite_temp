@@ -423,7 +423,7 @@ onMounted(() => {
           color: var(--q-gb-t-c-3);
         }
         .num {
-          color: var(--q-gb-t-c-18);
+          color: var(--q-gb-t-c-20);
         }
         &.active {
           background-image: var(--q-gb-bg-lg-6);

@@ -72,7 +72,7 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
@@ -116,7 +116,7 @@
       width: 100%;
   }
   .nonebox4-content-left-content-xian{
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-20);
       font-size: 0.12rem;
       width: 0.1rem;
       margin-right: 0.15rem;

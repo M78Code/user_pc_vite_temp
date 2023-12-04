@@ -96,7 +96,7 @@
     font-weight: bold;
   }
   .total-left{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
     font-size: 0.15rem;
   }
   .total{
@@ -121,7 +121,7 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.16rem;
@@ -132,7 +132,7 @@
     font-size: 0.16rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
     font-weight: 400;
   }
   .nonebox4-content-left-content-text-one{

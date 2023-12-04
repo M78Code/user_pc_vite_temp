@@ -828,7 +828,7 @@ onUnmounted(() => {
       >span{
         flex: 1;
         font-size: 10px;
-        color: var(--q-gb-t-c-4);
+        color: var(--q-gb-t-c-19);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -907,7 +907,7 @@ onUnmounted(() => {
               color:var(--q-gb-t-c-13);
             }
             .odd-value{
-              color: var(--q-gb-t-c-4);
+              color: var(--q-gb-t-c-19);
               &.red{
                 color: var(--q-color-com-fs-color-17) !important;
               }
@@ -1008,7 +1008,7 @@ onUnmounted(() => {
           color:var(--q-gb-t-c-13);
         }
         .odd-value{
-          color: var(--q-gb-t-c-4);
+          color: var(--q-gb-t-c-19);
           &.red{
             color: var(--q-color-com-fs-color-17) !important;
           }

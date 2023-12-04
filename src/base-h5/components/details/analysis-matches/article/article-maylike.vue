@@ -77,7 +77,7 @@ hr {
   height: 0.98rem;
   border-bottom: 1px solid var(--q-gb-bd-c-6);
   .detail2 {
-    color: var(--q-gb-t-c-4);
+    color: var(--q-gb-t-c-19);
   }
 }
 .detail {

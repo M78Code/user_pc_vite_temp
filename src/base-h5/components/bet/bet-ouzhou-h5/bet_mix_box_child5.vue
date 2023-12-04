@@ -75,7 +75,7 @@
     font-weight: bold;
   }
   .total-left{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
     font-size: 0.15rem;
   }
   .total{
@@ -86,14 +86,14 @@
     font-size: 0.14rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
   }
   .nonebox4-content-left-content-text-two{
     color: var(--q-gb-t-c-1);
     font-size: 0.16rem;
   }
   .text-two-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
     font-weight: 400;
   }
   .nonebox4-content-left-info{
@@ -182,7 +182,7 @@
   .nonebox4-content-right-profit{
       font-size: 0.2rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-20);
   }
   .nonebox4-content-right{
     display: flex;

@@ -41,7 +41,7 @@ const props = defineProps({
         span:nth-last-child(1){
             font-weight: bold;
             font-size: 22px;
-            color: var(--q-gb-t-c-18);
+            color: var(--q-gb-t-c-20);
         }
     }
     .others{

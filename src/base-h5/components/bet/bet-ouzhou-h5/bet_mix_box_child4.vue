@@ -142,7 +142,7 @@
     font-size: 0.16rem;
   }
   .total-left{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
     font-size: 0.15rem;
     margin-left: 0.05rem;
     font-weight: bold;
@@ -170,7 +170,7 @@
     margin-top: 0.05rem;
   }
   .text-one-span{
-    color: var(--q-gb-t-c-18);
+    color: var(--q-gb-t-c-20);
   }
   .nonebox4-content-left-content-text-three{
     font-size: 0.13rem;

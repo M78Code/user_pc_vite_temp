@@ -310,7 +310,7 @@ const state = reactive({
 
                     .text-style {
                         font-size: .1rem;
-                        color: var(--q-gb-t-c-4);
+                        color: var(--q-gb-t-c-19);
                     }
                 }
             }
