@@ -1,8 +1,5 @@
 <template>
-  <div class="component odds-item odds-wrap"
-    v-if="!(data.hl.every(item => item.hs == 2))" 
-    :style="{ 'order': order }"
-  >
+  <div class="component odds-item odds-wrap" v-if="!(data.hl.every(item => item.hs == 2))" :style="{ 'order': order }">
     <q-separator color="orange" />
     <div class="odds-hpn">
       <span class="odds-hpn-text">{{ data.hpn }}</span>
@@ -39,4 +36,28 @@ const order = computed(() => {
 
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.odds-hpn{
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  .odds-hpn-text {
+    flex: 1;
+    width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+.odds-hpn-icon {
+  width: 14px;
+  height: 14px;
+  background: url($SCSSPROJECTPATH+ "/image/detail/down.png") no-repeat center;
+  transition: transform .5s cubic-bezier(0, 0.2, 0, 1);
+  &.up {
+    transform: scaleY(-1);
+  }
+}
+</style>
