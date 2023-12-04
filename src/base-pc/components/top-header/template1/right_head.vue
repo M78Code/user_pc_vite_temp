@@ -9,10 +9,8 @@
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
         <div style="display: flex; position: relative;">
-          <input class="search-input" :class="is_focus ? 'change_width' : ''" @focus="show_search" v-model="keyword"
-            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @keyup.enter="get_search_data(keyword)" @input="() => {
-              get_search_data(keyword);
-            }" />
+          <input class="search-input" :class="is_focus ? 'change_width' : ''" @focus="show_search" :value="keyword"
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @input="e=>get_search_data(e.target.value)" @keyup.enter="e=>get_search_data(e.target.value)" />
           <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
           <img v-show="keyword" @click="clear_keyword" class="icon-close"
             :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
@@ -208,19 +206,11 @@ export default defineComponent({
         }
       })
     },{immediate:true})
-    //监听输入框内容改变，并搜索
-    watch(() => keyword.value,
-      (val) => {
-        let trimVal = val.trim();
-        get_search_data(trimVal);
-      }
-    )
-
     // 传递搜索状态
     const get_search_data = (val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
         type: 'result',
-        text: val || keyword.value
+        text:String(val).trim()
       })
     }
     /**
@@ -328,20 +318,19 @@ export default defineComponent({
       is_focus.value = props.focus
       keyword.value = props.text
     }
-
+    const emit_list=[
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off,
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width).off
+    ]
     onMounted(() => {
       compute_userInfo();
       UserCtr.get_balance();//默认获取一次余额
-      document.addEventListener('click', (e) => hide_search(e))
-      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
-      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width)
+      document.addEventListener('click', hide_search)
     });
     onUnmounted(() => {
       document.removeEventListener('click', hide_search)
-      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
-      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width).off()
+      emit_list.map(i=>i())
     })
-
     return {
       keyword,
       SearchPCClass,
