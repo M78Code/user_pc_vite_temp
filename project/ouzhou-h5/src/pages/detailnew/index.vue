@@ -7,7 +7,11 @@
     @touchend.passive="touchend"
   >
     <loading_page v-show="loading" />
-    <div v-if="match_detail?.mvs > -1">
+    <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
+    <!-- <template v-if="get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))"> -->
+    <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
+      <div v-if="match_detail?.mvs > -1">
+      <!-- 动画组件 -->
       <detail_header_tem2 :get_match_detail="match_detail || {}" />
     </div>
     <div v-else class="mini-header-container"  @click="onClickTest">
