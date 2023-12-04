@@ -2,15 +2,11 @@
   <div class="component odds-set-top" @click.stop="onClick" 
     :class="value.hton!='0' ? 'icon_zd_select' : 'icon_zd_default'"
   >
-
   </div>
 </template>
 <script setup lang="ts">
 import { api_details } from 'src/api';
 import { MITT_TYPES, useMittEmit } from 'src/core';
-import { useRoute } from 'vue-router';
-
-const route = useRoute()
 
 type Props = {
   value: TYPES.OddInfo
@@ -25,8 +21,6 @@ function onClick() {
     useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
     useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
     props.value.hton = Date.now().toString()
-    console.log(props.value.hton)
-
   }
   // 置顶状态变化时，更新相应玩法存储状态  todo  后续再优化
   const { hton,mid, hpid, topKey } = props.value
