@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, watch, onUnmounted } from "vue";
+import { defineComponent, onMounted, ref, watch, onUnmounted, nextTick } from "vue";
 import { format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
@@ -191,19 +191,23 @@ export default defineComponent({
     ]);
     let is_before_status;
     watch(MenuData.menu_data_version, () => {
-      //冠军不能有HK盘口
-      if ((MenuData.is_kemp()||MenuData.is_common_kemp()|| MenuData.is_collect_kemp()||MenuData.is_esports_champion())&&UserCtr.odds.cur_odds!='EU') {
-        is_before_status = UserCtr.odds.cur_odds;//保存之前的状态  因为可能冠军相互切
-        UserCtr.set_cur_odds("EU")//冠军不能为香港盘 直接切位欧洲盘
-        settingData.value[0].params.splice(1,1) //删掉HK盘口
-      } else {
-        if (is_before_status) { //如果原来是香港盘口得切回去 切换非冠军菜单了之后 得切回香港盘口
-          UserCtr.set_cur_odds(is_before_status)
-          is_before_status = undefined;
-          settingData.value[0].params.push("HK")
+      nextTick(() => {
+        //冠军不能有HK盘口
+        if ((MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp() || MenuData.is_esports_champion())) {
+          if ((settingData.value[0].params.includes("HK"))) { //如果有香港盘口
+            is_before_status = UserCtr.odds.cur_odds;//保存之前的状态  因为可能冠军相互切
+            UserCtr.set_cur_odds("EU")//冠军不能为香港盘 直接切位欧洲盘
+            settingData.value[0].params.splice(1, 1) //删掉HK盘口
+          }
+        } else {
+          if (is_before_status) { //如果原来是香港盘口得切回去 切换非冠军菜单了之后 得切回香港盘口
+            UserCtr.set_cur_odds(is_before_status)
+            is_before_status = undefined;
+            settingData.value[0].params.push("HK")
+          }
         }
-      }
-    }, { immediate: true })
+      })
+    },{immediate:true})
     //监听输入框内容改变，并搜索
     watch(() => keyword.value,
       (val) => {
