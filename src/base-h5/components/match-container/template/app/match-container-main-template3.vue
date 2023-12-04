@@ -294,7 +294,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--q-color-com-fs-color-38);
-    background: #fff;
+    background: var(--q-gb-bg-c-15);
     &.progress{
       border-top: 2px solid #74C4FF
     }
@@ -320,7 +320,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #ffffff;
+    background: var(--q-gb-bg-c-15);
     .buffer-container{
       background: var(--q-gb-bg-c-10);;
       height: 5px;
@@ -333,7 +333,7 @@ export default {
       border-top-right-radius: 0.08rem;
     }
     .match-content{
-      background: #fff;
+      background: var(--q-gb-bg-c-15);
       padding: 0 0.1rem;
     }
   }
@@ -434,7 +434,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: #f7f9fe;
+    background: var(--q-gb-bg-c-17);
     &.bottom{
       margin-top: 0.05rem;
     }

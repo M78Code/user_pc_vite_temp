@@ -43,7 +43,7 @@ let alertTips = ref(false)
     }
   }
 .tips-main {
-  background-color: #fff;
+  background-color: var(--q-gb-bg-c-15);
   border-radius: 0.1rem;
   width: 90%;
   padding: 0 0.14rem;
