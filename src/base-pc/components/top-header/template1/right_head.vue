@@ -331,7 +331,7 @@ export default defineComponent({
 
     onMounted(() => {
       compute_userInfo();
-      Usercr.get_balance();//默认获取一次余额
+      UserCtr.get_balance();//默认获取一次余额
       document.addEventListener('click', (e) => hide_search(e))
       useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
       useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width)
