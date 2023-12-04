@@ -41,6 +41,7 @@ const order = computed(() => {
   display: flex;
   align-items: center;
   padding: 15px 20px;
+  background-color: #fff;
   .odds-hpn-text {
     flex: 1;
     width: 0;
