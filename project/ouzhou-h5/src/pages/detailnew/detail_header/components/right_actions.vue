@@ -48,7 +48,7 @@ const mapObj = computed(() => {
 // 是否时视频
 const is_video = ref(props.isVideo);
 // 选择的item
-let select = list.value[0].label;
+let select = computed(() =>  list.value[0].label);
 
 const list = computed(() => {
     const res = [
