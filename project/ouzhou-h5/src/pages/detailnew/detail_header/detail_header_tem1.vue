@@ -1,5 +1,5 @@
 <template>
-  <div class="detail_header_tem1">
+  <div class="component detail_header_tem1">
     <div class="match-detail-head">
       <div
         v-show="get_match_detail?.csid"
