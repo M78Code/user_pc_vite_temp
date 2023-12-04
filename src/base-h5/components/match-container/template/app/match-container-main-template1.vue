@@ -448,7 +448,7 @@ export default {
     position: relative;
     transition: max-height 0.3s;
     padding-left: 6px;
-    background: var(--q-match-page-bg-color-10);
+    background: var(--q-gb-bg-c-15);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -552,7 +552,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: rgba(175, 179, 200, 0.1);
+    background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
