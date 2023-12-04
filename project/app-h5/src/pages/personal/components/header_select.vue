@@ -32,7 +32,7 @@ const select_index = (index) => {
 .header_select {
   height: 44px;
   width: 100%;
-  background: #fff;
+  background: var(--q-gb-bd-c-1);
   overflow-x: auto;
   overflow-y: hidden;
   font-size: 13px;

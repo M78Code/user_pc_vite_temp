@@ -222,11 +222,11 @@ const jumpRules = () => {
           align-items: center;
           padding: 0 45px 0 27px;
           transition: all 0.25s;
-          background: #F5F5F5;
+          background: var(--q-gb-bg-c-11);
           justify-content: space-between;
           &.active{
             color: #FF7000;
-            background: #FFF1E6;
+            background: var(--q-gb-bg-c-20);
           }
           > span {
             display: flex;
@@ -247,7 +247,7 @@ const jumpRules = () => {
           padding: 0 30px 0 30px;
           font-size: 14px;
           font-weight: 400;
-          background: #F5F5F5;
+          background: var(--q-gb-bg-c-11);
           > span {
             height: 26px;
           }
@@ -256,7 +256,7 @@ const jumpRules = () => {
             height: 30px;
             display: flex;
             align-items: center;
-            background: #E2E2E2;
+            background: var(--q-gb-bg-c-21);
             border-radius: 20px;
             justify-content: space-between;
             > span {
