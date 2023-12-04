@@ -8,7 +8,7 @@
       'show-video':get_show_video||viewTab === 'chatroom',
       'show-replay-video': get_is_dp_video_full_screen && !get_is_hengping,
       'video-full-screen': get_is_hengping,
-      'details-bet': viewTab === 'bet' &&is_export}"
+      'details-bet': viewTab === 'bet' &&is_esports}"
       :style="[{height:`${scroller_height}px`, ...page_style}]"
       v-cloak ref="details_box"
       @touchstart.passive="start"
@@ -157,7 +157,7 @@ import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
 import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/core/";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import {is_export } from "src/base-h5/mixin/menu";
+import {is_esports } from "src/base-h5/mixin/menu";
 
 //国际化
 

@@ -20,7 +20,7 @@
       <div class="bg_line tips-content">
         <img class="tips-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/personal/tips-icon.png`" alt="" @click="goto_announcement" /> 
         <div class="tips-bg">
-          <v-marquee />
+          <v-marquee ref="marqueeRef" />
         </div>
       </div>
       <!-- 设置 -->
@@ -83,6 +83,7 @@ const showMount = ref(mount)
 const l_visible = ref(false)
 const s_visible = ref(true)
 const show = ref()
+const marqueeRef = ref(null)
 // 用户信息
 const user_info = ref(UserCtr.user_info)
 const languages = [{
@@ -173,6 +174,7 @@ const on_change_lang = (key) => {
           // 设置国际化语言
           loadLanguageAsync(lang.value).then().finally(() => {
             UserCtr.set_lang(lang.value) 
+            marqueeRef.value.get_marquee_data()
           })
       } else if (code == '0401038') {
           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))

@@ -16,7 +16,8 @@ const routes = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('project/animation/src/pages/ErrorNotFound.vue')
+
+  component: () => import('project/animation/src/layouts/MainLayout.vue'),
   }
 ]
 

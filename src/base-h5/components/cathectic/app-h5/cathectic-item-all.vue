@@ -5,7 +5,7 @@
 <template>
   <div class="cathectic">
     <!-- 加载中 -->
-    <!-- <SRecord v-if="is_loading" /> -->
+    <!-- <SRecord v-if="BetRecordClass.is_loading" /> -->
     <scroll ref="myScroll" :on-pull="onPull">
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <template v-if="!lodash.isEmpty(BetRecordClass.list_data)">
@@ -43,6 +43,7 @@ import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import BetRecordWs from "src/core/bet-record/bet-record-ws.js";
+import { enum_order_by, enum_time_type } from "src/core/bet-record/util.js";
 import { itemSimpleBody, itemMultipleBody, earlySettle, earlySettledDetail, cancelReserve } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 import settleVoid from "src/base-h5/components/cathectic/app-h5/settle-void.vue";
 import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
@@ -52,21 +53,12 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 // 锚点
 const myScroll = ref(null)
-//是否在加载中
-const is_loading = ref(false)
-//list_data里面最后的一条数据的日期 '2020-11-17'
-const last_record = ref('')
-// 是否存在下一页
-const is_hasnext = ref(false)
-// 接口是否返回错误码为0401038限频
-const is_limit = ref(false)
-//需要查绚提前结算金额的订单集合
-const orderNumberItemList = ref([])
+
 let useMitt = null
 let wsObj = null
 
 // 延时器
-const timer = ref(null)
+let timer = null
 
 onMounted(() => {
   // 首次进入获取数据
@@ -80,7 +72,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  clearInterval(timer.value)
+  timer && clearInterval(timer)
   useMitt && useMitt()
   // 初始化BetRecordClass状态
   BetRecordClass.init_core()
@@ -95,17 +87,18 @@ onUnmounted(() => {
    * @return {Undefined} undefined
    */
 const init_data = (_index) => {
-  last_record.value = ''
   const { params, url_api } = init_params_api(_index)
   //请求注单记录接口
-  get_order_list(_index, params, url_api)
+  // 预约中、已失效(数据需加工)
+  const prevData = (_index === 1 || _index === 2)
+  BetRecordClass.get_order_list(params, url_api, prevData)
 
   // 未结算时，轮询获取提前结算列表金额
+  timer && clearInterval(timer)
   if(_index === 0) {
-    clearInterval(timer.value)
-    timer.value = setInterval(() => {
+    timer = setInterval(() => {
       if (document.visibilityState == 'visible') {
-        check_early_order()
+        BetRecordClass.check_early_order()
       }
     }, 5000)
   }
@@ -117,7 +110,7 @@ const init_params_api = (_index) => {
   switch (_index) {
     case 0: //未结算
       params = {
-        searchAfter: last_record.value || undefined,
+        searchAfter: BetRecordClass.last_record || undefined,
         orderStatus: '0',
       }
       url_api = api_betting.post_getH5OrderList      
@@ -136,10 +129,10 @@ const init_params_api = (_index) => {
       break;
     case 3: //已结算
       params = {
-        searchAfter: last_record.value || undefined,
+        searchAfter: BetRecordClass.last_record || undefined,
         orderStatus: '1',
-        orderBy: 2,  // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
-        timeType: 3
+        orderBy: enum_order_by[1],  // 默认排序（结算时间）
+        timeType: enum_time_type[2]  //七日内
       }
       url_api = api_betting.post_getH5OrderList
       break;
@@ -151,129 +144,17 @@ const init_params_api = (_index) => {
 }
 
 /**
- * @description 查询提前结算金额
+ * @description 页面上推分页加载
+ * @param {Undefined} Undefined
+ * @return {Undefined} undefined
  */
-const search_early_money = () => {
-  let params = { orderNo: orderNumberItemList.value.join(',') }
-  if (orderNumberItemList.value.length === 0) { return }
-  api_betting.get_cashout_max_amount_list(params).then(reslut => {
-    let res = reslut.status ? reslut.data : reslut
-    if (res.code == 200 && res.data) {
-      // 通知提前结算组件 => 数据金额变化
-      useMittEmit(MITT_TYPES.EMIT_EARLY_MONEY_LIST_CHANGE, res.data)
-    }
-  })
-}
-/**
- * @description 检查订单中是否存在符合条件的提前结算订单号
- */
-const check_early_order = () => {
-  // 如果用户未开启提前结算
-  if (!UserCtr.user_info.settleSwitch) {
-    orderNumberItemList.value = []
-    return;
-  }
-  // 循环列表查询需要提前结算的单号
-  let tempList = []
-  lodash.forEach(BetRecordClass.list_data, (value, key) => {
-    lodash.forEach(value.data, (item) => {
-      if (item.enablePreSettle) {
-        tempList.push(item.orderNo)
-      }
-    })
-  })
-  orderNumberItemList.value = tempList
-  //  查询提前结算金额
-  search_early_money()
-}
-
-/**
-   * @description 请求注单记录接口
-   * @param {Undefined} Undefined
-   * @return {Undefined} undefined
-  */
-const get_order_list = (_index, params, url_api) => {
-  //第一次加载时的注单数
-  let size = 0
-  is_loading.value = true
-  // 请求接口
-  url_api(params).then(reslut => {
-    let res = reslut.status ? reslut.data : reslut
-    is_limit.value = false
-    if (res.code == 200) {
-      let { record, hasNext } = lodash.get(res, "data");
-      is_hasnext.value = hasNext
-      is_loading.value = false;
-      // record 为null时 => 赋值为空对象
-      if(!record) record = {}
-      for (let item of Object.values(record)) {
-        size += item.data.length
-        // 如果是预约中、已失效，数据多余处理下
-        if(_index === 1 || _index === 2) {
-          for (var i = 0; i < item.data.length; i++) {
-            item.data[i].orderVOS = item.data[i].detailList
-          }
-        }
-      }
-      last_record.value = lodash.findLastKey(record);
-      // 赋值
-      BetRecordClass.set_list_data(record)
-      // 如果是未结算页面, 先获取提前结算列表金额
-      _index === 0 && check_early_order()
-    } else if (res.code == '0401038') {
-      is_limit.value = true
-      is_loading.value = false
-      return
-    } else {
-      is_loading.value = false;
-      return;
-    }
-    //容错处理，接口再调一次
-    if (size < 5 && size > 0 && lodash.get(res, 'data.hasNext') == true) {
-      init_data(_index)
-    }
-  }).catch(err => {
-    is_loading.value = false;
-    console.error(err)
-    return;
-  });
-}
-/**
-   * @description 页面上推分页加载
-   * @param {Undefined} Undefined
-   * @return {Undefined} undefined
-   */
 const onPull = () => {
-  const api_info = init_params_api(BetRecordClass.selected)
-  let ele = myScroll.value
-  if (!is_hasnext.value || last_record.value === undefined) {
-    //没有更多
-    ele.setState(7);
-    return;
-  }
-  //加载中
-  ele.setState(4);
-  api_info.url_api(api_info.params).then(res => {
-    //加载完成
-    ele.setState(5);
-    let { record, hasNext } = lodash.get(res, "data", {});
-    is_hasnext.value = hasNext
-    if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length > 0) {
-      last_record.value = lodash.findLastKey(record);
-      // 如果是预约中、已失效，数据多余处理下
-      for (let item of Object.values(record)) {
-        for (var i = 0; i < item.data.length; i++) {
-          item.data[i].orderVOS = item.data[i].detailList
-        }
-      }
-      // 合并数据
-      let obj = lodash.cloneDeep(BetRecordClass.list_data)
-      BetRecordClass.set_list_data(Object.assign(obj, record))
-    } else {
-      //没有更多
-      ele.setState(7);
-    }
-  }).catch(err => { console.error(err) });
+  const ele = myScroll.value
+  const _index = BetRecordClass.selected
+  const { params, url_api } = init_params_api(_index)
+  // 预约中、已失效(数据需加工)
+  const prevData = (_index === 1 || _index === 2)
+  BetRecordClass.onPull(params, url_api, ele, prevData)
 }
 </script>
     

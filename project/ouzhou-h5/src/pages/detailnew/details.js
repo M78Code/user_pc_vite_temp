@@ -131,7 +131,7 @@ export const details_main = (router, route) => {
         play = topKeyArr[0];
       }
       m_plays.push(Number(play));
-      return plays.includes(Number(play));
+      return plays && plays.includes(Number(play));
     });
     if (list) {
       MatchDataWarehouseInstance.value.set_match_details(
@@ -406,25 +406,43 @@ export const details_main = (router, route) => {
    *@param {obj} params 请求参数
    *@return {obj}
    */
-  const socketOddinfo = lodash.debounce((params) => {
-    // category_list.value = get_category_list.value;
-    api_match_list
-      .get_detail_category(params)
-      .then((res) => {
-        // console.log("get_category_list", res);
-        category_list.value = res.data;
-        if (!tab_selected_obj.value.id) {
-          tab_selected_obj.value = lodash.get(res, "data[0]", {});
+   const socketOddinfo = lodash.throttle((params) => {
+    //赛果页面调用赛果玩法详情接口
+    // match_odds_info.value = get_match_odds_info.value;
+    //接口调用
+    let obj_ = {
+      // axios api对象
+      axios_api: api_match_list.get_detail_list,
+      // axios api对象参数
+      params: params,
+      // 唯一key值
+      key: "details",
+      error_codes: ["0401038"],
+      // axios中then回调方法
+      fun_then: (res) => {
+        get_match_odds_info.value = res.data;
+        if (tab_selected_obj.value.marketName) {
+          detail_tabs_change(tab_selected_obj.value);
+        } else {
+          match_odds_info.value = res.data;
         }
-        get_matchDetail_getMatchOddsInfo({
-          mcid: 0,
-          cuid: cuid.value,
-          mid: params.mid,
-          newUser: 0,
-        });
-      })
-      .catch((err) => console.log(err));
-  }, 1000);
+        sessionStorage.setItem("match_oddinfo", JSON.stringify(res.data));
+        MatchDataWarehouseInstance.value.set_match_details(
+          getMidInfo(params.mid),
+          res.data
+        );
+      },
+      // axios中catch回调方法
+      fun_catch: (e) => {
+        console.log(e);
+      },
+      // 最大循环调用次数(异常时会循环调用),默认3次
+      max_loop: 1,
+      // 异常调用时延时时间,毫秒数,默认1000
+      timers: 1100,
+    };
+    utils.axios_api_loop(obj_);
+  }, 2000);
   /**
    * @description: RCMD_C109
    * @return {*}
@@ -436,10 +454,10 @@ export const details_main = (router, route) => {
     let skt_data = obj.cd;
     if (!skt_data || skt_data.length < 1) return;
     // 重新拉取数据;
-    socketOddinfo({
+    get_category_list_info({
       sportId: csid.value,
       mid:mid.value,
-    })
+    });
   }
   /**
    * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
@@ -451,10 +469,10 @@ export const details_main = (router, route) => {
     // 赛事级别盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
     if (skt_data.mhs == 0 || skt_data.mhs == 11) {
       // 重新拉取数据;
-      socketOddinfo({
+      get_category_list_info({
         sportId: csid.value,
         mid:mid.value,
-      })
+      });
     } else if (skt_data.mhs == 1) {
       // 设置盘口状态
     } else if (skt_data.mhs == 2) {
@@ -521,12 +539,14 @@ export const details_main = (router, route) => {
       //如果ms mmp变更了 就手动调用ws
       init.value = false;
       switch (cmd) {
+        // 赛事订阅(C8)-新增玩法/新增盘口(C303)
         case "C303":
           socketOddinfo({
             sportId: csid.value,
             mid:mid.value,
           })
           break;
+         // 赛事开赛状态(C302)  
         case "C302":
           // 赛事状态变化
           detail_init()
@@ -556,10 +576,14 @@ export const details_main = (router, route) => {
     });
   });
   // 监听ws断连
-  const {off} = useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status, ws_status_old)=>{
+  const {off} = useMittOn(MITT_TYPES.EMIT_WS_STATUS_CHANGE_EVENT,(ws_status)=>{
     // ws_status 链接状态变化 (0-断开,1-连接,2-断网续连状态)
-    if(ws_status != 1){
+    if(ws_status.ws_status != 1){
       MatchDataWarehouseInstance.value.scmd_c8_ws_reconnect()
+      socketOddinfo({
+        sportId: csid.value,
+        mid:mid.value,
+      })
     }
   });
   onUnmounted(()=>{
@@ -615,7 +639,7 @@ export const details_main = (router, route) => {
    */
   let get_godetailpage = ref(true);
   function event_switch() {
-    let { mid, csid, tid } = route.params;
+    let { mid, csid, tid } = match_detail.value || route.params;
     let params = {
       // 查找参数 1:赛事列表(非滚球:今日 早盘...) 2:赛事详情(滚球) 3:赛事筛选 4:赛事搜索(int) 如果不传默认 1:赛事列表
       sm: 2,

@@ -4,7 +4,7 @@ const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_JOB:prefix_job,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
 // 新旧菜单ID对应
-export const post_base_data_menu_mapping = (params, config={}, url = "/v3/menu/loadMapping")=>{
+export const post_base_data_menu_mapping = (params, config={}, url = "/v3/menu/loadMappingPB")=>{
   return http.post(`${prefix_job}${url}`, params, config);
 }
 //菜单数量统计

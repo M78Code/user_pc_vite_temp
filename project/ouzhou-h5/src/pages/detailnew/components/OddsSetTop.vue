@@ -1,14 +1,12 @@
 <template>
-  <div class="component odds-set-top" @click.stop="onClick" :class="value.hton ? 'icon_zd_select' : 'icon_zd_default'">
-
+  <div class="component odds-set-top" @click.stop="onClick" 
+    :class="value.hton!='0' ? 'icon_zd_select' : 'icon_zd_default'"
+  >
   </div>
 </template>
 <script setup lang="ts">
 import { api_details } from 'src/api';
 import { MITT_TYPES, useMittEmit } from 'src/core';
-import { useRoute } from 'vue-router';
-
-const route = useRoute()
 
 type Props = {
   value: TYPES.OddInfo
@@ -17,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 function onClick() {
-  if (props.value.hton) {
+  if (props.value.hton != '0') {
     props.value.hton = '0'
   } else {
     useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);

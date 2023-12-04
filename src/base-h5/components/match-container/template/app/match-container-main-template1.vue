@@ -51,7 +51,7 @@
               <img v-if='league_collect_state' :src="normal_img_is_favorite">
             </div>
             <span class="league-title-text row justify-between">
-              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
                 </span>
@@ -97,7 +97,7 @@
                     <img v-if='match_collect_state' :src="normal_img_is_favorite">
                   </div>
                   <!-- 赛事日期标准版 -->
-                  <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
+                  <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
                     <!-- 赛事回合数mfo -->
                     <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
@@ -167,15 +167,22 @@
                         }">
                           {{ match.mhn }}
                         </div>
+                        <template v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            {{ home_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                            {{ home_yellow_score }}
+                          </span>
+                        </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                           <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
-                        <span class='score-punish' v-show="home_red_score"
-                          :class="{ flash: is_show_home_red && !is_results }">
-                          {{ home_red_score }}
-                        </span>
+                       
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                       <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
@@ -198,19 +205,24 @@
                           'is-handicap': match.handicap_index == 2,
                           'is-handicap-1': match.handicap_index == 1,
                         }">
-                          {{ match.man }}
+                          <span>{{ match.man }}</span>
                         </div>
+                        <template v-if="home_red_score || home_yellow_score">
+                          <!-- 红牌 -->
+                          <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
+                            {{ away_red_score }}
+                          </span>
+                          <!-- 黄牌 -->
+                          <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                            {{ away_yellow_score }}
+                          </span>
+                        </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-
                       <div class="yb-goal-gif yb-goal-yo"></div>
                       <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                     </div>
-                    <!--进行中的赛事显示比分-->
-                    <span class='score-punish' v-show="away_red_score"
-                      :class="{ flash: is_show_away_red && !is_results }">
-                      {{ away_red_score }}
-                    </span>
+                   
                   </div>
                   <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                   <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
@@ -287,7 +299,7 @@ import { in_progress, not_begin, animation_icon, video_icon,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id, is_zaopan } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id, is_zaopan } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 
@@ -319,7 +331,7 @@ export default {
     })
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
     }
   }
@@ -363,7 +375,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--q-color-com-fs-color-38);
-    background: #fff;
+    background: var(--q-gb-bg-c-15);
       justify-content: space-between;
     &.progress{
       border-top: 2px solid #74C4FF
@@ -404,7 +416,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #ffffff;
+    background: var(--q-gb-bg-c-15);
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -412,7 +424,7 @@ export default {
       border-top-right-radius: 0.08rem;
     }
     .match-content{
-      background: #fff;
+      background: var(--q-gb-bg-c-15);
       padding: 0 0.1rem;
     }
   }
@@ -436,13 +448,13 @@ export default {
     position: relative;
     transition: max-height 0.3s;
     padding-left: 6px;
-    background: var(--q-match-page-bg-color-10);
+    background: var(--q-gb-bg-c-15);
 
     .match-odds-container-border-radius {
       overflow: hidden;
     }
     &.border-top{
-      border-top: 1px solid #e9e9e9;
+      border-top: 1px solid var(--q-gb-bd-c-4);
     }
 
     .eports_scoring_tip {
@@ -502,7 +514,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: #f7f9fe;
+    background: var(--q-gb-bg-c-17);
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -540,7 +552,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: rgba(175, 179, 200, 0.1);
+    background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
@@ -727,7 +739,6 @@ export default {
         height: 14px;
         margin: 0 10px 0 12px;
         position: relative;
-        top: 1px;
         flex-shrink: 0;
         > img {
           width: 0.14rem;
@@ -757,11 +768,11 @@ export default {
     flex-wrap: nowrap;
     display: flex;
     font-size: 0.1rem;
-    color: #303442;
+    color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
     background: var(--q-match-page-bg-color-10);
-    border-top: 1px solid #e9e9e9;
-    border-bottom: 1px solid #e9e9e9;
+    border-top: 1px solid var(--q-gb-bd-c-4);
+    border-bottom: 1px solid var(--q-gb-bd-c-4);
 
     .odd-title-i-w {
       width: 50%;
@@ -833,6 +844,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     overflow: hidden;
+    font-weight: 600;
     .icon-wapper{
       transform: rotate(90deg);
     }
@@ -851,17 +863,13 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
+      color: var(--q-gb-t-c-20);
       max-width: 2.8rem;
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
       }
     }
-
-
-    color: var(--q-color-com-fs-color-26);
-
-    font-weight: 600;
   }
 
   .match-type {
@@ -1055,7 +1063,7 @@ export default {
       }
 
       .team-title-container {
-        height: 0.31rem;
+        height: 0.32rem;
         display: flex;
         justify-content: space-between;
         position: relative;
@@ -1133,17 +1141,13 @@ export default {
 
           .team-t-title-w {
             font-size: 0.12rem;
-            height: 0.3rem;
-            display: flex;
-            width: 100%;
-            overflow: hidden;
             flex-shrink: 0;
-            font-weight: 600;
-            flex-direction: column-reverse;
+            max-width: 90%;
             text-overflow: ellipsis;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             word-break: break-all;
+            color: var(--q-gb-t-c-20) !important;
 
             &.is-handicap {
               font-weight: bold;
@@ -1154,18 +1158,20 @@ export default {
         .score-punish {
           width: 0.12rem;
           height: 0.14rem;
-          color: var(--q-gb-t-c-18);
           flex-shrink: 0;
-          background: var(--q-color-com-bg-color-43);
-          display: flex;
+          display: inline-flex;
           justify-content: center;
           align-items: center;
           font-size: 0.1rem;
           border-radius: 0.02rem;
           margin-left: 0.04rem;
+          color: var(--q-gb-t-c-14);
 
           &.yellow {
-            background: var(--q-color-com-bg-color-23);
+            background: #FFA800;
+          }
+          &.red{
+            background: #f00;
           }
 
           &.flash {
@@ -1195,7 +1201,6 @@ export default {
           position: absolute;
           right: 0.07rem;
           bottom: 0;
-          flex-direction: column-reverse;
           font-weight: 600;
 
           &.simple {
@@ -1388,6 +1393,9 @@ export default {
     &>div {
       height: auto;
     }
+    .date-time{
+      font-size: 12px
+    }
   }
 
   .favorite-icon-top {
@@ -1397,7 +1405,6 @@ export default {
     flex-shrink: 0;
     margin-right: .07rem;
     position: relative;
-    top: 1px;
 
     img {
       width: 100%;
@@ -1440,16 +1447,23 @@ export default {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    font-size: 0.1rem;
 
     .favorite-icon {
       position: relative;
-      top: -.01rem;
     }
 
     .date-time {
       white-space: nowrap;
       color: var(--q-color-com-fs-color-37);
+    }
+    .coming-soon{
+      font-size: 11px;
+    }
+
+    :deep(.start-counting-down){
+      .counting-down-start{
+        font-size: 11px;
+      }
     }
 
     .counting-down-up-container {
@@ -1466,6 +1480,11 @@ export default {
 
       .match-type {
         margin-right: 0.14rem;
+      }
+      :deep(.counting-down-wrap){
+        .counting{
+          font-size: 11px;
+        }
       }
     }
 

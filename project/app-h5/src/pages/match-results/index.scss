@@ -7,7 +7,7 @@
         flex: 1;
         display: flex;
         justify-content: center;
-        color: #C9CDDB;
+        color: #C9CDDB var(--q-gb-t-c-14);
 
         span {
             padding: .06rem 0;
@@ -20,7 +20,8 @@
         span {
             border-bottom: .02rem solid var(--q-gb-t-c-1);
             font-weight: 600;
-            color: #303442;
+            //color: #303442;
+            color: var(--q-gb-t-c-20);
         }
     }
 }
@@ -76,7 +77,13 @@
 }
 .match-results-container-styles {
     height: calc(100% - 1.25rem);
-    overflow-y: scroll;
+    // overflow-y: scroll;
     padding: .05rem;
     background: var(--q-gb-bg-c-10);
+	.match-list-container {
+		z-index: 0;
+		overflow: hidden;
+		height: 100%;
+    	position: relative;
+	}
 }

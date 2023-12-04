@@ -57,7 +57,6 @@ const detail_top_pop = ref(null);
 const isMatchResultRoute = route.name == 'result'
 const refLeagueName = ref('')
 
-getDropDownList()
 
 const getCsna = computed(()=>{
   return MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route?.params?.mid)?.csna
@@ -67,11 +66,19 @@ const leagueName = computed(()=>{
 })
 /** @type {Ref<Array<TYPES.MatchDetail>>} 下拉列表 */
 const drop_down_list = ref([]);
-
+if(route.params.tid){
+  getDropDownList(route.params.tid);
+} else {
+  watch(() => MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route?.params?.mid)?.tid,
+    (tid) => {
+      tid && getDropDownList(tid);
+    }
+  );
+}
 /** 获取下拉列表 */
-function getDropDownList() {
-  api_common.get_matchDetail_getMatchDetailByTournamentId({
-    tId: route.params.tid,
+function getDropDownList(tid='') {
+  tid && api_common.get_matchDetail_getMatchDetailByTournamentId({
+    tId: tid,
     type: isMatchResultRoute? 1 : (void 0),
     dateTime: Date.now()
   }).then(res => {

@@ -189,6 +189,7 @@ const api_bymids = (
     mids.splice(24);
   }
   if (mids.length == 0) return;
+  mids=lodash.uniq(mids)//去除重复
   // is_show_mids_change &&
   // 	mids.forEach((mid) => {
   // 		// 从列表触发详情接口同步数据
@@ -226,7 +227,7 @@ const api_bymids = (
   }
   let api;
   // 电竞
-  if (MenuData.is_export() && PageSourceData.page_source !== "search") {
+  if (MenuData.is_esports() && PageSourceData.page_source !== "search") {
     api = api_websocket.get_esports_by_mids;
     params = {
       mids: mids.join(","),
@@ -256,7 +257,7 @@ const api_bymids = (
         // if (page_source == "details" && page_source != "details") return;
         //更新电竞右侧视频
         if (
-          MenuData.is_export() &&
+          MenuData.is_esports() &&
           PageSourceData.page_source !== "search" &&
           !is_first_load
         ) {

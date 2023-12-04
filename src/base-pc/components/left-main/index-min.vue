@@ -107,7 +107,15 @@ const new_menu_click = val => {
   };
   // 设置      中间 菜单输出
   menu_config.set_mid_menu_result(params);
-
+  console.log('asdsdasdasd', {
+    root: val,
+    lv1_mi: '',
+    lv2_mi,
+    sports: '',
+    guanjun: "",
+    mid_menu_show,
+    has_mid_menu: true,
+  });
   menu_config.set_left_menu_result({
     root: val,
     lv1_mi: '',

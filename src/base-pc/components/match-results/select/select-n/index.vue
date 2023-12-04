@@ -120,7 +120,6 @@ const option = computed(() => {
  * 展示或隐藏下拉框
  */
 const showOption = (type) => {
-  console.error('typetypetypetypetype',type)
   if (type == "close") {
     if (optionsIsShow.value == true) {
       optionsIsShow.value = false;
@@ -128,7 +127,6 @@ const showOption = (type) => {
     }
   } else {
     optionsIsShow.value = !optionsIsShow.value;
-    console.error('props.options9999999',props.options)
     useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
   }
 };

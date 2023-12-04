@@ -10,11 +10,11 @@
         <header class="ball_tab">
             <q-virtual-scroll ref="scrollRef" v-if="menuList" :items="menuList"
                 virtual-scroll-horizontal v-slot="{ item, index }">
-                <div v-if="menu_type==28?true:MenuData.conventionalType.includes(+item.mi)" @click="on_change_play(item,index)"
+                <div v-if="menu_type==28?true:MenuData.menu_list.map((item)=>{return +item.mi}).includes(+item.mi)" @click="on_change_play(item,index)"
                     :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === playValue" :sport_id="item.mi" />
-                        <span class="badge" v-if="props.is_show_badge"><q-badge rounded :label="item.ct || 0" /></span>
+                        <span class="badge" v-if="props.is_show_badge && item.ct"><q-badge rounded :label="item.ct || 0" /></span>
                     </span>
                     <div class="label">{{BaseData.menus_i18n_map[+item.mi>1000 && +item.mi<2000?`3${item.mi}`:item.mi] }} </div>
                     <span class="round"></span>
@@ -29,6 +29,7 @@ import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData  } from "src/core/";
 const emits = defineEmits(['changeMenu']);
+
 const props = defineProps({
     menu_type: {
         type: String,

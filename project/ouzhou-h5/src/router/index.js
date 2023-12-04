@@ -100,7 +100,7 @@ const router = createRouter({
         // },
         // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选, 添加tid(联赛id)用于服务联赛筛选功能
         {
-          path: "/details/:mid/:tid/:csid?/:mcid?",
+          path: "/details/:mid/:csid/:tid?/:mcid?",
           name: "category",
           component: () => import("../pages/detailnew/index.vue"),
           // children: [
@@ -176,12 +176,15 @@ const router = createRouter({
     },
   ],
 });
-
+/**
+ * 不清除menuid路由
+ */
+const detailsName = ['category','result'];
 /**
  * 路由切换清除默认球种
  */
 router.beforeEach((to, from, next) => {
-    if(!!to.name && !!from.name && to.name !== from.name && to.name !== "matchList" && to.name !== "category" && from.name !=="category"){
+    if(!!to.name && !!from.name && to.name !== from.name && to.name !== "matchList" && !detailsName.includes(to.name) && !detailsName.includes(from.name)){
         LocalStorage.remove("nemu-h5");
         MenuData.clear_menu_id();
     }

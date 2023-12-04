@@ -133,15 +133,15 @@ class MenuData {
     // 默认设置二级菜单id
     // this.set_current_lv_2_menu_i( lodash_.get(menu_lv_mi_lsit,'[0]',{}))
     // 今日 加入 收藏/vr体育/电竞 滚球加入全部
-    
     if(mid == 1){
-      menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:"2",title:"全部"})
-      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:"2",title:"收藏"})
+      const all_ct = menu_lv_mi_lsit.map((item)=>{return item.ct||0}).reduce((n1,n2)=>{return n1+n2}) || 0;//全部
+      menu_lv_mi_lsit.unshift({mi:0,btn:1, ct:all_ct,title:"全部"})
+      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
     }
     if(mid == 2){
-      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:"2",title:"收藏"})
-      menu_lv_mi_lsit.splice(3,0,{mi:300,btn:1,ct:"2",title:"VR体育"})
-      menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:"2",title:"电竞"})
+      menu_lv_mi_lsit.unshift({mi:50000,btn:1,ct:0,title:"收藏"})
+      menu_lv_mi_lsit.splice(3,0,{mi:300,btn:1,ct:0,title:"VR体育"})
+      menu_lv_mi_lsit.splice(4,0,{mi:2000,btn:1,ct:0,title:"电竞"})
     }
     this.menu_lv_mi_lsit = menu_lv_mi_lsit
     return menu_lv_mi_lsit
@@ -392,12 +392,12 @@ class MenuData {
    */
   get_menus_i18n_map(item={}) {
     //二级菜单
-    // if (this.is_export(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi) ) {
+    // if (this.is_esports(+this.top_menu_title.mi) || this.is_vr(+this.top_menu_title.mi) ) {
     //   return BaseData.menus_i18n_map[+mi]
     // }
     // console.error('item',item)
     let text = BaseData.menus_i18n_map[item.mif];
-    if(this.is_kemp() || this.is_kemp_mi() || this.is_vr() || this.is_export()){
+    if(this.is_kemp() || this.is_kemp_mi() || this.is_vr() || this.is_esports()){
       text = BaseData.menus_i18n_map[item.mi]
     }
     return text
@@ -432,7 +432,7 @@ class MenuData {
     if (this.is_kemp() || this.is_kemp_mi()) {
       id = parseInt(bg_mi - 400);
     }
-    if (this.is_export() || this.is_vr()) {
+    if (this.is_esports() || this.is_vr()) {
       id = item.mi
     }
     // 收藏 vr 电竞 全部 不在此列
@@ -684,7 +684,7 @@ class MenuData {
    * 是否选中了电竞
    *  mi [number|string] 要比对的值
   */
-  is_export(mi) {
+  is_esports(mi) {
     return this._is_cur_mi_special(2000, mi)
   }
   /**
@@ -771,11 +771,11 @@ class MenuData {
   async get_date_menu_api_when_subchange(mid, type) {
     // 如果是早盘，串关，电竞的话
     const euid = this.get_euid(mid)
-    if ([this.is_zaopan(), this.is_mix(), this.is_export()].includes(true) && euid) {
+    if ([this.is_zaopan(), this.is_mix(), this.is_esports()].includes(true) && euid) {
       // 三级菜单先显示骨架屏，接口回来后，再隐藏骨架屏
       let api_func = null,
         params = { euid: euid };
-      if (this.is_export()) { //电竞
+      if (this.is_esports()) { //电竞
         api_func = api_common.get_esports_date_menu;
         let value = mid.slice(1, 4);
         params = { csid: value };
@@ -964,7 +964,7 @@ class MenuData {
    * 电竞菜单要保留 电竞菜单 的 csid
    */
   get_csid() {
-    if (this.is_export()) {
+    if (this.is_esports()) {
       return this.current_lv_2_menu?.csid
     }
     // if (BaseData.csids_map

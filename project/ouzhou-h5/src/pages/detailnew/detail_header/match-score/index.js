@@ -1,0 +1,1 @@
+export { default as score_child_5 } from "./score_child_5.vue"

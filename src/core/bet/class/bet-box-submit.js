@@ -380,8 +380,10 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
+    console.error('进来了')
     // 
     if(submit_btn) return
+    console.error('111111')
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
@@ -760,6 +762,14 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
         play_name = other.play_name
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
+          // 冠军玩法 部分玩法hpid相同 
+        if(MenuData.is_kemp()){
+            let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
+            let hpn_obj = hpn_list.find(item => item.hid == ol_obj._hid) || {}
+            if(hpn_obj.hid){
+                hpn = hpn_obj.hpn
+            }
+        }
         if(hpn){
             play_name = hpn
         }
@@ -887,6 +897,7 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
             break
         case 2:
             home_away_mark = [38,39,64,198,199,58,57,145,146,19,18,87,52,51,63,97,46,45,97,] 
+            break
     }
     // 首页不需要拼接的
     let home_away_diff = [2, 38]
@@ -932,6 +943,18 @@ const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
 
                 case 4:
                     text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
+                    break
+                
+                case 5:
+                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} ${handicap[3]} <span class='ty-span'>${handicap[4]}</span>`
+                    break
+
+                case 6:
+                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} ${handicap[3]} ${handicap[4]} <span class='ty-span'>${handicap[5]}</span>`
+                    break
+
+                case 7:
+                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} ${handicap[3]} ${handicap[4]} ${handicap[5]}<span class='ty-span'>${handicap[6]}</span>`
                     break
             }
         }

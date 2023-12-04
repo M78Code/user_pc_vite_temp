@@ -85,7 +85,7 @@ const router = createRouter({
           // },
           // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
         {
-          path: "/details/:mid/:mcid?/:csid?",
+          path: "/details/:mid/:csid/:mcid?",
           name: "category",
           component: () => import("../pages/details/details.vue"),
         },

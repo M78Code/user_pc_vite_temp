@@ -4,7 +4,7 @@
 
 
 import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
-import { MenuData, get_match_status, PageSourceData, PROJECT_NAME } from 'src/core/index.js'
+import { MenuData, get_match_status, PageSourceData, PROJECT_NAME, format_msc } from 'src/core/index.js'
 import BaseData from "src/core/base-data/base-data.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 
@@ -43,7 +43,7 @@ function get_match_tpl_number(is_hot) {
         match_tpl_number = 18
     }
     // 电竞常规赛事
-    else if (MenuData.is_export()) {
+    else if (MenuData.is_esports()) {
         match_tpl_number = 'esports'
     }
     //13列玩法菜单 && store.getters.get_unfold_multi_column
@@ -146,8 +146,6 @@ export function get_ouzhou_data_tpl_id(csid) {
      * @return {[主,客]} [主，客]
      */
 export function get_main_score(match) {
-    console.log('_home_score', match);
-
     let _home_score = ""
     let _away_score = ""
     if (get_match_status(match.ms)) {
@@ -439,8 +437,19 @@ export function match_list_handle_set(match_list) {
 * @description 获取比分 比分变化 或者 赛事阶段变化时调用
 * @param  {object} match  当场赛事信息
 */
-export const get_match_score = (match) => {
+export const get_match_score = (match, is_no_format) => {
 if (!match) return {home_score: '0', away_score: '0'}
+if (is_no_format) {
+    let msc_obj = {}
+    for (let i in match.msc) {
+        let format = match.msc[i].split("|");
+        msc_obj[format[0]] = {
+          home: format[1].split(":")[0],
+          away: format[1].split(":")[1],
+        };
+      }
+    match.msc_obj = msc_obj;
+}
    let key = "S1";
    let { csid, mmp, msc_obj = {} } = match;
    // 足球 | 手球

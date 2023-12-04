@@ -93,15 +93,21 @@
     /*  联赛菜单 */
     .tab-wrapper {
        background-color:var(--q-color-page-bg-color-2);
+       margin-top: 0.1rem;
+       border-bottom: none;
       .tab-item {
-        color:  var(--q-virtual-t-c-2);
+        color: var(--q-gb-t-c-19);
         &.active {
-          color:  var(--q-virtual-t-c-1);
+          color:  var(--q-gb-t-c-1);
           > div {
-            border-bottom: 2px solid var(--q-virtual-bd-c-1);
+            border-bottom: 2px solid var(--q-gb-t-c-1); 
           }
         }
       }
+    }
+    .virtual-content-wrapper {
+      padding: 0.08rem  0.05rem 0;
+      background: #f8f9fa;
     }
 
     .banner {

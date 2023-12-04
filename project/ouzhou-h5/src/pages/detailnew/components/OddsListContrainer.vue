@@ -2,8 +2,11 @@
   <div class="component odds-container">
     <template v-if="match_odds_info && match_odds_info.length > 0 && match_detail?.ms != 2">
       <TransitionGroup>
-        <template v-for="item in match_odds_info">
-          <OddsItem :data="item" ></OddsItem>
+        <template v-for="item in match_odds_info" :key="item.topKey">
+          <OddsItem v-if="item.hton != '0'" :data="item" ></OddsItem>
+        </template>
+        <template v-for="item in match_odds_info" :key="item.topKey">
+          <OddsItem v-if="item.hton == '0'" :data="item" ></OddsItem>
         </template>
       </TransitionGroup>
     </template>
@@ -68,4 +71,12 @@ function ToggleExpend() {
 
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.component{
+  display: flex;
+  flex-direction: column;
+}
+.v-move{
+  transition: all .5s ease;
+}
+</style>

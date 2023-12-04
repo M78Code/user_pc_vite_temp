@@ -22,7 +22,7 @@
         </span>
       </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="get_sport_show" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
+      <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
         <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
       </div>
 
@@ -49,7 +49,7 @@
             <div class="esport" v-else-if="match_of_list.csid == 100"
               :style="compute_css_obj('menu-sport-active-image', 2100)"></div>
             <span class="league-title-text row justify-between">
-              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_export }]">
+              <span :class="['league-t-wrapper', { 'league-t-main-wrapper': menu_type !== 28, export: is_esports }]">
                 <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': menu_type !== 28 }">
                   {{ match.tn }}
                 </span>
@@ -89,7 +89,7 @@
                 </template>
               </div>
               <!-- 赛事日期标准版 -->
-              <div :class="['timer-wrapper-c flex items-center', { esports: is_export, 'din-regular': is_export }]">
+              <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
                 <!-- 赛事回合数mfo -->
                 <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
                   {{ match.mfo }}
@@ -122,7 +122,7 @@
                 </div>
               </div>
               <!-- 比分版 -->
-              <div v-if="home_score == 0 || away_score == 0 || home_score || away_score">{{ home_score }} - {{
+              <div class="score-title-text" v-if="home_score == 0 || away_score == 0 || home_score || away_score">{{ home_score }} - {{
                 away_score }}</div>
             </div>
             <!--玩法数量-->
@@ -172,8 +172,6 @@
             </div>
             <!-- 比分选项 -->
             <div class="odds">
-              <!-- <img class='star' /> -->
-              <!-- 单个赛事收藏 -->
               <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
                 <img v-if="!match_collect_state" class="favorited-icon"
                   src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_match_collect" />
@@ -181,7 +179,6 @@
                   src="/src/base-h5/assets/match-list/ico_fav_sel.png" @click.stop="handle_match_collect" />
               </div>
               <div class="bet_btn">
-                <!-- {{match}} -->
                 <template v-if="curMatchOdds?.length">
                   <div v-for="item in curMatchOdds" :key="item.oid" class="item"
                     :class="{ active: active_score === `${item._mid}${item.oid}` }" @click="go_to_bet(item)">
@@ -230,7 +227,7 @@ import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
+import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
 import _ from 'lodash'
@@ -240,6 +237,8 @@ import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn } from "src/core/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
+
 
 export default {
   name: "match-container-main-template8",
@@ -320,7 +319,7 @@ export default {
       let hsw = lodash.get(play_data, `hl._play.hsw`) || "";
       let sport_id = lodash.get(props.match_of_list, "csid");
       // 电竞赔率精度处理
-      // if (lodash.isUndefined(sport_id) && menu_config.is_export()) {
+      // if (lodash.isUndefined(sport_id) && menu_config.is_esports()) {
       //   sport_id = "101";
       // }
       const match_odds = compute_value_by_cur_odd_type(
@@ -343,10 +342,14 @@ export default {
       useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, e => {
         isCollectMenuTab.value = e.mi === 50000
       })
+      VirtualList.set_is_show_ball(false)
+      VirtualList.set_is_change_handicap_height(-24)
     })
 
     onUnmounted(() => {
       useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+      VirtualList.set_is_show_ball(true)
+      VirtualList.set_is_change_handicap_height(0)
     })
     return {
       active_score,
@@ -356,7 +359,7 @@ export default {
       curMatchOdds,
       _,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
-      is_hot, menu_type, menu_lv2, is_detail, is_export, is_results, standard_edition, mearlys_icon, footer_menu_id
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, mearlys_icon, footer_menu_id
     }
   }
 }
@@ -372,7 +375,7 @@ export default {
 
   :deep(.counting-down-wrap) {
     /* width: auto !important; */
-    gap: 4px;
+    // gap: 4px;
 
     /* width:0.9rem!important; */
     >span {
@@ -402,10 +405,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #ffffff;
+    background: var(--q-gb-bg-c-15);
 
     .buffer-container {
-      background: #f7f9fe;
+      background: var(--q-gb-bg-c-17);
       height: 5px;
       width: 100%;
     }
@@ -659,7 +662,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: #ffffff !important;
+    background: var(--q-gb-bg-c-15) !important;
     height: 25px;
     border-bottom: 1px solid #F2F2F6;
 
@@ -676,7 +679,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: #f7f9fe;
+    background: var(--q-gb-bg-c-17);
     line-height: 20px;
     font-size: 11px;
 
@@ -757,7 +760,7 @@ export default {
 
   .match-content {
     width: 100%;
-    background: #fff;
+    background: var(--q-gb-bg-c-15);
     padding: 0 9px;
 
     .event-team {
@@ -896,6 +899,11 @@ export default {
             display: inline-block;
             height: 16px;
           }
+        }
+
+        .score-title-text {
+          height:100%;
+          margin-top: .02rem;
         }
 
         .timer-wrapper-c {

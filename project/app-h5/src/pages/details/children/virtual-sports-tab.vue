@@ -301,7 +301,9 @@ export default defineComponent({
 
     .q-tab__label {
       font-size: 0.14rem;
-      color: #999999; // var(--q-detials-color-7)
+      //color: #999999; // var(--q-detials-color-7)
+      color: var(--q-gb-t-c-19);
+      
     }
   }
 
