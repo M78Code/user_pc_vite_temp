@@ -41,7 +41,7 @@ function onClick() {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  padding: 12px;
+  margin: 0 12px;
 }
 
 .icon_zd_select {
