@@ -4,11 +4,15 @@
       <TransitionGroup>
         <template v-for="item in match_odds_info" :key="item.topKey">
           <OddsItem v-if="item.hton != '0'" :data="item" 
-            :unfold="props.allCloseState" ></OddsItem>
+            :unfold="props.allCloseState" 
+            >
+          </OddsItem>
         </template>
         <template v-for="item in match_odds_info" :key="item.topKey">
           <OddsItem v-if="item.hton == '0'" :data="item" 
-            :unfold="props.allCloseState"></OddsItem>
+            :unfold="props.allCloseState"
+            >
+          </OddsItem>
         </template>
       </TransitionGroup>
     </template>

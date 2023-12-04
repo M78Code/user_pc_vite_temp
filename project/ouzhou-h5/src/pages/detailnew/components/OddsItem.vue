@@ -1,7 +1,7 @@
 <template>
   <div class="component odds-item odds-wrap" v-if="!(data.hl.every(item => item.hs == 2))" :style="{ 'order': order }">
     <q-separator color="orange" />
-    <div class="odds-hpn">
+    <div class="odds-hpn" @click="toggleUnfold">
       <span class="odds-hpn-text">{{ data.hpn }}</span>
       <!-- 置顶按钮 -->
       <OddsSetTop :value="data"></OddsSetTop>
@@ -24,10 +24,14 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   unfold: false
 })
-const emit = defineEmits({
+const emit = defineEmits<{
+  (e:'update:unfold',param:boolean):void;
+}>()
 
-})
 
+function toggleUnfold(){
+
+}
 
 const order = computed(() => {
   // order 最小值-2147483648, hton目前长度13, 故substring(4)
