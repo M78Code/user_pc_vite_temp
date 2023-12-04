@@ -768,7 +768,7 @@ export default {
     flex-wrap: nowrap;
     display: flex;
     font-size: 0.1rem;
-    color: #303442;
+    color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
     background: var(--q-match-page-bg-color-10);
     border-top: 1px solid var(--q-gb-bd-c-4);
@@ -863,7 +863,7 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      color: #303442;
+      color: var(--q-gb-t-c-20);
       max-width: 2.8rem;
       line-height: 0.14rem;
       &.match-main-league {
@@ -1147,7 +1147,7 @@ export default {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             word-break: break-all;
-            color: #303442;
+            color: var(--q-gb-t-c-20) !important;
 
             &.is-handicap {
               font-weight: bold;
@@ -1165,7 +1165,7 @@ export default {
           font-size: 0.1rem;
           border-radius: 0.02rem;
           margin-left: 0.04rem;
-          color: #fff;
+          color: var(--q-gb-t-c-14);
 
           &.yellow {
             background: #FFA800;
