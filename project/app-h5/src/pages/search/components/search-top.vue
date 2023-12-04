@@ -361,11 +361,11 @@ onBeforeUnmount(() => {
 
   @Supports (-webkit-mask: none) and (not (caret-color: red)) {
     input {
-      color: #FFB001 var(--q-gb-t-c-14);
+      color: var(--q-gb-t-c-12);
     }
 
     input::first-line {
-      color: #FFB001 var(--q-gb-t-c-14);
+      color: var(--q-gb-t-c-12);
       width: 0.03rem;
     }
   }
