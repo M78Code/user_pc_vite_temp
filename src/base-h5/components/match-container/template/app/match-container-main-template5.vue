@@ -22,7 +22,7 @@
         </span>
       </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
+      <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
       </div>
 
@@ -195,6 +195,7 @@
                   </div>
                 </template>
               </div>
+              <!-- <OddListWrap :main_source="main_source" :match="match_of_list" /> -->
             </div>
 
 
@@ -304,6 +305,7 @@ export default {
     const curMatchOdds = ref([])
 
     watch(() => props.match_of_list, (newVal) => {
+      console.log('match_of_listmatch_of_listmatch_of_list', newVal)
       curMatchOdds.value = newVal?.hps?.[0]?.hl?.[0]?.ol || []
     }, { immediate: true })
 
@@ -322,6 +324,7 @@ export default {
       // if (lodash.isUndefined(sport_id) && menu_config.is_esports()) {
       //   sport_id = "101";
       // }
+      try {
       const match_odds = compute_value_by_cur_odd_type(
         ov,
         ov._hpid,  //todo
@@ -329,6 +332,9 @@ export default {
         sport_id
       );
       return match_odds
+      } catch (e) {
+        console.log('format_oddsformat_oddsformat_odds',e)
+      }
     };
 
 
@@ -343,7 +349,7 @@ export default {
         isCollectMenuTab.value = e.mi === 50000
       })
       VirtualList.set_is_show_ball(false)
-      VirtualList.set_is_change_handicap_height(-24)
+      VirtualList.set_is_change_handicap_height(-20)
     })
 
     onUnmounted(() => {
