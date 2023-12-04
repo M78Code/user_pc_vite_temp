@@ -11,7 +11,7 @@
     <TopMenu />
 
     <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-      <DateTab :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
+      <DateTab ref="childRef" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
 
     <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
@@ -39,6 +39,7 @@ import {
   reactive,
   ref,
   watch,
+  nextTick
 } from "vue";
 import { useRoute } from "vue-router";
 import lodash_ from "lodash";
@@ -57,7 +58,7 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口
-
+const childRef = ref(null)
 // 监听搜索框状态
 useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     select_dialog.value = value
@@ -141,6 +142,13 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 今日 滚球 冠军
     if( [1,2,400].includes(1*new_) ){
       set_scroll_data_list(new_)
+    }
+    //早盘 串关
+    if( [3,6].includes(1*new_)){
+      nextTick(()=>{
+        childRef.value.set_active_val()
+        childRef.value.changeTabMenu(0)
+      })
     }
   })
 
