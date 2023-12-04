@@ -107,7 +107,7 @@ onMounted(() => {
 // 获取数据
 const get_detail_info = (mid) => {
   // 3572298
-  MatchListCardDataClass.select_mid = mid
+  MatchListCardDataClass.set_current_mid(mid)
   const infomation = MatchDataWarehouseInstance.get_quick_mid_obj(mid)
   detail_info.value = infomation
   // setInterval(function (){

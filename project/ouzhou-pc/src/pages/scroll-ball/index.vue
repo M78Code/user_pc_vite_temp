@@ -102,8 +102,8 @@ export default {
                 }
             })
             if (mids_arr.length) {
-                const mid_index = mids_arr.findIndex(item =>item == MatchListCardDataClass.select_mid)
-                useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids_arr[mid_index]);
+                const mid_index = mids_arr.findIndex(item =>item == MatchListCardDataClass.current_mid.value)
+                useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids_arr[mid_index >= 0 ? mid_index : 0]);
             }
         }
         onMounted(() => {

@@ -35,8 +35,6 @@ class MatchListCardDataClass {
     this.no_start_to_card_key_arr = [];
     // 当前选中的玩法id对象
     this.csid_current_hpids = {};
-    // 右侧资讯选中的mid
-    this.select_mid = ''
     /**
      * 哪种列表类型
      * 1. 列表数据类型为联赛列表   有未开赛 已开赛
