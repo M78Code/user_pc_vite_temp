@@ -7,7 +7,6 @@
             <div class="right-icon" @click="state.select_dialog = true"></div>
         </template>
     </navigation-bar>
-
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
       <!-- 头部 -->
       <div class="virtual-head">
@@ -61,9 +60,10 @@ import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 // 回到顶部
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 // 虚拟体育
-import virtualSports from "src/base-h5/components/match-container/virtual/app/virtual-sports.vue";
-// 底部菜单
+// import virtualSports from "src/base-h5/components/match-container/virtual/app/virtual-sports.vue";
+import virtualSports from "src/base-h5/components/virtual/virtual-sports.vue";
 
+// 底部菜单
 
 // 当前选中的虚拟体育菜单(虚拟足球 赛马 赛狗 等)
 const current_sub_menu = ref({})
