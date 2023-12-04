@@ -51,7 +51,7 @@
       show_right_btn.value = true;
     }
 
-    time = LocalStorage.get('server_time')
+    time = LocalStorage.get('server_time') || new Date().getTime()
     update_time(time)
 
     let obj = {
