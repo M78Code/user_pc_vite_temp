@@ -361,11 +361,11 @@ onBeforeUnmount(() => {
 
   @Supports (-webkit-mask: none) and (not (caret-color: red)) {
     input {
-      color: #FFB001;
+      color: #FFB001 var(--q-gb-t-c-14);
     }
 
     input::first-line {
-      color: #FFB001;
+      color: #FFB001 var(--q-gb-t-c-14);
       width: 0.03rem;
     }
   }
@@ -399,7 +399,8 @@ onBeforeUnmount(() => {
     .searchBtn {
       position: absolute;
       right: 0.16rem;
-      color: #D2B79C;
+      //color: #D2B79C;
+      color: var(--q-gb-t-c-13);
       display: none;
     }
   }
