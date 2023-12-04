@@ -1,7 +1,7 @@
 <template>
   <!-- 滚球盘 标题-->
   
-  <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj)">
+  <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj,null,MenuData.is_scroll_ball())">
     <div class="left-box">
       <sport_icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
         :sport_id="card_style_obj.csid" size="18px" class="icon" color_type="gray_ball" />
