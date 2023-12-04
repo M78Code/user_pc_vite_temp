@@ -9,7 +9,7 @@
           <div class="nonebox4-fourth-a">
               <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
           </div>
-          <!--
+          
           <div class="nonebox4-fourth-a">
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
@@ -35,15 +35,15 @@
                   <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
               </div>
           </div>
-          -->
-          <ul class="keyboard-box">
+          
+          <!-- <ul class="keyboard-box">
               <li v-for="item of test" :key="item.value"
                   :style="`grid-area: ${item.area}`"
                   :data-number="item.value"
                   class="keyboard-box-item">
                   {{item.label }}
               </li>
-          </ul>
+          </ul> -->
       </div>
   </div>
 </template>
