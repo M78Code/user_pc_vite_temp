@@ -148,7 +148,7 @@ const go_back = () => {
         padding-bottom: .15rem;
         display: flex;
         align-items: center;
-        border-bottom: .01rem solid var(--q-gb-bd-c-7);
+        border-bottom: .01rem solid var(--q-gb-bd-c-6);
 
         .pattern {
             width: .03rem;
@@ -249,7 +249,7 @@ const go_back = () => {
                     width: 1rem;
                     height: .41rem;
                     border-radius: .04rem;
-                    background-color: var(--q-gb-bd-c-7);
+                    background-color: var(--q-gb-bd-c-);
 
                     .text-style {
                         font-size: .12rem;
@@ -317,7 +317,7 @@ const go_back = () => {
 
 
         .ht-answer-result {
-            border-top: 0.01rem solid var(--q-gb-bd-c-7);
+            border-top: 0.01rem solid var(--q-gb-bd-c-6);
             padding: 0.1rem .3rem;
             padding-bottom: .13rem;
 

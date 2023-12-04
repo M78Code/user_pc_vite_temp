@@ -30,7 +30,7 @@
     </div> -->
     <div class="h-right">
       <div class="user-info">
-        <span class="user-balance"> {{ format_balance(UserCtr.balance) }} </span>
+        <span class="user-balance"> {{ format_balance(UserCtr.balance) }}</span>
         <span class="user-name">{{ lodash.get(UserCtr.get_user(), "nickName") }}</span>
       </div>
       <q-avatar size="40px" @click="change_input">
@@ -331,6 +331,7 @@ export default defineComponent({
 
     onMounted(() => {
       compute_userInfo();
+      UserCtr.get_balance();//默认获取一次余额
       document.addEventListener('click', (e) => hide_search(e))
       useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
       useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width)

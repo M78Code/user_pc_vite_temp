@@ -107,7 +107,7 @@ const state = reactive({
         padding-bottom: .15rem;
         display: flex;
         align-items: center;
-        border-bottom: .01rem solid var(--q-gb-bd-c-7);
+        border-bottom: .01rem solid var(--q-gb-bd-c-6);
 
         .pattern {
             width: .03rem;
