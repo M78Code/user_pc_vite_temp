@@ -112,7 +112,7 @@ export default defineComponent({
       // 重新加载category组件，触发重新请求
       //如果是常规详情玩法集
       if(route.name == 'category'){
-        router.replace({name: 'category', params: {mid: match_id.value, mcid: uId}, query: {search_term: search_term}})
+        router.replace({name: 'category', params: {mid: match_id.value,csid:get_detail_data.csid, mcid: uId,}, query: {search_term: search_term}})
       }
       //如果是vr详情玩法集
       else{
