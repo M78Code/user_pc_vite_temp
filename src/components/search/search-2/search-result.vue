@@ -237,6 +237,7 @@ const search_type = ref(null)
 const keyword = ref('')
 const get_props = (props) => {
 	keyword.value = props.text
+	_get_search_result(keyword.value, true)
 	search_type.value = props.type
 }
 // 展开/收起 bowling 滚球 league 联赛 team 队伍
@@ -262,14 +263,6 @@ const show_bowling_list = computed(() => {
 	})
 	return obj;
 });
-
-// 监听搜索关键词改变
-watch(
-	() => keyword.value,
-	(res) => {
-		_get_search_result(res, true)
-	}
-)
 /**
  * @Description:点击滚球搜索
  * @param {string} league 点击联赛标题
@@ -510,15 +503,13 @@ const get_odd_os = (ov) => {
 	return compute_value_by_cur_odd_type(ov, '', '', props.search_csid)
 }
 
-onMounted(() => {
-	useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
-})
+const {off}=useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props);
 onBeforeUnmount(() => {
 	if (timer.value) {
 		clearTimeout(timer.value)
 		timer.value = null
 	}
-	useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
+	off()
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
 		text: ''
