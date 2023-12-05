@@ -4,7 +4,7 @@
     <!-- 赛事基础信息 -->
     <div class="basic-col"
       :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
-      <!-- 比赛进程 网球用105模板，别的用101 -->
+      <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
       <component :is="current_basic_info()" :match="match" show_type="all"></component>
       <!-- <basis-info101 :match="match" show_type="all" /> -->
       <!-- <basis-info105 v-else :match="match" show_type="all" /> -->
@@ -90,7 +90,8 @@ export default {
       }
     }, { immediate: true, deep: true })
     function current_basic_info() {
-      if (match.value.csid == 5) {
+      // 网球和羽毛球
+      if (match.value.csid == 5 || match.value.csid == 10) {
         return 'BasisInfo105'
       } else {
         return 'BasisInfo101'
