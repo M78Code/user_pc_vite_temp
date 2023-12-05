@@ -121,7 +121,36 @@ const to_corresponding_router_yazhou_h5 = (that, params_obj) => {
     });
   }
 }
-
+//地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
+const to_corresponding_router_yazhou_pc = (that, params_obj) => {
+  try {
+    // 获取指定key值参数数组的url参数对象['mt1','mt2','mid','csid','activity']
+    if(params_obj.get('mt1') && params_obj.get('mt1') != 900){
+      //去到列表页
+      that.$router.push({
+        name: 'home',
+        query: {mt1:params_obj.get('mt1'), mt2:params_obj.get('mt2')}
+      });
+    } else if (params_obj.get('mt1') == 900) {
+      //去到虚拟体育
+      that.$router.push({ name: 'virtual_sports', query: { home: 'home' } })
+    } else if (params_obj.get('mid')) {
+      // 去赛事详情
+      const csid = params_obj.get('csid');
+      that.$router.push({name:'details',params:{flag:1, mid:params_obj.get('mid'),csid},query:{flag:1}});
+    } else if (params_obj.get('activity')){
+      // 去活动页面
+      let act = params_obj.get('activity').split(',')[0]
+      if (['10007', '10008', '10009'].includes(act)) {
+        that.$router.replace({ name: "activity_task", params:  { act: act}, query: { rdm: new Date().getTime() } });
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
+  // 删除多余参数
+  SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','activity']);
+}
 //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
 const to_corresponding_router_app_h5 = (that, params_obj) => {
   try {
@@ -151,11 +180,11 @@ const to_corresponding_router_app_h5 = (that, params_obj) => {
         that.$router.replace({ name: "activity_task", params:  { act: act,isAPP:params_obj.get('isAPP')}, query: { rdm: new Date().getTime() } });
       }
     }
-    // 删除多余参数
-    SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','isAPP','activity','label','sy']);
   } catch (error) {
     console.error(error)
   }
+  // 删除多余参数
+  SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','isAPP','activity','label','sy']);
 }
 
 //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
@@ -188,11 +217,11 @@ const to_corresponding_router_ouzhou_h5 = (that, params_obj) => {
         that.$router.replace({ name: "activity_task", params:  { act: act,isAPP:params_obj.get('isAPP')}, query: { rdm: new Date().getTime() } });
       }
     }
-    // 删除多余参数
-    SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','tid','csid','isAPP','activity','label','sy']);
   } catch (error) {
     console.error(error)
   }
+  // 删除多余参数
+  SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','tid','csid','isAPP','activity','label','sy']);
 }
 
 //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
@@ -211,7 +240,7 @@ const to_corresponding_router_ouzhou_pc = (that, params_obj) => {
     } else if (params_obj.get('mid')) {
       // 去赛事详情
       const csid = params_obj.get('csid');
-      that.$router.push({name:'category',params:{flag:1, mid:params_obj.get('mid'),csid}});
+      that.$router.push({name:'details',params:{flag:1, mid:params_obj.get('mid'),csid}});
     } else if (params_obj.get('activity')){
       // 去活动页面
       let act = params_obj.get('activity').split(',')[0]
@@ -219,11 +248,11 @@ const to_corresponding_router_ouzhou_pc = (that, params_obj) => {
         that.$router.replace({ name: "activity_task", params:  { act: act}, query: { rdm: new Date().getTime() } });
       }
     }
-    // 删除多余参数
-    SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','activity']);
   } catch (error) {
     console.error(error)
   }
+  // 删除多余参数
+  SEARCH_PARAMS.init_param_del(['mt1','mt2','mid','csid','activity']);
 }
 let timer = 0;
 const watch_route_fun = (to, from)=>{
@@ -265,7 +294,8 @@ const url_param_ctr_init = (vue_that)=>{
       to_corresponding_router_ouzhou_h5(vue_that, search_params);
       break;
     case 'yazhou-pc':
-    
+      window.history.replaceState('', '', url);
+      to_corresponding_router_yazhou_pc(vue_that, search_params);
       break;
     case 'new-pc':
     

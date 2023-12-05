@@ -17,7 +17,7 @@ import {
   LocalStorage
 } from "src/core/index.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 import STANDARD_KEY from "src/core/standard-key";
 const menu_h5_key = STANDARD_KEY.get("menu_h5_key");
 const menu_h5 = STANDARD_KEY.get("menu_h5");
@@ -116,7 +116,7 @@ class MenuData {
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
-    menu_list = BaseData.left_menu_base_mi
+    menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:0}]:BaseData.left_menu_base_mi;
     //热门球种
     top_events_list = data.find((item)=>{return item.mi==5000}).sl || [];
     //冠军

@@ -1,5 +1,3 @@
-import { ref } from "vue";
-import { useRoute } from "vue-router";
 import lodash from "lodash";
 import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
@@ -368,7 +366,11 @@ const api_bymids = (
     }
   }
 };
-
+useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
+  // 重新订阅C8
+  api_bymids({ is_show_mids_change: true })
+}, 1000)),
+useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids);
 export {
   api_bymids,
   set_league_list_obj,

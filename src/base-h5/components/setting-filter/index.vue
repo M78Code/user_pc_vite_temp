@@ -38,7 +38,7 @@
           />
         </div>
       </div>
-      <div class="setting-item" @click="jumpHandle">
+      <div class="setting-item border" @click="jumpHandle">
         <div class="title">盘口教程</div>
         <div class="more">
         <img  
@@ -240,7 +240,7 @@ const activity_handle = item => {
     margin: 0 0.14rem;
 
     &.border {
-      border-bottom: 1px solid var(--q-gb-t-c-8);
+      border-bottom: 1px solid var(--q-gb-bd-c-4);
     }
 
     .title {

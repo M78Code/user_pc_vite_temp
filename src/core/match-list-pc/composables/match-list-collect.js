@@ -214,25 +214,25 @@ const length_0_fn = () => {
 /**
   * @Description: 根据赛事信息返回赛事类型 1：常规，2：冠军，3：电竞, 99:虚拟体育
   */
-const match_collect_type = (match)=>{
+const match_collect_type = (match) => {
   let res = '1';
   // 获取是否冠军赛事
-  let champion = lodash.get(match,'tpl_id', 0);
-  let menu_type = lodash.get(match,'menu_type', 0);
-  if(champion == 18 || menu_type == 100){
-    res =  '2';
+  let champion = lodash.get(match, 'tpl_id', 0);
+  let menu_type = lodash.get(match, 'menu_type', 0);
+  if (champion == 18 || menu_type == 100) {
+    res = '2';
   } else {
     // 获取赛种
-    let csid = lodash.get(match,'csid', 0)*1;
-    if(csid>=1000){
+    let csid = lodash.get(match, 'csid', 0) * 1;
+    if (csid >= 1000) {
       // 虚拟体育
-      res =  '99';
-    } else if(csid>=100){
+      res = '99';
+    } else if (csid >= 100) {
       // 电竞赛事
-      res =  '3';
+      res = '3';
     } else {
       // 常规赛事
-      res =  '1';
+      res = '1';
     }
   }
   return res;
@@ -245,60 +245,61 @@ const match_collect_type = (match)=>{
   * param{String} type 赛事类型 // 1：常规，2：冠军，3：电竞
   * return {Object} 收藏信息 {tf:false,mf:false}
   */
-export const match_collect_status = (match, obj) =>{
+export const match_collect_status = (match, obj) => {
   // match={tid:'888',mid:'222'};
   // obj= {"1":{"tids":{"888":1},"mids":{"222":1},"exclude":{"888":{"tids":"888","mids":{"2221":1}}}}}
 
-  if(!obj){
+  if (!obj) {
     obj = match_collect_data.data;
   }
-  let type=-1
-  if([MenuData.is_kemp(),MenuData.is_collect_kemp(),MenuData.is_common_kemp(),MenuData.is_esports_champion()].includes(true)){
-    type=2
-  }else if(MenuData.is_esports()){
-    type=3
+  let type = -1
+  //冠军
+  if (MenuData.is_kemp() || MenuData.is_collect_kemp() || MenuData.is_common_kemp() || MenuData.is_esports_champion()) {
+    type = 2
+  } else if (MenuData.is_esports()) {
+    type = 3//电竞
   }
-  let res = {tf:false,mf:false};
-  
-  if(match && obj){
+  let res = { tf: false, mf: false };
+
+  if (match && obj) {
     try {
-      let tid = lodash.get(match,'tid', 0);
-      let mid = lodash.get(match,'mid', 0);
+      let tid = lodash.get(match, 'tid', 0);
+      let mid = lodash.get(match, 'mid', 0);
       //0:全部，1：常规，2：冠军，3：电竞
-      if(type==-1){
+      if (type == -1) {
         type = match_collect_type(match);
       }
-      let data = lodash.get(obj,`${type}`);
-      if(data){
-        const tids = lodash.get(data,'tids');
-        const exclude = lodash.get(data,'exclude');
+      let data = lodash.get(obj, `${type}`);
+      if (data) {
+        const tids = lodash.get(data, 'tids');
+        const exclude = lodash.get(data, 'exclude');
         // tids联赛里面有
-        if(tids && tids[tid]) {
-          res.tf=true;
+        if (tids && tids[tid]) {
+          res.tf = true;
           res.mf = true;
           // exclude检测还发有
-          if(exclude){
-            const temp_mid = lodash.get(exclude,`${tid}.mids.${mid}`);
+          if (exclude) {
+            const temp_mid = lodash.get(exclude, `${tid}.mids.${mid}`);
             // if(lodash.get(exclude,`${tid}`)){
             //   res.tf = false;
             // }
-            if(temp_mid){
+            if (temp_mid) {
               res.mf = false;
             }
           }
         }
         // 赛事收藏检测
-        const mids = lodash.get(data,'mids');
-        if(mids && mids[mid]){
+        const mids = lodash.get(data, 'mids');
+        if (mids && mids[mid]) {
           res.mf = true;
         } else {
-          if(!mid){
+          if (!mid) {
             res.mf = false;
           }
         }
       }
       //0:全部，1：常规，2：冠军，3：电竞
-      if(type==2 && res.mf){
+      if (type == 2 && res.mf) {
         res.tf = true;
       }
     } catch (error) {
@@ -488,14 +489,14 @@ const mx_collect = ({ type = "match", match, match_index }) => {
 * @Description:设置全局收藏数据格式化数据 obj为http://api.sportxxxvo3.com/yewu11/v1/w/collectMatchesPB接口返回数据
 * param{object} obj 收藏数据,操作后的对象: {"1":{"tids":{"6666":1},"mids":{"3544337":1},"exclude":{"822459":{"tids":"822459","mids":{"222":1}}}}}
 */
-export const set_global_collect_data = (obj) =>{
+export const set_global_collect_data = (obj) => {
   // 列表转对象
-  const fun_list2obj = function(list) {
+  const fun_list2obj = function (list) {
     const obj = {};
-    if(list && list.length && typeof list != 'string'){
+    if (list && list.length && typeof list != 'string') {
       try {
         list.forEach(item => {
-          if(item){
+          if (item) {
             obj[item] = 1;
           }
         });
@@ -505,26 +506,26 @@ export const set_global_collect_data = (obj) =>{
     }
     return obj;
   }
-  if(obj){
+  if (obj) {
     obj = lodash.cloneDeep(obj);
     // 所有列表转对象
     for (const key in obj) {
       const temp = obj[key];
       if (temp) {
         // tids所有列表转对象
-        const tids = lodash.get(temp,'tids');
-        temp.tids= fun_list2obj(tids);
+        const tids = lodash.get(temp, 'tids');
+        temp.tids = fun_list2obj(tids);
         // mids所有列表转对象
-        const mids = lodash.get(temp,'mids');
+        const mids = lodash.get(temp, 'mids');
         temp.mids = fun_list2obj(mids);
         // exclude所有列表转对象
-        const exclude = lodash.get(temp,'exclude');
-        if(exclude){
+        const exclude = lodash.get(temp, 'exclude');
+        if (exclude) {
           const obj = {};
           exclude.forEach(item => {
-            const tids =  lodash.get(item,'tids');
-            const mids =  lodash.get(item,'mids');
-            if(tids && mids){
+            const tids = lodash.get(item, 'tids');
+            const mids = lodash.get(item, 'mids');
+            if (tids && mids) {
               item.mids = fun_list2obj(mids);
               obj[tids] = item;
             }
@@ -550,8 +551,9 @@ function fethc_collect_match() {
       }
     });
 }
-
-
+useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data)
+useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count)
+useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match)
 export {
   // 收藏数量
   collect_count,

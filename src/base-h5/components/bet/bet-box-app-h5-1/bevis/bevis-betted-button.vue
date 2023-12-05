@@ -40,12 +40,14 @@ const bindClick = () =>{
 
 <style scoped lang="scss">
 .betted-button{
-  padding: 0.08rem 0;
+  padding: 0.11rem 0;
   margin-top: 0.08rem;
   width: 100%;
   background-color: var(--q-gb-t-c-1);
-  border-radius: 12px;
+  border-radius: 0.12rem;
   margin-bottom: .2rem ;
+  height: 0.48rem;
+  
   >p{
     font-size: 16px;
     color: #fff;

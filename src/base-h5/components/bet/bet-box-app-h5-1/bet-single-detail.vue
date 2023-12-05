@@ -7,7 +7,8 @@
   <!-- 混合过关投注选项 -->
   <div>
     <div class="bet_single_info">
-      <div class="bet_single_detail" ref="bet_single_detail" :style="BetData.bet_pre_list.includes(item.playOptionsId) ?'width: 73%':'width:100%'">
+      <!-- <div class="bet_single_detail" ref="bet_single_detail" :style="BetData.bet_pre_list.includes(item.playOptionsId) ?'width: 73%':'width:100%'"> -->
+      <div class="bet_single_detail" ref="bet_single_detail">
         <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
           <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
 
@@ -18,7 +19,7 @@
         </div>
         <div class="content-rmb">RMB</div>
       </div>
-      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
+      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)" style="display:none">
         <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
         <div class="" v-else @click="set_bet_pre">+{{ i18n_t('pre_record.book')}}</div>
       </div>
@@ -298,11 +299,12 @@ onUnmounted(() => {
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
   margin-top: 0.1rem;
-  background: var(--q-gb-t-c-7);
+  background: var(--q-gb-bg-c-3);
   border-radius: 0.01rem;
   display: flex;
   justify-content: space-between;
   border-radius: 12px;
+  width: 100%;
   .content-rmb{
     font-family: PingFang SC;
     font-size: 20px;

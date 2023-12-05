@@ -4,9 +4,9 @@
     </div>
 </template>
 <script setup>
-import { UserCtr, compute_local_project_file_path } from "src/core/index.js";
-import {ref,reactive} from 'vue'
-const lang = ref(UserCtr.lang||'en')
+import { UserCtr, compute_local_project_file_path, i18n, LocalStorage } from "src/core/index.js";
+import { ref, reactive } from 'vue'
+const lang = ref(LocalStorage.get('lang', UserCtr.lang || i18n.global.locale))
 /* 退出登录通知-中文 */
 const logout_notice = compute_local_project_file_path('/image/image/not_login_zh.png')
 /* 退出登录通知-英文 */
@@ -18,12 +18,12 @@ const logout_notice_th = compute_local_project_file_path('/image/image/not_login
 /* 退出登录通知-马来语 */
 // const logout_notice_ma = compute_local_project_file_path('/image/image/logout_notice_ma.png')
 const imgSrc = reactive({
-  zh: logout_notice,
-  tw: logout_notice,
-  en: logout_notice_en,
-  vi: logout_notice_vi,
-  th: logout_notice_th,
-  // ma: logout_notice_ma,
+    zh: logout_notice,
+    tw: logout_notice,
+    en: logout_notice_en,
+    vi: logout_notice_vi,
+    th: logout_notice_th,
+    // ma: logout_notice_ma,
 })
 </script>
 <style lang="scss">

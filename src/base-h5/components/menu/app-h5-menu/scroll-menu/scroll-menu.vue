@@ -34,7 +34,7 @@
       </div>
 </template>
 <script setup>
-import { ref,reactive,onMounted,onUnmounted } from "vue";
+import { ref,reactive,onMounted,onUnmounted,nextTick } from "vue";
 import lodash_ from "lodash";
 import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/core/index.js";
@@ -62,12 +62,12 @@ const emits = defineEmits(['changeList'])
 */
 function set_menu_lv2(item = {},event) {
   // 选中后点击无效
-  if (item.mi == MenuData.current_lv_2_menu_i) return
-  // 设置菜单点击事件
-  console.log(useMittEmit)
-  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
-
+  if (item.mi == MenuData.current_lv_2_menu_i) return;
   event && scrollMenuEvent(event,".s-menu-container",".sport-menu-item");
+  nextTick(()=>{
+    // 设置菜单点击事件
+    useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
+  })
 }
 
 /**
@@ -156,9 +156,10 @@ onUnmounted(()=>{
           min-width: 0.5rem;
           height: 100%;
           flex-shrink: 0;
-          color: var(--q-gb-t-c-4);
+          color: var(--q-gb-t-c-19);
           .current {
-            color: var(--q-gb-bd-c-2);
+            //color: var(--q-gb-bd-c-2);
+            color: var(--q-gb-t-c-20);
             .inner-w {
               position: relative;
               font-size: 0.1rem;

@@ -193,7 +193,7 @@ onUnmounted(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: var(--q-gb-t-c-7);;
+    background-color: var(--q-gb-bg-c-4);;
     padding-right: 3px;
     padding-left: 10px;
     border-radius: 30px;
@@ -203,6 +203,7 @@ onUnmounted(() => {
     font-size: 20px;
     font-weight: bold;
     margin-right: 4px;
+    color: var(--q-gb-t-c-14);
 }
 .nonebox4-first-right-window-img {
     display: flex;

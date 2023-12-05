@@ -71,7 +71,6 @@ import { MenuData } from "src/core/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
-import BaseData from "src/core/base-data/base-data.js";
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
@@ -79,7 +78,7 @@ const scrollRefArea = ref(null);
 const dateOptionsRef = ref(null);
 const week = dateWeekMatchesFormat();
 const tabList = computed(()=>{
-    return BaseData.conventionalType.includes(400)?store.tabOptions:store.tabOptions.filter(n=>{return n !=='Outrights'})
+    return MenuData.menu_list.map((item)=>{return +item.mi}).includes(400)?store.tabOptions:store.tabOptions.filter(n=>{return n !=='Outrights'})
 })
 const DateOptionsOffset = computed(() => {
     const domWidth = document.body.clientWidth || document.documentElement.clientWidth
@@ -312,7 +311,7 @@ const areaListChange = (item) => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-left: 2px;
+        // padding-left: 2px;
         overflow-y: hidden;
         font-size: 14px;
 

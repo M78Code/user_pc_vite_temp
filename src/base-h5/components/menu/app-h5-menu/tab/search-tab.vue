@@ -180,7 +180,8 @@ function key_down(event) {
                 font-family: 'PingFang SC';
                 font-style: normal;
                 font-weight: 400;
-                color: #7981A4;
+                //color: #7981A4;
+                color: var(--q-gb-t-c-19);
                 &:first-child {
                     width: 0.4rem;
                 }

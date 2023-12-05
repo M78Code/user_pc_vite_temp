@@ -6,7 +6,7 @@
   // }
   // 赛事列表 页
   .match-list-page{
-    background: #fff;
+    background: var(--q-gb-bd-c-1);
     .hairline-border::after{
       display: none;
     }
@@ -19,7 +19,7 @@
       height: 20px;
       width: 10px;
       border-radius: 20px;
-      background: var(--q-gb-t-c-1);
+      background: var(--q-gb-t-c-1);  
       display: block;
       position: absolute;
       left: -7px;

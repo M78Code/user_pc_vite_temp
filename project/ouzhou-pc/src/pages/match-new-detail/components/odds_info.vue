@@ -6,7 +6,7 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="match-detail-odds" ref="scrollRef">
-    <div v-for="item in matchDetail" :key="item.topKey" class="odds-wrap">
+    <div v-for="item in matchDetail" :key="item.topKey" :class="{'odds-wrap':item.hl[0].hs != 2}">
       <q-expansion-item
         v-model="item.expanded"
         :expand-icon-toggle="false"

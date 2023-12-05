@@ -69,7 +69,7 @@ const set_back = () => {
     height: .44rem;
     display: flex;
     justify-content: space-between;
-    border-bottom: .01rem solid var(--q-gb-bd-c-7);
+    border-bottom: .01rem solid var(--q-gb-bd-c-6);
     &-close {
         display: flex;
         justify-content: center;

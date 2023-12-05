@@ -10,7 +10,7 @@
         <header class="ball_tab">
             <q-virtual-scroll ref="scrollRef" v-if="leftDataList.length" :items="leftDataList"
                 virtual-scroll-horizontal v-slot="{ item, index }">
-                <div v-if="!['118', '400'].includes(item.mi) && get_cont(item)" @click="on_change_play(item)"
+                <div v-if="!['400'].includes(item.mi) && get_cont(item)" @click="on_change_play(item)"
                     :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === playValue" :sport_id="item.mi" />

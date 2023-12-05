@@ -9,7 +9,7 @@
       <div class="row justify-between">
         <div class="q-mr-sm">{{item.currentTime}}</div>
         <div>{{ item.eventName }}</div>
-        <div v-if="item.remark" class="q-ml-xs">{{$t('settlements.cevent.w4')}}{{item.remark}}</div>
+        <div v-if="item.remark" class="q-ml-xs">操作者{{item.remark}}</div>
       </div>
     </div>
   </template>

@@ -54,7 +54,7 @@ const routes = [
         },
       },
       {
-        path: "/details/:mid/:tid/:csid",
+        path: "/details/:mid/:csid/:tid?",
         name: "details",
         component: () => import('../pages/match-new-detail/index.vue')
       },

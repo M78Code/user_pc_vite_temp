@@ -130,7 +130,7 @@ export default {
   height: auto;
   position: relative;
   margin: 0 auto;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
 
   .league-container {
@@ -295,7 +295,7 @@ export default {
       justify-content: space-between;
       // padding-bottom: 0.08rem;
       .ol-li-item {
-        background: #fff;
+        background: var(--q-gb-bg-c-15);
         width: 98%;
         margin: 0;
         margin-bottom: .06rem;
@@ -303,7 +303,7 @@ export default {
       .ol-list-left {
         flex: 1;
         .ol-list-left-title {
-          background: #fff;
+          background: var(--q-gb-bg-c-15);
           width: 98%;
           margin: 0;
           margin-bottom: 0.06rem;
