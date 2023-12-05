@@ -35,15 +35,15 @@
       <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
 
         <div class="hps-wrap-title flex items-center justify-between" :class="{ 'is-favorite': false }">
-          <div class="match-title items-center font-weight">
+          <div class="match-title items-center font-weight match-title-width">
             <div class="hpn-wrap ellipsis">
-              Winner
+              {{hp.hps}}
             </div>
           </div>
           <div class="match-title items-center">
             <div class="hpn-wrap ellipsis date-style">
               {{(new Date(+match_of_list.med)).Format(i18n_t('time10'))}}
-              Bet Closed
+              {{ i18n_t('match_main.cut_off')}}
             </div>
           </div>
         </div>
@@ -245,6 +245,7 @@ export default {
       background-color: var(--q-gb-bg-c-10);
       height: .36rem;
       padding: 0 .18rem;
+      flex-wrap: nowrap;
       // border-bottom: 1px solid var(--q-gb-t-c-6);
     }
 
@@ -264,6 +265,10 @@ export default {
       .date-style {
         color: var(--q-gb-t-c-1) !important;
       }
+    }
+
+    .match-title-width {
+      width: 1.8rem;
     }
 
     

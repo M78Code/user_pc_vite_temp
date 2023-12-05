@@ -262,7 +262,7 @@ onUnmounted(()=>{
   color:var(--q-gb-t-c-3);
   background: url('./img/top_bg.png') no-repeat;
   background-size: cover;
-  height: 0.5rem;
+  height:auto;
   > img {
     width: 5px;
     height: 8px;
