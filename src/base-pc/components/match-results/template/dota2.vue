@@ -227,10 +227,11 @@ export default {
   }
   &:nth-child(3) {
     width: 41.16%;
-    padding-left: 50px;
+    padding-left: 20px;
   }
   &:nth-child(4) {
     width: 20%;
+    // padding-left: 20px;
   }
   &:nth-child(4),
   &:last-child {
