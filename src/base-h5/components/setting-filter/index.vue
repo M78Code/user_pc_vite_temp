@@ -252,7 +252,7 @@ const activity_handle = item => {
     }
 
     .more {
-      color: var(--q-gb-bd-c-4);
+      color: var(--q-gb-t-c-19);
     }
 
     .goto-website {
@@ -262,7 +262,8 @@ const activity_handle = item => {
       background-color: #f3faff;
       border-radius: 0.18rem;
       text-align: center;
-      color: #7981a4;
+      //color: #7981a4;
+      color: var(--q-gb-t-c-11);
       font-weight: 500;
     }
   }

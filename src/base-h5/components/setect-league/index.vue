@@ -59,7 +59,7 @@ const state = reactive({
   search_val: ""
 });
 //组件数据
-const matchRef = ref();
+const matchRef = ref(null);
 let { search_val } = toRefs(state);
 
 let rem_1 = (window.innerWidth * 100) / 375;
