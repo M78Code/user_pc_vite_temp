@@ -224,7 +224,7 @@ export default {
     .limit-t-i {
       // width: 3.45rem;
       margin: 0 auto;
-      color: #999;
+      color: var(--q-gb-t-c-19);
       border-radius: 0.04rem;
     }
   }
@@ -255,7 +255,7 @@ export default {
       // }
 
       .hpn-wrap {
-        color: #414655;
+        color: var(--q-gb-t-c-20);
         font-size: 11px;
       }
     }

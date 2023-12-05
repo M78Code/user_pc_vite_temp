@@ -108,7 +108,7 @@ const set_menu_lv1 = item => {
     height: 0.44rem;
     display: flex;
     align-items: center;
-    color: #414655;
+    color: var(--q-gb-t-c-20);
     padding: 0 0.14rem;
     transition: padding-top 0.3s;
     // position: absolute;

@@ -244,7 +244,7 @@ const activity_handle = item => {
     }
 
     .title {
-      color: var(--q-gb-bd-c-2);
+      color: var(--q-gb-t-c-20);
 
       span {
         color: var(--q-gb-bd-c-4);
