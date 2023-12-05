@@ -242,8 +242,8 @@ const search_type = ref(null)
 const keyword = ref('')
 const get_props = (props) => {
 	keyword.value = props.text
-	_get_search_result(keyword.value, true)
 	search_type.value = props.type
+	_get_search_result(keyword.value, true)
 }
 // 展开/收起 bowling 滚球 league 联赛 team 队伍
 const expand_bowling = ref(true);
@@ -414,6 +414,7 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 		// console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;
+		clearTimeout(timer.value)
 		timer.value = setTimeout(() => {
 			// 如果是从详情页返回
 			if (search.back_keyword.keyword) {
@@ -425,7 +426,7 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 				//重新设置滚动高度
 				_ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
 			}
-		})
+		},0)
 	}).catch(err => {
 		search_loading = false
 		console.log(err);
@@ -500,7 +501,7 @@ const get_match_base_hps_by_mids = async () => {
 const red_color = (item) => {
 	const reg = new RegExp(keyword.value, "ig");
 	let i_color = 'red';
-	return item?.replace(reg, `<span style="color:${i_color}">${keyword.value}</span>`)
+	return item?.replace(reg, `<text style="color:${i_color}">${keyword.value}</text>`)
 }
 
 // 显示的赔率
