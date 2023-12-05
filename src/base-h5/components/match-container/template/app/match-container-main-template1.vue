@@ -1286,7 +1286,7 @@ export default {
 
 /* **************日期********************** -S*/
 .date-container {
-  background-color: var(--q-color-com-bg-color-12);
+  background-color: var(--q-color-com-bg-color-12);  
   width: 100%;
   color: var(--q-gb-t-c-19);
   padding-left: 6px;
