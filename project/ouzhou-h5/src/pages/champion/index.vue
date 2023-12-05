@@ -4,7 +4,7 @@
     <div class="header_tabs">
       <q-tabs v-model="tabValue" dense class="bg-grey-3" align="justify" narrow-indicator >
         <!-- <q-tab name="featured" :label="`${i18n_t('ouzhou.match.Outrights')}`" /> -->
-        <q-tab name="outrights" label="Outrights" />
+        <q-tab name="outrights" :label="`${i18n_t('ouzhou.match.outrights')}`" />
       </q-tabs>
     </div>
     <!-- 主内容区 -->
