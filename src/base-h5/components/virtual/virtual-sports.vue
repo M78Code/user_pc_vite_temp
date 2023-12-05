@@ -9,45 +9,58 @@
       </div>
     </div>
     <div class="virtual-content-wrapper">
+    <div class="virtual-sports-card">
       <div class="tab-title">
-      <div class="league-name right-border">{{ lengue_name }}</div>
-      <div class="status">
-        <!-- <span class="num">第10轮</span>
-        <span class="state">比赛中</span> -->
-        <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
-      </div>
-    </div>
-    <template v-if="!no_virtual_match">
-      <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
-      <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
-      <virtual-sports-stage
-        :is_before_destroy="is_before_destroy"
-        :key="current_match.mid"
-        :m_status="current_match.match_status"
-        :virtual_match_list="match_list_by_no"
-        :current_match="current_match" source='list'
-        :is_video_playing="is_video_playing"
-        :v_match_router_ente="v_match_router_ente"
-        :virtual_result_rank_data="virtual_result_rank_data"
-        @time_ended="timer_ended_handle"
-        @update_next_batch_match="update_n_batch_handle">
-      </virtual-sports-stage>
-      <div class="test-line" v-if="show_debug">
-        {{current_match.mid}}
-      </div>
-
-      <div class="virtual-sports-menu">
-          <div class="vsm-options" v-for="n in 4" :key="n">
-            <div class="teams">
-              <span>name1</span>
-              <span>{{n}}</span>
-            </div>
-            <div class="teams">
-              <span>name2</span>
-              <span>0</span>
-            </div>
-          </div>
+        <div class="league-name right-border">{{ lengue_name }}</div>
+        <div class="status">
+          <!-- <span class="num">第10轮</span>
+          <span class="state">比赛中</span> -->
+          <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
         </div>
+      </div>
+      <template v-if="!no_virtual_match">
+          <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
+          <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
+          <virtual-sports-stage
+            :is_before_destroy="is_before_destroy"
+            :key="current_match.mid"
+            :m_status="current_match.match_status"
+            :virtual_match_list="match_list_by_no"
+            :current_match="current_match" source='list'
+            :is_video_playing="is_video_playing"
+            :v_match_router_ente="v_match_router_ente"
+            :virtual_result_rank_data="virtual_result_rank_data"
+            @time_ended="timer_ended_handle"
+            @update_next_batch_match="update_n_batch_handle">
+          </virtual-sports-stage>
+          <div class="test-line" v-if="show_debug">
+            {{current_match.mid}}
+          </div>
+
+          <div class="virtual-sports-menu">
+              <div class="vsm-options" v-for="n in 4" :key="n">
+                <div class="teams">
+                  <span>name1</span>
+                  <span>{{n}}</span>
+                </div>
+                <div class="teams">
+                  <span>name2</span>
+                  <span>0</span>
+                </div>
+              </div>
+          </div>
+      </template>
+    </div>
+    <div class="virtual-sports-card">
+      <div class="tab-title tab-border">
+        <div class="league-name right-border">{{ lengue_name }}</div>
+        <div class="status">
+          <!-- <span class="num">第10轮</span>
+          <span class="state">比赛中</span> -->
+          <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+        </div>
+      </div>
+      <template v-if="!no_virtual_match">
       <!--赛事轮|期菜单-->
       <match-tab
         :is_reset_tab_i="is_reset_tab_i"
@@ -119,7 +132,8 @@
     </template>
     <no-data v-else which='noMatch' height='500'></no-data>
     </div>
-
+    </div>
+    
   </div>
 </template>
 
@@ -615,9 +629,13 @@ export default defineComponent({
 .tab-title{
   height: 0.25rem;
   display: flex;
-  padding: 0 0.1rem;
   align-items: center;
   justify-content: space-between;
+  padding-right: 9px;
+  &.tab-border {
+    border-bottom: 1px solid #eee;
+    height: 24px;
+  }
   .league-name{
     color: #303442;
     font-weight: 600;
@@ -647,7 +665,10 @@ export default defineComponent({
 .v-sports-main-list-style {
   padding-bottom: .48rem;
 }
-
+.virtual-sports-card {
+  background: #fff;
+  border-radius: 4px;
+}
 .virtual-sports-menu {
     display: flex;
     margin-bottom: .08rem;
