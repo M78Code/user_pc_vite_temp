@@ -94,7 +94,7 @@ class MatchMeta {
     // 获取真实数据
     this.http_params.md = md
     // 是否需要开赛、未开赛归类
-    const is_classify = project_name === 'app-h5' ? true : false
+    const is_classify = project_name === 'app-h5' ? false : false
     is_match && this.get_target_match_data({ md, is_classify })
 
     // 滚球全部
@@ -384,7 +384,7 @@ class MatchMeta {
    */
   filter_hot_match_by_tid (tid = '') {
     const tid_info = this.tid_map_mids[`tid_${tid}`]
-    this.get_target_match_data({ is_classify: true, tid })
+    this.get_target_match_data({ is_classify: false, tid })
     if (!tid_info) return
     const mids = this.tid_map_mids[`tid_${tid}`].mids
     if (mids.length < 1) return 
@@ -500,13 +500,14 @@ class MatchMeta {
   async get_target_match_data ({is_classify = false, scroll_top = 0, md = '', is_error = false, tid = ''}) {
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     const params = this.get_base_params()
+    params.hpsFlag = params.hpsflag
+    delete params.hpsflag
     this.http_params.md = md
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,
-        tid,
-        md: this.http_params.md
+        md: this.http_params.md + ''
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });

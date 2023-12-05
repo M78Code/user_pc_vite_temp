@@ -25,7 +25,7 @@
         }
         .sport-title {
           .score-inner-span{
-            color: var(--q-gb-t-c-3);
+            color: var(--q-gb-t-c-19);
           }
           .ball_img {
             background-color:var(--q-color-page-bg-color-2);
@@ -142,7 +142,7 @@
             background-color: var(--q-color-border-color-11);
           }
           .hpl-title {
-            color: var(--q-color-fs-color-48);
+            color: var(--q-gb-t-c-20);
           }
         }
         .date-container {
@@ -180,10 +180,10 @@
             }
             .timer-wrapper-c {
               .coming-soon {
-                color: var(--q-gb-t-c-3);
+                color: var(--q-gb-t-c-19);
               }
               .date-time {
-                color: var(--q-color-fs-color-30);
+                color: var(--q-gb-t-c-19);
               }
               &.esports {
                 .date-time {
@@ -202,7 +202,7 @@
             }
           }
           .mfo-title {
-            color: var(--q-color-fs-color-30);
+            color: var(--q-gb-t-c-19);
             &.is-ms1 {
               color: var(--q-gb-t-c-3);
             }
@@ -253,7 +253,7 @@
               }
             }
             .score {
-              color: var(--q-match-fs-color-1);
+              color: var(--q-gb-t-c-20);
             }
           }
           // .serving-party {
@@ -501,13 +501,13 @@
         background-color: transparent;
       }
       .odd-title {
-        color:  var(--q-gb-t-c-4) !important;
+        color:  var(--q-gb-t-c-19) !important;
         span {
-          color:  var(--q-gb-t-c-4) !important;
+          color:  var(--q-gb-t-c-19) !important;
         }
       }
       .odd-value {
-        color:var(--q-color-fs-color-63) !important;
+        color:  var(--q-gb-t-c-20) !important;
       }
     }
     /* ************** 标准版投注项选择样式 ************** -E */

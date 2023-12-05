@@ -299,26 +299,27 @@ onUnmounted(() => {
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
   margin-top: 0.1rem;
-  background: var(--q-gb-bg-c-22);
+  background: var(--q-gb-bg-c-9);
   border-radius: 0.01rem;
   display: flex;
   justify-content: space-between;
-  border-radius: 12px;
+  border-radius: 0.12rem;
   width: 100%;
+  height: 0.44rem;
   .content-rmb{
     font-family: PingFang SC;
-    font-size: 20px;
+    
     font-weight: 500;
     letter-spacing: 0px;
     text-align: center;
     height: 0.4rem;
     border-radius: 4px;
-    font-size: 0.16rem;
+    font-size: 0.14rem;
     padding-right: 0.1rem;
     position: relative;
     display: flex;
     align-items: center;
-    color: var(--q-gb-t-c-4);
+    color: var(--q-gb-t-c-3);
   }
 }
 .bet-single-detail {
@@ -346,6 +347,8 @@ onUnmounted(() => {
 }
 .money-number {
   margin-top: 1px;
+  font-family: Akrobat;
+  font-weight: 700;
 }
 .money-span {
   width: 0.02rem;

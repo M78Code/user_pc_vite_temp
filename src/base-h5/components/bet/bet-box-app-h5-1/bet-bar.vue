@@ -181,6 +181,8 @@ onUnmounted(() => {
     margin-left: 0.05rem;
     display: flex;
     font-size: 16px;
+    font-weight: 500;
+    font-family: PingFang SC;
 }
 .nonebox4-first-right {
     display: flex;
@@ -193,10 +195,12 @@ onUnmounted(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: var(--q-gb-bg-c-22);
+    background-color: var(--q-gb-bg-c-9);
     padding-right: 3px;
     padding-left: 10px;
-    border-radius: 30px;
+    border-radius: 0.2rem;
+    height: 0.28rem;
+    width: 1.47rem;
 }
 .nonebox4-first-right-window-num {
     display: flex;
@@ -204,6 +208,7 @@ onUnmounted(() => {
     font-weight: bold;
     margin-right: 4px;
     color: var(--q-gb-t-c-20);
+    font-family: Akrobat;
 }
 .nonebox4-first-right-window-img {
     display: flex;

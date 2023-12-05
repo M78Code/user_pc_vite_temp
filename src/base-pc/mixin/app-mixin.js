@@ -6,6 +6,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
+const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 export default {
     data() {
       return {

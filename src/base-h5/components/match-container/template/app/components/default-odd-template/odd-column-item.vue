@@ -591,7 +591,8 @@ onUnmounted(() => {
       height: 11px;
     }
     .is_up{
-      color: #E95B5B;
+      //color: #E95B5B;
+      color: var(--q-gb-t-c-21);
     }
     .is_down{
       color: #4AB06A;
