@@ -271,8 +271,8 @@ const pack_up = (val) => {
   // TODO: 临时调试用
   BetData.set_bet_state_show(false)
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
-  // BetData.set_clear_bet_info()
-  // BetViewDataClass.set_clear_bet_view_config()
+  BetData.set_clear_bet_info()
+  BetViewDataClass.set_clear_bet_view_config()
 }
 
 const submit_order = (type) => {
@@ -472,12 +472,11 @@ background: var(--q-gb-t-c-5) !important;
   z-index: 600;
   overflow: hidden;
   width: 100%;
-  padding: 0 0.15rem;
+  padding: 0 0.16rem;
   -webkit-overflow-scrolling: touch;
   border-radius: 24px 24px 0 0;
   //border: 1px solid;
   background-color: var(--q-gb-bg-c-15);
-  ;
 
   .yb_pl14 {
     margin-right: 0.01rem;
