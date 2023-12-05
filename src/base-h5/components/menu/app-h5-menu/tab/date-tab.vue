@@ -36,7 +36,7 @@ const props = defineProps({
     },
 
 });
-const dateTab = ref('dateTab')
+const dateTab = ref(null)
 const activeOn = ref('');//默认值
 
 onMounted(() => {
@@ -50,6 +50,7 @@ onUnmounted(()=>{
 * @param {*} val 
 */
 const changeTabMenu = (i, event) => {
+    event = event || dateTab.value[0];
     if(activeOn.value === i)return;
     activeOn.value = i;
     // 设置日期
@@ -57,7 +58,7 @@ const changeTabMenu = (i, event) => {
 
     set_menu_match_date()
 
-    event && scrollMenuEvent(event, ".date-tab-content-ul", ".active");
+    scrollMenuEvent(event, ".date-tab-content-ul", ".active");
 }
 /**
  * 默认值
@@ -75,7 +76,7 @@ const set_menu_match_date = () => {
         // }
     })
 }
-defineExpose({set_active_val,changeTabMenu,set_menu_match_date})
+defineExpose({set_active_val,changeTabMenu})
 
 
 </script>
