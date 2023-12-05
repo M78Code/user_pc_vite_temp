@@ -16,7 +16,7 @@
 
 <script>
 
-import common from "project/activity/src/mixins/constant/module/common.js";
+import common from "project/activity/src/mixins/module/common.js";
 import acticity_mixin from "../mixin/acticity_mixin";
 
 export default {
@@ -103,7 +103,7 @@ export default {
         clearTimeout(this.time2_);
         // 倒计时结束 刷新当面页面
         this.time2_ = setTimeout(()=> {
-          this.noNeedCss && this.$root.$emit(this.emit_cmd.EMIT_INDEX_REFRESH_END)
+          this.noNeedCss && this.$root.$emit(MITT_TYPES.EMIT_INDEX_REFRESH_END)
         },1000)
         this.day = 0; //天
         this.hour = 0; //时

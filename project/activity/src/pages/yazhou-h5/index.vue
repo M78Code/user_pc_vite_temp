@@ -197,9 +197,9 @@ export default {
     }else{
       this.initialization_menu(this.get_user.activityList, )
     }
-    // this.$root.$on(this.emit_cmd.EMIT_INDEX_REFRESH_END, this.index_refresh_end_handle);
+    // this.$root.$on(MITT_TYPES.EMIT_INDEX_REFRESH_END, this.index_refresh_end_handle);
     this.isIphoneX =  /iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375)
-    // this.$root.$on(this.emit_cmd.EMIT_TO_MAINTENANCE, this.to_maintenance)
+    // this.$root.$on(MITT_TYPES.EMIT_TO_MAINTENANCE, this.to_maintenance)
   },
   methods: {
     set_user(args) {
@@ -351,11 +351,11 @@ export default {
     clearTimeout(this.timer2_)
     this.timer2_ = null
 
-    // this.$root.$off(this.emit_cmd.EMIT_INDEX_REFRESH_END, this.index_refresh_end_handle);
+    // this.$root.$off(MITT_TYPES.EMIT_INDEX_REFRESH_END, this.index_refresh_end_handle);
     for (const key in this.$data) {
       this.$data[key] = null
     }
-    // this.$root.$off(this.emit_cmd.EMIT_TO_MAINTENANCE, this.to_maintenance)
+    // this.$root.$off(MITT_TYPES.EMIT_TO_MAINTENANCE, this.to_maintenance)
     sessionStorage.removeItem('isAPP')
   }
 }

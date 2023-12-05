@@ -525,7 +525,7 @@ export default {
      * @param {*} msg 要提示的信息，默认展示 1500ms,给 1800ms 是因为后面 300ms 是关闭动画
      */
     warningNotice(msg, time = 1800) {
-      this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, msg);
+      this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg);
       // 手动隐藏提示弹窗
       if (this.timeout_obj.timer2) {clearTimeout(this.timeout_obj.timer2)};
       this.timeout_obj.timer2 = setTimeout(() => {
