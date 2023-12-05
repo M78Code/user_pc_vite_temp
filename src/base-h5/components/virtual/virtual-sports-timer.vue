@@ -210,8 +210,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .v-s-timer {
-  min-width: 1.1rem;
-  height: 1.1rem;
+  min-width: 1.06rem;
+  height: 1.06rem;
   position: relative;
   display: flex;
   justify-content: center;
@@ -219,8 +219,8 @@ export default defineComponent({
   margin-bottom: 0.38rem;
 
   .v-timer-inner {
-    width: 1.05rem;
-    height: 1.05rem;
+    width: 1rem;
+    height: 1rem;
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
     line-height: 1;
@@ -238,7 +238,7 @@ export default defineComponent({
   }
 
   .graphic-wrapper {
-    width: 1.1rem;
+    width: 1.06rem;
     height: 100%;
     position: absolute;
     top: 0;

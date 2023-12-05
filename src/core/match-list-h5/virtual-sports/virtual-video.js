@@ -60,7 +60,7 @@ class VirtualVideo {
       return {};
     }
     let params = {
-      csid: menu_lv2.value,
+      csid: 1001 ||  menu_lv2.value, //menu_lv2数值不对，先写死1001用来调试
       tid: VirtualData.current_league.menuId,
       batchNo: VirtualData.current_batch.batchNo
     };
@@ -87,7 +87,7 @@ class VirtualVideo {
       if (res.code == 200) {
         if (res.data && res.data.detail && Object.keys(res.data.detail).length) {
           if (!is_no_match_data) {
-            let video_data = _.cloneDeep(res.data);
+            let video_data = lodash.cloneDeep(res.data);
             store.dispatch({ type: 'SET_VIDEO_PROCESS_DATA', data: video_data })
             useMittEmit(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, res.data);
           }
@@ -139,7 +139,7 @@ class VirtualVideo {
           if (res.code == 200) {
             if (res.data && res.data.detail && Object.keys(res.data.detail).length) {
               get_data = true;
-              let copied_video = _.cloneDeep(res.data);
+              let copied_video = lodash.cloneDeep(res.data);
               store.dispatch({ type: 'SET_VIDEO_PROCESS_DATA', data: copied_video })
               useMittEmit(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, copied_video);
               if (success_cb) {
