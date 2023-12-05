@@ -122,7 +122,6 @@ const get_odds_value = (ol_item,hsw) => {
 
   .odds {
     color: var(--q-gb-t-c-20);
-    
     position: relative;
     font-weight: 600;
 

@@ -47,13 +47,14 @@
       //margin-top: 10px;
       display: flex;
       justify-content: space-between;
-      background: var(--q-gb-bg-c-22);
+      background: var(--q-gb-bg-c-9);
       padding: 10px;
       border-radius: 0.12rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
       color: var(--q-gb-t-c-20);
+      font-size: 0.14rem;
   }
   .nonebox4-content-left-content{
       height: 70px;
@@ -63,21 +64,21 @@
   .nonebox4-content-left-content-xian{
       width: 2px;
       height: 100%;
-      background: #2394fc;
+      background: var(--q-gb-bg-c-13);
       margin-right: 4px;
   }
   .nonebox4-content-left-content-text{
-      font-size: 12px;
-      color: #7981A4;
+      font-size: 0.12rem;
+      color: var(--q-gb-t-c-18);
       line-height: 23px;
   }
   .nonebox4-content-right-profit{
-      font-size: 18px;
+      font-size: 0.22rem;
       font-weight: bold;
       color: var(--q-gb-t-c-20);
   }
   .nonebox4-content-right-profit-type{
-      font-size: 16px;
+      font-size: 0.14rem;
   }
   .nonebox4-content-right-num{
       width: 20px;
@@ -91,6 +92,10 @@
       font-size: 16px;
       margin-top: 44px;
       float: right;
+  }
+
+  .nonebox4-content-right{
+    margin-top: -6px;
   }
   
   </style>

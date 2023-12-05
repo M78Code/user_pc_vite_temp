@@ -136,7 +136,7 @@ class BaseData {
     // 是否通知元数据处理完成
     this.is_emit = false
 
-    this.conventionalType = [101,102,190,191]; 
+    this.conventionalType = [101,102]; 
   }
   /**
    * 初始化数据
@@ -403,7 +403,7 @@ class BaseData {
 
       // this.resolve_menus(menu_i18n_default)
     }
-    this.conventionalType = [101,102,190,191]; 
+    this.conventionalType = [101,102]; 
   }
   /**
    * 滚球赛事的赛种id
