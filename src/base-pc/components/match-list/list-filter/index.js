@@ -102,8 +102,8 @@ function resolve_mew_menu_res_mi_5000() {
     mi_5000_all = mi_5000_list.sl || [];
     let mi_5_list = []
     mi_5000_all.forEach(item => {
-        if(BUILD_VERSION){
-            let csid_ = [5001,5002,5005]
+        if(!IS_FOR_NEIBU_TEST){
+            let csid_ = [5001,5002]
             if(csid_.includes(item.mi*1)){
                 item.mif = (item.mi - 5000 + 100)
                 mi_5_list.push(item)
@@ -216,29 +216,33 @@ async function  get_menu_of_favorite_count(list,type) {
         type: type_[type], 
         cuid: UserCtr.get_cuid(),
     }
-    const { code,data } = await api_common.get_menu_of_favorite_count(parmas)
-    if(code == 200){
-        let collect_list = data || []
-       
-        list = list.map(item=>{
-            item.ct = 0
-            collect_list.forEach(obj=>{
-                if(obj.sportId){
-                    if(type == 400){
-                        if(item.mi == (type + obj.sportId*1)){
-                            item.ct = obj.count
-                        }
-                    }else{
-                        if(item.mi == (100 + obj.sportId*1)+''+type){
-                            item.ct = obj.count
+    try{
+        const { code,data } = await api_common.get_menu_of_favorite_count(parmas)
+        if(code == 200){
+            let collect_list = data || []
+           
+            list = list.map(item=>{
+                item.ct = 0
+                collect_list.forEach(obj=>{
+                    if(obj.sportId){
+                        if(type == 400){
+                            if(item.mi == (type + obj.sportId*1)){
+                                item.ct = obj.count
+                            }
+                        }else{
+                            if(item.mi == (100 + obj.sportId*1)+''+type){
+                                item.ct = obj.count
+                            }
                         }
                     }
-                }
+                })
+                return item
             })
-            return item
-        })
+        }
+        return list
+    } catch(error){
+        return list
     }
-    return list
 }
 
 /**
@@ -253,7 +257,7 @@ function resolve_mew_menu_res_mi_400() {
         return item
     })
     // 后期删除 
-    if(IS_FOR_NEIBU_TEST){
+    if(!IS_FOR_NEIBU_TEST){
         let csid_ = [401,402]
         mi_400_arr = mi_400_arr.filter( item=>csid_.includes(item.mi*1))
     }

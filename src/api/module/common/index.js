@@ -100,7 +100,7 @@ export const get_menu_of_favorite = (params, config, url="/v1/m/menu/countCollec
   return http.get(`${prefix}${url}`, params, config);
 };
 // 更新收藏列表菜单赛事数量
-export const get_menu_of_favorite_count = (params, config, url="/v1/m/menu/countCollectPB") => {
+export const get_menu_of_favorite_count = (params, config, url="/v1/m/menu/countCollect") => {
   return http.post(`${prefix}${url}`, params, config);
 };
 //
