@@ -236,6 +236,7 @@ export const sport_columns = {
       align: "left",
       label: "Set",
       field: "set",
+      language:'common.dish',
       headerStyle: "width: 33px",
     },
     {
@@ -243,6 +244,7 @@ export const sport_columns = {
       align: "left",
       label: "P",
       field: "p",
+      language:'common.score_',
       headerStyle: { width: "33px", color: "#ff7000" },
     },
   ],
