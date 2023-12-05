@@ -105,7 +105,7 @@ class VirtualList {
     let match_overlap_height = reduce_buffer_height ? reduce_buffer_height - buffer_height : 0
     let total = 0
     // 显示开赛、未开赛 match_stage_height - 缓冲高度
-    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_overlap_height
+    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_stage_height
     // 显示球种类别
     if (this.is_show_ball && is_show_ball_title) total += ball_title_height
     if (this.is_change_handicap_height !== 0) total += this.is_change_handicap_height

@@ -37,7 +37,7 @@
                       : '#8A8986',
                   }"
                 >
-                  {{ col.label }}
+                  {{ col.language?i18n_t(col.language):col.label }}
                 </span>
                 <div
                   v-else
