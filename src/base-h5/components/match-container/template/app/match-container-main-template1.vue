@@ -374,7 +374,7 @@ export default {
     padding-left: 0.20rem;
     display: flex;
     align-items: center;
-    color: var(--q-color-com-fs-color-38);
+    color: var(--q-gb-t-c-20);
     background: var(--q-gb-bg-c-15);
       justify-content: space-between;
     &.progress{
@@ -1288,7 +1288,7 @@ export default {
 .date-container {
   background-color: var(--q-color-com-bg-color-12);
   width: 100%;
-  color: #999;
+  color: var(--q-gb-t-c-19);
   padding-left: 6px;
   height: 0.2rem;
   display: flex;
@@ -1384,7 +1384,7 @@ export default {
 
   .timer-wrapper-c {
     height: 100%;
-    color: #999;
+    color: var(--q-gb-t-c-19);
 
     &.newer {
       margin-left: 0;

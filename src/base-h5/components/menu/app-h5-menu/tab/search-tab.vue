@@ -190,7 +190,7 @@ function key_down(event) {
                 font-style: normal;
                 font-weight: 400;
                 //color: #7981A4;
-                color: var(--q-gb-t-c-19);
+                color: var(--q-gb-t-c-20);
                 &:first-child {
                     width: 0.4rem;
                 }
