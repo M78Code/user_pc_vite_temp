@@ -84,4 +84,14 @@ watch(() => props.scrollEle, (val) => {
     }
   }
 }
+
+//没有滚动条则不显示
+.none-thumb {
+  .back-top {
+    .btn-back {
+      visibility: hidden;
+    }
+  }
+}
+
 </style>
