@@ -6,7 +6,7 @@
 <script setup>
 import { UserCtr, compute_local_project_file_path, i18n, LocalStorage } from "src/core/index.js";
 import { ref, reactive } from 'vue'
-const lang = ref(LocalStorage.get('lang', UserCtr.lang || i18n.global.locale))
+const lang = ref(LocalStorage.get('lang', UserCtr.lang || i18n.global.fallbackLocale))
 /* 退出登录通知-中文 */
 const logout_notice = compute_local_project_file_path('/image/image/not_login_zh.png')
 /* 退出登录通知-英文 */
