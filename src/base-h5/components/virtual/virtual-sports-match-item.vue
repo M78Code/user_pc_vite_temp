@@ -15,9 +15,11 @@
         <div class="team-wrapper" :class="{standard:standard_edition == 2}">
           <!-- 战队名称 -->
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+            <img v-img="([lodash.get(match_item,'mhlu'), lodash.get(match_item,'frmhn')])" />
             <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
           </div>
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+            <img v-img="([lodash.get(match_item,'malu'), lodash.get(match_item,'frman')])" />
             <div class="ellipsis">
               {{match_item.teams ? match_item.teams[1] : ''}}
             </div>
@@ -50,10 +52,6 @@
             <div v-if="match_item.csid == 1004" class="finally icon-s-wrap"
               v-show="match_item.match_status == 2">
               Fin.
-            </div>
-            <!-- 玩法数量 -->
-            <div v-if="match_item.mc">
-              {{GlobalAccessConfig.get_handicapNum() ? `${match_item.mc}+`: i18n_t('footer_menu.more')}}
             </div>
           </div>
         </div>
@@ -95,6 +93,12 @@
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="compute_img_url('icoin-slide-l')">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="compute_img_url('icoin-slide-r')" v-else>
           </template>
+
+          <!-- 玩法数量 -->
+          <div v-if="match_item.mc" class="play-count">
+              {{GlobalAccessConfig.get_handicapNum() ? `${match_item.mc}+`: i18n_t('footer_menu.more')}} >
+            </div>
+
           <!--标准版赔率容器-->
           <div class="standard-odd-l-w" v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
             :class="{'status2':standard_odd_status == 1}" v-if="standard_edition == 2">
@@ -648,7 +652,7 @@ export default defineComponent({
 
 
   &.standard {
-    height: 1.2rem;
+    height: 1.4rem;
   }
 
   .test-line {
@@ -671,12 +675,12 @@ export default defineComponent({
 
     &.standard {
       .team-w-container {
-        padding-top: 0.13rem;
+        padding-top: 0.21rem;
       }
 
       .team-title {
-        height: 0.3rem;
-        line-height: 0.3rem;
+        height: 0.32rem;
+        line-height: 0.32rem;
         margin-bottom: 0.02rem;
       }
     }
@@ -784,10 +788,14 @@ export default defineComponent({
     }
 
     .profession {
-      padding-top: 0.13rem;
-      height: 1.07rem;
+      // padding-top: 0.13rem;
+      height: 1.21rem;
       overflow: hidden;
       position: relative;
+      .play-count {
+        text-align: right;
+        padding-right: 0.1rem;
+      }
 
       .slide_icon {
         position: absolute;
@@ -846,13 +854,13 @@ export default defineComponent({
 
       .odd-wrap-min {
         width: 0.6rem;
-        height: 0.3rem;
+        height: 0.32rem;
         overflow: hidden;
         border-radius: 0.02rem;
         margin-bottom: 0.02rem;
 
         &.hp-2, &.hp-0 {
-          height: 0.46rem;
+          height: 0.49rem;
         }
 
         &:last-child {
@@ -860,7 +868,7 @@ export default defineComponent({
         }
 
         &.column2 {
-          height: 0.46rem;
+          height: 0.49rem;
         }
       }
     }
