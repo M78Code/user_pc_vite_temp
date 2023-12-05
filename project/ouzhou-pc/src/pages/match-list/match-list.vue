@@ -56,7 +56,7 @@
         </div> -->
         <template v-slot:after>
           <div style="height: 15px"></div>
-          <back-top :onClick="on_go_top" />
+          <back-top :onClick="on_go_top" v-show="MatchListScrollClass.scroll_top > 20" />
         </template>
       </scroll-list>
     </load-data>
@@ -103,6 +103,7 @@ import {
   handle_destroyed
 } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js';
 import {
   PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
@@ -192,6 +193,17 @@ export default {
     function get_league_list() {
       return MatchLeagueData.get_league_list()||[]
     }
+
+    const list_scorll_top = ref(0);
+    watch(
+        () => MatchListScrollClass.scroll_top,
+        (val) => {
+          alert(MatchListScrollClass.scroll_top);
+          list_scorll_top.value = val
+        },
+        { deep: true }
+    );
+
     return {
       show_refresh_mask,
       page_source, is_conming_soon,
@@ -199,9 +211,11 @@ export default {
       matches_15mins_list,
       match_count,
       match_list_card_key_arr,
+      list_scorll_top,
       // five_leagues_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass,
+      MatchListScrollClass,
       load_data_state,
       match_list_top,
       match_list_card,
