@@ -14,7 +14,7 @@
                    
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
-                    <div v-show="item.ct > 0 && current_mi != 0" class="sport-match-count">
+                    <div v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000" class="sport-match-count">
                       {{ item.ct || 0 }}
                     </div>
                   </div>

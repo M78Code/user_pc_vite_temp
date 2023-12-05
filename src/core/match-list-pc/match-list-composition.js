@@ -49,7 +49,6 @@ let mitt_list = [];
 let tid_match_list;
 // 调用列表接口
 useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
-	console.log('EMIT_FETCH_MATCH_LIST')
 	clearTimeout(tid_match_list)
 	tid_match_list = setTimeout(() => {
 		fetch_match_list(is_socket)//请求接口
