@@ -8,17 +8,15 @@
     <div class="sub-menu-date-w">
         <div class="sport-m-container">
           <div class="s-menu-container flex">
-            <template v-for="item in scrollDataList" :key="lodash_.get(item, 'mi')">
-              <div class="sport-menu-item flex justify-center" @click="set_menu_lv2(item, $event)" >
-                <div class="inner-w flex justify-between items-center" :class="{
-                  current: current_mi == item.mi
-                }
-                  ">
+            <template  v-for="(item,index) in scrollDataList" :key="index">
+              <!-- 全部 vr 收藏 电竞显示  -->
+              <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" >
+                <div class="inner-w flex justify-between items-center">
                   <div class="sport-w-icon">
                    
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
-                    <div v-show="item.ct > 0" class="sport-match-count">
+                    <div v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000" class="sport-match-count">
                       {{ item.ct || 0 }}
                     </div>
                   </div>
@@ -35,15 +33,16 @@
 </template>
 <script setup>
 import { ref,reactive,onMounted,onUnmounted,nextTick } from "vue";
-import lodash_ from "lodash";
-import BaseData from "src/core/base-data/base-data.js";
+// import lodash_ from "lodash";
+// import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/core/index.js";
 import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 const ref_data = reactive({
     emit_lsit:{}
 })
-
+const menu_show_id = reactive([0,300,50000,2000]);//全部 vr 收藏 电竞显示
+const scrollTab = ref(null);
 const props = defineProps({
   // 滑动菜单数据
   scrollDataList:{
@@ -61,15 +60,23 @@ const emits = defineEmits(['changeList'])
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  event = event || scrollTab.value[0];
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_i) return;
-  event && scrollMenuEvent(event,".s-menu-container",".sport-menu-item");
+  scrollMenuEvent(event,".s-menu-container",".current");
   nextTick(()=>{
-    // 设置菜单点击事件
-    useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
+  // 设置菜单点击事件
+  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
   })
 }
-
+/**
+ * 初始化滚动条
+ */
+const scrollTabMenu = () =>{
+    scrollMenuEvent(scrollTab.value[0],".s-menu-container",".sport-menu-item");
+  // })
+}
+defineExpose({scrollTabMenu});
 /**
  * @description: 球类id转化背景
  * @param {String} id 球类id

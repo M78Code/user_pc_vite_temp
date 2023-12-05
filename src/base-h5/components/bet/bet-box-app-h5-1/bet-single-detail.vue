@@ -299,7 +299,7 @@ onUnmounted(() => {
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
   margin-top: 0.1rem;
-  background: var(--q-gb-bg-c-3);
+  background: var(--q-gb-bg-c-22);
   border-radius: 0.01rem;
   display: flex;
   justify-content: space-between;

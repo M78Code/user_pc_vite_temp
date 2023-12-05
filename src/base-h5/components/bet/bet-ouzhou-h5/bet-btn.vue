@@ -5,7 +5,7 @@
 <template>
   <div class="tip component bet-btn-item">
     <div class="bet-error" v-if="BetViewDataClass.error_message">
-      {{ BetViewDataClass.error_message ? i18n_t(BetViewDataClass.error_message):'' }}
+      {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
     </div>
   </div> 
     <div class="bet_content_bottom component bet-btn-item">

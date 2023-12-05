@@ -35,12 +35,7 @@
                 </div>
                 <template v-slot:after>
                     <div style="height:15px"></div>
-                    <div class="pager-wrap row justify-center">
-                        <div class="go-top-btn yb-flex-center" @click="on_go_top">
-                            <icon-wapper name="icon-go_top" size="14px" />
-                            <div class="msg">{{ $t("common.back_top") || "" }}</div>
-                        </div>
-                    </div>
+                    <back-top :onClick="on_go_top" />
                 </template>
             </scroll-list>
         </load-data>
@@ -52,6 +47,7 @@ import { onMounted, onUnmounted, ref, watch, getCurrentInstance, onActivated } f
 
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { IconWapper } from 'src/components/icon'
+import { BackTop } from "src/components/back-top";
 import LoadData from 'src/components/load_data/load_data.vue';
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue"
@@ -77,6 +73,7 @@ export default {
         LoadData,
         ScrollList,
         IconWapper,
+        BackTop,
         LoadData,
         ConmingSoon
     },

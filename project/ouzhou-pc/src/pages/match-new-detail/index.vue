@@ -39,33 +39,55 @@
             {{ formatTime(detail_info.mgt, 'dd/mm hh:MM')  }}
             </span>
           -->
-            <span class="leagal-time">
-              <span v-if="detail_info.ms==0"> {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}</span>
+          <span class="leagal-time">
+            <match-process
+              :match="detail_info"
+              show_page="match-list"
+              :rows="1"
+            />
+            <!-- <span v-if="detail_info.ms==0"> {{ formatTime(detail_info.mgt, 'mm月dd日 hh:MM')  }}</span>
               <span v-else >
                 <match-process :match="detail_info" show_page="match-list" :rows="1" />
-              </span>
-               
-            </span>
+              </span> -->
+          </span>
         </div>
         <div>
-          <div class="expansion_ref_slotHeader expansion-vs" @click.stop="show_item">
-                <div>
-                  <span class="home-vs-away">{{ detail_info.mhn }} </span>
-                  <span class="match-detail-head-name m-10">v</span>
-                  <span class="home-vs-away">{{ detail_info.man }}</span>
-                </div>
-                <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`" class="expand-icon" />
+          <div
+            class="expansion_ref_slotHeader expansion-vs"
+            @click.stop="show_item"
+          >
+            <div>
+              <span class="home-vs-away">{{ detail_info.mhn }} </span>
+              <span class="match-detail-head-name m-10">v</span>
+              <span class="home-vs-away">{{ detail_info.man }}</span>
+            </div>
+            <img
+              :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
+              class="expand-icon"
+            />
+          </div>
+          <!-- 显示赛事卡片 -->
+          <q-card
+            class="match-name-list"
+            :style="{ maxHeight: showDetailList ? '500px' : '0px' }"
+          >
+            <div v-for="item in matchDetailList" :key="item.mid">
+              <div
+                :class="{
+                  'card-item': true,
+                  'active-nav': current_id == item.mid,
+                }"
+                @click="match_click(item)"
+              >
+                {{ item.mhn + " v " + item.man }}
               </div>
-             <!-- 显示赛事卡片 -->
-              <q-card class="match-name-list" :style="{maxHeight:showDetailList?'500px':'0px'}">
-              <div v-for="item in matchDetailList" :key="item.mid">
-                <div :class="{ 'card-item': true, 'active-nav': current_id == item.mid }" @click="match_click(item)">
-                  {{ item.mhn + " v " + item.man }}
-                </div>
-              </div>
-            </q-card>
+            </div>
+          </q-card>
         </div>
-        <div class="header_banne sport_bg" :style="`background-position:0 -${sport_ball_type[sportId]}px`"></div>
+        <div
+          class="header_banne sport_bg"
+          :style="`background-position:0 -${sport_ball_type[sportId]}px`"
+        ></div>
       </div>
       <!-- tabs 玩法分类切换 -->
       <tabs :tab_options="tabList" v-model="current_key" />
@@ -84,36 +106,42 @@
     </div> -->
   </div>
   <div class="detail-loading" v-show="detail_loading">
-      <loading></loading>
-    </div>
+    <loading></loading>
+  </div>
 </template>
 
 <script>
-import { onMounted, ref, provide,onUnmounted } from "vue";
-import { utils, MenuData, LOCAL_PROJECT_FILE_PREFIX ,useMittOn,MITT_TYPES} from "src/core/index.js";
+import { onMounted, ref, provide, onUnmounted } from "vue";
+import {
+  utils,
+  MenuData,
+  LOCAL_PROJECT_FILE_PREFIX,
+  useMittOn,
+  MITT_TYPES,
+} from "src/core/index.js";
 import odds_info from "./components/odds_info.vue";
 import analysis from "./analysis/index.vue";
 import tabs from "./components/tabs.vue";
 import breadcrumbs from "./components/breadcrumbs.vue";
 import { usedetailData } from "./index";
-import { formatTime, format_M_D_PC } from 'src/core/format/index.js'
+import { formatTime, format_M_D_PC } from "src/core/format/index.js";
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
-import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
-export default{
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
+export default {
   components: {
     tabs,
     breadcrumbs,
     analysis,
     odds_info,
     loading,
-    matchProcess
+    matchProcess,
   },
-  setup(ctx){
+  setup(ctx) {
     const router = useRouter();
     const route = useRoute();
     const refresh_data = ref(false);
-    const sportId = route.params.csid
+    const sportId = route.params.csid;
     const {
       tabList,
       detail_list,
@@ -127,11 +155,11 @@ export default{
       matchDetailList,
       current_id,
       refresh,
-      get_match_detail
+      get_match_detail,
     } = usedetailData(route);
     provide("all_hl_item", all_hl_item);
 
-  const showDetailList = ref(false) 
+    const showDetailList = ref(false);
     const match_click = (item) => {
       current_id.value = item.mid;
       const { mid, tid, csid } = item;
@@ -150,37 +178,34 @@ export default{
       }, 200);
     };
 
-    const refresh_click =lodash.debounce(() => {
+    const refresh_click = lodash.debounce(() => {
       refresh_data.value = true;
       init({
-        isNeedLoading: false
+        isNeedLoading: false,
       });
       setTimeout(() => {
         refresh_data.value = false;
       }, 1000);
-    },500);
+    }, 500);
 
-
-
-    const show_item = ()=>{
-      showDetailList.value = !showDetailList.value
-    }
-    const detail_mitt=useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,init).off
-    function mousedown_fun(e){
-      if (e.target.className!='home-vs-away') {
-        showDetailList.value = false
-        
+    const show_item = () => {
+      showDetailList.value = !showDetailList.value;
+    };
+    const detail_mitt = useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, init).off;
+    function mousedown_fun(e) {
+      if (e.target.className != "home-vs-away") {
+        showDetailList.value = false;
       }
-        // expansion_ref.value&&expansion_ref.value.hide();
+      // expansion_ref.value&&expansion_ref.value.hide();
     }
-    onMounted(()=>{
-      window.addEventListener('mousedown',mousedown_fun )
-    })
-    
-    onUnmounted(()=>{
-      detail_mitt()
-      window.removeEventListener('mousedown',mousedown_fun)
-    })
+    onMounted(() => {
+      window.addEventListener("mousedown", mousedown_fun);
+    });
+
+    onUnmounted(() => {
+      detail_mitt();
+      window.removeEventListener("mousedown", mousedown_fun);
+    });
 
     const sport_ball_type = {
       1: 0,
@@ -190,8 +215,9 @@ export default{
       7: 1170,
       8: 180,
       9: 270,
+      10: 360,
     };
-    return{
+    return {
       tabList,
       detail_list,
       current_key,
@@ -205,19 +231,17 @@ export default{
       current_id,
       refresh,
       sport_ball_type,
-   
+
       refresh_data,
       LOCAL_PROJECT_FILE_PREFIX,
       formatTime,
       match_click,
       refresh_click,
       show_item,
-      showDetailList
-    }
-  }
-}
-
-
+      showDetailList,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -270,7 +294,7 @@ export default{
     .temp-on {
       margin-left: 4px;
     }
-  } 
+  }
   .match-detail-head {
     position: relative;
     height: 80px;
@@ -278,9 +302,9 @@ export default{
     padding: 15px 0 16px 14px;
     background: var(--q-gb-bg-lg-4);
 
-    :deep(.q-item){
+    :deep(.q-item) {
       padding: 8px 0px;
-    }  
+    }
 
     .detail-head-leagal {
       display: flex;
@@ -288,9 +312,13 @@ export default{
       align-items: center;
 
       .leagal-time {
+        margin-left: 5px;
         background-color: var(--q-gb-bg-c-10);
         color: var(--q-gb-t-c-5);
-        padding: 2px 0px 2px 10px;
+        padding: 2px 5px 2px 0px;
+        :deep(.date-wrap) {
+          display: flex;
+        }
       }
     }
 
@@ -376,7 +404,7 @@ export default{
 .sport_bg {
   width: 226px;
   height: 80px;
-  background-image:url($SCSSPROJECTPATH + "/image/png/icon_sport_bg.png"); 
+  background-image: url($SCSSPROJECTPATH + "/image/png/icon_sport_bg.png");
   background-size: 226px;
   position: absolute;
   top: 0;
@@ -421,9 +449,8 @@ export default{
   }
 }
 .detail-loading {
-
   height: 100%;
-  &::v-deep{
+  &::v-deep {
     .loading_box {
       padding-top: 330px;
     }
@@ -447,20 +474,19 @@ export default{
   }
 }
 
-
-.expansion_ref_slotHeader{
-    width: 100%;
-    line-height: 35px;
-    font-weight: 500;
-    display: flex;
+.expansion_ref_slotHeader {
+  width: 100%;
+  line-height: 35px;
+  font-weight: 500;
+  display: flex;
 }
 
 ::v-deep .q-expansion-item {
-    .q-focus-helper {
-        visibility: hidden;
-    }
+  .q-focus-helper {
+    visibility: hidden;
+  }
 }
-.expansion-vs{
+.expansion-vs {
   cursor: pointer;
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable

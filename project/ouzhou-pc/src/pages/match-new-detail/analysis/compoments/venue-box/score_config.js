@@ -1,4 +1,7 @@
-// 假数据
+// 比分榜列表头
+
+// 引入国际化
+import { i18n_t } from "src/boot/i18n.js";;
 export const sport_columns = {
   1: [
     {
@@ -103,6 +106,7 @@ export const sport_columns = {
       courseIndex: 'HT',
       course: "HT",
       label: i18n_t("common.half_"),
+      language:'common.half_',
       field: "ht",
       headerStyle: "width: 33px",
     },
@@ -128,6 +132,7 @@ export const sport_columns = {
       name: "t",
       align: "left",
       label: i18n_t("common.total"),
+      language:'common.total',
       field: "t",
       headerStyle: { width: "33px", color: "#ff7000" },
     },
@@ -236,6 +241,7 @@ export const sport_columns = {
       align: "left",
       label: "Set",
       field: "set",
+      language:'common.dish',
       headerStyle: "width: 33px",
     },
     {
@@ -243,6 +249,7 @@ export const sport_columns = {
       align: "left",
       label: "P",
       field: "p",
+      language:'common.score_',
       headerStyle: { width: "33px", color: "#ff7000" },
     },
   ],
@@ -418,6 +425,58 @@ export const sport_columns = {
       align: "left",
       label: "5",
       field: "q5",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "set",
+      align: "left",
+      label: "G",
+      field: "set",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "p",
+      align: "left",
+      label: "T",
+      field: "p",
+      headerStyle: { width: "33px", color: "#ff7000" },
+    },
+  ],
+  10: [
+    {
+      name: "name",
+      label: "Q4 07:31",
+      align: "left",
+      field: "name",
+      headerStyle: {
+        "margin-left": "15px",
+        display: "block",
+        height: "30px",
+        "line-height": "30px",
+      },
+    },
+    {
+      name: "q1",
+      align: "left",
+      label: "1",
+      field: "q1",
+      course: "Babak 1",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "q2",
+      align: "left",
+      label: "2",
+      field: "q2",
+      course: "Babak 2",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "q3",
+      align: "left",
+      label: "3",
+      field: "q3",
+      course: "Babak 3",
       headerStyle: "width: 33px",
     },
     {

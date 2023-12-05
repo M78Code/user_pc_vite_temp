@@ -22,14 +22,20 @@
     </div>
      <!-- 主队信息 -->
      <div class="row-item">
-      <!-- 发球方 -->
-      <div class="serve-ball" :class="[match.mat == 'home' && 'active']">
-        <div class="point"></div>
+      <div class="team-logo">
+        <img v-if="show_type == 'all' && home_avatar" 
+        :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
+        v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter, null, update_show_default]" />
+        <div v-else v-show="lodash.get(match, 'mhn')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"></div>
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
             {{lodash.get(match, 'mhn')}}
+          </div>
+          <!-- 发球方 -->
+          <div class="serve-ball" :class="[match.mat == 'home' && 'active']">
+            <div class="point"></div>
           </div>
         </div>
       </div>
@@ -40,16 +46,22 @@
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
-      <!-- 发球方 -->
-      <div class="serve-ball" :class="[match.mat == 'away' && 'active']">
-        <div class="point"></div>
-      </div>
+      <div class="team-logo">
+        <img v-if="show_type == 'all' && away_avatar"
+        :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
+        v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter,  null, update_show_default]" />
+        <div v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"></div>
+      </div> 
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div
             class="team-name away ellipsis allow-user-select"
             :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
+          <!-- 发球方 -->
+          <div class="serve-ball" :class="[match.mat == 'away' && 'active']">
+            <div class="point"></div>
+          </div>
         </div>
       </div>
       <!-- 主比分 -->
@@ -103,6 +115,13 @@ const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
 const is_show_away_red = ref(false) // 是否显示客队红牌动画
 const is_collect = ref(false) //赛事是否收藏
+
+const show_default_img = ref(false); //是否显示默认队伍头像
+
+const update_show_default = (value)=>{
+  show_default_img.value = value;
+}
+
 let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(lodash.get(match.value, 'match.mid'))
 const handicap_num = computed(() => {
   if(GlobalAccessConfig.get_handicapNum()){
@@ -157,6 +176,17 @@ const collect = () => {
   is_collect.value = !is_collect.value
   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, match.value)
 }
+
+const home_avatar = computed(()=>{
+  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_1_logo;
+  
+  return url
+})
+
+const away_avatar = computed(()=>{
+  const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
+  return url
+})
 
 // 监听收藏变化
 watch(() => match.value.mf, (n) => {
@@ -253,6 +283,16 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .basic-wrap {
   padding: 10px 10px;
+  .team-logo {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    img,div {
+      width: 16px;
+      height: 16px;
+      background-size: 100%;
+    }
+  }
   .collect-box {
     margin-bottom: 7px;
     .collect-start {
@@ -290,7 +330,6 @@ onUnmounted(() => {
     display: flex;
     height: 16px;
     align-items: center;
-    padding-left: 25px;
     &+.row-item {
       margin-top: 4px;
     }
@@ -312,11 +351,9 @@ onUnmounted(() => {
 
     /*  发球方 */
   .serve-ball {
-    position: absolute;
-    top: 4px;
-    left: 4px;
     width: 5px;
     height: 5px;
+    margin-left: 10px;
     &.active {
       .point {
         background-color: var(--q-gb-bg-c-1);

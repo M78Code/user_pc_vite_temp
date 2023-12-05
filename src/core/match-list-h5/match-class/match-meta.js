@@ -94,7 +94,7 @@ class MatchMeta {
     // 获取真实数据
     this.http_params.md = md
     // 是否需要开赛、未开赛归类
-    const is_classify = project_name === 'app-h5' ? false : false
+    const is_classify = project_name === 'app-h5' ? true : false
     is_match && this.get_target_match_data({ md, is_classify })
 
     // 滚球全部
@@ -384,7 +384,7 @@ class MatchMeta {
    */
   filter_hot_match_by_tid (tid = '') {
     const tid_info = this.tid_map_mids[`tid_${tid}`]
-    this.get_target_match_data({ is_classify: false, tid })
+    this.get_target_match_data({ is_classify: true, tid })
     if (!tid_info) return
     const mids = this.tid_map_mids[`tid_${tid}`].mids
     if (mids.length < 1) return 

@@ -96,6 +96,7 @@ onMounted(()=>{
       color: #C2C2C2;
       .secondary_name {
         margin-right: 30px;
+        cursor: pointer;
       }
       .active {
         -color: var(--q-gb-t-c-2);

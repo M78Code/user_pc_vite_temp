@@ -36,7 +36,7 @@ const init_load = ref(false); //用于加载是否完成
     if (top.location != location) {
       if (
         DEFAULT_VERSION_NAME == "zhuanye" &&
-        url_params.ignore_iframe_pc == 1
+        window.SEARCH_PARAMS.init_param.get('ignore_iframe_pc') == 1
       ) {
         SessionStorage.set("hide_logo_icon", "1");
       }

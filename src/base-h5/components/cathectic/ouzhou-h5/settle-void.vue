@@ -29,7 +29,7 @@ template {
   min-height: 4rem;
   border-radius: 0.1rem;
   opacity: 0;
-  animation: opacityAnimate 1.5s linear;
+  animation: opacityAnimate 0.5s linear;
   animation-fill-mode: forwards;
   img {
     width: 2.4rem;

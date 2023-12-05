@@ -99,6 +99,7 @@ const onChangeDate = e => {
   if (store.tabActive !== 'Matches') {
     MatchMeta.get_ouzhou_leagues_data(e).then(res => {
       // console.log('onChangeDate', res, store.selectArea)
+      if (res === null) res = []
       if (res.length) {
         store.areaList = res
         if (JSON.stringify(store.selectArea) === '{}') {
