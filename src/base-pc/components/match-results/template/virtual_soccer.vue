@@ -148,6 +148,7 @@ export default {
     &:nth-child(3),
     &:nth-child(4),
     &:last-child {
+      padding-left: 20px;
       width: 21.16%;
     }
     &:nth-child(4),
@@ -179,12 +180,12 @@ export default {
       }
       &:nth-child(5),
       &:last-child{
-          width: 12%;
+        // padding-left: 20px;
+        width: 12%;
       }
-      &:nth-child(4),
       &:nth-child(5),
       &:last-child {
-        // text-align: center;
+        text-align: center;
       }
     }
   }

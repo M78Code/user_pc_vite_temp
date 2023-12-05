@@ -101,6 +101,7 @@ export default {
     user-select: none!important;
   }
   &:last-child {
+    padding-left: 20px;
     width: 25%;
   }
   .rs_jiao_shang,
