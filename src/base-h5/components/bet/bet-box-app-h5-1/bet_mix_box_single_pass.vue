@@ -47,13 +47,13 @@
       //margin-top: 10px;
       display: flex;
       justify-content: space-between;
-      background: var(--q-gb-bg-c-3);
+      background: var(--q-gb-bg-c-22);
       padding: 10px;
       border-radius: 0.12rem;
   }
   .nonebox4-content-left-title{
       font-size: 13px;
-      color: var(--q-gb-t-c-14);
+      color: var(--q-gb-t-c-20);
   }
   .nonebox4-content-left-content{
       height: 70px;
@@ -74,7 +74,7 @@
   .nonebox4-content-right-profit{
       font-size: 18px;
       font-weight: bold;
-      color: var(--q-gb-t-c-14);
+      color: var(--q-gb-t-c-20);
   }
   .nonebox4-content-right-profit-type{
       font-size: 16px;
