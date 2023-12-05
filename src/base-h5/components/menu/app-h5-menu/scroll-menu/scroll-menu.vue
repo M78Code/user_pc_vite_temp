@@ -9,7 +9,8 @@
         <div class="sport-m-container">
           <div class="s-menu-container flex">
             <template  v-for="(item,index) in scrollDataList" :key="index">
-              <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi)" ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" >
+              <!-- 全部 vr 收藏 电竞显示  -->
+              <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" >
                 <div class="inner-w flex justify-between items-center">
                   <div class="sport-w-icon">
                    
@@ -55,7 +56,6 @@ const props = defineProps({
   }
 })
 const emits = defineEmits(['changeList'])
-
 /**
  * 二级菜单事件
 */
