@@ -20,6 +20,8 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import AllCloseControl from "./AllCloseControl";
+
 const props = defineProps({
   category_list: {
     type: Array,
@@ -89,6 +91,8 @@ const tab_move2 = (currentIndex, scrollBox, whether_to_slide) => {
 //#region 一件收起/展开 初始情况为一键收起
 function changeAll(){
   emit('update:allCloseState',!props.allCloseState)
+  // AllCloseControl.unfold = !AllCloseControl.unfold
+  AllCloseControl.unfold = !props.allCloseState
 }
 //#endregion
 

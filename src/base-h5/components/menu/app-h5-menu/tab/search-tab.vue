@@ -10,7 +10,7 @@
     <!-- <div class="search-tab-wap"> -->
         <div class="search-tab-content">
             <ul class="search-tab-content-ul">
-                <li :class="{ active: activeOn === item.tid }" v-for="(item, index) in dataList" :key="index"
+                <li ref="searchTab" :class="{ active: activeOn === item.tid }" v-for="(item, index) in dataList" :key="index"
                     @click="changeTab(item.tid,index,$event)">
                     <img v-show="item.img" :src="item.img" />
                     {{ item.name }}
@@ -103,6 +103,8 @@ const props = defineProps({
     }
 });
 const drawerRight = ref(false)
+const searchTab = ref(null)
+
 const activeOn = ref(props.defaultVal || '0');//默认值
 const league_data = ref([])
 
@@ -128,7 +130,14 @@ const changeTab = (tid,i,event) => {
         MatchMeta.filter_hot_match_by_tid(tid)
     }
 }
-
+/**
+ * 初始化滚动条
+ */
+ const searchTabMenu = () =>{
+    activeOn.value = '0';
+    scrollMenuEvent(searchTab.value[0],".search-tab-content-ul",".active");
+}
+defineExpose({searchTabMenu});
 /**
  * 搜索足球事件
  */
@@ -181,7 +190,7 @@ function key_down(event) {
                 font-style: normal;
                 font-weight: 400;
                 //color: #7981A4;
-                color: var(--q-gb-t-c-19);
+                color: var(--q-gb-t-c-20);
                 &:first-child {
                     width: 0.4rem;
                 }

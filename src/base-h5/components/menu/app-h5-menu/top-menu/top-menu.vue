@@ -307,7 +307,7 @@ const set_menu_lv1 = item => {
         border-radius: 25px;
         float: right;
         background: var(--q-gb-bg-c-18);
-        color: var(--q-gb-bd-c-2);
+        color: var(--q-gb-t-c-20);
         text-align: center;
         display: flex;
         align-items: center;

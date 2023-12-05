@@ -5,32 +5,39 @@
       <span class="odds-hpn-text">{{ data.hpn }}</span>
       <!-- 置顶按钮 -->
       <OddsSetTop :value="data"></OddsSetTop>
-      <span class="odds-hpn-icon" :class="unfold ? 'up' : 'down'"></span>
+      <span class="odds-hpn-icon" :class="unfold ?'down':'up'"></span>
     </div>
     <div v-show="unfold">
       <!-- <OddTemplateDynamicComponent></OddTemplateDynamicComponent> -->
+      ----
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, reactive, ref, watch, computed } from "vue";
 import OddsSetTop from './OddsSetTop.vue'
+import AllCloseControl from "./AllCloseControl";
+
 // import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
 
 type Props = {
   data: TYPES.OddInfo
-  unfold?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
-  unfold: false
 })
 const emit = defineEmits<{
-  (e:'update:unfold',param:boolean):void;
 }>()
 
+const state = reactive({
+  unfold: true
+})
 
+watch(()=> AllCloseControl.unfold,(val)=>state.unfold = val)
+
+// const unfold = computed(()=> state.unfold || props.unfold)
+const unfold = computed(()=> state.unfold)
 function toggleUnfold(){
-
+  state.unfold = !state.unfold
 }
 
 const order = computed(() => {
