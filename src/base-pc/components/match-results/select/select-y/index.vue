@@ -75,6 +75,7 @@
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { i18n_t } from "src/core/index";
 import { IconWapper } from 'src/components/icon'
+const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 // import { mapGetters } from "vuex";
 import {
   useMittOn,
@@ -318,7 +319,7 @@ const confrim = () => {
   });
 };
 const versions_class = computed(() => {
-  return `versions-${window.env.config.DEFAULT_VERSION_NAME}`;
+  return `versions-${DEFAULT_VERSION_NAME}`;
 });
 
 onMounted(() => {

@@ -80,6 +80,7 @@ import {MatchProcessFullVersionWapper as MatchProgress} from "src/components/mat
 import details from "src/core/match-list-pc/details-class/details.js"
 import video from "src/core/video/video.js"
 import refresh from "src/components/refresh/refresh.vue"
+const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 export default {
   name: "VideoHeader",
   components:{
@@ -98,7 +99,7 @@ export default {
   },
   data(){
     return {
-      version_name:window.env.config.DEFAULT_VERSION_NAME,
+      version_name:DEFAULT_VERSION_NAME,
     }
   },
   computed:{
