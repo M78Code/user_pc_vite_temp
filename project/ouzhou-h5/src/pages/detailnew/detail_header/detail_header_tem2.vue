@@ -58,6 +58,8 @@
         </div>
       </div>
     </div> -->
+    <!-- <right_actions /> -->
+
   </div>
 </template>
   
@@ -68,6 +70,7 @@ import { api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
 import { useMittOn, useMitt,MITT_TYPES } from "src/core/index.js"
 import SwitchButtons from "./components/SwitchButtons.vue"
+import right_actions from "./components/right_actions.vue"
 const props = defineProps({
   get_match_detail: {
     type: Object,

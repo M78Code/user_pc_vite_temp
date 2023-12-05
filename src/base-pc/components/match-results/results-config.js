@@ -418,7 +418,6 @@ export const useGetResultConfig = () => {
           }
           //获取联赛数据
           get_pournament();
-          console.error('sport_typesport_type',state.champion_sport_type)
         } else {
           state.load_data_state = "empty";
         }
@@ -933,7 +932,6 @@ export const useGetResultConfig = () => {
     //重置筛选条件
     state.pournament_params.tournamentId = "";
     state.pournament_params.nameStr = "";
-    console.error('state.pournament_params',state.results_params)
     state.init = true; //查询赛事
    get_pournament(1); //联动调取联赛数据
   };
