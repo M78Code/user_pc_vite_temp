@@ -40,14 +40,15 @@ export default {
           } else {
             SessionStorage.set("hide_logo_icon", "0");
           }
-          // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
+         
+        } catch (error) {
+          console.error(error)
+        } finally {
+           // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
           // 后面如果确实有需要就自己处理 。目前这个是兼容某些异常场景下 接口先返回来回
           // 文件后返回回来 的显示异常，不管 前端缓存，资源文件丢失的场景，生产无此场景
           let languageName = window.SEARCH_PARAMS.init_param.get('lang') ||LocalStorage.get('lang') ||'zh';
           await loadLanguageAsync(languageName);
-        } catch (error) {
-          console.error(error)
-        } finally {
           console.log(" init_domain --  开始执行:");
           // 实例化域名检测类对象
           AllDomain.create(() => {

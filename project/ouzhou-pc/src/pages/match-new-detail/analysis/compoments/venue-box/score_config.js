@@ -435,6 +435,58 @@ export const sport_columns = {
       headerStyle: { width: "33px", color: "#ff7000" },
     },
   ],
+  10: [
+    {
+      name: "name",
+      label: "Q4 07:31",
+      align: "left",
+      field: "name",
+      headerStyle: {
+        "margin-left": "15px",
+        display: "block",
+        height: "30px",
+        "line-height": "30px",
+      },
+    },
+    {
+      name: "q1",
+      align: "left",
+      label: "1",
+      field: "q1",
+      course: "Babak 1",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "q2",
+      align: "left",
+      label: "2",
+      field: "q2",
+      course: "Babak 2",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "q3",
+      align: "left",
+      label: "3",
+      field: "q3",
+      course: "Babak 3",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "set",
+      align: "left",
+      label: "G",
+      field: "set",
+      headerStyle: "width: 33px",
+    },
+    {
+      name: "p",
+      align: "left",
+      label: "T",
+      field: "p",
+      headerStyle: { width: "33px", color: "#ff7000" },
+    },
+  ],
 };
 
 /**

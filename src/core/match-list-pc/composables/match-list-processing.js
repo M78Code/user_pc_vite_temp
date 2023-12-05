@@ -5,9 +5,9 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { virtual_sport_format } from 'src/core/format/module/format-match.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import {mx_collect_count, set_collect_count, match_collect_status} from "./match-list-collect.js";
+import { mx_collect_count, set_collect_count, match_collect_status } from "./match-list-collect.js";
 import virtual_composable_fn from './match-list-virtual.js'
-import {api_bymids, set_league_list_obj} from "./match-list-featch.js";
+import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
@@ -101,7 +101,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	if (MenuData.is_kemp()) {
 		all_league_list.push(...lodash.get(res_data, "data", []));
 	}
-	!backend_run&&deal_with_list_data(all_league_list);
+	!backend_run && deal_with_list_data(all_league_list);
 	// 设置数据仓库 联赛列表对象
 	set_league_list_obj(res_data)
 	if (code == 200 && all_league_list.length > 0) {
@@ -113,18 +113,18 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		} else {
 			try {
 				// 组装所有赛事,检测赛事收藏,算总共的收藏赛事数量
-			  all_league_list.forEach(item => {
-				let mids_ = lodash.get(item,'mids','').split(',');
-				mids_.forEach(mid_ => {
-					// 组装所有赛事
-				  const temp_match = {mid:mid_,csid:item.csid,tid:item.tid}
-				  // 设置收藏信息
-				  match_collect_status(temp_match)
+				all_league_list.forEach(item => {
+					let mids_ = lodash.get(item, 'mids', '').split(',');
+					mids_.forEach(mid_ => {
+						// 组装所有赛事
+						const temp_match = { mid: mid_, csid: item.csid, tid: item.tid }
+						// 设置收藏信息
+						match_collect_status(temp_match)
+					});
 				});
-			  });
 			} catch (error) {
-			  count_mf = lodash.get(data,'data.collectCount',0)
-			  console.error(error);
+				count_mf = lodash.get(data, 'data.collectCount', 0)
+				console.error(error);
 			}
 			set_collect_count({
 				type: "set",
@@ -176,7 +176,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				data: {}
 			})
 		}
-		
+
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
@@ -198,6 +198,11 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				tid: first_league.tid,
 				sportId: first_league.csid,
 			};
+			if (MatchListCardDataClass.current_mid.value) {
+				const match = MatchListData.get_quick_mid_obj(MatchListCardDataClass.current_mid.value)
+				// 控制右侧比分板
+				match && MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
+			}
 		} else {
 			if (MenuData.is_kemp()) {
 				// 冠军玩法 调用接口切换右侧
@@ -217,10 +222,11 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				callback_func = () => {
 					// lockie
 					const match = MatchListData.get_quick_mid_obj(Number(mids[0]));
-					if(match){
+					if (match) {
 						MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
 						useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids[0])
 					}
+
 					// this.regular_events_set_match_details_params(cut, params);
 				};
 			}
@@ -259,16 +265,16 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collect, backend_run }) => {
 	is_show_hot.value = false;
-  match_list.forEach(match => {
-	  match_collect_status(match)        
+	match_list.forEach(match => {
+		match_collect_status(match)
 	})
-	if(Array.isArray(match_list)){ //有时候是 {}
+	if (Array.isArray(match_list)) { //有时候是 {}
 		MatchListData.set_list(match_list)
 	}
 	// 设置第一条数据为当前mid，给分数板高亮用
-	if(match_list.length){
+	if (match_list.length) {
 		const mid_index = match_list.findIndex(item => item?.mid == MatchListCardDataClass.current_mid.value)
-		MatchListCardDataClass.set_current_mid(match_list[mid_index >= 0 ? mid_index : 0].mid); 
+		MatchListCardDataClass.set_current_mid(match_list[mid_index >= 0 ? mid_index : 0].mid);
 	}
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
@@ -297,7 +303,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 				// 	tid: first_match.tid,
 				// 	sportId: first_match.csid,
 				// };
-				if(first_match){
+				if (first_match) {
 					MatchDataWarehouse_PC_Detail_Common.set_match_details(first_match, [])
 					useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, first_match.mid)
 				}
@@ -305,6 +311,11 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 			}
 		}
 	} else {
+		if (MatchListCardDataClass.current_mid.value) {
+			const match = MatchListData.get_quick_mid_obj(MatchListCardDataClass.current_mid.value)
+			// 控制右侧比分板
+			match && MatchDataWarehouse_PC_Detail_Common.set_match_details(match, [])
+		}
 		// 更新可视区域赛事盘口数据
 		useMittEmit(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE)
 	}
@@ -409,9 +420,9 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	}
 };
 
-export  {
-		// 处理服务器返回的 列表 数据 ---滚球
+export {
+	// 处理服务器返回的 列表 数据 ---滚球
 	mx_use_list_res,
-		// 处理服务器返回的 列表 数据 ---联赛结构
-		mx_list_res
+	// 处理服务器返回的 列表 数据 ---联赛结构
+	mx_list_res
 }
