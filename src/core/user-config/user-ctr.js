@@ -1433,7 +1433,7 @@ class UserCtr {
     // theme主题
     res.theme = this.theme || get_value('theme');
     // 语言
-    res.lang = this.lang || get_value('lang');
+    res.lang = this.lang || get_value('lang') || "";
     // api 获取默认最快域名进行加密
     res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api'));
     // 功能附加参数
