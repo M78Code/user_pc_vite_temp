@@ -76,7 +76,7 @@ const set_menu_match_date = () => {
         // }
     })
 }
-defineExpose({set_active_val,changeTabMenu,set_menu_match_date})
+defineExpose({set_active_val,changeTabMenu})
 
 
 </script>
