@@ -628,13 +628,13 @@ export const useGetResultConfig = () => {
               results,
               (item) => item.tournamentName == state.league
             );
-            state.get_tr_detail([route.query, index]);
+            get_tr_detail([route.query, index]);
           }
         });
         // state.league_type = Array.from(new Set(tournament));
       } else {
         state.results_data = [];
-        state.results_list = {};
+        state.results_list = [];
         state.load_data_state = "empty";
       }
     });
