@@ -3,9 +3,9 @@
 <template>
     <div class="bet-footer">
         <div v-show="false">  {{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{i18n_t.locale}}-{{UserCtr.user_version}}</div>
-        <div class="bet-state" v-show="BetViewDataClass.error_message">
+        <div class="bet-state" v-if="BetViewDataClass.error_message">
             <div class="w-100 f-c-c bet-title" :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
-                {{ BetViewDataClass.error_message ? i18n_t(BetViewDataClass.error_message):'' }}
+                {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
             </div>
         </div>
         <div class="f-b-c bet-content" v-if="BetViewDataClass.bet_order_status == 1">
