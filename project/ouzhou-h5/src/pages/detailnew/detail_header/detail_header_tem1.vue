@@ -1,5 +1,5 @@
 <template>
-  <div class="detail_header_tem1">
+  <div class="component detail_header_tem1">
     <div class="match-detail-head">
       <div
         v-show="get_match_detail?.csid"
@@ -60,6 +60,9 @@
         </div>
         <div
           class="match-detail-item-list baseketball-list"
+          :class="{
+            'game-on':[1,2].includes(get_match_detail.ms)
+          }"
           v-if="['2', '6'].includes(get_match_detail.csid+'')"
         >
           <div class="line"></div>
@@ -472,7 +475,9 @@ onMounted(()=>{
         padding: 0 15px 0 0;
         font-weight: 700;
         // font-weight: 500; //已在父节点设置font-weight
-        &:last-child{
+      }
+      &.game-on{
+        .list-item:last-child{
           @extend .current-score-color;
         }
       }

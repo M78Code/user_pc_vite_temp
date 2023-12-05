@@ -142,6 +142,7 @@
     font-size: 0.16rem;
     margin: .08rem 0;
     font-weight: 500;
+    word-break: keep-all;
   }
   .text-two-span{
     color: var(--q-gb-bg-c-4);

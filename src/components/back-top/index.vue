@@ -4,7 +4,7 @@
  * onClick 是点击按钮的回调，如果在这里执行了滚动操作，则不要传scrollEle
 -->
 <template>
-  <div class="back-top" v-if="isShow">
+  <div class="back-top" v-show="isShow">
     <div class="btn-back" @click="backTop">
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/t-arrow.svg`">
       <span class="txt">{{i18n_t("common.back_top") || ""}}</span>
@@ -29,7 +29,7 @@ const props = defineProps({
   }
 })
 
-const isShow = ref(false)
+const isShow = ref(true)
 
 const backTop = () => {
   if (props.onClick) {
@@ -44,14 +44,11 @@ const backTop = () => {
 }
 
 const scrollFun = lodash.debounce((val) => {
-  if (val.scrollTop > 20) {
-    isShow.value = true;
-  } else {
-    isShow.value = false;
-  }
-}, 500)
+  isShow.value = val.scrollTop > 20;
+}, 200)
 
 watch(() => props.scrollEle, (val) => {
+  isShow.value = val.scrollTop > 20;
   if (val && val.scrollTo) {
     val.addEventListener("scroll", () => scrollFun(val), { passive: true });
   }

@@ -411,10 +411,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #ffffff;
+    background: var(--q-gb-bg-c-15);
 
     .buffer-container {
-      background: #f7f9fe;
+      background: var(--q-gb-bg-c-17);
       height: 5px;
       width: 100%;
     }
@@ -668,7 +668,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: #ffffff !important;
+    background: var(--q-gb-bg-c-15) !important;
     height: 25px;
     border-bottom: 1px solid #F2F2F6;
 
@@ -685,7 +685,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: #f7f9fe;
+    background: var(--q-gb-bg-c-17);
     line-height: 20px;
     font-size: 11px;
 
@@ -766,7 +766,7 @@ export default {
 
   .match-content {
     width: 100%;
-    background: #fff;
+    background: var(--q-gb-bg-c-15);
     padding: 0 9px;
 
     .event-team {

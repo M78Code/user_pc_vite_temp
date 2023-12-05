@@ -375,7 +375,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--q-color-com-fs-color-38);
-    background: #fff;
+    background: var(--q-gb-bg-c-15);
       justify-content: space-between;
     &.progress{
       border-top: 2px solid #74C4FF
@@ -416,7 +416,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #ffffff;
+    background: var(--q-gb-bg-c-15);
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -424,7 +424,7 @@ export default {
       border-top-right-radius: 0.08rem;
     }
     .match-content{
-      background: #fff;
+      background: var(--q-gb-bg-c-15);
       padding: 0 0.1rem;
     }
   }
@@ -448,7 +448,7 @@ export default {
     position: relative;
     transition: max-height 0.3s;
     padding-left: 6px;
-    background: var(--q-match-page-bg-color-10);
+    background: var(--q-gb-bg-c-15);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -514,7 +514,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: #f7f9fe;
+    background: var(--q-gb-bg-c-17);
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -552,7 +552,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: rgba(175, 179, 200, 0.1);
+    background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
     .league-collapse-dir{
@@ -768,7 +768,7 @@ export default {
     flex-wrap: nowrap;
     display: flex;
     font-size: 0.1rem;
-    color: #303442;
+    color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
     background: var(--q-match-page-bg-color-10);
     border-top: 1px solid var(--q-gb-bd-c-4);
@@ -863,7 +863,7 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      color: #303442;
+      color: var(--q-gb-t-c-20);
       max-width: 2.8rem;
       line-height: 0.14rem;
       &.match-main-league {
@@ -1147,7 +1147,7 @@ export default {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             word-break: break-all;
-            color: #303442;
+            color: var(--q-gb-t-c-20) !important;
 
             &.is-handicap {
               font-weight: bold;
@@ -1165,7 +1165,7 @@ export default {
           font-size: 0.1rem;
           border-radius: 0.02rem;
           margin-left: 0.04rem;
-          color: #fff;
+          color: var(--q-gb-t-c-14);
 
           &.yellow {
             background: #FFA800;

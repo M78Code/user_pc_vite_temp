@@ -186,6 +186,10 @@
       "bet_col_155": {
         "bet_col_1": "HDP",
         "bet_col_2": "HDP"
+      },
+      "bet_col_173": {
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under"
       }
     }
   },

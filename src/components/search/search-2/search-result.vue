@@ -30,7 +30,11 @@
 													<span class="middle">v</span>
 													<span class="away" v-html="red_color(item.man)"></span>
 												</p>
-												<p> {{ i18n_t(`mmp.${item.csid}.${item.mmp}`) }} {{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }} <span class="red">{{ get_match_score(item, true).home_score }}-{{ get_match_score(item, true).away_score }}</span> </p>
+												<p class="flex"> 
+													<!-- 比赛时间 -->
+													<match-process style="cursor:pointer" v-if="item" :match="item" :rows="1" :date_rows="1" date_show_type="inline" periodColor="gray" />
+													<span class="red">{{ get_match_score(item, true).home_score }}-{{ get_match_score(item, true).away_score }}</span> 
+												</p>
 											</div>
 											<div style="display: flex;flex-direction: row; flex: 1">
 												<div class="flex_1"
@@ -211,6 +215,7 @@ import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
 const props = defineProps({
 	show_type: {

@@ -33,7 +33,7 @@
       </div>
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`"></div>
       <!-- 玩法名称 -->
-      <div class="play-name-ouzhou" v-if="!is_kemp && csid && !card_style_obj.is_league_fold">
+      <div class="play-name-ouzhou" v-if="!is_kemp && !card_style_obj.is_league_fold">
         <div class="play-name-title-box"
           v-for="(item, col_index) in match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))"
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
@@ -85,12 +85,11 @@ const props = defineProps({
 const is_kemp = computed(() => {
   return (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp() || MenuData.is_esports_champion()) && MenuData.menu_data_version.value
 })
-const csid = lodash.get(props.card_style_obj, 'league_obj.csid')
+const csid = (lodash.get(props.card_style_obj, 'league_obj.csid') || MenuData.current_ball_type)
 let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
 const is_collect = ref(false);
-
 watch(() => props.card_style_obj, () => {
   //第一次进页面时，收藏从接口获取状态，后续点击前端控制
   is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
@@ -123,10 +122,10 @@ const collect = lodash.throttle(() => {
   is_collect.value = !is_collect.value;
 }, 1000)
 
-const leagueIcon = computed(()=>{
-    const url =  get_server_file_path(lodash.get(props.card_style_obj, 'league_obj.lurl'));
-    return url ? url : compute_img_url('pc-home-league-default')
-  })
+const leagueIcon = computed(() => {
+  const url = get_server_file_path(lodash.get(props.card_style_obj, 'league_obj.lurl'));
+  return url ? url : compute_img_url('pc-home-league-default')
+})
 
 onUnmounted(() => {
   clearTimeout(timer)

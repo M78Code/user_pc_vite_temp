@@ -28,7 +28,7 @@
               <div v-if="!col.icon">
                 <span
                   v-if="col.field !== 'name'"
-                  :class="course === col.label ? 'heightLight' : ''"
+                  :class="(course === col.label || course === col.course) ? 'heightLight' : ''"
                   :style="{
                     'line-height': '30px',
                     color: ['p', 't'].includes(col.field)
