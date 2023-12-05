@@ -241,7 +241,7 @@ export function usedetailData(route) {
           console.log(e);
         },
         // 最大循环调用次数(异常时会循环调用),默认3次
-        max_loop: 3,
+        max_loop: 5,
         // 异常调用时延时时间,毫秒数,默认1000
         timers: 1100,
       };

@@ -207,12 +207,12 @@ export default defineComponent({
       })
     },{immediate:true})
     // 传递搜索状态
-    const get_search_data = (val) => {
+    const get_search_data =lodash.throttle( (val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
         type: 'result',
         text:String(val).trim()
       })
-    }
+    },1000)
     /**
      * 是否显示搜索组件 default: false
      * 路径: project_path\src\store\module\search.js
@@ -311,7 +311,7 @@ export default defineComponent({
       keyword.value = ''
       userRouter.push('/')
     }
-    const get_props = (props) => {
+    const get_props = (props)=>{
       keyword.value = props.text
     }
     const get_width = (props) => {

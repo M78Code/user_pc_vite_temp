@@ -770,7 +770,7 @@ export default {
     font-size: 0.1rem;
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-match-page-bg-color-10);
+    background: var(--q-gb-bg-c-15);
     border-top: 1px solid var(--q-gb-bd-c-4);
     border-bottom: 1px solid var(--q-gb-bd-c-4);
 

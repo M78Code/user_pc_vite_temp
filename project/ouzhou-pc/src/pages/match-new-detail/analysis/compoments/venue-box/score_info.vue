@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="box-bc">
-    {{ course }}
+
     <q-table
       :rows="data"
       separator="none"
@@ -37,7 +37,7 @@
                       : '#8A8986',
                   }"
                 >
-                  {{ col.label }}
+                  {{ col.language?i18n_t(col.language):col.label }}
                 </span>
                 <div
                   v-else

@@ -270,8 +270,7 @@ export const useGetResultConfig = () => {
    */
   const showDate = (start, end) => {
     let _start = start || format_day(state._date.getTime());
-    let _end =
-      end || format_day(state._date.getTime() + 1000 * 60 * 60 * 24);
+    let _end = end || format_day(state._date.getTime() + 1000 * 60 * 60 * 24);
     // 越南语时间格式和其他语言不同
     if (["vi", "th", "en", "ms", "ad"].includes(state.lang)) {
       // 初始化时直接使用服务器时间计算的值

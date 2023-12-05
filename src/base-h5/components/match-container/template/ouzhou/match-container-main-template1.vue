@@ -1369,6 +1369,7 @@ export default {
           text-overflow: ellipsis;
           white-space: nowrap;
           font-size: 12px;
+          font-weight: bold;
         }
       }
 
