@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="box-bc">
-    {{ course }}
+
     <q-table
       :rows="data"
       separator="none"
