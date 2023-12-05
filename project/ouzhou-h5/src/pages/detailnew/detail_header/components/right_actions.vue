@@ -48,7 +48,6 @@ const mapObj = computed(() => {
 // 是否时视频
 const is_video = ref(props.isVideo);
 // 选择的item
-let select = computed(() =>  list.value[0].label);
 
 const list = computed(() => {
     const res = [
@@ -58,6 +57,8 @@ const list = computed(() => {
     ];
     return res.filter(e => mapObj.value[props.status].includes(e.value));
 })
+
+let select = ref(list.value[0].label);
 
 /**
  * 回调
@@ -87,28 +88,34 @@ const handleClick = (item, index) => {
     switch (item.label) {
         // 切换动画
         case 'animation':
+        case 'video':
+            console.log(item.label, select.value, "value===");
             // if (index == 0) {
-            if (select == "animation") {
-                emit('handleType', is_video.value ? 'animation' :'video')
+            if (select.value == "animation") {
+                emits('handleType', is_video.value ? 'animation' :'video')
                 is_video.value = !is_video.value;
+                // select.value = is_video.value ? 'animation' :'video';
             }else {
-                emit('handleType', 'animation')
+                emits('handleType', 'animation')
+                select.value = 'animation';
             }
+            
             // }
             break;
         // 切换比分
         case 'score':
             emits('handleType', 'score')
+            select.value = item.label;
             break;
         // 收藏
         case 'collect':
             emits('handleType', 'collect')
+            select.value = item.label;
             break;
         default:
             break;
     }
 
-    select = item.label;
 }
 
 </script>

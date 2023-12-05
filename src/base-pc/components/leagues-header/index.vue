@@ -40,6 +40,7 @@ const router = useRouter()
 const show_leagues = ref (false)
 const active_league = ref(route.params.tid)
 const league_list = ref([])
+const league_list2 = ref([]) // for fix 49882
 const set_show_leagues = () => {
 	if (!league_list.value.length) return;
 	show_leagues.value = !show_leagues.value
@@ -65,6 +66,15 @@ async function get_league(){
 		}
 	})
 
+  // for fix 49882
+  const list2 = await get_ouzhou_leagues_data(120, route.params.sportId)
+  league_list2.value=[]
+  list2?.map(item => {
+    item.tournamentList?.map(leagues => {
+      league_list2.value.push(leagues)
+    })
+  })
+
 }
 const off= useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,()=>get_league()).off
 watch(() => route.params.type, async () => {
@@ -80,7 +90,7 @@ onUnmounted(()=>{
 })
 const getName = () => {
 	let name = ''
-	league_list.value.map(item => {
+	league_list2.value.map(item => {
 		if (item.id == route.params.tid) {
 			name = item.nameText
 		}

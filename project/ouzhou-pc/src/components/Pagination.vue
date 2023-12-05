@@ -81,8 +81,8 @@ export default defineComponent({
   props: {
     // 当前列表数量
     count: {
-      type: Number,
-      default: 0,
+      type: Number || String,
+      default: () => 0,
     },
 
     betTotalAmount: {
@@ -122,8 +122,8 @@ export default defineComponent({
       default: ()=>{},
     },
     reset_pagination: {
-      type: String,
-      default: '1',
+      type: Number,
+      default: 1,
     }
   },
   filters: {
