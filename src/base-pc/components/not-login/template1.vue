@@ -1,6 +1,6 @@
 <template>
     <div class="no-token-wrap">
-        <img class="no-token-img" :src="imgSrc[lang]" />
+        <img class="no-token-img" :src="imgSrc[lang] || imgSrc.en" />
     </div>
 </template>
 <script setup>
