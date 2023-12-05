@@ -259,8 +259,8 @@ const locales = {
         days: i18n_t('time.time_date_week'),
         daysShort: i18n_t('time.time_date_week'),
         months: [
-        i18n_t('time.month_1'),
-        i18n_t('time.month_2'),
+          i18n_t('time.month_1'),
+          i18n_t('time.month_2'),
           i18n_t('time.month_3'),
           i18n_t('time.month_4'),
           i18n_t('time.month_5'),

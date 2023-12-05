@@ -1429,13 +1429,13 @@ class UserCtr {
     // token 令牌
     res.token = this.user_token || get_value('token');
     // gr分组
-    res.gr = lodash.get(this.user_info,'gr') || get_value('gr');
+    res.gr = lodash.get(this.user_info,'gr') || get_value('gr') || '';
     // theme主题
-    res.theme = this.theme || get_value('theme');
+    res.theme = this.theme || get_value('theme') || '';
     // 语言
-    res.lang = this.lang || get_value('lang');
+    res.lang = this.lang || get_value('lang') || '';
     // api 获取默认最快域名进行加密
-    res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api'));
+    res.api = this.api_encrypt(BUILDIN_CONFIG.DOMAIN_RESULT.first_one || get_value('best_api')) || '';
     // 功能附加参数
     const PARAM_ADD_KEY = ['wsl', 'pb', 'vlg'];
     PARAM_ADD_KEY.forEach(key => {

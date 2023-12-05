@@ -192,7 +192,7 @@ const showActivityTime = ref(SessionStorage.get('showActivityTime'))
 const allowClick = ref(false)
 /** 活动弹框显隐 */
 const showActivity = ref(false)
-const userBannerTimer = ref(i18n_t('common.auto_close').replace('%s', 5))
+// const userBannerTimer = ref(i18n_t('common.auto_close').replace('%s', 5))
 /***
  * 运营位活动弹窗
  */
@@ -231,10 +231,10 @@ function activity_dialog() {
       if (showActivity.value) {
         // 5秒后自动消失
         let time = 5;
-        userBannerTimer.value = i18n_t('common.auto_close').replace('%s', time);
+        // userBannerTimer.value = i18n_t('common.auto_close').replace('%s', time);
         let timer = setInterval(() => {
           time--;
-          userBannerTimer.value = i18n_t('common.auto_close').replace('%s', time);
+          // userBannerTimer.value = i18n_t('common.auto_close').replace('%s', time);
           if (time == 0) {
             showActivity.value = false;
             clearInterval(timer);

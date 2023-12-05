@@ -37,10 +37,11 @@ function onClick() {
 <style scoped lang="scss">
 .component {
   width: 0.16rem;
-  height: 0.14rem;
+  height: 0.16rem;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 96% 96%;
+  background-size: 100% 100%;
+  margin: 0 12px;
 }
 
 .icon_zd_select {

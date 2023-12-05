@@ -301,7 +301,7 @@ onUnmounted(() => {
 @import url( "src/base-h5/css/bet/bet_single_detail.scss");
 .nonebox4-fourth {
     width: 100%;
-    background-color: #e8f5fe;
+    background-color: var(--q-gb-bg-c-22);
     border-radius: 10px;
     padding-left: 4px;
     padding-right: 4px;

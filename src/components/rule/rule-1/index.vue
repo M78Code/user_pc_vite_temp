@@ -83,6 +83,7 @@ onMounted(get_pc_rule_url)
         width: 100%;
         flex: 1;
         background-color: #fff;
+      padding: 0 15px;
         
     }
 }

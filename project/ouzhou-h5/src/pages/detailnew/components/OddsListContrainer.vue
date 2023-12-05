@@ -3,10 +3,16 @@
     <template v-if="match_odds_info && match_odds_info.length > 0 && match_detail?.ms != 2">
       <TransitionGroup>
         <template v-for="item in match_odds_info" :key="item.topKey">
-          <OddsItem v-if="item.hton != '0'" :data="item" ></OddsItem>
+          <OddsItem v-if="item.hton != '0'" :data="item" 
+            :unfold="props.allCloseState" 
+            >
+          </OddsItem>
         </template>
         <template v-for="item in match_odds_info" :key="item.topKey">
-          <OddsItem v-if="item.hton == '0'" :data="item" ></OddsItem>
+          <OddsItem v-if="item.hton == '0'" :data="item" 
+            :unfold="props.allCloseState"
+            >
+          </OddsItem>
         </template>
       </TransitionGroup>
     </template>
@@ -79,4 +85,11 @@ function ToggleExpend() {
 .v-move{
   transition: all .5s ease;
 }
+.v-enter-active{
+  transition: all .2s ease;
+}
+.v-enter-from,.v-leave-to {
+  opacity: 0;
+}
+
 </style>

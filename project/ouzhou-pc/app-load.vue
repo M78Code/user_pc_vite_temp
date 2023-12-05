@@ -134,7 +134,7 @@ function iframe_check() {
     return;
   }
   // 检测是否忽略监测处理
-  if (urlparams.ignore_iframe_pc == 1) {
+  if (window.SEARCH_PARAMS.init_param.get('ignore_iframe_pc') == 1) {
     return;
   }
   // 公告栏,注单历史,体育规则和赛果页面不进行跳转
