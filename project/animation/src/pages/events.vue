@@ -31,7 +31,7 @@
     <div class="container">
       <div class="left">
         <div class="bg">
-          <Svg1 :height="svgHeight" :width="svgWidth" v-if="isShowSvg1" />
+          <Svg3 :height="svgHeight" :width="svgWidth" v-if="isShowSvg1" />
           <img ref="bgConainer" src="/public/animation/足球背景.png">
         </div>
         <div>11</div>
@@ -115,10 +115,16 @@ export default defineComponent({
   },
   methods: {
     calc(){
-      const {clientHeight,clientWidth} = this.$refs.bgConainer
-      console.log({clientHeight,clientWidth})
-      this.svgWidth = clientWidth
-      this.svgHeight = clientHeight
+      this.$refs.bgConainer.onload = () => {
+        const {clientHeight,clientWidth} = this.$refs.bgConainer
+        this.svgWidth = clientWidth
+        this.svgHeight = clientHeight
+      }
+      this.$nextTick(() => {
+        const {clientHeight,clientWidth} = this.$refs.bgConainer
+        this.svgWidth = clientWidth
+        this.svgHeight = clientHeight
+      })
     },
     pause(){
       
