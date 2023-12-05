@@ -8,7 +8,8 @@
     <div class="sub-menu-date-w">
         <div class="sport-m-container">
           <div class="s-menu-container flex">
-              <div ref="scrollTab" v-for="(item,index) in scrollDataList" :key="index"  :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] " @click="set_menu_lv2(item, $event)" >
+            <template  v-for="(item,index) in scrollDataList" :key="index">
+              <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi)" ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" >
                 <div class="inner-w flex justify-between items-center">
                   <div class="sport-w-icon">
                    
@@ -24,6 +25,7 @@
                 </div>
 
               </div>
+            </template>
           </div>
         </div>
       </div>
@@ -38,6 +40,7 @@ import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 const ref_data = reactive({
     emit_lsit:{}
 })
+const menu_show_id = reactive([0,300,50000,2000]);//全部 vr 收藏 电竞显示
 const scrollTab = ref(null);
 const props = defineProps({
   // 滑动菜单数据
