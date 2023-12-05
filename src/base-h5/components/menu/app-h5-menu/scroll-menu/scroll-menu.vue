@@ -160,7 +160,7 @@ onUnmounted(()=>{
         scrollbar-width: none; // 去除滚动条火狐浏览器兼容性问题
 
         .sport-menu-item {
-          min-width: 0.5rem;
+          min-width: 0.52rem;
           height: 100%;
           flex-shrink: 0;
           color: var(--q-gb-t-c-19);
