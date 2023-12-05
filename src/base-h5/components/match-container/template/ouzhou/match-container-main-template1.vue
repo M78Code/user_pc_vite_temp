@@ -475,12 +475,11 @@ export default {
     color: var(--q-color-com-fs-color-38);
     background: #fff;
     &.progress{
-      border-top: 2px solid #74C4FF
+      border-top: 2px solid rgba(116, 196, 255, 0.5);
     }
     &.not_begin{
-      border-top: 2px solid #E95B5B
+      border-top: 2px solid rgba(233, 91, 91, 0.51);
     }
-
     img {
       margin-right: .06rem;
       width: .13rem;
@@ -1433,7 +1432,6 @@ export default {
   }
 }
 /* **************日期********************** -E*/
-
 /* ********赛事容器相关********** -E*/
 </style>
   
