@@ -11,14 +11,14 @@
     <TopMenu />
 
     <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-      <DateTab ref="childRef" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
+      <DateTab ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
 
     <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
         <DateTab :dataList="dataList[MenuData.current_lv_2_menu_i]"  />
     </div>
     <!-- 滑动菜单组件 -->
-    <ScrollMenu :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
+    <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
     <!--  -->
     <!-- <SwitchWap /> -->
     <!--  -->
@@ -58,7 +58,8 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口
-const childRef = ref(null)
+const dateTabMenu = ref(null)
+const scrollTabMenu = ref(null)
 // 监听搜索框状态
 useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     select_dialog.value = value
@@ -146,10 +147,14 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     //早盘 串关
     if( [3,6].includes(1*new_)){
       nextTick(()=>{
-        childRef.value.set_active_val()
-        childRef.value.changeTabMenu(0)
+        dateTabMenu.value.set_active_val()
+        dateTabMenu.value.changeTabMenu(0)
       })
     }
+    //球种滚动初始化
+    nextTick(()=>{
+      scrollTabMenu.value.scrollTabMenu()
+    })
   })
 
   // 早盘 串关
@@ -175,7 +180,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       ref_data.current_mi = obj_.mi
       // 设置二级菜单 
       MenuData.set_current_lv_2_menu_i(obj_)
-
       handle_match_render_data()
     }
   }
@@ -193,7 +197,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     MenuData.set_current_lv_2_menu_i(obj)
     // 设置选中菜单的id
     ref_data.current_mi = obj.mi
-
+    
     set_menu_mi_change_get_api_data()
   }
 
