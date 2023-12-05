@@ -5,6 +5,7 @@
 -->
 <template>
   <div class="box-bc">
+
     <q-table
       :rows="data"
       separator="none"
@@ -84,11 +85,12 @@
                   _.get(detail_info, 'csid') != '4' &&
                   (
                     _.get(detail_info, 'mat') == 'away' && props.rowIndex === 1 ||
-                    _.get(detail_info, 'mat') == 'away' && props.rowIndex === 0
+                    _.get(detail_info, 'mat') == 'home' && props.rowIndex === 0
                  )
                 "
               >
               </span>
+              <span v-else style="margin-right: 6px;"></span>
               <span class="txt">{{ props.row.name }}</span>
             </span
             >
@@ -289,6 +291,7 @@ const get_score_result = (list, val) => {
   return result;
 };
 
+
 const get_msc_data = (msc_data, current_data) => {
   const detail_info = props.detail_info;
   const score_list = props.score_list;
@@ -304,8 +307,8 @@ const get_msc_data = (msc_data, current_data) => {
     },
   ];
   if (msc_data.length > 0) {
-    //   网球
-    if (detail_info.csid == 5) {
+    //   网球 羽毛球
+    if (["5", "10"].includes(detail_info.csid + "")) {
       res = list.map((item) => {
         return {
           name: item.name,
@@ -342,6 +345,7 @@ const get_msc_data = (msc_data, current_data) => {
  * @return {undefined} undefined
  */
 const format_msc = (detials) => {
+
   /**
    * csid 比赛阶段的对象变量名
    * msc比分数据
@@ -501,6 +505,7 @@ watch(
       }
       get_msc_data(msc_data, current_data);
     } else {
+      // 其他球种
       if (!["1", "2", "3"].includes(res.csid + "")) {
         format_msc(res);
       }
@@ -633,6 +638,7 @@ watch(
   background-color: var(--q-gb-bg-c-12);
   margin-right: 4px;
 }
+
 
 //.stage-13,.stage-14,.stage-15,
 //.stage-302,.stage-16,.stage-303{

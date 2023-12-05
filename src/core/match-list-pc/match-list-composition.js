@@ -266,7 +266,7 @@ function mounted_fn() {
 	mitt_list = [
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
-		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fetch_match_list).off,
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => fetch_match_list(true)).off,
 	]
 	load_video_resources();
 }
