@@ -75,7 +75,7 @@ const myScroll = ref(null)
 // 按什么排序  [1, 2, 3]
 const sort_active = ref(enum_order_by[1])
 // 展示多长时间的注单记录  [1, 2, 3, 4]
-const timeType = ref(enum_time_type[0])
+const timeType = ref(enum_time_type[2])
 
 let useMitt = null
 let wsObj = null
@@ -124,21 +124,26 @@ const init_data = (_index) => {
     }, 5000)
   }
 }
-// 根据索引获取当前接口的api和params
-const init_params_api = (_index) => {
+
+/**
+ * 获取请求接口的api和params
+ * @param {*} _index 当前索引
+ * @param {*} _isOnPull 是否是pull分页加载(确定searchAfter要不要传参)
+ */
+const init_params_api = (_index, _isOnPull=false) => {
   let params = {}
   let url_api = Promise.resolve();
   switch (_index) {
     case 0:
       params = {
-        searchAfter: BetRecordClass.last_record || undefined,
+        searchAfter: (_isOnPull && BetRecordClass.last_record) || undefined,
         orderStatus: '0',
       }
       url_api = api_betting.post_getH5OrderList      
       break;
     case 1:
       params = {
-        searchAfter: BetRecordClass.last_record || undefined,
+        searchAfter: (_isOnPull && BetRecordClass.last_record) || undefined,
         orderStatus: '1',
         orderBy: sort_active.value,  // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
         timeType: timeType.value
@@ -166,7 +171,7 @@ const sortChange = (index, reset) => {
    */
 const onPull = () => {
   let ele = myScroll.value
-  const { params, url_api } = init_params_api(BetRecordClass.selected)
+  const { params, url_api } = init_params_api(BetRecordClass.selected, true)
   BetRecordClass.onPull(params, url_api, ele)
 }
 
