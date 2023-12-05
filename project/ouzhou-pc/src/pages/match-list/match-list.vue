@@ -193,17 +193,6 @@ export default {
     function get_league_list() {
       return MatchLeagueData.get_league_list()||[]
     }
-
-    const list_scorll_top = ref(0);
-    watch(
-        () => MatchListScrollClass.scroll_top,
-        (val) => {
-          alert(MatchListScrollClass.scroll_top);
-          list_scorll_top.value = val
-        },
-        { deep: true }
-    );
-
     return {
       show_refresh_mask,
       page_source, is_conming_soon,
@@ -211,7 +200,6 @@ export default {
       matches_15mins_list,
       match_count,
       match_list_card_key_arr,
-      list_scorll_top,
       // five_leagues_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass,
