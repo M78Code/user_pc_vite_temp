@@ -1,11 +1,30 @@
 <template>
     <div class="container">
-        <custom_video />
+        <!-- /video.html?random=0.01897129618346205&controls=1&dplayer-volume=1&url=https%3A%2F%2Fsrv185-52.beterstream.xyz%2Flive%2FSetka-Cup-FIFA-2%2Fmulty.m3u8%3Fmatch_id%3D10913285%26s_id%3D1%26t_id%3D4503%26stats%3Dstatsbeter.co%26timestamp%3D1701748089%26key%3DVTJGc2RHVmtYMS9LcUw3RlNFMVd6SDBnOXpkOWlDUGJVNFNGTU8wVGp5NENKSFhsQzJTTU55cUM5RCtvWHpsTndzS0dRVGhVdWRnOVE5Y0x3SlNMd2ovOXZWS05uQi9NS1U3eW5qN0RYc1RkM3pKQWJxbGVPRVpRMXNpRFpFZDFvVE5hRk45aTdiMjZxR0svdFBRdHFXa1kycUdUU1hCeFJPZXZoeWxLa3Q0PQ%3D%3D&is_client=1 -->
+        <custom_video v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  
+                      :show_go_back="show_go_back" @change_go_back="change_go_back"/>
     </div>
 </template>
 
 <script setup>
+import lodash from 'lodash'
 import custom_video from "src/base-h5/components/details/components/videos2.vue";
+import { MatchDataWarehouse_H5_Detail_Common } from 'src/core';
+import { useRoute } from 'vue-router';
+import { ref } from "vue";
+const route = useRoute();
+const detail_data = lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {});
+// /视频说明是否展示
+const tips = ref(false);
+// 随机数props传参是否显示视频对阵信息，还可以控制动画显示返回按钮
+const is_show_text = ref('')
+const show_go_back = ref(false);
+const get_show_video = ref(false);
+console.log(route.params, "params");
+setTimeout(() => {
+    get_show_video.value = true;
+    console.log(detail_data, "detail_data==");
+}, 5000)
 </script>
 
 <style scoped lang="scss">
