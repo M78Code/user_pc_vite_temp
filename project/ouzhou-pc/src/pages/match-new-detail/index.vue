@@ -190,6 +190,7 @@ export default{
       7: 1170,
       8: 180,
       9: 270,
+      10: 360,
     };
     return{
       tabList,

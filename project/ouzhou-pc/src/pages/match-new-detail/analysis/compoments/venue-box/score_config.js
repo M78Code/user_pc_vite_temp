@@ -1,4 +1,7 @@
-// 假数据
+// 比分榜列表头
+
+// 引入国际化
+import { i18n_t } from "src/boot/i18n.js";;
 export const sport_columns = {
   1: [
     {
