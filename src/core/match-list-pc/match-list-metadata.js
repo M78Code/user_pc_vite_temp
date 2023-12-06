@@ -361,7 +361,7 @@ function set_base_data_init_ouzhou(play_num = '01') {
 			// }
 			data.data = matchs_list;
 		}
-		if (MenuData.is_left_zaopan()) return;
+		if (MenuData.is_left_zaopan() || matchs_list.length <= 0) return;
 		// 赛事列表 卡片数据
 		// 设置列表数据仓库
 		match_list_handle_set(matchs_list)
