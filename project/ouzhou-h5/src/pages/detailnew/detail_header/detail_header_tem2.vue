@@ -11,7 +11,7 @@
       ></iframe>
       <custom_video class="custom-video" :status="status" v-if="right_actions_label == 'video'" :get_detail_data="detail"/>
       <!-- {{ detail }} -->
-      <score_component :get_match_detail="detail" v-if="right_actions_label == 'score'" :key="right_actions_label"/>    
+      <score_component :get_match_detail="detail" v-show="right_actions_label == 'score'" :key="right_actions_label"/>    
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
