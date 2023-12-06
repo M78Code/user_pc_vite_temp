@@ -9,7 +9,11 @@
             />
         </div>
        <div class="col q-ml-sm" style="height: 100vh;overflow: auto;">
-        <div
+        <q-btn color="secondary" @click="get_event_code()" label="随机推送事件" />
+        <div class="animation-content q-mt-md q-pa-sm">
+            <embed style="width: 100%;max-height: 300px;" :src="get_svg_src()" type="image/svg+xml" />
+        </div>
+        <!-- <div
             v-for="(item, index) in dataObj"
             :key="index"
             class="content-list-item text-panda-text-light"
@@ -21,10 +25,10 @@
             </div>
             <div class="content-list-item-info">
               <span>
-                {{ item.currentTime }}' - {{ item.eventName }}
+                {{ item.currentTime }}' - {{ item.eventName }}-{{ item.eventCode }}
               </span>
             </div>
-        </div>
+        </div> -->
        </div>
     </div>
 </template>
@@ -33,7 +37,7 @@ import { api_event } from "project/animation/src/public/api/index"
 import { defineComponent } from "vue";
 import websocket_base from "project/animation/src/mixins/modules/websocket/websocket_base.js"
 import timeline from "project/animation/src/pages/components/timeline.vue"
-import _ from 'lodash';
+import { test_data } from "project/animation/src/globle/event_data.js"
 import axios from "axios";
 import { uid } from "quasar"
 let WEB_ENV = axios.prototype.WS_DOMAIN_FRNGKONG_1
@@ -44,7 +48,9 @@ export default defineComponent({
     mixins:[websocket_base],
  data() {
     // sportId=1&dataSourceCode=PA&matchId=2928959
+    
     return {
+        svg_src: '0',
         websocket_connection_1_url: WEB_ENV,
         dataObj: [],
         queryParams: null,
@@ -79,14 +85,12 @@ export default defineComponent({
  },
  methods: {
     set_websocket_data(data) {
-        console.warn('页面接收到消息')
-        console.warn(data)
+        // console.warn('页面接收到消息')
+        // console.warn(data)
         console.log(/\{/.test(data.data))
         if (/\{/.test(data.data)) {
            let convert_data = JSON.parse(data.data);
-           console.warn(convert_data)
            let { command, responseData,ack,msgId } = convert_data;
-           console.warn(responseData)
            if (command === 30013) {
             this.dataObj.unshift(responseData)
            }
@@ -154,8 +158,31 @@ export default defineComponent({
         }).catch(err => {
             console.error(err)
         })
+    },
+    // 生成随机事件
+    get_event_code() {
+        let index = Math.floor(Math.random()*5)
+        console.warn(index)
+        let data_ = test_data[index] 
+        this.svg_src = index
+        console.warn(data_)
+        let ws_obj = {
+            "ack": 0,
+            "command": 30013,
+            "globalId": "BG_0af508f320231206115740840017cca9df66",
+            "msgId": "BG_0af508f320231206115740840017cca9df66",
+            "responseData": data_,
+            "time": new Date().valueOf()
         }
+        let send = {
+            "data": JSON.stringify(ws_obj)
+        }
+        this.set_websocket_data(send)
+    },
+    get_svg_src() {
+        return `src/image/${this.svg_src}.svg`
     }
+},
 })
 </script>
 <style lang="scss" scoped>
@@ -164,5 +191,9 @@ export default defineComponent({
     // bug单 7658 要求这样做
     padding-left: 30px;
     // margin auto
+}
+.animation-content {
+    min-width: 300px;
+    min-height: 300px;
 }
 </style>
