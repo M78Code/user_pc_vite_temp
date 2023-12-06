@@ -137,6 +137,7 @@ onMounted(()=>{
   MenuData.set_collect_id(50000);
   const index = tabData.value.findIndex(n=>{return n.val == tabValue.value});
   on_update(tabData.value[index].val,1)
+  if(scrollListRef.value) scrollListRef.value.reset(state.current_mi)
 })
 onUnmounted(() => {
   MenuData.set_collect_id('')
