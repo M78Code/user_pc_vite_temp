@@ -27,7 +27,7 @@ class VirtualVideo {
   }
 
   /**
-   * 设置频进程数据 
+   * 设置视频进程数据 
    * @param value
    */
   set_video_process_data(value){
@@ -35,24 +35,25 @@ class VirtualVideo {
   }
 
   /**
-   * 获取频进程数据 
+   * 获取视频进程数据 
    * @param {Object} match
    */
-  get_match_video_process(match,) {
+  get_match_video_process(match) {
     if (!match) {
       return;
     }
     let got_data = false;
+    
     if (this.video_process_data) {
       let { batchNo } = match;
       if (this.video_process_data.batchNo == batchNo) {
         let p_data_detail = this.video_process_data.detail;
-        let detail_copied = _.cloneDeep(p_data_detail);
+        let detail_copied = lodash.cloneDeep(p_data_detail);
         if (detail_copied && detail_copied[match.mid]) {
           got_data = true;
           Object.assign(match, detail_copied[match.mid]);
           VirtualClass.destroy();
-          VirtualClass.update_match_video_data()
+          VirtualClass.update_match_video_data(match)
           useMittEmit(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED, this.video_process_data);
         }
       }
