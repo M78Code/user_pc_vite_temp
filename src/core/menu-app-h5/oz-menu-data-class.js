@@ -164,7 +164,6 @@ class MenuData {
         defaultMi:item.mi
       }
     });
-    console.error('menu_list',menu_list)
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
     this.champion_list = champion_list;

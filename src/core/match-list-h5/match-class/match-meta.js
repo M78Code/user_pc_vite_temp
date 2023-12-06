@@ -726,6 +726,8 @@ class MatchMeta {
     const params = this.get_base_params(euid)
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+    // 频繁切换菜单， 收藏接口比较慢时 会影响其他页面， 故加上判断
+    if (!MenuData.is_collect()) return
     const list = lodash.get(res, 'data', [])
     
     if (list.length > 0) {
