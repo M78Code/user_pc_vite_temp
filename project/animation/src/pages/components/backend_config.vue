@@ -1,14 +1,16 @@
 <template>
-  <div style="color: white;">
+  <div style="color: white">
     <div class="q-py-lg">配置信息</div>
     <div>赛种： {{ base_data.competition_type }}</div>
-    <div>背景：
-        {{base_data.bg_img}}
-        <img :src="base_data.bg_img" height="50" />
+    <div>
+      背景：
+      {{ base_data.bg_img }}
+      <img :src="ASSETS_IAMGE_CDN+base_data.bg_img" height="50" />
     </div>
-    <div>Logo：
-        {{logo_data.team_logo}}
-        <img :src="logo_data.team_logo" height="50" />
+    <div>
+      Logo：
+      {{ logo_data.team_logo }}
+      <img :src="ASSETS_IAMGE_CDN+logo_data.team_logo" height="50" />
     </div>
   </div>
 </template>
@@ -24,6 +26,7 @@ const ASSETS_IAMGE_CDN = "https://assets-image.oceasfe.com";
 export default {
   data() {
     return {
+      ASSETS_IAMGE_CDN,
       base_data: {},
       logo_data: {},
     };
@@ -42,7 +45,6 @@ export default {
         return;
       }
 
-      data.data.bg_img = ASSETS_IAMGE_CDN + data.data.bg_img;
       this.base_data = data.data;
     },
 
@@ -53,8 +55,6 @@ export default {
       if (!logoData) {
         return;
       }
-
-      logoData.team_logo = ASSETS_IAMGE_CDN + logoData.team_logo;
 
       this.logo_data = logoData;
     },
