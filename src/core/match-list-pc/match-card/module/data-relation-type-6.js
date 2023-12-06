@@ -66,7 +66,6 @@
     // 自定义联赛ID
     let cus_tid = ''
     // 遍历所有赛事列表
-    debugger
     MatchListCardData.match_list_key=match_list||[]
     match_list && match_list.length && match_list.forEach( (match,match_index) => {
       league_repeat_count_obj[match.tid] = league_repeat_count_obj[match.tid] || 0
