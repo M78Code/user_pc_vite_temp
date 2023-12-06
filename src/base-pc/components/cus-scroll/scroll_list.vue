@@ -28,7 +28,7 @@
 import resizeObserver from "src/base-pc/components/match-results/resize-observer/resize-observer.vue"
 // import {mapGetters,mapActions} from 'vuex'
 // import { store } from "src/store/index.js"
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref} from "vue";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
@@ -84,6 +84,7 @@ let mitt_list = [];
 onUnmounted(() => {
   // 设置列表滚动条位置
   mitt_list.forEach(i=>i())
+  MatchListScrollClass.clear_show_mid()
   // this.debounce_throttle_cancel(this.on_bootom);
   // this.debounce_throttle_cancel(this.emit_on_scroll);
   // this.debounce_throttle_cancel(this.update_list_card_offset);

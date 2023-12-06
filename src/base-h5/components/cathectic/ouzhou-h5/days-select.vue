@@ -15,15 +15,18 @@
 import { ref, onMounted, onUnmounted } from "vue"
 import { IconWapper } from 'src/components/icon'
 import { i18n_t } from "src/boot/i18n.js";
+import { enum_time_type } from "src/core/bet-record/util.js";
+
 let showList = ref(false)
-let _index = ref(0)
+let _index = ref(2)
 // 展示多长时间的注单记录  (1:今天 2:昨日 3:七日内 4:一月内)
 const [day, yestoday, week, month] = i18n_t('bet_record.bet_date_list') || Array(4).fill('');
+const [d, y, w, m] = enum_time_type; // [1, 2, 3, 4]
 const list = ref([
-    { title: day, val: 1 },
-    { title: yestoday, val: 2 },
-    { title: week, val: 3 },
-    { title: month, val: 4 },
+    { title: day, val: d },
+    { title: yestoday, val: y },
+    { title: week, val: w },
+    { title: month, val: m },
 ])
 
 const emit = defineEmits(['changeDays'])

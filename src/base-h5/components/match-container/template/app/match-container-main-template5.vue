@@ -22,7 +22,7 @@
         </span>
       </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="get_sport_show" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { first: i == 0 }]">
+      <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
       </div>
 
@@ -122,7 +122,7 @@
                 </div>
               </div>
               <!-- 比分版 -->
-              <div v-if="home_score == 0 || away_score == 0 || home_score || away_score">{{ home_score }} - {{
+              <div class="score-title-text" v-if="home_score == 0 || away_score == 0 || home_score || away_score">{{ home_score }} - {{
                 away_score }}</div>
             </div>
             <!--玩法数量-->
@@ -172,8 +172,6 @@
             </div>
             <!-- 比分选项 -->
             <div class="odds">
-              <!-- <img class='star' /> -->
-              <!-- 单个赛事收藏 -->
               <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
                 <img v-if="!match_collect_state" class="favorited-icon"
                   src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_match_collect" />
@@ -181,7 +179,6 @@
                   src="/src/base-h5/assets/match-list/ico_fav_sel.png" @click.stop="handle_match_collect" />
               </div>
               <div class="bet_btn">
-                <!-- {{match}} -->
                 <template v-if="curMatchOdds?.length">
                   <div v-for="item in curMatchOdds" :key="item.oid" class="item"
                     :class="{ active: active_score === `${item._mid}${item.oid}` }" @click="go_to_bet(item)">
@@ -198,6 +195,7 @@
                   </div>
                 </template>
               </div>
+              <!-- <OddListWrap :main_source="main_source" :match="match_of_list" /> -->
             </div>
 
 
@@ -240,6 +238,8 @@ import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn } from "src/core/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
+
 
 export default {
   name: "match-container-main-template8",
@@ -305,6 +305,7 @@ export default {
     const curMatchOdds = ref([])
 
     watch(() => props.match_of_list, (newVal) => {
+      console.log('match_of_listmatch_of_listmatch_of_list', newVal)
       curMatchOdds.value = newVal?.hps?.[0]?.hl?.[0]?.ol || []
     }, { immediate: true })
 
@@ -323,6 +324,7 @@ export default {
       // if (lodash.isUndefined(sport_id) && menu_config.is_esports()) {
       //   sport_id = "101";
       // }
+      try {
       const match_odds = compute_value_by_cur_odd_type(
         ov,
         ov._hpid,  //todo
@@ -330,6 +332,9 @@ export default {
         sport_id
       );
       return match_odds
+      } catch (e) {
+        console.log('format_oddsformat_oddsformat_odds',e)
+      }
     };
 
 
@@ -343,10 +348,14 @@ export default {
       useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, e => {
         isCollectMenuTab.value = e.mi === 50000
       })
+      VirtualList.set_is_show_ball(false)
+      VirtualList.set_is_change_handicap_height(-20)
     })
 
     onUnmounted(() => {
       useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+      VirtualList.set_is_show_ball(true)
+      VirtualList.set_is_change_handicap_height(0)
     })
     return {
       active_score,
@@ -372,7 +381,7 @@ export default {
 
   :deep(.counting-down-wrap) {
     /* width: auto !important; */
-    gap: 4px;
+    // gap: 4px;
 
     /* width:0.9rem!important; */
     >span {
@@ -402,10 +411,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #ffffff;
+    background: var(--q-gb-bg-c-15);
 
     .buffer-container {
-      background: #f7f9fe;
+      background: var(--q-gb-bg-c-17);
       height: 5px;
       width: 100%;
     }
@@ -659,7 +668,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: #ffffff !important;
+    background: var(--q-gb-bg-c-15) !important;
     height: 25px;
     border-bottom: 1px solid #F2F2F6;
 
@@ -676,7 +685,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: #f7f9fe;
+    background: var(--q-gb-bg-c-17);
     line-height: 20px;
     font-size: 11px;
 
@@ -757,7 +766,7 @@ export default {
 
   .match-content {
     width: 100%;
-    background: #fff;
+    background: var(--q-gb-bg-c-15);
     padding: 0 9px;
 
     .event-team {
@@ -896,6 +905,11 @@ export default {
             display: inline-block;
             height: 16px;
           }
+        }
+
+        .score-title-text {
+          height:100%;
+          margin-top: .02rem;
         }
 
         .timer-wrapper-c {

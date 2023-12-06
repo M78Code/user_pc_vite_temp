@@ -38,7 +38,7 @@
           />
         </div>
       </div>
-      <div class="setting-item" @click="jumpHandle">
+      <div class="setting-item border" @click="jumpHandle">
         <div class="title">盘口教程</div>
         <div class="more">
         <img  
@@ -240,11 +240,11 @@ const activity_handle = item => {
     margin: 0 0.14rem;
 
     &.border {
-      border-bottom: 1px solid var(--q-gb-t-c-8);
+      border-bottom: 1px solid var(--q-gb-bd-c-4);
     }
 
     .title {
-      color: var(--q-gb-bd-c-2);
+      color: var(--q-gb-t-c-20);
 
       span {
         color: var(--q-gb-bd-c-4);
@@ -252,7 +252,7 @@ const activity_handle = item => {
     }
 
     .more {
-      color: var(--q-gb-bd-c-4);
+      color: var(--q-gb-t-c-19);
     }
 
     .goto-website {
@@ -262,7 +262,8 @@ const activity_handle = item => {
       background-color: #f3faff;
       border-radius: 0.18rem;
       text-align: center;
-      color: #7981a4;
+      //color: #7981a4;
+      color: var(--q-gb-t-c-11);
       font-weight: 500;
     }
   }

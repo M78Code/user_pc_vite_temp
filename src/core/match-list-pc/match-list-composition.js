@@ -12,7 +12,7 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { update_collect_data, mx_collect_count, mx_collect_match, collect_count, fethc_collect_match } from "./composables/match-list-collect.js";
+import { fethc_collect_match } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
 import { mx_use_list_res, mx_list_res } from './composables/match-list-processing.js'
@@ -36,7 +36,7 @@ const is_loading = ref(true);
 
 let show_refresh_mask = ref(false);
 const timer_obj = ref({});
-let api_error_count =0;
+let api_error_count = 0;
 let is_has_base_data = false; //是否有元数据
 let check_match_last_update_timer_id;
 let get_match_list_timeid;
@@ -64,7 +64,6 @@ useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_pag
 */
 export function fetch_match_list(is_socket = false, cut) {
 	const match_list_params = get_match_list_params();
-	console.log('match_list_params', match_list_params);
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {
@@ -246,7 +245,7 @@ function init_page_when_base_data_first_loaded() {
 	// );
 }
 function mounted_fn() {
-	fetch_match_list();
+	// fetch_match_list();
 	// 开启自动化测试功能
 	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	// 列表数据仓库
@@ -263,22 +262,11 @@ function mounted_fn() {
 	api_error_count = 0;
 	// is_vr_numer.value = 0;
 	mitt_list = [
-		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data).off,
-		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count).off,
 		// 站点 tab 休眠状态转激活
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
-
-		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids).off,
-		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match).off,
-		useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, lodash.debounce(() => {
-			// 重新订阅C8
-			api_bymids({ is_show_mids_change: true })
-		}, 1000)).off,
-		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fetch_match_list).off,
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => fetch_match_list(true)).off,
 	]
-
 	load_video_resources();
-
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
 // 		// bug 版本没有变化 也可以进入
@@ -329,7 +317,7 @@ export function handle_match_list_request_when_ok(data, is_socket, cut, collect)
 function get_hot_match_list(backend_run = false) {
 	// 更新收藏数量
 	if (!backend_run) {
-		mx_collect_count();
+		useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD)
 	}
 	let match_list_api_config = MenuData.match_list_api_config.match_list;
 	let api = api_match[match_list_api_config.api_name];
@@ -397,13 +385,6 @@ function get_hot_match_list(backend_run = false) {
 		});
 };
 /**
- * @description 返回顶部
- * @return {undefined} undefined
- */
-function on_go_top() {
-	useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0);
-};
-/**
  * @description 无感刷新
  * @return {undefined} undefined
  */
@@ -427,7 +408,7 @@ function socket_remove_match(match) {
 	// 移除卡片
 	MatchListCardClass.remove_match(match.mid);
 	// 更新收藏数量
-	update_collect_data({ type: "remove", match });
+	useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, { type: "remove", match })
 	// if (vx_details_params.mid == match.mid) {
 	// 	// 赛事移除时右侧赛事自动切换
 	// 	mx_autoset_active_match({ mid: match.mid });
@@ -472,7 +453,7 @@ function check_match_last_update_time() {
  * 发送站点选项卡事件
  */
 function emit_site_tab_active() {
-	if(!MenuData.is_home()){
+	if (!MenuData.is_home()) {
 		fetch_match_list(true);
 	}
 };
@@ -496,8 +477,6 @@ export {
 	is_loading,
 	show_refresh_mask,
 	is_show_hot,
-	collect_count,
-	on_go_top,
 	on_refresh,
 	socket_remove_match,
 	set_load_data_state,

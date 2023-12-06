@@ -8,7 +8,7 @@
       dirt_motorcycle:current_sub_menu_id == 1009
       }">
       <loading v-show="virtual_match_list_data_loading" class="wrapper-loading-c" />
-
+      <div>m_status:{{ m_status }}</div>
       <!-- 0:代表开赛之前倒计时 -->
       <div v-if="!m_status || m_status == 0"
         class="row justify-center items-center timetop">

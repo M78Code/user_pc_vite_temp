@@ -121,6 +121,8 @@
 
 <script>
 import no_data from "../no_data/no_data.vue";
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+
 
 export default {
   name: "loadData",
@@ -183,7 +185,8 @@ export default {
     // 用户登录失效时,直接关闭loading中动画
     this.no_user = this.vx_get_is_invalid;
     // 绑定接收用户失效事件
-    this.$root.$on(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    this.handle_generat_emitters()
+ 
   },
 
   computed: {
@@ -198,6 +201,18 @@ export default {
   },
 
   methods: {
+    /**
+* 生成事件监听  
+*/
+handle_generat_emitters(){
+let event_pairs=  [
+// 投注数量
+{ type:MITT_TYPES.EMIT_SHOW_ALERT_CMD, callback:this.no_user_event} 
+]
+let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+this.emitters_off=emitters_off
+  
+},
     refresh() {
       if(this.load_type == 'league_fold'){
         this.$emit('refresh')
@@ -213,26 +228,12 @@ export default {
       this.no_user = true;
 
     },
-    /**电竞无赛事时跳转其他菜单 */
-    // journey(){
-    //   //电竞种类菜单
-    //  let  subList = _.get(window.$menu,'lastSubListMenu.subList',[])
-    //  //过滤当前选中电竞
-    //  let  newsub =  _.filter(subList,menu=>menu.field1 != ) || []
-    //   //拿到其他点 csid
-    //  let csid = (_.find(newsub,menu=>menu.count>0) || {} ).field1
-    //  //如果电竞有其他赛事就跳转热门赛事
-    //  if(csid){
-    //     this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_CMD, { click_type:'left_menu' })
-    //  }else{
-    //    //跳转热门
-    //       window.$menu.subMenuClick('301');
-    //  }
-    // }
+ 
   },
   destroyed () {
-    // 解绑接收用户失效事件
-    this.$root.$off(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+ 
+//移除相应监听事件 //视图销毁钩子函数内执行
+if(this.emitters_off){this.emitters_off()} 
   },
 };
 </script>

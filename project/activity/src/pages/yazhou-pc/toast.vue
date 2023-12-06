@@ -67,7 +67,7 @@ export default {
     }
   },
   destroyed() {
-    // this.$root.$off(this.emit_cmd.EMIT_SHOW_TOAST_CMD, this.show_toast);
+    // this.$root.$off(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.show_toast);
     if (this.timer_) {
       clearTimeout(this.timer_);
     }

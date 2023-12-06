@@ -30,7 +30,11 @@
 													<span class="middle">v</span>
 													<span class="away" v-html="red_color(item.man)"></span>
 												</p>
-												<p> {{ i18n_t(`mmp.${item.csid}.${item.mmp}`) }} {{ (new Date(+item.mgt)).Format('MM/dd hh:mm') }} <span class="red">{{ get_match_score(item, true).home_score }}-{{ get_match_score(item, true).away_score }}</span> </p>
+												<p class="flex"> 
+													<!-- 比赛时间 -->
+													<match-process style="cursor:pointer" v-if="item" :match="item" :rows="1" :date_rows="1" date_show_type="inline" periodColor="gray" />
+													<span class="red">{{ get_match_score(item, true).home_score }}-{{ get_match_score(item, true).away_score }}</span> 
+												</p>
 											</div>
 											<div style="display: flex;flex-direction: row; flex: 1">
 												<div class="flex_1"
@@ -66,7 +70,7 @@
 							</div>
 						</div>
 						<!-- 搜索 联赛 -->
-						<div v-if="search_data?.league && search_data?.league.length > 0" style="margin-bottom: 10px;">
+						<div v-if="search_data?.league && search_data?.league.length > 0">
 							<div @click="expand_league = !expand_league">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
@@ -211,6 +215,7 @@ import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
 const props = defineProps({
 	show_type: {
@@ -238,6 +243,7 @@ const keyword = ref('')
 const get_props = (props) => {
 	keyword.value = props.text
 	search_type.value = props.type
+	_get_search_result(keyword.value, true)
 }
 // 展开/收起 bowling 滚球 league 联赛 team 队伍
 const expand_bowling = ref(true);
@@ -262,14 +268,6 @@ const show_bowling_list = computed(() => {
 	})
 	return obj;
 });
-
-// 监听搜索关键词改变
-watch(
-	() => keyword.value,
-	(res) => {
-		_get_search_result(res, true)
-	}
-)
 /**
  * @Description:点击滚球搜索
  * @param {string} league 点击联赛标题
@@ -416,6 +414,7 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 		// console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;
+		clearTimeout(timer.value)
 		timer.value = setTimeout(() => {
 			// 如果是从详情页返回
 			if (search.back_keyword.keyword) {
@@ -427,7 +426,7 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 				//重新设置滚动高度
 				_ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition('vertical', 0);
 			}
-		})
+		},0)
 	}).catch(err => {
 		search_loading = false
 		console.log(err);
@@ -502,7 +501,7 @@ const get_match_base_hps_by_mids = async () => {
 const red_color = (item) => {
 	const reg = new RegExp(keyword.value, "ig");
 	let i_color = 'red';
-	return item?.replace(reg, `<span style="color:${i_color}">${keyword.value}</span>`)
+	return item?.replace(reg, `<text style="color:${i_color}">${keyword.value}</text>`)
 }
 
 // 显示的赔率
@@ -510,15 +509,13 @@ const get_odd_os = (ov) => {
 	return compute_value_by_cur_odd_type(ov, '', '', props.search_csid)
 }
 
-onMounted(() => {
-	useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
-})
+const {off}=useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props);
 onBeforeUnmount(() => {
 	if (timer.value) {
 		clearTimeout(timer.value)
 		timer.value = null
 	}
-	useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
+	off()
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
 		focus: false,
 		text: ''

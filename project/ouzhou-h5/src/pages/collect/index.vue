@@ -37,7 +37,7 @@ const state = reactive({
 })
 const tabValue = ref(MenuData.collect_menu || 1);
 const scrollListRef = ref(null)
-const tabData = reactive([
+const tabData = ref([
   {
     name:"inplay",
     label:i18n_t("menu_itme_name.inplay"),
@@ -129,9 +129,14 @@ const changeMenu = (item) =>{
   MatchMeta.get_collect_match()
 }
 onMounted(()=>{
+  let tabList = tabData.value;
+  if(!MenuData.menu_list.map((item)=>{return +item.mi}).includes(400)){
+    tabList.pop();
+    tabData.value = tabList;
+  };
   MenuData.set_collect_id(50000);
-  const index = tabData.findIndex(n=>{return n.val == tabValue.value});
-  on_update(tabData[index].val,1)
+  const index = tabData.value.findIndex(n=>{return n.val == tabValue.value});
+  on_update(tabData.value[index].val,1)
 })
 onUnmounted(() => {
   MenuData.set_collect_id('')

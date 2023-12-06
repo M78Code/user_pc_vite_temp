@@ -9,8 +9,8 @@
           <div class="nonebox4-fourth-a">
               <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
           </div>
-          <!--
-          <div class="nonebox4-fourth-a">
+          
+          <div class="nonebox4-fourth-a"> 
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
                   <div class="nonebox4-fourth-num-sun" data-number='4'>4</div>
@@ -31,19 +31,22 @@
               </div>
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
-                  <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div>
+                  <!-- <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div> -->
+                  <div class="nonebox4-fourth-num-sun key-cell" data-num="x">
+                    <img class="key-cell-img" :src="compute_local_project_file_path('/image/svg/jianpan_del_1.svg')" alt="" data-num="x">
+                  </div>
                   <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
               </div>
           </div>
-          -->
-          <ul class="keyboard-box">
+          
+          <!-- <ul class="keyboard-box">
               <li v-for="item of test" :key="item.value"
                   :style="`grid-area: ${item.area}`"
                   :data-number="item.value"
                   class="keyboard-box-item">
                   {{item.label }}
               </li>
-          </ul>
+          </ul> -->
       </div>
   </div>
 </template>
@@ -53,7 +56,7 @@ import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr, i18n_t } from "src/core/index.js";
+import { UserCtr, compute_local_project_file_path, i18n_t } from "src/core/index.js";
 import lodash_ from 'lodash'
 
 const active_index = ref(BetData.active_index)
@@ -301,7 +304,7 @@ onUnmounted(() => {
 @import url( "src/base-h5/css/bet/bet_single_detail.scss");
 .nonebox4-fourth {
     width: 100%;
-    background-color: #e8f5fe;
+    background-color: var(--q-gb-bg-c-22);
     border-radius: 10px;
     padding-left: 4px;
     padding-right: 4px;
@@ -315,19 +318,19 @@ onUnmounted(() => {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4px;
+   
 }
 .nonebox4-fourth-a-son {
     display: flex;
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
-    color: #2394fc;
-    font-size: 16px;
+    background-color: var(--q-gb-bg-c-15);
+    color: var(--q-gb-t-c-1);
+    font-size: 0.18rem;
     font-weight: bold;
-    border-radius: 6px;
-    margin-left: 2px;
+    border-radius: 0.08rem;
+    margin-left: 0.01rem;
     margin-right: 2px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -349,10 +352,10 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-15);
     box-shadow: 0 2px 2px #eeeeee;
     color: #333;
-    font-size: 16px;
+    font-size: 0.22rem;
     font-weight: bold;
     border-radius: 6px;
     margin-top: 2px;
@@ -364,7 +367,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
+    background-color: var(--q-gb-bg-c-15);
     box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 14px;
@@ -376,7 +379,7 @@ onUnmounted(() => {
 }
 
 .keyboard {
-  height: 216px;
+  height: 1.98rem;
   -webkit-overflow-scrolling: touch;
   font-size: 20px;
   font-weight: 500;
@@ -387,31 +390,11 @@ onUnmounted(() => {
 .key-cell {
   flex: 1;
   box-sizing: border-box;
-  line-height: 54px;
   text-align: center;
-  border: 1px solid var(--q-gb-bd-c-10);
-  background: #ffffff0D;
 }
-
-.key-cell {
-  &:first-child {
-    // 左侧第一排MAX的样式
-    background: #F5F5F5;
-  }
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  &.del-key {
-    background: cadetblue #ffffff0D no-repeat center center;
-    opacity: 0.9;
-    color: #B8B8B8;
-  }
-
-  &.shadow-show {
-    color: #595959 !important;
-  }
+.key-cell-img{
+  width: 0.2rem;
+  height: 0.2rem;
 }
 
 .del-key {
@@ -445,7 +428,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #fff;
+    background: var(--q-gb-bg-c-15);
     box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 16px;

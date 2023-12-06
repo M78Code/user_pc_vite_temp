@@ -1,33 +1,55 @@
 <template>
+  <!-- 可赢额、结算 -->
+  <template>
+    <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
+    <!-- 在未结算页 -->
+    <p v-if="BetRecordClass.selected !== 3" class="acount">
+      <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
+      <template v-if="data_f.orderStatus == 1 || data_f.orderStatus == 2 || data_f.orderStatus == 4">
+        <span>
+          <template v-if="data_f.backAmount !== null">{{format_money2(data_f.backAmount)}}{{ i18n_t('common.unit') }}</template>
+          <template v-else>{{format_money2(data_f.orderAmountTotal)}}{{ i18n_t('common.unit') }}</template>
+        </span>
+      </template>
+      <template v-else>
+        <span>{{format_money2(data_f.maxWinAmount)}}{{ i18n_t('common.unit') }}</span>
+      </template>
+    </p>
+    <!-- 在已结算页 -->
+    <p v-else class="acount">
+      <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
+      <span :class="[calc_amount_settle(data_f).color]">{{ calc_amount_settle(data_f).text }}</span>
+    </p>
+  </template>
   <!-- 注单状态： -->
   <p>
-  <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
-  <label>{{ i18n_t('app_h5.cathectic.bet_status') }}：</label>
-  <template>
-    <!-- 预约中、预约失效页 -->
-    <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
-      <template v-if="[2, 3].includes(data_f.preOrderStatus)">{{ i18n_t('pre_record.booked_fail') }}</template>
-      <template v-else-if="[4].includes(data_f.preOrderStatus)">{{ i18n_t('pre_record.canceled') }}</template>
-      <template v-else>{{ i18n_t('pre_record.booking') }}</template>
-    </span>
+    <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
+    <label>{{ i18n_t('app_h5.cathectic.bet_status') }}：</label>
+    <template>
+      <!-- 预约中、预约失效页 -->
+      <span v-if="BetRecordClass.selected === 1 || BetRecordClass.selected === 2">
+        <template v-if="[2, 3].includes(data_f.preOrderStatus)">{{ i18n_t('pre_record.booked_fail') }}</template>
+        <template v-else-if="[4].includes(data_f.preOrderStatus)">{{ i18n_t('pre_record.canceled') }}</template>
+        <template v-else>{{ i18n_t('pre_record.booking') }}</template>
+      </span>
 
-    <!-- 未结算页 -->
-    <span v-else-if="BetRecordClass.selected === 0">
-      <!-- 订单状态(确认中。。) -->
-      <template v-if="data_f.orderStatus == '3'">
-        {{ confirming.text }}
-      </template>
-      <!-- 订单状态(非确认中) -->
-      <template v-else>
-        {{ calc_text(data_f).text }}
-      </template>
-    </span>
+      <!-- 未结算页 -->
+      <span v-else-if="BetRecordClass.selected === 0">
+        <!-- 订单状态(确认中。。) -->
+        <template v-if="data_f.orderStatus == '3'">
+          {{ confirming.text }}
+        </template>
+        <!-- 订单状态(非确认中) -->
+        <template v-else>
+          {{ calc_text(data_f).text }}
+        </template>
+      </span>
 
-    <!-- 已结算页 -->
-    <span v-else>
-      {{ calc_text_settle(data_f) }}
-    </span>
-  </template>
+      <!-- 已结算页 -->
+      <span v-else>
+        {{ calc_text_settle(data_f) }}
+      </span>
+    </template>
   </p>
 </template>
 
@@ -36,13 +58,25 @@ import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { calc_text } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
-import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
-
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
+import { outcome } from "src/core/bet-record/util.js";
+import { formatTime, format_money2, format_balance } from 'src/core/format/index.js'
 let props = defineProps({
   data_f: {
     type: Object
   }
 })
+
+// 已结算 => 结算金额
+const calc_amount_settle = (data_f) => {
+  let text = ''
+  let color = 'black'
+  text = `${outcome[data_f.outcome]} ${format_balance(data_f.profitAmount)}${i18n_t('common.unit')}`
+  if(data_f.outcome == 4 || data_f.outcome == 5) {
+    color = ''
+  }
+  return { text, color }
+}
 
 // 已结算 => 注单状态
 const calc_text_settle = (data_f) => {
@@ -112,5 +146,8 @@ p {
   line-height: 2;
   display: flex;
   justify-content: space-between;
+  &.acount {
+      color: var(--q-gb-bg-c-13);
+    }
 }
 </style>

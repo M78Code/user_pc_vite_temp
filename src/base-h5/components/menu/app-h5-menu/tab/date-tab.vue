@@ -9,23 +9,23 @@
     <div class="date-tab-wap">
         <div class="date-tab-content">
             <ul class="date-tab-content-ul">
-                <li :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
-                    @click="changeTabMenu(index,$event)">
+                <li ref="dateTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
+                    @click="changeTabMenu(index, $event)">
                     {{ item.name }}
                 </li>
             </ul>
         </div>
     </div>
-  </template>
+</template>
   
-  <script setup>
-  import { onMounted, ref , watch } from "vue";
-  import { scrollMenuEvent } from "../utils";
-  import { MenuData } from "src/core/index.js";
-  import { api_common } from "src/api/"
-  import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+<script setup>
+import { onMounted, onUnmounted,ref, watch } from "vue";
+import { scrollMenuEvent } from "../utils";
+import { MenuData } from "src/core/index.js";
+import { api_common } from "src/api/"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
-  const props = defineProps({
+const props = defineProps({
     defaultVal: {
         type: Number,
         default: 0
@@ -34,71 +34,82 @@
         type: Array,
         default: []
     },
-  
-  });
-  
-  const activeOn = ref(props.defaultVal || '');//默认值
 
-  onMounted(()=>{
+});
+const dateTab = ref(null)
+const activeOn = ref('');//默认值
+
+onMounted(() => {
     changeTabMenu(0)
-  })
-
-  /**
-  * 选中事件
-  * @param {*} val 
-  */
-  const changeTabMenu = (i,event) => {
-    console.error('ssss',i,'---',props.dataList[i].val)
+})
+onUnmounted(()=>{
+    set_active_val()
+})
+/**
+* 选中事件
+* @param {*} val 
+*/
+const changeTabMenu = (i, event) => {
+    event = event || dateTab.value[0];
     if(activeOn.value === i)return;
     activeOn.value = i;
     // 设置日期
-    MenuData.set_date_time(props.dataList[i].val)
+    MenuData.set_date_time(props.dataList?.[i]?.val)
 
     set_menu_match_date()
 
-    event && scrollMenuEvent(event,".date-tab-content-ul",".active");
-  }
-  
+    scrollMenuEvent(event, ".date-tab-content-ul", ".active");
+}
+/**
+ * 默认值
+ */
+const set_active_val = () =>{
+    activeOn.value = '';
+}
+// 根据菜单数据 请求接口    
+const set_menu_match_date = () => {
+    // 获取菜单中的数据 进去接口请求
+    const { menu_match_date_api_config: { api, params } } = MenuData
+    api_common[api](params).then(res => {
+        // if(res.code == 200 ){
+        useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, res.data || {})
+        // }
+    })
+}
+defineExpose({set_active_val,changeTabMenu})
 
-    // 根据菜单数据 请求接口    
-    const set_menu_match_date = () => {
-        // 获取菜单中的数据 进去接口请求
-        const { menu_match_date_api_config:{ api,params } } = MenuData
-        api_common[api](params).then(res => {
-            // if(res.code == 200 ){
-                useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE,res.data || {})
-            // }
-        })
-    }   
 
-
-    
-  </script>
-  <style lang="scss" scoped>
-  .date-tab-wap {
+</script>
+<style lang="scss" scoped>
+.date-tab-wap {
     width: 100%;
     height: 0.32rem;
     overflow: hidden;
     padding: 0 0.05rem;
     position: relative;
+
     .date-tab-content {
         width: 100%;
         height: 0.32rem;
         line-height: 0.32rem;
+
         ul {
             width: 100%;
             overflow: hidden;
             overflow-x: auto;
             display: flex;
+
             &::-webkit-scrollbar {
                 display: none;
             }
+
             li {
                 width: 0.58rem;
                 height: 100%;
                 flex-shrink: 0;
                 text-align: center;
                 font-weight: 400;
+
                 // &:first-child {
                 //     width: 0.4rem;
                 // }
@@ -106,17 +117,19 @@
                     color: var(--q-gb-t-c-1);
                     position: relative;
                     font-weight: 500;
-                    &::after{
-                      content: "";
-                      position: absolute;
-                      width: 60%;
-                      height: 1px;
-                      background-color: var(--q-gb-t-c-1);
-                      bottom: 1px;
-                      left: 50%;
-                      margin-left: -30%;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 60%;
+                        height: 1px;
+                        background-color: var(--q-gb-t-c-1);
+                        bottom: 1px;
+                        left: 50%;
+                        margin-left: -30%;
                     }
                 }
+
                 span {
                     font-size: 12px;
                     color: #7981A4;
@@ -124,5 +137,5 @@
             }
         }
     }
-  }</style>
+}</style>
   

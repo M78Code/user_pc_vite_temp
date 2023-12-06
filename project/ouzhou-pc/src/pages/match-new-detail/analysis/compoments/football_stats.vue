@@ -18,11 +18,10 @@
         </div>
       </div>
       <div>
-       
+      
         <div class="detail-statsic" v-if="score_list">
-
           <div v-for="item in statsList" :key="item.value">
-            <div class="detail-statsic-title">{{ item.value }}</div>
+            <div class="detail-statsic-title">{{ i18n_t(item.value)}}</div>
             <div class="detail-statsic-chart" v-if="score_list[item.value_key]" >
               <span>{{ score_list[item.value_key].home }}</span>
               <q-knob
@@ -43,7 +42,7 @@
         <div class="detail-slider" v-for="item in sliderList" :key="item.title">
           <div class="row justify-between" v-if="score_list[item.value_key]">
             <span>{{ score_list[item.value_key].home  }}</span>
-            <span class="detail-slider-title">{{ item.title }}</span>
+            <span class="detail-slider-title">{{i18n_t(item.title)}}</span>
             <span>{{ score_list[item.value_key].away  }}</span>
           </div>
           <div class="detail-slider-line" v-if="score_list[item.value_key]">
@@ -60,6 +59,7 @@
 
 <script setup>
 import { onMounted, ref,computed } from "vue";
+import { i18n_t } from "src/boot/i18n.js"
 import _ from "lodash"
 const props =  defineProps({
   detail_info: {  // 赛事详情
@@ -73,17 +73,17 @@ const props =  defineProps({
 })
 const statsList = ref([
   {
-    value: i18n_t("common.assault"),
+    value: 'common.assault',
     value_key:'S104'
    
   },
   {
-    value: i18n_t("common.dangerous_assault"),
+    value: 'common.dangerous_assault',
     value_key:'S8'
   
   },
   {
-    value: i18n_t("common.possession_ball"),
+    value: 'common.possession_ball',
     value_key:'S105'
   
   },
@@ -96,17 +96,17 @@ onMounted(()=>{
 
 const value = ref(50);
 const standard = ref(15)
-const sliderList = ref([
+const sliderList = [
   {
-    title: i18n_t("common.shots_on_goal"),
+    title: 'common.shots_on_goal',
     value_key:'S18'
   },
   {
-    title: i18n_t("common.shot_wide_goal"),
+    title:'common.shot_wide_goal',
     value_key:'S17'
   },
 
-])
+]
 const tab = ref("mails");
 
 </script>

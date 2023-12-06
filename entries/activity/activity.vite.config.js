@@ -60,7 +60,9 @@ export default defineConfig({
             dist: path.resolve(process.cwd(), "./dist"),
             project: path.resolve(__dirname, '../../project'),
             node_modules: path.resolve(process.cwd(), "./node_modules"),
-            public: path.resolve(__dirname, '../../public')
+            public: path.resolve(__dirname, '../../public'),
+            project_path: path.resolve(process.cwd(), `./project/${project}`),
+    
         },
     },
     server: {

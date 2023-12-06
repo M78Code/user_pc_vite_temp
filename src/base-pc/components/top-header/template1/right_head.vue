@@ -9,10 +9,8 @@
     <div :class="[is_search ? 'search-click' : 'search']">
       <div class="s-input s-input-click">
         <div style="display: flex; position: relative;">
-          <input class="search-input" :class="is_focus ? 'change_width' : ''" @focus="show_search" v-model="keyword"
-            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @keyup.enter="get_search_data(keyword)" @input="() => {
-              get_search_data(keyword);
-            }" />
+          <input class="search-input" :class="is_focus ? 'change_width' : ''" @focus="show_search" :value="keyword"
+            :placeholder="`${i18n_t('ouzhou.search.placeholder')}`" @input="e=>get_search_data(e.target.value)" @keyup.enter="e=>get_search_data(e.target.value)" />
           <img class="icon-search" :src="compute_local_project_file_path('image/svg/search_white.svg')" alt="">
           <img v-show="keyword" @click="clear_keyword" class="icon-close"
             :src="compute_local_project_file_path('image/svg/close.svg')" alt="">
@@ -30,7 +28,7 @@
     </div> -->
     <div class="h-right">
       <div class="user-info">
-        <span class="user-balance"> {{ format_balance(UserCtr.balance) }} </span>
+        <span class="user-balance"> {{ format_balance(UserCtr.balance) }}</span>
         <span class="user-name">{{ lodash.get(UserCtr.get_user(), "nickName") }}</span>
       </div>
       <q-avatar size="40px" @click="change_input">
@@ -112,7 +110,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, watch, onUnmounted } from "vue";
+import { defineComponent, onMounted, ref, watch, onUnmounted, nextTick } from "vue";
 import { format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
@@ -191,35 +189,30 @@ export default defineComponent({
     ]);
     let is_before_status;
     watch(MenuData.menu_data_version, () => {
-      console.log('settingData',MenuData.is_kemp(), MenuData.is_common_kemp(), MenuData.is_collect_kemp(),UserCtr.odds.cur_odds+'11')
-      if ([MenuData.is_kemp(), MenuData.is_common_kemp(), MenuData.is_collect_kemp()].includes(true) && UserCtr.odds.cur_odds == "HK") {
-        console.log('settingData',settingData.value[0].params.splice(1, 1))
-
-        is_before_status = UserCtr.odds.cur_odds;//保存之前的状态  因为可能冠军相互切
-        UserCtr.set_cur_odds("EU")//冠军不能为香港盘
-      } else {
-        if (is_before_status == "HK") { //如果原来是香港盘口得切回去 切换非冠军菜单了之后 得切回香港盘口
-          UserCtr.set_cur_odds(is_before_status)
-          is_before_status = undefined;
-          settingData.value[0].params.push("HK")
+      nextTick(() => {
+        //冠军不能有HK盘口
+        if ((MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp() || MenuData.is_esports_champion())) {
+          if ((settingData.value[0].params.includes("HK"))) { //如果有香港盘口
+            is_before_status = UserCtr.odds.cur_odds;//保存之前的状态  因为可能冠军相互切
+            UserCtr.set_cur_odds("EU")//冠军不能为香港盘 直接切位欧洲盘
+            settingData.value[0].params.splice(1, 1) //删掉HK盘口
+          }
+        } else {
+          if (is_before_status) { //如果原来是香港盘口得切回去 切换非冠军菜单了之后 得切回香港盘口
+            UserCtr.set_cur_odds(is_before_status)
+            is_before_status = undefined;
+            settingData.value[0].params.push("HK")
+          }
         }
-      }
-    }, { immediate: true })
-    //监听输入框内容改变，并搜索
-    watch(() => keyword.value,
-      (val) => {
-        let trimVal = val.trim();
-        get_search_data(trimVal);
-      }
-    )
-
+      })
+    },{immediate:true})
     // 传递搜索状态
-    const get_search_data = (val) => {
+    const get_search_data =lodash.throttle( (val) => {
       useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, {
         type: 'result',
-        text: val || keyword.value
+        text:String(val).trim()
       })
-    }
+    },1000)
     /**
      * 是否显示搜索组件 default: false
      * 路径: project_path\src\store\module\search.js
@@ -318,26 +311,26 @@ export default defineComponent({
       keyword.value = ''
       userRouter.push('/')
     }
-    const get_props = (props) => {
+    const get_props = (props)=>{
       keyword.value = props.text
     }
     const get_width = (props) => {
       is_focus.value = props.focus
       keyword.value = props.text
     }
-
+    const emit_list=[
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off,
+      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width).off
+    ]
     onMounted(() => {
       compute_userInfo();
-      document.addEventListener('click', (e) => hide_search(e))
-      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props)
-      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width)
+      UserCtr.get_balance();//默认获取一次余额
+      document.addEventListener('click', hide_search)
     });
     onUnmounted(() => {
       document.removeEventListener('click', hide_search)
-      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props).off()
-      useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, get_width).off()
+      emit_list.map(i=>i())
     })
-
     return {
       keyword,
       SearchPCClass,

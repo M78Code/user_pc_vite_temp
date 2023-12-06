@@ -576,7 +576,8 @@ const hand_copy = (data) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 45px;
+      min-width: 45px;
+      padding: 0 10px;
       height: 24px;
       font-size: 12px;
       border-radius: 20px;

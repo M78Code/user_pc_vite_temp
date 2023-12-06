@@ -112,7 +112,8 @@ const popularListSort = (arr) =>{
   const tem = new Map();
   arr = arr.sort((n,m)=>{return m.num - n.num});
   arr = [...arr,...leftDataList.value]
-  let mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1) && MenuData.conventionalType.includes(+item.mi))
+  
+  let mergeArr = arr.filter((item) => !tem.has(item.mi) && tem.set(item.mi, 1) && MenuData.menu_list.map((item)=>{return +item.mi}).includes(+item.mi))
   return mergeArr.slice(0,3);
 }
 /**
@@ -178,6 +179,7 @@ const change_current_menu = (item) => {
  */
 const get_init_data = (val) =>{
   const list = val || MenuData.menu_list;
+  
   leftDataList.value = list && list.length?list:defaultSports;
   const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
   popularList.value = popularListSort(popularSortListH5);

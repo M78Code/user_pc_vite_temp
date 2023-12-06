@@ -131,7 +131,7 @@ export const details_main = (router, route) => {
         play = topKeyArr[0];
       }
       m_plays.push(Number(play));
-      return plays.includes(Number(play));
+      return plays && plays.includes(Number(play));
     });
     if (list) {
       MatchDataWarehouseInstance.value.set_match_details(
@@ -639,7 +639,7 @@ export const details_main = (router, route) => {
    */
   let get_godetailpage = ref(true);
   function event_switch() {
-    let { mid, csid, tid } = route.params;
+    let { mid, csid, tid } = match_detail.value || route.params;
     let params = {
       // 查找参数 1:赛事列表(非滚球:今日 早盘...) 2:赛事详情(滚球) 3:赛事筛选 4:赛事搜索(int) 如果不传默认 1:赛事列表
       sm: 2,

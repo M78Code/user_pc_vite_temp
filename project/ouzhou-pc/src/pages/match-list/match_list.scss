@@ -244,29 +244,6 @@
     } 
   }
 
-  /*  返回顶部 */
-  .pager-wrap {
-    margin: 0 15px 15px 0;
-    .go-top-btn {
-      margin-left: 15px;
-      background-color: var(--q-gb-bd-c-3);
-      padding: 0 5px;
-      height: 24px;
-      border-radius: 2px;
-      border: none;
-      cursor: pointer;
-      .msg {
-        margin-left: 5px;
-      }
-    }
-  }
-}
-.none-thumb {
-  .pager-wrap {
-    .go-top-btn {
-      visibility: hidden;
-    }
-  }
 }
 
 /*  透明闪烁 */

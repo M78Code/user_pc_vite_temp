@@ -8,34 +8,61 @@
         <div>{{tab_item.name}}</div>
       </div>
     </div>
-    <div class="tab-title">
-      <div class="league-name right-border">{{ lengue_name }}</div>
-      <div class="status">
-        <!-- <span class="num">第10轮</span>
-        <span class="state">比赛中</span> -->
-        <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+    <div class="virtual-content-wrapper">
+    <div class="virtual-sports-card">
+      <div class="tab-title">
+        <div class="league-name right-border">{{ lengue_name }}</div>
+        <div class="status">
+          <!-- <span class="num">第10轮</span>
+          <span class="state">比赛中</span> -->
+          <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+        </div>
       </div>
+      <template v-if="!no_virtual_match">
+          <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
+          <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
+          <virtual-sports-stage
+            :is_before_destroy="is_before_destroy"
+            :key="current_match.mid"
+            :m_status="current_match.match_status"
+            :virtual_match_list="match_list_by_no"
+            :current_match="current_match" source='list'
+            :is_video_playing="is_video_playing"
+            :v_match_router_ente="v_match_router_ente"
+            :virtual_result_rank_data="virtual_result_rank_data"
+            @time_ended="timer_ended_handle"
+            @update_next_batch_match="update_n_batch_handle">
+          </virtual-sports-stage>
+          <div class="test-line" v-if="show_debug">
+            {{current_match.mid}}
+          </div>
+
+          <div class="virtual-sports-menu">
+              <div class="vsm-options" v-for="n in 4" :key="n">
+                <div class="teams">
+                  <span>name1</span>
+                  <span>{{n}}</span>
+                </div>
+                <div class="teams">
+                  <span>name2</span>
+                  <span>0</span>
+                </div>
+              </div>
+          </div>
+      </template>
     </div>
-    <template v-if="!no_virtual_match">
-      <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
-      <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
-      <virtual-sports-stage
-        :is_before_destroy="is_before_destroy"
-        :key="current_match.mid"
-        :m_status="current_match.match_status"
-        :virtual_match_list="match_list_by_no"
-        :current_match="current_match" source='list'
-        :is_video_playing="is_video_playing"
-        :v_match_router_ente="v_match_router_ente"
-        :virtual_result_rank_data="virtual_result_rank_data"
-        @time_ended="timer_ended_handle"
-        @update_next_batch_match="update_n_batch_handle">
-      </virtual-sports-stage>
-      <div class="test-line" v-if="show_debug">
-        {{current_match.mid}}
+    <div class="virtual-sports-card">
+      <div class="tab-title tab-border">
+        <div class="league-name right-border">{{ lengue_name }}</div>
+        <div class="status">
+          <!-- <span class="num">第10轮</span>
+          <span class="state">比赛中</span> -->
+          <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+        </div>
       </div>
+      <template v-if="!no_virtual_match">
       <!--赛事轮|期菜单-->
-      <match-tab
+      <!-- <match-tab
         :is_reset_tab_i="is_reset_tab_i"
         :current_league="tab_items[tab_item_i]"
         :current_match="current_match"
@@ -44,7 +71,7 @@
         :before_match_tab_trend="before_match_tab_trend"
         @trend_event_change="trend_event_change"
         @time_ended="timer_ended_handle"
-      ></match-tab>
+      ></match-tab> -->
       <!--  虚拟体育主列表页面  -->
       <div v-if="!ranking_list_change" class="v-sports-main-list" 
         :class="{'v-sports-main-list-style': standard_edition === 1}" 
@@ -104,7 +131,9 @@
       <!-- 占位撑开高度 -->
     </template>
     <no-data v-else which='noMatch' height='500'></no-data>
-
+    </div>
+    </div>
+    
   </div>
 </template>
 
@@ -600,12 +629,17 @@ export default defineComponent({
 .tab-title{
   height: 0.25rem;
   display: flex;
-  padding: 0 0.1rem;
   align-items: center;
   justify-content: space-between;
+  padding-right: 9px;
+  &.tab-border {
+    border-bottom: 1px solid #eee;
+    height: 24px;
+  }
   .league-name{
     color: #303442;
     font-weight: 600;
+    padding-left: 0.07rem;
   }
   .status{
     .state{
@@ -631,4 +665,38 @@ export default defineComponent({
 .v-sports-main-list-style {
   padding-bottom: .48rem;
 }
+.virtual-sports-card {
+  background: #fff;
+  border-radius: 4px;
+}
+.virtual-sports-menu {
+    display: flex;
+    margin-bottom: .08rem;
+    padding: .1rem;
+    padding-bottom: 0;
+    background: var(--q-gb-bd-c-1);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    border-bottom-left-radius: .04rem;
+    border-bottom-right-radius: .04rem;
+    .vsm-options {
+      width: 1.76rem;
+      height: .4rem;
+      background: var(--q-gb-bg-c-18);
+      border-radius: .04rem;
+      margin-bottom: .08rem;
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      flex-direction: column;
+      font-size: .12rem;
+      padding: .02rem .12rem;
+      .teams {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+  }
 </style>

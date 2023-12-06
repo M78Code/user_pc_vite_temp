@@ -66,7 +66,8 @@
       line-height: 19px;
       font-weight: 600;
       margin-bottom: 20px;
-      color: rgba(255, 112, 0, 1);
+      //color: rgba(255, 112, 0, 1);
+      color: var(--q-gb-t-c-11);
     }
   }
   .popular .item,
@@ -87,7 +88,7 @@
       height: 19px;
       line-height: 19px;
       font-weight: 400;
-      color: rgba(61, 59, 55, 1);
+      color: rgba(61, 59, 55, 1) var(--q-gb-t-c-14);
     }
   }
   .popular .item:last-child {

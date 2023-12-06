@@ -1,7 +1,7 @@
 <template>
   <div class="detail_header_tem2">
     <div class="detail-header-video">
-      <iframe v-if="animation_src"
+      <iframe v-show="animation_src && right_actions_label == 'animation'"
         id="replayIframe"
         :src="animation_src+'&rdm='+iframe_rdm"
         style="width:100%;height:100%;"
@@ -9,6 +9,7 @@
         frameborder="0"
         scrolling="no"
       ></iframe>
+      <custom_video v-if="right_actions_label == 'video'"/>
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
@@ -58,6 +59,7 @@
         </div>
       </div>
     </div> -->
+    <right_actions @handle-type="handle_type"/>
   </div>
 </template>
   
@@ -68,6 +70,8 @@ import { api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
 import { useMittOn, useMitt,MITT_TYPES } from "src/core/index.js"
 import SwitchButtons from "./components/SwitchButtons.vue"
+import right_actions from "./components/right_actions.vue"
+import custom_video from "./detail_header_video.vue";
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -77,6 +81,9 @@ const props = defineProps({
 const scoew_icon_list = ref({});
 const iframe_rdm = ref("")
 iframe_rdm.value = new Date().getTime();
+// 状态，是视频还是动画
+/** @type {import('vue').Ref<'animation'|'video'>} */
+const right_actions_label = ref('animation')
 const animation_src = ref("");
 const football_score_icon_list = ref([
   {
@@ -123,7 +130,26 @@ watch(toRef_get_match_detail, (new_value, old_value) => {
   scoew_icon_list.value = {};
   set_scoew_icon_list(new_value);
 })
-
+/**
+ * 切换类型回调
+ * @param {'animation' | 'video' | 'score' | 'collect'} label 
+ */
+const handle_type = (label) => {
+  switch (label) {
+    case 'animation':
+    case 'video':
+      right_actions_label.value = label;
+      break;
+    case 'score':
+      // 切换比分，通知父组件切换
+      break;
+    case 'collect':
+      // 点击收藏，通知父组件更新收藏状态
+      break;
+    default:
+      break;
+  }
+}
 const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
   /**
   * @Description:获取动画播放地址

@@ -112,7 +112,7 @@ export default {
 .all_league_title{
   display: flex;
   height: 30px;
-  background: #fff;
+  background: var(--q-gb-bg-c-15);
   padding: 0 10px;
   align-items: center;
   justify-content: space-between;
@@ -142,7 +142,7 @@ export default {
   height: auto;
   position: relative;
   margin: 0 auto;
-  background: #F2F2F6;
+  background: var(--q-gb-bg-c-18);
   border-radius: 0.05rem;
 
   .league-container {
@@ -224,7 +224,7 @@ export default {
     .limit-t-i {
       // width: 3.45rem;
       margin: 0 auto;
-      color: #999;
+      color: var(--q-gb-t-c-19);
       border-radius: 0.04rem;
     }
   }
@@ -255,7 +255,7 @@ export default {
       // }
 
       .hpn-wrap {
-        color: #414655;
+        color: var(--q-gb-t-c-20);
         font-size: 11px;
       }
     }
@@ -268,7 +268,7 @@ export default {
       padding-left: 0.07rem;
       // padding-bottom: 0.08rem;
       .ol-li-item{
-        background: #fff;
+        background: var(--q-gb-bg-c-15);
       }
     }
 

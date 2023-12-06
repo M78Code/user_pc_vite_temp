@@ -404,7 +404,7 @@ import {api_activity} from "project/activity/src/api/index.js";
 import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
 import common from "project/activity/src/pages/yazhou-pc/common";
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
-import format_date_base from "project/activity/src/mixins/common/time_format.js";
+import format_date_base from "project/activity/src/mixins/module/formartmixin.js";
 import utils from 'project/activity/src/utils/utils.js'
 
 // import { mapGetters } from "vuex";
@@ -891,11 +891,11 @@ export default {
     async openBox() {
       this.getLottery = false;
       if (this.activityObj.period == 3) {
-        this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, '活动已结束');
+        this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '活动已结束');
         return;
       }
       if (this.current_open_box.boxNum == 0) {
-        this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, '当前盲盒已被抢完');
+        this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '当前盲盒已被抢完');
         this.getLuckyBoxInfo();
         return;
       }
@@ -913,7 +913,7 @@ export default {
       if (this.timerIsClick == false) {
         if (this.openBoxTime > 0) {
           this.timerIsClick = true;
-          this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, '操作过于频繁，请稍后再试');
+          this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '操作过于频繁，请稍后再试');
           return;
         }
       } else {
@@ -968,7 +968,7 @@ export default {
             this.bettingMsg = "活动现已维护，感谢您的支持";
           // 其他情况的接口提示
           } else {
-            this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, res.data.msg);
+            this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.data.msg);
           }
           this.getLuckyBoxInfo(true, params.boxType);
         }
@@ -980,7 +980,7 @@ export default {
         } else {
           text = "网络异常，请重新抽取";
         }
-        this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, text);
+        this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
       }
       this.checkToken();
     },

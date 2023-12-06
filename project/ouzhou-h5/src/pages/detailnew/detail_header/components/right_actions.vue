@@ -1,7 +1,7 @@
 <template>
     <div class="right-actions">
         <ul class="list">
-            <li v-for="(item, i) in list" :key="i" class="item" @click="handleClick(item)">
+            <li v-for="(item, i) in list" :key="i" class="item" @click="handleClick(item, index)">
                 <img :src="props.isCollect && item.label == 'collect' ? item.active : item.img" alt="" class="icon" v-if="item.img" />
             </li>
         </ul>
@@ -9,8 +9,9 @@
 </template>
 
 <script setup>
+import { emit } from 'licia/fullscreen';
 import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 // import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
 const props = defineProps({
     // 是否收藏
@@ -44,34 +45,77 @@ const mapObj = computed(() => {
         3: [2]
     }
 })
+// 是否时视频
+const is_video = ref(props.isVideo);
+// 选择的item
 
 const list = computed(() => {
     const res = [
-        {label: 'animation', img: props.isVideo ? `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video.png` :  `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation.png`, value: 0},
+        {label: 'animation', img: is_video.value ? `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video.png` :  `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation.png`, value: 0},
         {label: 'score', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/score.png`, value: 1},
         {label: 'collect', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect_gray.png`, active: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`, value: 2},
     ];
     return res.filter(e => mapObj.value[props.status].includes(e.value));
 })
 
-const handleClick = (item) => {
-    console.log(111);
+let select = ref(list.value[0].label);
+
+/**
+ * 回调
+ * @param {*} item 
+ * @param {*} index
+ * @example
+ * <right_actions @handleType="handle_type"/> 
+ * 
+ * handle_type(value) {
+ *    switch(value) {
+ *     // 点击动画
+ *     case "animation":
+ *      break; 
+ *     // 点击视频
+ *     case "video":
+ *      break;
+ *     // 点击比分
+ *     case "score":
+ *      break;
+ *     // 点击收藏
+ *     case "collect":
+ *      break; 
+*     }
+ * }
+ */
+const handleClick = (item, index) => {
     switch (item.label) {
         // 切换动画
         case 'animation':
-            emits('handleType', 'animation')
+        case 'video':
+            console.log(item.label, select.value, "value===");
+            // if (index == 0) {
+            if (select.value == "animation") {
+                emits('handleType', is_video.value ? 'animation' :'video')
+                is_video.value = !is_video.value;
+                // select.value = is_video.value ? 'animation' :'video';
+            }else {
+                emits('handleType', 'animation')
+                select.value = 'animation';
+            }
+            
+            // }
             break;
         // 切换比分
         case 'score':
             emits('handleType', 'score')
+            select.value = item.label;
             break;
         // 收藏
         case 'collect':
             emits('handleType', 'collect')
+            select.value = item.label;
             break;
         default:
             break;
     }
+
 }
 
 </script>

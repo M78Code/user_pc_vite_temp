@@ -290,7 +290,7 @@ export default {
             this.luckyTicket = data.luckyTicket;
           }
         } else if(['0410505'].includes(code)) { // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
-          this.$root.$emit(this.emit_cmd.EMIT_TO_MAINTENANCE)
+          this.$root.$emit(MITT_TYPES.EMIT_TO_MAINTENANCE)
           return
         }else if ( ['0401038'].includes(code) ){
           const msg_nodata_22 = this.$root.$t('msg.msg_nodata_22')
@@ -345,7 +345,7 @@ export default {
             this.step = 'normal'
           }, 2000);
         } else if(['0410505'].includes(code)) { // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
-          this.$root.$emit(this.emit_cmd.EMIT_TO_MAINTENANCE)
+          this.$root.$emit(MITT_TYPES.EMIT_TO_MAINTENANCE)
           return
         } else {
           this.$toast(res.msg, 1500)
@@ -379,7 +379,7 @@ export default {
           // 合成完成后更新数据
           this.get_lottory_merge()
         } else if(['0410505'].includes(code)) { // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
-          this.$root.$emit(this.emit_cmd.EMIT_TO_MAINTENANCE)
+          this.$root.$emit(MITT_TYPES.EMIT_TO_MAINTENANCE)
           return
         } else {
           this.$toast(res.msg, 1500)

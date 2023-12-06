@@ -17,6 +17,7 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { format_day,is_eports_csid } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 // import { axios_loop } from "src/core/http/index.js";
 // import menu_config from "src/core/menu-pc/menu-data-class.js";
 // import { pre_load_video } from "src/core/pre-load/index";
@@ -270,10 +271,9 @@ export const useGetResultConfig = () => {
    */
   const showDate = (start, end) => {
     let _start = start || format_day(state._date.getTime());
-    let _end =
-      end || format_day(state._date.getTime() + 1000 * 60 * 60 * 24);
+    let _end = end || format_day(state._date.getTime() + 1000 * 60 * 60 * 24);
     // 越南语时间格式和其他语言不同
-    if (["vi", "th", "en", "ms", "ad"].includes(state.lang)) {
+    if (["vi", "th", "en", "ms", "ad"].includes(UserCtr.lang)) {
       // 初始化时直接使用服务器时间计算的值
       // 非初始化时需要格式化
       if (start && end) {
@@ -283,18 +283,18 @@ export const useGetResultConfig = () => {
           state.model.to = _end;
         } else {
           // 单天
-          state.startDateSearch = state.formatTime(
+          state.startDateSearch = formatTime(
             new Date(state.model).getTime(),
             "yyyy/mm/dd"
           );
-          state.endDateSearch = state.formatTime(
+          state.endDateSearch = formatTime(
             new Date(state.model).getTime(),
             "yyyy/mm/dd"
           );
-          state.showSelectTime = `${state.formatTime(
+          state.showSelectTime = `${formatTime(
             new Date(state.model).getTime(),
             "dd/mm/yyyy"
-          )} - ${state.formatTime(
+          )} - ${formatTime(
             new Date(state.model).getTime(),
             "dd/mm/yyyy"
           )}`;
@@ -302,28 +302,28 @@ export const useGetResultConfig = () => {
         }
       } else {
         if (state.model.from) {
-          state.model.from = state.formatTime(
+          state.model.from = formatTime(
             new Date(_start).getTime(),
             "yyyy/mm/dd"
           );
-          state.model.to = state.formatTime(
+          state.model.to = formatTime(
             new Date(_end).getTime(),
             "yyyy/mm/dd"
           );
         }
       }
-      state.startDateSearch = state.formatTime(
+      state.startDateSearch = formatTime(
         new Date(_start).getTime(),
         "yyyy/mm/dd"
       );
-      state.endDateSearch = state.formatTime(
+      state.endDateSearch = formatTime(
         new Date(_end).getTime(),
         "yyyy/mm/dd"
       );
-      state.showSelectTime = `${state.formatTime(
+      state.showSelectTime = `${formatTime(
         new Date(_start).getTime(),
         "dd/mm/yyyy"
-      )} - ${state.formatTime(new Date(_end).getTime(), "dd/mm/yyyy")}`;
+      )} - ${formatTime(new Date(_end).getTime(), "dd/mm/yyyy")}`;
     } else {
       state.startDateSearch = _start;
       state.endDateSearch = _end;
@@ -418,7 +418,6 @@ export const useGetResultConfig = () => {
           }
           //获取联赛数据
           get_pournament();
-          console.error('sport_typesport_type',state.champion_sport_type)
         } else {
           state.load_data_state = "empty";
         }
@@ -557,7 +556,7 @@ export const useGetResultConfig = () => {
       if (
         !lodash.isEmpty(homeName) &&
         !lodash.isEmpty(awayName) &&
-        state.lang == lang
+        UserCtr.lang == lang
       ) {
         state.results_params.matchNameStr = `${homeName} VS ${awayName}`;
       }
@@ -629,13 +628,13 @@ export const useGetResultConfig = () => {
               results,
               (item) => item.tournamentName == state.league
             );
-            state.get_tr_detail([route.query, index]);
+            get_tr_detail([route.query, index]);
           }
         });
         // state.league_type = Array.from(new Set(tournament));
       } else {
         state.results_data = [];
-        state.results_list = {};
+        state.results_list = [];
         state.load_data_state = "empty";
       }
     });
@@ -933,7 +932,6 @@ export const useGetResultConfig = () => {
     //重置筛选条件
     state.pournament_params.tournamentId = "";
     state.pournament_params.nameStr = "";
-    console.error('state.pournament_params',state.results_params)
     state.init = true; //查询赛事
    get_pournament(1); //联动调取联赛数据
   };

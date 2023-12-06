@@ -119,14 +119,15 @@ watch(
   { deep: true }
 );
 
-onMounted(()=>{
-  useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, change_status)
-})
-
 const change_status = (pramas)=>{
   show_type.value = pramas.type
   search_text.value = pramas.text
 }
+const {off}=useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, change_status)
+
+onUnmounted(()=>{
+  off()
+})
 
 /** 保存显示搜索组件状态 */
 const set_search_status = (data) =>{

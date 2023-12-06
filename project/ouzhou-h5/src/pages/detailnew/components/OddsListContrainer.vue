@@ -2,8 +2,11 @@
   <div class="component odds-container">
     <template v-if="match_odds_info && match_odds_info.length > 0 && match_detail?.ms != 2">
       <TransitionGroup>
-        <template v-for="item in match_odds_info">
-          <OddsItem :data="item" ></OddsItem>
+        <template v-for="item in match_odds_info" :key="item.topKey">
+          <OddsItem v-if="item.hton != '0'" :data="item"></OddsItem>
+        </template>
+        <template v-for="item in match_odds_info" :key="item.topKey">
+          <OddsItem v-if="item.hton == '0'" :data="item"></OddsItem>
         </template>
       </TransitionGroup>
     </template>
@@ -32,6 +35,10 @@ const props = withDefaults(defineProps<Props>(), {
   loading: false,
   allCloseState: false,
 })
+
+const emit = defineEmits<{
+  (e:'update:allCloseState',param:boolean)
+}>()
 
 
 //#region 展开收起功能
@@ -63,9 +70,27 @@ function ToggleExpend() {
   //   emit('update:allCloseState', true)
   // }
 }
+function updateUnfold(unfold: boolean){
+  emit('update:allCloseState',unfold)
+}
 
 //#endregion
 
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.component{
+  display: flex;
+  flex-direction: column;
+}
+.v-move{
+  transition: all .5s ease;
+}
+.v-enter-active{
+  transition: all .2s ease;
+}
+.v-enter-from,.v-leave-to {
+  opacity: 0;
+}
+
+</style>

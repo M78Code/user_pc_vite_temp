@@ -190,7 +190,7 @@ export function usedetailData(route) {
             return;
           }
           getMatchDetailList(res.data);
-          detail_loading.value = false;
+          // detail_loading.value = false;
           detail_info.value = { ...detail_info.value, ...res.data };
           detail_info.value["course"] = handle_course_data(detail_info.value);
           setTimeout(() => {
@@ -207,7 +207,7 @@ export function usedetailData(route) {
         console.log(e);
       },
       // 最大循环调用次数(异常时会循环调用),默认3次
-      max_loop: 1,
+      max_loop: 3,
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
@@ -223,18 +223,36 @@ export function usedetailData(route) {
         tId: data.tid,
         t: new Date().getTime(),
       };
-      const res = await getMatchDetailByTournamentId(params);
-      if (res.code == "0401038") {
-        // 限频重新请求
-        setTimeout(() => {
-          getMatchDetailList(data);
-        }, 1000);
-      } else {
-        matchDetailList.value = res.data;
-      }
-    } catch (error) {
-      console.error("getMatchDetailByTournamentId", error);
+      let obj_ = {
+        // axios api对象
+        axios_api: getMatchDetailByTournamentId,
+        // axios api对象参数
+        params: params,
+        // 唯一key值
+        key: "details-list",
+        error_codes: ["0401038"],
+        // axios中then回调方法
+        fun_then: (res) => {
+            // 空赛事数据跳转回首页
+            matchDetailList.value = res.data;
+        },
+        // axios中catch回调方法
+        fun_catch: (e) => {
+          console.log(e);
+        },
+        // 最大循环调用次数(异常时会循环调用),默认3次
+        max_loop: 5,
+        // 异常调用时延时时间,毫秒数,默认1000
+        timers: 1100,
+      };
+
+      utils.axios_api_loop(obj_);
     }
+    catch (error) {
+      console.error("details-list", error);
+    }
+
+     
   };
 
   /**

@@ -500,13 +500,14 @@ class MatchMeta {
   async get_target_match_data ({is_classify = false, scroll_top = 0, md = '', is_error = false, tid = ''}) {
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     const params = this.get_base_params()
+    params.hpsFlag = params.hpsflag
+    delete params.hpsflag
     this.http_params.md = md
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,
-        tid,
-        md: this.http_params.md
+        md: this.http_params.md + ''
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
@@ -529,7 +530,7 @@ class MatchMeta {
       // }, 7000)
 
     } catch {
-      if (this.current_euid !== `${euid}_${md}`) return
+      if (this.current_euid !== `${euid}_${md}_${tid}`) return
       // 当接口 报错，或者出现限频， 调用3次
       if (this.error_http_count.match >= 3) {
         if (this.match_mids.length < 1) this.set_page_match_empty_status({ state: true, type: 'noWifi' }); 

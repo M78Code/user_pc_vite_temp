@@ -59,7 +59,7 @@ const state = reactive({
   search_val: ""
 });
 //组件数据
-const matchRef = ref();
+const matchRef = ref(null);
 let { search_val } = toRefs(state);
 
 let rem_1 = (window.innerWidth * 100) / 375;
@@ -114,7 +114,7 @@ defineProps({});
   }
   .sl-search {
     display: flex;
-    padding: 0 0.4rem;
+    padding: 0 0.2rem;
     .sl-input-content {
       height: 0.4rem;
       width: 100%;

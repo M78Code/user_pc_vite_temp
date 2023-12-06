@@ -35,12 +35,7 @@
                 </div>
                 <template v-slot:after>
                     <div style="height:15px"></div>
-                    <div class="pager-wrap row justify-center">
-                        <div class="go-top-btn yb-flex-center" @click="on_go_top">
-                            <icon-wapper name="icon-go_top" size="14px" />
-                            <div class="msg">{{ $t("common.back_top") || "" }}</div>
-                        </div>
-                    </div>
+                    <back-top :onClick="on_go_top" />
                 </template>
             </scroll-list>
         </load-data>
@@ -52,6 +47,7 @@ import { onMounted, onUnmounted, ref, watch, getCurrentInstance, onActivated } f
 
 import MatchesHeader from "src/base-pc/components/matches_header/matches_header.vue";
 import { IconWapper } from 'src/components/icon'
+import { BackTop } from "src/components/back-top";
 import LoadData from 'src/components/load_data/load_data.vue';
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue"
@@ -77,6 +73,7 @@ export default {
         LoadData,
         ScrollList,
         IconWapper,
+        BackTop,
         LoadData,
         ConmingSoon
     },
@@ -93,6 +90,18 @@ export default {
         const { proxy } = getCurrentInstance()
         const MatchListCardDataClass_match_list_card_key_arr = () => {
             match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr
+            // 获取mid 设置右侧赛事资讯 当ws赛事移除 设置当前第一个mid为右侧赛事资讯
+            const mids_arr = []
+            match_list_card_key_arr.value.map(item => {
+                const card_style_obj = MatchListCardDataClass.get_card_obj_bymid(item)
+                if (card_style_obj?.card_type == "league_container") {
+                    mids_arr.push(...card_style_obj?.mids.split(","))
+                }
+            })
+            if (mids_arr.length) {
+                const mid_index = mids_arr.findIndex(item =>item == MatchListCardDataClass.current_mid.value)
+                useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids_arr[mid_index >= 0 ? mid_index : 0]);
+            }
         }
         onMounted(() => {
             LayOutMain_pc.set_oz_show_right(true)
@@ -109,8 +118,8 @@ export default {
             LayOutMain_pc.set_oz_show_left(false)
         })
         function on_go_top(){
-      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)
-    }
+            useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)
+        }
         watch(
             MatchListCardDataClass.list_version,
             (list_version) => {

@@ -51,10 +51,9 @@ const base_menu_id_new = {
   30002: "1011",
   30003: '1021',
   30004: '1051',
-  30091: '',
-  30090: ''
+  30091: '1911',
+  30090: '1901'
 }
-
 class BaseData {
   constructor() {
     //基础数据返回值
@@ -137,7 +136,7 @@ class BaseData {
     // 是否通知元数据处理完成
     this.is_emit = false
 
-    this.conventionalType = [101,102,190,191]; 
+    this.conventionalType = [101,102]; 
   }
   /**
    * 初始化数据
@@ -188,10 +187,19 @@ class BaseData {
     // ws请求订阅
     BaseWsMessage.init()
   }
-
+  /**
+   * 新旧菜单映射关系
+   * @returns 
+   */
+  base_menu_id_togger = () =>{
+    const data = mi_euid_mapping_default.data;//静态json
+    const base_menu_obj =Object.fromEntries(Object.keys(data).map(item => [data[item].p || data[item].h, item]));
+    return base_menu_obj;
+  }
   // 菜单数量变化
   set_base_c301_change(list = []) {
-    list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    // list.forEach(item => item.mi = base_menu_id_new[item.menuId])
+    list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
 
@@ -395,7 +403,7 @@ class BaseData {
 
       // this.resolve_menus(menu_i18n_default)
     }
-    this.conventionalType = [101,102,190,191]; 
+    this.conventionalType = [101,102]; 
   }
   /**
    * 滚球赛事的赛种id
@@ -1069,6 +1077,8 @@ class BaseData {
       137: 37,
       138: 38,
       139: 39,
+      190: 90,
+      191: 91,
       300: 300,
       400: 400,
       2000: 2000,

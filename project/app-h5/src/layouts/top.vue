@@ -11,18 +11,18 @@
     <TopMenu />
 
     <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
-      <DateTab :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
+      <DateTab ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
 
     <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
         <DateTab :dataList="dataList[MenuData.current_lv_2_menu_i]"  />
     </div>
     <!-- 滑动菜单组件 -->
-    <ScrollMenu :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
+    <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
     <!--  -->
     <!-- <SwitchWap /> -->
     <!--  -->
-    <SearchTab />
+    <SearchTab ref="searchTabMenu"/>
      <!-- 筛选+搜索  已脱离文档流-->
     <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
@@ -39,6 +39,7 @@ import {
   reactive,
   ref,
   watch,
+  nextTick
 } from "vue";
 import { useRoute } from "vue-router";
 import lodash_ from "lodash";
@@ -57,7 +58,9 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口
-
+const dateTabMenu = ref(null);//时间dom
+const scrollTabMenu = ref(null);//滚球dom
+const searchTabMenu = ref(null);//足球tab dom
 // 监听搜索框状态
 useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     select_dialog.value = value
@@ -142,6 +145,18 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if( [1,2,400].includes(1*new_) ){
       set_scroll_data_list(new_)
     }
+    //早盘 串关
+    if( [3,6].includes(1*new_)){
+      nextTick(()=>{
+        dateTabMenu.value.set_active_val()
+        dateTabMenu.value.changeTabMenu(0)
+      })
+    }
+    //球种滚动初始化
+    nextTick(()=>{
+      scrollTabMenu.value.scrollTabMenu()
+      searchTabMenu.value.searchTabMenu()
+    })
   })
 
   // 早盘 串关
@@ -167,7 +182,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       ref_data.current_mi = obj_.mi
       // 设置二级菜单 
       MenuData.set_current_lv_2_menu_i(obj_)
-
       handle_match_render_data()
     }
   }
@@ -185,7 +199,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     MenuData.set_current_lv_2_menu_i(obj)
     // 设置选中菜单的id
     ref_data.current_mi = obj.mi
-
+    
     set_menu_mi_change_get_api_data()
   }
 

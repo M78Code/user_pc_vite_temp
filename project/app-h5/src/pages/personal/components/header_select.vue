@@ -32,11 +32,12 @@ const select_index = (index) => {
 .header_select {
   height: 44px;
   width: 100%;
-  background: #fff;
+  background: var(--q-gb-bd-c-1);
   overflow-x: auto;
   overflow-y: hidden;
   font-size: 13px;
-  color: #8a8986;
+  //color: #8a8986 var(--q-gb-t-c-14);
+  color: var(--q-gb-t-c-19);
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -47,7 +48,8 @@ const select_index = (index) => {
   }
   .fous {
     font-weight: 500;
-    color: #1a1a1a;
+    color: var(--q-gb-t-c-18);
+    //color: #1a1a1a;
   }
 }
 </style>

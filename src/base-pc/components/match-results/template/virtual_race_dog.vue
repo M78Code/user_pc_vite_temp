@@ -185,15 +185,16 @@ export default {
 .table-col:nth-child(3) {
   display: flex;
   align-items: center;
-  padding: 0 20px 0 0;
+  /* padding: 0 20px 0 0; */
 }
 .table-col:nth-child(4),
 .table-col:nth-child(5),
 .table-col:last-child {
   width: 15%;
+  padding-left: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 }
 .table-col:nth-child(4) .num {
   padding: 10px;

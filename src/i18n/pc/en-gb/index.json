@@ -186,6 +186,14 @@
       "bet_col_155": {
         "bet_col_1": "HDP",
         "bet_col_2": "HDP"
+      },
+      "bet_col_172": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_173": {
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under"
       }
     }
   },
@@ -680,7 +688,7 @@
     "return_sports": "Return",
     "rushing_num": "Rushing Num",
     "score": "Point",
-    "score_": "Point",
+    "score_": "P",
     "score_board": "Score Board",
     "score_center": "Score Center",
     "search": "Enter league or team",
@@ -706,7 +714,7 @@
     "ten_million": "Millions",
     "ten_thousand": "Ten Thousand",
     "tips1": "Please check the league you want to filter",
-    "total": "Total",
+    "total": "T",
     "total_": "Total",
     "touchdown": "Touchdown",
     "up_half": "First Half",
