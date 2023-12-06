@@ -166,7 +166,7 @@ export default {
             }
         ];
         // 更新用户信息
-        this.$root.$emit("upd_user_data");
+        useMittEmit("upd_user_data");
         this.get_user_info()
         // 根据连接参数跳转活动
         let page_url = window.location.href.toLowerCase();

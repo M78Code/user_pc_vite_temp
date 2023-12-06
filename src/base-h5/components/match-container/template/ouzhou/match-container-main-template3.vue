@@ -95,6 +95,9 @@
                           </span>
                         </div>
                       </div>
+                      <div class="title-time">
+                        <span>{{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} </span>
+                      </div>
                       <!--主队图片和名称-->
                       <div class='team-title-container' :class="{
                         simple: show_newer_edition && !is_results,
@@ -105,13 +108,13 @@
                         <div class="team-left">
                           <template v-if="home_red_score || home_yellow_score">
                             <!-- 红牌 -->
-                            <!-- <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
                               {{ home_red_score }}
-                            </span> -->
+                            </span>
                             <!-- 黄牌 -->
-                            <!-- <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
+                            <span class='score-punish yellow' v-show="!home_red_score && home_yellow_score">
                               {{ home_yellow_score }}
-                            </span> -->
+                            </span>
                           </template>
                           <!--发球方绿点-->
                           <template v-else>
@@ -119,7 +122,6 @@
                           </template>
                         </div>
                         <div class="team-title-inner-con">
-                          <span>{{ format_time_zone(+match.mgt).Format(i18n_t('time4')) }} </span>
                           <div class='team-t-title-w' :class="{
                             'is-handicap': match.handicap_index == 1,
                             'is-handicap-1': match.handicap_index == 2,
@@ -144,13 +146,13 @@
                         <div class="team-left">
                           <template v-if="home_red_score || home_yellow_score">
                             <!-- 红牌 -->
-                            <!-- <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results }">
+                            <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results }">
                               {{ away_red_score }}
-                            </span> -->
+                            </span>
                             <!-- 黄牌 -->
-                            <!-- <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
+                            <span class='score-punish yellow' v-show="!away_red_score && away_yellow_score">
                               {{ away_yellow_score }}
-                            </span> -->
+                            </span>
                           </template>
                           <!--发球方绿点-->
                           <template v-else>
@@ -819,6 +821,11 @@ export default {
       &.simple {
         transform: translateY(-1px);
       }
+      .title-time{
+        color: #8a8986;
+        font-size: 14px;
+        padding-left: 20px;
+      }
 
       &.team_title {
         .team-title-inner-con {
@@ -836,9 +843,11 @@ export default {
         display: flex;
         position: relative;
         .team-left{
-          width: 20px;
+          width: 15px;
           flex-shrink: 0;
-          margin-left: 2px;
+          margin-left: 7px;
+          display: flex;
+          align-items: center;
         }
 
         &.simple {

@@ -335,7 +335,7 @@ export default {
     height: 24px;
     border-radius: 13px;
     padding: 0;
-    :deep(.icon-wrap) {
+    :deep(.icon-wrap)  {
       width: 24px;
       height: 24px;
       display: flex;

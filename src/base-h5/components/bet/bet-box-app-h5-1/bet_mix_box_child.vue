@@ -50,9 +50,10 @@
 
       <!-- 投注详情 不论成功失败都会显示 -->
       <!--<betInfoList v-if="get_bet_status != 1"></betInfoList>-->
-
+      <!-- <div>{{BetData.bet_s_list.length}}---{{BetData.is_bet_single}}---{{BetViewDataClass.bet_order_status}}</div> -->
       <!-- 串关输入框 -->
-      <template v-if="BetData.bet_s_list.length > 1 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
+      <template v-if="BetData.bet_s_list.length > 0 && !BetData.is_bet_single &&  BetViewDataClass.bet_order_status == 1 ">
+      <!-- <div>12313123</div> -->
         <bet-collusion-input></bet-collusion-input>
       </template>
 
@@ -64,7 +65,11 @@
 
         <!-- 键盘 -->
         <key-board v-if="BetData.bet_keyboard_show" :config="BetData.bet_single_list[0]" :index="0"></key-board>
-
+        <div class="tip component bet-btn-item" v-if="BetViewDataClass.error_message">
+          <div class="bet-error">
+            {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
+          </div>
+        </div>
         <div class="dele-wrap yb_px12 yb_py10 row"  @touchmove.prevent>
           <!-- 右 自动接受跟好赔率 -->
           <span>
@@ -121,6 +126,7 @@
                 <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
               </div>
             </template>
+            
             <template v-else>
               <!-- 投注 -->
               <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
@@ -129,6 +135,8 @@
                 <div>{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
                 <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
               </div>
+              
+              <!-- <slider v-if="BetViewDataClass.bet_order_status == 1"></slider> -->
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
               <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
                 <div class="jiantou jiantouhui">></div>
@@ -168,6 +176,7 @@ import betAfterStatus from './bet-after-status.vue';
 import bevisBettedStatus from "./bevis/bevis-betted_status.vue"
 import bevisBettedButton from "./bevis/bevis-betted-button.vue"
 import bevisBettedConfig from "./bevis/bevis-betted-config.vue"
+import slider from "./bevis/slider.vue"
 
 
 import betMixShow from './bet_mix_show3.vue';
@@ -262,8 +271,10 @@ const is_bet_check_rc = () => {
 
 // 单关 串关切换
 const set_is_bet_single = () =>{
+  // BetData.set_is_bet_single()
+  // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   BetData.set_is_bet_single()
-  useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+  BetData.set_bet_state_show(false)
 }
 // 投注事件
 const pack_up = (val) => {
@@ -349,6 +360,22 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss" scoped>
+.tip{
+  color: var(--q-gb-bd-c-4);
+  text-align: center;
+  font-size: 0.14rem;
+  width: 100%;
+  height: .36rem;
+  line-height: 0.36rem;
+
+ .bet-error {
+    color: #FF0000;
+  }
+
+  .bet-success {
+    color: var(--q-gb-t-c-16);
+  }
+}
 .jiantou{
   height: 0.4rem;
   width: 0.4rem;

@@ -124,7 +124,11 @@ export default defineComponent({
     reset_pagination: {
       type: Number,
       default: 1,
-    }
+    },
+    page: {
+      type: Object,
+      default: ()=>{},
+    },
   },
   filters: {
     format_balance(num) {
@@ -177,13 +181,18 @@ export default defineComponent({
       })
     })
     watch(() => props.reset_pagination, (newVal) => {
-      state.current = +newVal
+      state.current = +newVal;
     })
 
 
     const perPageNum = computed({
       get: function () {
-        return state.pagination.limit;
+      //如果父组件传递页面长度来则接受
+        if (props.page){
+          return props.page.size;
+        }else {
+          return state.pagination.limit;
+        }
       },
       set: function (val) {
         context.emit('pageSizeChange', val)

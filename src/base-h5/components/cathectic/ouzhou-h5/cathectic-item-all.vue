@@ -15,7 +15,7 @@
       <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
       <!-- 已结算筛选、提前结算按钮 -->
       <div class="settled-select flex" v-if="BetRecordClass.selected === 1">
-          <div class="select flex">
+          <div class="select flex"> 
             <span :class="{'active': sort_active === 2}" @click="sortChange(2)">{{ i18n_t('bet_record.settle_time') }}</span>
             <span :class="{'active': sort_active === 1}" @click="sortChange(1)">{{ i18n_t('bet_record.bet_time') }}</span>
           </div>
@@ -31,7 +31,7 @@
           <q-slide-transition>
             <template>
               <div class="date-header flex">
-                <span class="date"><span>{{ formatTime(new Date(name).getTime(), 'mm/DD')}}</span></span>
+                <span class="date"><span>{{ formatTime(new Date(name).getTime(), lang === 'zh'?'mm/DD': 'DD/mm')}}</span></span>
                 <!-- 当前日期的已结算信息总和 -->
                 <div class="settled-date" v-if="BetRecordClass.selected === 1">
                   {{ i18n_t('bet_record.number') }} <span>{{value.totalOrders}}</span>
@@ -70,6 +70,8 @@ import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { formatTime } from 'src/core/format/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import loading from "src/base-h5/components/common/loading.vue"
+//语言设置
+const lang = ref(UserCtr.lang)
 // 锚点
 const myScroll = ref(null)
 // 按什么排序  [1, 2, 3]

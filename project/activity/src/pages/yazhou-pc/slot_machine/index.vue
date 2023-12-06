@@ -307,7 +307,8 @@ import compose from "project/activity/src/pages/yazhou-pc/slot_machine/compose.v
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
 import utils from 'project/activity/src/utils/utils.js';
 import _ from 'lodash';
-
+//头部引入  
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
 export default {
   mixins: [common, format_date_base],
   data() {
@@ -877,7 +878,7 @@ export default {
      * @param {*} msg
      */
     warningNotice(msg) {
-      this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg);
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg);
       // 手动隐藏提示弹窗
       clearTimeout(this.timeout_obj.timer2);
       this.timeout_obj.timer2 = setTimeout(() => {
