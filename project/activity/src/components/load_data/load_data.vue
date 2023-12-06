@@ -15,7 +15,7 @@
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span v-if="cur_state == 'box_opening'" style="font-size: 16px">抽盒中......</span>
-          <span v-else>{{$root.$t('common.loading')}}</span>
+          <span v-else>{{t('common.loading')}}</span>
           <!-- 内容加载中... -->
         </div>
       </div>
@@ -23,24 +23,24 @@
       <div v-if="cur_state=='right_details_loading'" class="loading-wrap right_details_loading" >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span>{{$root.$t('common.loading')}}</span>
+          <span>{{t('common.loading')}}</span>
           <!-- 右侧详情内容加载中... -->
         </div>
       </div>
       <no-data
         v-else-if="['empty','notice-empty','code_empty'].includes(cur_state)"
-        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?$root.$t('common.code_empty'):(($store.state.filter.open_select_time?$root.$t('filter.empty'):$root.$t('common.no_data'))))"
+        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?t('common.code_empty'):(('$store.state.filter.open_select_time'?t('filter.empty'):t('common.no_data'))))"
         :msg2="no_data_msg2"
         :marginBottom="'0px'"
         width="180px"
         height="180px"
         :color="color"
         class="empty-wrap"
-        :class="{filter_img:$store.state.filter.open_select_time}"
+        :class="{filter_img:'$store.state.filter.open_select_time'}"
       >
       </no-data>
       <no-data v-else-if="['all_empty','new_empty'].includes(cur_state) &&is_eports"
-        :msg="$root.$t('common.no_data')"
+        :msg="t('common.no_data')"
         :type_name="'esports-size'"
         :marginBottom="'0px'"
         width="203px"
@@ -50,13 +50,13 @@
       >
         <!-- <div class="empty-btn-wrap" >
           <div class="empty-btn" @click="journey">
-            {{$root.$t('common.go_now')}}
+            {{t('common.go_now')}}
            </div>
         </div> -->
       </no-data>
       <div class="list_right_empty" v-else-if="['all_empty','new_empty'].includes(cur_state)">
         <div class="img"></div>
-        <span>{{$root.$t(`common.${cur_state}`)}}</span>
+        <span>{{t(`common.${cur_state}`)}}</span>
       </div>
     </div>
     <!-- refresh || 404 -->
@@ -68,16 +68,16 @@
           :class="color"
         />
         <!-- 网络不给力 -->
-        <div v-if="cur_state=='refresh'" class="text1">{{$root.$t('common.no_network2')}}</div>
+        <div v-if="cur_state=='refresh'" class="text1">{{t('common.no_network2')}}</div>
         <div
           v-if="cur_state=='404'"
           class="img img404"
           :class="color"
         ></div>
         <!-- 哦豁~页面不见了 -->
-        <div v-if="cur_state=='404'" class="text1">{{$root.$t('common.page404')}}</div>
-        <div class="text2">{{$root.$t('common.nervous')}}</div>
-        <div class="btn" @click="refresh">{{$root.$t('common.refresh')}}</div>
+        <div v-if="cur_state=='404'" class="text1">{{t('common.page404')}}</div>
+        <div class="text2">{{t('common.nervous')}}</div>
+        <div class="btn" @click="refresh">{{t('common.refresh')}}</div>
       </div>
     </div>
     <!-- 用户接口限流提示 -->
@@ -86,12 +86,12 @@
         <div class="img"></div>
         <div class="text1">
           <!-- Hi，真不巧，页面走丢了 -->
-          <span>{{$root.$t('common.user_api_limited1')}}</span><br>
+          <span>{{t('common.user_api_limited1')}}</span><br>
           <!-- 别紧张，点“刷新”马上找回~ -->
-          <span>{{$root.$t('common.user_api_limited2')}}</span>
+          <span>{{t('common.user_api_limited2')}}</span>
         </div>
         <!-- 刷新 -->
-        <div class="btn" @click="refresh">{{$root.$t('common.refresh')}}</div>
+        <div class="btn" @click="refresh">{{t('common.refresh')}}</div>
       </div>
     </div>
     <!-- 接口限流提示 -->
@@ -100,7 +100,7 @@
         <div class="img"></div>
         <div class="text1">
           <!-- 当前访问人数过多，请稍后再试 -->
-          <span>{{$root.$t('common.limited')}}</span>
+          <span>{{t('common.limited')}}</span>
         </div>
       </div>
     </div>
@@ -113,7 +113,7 @@
           :class="color"
         />
         <!-- 网络不给力 -->
-        <div v-if="cur_state=='record_refresh'" class="text1">{{$root.$t('common.limited')}}</div>
+        <div v-if="cur_state=='record_refresh'" class="text1">{{t('common.limited')}}</div>
       </div>
     </div>
   </div>
@@ -121,6 +121,8 @@
 
 <script>
 import no_data from "../no_data/no_data.vue";
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
+
 
 export default {
   name: "loadData",
@@ -183,7 +185,8 @@ export default {
     // 用户登录失效时,直接关闭loading中动画
     this.no_user = this.vx_get_is_invalid;
     // 绑定接收用户失效事件
-    this.$root.$on(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    this.handle_generat_emitters()
+ 
   },
 
   computed: {
@@ -198,6 +201,18 @@ export default {
   },
 
   methods: {
+    /**
+* 生成事件监听  
+*/
+handle_generat_emitters(){
+let event_pairs=  [
+// 投注数量
+{ type:MITT_TYPES.EMIT_SHOW_ALERT_CMD, callback:this.no_user_event} 
+]
+let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+this.emitters_off=emitters_off
+  
+},
     refresh() {
       if(this.load_type == 'league_fold'){
         this.$emit('refresh')
@@ -213,26 +228,12 @@ export default {
       this.no_user = true;
 
     },
-    /**电竞无赛事时跳转其他菜单 */
-    // journey(){
-    //   //电竞种类菜单
-    //  let  subList = _.get(window.$menu,'lastSubListMenu.subList',[])
-    //  //过滤当前选中电竞
-    //  let  newsub =  _.filter(subList,menu=>menu.field1 != ) || []
-    //   //拿到其他点 csid
-    //  let csid = (_.find(newsub,menu=>menu.count>0) || {} ).field1
-    //  //如果电竞有其他赛事就跳转热门赛事
-    //  if(csid){
-    //     this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_CMD, { click_type:'left_menu' })
-    //  }else{
-    //    //跳转热门
-    //       window.$menu.subMenuClick('301');
-    //  }
-    // }
+ 
   },
   destroyed () {
-    // 解绑接收用户失效事件
-    this.$root.$off(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+ 
+//移除相应监听事件 //视图销毁钩子函数内执行
+if(this.emitters_off){this.emitters_off()} 
   },
 };
 </script>

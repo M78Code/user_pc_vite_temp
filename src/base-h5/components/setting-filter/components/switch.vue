@@ -74,11 +74,12 @@ const toggle = () => {
         text-align: center;
         position: relative;
         z-index: 1;
-        color: var(--q-gb-bg-c-10);
+        color: var(--q-gb-bg-c-15);
         font-size: 0.12rem;
 
         &.active {
-            color: #7981a4;
+            //color: #7981a4;
+            color: var(--q-gb-t-c-11);
         }
     }
 }

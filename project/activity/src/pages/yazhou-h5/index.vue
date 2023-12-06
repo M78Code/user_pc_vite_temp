@@ -91,10 +91,11 @@ import lucky_blind_box from "./components/lucky_blind_box.vue";
 import growth_task from "./components/growth_task.vue";
 import slot_machine from './components/slot_machine.vue'
 import acticity_mixin from "./mixin/acticity_mixin.js";
-import userStore from 'project/activity/src/store/module/user/index.js';
+import { UserCtr } from "project_path/src/core/index.js";
+
 import _ from 'lodash';
 import utils from 'project/activity/src/utils/utils.js';
-import { get_file_path } from 'project/activity/src/utils/get_file_path.js'
+ 
 
 
 export default {
@@ -150,10 +151,10 @@ export default {
       return maintenance_string
     },
     get_user() {
-        return userStore.getters.get_user();
+        return UserCtr.get_user();
     },
     get_user_token() {
-        return userStore.getters.get_user_token();
+        return UserCtr.get_user_token();
     }
   },
   created() {
@@ -197,15 +198,15 @@ export default {
     }else{
       this.initialization_menu(this.get_user.activityList, )
     }
-    // this.$root.$on(this.emit_cmd.EMIT_INDEX_REFRESH_END, this.index_refresh_end_handle);
+    // this.$root.$on(MITT_TYPES.EMIT_INDEX_REFRESH_END, this.index_refresh_end_handle);
     this.isIphoneX =  /iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375)
-    // this.$root.$on(this.emit_cmd.EMIT_TO_MAINTENANCE, this.to_maintenance)
+    // this.$root.$on(MITT_TYPES.EMIT_TO_MAINTENANCE, this.to_maintenance)
   },
   methods: {
     set_user(args) {
-        return userStore.mutations.set_user(args);
+        return UserCtr.set_user_info(args);
     },
-    get_file_path: get_file_path,
+    get_file_path:  ()=>'',
     // 去到维护页面
     to_maintenance() {
       this.$toast('活动现已维护，感谢您的支持', 2000)
@@ -351,11 +352,11 @@ export default {
     clearTimeout(this.timer2_)
     this.timer2_ = null
 
-    // this.$root.$off(this.emit_cmd.EMIT_INDEX_REFRESH_END, this.index_refresh_end_handle);
+    // this.$root.$off(MITT_TYPES.EMIT_INDEX_REFRESH_END, this.index_refresh_end_handle);
     for (const key in this.$data) {
       this.$data[key] = null
     }
-    // this.$root.$off(this.emit_cmd.EMIT_TO_MAINTENANCE, this.to_maintenance)
+    // this.$root.$off(MITT_TYPES.EMIT_TO_MAINTENANCE, this.to_maintenance)
     sessionStorage.removeItem('isAPP')
   }
 }

@@ -1,8 +1,8 @@
 /**
  * 这个文件的作用, 是为了解决各种乱七八糟的 扩展(window/date) 报错的问题;
  */
-import 'project/activity/src/utils/window_env/window_env_default.js'
-// import "project/activity/src/public/utils/menuClass/menu_calss.js"
+ 
+ 
 
 class HackError {
     constructor() {

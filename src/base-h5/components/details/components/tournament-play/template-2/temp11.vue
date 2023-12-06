@@ -4,6 +4,7 @@
  * @Description: 针对虚拟体育新增的玩法模板11
 -->
 <template>
+   <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp11 mx-5">
     <div class="hairline-border">
       <div class="row virtual-bet-wrapper">
@@ -11,7 +12,7 @@
         <div v-for="(item,index) in odds_list"
              @click="utils.go_to_bet(item)" :key="index"
              :style="{width:odds_list.length > 30 ?'25%':'20%'}"
-             class="item-style2" :class="[![0,1,2,3,4].includes(index) ? 'border-bot':'',is_select(item.oid) ? 'blue-color':'']"
+             class="item-style2" :class="[![0,1,2,3,4].includes(index) ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'blue-color':'']"
         >
           <div class="row justify-center">
             <div v-for="(item_data_count,index2) in item.two_num" :key="index2">
@@ -38,12 +39,10 @@ import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp10",
-  props:{
-    item_data:Object
-  },
+  props: ["item_data", "title"],
   // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
@@ -55,26 +54,12 @@ export default defineComponent({
       hsw_single: ''
     });
     // #TODO vuex
-    // ...mapGetters(['get_bet_list']),
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
-    const get_bet_list = computed(() => {
-      return []
-    });
     const get_curr_sub_menu_type = computed(() => {
       return ""
     });
-    /**
-     *@description 是否选中
-     *@param {String} id 投注项id
-     *@return {Boolean}
-     */
-    const is_select = computed(() => {
-      return function(id){
-        return get_bet_list.includes(id)
-      }
-    })
     watch(
       // 深度监听数据的变化及时执行os修改函数
       () => item_data,
@@ -103,8 +88,7 @@ export default defineComponent({
     };
     return {
       ...toRefs(data),
-      is_select,
-      get_bet_list,
+      BetData,
       get_curr_sub_menu_type,
       lodash,
       temp_odds,

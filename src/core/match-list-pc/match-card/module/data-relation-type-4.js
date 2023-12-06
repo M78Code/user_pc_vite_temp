@@ -141,31 +141,31 @@
       // 是否创建了一个赛事开赛状态标题卡片
       let is_create_match_status_card = false
       // 如果当前赛事开赛状态 不等于上一个赛事开赛状态  需要添加一个开赛状态标题卡片
-      if(MatchListCardData.match_list_mapping_relation_obj_type == 4 && match_ms != pre_match_ms){
-        pre_match_ms = match_ms
-        card_key = match_ms == 1 ? 'play_title' : 'no_start_title'
-        // 判断开赛状态标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复开赛状态标题卡片
-        if(!match_list_card_key_arr.includes(card_key)){
-          is_create_match_status_card = true
-          // 赛事开赛状态标题卡片处理
-          card_index += 1
-          match_list_card_key_arr.push(card_key)
+      // if(MatchListCardData.match_list_mapping_relation_obj_type == 4 && match_ms != pre_match_ms){
+      //   pre_match_ms = match_ms
+      //   card_key = match_ms == 1 ? 'play_title' : 'no_start_title'
+      //   // 判断开赛状态标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复开赛状态标题卡片
+      //   if(!match_list_card_key_arr.includes(card_key)){
+      //     is_create_match_status_card = true
+      //     // 赛事开赛状态标题卡片处理
+      //     card_index += 1
+      //     match_list_card_key_arr.push(card_key)
 
-          // 打入开赛状态标题卡片特征
-          all_card_obj[card_key] = {
-            ...ouzhou_match_status_title_card_template,
-            // 卡片索引
-            card_index,
-            // 卡片类型
-            card_type: card_key,
-          }
-          // 如果不是ws调用  设置折叠数据
-          if(!is_ws_call){
-            Object.assign(all_card_obj[card_key],fold_template)
-          }
-        }
+      //     // 打入开赛状态标题卡片特征
+      //     all_card_obj[card_key] = {
+      //       ...ouzhou_match_status_title_card_template,
+      //       // 卡片索引
+      //       card_index,
+      //       // 卡片类型
+      //       card_type: card_key,
+      //     }
+      //     // 如果不是ws调用  设置折叠数据
+      //     if(!is_ws_call){
+      //       Object.assign(all_card_obj[card_key],fold_template)
+      //     }
+      //   }
 
-      }
+      // }
 
       // 如果当前联赛 不等于上一个联赛,或者刚创建了一个赛事开赛状态标题卡片，  需要添加一个联赛标题卡片
       if(_match.tid != pre_match_tid || is_create_match_status_card){

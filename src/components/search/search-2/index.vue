@@ -74,6 +74,9 @@ import { api_search } from "src/api/index.js";
 
 import { compute_css_variables } from "src/core/css-var/index.js"
 
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 const props = defineProps({})
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -172,7 +175,7 @@ function set_sports_list() {
     if (lodash.get(res, 'code') == 200) {
       const list = lodash.get(res, 'data') || []
       // 根据商户过滤篮球赛事
-      const ls = ["1", "2"]  //只显示足、篮、网
+      const ls = ["1", "2", "5"]  //只显示足、篮、网
       sports_list = list.filter(item => ls.includes(item.id))
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id

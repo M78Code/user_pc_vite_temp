@@ -4,6 +4,7 @@
  * @Description: 模板id=6 --用于无盘口&区分主客的多个投注项玩法 比如最后进球球员
 -->
 <template>
+   <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp6 mx-5 super-vip-oper">
     <div class="hairline-border">
       <div class="row title-style">

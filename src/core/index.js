@@ -69,7 +69,6 @@ let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
 // if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
 //   MenuData = MenuData_App_h5
 // }
-console.log('dgsduhgbsdgsdfasd', PROJECT_NAME);
 
 switch (PROJECT_NAME) {
   case 'ouzhou-h5':
@@ -269,14 +268,13 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 export * from "src/core/server-img/";
 /**
  *
- * 所有的用法 都一样
+ * 所有的用法 都一样 注意 这里输出的 模块不能 用这种方法 
  * import { xxxx } from "src/core/index.js";
  *
  * import { is_eports_csid  } from "src/core/index.js";
  *
  */
 import ServerTime from './server-time/server-time'
-import { M } from "licia/moment";
 
 export {
   //

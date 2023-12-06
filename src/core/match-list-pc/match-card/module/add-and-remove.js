@@ -1,13 +1,14 @@
 import { update_match_parent_card_style } from "./utils.js";
 import { compute_style_template_by_matchinfo } from "./compute-style-template.js";
-import {get_match_template_id} from '../../match-handle-data.js'
+import { get_match_template_id } from '../../match-handle-data.js'
 import { conpute_match_list_card_offset } from "./card-show-offset.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./data-relation.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardData from "./match-list-card-data-class";
-import {league_list_obj} from '../../composables/match-list-featch.js'
+import { league_list_obj } from '../../composables/match-list-featch.js'
 import { PageSourceData } from 'src/core/index.js';
 import { fold_template } from "../config/card-template-config.js"
+import { replace } from "lodash";
 
 //引入菜单类
 const MenuData = {
@@ -44,7 +45,7 @@ export const remove_league = (remove_tid, callback) => {
   } else {
     // 列表接口数据类型为赛事列表
     let match_list = MatchListData.match_list;
-    
+
     // 移除联赛ID一样的赛事
     lodash.remove(match_list, (match) => {
       return match.tid == remove_tid;
@@ -78,21 +79,25 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
     }
     mids_arr.forEach((mid) => {
       // 原来的样式数据
-      let old_match_style_obj = MatchListCardData.all_card_obj[mid+'_'];
-      // 判断是否需要动态计算高度
-      if ( old_match_style_obj.is_dynamic_compute_height || lodash.get(old_match_style_obj, 'card_total_height') ) {
-        let match = MatchListData.list_to_obj.mid_obj[mid+'_'];
-        let match_style_obj = compute_style_template_by_matchinfo(
-          match,
-          get_match_template_id(match)
-        );
-        // 更新赛事表征数据
-        Object.assign(old_match_style_obj, match_style_obj);
-        // 更新赛事父级卡片样式 即对应的联赛容器卡片样式
-        update_match_parent_card_style(
-          old_match_style_obj,
-          MatchListCardData.all_card_obj
-        );
+      let old_match_style_obj = MatchListCardData.all_card_obj[mid + '_'];
+      if (old_match_style_obj) {
+        // 判断是否需要动态计算高度
+        if (old_match_style_obj.is_dynamic_compute_height || lodash.get(old_match_style_obj, 'card_total_height')) {
+          let match = MatchListData.list_to_obj.mid_obj[mid + '_'];
+          let match_style_obj = compute_style_template_by_matchinfo(
+            match,
+            get_match_template_id(match)
+          );
+          // 更新赛事表征数据
+          Object.assign(old_match_style_obj, match_style_obj);
+          // 更新赛事父级卡片样式 即对应的联赛容器卡片样式
+          update_match_parent_card_style(
+            old_match_style_obj,
+            MatchListCardData.all_card_obj
+          );
+        }
+      } else {
+        // console.log(mid, old_match_style_obj)
       }
     });
     // 设置列表总高度
@@ -139,27 +144,18 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
   match_status_type_arr.forEach((match_status_type) => {
     // 遍历联赛列表
     let league_list = lodash.get(all_league_obj, match_status_type, []);
-    league_list.forEach((league_obj, league_index) => {
+    for (let index = 0; index < league_list.length; index++) {
+      const league_obj = league_list[index];
       // 判断联赛ID是否相等
       if (remove_tid == league_obj.tid) {
-        // 赛事ID数组
-        let mids_arr = league_obj.mids.split(",");
-        // 遍历联赛下所有赛事ID
-        mids_arr.forEach((mid, mid_index) => {
-          // 判断赛事ID是否相等
-          if (mid == remove_mid) {
-            mids_arr.splice(mid_index, 1);
-            if (mids_arr.length == 0) {
-              // 联赛下没有赛事  移除联赛
-              league_list.splice(league_index, 1);
-            } else {
-              // 移除赛事后  重新赋值联赛的mids
-              league_obj.mids = mids_arr.join(",");
-            }
-          }
-        });
+        //删掉赛事
+        league_obj.mids = lodash.remove(league_obj.mids.split(","), remove_mid).join(',')
+        if (league_obj.mids == '') { //删掉联赛
+          league_list.splice(index, 1)
+          index--;
+        }
       }
-    });
+    }
   });
   let match_length =
     lodash.get(all_league_obj, "livedata.length", 0) +
@@ -187,12 +183,14 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   callback
 ) => {
   // 列表接口数据类型为赛事列表
+  let len = MatchListCardData.match_list_key.length;
   let match_list = MatchListCardData.match_list_key;
   match_list.forEach((match, index) => {
     if (match.mid == remove_mid) {
       match_list.splice(index, 1);
     }
   });
+  if (len == match_list.length) return; //如果总是没有变化就直接返回
   if (match_list.length == 0) {
     // 参照 remove_match_callback_when_match_list_length_0_demo
     if (callback && callback.length_0_fn) {
@@ -223,7 +221,7 @@ export const remove_match = (remove_mid, callback) => {
   if (route_name == "search") {
     return;
   }
-  if ([1, 3, 8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+  if (lodash.get(league_list_obj, 'livedata') || lodash.get(league_list_obj, 'nolivedata')) {
     remove_match_when_match_list_mapping_relation_obj_type_1_3(
       remove_mid,
       callback

@@ -40,8 +40,6 @@ class MatchMeta {
     this.complete_matchs = []
     // 上一次滚动得距离
     this.prev_scroll = 0
-    // 是否需要赛事归类操作
-    this.is_classify = false
     // 其他仓库的全量赛事
     this.other_match_mids = []
     this.other_complete_matchs = []
@@ -91,10 +89,15 @@ class MatchMeta {
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
 
+    // 清除上一轮赛事
+    this.clear_match_info()
+
     // 获取真实数据
     this.http_params.md = md
+
+
     // 是否需要开赛、未开赛归类
-    const is_classify = project_name === 'app-h5' ? false : false
+    const is_classify = this.get_is_classify()
     is_match && this.get_target_match_data({ md, is_classify })
 
     // 滚球全部
@@ -109,14 +112,6 @@ class MatchMeta {
     if (MenuData.is_esports() || MenuData.is_results()) return
 
     this.get_origin_match_mids_by_mi(menu_lv_v2)
-  }
-
-  /**
-   * @description 重置 match_mids
-   * @param {*} val 
-   */
-  set_match_mids (val) {
-    this.match_mids = val
   }
 
   /**
@@ -174,8 +169,8 @@ class MatchMeta {
   get_origin_match_by_mids(mids) {
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
-    // 显示空数据页面
-    if (length < 1) return this.set_page_match_empty_status({ state: true });
+    // 显示空数据页面  this.set_page_match_empty_status({ state: true });
+    if (length < 1) return
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 赛事全量数据
@@ -343,6 +338,7 @@ class MatchMeta {
    */
   filter_match_by_time (time) {
     // 所有日期
+    this.clear_match_info()
     let target_mids = []
     if (!time) {
       target_mids = lodash.uniq(this.zaopan_mids)
@@ -384,19 +380,11 @@ class MatchMeta {
    */
   filter_hot_match_by_tid (tid = '') {
     const tid_info = this.tid_map_mids[`tid_${tid}`]
-    this.get_target_match_data({ is_classify: false, tid })
+    this.get_target_match_data({ is_classify: true, tid })
     if (!tid_info) return
     const mids = this.tid_map_mids[`tid_${tid}`].mids
     if (mids.length < 1) return 
     this.get_origin_match_by_mids(mids)
-    
-  }
-
-  /**
-   * @description 获取特定联赛赛事
-   */
-  get_specific_leaguesby_tid () {
-
   }
 
   /**
@@ -406,7 +394,7 @@ class MatchMeta {
    */
   get_base_params (euid) {
     // match中 hpsFlag 都为0 除开冠军或电竞冠军; 赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
-    const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
+    const hpsFlag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     const current_lv_1_menu_i = lodash.get(MenuData, 'current_lv_1_menu_i')
     const type = MenuData.menu_id_map(current_lv_1_menu_i) ? MenuData.menu_id_map(current_lv_1_menu_i) : current_lv_1_menu_i
     return {
@@ -418,7 +406,7 @@ class MatchMeta {
       sort: PageSourceData.sort_type,
       //标准版和简版 1为新手版  2为标准版
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
-      hpsflag
+      hpsFlag
     };
   }
 
@@ -500,14 +488,17 @@ class MatchMeta {
   async get_target_match_data ({is_classify = false, scroll_top = 0, md = '', is_error = false, tid = ''}) {
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     const params = this.get_base_params()
-    params.hpsFlag = params.hpsflag
-    delete params.hpsflag
     this.http_params.md = md
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
+    const other_params = {
+      category: 1,
+      md: this.http_params.md + ''
+    }
+    if (tid) Object.assign(other_params, { tid })
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,
-        md: this.http_params.md + ''
+        ...other_params
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
@@ -537,7 +528,7 @@ class MatchMeta {
       } else {
         this.error_http_count.match++
         let timer = setTimeout(() => {
-          this.get_target_match_data({is_classify, scroll_top, md, is_error: true})
+          this.get_target_match_data({is_classify, scroll_top, md, is_error: true, tid})
           clearTimeout(timer)
           timer = null
         }, 3000)
@@ -737,8 +728,11 @@ class MatchMeta {
       euid = MenuData.get_euid(mid+''+lv1_mi)
     }
     const params = this.get_base_params(euid)
+    delete params.hpsFlag
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+    // 频繁切换菜单， 收藏接口比较慢时 会影响其他页面， 故加上判断
+    if (!MenuData.is_collect()) return
     const list = lodash.get(res, 'data', [])
     
     if (list.length > 0) {
@@ -803,8 +797,9 @@ class MatchMeta {
    * @description 设置是否需要赛事归类
    * @param { Boolean } val 
    */
-  set_is_classify (val) {
-    this.is_classify = val
+  get_is_classify () {
+    const is_classify = project_name === 'app-h5' ? true : false
+    return  is_classify
   }
 
   set_current_euid (val) {
@@ -885,7 +880,7 @@ class MatchMeta {
 
     let target_data = []
     if (is_classify) {
-      // 赛事归类(开赛-未开赛) 里面包含了球种归类
+      // 赛事归类(开赛-未开赛) 里面包含了球种归类、联赛归类
       target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
       // 球种归类
@@ -930,7 +925,7 @@ class MatchMeta {
       this.complete_matchs = matchs_data
       this.complete_mids = result_mids
     }
-
+    
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -961,8 +956,11 @@ class MatchMeta {
     // 清除联赛下得赛事数量
     MatchResponsive.clear_ball_seed_league_count()
 
+     // 是否需要开赛、未开赛归类
+     const is_classify = this.get_is_classify()
+
     // 赛事归类开赛、未开赛
-    const target_data = this.is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list.filter((t) => t.mid)
+    const target_data = is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list.filter((t) => t.mid)
     // 过滤赛事 
     this.complete_mids = mids
     this.complete_matchs = target_data.map((t, index) => {

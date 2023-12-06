@@ -1,4 +1,5 @@
 import lodash from 'lodash'
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 // 电竞赛种csid
 const e_sport_csids = [101, 100, 102, 103];
 import { UserCtr } from 'src/core/'
@@ -61,7 +62,8 @@ const get_server_file_path = (path, csid = 0) => {
     return `${UserCtr.e_sports_domain_img}/${path}`;
   }
   //新配置是 数组
-  const domain_img_str = DOMAIN_RESULT.img_domains[0];
+  let DOMAIN_RESULT_ = lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT') 
+  const domain_img_str = DOMAIN_RESULT_.img_domains[0];
   if (!lodash.isEmpty(domain_img_str)) {
     return `${domain_img_str}/${path}`;
   }

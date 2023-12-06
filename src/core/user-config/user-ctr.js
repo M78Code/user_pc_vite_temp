@@ -14,7 +14,6 @@ import { ServerTime } from "src/core/";
 
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { default_theme_key } from "src/core/theme/"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
@@ -133,7 +132,8 @@ class UserCtr {
     this.c303_data_change = ''
     // 次要玩法盘口状态变化
     this.c305_data_change = ''
-
+    // var事件国际化信息
+    this.var_event_i18n = []
     nextTick(()=>{
       this.get_system_time()
     })
@@ -169,7 +169,10 @@ class UserCtr {
   set_c305_data_change (val) {
     this.c305_data_change = val
   }
-
+  // 设置当前var事件国际化集合信息 
+  set_var_event_i18n(val) {
+    this.var_event_i18n = val
+  }
   /**
    * 获取初始化uid
    * @return {String} uid
@@ -880,7 +883,10 @@ class UserCtr {
     }
     return ret;
   }
-
+  // 获取var事件国际化信息
+  get_var_event_i18n() {
+    return this.var_event_i18n;
+  }
   /**
    * 获取用户基础信息
    * 语种信息,赔率类型

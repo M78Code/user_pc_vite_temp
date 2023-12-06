@@ -3,7 +3,7 @@
  * @Date: 2020-08-20 18:35:53
  * @Description: 用户操作api接口定义
  */
-import http from "project/activity/src/utils/http/axios_warpper.js";
+import { http } from "project_path/src/core/index.js";
 
 // let prefix = window.env.config.api.API_PREFIX_USER;
 // let prifix_url =  http.HTTP_UPLOAD_API;

@@ -324,11 +324,9 @@ import active_count_down from "./active_count_down.vue";
 import number_scroll from './number_scroll.vue';
 import data_pager from "project/activity/src/components/data_pager.vue";
 import compose from './compose.vue';
-import common from "project/activity/src/mixins/constant/module/common.js";
+import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
-import utils from 'project/activity/src/utils/utils.js';
-import themeStore from 'project/activity/src/store/module/theme/theme.js';
-import userStore from 'project/activity/src/store/module/user/index.js';
+import { UserCtr } from "project_path/src/core/index.js";
 
 
 export default {
@@ -411,10 +409,10 @@ export default {
   },
   computed: {
     get_user() {
-        return userStore.getters.get_user();
+        return UserCtr.get_user();
     },
     get_theme() {
-        return themeStore.getters.get_theme();
+        return UserCtr.theme;
     },
   },
   components: {
@@ -598,7 +596,7 @@ export default {
           return
         }
         else if ( ['0401038'].includes(code) ){
-          const msg_nodata_22 = this.$root.$t('msg.msg_nodata_22')
+          const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
         }
         else {
@@ -651,7 +649,7 @@ export default {
           this.$emit('to_maintenance')
           return
         }else if ( ['0401038'].includes(code) ){
-          const msg_nodata_22 = this.$root.$t('msg.msg_nodata_22')
+          const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
         } else {
           this.gameHistoryLists.list = [];

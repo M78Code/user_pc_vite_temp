@@ -4,7 +4,7 @@
  * @Description: 赛事分析页动画/视频
 -->
 <template>
-  <div class="box-bc">
+  <div class="box-bc" @mouseenter="video_enter" @mouseleave="video_leave">
     <div class="iframe_box">
       <iframe
         id="video-iframe"
@@ -19,7 +19,15 @@
         allowfullscreen="true"
         allow="autoplay"
       ></iframe>
-
+      <video_type_ctr
+          @mouseenter="video_enter"
+          v-show="is_video_hover"
+          :ctr_data={video_type:1}
+          :is_video_hover="is_video_hover"
+          :video_fullscreen_disabled="true"
+          :match_info="detail_info"
+          :is_esports="false"
+      ></video_type_ctr>
       <div class="detail-loading" v-if="iframe_loading">
         <loading></loading>
       </div>
@@ -33,6 +41,7 @@ import { api_match_list } from "src/api";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 import video from "src/core/video/video.js";
 import url_add_param from "src/core/enter-params/util/index.js";
+import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import loading from "../../../components/loading/index.vue";
 import _ from "lodash";
 const props = defineProps({
@@ -48,6 +57,7 @@ const props = defineProps({
   },
 });
 const iframe_loading = ref();
+const is_video_hover = ref(false);
 
 const { post_video_url } = api_match_list; // 接口
 watch(
@@ -190,6 +200,35 @@ const get_animation_url = () => {
       console.error(err);
     });
 };
+
+/**
+ * @Description:鼠标移入视频区域
+ * @return {undefined} undefined
+ */
+const video_enter = () => {
+  is_video_hover.value = true;
+  video.send_message({
+    cmd:'show_controller',
+    val:true
+  })
+};
+
+/**
+ * @Description:鼠标离开视频区域
+ * @return {undefined} undefined
+ */
+const video_leave = () => {
+  is_video_hover.value = false;
+  video.send_message({
+    cmd:'show_controller',
+    val:false
+  })
+  video.send_message({
+    cmd:'global_click',
+    val:''
+  })
+};
+
 </script>
 
 <style lang="scss" scoped>
@@ -217,5 +256,13 @@ const get_animation_url = () => {
   }
 }
 .video-iframe {
+}
+
+// 屏蔽不需要的功能
+.box-bc :deep(.full-screen-wrap) {
+  display: none !important;
+}
+.box-bc :deep(.xl-screen-wrap) {
+  display: none !important;
 }
 </style>

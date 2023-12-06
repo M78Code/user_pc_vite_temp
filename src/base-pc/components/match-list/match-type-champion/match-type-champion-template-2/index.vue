@@ -66,10 +66,11 @@ const collect = lodash.throttle(() => {
 </script>
 <style lang="scss" scoped>
 .c-match-league {
-  height: 34px;
+  margin-top: -1px;
+  border-top: 1px solid var(--q-gb-bd-c-1);
 }
 .tr-match-head-ouzhou {
-  height: 34px;
+  height: 40px;
   cursor: pointer;
   .leagues-wrap {
     display: flex;

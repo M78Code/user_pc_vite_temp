@@ -65,7 +65,7 @@
           }"
           v-if="['2', '6'].includes(get_match_detail.csid+'')"
         >
-          <div class="line"></div>
+          <!-- <div class="line"></div> -->
           <template v-for="item in basketball_score_icon_list" :key="item.msc_key">
             <div class="list-item" v-if="scoew_icon_list[item.msc_key]" >
               <span>{{scoew_icon_list[item.msc_key]["home"]}}</span>
@@ -75,9 +75,10 @@
           </template>
         </div>
       </template>
-      <!-- 比分组件 目前只写了网球比分组件 -->
-      <matchScore v-if="get_match_detail.msid == 5" :detail_data="get_match_detail" />
+     
     </div>
+     <!-- 比分组件 目前只写了网球比分组件 -->
+     <matchScore v-if="get_match_detail.msid == 5" :detail_data="get_match_detail" />
   </div>
 </template>
 
@@ -340,8 +341,12 @@ onMounted(()=>{
 .current-score-color{
   color: var(--q-gb-t-c-1);
 }
+
+
+
 .detail_header_tem1 {
   .match-detail-head {
+    // padding: 12px 20px;
     position: relative;
     width: 100%;
     // height: 245px;
@@ -392,6 +397,7 @@ onMounted(()=>{
       justify-content: space-between;
       align-items: center;
       position: relative;
+      padding: 20px 12px 14px 20px;
       .match-detail-time-label {
         color: var(--q-gb-t-c-3);
         padding-right: 10px;
@@ -406,8 +412,8 @@ onMounted(()=>{
         width: 14px;
         height: 14px;
         position: absolute;
+        right: 20px;
         z-index: 2;
-        right: 0;
         img {
           width: 14px;
           height: 14px;
@@ -418,6 +424,7 @@ onMounted(()=>{
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0px 20px 10px 20px;
       .match-detail-team-name {
         // font-weight: bold;
         font-size: 15px;
@@ -434,8 +441,18 @@ onMounted(()=>{
       height: 34px;
       line-height: 34px;
       display: flex;
+      border-top: 1px solid #f5f5f5;
       justify-content: space-between;
       .list {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        &:first-child {
+          padding-left: 20px;
+        }
+        &:last-child {
+          padding-right: 20px;
+        }
       }
       .baseketball_list {
       }
@@ -463,18 +480,21 @@ onMounted(()=>{
         display: inline-block;
         width: 14px;
         height: 14px;
-        margin: 0 2px;
+        margin: 0 6px;
         vertical-align: middle;
       }
     }
     .baseketball-list {
       position: relative;
       margin-top: 5px;
+      padding-left: 20px;
       justify-content: flex-start;
       .list-item {
         padding: 0 15px 0 0;
         font-weight: 700;
+        font-size: 14px;
         // font-weight: 500; //已在父节点设置font-weight
+        
       }
       &.game-on{
         .list-item:last-child{

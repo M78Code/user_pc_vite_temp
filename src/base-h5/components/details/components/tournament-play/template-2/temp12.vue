@@ -4,6 +4,7 @@
  * @Description: 玩法模板12
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp12 mx-5">
     <div class="hairline-border">
       <div class="bet-wrapper">
@@ -269,12 +270,10 @@ import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as M
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp12",
-  props:{
-    item_data:Object,
-  },
+  props: ["item_data", "title"],
   components: {
     "odds-new": odds_new
   },
@@ -288,9 +287,6 @@ export default defineComponent({
       // 客队是否显示
       valid_away: false,
     });
-    // #TODO vuex
-    // computed: {
-    // ...mapGetters(["BetData.bet_oid_list","get_detail_data"]),
     const route = useRoute()
     const get_detail_data = computed(() => {
       return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)

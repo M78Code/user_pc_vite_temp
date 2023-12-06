@@ -38,27 +38,27 @@
 											</div>
 											<div style="display: flex;flex-direction: row; flex: 1">
 												<div class="flex_1"
-													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[0].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div v-html="red_color(item?.mhn)"></div>
-													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[0].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
-												<template v-if="item.csid != '2' && item.csid != '5'">
+												<template v-if="!sports_id.includes(item.csid)">
 													<div class="flex_1"
-														v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+														v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[0].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
 														<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-														<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+														<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 													</div>
 													<div class="flex_1" v-else>
 														<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 													</div>
 												</template>
 												<div class="flex_1"
-													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div v-html="red_color(item?.man)"></div>
-													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -93,27 +93,27 @@
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 												<div v-html="red_color(i?.mhn)"></div>
-												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="i.csid != '2' && i.csid != '5'">
+											<template v-if="!sports_id.includes(i.csid)">
 												<div class="flex_1"
-													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
 											</template>
 											<div class="flex_1"
-												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 												<div v-html="red_color(i?.man)"></div>
-												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -152,27 +152,27 @@
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[0]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div v-html="red_color(item?.matchList?.[0].mhn)"></div>
-												<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												v-if="lodash.get(list, 'hps[0].hl.length', 0) > 0 && lodash.get(list, 'hps[0].hl[0].ol[0].ov', '') && lodash.get(list, 'hps[0].hl[0].ol[1].os', '') === 1">
+												<div v-html="red_color(list.mhn)"></div>
+												<div class="red">{{ get_odd_os(lodash.get(list, 'hps[0].hl[0].ol[0].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="list.csid != '2' && list.csid != '5'">
+											<template v-if="!sports_id.includes(list.csid)">
 												<div class="flex_1"
-													v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[2]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													v-if="lodash.get(list, 'hps[0].hl.length', 0) > 0 && lodash.get(list, 'hps[0].hl[0].ol[2].ov', '') && lodash.get(list, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(list, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
 											</template>
 											<div class="flex_1"
-												v-if="list.hps?.[0]?.hl.length > 0 && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && list.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+												v-if="lodash.get(list, 'hps[0].hl.length', 0) > 0 && lodash.get(list, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(list, 'hps[0].hl[0].ol[1].os', '') === 1">
 												<div v-html="red_color(list.man)"></div>
-												<div class="red">{{ get_odd_os(list.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(list, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -186,9 +186,7 @@
 				</div>
 			</div>
 		</q-scroll-area>
-		<div v-else="!(search_data?.team && search_data.team?.length > 0) &&
-			!(search_data?.league && search_data.league?.length > 0) && 
-			!(search_data?.bowling && search_data?.bowling?.length > 0) &&
+		<div v-else="is_empty_data &&
 			!search_loading"
 			 class="no-result-warp">
 			 <!-- <p>{{ i18n_t('ouzhou.search.no_search_rezult') }}</p> -->
@@ -433,15 +431,22 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 	})
 }, 500)
 
+// 不展示平局的球种csid
+const sports_id = ['2', '5'];
+
+// 判断数据为空
+const is_empty_data = () => {
+	if(!(search_data.value?.team && search_data.value?.team.length > 0) &&
+	!(search_data.value?.bowling && search_data.value?.bowling.length > 0) &&
+	!(search_data.value?.league && search_data.value?.league.length > 0)) return true
+}
+
 /**
  * @description 获取赛事赔率
  */
 let match_mid_Arr = [];
 const get_match_base_hps_by_mids = async () => {
-	if (!(search_data.value?.team && search_data.value?.team.length > 0) &&
-		!(search_data.value?.league && search_data.value?.league.length > 0) &&
-		!(search_data.value?.bowling && search_data.value?.bowling.length > 0)
-	) return;
+	if (is_empty_data()) return;
 	// 拿到所有滚球，联赛，队伍 mid
 	match_mid_Arr = []
 	search_data.value?.team.forEach((item, index) => {

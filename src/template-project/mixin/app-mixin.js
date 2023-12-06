@@ -85,7 +85,7 @@ export default {
         // http初始化方法 会调用 setApiDomain
         // ws和http域名切换逻辑
         http.setApiDomain();
-        enter_params(async(user)=>{
+         enter_params(async(user)=>{
           await loadLanguageAsync(lang);
          
   

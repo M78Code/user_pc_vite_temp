@@ -7,7 +7,8 @@
         :sport_id="card_style_obj.csid" size="18px" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
       
-      <span>{{ cur_title_info.name }}</span>
+      <span v-if="!MenuData.is_esports()">{{ cur_title_info.name }}</span>
+      <span v-else>{{ BaseData.menus_i18n_map[MenuData.menu_current_mi] }}</span>
       <!-- 赛事数量 -->
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>

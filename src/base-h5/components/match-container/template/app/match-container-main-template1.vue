@@ -404,7 +404,7 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-21);
     height: 5px;
     margin: 0 4px;
   }
@@ -448,7 +448,7 @@ export default {
     position: relative;
     transition: max-height 0.3s;
     padding-left: 6px;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -551,7 +551,7 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
+    padding: 0 5px 0 15px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
@@ -737,7 +737,7 @@ export default {
       .favorited-icon{
         width: 14px;
         height: 14px;
-        margin: 0 10px 0 12px;
+        margin: 0 10px 0 11px;
         position: relative;
         flex-shrink: 0;
         > img {
@@ -770,7 +770,7 @@ export default {
     font-size: 0.1rem;
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-18);
     border-top: 1px solid var(--q-gb-bd-c-4);
     border-bottom: 1px solid var(--q-gb-bd-c-4);
 
@@ -802,7 +802,7 @@ export default {
       line-height: 1;
       margin-left: 0.01rem;
       font-size: 0.1rem;
-      color: var(--q-color-com-fs-color-1);
+      color: #AFB3C8 !important;
       flex-shrink: 0;
 
       &.boxing {
@@ -863,8 +863,7 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      color: var(--q-gb-t-c-20);
-      max-width: 2.8rem;
+      color: #303442;
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
@@ -1482,6 +1481,7 @@ export default {
         margin-right: 0.14rem;
       }
       :deep(.counting-down-wrap){
+        color: #AFB3C8 !important;
         .counting{
           font-size: 11px;
         }

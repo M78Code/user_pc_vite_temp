@@ -37,7 +37,12 @@ class MatchUtils {
       not_started[0].no_start_total = n_length
       this.get_match_total_by_csid('not', not_started)
     }
-    return lodash.uniqBy([ ...this.handler_match_classify_by_csid(started), ...this.handler_match_classify_by_csid(not_started) ], 'mid')
+    // 已开赛球种归类后的数据
+    const result_started = this.handler_match_classify_by_csid(started)
+    // 未开赛球种归类后的数据
+    const result_not_started = this.handler_match_classify_by_csid(not_started)
+    // 最终数据
+    return lodash.uniqBy([ ...this.handler_match_classify_by_tid(result_started), ...this.handler_match_classify_by_tid(result_not_started) ], 'mid')
   }
 
   /**
@@ -60,6 +65,8 @@ class MatchUtils {
    * @param {*} list 赛事数据
    */
    handler_match_classify_by_tid (list) {
+    const length = lodash.get(list, 'length', 0)
+    if (length < 1) return []
     const tid_list = list.map(l => l.tid)
     const result_tids = lodash.uniq(tid_list)
     const tids_matchs = []
@@ -232,7 +239,7 @@ class MatchUtils {
     const result = []
     match_data.some(t => {
       const { csid } = t
-      if (![1, 2].includes(+csid)) return
+      if (![1, 2, 5].includes(+csid)) return
       t.is_virtual = true
       const key = `csid_${csid}`
       if (csid_obj[key]) {

@@ -154,6 +154,9 @@ import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { LayOutMain_pc } from "src/core/index.js";
 import { GlobalSwitchClass} from "src/core/index";
+
+import { loadLanguageAsync } from "src/core/index.js";
+import { LocalStorage } from "src/core/utils/module/web-storage.js";
 import {
   i18n_t,
   useMittEmit,
@@ -307,6 +310,9 @@ const confirmDate=()=>{
 function refresh() {
   emit("refresh")
 }
+onMounted(()=>{
+ loadLanguageAsync(LocalStorage.get('lang'));
+})
 </script>
 
 <style scoped lang="scss">

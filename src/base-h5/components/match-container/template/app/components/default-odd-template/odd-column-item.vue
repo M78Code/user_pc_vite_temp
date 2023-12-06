@@ -610,7 +610,7 @@ onUnmounted(() => {
     margin-bottom: 0.09rem;
     font-size: 0.14rem;
     line-height: 1;
-
+    color: #AFB3C8 !important;
     &.standard {
       margin-bottom: 0.03rem;
       font-size: 0.12rem;

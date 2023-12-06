@@ -195,7 +195,7 @@ onUnmounted(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: var(--q-gb-bg-c-9);
+    background-color: var(--q-gb-bg-c-22);
     padding-right: 3px;
     padding-left: 10px;
     border-radius: 0.2rem;
