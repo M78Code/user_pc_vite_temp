@@ -351,3 +351,69 @@ input::-ms-reveal {
     margin-top: 0;
   }
 }
+
+/* *** 虚拟体育 ************ -S */
+/*  排名 icon */
+div[class*="ranking-bg-style"] {
+  background-size: 100% 100%;
+}
+.ranking-bg-style1-1 {
+  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_1.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_1.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1009_1.svg");
+  }
+}
+.ranking-bg-style1-2 {
+  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_2.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_2.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1009_2.svg");
+  }
+}
+.ranking-bg-style1-3 {
+  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_3.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_3.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1009_3.svg");
+  }
+}
+.ranking-bg-style1-4 {
+  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_4.svg");
+  &.csid-1002,
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_4.svg");
+  }
+  &.csid-1009 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1009_4.svg");
+  }
+}
+.ranking-bg-style1-5 {
+  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_5.svg");
+  &.csid-1002 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_5.svg");
+  }
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1010_5.svg");
+  }
+}
+.ranking-bg-style1-6 {
+  background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/style1_6.svg");
+  &.csid-1002 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1002_6.svg");
+  }
+  &.csid-1010 {
+    background-image: url($SCSSPROJECTPATH+"/image/svg/virtual/ranking/csid_1010_6.svg");
+  }
+}
+
+/* *** 虚拟体育 ************ -E */

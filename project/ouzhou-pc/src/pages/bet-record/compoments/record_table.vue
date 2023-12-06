@@ -3,13 +3,13 @@
     <div>
 
       <q-table :rows="tableData" style="max-height:calc(100vh - 17rem)" :rows-per-page-options="[0]" :columns="columns"
-               row-key="orderNo
-" separator="cell" hide-pagination :table-header-style="{
-  backgroundColor: '#F1F1F1',
-  height: '28px',
-  color: '#2A2925',
-  fontSize: '12px',
-}">
+               row-key="orderNo" separator="cell" hide-pagination :class="current_tab === 'settled' ? 'settled' : 'unsettled'"
+          :table-header-style="{
+          backgroundColor: '#F1F1F1',
+          height: '28px',
+          color: '#2A2925',
+          fontSize: '12px',
+        }">
         <template v-slot:no-data>
           <div class="detail-loading" v-if="loading">
             <q-circular-progress indeterminate rounded size="80px" :thickness="0.1" color="opt-basic" class="q-ma-md" />
@@ -605,9 +605,11 @@ const hand_copy = (data) => {
   position: relative;
   margin-top: 10px;
 
-  &:deep(.q-table) {
-    // min-height: 650px !important;
-    padding-bottom: 51px;
+  .unsettled {
+    padding-bottom: 50px;
+  }
+  .settled {
+    padding-bottom: 62px;
   }
 
   &:deep(.q-table__card) {
