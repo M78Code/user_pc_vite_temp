@@ -42,7 +42,7 @@ import BetData from "src/core/bet/class/bet-data-class.js"
 import { project_name,MatchDetailCalss } from 'src/core'
 export default defineComponent({
   name: "temp10",
-  props: ["item_data"],
+  props: ["item_data", "title"],
   // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {

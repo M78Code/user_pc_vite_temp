@@ -9,7 +9,6 @@
           v-if="GlobalAccessConfig.get_collectSwitch()">
           <div  class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
         </div>
-
         <!-- 比赛进程 -->
         <match-process style="cursor:pointer" v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
         periodColor="gray" />

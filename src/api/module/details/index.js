@@ -59,7 +59,7 @@ export const get_match_detail_m = (params, config = {}, url = "/v1/m/matchDetail
 
 /** 玩法置顶 猜测应该和get_category_playTop一样
  * @param {Object} params
- * @param {Number} params.status 置顶状态
+ * @param {1|0} params.status 置顶状态 1标识当前置顶，请求取消置顶;0请求置顶
  * @param {String} params.playId 玩法ID
  * @param {String} params.matchId 赛事ID
  * @param {String} params.topKey topKey字段
@@ -68,7 +68,7 @@ export const get_match_detail_m = (params, config = {}, url = "/v1/m/matchDetail
 export const set_playTop = (params, config = {}, url = "/v1/m/category/playTop") => http.get(`${prefix}${url}`, params)
 /** 置顶接口(明明是个设置状态的接口却以get开头)
  * @param {Object} params
- * @param {Number} params.status 置顶状态
+ * @param {1|0} params.status 置顶状态 1标识当前置顶，请求取消置顶;0请求置顶
  * @param {String} params.playId 玩法ID
  * @param {String} params.matchId 赛事ID
  * @param {String} params.topKey topKey字段

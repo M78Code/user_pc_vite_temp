@@ -38,15 +38,21 @@ declare namespace TYPES {
     mearlys: number,
     mft: number,
   }
-  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid,K.hpid,K.mid,K.hpn {
+  /** 盘口信息 */ interface OddInfo<T extends Ol|OlResult=Ol> extends K.hid,K.hpid,K.mid,K.hpn,K.hpt {
     hv:any,
-    ol:T[]
+    /** @deprecated 貌似没有这个属性 */ ol:T[]
     hl:Hl[]
     /** 置顶时间戳 */ hton: string
     /** 用于玩法置顶的key */ topKey: string
+    /**  */ title:OddTitle[]
   }
 
-  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os {
+  /** 玩法标题 */ interface OddTitle {
+    /** 标题名字 */ osn:string
+    /** ? */ otd: number
+  }
+
+  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os,K.ott {
   }
   /** Ol投注项 结果 */ interface OlResult extends K.ot,K.oid,K.on,K.result,K.ott,K.otd {
   }
@@ -79,6 +85,8 @@ declare namespace TYPES {
   }
   type OlResultArray =  ['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half']
   type OlResultState= OlResultArray[K.result[keyof K.result]]
+
+  export type OlItemType =  'default' | 'fill'
 }
 
 /** 属性字段复用注释 */
@@ -138,6 +146,9 @@ declare namespace K {
   };
   /** 投注项头名称 */ type ott = {
     /** 投注项头名称 */ ott: string
+  };
+  /** 投注项聚合名称 */ type otv = {
+    /** 投注项聚合名称 */ otv: string
   };
   /** 玩法名称 */ type hpn = {
     /** 玩法名称 */ hpn: string

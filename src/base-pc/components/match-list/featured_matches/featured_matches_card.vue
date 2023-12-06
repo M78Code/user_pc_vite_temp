@@ -14,14 +14,18 @@
             <span v-show="Number(item.mmp)">{{ item.mstValue }}</span>
           </div> -->
           <!-- 比赛进程 -->
-          <match-process v-if="item" :match="get_match_item(item.mid)" source='match_list' show_page="match-list" :rows="1" :date_rows="1"
-            date_show_type="inline" periodColor="gray" />
+          <match-process v-if="item" :match="get_match_item(item.mid)" source='match_list' show_page="match-list"
+            :rows="1" :date_rows="1" date_show_type="inline" periodColor="gray" />
         </div>
-        <div class="club-name" :class="{'bold': get_handicap_index_by(item) == 1}">
-          <span>{{ get_match_item(item.mid)?.mhn }}</span><span class="din_font" v-show="get_match_status(get_match_item(item.mid).ms)">{{get_match_score(get_match_item(item.mid)).home_score }}</span>
+        <div class="club-name" :class="{ 'bold': get_handicap_index_by(item) == 1 }">
+          <span>{{ get_match_item(item.mid)?.mhn }}</span><span class="din_font"
+            v-show="get_match_status(get_match_item(item.mid).ms)">{{ get_match_score(get_match_item(item.mid)).home_score
+            }}</span>
         </div>
-        <div class="union-name" :class="{'bold': get_handicap_index_by(item) == 2}">
-          <span>{{ get_match_item(item.mid)?.man }}</span><span class="din_font" v-show="get_match_status(get_match_item(item.mid).ms)">{{get_match_score(get_match_item(item.mid)).away_score }}</span>
+        <div class="union-name" :class="{ 'bold': get_handicap_index_by(item) == 2 }">
+          <span>{{ get_match_item(item.mid)?.man }}</span><span class="din_font"
+            v-show="get_match_status(get_match_item(item.mid).ms)">{{ get_match_score(get_match_item(item.mid)).away_score
+            }}</span>
         </div>
         <div class="odds_box">
           <div class="top-line"></div>
@@ -47,19 +51,14 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn, get_match_status } from 'src/core'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { get_ouzhou_data_tpl_id ,get_handicap_index_by, get_match_to_map_obj, get_match_score} from 'src/core/match-list-pc/match-handle-data.js'
+import { get_ouzhou_data_tpl_id, get_handicap_index_by, get_match_to_map_obj, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
-import { utils } from "src/core/index.js"
-
 const router = useRouter();
-
 const cache_data = SessionStorage.get('get_hots', []);
-const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common)
 if (cache_data.length) {
   MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(cache_data);
 }
 const matches_featured_list = ref(cache_data)
-
 const get_featurd_list = async () => {
   let params = {
     isHot: 1,
@@ -86,6 +85,10 @@ const get_featurd_list = async () => {
     set_active_mids(mids) //添加ws订阅
   }
 }
+const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common, (mid) => {
+  const idx = matches_featured_list.value.findIndex(i => i.mid == mid);
+  idx > -1 && get_featurd_list() //如果特色赛事ID已经删除 就重新查询
+})
 const mitt_list = [useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, get_featurd_list).off]
 const get_match_item = (mid) => {
   return MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(mid)
@@ -226,6 +229,7 @@ get_featurd_list()
       letter-spacing: 0px;
       text-align: left;
       padding: 0 14px;
+
       &.bold {
         color: var(--q-gb-t-c-2);
       }

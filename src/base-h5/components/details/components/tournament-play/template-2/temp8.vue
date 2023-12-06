@@ -54,9 +54,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
   name: "temp8",
-  props:{
-    item_data:Object
-  },
+  props: ["item_data", "title"],
   components: {
 
   },

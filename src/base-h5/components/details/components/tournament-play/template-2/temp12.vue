@@ -273,9 +273,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp12",
-  props:{
-    item_data:Object,
-  },
+  props: ["item_data", "title"],
   components: {
     "odds-new": odds_new
   },
