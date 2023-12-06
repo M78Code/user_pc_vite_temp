@@ -7,6 +7,7 @@
                 class="components-item" 
                 :list="dataObj"
             />
+            <BackendConfig />
         </div>
        <div class="col q-ml-sm" style="height: 100vh;overflow: auto;">
         <div
@@ -33,6 +34,7 @@ import { api_event } from "project/animation/src/public/api/index"
 import { defineComponent } from "vue";
 import websocket_base from "project/animation/src/mixins/modules/websocket/websocket_base.js"
 import timeline from "project/animation/src/pages/components/timeline.vue"
+import BackendConfig from "project/animation/src/pages/components/backend_config.vue"
 import _ from 'lodash';
 import axios from "axios";
 import { uid } from "quasar"
@@ -40,6 +42,7 @@ let WEB_ENV = axios.prototype.WS_DOMAIN_FRNGKONG_1
 export default defineComponent({
     components: {
         timeline,
+        BackendConfig,
     },
     mixins:[websocket_base],
  data() {
