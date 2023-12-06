@@ -9,7 +9,7 @@
         frameborder="0"
         scrolling="no"
       ></iframe>
-      <custom_video v-if="right_actions_label == 'video'"/>
+      <custom_video class="custom-video" v-show="right_actions_label == 'video'" :get_detail_data="props.get_match_detail"/>
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
@@ -59,7 +59,7 @@
         </div>
       </div>
     </div> -->
-    <right_actions @handle-type="handle_type"/>
+    <right_actions @handle-type="handle_type" />
   </div>
 </template>
   
@@ -78,6 +78,7 @@ const props = defineProps({
     default: () => ({}),
   },
 });
+
 const scoew_icon_list = ref({});
 const iframe_rdm = ref("")
 iframe_rdm.value = new Date().getTime();
@@ -341,5 +342,10 @@ onMounted(() => {
       vertical-align: middle;
     }
   }
+}
+
+.custom-video {
+  width: 100%;
+  height: 100%;
 }
 </style>
