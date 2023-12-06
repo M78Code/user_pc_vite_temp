@@ -364,8 +364,6 @@ function set_base_data_init_ouzhou(play_num = '01') {
 		if (MenuData.is_left_zaopan()) return;
 		// 赛事列表 卡片数据
 		// 设置列表数据仓库
-		console.log("jiffy1",matchs_list)
-
 		match_list_handle_set(matchs_list)
 		// MatchListData.set_list(
 		// 	matchs_list,
