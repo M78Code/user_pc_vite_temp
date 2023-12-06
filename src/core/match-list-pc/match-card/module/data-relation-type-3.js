@@ -182,7 +182,7 @@
           }
         }
         // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
-        if(league_index == 0 && MatchListCardData.match_list_mapping_relation_obj_type == 1){
+        if(league_index == 0 ){
           // 已开赛、未开赛标题卡片处理
           card_index += 1
           card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
