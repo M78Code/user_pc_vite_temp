@@ -6,7 +6,7 @@
         :class="['sport_bg', `${get_sports_bg(get_match_detail?.csid)}`]"
       ></div>
      
-      <div class="match-detail-time ">
+      <div class="match-detail-time">
         <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
           <match-stage :detail_data="get_match_detail" ></match-stage>
           <q-badge
@@ -424,7 +424,7 @@ onMounted(()=>{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0px 20px 0 20px;
+      padding: 0px 20px 10px 20px;
       .match-detail-team-name {
         // font-weight: bold;
         font-size: 15px;

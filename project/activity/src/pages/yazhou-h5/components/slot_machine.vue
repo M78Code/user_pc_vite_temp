@@ -326,9 +326,7 @@ import data_pager from "project/activity/src/components/data_pager.vue";
 import compose from './compose.vue';
 import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
-
-import themeStore from 'project/activity/src/store/module/theme/theme.js';
-import userStore from 'project/activity/src/store/module/user/index.js';
+import { UserCtr } from "project_path/src/core/index.js";
 
 
 export default {
@@ -411,10 +409,10 @@ export default {
   },
   computed: {
     get_user() {
-        return userStore.getters.get_user();
+        return UserCtr.get_user();
     },
     get_theme() {
-        return themeStore.getters.get_theme();
+        return UserCtr.theme;
     },
   },
   components: {

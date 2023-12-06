@@ -35,7 +35,7 @@
             {{ lodash.get(match, 'mhn') }}
           </div>
           <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_home_goal">
+          <div class="yb-flex-center" v-if="is_show_home_goal && false">
             <div class="yb-goal-gif" :style="compute_css_obj({ key: 'goal_image' })">
               <!-- <img :src="compute_img_url('goal_image')" /> -->
             </div>
@@ -73,7 +73,7 @@
             {{ lodash.get(match, 'man') }}{{ play_name_obj.suffix_name }}
           </div>
           <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_away_goal">
+          <div class="yb-flex-center" v-if="is_show_away_goal && false">
             <div class="yb-goal-gif"></div>
             <div class="gif-text">{{ i18n_t('common.goal') }}</div>
           </div>
@@ -277,7 +277,6 @@ const use_polling_mst = payload => {
 }
 // var 事件处理
 function handle_var_event(ws_data) {
-  console.log('ws_data', ws_data);
   const { skt_data: { mat, mid }, var_item } = ws_data
   if (match.value.mid !== mid) return
   if (mat === 'home') {
