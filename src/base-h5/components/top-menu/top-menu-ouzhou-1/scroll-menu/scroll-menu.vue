@@ -33,6 +33,9 @@ import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js"
 import { sports_play_data } from 'src/core/constant/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { api_base_data, api_common } from "src/api/index.js";
+import {  LocalStorage } from "src/core/index.js"
+import STANDARD_KEY from "src/core/standard-key";
+const menu_h5 = STANDARD_KEY.get("menu_h5");
 const get_uid =  ref(UserCtr.get_uid())
 const props = defineProps({
     menu_type: {
@@ -70,15 +73,18 @@ const scrollRef = ref(null);
  * 初始化
  */
 const get_init_data = () =>{
+    //当前激活球种id  如果本地有存储值就取本地存储的值
+    const session_info = LocalStorage.get(menu_h5);
     leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
-    // MenuData.menu_mi.value || 
-    MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
+    MenuData.set_menu_mi(session_info?.menu_mi || MenuData.menu_mi.value || dataList()[0]?.mi);
     playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
+
     nextTick(()=>{
         const index = dataList().findIndex(n=>n.mi ==  playValue.value) || 0;
         scrollRef.value.scrollTo(index-2, 'start-force')
     })
+   
 }
 /**
  * 获取最新列表
