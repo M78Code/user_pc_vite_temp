@@ -19,7 +19,7 @@
 import common from "project/activity/src/mixins/module/common.js";
 import acticity_mixin from "../mixin/acticity_mixin";
 //头部引入  
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
 export default {
   name: "active_count_down",
   mixins: [common, acticity_mixin],
