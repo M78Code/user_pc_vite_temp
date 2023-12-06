@@ -207,6 +207,14 @@
       "bet_col_173": {
         "bet_col_Over": "主队总分",
         "bet_col_Under": "客队总分"
+      },
+      "bet_col_182": {
+        "bet_col_Over": "总局数",
+        "bet_col_Under": "总局数"
+      },
+      "bet_col_181": {
+        "bet_col_1": "主队总分",
+        "bet_col_2": "客队总分"
       }
     }
   },
