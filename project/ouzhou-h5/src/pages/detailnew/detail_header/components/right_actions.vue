@@ -24,7 +24,7 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    // 右侧显示状态 0 -> 显示全部 1 -> 展示动画内 2 -> 展示比分 3 -> 只展示收藏 
+    // 右侧显示状态1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示 
     status: {
         type: Number,
         default: 1
@@ -39,12 +39,13 @@ const emits = defineEmits(['handleType'])
 // 展示的项,根据不同的值显示不同的actions
 const mapObj = computed(() => {
     return  {
-        0: [0,1,2],
         1: [0,1,2],
         2: [0,1,2],
-        3: [2]
+        3: [0,1,2],
+        4: [2]
     }
 })
+
 // 是否时视频
 const is_video = ref(props.isVideo);
 // 选择的item
@@ -90,8 +91,12 @@ const handleClick = (item, index) => {
         case 'animation':
         case 'video':
             console.log(item.label, select.value, "value===");
+            
             // if (index == 0) {
             if (select.value == "animation") {
+                if (props.status != 1) {
+                    return;
+                }
                 emits('handleType', is_video.value ? 'animation' :'video')
                 is_video.value = !is_video.value;
                 // select.value = is_video.value ? 'animation' :'video';
@@ -109,7 +114,7 @@ const handleClick = (item, index) => {
             break;
         // 收藏
         case 'collect':
-            emits('handleType', 'collect')
+            emits('handleType', 'collect');
             select.value = item.label;
             break;
         default:
@@ -135,7 +140,7 @@ const handleClick = (item, index) => {
     display: flex;
     justify-content: flex-end;
     .list {
-        padding-top: 30px;
+        // padding-top: 30px;
     }
     .item {
         width: 40px;

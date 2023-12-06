@@ -402,7 +402,7 @@ export const details_main = (router, route) => {
     }
   };
   /**
-   *@description 获取详情页面玩法集接口(/v1/m/category/getCategoryList)
+   *@description 获取详情页面oddinfo
    *@param {obj} params 请求参数
    *@return {obj}
    */
@@ -542,8 +542,10 @@ export const details_main = (router, route) => {
         // 赛事订阅(C8)-新增玩法/新增盘口(C303)
         case "C303":
           socketOddinfo({
-            sportId: csid.value,
-            mid:mid.value,
+            mcid: 0,
+            cuid: cuid.value,
+            mid: mid.value,
+            newUser: 0,
           })
           break;
          // 赛事开赛状态(C302)  
@@ -560,8 +562,10 @@ export const details_main = (router, route) => {
          //  玩法集变更(C112)    
         case "C112":
           socketOddinfo({
-            sportId: csid.value,
-            mid:mid.value,
+            mcid: 0,
+            cuid: cuid.value,
+            mid: mid.value,
+            newUser: 0,
           })
           break; 
          case "C102":
@@ -581,8 +585,10 @@ export const details_main = (router, route) => {
     if(ws_status.ws_status != 1){
       MatchDataWarehouseInstance.value.scmd_c8_ws_reconnect()
       socketOddinfo({
-        sportId: csid.value,
-        mid:mid.value,
+        mcid: 0,
+        cuid: cuid.value,
+        mid: mid.value,
+        newUser: 0,
       })
     }
   });
