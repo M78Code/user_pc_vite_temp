@@ -6,7 +6,7 @@ import axios_debounce_cache from "./debounce-module/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import domain from "./domain";
 import { SessionStorage, LocalStorage } from "src/core/utils/module/web-storage.js";
-import { get_query_string } from "src/core/index.js";
+import {  get_query_string} from "src/core/utils/index.js"
 import { useMittEmit, MITT_TYPES } from "../mitt";
 const token_key = STANDARD_KEY.get("token"); //token键
 const lang_key =  'lang'; // 语言key

@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onBeforeUnmount, getCurrentInstance, onMounted } from 'vue'
-import { SessionStorage  } from "src/core/index.js";
+import { SessionStorage } from "src/core/utils/index.js"
 // import menu_stay_time from "/utils/menuClass/menu_stay_time.js"
 
 /** 时间 */

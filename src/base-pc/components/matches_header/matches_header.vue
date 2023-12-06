@@ -188,6 +188,14 @@ const set_tab_list = (news_) =>{
 		tab_list.value = ouzhou_filter_config
 	}
 
+	// 电竞
+	if (MenuData.is_vr()) {
+		matches_header_title.value = 'VR体育'
+		match_list_top.value = '134px'
+		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'esports', [])  
+		tab_list.value = ouzhou_filter_config
+	}
+
 	if (tab_list.value.length) {
 		if(MenuData.mid_menu_result.filter_tab){
 			checked_current_tab({value:MenuData.mid_menu_result.filter_tab})
