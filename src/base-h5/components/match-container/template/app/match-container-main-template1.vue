@@ -404,7 +404,7 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-21);
     height: 5px;
     margin: 0 4px;
   }
@@ -551,7 +551,7 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
+    padding: 0 5px 0 15px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
@@ -737,7 +737,7 @@ export default {
       .favorited-icon{
         width: 14px;
         height: 14px;
-        margin: 0 10px 0 12px;
+        margin: 0 10px 0 11px;
         position: relative;
         flex-shrink: 0;
         > img {

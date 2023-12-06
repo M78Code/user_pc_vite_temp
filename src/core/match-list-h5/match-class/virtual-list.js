@@ -219,7 +219,7 @@ class VirtualList {
         position = scrollTop - 234 * 5
       } else {
         // 球种折叠
-        position = scrollTop - 234 * 5
+        position = scrollTop - 200
       }
     }
     return position
