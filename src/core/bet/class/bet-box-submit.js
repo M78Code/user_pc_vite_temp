@@ -21,6 +21,7 @@ import {
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
 import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/core/index.js"
+import { i18n_t } from "src/boot/i18n.js"
 
 let time_out = null
 let time_api_out = null
@@ -779,6 +780,8 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
             let hpn_obj = hpn_list.find(item => item.hid == ol_obj._hid) || {}
             if(hpn_obj.hid){
                 hpn = hpn_obj.hpn
+            }else{
+                hpn = i18n_t('bet.bet_winner')
             }
         }
         if(hpn){

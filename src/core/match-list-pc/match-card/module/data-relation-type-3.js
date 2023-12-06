@@ -124,7 +124,6 @@
       let league_list = lodash.get(all_league_obj,match_status_type,[])
 
       let sort_league_list = lodash.cloneDeep(league_list);
-      sort_league_list.push({})
       // 上一个联赛
       let pre_league_info = {}
       // 判断是否是相同的联赛
