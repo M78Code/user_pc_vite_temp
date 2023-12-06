@@ -8,6 +8,7 @@ import MatchListCardData from "./match-list-card-data-class";
 import { league_list_obj } from '../../composables/match-list-featch.js'
 import { PageSourceData } from 'src/core/index.js';
 import { fold_template } from "../config/card-template-config.js"
+import { replace } from "lodash";
 
 //引入菜单类
 const MenuData = {
@@ -139,27 +140,18 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
   match_status_type_arr.forEach((match_status_type) => {
     // 遍历联赛列表
     let league_list = lodash.get(all_league_obj, match_status_type, []);
-    league_list.forEach((league_obj, league_index) => {
+    for (let index = 0; index < league_list.length; index++) {
+      const league_obj = league_list[index];
       // 判断联赛ID是否相等
       if (remove_tid == league_obj.tid) {
-        // 赛事ID数组
-        let mids_arr = league_obj.mids.split(",");
-        // 遍历联赛下所有赛事ID
-        mids_arr.forEach((mid, mid_index) => {
-          // 判断赛事ID是否相等
-          if (mid == remove_mid) {
-            mids_arr.splice(mid_index, 1);
-            if (mids_arr.length == 0) {
-              // 联赛下没有赛事  移除联赛
-              league_list.splice(league_index, 1);
-            } else {
-              // 移除赛事后  重新赋值联赛的mids
-              league_obj.mids = mids_arr.join(",");
-            }
-          }
-        });
+        //删掉赛事
+        league_obj.mids = lodash.remove(league_obj.mids.split(","),remove_mid).join(',')
+        if(league_obj.mids==''){ //删掉联赛
+          league_list.splice(index,1)
+          index--;
+        }
       }
-    });
+    }
   });
   let match_length =
     lodash.get(all_league_obj, "livedata.length", 0) +

@@ -517,7 +517,7 @@ export default {
           }
         }
         else if ( ['0401038'].includes(code) ){
-          const msg_nodata_22 = this.$root.$t('msg.msg_nodata_22')
+          const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
         }
       } catch (err) {
@@ -597,7 +597,7 @@ export default {
           this.$set(this.result_page_info, 'pages' , +data.total )
           this.history_alert = true
         }else if ( ['0401038'].includes(code) ){
-          const msg_nodata_22 = this.$root.$t('msg.msg_nodata_22')
+          const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
         }
         else{

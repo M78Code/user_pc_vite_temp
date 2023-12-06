@@ -182,16 +182,17 @@ export default defineComponent({
     })
     watch(() => props.reset_pagination, (newVal) => {
       state.current = +newVal;
-      //如果父组件传递页面长度来则接受
-      // if (props.page){
-      //   state.pagination.limit = props.page.value.size;
-      // }
     })
 
 
     const perPageNum = computed({
       get: function () {
-        return state.pagination.limit;
+      //如果父组件传递页面长度来则接受
+        if (props.page){
+          return props.page.size;
+        }else {
+          return state.pagination.limit;
+        }
       },
       set: function (val) {
         context.emit('pageSizeChange', val)
