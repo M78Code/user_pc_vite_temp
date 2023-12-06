@@ -49,6 +49,10 @@
       "home": "Home",
       "today": "Today",
       "early": "Early",
+      "lol": "LOL",
+      "dota": "Dota2",
+      "kog": "KOG",
+      "csgo": "CS:GO",
       "tomorrow": "Tomorrow",
       "all_matches": "All Matches",
       "play_map": {
