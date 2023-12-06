@@ -1,9 +1,6 @@
 <script setup name="detail-top-ms-options">
 import teamImg from 'src/base-h5/components/details/team-img.vue'    // 详情页蓝色背景上的大型字母图标
-import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 import EventDateStandard from "./event-date-standard.vue"
-import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
-import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 
 import {computed, defineProps, defineEmits} from "vue"
 import {useRouter, useRoute} from "vue-router"
@@ -29,15 +26,6 @@ const props = defineProps({
 
 const router = useRouter()
 const route = useRoute()
-
-/* 是否赛果详情页面 */
-// matchResults 欧洲 H5
-const is_match_result = computed(() => {
-    return ['matchResults'].includes(route.name)
-})
-setTimeout(function () {
-    console.log(props.detail_data, "props.detail_data")
-}, 1200)
 
 const is_eports_scoring = function (item) {
     //计算主分和客分，用全局的分支处理方法进行处理
@@ -68,6 +56,7 @@ const emits = defineEmits(['ChangeActive'])
 const ChangeActive = function () {
     emits('ChangeActive')
 }
+
 </script>
 
 <template>
@@ -93,7 +82,6 @@ const ChangeActive = function () {
             <p class="score-point">{{ format_total_score(detail_data, 1) }}</p>
         </div>
         <aside class="man team-image">
-
             <div class="figure">
                 <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
                 <team-img :type="1" :url="detail_data.malu[0]" :fr="detail_data.frman[0]" :size="22"
@@ -122,6 +110,7 @@ const ChangeActive = function () {
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
 
         .figure {
             width: 32px;
@@ -138,18 +127,20 @@ const ChangeActive = function () {
     }
 
     .mhn {
-        .tips{
+        .tips {
             text-align: right;
         }
+
         .figure {
             margin-left: 8px;
         }
     }
 
     .man {
-        .tips{
+        .tips {
             text-align: left;
         }
+
         .figure {
             margin-right: 8px;
         }
@@ -171,6 +162,8 @@ const ChangeActive = function () {
             font-weight: 600;
             margin: 0 4px;
             flex-shrink: 0;
+            line-height: 40px;
+            height: 40px;
         }
     }
 }
@@ -196,7 +189,15 @@ const ChangeActive = function () {
     font-weight: bold;
 }
 
-::v-deep .event-date-standard{
+::v-deep .event-date-standard {
     color: #fff;
+}
+
+::v-deep .match_stage {
+    width: 72px;
+    height: 40px;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
 }
 </style>

@@ -116,7 +116,7 @@ class MenuData {
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
-    menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:0}]:BaseData.left_menu_base_mi;
+    menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:0},{mi:2000,ct:0}]:BaseData.left_menu_base_mi;
     //热门球种
     top_events_list = data.find((item)=>{return item.mi==5000}).sl || [];
     //冠军
@@ -164,7 +164,6 @@ class MenuData {
         defaultMi:item.mi
       }
     });
-    console.error('menu_list',menu_list)
     this.menu_list = menu_list;
     this.top_events_list = top_events_list;
     this.champion_list = champion_list;

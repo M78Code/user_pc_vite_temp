@@ -327,8 +327,8 @@ import compose from './compose.vue';
 import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
 
-import themeStore from 'project/activity/src/store/module/theme/theme.js';
-import userStore from 'project/activity/src/store/module/user/index.js';
+
+;
 
 
 export default {

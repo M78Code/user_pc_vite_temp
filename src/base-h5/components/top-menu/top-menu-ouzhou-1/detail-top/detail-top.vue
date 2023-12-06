@@ -147,6 +147,9 @@ const refreshAll = (params) => {
   if(params instanceof Event){
     params = route.params
   }
+  if(route.params.tid){
+    getDropDownList(route.params.tid);
+  }
   refresh_is_active.value = true;
   useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS,params)
   refresh_is_active.value = false;

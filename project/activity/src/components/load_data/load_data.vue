@@ -121,7 +121,7 @@
 
 <script>
 import no_data from "../no_data/no_data.vue";
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
 
 
 export default {

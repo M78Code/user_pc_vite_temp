@@ -40,6 +40,7 @@
      "match": {
         "favorites": "收藏",
         "matches": "赛事",
+        "outrights": "冠军",
         "featured": "特色",
         "top_events": "热门赛事",
         "top_leagues": "热门联赛",
@@ -49,6 +50,10 @@
         "home": "体育投注",
         "today": "今日",
         "early": "早盘",
+        "lol": "英雄联盟",
+        "dota": "Dota2",
+        "kog": "王者荣耀",
+        "csgo": "CS:GO",
         "tomorrow": "明天",
         "bet_col_Over": "全场大",
         "bet_col_Under": "全场小",
@@ -207,6 +212,14 @@
       "bet_col_173": {
         "bet_col_Over": "主队总分",
         "bet_col_Under": "客队总分"
+      },
+      "bet_col_182": {
+        "bet_col_Over": "总局数",
+        "bet_col_Under": "总局数"
+      },
+      "bet_col_181": {
+        "bet_col_1": "让局",
+        "bet_col_2": "让局"
       }
     }
   },

@@ -22,34 +22,33 @@
         <!-- 得分条 网球需在后面添加%  如有其他赛事自行添加 -->
         <div class="detail-slider" v-for="item in sliderList" :key="item.title">
           <div class="row justify-between" v-if="score_list[item.value_key]">
-            <span
-              >{{ score_list[item.value_key].home
-              }}{{
-                ["5"].includes(String(detail_info.csid))?'%':''
-              }}</span
-            >
-            <span class="detail-slider-title">{{ item.title }}</span>
-            <span>{{ score_list[item.value_key].away }}{{
-                ["5"].includes(String(detail_info.csid))?'%':''
-              }}</span>
+            <span>
+              {{ score_list[item.value_key].home}}{{["5"].includes(String(detail_info.csid))?'%':''}}
+            </span>
+            <span class="detail-slider-title">{{ item.title() }}</span>
+            <span>
+              {{ score_list[item.value_key].away }}{{["5"].includes(String(detail_info.csid))?'%':''}}
+            </span>
           </div>
           <div class="detail-slider-line" v-if="score_list[item.value_key]">
+            <!-- score_list[item.value_key].percentage -->
             <q-slider
               readonly
               reverse
-              :model-value="score_list[item.value_key].percentage"
+              :model-value="cale_score(score_list[item.value_key].home)"
               :min="0"
-              :max="120"
+              :max="50"
               track-size="5px"
               color="amber-7"
               :thumb-size="0"
               style="margin-right: 6px"
             />
+            <!-- score_list[item.value_key].away_percentage -->
             <q-slider
               readonly
-              :model-value="score_list[item.value_key].away_percentage"
+              :model-value="cale_score(score_list[item.value_key].away)"
               :min="0"
-              :max="120"
+              :max="50"
               track-size="5px"
               color="indigo-12"
               :thumb-size="0"
@@ -81,9 +80,9 @@
               <q-slider
                 readonly
                 reverse
-                :model-value="score_list['S111']['home'] + '%'"
+                :model-value="score_list['S111']['home']"
                 :min="0"
-                :max="50"
+                :max="100"
                 track-size="5px"
                 color="amber-7"
                 :thumb-size="0"
@@ -91,9 +90,9 @@
               />
               <q-slider
                 readonly
-                :model-value="score_list['S111']['away'] + '%'"
+                :model-value="score_list['S111']['away']"
                 :min="0"
-                :max="50"
+                :max="100"
                 track-size="5px"
                 color="indigo-12"
                 :thumb-size="0"
@@ -222,6 +221,21 @@ const stop_obj = computed(() => {
   };
   return obj;
 });
+
+
+const cale_score = function(value1){
+  value1 =  Number(value1)
+  if(value1 > 0){
+    let percentage = value1 * 2
+    if(percentage < 100){
+      return percentage
+    }else{
+      return 100
+    }
+  }else{
+    return 1
+  }
+}
 </script>
 
 <style lang="scss" scoped>
