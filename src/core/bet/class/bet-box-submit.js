@@ -746,7 +746,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         ot: ol_obj.ot, //投注項类型
         placeNum: hl_obj.hn, //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
-        bet_amount: 0, // 投注金额
+        bet_amount: '', // 投注金额
         bet_type: other.bet_type, // 投注类型
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段

@@ -23,15 +23,13 @@
           
         </div>
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
-        <div>
-              <!-- <div>
-                <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money && items.ol_os == 1">
-                    <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
-                        {{index == 'max' ? '' : '+' }}{{obj}}
-                    </li>
-                </ul>
-            </div> -->
-        </div>
+    </div>
+    <div>
+        <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money && items.ol_os == 1">
+            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
+                {{index == 'max' ? '' : '+' }}{{obj}}
+            </li>
+        </ul>
     </div>
 </template>
 
@@ -56,6 +54,7 @@ const ref_data = reactive({
     seriesOdds: '', // 赔率
     show_quick: false, // 显示快捷金额
     emit_lsit: {},
+    show_money: false,
 })
 
 // 复式连串过关投注
@@ -72,29 +71,79 @@ const stop_drap_fn = (state) => {
         draggable: state
     }
     BetData.set_bet_box_draggable(obj)
+
+    // 失去焦点 隐藏
+    show_quick_amount(!state)
+
 }
 
 onMounted(() => {
     set_ref_data_bet_money()
+    
+    // 单关 单注可以默认展开
+    if(BetData.is_bet_single && !BetData.is_bet_merge){
+        show_quick_amount(true)
+    }
+
+    ref_data.money = props.items.bet_amount
       // 监听 限额变化
     ref_data.emit_lsit = {
         emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-        emitter_2: useMittOn(MITT_TYPES.EMIT_SET_QUICK_AMOUNT, set_quick_money).off
     }
 })
+
 
 onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
 })
 
-// 设置快捷金额
-const set_quick_money = () => {
-    // 输入金额 不能大于最大金额
-    if( props.items.bet_amount > ref_data.max_money ){
-        ref_data.money = ref_data.max_money
-    }else{
-        ref_data.money = props.items.bet_amount
+// 快捷金额 显示隐藏
+const set_show_quick_money = (obj = {}) => {
+    ref_data.show_money = obj.show
+    obj.money_list.max = 'MAX'
+    ref_data.money_list = obj.money_list
+    ref_data.max_money = obj.max_money
+}
+
+
+// 判断快捷金额按钮是否可点击
+const bet_money_btn_class = (obj, index) => {
+    let className = '';
+    if(ref_data.max_money > 0) {
+        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
+            className = 'disabled'
+        }
     }
+    return className;
+}
+
+// 快捷金额
+const set_bet_money = obj => {
+    // 获取当前投注金额
+    let money = props.items.bet_amount
+    let money_ = obj
+    // 设置最大投注金额
+    if(obj == "MAX"){
+        money_ = ref_data.max_money
+    }
+    // 计算投注金额
+    let money_amount = mathJs.add(money,money_)
+    // 投注金额 不能大于最大投注金额 也不能大于用户约
+    if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
+        BetData.set_bet_obj_amount(mathJs.add(money,money_),props.items.playOptionsId)
+
+        ref_data.money = money_amount
+    }else{
+        // 最大限额不能大于余额
+        let money_a = ref_data.max_money
+        if(UserCtr.balance < ref_data.max_money){
+            money_a = UserCtr.balance
+        }
+        BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
+
+        ref_data.money = money_a
+    }
+    
 }
 
 // 键盘回车事件
@@ -138,7 +187,7 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    // console.error('sss')
+    console.error('sss')
     // 输入控制
     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
         BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
@@ -172,7 +221,7 @@ const show_quick_amount = state => {
         money_list,
         max_money: ref_data.max_money,
     }
-    useMittEmit(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, obj)
+    set_show_quick_money(obj)
 }
 
 </script>
@@ -182,6 +231,34 @@ const show_quick_amount = state => {
 </style>
 
 <style scoped lang="scss">
+
+
+.bet-bet-money {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--q-gb-bg-c-15);
+    border-top: 1px solid var(--q-gb-bd-c-6);
+
+    .bet-money-li {
+        width: 76px;
+        height: 30px;
+        border: 0.5px solid var(--q-gb-bd-c-5);
+        background: var(--q-gb-bg-c-4);
+        color: #505050;
+        border-radius: 2px;
+        transition: .3s;
+        cursor: pointer;
+
+        &:hover {
+            // border: 1px solid #FF7000;
+            border: 1px solid var(--q-gb-bd-c-1);
+        }
+        &.disabled{
+            background: var(--q-gb-bg-c-19);
+        }
+    }
+}
+
 .bet-money{
     background: var(--q-gb-bg-c-15);
     .bet-input-info{

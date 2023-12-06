@@ -62,99 +62,18 @@
 
 <script setup>
 
-import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t } from "src/core/"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,UserCtr,i18n_t } from "src/core/"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import mathJs from 'src/core/bet/common/mathjs.js'
-import lodash_ from "lodash"
 
 import betInput from "./bet-input.vue"
-
 
 const props = defineProps({
     items:{},
     index:{}
 })
 
-const ref_data = reactive({
-    show_money: false, // 显示快捷金额
-    max_money: 0, // 最大限额
-    money_list: [],
-    emit_lsit: {}
-})
-
-onMounted(()=>{
-    // 单关 单注默认显示快捷金额
-    if(BetData.is_bet_single){
-        ref_data.show_money = true
-      
-        let money_list = lodash_.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
-        money_list.max = 'MAX'
-        ref_data.money_list = money_list
-    }
-    ref_data.emit_lsit = {
-        emitter_1: useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off,
-        emitter_2: useMittOn(MITT_TYPES.EMIT_SHOW_QUICK_AMOUNT, set_show_quick_money).off
-    }
-})
-
-onUnmounted(()=>{
-    Object.values(ref_data.emit_lsit).map((x) => x());
-})
-
-const set_ref_data_bet_money = () => {
-    const {max_money = 8888 } = lodash_.get(BetViewDataClass.bet_min_max_money, `${props.items.playOptionsId}`, {})
-    ref_data.max_money = max_money
-}
-
-// 快捷金额 显示隐藏
-const set_show_quick_money = (obj = {}) => {
-    ref_data.show_money = obj.show
-    obj.money_list.max = 'MAX'
-    ref_data.money_list = obj.money_list
-    ref_data.max_money = obj.max_money
-}
-
-// 判断快捷金额按钮是否可点击
-const bet_money_btn_class = (obj, index) => {
-    let className = '';
-    if(ref_data.max_money > 0) {
-        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
-            className = 'disabled'
-        }
-    }
-    return className;
-}
-
-// 快捷金额
-const set_bet_money = obj => {
-    // 获取当前投注金额
-    let money = props.items.bet_amount
-    let money_ = obj
-    // 设置最大投注金额
-    if(obj == "MAX"){
-        money_ = ref_data.max_money
-    }
-    // 计算投注金额
-    let money_amount = mathJs.add(money,money_)
-    // 投注金额 不能大于最大投注金额 也不能大于用户约
-    if(money_amount < ref_data.max_money && money_amount < UserCtr.balance){
-        BetData.set_bet_amount(mathJs.add(money,money_))
-    }else{
-        // 最大限额不能大于余额
-        let money_a = ref_data.max_money
-        if(UserCtr.balance < ref_data.max_money){
-            money_a = UserCtr.balance
-        }
-        BetData.set_bet_amount(money_a)
-    }
-    useMittEmit(MITT_TYPES.EMIT_SET_QUICK_AMOUNT)
-}
-
 const set_delete = () => {
-    // document.getElementsByClassName("bet-list")[0].style.display = "none"
-    // BetData.set_bet_state_show(!BetData.bet_state_show)
     BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
 }
 
@@ -238,31 +157,6 @@ const set_delete = () => {
         }
 
        
-    }
-
-    .bet-bet-money {
-        width: 100%;
-        padding: 10px 12px;
-        background: var(--q-gb-bg-c-15);
-
-        .bet-money-li {
-            width: 76px;
-            height: 30px;
-            border: 0.5px solid var(--q-gb-bd-c-5);
-            background: var(--q-gb-bg-c-4);
-            color: #505050;
-            border-radius: 2px;
-            transition: .3s;
-            cursor: pointer;
-
-            &:hover {
-                // border: 1px solid #FF7000;
-                border: 1px solid var(--q-gb-bd-c-1);
-            }
-            &.disabled{
-                background: var(--q-gb-bg-c-19);
-            }
-        }
     }
 
     .bet-market{
