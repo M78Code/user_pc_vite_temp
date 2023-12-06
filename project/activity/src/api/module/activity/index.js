@@ -5,7 +5,7 @@
  * @Author: Echo
  */
 
-import http from "project/activity/src/utils/http/axios_warpper.js";
+import { http } from "project_path/src/core/index.js";
 let prefix = window.env.config.api.API_PREFIX_ACTIVITY;
 
 // // 获取欧洲杯活动【幸运盲盒】页面数据

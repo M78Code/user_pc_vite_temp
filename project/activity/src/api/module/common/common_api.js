@@ -4,7 +4,7 @@
  * @Description: 公共API接口定义
  */
 
-import http from "project/activity/src/utils/http/axios_warpper.js";
+import { http } from "project_path/src/core/index.js";
 // let prefix_job = window.env.config.api.API_PREFIX_JOB;
 // let prefix_file = window.env.config.api.API_PREFIX_FILE_REA
 // 项目名称

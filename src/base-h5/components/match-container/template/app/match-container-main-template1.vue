@@ -448,7 +448,7 @@ export default {
     position: relative;
     transition: max-height 0.3s;
     padding-left: 6px;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -770,7 +770,7 @@ export default {
     font-size: 0.1rem;
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-18);
     border-top: 1px solid var(--q-gb-bd-c-4);
     border-bottom: 1px solid var(--q-gb-bd-c-4);
 

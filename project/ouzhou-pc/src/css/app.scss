@@ -345,11 +345,14 @@ input::-ms-reveal {
   background-image: url($SCSSPROJECTPATH+"/image/theme01/img/png/user_api_limited.png");
 }
 
-[class^="card_key_sport_title_"]{
+.have_margin{
   margin-top: 10px;
-  &.card_key_sport_title_1 {
-    margin-top: 0;
-  }
+  // &.card_key_sport_title_1 {
+  //   margin-top: 0;
+  // }
+  // &.card_key_sport_title_100 {
+  //   margin-top: 0;
+  // }
 }
 
 /* *** 虚拟体育 ************ -S */
