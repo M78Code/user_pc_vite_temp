@@ -4,12 +4,13 @@
  * @Description: 针对虚拟体育新增的玩法模板10
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp10 mx-5">
     <div class="hairline-border">
       <div class="row virtual-bet-wrapper">
         <div v-for="(item,index) in odds_list" :key="index"
              class="col-4 item-height"
-             :class="[index >= 3 ? 'border-bot':'',is_select(item.oid) ? 'blue-color':'']"
+             :class="[index >= 3 ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'blue-color':'']"
              @click="utils.go_to_bet(item)"
         >
           <div class="row justify-center">
@@ -20,7 +21,7 @@
             </div>
           </div>
           <div class="odds-style">
-            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.odds,null,hsw_single)}}</div>
+            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.odds,null,MatchDetailCalss.params.sportId)}}</div>
             <div v-else><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
           </div>
         </div>
@@ -37,7 +38,8 @@ import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import BetData from "src/core/bet/class/bet-data-class.js"
+import { project_name,MatchDetailCalss } from 'src/core'
 export default defineComponent({
   name: "temp10",
   props: ["item_data"],
@@ -60,16 +62,6 @@ export default defineComponent({
       odds_list: [],
       // hsw切换赔率的值
       hsw_single: ''
-    })
-    /**
-     *@description 是否选中
-     *@param {String} id 投注项id
-     *@return {Boolean}
-     */
-    const is_select = computed(() => {
-      return function(id){
-        return get_bet_list.includes(id)
-      }
     })
     watch(
       // 深度监听数据的变化及时执行os修改函数
@@ -105,7 +97,7 @@ export default defineComponent({
       ...toRefs(data),
       utils,
       lodash,
-      is_select,
+      BetData,
       get_bet_list,
       get_curr_sub_menu_type,
       temp_odds,

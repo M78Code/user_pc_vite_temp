@@ -4,6 +4,7 @@
 -->
 <template>
   <div class="temp15 mx-5">
+    <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <div class="hairline-border">
       <!-- justify-between -->
       <div v-for="(item,index) in item_data.hl" :key="index" class="row temp15-pd"  :class="item_data.hl && item_data.hl.length > 1 ? 'many-item-border':'sigle-item-border'">
@@ -18,7 +19,7 @@
             <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
                 <div @click="utils.go_to_bet(ol_item)"
-                     :class="[{'win':utils.calc_win(ol_item.result),'active-play':get_bet_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
+                     :class="[{'win':utils.calc_win(ol_item.result),'active-play':BetData.bet_oid_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
                      :key="index2" class="play-box">
                   <div class="remark">{{olitem_name(ol_item)}}</div>
                   <div>
@@ -72,6 +73,7 @@ import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as M
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp15",
   props: ["item_data"],
@@ -88,10 +90,6 @@ export default defineComponent({
     });
     // #TODO vuex
     // computed: {
-    // ...mapGetters(["get_bet_list","get_detail_data"]),
-    const get_bet_list = computed(() => {
-      return []
-    });
     const route = useRoute()
     const get_detail_data = computed(() => {
       return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
@@ -155,7 +153,7 @@ export default defineComponent({
     );
     return {
       ...toRefs(init_data),
-      get_bet_list,
+      BetData,
       get_detail_data,
       olitem_name,
       calc_num,

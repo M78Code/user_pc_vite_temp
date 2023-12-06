@@ -4,6 +4,7 @@
  * @Description: 针对虚拟体育新增的玩法模板8
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp8 mx-5" >
     <div>
       <div v-for="(team,index) in item_data.team" :key="index" :style="{'margin-top':index > 0 ? '0.04rem':''}" class="hairline-border">
@@ -13,20 +14,20 @@
             <div class="team-name">{{team.teamName}}</div>
           </div>
           <div class="row team justify-between">
-            <div class="col-4 team-odds" @click="go_to_bet(`20033${team.teamId}`,index)" :class="[is_select(`20033${team.teamId}`) && 'team-odds2']">
+            <div class="col-4 team-odds" @click="go_to_bet(`20033${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20033${team.teamId}`] && play_obj[`20033${team.teamId}`].oid) && 'team-odds2']">
               <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20033${team.teamId}.ov`) / 100000,null,hsw_obj[20033])}}
               </div>
             </div>
-            <div class="col-4 team-odds" @click="go_to_bet(`20034${team.teamId}`,index)" :class="[is_select(`20034${team.teamId}`) && 'team-odds2']">
+            <div class="col-4 team-odds" @click="go_to_bet(`20034${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20034${team.teamId}`] && play_obj[`20034${team.teamId}`].oid) && 'team-odds2']">
               <div v-if="lodash.get(play_obj,`20034${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20034${team.teamId}.ov`) / 100000,null,hsw_obj[20034])}}
               </div>
             </div>
             <div v-if="'1009' != sub_menu_type"
-            class="col-4 team-odds" @click="go_to_bet(`20035${team.teamId}`,index)" :class="is_select(`20035${team.teamId}`) && 'team-odds2'">
+            class="col-4 team-odds" @click="go_to_bet(`20035${team.teamId}`,index)" :class="BetData.bet_oid_list.includes(play_obj && play_obj[`20035${team.teamId}`] && play_obj[`20035${team.teamId}`].oid) && 'team-odds2'">
               <div v-if="lodash.get(play_obj,`20035${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20035${team.teamId}.ov`) / 100000,null,hsw_obj[20035])}}
@@ -48,7 +49,7 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
-
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -61,13 +62,9 @@ export default defineComponent({
   },
   setup(props, evnet) {
     // #TODO vuex
-    // ...mapGetters(["get_bet_list","get_cur_odd","get_detail_data"]),
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
-    const get_bet_list = computed(() => {
-      return []
-    });
     const get_cur_odd = computed(() => {
       return ""
     });
@@ -89,9 +86,10 @@ export default defineComponent({
      */
     const is_select = () => {
       return function(id){
-        return get_bet_list.includes(play_obj && play_obj[id] && play_obj[id].oid)
+        return BetData.bet_oid_list.includes(play_obj && play_obj[id] && play_obj[id].oid)
       }
     }
+    const play_obj = ref({})
     onMounted(() => {
       get_odds()
     });
@@ -109,7 +107,7 @@ export default defineComponent({
         })
         play_obj2[item.hpid] = item;
       })
-      play_obj = play_obj
+      play_obj.value = play_obj
     };
     /**
      *@description 虚拟体育(赛马)点击详细页小方块投注
@@ -118,7 +116,7 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const go_to_bet = (ol_item,index) => {
-      ol_item = play_obj[ol_item]
+      ol_item = play_obj.value[ol_item]
       ol_item.num = index + 1
       utils.go_to_bet(ol_item)
       // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
@@ -126,14 +124,15 @@ export default defineComponent({
     return {
       utils,
       lodash,
-      get_bet_list,
+      BetData,
       get_cur_odd,
       get_detail_data,
       get_curr_sub_menu_type,
       LOCAL_PROJECT_FILE_PREFIX,
       is_select,
       get_odds,
-      go_to_bet
+      go_to_bet,
+      play_obj
     }
   }
 })
