@@ -112,8 +112,8 @@
     "bet_col": {
       "bet_col_1": {
         "bet_col_1": "Home",
-        "bet_col_X": "Away",
-        "bet_col_2": "Draw"
+        "bet_col_X": "Draw",
+        "bet_col_2": "Away"
       },
       "bet_col_2": {
         "bet_col_Over": "Over",
@@ -295,6 +295,7 @@
     "agree_change": "Accept Changes",
     "agree_change2": "Accept change and bet",
     "away_win": "A win",
+    "bet_winner": "Outrights",
     "bet": "Single Bet",
     "bet_10001": "10-Fold",
     "bet_10001013": "Block (10)",

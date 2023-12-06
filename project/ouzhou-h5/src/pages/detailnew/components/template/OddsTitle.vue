@@ -14,7 +14,7 @@ const props = defineProps<{
 }>()
 
 const len = props.data.title.length
-const show = len > 1 && len <= 3
+const show = len > 1 && len <= 4
 
 </script>
 
