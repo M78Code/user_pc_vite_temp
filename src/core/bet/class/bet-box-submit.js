@@ -764,6 +764,23 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         bet_obj.handicap = ol_obj.on
     }
 
+    // 串关数据 提示
+    if(!BetData.is_bet_single){
+        let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
+        let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
+        // 串关 数量不是大于1条投注项 则提示
+        if( BetData.bet_s_list.length < 2){
+            BetViewDataClass.set_bet_before_message({
+                code: 500,
+                message: i18n_tc('bet.bet_min_item',min_series)
+            })
+        }else if(BetData.bet_s_list.length < 10){
+
+        } else{
+            BetViewDataClass.set_bet_before_message({})
+        }
+    }
+
     // 设置投注内容 
     BetData.set_bet_read_write_refer_obj(bet_obj)
 
