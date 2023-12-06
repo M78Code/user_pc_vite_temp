@@ -3,17 +3,13 @@
     <q-separator color="orange" />
     <div class="odds-hpn" @click="toggleUnfold">
       <span class="odds-hpn-text">{{ data.hpn }}</span>
+      template{{ data.hpt }}
       <!-- 置顶按钮 -->
       <OddsSetTop :value="data"></OddsSetTop>
       <span class="odds-hpn-icon" :class="unfold ?'down':'up'" @click.stop="toggleUnfold"></span>
     </div>
     <div v-show="unfold">
-      <!-- <OddTemplateDynamicComponent></OddTemplateDynamicComponent> -->
-      <template v-for="item in data.hl">
-        <template v-for="ol in item.ol">
-          <OddOlItem :value="ol"></OddOlItem>
-        </template>
-      </template>
+      <OddTemplateDynamicComponent :data="data"></OddTemplateDynamicComponent>
     </div>
   </div>
 </template>
@@ -21,9 +17,8 @@
 import { onMounted, reactive, ref, watch, computed } from "vue";
 import AllCloseControl from "./AllCloseControl";
 import OddsSetTop from './OddsSetTop.vue'
-import OddOlItem from "./OddOlItem.vue";
 
-// import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
+import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
 
 type Props = {
   data: TYPES.OddInfo
@@ -47,7 +42,8 @@ function toggleUnfold(){
 
 const order = computed(() => {
   // order 最小值-2147483648, hton目前长度13, 故substring(4)
-  return -Number(props.data.hton.substring(4))
+  // return -Number(props.data.hton.substring(4))
+  return props.data.hpt
 })
 
 </script>
