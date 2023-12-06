@@ -134,21 +134,6 @@ const filter_20_match_new = (data) => {
 
   return result;
 }
-
-export const get_featurd_list = async () => {
-  let params = {
-    isHot: 1,
-    cuid: UserCtr.get_uid()
-  }
-  let featured_list = []
-  let res = await api_details.get_hots(params)
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(res.data);
-  // 获取matches_featured
-  featured_list = filter_featured_list(
-    MatchDataWarehouse_ouzhou_PC_hots_List_Common.match_list
-  );
-  return featured_list
-}
 const matches_15mins_list = ref(SessionStorage.get('matches_15mins_list', []))
 let match_count = ref(0);
 if (matches_15mins_list.value.length) {
@@ -163,14 +148,14 @@ export const init_home_matches = async () => {
   };
   const match_list = []
   const get_home_matches = SessionStorage.get('get_home_matches', [])
-  const get_five_leagues_list = SessionStorage.get('get_five_leagues_list', [])
-  if (get_home_matches.length) { //数据缓存先
+  // const get_five_leagues_list = SessionStorage.get('get_five_leagues_list', [])
+  if (get_home_matches.length > 0) { //数据缓存先
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
-    MatchDataWarehouse_PC_List_Common.set_list([...get_home_matches, ...get_five_leagues_list]);
+    MatchDataWarehouse_PC_List_Common.set_list(get_home_matches);
     MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(get_home_matches);
-    MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-      get_five_leagues_list, null, null, true
-    );
+    // MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+    //   get_five_leagues_list, null, null, true
+    // );
     set_load_data_state("data")
   }
   await axios_loop({
@@ -198,7 +183,6 @@ export const init_home_matches = async () => {
         sort_list = sort_list.sort((x, y) => x.csid - y.csid);
         //过滤前20条数据
         sort_list = filter_20_match_new(sort_list);
-        
         match_list.push(...sort_list)
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
@@ -207,6 +191,8 @@ export const init_home_matches = async () => {
       } catch (error) {
         console.log(error);
       }
+    }, fun_catch() {
+      set_load_data_state("refresh")
     }
   })
   // 暂时隐藏五大联赛

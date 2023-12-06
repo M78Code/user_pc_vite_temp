@@ -232,7 +232,7 @@ class MatchUtils {
     const result = []
     match_data.some(t => {
       const { csid } = t
-      if (![1, 2].includes(+csid)) return
+      if (![1, 2, 5].includes(+csid)) return
       t.is_virtual = true
       const key = `csid_${csid}`
       if (csid_obj[key]) {

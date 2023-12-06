@@ -65,7 +65,7 @@ body {
 
     /*  详情页热门赛事 */
     .detais-hot-head {
-      color: var(gb-t-c-1);
+      color: var(--q-gb-t-c-1);
     }
 
     /* 无数据边框 */
@@ -149,6 +149,7 @@ body {
           .handicap-col:nth-of-type(n+3):nth-of-type(-n+4) {
             .bet-item-wrap {
               background-color: var(--q-gb-bg-c-14);
+              ;
             }
           }
         }
