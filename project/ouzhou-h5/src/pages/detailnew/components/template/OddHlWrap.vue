@@ -1,6 +1,8 @@
 <template>
   <div class="component odd-hl-wrap"
-    :class="[type,'hpt-'+hpt]"
+    :class="[type,'hpt-'+hpt,{
+      'have-title': hasTitle
+    }]"
   >
     <slot>
       <template v-for="item in data.ol" :key="item">
@@ -10,15 +12,18 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue'
 import OddOlItem from "./OddOlItem.vue";
 
 const props = withDefaults(defineProps<{
   data:TYPES.Hl
   hpt: number
   type?:TYPES.OlItemType
+  oddInfo?:TYPES.OddInfo
 }>(),{
   type: 'default'
 })
+const hasTitle = computed(()=>props.oddInfo?.title.length)
 
 </script>
 
@@ -43,6 +48,10 @@ const props = withDefaults(defineProps<{
     .ol-content{
       justify-content: center;
     }
+    .odd-image{
+      position: absolute;
+      transform: translateX(100%);
+    }
   }
   &.hpt-5{
     .component.odd-ol-item{
@@ -52,7 +61,7 @@ const props = withDefaults(defineProps<{
   &.hpt-10{
     .component.odd-ol-item{
       flex-basis: calc(100%/3);
-      padding: 10px 0;
+      padding: 10px 4px;
     }
     .icontainer{
       flex-direction: column;
@@ -60,6 +69,9 @@ const props = withDefaults(defineProps<{
       align-items: center;
       .separate{
         display: none;
+      }
+      .item{
+        text-align: center;
       }
       .odd-image{
         position: absolute;

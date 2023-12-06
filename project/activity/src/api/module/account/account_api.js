@@ -3,7 +3,9 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 用户模块相关api定义
  */
-import http from "project/activity/src/utils/http/axios_warpper.js";
+import { http } from "project_path/src/core/index.js";
+
+ 
 console.error(window.BUILDIN_CONFIG);
 // const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 // const { API_PREFIX_ACTIVITY: prefix } = API_PREFIX;

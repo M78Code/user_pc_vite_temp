@@ -180,6 +180,7 @@ function resetStatus() {
     justify-content: start;
   }
   .ol-content{
+    flex: none;
     justify-content: end;
     .odd-image{
       position: absolute;

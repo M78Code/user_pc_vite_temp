@@ -3,8 +3,8 @@
  * @Date: 2021-08-27 14:35:35
  * @Description: 活动公用方法
  */
-import userStore from 'project/activity/src/store/module/user/index.js';
-
+;
+import { UserCtr } from "project_path/src/core/index.js";
 export default {
   data() {
     return {
@@ -13,7 +13,7 @@ export default {
   },
   computed: {
     get_user() {
-        return userStore.getters.get_user();
+      return UserCtr.get_user();
     },
   },
   methods: {

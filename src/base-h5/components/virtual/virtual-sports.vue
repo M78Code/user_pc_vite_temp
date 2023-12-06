@@ -158,6 +158,7 @@ import { get_now_server } from 'src/core/utils/module/other.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import utils from 'src/base-h5/core/utils/index.js'
 
 import 'src/base-h5/css/pages/virtual-sports.scss'
 
@@ -186,6 +187,8 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
+    // 一开始就加载所需js文件
+    utils.load_player_js()
     const { params, is_user_refresh, v_match_router_ente } = toRefs(props);
     const state = reactive({
       // 事件集合
@@ -445,8 +448,10 @@ export default defineComponent({
       }
       else{
         // 比赛已开始, 获取视频接口
+        
         VirtualVideo.get_video_process_by_api(() => {
-          VirtualVideo.get_match_video_process(state.current_match);
+          console.log('lzx 2222');
+          VirtualVideo.get_match_video_process(state.current_match).bind(VirtualVideo)();
         });
       }
 
@@ -465,7 +470,7 @@ export default defineComponent({
             if(match.start_now_sub <= 0){
               VirtualVideo.get_video_process_by_api(() => {
                 state.current_match = match;
-                VirtualVideo.get_match_video_process(state.current_match);
+                VirtualVideo.get_match_video_process.bind(VirtualVideo, state.current_match)();
               });
             }
           }
