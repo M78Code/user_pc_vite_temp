@@ -76,9 +76,10 @@ const on_update = async (val,type) => {
  * 获取收藏球种数量
  */
 const getListCount = async (list,type) =>{
+  let collect = JSON.parse(JSON.stringify(list))|| [];
   let euid_list = ''
     // 获取对应的旧菜单id    
-    list.forEach(item =>{
+    collect.forEach(item =>{
         euid_list += MenuData.get_mid_for_euid(type==400?`${+item.mi+300}`:`${item.mi}${type}`) + ','
     })
     let type_ = {
@@ -98,7 +99,7 @@ const getListCount = async (list,type) =>{
     const res = await api_common.get_menu_of_favorite_count(parmas)
     if(res && res.code == 200){
         let collect_list = res.data || []
-        list = list.map(item=>{
+        collect = collect.map(item=>{
             item.ct = 0
             collect_list.forEach(obj=>{
                 if(obj.sportId){
@@ -116,7 +117,7 @@ const getListCount = async (list,type) =>{
             return item
         })
     }
-    return list
+    return collect
 }
 /**
  * 球种点击
