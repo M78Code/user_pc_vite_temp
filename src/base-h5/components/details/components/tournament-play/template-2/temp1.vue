@@ -23,7 +23,7 @@
                       >
                         <div class="text-center odds-wrap">
                           <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
-                          <odds-new class="odds-style" :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                          <odds-new  :item_data="item_data" :ol_data="ol_item" ></odds-new>
                         </div>
                       </div>
                       <!-- 主程序 end -->
@@ -96,7 +96,7 @@
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <odds-new class="odds-style" :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                            <odds-new class="odds-style"  :item_data="item_data" :ol_data="ol_item" ></odds-new>
                           </div>
                         </div>
                         <!-- 主程序 end -->
@@ -171,7 +171,7 @@
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <odds-new class="odds-style" :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                            <odds-new class="odds-style"  :item_data="item_data" :ol_data="ol_item" ></odds-new>
                           </div>
                         </div>
                         <!-- 主程序 end -->
@@ -246,7 +246,7 @@
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
-                            <odds-new class="odds-style" :item_data="item_data" :ol_data="ol_item" ></odds-new>
+                            <odds-new class="odds-style"  :item_data="item_data" :ol_data="ol_item" ></odds-new>
                           </div>
                         </div>
                         <!-- 主程序 end -->
