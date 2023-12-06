@@ -3,7 +3,7 @@
     <q-separator color="orange" />
     <div class="odds-hpn" @click="toggleUnfold">
       <span class="odds-hpn-text">{{ data.hpn }}</span>
-      template{{ data.hpt }}
+      <!-- template{{ data.hpt }} -->
       <!-- 置顶按钮 -->
       <OddsSetTop :value="data"></OddsSetTop>
       <span class="odds-hpn-icon" :class="unfold ?'down':'up'" @click.stop="toggleUnfold"></span>
@@ -42,8 +42,8 @@ function toggleUnfold(){
 
 const order = computed(() => {
   // order 最小值-2147483648, hton目前长度13, 故substring(4)
-  // return -Number(props.data.hton.substring(4))
-  return props.data.hpt
+  return -Number(props.data.hton.substring(4))
+  // return props.data.hpt
 })
 
 </script>

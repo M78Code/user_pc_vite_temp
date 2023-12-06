@@ -174,9 +174,9 @@ function set_sports_list() {
   api_search.get_search_sport().then(res => {
     if (lodash.get(res, 'code') == 200) {
       const list = lodash.get(res, 'data') || []
-      // IS_FOR_NEIBU_TEST 是否内部自测环境， 是：开放所有赛种， 否：只开放足、篮
-      const ls = ["1", "2"]  //足、篮
-      sports_list = !IS_FOR_NEIBU_TEST ? list.filter(item => ls.includes(item.id)) : list
+      // 根据商户过滤篮球赛事
+      const ls = ["1", "2", "5"]  //只显示足、篮、网
+      sports_list = list.filter(item => ls.includes(item.id))
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id
       if (csid) {
