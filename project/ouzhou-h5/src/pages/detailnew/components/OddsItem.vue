@@ -5,18 +5,23 @@
       <span class="odds-hpn-text">{{ data.hpn }}</span>
       <!-- 置顶按钮 -->
       <OddsSetTop :value="data"></OddsSetTop>
-      <span class="odds-hpn-icon" :class="unfold ?'down':'up'"></span>
+      <span class="odds-hpn-icon" :class="unfold ?'down':'up'" @click.stop="toggleUnfold"></span>
     </div>
     <div v-show="unfold">
       <!-- <OddTemplateDynamicComponent></OddTemplateDynamicComponent> -->
-      ----
+      <template v-for="item in data.hl">
+        <template v-for="ol in item.ol">
+          <OddOlItem :value="ol"></OddOlItem>
+        </template>
+      </template>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch, computed } from "vue";
-import OddsSetTop from './OddsSetTop.vue'
 import AllCloseControl from "./AllCloseControl";
+import OddsSetTop from './OddsSetTop.vue'
+import OddOlItem from "./OddOlItem.vue";
 
 // import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
 
@@ -51,7 +56,7 @@ const order = computed(() => {
 .odds-hpn{
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 15px 13px 15px 20px;
   background-color: #fff;
   .odds-hpn-text {
     flex: 1;
@@ -66,6 +71,7 @@ const order = computed(() => {
 .odds-hpn-icon {
   width: 14px;
   height: 14px;
+  margin-left: 14px;
   background: url($SCSSPROJECTPATH+ "/image/detail/down.png") no-repeat center;
   transition: transform .5s cubic-bezier(0, 0.2, 0, 1);
   &.up {
