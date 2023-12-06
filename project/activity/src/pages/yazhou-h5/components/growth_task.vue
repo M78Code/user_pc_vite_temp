@@ -211,7 +211,7 @@ import data_pager from "project/activity/src/components/data_pager.vue";
 import acticity_mixin from "../mixin/acticity_mixin";
 import active_count_down from "./active_count_down.vue";
 import utils from 'project/activity/src/utils/utils.js';
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "project_path/src/core/index.js";
 
 export default {
   name: "daily_betting_payouts",

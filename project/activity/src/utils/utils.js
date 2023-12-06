@@ -4,7 +4,7 @@
  * @Description: 公共方法对象定义
  */
 import { uid } from "quasar";
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "project_path/src/core/index.js";
 ;
 // import { api_details, api_account } from "project/activity/src/api/index.js"
 

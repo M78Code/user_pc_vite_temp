@@ -91,7 +91,7 @@ import lucky_blind_box from "./components/lucky_blind_box.vue";
 import growth_task from "./components/growth_task.vue";
 import slot_machine from './components/slot_machine.vue'
 import acticity_mixin from "./mixin/acticity_mixin.js";
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "project_path/src/core/index.js";
 
 import _ from 'lodash';
 import utils from 'project/activity/src/utils/utils.js';

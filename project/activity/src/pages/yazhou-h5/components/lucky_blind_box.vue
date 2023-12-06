@@ -287,7 +287,7 @@ import active_count_down from "./active_count_down.vue";
 import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
 import utils from 'project/activity/src/utils/utils.js';
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "project_path/src/core/index.js";
 
 export default {
   name: "lucky_blind_box",

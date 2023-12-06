@@ -4,7 +4,7 @@
  * @Description: 活动公用方法
  */
 ;
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "project_path/src/core/index.js";
 export default {
   data() {
     return {

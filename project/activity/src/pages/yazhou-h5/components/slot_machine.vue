@@ -326,7 +326,7 @@ import data_pager from "project/activity/src/components/data_pager.vue";
 import compose from './compose.vue';
 import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "project_path/src/core/index.js";
 
 
 export default {
