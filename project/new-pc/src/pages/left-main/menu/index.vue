@@ -5,7 +5,7 @@
     <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border border-bottom" style="margin-bottom: 0px"
       :class="MenuData.menu_root == 1 && 'active'">
       <!-- 现场滚球盘 -->
-      <span class="record-icon" :style="compute_css_obj('pc-img-play-match')"></span>
+      <span class="record-icon" :style="compute_css_obj({key: 'pc-img-play-match'})"></span>
       <div class="col">
         {{ $t("common.in_plays") }}
       </div>
@@ -24,7 +24,7 @@
       :class="MenuData.menu_root == 500 && 'active'"
       :id="DOM_ID_SHOW && `menu-${MenuData.add_mi_introduce.mi_500.label}`">
       <!-- 热门赛事图标 -->
-      <span class="record-icon" :style="compute_css_obj('pc-img-hot-match')"></span>
+      <span class="record-icon" :style="compute_css_obj({key: 'pc-img-hot-match'})"></span>
       <div class="col">
         {{ $t("menu.match_hot") }}
       </div>
@@ -34,7 +34,7 @@
           {{ MenuData.menu_root_count.mi_500 }}</span>
       </div>
     </div>
-
+    
     <div style="display: none">{{ base_data_instance.base_data_version }}</div>
     <!-- 体育菜单 -->
     <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance"
@@ -99,8 +99,7 @@ const new_menu_click = (root) => {
     sports: "",
     guanjun: "",
   };
-  // 设置 中间 菜单输出
-  MenuData.set_mid_menu_result(params);
+
 
   // 设置 左侧菜单
   MenuData.set_left_menu_result({
@@ -112,6 +111,8 @@ const new_menu_click = (root) => {
     mid_menu_show,
     has_mid_menu: true,
   });
+  // 设置 中间 菜单输出
+  MenuData.set_mid_menu_result(params);
 };
 
 /**
