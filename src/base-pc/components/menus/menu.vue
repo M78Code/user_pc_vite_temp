@@ -46,6 +46,10 @@
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
+        <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
+          <sport_icon :sport_id="BaseData.compute_sport_id(2000)" size="18px" class="icon" />
+          {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
+        </li>
       </ul>
     </div>
 
@@ -134,7 +138,12 @@ const jump_func = (payload ={},type) => {
   })
   
 }
-
+/**
+ * 电竞
+ */
+const esportsClick = ()=>{
+ //
+}
 // 冠军
 const outrights = () => {
   if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return

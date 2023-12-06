@@ -195,7 +195,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 export default defineComponent({
   name: "temp5",
-  props: ["item_data"],
+  props: ["item_data","title"],
   components: {
     oddsNew,
   },

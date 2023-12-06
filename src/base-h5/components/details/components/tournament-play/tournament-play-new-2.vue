@@ -100,7 +100,7 @@
                 :is="`temp${item_data.hpt}`"
                 :item_data="item_data"
                 :title="title"
-                @bet_click_="bet_click_"
+            
             />
           </div>
         </q-slide-transition>
@@ -113,7 +113,6 @@
                 v-show="item_data.hotName"
                 :item_data="item_data"
                 :title="title"
-                @bet_click_="bet_click_"
             ></temp8>
           </div>
         </q-slide-transition>

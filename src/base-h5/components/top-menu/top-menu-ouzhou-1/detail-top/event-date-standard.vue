@@ -1,13 +1,11 @@
 <script name="event-date-standard" setup>
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zone  } from "src/core";
+import { format_time_zone  } from "src/core";
 import { get_mmp_name } from "src/core/format/module/format-msc.js"
 import {
     get_match_status,
     utils,
-    i18n_t,
-    score_switch_handle,
     format_string,
     is_eports_csid
 } from "src/core/index"
@@ -47,21 +45,22 @@ const show_counting_down = function (item) {
     return [1, 2, 10].includes(item.ms * 1);
 }
 
+// 获取阶段名称
 const computed_process_name = computed(() => {
-    let { ms_info } = props || {};
-    if(!ms_info){
+    // debugger
+    let match = props?.ms_info ?? {}
+    if(!match){
         return '';
     }
-    let csid = lodash.get(props, 'match.csid')
-    let mmp = lodash.get(props, 'match.mmp')
-    let mle = lodash.get(props, 'match.mle')
+    const {csid, mmp, mle} = match
     let process_name = get_mmp_name(csid, mmp) || "";
     // 即将开赛
-    if (lodash.get(props, 'match.ms') == 110) {
+    if (lodash.get(props, 'ms') == 110) {
         process_name = i18n_t("common.match_soon");
-    }// 滚球 && 未开赛
-    else if (get_match_status(lodash.get(props, 'match.ms')) && ms_info.mmp == 0) {
-        switch (Number(ms_info.csid)) {
+    }
+    // 滚球 && 未开赛
+    else if (get_match_status(lodash.get(match, 'ms')) && match.mmp == 0) {
+        switch (Number(match.csid)) {
             // 足
             case 1:
                 process_name = i18n_t("common.up_half");
@@ -69,7 +68,7 @@ const computed_process_name = computed(() => {
             // 篮
             case 2:
                 process_name =
-                    ms_info.mle == 17 ? i18n_t("common.up_half") : i18n_t("common.first_match");
+                    match.mle == 17 ? i18n_t("common.up_half") : i18n_t("common.first_match");
                 break;
             //棒球
             case 3:
@@ -102,7 +101,7 @@ const computed_process_name = computed(() => {
         }
 
         // 电竞
-        if (is_eports_csid(ms_info.csid)) {
+        if (is_eports_csid(match.csid)) {
             process_name = i18n_t("mmp.100.1");
         }
     } else {
@@ -111,11 +110,9 @@ const computed_process_name = computed(() => {
             process_name = i18n_t("mmp.2.2");
         }
 
-        console.log(process_name,"process_name")
-
         // 斯诺克(7) 的滚球(21)
         if (csid == 7 && mmp == 21) {
-            process_name = covert_mct(ms_info);
+            process_name = covert_mct(match);
         }
     }
 
@@ -125,7 +122,7 @@ const computed_process_name = computed(() => {
     }
     //是否列表页棒球第X局，换行显示
     if (
-        lodash.get(props, 'match.csid')== 3 &&
+        lodash.get(match, 'csid')== 3 &&
         props.show_page == "match-list" &&
         process_name.indexOf("第") == 0
     ) {
@@ -155,11 +152,12 @@ const covert_mct = ({ mct, mmp, ms }) => {
     let rs = format_string(i18n_t("mmp.7.x"), new_num);
     return rs;
 };
+
 </script>
 
 <template>
     <div class="event-date-standard">
-        <div v-if="!!computed_process_name" v-html="computed_process_name"></div>
+        <div class="process_name" v-if="!!computed_process_name" v-html="computed_process_name"></div>
         <!--即将开赛 ms = 110-->
         <div class="coming-soon" v-if="ms_info?.ms" v-show="ms_info?.ms == 110">
             {{ i18n_t(`ms[${ms_info?.ms}]`) }}
@@ -187,10 +185,15 @@ const covert_mct = ({ mct, mmp, ms }) => {
 .event-date-standard{
     display: flex;
     align-self: center;
+    align-items: center;
+    flex-direction: column;
     justify-content: center;
     ::v-deep(.counting-down-wrap){
         position: relative !important;
         width: auto !important;
+    }
+    .process_name{
+        font-size: 0.15rem;
     }
 }
 </style>
