@@ -28,7 +28,7 @@
 import { ref,onMounted,onUnmounted, watch } from 'vue';
 import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from 'vue-router';
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
@@ -254,4 +254,4 @@ const jumpTo = ()=>{
 	padding-right: 3px;
 	}
   }
-</style>
+</style>src/output/index.js

@@ -468,3 +468,4 @@ const is_show_margin = computed(() => {
 <style lang="scss">
 @import "../match-details//match-details.scss";
 </style>
+src/output/index

@@ -12,7 +12,7 @@
      * 
      * 处理  56
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/index.js'
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import {ref} from "vue"

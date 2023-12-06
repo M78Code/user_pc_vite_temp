@@ -58,7 +58,7 @@
   <script setup>
   
     import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-      import { compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+      import { compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
       import { format_currency } from "src/core/format/index.js"
 // import i18n from "project/activity/src/i18n";
 
@@ -257,4 +257,4 @@
     height: 0.18rem;
   }
   </style>
-  
+  src/output/index.js

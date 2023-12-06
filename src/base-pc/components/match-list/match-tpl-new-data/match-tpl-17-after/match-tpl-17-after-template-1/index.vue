@@ -37,7 +37,7 @@
 
 import { ref, watch, defineProps } from 'vue';
 
-import { t, get_match_status, compute_local_project_file_path, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
+import { t, get_match_status, compute_local_project_file_path, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/output/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
@@ -71,3 +71,4 @@ watch(() => MatchListData.data_version.version, (new_value, old_value) => {
 })
 
 </script>
+src/output/index.js

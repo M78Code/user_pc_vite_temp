@@ -27,7 +27,7 @@
 </template>
 <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { useMittEmit, MITT_TYPES  } from "src/core/index.js";
+  import { useMittEmit, MITT_TYPES  } from "src/output/index.js";
   const type = 1//1:Betting Type  2:  3:System
 
   const clear = () =>{
@@ -134,3 +134,4 @@
       height: 0.4rem;
     }
 </style>
+src/output/index.js

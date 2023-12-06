@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup>
-import { format_currency } from 'src/core/index.js'
+import { format_currency } from 'src/output/index.js'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 </script>
 
@@ -55,3 +55,4 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 }
 
 </style>
+src/output/index.js

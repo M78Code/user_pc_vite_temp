@@ -6,7 +6,7 @@ import {
   LayOutMain_pc,
   UserCtr,
   MenuData, axios_loop, get_match_status, SessionStorage
-} from "src/core";
+} from "src/output";
 import { ref } from 'vue'
 import { set_load_data_state } from 'src/core/match-list-pc/match-list-composition.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";

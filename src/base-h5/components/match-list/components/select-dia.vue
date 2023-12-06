@@ -31,7 +31,7 @@ import search from '../../search/search.vue'
 
 import { onMounted, onUnmounted, ref, watch } from "vue"
 import store from "src/store-redux/index.js";
-import { i18n_t, MenuData, SearchData } from 'src/core/index.js'
+import { i18n_t, MenuData, SearchData } from 'src/output/index.js'
 const props = defineProps(['detail_data'])
 const { menu_type, get_sport_all_selected } = MenuData;
 const change_show = ref(true)
@@ -137,4 +137,4 @@ const is_search_hide = (i) => {
     }
   }
 }
-</style>
+</style>src/output/index.js

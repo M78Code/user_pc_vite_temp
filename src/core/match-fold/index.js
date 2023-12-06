@@ -5,7 +5,7 @@
 import lodash from 'lodash'
 import { ref } from 'vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output'
 
 class MatchFold {
   constructor () {

@@ -56,7 +56,7 @@
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
-import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/output/index.js";
 
 const props = defineProps({
     is_show_conflict: {
@@ -105,4 +105,4 @@ const nothing = () =>{
 <style scoped lang="scss">  
 
 
-</style>
+</style>src/output/index.js

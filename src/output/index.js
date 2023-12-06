@@ -5,6 +5,8 @@ const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 
  
 
+export * from "./constant-utils.js"
+export * from "src/core/enter-params/index.js";
 //通用
 
 import lodash from "lodash";
@@ -14,14 +16,9 @@ import lodash from "lodash";
 // const route = useRoute();
 
 // src\core\utils\module\match-list-utils.js与src\core\format\module\format-date.js 存在get_remote_time的冲突导出
-export * from "src/core/format/index.js";
-export * from "src/core/constant/index.js";
-export * from "src/core/utils/index.js";
-export * from "src/core/enter-params/index.js";
 
-export * from 'src/core/file-path/file-path'
 // ==============================   间接转出     项目无差异的        ======================================
-import { i18n, loadLanguageAsync, map_lang, t, i18n_t } from "src/boot/i18n.js";
+
 
 import {
   useMittOn,
@@ -30,7 +27,7 @@ import {
   useMittEmitterGenerator,
   MITT_TYPES,
 } from "src/core/mitt/index.js";
-import uid from "src/core/uuid/index.js";
+export   { default as uid}  from "src/core/uuid/index.js";
 import SearchData from "src/core/search-class/search-data-class.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
@@ -48,47 +45,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js";
 
 // ==============================  间接转出     默认输出   项目有差异的    ======================================
 
-// pc
 
-import MenuData_PC from "src/core/menu-pc/menu-data-class.js";
-import MenuData_PC_Yazhou from "src/core/menu-pc-yazhou/menu-data-class.js";
-import MatchListCard_PC from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import MatchListCardData_PC from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-// 搜索组件类
-import  SearchPCClass  from "src/core/search-class/seach-pc-calss.js";
-// h5
-
-import MenuData_H5 from "src/core/menu-h5/menu-data-class.js";
-import MatchListCard_H5 from "src/core/match-list-h5/match-card/match-list-card-class.js";
-import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
-
-import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
-import OZ_MenuData_App_h5 from "src/core/menu-app-h5/oz-menu-data-class.js";
-
-let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
-// if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
-//   MenuData = MenuData_App_h5
-// }
-
-switch (PROJECT_NAME) {
-  case 'ouzhou-h5':
-    MenuData = OZ_MenuData_App_h5
-    break;
-  case 'app-h5':
-    MenuData = MenuData_App_h5
-    break;
-  case 'yazhou-pc': 
-    MenuData = MenuData_PC_Yazhou
-    break;
-  case 'ouzhou-pc':
-    MenuData = MenuData_PC
-    break;
-  default:
-    break;
-}
-
-const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
-const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 
 //=================================     pc全局开关类 =================================
 import  GlobalSwitchClass  from "src/core/global/global.js";
@@ -255,12 +212,13 @@ const MatchListH5DetailMiddleware = new MatchListDetailMiddleware()
  * PC  布局
  */
 
-import LayOutMain_pc from "src/core/layout/index.js";
+export   { default as LayOutMain_pc} from "src/core/layout/index.js";
 
 /**
  * CSS 变量
  */
-import { compute_css_variables } from "src/core/css-var/index.js"
+ 
+export {compute_css_variables} from  "src/core/css-var/index.js"
 
 /**
  * img 变量
@@ -269,12 +227,12 @@ export * from "src/core/server-img/";
 /**
  *
  * 所有的用法 都一样 注意 这里输出的 模块不能 用这种方法 
- * import { xxxx } from "src/core/index.js";
+ * import { xxxx } from "src/output/index.js";
  *
- * import { is_eports_csid  } from "src/core/index.js";
+ * import { is_eports_csid  } from "src/output/index.js";
  *
  */
-import ServerTime from './server-time/server-time'
+import ServerTime from '../core/server-time/server-time'
 import { M } from "licia/moment";
 
 export {

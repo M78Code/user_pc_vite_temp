@@ -4,7 +4,7 @@
  * @Description: h5/pc数据仓库ws数据实时数据同步
  * 
  */
-import { UserCtr } from "src/core";
+import { UserCtr } from "src/output";
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js";
 import {  useMittEmit, MITT_TYPES } from  "src/core/mitt"
 export default class MatchDataBaseWS

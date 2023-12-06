@@ -15,7 +15,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { i18n_t } from "src/boot/i18n.js"
-import { utils, UserCtr } from 'src/core/index.js'
+import { utils, UserCtr } from 'src/output/index.js'
 import { get_remote_time } from "src/core/format/index.js"
 
 /** 是否内嵌 */
@@ -101,4 +101,4 @@ onMounted(compute_colse_tips_time)
         border-top-left-radius: 0;
     }
 }
-</style>
+</style>src/output/index.js

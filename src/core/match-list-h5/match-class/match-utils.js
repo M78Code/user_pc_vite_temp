@@ -1,6 +1,6 @@
 import lodash from 'lodash'
 import BaseData from 'src/core/base-data/base-data.js'
-import { MenuData } from 'src/core'
+import { MenuData } from 'src/output'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { use_playingMethods_15 } from "src/core/constant/config/15-minute.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';

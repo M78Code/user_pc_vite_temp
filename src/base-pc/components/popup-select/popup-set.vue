@@ -30,7 +30,7 @@ import { theme_list, theme_map } from "src/core/theme/"
 
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
-// import userCtr from 'src/core/index.js'
+// import userCtr from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 /** 组件没有使用 */

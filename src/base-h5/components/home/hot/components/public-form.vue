@@ -116,7 +116,7 @@
 
 <script setup>
 import no_data from "src/base-h5/components/common/no-data.vue";    // 无网络展示组件
-import { useMittEmit, useMittOn, MITT_TYPES,compute_img_url } from "src/core/index.js"
+import { useMittEmit, useMittOn, MITT_TYPES,compute_img_url } from "src/output/index.js"
 import { ref} from 'vue';
 
 
@@ -349,3 +349,4 @@ let none_league_icon_black =  ("image/bw3/png/home_page/Avatar_black.png")
   }
 }
 </style>
+src/output/index.js

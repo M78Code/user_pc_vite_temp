@@ -9,7 +9,7 @@ import {
   PROJECT_NAME,
   SessionStorage,
   LayOutMain_pc
-} from "src/core/index.js"
+} from "src/output/index.js"
 const menu_key = STANDARD_KEY.get("menu_pc");
 
 import STANDARD_KEY from "src/core/standard-key";

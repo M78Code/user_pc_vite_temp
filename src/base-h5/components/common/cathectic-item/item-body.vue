@@ -157,3 +157,4 @@ import { project_name } from 'src/core'
   }
 }
 </style>
+src/output

@@ -14,7 +14,7 @@
     </div>
 </template>
 <script setup>
-import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
   /**
    * 初始化数据
@@ -64,4 +64,4 @@ import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
             flex: 1 1;
         }
     }
-</style>
+</style>src/output/index.js

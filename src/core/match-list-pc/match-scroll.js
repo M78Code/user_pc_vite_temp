@@ -1,6 +1,6 @@
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, } from 'src/core/index.js';
+import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, } from 'src/output/index.js';
 import MatchListCardData from "./match-card/module/match-list-card-data-class";
 import { load_data_state } from './match-list-composition'
 class MatchListScrollClass {

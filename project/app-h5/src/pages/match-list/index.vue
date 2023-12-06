@@ -37,7 +37,7 @@ import SList from "src/base-h5/components/skeleton/skeleton-list.vue"   // èµ›äº
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
-import { MenuData, score_switch_handle, utils } from "src/core/index.js";
+import { MenuData, score_switch_handle, utils } from "src/output/index.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
@@ -210,3 +210,4 @@ onUnmounted(() => {
 <style scoped lang="scss">
   @import "./index.scss";
 </style>
+src/output/index.jssrc/output

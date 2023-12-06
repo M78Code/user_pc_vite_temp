@@ -19,7 +19,7 @@ import { useMittEmit, MITT_TYPES,project_name, MenuData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
   MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
-} from 'src/core'
+} from 'src/output'
 
 class MatchMeta {
 

@@ -1,4 +1,4 @@
-import { UserCtr,MenuData } from 'src/core/index.js'
+import { UserCtr,MenuData } from 'src/output/index.js'
 import BaseData from "src/core/base-data/base-data.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { ref } from 'vue';

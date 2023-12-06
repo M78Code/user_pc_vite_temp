@@ -66,3 +66,4 @@ export default {
   }
 };
 </script>
+src/output

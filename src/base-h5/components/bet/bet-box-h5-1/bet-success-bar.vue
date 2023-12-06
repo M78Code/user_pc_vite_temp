@@ -35,7 +35,7 @@
 
 <script setup>
 // import bettinglist from 'src/project/mixins/betting/betting.js';
-import { UserCtr ,compute_img_url} from "src/core/index.js";
+import { UserCtr ,compute_img_url} from "src/output/index.js";
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
@@ -97,3 +97,4 @@ const get_s_count_data = ref(store_state.get_s_count_data)
   }
 }
 </style>
+src/output/index.js

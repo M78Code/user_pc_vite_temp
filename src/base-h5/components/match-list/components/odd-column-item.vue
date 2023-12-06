@@ -60,7 +60,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
-import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
@@ -482,4 +482,4 @@ onUnmounted(() => {
  
 <style scoped lang="scss">
   @import "../styles/odd-column-item";
-</style>
+</style>src/output/index.jssrc/output

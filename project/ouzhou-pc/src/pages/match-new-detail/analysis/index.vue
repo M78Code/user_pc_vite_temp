@@ -65,7 +65,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, computed, watch } from "vue";
-// import {LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+// import {LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 
 import FootBallStats from "./compoments/football_stats.vue";
 import BasketBallStats from "./compoments/basketball_stats.vue";
@@ -255,3 +255,4 @@ const score_list = computed(() => {
   }
 }
 </style>
+src/output/index

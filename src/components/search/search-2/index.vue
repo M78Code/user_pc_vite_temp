@@ -56,7 +56,7 @@ import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
-import { LayOutMain_pc, utils } from 'src/core/index.js'
+import { LayOutMain_pc, utils } from 'src/output/index.js'
 // 搜索输入框组件
 import searchInput from "./search-input.vue"
 // // 搜索初始化组件
@@ -329,3 +329,4 @@ export default defineComponent({
 	}
 }
 </style>
+src/output/index.js

@@ -6,7 +6,7 @@
 import { nextTick } from 'vue'
 import MatchListCardData from "./match-list-card-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js"
-import { LayOutMain_pc ,MenuData} from "src/core/index.js";
+import { LayOutMain_pc ,MenuData} from "src/output/index.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 
  

@@ -29,7 +29,7 @@ import {
 } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import LeaguesHeader from "src/base-pc/components/leagues-header/index.vue";
-import { LayOutMain_pc, useMittOn,MITT_TYPES } from 'src/core/index.js';
+import { LayOutMain_pc, useMittOn,MITT_TYPES } from 'src/output/index.js';
 import { api_match } from "src/api/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import "../match-list/match_list.scss";
@@ -121,4 +121,4 @@ export default {
   z-index: 200;
   font-size: 13px;
 }
-</style>
+</style>src/output/index.js

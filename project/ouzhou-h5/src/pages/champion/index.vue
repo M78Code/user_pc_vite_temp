@@ -26,7 +26,7 @@
 import { onMounted, ref ,reactive } from "vue";
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const tabValue = ref('outrights');
 const state = reactive({
@@ -121,3 +121,4 @@ onMounted(async () => {
   }
 }
 </style>
+src/output/index.js

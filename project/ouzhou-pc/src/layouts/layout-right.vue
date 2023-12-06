@@ -30,7 +30,7 @@
 import { ref, onBeforeUnmount, watch } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import analysis from "../pages/match-new-detail/analysis/index.vue";
-import { LayOutMain_pc, MenuData } from "src/core/index.js";
+import { LayOutMain_pc, MenuData } from "src/output/index.js";
 import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const right_status = ref(null);
@@ -62,3 +62,4 @@ function handle_click() {
   }
 }
 </style>
+src/output/index.js

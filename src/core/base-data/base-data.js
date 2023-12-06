@@ -42,7 +42,7 @@ import {
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,MenuData,LocalStorage
-} from "src/core/index.js"
+} from "src/output/index.js"
 
 import STANDARD_KEY from "src/core/standard-key";
 const base_data_key = STANDARD_KEY.get("base_data_key");

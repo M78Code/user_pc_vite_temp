@@ -56,7 +56,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { t, is_eports_csid,UserCtr } from "src/core/index.js";
+import { t, is_eports_csid,UserCtr } from "src/output/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
 const root=500//常量 500
@@ -346,3 +346,4 @@ function handle_click_menu_mi_500(mi) {
   }
 }
 </style>
+src/output/index.js

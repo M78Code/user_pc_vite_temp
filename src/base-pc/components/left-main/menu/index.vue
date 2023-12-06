@@ -48,7 +48,7 @@ import { useRouter } from "vue-router";
 
 import base_data_instance from "src/core/base-data/base-data.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { MenuData,LayOutMain_pc } from "src/core/index.js";
+import { MenuData,LayOutMain_pc } from "src/output/index.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'
 
 import { MenuWapper } from "src/base-pc/components/menu/index.js";
@@ -518,4 +518,4 @@ const set_route_url = () => {
 .border-bottom{
   border-bottom: 1px solid var(--q-gb-bd-c-8);
 }
-</style>
+</style>src/output/index.js

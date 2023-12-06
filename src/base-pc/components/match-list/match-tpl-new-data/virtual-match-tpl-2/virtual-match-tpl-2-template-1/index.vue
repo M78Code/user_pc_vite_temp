@@ -47,11 +47,11 @@
 import details from "src/core/match-list/details-class/details.js";
 import { IconWapper } from 'src/components/icon'
 import { ref, computed, watch } from 'vue';
-import { t } from "src/core/index.js";
+import { t } from "src/output/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import { is_eports_csid } from 'src/core/index.js'
+import { is_eports_csid } from 'src/output/index.js'
 import { useRouter } from "vue-router";
 const router = useRouter()
 ;
@@ -90,4 +90,4 @@ const on_go_detail = () => {
     justify-items: center;
   }
 }
-</style>
+</style>src/output/index.jssrc/output/index.js

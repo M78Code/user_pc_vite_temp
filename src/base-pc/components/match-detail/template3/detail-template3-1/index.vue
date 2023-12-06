@@ -112,3 +112,4 @@ const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,be
   }
 }
 </style>
+src/output/index

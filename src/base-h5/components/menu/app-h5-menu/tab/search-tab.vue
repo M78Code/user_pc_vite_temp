@@ -47,10 +47,10 @@
 import { ref } from "vue";
 import search from "./img/search.svg";
 import {scrollMenuEvent} from "../utils";
-import { useMittEmit, MITT_TYPES } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES } from "src/output/index.js";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import  screenModal from './screen-modal.vue'
-import { compute_css_obj,league_sprite_images_postion } from "src/core/index.js";
+import { compute_css_obj,league_sprite_images_postion } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({
     dataList: {
@@ -254,4 +254,4 @@ function key_down(event) {
     height: auto;
 }
 </style>
-  
+  src/output/index.jssrc/output/index.js

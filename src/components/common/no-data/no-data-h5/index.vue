@@ -15,7 +15,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { i18n_t, compute_css_obj } from "src/core/index.js";
+import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRoute } from "vue-router"
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
@@ -185,4 +185,4 @@ function refresh_data() {
   }
 }
 </style>
-  
+  src/output/index.js

@@ -3,7 +3,7 @@ import {
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common, PROJECT_NAME } from "src/core/index.js";
+import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common, PROJECT_NAME } from "src/output/index.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'

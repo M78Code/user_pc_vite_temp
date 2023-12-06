@@ -17,7 +17,7 @@
 import { ref, watch, nextTick, onMounted, defineAsyncComponent } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import {utils } from 'src/core/index.js'
+import {utils } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 文章页
 import articleMain from "src/base-h5/components/details/analysis-matches/article/article-main.vue"
@@ -148,3 +148,4 @@ const tab_click = ([tab, type]) => {
 
 
 </style>
+src/output/index.js

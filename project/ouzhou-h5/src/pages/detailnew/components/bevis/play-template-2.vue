@@ -2,7 +2,7 @@
 import olStatus from "../ol_status.vue";
 import {defineProps, defineEmits, computed} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
+import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/output/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import ResultOlItem from "../../result/ResultOlItem.vue";
 import lockImg from "../lock_img.vue";
@@ -87,4 +87,4 @@ const go_betting = (data) => {
         }
     }
 }
-</style>
+</style>src/output/index.js

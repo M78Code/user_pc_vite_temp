@@ -28,7 +28,7 @@ import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
-import { SessionStorage, utils,SearchPCClass } from 'src/core/index.js'
+import { SessionStorage, utils,SearchPCClass } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import { i18n_t } from "src/boot/i18n.js"
@@ -543,3 +543,4 @@ const set_show_login_popup = (data) => store.dispatch({
  <style lang="scss" scoped>
 @import 'src/base-pc/components/site-header/site-header.scss';
 </style>-->
+src/output/index.js
