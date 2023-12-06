@@ -35,7 +35,7 @@ function set_base_data_init() {
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
-		current_ball_type:csid,
+		current_ball_type: csid,
 		left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
 		mid_menu_result: { csid: mi, mif, root, mid_menu_mi },
 		menu_data_version,
@@ -75,7 +75,7 @@ function set_base_data_init() {
 		return;
 	}
 	// 常规赛种
-	if ([MenuData.is_today(), MenuData.is_zaopan()].includes(true) && !MenuData.is_common_kemp()) {
+	if ((MenuData.is_today() || MenuData.is_zaopan()) && !MenuData.is_common_kemp()) {
 		// 根据联赛-赛事接口 拿到 mid 去赛事列表里面匹配数据
 		if (!mid) return;
 		// 常规赛种/联赛   滚球 ld
@@ -214,7 +214,7 @@ function set_base_data_init_ouzhou(play_num = '01') {
 	try {
 		let {
 			menu_root,
-			current_ball_type:csid,
+			current_ball_type: csid,
 			left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
 			mid_menu_result: { mif, root, mid_menu_mi },
 			menu_data_version,
@@ -286,7 +286,7 @@ function set_base_data_init_ouzhou(play_num = '01') {
 				// 	let mid_1 = midf + menu_root + ("" + midf).substring(1);
 				// 	matchs_list = get_match_list_by_mid_for_base_data_res(mid_1, csid, "ld");
 				// }
-			} 
+			}
 			//TODO 还没有调完
 			// else if (MenuData.is_kemp()) {
 
