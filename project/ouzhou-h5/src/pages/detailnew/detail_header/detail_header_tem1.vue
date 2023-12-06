@@ -6,7 +6,7 @@
         :class="['sport_bg', `${get_sports_bg(get_match_detail?.csid)}`]"
       ></div>
      
-      <div class="match-detail-time ">
+      <div class="match-detail-time">
         <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
           <match-stage :detail_data="get_match_detail" ></match-stage>
           <q-badge
