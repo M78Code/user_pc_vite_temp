@@ -94,7 +94,7 @@ import acticity_mixin from "./mixin/acticity_mixin.js";
  
 import _ from 'lodash';
 import utils from 'project/activity/src/utils/utils.js';
-import { get_file_path } from 'project/activity/src/utils/get_file_path.js'
+ 
 
 
 export default {
@@ -205,7 +205,7 @@ export default {
     set_user(args) {
         return userStore.mutations.set_user(args);
     },
-    get_file_path: get_file_path,
+    get_file_path:  ()=>'',
     // 去到维护页面
     to_maintenance() {
       this.$toast('活动现已维护，感谢您的支持', 2000)
