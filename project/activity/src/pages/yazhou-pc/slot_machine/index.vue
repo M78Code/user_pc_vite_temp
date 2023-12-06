@@ -301,13 +301,14 @@
 import {api_activity} from "project/activity/src/api/index.js";
 import common from "project/activity/src/pages/yazhou-pc/common";
 import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
-import format_date_base from "project/activity/src/mixins/common/time_format.js";
+import format_date_base from "project/activity/src/mixins/module/formartmixin.js";
 import NumberScroll from "project/activity/src/pages/yazhou-pc/slot_machine/number_scroll.vue"
 import compose from "project/activity/src/pages/yazhou-pc/slot_machine/compose.vue"
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
 import utils from 'project/activity/src/utils/utils.js';
 import _ from 'lodash';
-
+//头部引入  
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
 export default {
   mixins: [common, format_date_base],
   data() {
@@ -451,7 +452,7 @@ export default {
     this.machine_images = window.vue;
 
      // 站点 tab 休眠状态转激活
-     // this.$root.$on(this.emit_cmd.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+     // this.$root.$on(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
 
   },
   methods: {
@@ -877,7 +878,7 @@ export default {
      * @param {*} msg
      */
     warningNotice(msg) {
-      this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, msg);
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg);
       // 手动隐藏提示弹窗
       clearTimeout(this.timeout_obj.timer2);
       this.timeout_obj.timer2 = setTimeout(() => {
@@ -1004,7 +1005,7 @@ export default {
     clearTimeout(this.timeout_obj.timer2);
     Object.keys(this.timerObj).forEach(item => clearTimeout(this.timerObj[item]))
    // 站点 tab 休眠状态转激活
-   // this.$root.$off(this.emit_cmd.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+   // this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
   }
 }
 </script>

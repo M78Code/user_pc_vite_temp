@@ -193,6 +193,9 @@ function set_base_data_init() {
 	MatchListData.set_list(
 		matchs_list,
 	);
+	//右侧比分版 应该改变
+	MatchDataWarehouse_PC_Detail_Common.set_match_details(matchs_list[0], [])
+	useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, matchs_list[0].mid)
 	handle_match_list_request_when_ok(matchs_list, false, true, true);
 
 	let ts1 = Date.now();
@@ -361,8 +364,6 @@ function set_base_data_init_ouzhou(play_num = '01') {
 		if (MenuData.is_left_zaopan()) return;
 		// 赛事列表 卡片数据
 		// 设置列表数据仓库
-		console.log("jiffy1",matchs_list)
-
 		match_list_handle_set(matchs_list)
 		// MatchListData.set_list(
 		// 	matchs_list,

@@ -162,7 +162,7 @@ import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue"
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
 import LotteryDialog from "project/activity/src/pages/yazhou-pc/lottery_dialog.vue";
 import common from "project/activity/src/pages/yazhou-pc/common";
-import format_date_base from "project/activity/src/mixins/common/time_format.js";
+import format_date_base from "project/activity/src/mixins/module/formartmixin.js";
 import utils from 'project/activity/src/utils/utils.js'
 export default {
   name: 'BettingEveryday',

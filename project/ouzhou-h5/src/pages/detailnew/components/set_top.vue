@@ -126,16 +126,18 @@ const handle_zhiding = (params) => {
 </script>
 <style scoped lang="scss">
 .icon_zd_select {
-  width: 0.16rem;
+  width: 0.14rem;
   height: 0.14rem;
-  background: url($SCSSPROJECTPATH + "/image/svg/stick_btn.svg") no-repeat
-    center / 96% 96% !important;
+  background: url($SCSSPROJECTPATH + "/image/detail/set_top_active.png") no-repeat
+    center / 100% 100% !important;
+  margin-right: 0.06rem;
 }
 
 .icon_zd_default {
-  width: 0.16rem;
+  width: 0.14rem;
   height: 0.14rem;
-  background: url($SCSSPROJECTPATH + "/image/svg/stick_btn_def.svg") no-repeat
-    center / 96% 96% !important;
+  background: url($SCSSPROJECTPATH + "/image/detail/set_top.png") no-repeat
+    center / 100% 100% !important;
+  margin-right: 0.06rem;
 }
 </style>

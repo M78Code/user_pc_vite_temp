@@ -85,8 +85,11 @@ let IS_FOR_NEIBU_TEST =    false
   const ALL_PROJECT = Object.values(PROJECT_MAP);
   //删除布局资源数组
   const NEED_DELETE_PROJECT = ALL_PROJECT.filter((x) => x != PROJECT_NAME);
+  // 默认模版名称
+  const DEFAULT_VERSION_NAME = ''
   return {
     PROJECT_NAME,
+    DEFAULT_VERSION_NAME,
     NEED_DELETE_PROJECT,
   };
 };

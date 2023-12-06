@@ -144,7 +144,7 @@ const get_md = ref(MenuData.current_lv_3_menu)    //三级日期菜单时间戳
 const all_checked = computed(() => {
   return list.value.every(({ select }) => select); // 选中所有
 })
-
+const emit = defineEmits(["selectHandle"]);
 const props = defineProps({
   search_val: {
     type: String,
@@ -168,6 +168,8 @@ watch(active_index, (newVal) => {
 watch(select_num, (new_) => {
   if (new_ < 0) {
     select_num.value = 0
+  }else {
+    emit("selectHandle",select_num);
   }
 })
 

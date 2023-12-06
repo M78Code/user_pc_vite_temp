@@ -11,15 +11,14 @@ import tooltip from "project/activity/src/utils/tooltip.js"
 
 import Icon from "project/activity/src/components/icon/icon.vue"
 import load_data from "project/activity/src/components/load_data/load_data.vue";
-import * as emit_cmd from "project/activity/src/utils/http/emit_cmd.js";
+
 import * as error_mapping from "project/activity/src/config/error_code_mapping.js";
-import * as yabo_common from "project/activity/src/mixins/common/common.js";
+ 
 // import * as virtual_common from "project/activity/src/public/mixins/common/virtual_common.js";
 // 该文件再 bet_item_mixin.js, bet_item_mixin.js 中使用由于最小投注单元会导致引入次数过多,因此暂时提出为公共的
 // 导入自定义高精度计算工具js
 import math from "project/activity/src/boot/mathjs.js"
-// import userCtr from 'project/activity/src/public/utils/user/userCtr.js';
-import {get_file_path} from "project/activity/src/utils/get_file_path.js"
+ 
 // 加载公共样式
 import 'project/activity/src/css/common.scss';
 
@@ -224,7 +223,7 @@ export default async (app) => {//app, router, store,
    * @param {String} path 图片路径
    * @return {String} csid 球种类型
    */
-  window.get_file_path = get_file_path
+  window.get_file_path = ()=>''
 
 
   // 获取赛事阶段国际化字符串
@@ -232,7 +231,7 @@ export default async (app) => {//app, router, store,
   // @param: sport_type-球种
   window.mmpName = function (sportType, mmp) {
     let name = `mmp.${sportType}.${mmp}`
-    let ret = this.$root.$t(`mmp.${sportType}.${mmp}`);
+    let ret = i18n_t(`mmp.${sportType}.${mmp}`);
     return name == ret ? '' : ret;
   }
 
@@ -244,13 +243,11 @@ export default async (app) => {//app, router, store,
 
   /** JS  **************************/
 
-  // emit 常量 ：this.emit_cmd.常量
-  window.emit_cmd = emit_cmd;
+  // emit 常量 ：MITT_TYPES.常量
+  
   // 错误码异常映射
   window.error_mapping = error_mapping;
-  // 公共方法映射
-  window.yabo_common = yabo_common;
-  // window.virtual_common = virtual_common;
+ 
 
 
 

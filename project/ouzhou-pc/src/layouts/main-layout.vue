@@ -51,7 +51,7 @@ import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount } from "v
 import lodash_ from "lodash"
 import { useRoute } from "vue-router";
 import { LayOutMain_pc, UserCtr, GlobalAccessConfig } from "src/core/index.js";
-import { api_betting } from "src/api/"
+import { api_betting, api_common } from "src/api/"
 
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
@@ -109,11 +109,18 @@ onMounted(() => {
   ref_data.emit_lsit = {
       emitter_1: useMittOn(MITT_TYPES.EMIT_TICKRTS_COUNT_CONFIG, get_unsettle_tickets_count_config).off,
   }
-
+  get_event_info()
   // 全局一秒钟定时器
   upd_time_refresh_timer = setInterval(global_one_second_timer, 1000);
 
 })
+// 获取var事件国际化
+function get_event_info () {
+  api_common.get_event_info().then(res => {
+    if (res.code != 200) return
+    UserCtr.set_var_event_i18n(res.data)
+  })
+}
 
 /**
  * @Description 全局一秒钟定时器 

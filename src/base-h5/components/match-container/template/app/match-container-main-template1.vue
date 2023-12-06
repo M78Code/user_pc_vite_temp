@@ -374,7 +374,7 @@ export default {
     padding-left: 0.20rem;
     display: flex;
     align-items: center;
-    color: var(--q-color-com-fs-color-38);
+    color: var(--q-gb-t-c-20);
     background: var(--q-gb-bg-c-15);
       justify-content: space-between;
     &.progress{
@@ -802,7 +802,7 @@ export default {
       line-height: 1;
       margin-left: 0.01rem;
       font-size: 0.1rem;
-      color: var(--q-color-com-fs-color-1);
+      color: #AFB3C8 !important;
       flex-shrink: 0;
 
       &.boxing {
@@ -863,8 +863,7 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      color: var(--q-gb-t-c-20);
-      max-width: 2.8rem;
+      color: #303442;
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
@@ -1286,9 +1285,9 @@ export default {
 
 /* **************日期********************** -S*/
 .date-container {
-  background-color: var(--q-color-com-bg-color-12);
+  background-color: var(--q-color-com-bg-color-12);  
   width: 100%;
-  color: #999;
+  color: var(--q-gb-t-c-19);
   padding-left: 6px;
   height: 0.2rem;
   display: flex;
@@ -1384,7 +1383,7 @@ export default {
 
   .timer-wrapper-c {
     height: 100%;
-    color: #999;
+    color: var(--q-gb-t-c-19);
 
     &.newer {
       margin-left: 0;
@@ -1482,6 +1481,7 @@ export default {
         margin-right: 0.14rem;
       }
       :deep(.counting-down-wrap){
+        color: #AFB3C8 !important;
         .counting{
           font-size: 11px;
         }

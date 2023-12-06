@@ -179,7 +179,7 @@ const change_current_menu = (item) => {
  */
 const get_init_data = (val) =>{
   const list = val || MenuData.menu_list;
-  
+  console.log(list,defaultSports, 'defaultSports' );
   leftDataList.value = list && list.length?list:defaultSports;
   const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
   popularList.value = popularListSort(popularSortListH5);
