@@ -304,3 +304,12 @@ export const sprite_images_postion = {
   31009: 42,
   50000: 1,
 }
+// 联赛对应的位置
+export const league_sprite_images_postion = {
+  6408: 6, //下标从0开始 欧冠
+  180:2,//英超
+  239:9,//意甲
+  320:3,//西甲
+  79:5,//法甲
+  276:4,//德甲
+}

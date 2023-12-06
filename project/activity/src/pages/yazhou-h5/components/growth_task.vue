@@ -311,7 +311,7 @@ export default {
           this.$emit('to_maintenance')
           return
         }else if ( ['0401038'].includes(code) ){
-          const msg_nodata_22 = this.$root.$t('msg.msg_nodata_22')
+          const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
         }
         else{
@@ -368,7 +368,7 @@ export default {
           this.get_everyDay_list = []
           this.has_data = false
           if ( ['0401038'].includes(code) ){
-          const msg_nodata_22 = this.$root.$t('msg.msg_nodata_22')
+          const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
         }
         }

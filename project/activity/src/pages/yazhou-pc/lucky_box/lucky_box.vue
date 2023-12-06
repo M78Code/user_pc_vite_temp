@@ -409,6 +409,8 @@ import utils from 'project/activity/src/utils/utils.js'
 
 // import { mapGetters } from "vuex";
 import UserStore from 'project/activity/src/store/module/user/index.js';
+//头部引入  
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
 export default {
   name: "LuckyBox",
   mixins: [common, format_date_base],
@@ -891,11 +893,11 @@ export default {
     async openBox() {
       this.getLottery = false;
       if (this.activityObj.period == 3) {
-        this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '活动已结束');
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '活动已结束');
         return;
       }
       if (this.current_open_box.boxNum == 0) {
-        this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '当前盲盒已被抢完');
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '当前盲盒已被抢完');
         this.getLuckyBoxInfo();
         return;
       }
@@ -913,7 +915,7 @@ export default {
       if (this.timerIsClick == false) {
         if (this.openBoxTime > 0) {
           this.timerIsClick = true;
-          this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '操作过于频繁，请稍后再试');
+          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '操作过于频繁，请稍后再试');
           return;
         }
       } else {
@@ -968,7 +970,7 @@ export default {
             this.bettingMsg = "活动现已维护，感谢您的支持";
           // 其他情况的接口提示
           } else {
-            this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.data.msg);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.data.msg);
           }
           this.getLuckyBoxInfo(true, params.boxType);
         }
@@ -980,7 +982,7 @@ export default {
         } else {
           text = "网络异常，请重新抽取";
         }
-        this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
       }
       this.checkToken();
     },

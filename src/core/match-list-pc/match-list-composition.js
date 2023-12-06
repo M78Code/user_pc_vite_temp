@@ -12,7 +12,7 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { fethc_collect_match } from "./composables/match-list-collect.js";
+import { fethc_collect_match, collect_count } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
 import { mx_use_list_res, mx_list_res } from './composables/match-list-processing.js'
@@ -477,6 +477,7 @@ export {
 	load_data_state,
 	is_loading,
 	show_refresh_mask,
+	collect_count,
 	is_show_hot,
 	on_refresh,
 	socket_remove_match,

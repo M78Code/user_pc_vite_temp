@@ -231,7 +231,7 @@ export default async (app) => {//app, router, store,
   // @param: sport_type-球种
   window.mmpName = function (sportType, mmp) {
     let name = `mmp.${sportType}.${mmp}`
-    let ret = this.$root.$t(`mmp.${sportType}.${mmp}`);
+    let ret = i18n_t(`mmp.${sportType}.${mmp}`);
     return name == ret ? '' : ret;
   }
 

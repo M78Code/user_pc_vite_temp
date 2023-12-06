@@ -77,7 +77,7 @@
       csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []
 
       // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
-      if(MatchListCardData.match_list_mapping_relation_obj_type == 5 && match.csid != pre_match_csid){
+      if(match.csid != pre_match_csid){
         pre_match_csid = match.csid
         card_key = `sport_title_${match.csid}`
         // 判断球种标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复球种标题卡片

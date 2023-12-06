@@ -89,8 +89,14 @@ class MatchMeta {
       menu_lv_v2_sl = MenuData.get_menu_lv_2_mi_list(menu_lv_v2)
     }
 
+    // 清除上一轮赛事
+    this.clear_match_info()
+
     // 获取真实数据
     this.http_params.md = md
+
+
+    debugger
     // 是否需要开赛、未开赛归类
     const is_classify = this.get_is_classify()
     is_match && this.get_target_match_data({ md, is_classify })
@@ -164,8 +170,8 @@ class MatchMeta {
   get_origin_match_by_mids(mids) {
     const result_mids = lodash.uniq(mids)
     const length = lodash.get(result_mids, 'length', 0)
-    // 显示空数据页面
-    if (length < 1) return this.set_page_match_empty_status({ state: true });
+    // 显示空数据页面  this.set_page_match_empty_status({ state: true });
+    if (length < 1) return
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 赛事全量数据
@@ -333,6 +339,7 @@ class MatchMeta {
    */
   filter_match_by_time (time) {
     // 所有日期
+    this.clear_match_info()
     let target_mids = []
     if (!time) {
       target_mids = lodash.uniq(this.zaopan_mids)
@@ -379,13 +386,6 @@ class MatchMeta {
     const mids = this.tid_map_mids[`tid_${tid}`].mids
     if (mids.length < 1) return 
     this.get_origin_match_by_mids(mids)
-  }
-
-  /**
-   * @description 获取特定联赛赛事
-   */
-  get_specific_leaguesby_tid () {
-
   }
 
   /**

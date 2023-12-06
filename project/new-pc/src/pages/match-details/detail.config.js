@@ -14,11 +14,8 @@ import { useGetGlobal } from  "src/core/global/mixin/global_mixin.js"
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
 import  { computed_background } from  "src/core/constant/config/csid.js"
-// console.log(details,);
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
-console.log(search,'search');
-import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
@@ -26,25 +23,20 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
 // import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
-import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_eports_csid,MatchDetailCalss} from "src/core/index"; 
+import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_eports_csid,MatchDetailCalss,SearchPCClass,GlobalSwitchClass,LayOutMain_pc} from "src/core/index"; 
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-import LayOutMain from "src/core/layout/index.js"
-
-export const useGetConfig = (router) => {
-  console.log(router,'router');
+export const useGetConfig = (router,cur_menu_type,details_params,play_media) => {
   const route = useRoute();
   // const router = useRouter();
-
-  const store_state = store.getState();
   const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_PC_Detail_Common)
   const state = reactive({
     // 菜单数据
     // menu_data: $menu.menu_data,
     // MatchDataWarehouseInstance: "",
-    mid: (route?.params?.mid) || "", //赛事id
-    sportId: (route?.params?.csid) ||  0, //球类id
+    mid: (route?.params?.mid) || "" , //赛事id
+    sportId: (route?.params?.csid) || 0, //球类id
     match_infoData: {}, //赛事状态比分信息
     category_list: [], //玩法集
     mcid: 0, //默认玩法集id
@@ -77,35 +69,19 @@ export const useGetConfig = (router) => {
   const handicap_this =ref({category_list:[]})// 传给玩法集 tabs 的数据
   const detail_header = ref(null); // 头部组件实例
 
-  const details_params = ref(store_state.matchesReducer.params);
-  // 获取当前菜单类型
-  const cur_menu_type = ref(store_state.menuReducer.cur_menu_type);
+
   // 当前所选的玩法集子项id
-  const tabs_active_index = ref(store_state.matchesReducer.tabs_active_index);
+  const tabs_active_index = ref(MatchDetailCalss.current_category_id);
   // 当前所选的玩法集子项id
   const uuid = ref(uid);
   /** 语言变化 */
-  const get_lang_change = ref(store_state.langReducer.lang_change);
+  const get_lang_change = ref(UserCtr.lang);
   // //播放类型
-  const play_media = ref(store_state.matchesReducer.play_media);
   // 玩法集对应玩法缓存数据
-  const get_details_data_cache = ref(
-    store_state.matchesReducer.details_data_cache
-  );
+  const get_details_data_cache = ref(MatchDetailCalss.details_data_cache);
   // 置顶的玩法id
-  const get_top_id = ref(store_state.matchesReducer.topId);
+  const get_top_id = ref(MatchDetailCalss.top_id);
 
-  // 监听状态变化
-  // let un_subscribe = store.subscribe(() => {
-  //   let state_ = store.getState();
-  //   details_params.value = state_.matchesReducer.params;
-  //   cur_menu_type.value = state_.menuReducer.cur_menu_type;
-  //   tabs_active_index.value = state_.matchesReducer.tabs_active_index;
-  //   get_details_data_cache.value = state_.matchesReducer.details_data_cache;
-  //   get_lang_change.value = state_.langReducer.lang_change;
-  //   cur_expand_layout.value = state_.layoutReducer.cur_expand_layout;
-  //   get_top_id.value = state_.matchesReducer.topId;
-  // });
 
   const category_list_length = computed(() => {
     return lodash.get(state.category_list, "length", 0);
@@ -145,7 +121,6 @@ export const useGetConfig = (router) => {
   watch(
     () => ms.value,
     (_new, _old) => {
-      console.log(11111111111111)
       let arr_ms = [0, 1, 2, 7, 10, 110];
       // 1.赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
       // 2.ms变更时才调用
@@ -160,7 +135,6 @@ export const useGetConfig = (router) => {
     () => mmp.value,
     (_new, _old) => {
       if (_new !== 999 && _old) {
-        console.log(11111111111111)
         // 更新右侧详情
         // init();
       }
@@ -177,7 +151,6 @@ export const useGetConfig = (router) => {
    *
    */
   const init = (param = { is_ws: false }) => {
-    
     let { mid, is_ws } = param;
     clearTimeout(state.get_match_details_timer);
     if (mid && mid != -1) {
@@ -225,11 +198,7 @@ export const useGetConfig = (router) => {
           keyword: route.query.keyword,
           csid: route.params.csid,
         });
-        
-        store.dispatch({
-          type: "SET_SEARCH_STATUS",
-          data: true,
-        });
+        SearchPCClass.set_search_isShow(true)
       }
       let { from_path, from } = cur_menu_type.value;
       from_path = from_path || "/home";
@@ -238,10 +207,9 @@ export const useGetConfig = (router) => {
       }
       // 告知列表是详情返回：用于是否重新自动拉右侧内容
       MatchDetailCalss.set_is_back_btn_click(is_back)
-      // debugger
       router.push({path:from_path});
       if (from_path.includes("search")) {
-        MatchDetailCalss.set_unfold_multi_column(false)
+        LayOutMain_pc.set_unfold_multi_column(false)
       }
     }, 50);
   };
@@ -323,7 +291,6 @@ export const useGetConfig = (router) => {
             let str =state.mid+'_'
             // state.match_infoData = data;
             state.match_infoData = lodash.get(MatchDataWarehouseInstance.list_to_obj.mid_obj,str);
-            console.log(state.match_infoData,'match_infoData');
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -332,13 +299,10 @@ export const useGetConfig = (router) => {
         .catch((err) => {
           state.is_request = false;
           // 设置错误信息
-          store.dispatch({
-            type: "SET_ERROR_DATA",
-            data: {
-              site: "details--get_matchInfo",
-              error: err,
-            },
-          });
+          GlobalSwitchClass.set_error_data({
+            site: "details--get_matchInfo",
+            error: err,
+          })
           countMatchDetail();
         });
     };
@@ -373,8 +337,6 @@ export const useGetConfig = (router) => {
    * @param {is_init} 是否需要走初始流程，如第一次进入
    */
   const get_match_detail = ({ is_ws = false, is_init = false } = {}) => {
-    console.log(is_init,'is_init',is_ws);
-    
     let params = {
       // mcid: this.mcid, //玩法集id
       mcid: "0", //玩法集id
@@ -451,7 +413,6 @@ export const useGetConfig = (router) => {
    * @description 玩法列表数据处理--电竞和其他赛事通用
    */
   const get_match_details = (res) => {
-    
     state.err_time = 0;
     state.match_details = [];
     state.data_loaded = true;
@@ -482,20 +443,15 @@ export const useGetConfig = (router) => {
       let obj = [];
       // 设置玩法个数
       MatchDetailCalss.match_detail_count = data.length
-      console.log(MatchDetailCalss.match_detail_count,'match_detail_count');
-
       // 置顶数据排序
       let arr = []; //暂存本地置顶的数据
       for (var i = 0; i < data.length; i++) {
         if (data[i].hton != "0") {
-          // 保存置顶玩法的 id
-          store.dispatch({
-            type: "SET_TOP_ID",
-            data: {
-              id: data[i].topKey,
-              type: true,
-            },
-          });
+        // 保存置顶玩法的 id
+        MatchDetailCalss.set_top_id({
+          id: data[i].topKey,
+          type: true,
+        })
         } else {
           if (get_top_id.value.includes(data[i].topKey)) {
             data[i].hton = new Date().getTime() + "";
@@ -528,20 +484,11 @@ export const useGetConfig = (router) => {
         [`${state.mid}-${state.mcid}`]: data,
       };
       // 清除玩法集下缓存数据
-      store.dispatch({
-        type: "SET_DETAILS_DATA_CACHE",
-        data: details_data_cache,
-      });
-
+      MatchDetailCalss.set_details_data_cache(details_data_cache)
       // 处理当前玩法集数据
-  
       handle_match_details_data(data, timestap);
       /** 设置语言变化 */
       UserCtr.set_lang(false);
-      // store.dispatch({
-      //   type: "set_lang_change",
-      //   data: false,
-      // });
     } else {
       const tabs_active_data_cache =
         get_details_data_cache.value[`${state.mid}-${tabs_active_index.value}`];
@@ -579,15 +526,12 @@ export const useGetConfig = (router) => {
    * @return {}
    */
   const err_tips = (err) => {
-    
     state.match_details = [];
-    store.dispatch({
-      type: "SET_ERROR_DATA",
-      data: {
-        site: "details--get_match_detail",
-        error: err,
-      },
-    });
+    GlobalSwitchClass.set_error_data({
+      site: "details--get_match_detail",
+      error: err,
+    })
+
     if (
       lodash.isPlainObject(err) ||
       lodash.get(err, "response.status") == 404
@@ -655,7 +599,6 @@ export const useGetConfig = (router) => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        console.log(res,'get_category_list');
         if (!MatchDataWarehouseInstance) {
           return;
         }
@@ -668,7 +611,6 @@ export const useGetConfig = (router) => {
         // if (code === 200 && data.length) {
         if ( res?.length) {
           state.category_list = res;
-          console.log( handicap_this.value,' state.handicap_this');
           handicap_this.value['category_list'] = res
           // 初始化玩法列表
           if (callback) {
@@ -729,15 +671,9 @@ export const useGetConfig = (router) => {
     ) || { plays: [] };
     state.plays_list = plays;
     // 保存当前选中的玩法集子项id
-    store.dispatch({
-      type: "SET_TABS_ACTIVE_ID",
-      data: state.mcid,
-    });
+    MatchDetailCalss.set_current_category_id(state.mcid)
     // 保存当前选中的玩法集子项玩法集合
-    store.dispatch({
-      type: "SET_TABS_ACTIVE_PLAYS",
-      data: state.plays_list,
-    });
+    MatchDetailCalss.set_category_arr(state.plays_list)
     state.change_mid = false;
   };
 
@@ -793,9 +729,7 @@ export const useGetConfig = (router) => {
    * 传递玩法列表的数据给到玩法集
    */
   const set_handicap_this = (val) => {
-    
     handicap_this.value = val;
-    console.log(handicap_this.value,'state.handicap_this');
   };
 
   /**
@@ -850,7 +784,6 @@ export const useGetConfig = (router) => {
    * @description 获取loading状态
    */
   const getLoading = (status) => {
-    console.log(11111111111111, status);
     state.load_detail_statu = status;
   };
   /**
@@ -929,7 +862,7 @@ export const useGetConfig = (router) => {
       // 电竞不用切右侧
       if (!is_eports_csid(sportId)) {
         // 设置赛事详情的请求参数
-        // store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
+        MatchDetailCalss.set_match_details_params({ mid, sportId, tid })
       }
       // 初始化详情页数据
       // this.init = lodash.debounce(this.init, 2000, { leading: true });
@@ -961,32 +894,12 @@ export const useGetConfig = (router) => {
     // }
 
     //玩法列表单双列切换为单列
-    store.dispatch({
-      type: "SET_LAYOUT_STATU",
-      data: 0,
-    });
     // 清除玩法集下缓存数据
-    store.dispatch({
-      type: "SET_DETAILS_DATA_CACHE",
-      data: {},
-    });
-
     // 清空选中的玩法集id
-    store.dispatch({
-      type: "SET_TABS_ACTIVE_ID",
-      data: "",
-    });
     // 清空选中的玩法集id对应的盘口玩法
-    store.dispatch({
-      type: "SET_TABS_ACTIVE_PLAYS",
-      data: [],
-    });
-
+    MatchDetailCalss.set_clear_all_play_data()
     // 站点 tab 休眠状态转激活
     useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
-
-    // 销毁前清空数据
-    MatchDataWarehouseInstance.destroy();
     state.match_infoData = null;
     state.category_list = null;
     state.match_details = null;
