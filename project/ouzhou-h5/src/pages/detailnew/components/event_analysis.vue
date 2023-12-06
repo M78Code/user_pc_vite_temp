@@ -3,7 +3,7 @@
     <div class="mathc_results_visuals">
       <template v-if="active_tab.id == '1'">
         <template v-if="match_detail && match_detail.msc && match_detail.msc.length > 0">
-          <div v-if="match_detail.csid == 1">22
+          <div v-if="match_detail.csid == 1">
             <div class="designation">
               <span class="ellipsis">{{ match_detail.mhn }}</span>
               <span class="ellipsis">{{ match_detail.man }}</span>
