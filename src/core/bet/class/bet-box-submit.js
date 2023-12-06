@@ -20,8 +20,9 @@ import {
  } from 'src/core/index.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
-import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/core/index.js"
-import { is } from "quasar"
+import { MenuData,UserCtr,useMittEmit, MITT_TYPES } from "src/core/index.js"
+import { i18n_tc } from "src/boot/i18n.js"
+
 
 let time_out = null
 let time_api_out = null
@@ -771,11 +772,14 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 串关 数量不是大于1条投注项 则提示
         if( BetData.bet_s_list.length < 2){
             BetViewDataClass.set_bet_before_message({
-                code: 500,
-                message: i18n_tc('bet.bet_min_item',min_series)
+                code: 'sasdasd',
+                message: i18n_tc('bet.bet_min_item',min_series,{ 'num': min_series})
             })
         }else if(BetData.bet_s_list.length < 10){
-
+            BetViewDataClass.set_bet_before_message({
+                code: 'sasdasd',
+                message: i18n_tc('bet.bet_max_item',man_series,{ 'num': man_series})
+            })
         } else{
             BetViewDataClass.set_bet_before_message({})
         }

@@ -1,7 +1,7 @@
 
 
 <template>
-    <div v-if="!BetData.is_bet_single && BetData.bet_s_list.length >1">
+    <div v-if="(!BetData.is_bet_single && BetData.bet_s_list.length >1) || BetData.is_bet_single">
         <div class="px-12 bet-money" >
             <div class="f-b-c pl-18 bet-input-info">
                 <div>
