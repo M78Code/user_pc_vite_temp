@@ -1,7 +1,7 @@
 <template>
   <div class="detail_header_tem2">
     <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-134':'detail-header-230']">
-      <iframe v-show="animation_src && right_actions_label == 'animation'"
+      <iframe v-if="animation_src && right_actions_label == 'animation'"
         id="replayIframe"
         :src="animation_src+'&rdm='+iframe_rdm"
         style="width:100%;height:100%;"
@@ -9,8 +9,9 @@
         frameborder="0"
         scrolling="no"
       ></iframe>
-      <custom_video class="custom-video" :status="status" v-show="right_actions_label == 'video'" :get_detail_data="props.get_match_detail"/>
-      <score_component :get_match_detail="props.get_match_detail || {}" v-show="right_actions_label == 'score'"/>    
+      <custom_video class="custom-video" :status="status" v-if="right_actions_label == 'video'" :get_detail_data="detail"/>
+      <!-- {{ detail }} -->
+      <score_component :get_match_detail="detail" v-if="right_actions_label == 'score'" :key="right_actions_label"/>    
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
@@ -83,6 +84,7 @@ const props = defineProps({
   },
 });
 
+const detail = computed(() => props.get_match_detail)
 
   // 赛事收藏状态
 const  is_collect = computed(()=>{
