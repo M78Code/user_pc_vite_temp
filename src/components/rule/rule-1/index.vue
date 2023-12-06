@@ -17,6 +17,9 @@ import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
+
+import { loadLanguageAsync } from "src/core/index.js";
+import { LocalStorage } from "src/core/utils/module/web-storage.js";
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({})
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -39,7 +42,7 @@ const get_pc_rule_url = () => {
         'ms': 'ms_my',
         'ad': 'id_id',
     }
-    const lang2 = lang_map[UserCtr.lang] || 'zh_cn';
+    const lang2 = lang_map[LocalStorage.get('lang')] || 'zh_cn';
     let url = '';
     const [theme2, get_merchant_style] = UserCtr.theme.split('_')
     let domain = lodash.get(window, `env.config.static_serve[0]`)
@@ -68,7 +71,9 @@ const get_pc_rule_url = () => {
     rule_url.value = url
     return url;
 }
-onMounted(get_pc_rule_url)
+onMounted(()=>{
+ get_pc_rule_url()
+})
 
 </script>
   
