@@ -304,7 +304,7 @@ export const sprite_images_postion = {
   31009: 42,
   50000: 1,
 }
-// 联赛对应的位置
+// 复刻版联赛对应的位置
 export const league_sprite_images_postion = {
   6408: 6, //下标从0开始 欧冠
   180:2,//英超

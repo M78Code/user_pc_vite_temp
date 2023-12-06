@@ -96,7 +96,6 @@ class MatchMeta {
     this.http_params.md = md
 
 
-    debugger
     // 是否需要开赛、未开赛归类
     const is_classify = this.get_is_classify()
     is_match && this.get_target_match_data({ md, is_classify })

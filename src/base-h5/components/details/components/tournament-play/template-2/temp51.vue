@@ -4,6 +4,7 @@
  * 多用于电竞
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp2 temp51 mx-5 text-center">
     <div class="hairline-border">
       <div class="esport-bet-wrapper">
@@ -19,7 +20,7 @@
                     <!-- os: 1、开盘 2、封盘 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active_play':'',{'win':utils.calc_win(ol_item.result)}]">
                         <div class="ellipsis">
                           <span class="size-color">{{ol_item.on || ol_item.ott}}</span>
                         </div>
@@ -84,9 +85,10 @@ import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp51",
-  props: ["item_data"],
+  props: ["item_data", "title"],
   components: {
     oddsNew,
   },
@@ -95,13 +97,6 @@ export default defineComponent({
   setup(props, evnet) {
     let data = reactive({
       utils
-    });
-    // #TODO vuex
-    // computed: {
-    //   ...mapGetters(["get_bet_list"])
-    // },
-    const get_bet_list = computed(() => {
-      return []
     });
     onUnmounted(() => {
       // #TODO $data
@@ -114,7 +109,7 @@ export default defineComponent({
     }
     return {
       ...toRefs(data),
-      get_bet_list,
+      BetData,
       go_to_bet,
       LOCAL_PROJECT_FILE_PREFIX
     }
