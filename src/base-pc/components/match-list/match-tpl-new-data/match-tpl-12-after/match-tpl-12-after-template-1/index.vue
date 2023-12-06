@@ -99,7 +99,7 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 
-import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
+import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -243,4 +243,4 @@ function fold_tab_play () {
     margin-left: 10px;
   }
 }
-</style>
+</style>src/output/index.js

@@ -1,9 +1,9 @@
-import { loadLanguageAsync } from "src/core/index.js";
+import { loadLanguageAsync } from "src/output/index.js";
 import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { enter_params,  LocalStorage } from "src/core/index.js";
+import { enter_params,  LocalStorage } from "src/output/index.js";
  
  
  

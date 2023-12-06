@@ -2,7 +2,7 @@ import {
   PageSourceData
   ,MenuData
   ,api_betting
-} from "src/core/index.js";
+} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import {

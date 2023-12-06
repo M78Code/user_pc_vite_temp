@@ -14,7 +14,7 @@ import {
   PageSourceData,
   is_eports_csid,
   GlobalSwitchClass
-} from "src/core/index.js";
+} from "src/output/index.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from "src/core/match-list-pc/match-scroll.js";

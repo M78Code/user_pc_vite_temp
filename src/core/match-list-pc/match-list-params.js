@@ -1,4 +1,4 @@
-import { MenuData, GlobalAccessConfig, UserCtr, useMittEmit, MITT_TYPES, t } from 'src/core/index.js'
+import { MenuData, GlobalAccessConfig, UserCtr, useMittEmit, MITT_TYPES, t } from 'src/output/index.js'
 import filterHeader from "src/core/filter-header/filter-header.js";
 import BaseData from "src/core/base-data/base-data.js";
 
@@ -108,7 +108,6 @@ function match_list_all_params() {
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${menu_current_mi}`] || {};
     delete lv2_mi_info.h5_euid
-    console.log('menu_rootmenu_root', menu_root);
     if ([2, 3, 202, 203].includes(Number(menu_root))) {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
@@ -143,11 +142,11 @@ function match_list_all_params() {
     } else if (menu_root == 2000) {
         // 电子竞技
         lv2_mi_info = {
-            ...lv2_mi_info,
             "category": 1,
-            "csid": csid,
+            "csid": menu_current_mi - 2000,
             "collect": 1,
-            apiType,
+            "selectionHour": null,
+            "tid": "",
             md,
         }
     } else if (menu_root == 500) {

@@ -113,7 +113,7 @@ import {
   MatchListH5DetailMiddleware, 
   MatchDataWarehouse_H5_Detail_Common as MatchDetailDataWarehouse, 
   MatchDataWarehouse_H5_List_Common as MatchListDataWarehouse
-} from 'src/core/index.js'
+} from 'src/output/index.js'
 import { format_time_zone_time, format_odds, format_score, formatTime } from 'src/core/format'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
@@ -503,3 +503,4 @@ const props =defineProps({
   }
 }
 </style>
+src/outputsrc/output/index.js

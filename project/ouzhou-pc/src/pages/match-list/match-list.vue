@@ -45,8 +45,8 @@
         <!-- 滚球标题 -->
         <Match-Main-Title :title="$t('menu.match_playing')" :match_count="match_count"
           v-show="match_list_card_key_arr.length && MenuData.is_home()" />
-
-        <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
+        
+        <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="{'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home()}">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
         <!-- <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
@@ -106,7 +106,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import {
   PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
-} from "src/core/index.js";
+} from "src/output/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";
@@ -275,3 +275,4 @@ export default {
   margin-bottom: 10px;
 }
 </style>
+src/output/index.js

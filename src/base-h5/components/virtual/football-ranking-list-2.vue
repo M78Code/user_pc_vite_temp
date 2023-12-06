@@ -35,7 +35,7 @@
 import { api_virtual } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
 import { onUnmounted,watch,ref } from 'vue';
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 const props = defineProps({
   tid: {
@@ -190,3 +190,4 @@ watch(() => props.tid, () => {
   }
 }
 </style>
+src/output/index.js

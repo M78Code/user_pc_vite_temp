@@ -37,7 +37,7 @@ import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
-import { utils,SearchPCClass,compute_local_project_file_path } from 'src/core/index.js';
+import { utils,SearchPCClass,compute_local_project_file_path } from 'src/output/index.js';
 
 import { IconWapper } from 'src/components/icon/index.js'
 
@@ -130,4 +130,4 @@ function handle_menu_collapse() {
 
 <style lang="scss">
 // @import './site-header.scss';
-</style>
+</style>src/output/index.js

@@ -124,7 +124,7 @@
 
 <script setup>
 import { useCommon } from "../../use-common";
-import {is_eports_csid} from 'src/core/index.js';
+import {is_eports_csid} from 'src/output/index.js';
 const emit = defineEmits(["sort_index", "set_panel_status"]);
 import betItem from "src/base-pc/components/bet-item/bet_item.vue";
 const props = defineProps({
@@ -187,3 +187,4 @@ const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,is
   }
 }
 </style>
+src/output/index.js

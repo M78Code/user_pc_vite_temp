@@ -42,7 +42,7 @@ import {
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,MenuData,LocalStorage
-} from "src/core/index.js"
+} from "src/output/index.js"
 
 import STANDARD_KEY from "src/core/standard-key";
 const base_data_key = STANDARD_KEY.get("base_data_key");
@@ -626,7 +626,7 @@ class BaseData {
    * 计算虚拟体育 的 数据对象
    */
   async set_vr_mi_config() {
-    let res = await api_common.get_virtual_menu({});
+    // let res = await api_common.get_virtual_menu({});
     // VR 体育的 配置
 
     // let mi_300_obj = lodash_.get(res, 'data')

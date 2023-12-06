@@ -103,7 +103,7 @@ import lodash from 'lodash'
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { get_match_status } from 'src/core/utils/index'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, compute_img_url, UserCtr } from "src/core/index.js"
+import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, compute_img_url, UserCtr } from "src/output/index.js"
 import { get_remote_time } from "src/core/format/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -277,7 +277,6 @@ const use_polling_mst = payload => {
 }
 // var 事件处理
 function handle_var_event(ws_data) {
-  console.log('ws_data', ws_data);
   const { skt_data: { mat, mid }, var_item } = ws_data
   if (match.value.mid !== mid) return
   if (mat === 'home') {
@@ -437,3 +436,4 @@ onUnmounted(() => {
   text-overflow: ellipsis;
   white-space: nowrap;
 }</style>
+src/output/index.js

@@ -239,7 +239,7 @@ import BaseData from "src/core/base-data/base-data.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import DragScroll from "src/base-pc/components/cus-scroll/drag_scroll.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
-import { compute_css_obj } from "src/core/index.js";
+import { compute_css_obj } from "src/output/index.js";
   import {
     current_menu,
     mi_100_arr,
@@ -323,3 +323,4 @@ import { compute_css_obj } from "src/core/index.js";
   }
 }
 </style>
+src/output/index.js

@@ -15,7 +15,7 @@ import {
   utils,
   UserCtr,
   MatchDataWarehouse_H5_List_Common,
-} from "src/core/index";
+} from "src/output/index";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
 export const details_ws = (router, route) => {

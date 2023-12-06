@@ -40,7 +40,7 @@
 import { defineProps, ref, computed} from 'vue';
 import { useRouter,useRoute } from 'vue-router'
 
-import { GlobalAccessConfig, LayOutMain_pc, LOCAL_PROJECT_FILE_PREFIX, compute_img_url, MenuData } from 'src/core/index.js';
+import { GlobalAccessConfig, LayOutMain_pc, LOCAL_PROJECT_FILE_PREFIX, compute_img_url, MenuData } from 'src/output/index.js';
 
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { get_server_file_path } from "src/core/file-path/file-path.js";
@@ -132,3 +132,4 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 }
 </style>
 
+src/output/index.js

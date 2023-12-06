@@ -1,4 +1,4 @@
-import { PROJECT_NAME } from 'src/core/index.js';
+import { PROJECT_NAME } from 'src/output/index.js';
 
 /**
  * 通过菜单id 来映射显示每个菜单下边的默认模板
@@ -24,7 +24,7 @@ const menu_to_match_templte = {
   // 电竞
   2100: { label: "电竞-英雄联盟", value: "24" },
   2101: { label: "电竞-Dota2", value: "24" },
-  2101: { label: "电竞-Dota2", value: "24" },
+  2102: { label: "电竞-CS·GO", value: "24" },
   2103: { label: "电竞-王者荣耀", value: "24" },
 
   // 滚球

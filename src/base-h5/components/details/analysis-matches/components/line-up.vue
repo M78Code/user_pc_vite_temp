@@ -318,3 +318,4 @@ import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 <style lang="scss" scoped>
 @import "../styles/line-up.scss"
 </style>
+src/output

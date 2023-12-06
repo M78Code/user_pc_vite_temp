@@ -51,4 +51,4 @@ function onClick() {
 .icon_zd_default {
   background-image: url($SCSSPROJECTPATH + "/image/detail/set_top.png");
 }
-</style>
+</style>src/output

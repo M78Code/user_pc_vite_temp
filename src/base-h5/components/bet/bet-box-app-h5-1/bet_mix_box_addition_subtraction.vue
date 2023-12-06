@@ -11,7 +11,7 @@
   </div>
 </template>
 <script setup>
-import { format_odds } from 'src/core/index.js'
+import { format_odds } from 'src/output/index.js'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, reactive } from 'vue';
@@ -102,3 +102,4 @@ const set_bet_obj_config = () => {
         margin-top: -0.01rem;
     }
 </style>
+src/output/index.js

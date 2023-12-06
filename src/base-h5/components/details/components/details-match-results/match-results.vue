@@ -41,7 +41,7 @@ import basketballIncident from "src/base-h5/components/details/analysis-matches/
  // 赛果详情 事件 组件
 import timeLine from 'src/base-h5/components/details/components/details-match-results/time-line.vue';
 import { i18n_t } from "src/boot/i18n.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
+import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 import { ref, onMounted } from "vue";
 
 
@@ -128,3 +128,4 @@ const props = defineProps({
   padding-bottom: 0
 }
 </style>
+src/output/index.js

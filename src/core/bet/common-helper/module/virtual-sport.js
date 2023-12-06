@@ -3,8 +3,8 @@
  * @Date: 2020-08-04 17:13:50
  * @Description: 注部分公共方法提取(包括与列表,详情,投注项三部分)
  */
-import {  MenuData  } from "src/core/index.js";
-import {  PageSourceData  } from "src/core/index.js";
+import {  MenuData  } from "src/output/index.js";
+import {  PageSourceData  } from "src/output/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import {

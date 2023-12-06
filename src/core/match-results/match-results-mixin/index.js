@@ -5,7 +5,7 @@
  * @Description: src/public/mixins/results/index
  */
 import lodash from 'lodash'
-import { i18n_t,formatTime} from 'src/core/index.js'
+import { i18n_t,formatTime} from 'src/output/index.js'
 import { nextTick } from "vue";
 export default {
   data() {

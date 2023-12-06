@@ -32,7 +32,7 @@ import { useRouter } from 'vue-router';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t , useMittEmit,MITT_TYPES} from "src/core/index.js"
+import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t , useMittEmit,MITT_TYPES} from "src/output/index.js"
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 import { get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
@@ -227,3 +227,4 @@ const get_mmp = (mst) => {
   }
 }
 </style>
+src/output/index.js

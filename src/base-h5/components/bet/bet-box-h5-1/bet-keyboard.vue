@@ -44,7 +44,7 @@
 import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/output/index.js";
 import lodash from 'lodash'
 
 
@@ -314,4 +314,4 @@ onUnmounted(() => {
   // background: url('../../../assets/images/bet/bet_key_delect.png') no-repeat 50%;
   background-size: 23px 14px;
 }
-</style>
+</style>src/output/index.js

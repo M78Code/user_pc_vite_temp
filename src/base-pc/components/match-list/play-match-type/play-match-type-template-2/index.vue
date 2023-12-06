@@ -7,7 +7,8 @@
         :sport_id="card_style_obj.csid" size="18px" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
       
-      <span>{{ cur_title_info.name }}</span>
+      <span v-if="!MenuData.is_esports()">{{ cur_title_info.name }}</span>
+      <span v-else>{{ BaseData.menus_i18n_map[MenuData.menu_current_mi] }}</span>
       <!-- 赛事数量 -->
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
@@ -47,7 +48,7 @@ import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { t, useEventListener } from "src/core/index.js";
+import { t, useEventListener } from "src/output/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 
 const route = useRoute()
@@ -187,4 +188,4 @@ function handle_hpid_choose(item) {
 }
 </style>
  
- 
+ src/output/index.js

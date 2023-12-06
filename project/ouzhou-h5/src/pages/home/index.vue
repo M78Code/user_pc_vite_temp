@@ -72,13 +72,13 @@ import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5 } from "src/core/index.js";
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5 } from "src/output/index.js";
 
 provide('get_hots_data', () => {
   get_ouzhou_home_data()
@@ -420,3 +420,4 @@ onUnmounted(() => {
   }
 }
 </style>
+src/output/index.jssrc/output/index.js

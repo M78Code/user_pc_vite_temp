@@ -1,4 +1,4 @@
-import { PageSourceData, fileds_map_common } from "src/core/index.js";
+import { PageSourceData, fileds_map_common } from "src/output/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
 import { get_score_config,get_market_is_show } from "./bet-box-submit"

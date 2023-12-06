@@ -11,7 +11,7 @@
       ></iframe>
       <custom_video class="custom-video" :status="status" v-if="right_actions_label == 'video'" :get_detail_data="detail"/>
       <!-- {{ detail }} -->
-      <score_component :get_match_detail="detail" v-if="right_actions_label == 'score'" :key="right_actions_label"/>    
+      <score_component :get_match_detail="detail" v-show="right_actions_label == 'score'" :key="right_actions_label"/>    
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
@@ -70,7 +70,7 @@ import { onMounted, ref, toRef, watch,onUnmounted, computed } from "vue";
 import lodash from "lodash";
 import { api_common, api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
-import { useMittOn, useMitt,MITT_TYPES, UserCtr } from "src/core/index.js"
+import { useMittOn, useMitt,MITT_TYPES, UserCtr } from "src/output/index.js"
 import SwitchButtons from "./components/SwitchButtons.vue"
 import right_actions from "./components/right_actions.vue"
 import custom_video from "./detail_header_video.vue";
@@ -429,4 +429,4 @@ onMounted(() => {
 .mt-10 {
   margin-top: 10px;
 }
-</style>
+</style>src/output/index.js

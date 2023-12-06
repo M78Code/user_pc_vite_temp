@@ -426,7 +426,7 @@
 <script setup>
 
 import { ref, onUnmounted } from 'vue';
-import { t } from "src/core/index.js";
+import { t } from "src/output/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // const { match,tournamentTypeFinish,vs_info } = useRegistPropsHelper(component_symbol, defineProps(need_register_props))
@@ -458,4 +458,4 @@ onUnmounted(() => {
 
 </script>
 
-<style lang="scss" scoped>@import url('./index.scss');</style>
+<style lang="scss" scoped>@import url('./index.scss');</style>src/output/index.js

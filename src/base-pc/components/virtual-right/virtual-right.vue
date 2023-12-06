@@ -265,3 +265,4 @@ export default {
   border-left: none;
 }
 </style>
+src/output/index

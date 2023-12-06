@@ -1,9 +1,39 @@
 import mitt from "mitt";
  
 
-import * as  MITT_TYPES_BASE from "base_path/core/mitt/mitt-keys.js" 
-import * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js" 
+// import * as  MITT_TYPES_BASE from "base_path/core/mitt/mitt-keys.js" 
+// import * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js" 
+let  MITT_TYPES_BASE={}
+let  MITT_TYPES_PROJECT={}
 
+
+try {
+  let module_obj =   import.meta.glob("base_path/core/mitt/mitt-keys.js",{ eager: true }) ||{} ;
+
+  let arr= Object.values(module_obj) 
+  if(arr[0]){
+    MITT_TYPES_BASE = arr[0]
+  }
+} catch (error) {
+  
+}
+try {
+  let module_obj =   import.meta.glob("project_path/src/core/mitt/mitt-keys.js",{ eager: true }) ||{} ;
+
+  let arr= Object.values(module_obj) 
+  if(arr[0]){
+    MITT_TYPES_PROJECT = arr[0]
+  }
+} catch (error) {
+  
+}
+
+
+ 
+
+
+console.error('MITT_TYPES_BASE----------',MITT_TYPES_BASE);
+console.error('MITT_TYPES_PROJECT----------',MITT_TYPES_PROJECT);
 
 // let MITT_TYPES_BASE={} 
 // try {
@@ -116,7 +146,7 @@ function useMittEmit(type, param) {
 
 //==============================事件监听  生成器  demo  option  开始  ====================================
 // //头部引入  
-// import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+// import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/output/index.js";
 // //methods 内添加 
 // /**
 // * 生成事件监听  
@@ -144,7 +174,7 @@ function useMittEmit(type, param) {
  * @param {Array<{type: keyof MittType,callback: ()=>void}>} event_pairs  事件 配置对象数组
  * @returns { MITT.UseMittEmitterGeneratorResult } { emitters_off() } 批量取消挂载的事件监听
  * @example
- * import { MITT_TYPES, useMittEmitterGenerator } from "src/core/index.js";
+ * import { MITT_TYPES, useMittEmitterGenerator } from "src/output/index.js";
  * const { emitters_off } = useMittEmitterGenerator([
  *  {
  *    type: MITT_TYPES.EMIT_KEY,

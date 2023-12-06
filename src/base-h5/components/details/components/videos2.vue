@@ -292,7 +292,7 @@ import basketball_match_analysis from "src/base-h5/components/details/analysis-m
 // import uid from "src/core/uuid/index.js"
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
 export default {
   name: "videos",
@@ -2330,3 +2330,4 @@ export default {
 
 /* ************** 视频全屏的样式 ************** -E */
 </style>
+src/output/index.js

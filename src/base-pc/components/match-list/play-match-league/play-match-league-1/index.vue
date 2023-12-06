@@ -5,7 +5,7 @@
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
-        <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
+        <div class="yb-flex-center" v-if="!MenuData.is_esports()" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
           <!-- 联赛是否收藏 -->
           <div @click.stop="collect" class="icon-wrap m-star-wrap-league"
             v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
@@ -14,7 +14,7 @@
           </div>
         </div>
         <!-- 联赛图标 -->
-        <div class="league-icon-wrap">
+        <div class="league-icon-wrap" :style="{marginRight: MenuData.is_esports() && '0'}">
           <span class="soprts_id_icon" v-if="menu_config.is_esports()"
             :style="compute_css_obj({ key: 'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else :src="leagueIcon" />
@@ -57,7 +57,7 @@
 import lodash from 'lodash';
 import { ref, computed, onUnmounted, watch } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { MenuData, compute_css_obj, compute_img_url } from "src/core/index.js";
+import { MenuData, compute_css_obj, compute_img_url } from "src/output/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
@@ -189,3 +189,4 @@ onUnmounted(() => {
 
 }
 </style>
+src/output/index.js

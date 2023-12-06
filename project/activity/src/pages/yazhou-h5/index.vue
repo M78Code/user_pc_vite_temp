@@ -91,10 +91,11 @@ import lucky_blind_box from "./components/lucky_blind_box.vue";
 import growth_task from "./components/growth_task.vue";
 import slot_machine from './components/slot_machine.vue'
 import acticity_mixin from "./mixin/acticity_mixin.js";
- 
+import { UserCtr } from "project_path/src/core/index.js";
+
 import _ from 'lodash';
 import utils from 'project/activity/src/utils/utils.js';
-import { get_file_path } from 'project/activity/src/utils/get_file_path.js'
+ 
 
 
 export default {
@@ -150,10 +151,10 @@ export default {
       return maintenance_string
     },
     get_user() {
-        return userStore.getters.get_user();
+        return UserCtr.get_user();
     },
     get_user_token() {
-        return userStore.getters.get_user_token();
+        return UserCtr.get_user_token();
     }
   },
   created() {
@@ -203,9 +204,9 @@ export default {
   },
   methods: {
     set_user(args) {
-        return userStore.mutations.set_user(args);
+        return UserCtr.set_user_info(args);
     },
-    get_file_path: get_file_path,
+    get_file_path:  ()=>'',
     // 去到维护页面
     to_maintenance() {
       this.$toast('活动现已维护，感谢您的支持', 2000)

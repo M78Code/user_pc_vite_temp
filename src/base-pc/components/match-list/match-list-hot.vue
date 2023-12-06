@@ -31,7 +31,7 @@ import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/com
 import loadData from "src/base-pc/components/load-data/load-data.vue"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
-import { useMittEmit,MITT_TYPES, compute_local_project_file_path } from "src/core/index.js";
+import { useMittEmit,MITT_TYPES, compute_local_project_file_path } from "src/output/index.js";
 export default {
   name: "HotMatchList",
   components: {
@@ -95,3 +95,4 @@ export default {
   margin-bottom: 5px;
 }
 </style>
+src/output/index.js

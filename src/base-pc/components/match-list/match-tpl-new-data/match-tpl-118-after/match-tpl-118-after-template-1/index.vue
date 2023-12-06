@@ -52,7 +52,7 @@ import {
   i18n_t,
   MatchDataWarehouse_PC_List_Common as MatchListData,
   time_conversion,
-} from "src/core/index.js";
+} from "src/output/index.js";
 const props = defineProps({
   mid: {
     type: [String, Number],
@@ -147,3 +147,4 @@ function compute_match_all_handicap_data_champion(match) {
 
 
 </style>
+src/output/index.js

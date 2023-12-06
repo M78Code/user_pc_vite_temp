@@ -94,7 +94,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "src/i18n/pc/langs/index.mjs";
-import { loadLanguageAsync } from "src/core/index.js";
+import { loadLanguageAsync } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES, compute_css_obj, UserCtr } from 'src/core/'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { theme_map } from "src/core/theme/"
@@ -417,4 +417,4 @@ function change_theme() {
     }
 }
 </style>
-  
+  src/output/index.jssrc/output

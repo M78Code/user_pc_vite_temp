@@ -41,7 +41,7 @@
 import { api_virtual } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
 import 'src/base-h5/css/pages/virtual-group-matches.scss'
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "group_matches",
@@ -206,3 +206,4 @@ export default defineComponent({
   }
 }
 </style>
+src/output/index.js

@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 //是否为mini状态
 /**
  * main_menu_toggle 左侧列表显示形式 default: 'normal' -- normal：展开 mini：收起

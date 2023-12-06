@@ -180,7 +180,7 @@ import odds_new from "src/base-h5/components/details/components/tournament_play/
 import { i18n_t } from "src/boot/i18n.js"
 // #TODO mixins 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
-import {utils } from 'src/core/index.js';
+import {utils } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 
 export default defineComponent({
@@ -344,3 +344,4 @@ export default defineComponent({
   vertical-align: middle;
 }
 </style>
+src/output/index.js

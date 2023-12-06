@@ -37,7 +37,7 @@ function loadLanguageAsync (lang){
     'ko':'ko-kr',//韩语
     'es':'es-es',//西班牙
   }
-  return import(/* webpackChunkName: "lang-[request]" */`src/i18n/${map_[lang]}/index.json`).then(langfile=>{
+  return import(/* webpackChunkName: "lang-[request]" */`project_path/src/i18n/${map_[lang]}/index.json`).then(langfile=>{
     // 设置语言信息
     i18n.setLocaleMessage(lang, { ...langfile, common_lang });
     

@@ -203,7 +203,7 @@ import ballSpin from './ball_spin.vue';
 import { useMittOn, useMittEmit, MITT_TYPES,compute_img_url,UserCtr } from "src/core/"
 import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { format_odds, calc_bifen } from 'src/core/index.js'
+import { format_odds, calc_bifen } from 'src/output/index.js'
 import { ref, onMounted, watch, computed, onUnmounted,nextTick } from 'vue';
 
 
@@ -995,3 +995,4 @@ const _handleNumberKey = (num) => {
 
   /* ************** 小键盘样式 ************** -E */
 }</style>
+src/outputsrc/output/index.js

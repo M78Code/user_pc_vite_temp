@@ -47,7 +47,7 @@ import lodash_ from "lodash";
 import { reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/core/format/index.js";
-import { i18n_t, compute_css_obj, MenuData,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { i18n_t, compute_css_obj, MenuData,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/core/"
 
 import TopHeader from './top-header.vue';
@@ -328,4 +328,4 @@ const set_menu_lv1 = item => {
             white-space:nowrap;
         }
     }
-</style>
+</style>src/output/index.jssrc/output

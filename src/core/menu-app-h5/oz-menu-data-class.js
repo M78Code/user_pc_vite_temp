@@ -15,7 +15,7 @@ import {
   MITT_TYPES,
   SessionStorage,
   LocalStorage
-} from "src/core/index.js"
+} from "src/output/index.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 import STANDARD_KEY from "src/core/standard-key";

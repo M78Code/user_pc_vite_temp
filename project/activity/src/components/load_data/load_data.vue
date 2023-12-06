@@ -29,14 +29,14 @@
       </div>
       <no-data
         v-else-if="['empty','notice-empty','code_empty'].includes(cur_state)"
-        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?t('common.code_empty'):(($store.state.filter.open_select_time?t('filter.empty'):t('common.no_data'))))"
+        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?t('common.code_empty'):(('$store.state.filter.open_select_time'?t('filter.empty'):t('common.no_data'))))"
         :msg2="no_data_msg2"
         :marginBottom="'0px'"
         width="180px"
         height="180px"
         :color="color"
         class="empty-wrap"
-        :class="{filter_img:$store.state.filter.open_select_time}"
+        :class="{filter_img:'$store.state.filter.open_select_time'}"
       >
       </no-data>
       <no-data v-else-if="['all_empty','new_empty'].includes(cur_state) &&is_eports"
@@ -121,7 +121,7 @@
 
 <script>
 import no_data from "../no_data/no_data.vue";
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
 
 
 export default {

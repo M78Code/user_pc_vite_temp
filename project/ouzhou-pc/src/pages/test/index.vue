@@ -38,7 +38,7 @@
 <script setup>
 import { api_match,socket_api } from "src/api/index.js";
 import { ref, reactive, onMounted,computed } from "vue"
-import { UserCtr,compute_value_by_cur_odd_type } from "src/core/index.js"
+import { UserCtr,compute_value_by_cur_odd_type } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
@@ -120,4 +120,4 @@ const router = useRouter()
       color: #ff0000;
     }
   }
-</style>
+</style>src/output/index.js
