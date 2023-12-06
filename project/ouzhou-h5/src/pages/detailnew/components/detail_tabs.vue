@@ -92,7 +92,7 @@ const tab_move2 = (currentIndex, scrollBox, whether_to_slide) => {
 function changeAll(){
   emit('update:allCloseState',!props.allCloseState)
   // AllCloseControl.unfold = !AllCloseControl.unfold
-  AllCloseControl.unfold = !props.allCloseState
+  AllCloseControl.unfold = props.allCloseState
 }
 //#endregion
 

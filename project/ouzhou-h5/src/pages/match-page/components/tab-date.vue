@@ -163,7 +163,7 @@ const changeDatetab = (item, index) => {
  */
 const setDefaultData = (val) => {
     // 重置
-    store.tabActive = 'Matches'
+    // store.tabActive = 'Matches'
     MenuData.set_current_lv1_menu(2);
     // MenuData.set_menu_mi(val);
     store.current_menu_mi = val;

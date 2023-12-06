@@ -54,6 +54,8 @@ import announce from "src/base-pc/components/announce/index.vue";
 import matchResults from "src/base-pc/components/results/match-results.vue";
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { loadLanguageAsync } from "src/core/index.js";
+import { LocalStorage } from "src/core/utils/module/web-storage.js";
 //数据列表
 const list_data = reactive([
   { id: "announcement", name: "Announcement", i18filed: 'announcement' },
@@ -69,6 +71,7 @@ function active_change(value) {
  LayOutMain_pc.set_layout_secondary_active(value)
 }
 onMounted(()=>{
+ loadLanguageAsync(LocalStorage.get('lang'));
  const value = SEARCH_PARAMS.init_param.get("secondary_active") || localStorage.getItem("secondary_active") ;
  active_change(value)
 })

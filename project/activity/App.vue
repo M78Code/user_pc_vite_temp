@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div v-if="is_mobile"><PageH5 /></div>
-    <div v-else><PagePc /></div>
+    <!-- <div v-if="is_mobile"><PageH5 /></div> -->
+    <PageH5 />
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import LayoutPc from "project/activity/src/layouts/layout-pc.vue";
+ 
 import LayoutH5 from "project/activity/src/layouts/layout-h5.vue";
 
 import app_mixin from "./src/mixins/app-mixin.js";
@@ -16,7 +16,7 @@ export default defineComponent({
   name: "App",
   mixins: [app_mixin],
   components: {
-    LayoutPc,
+    
     LayoutH5,
   },
   computed: {

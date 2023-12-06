@@ -11,7 +11,7 @@
         <span v-if="!one_hour">
           <!-- 距离开赛时间大于1小时 显示月和日 .Format(i18n_t('time3'))-->
           <!-- {{(new Date(+detail_data.mgt)).Format(i18n_t('time3'))}} -->
-          {{ formatTime(+detail_data.mgt, "mm/DD hh:MM") }}
+          {{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}
         </span>
       </span>
 
