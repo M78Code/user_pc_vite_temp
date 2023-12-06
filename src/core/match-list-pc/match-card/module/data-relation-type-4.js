@@ -141,7 +141,7 @@
       // 是否创建了一个赛事开赛状态标题卡片
       let is_create_match_status_card = false
       // 如果当前赛事开赛状态 不等于上一个赛事开赛状态  需要添加一个开赛状态标题卡片
-      if(MatchListCardData.match_list_mapping_relation_obj_type == 4 && match_ms != pre_match_ms){
+      if(match_ms != pre_match_ms){
         pre_match_ms = match_ms
         card_key = match_ms == 1 ? 'play_title' : 'no_start_title'
         // 判断开赛状态标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复开赛状态标题卡片
