@@ -19,8 +19,11 @@ const props = defineProps({
     get_detail_data: {
         type: Object,
         default: () => ({})
-    }
+    },
+
 })
+
+
 const route = useRoute();
 const detail_data = lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {});
 // /视频说明是否展示
