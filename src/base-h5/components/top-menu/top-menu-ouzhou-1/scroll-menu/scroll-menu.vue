@@ -25,7 +25,7 @@
 </template>
 <script setup>
 import lodash from 'lodash'
-import { onMounted, ref ,onUnmounted, reactive} from "vue"
+import { onMounted, ref ,onUnmounted, reactive,nextTick} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData , UserCtr} from "src/core/";
@@ -75,6 +75,10 @@ const get_init_data = () =>{
     // MenuData.menu_mi.value || 
     MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
     playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
+    nextTick(()=>{
+        const index = dataList().findIndex(n=>n.mi ==  playValue.value) || 0;
+        scrollRef.value.scrollTo(index-2, 'start-force')
+    })
 }
 /**
  * 获取最新列表
