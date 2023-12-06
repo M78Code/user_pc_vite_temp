@@ -743,66 +743,68 @@ export const socre_dict = (csid) => {
   return dict[csid];
 };
 
+// title 用方法返回解决国际化文字需要刷新才能生效的问题
+// Bug单号：49705
 export const allBallObj = {
   2: [
     {
-      title: `2 ${i18n_t("common.score")}`,
+      title: () => `2 ${i18n_t("common.score")}`,
       value_key: "S107",
     },
     {
-      title: `3 ${i18n_t("common.score")}`,
+      title: () => `3 ${i18n_t("common.score")}`,
       value_key: "S108",
     },
     {
-      title: i18n_t("common.foul"),
+      title: () => i18n_t("common.foul"),
       value_key: "S106",
     },
   ],
   5: [
     {
-      title: `${i18n_t("msc.S114")}`,
+      title: () => `${i18n_t("msc.S114")}`,
       value_key: "S114",
     },
     {
-      title: `${i18n_t('common.fault')}`,
+      title: () => `${i18n_t('common.fault')}`,
       value_key: "S202",
     },
     {
-      title: `${i18n_t('common.ace')}`,
+      title: () => `${i18n_t('common.ace')}`,
       value_key: "S4",
     },
   ],
   7: [
     {
-      title: `${i18n_t('common.ace')}`,
+      title: () => `${i18n_t('common.ace')}`,
       value_key: "S4",
     },
     {
-      title: `${i18n_t('common.sigle_fault')}`,
+      title: () => `${i18n_t('common.sigle_fault')}`,
       value_key: "S113",
     }
   ],
   9: [
     {
-      title: `${i18n_t('common.ace')}`,
+      title: () => `${i18n_t('common.ace')}`,
       value_key: "S4",
     },
     {
-      title: `${i18n_t('common.sigle_fault')}`,
+      title: () => `${i18n_t('common.sigle_fault')}`,
       value_key: "S113",
     }
   ],
   10: [
     {
-      title: `${i18n_t('common.score_')}`,
+      title: () => `${i18n_t('common.score_')}`,
       value_key: "S115",
     },
     {
-      title: "接收点得分",
+      title: () => "接收点得分",
       value_key: "S116",
     },
     {
-      title: `${i18n_t('common.ace')}`,
+      title: () => `${i18n_t('common.ace')}`,
       value_key: "S117",
     },
   ],

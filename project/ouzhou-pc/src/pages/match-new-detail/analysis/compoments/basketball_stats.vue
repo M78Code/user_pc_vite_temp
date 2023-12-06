@@ -25,7 +25,7 @@
             <span>
               {{ score_list[item.value_key].home}}{{["5"].includes(String(detail_info.csid))?'%':''}}
             </span>
-            <span class="detail-slider-title">{{ item.title }}</span>
+            <span class="detail-slider-title">{{ item.title() }}</span>
             <span>
               {{ score_list[item.value_key].away }}{{["5"].includes(String(detail_info.csid))?'%':''}}
             </span>

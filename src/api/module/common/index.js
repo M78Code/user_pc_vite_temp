@@ -283,7 +283,7 @@ export const get_esports_date_menu = (params, config={}, url = "/v1/w/esports/ge
 };
 
 //虚拟体育菜单接口
-export const get_virtual_menu = (params={}, config={}, url = "/v1/w/virtual/menusPB") => {
+export const get_virtual_menu = (params={}, config={}, url = "/v1/w/virtual/menus") => {
   return http.get(`${prefix_job}${url}`, params, config);
 };
 

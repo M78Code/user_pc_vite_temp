@@ -316,6 +316,7 @@ class VirtualClass {
    * @description 更新赛事数据
    */
   update_match_video_data (match = {}) {
+    this.sport_data = match;
     const res = this.get_upd_time_obj_data(this.upd_list, this.current_time / 1000);
     match.show_time = res.show_time;
     match.match_status = res.match_status;

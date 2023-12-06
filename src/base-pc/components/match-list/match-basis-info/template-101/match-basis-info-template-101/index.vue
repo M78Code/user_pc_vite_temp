@@ -277,7 +277,6 @@ const use_polling_mst = payload => {
 }
 // var 事件处理
 function handle_var_event(ws_data) {
-  console.log('ws_data', ws_data);
   const { skt_data: { mat, mid }, var_item } = ws_data
   if (match.value.mid !== mid) return
   if (mat === 'home') {

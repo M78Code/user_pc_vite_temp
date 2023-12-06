@@ -1,15 +1,19 @@
-import { loadLanguageAsync } from "src/core/index.js";
+import { loadLanguageAsync } from "project_path/src/core/index.js";
 import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import STANDARD_KEY from "src/core/standard-key";
-import { enter_params,  LocalStorage } from "src/core/index.js";
+ 
+
+import { enter_params,  LocalStorage  ,useMittOn, 
+  MITT_TYPES ,http, AllDomain,
+  url_param_ctr_init, watch_route_fun
+} from "project_path/src/core/index.js";
+ 
+
  
  
  
-import { http, AllDomain } from "src/core/http/index.js";
  
-import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
+
 
 export default {
   data() {
