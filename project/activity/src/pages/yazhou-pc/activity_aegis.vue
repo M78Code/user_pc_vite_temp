@@ -23,6 +23,8 @@
 <script>
 import { mapGetters } from "vuex";
 import utils from 'project/activity/src/utils/utils.js'
+//头部引入  
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
 export default {
   data() {
     return {
@@ -38,7 +40,7 @@ export default {
     })
   },
   created() {
-    this.$root.$emit("upd_user_data");
+    useMittEmit("upd_user_data");
     let _url = _.get(this.vx_get_user, 'maintainingPCUrl');
     _url = window.vue.get_file_path(_url);
     this.imgUrl = _url;
