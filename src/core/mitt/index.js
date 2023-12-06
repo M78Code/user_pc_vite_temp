@@ -14,7 +14,7 @@ try {
 
 let MITT_TYPES_PROJECT={} 
 try {
-    MITT_TYPES_PROJECT = await import( "project_path/core/mitt/mitt-keys.js"  );
+    MITT_TYPES_PROJECT = await import( "project_path/src/core/mitt/mitt-keys.js"  );
 } catch (error) {
 }
 
