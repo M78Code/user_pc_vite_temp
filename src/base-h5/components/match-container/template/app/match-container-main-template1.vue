@@ -802,7 +802,7 @@ export default {
       line-height: 1;
       margin-left: 0.01rem;
       font-size: 0.1rem;
-      color: var(--q-color-com-fs-color-1);
+      color: #AFB3C8 !important;
       flex-shrink: 0;
 
       &.boxing {
@@ -863,8 +863,7 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      color: var(--q-gb-t-c-20);
-      max-width: 2.8rem;
+      color: #303442;
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
@@ -1482,6 +1481,7 @@ export default {
         margin-right: 0.14rem;
       }
       :deep(.counting-down-wrap){
+        color: #AFB3C8 !important;
         .counting{
           font-size: 11px;
         }
