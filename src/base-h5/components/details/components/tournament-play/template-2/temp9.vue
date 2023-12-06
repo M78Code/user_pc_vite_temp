@@ -36,9 +36,7 @@ import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
 import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp9",
-  props:{
-    item_data:Object
-  },
+  props: ["item_data", "title"],
   setup(props, evnet) {
     let data = reactive({
       // 冠军投注项集合

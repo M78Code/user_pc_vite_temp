@@ -151,7 +151,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
   name: "temp2",
-  props: ["item_data"],
+  props: ["item_data","title"],
   components: {
     oddsNew,
   },

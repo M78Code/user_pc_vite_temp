@@ -42,9 +42,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp10",
-  props:{
-    item_data:Object
-  },
+  props: ["item_data", "title"],
   // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
