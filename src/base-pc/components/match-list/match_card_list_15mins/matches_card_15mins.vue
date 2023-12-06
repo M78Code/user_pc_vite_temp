@@ -32,8 +32,7 @@ import { useRouter } from 'vue-router';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t } from "src/core/index.js"
-import { get_min15_handicap_type } from 'src/core/match-list-pc/composables/match-list-other.js'
+import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t , useMittEmit,MITT_TYPES} from "src/core/index.js"
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 import { get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
@@ -75,8 +74,8 @@ const ols_data = computed(() => {
 })
 watch(() => match.hSpecial, (v, o) => {
   if (v != o && v != undefined && o != undefined) {
-    // 15分钟玩法阶段
-    emits("del", props.idx)
+    // 15分钟玩法阶段改变
+    useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES)
   }
 })
 // // 监听 当前投注项ID的变化
