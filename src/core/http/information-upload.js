@@ -5,7 +5,7 @@
  */
 import axios from "axios";
 import device from "current-device";
-import { SessionStorage  } from "src/core/index.js";
+import { SessionStorage } from "src/core/utils/index.js"
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 
 class infoUpload {
