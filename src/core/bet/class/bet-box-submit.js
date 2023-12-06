@@ -450,7 +450,7 @@ const submit_handle = type => {
     params.seriesOrders = seriesOrders
     // 测试投注失败
     // BetViewDataClass.set_bet_order_status(5)
-    // return
+    //return
     api_betting.post_submit_bet_list(params).then(res => {
         // BetViewDataClass.set_tip_message(res)
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
