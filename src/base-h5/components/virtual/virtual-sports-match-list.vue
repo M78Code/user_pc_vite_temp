@@ -83,7 +83,7 @@ watch( () => props.virtual_match_list, (newValue) => {
     switch_match_handle(state.selected_match_i);
 
     // #TODO emit 
-    emit('switch_match',state.selected_match_i);
+    // emit('switch_match',state.selected_match_i); 重复调用，注释掉
   }
 );
 
