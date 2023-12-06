@@ -12,7 +12,9 @@
             <ul class="search-tab-content-ul">
                 <li ref="searchTab" :class="{ active: activeOn === item.tid }" v-for="(item, index) in dataList" :key="index"
                     @click="changeTab(item.tid,index,$event)">
-                    <img v-show="item.img" :src="item.img" />
+                    <!-- <img v-show="item.img" :src="item.img" /> -->
+                    <span v-if="+item.tid" class="sport-icon-wrap"
+                      :style="compute_css_obj({key: activeOn === item.tid ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
                     {{ item.name }}
                 </li>
             </ul>
@@ -48,6 +50,7 @@ import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES } from "src/core/index.js";
 import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import  screenModal from './screen-modal.vue'
+import { compute_css_obj,league_sprite_images_postion } from "src/core/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({
     dataList: {
@@ -107,7 +110,14 @@ const searchTab = ref(null)
 
 const activeOn = ref(props.defaultVal || '0');//默认值
 const league_data = ref([])
-
+/**
+ * @description: 联赛转化背景
+ * @param {String} id 球类id
+ * @return {}
+ */
+ const format_type = ( item = {} ) => {
+    return league_sprite_images_postion[+item.tid]
+}
 /**
  * 选中的数据
  * @param {*} val
@@ -208,7 +218,17 @@ function key_down(event) {
                     vertical-align: middle;
                     margin-top: -2px;
                 }
-
+                .sport-icon-wrap {
+                    --per: -0.255rem;
+                    display: inline-block;
+                    width: auto;
+                    height: 0.18rem;
+                    width: 0.18rem;
+                    vertical-align: middle;
+                    margin-top: -2px;
+                    background-position: 0 0;
+                    background-size: 0.18rem auto;
+                }
                 span {
                     font-size: 12px;
                     color: #7981A4;
