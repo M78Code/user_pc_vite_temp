@@ -7,6 +7,7 @@
                 <div class="f-c-c bet-count" >{{ BetData.bet_single_list.length }}</div>
                 <div class="bet-slip">{{ i18n_t("common.bets_single") }}</div>
             </div>
+       
             <div class="f-e-c">
                 <div class="f-c-c bet-money">{{ format_money2(UserCtr.balance) }}</div>
                 <div class="bet-state" @click="set_bet_show" :class="BetData.bet_state_show ? 'bet-hide' :'bet-show'"></div>
@@ -34,9 +35,6 @@ const set_bet_show = () => {
         width: 100%;
         height: 54px;
         background: var(--q-gb-bg-c-20);
-        // border-top: 3px solid #FF7000;
-        // border-left: 1px solid #FF7000;
-        // border-right: 1px solid #FF7000;
         border-top: 3px solid var(--q-gb-bd-c-1);
         border-left: 1px solid var(--q-gb-bd-c-1);
         border-right: 1px solid var(--q-gb-bd-c-1);

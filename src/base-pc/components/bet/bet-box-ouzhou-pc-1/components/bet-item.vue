@@ -9,7 +9,7 @@
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}-{{ items.playId }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                     <!-- 盘口 -->
@@ -34,10 +34,10 @@
                 <div class="font12 h12 mt-4">
                     <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
                     <span class="text-1a1 font500" v-if="[1].includes(items.playId*1)"> 
-                        {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally), BetData.bet_amount)) || '0.00' }} 
+                        {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount)) || '0.00' }} 
                     </span>
                     <span class="text-1a1 font500" v-else>
-                        {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }} 
+                        {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) || '0.00' }} 
                     </span>
                 </div>
             </div>
@@ -130,7 +130,7 @@ const set_show_quick_money = (obj = {}) => {
 const bet_money_btn_class = (obj, index) => {
     let className = '';
     if(ref_data.max_money > 0) {
-        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < BetData.bet_amount || UserCtr.balance < obj)) {
+        if(index != 'max' && (ref_data.max_money < obj || ref_data.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
             className = 'disabled'
         }
     }
@@ -140,7 +140,7 @@ const bet_money_btn_class = (obj, index) => {
 // 快捷金额
 const set_bet_money = obj => {
     // 获取当前投注金额
-    let money = BetData.bet_amount
+    let money = props.items.bet_amount
     let money_ = obj
     // 设置最大投注金额
     if(obj == "MAX"){

@@ -1,8 +1,9 @@
-import { PageSourceData, fileds_map_common } from "src/core/index.js";
+import { fileds_map_common, useMittEmit,MITT_TYPES } from "src/core/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class"
 import { get_score_config,get_market_is_show } from "./bet-box-submit"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { ref } from "vue"
 import lodash_ from "lodash"
 
@@ -366,12 +367,20 @@ this.bet_appoint_ball_head= null */
     this.is_virtual_bet = is_virtual_bet
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
-
+    console.error('bet_read_write_refer_obj')
     // 单关/串关 投注
     if (this.is_bet_single) {
       // 单关 不合并 只有一条 
       // 单关 合并 多条
       if (this.is_bet_merge) {
+        // 单关合并 通盘口下只能选择一个
+        let markert_obj = this.bet_single_list.find(item => item.marketId == bet_refer_obj.marketId) || {}
+        if(markert_obj.marketId){
+          // 必有的 
+          let index_ = this.bet_single_list.findIndex(item => item.marketId == bet_refer_obj.marketId)
+          // 删除指定投注项
+          this.bet_single_list.splice(index_,1)
+        }
         this.bet_single_list.push(bet_refer_obj)
       } else {
         this.bet_single_list = [bet_refer_obj]
@@ -525,25 +534,56 @@ this.bet_appoint_ball_head= null */
   }
 
   // 设置 切换单关/串关切换
-  set_is_bet_single() {
-    // true 单关 false 串关
-    this.is_bet_single = !this.is_bet_single
+  set_is_bet_single(state) {
     // 单关 切换到串关 / 
-    if (!this.is_bet_single) {
+    if (this.is_bet_single) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
-      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+      if(!this.bet_s_list.length){
+        this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
+      }
+      // 获取串关 参数显示
+      getSeriesCountJointNumber((code, data) => {
+        if (code == 200) {
+            BetViewDataClass.set_bet_special_series(data)
+
+            useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+        }
+      })
     }
+
+    let is_bet_single = !this.is_bet_single
+    // 有设置值 则使用设置的值
+    if(state){
+      if(state == 'single'){
+        is_bet_single = true
+      }else{
+        is_bet_single = false
+      }
+    }
+    // true 单关 false 串关
+    this.is_bet_single = is_bet_single
+  
     this.set_bet_data_class_version()
   }
 
   // 设置单关/单关合并 切换
-  set_is_bet_merge() {
-    this.is_bet_merge = !this.is_bet_merge
+  set_is_bet_merge(merge) {
     // 设置 投注内容数据
-    if (!this.is_bet_merge) {
+    if (this.is_bet_merge) {
       // 不合并的状态下 取最后合并的最后一条数据作为投注内容
       this.bet_single_list = [this.bet_single_list.pop()]
     }
+    let is_merge = !this.is_bet_merge
+
+    if(merge){
+      if(merge == 'merge'){
+        is_merge = true
+      }else{
+        is_merge = false
+      }
+    }
+    this.is_bet_merge = is_merge
+
     this.set_bet_data_class_version()
   }
 
@@ -607,6 +647,24 @@ this.bet_appoint_ball_head= null */
     this.bet_amount = val;
     this.set_bet_data_class_version()
     // console.error("投注金额", val)
+  }
+
+  // 设置投注项的投注金额
+  set_bet_obj_amount(val,oid){
+    if(this.is_bet_single){
+      this.bet_single_list.filter(item => {
+        if(item.playOptionsId == oid){
+          item.bet_amount = val
+        }
+      })
+    }else{
+      this.bet_s_list.filter(item => {
+        if(item.playOptionsId == oid){
+          item.bet_amount = val
+        }
+      })
+    }
+    this.set_bet_data_class_version()
   }
   /**
    * @description: 删除投注对象

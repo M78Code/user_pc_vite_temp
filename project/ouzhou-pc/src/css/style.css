@@ -31,7 +31,6 @@
 }
 .icon-arrow:before {
   content: "\e97f";
-  color: #2cb2ff;
 }
 .icon-neutral .path1:before {
   content: "\e92f";

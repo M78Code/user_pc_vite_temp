@@ -182,6 +182,9 @@
 .h15{
     height: 15px;
 }
+.h40{
+    height: 40px;
+}
 .h52{
     height: 52px;
 }
@@ -222,7 +225,6 @@
     color: var(--q-gb-t-c-1);
 }
 .text-ff7{
-    // color: #ff7000;
     color: var(--q-gb-t-c-2);
 }
 .text-009{
@@ -235,6 +237,13 @@
     color: #8a8a8a;
 }
 
+.cursor{
+    cursor: pointer;
+}
+.px-12{
+    padding-left: 12px;
+    padding-right: 12px;
+}
 .mx-4{
     margin-left: 4px;
     margin-right: 4px;
@@ -263,6 +272,14 @@
     margin-right: 10px;
 }
 
+
+.ml-16{
+    margin-left: 16px;
+}
+
+.re{
+    position: relative;
+}
 
 ul{
     margin: 0;

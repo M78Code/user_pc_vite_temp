@@ -30,6 +30,13 @@ const ref_data = reactive({
     emit_lsit: {},
 })
 
+// 复式连串过关投注
+const special_series = reactive({
+  id: '',
+  name: '',
+  count: "",
+})
+
 // 开启/停止拖拽
 const stop_drap_fn = (state) => {
     let obj = {
@@ -55,10 +62,10 @@ onUnmounted(() => {
 // 设置快捷金额
 const set_quick_money = () => {
     // 输入金额 不能大于最大金额
-    if( BetData.bet_amount > ref_data.max_money ){
+    if( props.items.bet_amount > ref_data.max_money ){
         ref_data.money = ref_data.max_money
     }else{
-        ref_data.money = BetData.bet_amount
+        ref_data.money = props.items.bet_amount
     }
 }
 
@@ -78,7 +85,7 @@ const set_ref_data_bet_money = () => {
     if (!BetData.is_bet_single) {
 
         // 复式连串关投注
-        const { id, name, count } = BetViewDataClass.bet_special_series[props.index]
+        const { id, name, count } = lodash_.get(BetViewDataClass.bet_special_series, `[${props.index}]`, {}) 
         special_series.id = id
         special_series.name = name
         special_series.count = count
@@ -103,10 +110,10 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    console.error('sss')
+    // console.error('sss')
     // 输入控制
     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
-        BetData.set_bet_amount(ref_data.money)
+        BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
     }else{
         // 最大限额不能大于余额
         let money_a = ref_data.max_money
@@ -114,7 +121,7 @@ const set_win_money = () => {
             money_a = UserCtr.balance
         }
         ref_data.money = money_a
-        BetData.set_bet_amount(money_a)
+        BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
     }
    
     // 计算最高可赢金额
