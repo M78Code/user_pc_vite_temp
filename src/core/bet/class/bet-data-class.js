@@ -845,21 +845,12 @@ this.bet_appoint_ball_head= null */
   // 删除投注项
   // oid 投注项id  index 投注项下标
   set_delete_bet_info(oid,index) {
+    
     // 删除投注项中的数据
     if(this.is_bet_single){
-      let index_ = index
-      // 有下标
-      if(index || index == 0){
-        index_ = this.bet_single_list.findIndex(item => item == oid)
-      }
-      this.bet_single_list.splice(index_,1)
+      this.bet_single_list.splice(index,1)
     }else{
-      let index_ = index
-      // 有下标
-      if(index || index == 0){
-        index_ = this.bet_s_list.findIndex(item => item == oid)
-      }
-      this.bet_s_list.splice(index_,1)
+      this.bet_s_list.splice(index,1)
     }
     
     // 获取oid在投注项id集合中的位置

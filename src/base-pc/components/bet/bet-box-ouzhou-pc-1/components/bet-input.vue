@@ -25,7 +25,7 @@
         <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
     </div>
     <div>
-        <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money && items.ol_os == 1">
+        <ul class="bet-bet-money f-b-c" v-show="items.ol_os == 1">
             <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
                 {{index == 'max' ? '' : '+' }}{{obj}}
             </li>
@@ -54,7 +54,7 @@ const ref_data = reactive({
     seriesOdds: '', // 赔率
     show_quick: false, // 显示快捷金额
     emit_lsit: {},
-    show_money: false,
+    show_money: true,
 })
 
 // 复式连串过关投注
@@ -72,18 +72,15 @@ const stop_drap_fn = (state) => {
     }
     BetData.set_bet_box_draggable(obj)
 
-    // 失去焦点 隐藏
-    show_quick_amount(!state)
-
 }
 
 onMounted(() => {
     set_ref_data_bet_money()
-    
-    // 单关 单注可以默认展开
-    if(BetData.is_bet_single && !BetData.is_bet_merge){
-        show_quick_amount(true)
-    }
+    show_quick_amount(true)
+    // // 单关 单注可以默认展开
+    // if(BetData.is_bet_single && !BetData.is_bet_merge){
+    //     show_quick_amount(true)
+    // }
 
     ref_data.money = props.items.bet_amount
       // 监听 限额变化
@@ -187,7 +184,6 @@ const set_ref_data_bet_money = () => {
 
 // 输入判断
 const set_win_money = () => {
-    console.error('sss')
     // 输入控制
     if( ref_data.money < ref_data.max_money &&  ref_data.money < UserCtr.balance){
         BetData.set_bet_obj_amount(ref_data.money,props.items.playOptionsId)
@@ -200,9 +196,6 @@ const set_win_money = () => {
         ref_data.money = money_a
         BetData.set_bet_obj_amount(money_a,props.items.playOptionsId)
     }
-   
-    // 计算最高可赢金额
-    // ref_data.win_money = ref_data.money * props.item.oddFinally
 }
 
 // 快捷金额 state true   false
