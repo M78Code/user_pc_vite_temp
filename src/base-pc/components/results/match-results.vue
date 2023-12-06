@@ -84,6 +84,7 @@
                   :is_bet_record="false"
                   :reset_pagination="reset_pagination"
                   :results_table="results_table_style"
+                  :page="results_params.page"
       >
       </Pagination>
     </div>

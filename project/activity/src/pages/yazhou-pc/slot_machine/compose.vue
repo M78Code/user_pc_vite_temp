@@ -195,7 +195,8 @@ import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
 import silver_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/silver_card.png";
 import gold_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/gold_card.png";
 import diamond_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/diamond_card.png";
-
+//头部引入  
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
 // 生成随机数
 const random = function(minNum,maxNum){
   return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
@@ -525,7 +526,7 @@ export default {
      * @param {*} msg 要提示的信息，默认展示 1500ms,给 1800ms 是因为后面 300ms 是关闭动画
      */
     warningNotice(msg, time = 1800) {
-      this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg);
+      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg);
       // 手动隐藏提示弹窗
       if (this.timeout_obj.timer2) {clearTimeout(this.timeout_obj.timer2)};
       this.timeout_obj.timer2 = setTimeout(() => {

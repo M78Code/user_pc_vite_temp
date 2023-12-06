@@ -120,7 +120,7 @@ body {
 
     /* loading */
     .loading-text {
-      color: var(--q-layout-color-1);
+      color: var(--q-layout-color-1) !important;
     }
 
     .img-loading {

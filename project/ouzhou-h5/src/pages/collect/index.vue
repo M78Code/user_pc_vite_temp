@@ -66,7 +66,7 @@ const tabData = ref([
 const on_update = async (val,type) => {
   state.slideMenu_sport = await getListCount(val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val),val);
   // state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
-  val != 400 && MenuData.set_current_lv1_menu(val);
+  MenuData.set_current_lv1_menu(val);
   const index = MenuData.collect_menu?state.slideMenu_sport?.findIndex(n=>{return n.mi == MenuData.menu_mi.value}):0;
   changeMenu(state.slideMenu_sport?.[index !== -1 && type?index:0])
   MenuData.set_collect_menu(val);
@@ -137,6 +137,7 @@ onMounted(()=>{
   MenuData.set_collect_id(50000);
   const index = tabData.value.findIndex(n=>{return n.val == tabValue.value});
   on_update(tabData.value[index].val,1)
+  if(scrollListRef.value) scrollListRef.value.reset(state.current_mi)
 })
 onUnmounted(() => {
   MenuData.set_collect_id('')

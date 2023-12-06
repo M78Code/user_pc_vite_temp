@@ -5,6 +5,8 @@
  * @Author: Echo
  */
 import time_format_mixin from "project/activity/src/mixins/module/formartmixin.js";
+//头部引入  
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
 export default {
   data() {
     return {
@@ -69,8 +71,8 @@ export default {
         this.sec = sec;
       }
       if (hr == '00' && min == '00' && sec == '00') {
-        this.$root.$emit("upd_user_data");
-        this.$root.$emit('update_activity_period');
+        useMittEmit("upd_user_data");
+        useMittEmit('update_activity_period');
         clearTimeout(this.countTimer1);
         clearTimeout(this.countTimer2);
         this.countTimer2 = setTimeout(() => {

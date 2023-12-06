@@ -93,7 +93,7 @@ const target_com = computed(() => {
 /**
  * @description: 赛事列表为空通知事件函数
  */
-const upd_match_is_empty = (obj) => {
+const upd_match_is_empty = (obj = {}) => {
   // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
   const { state = false, type = 'noMatch' } = obj
   which.value = type

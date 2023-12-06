@@ -5,7 +5,6 @@
 -->
 <template>
   <div class="box-bc">
-
     <q-table
       :rows="data"
       separator="none"
@@ -29,7 +28,11 @@
               <div v-if="!col.icon">
                 <span
                   v-if="col.field !== 'name'"
-                  :class="(course === col.label || course === col.course) ? 'heightLight' : ''"
+                  :class="
+                    course === col.label || course === col.course
+                      ? 'heightLight'
+                      : ''
+                  "
                   :style="{
                     'line-height': '30px',
                     color: ['p', 't'].includes(col.field)
@@ -37,7 +40,7 @@
                       : '#8A8986',
                   }"
                 >
-                  {{ col.language?i18n_t(col.language):col.label }}
+                  {{ col.language ? i18n_t(col.language) : col.label }}
                 </span>
                 <div
                   v-else
@@ -74,26 +77,28 @@
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
-            <span class="table-name" :class="{
-              [`csid_${_.get(detail_info, 'csid')}`] : true
-            }">
+            <span
+              class="table-name"
+              :class="{
+                [`csid_${_.get(detail_info, 'csid')}`]: true,
+              }"
+            >
               <!-- 发球方小圆点 -->
               <span
                 class="round"
                 v-if="
                   _.get(detail_info, 'mmp') != 0 &&
                   _.get(detail_info, 'csid') != '4' &&
-                  (
-                    _.get(detail_info, 'mat') == 'away' && props.rowIndex === 1 ||
-                    _.get(detail_info, 'mat') == 'home' && props.rowIndex === 0
-                 )
+                  ((_.get(detail_info, 'mat') == 'away' &&
+                    props.rowIndex === 1) ||
+                    (_.get(detail_info, 'mat') == 'home' &&
+                      props.rowIndex === 0))
                 "
               >
               </span>
-              <span v-else style="margin-right: 6px;"></span>
+              <span v-else style="margin-right: 6px"></span>
               <span class="txt">{{ props.row.name }}</span>
-            </span
-            >
+            </span>
           </q-td>
           <q-td key="q1" :props="props">
             <span
@@ -156,8 +161,8 @@
               props.row.p
             }}</span>
           </q-td>
-           <!--新增加时赛比分和点球大战比分 start-->
-           <q-td key="x" :props="props">
+          <!--新增加时赛比分和点球大战比分 start-->
+          <q-td key="x" :props="props">
             <span :class="[course === 'x' ? 'heightLight' : '']">{{
               props.row.x
             }}</span>
@@ -260,9 +265,25 @@ const get_score_result = (list, val) => {
 
   let result = [];
   const detail_info = props.detail_info;
+  const {cds} = detail_info
   result = list.map((item) => {
     if (detail_info.csid == 1 || detail_info.csid == 3) {
-      return {
+      //  如果是C01数据，隐藏角球黄牌红牌点球
+      if (cds=='C01') {
+        return {
+        name: item.name,
+        q1: '', // 角球
+        q2: '', // 黄牌
+        ht:'', // 红牌
+        q3: '', // 点球
+        q4: msc_obj && msc_obj.S2 ? msc_obj.S2[item.key] : 0, // 半场
+        t: msc_obj && msc_obj.S1 ? msc_obj.S1[item.key] : 0, // 全场
+        x: msc_obj && msc_obj.S7 ? msc_obj.S7[item.key] : 0, // 加时赛比分
+        y: msc_obj && msc_obj.S170 ? msc_obj.S170[item.key] : 0, // 点球大战
+      };
+        
+      }else{
+        return {
         name: item.name,
         q1: msc_obj && msc_obj["S5"] ? msc_obj["S5"][item.key] : 0, // 角球
         q2: msc_obj && msc_obj.S12 ? msc_obj.S12[item.key] : 0, // 黄牌
@@ -273,6 +294,8 @@ const get_score_result = (list, val) => {
         x: msc_obj && msc_obj.S7 ? msc_obj.S7[item.key] : 0, // 加时赛比分
         y: msc_obj && msc_obj.S170 ? msc_obj.S170[item.key] : 0, // 点球大战
       };
+
+      }
     } else if (detail_info.csid == 2) {
       // 48282 【SIT】【欧洲版二期】【PC】篮球详情页比分版未到的赛事阶段比分不需要展示
       return {
@@ -290,7 +313,6 @@ const get_score_result = (list, val) => {
   });
   return result;
 };
-
 
 const get_msc_data = (msc_data, current_data) => {
   const detail_info = props.detail_info;
@@ -345,7 +367,6 @@ const get_msc_data = (msc_data, current_data) => {
  * @return {undefined} undefined
  */
 const format_msc = (detials) => {
-
   /**
    * csid 比赛阶段的对象变量名
    * msc比分数据
@@ -540,9 +561,9 @@ watch(
   () => props.score_list,
   (val) => {
     const detail_info = props.detail_info;
-    columns.value =[]
-    columns.value = JSON.parse(JSON.stringify(sport_columns[detail_info.csid])) ;
-   
+    columns.value = [];
+    columns.value = JSON.parse(JSON.stringify(sport_columns[detail_info.csid]));
+
     //加时赛
     if (["32", "41", "33", "42", "110"].includes(detail_info.mmp)) {
       //  加时赛
@@ -555,9 +576,9 @@ watch(
         headerStyle: { width: "33px", color: "#ff7000" },
       });
     }
-      //点球大战,点球大战一定会有加时赛
-      if (["34", "50", "120"].includes(detail_info.mmp) ) {
-        columns.value.push({
+    //点球大战,点球大战一定会有加时赛
+    if (["34", "50", "120"].includes(detail_info.mmp)) {
+      columns.value.push({
         name: "x",
         align: "left",
         label: "T",
@@ -565,7 +586,7 @@ watch(
         icon: "jiashi",
         headerStyle: { width: "33px", color: "#ff7000" },
       });
-        columns.value.push({
+      columns.value.push({
         name: "y",
         align: "left",
         label: "Y",
@@ -573,7 +594,16 @@ watch(
         icon: "detail_point",
         headerStyle: { width: "33px", color: "#ff7000" },
       });
-        }
+    }
+    const {cds,csid} = detail_info
+    //  如果是C01数据，隐藏角球黄牌红牌点球  cds=='C01'&&
+    if (cds=='C01'&&[1,3].includes(Number(csid))) {
+      columns.value[1].icon = '1'
+      columns.value[2].icon = '1'
+      columns.value[3].icon = '1'
+      columns.value[4].icon = '1' 
+    }
+
     insetColumnTooltip();
   },
   { immediate: false, deep: true }
@@ -621,7 +651,7 @@ watch(
   display: flex;
   align-items: center;
   text-overflow: ellipsis;
-  &.csid_1{
+  &.csid_1 {
     margin-left: 11px;
   }
 }
@@ -638,7 +668,6 @@ watch(
   background-color: var(--q-gb-bg-c-12);
   margin-right: 4px;
 }
-
 
 //.stage-13,.stage-14,.stage-15,
 //.stage-302,.stage-16,.stage-303{

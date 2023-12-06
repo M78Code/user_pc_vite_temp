@@ -214,9 +214,9 @@ function set_base_data_init_ouzhou(play_num = '01') {
 	try {
 		let {
 			menu_root,
-			current_ball_type,
+			current_ball_type:csid,
 			left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
-			mid_menu_result: { csid, mif, root, mid_menu_mi },
+			mid_menu_result: { mif, root, mid_menu_mi },
 			menu_data_version,
 		} = MenuData;
 		let mid = lv2_mi + play_num;
@@ -361,7 +361,7 @@ function set_base_data_init_ouzhou(play_num = '01') {
 			// }
 			data.data = matchs_list;
 		}
-		if (MenuData.is_left_zaopan()) return;
+		if (MenuData.is_left_zaopan() || matchs_list.length <= 0) return;
 		// 赛事列表 卡片数据
 		// 设置列表数据仓库
 		match_list_handle_set(matchs_list)
