@@ -767,15 +767,17 @@ const set_bet_obj_config = (params = {}, other = {}) => {
 
     // 串关数据 提示
     if(!BetData.is_bet_single){
+        // 获取商户配置的 串关投注项
         let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
         let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
         // 串关 数量不是大于1条投注项 则提示
-        if( BetData.bet_s_list.length < 2){
+        if( BetData.bet_s_list.length < min_series){
             BetViewDataClass.set_bet_before_message({
                 code: 'sasdasd',
                 message: i18n_tc('bet.bet_min_item',min_series,{ 'num': min_series})
             })
-        }else if(BetData.bet_s_list.length < 10){
+        }else if(BetData.bet_s_list.length < man_series){
+            // 串关 数量不能大于设置的数量
             BetViewDataClass.set_bet_before_message({
                 code: 'sasdasd',
                 message: i18n_tc('bet.bet_max_item',man_series,{ 'num': man_series})
