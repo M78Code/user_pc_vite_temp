@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 公共的动画模板
  */
-import {utils,formatTime,is_eports_csid,i18n_t, format_string } from 'src/core/index.js';
+import {utils,formatTime,is_eports_csid,i18n_t, format_string } from 'src/output/index.js';
 import lodash from 'lodash'
 // import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 // const licia_format = require('licia/format');

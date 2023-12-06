@@ -50,7 +50,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-view-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
-import { LayOutMain_pc } from "src/core/index.js";
+import { LayOutMain_pc } from "src/output/index.js";
 
 //是否失效
 const lock_btn = ref(false)
@@ -156,4 +156,4 @@ const cancel_handle = () => {
 }
 
 /** 选择框样式 -E*/
-</style>
+</style>src/output/index.js

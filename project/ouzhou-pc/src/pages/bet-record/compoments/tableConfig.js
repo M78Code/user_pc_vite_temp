@@ -9,7 +9,7 @@
 import { ref, onMounted } from 'vue'
 import { api_match_list } from 'src/api'
 import { responseData } from './mock'
-import { i18n_t, UserCtr } from 'src/core/index.js'
+import { i18n_t, UserCtr } from 'src/output/index.js'
 import GlobalSwitchClass from 'src/core/global/global.js'
 export function useGetOrderList () {
   const { get_order_list } = api_match_list // 接口

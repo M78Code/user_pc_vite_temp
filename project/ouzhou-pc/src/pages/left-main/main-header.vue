@@ -35,7 +35,7 @@
 <script setup>
 import { ref, onBeforeUnmount, onMounted } from "vue";
 import { get } from "lodash";
-import { UserCtr,format_balance  } from "src/core/index.js";
+import { UserCtr,format_balance  } from "src/output/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import { IconWapper } from 'src/components/icon'
 import RefrechBlance from "src/components/refresh/refresh.vue"
@@ -129,4 +129,4 @@ onBeforeUnmount(() => {
     }
   }
 }
-</style>
+</style>src/output/index.js

@@ -6,7 +6,7 @@
  */
 
 import { ref } from 'vue'
-import { MenuData, project_name } from 'src/core'
+import { MenuData, project_name } from 'src/output/index.js'
 import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -219,7 +219,7 @@ class VirtualList {
         position = scrollTop - 234 * 5
       } else {
         // 球种折叠
-        position = scrollTop - 234 * 5
+        position = scrollTop - 200
       }
     }
     return position

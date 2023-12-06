@@ -19,7 +19,7 @@
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import { MenuData,  MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, 
-  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/core/index.js";
+  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js";
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
 
 const defer_render = use_defer_render()
@@ -42,4 +42,4 @@ const get_match_item = (mid) => {
       display: none;
     }
   }
-</style>
+</style>src/output/index.js

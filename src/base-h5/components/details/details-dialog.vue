@@ -159,7 +159,7 @@ import matchDialogStage from 'src/base-h5/components/match/match-dialog-stage.vu
 import showStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
 // 工具
 import { format_total_score } from 'src/core/format/module/format-score.js'
-import { UserCtr, MenuData,compute_css_obj,useMittEmit, MITT_TYPES, MatchDetailCalss } from "src/core/index.js";
+import { UserCtr, MenuData,compute_css_obj,useMittEmit, MITT_TYPES, MatchDetailCalss } from "src/output/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
  
 
@@ -383,3 +383,4 @@ export default defineComponent({
   }
 }
 </style>
+src/output/index.js

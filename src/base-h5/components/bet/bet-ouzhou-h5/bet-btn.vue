@@ -22,7 +22,7 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js" 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit, MITT_TYPES,i18n_t,UserCtr  } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES,i18n_t,UserCtr  } from "src/output/index.js";
 
 const place_bet = () => {
   // 未投注之前 可以点击
@@ -91,3 +91,4 @@ const pack_up = (val) => {
     }
   }
 </style>
+src/output/index.js

@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { project_name } from 'src/core'
+import { project_name } from 'src/output'
 import PageSourceData from "src/core/page-source/page-source.js";
 const { page_source } = PageSourceData;
 // 浏览器高度

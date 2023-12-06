@@ -8,7 +8,7 @@
 import { ref ,reactive} from "vue"
 import { SessionStorage } from "src/core/utils/index.js"
 import { debounce } from "lodash";
-import { MatchDataWarehouse_H5_Detail_Common } from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common } from "src/output/index";
 export default class MatchDetailCtr {
  
   constructor( ) {

@@ -107,7 +107,7 @@
 <script setup>
 import { ref, reactive } from "vue"
 import lodash from 'lodash'
-import { format_odds,formatTime } from 'src/core/index.js'
+import { format_odds,formatTime } from 'src/output/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { IconWapper } from 'src/components/icon'
@@ -233,3 +233,4 @@ const del_bet_item = () => {
   }
 }
 </style>
+src/output/index.js

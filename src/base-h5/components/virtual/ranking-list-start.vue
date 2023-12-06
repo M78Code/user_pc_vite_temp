@@ -44,7 +44,7 @@
 import { api_virtual } from "src/api/index.js";
 import noData from "src/base-h5/components/common/no-data.vue";
 import { onUnmounted, reactive, toRefs, defineComponent } from "vue";
-import{ compute_img_url, i18n_t } from 'src/core/index.js'
+import{ compute_img_url, i18n_t } from 'src/output/index.js'
 export default defineComponent({
   name: "ranking_list_start",
 
@@ -355,3 +355,4 @@ export default defineComponent({
   }
 }
 </style>
+src/output/index.js

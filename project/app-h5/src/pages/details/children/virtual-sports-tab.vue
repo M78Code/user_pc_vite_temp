@@ -436,3 +436,4 @@ export default defineComponent({
   background-size: 100% 100%;
 }
 </style>
+src/output

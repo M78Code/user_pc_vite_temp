@@ -13,7 +13,7 @@
 import { api_common, api_analysis } from "src/api";
 import lodash_ from "lodash";
 import { computed, nextTick, ref, watch } from "vue";
-import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr, sprite_images_postion } from "src/core/";
+import { SessionStorage, useMittEmit, MITT_TYPES, UserCtr, sprite_images_postion } from "src/output";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 

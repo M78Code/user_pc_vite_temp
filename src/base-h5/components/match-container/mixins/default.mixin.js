@@ -3,13 +3,13 @@ import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { useMittEmit, MITT_TYPES, UserCtr } from  "src/core"
+import { useMittEmit, MITT_TYPES, UserCtr } from  "src/output"
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
-import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/core/index.js"
+import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
 import { format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
@@ -373,7 +373,7 @@ export default defineComponent({
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' }  = this.match_of_list
+      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
@@ -383,10 +383,10 @@ export default defineComponent({
      * @description 联赛折叠
      */
     handle_league_fold () {
-      const { tid, is_virtual = false, warehouse_type = '' }  = this.match_of_list
+      const { tid, is_virtual = false, warehouse_type = '', start_flag = '' }  = this.match_of_list
       // 首页热门，详情页，不需要用到折叠
       if (is_hot.value || is_detail.value) return;
-      MatchFold.set_league_fold(this.match_of_list)
+      MatchFold.set_league_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})

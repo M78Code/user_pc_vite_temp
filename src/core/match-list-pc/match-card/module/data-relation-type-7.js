@@ -13,14 +13,14 @@
      * 处理 ： 9 
      * 因为首页有两个列表  所以不能用同一个表征类  需要新创建一个五大联赛的表征类
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/index.js'
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import {ref} from "vue"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
     import {compute_style_template_by_matchinfo} from "./compute-style-template.js"
-    import {get_match_status} from "src/core/index.js"
+    import {get_match_status} from "src/output/index.js"
     import {
       ouzhou_match_status_title_card_template,
       ouzhou_sport_title_card_template,

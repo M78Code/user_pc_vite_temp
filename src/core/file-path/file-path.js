@@ -2,7 +2,7 @@ import lodash from 'lodash'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 // 电竞赛种csid
 const e_sport_csids = [101, 100, 102, 103];
-import { UserCtr } from 'src/core/'
+import { UserCtr } from 'src/output'
  
  
 // 目前环境信息

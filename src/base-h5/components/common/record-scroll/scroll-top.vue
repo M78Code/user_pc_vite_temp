@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { utils,UserCtr, compute_img_url, PROJECT_NAME } from 'src/core/index.js'
+import { utils,UserCtr, compute_img_url, PROJECT_NAME } from 'src/output/index.js'
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
 import { scroll_top_icon } from 'src/base-h5/core/utils/local-image.js'
@@ -105,3 +105,4 @@ onUnmounted(() => {
   }
 }
 </style>
+src/output/index.js

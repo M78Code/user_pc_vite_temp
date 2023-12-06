@@ -16,4 +16,4 @@ const images = ['/ouzhou-h5/image/detail/animation.png']
 
 
 
-</script>
+</script>src/output/index

@@ -13,7 +13,7 @@ import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter, useRoute } from "vue-router";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { MatchDetailCalss, LayOutMain_pc,GlobalSwitchClass,MenuData,SearchPCClass,UserCtr ,useMittEmit,MITT_TYPES} from "src/core"; 
+import { MatchDetailCalss, LayOutMain_pc,GlobalSwitchClass,MenuData,SearchPCClass,UserCtr ,useMittEmit,MITT_TYPES} from "src/output"; 
 //投注类
 import BetData from "src/core/bet/class/bet-data-class.js";
 export const useGetGlobal = ({  back_to }) => {

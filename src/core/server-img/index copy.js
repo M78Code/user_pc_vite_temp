@@ -2,7 +2,7 @@ import { sprite, local_config } from 'project_path/src/css/server-img/'
 import { computed, ref } from "vue";
 import all_assets from "app/job/output/assets/index.json";
 
-import { UserCtr, useMittOn, MITT_TYPES } from "src/core/";
+import { UserCtr, useMittOn, MITT_TYPES } from "src/output";
 import { isObject, get } from 'lodash'
 const theme = ref(UserCtr.theme);
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;

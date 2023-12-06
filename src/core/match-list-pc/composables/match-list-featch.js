@@ -2,9 +2,9 @@ import lodash from "lodash";
 import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData } from "src/core/index.js";
+import { PageSourceData } from "src/output/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-import { MatchDataWarehouse_PC_List_Common  } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common  } from "src/output/index.js";
 import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-list-other.js';
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'

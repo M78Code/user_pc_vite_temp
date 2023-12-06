@@ -156,7 +156,7 @@
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, nextTick, computed, onBeforeUnmount, onMounted, } from "vue";
-import { i18n_t, compute_css_obj, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,PROJECT_NAME } from "src/core/index.js";
+import { i18n_t, compute_css_obj, GlobalAccessConfig, useMittOn, MITT_TYPES, UserCtr, MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,PROJECT_NAME } from "src/output/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
@@ -1004,4 +1004,4 @@ if (MenuData.is_hot()) {
     }
   }
 }
-</style>
+</style>src/output/index.js

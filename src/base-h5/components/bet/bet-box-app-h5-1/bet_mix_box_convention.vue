@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup>
-import { format_currency, i18n_t } from 'src/core/index.js'
+import { format_currency, i18n_t } from 'src/output/index.js'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 </script>
 
@@ -69,3 +69,4 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
   font-size: 14px;
 }
 </style>
+src/output/index.js

@@ -26,7 +26,7 @@ import { computed, ref } from 'vue'
 import OddItem from './odd-item.vue'
 import lodash from 'lodash'
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { use_sports_play_title } from 'src/core/constant/index.js'
 
@@ -145,4 +145,4 @@ const get_time_hps = (hps) => {
       top: 2px;
     }
   }
-</style>
+</style>src/output/index.js

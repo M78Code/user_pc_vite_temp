@@ -1,7 +1,7 @@
 import all_sprit_fn from "project_path/src/css/server-img/sprite-img/index.js";
 import compute_other_image_css from "project_path/src/css/server-img/other-img/index.js";
 
-import { UserCtr, useMittOn, MITT_TYPES } from "src/core/";
+import { UserCtr, useMittOn, MITT_TYPES } from "src/output";
 
 /**
  * 计算精灵图和 其他主题图 的 css

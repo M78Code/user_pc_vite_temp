@@ -36,7 +36,7 @@
 
 <script setup>
 import { ref, watch, onMounted, nextTick, computed } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 const props = defineProps({
   tab_options: {
@@ -181,3 +181,4 @@ onMounted(()=>{
   }
 }
 </style>
+src/output/index.js

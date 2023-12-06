@@ -133,7 +133,7 @@ import { api_common } from "src/api/index.js";
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/output/index.js";
 
 export default defineComponent({
   name: "tournament_play_new",
@@ -735,4 +735,4 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
   @import "src/base-h5/components/details/styles/details.scss";
-</style>
+</style>src/output/index.js

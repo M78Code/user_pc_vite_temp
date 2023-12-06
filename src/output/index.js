@@ -275,7 +275,6 @@ export * from "src/core/server-img/";
  *
  */
 import ServerTime from './server-time/server-time'
-import { M } from "licia/moment";
 
 export {
   //

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { i18n_t } from "src/core/index.js";
+import { i18n_t } from "src/output/index.js";
 
 export default {
   name: "no_data",
@@ -97,4 +97,4 @@ export default {
       font-size: 12px;
     }
   }
-}</style>
+}</style>src/output/index.js

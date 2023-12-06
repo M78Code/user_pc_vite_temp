@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { compute_value_by_cur_odd_type, MatchDetailCalss } from "src/core/index.js"
+import { compute_value_by_cur_odd_type, MatchDetailCalss } from "src/output/index.js"
 import common, { state } from './common.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {
@@ -188,4 +188,4 @@ function resetStatus() {
     }
   }
 }
-</style>
+</style>src/output/index.js

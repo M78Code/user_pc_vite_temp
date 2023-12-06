@@ -23,7 +23,7 @@
 <script setup>
 
 import { ref, onMounted, reactive, onUnmounted } from "vue";
-import { i18n_t, MenuData } from "src/core/index.js";
+import { i18n_t, MenuData } from "src/output/index.js";
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -203,4 +203,4 @@ onUnmounted(() => {
       background-color: var(--q-gb-bg-c-2) !important;
     }
 }
-</style>
+</style>src/output/index.js

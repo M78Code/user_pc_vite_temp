@@ -30,7 +30,7 @@
   import daysSelect from "src/base-h5/components/cathectic/ouzhou-h5/days-select.vue"
   import { onMounted, onUnmounted,  ref, provide } from 'vue'
   import { i18n_t } from "src/boot/i18n.js";
-  import {compute_local_project_file_path} from "src/core/index.js"
+  import {compute_local_project_file_path} from "src/output/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
   
 
@@ -123,4 +123,4 @@
     background-color: var(--q-gb-bg-c-10);
   }
   </style>
-  
+  src/output/index.js

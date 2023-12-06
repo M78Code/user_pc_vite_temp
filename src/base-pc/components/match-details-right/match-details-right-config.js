@@ -19,7 +19,7 @@ import {
   MatchDetailCalss,
   LayOutMain_pc,
   GlobalSwitchClass
-} from "src/core/index.js";
+} from "src/output/index.js";
 //moni
 // import MenuData from "./menuData"
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
