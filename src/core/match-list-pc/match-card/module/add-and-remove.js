@@ -187,12 +187,14 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   callback
 ) => {
   // 列表接口数据类型为赛事列表
+  let len=MatchListCardData.match_list_key.length;
   let match_list = MatchListCardData.match_list_key;
   match_list.forEach((match, index) => {
     if (match.mid == remove_mid) {
       match_list.splice(index, 1);
     }
   });
+  if(len==match_list.length)return; //如果总是没有变化就直接返回
   if (match_list.length == 0) {
     // 参照 remove_match_callback_when_match_list_length_0_demo
     if (callback && callback.length_0_fn) {
