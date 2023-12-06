@@ -53,12 +53,14 @@ export default {
           console.log(" init_domain --  开始执行:");
           // 实例化域名检测类对象
           AllDomain.create(() => {
-            enter_params()
+          
             // 首次进入,发现最快的域名
             console.error(" init_domain -- 回调执行:");
             // http初始化方法 会调用 setApiDomain
             // ws和http域名切换逻辑
             http.setApiDomain();
+
+            enter_params()
             // 元数据初始化
             base_data.init();
             // 投注信息 初始化
