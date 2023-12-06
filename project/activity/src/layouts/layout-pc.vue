@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
       <q-page class="flex flex-center">
-        <PagePc/>
+        <PagePc />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -10,13 +10,19 @@
 <script>
 import { defineComponent, defineAsyncComponent } from "vue";
 import _ from "lodash";
-import PageH5 from "../pages/yazhou-h5/index.vue";
+
 import PagePc from "../pages/yazhou-pc/index.vue";
+//头部引入
+import {
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "src/core/index.js";
 import { UserCtr } from "src/core/index.js";
 export default defineComponent({
   name: "layout-pc",
   components: {
- 
     PagePc,
   },
   data() {
@@ -46,6 +52,8 @@ export default defineComponent({
     // html宽度基准值不为375的商户(如：外层样式宽度为750)
     this.wpx = url_search.get("wpx");
     this.inner_height = window.innerHeight;
+    //created 内 执行
+    this.handle_generat_emitters();
   },
   mounted() {},
   methods: {
@@ -98,11 +106,11 @@ export default defineComponent({
         UserCtr.set_theme();
       }
     },
- 
+
     //小屏幕rem适配方案，(375的设计稿，16px，可写成.16rem)
     onResize() {
       let html_ele = document.documentElement;
-      this.$root.$emit(MITT_TYPES.EMIT_WINDOW_RESIZE);
+      useMittEmit(MITT_TYPES.EMIT_WINDOW_RESIZE);
       // 等待视口高度变过来以后再做相应的操作
       clearTimeout(this.timer_5);
       this.timer_5 = setTimeout(() => {
@@ -222,22 +230,40 @@ export default defineComponent({
         this[timer] = null;
       }
     },
+    /**
+     * 生成事件监听
+     */
+    handle_generat_emitters() {
+      let event_pairs = [
+        // 投注数量
+        {
+          type: MITT_TYPES.EMIT_GO_TO_VENDER,
+          callback: () => {
+            this.$nextTick(() => {
+              window.is_token_invalid_show = true;
+              this.is_token_invalid_show = true;
+            });
+          },
+        },
+        {
+          type: MITT_TYPES.EMIT_DOMAIN_ERROR_ALERT,
+          callback: () => {
+            this.$nextTick(() => {
+              this.is_domain_invalid_show = true;
+            });
+          },
+        },
+      ];
+      let { emitters_off } = useMittEmitterGenerator(event_pairs);
+      this.emitters_off = emitters_off;
+    },
+
     // 添加相应监听事件
     on_listeners() {
       // 设置网络状态
       window.addEventListener("offline", this.offlineEvent);
       window.addEventListener("online", this.onlineEvent);
-      this.$root.$on(MITT_TYPES.EMIT_GO_TO_VENDER, () => {
-        this.$nextTick(() => {
-          window.is_token_invalid_show = true;
-          this.is_token_invalid_show = true;
-        });
-      });
-      this.$root.$on(MITT_TYPES.EMIT_DOMAIN_ERROR_ALERT, () => {
-        this.$nextTick(() => {
-          this.is_domain_invalid_show = true;
-        });
-      });
+
       // 阻止双击放大
       document.addEventListener("touchstart", this.touchstart_event_fun);
       // 阻止双指放大
