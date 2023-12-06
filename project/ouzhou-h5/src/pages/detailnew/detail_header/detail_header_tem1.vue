@@ -424,7 +424,7 @@ onMounted(()=>{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0px 20px 0 20px;
+      padding: 0px 20px 10px 20px;
       .match-detail-team-name {
         // font-weight: bold;
         font-size: 15px;
