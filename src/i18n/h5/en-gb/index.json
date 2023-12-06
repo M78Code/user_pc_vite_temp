@@ -112,8 +112,8 @@
     "bet_col": {
       "bet_col_1": {
         "bet_col_1": "Home",
-        "bet_col_X": "Away",
-        "bet_col_2": "Draw"
+        "bet_col_X": "Draw",
+        "bet_col_2": "Away"
       },
       "bet_col_2": {
         "bet_col_Over": "Over",
