@@ -244,7 +244,7 @@ class BetViewData {
       case '0400452':
       case '0400461':
       case 'DJ006':
-        text = "bet_message.已失效"
+        text = "bet_message.m_0402001"
         break
        
       case '0402009':

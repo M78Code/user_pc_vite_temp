@@ -6,15 +6,15 @@
     <!-- 展开项 -->
     <div v-show="BetData.bet_state_show" class="bet-box-content">
 
-      <div class="f-b-c px-12 h40 font14 bet-delete-all">
+      <div class="f-b-c px-12 h40 font14 bet-delete-all" v-if="(BetData.bet_single_list.length || BetData.bet_s_list.length) && BetViewDataClass.bet_order_status == 1 ">
         <div class="cursor">
           <span class="icon-delete"></span>
           <span class="ml-16">删除全部</span>
         </div>
         <div class="cursor re" @click="show_single_change()">
           <div class="f-e-c">
-            {{ BetData.is_bet_single }}-{{ BetData.is_bet_merge }}
-            <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
+            <!-- {{ BetData.is_bet_single }}-{{ BetData.is_bet_merge }} -->
+            <span v-if="BetData.is_bet_single && !BetData.is_bet_merge">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="BetData.is_bet_single && BetData.is_bet_merge">{{ i18n_t('bet.merge') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
@@ -22,7 +22,7 @@
           </div>
           <div class="show_single" v-if="ref_data.show_single">
             <!-- 单关 -->
-            <div :class="BetData.is_bet_single?'active':''" class="bet-li" @click="set_single_change('single')">{{i18n_t('bet.bet_one_')}}</div>
+            <div :class="BetData.is_bet_single && !BetData.is_bet_merge?'active':''" class="bet-li" @click="set_single_change('single')">{{i18n_t('bet.bet_one_')}}</div>
             <!-- 串关 -->
             <div :class="BetData.is_bet_single?'':'active'" class="bet-li" @click="set_single_change('series')">{{i18n_t('bet.bet_series')}}</div>
             <!-- 单关合并 -->
@@ -151,6 +151,9 @@ const set_single_change = val => {
       font-weight: 400;
       letter-spacing: 0px;
       border-bottom: 1px solid var(--q-gb-bd-c-2);
+      &.active{
+        color: var(--q-gb-t-c-2);
+      }
     }
   }
 </style>

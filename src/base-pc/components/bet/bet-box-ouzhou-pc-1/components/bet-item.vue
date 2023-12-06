@@ -22,23 +22,14 @@
             </div>
             <div class="fw-e-s bet-right" v-if="items.ol_os == 1">
                 <div class="f-c-c bet-money">
+                    <span class="font14 font700 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
+                        @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
+                    </span>
+
                     <div class="show_img">
                         <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
                         <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
                     </div>
-                    <span class="font14 font700 mr-10 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
-                        @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
-                    </span>
-                    <BetInput :items="items" />
-                </div>
-                <div class="font12 h12 mt-4">
-                    <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                    <span class="text-1a1 font500" v-if="[1].includes(items.playId*1)"> 
-                        {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount)) || '0.00' }} 
-                    </span>
-                    <span class="text-1a1 font500" v-else>
-                        {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) || '0.00' }} 
-                    </span>
                 </div>
             </div>
 
@@ -63,24 +54,23 @@
             </div>
            
         </div>
-        <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money && items.ol_os == 1">
-            <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
-                {{index == 'max' ? '' : '+' }}{{obj}}
-            </li>
-        </ul>
+        
+        <betInput :items="items"></betInput>
+       
     </div>
 </template>
 
 <script setup>
 
 import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney } from "src/core/"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t } from "src/core/"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import mathJs from 'src/core/bet/common/mathjs.js'
 import lodash_ from "lodash"
 
-import BetInput from "./bet-input.vue"  // 投注输入框
+import betInput from "./bet-input.vue"
+
 
 const props = defineProps({
     items:{},
@@ -247,9 +237,7 @@ const set_delete = () => {
             }
         }
 
-        .text-8A8986-i {
-            color: var(--q-gb-t-c-8) !important
-        }
+       
     }
 
     .bet-bet-money {
@@ -308,6 +296,7 @@ const set_delete = () => {
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);
+        margin-right: 7px;
     }
     .red-up{
         color: var(--q-gb-t-c-7);

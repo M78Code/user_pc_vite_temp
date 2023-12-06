@@ -1,11 +1,38 @@
 
 
 <template>
-    <div>
-        <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-        :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
+    <div class="px-12 bet-money">
+        <div class="f-b-c pl-18 bet-input-info">
+            <div>
+                <div class="font14">单关</div>
+                <div class="font12 h12">
+                    <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
+                    <span class="text-8A8986-i font500" v-if="[1].includes(items.playId*1)"> 
+                        {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally), items.bet_amount))  }} 
+                    </span>
+                    <span class="text-8A8986-i font500" v-else>
+                        {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) }} 
+                    </span>
+                </div>
+            </div>
+    
+            <div>
+                <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
+                :placeholder="`${i18n_t('bet.money_range')} ${ref_data.min_money}~${format_money3(ref_data.max_money)}`" maxLength="11"  />
+            </div>
+          
+        </div>
+        <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
+        <div>
+              <!-- <div>
+                <ul class="bet-bet-money f-b-c" v-show="ref_data.show_money && items.ol_os == 1">
+                    <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
+                        {{index == 'max' ? '' : '+' }}{{obj}}
+                    </li>
+                </ul>
+            </div> -->
+        </div>
     </div>
-
 </template>
 
 <script setup> 
@@ -13,8 +40,9 @@ import { reactive,onMounted,onUnmounted } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr, format_money3 } from "src/core/"
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 } from "src/core/"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
+import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({
     items:{},
 })
@@ -150,28 +178,26 @@ const show_quick_amount = state => {
 </script>
 
 <style scoped lang="scss">
+@import "../css/bet.scss";
+</style>
+
+<style scoped lang="scss">
+.bet-money{
+    background: var(--q-gb-bg-c-15);
+    .bet-input-info{
+        height: 58px;
+    }
+    .text-8A8986-i {
+        color: var(--q-gb-t-c-8) !important
+    }
+}
 .bet-input-focus{
     position: relative;
     background: var(--q-gb-bg-c-18);
     transition: .3s;
-    &:after{
-         //width: 1px;
-         //height: 14px;
-        // transition: .3s;
-        // content: '';
-        // position: absolute;
-        //left: 8px;
-        // top: 50%;
-       //  margin-top: -7px;
-      //  background: #FF7000;
-        // z-index: 9;
-    }
-     .bet-input{
-        // padding-left: 14px;
-     }
 }
 .bet-input{
-    width: 130px;
+    width: 160px;
     height: 34px;
     background: none;
     border: 0.5px solid var(--q-gb-bd-c-5);
