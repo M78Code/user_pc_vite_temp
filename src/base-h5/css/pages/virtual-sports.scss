@@ -85,7 +85,7 @@
   .circle-time-wrapper {
     svg {
       path {
-        stroke: var(--q-color-fs-color-50);
+        stroke: var(--q-gb-t-c-12);
       }
     }
   }
@@ -153,14 +153,14 @@
     .final-circle {
       svg {
         path {
-          stroke: var(--q-color-com-fs-color-9);
+          stroke: var(--q-gb-bd-c-8);
         }
       }
     }
     .timer-format {
-      color:var(--q-color-fs-color-50) !important;
+      color: var(--q-gb-t-c-12) !important;
       &.last {
-        color: var(--q-color-com-fs-color-48) !important;
+        color: var(--q-gb-bd-c-8) !important;
       }
     }
   }

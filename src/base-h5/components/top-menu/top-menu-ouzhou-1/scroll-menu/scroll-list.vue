@@ -24,7 +24,7 @@
     </div>
 </template>
 <script setup>
-import { ref , watch } from "vue"
+import { ref , watch ,nextTick} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData  } from "src/core/";
@@ -80,7 +80,10 @@ const on_change_play = (item,index) => {
 }
 const reset = (mi) => {
     if(mi)playValue.value = mi;
-    scrollRef.value.scrollTo(0, 'start-force')
+    nextTick(()=>{
+        const index = props.menuList?.findIndex(n=>n.mi == playValue.value) || 0;
+        scrollRef.value.scrollTo(index-2, 'start-force')
+    })
 }
 
 defineExpose({

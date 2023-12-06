@@ -98,7 +98,7 @@ export default {
   },
   data(){
     return {
-      version_name:window.env.config.DEFAULT_VERSION_NAME,
+      version_name:window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME
     }
   },
   computed:{

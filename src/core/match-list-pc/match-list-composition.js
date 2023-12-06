@@ -63,8 +63,8 @@ useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_pag
 * @param {Object} params 其他参数
 */
 export function fetch_match_list(is_socket = false, cut) {
+	clearTimeout(axios_debounce_timer2); //取消上一次请求
 	const match_list_params = get_match_list_params();
-	console.log('match_list_params', match_list_params);
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid) {

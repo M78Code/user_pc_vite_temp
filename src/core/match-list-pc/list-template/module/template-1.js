@@ -3,7 +3,7 @@
  *
  */
 import * as TemplateCommon from "./template-common.js";
-import { UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 let hps_15_minute = TemplateCommon.hps_15_minute;
 //1号模板  模板主盘
 export const template_1_main = [

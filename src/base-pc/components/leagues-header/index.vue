@@ -99,7 +99,7 @@ const getName = () => {
 }
 const jumpTo = ()=>{
 	let route_name = lodash_.get(MenuData.router_info,'pre_route')
-  router.push({name:route_name})
+  	router.push({name:route_name})
 }
 
 </script>

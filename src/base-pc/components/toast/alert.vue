@@ -3,10 +3,10 @@
 -->
 
 <template>
-  <q-dialog v-model="is_show" :persistent="backDrop">
+  <q-dialog :model-value="is_show" v-if="is_show" :persistent="backDrop">
     <div class="dialog_content">
       <div class="alert-wrap">
-        <img :src="imgSrc[lang]" alt="" style="width: 100%;">
+        <img :src="imgSrc[UserCtr.lang]" alt="" style="width: 100%;">
         <div class="row items-center  relative-position">
           <div class="text">{{ i18n_t("login.login_out_dear_user") }}</div>
           <!-- 域名错误弹窗 -->
@@ -71,11 +71,6 @@ const imgSrc = reactive({
 })
 /* 是否域名错误弹窗 */
 const is_domain_error = ref(false)
-/** 
- * 语言
- */
-const lang = ref(UserCtr.lang||'en')
-
 /** 
  * 判断是否是登录状态 default: false
  */

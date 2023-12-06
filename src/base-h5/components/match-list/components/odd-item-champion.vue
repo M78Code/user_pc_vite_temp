@@ -105,7 +105,7 @@ const get_odds_value = (ol_item,hsw) => {
   }
 
   .on {
-    color: var(--q-gb-bg-c-2);
+    color: var(--q-gb-t-c-20);
     max-width: 1.06rem;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -121,7 +121,7 @@ const get_odds_value = (ol_item,hsw) => {
   }
 
   .odds {
-    color: #414655;
+    color: var(--q-gb-t-c-20);
     position: relative;
     font-weight: 600;
 

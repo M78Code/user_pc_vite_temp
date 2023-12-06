@@ -406,7 +406,7 @@ class MatchMeta {
    */
   get_base_params (euid) {
     // match中 hpsFlag 都为0 除开冠军或电竞冠军; 赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
-    const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
+    const hpsFlag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     const current_lv_1_menu_i = lodash.get(MenuData, 'current_lv_1_menu_i')
     const type = MenuData.menu_id_map(current_lv_1_menu_i) ? MenuData.menu_id_map(current_lv_1_menu_i) : current_lv_1_menu_i
     return {
@@ -418,7 +418,7 @@ class MatchMeta {
       sort: PageSourceData.sort_type,
       //标准版和简版 1为新手版  2为标准版
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
-      hpsflag
+      hpsFlag
     };
   }
 
@@ -505,8 +505,7 @@ class MatchMeta {
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,
-        tid,
-        md: this.http_params.md
+        md: this.http_params.md + ''
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });

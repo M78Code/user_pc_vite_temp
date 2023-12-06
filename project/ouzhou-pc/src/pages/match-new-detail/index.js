@@ -66,7 +66,7 @@ export function usedetailData(route) {
   watch(
     () => route.params,
     (val) => {
-      if (val && val.mid) {
+      if (val && val.mid && detail_info.value?.mmp != '999' ) {
         route_parmas.value = val;
         init();
       }
@@ -554,7 +554,7 @@ export function usedetailData(route) {
     let skt_data = obj.cd;
     if (skt_data.mmp == 999) {
       //切换赛事
-      mx_autoset_active_match({ mid: route.params.mid });
+      // mx_autoset_active_match({ mid: route.params.mid });
     }
   }
   // setTimeout(() => {
@@ -581,8 +581,6 @@ export function usedetailData(route) {
   /* 赛事结束之后调取详情接口 */
   message_fun.push(
     useMittOn(MITT_TYPES.EMIT_SWITCH_MATCH, (parmas) => {
-      // route_parmas.value = parmas
-      refresh();
     }).off
   );
     // 监听ws断连
@@ -655,13 +653,16 @@ export function usedetailData(route) {
   watch(
     () => detail_info.value?.mmp,
     (_new, _old) => {
+   
       // 如果是999赛事结束即调接口切换赛事
       if (_new == "999") {
+        console.log('mmp',3333);
         mx_autoset_active_match({ mid: route.params.mid });
       }
       // 否则更新玩法集
       else {
         if (_old != undefined && _new!=_old) {
+          console.log('mmp',1111);
           get_category();
         }
       }
@@ -672,16 +673,19 @@ export function usedetailData(route) {
   watch(
     () => detail_info.value?.ms,
     (_new, _old) => {
+     
       let arr_ms = [0, 1, 2, 7, 10, 110];
       if (!arr_ms.includes(Number(_new)) && _new != undefined) {
+        console.log('mmp',4444);
         mx_autoset_active_match({ mid: route.params.mid });
       }
       // 赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
       else {
+        console.log('mmp',222);
         // ms变更时才调用
         if (_new != _old && _old) {
           // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-          refresh();
+          // refresh();
         }
       }
     },

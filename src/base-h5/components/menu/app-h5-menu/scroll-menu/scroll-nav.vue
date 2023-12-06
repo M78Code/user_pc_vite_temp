@@ -52,7 +52,7 @@ onBeforeUnmount(() => {
     flex-wrap: nowrap;
     position: relative;
     &.current {
-        color: var(--q-gb-bd-c-2);
+        color: var(--q-gb-t-c-20);
       }
     .sport-w-icon {
       width: auto;

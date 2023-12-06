@@ -369,7 +369,7 @@ export const match_collect_status = (match, obj) => {
  * @param  {boolean} is_champion  是否冠军收藏
  * @return {undefined} undefined
  */
-const mx_collect_leagues = (match, is_champion) => {
+const mx_collect_leagues = async (match, is_champion) => {
   let cur_collect_state = Number(!match.tf);
   let _params = {
     tid: match.tid,
@@ -384,7 +384,7 @@ const mx_collect_leagues = (match, is_champion) => {
       cf: cur_collect_state,
     };
   }
-  api_match.post_collect_leagues(_params);
+  await api_match.post_collect_leagues(_params);
   // .then((res) => {
   // let code = lodash.get(res, "code");
   // let data = lodash.get(res, "data");
@@ -445,7 +445,8 @@ const mx_collect_leagues = (match, is_champion) => {
   //   );
   // }
   // 获取列表最新的收藏数量
-  mx_collect_count();
+  await mx_collect_count();
+  await fethc_collect_match()
   // })
   // .catch((err) => {
   //   console.error(err)

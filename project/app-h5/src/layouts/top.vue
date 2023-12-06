@@ -22,7 +22,7 @@
     <!--  -->
     <!-- <SwitchWap /> -->
     <!--  -->
-    <SearchTab />
+    <SearchTab ref="searchTabMenu"/>
      <!-- 筛选+搜索  已脱离文档流-->
     <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
@@ -58,8 +58,9 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口
-const dateTabMenu = ref(null)
-const scrollTabMenu = ref(null)
+const dateTabMenu = ref(null);//时间dom
+const scrollTabMenu = ref(null);//滚球dom
+const searchTabMenu = ref(null);//足球tab dom
 // 监听搜索框状态
 useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     select_dialog.value = value
@@ -154,6 +155,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     //球种滚动初始化
     nextTick(()=>{
       scrollTabMenu.value.scrollTabMenu()
+      searchTabMenu.value.searchTabMenu()
     })
   })
 

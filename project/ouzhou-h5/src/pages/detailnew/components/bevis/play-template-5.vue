@@ -30,6 +30,9 @@ let betInformation = {
     assemble: [],
 };
 let baseData = []
+
+const useOtv = [ '3', '69', '71', '220', '221', '271', '272', '171', '13', '101', '106', '105', '216', '102', '107', '339' ]
+
 const AssembleData = computed(() => {
     betInformation = {
         others: [],
@@ -80,7 +83,7 @@ const go_betting = (data) => {
                     <template v-if="info.os == 1 && info._hs != 1">
                         <li class="bet" @click="go_betting(info)"
                             :class="{ 'is-active': BetData.bet_oid_list.includes(info?.oid ) }">
-
+                            <span>{{ useOtv.includes(info._hpid) ? `${info.otv}` : `${info?.on}  ${info?.ott}` }}</span>
                             <span class="ov-text">{{ compute_value_by_cur_odd_type(info.ov, info._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                         </li>
                     </template>
@@ -94,7 +97,7 @@ const go_betting = (data) => {
             <template v-for="otherChild of AssembleData.others" >
                 <li v-if="otherChild.os == 1" class="bet" @click="go_betting(otherChild)"
                     :class="{ 'is-active': BetData.bet_oid_list.includes(otherChild?.oid ) }">
-                    <span class="on-text">{{ otherChild.on }}</span>
+                    <span class="on-text">{{ useOtv.includes(otherChild._hpid) ? `${otherChild.otv}` : `${otherChild?.on}  ${otherChild?.ott}` }}</span>
                     <span class="ov-text">{{ compute_value_by_cur_odd_type(otherChild.ov, otherChild._hpid, '', MatchDetailCalss.params.sportId) }}</span>
                 </li>
                 <figure class="bet" v-if="otherChild?.os == 2">
