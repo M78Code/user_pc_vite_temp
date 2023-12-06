@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<{
   &.hpt-10{
     .component.odd-ol-item{
       flex-basis: calc(100%/3);
-      padding: 10px 0;
+      padding: 10px 4px;
     }
     .icontainer{
       flex-direction: column;
@@ -60,6 +60,9 @@ const props = withDefaults(defineProps<{
       align-items: center;
       .separate{
         display: none;
+      }
+      .item{
+        text-align: center;
       }
       .odd-image{
         position: absolute;
