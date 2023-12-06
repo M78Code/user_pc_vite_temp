@@ -36,8 +36,8 @@ function onClick() {
 
 <style scoped lang="scss">
 .component {
-  width: 0.16rem;
-  height: 0.16rem;
+  width: 0.14rem;
+  height: 0.14rem;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
