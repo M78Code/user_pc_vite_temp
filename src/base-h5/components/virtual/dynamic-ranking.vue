@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script steup>
+<script setup>
 import VirtualSportsDRTimer from "src/base-h5/components/virtual/virtual-sports-d-r-timer.vue"
 </script>
 

@@ -26,7 +26,7 @@ function onClick() {
   const { hton,mid, hpid, topKey } = props.value
   api_details.get_category_playTop({
     matchId: mid,
-    status: hton ? 1 : 0,
+    status: hton == '0' ? 1 : 0,
     playId: hpid,
     topKey
   })
@@ -41,7 +41,7 @@ function onClick() {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  margin: 0 12px;
+  margin-left: 14px;
 }
 
 .icon_zd_select {
@@ -49,6 +49,6 @@ function onClick() {
 }
 
 .icon_zd_default {
-  background-image: url($SCSSPROJECTPATH + "/image/detail/set_to.png");
+  background-image: url($SCSSPROJECTPATH + "/image/detail/set_top.png");
 }
 </style>

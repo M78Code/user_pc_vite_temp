@@ -186,7 +186,7 @@ function is_odds_seal() {
 function bet_item_select(id) {
   if (BetData.is_bet_single) {
     // 检查单关是否选中
-    return BetData.bet_single_list.includes(id);
+    return BetData.bet_oid_list.includes(id);
   } else {
     // 检查串关是否选中
     return BetData.bet_list.includes(id);
@@ -244,7 +244,7 @@ const disk_text_replace = (lang, onb) => {
  */
 function get_odds_state(mhs, hs, os) {
   let _active = get_odds_active(mhs, hs, os);
-  let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
+  let id = lodash.get(props.ol_data, "oid");
   let state = "";
   const STATE = {
     // 封盘

@@ -16,7 +16,6 @@
         <div class="no-data-text"> {{ i18n_t('detail.odd_all_closed') }}</div>
       </div>
     </template>
-
   </div>
 </template>
 <script setup lang="ts">

@@ -339,7 +339,7 @@ export default defineComponent({
      * @description: 视频同步函数
      */
     const set_init_video_on = (video_data) => {
-      VirtualVideo.get_current_match_video_process("v_p_d_got",video_data);
+      get_current_match_video_process("v_p_d_got",video_data);
     };
     /**
     *@description:虚拟体育详情页返回
@@ -406,7 +406,7 @@ export default defineComponent({
      * 初始化视频播放器
      */
     const init_video_player = () => {
-      if(!props.current_match|| !props.current_match.thirdMatchVideoUrl || m_status != 1 || state.video_play_stauts == 2) return;
+      if(!props.current_match|| !props.current_match.thirdMatchVideoUrl || props.m_status != 1 || state.video_play_stauts == 2) return;
       let video_wrap_dom = document.querySelector('.video-playing-er');
 
       if(!video_wrap_dom){
@@ -629,9 +629,9 @@ export default defineComponent({
         if(type_s === 'is_process_update'){
           state.random_inited = true;
         }
-        if(current_league){
+        if(VirtualData.current_league){
           let p = lodash.cloneDeep(get_prev_v_sports_params);
-          let p_key = `${current_sub_menu_id.value}-${current_league.menuId}`;
+          let p_key = `${current_sub_menu_id.value}-${VirtualData.current_league.menuId}`;
           p[p_key] = lodash.cloneDeep(new_);
           set_prev_v_sports_params(p);
         }

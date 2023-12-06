@@ -69,7 +69,6 @@ let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
 // if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
 //   MenuData = MenuData_App_h5
 // }
-console.log('dgsduhgbsdgsdfasd', PROJECT_NAME);
 
 switch (PROJECT_NAME) {
   case 'ouzhou-h5':

@@ -5,11 +5,12 @@
 -->
 <template>
   <div :class="['odds_new',{'odds-new2':ol_data.result != undefined,'odds-new-ky':project_name == 'app-h5'}]" :id="DOM_ID_SHOW && `list-${lodash.get(ol_data, 'oid')}`"   >
+    <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <template v-if="ol_data.result == undefined">
       <span v-if="odds_value() < 1.01 && get_cur_odd == 'EU'">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" alt="" style=" width: 0.12rem"/>
       </span>
-      <span v-else class="odds" :class="[{'red_text': status == 10, 'green_text': status == -10,'white_text':get_bet_list.includes(ol_data.id_) }]">
+      <span v-else class="odds" :class="[{'red_text': status == 10, 'green_text': status == -10,'white_text':BetData.bet_oid_list.includes(ol_data.id_) }]">
         <span>{{ odds_value() }}</span>
         <span class='change-icon' :class="{'icon-red':status == 10,'icon-green':status == -10}"></span>
       </span>
@@ -26,11 +27,11 @@
 // #TODO mixins
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import lodash from "lodash";
-import { project_name } from 'src/core'
+import { project_name,MatchDetailCalss } from 'src/core'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
-
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
@@ -43,13 +44,7 @@ export default defineComponent({
       status: '',
       DOM_ID_SHOW: '',
     });
-    // #TODO vuex
-    // computed: {
-    // ...mapGetters(['get_cur_odd','get_bet_list']),
     const get_cur_odd = computed(() => {
-      return "";
-    });
-    const get_bet_list = computed(() => {
       return "";
     });
      //输、赢、无效···
@@ -97,25 +92,7 @@ export default defineComponent({
       component_data.DOM_ID_SHOW = "DOM_ID_SHOW";
     });
     const odds_value = () => {
-      if(props.ol_data.result || props.ol_data.result == 0){
-        let result_ = props.ol_data.result
-        return t(`virtual_sports.result.${result_}`)
-      }else{
-        let r = '';
-        let r1 = compute_value_by_cur_odd_type(
-          props.ol_data.ov,
-          props.ol_data._hpid,
-          props.item_data.hsw,
-          false,
-          props.ol_data.csid
-        )
-        if(r1){
-          r = r1;
-        }else{
-          r = 0;
-        }
-        return r;
-      }
+      return compute_value_by_cur_odd_type(props.ol_data?.ov,props.ol_data?._hpid,'',MatchDetailCalss.params.sportId)
     };
     onUnmounted(() => {
       clearTimeout(component_data.clear_status_timeout);
@@ -123,11 +100,11 @@ export default defineComponent({
     return {
       ...toRefs(component_data),
       get_cur_odd,
-      get_bet_list,
       odds_value,
       calc_text,
       lodash,
-      project_name
+      project_name,
+      BetData
     }
   }
 })

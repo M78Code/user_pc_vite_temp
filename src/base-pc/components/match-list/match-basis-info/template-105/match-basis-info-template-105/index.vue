@@ -9,7 +9,6 @@
           v-if="GlobalAccessConfig.get_collectSwitch()">
           <div  class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
         </div>
-
         <!-- 比赛进程 -->
         <match-process style="cursor:pointer" v-if="match" :match="match" source='match_list' show_page="match-list" :rows="1" :date_rows="1" date_show_type="inline"
         periodColor="gray" />
@@ -22,11 +21,21 @@
     </div>
      <!-- 主队信息 -->
      <div class="row-item">
-      <div class="team-logo">
-        <img v-if="show_type == 'all' && home_avatar" 
-        :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
-        v-img="[((lodash.get(match, 'match_logo') || {}) || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter, null, update_show_default]" />
-        <div v-else v-show="lodash.get(match, 'mhn')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"></div>
+      <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'">
+        <!-- 电竞和普通赛事图片地址不同需要传入csid(球种id)进行区分 -->
+        <!-- 双打局，就会有两个头像 -->
+        <div>
+          <img v-if="show_type == 'all' && home_avatar"
+          :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"
+          v-img="[(lodash.get(match, 'match_logo') || {}).home_1_logo, (lodash.get(match, 'match_logo') || {}).home_1_letter, match?.csid, update_show_default]" />
+          <div v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_1_letter })"></div>
+        </div>
+        <div v-if="lodash.get(match,'match_logo.is_double',false)">
+          <img class="logo2" v-if="show_type == 'all' && home_avatar2"
+          :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_2_letter })"
+          v-img="[(lodash.get(match, 'match_logo') || {}).home_2_logo, (lodash.get(match, 'match_logo') || {}).home_2_letter, match?.csid, update_show_default]" />
+          <div class="logo2" v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).home_2_letter })"></div>
+        </div>
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
@@ -46,12 +55,21 @@
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
-      <div class="team-logo">
-        <img v-if="show_type == 'all' && away_avatar"
-        :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
-        v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter,  null, update_show_default]" />
-        <div v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"></div>
-      </div> 
+      <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'">
+        <!-- 同主队 -->
+        <div>
+          <img v-if="show_type == 'all' && away_avatar"
+          :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"
+          v-img="[(lodash.get(match, 'match_logo') || {}).away_1_logo, (lodash.get(match, 'match_logo') || {}).away_1_letter,  match?.csid, update_show_default]" />
+          <div v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_1_letter })"></div>
+        </div>
+        <div v-if="lodash.get(match,'match_logo.is_double',false)">
+          <img class="logo2" v-if="show_type == 'all' && away_avatar2"
+          :style="show_default_img && compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_2_letter })"
+          v-img="[(lodash.get(match, 'match_logo') || {}).away_2_logo, (lodash.get(match, 'match_logo') || {}).away_2_letter,  match?.csid, update_show_default]" />
+          <div class="logo2" v-else v-show="lodash.get(match, 'man')" :style="compute_css_obj({ key: 'pc-team-logo', position: (lodash.get(match, 'match_logo') || {}).away_2_letter })"></div>
+        </div>
+      </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div
@@ -182,9 +200,19 @@ const home_avatar = computed(()=>{
   
   return url
 })
+const home_avatar2 = computed(()=>{
+  const url = ((lodash.get(match.value, 'match_logo') || {}) || {}).home_2_logo;
+  
+  return url
+})
 
 const away_avatar = computed(()=>{
   const url = (lodash.get(match.value, 'match_logo') || {}).away_1_logo;
+  return url
+})
+
+const away_avatar2 = computed(()=>{
+  const url = (lodash.get(match.value, 'match_logo') || {}).away_2_logo;
   return url
 })
 
@@ -291,6 +319,9 @@ onUnmounted(() => {
       width: 16px;
       height: 16px;
       background-size: 100%;
+    }
+    .logo2 {
+      margin-left: -4px;
     }
   }
   .collect-box {

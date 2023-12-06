@@ -21,7 +21,7 @@
         <!-- 流畅 -->
         <div class="video-type-but" :class="{'video-type-but-action':ctr_data.video_type==2}" @click="send_video_type_click(2)">{{get_video_clarity_name2(2)}}</div>
       </div>
-      <img class="close-btn" @click="is_show_type_list = false" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/close_white.png`">
+      <img class="close-btn" @click="is_show_type_list = false" src="~public/image/common/png/close_white.png">
     </div>
     <!-- 画中画提示框 -->
       <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ i18n_t('video.open_pip')}}</div>
@@ -392,7 +392,7 @@ export default {
     cursor: pointer;
     width: 16px;
     height: 16px;
-    // background-image: url($SCSSPROJECTPATH +"/image/svg/virtual-ref.svg");
+     background-image: url($SCSSPROJECTPATH +"/image/svg/virtual-ref.svg");
     background-size: cover;
     &.is_rotate {
       animation: video-reload-btn 5s linear 0s infinite normal;

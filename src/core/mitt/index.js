@@ -1,23 +1,24 @@
 import mitt from "mitt";
  
 
-// import * as  MITT_TYPES_BASE from "base_path/core/mitt/mitt-keys.js" 
-// import * as  MITT_TYPES_PROJECT from "project_path/core/mitt/mitt-keys.js" 
+import * as  MITT_TYPES_BASE from "base_path/core/mitt/mitt-keys.js" 
+import * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js" 
 
 
-let MITT_TYPES_BASE={} 
-try {
-    MITT_TYPES_BASE = await import( "base_path/core/mitt/mitt-keys.js"  );
-} catch (error) {
-}
+// let MITT_TYPES_BASE={} 
+// try {
+//     MITT_TYPES_BASE = await import( "base_path/core/mitt/mitt-keys.js"  );
+// } catch (error) {
+//   console.error('error', error);
+// }
 
 
-let MITT_TYPES_PROJECT={} 
-try {
-    MITT_TYPES_PROJECT = await import( "project_path/src/core/mitt/mitt-keys.js"  );
-} catch (error) {
-}
-
+// let MITT_TYPES_PROJECT={} 
+// try {
+//     MITT_TYPES_PROJECT = await import( "project_path/src/core/mitt/mitt-keys.js"  );
+// } catch (error) {
+//   console.error('error', error);
+// }
 
 import { onUnmounted } from "vue";
 
