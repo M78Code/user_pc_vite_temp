@@ -743,6 +743,8 @@ export const socre_dict = (csid) => {
   return dict[csid];
 };
 
+// title 用方法返回解决国际化文字需要刷新才能生效的问题
+// Bug单号：49705
 export const allBallObj = {
   2: [
     {
