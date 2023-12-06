@@ -94,7 +94,7 @@ class MatchMeta {
     // 获取真实数据
     this.http_params.md = md
     // 是否需要开赛、未开赛归类
-    const is_classify = project_name === 'app-h5' ? false : false
+    const is_classify = project_name === 'app-h5' ? true : false
     is_match && this.get_target_match_data({ md, is_classify })
 
     // 滚球全部
@@ -384,7 +384,7 @@ class MatchMeta {
    */
   filter_hot_match_by_tid (tid = '') {
     const tid_info = this.tid_map_mids[`tid_${tid}`]
-    this.get_target_match_data({ is_classify: false, tid })
+    this.get_target_match_data({ is_classify: true, tid })
     if (!tid_info) return
     const mids = this.tid_map_mids[`tid_${tid}`].mids
     if (mids.length < 1) return 
@@ -406,7 +406,7 @@ class MatchMeta {
    */
   get_base_params (euid) {
     // match中 hpsFlag 都为0 除开冠军或电竞冠军; 赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
-    const hpsflag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
+    const hpsFlag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     const current_lv_1_menu_i = lodash.get(MenuData, 'current_lv_1_menu_i')
     const type = MenuData.menu_id_map(current_lv_1_menu_i) ? MenuData.menu_id_map(current_lv_1_menu_i) : current_lv_1_menu_i
     return {
@@ -418,7 +418,7 @@ class MatchMeta {
       sort: PageSourceData.sort_type,
       //标准版和简版 1为新手版  2为标准版
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
-      hpsflag
+      hpsFlag
     };
   }
 
@@ -500,8 +500,6 @@ class MatchMeta {
   async get_target_match_data ({is_classify = false, scroll_top = 0, md = '', is_error = false, tid = ''}) {
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     const params = this.get_base_params()
-    params.hpsFlag = params.hpsflag
-    delete params.hpsflag
     this.http_params.md = md
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
     try {
