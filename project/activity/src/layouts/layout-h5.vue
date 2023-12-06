@@ -17,8 +17,8 @@ import {
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,
-} from "src/core/index.js";
-import { UserCtr } from "src/core/index.js";
+} from "project_path/src/core/index.js";
+import { UserCtr } from "project_path/src/core/index.js";
 export default defineComponent({
   name: "layout-h5",
   components: {

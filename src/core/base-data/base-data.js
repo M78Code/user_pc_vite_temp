@@ -626,7 +626,7 @@ class BaseData {
    * 计算虚拟体育 的 数据对象
    */
   async set_vr_mi_config() {
-    let res = await api_common.get_virtual_menu({});
+    // let res = await api_common.get_virtual_menu({});
     // VR 体育的 配置
 
     // let mi_300_obj = lodash_.get(res, 'data')

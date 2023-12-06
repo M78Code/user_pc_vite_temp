@@ -4,6 +4,7 @@
  * @Description: 公共方法对象定义
  */
 import { uid } from "quasar";
+import { UserCtr } from "project_path/src/core/index.js";
 ;
 // import { api_details, api_account } from "project/activity/src/api/index.js"
 
@@ -546,7 +547,7 @@ const utils = {
      * @param {undefined} eventPropsObj 要加的参数
     */
     send_zhuge_event(eventLabel, eventPropsObj = {}) {
-        let vx_get_user = userStore.getters.get_user();
+        let vx_get_user = UserCtr.get_user();
         let objKey = {
             clickTime: "点击时间",
             userName: "用户名",
