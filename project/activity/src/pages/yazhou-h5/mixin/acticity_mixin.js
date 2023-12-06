@@ -4,7 +4,7 @@
  * @Description: 活动公用方法
  */
 ;
-
+import { UserCtr } from "src/core/index.js";
 export default {
   data() {
     return {
@@ -13,7 +13,7 @@ export default {
   },
   computed: {
     get_user() {
-        return userStore.getters.get_user();
+      return UserCtr.get_user();
     },
   },
   methods: {

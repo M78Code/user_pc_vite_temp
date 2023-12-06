@@ -211,8 +211,7 @@ import data_pager from "project/activity/src/components/data_pager.vue";
 import acticity_mixin from "../mixin/acticity_mixin";
 import active_count_down from "./active_count_down.vue";
 import utils from 'project/activity/src/utils/utils.js';
-
-;
+import { UserCtr } from "src/core/index.js";
 
 export default {
   name: "daily_betting_payouts",
@@ -285,7 +284,7 @@ export default {
   },
   methods:{
     set_user(args) {
-        return userStore.mutations.set_user(args);
+        return UserCtr.set_user_info(args);
     },
     // 数据页变化
     data_page_changed($event) {
@@ -456,10 +455,10 @@ export default {
   },
   computed: {
     get_user() {
-        return userStore.getters.get_user();
+        return UserCtr.get_user();
     },
     get_theme() {
-        return themeStore.getters.get_theme();
+        return UserCtr.theme;
     },
   },
   destroyed() {
