@@ -1,4 +1,5 @@
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp3 mx-5 box-style">
     <!-- ms: 0开 1封 2关 11锁 -->
     <!-- hs: 0开 1封 2关 11锁 -->
@@ -12,9 +13,9 @@
               <template v-if="ol_item.os == 1">
                 <!-- 主程序 start -->
                 <div class="play-box-style details_color warp" @click="utils.go_to_bet(ol_item)"
-                     :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':utils.calc_win(ol_item.result)}]">
-                  <div class="ellipsis remark details_t_color6 fz_14" :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
-                  <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
+                     :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':utils.calc_win(ol_item.result)}]">
+                  <div class="ellipsis remark details_t_color6 fz_14" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
+                  <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                     {{ol_item.on || ol_item.ott}}2
                   </span>
                   </div>
@@ -111,6 +112,7 @@ import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router";
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -120,9 +122,6 @@ export default defineComponent({
     oddsNew,
   },
   setup(props, evnet) {
-    const get_bet_list = computed(() => {
-      return []
-    });
     const route = useRoute()
     const get_detail_data = computed(() => {
       return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
@@ -135,7 +134,7 @@ export default defineComponent({
     });
     return {
       utils,
-      get_bet_list,
+      BetData,
       get_detail_data,
       get_is_hengping,
       is_match_result,

@@ -200,7 +200,6 @@ export default class MatchDataBaseWS
       let skt_data = ws_obj.cd;
       // var 事件 skt_data.cmec !== 'goal 避免接口返回 goal 事件
       const var_item = lodash.find(UserCtr.get_var_event_i18n(), (t) => t.nameCode === skt_data.cmec)
-      console.log('var_item', UserCtr.get_var_event_i18n());
       var_item && skt_data.cmec !== 'goal' && useMittEmit(MITT_TYPES.EMIT_VAR_EVENT, { skt_data, var_item });
       if(match){
         // 数据同步逻辑

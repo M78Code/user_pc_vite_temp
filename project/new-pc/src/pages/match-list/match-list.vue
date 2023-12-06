@@ -10,13 +10,21 @@
     <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div>
-    <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
-      <div>{{ menu_config.mid_menu_result.match_tpl_number }}</div>
-      <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
-      <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
-      <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
-      <div> load_data_state {{ load_data_state }}</div>
-    </div> -->
+    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl || 1">
+      <!-- <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div> -->
+      <!-- 临时调试用 -->
+      <div class="fold-btn" @click="match_list_card.unfold_all_league()">
+        展开联赛
+      </div>
+      <div class="fold-btn" @click="match_list_card.fold_all_league()">
+        折叠联赛
+      </div>
+      <div class="fold-btn" @click="match_list_card.test_log_data()">
+        打印数据
+      </div>
+      {{ MatchListCardDataClass.list_version }}-- {{ load_data_state }}--
+      length--- {{ match_list_card_key_arr.length }}
+    </div>
     <div class="scroll-fixed-header" :class="{ 'no-data': load_data_state != 'data' }">
       <!-- banner -->
       <div class="banner-box" :style="{height: GlobalAccessConfig.get_show_banner() ? '120px' : '0px'}" v-if="GlobalAccessConfig.get_show_banner()"></div>
@@ -39,7 +47,7 @@
       <list-filter-hot v-if="menu_config.menu_root == 500"
         :collect_count="collect_count" :load_data_state="load_data_state" />
       <!-- 电竞顶部菜单 -->
-      <!-- <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" /> -->
+      <esports-header v-if="menu_config.menu_root == 2000" :load_data_state="load_data_state" />
       <!-- 赛事状态 | 赛种类型      -->
       <!-- <play-virtual-match-type class="sticky-wrap" v-if="menu_config.menu_root_show_shoucang == 300" style="top:100px" /> -->
       <!-- 联赛  VR 足球才会有联赛-->
@@ -79,17 +87,17 @@
         <template v-slot:before>
           <div :style="{ height: MatchListCardDataClass.sticky_top.fixed_header_height }"></div>
         </template>
-      <div
-        v-for="card_key in match_list_card_key_arr"
-        :key="card_key" 
-        :card_key="card_key" 
-        :data-card-key="card_key"
-        :class="`card_key   ${card_key}`"
-      >
-        <match-list-card 
+        <div
+          v-for="card_key in match_list_card_key_arr"
+          :key="card_key" 
           :card_key="card_key" 
-        />
-      </div>  
+          :data-card-key="card_key"
+          :class="`card_key_${card_key}`"
+        >
+          <match-list-card 
+            :card_key="card_key" 
+          />
+        </div>  
         <template v-slot:after>
           <div style="height:15px"></div>
           <div class="pager-wrap row justify-end">
@@ -106,7 +114,7 @@
     <!-- 点击头部刷新弹出 loading 蒙层 -->
     <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{ top: '36px' }">
       <!-- <div v-show="show_refresh_mask" class="refresh-mask absolute-full yb-flex-center" :style="{top:get_is_show_banner && get_is_roll_show_banner ? '156px' : '36px'}"> -->
-      <div class="img-loading custom-format-img-loading"></div>
+      <div class="img-loading custom-format-img-loading" :style="compute_css_obj('pc-img-loading')"></div>
     </div>
   </div>
 </template>
@@ -118,14 +126,14 @@ import LoadData from 'src/components/load_data/load_data.vue';
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import listFilter from "src/base-pc/components/match-list/list-filter/index.vue"; //赛事列表筛选：滚球-球种、早盘-日期
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/index.vue"; //热门赛事列表 头部筛选
-import { ListFilterDateFullVersionWapper as listFilterDate } from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
+import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from 'src/base-pc/components/cus-scroll/scroll_list.vue';
 import refresh from "src/components/refresh/refresh.vue"
+import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue";//电竞赛事列表筛选
 
-// import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/base-pc/components/match-list/esports-header/index.js";//电竞赛事列表筛选
 // import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/base-pc/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头
 // import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/base-pc/components/match-list/match-list-card/index.js";//联赛筛选页面
 // import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/base-pc/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
@@ -135,10 +143,9 @@ import refresh from "src/components/refresh/refresh.vue"
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import {collect_count} from 'src/core/match-list-pc/composables/match-list-collect.js'
-import {mounted_fn, load_data_state, show_refresh_mask,  is_show_hot} from "src/core/match-list-pc/match-list-composition.js";
+import {mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData } from 'src/core/index.js';
+import { PageSourceData,compute_css_obj } from 'src/core/index.js';
 import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
 import "./match_list.scss";
 const { page_source } = PageSourceData;
@@ -155,6 +162,7 @@ export default {
     IconWapper,
     LoadData,
     refresh,
+    EsportsHeader,
     ListHeader
   },
   setup() {
@@ -162,7 +170,7 @@ export default {
       mounted_fn();
     });
     onUnmounted(() => {
-      // handle_destroyed()
+       handle_destroyed()
     })
     return {
       menu_config,
@@ -172,17 +180,19 @@ export default {
       is_show_hot,
       page_source,
       GlobalAccessConfig,
+      on_refresh
     };
   },
   data() {
     return {
+      compute_css_obj,
       MatchListCardDataClass   ,
       load_data_state,
       match_list_card_key_arr:[]
     }
   },
   mounted () {
-    this.MatchListCardDataClass_match_list_card_key_arr();
+    this.MatchListCardDataClass_match_list_card_key_arr()  ;
   },
   watch: {
     'MatchListCardDataClass.list_version'(newValue, oldValue) {
@@ -193,7 +203,7 @@ export default {
   methods: {
     MatchListCardDataClass_match_list_card_key_arr() {
       this.match_list_card_key_arr= MatchListCardDataClass.match_list_card_key_arr
-    }
+    },
   },
 };
 // 赛事列表筛选：滚球-球种、早盘-日期

@@ -56,10 +56,10 @@
             class="expansion_ref_slotHeader expansion-vs"
             @click.stop="show_item"
           >
-            <div>
-              <span class="home-vs-away">{{ detail_info.mhn }} </span>
+            <div style="display: flex;align-items: center;">
+              <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
               <span class="match-detail-head-name m-10">v</span>
-              <span class="home-vs-away">{{ detail_info.man }}</span>
+              <span class="home-vs-away" :title="detail_info.man">{{ detail_info.man }}</span>
             </div>
             <img
               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
@@ -335,6 +335,11 @@ export default {
       line-height: 25px;
       color: var(--q-gb-t-c-5);
       margin-top: 6px;
+      display: inline-block;
+      max-width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     }
 
     .m-10 {
@@ -460,7 +465,7 @@ export default {
   background-color: var(--q-gb-bg-c-8);
   width: 75%;
   z-index: 1000;
-  margin-top: -8px;
+  // margin-top: -8px;
   // max-height: 500px;
   overflow-y: auto;
   transition: all 0.3s linear;
