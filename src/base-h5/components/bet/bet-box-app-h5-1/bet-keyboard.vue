@@ -32,8 +32,8 @@
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
                   <!-- <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div> -->
-                  <div class="nonebox4-fourth-num-sun key-cell" data-num="x">
-                    <img class="key-cell-img" :src="compute_local_project_file_path('/image/svg/jianpan_del_1.svg')" alt="" data-num="x">
+                  <div class="nonebox4-fourth-num-sun key-cell" data-num="x" @click.stop="_handleDeleteKey()">
+                    <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del_1.svg`" alt="" data-num="x">
                   </div>
                   <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
               </div>
@@ -56,7 +56,7 @@ import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr, compute_local_project_file_path, i18n_t } from "src/core/index.js";
+import { UserCtr, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
 import lodash_ from 'lodash'
 
 const active_index = ref(BetData.active_index)
@@ -304,7 +304,7 @@ onUnmounted(() => {
 @import url( "src/base-h5/css/bet/bet_single_detail.scss");
 .nonebox4-fourth {
     width: 100%;
-    background-color: var(--q-gb-bg-c-22);
+    background-color: var(--q-gb-bg-c-9);
     border-radius: 10px;
     padding-left: 4px;
     padding-right: 4px;
@@ -334,7 +334,7 @@ onUnmounted(() => {
     margin-right: 2px;
     padding-top: 5px;
     padding-bottom: 5px;
-    box-shadow: 0 2px 2px #eeeeee;
+    //box-shadow: 0 2px 2px #eeeeee;
 }
 .nonebox4-fourth-num {
     height: 156px;
@@ -353,7 +353,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     background-color: var(--q-gb-bg-c-15);
-    box-shadow: 0 2px 2px #eeeeee;
+    //box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 0.22rem;
     font-weight: bold;
@@ -368,7 +368,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     background-color: var(--q-gb-bg-c-15);
-    box-shadow: 0 2px 2px #eeeeee;
+    //box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 14px;
     font-weight: bold;
@@ -429,7 +429,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     background: var(--q-gb-bg-c-15);
-    box-shadow: 0 2px 2px #eeeeee;
+    //box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 16px;
     font-weight: bold;

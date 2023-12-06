@@ -165,7 +165,7 @@ watch(() => props.match.mst, () => {
   }
 })
 // 动态设置定时器容器宽度
-const counting_down_wrap_width = (title, counting_time) => {
+const counting_down_wrap_width = (title = '', counting_time = '') => {
   // 当前语言
   const lang = get_lang.value
   // 当前赛事阶段名称

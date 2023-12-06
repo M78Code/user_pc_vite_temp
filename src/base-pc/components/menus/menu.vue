@@ -46,6 +46,10 @@
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
+        <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
+          <sport_icon :sport_id="BaseData.compute_sport_id(2000)" size="18px" class="icon" />
+          {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
+        </li>
       </ul>
     </div>
 
@@ -134,7 +138,41 @@ const jump_func = (payload ={},type) => {
   })
   
 }
+/**
+ * 电竞
+ */
+const esportsClick = ()=>{
+  if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
+    return
+  }
+   // 点击菜单的时候如果在详情页应跳转出来先
+  if (['league','details','search'].includes(route.name)) {
+    router.push('/home')
+  }
+  let obj = {
+    lv1_mi : 2000,
+    has_mid_menu: true, // 有中间菜单
+    lv2_mi: 2000 +''+ 2, // 二级菜单id
+    menu_type: 1, // 左侧热门或者赛种
+  }
+  //太多了 后续做优化
+  MenuData.set_menu_root(202, true)
+  MenuData.set_is_collect(false)
+  MenuData.set_left_menu_result(obj)
+  MenuData.set_menu_current_mi(obj.lv2_mi)
+  MenuData.set_current_ball_type(payload.mi*1 - 100)
 
+  let mid_config = {
+    ...MenuData.mid_menu_result,
+    md: '',
+    filter_tab: 4001
+  }
+  MenuData.set_mid_menu_result(mid_config)
+
+  nextTick(()=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,payload.mi)
+  })
+}
 // 冠军
 const outrights = () => {
   if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return

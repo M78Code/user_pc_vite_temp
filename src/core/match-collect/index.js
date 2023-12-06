@@ -118,9 +118,7 @@ class MatchCollect {
           Object.assign(this.match_collect_obj, { ...data })
           this.set_is_get_collect(true)
           list && list.length > 0 && list.forEach(match => {
-            requestAnimationFrame(() => {
-              this.handle_collect_state(match)
-            })
+            this.handle_collect_state(match)
           })
           resolve()
         }
@@ -156,8 +154,8 @@ class MatchCollect {
           }
         }
       }
-      if (mids.length > 0) {
-        match_collect_state = mids.includes(mid)
+      if (mids.length > 0 && mids.includes(mid)) {
+        match_collect_state = true
       }
     }
     // 该联赛是否收藏

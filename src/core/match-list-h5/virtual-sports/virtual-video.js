@@ -10,6 +10,7 @@ import VirtualClass from "./virtual-class"
 import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { api_virtual } from "src/api/index.js";
+
 class VirtualVideo {
 
   constructor() {
@@ -26,27 +27,34 @@ class VirtualVideo {
   }
 
   /**
-   * 获取频进程数据
+   * 设置视频进程数据 
+   * @param value
+   */
+  set_video_process_data(value){
+    this.video_process_data = value;
+  }
+
+  /**
+   * 获取视频进程数据 
    * @param {Object} match
    */
   get_match_video_process(match) {
-    const state = store.getState()
     if (!match) {
       return;
     }
     let got_data = false;
-    if (state.get_video_process_data) {
+    
+    if (this.video_process_data) {
       let { batchNo } = match;
-
-      if (state.get_video_process_data.batchNo == batchNo) {
-        let p_data_detail = state.get_video_process_data.detail;
-        let detail_copied = _.cloneDeep(p_data_detail);
+      if (this.video_process_data.batchNo == batchNo) {
+        let p_data_detail = this.video_process_data.detail;
+        let detail_copied = lodash.cloneDeep(p_data_detail);
         if (detail_copied && detail_copied[match.mid]) {
           got_data = true;
           Object.assign(match, detail_copied[match.mid]);
           VirtualClass.destroy();
-          VirtualClass.update_match_video_data()
-          useMittEmit(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED, state.get_video_process_data);
+          VirtualClass.update_match_video_data(match)
+          useMittEmit(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED, this.video_process_data);
         }
       }
     }
@@ -76,6 +84,7 @@ class VirtualVideo {
     * @return {Undefined} Undefined
     */
   get_video_process_by_api(success_cb, is_no_match_data) {
+    
     let params = this.gen_video_api_cache_key();
     if (!params.csid) return;
     if (this.current_match.orderNo) {
@@ -88,7 +97,7 @@ class VirtualVideo {
         if (res.data && res.data.detail && Object.keys(res.data.detail).length) {
           if (!is_no_match_data) {
             let video_data = lodash.cloneDeep(res.data);
-            store.dispatch({ type: 'SET_VIDEO_PROCESS_DATA', data: video_data })
+            this.set_video_process_data(video_data);
             useMittEmit(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, res.data);
           }
           if (success_cb) {

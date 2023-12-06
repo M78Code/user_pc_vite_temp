@@ -4,6 +4,7 @@
  * @Description: h5/pc数据仓库ws数据实时数据同步
  * 
  */
+import { UserCtr } from "src/core";
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js";
 import {  useMittEmit, MITT_TYPES } from  "src/core/mitt"
 export default class MatchDataBaseWS
@@ -196,6 +197,10 @@ export default class MatchDataBaseWS
       let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
+      let skt_data = ws_obj.cd;
+      // var 事件 skt_data.cmec !== 'goal 避免接口返回 goal 事件
+      const var_item = lodash.find(UserCtr.get_var_event_i18n(), (t) => t.nameCode === skt_data.cmec)
+      var_item && skt_data.cmec !== 'goal' && useMittEmit(MITT_TYPES.EMIT_VAR_EVENT, { skt_data, var_item });
       if(match){
         // 数据同步逻辑
         this.match_ctr.assign_with(match, cd_obj);

@@ -450,7 +450,7 @@ const submit_handle = type => {
     params.seriesOrders = seriesOrders
     // 测试投注失败
     // BetViewDataClass.set_bet_order_status(5)
-    // return
+    //return
     api_betting.post_submit_bet_list(params).then(res => {
         // BetViewDataClass.set_tip_message(res)
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
@@ -621,6 +621,17 @@ const set_error_message_config = (res ={},type,order_state) => {
 // params 各种id 用于查找数据对应的值 
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
+/**
+ * 
+ * @param {{ oid, _hid, _hn, _mid}} params 
+ * @param {Object} other 
+ * @param {Boolean} other.is_detail
+ * @param {'common_bet'|''} other.bet_type
+ * @param {1|2|3|4|5} other.device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+ * @param {'h5_detail'|'h5_list'} other.match_data_type
+ * @param {String} other.play_name 玩法名
+ * @returns 
+ */
 const set_bet_obj_config = (params = {}, other = {}) => {
     console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态

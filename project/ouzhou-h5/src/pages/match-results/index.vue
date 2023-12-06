@@ -85,12 +85,13 @@ const switchHandle = async ()=> {
     // api_analysis.get_match_result_menu( {menuType:0} ).then( ( res = {} ) => {
         if(res?.code == 200){
             let scroll_data = res.data.filter((n)=>{return n.sportId != '0'}).map( item => {
+                const subList = item.subList.sort((a,b) => Number(b.field1) - Number(a.field1))
                 return {
                     mi: menuTypeFormat(item),
                     ct: item.count,
                     sport: item.sportId,
                     name:item.name,
-                    subList:item.subList.map((n)=>{
+                    subList:subList.map((n)=>{
                         return {
                             val:n.field1,
                             ...n

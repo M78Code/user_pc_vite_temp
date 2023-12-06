@@ -220,12 +220,12 @@ export default defineComponent({
     onMounted(() => {
       // #TODO EMIT
       // useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
-      VirtualVideo.get_match_video_process()
+      VirtualVideo.get_match_video_process.bind(VirtualVideo)()
       // #TODO EMIT
       // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status);
 
       emitters = [
-        useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, VirtualVideo.get_match_video_process).off,
+        useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, VirtualVideo.get_match_video_process.bind(VirtualVideo)).off,
         useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
         useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, xu_ni_ty_standard_odd_status).off,
       ]

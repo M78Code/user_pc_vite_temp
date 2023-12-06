@@ -110,7 +110,7 @@ class MatchListCardDataClass {
     if (tpl_odds) return tpl_odds
     //默认使用第一个
     if (choose_config[csid]) return choose_config[csid][0]
-    // console.error("默认模板没有配置")
+    console.error("默认模板没有配置",csid)
     return {};
   }
   //获取单个卡片对象

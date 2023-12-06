@@ -175,6 +175,8 @@ import lottery from "./lottery.vue";
 const random = function(minNum,maxNum){
   return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
 }
+//头部引入  
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
 export default {
   name: 'compose',
   components:{
@@ -290,10 +292,10 @@ export default {
             this.luckyTicket = data.luckyTicket;
           }
         } else if(['0410505'].includes(code)) { // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
-          this.$root.$emit(MITT_TYPES.EMIT_TO_MAINTENANCE)
+          useMittEmit(MITT_TYPES.EMIT_TO_MAINTENANCE)
           return
         }else if ( ['0401038'].includes(code) ){
-          const msg_nodata_22 = this.$root.$t('msg.msg_nodata_22')
+          const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
           this.$toast(msg_nodata_22, 1500)
         } else {
           this.$toast(res.msg, 1500)
@@ -345,7 +347,7 @@ export default {
             this.step = 'normal'
           }, 2000);
         } else if(['0410505'].includes(code)) { // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
-          this.$root.$emit(MITT_TYPES.EMIT_TO_MAINTENANCE)
+          useMittEmit(MITT_TYPES.EMIT_TO_MAINTENANCE)
           return
         } else {
           this.$toast(res.msg, 1500)
@@ -379,7 +381,7 @@ export default {
           // 合成完成后更新数据
           this.get_lottory_merge()
         } else if(['0410505'].includes(code)) { // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
-          this.$root.$emit(MITT_TYPES.EMIT_TO_MAINTENANCE)
+          useMittEmit(MITT_TYPES.EMIT_TO_MAINTENANCE)
           return
         } else {
           this.$toast(res.msg, 1500)

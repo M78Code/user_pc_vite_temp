@@ -4,12 +4,13 @@
  * @Description: 针对虚拟体育新增的玩法模板9
 -->
 <template>
+  <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp9 mx-5">
     <div class="hairline-border">
       <div class="row virtual-bet-wrapper">
         <div class="row justify-between champion-item col-6"
              v-for="(item,index) in champion_list" :key="index"
-             @click="go_to_bet(index)"  :class="is_select(item.oid) && 'champion-item2'"
+             @click="go_to_bet(index)"  :class="BetData.bet_oid_list.includes(item.oid)&& 'champion-item2'"
         >
           <div  class="row">
             <div class="temp9-sort" :class="`virtual-num-${index+1} csid-${[1010].includes(sub_menu_type) ? '1002' : sub_menu_type} ${[1010].includes(sub_menu_type) ? `motorcycle-${index+1}` : ''}`"></div>
@@ -31,13 +32,11 @@ import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { project_name,LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
-
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp9",
-  props:{
-    item_data:Object
-  },
+  props: ["item_data", "title"],
   setup(props, evnet) {
     let data = reactive({
       // 冠军投注项集合
@@ -46,13 +45,9 @@ export default defineComponent({
       hsw_obj: null
     })
     // #TODO vuex
-    // ...mapGetters(['get_bet_list']),
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
-    const get_bet_list = computed(() => {
-      return []
-    });
     const get_curr_sub_menu_type = computed(() => {
       return ""
     });
@@ -65,16 +60,6 @@ export default defineComponent({
     );
     onMounted(() => {
       max_count_ol = get_ol_list();
-    })
-    /**
-     *@description 是否选中
-     *@param {String} id 投注项id
-     *@return {Boolean}
-     */
-    const is_select = computed(() => {
-      return function(oid){
-        return get_bet_list.value.includes(oid)
-      }
     })
     const get_odds = (item) =>{
       let val = item.ov / 100000, hsw = props.item_data.hsw;
@@ -101,7 +86,7 @@ export default defineComponent({
     return {
       ...toRefs(data),
       utils,
-      is_select,
+      BetData,
       get_bet_list,
       get_curr_sub_menu_type,
       get_odds,

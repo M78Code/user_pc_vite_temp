@@ -919,7 +919,7 @@ export default defineComponent({
         return; //  防止急速点击两次
       }
       this.is_on_go_detail = true;
-      if (is_results.value) useMittEmit(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, item)
+      if (is_results.value || this.$route.name == "matchList") useMittEmit(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, item)
       // 如果是非赛果电竞赛事，需要设置菜单类型
       if (MenuData.current_menu !== 28 && [100, 101, 102, 103].includes(+item.csid)) {
         // store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 3000 });

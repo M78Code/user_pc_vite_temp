@@ -10,7 +10,7 @@
         <header class="ball_tab">
             <q-virtual-scroll ref="scrollRef" v-if="leftDataList.length" :items="leftDataList"
                 virtual-scroll-horizontal v-slot="{ item, index }">
-                <div v-if="!['400'].includes(item.mi) && get_cont(item)" @click="on_change_play(item)"
+                <div v-if="![400,2000,300].includes(item.mi) && get_cont(item)" @click="on_change_play(item)"
                     :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === playValue" :sport_id="item.mi" />
@@ -25,7 +25,7 @@
 </template>
 <script setup>
 import lodash from 'lodash'
-import { onMounted, ref ,onUnmounted, reactive} from "vue"
+import { onMounted, ref ,onUnmounted, reactive,nextTick} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData , UserCtr} from "src/core/";
@@ -33,6 +33,9 @@ import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js"
 import { sports_play_data } from 'src/core/constant/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { api_base_data, api_common } from "src/api/index.js";
+import {  LocalStorage } from "src/core/index.js"
+import STANDARD_KEY from "src/core/standard-key";
+const menu_h5 = STANDARD_KEY.get("menu_h5");
 const get_uid =  ref(UserCtr.get_uid())
 const props = defineProps({
     menu_type: {
@@ -70,11 +73,18 @@ const scrollRef = ref(null);
  * 初始化
  */
 const get_init_data = () =>{
+    //当前激活球种id  如果本地有存储值就取本地存储的值
+    const session_info = LocalStorage.get(menu_h5);
     leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
-    // MenuData.menu_mi.value || 
-    MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
+    MenuData.set_menu_mi(session_info?.menu_mi || MenuData.menu_mi.value || dataList()[0]?.mi);
     playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
+
+    nextTick(()=>{
+        const index = dataList().findIndex(n=>n.mi ==  playValue.value) || 0;
+        scrollRef.value.scrollTo(index-2, 'start-force')
+    })
+   
 }
 /**
  * 获取最新列表
@@ -136,8 +146,8 @@ const get_menu_ws_list = (list) =>{
     leftDataList.value = leftDataList.value.map((item)=>{
         list.forEach((n)=>{
             if(item.mi == n.mi.slice(0,3)){
-                let index = item.sl?.findIndex((k)=>{return k.mi == n.mi})
-                item.sl[index].ct = n.count;
+                let index = item.sl?.findIndex((k)=>{return k.mi == n.mi});
+                if(index !== -1)item.sl[index].ct = n.count;
             }
         })
         return item;
