@@ -174,7 +174,7 @@ export const useGetGlobal = ({  back_to }) => {
    * @return {undefined} undefined
    */
   const mx_autoset_active_match = (params = { mid: 0 }) => {
-    console.log(1111111111111111, menu_config);
+ 
     let { name: route_name, params: cur_params } = route;
     let return_status =
       (route_name === "video" && [3, 4, 5].includes(+cur_params.play_type)) ||
@@ -279,7 +279,7 @@ export const useGetGlobal = ({  back_to }) => {
 
       api.then(({ data }) => {
         if (!details.auto_swich_match) return;
-        let { mid = -1, csid: sportId, tid } = data || {};
+        let { mid = -1, csid=sportId, tid } = data || {};
         // 详情时重载页面
         if (cur_page == "details" || cur_page == "video") {
           if (mid && mid != -1) {
