@@ -34,7 +34,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
     // background: var(--q-gb-bg-c-9);
     padding: 10px;
     margin-top: 0.1rem;
-    background-color: var(--q-gb-bg-c-9);
+    background-color: var(--q-gb-bg-c-22);
     border-radius: 0.12rem;
 }
 .nonebox4-content-top0{
