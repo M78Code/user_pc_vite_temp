@@ -9,16 +9,14 @@
           </div>
         </div>
       </div>
-    <VirtualSportsMatchItem v-for="(match_item,i) in virtual_match_list" :match_selected_i="stateRefs.selected_match_i"
+    <VirtualSportsMatchItem v-for="(match_item,i) in virtual_match_list" :match_selected_i="stateRefs.selected_match_i.value"
       :key="i" :i="i" :match_item="match_item" @switch_match="switch_match_handle"
-      @odd_pan="odd_pan_handle" :other_status="stateRefs.standard_odd_status">
+      @odd_pan="odd_pan_handle" :other_status="stateRefs.standard_odd_status.value">
     </VirtualSportsMatchItem>
   </div>
 </template>
 
 <script setup>
-// #TODO VUEX
-// import { mapGetters, mapActions } from "vuex";
 import SVirtual from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
 import VirtualSportsMatchItem from "src/base-h5/components/virtual/virtual-sports-match-item.vue";
 // #TODO MIXINS 
@@ -28,14 +26,13 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 
 
 const props = defineProps({
-  virtual_match_list:Array,
-  match_list_loaded:Number,
+  virtual_match_list: Array,
+  match_list_loaded: Number,
   v_menu_changed:Number | String,
   csid:Number | String,
 })  
 
 const emit = defineEmits(['switch_match'])
-console.log('emit', emit);
 
 const state = reactive({
   selected_match_i:0,
@@ -86,7 +83,7 @@ watch( () => props.virtual_match_list, (newValue) => {
     switch_match_handle(state.selected_match_i);
 
     // #TODO emit 
-    emit('switch_match',state.selected_match_i);
+    // emit('switch_match',state.selected_match_i); 重复调用，注释掉
   }
 );
 

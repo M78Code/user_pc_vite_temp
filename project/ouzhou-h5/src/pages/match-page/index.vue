@@ -35,12 +35,24 @@ let handler_func = null
 const emitters = ref({})
 
 onMounted(() => {
+  if (sessionStorage.getItem('match_list_params')) {
+		const data = JSON.parse(sessionStorage.getItem('match_list_params'))
+    // console.log('onMountedonMountedonMountedonMounted', store, data)
+    Object.keys(store).forEach(key => {
+      store[key] = data[key]
+    })
+    MatchMeta.clear_match_info()
+    MatchMeta.get_ouzhou_leagues_list_data(data.selectLeague.tid, data.curSelectedOption.timestamp)
 
+	} else {
+    onTabChange()
+    initMatchPage()
+    BaseData.is_emit && MatchMeta.set_origin_match_data()
+  }
   MatchMeta.set_prev_scroll(0)
-  onTabChange()
-  initMatchPage()
+  // onTabChange()
+  // initMatchPage()
 
-  BaseData.is_emit && MatchMeta.set_origin_match_data()
 
   // 接口请求防抖
   handler_func = lodash.debounce(({ cmd, data }) => {
@@ -57,6 +69,8 @@ onMounted(() => {
     }
   })
 
+  window.addEventListener('beforeunload', clearSessionStorageData)
+
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, () => {
       if (!BaseData.is_emit) {
@@ -67,6 +81,10 @@ onMounted(() => {
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
       store.isLeagueDetail = false
       onTabChange()
+    }).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_GO_TO_DETAIL_HANDLE, () => {
+      console.log('进入了详情页面，需要缓存数据')
+      cacheStoreData()
     }).off
   }
 })
@@ -75,11 +93,18 @@ onUnmounted(() => {
    // 组件销毁时销毁监听函数
   ws_message_listener.ws_remove_message_listener(message_fun)
   message_fun = null
+  // sessionStorage.removeItem('match_list_params')
+  window.addEventListener('beforeunload', clearSessionStorageData)
 })
+
+const cacheStoreData = () => {
+  sessionStorage.setItem('match_list_params', JSON.stringify(store));
+}
 
 const onTabChange = e => {
   switch (store.tabActive) {
     case 'Matces':
+      clearSessionStorageData()
       break
     case 'League':
       MenuData.set_current_lv1_menu(2);
@@ -91,9 +116,15 @@ const onTabChange = e => {
       // MenuData.set_menu_mi('101');
       // MatchMeta.set_origin_match_data()
       MatchMeta.get_champion_match()
+      clearSessionStorageData()
       break
   }
 }
+
+const clearSessionStorageData = () => {
+  sessionStorage.removeItem('match_list_params')
+}
+
 // 当为matches时 切换时间后 监听方法
 const onChangeDate = e => {
   if (store.tabActive !== 'Matches') {

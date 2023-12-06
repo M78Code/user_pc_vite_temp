@@ -165,7 +165,7 @@ watch(() => props.match.mst, () => {
   }
 })
 // 动态设置定时器容器宽度
-const counting_down_wrap_width = (title, counting_time) => {
+const counting_down_wrap_width = (title = '', counting_time = '') => {
   // 当前语言
   const lang = get_lang.value
   // 当前赛事阶段名称
@@ -487,11 +487,11 @@ onUnmounted(() => {
     padding-right: 0.03rem;
     margin-right: 0.02rem;
     font-size: 0.11rem;
-    color: var(--q-gb-t-c-3);
+    color: var(--q-gb-t-c-19);
   }
 
   .counting, .special {
-    color: var(--q-gb-t-c-4);
+    color: var(--q-gb-t-c-19);
     //color: #5A6074;
     font-size: 0.14rem;
     font-weight: 500;

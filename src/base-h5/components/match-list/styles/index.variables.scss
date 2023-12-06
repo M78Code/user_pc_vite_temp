@@ -25,7 +25,7 @@
         }
         .sport-title {
           .score-inner-span{
-            color: var(--q-gb-t-c-3);
+            color: var(--q-gb-t-c-19);
           }
           .ball_img {
             background-color:var(--q-color-page-bg-color-2);
@@ -99,11 +99,11 @@
                     color: var(--q-color-com-fs-color-18);
                   }
                   &.red {
-                    color: var(--q-color-com-fs-color-17) !important;
+                    color: var(--q-color-com-fs-color-17) ;
 
                   }
                   &.green {
-                    color: var(--q-color-com-fs-color-10) !important;
+                    color: var(--q-color-com-fs-color-10) ;
                   }
                 }
                 .icon_lock[class*=theme0] {
@@ -111,14 +111,14 @@
                 }
               }
               .odd-column-item2 {
-                background: var(--q-match-page-bg-color-10) !important;
+                background: var(--q-match-page-bg-color-10) ;
                 &:after {
                   background-color: transparent;
                 }
                 .odd-title {
                   color:  var(--q-color-fs-color-10);
                   span {
-                    color:  var(--q-color-fs-color-10) !important;
+                    color:  var(--q-color-fs-color-10) ;
                   }
                 }
                 .odd-value {
@@ -142,7 +142,7 @@
             background-color: var(--q-color-border-color-11);
           }
           .hpl-title {
-            color: var(--q-color-fs-color-48);
+            color: var(--q-gb-t-c-20);
           }
         }
         .date-container {
@@ -152,10 +152,10 @@
               color: var(--q-match-fs-color-137);
             }
             .counting {
-              color: var(--q-match-fs-color-13) !important;
+              color: var(--q-match-fs-color-13) ;
             }
             .date-time {
-              color: var(--q-match-fs-color-13) !important;
+              color: var(--q-match-fs-color-13) ;
             }
           }
           &.n-s-edition {
@@ -180,10 +180,10 @@
             }
             .timer-wrapper-c {
               .coming-soon {
-                color: var(--q-gb-t-c-3);
+                color: var(--q-gb-t-c-19);
               }
               .date-time {
-                color: var(--q-color-fs-color-30);
+                color: var(--q-gb-t-c-19);
               }
               &.esports {
                 .date-time {
@@ -202,7 +202,7 @@
             }
           }
           .mfo-title {
-            color: var(--q-color-fs-color-30);
+            color: var(--q-gb-t-c-19);
             &.is-ms1 {
               color: var(--q-gb-t-c-3);
             }
@@ -222,7 +222,7 @@
                   color:var(--q-match-fs-color-127);
                 }
                 .score-l-total2 {
-                  color: var(--q-match-fs-color-1) !important;
+                  color: var(--q-match-fs-color-1) ;
                 }
               }
             }
@@ -243,7 +243,7 @@
               color: var(--q-match-fs-color-1);
               &.name {
                 color: var(--q-match-fs-color-1);
-                font-size: 0.12rem !important;
+                font-size: 0.12rem ;
               }
               &.is-handicap {
                 color: var(--q-color-fs-color-31);
@@ -253,11 +253,11 @@
               }
             }
             .score {
-              color: var(--q-match-fs-color-1);
+              color: var(--q-gb-t-c-20);
             }
           }
           // .serving-party {
-          //   background-color: #569ffd !important;
+          //   background-color: #569ffd ;
           // }
           .f-ht-ot {
             color: var(--q-color-fs-color-23);
@@ -295,10 +295,10 @@
                     color: var(--q-color-com-fs-color-18);
                   }
                   &.red {
-                    color: var(--q-color-com-fs-color-17) !important;
+                    color: var(--q-color-com-fs-color-17) ;
                   }
                   &.green {
-                    color: var(--q-color-com-fs-color-10) !important;
+                    color: var(--q-color-com-fs-color-10) ;
                   }
                 }
               }
@@ -308,14 +308,14 @@
               background: var(--q-color-img-bg-36) no-repeat  center / cover;
               /* ************** 新手版投注项选择样式 ************** -S */
               .odd-column-item2 {
-                background:var(--q-gb-bd-c-13) !important;
+                background:var(--q-gb-bd-c-13) ;
                 &:after {
                   background-color: transparent;
                 }
                 .odd-title {
-                  color:  var(--q-color-fs-color-10) !important;
+                  color:  var(--q-color-fs-color-10) ;
                   span {
-                    color:  var(--q-color-fs-color-10) !important;
+                    color:  var(--q-color-fs-color-10) ;
                   }
                 }
                 .odd-value {
@@ -326,10 +326,10 @@
             }
           }
           .f-icon[class*=theme0] {
-            display: block !important;
+            display: block ;
           }
           .live-icon-btn[class*=theme0] {
-            display: block !important;
+            display: block ;
           }
           .odd-wrap-min {
             background-color: var(--q-color-page-bg-color-9);
@@ -354,10 +354,10 @@
                 color: var(--q-color-com-fs-color-18);
               }
               &.red {
-                color: var(--q-color-com-fs-color-17) !important;
+                color: var(--q-color-com-fs-color-17) ;
               }
               &.green {
-                color: var(--q-color-com-fs-color-10) !important;
+                color: var(--q-color-com-fs-color-10) ;
               }
             }
             .icon_lock[class*=theme0] {
@@ -365,14 +365,14 @@
             }
             /* ************** 标准版投注项选择样式 ************** -S */
             .odd-column-item2 {
-              background: var(--q-gb-bg-c-18) !important;
+              background: var(--q-gb-bg-c-18);
               &:after {
                 background-color: transparent;
               }
               .odd-title {
                 color:  var(--q-color-fs-color-10);
                 span {
-                  color:  var(--q-color-fs-color-10) !important;
+                  color:  var(--q-color-fs-color-10);
                 }
               }
               .odd-value {
@@ -471,7 +471,7 @@
             &.result {
               .score {
                 &:last-child {
-                  color: var(--q-gb-t-c-3) !important;
+                  color: var(--q-gb-t-c-3) ;
                 }
               }
             }
@@ -488,26 +488,26 @@
         }
       }
       .score-important {
-        color:var(--q-match-fs-color-135) !important;
+        color:var(--q-match-fs-color-135) ;
       }
       .score-important2 {
-        color: var(--q-color-com-fs-color-14) !important;
+        color: var(--q-color-com-fs-color-14) ;
         /* ************** 标准版投注项选择样式 上面嵌套太深，再写一遍************** -S */
       }
     }
     .odd-column-item2 {
-      background: var(--q-match-page-bg-color-10) !important;
+      background: var(--q-match-page-bg-color-10) ;
       &:after {
         background-color: transparent;
       }
       .odd-title {
-        color:  var(--q-gb-t-c-4) !important;
+        color:  var(--q-gb-t-c-19);
         span {
-          color:  var(--q-gb-t-c-4) !important;
+          color:  var(--q-gb-t-c-19);
         }
       }
       .odd-value {
-        color:var(--q-color-fs-color-63) !important;
+        color:  var(--q-gb-t-c-20);
       }
     }
     /* ************** 标准版投注项选择样式 ************** -E */

@@ -1,12 +1,30 @@
 import mitt from "mitt";
-import * as MITT_TYPES_PROJECT from "base_path/core/mitt/mitt-keys.js";
  
-import * as MITT_TYPES_DEFAULT from "./mitt-keys";
+
+import * as  MITT_TYPES_BASE from "base_path/core/mitt/mitt-keys.js" 
+import * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js" 
+
+
+// let MITT_TYPES_BASE={} 
+// try {
+//     MITT_TYPES_BASE = await import( "base_path/core/mitt/mitt-keys.js"  );
+// } catch (error) {
+//   console.error('error', error);
+// }
+
+
+// let MITT_TYPES_PROJECT={} 
+// try {
+//     MITT_TYPES_PROJECT = await import( "project_path/src/core/mitt/mitt-keys.js"  );
+// } catch (error) {
+//   console.error('error', error);
+// }
+
 import { onUnmounted } from "vue";
 
 /** @type {MittType} */
-const MITT_TYPES = Object.assign({}, MITT_TYPES_DEFAULT, MITT_TYPES_PROJECT);
-// const emitter = new mitt(); // 使用new疑似错误写法
+const MITT_TYPES = Object.assign({}, MITT_TYPES_BASE, MITT_TYPES_PROJECT);
+
 const emitter = mitt();
 
 /**
@@ -97,7 +115,9 @@ function useMittEmit(type, param) {
 
 
 //==============================事件监听  生成器  demo  option  开始  ====================================
-// import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
+// //头部引入  
+// import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+// //methods 内添加 
 // /**
 // * 生成事件监听  
 // */
@@ -107,11 +127,14 @@ function useMittEmit(type, param) {
 // { type:MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD, callback:this.get_bet_total_count} 
 // ]
 // let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
-// this.emitters_off=emitters_off
-// ////移除相应监听事件 //视图销毁钩子函数内执行
-// //if(this.emitters_off){this.emitters_off()}   
+// this.emitters_off=emitters_off  
 // },
 
+// //created 内 执行 
+// this.handle_generat_emitters()
+
+// //移除相应监听事件 //视图销毁钩子函数内执行
+// if(this.emitters_off){this.emitters_off()} 
 
 //==============================事件监听  生成器  demo   option   结束 ====================================
 

@@ -104,16 +104,10 @@ const props = defineProps({
     default: () => "",
   },
 })
-//欧洲版是灰色图标
-if (props.color_type === 'gray_ball') {
-  Object.keys(sport_number).forEach(key => {
-    sport_number[key] = sport_number[key] + 1;
-  }
-  )
-}
 const icon_styles = computed(() => {
   //雪碧图样式 计算方式参考备注文件
-  let number = sport_number[props.sport_id]
+  //欧洲版是灰色图标
+  let number = sport_number[props.sport_id] + (props.color_type === 'gray_ball' ? 1 : 0)
   // 如果是未选中状态Y轴坐标下移一位
   number = props.status ? number : number + 1;
   if (!number && number !== 0) {

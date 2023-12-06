@@ -45,10 +45,10 @@ function onClick() {
 }
 
 .icon_zd_select {
-  background-image: url($SCSSPROJECTPATH + "/image/svg/stick_btn.svg");
+  background-image: url($SCSSPROJECTPATH + "/image/detail/set_top_active.png");
 }
 
 .icon_zd_default {
-  background-image: url($SCSSPROJECTPATH + "/image/svg/stick_btn_def.svg");
+  background-image: url($SCSSPROJECTPATH + "/image/detail/set_to.png");
 }
 </style>

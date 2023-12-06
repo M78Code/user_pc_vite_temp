@@ -12,13 +12,15 @@
         <!-- Esports---VR Sports 电竞  VR-->
         <template v-if="sportsGenre.length">
           <div class="sports-genre">
-            <div class="item" :class="[
-              item.className,
-              // { active: meta_data_store.current_menu.mi == item.mi },
-            ]" v-for="(item, index) in sportsGenre" :key="index" @click="set_menu_obj(item)">
-              <sport-icon size="20" :sport_id="item.mi" />
-              <div>{{ BaseData.menus_i18n_map[item.mi]}}</div>
-            </div>
+            <template v-for="(item, index) in sportsGenre" :key="index">
+              <div v-if="MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(+item.mi)" class="item" :class="[
+                item.className,
+                // { active: meta_data_store.current_menu.mi == item.mi },
+              ]"  @click="set_menu_obj(item)">
+                <sport-icon size="20" :sport_id="item.mi" />
+                <div>{{ BaseData.menus_i18n_map[item.mi]}}</div>
+              </div>
+            </template>
           </div>
           <!-- 分割线 -->
           <div class="segmentation"></div>
@@ -38,20 +40,20 @@
         <!-- 赛事球类 -->
         <div class="menu_container">
           <h5>{{ i18n_t("ouzhou.menu.all_sports")}}</h5>
-          <div class="menu_item" :class="[
-            // { active: meta_data_store.current_menu.mi == item.mi },
-          ]" v-for="item in leftDataList" :key="item.mi" @click="change_current_menu(item)"
-            :data-id="item.mi">
-            <sport-icon size="18" :sport_id="item.mi" />
-            <!-- 有电竟体育时展示电竞体育2000  Esports  -->
-            <div>
-              {{
-                item.mi == "2000"
-                ? "Esports"
-                : BaseData.menus_i18n_map[item.mi]
-              }}
+          <template  v-for="item in leftDataList" :key="item.mi">
+            <div v-if="![2000,300].includes(item.mi)" class="menu_item" :class="[
+              // { active: meta_data_store.current_menu.mi == item.mi },
+            ]" @click="change_current_menu(item)"
+              :data-id="item.mi">
+              <sport-icon size="18" :sport_id="item.mi" />
+              <!-- 有电竟体育时展示电竞体育2000  Esports  -->
+              <div>
+                {{
+                  BaseData.menus_i18n_map[item.mi]
+                }}
+              </div>
             </div>
-          </div>
+          </template>
         </div>
       </q-item-label>
     </q-list>
@@ -76,9 +78,10 @@ const leftDataList = ref([]);
  * vr 电竞
  */
 const sportsGenre = reactive([
-  // { name: i18n_t("menu_itme_name.esports"), className: "esports", mi: "2000",route: '/esports'},
-  // { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
+  { name: i18n_t("common.esports"), className: "esports", mi: "2000",route: '/esports'},
+  { name: i18n_t("common.virtual_sports"), className: "vr-sports", mi: "300",route: '/virtual' },
 ])
+console.log(i18n_t("ouzhou.menu_itme_name"))
 /**
  * 默认所有球种
  */
@@ -179,7 +182,7 @@ const change_current_menu = (item) => {
  */
 const get_init_data = (val) =>{
   const list = val || MenuData.menu_list;
-  
+  console.log(list,defaultSports, 'defaultSports' );
   leftDataList.value = list && list.length?list:defaultSports;
   const popularSortListH5 = LocalStorage.get("popularSortListH5") ||[];
   popularList.value = popularListSort(popularSortListH5);
@@ -243,8 +246,8 @@ onUnmounted(()=>{
       }
     }
 
-    .esports {
-      margin-bottom: 24px;
+    .vr-sports {
+      margin-top: 20px;
     }
 
     .esports span,

@@ -6,6 +6,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetWsMessage from "src/core/bet/class/bet-ws-message.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import {url_param_ctr_init, watch_route_fun} from "src/core/url-param-ctr/index.js";
+const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 export default {
     data() {
       return {
@@ -52,12 +53,14 @@ export default {
           console.log(" init_domain --  开始执行:");
           // 实例化域名检测类对象
           AllDomain.create(() => {
-            enter_params()
+          
             // 首次进入,发现最快的域名
             console.error(" init_domain -- 回调执行:");
             // http初始化方法 会调用 setApiDomain
             // ws和http域名切换逻辑
             http.setApiDomain();
+
+            enter_params()
             // 元数据初始化
             base_data.init();
             // 投注信息 初始化

@@ -14,13 +14,14 @@
     <!-- 虚拟体育 -->
     <!-- <virtual-right
       v-if="
-        new_menu.is_vr() &&
+        MenuData.is_vr() &&
         route.name != 'search' &&
         route.name != 'details'
       "
     /> -->
+    <!-- v-else -->
     <!-- 常规竞猜 -->
-    <match-details-right class="page-match-detail fit" />
+    <match-details-right  class="page-match-detail fit" />
   </div>
   </div>
 </template>
@@ -29,9 +30,9 @@ import { ref,onBeforeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
-import { LayOutMain_pc } from "src/core/index.js";
+import { LayOutMain_pc,MenuData } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router"
-
+// import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
 const route = useRoute()
 const right_status=ref(null)
 
