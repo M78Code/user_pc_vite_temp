@@ -6,7 +6,7 @@
 -->
 <template>
   <div class="y-select handel relative-position" :class="versions_class" @click.stop>
-    <div class="y-field-control" @click="showFc" :style="{ width: `${popWidth}px` }">
+    <div class="y-field-control" @click="isShow = true" :style="{ width: `${popWidth}px` }">
       <input
         type="text"
         class="input"
@@ -101,9 +101,10 @@ const isAllSelect = ref(1); // 1 全选 0反选
 let mitt_list = []
 const itemAllSelect = ref("all"); // 针对选项的判断 all 全部选中  part 部分选中
 const props = defineProps({
+  //下拉框子项
   list: {
-    //下拉框子项
-    type: Array
+      type: Array,
+      default: () => []
   },
   sport_id: String, //球类id
   popWidth: String, //宽度
@@ -172,15 +173,15 @@ const ipt_change = () => {
     emit("ipt_search", [input_val.value, Number(is_hot.value)]);
   }, 500);
 };
-const showFc = () =>{
-  isShow.value = true;
-  menu.value = "all";
-  props.list.forEach(item => {
-      if (!active_tournament.value.includes(item.id)) {
-        active_tournament.value.push(item.id);
-      }
-    });
-}
+// const showFc = () =>{
+//   isShow.value = true;
+//   menu.value = "all";
+//   props.list.forEach(item => {
+//       if (!active_tournament.value.includes(item.id)) {
+//         active_tournament.value.push(item.id);
+//       }
+//     });
+// }
 /**
  * @description: 全选
  * @param {}
@@ -229,7 +230,7 @@ const checkInvert = () => {
  */
 const checkHot = n => {
   emit("confirm", 0);
-  // menu.value = "hot";
+  menu.value = "hot";
   initSport.value = n;
   if (n == 1) {
     is_hot.value = false;
@@ -337,8 +338,8 @@ onMounted(() => {
     {deep:true, immediate: true }
   );
 watch(
-  props.list,
-  res => {
+  () => props.list,
+  (res) => {
     let _no_active = active_tournament.value.length == 0;
     // 当前是不是反选
     let is_invert = menu.value == "invert";
@@ -360,7 +361,7 @@ watch(
       // 如果条件有变，就清空已选中id
       if (
         _no_active ||
-        isTimeChanged ||
+        props.isTimeChanged ||
         is_hot.value ||
         itemAllSelect.value == "all"
       ) {
@@ -375,14 +376,9 @@ watch(
         // 或者时间有变化
         // 或者当前为热门并且是全部选中状态
         // 或者当前是全部选中状态，就重新全部选中
-         console.log('is_invertis_inver2222222t',is_invert)
-         console.log('is_invertis_inver3333333333t',_no_active)
-         console.log('is_invertis_inver4444444444t',isTimeChanged)
-         console.log('is_invertis_inver5555555t',is_hot)
-         console.log('is_invertis_inver6666666t',itemAllSelect.value)
         if (
           _no_active ||
-          isTimeChanged ||
+          props.isTimeChanged ||
           is_hot ||
           itemAllSelect.value == "all"
         ) {
@@ -455,7 +451,6 @@ watch(
     } else {
       itemAllSelect.value = allSelect ? "all" : "part";
     }
-    console.log('arr',arr)
   },
   { deep: true }
 );
