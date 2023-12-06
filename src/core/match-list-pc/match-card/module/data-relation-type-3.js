@@ -181,27 +181,27 @@
             Object.assign(all_card_obj[card_key],fold_template)
           }
         }
-        // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
-        if(league_index == 0 ){
-          // 已开赛、未开赛标题卡片处理
-          card_index += 1
-          card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
-          match_list_card_key_arr.push(card_key)
-          // 打入已开赛、未开赛标题卡片特征
-          all_card_obj[card_key] = {
-            ...ouzhou_match_status_title_card_template,
-            // 卡片索引
-            card_index,
-            // 卡片类型
-            card_type: card_key,
-            test: 1,
-          }
-          temp_match_status_title_card_obj = all_card_obj[card_key]
-          // 如果不是ws调用  设置折叠数据
-          if(!is_ws_call){
-            Object.assign(all_card_obj[card_key],fold_template)
-          }
-        }
+        // // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
+        // if(league_index == 0 && MatchListCardData.match_list_mapping_relation_obj_type == 1){
+        //   // 已开赛、未开赛标题卡片处理
+        //   card_index += 1
+        //   card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
+        //   match_list_card_key_arr.push(card_key)
+        //   // 打入已开赛、未开赛标题卡片特征
+        //   all_card_obj[card_key] = {
+        //     ...ouzhou_match_status_title_card_template,
+        //     // 卡片索引
+        //     card_index,
+        //     // 卡片类型
+        //     card_type: card_key,
+        //     test: 1,
+        //   }
+        //   temp_match_status_title_card_obj = all_card_obj[card_key]
+        //   // 如果不是ws调用  设置折叠数据
+        //   if(!is_ws_call){
+        //     Object.assign(all_card_obj[card_key],fold_template)
+        //   }
+        // }
 
         // 联赛标题卡片处理
         card_index += 1

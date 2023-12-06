@@ -173,7 +173,7 @@ function key_down(event) {
     width: 100%;
     height: 0.32rem;
     overflow: hidden;
-    padding: 0 0.05rem;
+    padding: 0 0.06rem;
     position: relative;
 
     .search-tab-content {

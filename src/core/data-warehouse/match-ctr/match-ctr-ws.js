@@ -247,6 +247,8 @@ export default class MatchDataBaseWS
         this.match_ctr.assign_with(match, { ...cd_obj, is_ws: true });        
         // 格式化列表赛事(部分数组转对象)
         this.match_ctr.list_serialized_match_obj([match]);
+        // 设置赛事比分更新时间
+        this.match_ctr.ws_match_key_upd_time_cache_set(match,'msc');
       }
     }
   }
