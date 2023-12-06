@@ -89,7 +89,8 @@
             <icon-wapper color="#999" name="icon-arrow"  :class="['icon-wapper', {'close': judage_hshow == 'Yes'}]"  size="16px" />
           </div>
           <!-- 调试专用勿删除 -->
-          <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
+          <!-- <span v-if="wsl_flag" style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span> -->
+          <span style="color:red;font-size:12px;" text = "调试用span">模板(hpt)<span>{{item_data.hpt}}玩法(hpid)=>{{item_data.hpid}}</span></span>
         </div>
       </div>
       <template v-if="[0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,18,51].includes(+item_data.hpt)">
@@ -100,7 +101,7 @@
                 :is="`temp${item_data.hpt}`"
                 :item_data="item_data"
                 :title="title"
-                @bet_click_="bet_click_"
+            
             />
           </div>
         </q-slide-transition>
@@ -113,7 +114,6 @@
                 v-show="item_data.hotName"
                 :item_data="item_data"
                 :title="title"
-                @bet_click_="bet_click_"
             ></temp8>
           </div>
         </q-slide-transition>

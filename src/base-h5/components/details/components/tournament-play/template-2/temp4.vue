@@ -5,6 +5,7 @@
  * os 1:开盘 2:封盘 3:关盘
 -->
 <template>
+   <div v-show="false">{{BetData.bet_data_class_version}}</div>
   <div class="temp4 mx-5">
     <div class="hairline-border">
       <div class="row title-style ">

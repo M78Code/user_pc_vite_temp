@@ -5,6 +5,7 @@
 -->
 <template>
   <div class="temp13 mx-5">
+    <div v-show="false">{{BetData.bet_data_class_version}}</div>
     <div class="hairline-border">
       <div class="rad-style">
         <i class="slide_icon slide_icon_l animate-effect" v-show="is_show_slide && !get_is_hengping"></i>
@@ -36,15 +37,15 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': utils.calc_win(append_single.result)}]">
+                               :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': utils.calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">  
                               <div class="single-name">
                                 <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
-                                <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
+                                <span :class="BetData.bet_oid_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
                               </div>
-                              <odds-new :class="{'odds-style':!is_match_result}" :item_data="item_data" :ol_data="append_single" ></odds-new>
+                              <odds-new  :class="{'odds-style':!is_match_result}"  :item_data="item_data" :ol_data="append_single" ></odds-new>
                             </div>                           
                           </div>
                         </template>
@@ -144,15 +145,15 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(append_single.result)}]">
+                               :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">
                               <div class="single-name">
                                 <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
-                                <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
+                                <span :class="BetData.bet_oid_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
                               </div>
-                              <odds-new :class="{'odds-style':!is_match_result}" :item_data="item_data" :ol_data="append_single" ></odds-new>
+                              <odds-new  :class="{'odds-style':!is_match_result}"  :item_data="item_data" :ol_data="append_single" ></odds-new>
                             </div>
                           </div>
                         </template>
@@ -239,6 +240,7 @@ import {utils,LOCAL_PROJECT_FILE_PREFIX ,MatchDataWarehouse_H5_Detail_Common as 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   name: "temp13",
   props:{
@@ -257,12 +259,6 @@ export default defineComponent({
       left: 0
     });
     const bet_slide = ref(null)
-    // #TODO vuex
-    // computed: {
-    // ...mapGetters(["get_bet_list", "get_detail_data", 'get_is_hengping']),
-    const get_bet_list = computed(() => {
-      return []
-    });
     const get_detail_data = computed(() => {
       return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
     });
@@ -406,7 +402,7 @@ export default defineComponent({
     return {
       ...toRefs(init_data),
       lodash,
-      get_bet_list,
+      BetData,
       get_detail_data,
       get_is_hengping,
       devote_value_d,

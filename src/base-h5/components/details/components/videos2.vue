@@ -251,7 +251,7 @@
         <!-- 全屏按钮 -->
         <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" class="full-screen-btn" @click="set_full_screen">
           <img v-if="get_is_full_screen"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
-          <img v-else  :src="`/${project_name}5/image/svg/full_screen.svg`">
+          <img v-else  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/full_screen.svg`">
         </div>
         <!-- 视频info说明弹窗 -->
         <div
