@@ -37,7 +37,7 @@
    * @param {boolean} is_ws_call 是否ws调用
    * @param {undefined} undefined
   */
-  export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5=(match_list,is_ws_call)=>{
+  export const compute_match_list_style_obj_and_match_list_mapping_relation_obj_type6=(match_list,is_ws_call)=>{
     // 赛种ID 到卡片key的 映射对象
     let csid_to_card_key_obj = {}
     // 所有卡片列表
@@ -66,6 +66,7 @@
     // 自定义联赛ID
     let cus_tid = ''
     // 遍历所有赛事列表
+    MatchListCardData.match_list_key=match_list||[]
     match_list && match_list.length && match_list.forEach( (match,match_index) => {
       league_repeat_count_obj[match.tid] = league_repeat_count_obj[match.tid] || 0
       // 冠军首次加载只显示前3场赛事
@@ -76,7 +77,7 @@
       csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []
 
       // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
-      if(MatchListCardData.match_list_mapping_relation_obj_type == 5 && match.csid != pre_match_csid){
+      if(match.csid != pre_match_csid){
         pre_match_csid = match.csid
         card_key = `sport_title_${match.csid}`
         // 判断球种标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复球种标题卡片
@@ -177,7 +178,6 @@
       all_card_obj[match.mid+'_'] = match_style_obj
 
     })
-
     MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象
         all_card_obj,

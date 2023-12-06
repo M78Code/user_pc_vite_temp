@@ -4,7 +4,7 @@
  * @Description: 赛事分析页动画/视频
 -->
 <template>
-  <div class="box-bc">
+  <div class="box-bc" @mouseenter="video_enter" @mouseleave="video_leave">
     <div class="iframe_box">
       <iframe
         id="video-iframe"
@@ -190,6 +190,33 @@ const get_animation_url = () => {
       console.error(err);
     });
 };
+
+/**
+ * @Description:鼠标移入视频区域
+ * @return {undefined} undefined
+ */
+const video_enter = () => {
+  video.send_message({
+    cmd:'show_controller',
+    val:true
+  })
+};
+
+/**
+ * @Description:鼠标离开视频区域
+ * @return {undefined} undefined
+ */
+const video_leave = () => {
+  video.send_message({
+    cmd:'show_controller',
+    val:false
+  })
+  video.send_message({
+    cmd:'global_click',
+    val:''
+  })
+};
+
 </script>
 
 <style lang="scss" scoped>
