@@ -406,6 +406,7 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	if (!match_list) {
 		match_list = lodash.get(data, "data");
 	}
+	set_league_list_obj(match_list)
 	match_list = match_list || [];
 	//虚拟体育 接口数据结构转换
 	// lockie
