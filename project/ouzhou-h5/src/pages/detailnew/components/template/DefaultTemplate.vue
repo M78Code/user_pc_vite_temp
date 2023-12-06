@@ -1,8 +1,8 @@
 <template>
   <div class="component">
-    <OddsTitle :data="data" v-if="hasTitle"></OddsTitle>
+    <OddsTitle :data="data"></OddsTitle>
       <template v-for="item in data.hl">
-        <OddHlWrap :data="item" :type="olType" :hpt="data.hpt">
+        <OddHlWrap :data="item" :type="olType" :hpt="data.hpt" :oddInfo="data">
         </OddHlWrap>
       </template>
   </div>
@@ -16,8 +16,6 @@ const props = defineProps<{
   data:TYPES.OddInfo
 }>()
 
-const len = props.data.title.length
-const hasTitle = len > 1 && len <= 3
 const olType = common.getOlType(props.data)
 
 </script>
