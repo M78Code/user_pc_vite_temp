@@ -53,9 +53,9 @@ export default {
       let difValue_time = Math.floor(dateDiff_time / (24 * 3600 * 1000));
       let day_value;
       if(difValue_time == 0){
-        day_value = this.$root.$t('today')
+        day_value = i18n_t('today')
       }else if(difValue_time == '-1'){
-        day_value = this.$root.$t('tomorrow')
+        day_value = i18n_t('tomorrow')
       }
       return day_value
     },
@@ -63,7 +63,7 @@ export default {
       // let arr = ["日", "一", "二", "三", "四", "五", "六"];
       let i = new Date(value).getDay();
       // return "周" + a[i];
-      let replace_name = this.$root.$t('time.time_date_week')[i]
+      let replace_name = i18n_t('time.time_date_week')[i]
       if(replace_){
         replace_name = replace_name.replace('星期', '周')
       }
@@ -130,11 +130,11 @@ export default {
       let h = (time.getHours() + "").padStart(2, 0);
       let mm = (time.getMinutes() + "").padStart(2, 0);
       let s = (time.getSeconds() + "").padStart(2, 0);
-      let arr = $root.$t('time.time_date_week');// ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+      let arr = t('time.time_date_week');// ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
       let i = time.getDay();
       let weekday = arr[i];
       // return `${m}月${d}日 (${weekday})`;
-      return licia_format(this.$root.$t('time.time_date_2'), m, d, arr[i]);
+      return licia_format(i18n_t('time.time_date_2'), m, d, arr[i]);
     },
     format_day(value, separator = "/") {
       if (!value) { return '' }
@@ -191,7 +191,7 @@ export default {
       // let arr = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
       let i = new Date(parseInt(value)).getDay();
       // return a[i];
-      return this.$root.$t('time.time_date_week')[i];
+      return i18n_t('time.time_date_week')[i];
     },
     /**
      * @Description 时间戳转星期 
@@ -200,7 +200,7 @@ export default {
     */
     format_week2(value) {
       let i = new Date(parseInt(value)).getDay();
-      return this.$root.$t('time.time_date_week_3')[i];
+      return i18n_t('time.time_date_week_3')[i];
     },
     utc_to_gmt_8(value) {
       if (!value) { return '' }
@@ -248,9 +248,9 @@ export default {
       let time_local = new Date().getTime();
       if (time > time_local) {
         let cha_m = Math.floor((time - time_local) / (60 * 1000))
-        str = `${cha_m}` + this.$root.$t('match_info.after_start');//分钟后开始
+        str = `${cha_m}` + i18n_t('match_info.after_start');//分钟后开始
       } else {
-        str = this.$root.$t('match_info.match_playing');//`已开赛`
+        str = i18n_t('match_info.match_playing');//`已开赛`
       }
       return str
     },
@@ -261,9 +261,9 @@ export default {
       let time_local = new Date().getTime();
       if (time > time_local) {
         let cha_m = Math.floor((time - time_local) / (60 * 1000))
-        str = `${cha_m}` + this.$root.$t('match_info.after_start');//分钟后开始
+        str = `${cha_m}` + i18n_t('match_info.after_start');//分钟后开始
       } else {
-        str = this.$root.$t('match_info.match_playing');//`已开赛`
+        str = i18n_t('match_info.match_playing');//`已开赛`
       }
       return str
     },

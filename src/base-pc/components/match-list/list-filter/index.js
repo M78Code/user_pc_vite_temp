@@ -249,7 +249,8 @@ async function  get_menu_of_favorite_count(list,type) {
  * 解析 新接口返回值  冠军页面
  */
 function resolve_mew_menu_res_mi_400() {
-    let mi_400_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 400) || {
+    let mew_menu_list_res = lodash_.cloneDeep(BaseData.mew_menu_list_res)
+    let mi_400_obj = mew_menu_list_res.find((x) => x.mi == 400) || {
         sl: [],
     };
     let mi_400_arr = mi_400_obj.sl.filter( item=>{
@@ -266,7 +267,6 @@ function resolve_mew_menu_res_mi_400() {
 
     // 收藏
     if(MenuData.is_collect){
-        get_menu_of_favorite_count(mi_400_arr,400)
         mi_100_arr.value = get_menu_of_favorite_count(mi_400_arr,400)
     }
 

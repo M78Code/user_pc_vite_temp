@@ -6,6 +6,8 @@ import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2 
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3 } from "./data-relation-type-3.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4 } from "./data-relation-type-4.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5 } from "./data-relation-type-5.js";
+import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type6 } from "./data-relation-type-6.js";
+
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type7 } from "./data-relation-type-7.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";
@@ -206,7 +208,12 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
         match_list,
         is_ws_call
       );
-    } else if ([8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+    } else if ([6].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
+      compute_match_list_style_obj_and_match_list_mapping_relation_obj_type6(
+        match_list,
+        is_ws_call
+      );
+    }else if ([8].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
       compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3(
         match_list,
         is_ws_call

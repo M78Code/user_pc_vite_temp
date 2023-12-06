@@ -73,7 +73,7 @@
           </div>
         </div>
         <!-- 视频单页项目-->
-        {{ iframe_src+'&rdm='+iframe_rdm }}
+        <!-- {{ iframe_src+'&rdm='+iframe_rdm }} -->
         <iframe 
         v-if="iframe_show && !is_show_no_handle && iframe_src" 
         v-show="!is_playing_replay" 

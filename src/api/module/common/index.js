@@ -298,3 +298,7 @@ export const get_server_time = (params, config={}, url = "/v1/getSystemTime/curr
 // 根据赛事IDs，获取赛事事件
 export const match_event = (params, config={}, url = "/v1/matchevent") => http.post(`${prefix}${url}`, params, config);
 
+// var事件提示 字段配置接口  var事件国际化
+export const get_event_info = (params, config = {}, url="/v1/w/eventInfo") => {
+  return http.get(`${prefix}${url}`, params);
+};
