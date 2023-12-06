@@ -214,9 +214,9 @@ function set_base_data_init_ouzhou(play_num = '01') {
 	try {
 		let {
 			menu_root,
-			current_ball_type,
+			current_ball_type:csid,
 			left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
-			mid_menu_result: { csid, mif, root, mid_menu_mi },
+			mid_menu_result: { mif, root, mid_menu_mi },
 			menu_data_version,
 		} = MenuData;
 		let mid = lv2_mi + play_num;
