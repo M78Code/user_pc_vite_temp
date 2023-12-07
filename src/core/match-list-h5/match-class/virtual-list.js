@@ -104,8 +104,8 @@ class VirtualList {
     // 赛事相叠高度 缓冲容器是 5px - buffer_height  就是交叠高度
     let match_overlap_height = reduce_buffer_height ? reduce_buffer_height - buffer_height : 0
     let total = 0
-    // 显示开赛、未开赛 match_stage_height - 缓冲高度
-    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_stage_height
+    // 显示开赛、未开赛 match_stage_height - 缓冲高度  并且不需要缓冲高度 所以 - 3
+    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_stage_height - 3
     // 显示球种类别
     if (this.is_show_ball && is_show_ball_title) total += ball_title_height
     // if (this.is_change_handicap_height !== 0) total += this.is_change_handicap_height
