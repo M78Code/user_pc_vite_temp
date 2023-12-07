@@ -188,4 +188,4 @@ function resetStatus() {
     }
   }
 }
-</style>src/output/index.js
+</style>

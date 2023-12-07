@@ -1,5 +1,5 @@
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
+export const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 
 
 // pc
@@ -19,23 +19,23 @@ import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match
 import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
 import OZ_MenuData_App_h5 from "src/core/menu-app-h5/oz-menu-data-class.js";
 
-let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
+let current_menu_data = IS_PC ? MenuData_PC : MenuData_H5;
 // if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
-//   MenuData = MenuData_App_h5
+//   current_menu_data = MenuData_App_h5
 // }
 
 switch (PROJECT_NAME) {
   case 'ouzhou-h5':
-    MenuData = OZ_MenuData_App_h5
+    current_menu_data = OZ_MenuData_App_h5
     break;
   case 'app-h5':
-    MenuData = MenuData_App_h5
+    current_menu_data = MenuData_App_h5
     break;
   case 'yazhou-pc': 
-    MenuData = MenuData_PC_Yazhou
+    current_menu_data = MenuData_PC_Yazhou
     break;
   case 'ouzhou-pc':
-    MenuData = MenuData_PC
+    current_menu_data = MenuData_PC
     break;
   default:
     break;
@@ -43,5 +43,5 @@ switch (PROJECT_NAME) {
 
 export const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
 export const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
-
+export const MenuData = current_menu_data;
  

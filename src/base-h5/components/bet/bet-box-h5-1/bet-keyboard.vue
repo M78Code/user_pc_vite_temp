@@ -314,4 +314,4 @@ onUnmounted(() => {
   // background: url('../../../assets/images/bet/bet_key_delect.png') no-repeat 50%;
   background-size: 23px 14px;
 }
-</style>src/output/index.js
+</style>

@@ -95,4 +95,4 @@ img {
   display: inline-block;
   max-width: 1rem;
 }
-</style>src/output/index.js
+</style>

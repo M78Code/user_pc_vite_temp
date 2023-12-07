@@ -37,12 +37,13 @@ import menu_i18n_default from "./config/menu-i18n.json";
 import ws_user_info from "./config/user_info.json";
 //vr 默认的 用于ws模拟
 import vr_menu_info from "./config/vr_menu_info.json";
-import { MenuData,LocalStorage } from "src/core/index.js"
+import { MenuData } from "src/output/computed.js"
+import { LocalStorage } from 'src/output/constant-utils.js'
 import {
   useMittOn,
   useMittEmit,
   MITT_TYPES,
-} from "src/output/index.js";
+} from "src/core/mitt/index.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 const base_data_key = STANDARD_KEY.get("base_data_key");

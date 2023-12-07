@@ -249,4 +249,4 @@ const goBackToLeague = () => {
     font-weight: bold;
   }
 }
-</style>src/output/index.js
+</style>

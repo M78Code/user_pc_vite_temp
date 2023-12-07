@@ -178,4 +178,4 @@ const score_column_position = computed(() => {
 
 </script>
 
-<style></style>src/output/index.js
+<style></style>

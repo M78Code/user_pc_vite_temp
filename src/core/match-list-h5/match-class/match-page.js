@@ -1,7 +1,6 @@
 
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import { csid_map_concede_points_id } from "src/output/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
 import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";

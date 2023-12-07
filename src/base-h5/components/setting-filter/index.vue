@@ -280,4 +280,4 @@ const activity_handle = item => {
     }
   }
 }
-</style>src/output/index.jssrc/output/index.jssrc/outputsrc/outputsrc/output/index.js
+</style>/index.jssrc/outputsrc/outputsrc/output/index.js

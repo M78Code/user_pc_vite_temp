@@ -1,4 +1,4 @@
-import { compute_local_project_file_path } from "src/output";
+import { compute_local_project_file_path } from "src/output/constant-utils.js";
 const img_key_map = {
   xsxa :''
 };

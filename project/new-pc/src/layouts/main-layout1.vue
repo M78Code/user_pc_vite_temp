@@ -140,4 +140,4 @@ const show_move_video = computed(()=>{
    width:100%;
   height:100%;
 }
-</style>src/output/index.js
+</style>

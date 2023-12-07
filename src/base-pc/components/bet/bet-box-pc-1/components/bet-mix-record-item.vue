@@ -93,4 +93,4 @@ import lodash from 'lodash'
     text-align: right;
   }
 }
-</style>src/output/index.js
+</style>

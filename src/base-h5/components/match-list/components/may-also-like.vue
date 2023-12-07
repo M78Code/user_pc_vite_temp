@@ -215,4 +215,4 @@ const normal_ = computed(() => {
 
 <style scoped lang="scss">
  @import "../styles/may-also-like.scss";
-</style>src/output/index.js
+</style>

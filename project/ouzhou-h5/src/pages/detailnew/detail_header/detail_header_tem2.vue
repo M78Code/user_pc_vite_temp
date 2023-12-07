@@ -429,4 +429,4 @@ onMounted(() => {
 .mt-10 {
   margin-top: 10px;
 }
-</style>src/output/index.js
+</style>

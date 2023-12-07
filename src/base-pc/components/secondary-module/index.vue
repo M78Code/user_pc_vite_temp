@@ -138,4 +138,4 @@ function close_page(value) {
     }
 }
 
-</style>src/output/index.jssrc/output/index.js
+</style>/index.js

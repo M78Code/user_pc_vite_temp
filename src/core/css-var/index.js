@@ -1,6 +1,5 @@
 
-
-import { UserCtr, useMittOn, MITT_TYPES } from "src/output";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import themes from "app/job/output/css/index";
 
 /**/

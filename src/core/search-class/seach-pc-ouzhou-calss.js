@@ -1,6 +1,6 @@
 import { ref, nextTick } from "vue";
 import { debounce } from "lodash";
-import { useMittEmit, MITT_TYPES } from "src/output";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 class SearchPCDataClass {
   related_keyword = ""; //联想关键字
   keyword = ""; //搜索关键字

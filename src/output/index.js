@@ -246,7 +246,7 @@ const MatchDataWarehouse_H5_Detail_Jingxuan = new MatchDataBase({
 /***
  * 详情操作类
  */
-const MatchDetailCalss = new MatchDetailCtr()
+export const MatchDetailCalss = new MatchDetailCtr()
 /***
  * H5详情中间件
  */
@@ -274,7 +274,7 @@ export * from "src/core/server-img/";
  * import { is_eports_csid  } from "src/core/index.js";
  *
  */
-import ServerTime from './server-time/server-time'
+import ServerTime from 'src/core/server-time/server-time.js'
 
 export {
   //

@@ -241,4 +241,4 @@ function collect (){
       margin: 0;
     }
   }
-}</style>src/output/indexsrc/output/index.js
+}</style>/indexsrc/output/index.js

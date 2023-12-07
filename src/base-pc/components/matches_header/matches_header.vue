@@ -422,4 +422,4 @@ const checked_current_tab = payload => {
 	padding-right: 3px;
 	}
   }
-</style>src/output/index.js
+</style>

@@ -1,6 +1,5 @@
-import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME } from "src/output/index.js";
 import MatchListCardData from "./match-list-card-data-class.js";
-import lodash from "lodash";
+import { PROJECT_NAME } from 'src/output/computed.js'
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 } from "./data-relation-type-1.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2 } from "./data-relation-type-2.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3 } from "./data-relation-type-3.js";

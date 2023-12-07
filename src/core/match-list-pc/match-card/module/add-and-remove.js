@@ -6,7 +6,7 @@ import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 import MatchListCardData from "./match-list-card-data-class";
 import { league_list_obj } from '../../composables/match-list-featch.js'
-import { PageSourceData } from 'src/output/index.js';
+import { PageSourceData } from 'src/output/computed.js';
 import { fold_template } from "../config/card-template-config.js"
 import { replace } from "lodash";
 

@@ -55,4 +55,4 @@ import BetResult from "./components/bet-result.vue"  // 投注结果
     border: 1px solid var(--q-gb-bd-c-1);
     border-top: none;
   }
-</style>src/output
+</style>

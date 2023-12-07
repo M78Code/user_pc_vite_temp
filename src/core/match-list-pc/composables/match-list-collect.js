@@ -1,7 +1,11 @@
 import { ref, nextTick } from "vue";
 import lodash from "lodash";
+
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { UserCtr, t, PageSourceData, MenuData } from "src/output/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
+import { MenuData } from "src/output/computed.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { api_common, api_match } from "src/api/index.js";
 // 收藏api
@@ -9,7 +13,6 @@ const get_collect_matches_api = api_match.post_fetch_collect_list_high_light;
 // 全局赛事收藏信息
 const match_collect_data = { data: null };
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 // 前端控制是否禁用收藏功能   ENABLE_COLLECT_API

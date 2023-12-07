@@ -648,4 +648,4 @@ export default {
 .esports-head-info-3 .is_details {
   max-width: 314px !important;
 }
-</style>src/output
+</style>

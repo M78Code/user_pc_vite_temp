@@ -90,4 +90,4 @@ const on_go_detail = () => {
     justify-items: center;
   }
 }
-</style>src/output/index.jssrc/output/index.js
+</style>/index.js

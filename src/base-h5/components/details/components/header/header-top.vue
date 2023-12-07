@@ -596,4 +596,4 @@ export default defineComponent({
 <style scoped lang="scss">
 /****************** 横屏投注弹窗*******************/
 @import "../../styles/header-top.scss";
-</style>src/output/index.js
+</style>

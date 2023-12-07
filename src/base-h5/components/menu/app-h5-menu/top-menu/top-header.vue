@@ -64,4 +64,4 @@ import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
             flex: 1 1;
         }
     }
-</style>src/output/index.js
+</style>

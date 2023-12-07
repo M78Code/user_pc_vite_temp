@@ -763,4 +763,4 @@ export default defineComponent({
 </style>
 <style scoped lang="scss">
   @import "../../styles/details-theme/temp.scss";
-</style>src/output
+</style>

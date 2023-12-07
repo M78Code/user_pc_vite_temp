@@ -1,5 +1,5 @@
 
-import { i18n_t } from "src/output/index.js"
+import { i18n_t } from "src/boot/i18n.js"
 
 // 15 分钟玩法对应映射
 export const use_playingMethods_15 = () => {

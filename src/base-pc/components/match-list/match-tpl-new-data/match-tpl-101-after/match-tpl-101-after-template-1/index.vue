@@ -234,4 +234,4 @@ export default {
     color: var(--q-gb-bg-c-17);
   }
 }
-</style>src/output/index.js
+</style>

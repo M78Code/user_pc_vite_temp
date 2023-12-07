@@ -275,4 +275,4 @@ const poisition_top = computed(() => {
 .skeleton-wrap {
   z-index: 350 !important;
 }
-</style>src/output/index.js
+</style>

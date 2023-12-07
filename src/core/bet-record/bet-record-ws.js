@@ -1,5 +1,5 @@
 import lodash from "lodash"
-import { UserCtr } from "src/output";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { nextTick } from "vue";

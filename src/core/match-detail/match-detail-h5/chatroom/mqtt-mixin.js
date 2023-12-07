@@ -11,7 +11,7 @@
 // import mqtt from 'mqtt';
 import uniqid from 'uniqid';
 import ChatroomMsgType from 'src/core/ws/chatroom/chatroom-msgtype.js';
-import { UserCtr } from "src/output/index.js";
+import { UserCtr } from "src/core/user-config/user-ctr.js";
 
 export default {
   computed: {

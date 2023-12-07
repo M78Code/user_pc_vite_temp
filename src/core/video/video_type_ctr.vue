@@ -57,7 +57,7 @@
 import video from "src/core/video/video.js"
 import { IconWapper } from 'src/components/icon'
 import { get_media_icon_index,MatchDetailCalss,debounce_throttle_cancel,LOCAL_PROJECT_FILE_PREFIX} from "src/core";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default {
   components: {

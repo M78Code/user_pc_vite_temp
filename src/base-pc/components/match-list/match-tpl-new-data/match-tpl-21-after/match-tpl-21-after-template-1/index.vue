@@ -38,4 +38,4 @@ import { compute_local_project_file_path } from 'src/output/index.js'
 
 <style lang="scss" scoped>
 
-</style>src/output/index.js
+</style>

@@ -105,4 +105,4 @@ const nothing = () =>{
 <style scoped lang="scss">  
 
 
-</style>src/output/index.js
+</style>

@@ -458,4 +458,4 @@ onUnmounted(() => {
 
 </script>
 
-<style lang="scss" scoped>@import url('./index.scss');</style>src/output/index.js
+<style lang="scss" scoped>@import url('./index.scss');</style>

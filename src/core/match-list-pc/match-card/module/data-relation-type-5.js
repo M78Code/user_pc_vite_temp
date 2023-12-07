@@ -12,10 +12,7 @@
      * 
      * 处理  56
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/index.js'
     import MatchListCardData from "./match-list-card-data-class.js";
-    import lodash from "lodash";
-    import {ref} from "vue"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
     import {compute_style_template_by_matchinfo} from "./compute-style-template.js"

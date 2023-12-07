@@ -1,4 +1,3 @@
-import { PROJECT_NAME } from 'src/output/index.js';
 
 /**
  * 通过菜单id 来映射显示每个菜单下边的默认模板

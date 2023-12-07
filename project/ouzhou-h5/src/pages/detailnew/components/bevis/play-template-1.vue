@@ -166,4 +166,4 @@ const AssembleData = computed(() => {
     border: 1px solid var(--q-gb-bd-c-10);
 }
 
-</style>src/output/index.js
+</style>

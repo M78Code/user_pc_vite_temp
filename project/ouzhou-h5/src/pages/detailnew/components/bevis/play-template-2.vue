@@ -87,4 +87,4 @@ const go_betting = (data) => {
         }
     }
 }
-</style>src/output/index.js
+</style>

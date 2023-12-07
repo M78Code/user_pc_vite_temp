@@ -38,4 +38,4 @@ import { compute_local_project_file_path } from 'src/output/index.js';
 </script>
 
 <style>
-</style>src/output/index.js
+</style>

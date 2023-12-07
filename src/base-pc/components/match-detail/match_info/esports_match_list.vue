@@ -248,4 +248,4 @@ export default {
     }
   }
 }
-</style>src/output/index
+</style>/index

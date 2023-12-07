@@ -1,5 +1,5 @@
-import { UserCtr } from "src/output";
-import BetData from "./bet-data-class"
+import { UserCtr } from "src/output.js";
+import BetData from "./bet-data-class.js"
 import lodash_ from "lodash"
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { nextTick } from "vue";

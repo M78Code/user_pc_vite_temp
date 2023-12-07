@@ -190,4 +190,4 @@ const go_betting = (data) => {
         color: var(--q-gb-t-c-1);
     }
 }
-</style>src/output/index.js
+</style>

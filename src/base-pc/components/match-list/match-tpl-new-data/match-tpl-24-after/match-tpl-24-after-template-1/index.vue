@@ -92,4 +92,4 @@ const bet_col = computed(() => {
     height: 24px;
   }
 }
-</style>src/output/index.js
+</style>

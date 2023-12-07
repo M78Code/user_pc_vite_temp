@@ -219,4 +219,4 @@ function getCurState(hipo) {
     }
   }
 }
-</style>src/output/index.js
+</style>

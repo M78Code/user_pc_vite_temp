@@ -33,4 +33,4 @@ watch(
   white-space: nowrap;
 
 }
-</style>src/output/index.js
+</style>

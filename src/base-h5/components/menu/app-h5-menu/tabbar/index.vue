@@ -721,4 +721,4 @@
   <style lang="scss" scoped>
   @import url(./footer.scss);
   @import url(./footer_menu.scss);
-  </style>src/output/index.jssrc/output/index.js
+  </style>/index.js

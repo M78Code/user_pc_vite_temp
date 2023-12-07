@@ -203,4 +203,4 @@ onUnmounted(() => {
       background-color: var(--q-gb-bg-c-2) !important;
     }
 }
-</style>src/output/index.js
+</style>

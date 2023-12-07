@@ -249,4 +249,4 @@ const get_unsettle_tickets_count_config = () => {
   min-width: 1440px;
   margin: 0 auto;
 }
-</style>src/output/index.js
+</style>

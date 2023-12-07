@@ -42,4 +42,4 @@ import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
     }
   }
 
-</style>src/output/index.js
+</style>

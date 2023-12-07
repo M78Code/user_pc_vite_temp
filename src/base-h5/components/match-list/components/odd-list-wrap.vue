@@ -814,4 +814,4 @@ onUnmounted(() => {
  
 <style scoped lang="scss">
 @import "../styles/odd-list-wrap";
-</style>src/output/index.jssrc/output/index.js
+</style>/index.js

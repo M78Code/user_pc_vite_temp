@@ -2,7 +2,7 @@ import lodash from "lodash";
 import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData } from "src/output/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { MatchDataWarehouse_PC_List_Common  } from "src/output/index.js";
 import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-list-other.js';

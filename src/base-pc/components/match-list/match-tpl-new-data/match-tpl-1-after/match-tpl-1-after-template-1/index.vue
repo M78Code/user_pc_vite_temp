@@ -461,4 +461,4 @@ onMounted(() => {
     border-right: none !important;
   }
 }
-</style>src/output/index.js
+</style>

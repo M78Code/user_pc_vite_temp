@@ -235,4 +235,4 @@ function change(index) {
 </script>
 <style lang="scss" scoped>
 @import './site-header.scss';
-</style>src/output
+</style>

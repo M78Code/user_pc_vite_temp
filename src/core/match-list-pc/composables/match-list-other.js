@@ -5,7 +5,7 @@
 import { ref } from 'vue';
 
 import { MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
-import { get_match_status } from 'src/output/index.js'
+import { get_match_status } from 'src/output/constant-utils.js'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";

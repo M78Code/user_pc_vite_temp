@@ -482,4 +482,4 @@ onUnmounted(() => {
  
 <style scoped lang="scss">
   @import "../styles/odd-column-item";
-</style>src/output/index.jssrc/output
+</style>

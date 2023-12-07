@@ -1,4 +1,4 @@
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/constant-utils.js"
 
 const detail_csid_config= {
     CSID_1: {

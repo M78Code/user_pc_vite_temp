@@ -109,4 +109,4 @@ const set_bet_show = () => {
             }
         }
     }
-</style>src/output
+</style>

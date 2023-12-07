@@ -5,8 +5,9 @@
  * @Description:
  */
 import lodash from "lodash";
-import { GlobalSwitchClass,MatchDetailCalss }  from "src/output"
+import { MatchDetailCalss }  from "src/output/index.js"
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
+import GlobalSwitchClass  from "src/core/global/global.js";
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";
 
