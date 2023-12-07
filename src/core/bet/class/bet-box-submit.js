@@ -777,9 +777,12 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
           // 冠军玩法 部分玩法hpid相同 
         if(MenuData.is_kemp()){
             let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
+            if(hpn_list.length < 1){
+                hpn_list = lodash_.get(mid_obj,`hps`,[])
+            }
             let hpn_obj = hpn_list.find(item => item.hid == ol_obj._hid) || {}
             if(hpn_obj.hid){
-                hpn = hpn_obj.hpn
+                hpn = hpn_obj.hpn || hpn_obj.hps
             }else{
                 hpn = i18n_t('bet.bet_winner')
             }
