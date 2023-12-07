@@ -57,8 +57,8 @@
 </template>
 
 <script setup>
-import { LayOutMain_pc } from "src/core/index.js";
-import { compute_local_project_file_path } from "src/core/index.js";
+import { LayOutMain_pc } from "src/output/index.js";
+import { compute_local_project_file_path } from "src/output/index.js";
 import { ref, reactive,toRef, toRefs } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import rule from "src/base-pc/components/rule/index.vue";
@@ -138,4 +138,4 @@ function close_page(value) {
     }
 }
 
-</style>
+</style>/index.js

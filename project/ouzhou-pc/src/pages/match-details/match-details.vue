@@ -381,3 +381,4 @@ let back_to_timer =null
 <style lang="scss">
 @import "src/base-pc/components/match-details/match-details.scss";
 </style>
+src/output/index

@@ -45,7 +45,7 @@ import stage_child_15 from "src/project/components/match/stage/stage-child-15.vu
 import stage_child_16 from "src/project/components/match/stage/stage-child-16.vue";      // 详情页显示水球赛事第几节以及赛事时间
 import stage_child_101 from "src/project/components/match/stage/stage-child-101.vue";    // 详情页 电竞第几局 以及 赛事时间
 // import {mapGetters} from "vuex";
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 
 export default {
   name: "match_stage",
@@ -138,3 +138,4 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
+src/output/index.js

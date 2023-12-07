@@ -44,7 +44,7 @@ import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_server_file_path } from "src/core/file-path/file-path.js"
-import { utils } from "src/core/index.js"
+import { utils } from "src/output/index.js"
 
   // 弹框是否显示
   let is_show_dialog = ref(false)
@@ -286,3 +286,4 @@ const handle_hide_dialog = (e) => {
   box-shadow: unset;
 }
 </style>
+src/output/index.js

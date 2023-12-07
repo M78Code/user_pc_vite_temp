@@ -48,7 +48,7 @@ import {   nextTick, ref, computed, watch, onMounted, onBeforeUnmount } from "vu
 import lodash from "lodash";
 import { api_common } from "src/api/index.js";
 import BaseData from "src/core/base-data/base-data.js";
-import { UserCtr,MenuData } from 'src/core/index.js'
+import { UserCtr,MenuData } from 'src/output/index.js'
 import { 
   handle_click_menu_mi_3_date,
   get_date_menu_list,
@@ -465,3 +465,4 @@ onBeforeUnmount(() => {
   }
 }
 </style>
+src/output/index.js

@@ -16,7 +16,7 @@
   
 <script setup>
 import coming_soon from 'src/assets/images/conming_soons.png';
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 
 const props = defineProps({
   is_nodata: {
@@ -105,4 +105,4 @@ const props = defineProps({
     }
 }
 </style>
-  
+  src/output/index.js

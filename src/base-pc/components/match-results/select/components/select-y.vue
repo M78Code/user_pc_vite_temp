@@ -76,7 +76,7 @@ import {
   useMittOn,
   useMittEmitterGenerator,
   MITT_TYPES
-} from "src/core/index.js";
+} from "src/output/index.js";
 const option = ref(null); //选中项
 const isShow = ref(false); // 是否展示联赛列表
 const active = ref(null); //选择的下标
@@ -597,3 +597,4 @@ onUnmounted(() => {
   }
 }
 </style>
+src/output/indexsrc/output/indexsrc/output/index.js

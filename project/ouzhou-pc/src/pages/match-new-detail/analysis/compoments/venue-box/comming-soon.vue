@@ -26,7 +26,7 @@
 
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import lodash_ from "lodash";
 
 const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
@@ -179,3 +179,4 @@ watch(
   }
 }
 </style>
+src/output/index.js

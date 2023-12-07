@@ -12,7 +12,7 @@ import {
   MenuData,
   SearchData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5
-} from "src/core/index";
+} from "src/output/index";
 import { details_ws } from "./details-ws";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 

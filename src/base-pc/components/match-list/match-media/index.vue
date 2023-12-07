@@ -251,4 +251,4 @@ function collect (){
       margin: 0;
     }
   }
-}</style>
+}</style>/index

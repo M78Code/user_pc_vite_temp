@@ -29,8 +29,8 @@ import store from "src/store-redux/index.js";
 import { api_account, api_details } from 'src/api/index';
 import langs_mjs from "src/i18n/pc/langs/index.mjs";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { loadLanguageAsync } from 'src/core/index.js'
-// import userCtr from 'src/core/index.js'
+import { loadLanguageAsync } from 'src/output/index.js'
+// import userCtr from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -255,4 +255,4 @@ const versions_class = computed(() => {
     }
 }
 </style>
-  
+  src/output/index.js

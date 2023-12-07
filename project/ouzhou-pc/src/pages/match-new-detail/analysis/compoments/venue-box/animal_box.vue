@@ -38,7 +38,7 @@
 <script setup>
 import { onMounted, ref, watch, nextTick } from "vue";
 import { api_match_list } from "src/api";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import video from "src/core/video/video.js";
 import url_add_param from "src/core/enter-params/util/index.js";
 import video_type_ctr from "src/core/video/video_type_ctr.vue";
@@ -266,3 +266,4 @@ const video_leave = () => {
   display: none !important;
 }
 </style>
+src/output/index.js

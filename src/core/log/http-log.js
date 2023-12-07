@@ -6,7 +6,7 @@
  * @FilePath: \user-pc-vite\src\core\http\http-log.js
  * @Description: http方法次数统计
  */
-import { SessionStorage , LocalStorage } from "src/core/index.js";
+import { SessionStorage , LocalStorage } from "src/output/constant-utils.js";
 import { DateForMat } from "src/core/format/index.js";
 import { throttle } from "lodash";
 class HttpLog {

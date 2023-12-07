@@ -392,4 +392,4 @@ export default {
         }
     }
 }
-</style>
+</style>/index

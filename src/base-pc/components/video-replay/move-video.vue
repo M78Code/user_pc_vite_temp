@@ -36,7 +36,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 // // VueDraggableResizable组件api: https://gitcode.net/mirrors/mauricius/vue-draggable-resizable?utm_source=csdn_github_accelerator
 // import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 import { onMounted, ref, computed, reactive, onUnmounted, toRefs } from 'vue'
-import { compute_local_project_file_path } from 'src/core/index.js';
+import { compute_local_project_file_path } from 'src/output/index.js';
 import store from "src/store-redux/index.js";
 import { useRoute } from "vue-router";
 import {  utils } from "src/core/utils/module/utils.js";
@@ -687,3 +687,4 @@ const play_video = () => {
   background-color: rgba(255, 255, 255, 0.8);
 }
 </style>
+src/output/index.js

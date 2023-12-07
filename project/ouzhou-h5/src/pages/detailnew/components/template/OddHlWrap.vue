@@ -58,7 +58,7 @@ const hasTitle = computed(()=>props.oddInfo?.title.length)
       flex-basis: 50%;
     }
   }
-  &.hpt-10{
+  &.hpt-10,&.hpt-15{
     .component.odd-ol-item{
       flex-basis: calc(100%/3);
       padding: 10px 4px;
@@ -77,6 +77,11 @@ const hasTitle = computed(()=>props.oddInfo?.title.length)
         position: absolute;
         transform: translateX(100%);
       }
+    }
+  }
+  &.hpt-15{
+    .component.odd-ol-item{
+      flex-basis: 25%;
     }
   }
 }

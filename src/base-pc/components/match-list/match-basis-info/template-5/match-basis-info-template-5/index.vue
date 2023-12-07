@@ -96,7 +96,7 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 
 
-import { t } from "src/core/index.js";
+import { t } from "src/output/index.js";
 </script>
 <style lang="scss" scoped>
 .basic-col {
@@ -135,3 +135,4 @@ import { t } from "src/core/index.js";
   }
 }
 </style>
+src/output/index.jssrc/output/index.js

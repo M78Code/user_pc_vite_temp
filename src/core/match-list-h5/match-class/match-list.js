@@ -6,7 +6,7 @@
 import lodash from 'lodash'
 import MatchCtr from './match-ctr'
 import { i18n_t } from "src/boot/i18n.js";
-import { numberToChinese } from "src/core";
+import { numberToChinese } from "src/output/constant-utils.js";
 class matchListClass {
   /**
   * @description:斯诺克7局显示处理

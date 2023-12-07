@@ -50,7 +50,7 @@
 import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount } from "vue";
 import lodash_ from "lodash"
 import { useRoute } from "vue-router";
-import { LayOutMain_pc, UserCtr, GlobalAccessConfig } from "src/core/index.js";
+import { LayOutMain_pc, UserCtr, GlobalAccessConfig } from "src/output/index.js";
 import { api_betting, api_common } from "src/api/"
 
 import layoutHeader from "./layout-header.vue";

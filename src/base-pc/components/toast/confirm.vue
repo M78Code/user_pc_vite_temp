@@ -21,7 +21,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
-import { i18n_t } from "src/core/index.js";;
+import { i18n_t } from "src/output/index.js";;
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
 /** 国际化 */
@@ -147,3 +147,4 @@ function confirm() {
 </style>
 
 
+src/output/index.js

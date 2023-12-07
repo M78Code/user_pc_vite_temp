@@ -102,4 +102,4 @@ export default {
   align-items: center;
   height: 100%;
 }
-</style>
+</style>/index

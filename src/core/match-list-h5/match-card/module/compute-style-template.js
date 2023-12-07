@@ -30,13 +30,13 @@
  *
  */
 
-import { MatchDataWarehouse_H5_List_Common as MatchListData  } from 'src/core/index.js'
+import { MatchDataWarehouse_H5_List_Common as MatchListData  } from 'src/output/index.js'
 import MatchListCardData from "./match-list-card-data-class.js"
 import lodash from "lodash"
 import { update_match_parent_card_style } from "./utils.js"
 import { league_title_card_template } from "../template/card-template-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../template"
-import { LocalStorage, utils } from "src/core/index.js";
+import { LocalStorage } from "src/output/constant-utils.js";
 /**
  * @Description 获取其他玩法盘口高度
  * @param {string | Number } csid  赛种id

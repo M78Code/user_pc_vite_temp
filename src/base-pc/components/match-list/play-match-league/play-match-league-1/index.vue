@@ -57,7 +57,7 @@
 import lodash from 'lodash';
 import { ref, computed, onUnmounted, watch } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { MenuData, compute_css_obj, compute_img_url } from "src/core/index.js";
+import { MenuData, compute_css_obj, compute_img_url } from "src/output/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
@@ -189,3 +189,4 @@ onUnmounted(() => {
 
 }
 </style>
+src/output/index.js

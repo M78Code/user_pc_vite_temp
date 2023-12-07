@@ -25,7 +25,7 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/core/index.js";
+import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import {compute_local_project_file_path} from 'src/core';
 

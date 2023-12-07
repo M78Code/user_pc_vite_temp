@@ -609,4 +609,4 @@ get_carousel((data) => {
         height: 1.6rem;
     }
 }
-</style>
+</style>src/output

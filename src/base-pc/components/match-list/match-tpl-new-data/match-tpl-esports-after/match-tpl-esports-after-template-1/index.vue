@@ -46,7 +46,7 @@
 import { ref, watch } from 'vue';
 import lodash from 'lodash'
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
@@ -106,3 +106,4 @@ watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   top: 18px!important;
 }
 </style>
+src/output/index.js

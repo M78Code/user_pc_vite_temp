@@ -70,7 +70,7 @@ import { onMounted, ref, toRef, watch,onUnmounted, computed } from "vue";
 import lodash from "lodash";
 import { api_common, api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
-import { useMittOn, useMitt,MITT_TYPES, UserCtr } from "src/core/index.js"
+import { useMittOn, useMitt,MITT_TYPES, UserCtr } from "src/output/index.js"
 import SwitchButtons from "./components/SwitchButtons.vue"
 import right_actions from "./components/right_actions.vue"
 import custom_video from "./detail_header_video.vue";

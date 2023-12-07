@@ -386,3 +386,4 @@ export default defineComponent({
   position: absolute;
 }
 </style>
+src/output/index

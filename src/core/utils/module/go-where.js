@@ -9,7 +9,7 @@
   let golistpage = false
   let godetailpage = false
 // =============================================
-import { MatchDetailCalss } from "src/core";
+import { MatchDetailCalss } from "src/output/index.js";
 // 返回首页
 const go_home = ({back_to, route_name, route, router}) => {
   if(get_show_favorite_list){

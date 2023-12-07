@@ -13,7 +13,7 @@
 
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/core/index.js'
+import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/output/index.js'
 </script>
 
 <style lang="scss" scoped>
@@ -48,3 +48,4 @@ template {
   }
 }
 </style>
+src/output/index.js

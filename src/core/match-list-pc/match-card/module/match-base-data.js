@@ -1,4 +1,4 @@
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import MatchListCardClass from '../match-list-card-class.js';
 import {match_list_handle_set} from '../../match-handle-data.js'

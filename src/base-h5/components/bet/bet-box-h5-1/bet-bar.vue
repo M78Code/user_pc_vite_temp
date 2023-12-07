@@ -38,7 +38,7 @@
 <script setup>
 import lodash from "lodash"
 // import store from "src/store-redux/index.js";
-// import { UserCtr } from "src/core/index.js";
+// import { UserCtr } from "src/output/index.js";
 import { format_money2 } from 'src/core/format/module/format-money.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
@@ -252,3 +252,4 @@ onUnmounted(() => {
 .arrow {
   transform: scale(-1);
 }</style>
+src/output

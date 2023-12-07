@@ -34,7 +34,7 @@
   </div>
 </template>
 <script setup>
-import { compute_local_project_file_path } from 'src/core/index.js';
+import { compute_local_project_file_path } from 'src/output/index.js';
 </script>
 
 <style>

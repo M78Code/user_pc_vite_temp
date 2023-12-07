@@ -10,9 +10,9 @@ import { ref,nextTick } from "vue";
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
-import { ServerTime } from "src/core/";
+import { ServerTime } from "src/output/constant-utils.js";
 
-import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
+import { LocalStorage, SessionStorage } from "src/output/constant-utils.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
@@ -24,7 +24,7 @@ import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 import { uid } from 'quasar';
-import { i18n_t, i18n } from "..";
+import { i18n_t, i18n } from "../../output";
 
 import STANDARD_KEY from "src/core/standard-key";
 const user_key = STANDARD_KEY.get("user_info");

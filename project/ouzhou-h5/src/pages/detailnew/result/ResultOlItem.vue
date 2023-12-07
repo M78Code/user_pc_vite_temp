@@ -161,4 +161,4 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
 .hpt-3{
   --private-inner-container-padding: 0px 20px;
 }
-</style>
+</style>/index

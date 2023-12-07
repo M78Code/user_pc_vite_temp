@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { formete_date  } from "src/core/index.js";
+import { formete_date  } from "src/output/index.js";
   const props = defineProps({
     article_detail: {
       type: Object,
@@ -430,3 +430,4 @@ hr {
   max-width: 1.7rem;
 }
 </style>
+src/output/index.js

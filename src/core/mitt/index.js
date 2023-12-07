@@ -146,7 +146,7 @@ function useMittEmit(type, param) {
 
 //==============================事件监听  生成器  demo  option  开始  ====================================
 // //头部引入  
-// import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+// import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/output/index.js";
 // //methods 内添加 
 // /**
 // * 生成事件监听  
@@ -174,7 +174,7 @@ function useMittEmit(type, param) {
  * @param {Array<{type: keyof MittType,callback: ()=>void}>} event_pairs  事件 配置对象数组
  * @returns { MITT.UseMittEmitterGeneratorResult } { emitters_off() } 批量取消挂载的事件监听
  * @example
- * import { MITT_TYPES, useMittEmitterGenerator } from "src/core/index.js";
+ * import { MITT_TYPES, useMittEmitterGenerator } from "src/output/index.js";
  * const { emitters_off } = useMittEmitterGenerator([
  *  {
  *    type: MITT_TYPES.EMIT_KEY,

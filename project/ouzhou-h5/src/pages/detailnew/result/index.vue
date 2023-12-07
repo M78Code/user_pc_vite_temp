@@ -196,4 +196,4 @@ function getMatchDetail(params) {
   background-color: var(--q-gb-bg-c-2);
 }
 </style>
-./result.js
+./result.jssrc/output/index

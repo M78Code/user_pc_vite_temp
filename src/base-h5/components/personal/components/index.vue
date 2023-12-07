@@ -71,7 +71,7 @@ import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_account,api_betting } from 'src/api/index';
-import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/core/index.js";
+import { loadLanguageAsync, useMittEmit, MITT_TYPES} from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,format_money2 } from "src/core";
 import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
 //语言设置
