@@ -490,11 +490,15 @@ class MatchMeta {
     const params = this.get_base_params()
     this.http_params.md = md
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
+    const other_params = {
+      category: 1,
+      md: this.http_params.md + ''
+    }
+    if (tid) Object.assign(other_params, { tid })
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,
-        tid,
-        md: this.http_params.md + ''
+        ...other_params
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
@@ -875,7 +879,7 @@ class MatchMeta {
 
     let target_data = []
     if (is_classify) {
-      // 赛事归类(开赛-未开赛) 里面包含了球种归类
+      // 赛事归类(开赛-未开赛) 里面包含了球种归类、联赛归类
       target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
       // 球种归类
@@ -920,7 +924,7 @@ class MatchMeta {
       this.complete_matchs = matchs_data
       this.complete_mids = result_mids
     }
-
+    
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()
@@ -1175,7 +1179,6 @@ class MatchMeta {
     list = lodash.map(list, t => {
       // MatchResponsive.get_ball_seed_methods(t)
       const match = warehouse.get_quick_mid_obj(t.mid)
-      // match.is_meta  TODO: 后续删除判断逻辑
       let target = {}
       if (merge === 'cover') {
         target = Object.assign({}, match, t)
