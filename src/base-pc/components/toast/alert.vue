@@ -37,7 +37,6 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { i18n_t, compute_local_project_file_path } from "src/output/index.js";
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { utils } from "src/output/index.js";
 

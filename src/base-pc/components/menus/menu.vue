@@ -69,7 +69,7 @@ import BaseData from "src/core/base-data/base-data.js";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
 // 菜单配置
-import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/output/index.js"
+import { MenuData,useMittEmit,MITT_TYPES } from "src/output/index.js"
 
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;

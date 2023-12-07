@@ -205,7 +205,8 @@ import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
 import { get_search_result } from "src/api/module/search/index.js";
-import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/output/index.js";
+import { compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";

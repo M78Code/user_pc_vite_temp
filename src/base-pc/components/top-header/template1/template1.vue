@@ -32,7 +32,8 @@ import { defineComponent, ref, onUnmounted, onMounted } from "vue";
 import { useRouter, useRoute } from 'vue-router'
 
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { MenuData,useMittEmit,MITT_TYPES,UserCtr, i18n, useMittOn  } from "src/output/index.js"
+import { MenuData,useMittEmit,MITT_TYPES, i18n, useMittOn  } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import right_head from "./right_head.vue";
 import { compute_img_url } from 'src/core/server-img/index.js'
 

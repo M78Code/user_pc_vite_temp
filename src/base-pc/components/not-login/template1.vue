@@ -4,7 +4,8 @@
     </div>
 </template>
 <script setup>
-import { UserCtr, compute_local_project_file_path, i18n } from "src/output/index.js";
+import { compute_local_project_file_path, i18n } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { LocalStorage } from 'src/core/utils/module/web-storage.js'
 import { ref, reactive } from 'vue'
 const lang = ref(LocalStorage.get('lang', UserCtr.lang || i18n.global.fallbackLocale))

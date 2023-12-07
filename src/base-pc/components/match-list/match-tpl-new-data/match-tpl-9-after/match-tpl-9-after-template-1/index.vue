@@ -66,8 +66,7 @@ import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 // useRegistPropsHelper(component_symbol, need_register_props)
-import { utils_info } from 'src/core/utils/module/match-list-utils.js';
-import { UserCtr, compute_local_project_file_path } from 'src/output/index.js';
+import {  compute_local_project_file_path } from 'src/output/index.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
@@ -75,7 +74,6 @@ import { MatchBasisInfo2FullVersionWapper as BasisInfo2 } from 'src/base-pc/comp
 import { MatchBasisInfo5FullVersionWapper as BasisInfo5 } from 'src/base-pc/components/match-list/match-basis-info/template-5/index.js'
 import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/base-pc/components/match-list/match-handicap/index.js'
 import MatchMedia from 'src/base-pc/components/match-list/match-media/index.vue'
-import { CommonTabFullVersionWapper as Tab } from "src/base-pc/components/tab/common-tab/index.js";
 
 const props = defineProps({
   mid: {
