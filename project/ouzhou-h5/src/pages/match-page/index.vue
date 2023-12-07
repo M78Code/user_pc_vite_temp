@@ -35,39 +35,33 @@ let handler_func = null
 const emitters = ref({})
 
 onMounted(() => {
-  if (sessionStorage.getItem('match_list_params')) {
-		const data = JSON.parse(sessionStorage.getItem('match_list_params'))
-    // console.log('onMountedonMountedonMountedonMounted', store, data)
+  const data = sessionStorage.getItem('match_list_params') && JSON.parse(sessionStorage.getItem('match_list_params'))
+  if (data && data.tabActive === "League") {
     Object.keys(store).forEach(key => {
       store[key] = data[key]
     })
     MatchMeta.clear_match_info()
     MatchMeta.get_ouzhou_leagues_list_data(data.selectLeague.tid, data.curSelectedOption.timestamp)
-
 	} else {
+    MatchMeta.set_prev_scroll(0)
     onTabChange()
     initMatchPage()
     BaseData.is_emit && MatchMeta.set_origin_match_data()
-  }
-  MatchMeta.set_prev_scroll(0)
-  // onTabChange()
-  // initMatchPage()
+    // 接口请求防抖
+    handler_func = lodash.debounce(({ cmd, data }) => {
+      MatchMeta.handle_ws_directive({ cmd, data })
+    }, 1000)
 
-
-  // 接口请求防抖
-  handler_func = lodash.debounce(({ cmd, data }) => {
-    MatchMeta.handle_ws_directive({ cmd, data })
-  }, 1000)
-
-  // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-    handler_func({ cmd, data })
-    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
-      MatchMeta.handle_remove_match(data)
-    } else {
+    // 增加监听接受返回的监听函数
+    message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
       handler_func({ cmd, data })
-    }
-  })
+      if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+        MatchMeta.handle_remove_match(data)
+      } else {
+        handler_func({ cmd, data })
+      }
+    })
+  }
 
   window.addEventListener('beforeunload', clearSessionStorageData)
 

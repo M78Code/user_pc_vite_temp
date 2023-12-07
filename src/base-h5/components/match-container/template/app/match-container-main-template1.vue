@@ -182,7 +182,6 @@
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                           <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
-                       
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                       <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
@@ -219,20 +218,20 @@
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-                      <div class="yb-goal-gif yb-goal-yo"></div>
-                      <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                          <!-- 进球图标 -->
+                          <div class="yb-goal-gif yb-goal-yo"></div>
+                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                        </div>
+                      </div>
+                    <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
+                    <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
+                      :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                      {{ away_score }}
                     </div>
-                   
-                  </div>
-                  <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                  <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
-                    :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                    {{ away_score }}
-                  </div>
-                  <!--发球方绿点-->
-                  <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                    v-show="set_serving_side(match_of_list, 'away')">
-                  </span>
+                    <!--发球方绿点-->
+                    <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                      v-show="set_serving_side(match_of_list, 'away')">
+                    </span>
                   </div>
                   <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
                   <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
@@ -376,12 +375,12 @@ export default {
     align-items: center;
     color: var(--q-gb-t-c-20);
     background: var(--q-gb-bg-c-15);
-      justify-content: space-between;
+    justify-content: space-between;
     &.progress{
-      border-top: 2px solid #74C4FF
+      border-top: 2px solid rgba(116, 196, 255, 0.5);
     }
     &.not_begin{
-      border-top: 2px solid #E95B5B
+      border-top: 2px solid rgba(233, 91, 91, 0.51);
     }
 
     img {
@@ -404,12 +403,12 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-21);
     height: 5px;
     margin: 0 4px;
   }
   .match-inner-container {
-    width: 98%;
+    padding: 0 0.05rem;
     margin: 0 auto;
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
@@ -551,7 +550,7 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
+    padding: 0 5px 0 15px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
@@ -737,7 +736,7 @@ export default {
       .favorited-icon{
         width: 14px;
         height: 14px;
-        margin: 0 10px 0 12px;
+        margin: 0 10px 0 11px;
         position: relative;
         flex-shrink: 0;
         > img {
@@ -771,8 +770,8 @@ export default {
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
     background: var(--q-gb-bg-c-18);
-    border-top: 1px solid var(--q-gb-bd-c-4);
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
 
     .odd-title-i-w {
       width: 50%;
@@ -1098,6 +1097,13 @@ export default {
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          .yb-flex-center{
+            padding-left: 2px;
+            .yb-goal-gif{
+              background-image: url($SCSSPROJECTPATH+"/image/common/goal_gif.png");
+            }
+          }
+          
 
           /*图标*/
           .team-icon {
