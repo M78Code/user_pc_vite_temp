@@ -12,7 +12,7 @@
 <script>
 // #TODO vuex
 // import {mapGetters} from "vuex";
-import {compute_img_url} from 'src/core/'
+import {compute_img_url} from "src/output/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
 export default defineComponent({
   name: 'notice_bar',

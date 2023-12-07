@@ -103,7 +103,7 @@
 
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
-import {compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from 'src/core/'
+import {compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js"
 import { api_common } from "src/api/index.js";
 import {
   utils, 

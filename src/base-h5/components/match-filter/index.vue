@@ -99,7 +99,7 @@ import lodash from 'lodash';
 import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 
-import { i18n_t, MITT_TYPES, compute_css_obj, useMittEmit, MenuData, compute_img_url, UserCtr, get_server_file_path } from 'src/core/'
+import { i18n_t, MITT_TYPES, compute_css_obj, useMittEmit, MenuData, compute_img_url, UserCtr, get_server_file_path } from "src/output/index.js"
 import { ref, watch, computed, nextTick, onBeforeUnmount, onMounted, toRefs } from 'vue';
 import search from "src/core/search-class/search.js"
 import { api_search } from 'src/api/'

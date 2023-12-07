@@ -52,7 +52,7 @@ import lodash from "lodash";
 import { api_common } from "src/api/index";
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { go_where, utils } from "src/core/utils/index.js"
-import { i18n_t, MenuData } from 'src/core/'
+import { i18n_t, MenuData } from "src/output/index.js"
 import base_data from "src/core/menu-h5/menu-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { theme } from 'src/base-h5/mixin/userctr.js'

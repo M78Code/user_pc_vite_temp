@@ -139,7 +139,7 @@ import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue'
 // 列表数据和对象结合操作类-实现快速检索,修改等功能
 import ListMap from 'src/core/match-list-h5/match-class/list-map.js';
 import { ref, watch, onUnmounted } from "vue";
-import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_server_file_path, UserCtr, format_total_score, format_time_zone } from 'src/core/'
+import { SessionStorage, LocalStorage, useMittOn, useMittEmit, ServerTime, MITT_TYPES, get_server_file_path, UserCtr, format_total_score, format_time_zone } from "src/output/index.js"
 import { useRoute, useRouter } from "vue-router";
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { lang } from "src/base-h5/mixin/userctr";

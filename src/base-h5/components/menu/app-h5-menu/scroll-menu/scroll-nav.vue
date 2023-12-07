@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref, onBeforeUnmount } from 'vue';
-import { UserCtr, MenuData, useMittOn, MITT_TYPES } from 'src/core/'
+import { UserCtr, MenuData, useMittOn, MITT_TYPES } from "src/output/index.js"
 const { menu_type } = MenuData;
 // TODO: 后续修改调整
 const props = defineProps({

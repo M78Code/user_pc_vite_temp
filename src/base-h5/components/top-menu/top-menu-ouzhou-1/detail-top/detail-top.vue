@@ -43,7 +43,7 @@ import {
 } from "src/output/index.js";
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData } from 'src/core/';
+import { MenuData } from "src/output/index.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import DetailTopMsOptions from "./detail-top-ms-options.vue";
