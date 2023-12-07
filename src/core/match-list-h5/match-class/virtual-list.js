@@ -153,7 +153,6 @@ class VirtualList {
       const virtual_key = this.get_match_height_key(mid)
       // 赛事高度
       const match_height = this.get_match_total_height(match, index)
-      console.log(match_height)
       // 退出循环
       if (match_count >= page_count) return true 
       if (match.mid && accrual_height > start_position) {

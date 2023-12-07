@@ -188,7 +188,7 @@ class MatchMeta {
       const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
       // 球种名称
       // 赛事其他操作
-      this.match_assistance_operations(target)
+      this.match_assistance_operations(target, index)
       return { ...target, tn, csna, is_meta: true }
     })
     // 设置 元数据计算 流程
@@ -290,10 +290,12 @@ class MatchMeta {
    * @description 赛事操作
    * @param { match } 赛事对象
    */
-  match_assistance_operations (match) {
+  match_assistance_operations (match, index) {
     const { tid, csid, mid, ms } = match
     // 初始化赛事折叠
     // MatchFold.set_match_mid_fold_obj(match)
+    
+    MatchResponsive.set_show_match_info(`mid_${match.mid}`, index < 20 ? true : false)
 
     const key = MatchFold.get_match_fold_key(match)
     if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
@@ -859,7 +861,7 @@ class MatchMeta {
       Object.assign(t, {
         is_show_league: i === 0 ? true : target_list[i].tid !== target_list[i - 1].tid
       })
-      this.match_assistance_operations(t)
+      this.match_assistance_operations(t, i)
     })
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
@@ -921,7 +923,7 @@ class MatchMeta {
         is_show_league: index === 0 ? true : target_data[index].tid !== target_data[index - 1].tid
       })
       //  赛事操作
-      this.match_assistance_operations(match)
+      this.match_assistance_operations(match, index)
       return match
     })
 
