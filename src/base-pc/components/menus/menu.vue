@@ -72,7 +72,7 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST, BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 const popular = ([{mi:101},{mi:102}])
 
