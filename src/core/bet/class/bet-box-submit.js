@@ -734,7 +734,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: get_handicap(ol_obj,other.is_detail,mid_obj), // 投注项名称
+        handicap: get_handicap(ol_obj,hl_obj,mid_obj,other.is_detail), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
@@ -777,9 +777,12 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
           // 冠军玩法 部分玩法hpid相同 
         if(MenuData.is_kemp()){
             let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
+            if(hpn_list.length < 1){
+                hpn_list = lodash_.get(mid_obj,`hps`,[])
+            }
             let hpn_obj = hpn_list.find(item => item.hid == ol_obj._hid) || {}
             if(hpn_obj.hid){
-                hpn = hpn_obj.hpn
+                hpn = hpn_obj.hpn || hpn_obj.hps
             }else{
                 hpn = i18n_t('bet.bet_winner')
             }
@@ -899,107 +902,60 @@ const set_orderNo_bet_obj = order_no_list => {
 }
 
 // 获取盘口值 附加值
-const get_handicap = (ol_obj = {},is_detail,mid_obj) => {
+const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
+
+    // ## 详情页的取值，直接取 ol 层级的 `ott` + `on`,当遇到下面几种玩法时，直接取 `otv`,
+    // 3-全场让球赛果  69-上半场让球赛果  71-下半场让球赛果  
+    // 220-球员得分 221-球员三分球 271-球员助攻 272-球员篮板
+    // 171-独赢&总局数 13-独赢&进球大小 101-独赢&两队都进球  106-下半场独赢&下半场两队都进球 105-上半场独赢&上半场两队都进球 216-独赢&总分 102-进球大小&两队都进球
+    // 107-双重机会&两队都进球 
+    // 339-拳击的独赢&准确回合数
+
+    // ## 列表页的取值，分2个值相加，即 a+b 的形式，规则如下
+    // 1. b取 最里层ol 的 `on`
+    // 2. 当b的值里含有 `主胜` 或者 `客胜` 字样时，b 为空字符串
+    // 3. 当 `ots` 值是 `T1` 时，a 取 `mhn`,当 `ots` 值是 `T2` 时，a 取 `man`,
+    // 4. 当 玩法id 字段 `hpid` ,为 2 或者 173 或者 38 或者 114 时，a 为空字符串
+
     // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
-    // 区分赛种
-    let home_away_mark = []
-    switch(mid_obj.csid*1){
-        case 1:
-            home_away_mark = [2,3,4,7,10,11,12,13,18,19,26,33,34,38,45,39,58,69,71,87,88,97,98,102,109,110,114,115,116,122,123,124,127,134,143,198,199,233,307,309,314,315,325,328,331,335,346,347,348,349,351,367, ] 
-            break
-        case 2:
-            home_away_mark = [38,39,64,198,199,58,57,145,146,19,18,87,52,51,63,97,46,45,97,] 
-            break
-    }
-    // 首页不需要拼接的
-    let home_away_diff = [2, 38]
-
-    // 主客队
-    let home_away_only = [1, 37, 32]
-
-    // 独赢类
-    if(home_away_only.includes(ol_obj._hpid*1)){
-        switch(ol_obj.ot){
-            case '1':
-                // 主
-                text= mid_obj.mhn
-                break
-            case '2':
-                // 客
-                text = mid_obj.man
-                break
-            default:
-                text = ol_obj.on ? ol_obj.on : ol_obj.otv
-                break
-        }
-        return text
-    }
-
-    // 详情 
+    let detail_mark = [3,13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
+    let lsit_mark = [2,173,38,114]
+    // 详情
     if(is_detail){
-        // 投注项名称
-        text = ol_obj.otv
-        // 
-        if(home_away_mark.includes(ol_obj._hpid*1)){
-            let handicap = text.split(' ')
-            handicap = handicap.filter(item => item)
-            // 足球特殊组合玩法
-            switch(handicap.length){
-                case 2:
-                    text = `${handicap[0]} <span class='ty-span'>${handicap[1]}</span>`
-                    break
-                
-                case 3:
-                    text = `${handicap[0]} ${handicap[1]} <span class='ty-span'>${handicap[2]}</span>`
-                    break
-
-                case 4:
-                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} <span class='ty-span'>${handicap[3]}</span>`
-                    break
-                
-                case 5:
-                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} ${handicap[3]} <span class='ty-span'>${handicap[4]}</span>`
-                    break
-
-                case 6:
-                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} ${handicap[3]} ${handicap[4]} <span class='ty-span'>${handicap[5]}</span>`
-                    break
-
-                case 7:
-                    text = `${handicap[0]} ${handicap[1]} ${handicap[2]} ${handicap[3]} ${handicap[4]} ${handicap[5]}<span class='ty-span'>${handicap[6]}</span>`
-                    break
-            }
+        text = `${ol_obj.ott} <span class='ty-span'>${ol_obj.on}</span>`  
+        if(detail_mark.includes(ol_obj._hpid*1)){
+            text = `<span class='ty-span'>${ol_obj.otv}</span>` 
         }
-        return text
-
     }else{
-        // 首页 列表
-        text = ol_obj.on
-        // 是否需要 玩法拼接
-        if(home_away_diff.includes(ol_obj._hpid*1)){
+        let a = '' ,b = '' 
+        b = ol_obj.on
 
-            let handicap = text.split(' ')
-            handicap = handicap.filter(item => item)
-    
-            text = `${handicap[0]}${handicap[1] ? `<span class='ty-span'>${handicap[1]}</span>`:''}`
-        }else{
-            // 主客队拼接
-            switch(ol_obj.ot){
-                case '1':
-                    // 主
-                    text = mid_obj.mhn
-                    break
-                case '2':
-                    // 客
-                    text = mid_obj.man
-                    break
-            }
-            text = `${text} <span class='ty-span'>${ol_obj.on}</span>`  
+        if(ol_obj.ots == 'T1'){
+            a = mid_obj.mhn
         }
-        return text  
+        if(ol_obj.ots == 'T2'){
+            a = mid_obj.man
+        }
+        // 加入是否有球头判断 
+        if(['T1','T2'].includes(ol_obj.ots) && !hl_obj.hv){
+            b = ''
+        }
+
+        if(lsit_mark.includes(ol_obj._hpid*1)){
+            a = ''
+        }
+        // 首页大小类玩法
+        if(['Over',"Under"].includes(ol_obj.ot)){
+            a = ol_obj.onbl
+            b = ol_obj.onb
+        }
+
+        text = `${a} <span class='ty-span'>${b}</span>`  
     }
+
+    return text
 }
 
 // 是否显示基准分 

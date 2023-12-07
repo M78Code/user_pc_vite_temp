@@ -52,9 +52,9 @@
       border-radius: 0.12rem;
   }
   .nonebox4-content-left-title{
-      font-size: 13px;
       color: var(--q-gb-t-c-20);
       font-size: 0.14rem;
+			font-weight: 500;
   }
   .nonebox4-content-left-content{
       height: 70px;
@@ -69,13 +69,15 @@
   }
   .nonebox4-content-left-content-text{
       font-size: 0.12rem;
-      color: var(--q-gb-t-c-18);
+      color: var(--q-gb-t-c-11);
       line-height: 23px;
+			font-weight: 500;
   }
   .nonebox4-content-right-profit{
       font-size: 0.22rem;
       font-weight: bold;
-      color: var(--q-gb-t-c-20);
+      display: flex;
+      align-items: center;
   }
   .nonebox4-content-right-profit-type{
       font-size: 0.14rem;

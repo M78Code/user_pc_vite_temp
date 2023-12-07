@@ -96,7 +96,7 @@ const getListCount = async (list,type) =>{
         type: type_[type], 
         cuid: UserCtr.get_cuid(),
     }
-    const res = await api_common.get_menu_of_favorite_count(parmas)
+    const res = await api_common.get_collect_menu_count_h5(parmas)
     if(res && res.code == 200){
         let collect_list = res.data || []
         collect = collect.map(item=>{

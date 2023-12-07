@@ -73,7 +73,6 @@
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3 =(all_league_obj,is_ws_call,is_remove_call)=>{
     let template_id = MenuData.get_match_tpl_number()
     // 赛事模板ID
-
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象
@@ -133,23 +132,25 @@
       // 遍历联赛列表
       sort_league_list.forEach( (league_obj) => {
         // 如果上一个联赛对象id不等于当前的联赛对象id
+
         if (pre_league_info.tid != league_obj.tid) {
           // 重新给上一个联赛对象赋值
           pre_league_info = league_obj
+          same_tid = lodash.cloneDeep(league_obj);
           if (same_tid['mids']) {
             same_adjacent_tid_list.push(same_tid)          
           }
-          same_tid = lodash.cloneDeep(league_obj);
         } else {
           same_tid['mids'] += ',' + league_obj.mids;
         }
       })
       sort_league_list = same_adjacent_tid_list;
-
       // 将组合好的数据赋值给用来计算的数组
       league_list = lodash.cloneDeep(sort_league_list);
       
+      
       league_list.forEach( (league_obj,league_index) => {
+
         let csid_key = 'csid_'+league_obj.csid
         csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []
         league_repeat_count_obj[league_obj.tid] = league_repeat_count_obj[league_obj.tid] || 0
@@ -159,7 +160,7 @@
         // 赛事ID数组
         let mids_arr = league_obj.mids.split(',')
         match_status_type_match_count += mids_arr.length
-        // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
+        // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡
         if(league_obj.csid != pre_match_csid){
           pre_match_csid = league_obj.csid
           card_key = `sport_title_${league_obj.csid}`
@@ -299,6 +300,7 @@
         temp_match_status_title_card_obj.match_count = match_status_type_match_count
       }
     })
+    console.log('match_list_card_key_arr', match_list_card_key_arr);
     // MatchListCardData.set_all_card_obj(all_card_obj)
     // 合并所有卡片样式对象
     // 已开赛 到卡片key的 映射对象

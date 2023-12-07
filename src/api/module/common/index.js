@@ -103,6 +103,14 @@ export const get_menu_of_favorite = (params, config, url="/v1/m/menu/countCollec
 export const get_menu_of_favorite_count = (params, config, url="/v1/m/menu/countCollectPB") => {
   return http.post(`${prefix}${url}`, params, config);
 };
+// 更新收藏列表菜单赛事数量 H5
+export const get_collect_menu_count_h5 = (params, config, url="/v1/m/menu/countCollectPB") => {
+  return http.post(`${prefix}${url}`, params, config);
+};
+// 更新收藏列表菜单赛事数量 PC
+export const get_collect_menu_count_pc = (params, config, url="/v1/w/menu/countCollectPB") => {
+  return http.post(`${prefix}${url}`, params, config);
+};
 //
 export const collectNewH5ListBottom = (params,config,url="/v1/m/collectNewH5ListBottom") => {
   params.sys = 7; //系统（1.panda-H5菜单  2.panda老PC-菜单 3.188菜单  4-新版PC菜单   7-H5 v2.0）
@@ -168,7 +176,7 @@ export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/
 export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url = "/v1/m/matchDetail/getMatchDetailByTournamentIdPB") => http.get(`${prefix}${url}`, params, config)
 
 // 赛事详情页面接口（christion）
-export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
+export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetailPB") => http.get(`${prefix_job}${url}`, params, config)
 /** 
  * 赛果详情页面接口（christion）
  * @returns {Promise<API.MatchDetails>}
@@ -179,7 +187,7 @@ export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/mat
 export const get_DJ_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params, config)
 
 // 根据玩法查询盘口信息
-export const get_matchDetail_getMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getMatchOddsInfo1") => {
+export const get_matchDetail_getMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getMatchOddsInfo1PB") => {
   return http.get(`${prefix_job}${url}`, params, {axios_debounce_cache_key: 'match_detail_odds_info'});
 };
 

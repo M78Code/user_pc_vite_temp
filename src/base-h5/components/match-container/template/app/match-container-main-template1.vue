@@ -182,7 +182,6 @@
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                           <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
-                       
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                       <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
@@ -219,20 +218,20 @@
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-                      <div class="yb-goal-gif yb-goal-yo"></div>
-                      <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                          <!-- 进球图标 -->
+                          <div class="yb-goal-gif yb-goal-yo"></div>
+                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                        </div>
+                      </div>
+                    <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
+                    <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
+                      :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                      {{ away_score }}
                     </div>
-                   
-                  </div>
-                  <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                  <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
-                    :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                    {{ away_score }}
-                  </div>
-                  <!--发球方绿点-->
-                  <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                    v-show="set_serving_side(match_of_list, 'away')">
-                  </span>
+                    <!--发球方绿点-->
+                    <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                      v-show="set_serving_side(match_of_list, 'away')">
+                    </span>
                   </div>
                   <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
                   <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
@@ -770,9 +769,9 @@ export default {
     font-size: 0.1rem;
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-15);
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    background: var(--q-gb-bg-c-18);
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
 
     .odd-title-i-w {
       width: 50%;
@@ -1098,6 +1097,13 @@ export default {
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          .yb-flex-center{
+            padding-left: 2px;
+            .yb-goal-gif{
+              background-image: url($SCSSPROJECTPATH+"/image/common/goal_gif.png");
+            }
+          }
+          
 
           /*图标*/
           .team-icon {

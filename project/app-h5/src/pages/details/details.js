@@ -652,6 +652,10 @@ export const details_main = () => {
         .get_category_list(params)
         .then((res) => {
           const res_data = lodash.get(res, "data");
+          //转移所有中文投注名称
+          if(UserCtr.lang == "zh"){
+            res.data[0].marketName = '所有盘口'
+          }
           state_data.data_list = res_data;
 
           // set_details_tabs_list(res_data);

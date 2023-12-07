@@ -490,10 +490,10 @@ class MatchMeta {
     this.http_params.md = md
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
     const other_params = {
-      category: 1,
-      md: this.http_params.md + ''
+      category: 1
     }
     if (tid) Object.assign(other_params, { tid })
+    if (this.http_params.md) Object.assign(other_params, {  md: this.http_params.md + '' })
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,

@@ -16,6 +16,7 @@ import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
+import { default_theme_key } from "src/core/theme/"
 
 // #TODO 接口统一管理的文件，后续替换
 import { api_details, api_account, api_common } from "src/api/";
