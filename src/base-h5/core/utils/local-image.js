@@ -86,6 +86,11 @@ export const neutral_site = compute_local_project_file_path('/image/list/neutral
 export const is_up_app = compute_local_project_file_path('/image/list/icon_up.png')
 export const is_down_app = compute_local_project_file_path('/image/list/icon_down.png')
 
+// 欧洲版 110 赛事高度 骨架屏
+export const skeleton_white_ouzhou_110 = compute_local_project_file_path('/image/skeleton/height-110.jpg')
+// 欧洲版 90 赛事高度 骨架屏
+export const skeleton_white_ouzhou_90 = compute_local_project_file_path('/image/skeleton/height-90.jpg')
+
 // 回到顶部
 export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')
 
