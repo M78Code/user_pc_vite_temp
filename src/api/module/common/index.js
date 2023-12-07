@@ -104,7 +104,7 @@ export const get_menu_of_favorite_count = (params, config, url="/v1/m/menu/count
   return http.post(`${prefix}${url}`, params, config);
 };
 // 更新收藏列表菜单赛事数量 H5
-export const get_collect_menu_count = (params, config, url="/v1/m/menu/countCollectPB") => {
+export const get_collect_menu_count_h5 = (params, config, url="/v1/m/menu/countCollectPB") => {
   return http.post(`${prefix}${url}`, params, config);
 };
 // 更新收藏列表菜单赛事数量 PC

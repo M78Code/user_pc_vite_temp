@@ -217,7 +217,7 @@ async function  get_menu_of_favorite_count(list,type) {
         cuid: UserCtr.get_cuid(),
     }
     try{
-        const { code,data } = await api_common.get_menu_of_favorite_count(parmas)
+        const { code,data } = await api_common.get_collect_menu_count_pc(parmas)
         if(code == 200){
             let collect_list = data || []
            
