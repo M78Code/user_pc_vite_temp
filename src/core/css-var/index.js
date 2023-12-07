@@ -13,6 +13,7 @@ import themes from "app/job/output/css/index";
  * @param {*} module   :    css 目录下 ：  global   /  component  目录下 ：文件名字  ： 例如  background
  */
 export function compute_css_variables({ category, module }) {
+  console.log('UserCtrUserCtrUserCtr', UserCtr);
   const _theme_key = themes[UserCtr.theme]
   let final_obj = {}
   if (_theme_key) {

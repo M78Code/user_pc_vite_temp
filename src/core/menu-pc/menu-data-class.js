@@ -20,7 +20,7 @@ const menu_key = STANDARD_KEY.get("menu_pc");
 
 
 
-// import BaseData from "src/core/base-data/base-data.js"
+import BaseData from "src/core/base-data/base-data.js"
 
 
 // 热门除了50199-30199  赛事、50101-30101 竞足外，

@@ -285,6 +285,7 @@ function on_click_lang(lang_) {
  * @return {undefined} undefined
  */
 function change_theme() {
+    console.log('fsudhfudshgbsdghsdg');
     const theme = UserCtr.theme
     const ary = Object.keys(theme_map);
     let idx = ary.findIndex(i => i == theme)

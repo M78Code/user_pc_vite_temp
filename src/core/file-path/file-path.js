@@ -69,7 +69,7 @@ const get_server_file_path = (path, csid = 0) => {
 
   if (CURRENT_ENV == 'idc_sandbox' || CURRENT_ENV == 'idc_pre' || CURRENT_ENV == 'idc_ylcs') {
     // let api_domain = config.domain[CURRENT_ENV][0];
-    let api_domain = DOMAIN_RESULT.first_one
+    let api_domain = DOMAIN_RESULT_.first_one
     // 试玩环境使用生产api图片
     // api_domain = config.domain['idc_online'][0];
     api_domain = api_domain.replace(/\/\/.*?\./, '//image.');
@@ -78,7 +78,7 @@ const get_server_file_path = (path, csid = 0) => {
 
   if ((NODE_ENV == 'development')) {
     // let api_domain = config.domain[CURRENT_ENV][0]; //config没有赋值domain 从老项目迁移
-    const { img_domains } = DOMAIN_RESULT
+    const { img_domains } = DOMAIN_RESULT_
     let api_domain = img_domains[0]
     api_domain = api_domain && api_domain.replace(/\/\/.*?\./, '//image.');
     return `${api_domain}/${path}`;
