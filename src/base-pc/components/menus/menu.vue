@@ -40,17 +40,17 @@
       </ul>
     </div>
     <div class="menu-nav-line" />
-    <div class="menu-nav-li">
+    <div class="menu-nav-li" v-if="IS_FOR_NEIBU_TEST">
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
-        <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}" v-if="!BUILD_VERSION">
+        <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
           <sport_icon :sport_id="BaseData.compute_sport_id(2000)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
         </li>
-        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}" v-if="!BUILD_VERSION">
+        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
           <sport_icon :sport_id="BaseData.compute_sport_id(300)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[300] || "" }}
         </li>

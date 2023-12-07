@@ -135,7 +135,7 @@ class BaseData {
     // 是否通知元数据处理完成
     this.is_emit = false
 
-    this.conventionalType = [101, 102, 105]; 
+    this.conventionalType = [101,102]; 
   }
   /**
    * 初始化数据
@@ -402,7 +402,7 @@ class BaseData {
 
       // this.resolve_menus(menu_i18n_default)
     }
-    this.conventionalType = [101, 102, 105]; 
+    this.conventionalType = [101,102]; 
   }
   /**
    * 滚球赛事的赛种id
@@ -556,7 +556,7 @@ class BaseData {
        *  一期只有足球篮球  暂定
        *  重置默认数据
        */
-      if(BUILD_VERSION){
+      if(!IS_FOR_NEIBU_TEST){
         this.left_menu_base_mi_arr = this.conventionalType;
        
         let list_mi_lsit = []
