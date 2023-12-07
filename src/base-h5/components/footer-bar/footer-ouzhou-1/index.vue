@@ -22,7 +22,7 @@
 <script setup>
 import { defineComponent, ref, reactive, watch,computed  } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { MenuData } from 'src/core/'
+import { MenuData } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'

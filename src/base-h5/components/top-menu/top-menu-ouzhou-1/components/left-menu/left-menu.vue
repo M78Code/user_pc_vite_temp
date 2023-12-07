@@ -63,7 +63,7 @@
 import {ref ,reactive, defineEmits,onMounted,onUnmounted } from "vue";
 import sportIcon from "./sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData } from 'src/core/';
+import { MenuData } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { LocalStorage } from "src/core/utils/module/web-storage.js";
