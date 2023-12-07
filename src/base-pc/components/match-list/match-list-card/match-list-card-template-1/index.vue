@@ -77,8 +77,6 @@ import LoadData from "src/base-pc/components/load-data/load-data.vue";
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { LayOutMain_pc, compute_local_project_file_path } from "src/output/index.js";
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js";
-import { component_symbol, need_register_props } from "../config/index.js";
 
 const props = defineProps({
   card_key: {

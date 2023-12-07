@@ -46,7 +46,7 @@ import { useRouter, useRoute } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
 import { reactive, toRefs, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/output/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from 'src/core';
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
 
 defineOptions({
   name: "selectLeague" // 设置组件名称

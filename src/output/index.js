@@ -3,12 +3,7 @@
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 
- 
-
 //通用
-
-import lodash from "lodash";
-
 // import { useRouter, useRoute } from 'vue-router';
 // const router = useRouter();
 // const route = useRoute();
@@ -299,7 +294,6 @@ export {
   uid,
   SearchData,
   MatchDetailCtr,
-  MatchDetailCalss,
   UserCtr,
   IS_PC,
   PROJECT_NAME,

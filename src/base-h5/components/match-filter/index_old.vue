@@ -114,7 +114,7 @@ import SFilter from "src/base-h5/components/skeleton/filter.vue"
 import { UserCtr, compute_img_url,MenuData, i18n_t, get_server_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
 import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import lodash from 'lodash'
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
 // 构建版本
 // BUILD_VERSION:window.env.config.BUILD_VERSION,

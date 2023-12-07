@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {compute_css_obj} from "src/core/"
+import {compute_css_obj} from "src/output/index.js"
 
 export default {
   name: "SportIcon",

@@ -3,13 +3,13 @@
 // 电竞球种 menu_id 规则 ：2000  +对应球种 id   csid  2000 + 100   =2100   英雄联盟
 // 虚拟球种 menu_id 规则 ：30000 +对应球种 id   csid  30000 + 1001 =31001   VR足球
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
-import { i18n_t, i18n } from "src/boot/i18n.js";
 import { nextTick, ref } from "vue";
+
+import { i18n_t, i18n } from "src/boot/i18n.js";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-import BaseWsMessage from "./base-ws-message"
-const { PROJECT_NAME,BUILD_VERSION,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
-console.error('BUILD_VERSION_CONFIG',BUILD_VERSION_CONFIG)
+// import BaseWsMessage from "./base-ws-message"
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
 
@@ -186,7 +186,7 @@ class BaseData {
     }, 2000);
 
     // ws请求订阅
-    BaseWsMessage.init()
+    // BaseWsMessage.init()
   }
   /**
    * 新旧菜单映射关系

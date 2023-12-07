@@ -35,7 +35,7 @@ import {
   useMittOn,
   useMittEmit,
   format_second_ms
-} from "src/core/index";
+} from "src/output/index.js";
 export default {
     props: {
         mid: {

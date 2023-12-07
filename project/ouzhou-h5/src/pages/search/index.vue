@@ -257,7 +257,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, onUnmounted, reactive } from 'vue';
-import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
+import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/output/index.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";

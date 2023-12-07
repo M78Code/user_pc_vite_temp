@@ -434,7 +434,7 @@
 <script>
 
 import { ref, computed, watch, nextTick } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
+import { LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
 
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';

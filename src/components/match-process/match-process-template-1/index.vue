@@ -61,10 +61,9 @@ import {
   get_match_status,
   utils,
   i18n_t,
-  score_switch_handle,
   format_string,
   is_eports_csid
-} from "src/core/index"
+} from "src/output/index.js"
 import { get_mmp_name } from "src/core/format/module/format-msc.js"
 import {
   useRegistPropsHelper,

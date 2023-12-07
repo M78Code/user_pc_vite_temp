@@ -1,4 +1,4 @@
-import { LOCAL_PROJECT_FILE_PREFIX }  from 'src/output/index.js'
+import { LOCAL_PROJECT_FILE_PREFIX }  from 'src/output/constant-utils'
  
 
  

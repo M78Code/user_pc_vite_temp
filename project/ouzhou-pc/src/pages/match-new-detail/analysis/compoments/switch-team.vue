@@ -49,7 +49,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 // import trophy_img from "src/assets/images/trophy.png";
 // import to_vs from "src/assets/images/to_vs.png";
 // import no_shoucan from "src/assets/images/no_shoucan.png";

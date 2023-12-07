@@ -48,7 +48,7 @@ import template2 from './template2.vue';
 import { useRouter } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn, get_match_status } from 'src/core'
+import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn, get_match_status } from "src/output/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { get_ouzhou_data_tpl_id, get_handicap_index_by, get_match_to_map_obj, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'

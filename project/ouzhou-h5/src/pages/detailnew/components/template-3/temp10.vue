@@ -32,7 +32,7 @@
 // #TODO vuex
 // import { mapGetters} from "vuex";
 import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import store from "src/store-redux";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

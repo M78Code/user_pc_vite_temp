@@ -27,7 +27,7 @@ import {
   utils,
   UserCtr,
   MenuData
-} from "src/core/index";
+} from "src/output/index.js";
 export default {
   components: {
     "match-video": match_video,

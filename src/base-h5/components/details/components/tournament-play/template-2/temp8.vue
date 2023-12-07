@@ -48,7 +48,7 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js"
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 export default defineComponent({
   // #TODO mixins

@@ -82,7 +82,7 @@ import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/components/match-list/list-filter/index.js"
-import { MenuData ,useMittOn,MITT_TYPES, } from "src/core/"
+import { MenuData ,useMittOn,MITT_TYPES, } from "src/output/index.js"
 import { compute_img_url } from 'src/core/server-img/index.js'
 
 let area_obj = ref();

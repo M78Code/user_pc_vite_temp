@@ -301,7 +301,7 @@ import { format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
-import {UserCtr,compute_img_url} from "src/core/";
+import {UserCtr,compute_img_url} from "src/output/index.js";
 
 
 //国际化

@@ -5,7 +5,7 @@
 import lodash from 'lodash'
 import { ref } from 'vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { project_name } from 'src/core'
+import { PROJECT_NAME } from 'src/output/computed.js'
 
 class MatchFold {
   constructor () {
@@ -26,7 +26,7 @@ class MatchFold {
     if (!match) return
     const key = this.get_match_fold_key(match)
     // 除欧洲版，都默认折叠
-    const show_card = project_name === 'ouzhou-h5'
+    const show_card = PROJECT_NAME === 'ouzhou-h5'
     // 次要玩法头部是否显示
     const show_tab = this.compute_show_tab_play(match)
     Object.assign(this.match_mid_fold_obj.value, {
@@ -66,7 +66,7 @@ class MatchFold {
   }
   // 获取默认的球种折叠对象
   get_default_fold_state_by_csid (flag) {
-    const state = project_name === 'ouzhou-h5'
+    const state = PROJECT_NAME === 'ouzhou-h5'
     return flag !== undefined ? flag : state
   }
  

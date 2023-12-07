@@ -1,4 +1,4 @@
-import { UserCtr } from "src/output.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "./bet-data-class.js"
 import lodash_ from "lodash"
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"

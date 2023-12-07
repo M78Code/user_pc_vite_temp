@@ -67,7 +67,7 @@ import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/i
 import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
 import { useRoute } from "vue-router";
 // import EMITTER from "src/global/mitt.js";
-import {useMittEmit, MITT_TYPES,MatchDetailCalss,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common} from "src/core/"
+import {useMittEmit, MITT_TYPES,MatchDetailCalss,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common} from "src/output/index.js"
 const MatchDataWarehouseInstance =ref(MatchDataWarehouse_H5_Detail_Common)
 const route = useRoute()
 // /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */

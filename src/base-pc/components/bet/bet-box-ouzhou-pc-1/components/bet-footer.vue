@@ -24,7 +24,7 @@ import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { i18n_t,UserCtr } from "src/core/"
+import { i18n_t,UserCtr } from "src/output/index.js"
 
 // 提交投注信息
 const set_bet_submit = () => {

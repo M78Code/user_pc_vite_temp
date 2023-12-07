@@ -134,7 +134,7 @@ import { useRoute } from "vue-router";
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
 import { IconWapper } from 'src/components/icon'
-import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj,UserCtr,MatchDetailCalss,MatchDataWarehouse_H5_Detail_Common} from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj,UserCtr,MatchDetailCalss,MatchDataWarehouse_H5_Detail_Common} from  "src/output/index.js"
 import { SessionStorage } from "src/core/utils/index.js"
 // 模板id=0(默认模板)
 import temp0 from "./template-2/temp0.vue"

@@ -76,7 +76,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import basket_ball_stats from './basketball_stats.vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 const props = defineProps({
   match_odds_info: {
     type: Array,

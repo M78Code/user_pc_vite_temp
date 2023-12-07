@@ -16,7 +16,7 @@
 </template>
  
 <script setup>
-import { compute_local_project_file_path } from 'src/core'
+import { compute_local_project_file_path } from "src/output/index.js"
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 

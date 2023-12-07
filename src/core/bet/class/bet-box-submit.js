@@ -20,7 +20,9 @@ import {
  } from 'src/output/index.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
-import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
+import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
+import { MenuData } from 'src/output/computed.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js"
 
 let time_out = null

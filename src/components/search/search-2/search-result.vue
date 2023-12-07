@@ -200,14 +200,13 @@
 </template>
   
 <script setup>
-import { ref, reactive, watch, onBeforeUnmount, nextTick, computed, onMounted } from 'vue'
+import { ref, watch, onBeforeUnmount, nextTick, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
-import PageSourceData from "src/core/page-source/page-source.js";
 import { get_search_result } from "src/api/module/search/index.js";
-import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/core/";
+import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/output/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js';
 import { api_common, api_match_list } from "src/api/index.js";

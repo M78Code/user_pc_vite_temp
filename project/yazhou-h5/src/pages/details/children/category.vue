@@ -86,7 +86,7 @@ import no_data from "src/base-h5/components/common/no-data.vue"
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
 
-import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 // 引入加载中的组件
 import loading from "src/base-h5/components/common/loading.vue"
 // 精选赛事

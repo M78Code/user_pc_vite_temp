@@ -60,7 +60,7 @@
 import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES,SessionStorage } from "src/output/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX} from 'src/core';
+import {LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
 import {
   ref,
   watch,
@@ -71,7 +71,7 @@ import {
 } from "vue";
 import Switch from "./components/switch.vue";
 import { standard_edition } from "src/base-h5/mixin/userctr.js";
-import { UserCtr } from "src/core/";
+import { UserCtr } from "src/output/index.js";
 import { LocalStorage } from "src/output/index.js";
 import { default_theme_key } from "src/core/theme/";
 

@@ -90,7 +90,7 @@ import { ref, onMounted, watch, computed, onUnmounted, watchEffect } from 'vue';
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import {project_name} from "src/core/"
+import {project_name} from "src/output/index.js"
 
 import lodash from 'lodash'
 

@@ -52,6 +52,9 @@ import lodash_ from "lodash"
 import { useRoute } from "vue-router";
 import { LayOutMain_pc, UserCtr, GlobalAccessConfig } from "src/output/index.js";
 import { api_betting, api_common } from "src/api/"
+import { compute_css_variables } from "src/core/css-var/index.js"
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+import BetData from 'src/core/bet/class/bet-data-class.js'
 
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
@@ -61,9 +64,6 @@ import alertComponents from "src/base-pc/components/toast/alert.vue";
 import confirmComponents from "src/base-pc/components/toast/confirm.vue";
 import secondaryModule from 'src/base-pc/components/secondary-module/index.vue'
 import { BetBoxWapper } from "src/base-pc/components/bet";
-import { compute_css_variables } from "src/core/css-var/index.js"
-import BetData from 'src/core/bet/class/bet-data-class.js'
-import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 
 
 const page_style = ref('')

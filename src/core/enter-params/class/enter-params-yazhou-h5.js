@@ -3,7 +3,7 @@ import { get_query_string ,LocalStorage } from "src/core/utils/index.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
 import { MenuData } from "src/output/computed.js";
-import { GlobalAccessConfig } from 'src/core/access-config/access-config.js'
+import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 

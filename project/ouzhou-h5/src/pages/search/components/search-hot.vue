@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { SearchData } from "src/core/";
+import { SearchData } from "src/output/index.js";
 
 export default {
   name: 'searchHot',

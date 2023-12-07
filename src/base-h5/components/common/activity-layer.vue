@@ -14,7 +14,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import lodash from 'lodash'
-import { UserCtr, get_server_file_path, LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { UserCtr, get_server_file_path, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 const props = defineProps({
   activity_layerimg: {
     type: String,

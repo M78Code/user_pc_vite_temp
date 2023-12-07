@@ -272,7 +272,7 @@ import {
   useMittEmit,
   utils,
   UserCtr
-} from "src/core/index";
+} from "src/output/index.js";
 import  videoHistoryLine  from "src/base-pc/components/video-replay/video-history-line.vue";
 import matchHandicap from "src/base-pc/components/match-detail/match-handicap/match-handicap.vue";
 import { TabWapper as Tab } from "src/components/common/tab";

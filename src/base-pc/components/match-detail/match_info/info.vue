@@ -42,7 +42,7 @@ import basketball from "src/base-pc/components/match-detail/match_info/basketbal
 import more from "src/base-pc/components/match-detail/match_info/more/after.vue";
 import baseball from "src/base-pc/components/match-detail/match_info/more/baseball_after.vue";
 import before from "src/base-pc/components/match-detail/match_info/animation_template/common_before.vue";
-import { is_eports_csid} from "src/core"
+import { is_eports_csid} from "src/output/index.js"
 import dota2_started from "src/base-pc/components/match-detail/match_info/dota2/dota2-started.vue"
 import lodash from 'lodash'
 export default {

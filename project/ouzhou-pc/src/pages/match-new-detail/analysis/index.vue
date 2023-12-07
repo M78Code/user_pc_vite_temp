@@ -64,23 +64,17 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, computed, watch } from "vue";
-// import {LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import { onMounted, ref, computed } from "vue";
+import lodash_ from "lodash";
 
 import FootBallStats from "./compoments/football_stats.vue";
 import BasketBallStats from "./compoments/basketball_stats.vue";
-
 import switchTeam from "./compoments/switch-team.vue";
-
 import venueBox from "./compoments/venue-box/index.vue";
-import lodash_ from "lodash";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
-  MenuData,
-  UserCtr,
-} from "src/core/index";
-import { format_mst_data } from "src/core/utils/matches_list.js";
+} from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 // const props =  defineProps({

@@ -153,7 +153,7 @@ import selectY from "src/base-pc/components/match-results/select/components/sele
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { LayOutMain_pc } from "src/output/index.js";
-import { GlobalSwitchClass} from "src/core/index";
+import { GlobalSwitchClass} from "src/output/index.js";
 
 import { loadLanguageAsync } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/module/web-storage.js";

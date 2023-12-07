@@ -31,7 +31,7 @@ import store from "src/store-redux";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { project_name,LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { project_name,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
 export default defineComponent({
   name: "temp9",

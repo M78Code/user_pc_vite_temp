@@ -44,7 +44,7 @@ import {
 import { useRoute } from "vue-router";
 import lodash_ from "lodash";
 
-import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
+import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";

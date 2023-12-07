@@ -20,7 +20,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import store from 'src/store-redux/index.js'
-import { MITT_TYPES,compute_css_obj,i18n_t, useMittEmit } from "src/core/"
+import { MITT_TYPES,compute_css_obj,i18n_t, useMittEmit } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 let { themeReducer, cathecticReducer } = store.getState()
 let store_cathectic = cathecticReducer

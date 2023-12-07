@@ -44,7 +44,7 @@
 import { computed, defineComponent, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 import lodash from 'lodash';
 import { useRoute } from 'vue-router';
-import { project_name } from 'src/core';
+import { project_name } from "src/output/index.js";
 import { api_common } from 'src/api/index.js';
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import uid from "src/core/uuid/index.js"

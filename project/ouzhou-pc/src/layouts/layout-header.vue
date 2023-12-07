@@ -23,15 +23,15 @@
 import { ref, reactive, onMounted, onUnmounted, } from 'vue'
 import { useRoute, useRouter } from "vue-router";
 
-import { SessionStorage, utils,t } from 'src/output/index.js'
+import { SessionStorage, utils } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/"
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 
-// import timer from "src/base-pc/components/site-header/timer.vue"
+import timer from "src/base-pc/components/site-header/timer.vue"
 import gift_package from '/ouzhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";

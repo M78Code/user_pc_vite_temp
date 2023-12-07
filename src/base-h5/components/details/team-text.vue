@@ -18,7 +18,7 @@
 
 <script setup>
 import { defineComponent } from "vue";
-import { project_name } from 'src/core'
+import { project_name } from "src/output/index.js"
 import matchStage from "src/base-h5/components/match/match-stage.vue";   // 下拉列表赛事时间展示
 const props = defineProps(['detail_data'])
 </script>

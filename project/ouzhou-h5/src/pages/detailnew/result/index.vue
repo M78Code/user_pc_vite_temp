@@ -30,7 +30,7 @@ import {
   MenuData,
   SearchData,
 useMittEmit,
-} from "src/core/index";
+} from "src/output/index.js";
 import { onMounted, ref, toRaw, watch, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import detail_header_tem1 from "../detail_header/detail_header_tem1.vue";

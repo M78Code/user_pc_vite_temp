@@ -73,7 +73,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from "vue";
-import { i18n_t } from "src/core/index";
+import { i18n_t } from "src/output/index.js";
 import { IconWapper } from 'src/components/icon'
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 // import { mapGetters } from "vuex";

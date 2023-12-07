@@ -96,7 +96,7 @@ import { api_filter } from "src/api/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
 import SFilter from "src/base-h5/components/skeleton/filter.vue";
 import lodash from 'lodash';
-import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from 'src/core';
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 
 import { i18n_t, MITT_TYPES, compute_css_obj, useMittEmit, MenuData, compute_img_url, UserCtr, get_server_file_path } from 'src/core/'

@@ -35,7 +35,7 @@ import {
   useMittEmit,
   utils,
   UserCtr
-} from "src/core/index";
+} from "src/output/index.js";
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";

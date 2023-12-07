@@ -219,7 +219,7 @@ import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 import { format_total_score } from "src/core/format/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js";;
 import { useRoute } from "vue-router"
-import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/output/index.js";
 import sliderX from "src/base-h5/components/details/analysis-matches/components/slider-x.vue"
 // 队标视图
 import teamImg from "src/base-h5/components/details/team-img.vue"

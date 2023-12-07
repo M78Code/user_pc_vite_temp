@@ -111,11 +111,11 @@
 
 <script>
 import { defineComponent, onMounted, ref, watch, onUnmounted, nextTick } from "vue";
-import { format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
+
+import { format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, MenuData, loadLanguageAsync, compute_local_project_file_path } from "src/output/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account, api_betting } from 'src/api/index';
-import { loadLanguageAsync, compute_local_project_file_path } from "src/output/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';

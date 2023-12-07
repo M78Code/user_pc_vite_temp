@@ -29,10 +29,11 @@
 </template>
 <script>
 import { defineComponent, ref, onUnmounted, onMounted } from "vue";
-import right_head from "./right_head.vue";
 import { useRouter, useRoute } from 'vue-router'
+
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { MenuData,useMittEmit,MITT_TYPES,UserCtr, i18n, useMittOn  } from "src/core/"
+import { MenuData,useMittEmit,MITT_TYPES,UserCtr, i18n, useMittOn  } from "src/output/index.js"
+import right_head from "./right_head.vue";
 import { compute_img_url } from 'src/core/server-img/index.js'
 
 export default defineComponent({

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { compute_css_obj } from "src/core/index";
+import { compute_css_obj } from "src/output/index.js";
 export default {
   name: "team_img",
   data(){

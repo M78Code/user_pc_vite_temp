@@ -64,7 +64,7 @@
 // import { mapGetters } from "vuex";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import { onMounted, onUnmounted, ref,watch,computed } from "vue";
-import { GlobalSwitchClass} from "src/core/index";
+import { GlobalSwitchClass} from "src/output/index.js";
 const props = defineProps({
   // 当前选中的球种
   sportType: {

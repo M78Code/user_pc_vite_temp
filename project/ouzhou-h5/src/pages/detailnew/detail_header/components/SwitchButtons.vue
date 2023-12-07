@@ -10,7 +10,7 @@
 
 <script setup>
 import SwitchButton from './SwitchButton.vue';
-import {LOCAL_PROJECT_FILE_PREFIX} from 'src/core/index'
+import {LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js"
 
 const images = ['/ouzhou-h5/image/detail/animation.png']
 

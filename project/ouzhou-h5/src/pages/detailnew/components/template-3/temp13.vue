@@ -239,7 +239,7 @@
 import store from "src/store-redux";
 import lodash from "lodash";
 import odds_new from "base_path/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core';
+import {utils,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"

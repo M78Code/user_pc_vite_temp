@@ -41,7 +41,7 @@
 <script setup>
 import { api_betting } from "src/api/index.js";
 import { ref, onUnmounted  } from 'vue'
-import {useMittOn, MITT_TYPES,compute_css_obj,UserCtr} from  "src/core/"
+import {useMittOn, MITT_TYPES,compute_css_obj,UserCtr} from  "src/output/index.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 // import { mapGetters } from "vuex";
 import store from 'src/store-redux'

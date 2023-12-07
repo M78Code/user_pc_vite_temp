@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { SearchData,compute_local_project_file_path } from "src/core/";
+import { SearchData,compute_local_project_file_path } from "src/output/index.js";
 export default {
   name: 'searchHistory',
   props: {

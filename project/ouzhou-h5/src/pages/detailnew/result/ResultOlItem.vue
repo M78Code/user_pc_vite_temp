@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 
-import { utils } from 'src/core/index'
+import { utils } from "src/output/index.js"
 
 const props = withDefaults(defineProps<{
   value: TYPES.OlResult,

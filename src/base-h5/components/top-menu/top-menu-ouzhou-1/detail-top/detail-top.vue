@@ -40,7 +40,7 @@ import {
   useMittEmit, MITT_TYPES,
   MatchDataWarehouse_H5_Detail_Common,
   MatchDataWarehouse_H5_List_Common,
-} from "src/core/index";
+} from "src/output/index.js";
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
 import { MenuData } from 'src/core/';
