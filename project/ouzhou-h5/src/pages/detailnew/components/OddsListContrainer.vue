@@ -91,5 +91,16 @@ function updateUnfold(unfold: boolean){
 .v-enter-from,.v-leave-to {
   opacity: 0;
 }
+.no-data {
+        width: 140px;
+        height: 140px;
+        margin-left: 50%;
+        transform: translate(-70px);
+    }
 
+.no-data-text {
+    text-align: center;
+    color: #A1A3A5;
+    font-size: 16px;
+}
 </style>

@@ -168,7 +168,7 @@ export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/
 export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url = "/v1/m/matchDetail/getMatchDetailByTournamentIdPB") => http.get(`${prefix}${url}`, params, config)
 
 // 赛事详情页面接口（christion）
-export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
+export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetailPB") => http.get(`${prefix_job}${url}`, params, config)
 /** 
  * 赛果详情页面接口（christion）
  * @returns {Promise<API.MatchDetails>}
@@ -179,7 +179,7 @@ export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/mat
 export const get_DJ_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getESMatchDetail") => http.get(`${prefix}${url}`, params, config)
 
 // 根据玩法查询盘口信息
-export const get_matchDetail_getMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getMatchOddsInfo1") => {
+export const get_matchDetail_getMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getMatchOddsInfo1PB") => {
   return http.get(`${prefix_job}${url}`, params, {axios_debounce_cache_key: 'match_detail_odds_info'});
 };
 
