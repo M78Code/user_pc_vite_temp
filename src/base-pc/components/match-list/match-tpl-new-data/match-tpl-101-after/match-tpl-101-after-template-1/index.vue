@@ -31,7 +31,7 @@
 import { ref, watch, defineProps, nextTick, inject } from 'vue';
 import lodash from 'lodash'
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -234,4 +234,4 @@ export default {
     color: var(--q-gb-bg-c-17);
   }
 }
-</style>
+</style>src/output/index.js

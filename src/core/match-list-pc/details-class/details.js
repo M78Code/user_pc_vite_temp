@@ -4,9 +4,9 @@
  * @Description: 赛事详情相关操作类
  */
 import { api_details } from "src/api/index";
-import { UserCtr, MITT_TYPES,useMittEmit, MenuData } from "src/core/index.js"; 
+import { UserCtr, MITT_TYPES,useMittEmit, MenuData } from "src/output/index.js"; 
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
-import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss,MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,LayOutMain_pc } from 'src/core/index.js'
+import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss,MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,LayOutMain_pc } from 'src/output/index.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 //引入列表跳详情中间件 
 import  MatchListDetailMiddlewareClass  from "src/core/match-detail/match-detail-pc/match-list-detail-pc/index.js"

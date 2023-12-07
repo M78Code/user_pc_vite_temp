@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { PageSourceData,MatchDetailCalss  } from "src/core/index.js";
+import { PageSourceData,MatchDetailCalss  } from "src/output/index.js";
 import ZhuGe from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
 import details from "src/core/match-list-pc/details-class/details.js";

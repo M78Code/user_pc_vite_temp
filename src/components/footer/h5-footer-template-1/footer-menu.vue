@@ -78,12 +78,12 @@
 <script setup>
 // TODO: 后续修改调整
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
-import { utils, SessionStorage } from "src/core/index.js";
+import { utils, SessionStorage } from "src/output/index.js";
 import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
 import lodash from "lodash";
 import { useRoute, useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
-import { UserCtr, i18n_t, compute_css_obj, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/core/index.js";
+import { UserCtr, i18n_t, compute_css_obj, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/output/index.js";
 import { lang, show_favorite_list, theme, user_info, resources_obj } from "src/base-h5/mixin/userctr";
 const { matchReducer } = store.getState();
 const { menu_type, update_time, get_sport_all_selected } = MenuData;
@@ -722,4 +722,4 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 @import url(./footer.scss);
 @import url(./footer_menu.scss);
-</style>
+</style>src/output/index.jssrc/output/index.js

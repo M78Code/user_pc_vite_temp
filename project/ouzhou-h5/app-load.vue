@@ -19,7 +19,7 @@ import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/core/index.js";
+import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch,toRaw } from "vue";
 import { useRoute } from "vue-router";
 
@@ -265,3 +265,4 @@ ServerTime.get_server_time()
   height: inherit;
 }
 </style>
+src/output/index.js

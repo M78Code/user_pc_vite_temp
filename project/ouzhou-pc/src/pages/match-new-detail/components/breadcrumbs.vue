@@ -22,7 +22,7 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import { useRoute,useRouter } from 'vue-router'
-import {LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/core/index.js'
+import {LOCAL_PROJECT_FILE_PREFIX, MenuData } from 'src/output/index.js'
 import BaseData from "src/core/base-data/base-data.js";
 import lodash_ from "lodash"
 
@@ -127,4 +127,4 @@ const jumpToLeagues  = () => {
   }
 }
 </style>
-  
+  src/output/index.js

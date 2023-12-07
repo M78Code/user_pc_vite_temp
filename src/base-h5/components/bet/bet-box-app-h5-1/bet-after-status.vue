@@ -9,7 +9,7 @@
 <script setup>
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { ref,computed } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 
 let title = ref('')
 
@@ -59,4 +59,4 @@ const bet_order_status_active = computed(()=>{
     }
   }
 }
-</style>
+</style>src/output/index.js

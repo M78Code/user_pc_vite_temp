@@ -2,7 +2,7 @@
   <div class="text-toast" v-if="bool">{{ text }}</div>
 </template>
 <script setup>
-import { GlobalSwitchClass } from "src/core/index.js";
+import { GlobalSwitchClass } from "src/output/index.js";
 import {watch,ref} from 'vue'
 const bool = ref(GlobalSwitchClass.tip_show_state.isShow)
 const text = ref(GlobalSwitchClass.tip_show_state.text)
@@ -33,4 +33,4 @@ watch(
   white-space: nowrap;
 
 }
-</style>
+</style>src/output/index.js

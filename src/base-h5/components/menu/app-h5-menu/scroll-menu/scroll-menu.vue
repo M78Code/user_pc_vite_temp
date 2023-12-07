@@ -36,7 +36,7 @@
 import { ref,reactive,onMounted,onUnmounted,nextTick } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
-import { compute_css_obj, MenuData } from "src/core/index.js";
+import { compute_css_obj, MenuData } from "src/output/index.js";
 import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 const ref_data = reactive({
@@ -221,3 +221,4 @@ onUnmounted(()=>{
   }
 
 </style>
+src/output/index.js

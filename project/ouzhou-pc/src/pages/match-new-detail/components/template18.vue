@@ -64,7 +64,7 @@
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import betItem from "./bet-item-list-new-data.vue";
 
 const props = defineProps({
@@ -192,3 +192,4 @@ onMounted(() => {
   height: 16px;
 }
 </style>
+src/output/index.js

@@ -10,12 +10,12 @@ import {
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,
-} from "src/core/index.js"
+} from "src/output/index.js"
 
-import {utils} from "src/core/index.js";
+import {utils} from "src/output/index.js";
 import store from "src/store-redux/index.js";
 import { compute_sport_id  } from 'src/core/constant/index.js'
-import { LayOutMain_pc, SessionStorage } from "src/core/index.js";
+import { LayOutMain_pc, SessionStorage } from "src/output/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 
 const menu_key = STANDARD_KEY.get("menu_pc");

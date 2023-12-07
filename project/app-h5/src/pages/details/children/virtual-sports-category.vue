@@ -939,3 +939,4 @@ export default defineComponent({
   height: 0.18rem;
 }
 </style>
+src/output/index.js

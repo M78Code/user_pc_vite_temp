@@ -2,7 +2,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import {
   MatchDataWarehouse_H5_List_Common as MatchListData,
   MatchDataWarehouse_H5_Detail_Common as MatchDetailData,
-} from "src/core/index.js";
+} from "src/output/index.js";
 
 import baseData from "src/core/base-data/base-data.js";
 

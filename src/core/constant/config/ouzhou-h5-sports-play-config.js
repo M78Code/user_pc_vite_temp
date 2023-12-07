@@ -1,4 +1,4 @@
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 // KEY = 球种
 // VALUE = {
 //  label = 多语言 赛果 玩法,

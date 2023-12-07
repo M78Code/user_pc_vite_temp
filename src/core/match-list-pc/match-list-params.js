@@ -1,4 +1,4 @@
-import { MenuData, GlobalAccessConfig, UserCtr, useMittEmit, MITT_TYPES, t } from 'src/core/index.js'
+import { MenuData, GlobalAccessConfig, UserCtr, useMittEmit, MITT_TYPES, t } from 'src/output/index.js'
 import filterHeader from "src/core/filter-header/filter-header.js";
 import BaseData from "src/core/base-data/base-data.js";
 

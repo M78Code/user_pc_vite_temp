@@ -202,3 +202,4 @@ import {compute_img_url} from 'src/core/'
   }
 }
 </style>
+src/output

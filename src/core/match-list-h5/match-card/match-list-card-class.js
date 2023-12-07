@@ -10,7 +10,7 @@ import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MenuData from "src/core/menu-h5/menu-data-class.js";
 import MatchListCardScroll from './match-list-card-scroll'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output'
 import { compute_style_template_by_match_height } from './module/compute-style-template.js'
 import MatchMeta from '../match-class/match-meta'
 

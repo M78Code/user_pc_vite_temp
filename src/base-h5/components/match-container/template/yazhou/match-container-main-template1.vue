@@ -444,7 +444,7 @@ import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-w
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import { i18n_t, compute_img_url } from "src/core/index.js"
+import { i18n_t, compute_img_url } from "src/output/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 
@@ -1616,4 +1616,4 @@ export default {
 
 /* ********赛事容器相关********** -E*/
 </style>
-  
+  src/output/index.jssrc/output/index.js

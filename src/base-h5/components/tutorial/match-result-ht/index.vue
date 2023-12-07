@@ -64,7 +64,7 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/core/index.js";
+import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, onBeforeMount, reactive } from "vue";
 
@@ -330,4 +330,4 @@ const state = reactive({
     }
 
 }
-</style>
+</style>src/output/index.js

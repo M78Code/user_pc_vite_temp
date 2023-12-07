@@ -315,3 +315,4 @@ export default defineComponent({
   }
 }
 </style>
+src/output/indexsrc/output/index

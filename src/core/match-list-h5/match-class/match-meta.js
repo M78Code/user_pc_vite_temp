@@ -19,7 +19,7 @@ import { useMittEmit, MITT_TYPES,project_name, MenuData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
   MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
-} from 'src/core'
+} from 'src/output'
 
 class MatchMeta {
 
@@ -490,11 +490,15 @@ class MatchMeta {
     const params = this.get_base_params()
     this.http_params.md = md
     if (!is_error) this.current_euid = `${euid}_${md}_${tid}`
+    const other_params = {
+      category: 1,
+      md: this.http_params.md + ''
+    }
+    if (tid) Object.assign(other_params, { tid })
     try {
       const res = await api_common.post_match_full_list({ 
         ...params,
-        tid,
-        md: this.http_params.md + ''
+        ...other_params
       })
       if (this.current_euid !== `${euid}_${md}_${tid}`) return
       if (res.code == '0401038' && this.match_mids.length < 1) return this.set_page_match_empty_status({ state: true, type: 'noWifi' });
@@ -724,6 +728,7 @@ class MatchMeta {
       euid = MenuData.get_euid(mid+''+lv1_mi)
     }
     const params = this.get_base_params(euid)
+    delete params.hpsFlag
     const res = await api_common.get_collect_matches(params)
     if (res.code !== '200') return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
     // 频繁切换菜单， 收藏接口比较慢时 会影响其他页面， 故加上判断
@@ -875,7 +880,7 @@ class MatchMeta {
 
     let target_data = []
     if (is_classify) {
-      // 赛事归类(开赛-未开赛) 里面包含了球种归类
+      // 赛事归类(开赛-未开赛) 里面包含了球种归类、联赛归类
       target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
       // 球种归类
@@ -920,7 +925,7 @@ class MatchMeta {
       this.complete_matchs = matchs_data
       this.complete_mids = result_mids
     }
-
+    
     if (!is_virtual) {
       // 清除虚拟计算信息
       VirtualList.clear_virtual_info()

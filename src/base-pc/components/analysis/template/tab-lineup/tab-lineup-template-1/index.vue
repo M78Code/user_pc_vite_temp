@@ -427,4 +427,4 @@ function get_first_lineup(data, lineup, type) {
     background: var(--q-analysis-color-2) !important;
   }
 }
-</style>
+</style>src/output/index.js

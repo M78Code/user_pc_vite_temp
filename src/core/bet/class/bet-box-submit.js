@@ -17,10 +17,10 @@ import {
     MatchDataWarehouse_H5_List_Jingxuan,
     MatchDataWarehouse_H5_Detail_Jingxuan,
     
- } from 'src/core/index.js'
+ } from 'src/output/index.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
-import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/core/index.js"
+import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/output/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 
 let time_out = null

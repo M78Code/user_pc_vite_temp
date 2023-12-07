@@ -78,7 +78,7 @@ import lockImg from "../lock_img.vue";
 import { onMounted, ref, computed } from "vue";
 import { storage_bet_info } from "src/core/bet/module/bet_info.js"; //#TODO core/index.js not export storage_bet_info
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
-import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
+import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import EMITTER from  "src/global/mitt.js"
 import olStatus from "../ol_status.vue";
@@ -224,3 +224,4 @@ onMounted(() => {
   top: 2px;
 }
 </style>
+src/output/index.js

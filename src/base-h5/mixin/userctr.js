@@ -1,5 +1,5 @@
 import { watch, onBeforeUnmount, ref } from "vue";
-import { UserCtr, useMittOn, MITT_TYPES } from 'src/core/'
+import { UserCtr, useMittOn, MITT_TYPES } from 'src/output'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 const theme = ref(UserCtr.theme)//主题
 const lang = ref(UserCtr.lang)//语言

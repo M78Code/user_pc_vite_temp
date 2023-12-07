@@ -223,7 +223,7 @@ import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-w
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 
-import { i18n_t, compute_img_url } from "src/core/index.js"
+import { i18n_t, compute_img_url } from "src/output/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 
@@ -232,10 +232,10 @@ import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_
 
 import default_mixin from '../../mixins/default.mixin.js'
 import _ from 'lodash'
-import { compute_value_by_cur_odd_type } from "src/core/index.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import lodash from 'lodash';
 import { ref, watch, onMounted, onUnmounted } from 'vue';
-import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn } from "src/core/index.js"
+import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn } from "src/output/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
@@ -947,4 +947,4 @@ export default {
 
 /* ********赛事容器相关********** -E*/
 </style>
-  
+  src/output/index.jssrc/output/index.jssrc/output/index.js

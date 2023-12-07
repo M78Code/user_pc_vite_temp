@@ -106,7 +106,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import {
   PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
-} from "src/core/index.js";
+} from "src/output/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";
@@ -275,3 +275,4 @@ export default {
   margin-bottom: 10px;
 }
 </style>
+src/output/index.js

@@ -9,7 +9,7 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { esports_csid } from "../../constant/config/csid"
 import { useRoute } from "vue-router"
-import {UserCtr} from 'src/core'
+import {UserCtr} from 'src/output'
 import { includes } from "lodash";
 // import { format_odds } from "src/core/format/module/format-odds.js"
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";

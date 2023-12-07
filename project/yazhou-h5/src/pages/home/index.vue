@@ -34,7 +34,7 @@ import UserCtr from "src/core/user-config/user-ctr.js"; // mixins: [router_mixin
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js";
-import { MenuData } from "src/core/index.js"
+import { MenuData } from "src/output/index.js"
 
 import 'src/base-h5/css/pages/hot-modal.scss'
 // import router_mixins from "src/base-h5/mixins/router-mixins.js";
@@ -553,4 +553,4 @@ export default defineComponent({
     }
 
   }
-}</style>
+}</style>src/output/index.js

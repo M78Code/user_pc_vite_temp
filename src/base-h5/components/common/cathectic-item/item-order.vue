@@ -83,3 +83,4 @@ import { project_name } from 'src/core'
   line-height: 0.36rem;
 }
 </style>
+src/output

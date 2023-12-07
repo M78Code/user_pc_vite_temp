@@ -44,7 +44,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
-import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
+import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
@@ -422,4 +422,4 @@ const checked_current_tab = payload => {
 	padding-right: 3px;
 	}
   }
-</style>
+</style>src/output/index.js

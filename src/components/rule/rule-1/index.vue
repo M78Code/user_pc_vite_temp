@@ -18,7 +18,7 @@ import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
 
-import { loadLanguageAsync } from "src/core/index.js";
+import { loadLanguageAsync } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/module/web-storage.js";
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({})
@@ -93,4 +93,4 @@ onMounted(()=>{
     }
 }
 </style>
-  
+  src/output/index.js
