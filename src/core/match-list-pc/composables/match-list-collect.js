@@ -8,8 +8,6 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { api_common, api_match } from "src/api/index.js";
-// 收藏api
-const get_collect_matches_api = api_match.post_fetch_collect_list_high_light;
 // 全局赛事收藏信息
 const match_collect_data = { data: null };
 

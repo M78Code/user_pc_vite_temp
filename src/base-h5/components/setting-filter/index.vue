@@ -72,7 +72,7 @@ import {
 import Switch from "./components/switch.vue";
 import { standard_edition } from "src/base-h5/mixin/userctr.js";
 import { UserCtr } from "src/output/index.js";
-import { LocalStorage } from "src/output/index.js";
+import { LocalStorage } from "src/core/utils/module/web-storage.js";
 import { default_theme_key } from "src/core/theme/";
 
 defineOptions({

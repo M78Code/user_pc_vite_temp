@@ -3,7 +3,7 @@
  *
  */
 import { nextTick } from "vue";
-import { LocalStorage, SessionStorage } from "src/output/index.js";
+import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const initialState = {

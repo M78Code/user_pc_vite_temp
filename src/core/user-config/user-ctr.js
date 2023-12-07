@@ -18,7 +18,7 @@ import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
 
-import { LocalStorage, SessionStorage } from "src/output/constant-utils.js";
+import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;

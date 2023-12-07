@@ -1,5 +1,5 @@
-import { get_query_string ,LocalStorage } from "src/core/utils/index.js";
- 
+import { get_query_string } from "src/core/utils/index.js";
+import { LocalStorage } from 'src/core/utils/module/web-storage.js'
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
 import { MenuData } from "src/output/computed.js";
