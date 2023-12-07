@@ -9,7 +9,6 @@ import { dianjing_sublist } from "src/core/constant/config/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import BaseWsMessage from "./base-ws-message"
 const { PROJECT_NAME,BUILD_VERSION,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
-console.error('BUILD_VERSION_CONFIG',BUILD_VERSION_CONFIG)
 
 //   约定 四个 值
 
@@ -136,7 +135,7 @@ class BaseData {
     // 是否通知元数据处理完成
     this.is_emit = false
 
-    this.conventionalType = [101,102]; 
+    this.conventionalType = [101, 102, 105]; 
   }
   /**
    * 初始化数据
@@ -403,7 +402,7 @@ class BaseData {
 
       // this.resolve_menus(menu_i18n_default)
     }
-    this.conventionalType = [101,102]; 
+    this.conventionalType = [101, 102, 105]; 
   }
   /**
    * 滚球赛事的赛种id
@@ -557,7 +556,7 @@ class BaseData {
        *  一期只有足球篮球  暂定
        *  重置默认数据
        */
-      if(!IS_FOR_NEIBU_TEST){
+      if(BUILD_VERSION){
         this.left_menu_base_mi_arr = this.conventionalType;
        
         let list_mi_lsit = []

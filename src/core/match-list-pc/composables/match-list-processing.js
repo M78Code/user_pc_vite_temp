@@ -402,9 +402,9 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	let code = lodash.get(data, "code");
 	clearTimeout(virtual_list_timeout_id);
 	// 赛事列表
-	let match_list = lodash.get(data, "data.data");
+	let match_list = lodash.get(data, "data.data", []);
 	if (!match_list) {
-		match_list = lodash.get(data, "data");
+		match_list = lodash.get(data, "data", []);
 	}
 	set_league_list_obj(match_list)
 	match_list = match_list || [];

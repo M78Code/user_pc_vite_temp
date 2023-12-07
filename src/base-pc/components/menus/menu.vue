@@ -40,17 +40,17 @@
       </ul>
     </div>
     <div class="menu-nav-line" />
-    <div class="menu-nav-li" v-if="IS_FOR_NEIBU_TEST">
+    <div class="menu-nav-li">
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
-        <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
+        <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}" v-if="!BUILD_VERSION">
           <sport_icon :sport_id="BaseData.compute_sport_id(2000)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
         </li>
-        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
+        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}" v-if="!BUILD_VERSION">
           <sport_icon :sport_id="BaseData.compute_sport_id(300)" size="18px" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[300] || "" }}
         </li>
@@ -72,7 +72,7 @@ import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
 
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST, BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 const popular = ([{mi:101},{mi:102}])
 
