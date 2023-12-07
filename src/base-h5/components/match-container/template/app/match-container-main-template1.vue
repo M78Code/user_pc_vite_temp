@@ -376,12 +376,12 @@ export default {
     align-items: center;
     color: var(--q-gb-t-c-20);
     background: var(--q-gb-bg-c-15);
-      justify-content: space-between;
+    justify-content: space-between;
     &.progress{
-      border-top: 2px solid #74C4FF
+      border-top: 2px solid rgba(116, 196, 255, 0.5);
     }
     &.not_begin{
-      border-top: 2px solid #E95B5B
+      border-top: 2px solid rgba(233, 91, 91, 0.51);
     }
 
     img {
@@ -404,12 +404,12 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-21);
     height: 5px;
     margin: 0 4px;
   }
   .match-inner-container {
-    width: 98%;
+    padding: 0 0.05rem;
     margin: 0 auto;
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
@@ -551,7 +551,7 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
+    padding: 0 5px 0 15px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
@@ -737,7 +737,7 @@ export default {
       .favorited-icon{
         width: 14px;
         height: 14px;
-        margin: 0 10px 0 12px;
+        margin: 0 10px 0 11px;
         position: relative;
         flex-shrink: 0;
         > img {
@@ -770,9 +770,9 @@ export default {
     font-size: 0.1rem;
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-18);
-    border-top: 1px solid var(--q-gb-bd-c-4);
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    background: var(--q-gb-bg-c-15);
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 
     .odd-title-i-w {
       width: 50%;

@@ -97,8 +97,7 @@ class MatchMeta {
 
 
     // 是否需要开赛、未开赛归类
-    const is_classify = this.get_is_classify()
-    is_match && this.get_target_match_data({ md, is_classify })
+    is_match && this.get_target_match_data({ md })
 
     // 滚球全部
     if (+menu_lv_v1 === 1 && menu_lv_v2 == 0) return this.get_origin_match_mids_by_mis(menu_lv_v1_sl)
@@ -380,7 +379,7 @@ class MatchMeta {
    */
   filter_hot_match_by_tid (tid = '') {
     const tid_info = this.tid_map_mids[`tid_${tid}`]
-    this.get_target_match_data({ is_classify: true, tid })
+    this.get_target_match_data({ tid })
     if (!tid_info) return
     const mids = this.tid_map_mids[`tid_${tid}`].mids
     if (mids.length < 1) return 
@@ -480,12 +479,12 @@ class MatchMeta {
 
   /**
    * @description 获取实际渲染赛事
-   * @param { Boolean } is_classify 是否需要进行 开赛 / 未开赛归类, is_error 是否限频或者接口报错
+   * @param { Boolean } 是否需要进行 开赛 / 未开赛归类, is_error 是否限频或者接口报错
    *  app-h5: 需要
    *  ouzhou-h5 不需要
    *  yazhou-h5 需要
    */
-  async get_target_match_data ({is_classify = false, scroll_top = 0, md = '', is_error = false, tid = ''}) {
+  async get_target_match_data ({scroll_top = 0, md = '', is_error = false, tid = ''}) {
     const euid = MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i'))
     const params = this.get_base_params()
     this.http_params.md = md
@@ -509,7 +508,7 @@ class MatchMeta {
       // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
       if (length < 1) return this.set_page_match_empty_status({ state: true });
       if (!MatchCollect.is_get_collect) MatchCollect.get_collect_match_data(list)
-      this.handler_match_list_data({ list: list, is_classify, scroll_top })
+      this.handler_match_list_data({ list: list, scroll_top })
 
       // 模拟删除赛事
       // setInterval(() => {
@@ -528,7 +527,7 @@ class MatchMeta {
       } else {
         this.error_http_count.match++
         let timer = setTimeout(() => {
-          this.get_target_match_data({is_classify, scroll_top, md, is_error: true, tid})
+          this.get_target_match_data({scroll_top, md, is_error: true, tid})
           clearTimeout(timer)
           timer = null
         }, 3000)
@@ -797,8 +796,19 @@ class MatchMeta {
    * @param { Boolean } val 
    */
   get_is_classify () {
-    const is_classify = project_name === 'app-h5' ? true : false
-    return  is_classify
+    let is_classify = false
+    if (project_name === 'app-h5') {
+      // 滚球不需要
+      if (MenuData.current_lv_1_menu_i == 1) {
+        is_classify = false
+      } else {
+        // 今日、早盘需要 开赛、未开赛归类
+        is_classify = true
+      }
+    } else {
+      is_classify = false
+    }
+    return is_classify
   }
 
   set_current_euid (val) {
@@ -865,7 +875,9 @@ class MatchMeta {
    */
   handler_match_list_data(config) {
 
-    const { list = [], type = 1, is_virtual = true, is_classify = false, warehouse = MatchDataBaseH5, scroll_top = 0 ,merge = '' } = config
+    const { list = [], type = 1, is_virtual = true, warehouse = MatchDataBaseH5, scroll_top = 0 ,merge = '' } = config
+
+    const is_classify = this.get_is_classify()
 
     // 清除联赛下得赛事数量
     if (this.is_other_warehouse(warehouse.name_code)) {
@@ -955,8 +967,8 @@ class MatchMeta {
     // 清除联赛下得赛事数量
     MatchResponsive.clear_ball_seed_league_count()
 
-     // 是否需要开赛、未开赛归类
-     const is_classify = this.get_is_classify()
+    // 是否需要开赛、未开赛归类
+    const is_classify = this.get_is_classify()
 
     // 赛事归类开赛、未开赛
     const target_data = is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list.filter((t) => t.mid)
