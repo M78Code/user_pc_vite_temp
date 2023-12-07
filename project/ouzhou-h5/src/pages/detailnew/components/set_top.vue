@@ -13,7 +13,7 @@ import {
   UserCtr,
   MatchDetailCalss,
   MatchDataWarehouse_H5_Detail_Common,
-} from "src/core/";
+} from "src/output/index.js";
 import { useRoute } from "vue-router";
 import { api_details } from "src/api/index";
 import { computed } from "vue";
@@ -141,3 +141,4 @@ const handle_zhiding = (params) => {
   margin-right: 0.06rem;
 }
 </style>
+src/output

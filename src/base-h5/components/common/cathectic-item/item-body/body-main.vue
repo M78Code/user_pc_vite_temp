@@ -103,7 +103,7 @@
 
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
-import {compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from 'src/core/'
+import {compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js"
 import { api_common } from "src/api/index.js";
 import {
   utils, 
@@ -113,7 +113,7 @@ import {
   MatchListH5DetailMiddleware, 
   MatchDataWarehouse_H5_Detail_Common as MatchDetailDataWarehouse, 
   MatchDataWarehouse_H5_List_Common as MatchListDataWarehouse
-} from 'src/core/index.js'
+} from 'src/output/index.js'
 import { format_time_zone_time, format_odds, format_score, formatTime } from 'src/core/format'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
@@ -503,3 +503,4 @@ const props =defineProps({
   }
 }
 </style>
+src/outputsrc/output/index.js

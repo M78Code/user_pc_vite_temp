@@ -8,7 +8,7 @@
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
-    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl && false">
+    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl || 1">
       <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
       <!-- 临时调试用 -->
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">
@@ -106,7 +106,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 import {
   PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
-} from "src/core/index.js";
+} from "src/output/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";
@@ -275,3 +275,4 @@ export default {
   margin-bottom: 10px;
 }
 </style>
+src/output/index.js

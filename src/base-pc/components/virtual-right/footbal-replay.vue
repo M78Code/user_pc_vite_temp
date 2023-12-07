@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { compute_local_project_file_path } from "src/core";
+import { compute_local_project_file_path } from "src/output/index.js";
 export default {
   name: "footbalReplay",
   data() {
@@ -228,3 +228,4 @@ export default {
   }
 }
 </style>
+src/output

@@ -1,5 +1,6 @@
 
 import PageSourceData from "src/core/page-source/page-source.js";
+console.log('asfnafhasf', PageSourceData);
 import MatchListCardData from "./match-list-card-data-class.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 

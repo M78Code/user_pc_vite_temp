@@ -35,11 +35,13 @@ import tiaozhuanPanel from "src/base-h5/components/match-list/components/tiaozhu
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import SList from "src/base-h5/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
+import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
-import { MenuData, score_switch_handle, utils } from "src/core/index.js";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { MenuData, score_switch_handle, utils } from "src/output/index.js";
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
+import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
@@ -74,7 +76,28 @@ const show_favorite_list = ref(store_state.show_favorite_list);
 const get_is_show_menu = ref(store_state.get_is_show_menu);
 const get_preload_animation_url = ref(store_state.get_preload_animation_url);
 
+let message_fun = null
+let handler_func = null
+
 onMounted(() => {
+
+  BaseData.is_emit && MatchMeta.set_origin_match_data()
+
+  // 接口请求防抖
+  handler_func = lodash.debounce(({ cmd, data }) => {
+    MatchMeta.handle_ws_directive({ cmd, data })
+  }, 1000)
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+    handler_func({ cmd, data })
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      MatchMeta.handle_remove_match(data)
+    } else {
+      handler_func({ cmd, data })
+    }
+  })
+
   // 初始化赛事列表操作工具类
   if (standard_edition.value == 2) {
     newer_standard_changing.value = true;
@@ -146,6 +169,7 @@ const event_init = () => {
  * @description 元数据请求回来 初始化赛事加载
  */
 const init_match_callback = () => {
+  console.log(444444444444)
   if (route.name !== 'matchList') return
   MatchMeta.set_origin_match_data()
 }
@@ -210,3 +234,4 @@ onUnmounted(() => {
 <style scoped lang="scss">
   @import "./index.scss";
 </style>
+src/output/index.jssrc/output

@@ -25,7 +25,7 @@
   import { format_mgt_time } from "src/core/format/index.js"
   import { utils } from 'src/core/utils/index.js';
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-// import { format_mgt_time } from "src/core/index";
+// import { format_mgt_time } from "src/output/index.js";
   const props = defineProps({
     detail_data: {
       type: Object,

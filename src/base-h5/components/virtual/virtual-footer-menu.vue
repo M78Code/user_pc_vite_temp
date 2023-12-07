@@ -34,7 +34,7 @@
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import 'src/base-h5/css/pages/virtual-footer-menu.scss'
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 export default defineComponent({
   name: "virtual_footer_menu",
@@ -267,3 +267,4 @@ export default defineComponent({
   }
 }
 </style>
+src/output/index.js

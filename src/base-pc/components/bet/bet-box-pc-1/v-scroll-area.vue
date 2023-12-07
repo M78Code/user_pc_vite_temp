@@ -40,7 +40,7 @@ import { ref, reactive, onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
 
 import store from "src/store-redux/index.js";
-import {utils,LayOutMain_pc } from 'src/core/index.js'
+import {utils,LayOutMain_pc } from 'src/output/index.js'
 
 import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
@@ -226,3 +226,4 @@ onUnmounted(() => {
   }
 }
 </style>
+src/output/index.js

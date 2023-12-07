@@ -15,7 +15,7 @@
 import { ref, onMounted, onUnmounted, provide,inject, watch } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc, utils } from "src/core/index.js";
+import { LayOutMain_pc, utils } from "src/output/index.js";
 import { get_match_template_id } from 'src/core/match-list-pc/match-handle-data.js';
 import {
   socket_remove_match
@@ -102,3 +102,4 @@ export default {
   }
 }
 </style>
+src/output/index.js

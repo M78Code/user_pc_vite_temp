@@ -187,7 +187,7 @@ import {
   is_eports_csid,
   LOCAL_PROJECT_FILE_PREFIX,
   stage_dict,
-} from "src/core/index.js";
+} from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 import { handle_course_data } from "src/core/utils/matches_list.js";
 import _ from "lodash";
@@ -675,3 +675,4 @@ watch(
 //  color: rgb(255, 112, 0) !important;
 //}
 </style>
+src/output/index.js

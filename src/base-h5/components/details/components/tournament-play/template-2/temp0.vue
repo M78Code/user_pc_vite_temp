@@ -186,12 +186,12 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 // #TODO mixins
 import lodash from "lodash";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
-import { useMittEmit, MITT_TYPES ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/core/index.js"
+import { useMittEmit, MITT_TYPES ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
 //国际化
 
 
@@ -362,3 +362,4 @@ export default defineComponent({
   vertical-align: middle;
 }
 </style>
+src/output/index.jssrc/output/index.js

@@ -51,7 +51,7 @@
 
 <script setup> 
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import {i18n_t,format_money2,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
+import {i18n_t,format_money2,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { IconWapper } from 'src/components/icon/index.js'
 

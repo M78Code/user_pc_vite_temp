@@ -118,7 +118,7 @@ import {
   LOCAL_PROJECT_FILE_PREFIX,
   useMittOn,
   MITT_TYPES,
-} from "src/core/index.js";
+} from "src/output/index.js";
 import odds_info from "./components/odds_info.vue";
 import analysis from "./analysis/index.vue";
 import tabs from "./components/tabs.vue";
@@ -496,3 +496,4 @@ export default {
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
 </style>
+src/output/index.js

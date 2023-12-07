@@ -23,7 +23,7 @@
   </template>
   
   <script setup>
-import {LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import {LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { onMounted, ref } from 'vue'
   const visible = ref(false)
   const emits = defineEmits(['update:modelValue'])
@@ -83,3 +83,4 @@ import { onMounted, ref } from 'vue'
     }
   }
 </style>
+src/output

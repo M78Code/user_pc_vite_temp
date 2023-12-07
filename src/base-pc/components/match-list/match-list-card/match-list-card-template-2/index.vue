@@ -46,7 +46,7 @@ import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from "src/bas
 
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc, MatchDataWarehouse_PC_List_Common } from "src/core/index.js";
+import { LayOutMain_pc, MatchDataWarehouse_PC_List_Common } from "src/output/index.js";
 const props = defineProps({
   card_key: String,
   MatchListData: {
@@ -167,3 +167,4 @@ onUnmounted(() => {
   font-weight: 600;
 }
 </style>
+src/output/index.js

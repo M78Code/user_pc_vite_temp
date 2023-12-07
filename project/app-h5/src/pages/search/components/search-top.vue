@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { utils, SearchData, useMittEmit, useMittOn, MenuData, UserCtr, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX } from "src/core/";
+import { utils, SearchData, useMittEmit, useMittOn, MenuData, UserCtr, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import SSearch from "src/base-h5/components/skeleton/search.vue"// 骨架屏
 import { api_search } from 'src/api/'
 const { get_hot_push, get_sport } = api_search || {}
@@ -564,3 +564,4 @@ onBeforeUnmount(() => {
   }
 }
 </style>
+src/output

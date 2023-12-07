@@ -20,7 +20,7 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, markRaw, watch, nextTick, computed } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core';
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import OddsItem from './OddsItem.vue';
 
 type Props = {

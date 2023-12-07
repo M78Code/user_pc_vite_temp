@@ -62,7 +62,7 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/output/index.js";
 // import { FooterWapper } from "src/components/footer/index.js";
 import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
 import { MenuWapper } from "src/base-h5/components/menu";
@@ -394,3 +394,4 @@ if (UserCtr.get_user_token()) {
   /* **********注单记录********************* *-E*/
 }
 </style>
+src/output

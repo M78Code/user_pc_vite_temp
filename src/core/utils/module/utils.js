@@ -10,9 +10,6 @@ import { api_common, api_account } from 'src/api/index';
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { DateForMat } from "src/core/format/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
-const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 
 const OL_RESULTS=['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half'];
 

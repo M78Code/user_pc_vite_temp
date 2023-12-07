@@ -18,7 +18,7 @@
   
 <script setup>
 import { ref, watch } from 'vue'
-import { utils } from 'src/core/index.js';
+import { utils } from 'src/output/index.js';
 
 const props = defineProps({
     tabList: {
@@ -135,3 +135,4 @@ function changeTab(tab,index) {
 }
 </style>
 
+src/output/index.js

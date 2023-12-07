@@ -35,7 +35,7 @@ import { onMounted, defineProps,ref,watch } from "vue";
 import DateTab from "src/base-pc/components/tab/date-tab/index.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj } from "src/core/server-img/index.js";
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import sportIcon from "src/components/sport_icon/sport_icon.vue";
 const current_menu = ref({});
 const dianjing_sublist = ref(BaseData.dianjing_sublist);
@@ -171,3 +171,4 @@ function tab_click(obj) {
   }
 }
 </style>
+src/output/index.js

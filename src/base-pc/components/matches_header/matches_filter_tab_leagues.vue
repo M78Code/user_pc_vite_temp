@@ -37,7 +37,7 @@ import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import { compute_img_url } from 'src/core/server-img/index.js'
-import { useMittOn,MITT_TYPES } from 'src/core/index.js';
+import { useMittOn,MITT_TYPES } from 'src/output/index.js';
 
 
 let area_obj = ref();
@@ -306,3 +306,4 @@ onUnmounted(() => {
   right: 0;
 }
 </style>
+src/output/index.js

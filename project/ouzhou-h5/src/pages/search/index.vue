@@ -257,13 +257,13 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, onUnmounted, reactive } from 'vue';
-import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
+import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/output/index.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_delete_history_search, get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 import { api_search } from 'src/api/';
-import { compute_value_by_cur_odd_type } from "src/core/index.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
@@ -988,4 +988,4 @@ li {
 }
 </style>
   
-  
+  src/outputsrc/output/index.js

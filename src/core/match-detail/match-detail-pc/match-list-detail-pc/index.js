@@ -1,5 +1,5 @@
 import PageSourceData from "src/core/page-source/page-source.js";
-import { MatchDetailCalss } from "src/core";
+import { MatchDetailCalss } from "src/output/index.js";
 /**
  * PC   列表 和 详情  之间的 数据中间件 
  * 

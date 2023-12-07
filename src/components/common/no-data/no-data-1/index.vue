@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { i18n_t } from "src/core/index.js";
+import { i18n_t } from "src/output/index.js";
 
 export default {
   name: "no_data",

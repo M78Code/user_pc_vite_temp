@@ -282,7 +282,7 @@
 <script>
 
 import { ref, computed, watch, nextTick } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
+import { LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
 
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
@@ -292,7 +292,7 @@ import ImageCacheLoad from "src/base-h5/components/match-list/components/public-
 import { icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
+import { i18n_t, compute_img_url, compute_css_obj  } from "src/output/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/default-odd-template/odd-list-wrap.vue';
 import { in_progress, not_begin, animation_icon, video_icon, 
@@ -404,7 +404,7 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-21);
     height: 5px;
     margin: 0 4px;
   }
@@ -551,7 +551,7 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
+    padding: 0 5px 0 15px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
@@ -737,7 +737,7 @@ export default {
       .favorited-icon{
         width: 14px;
         height: 14px;
-        margin: 0 10px 0 12px;
+        margin: 0 10px 0 11px;
         position: relative;
         flex-shrink: 0;
         > img {
@@ -1546,3 +1546,4 @@ export default {
 /* ********赛事容器相关********** -E*/
 </style>
   
+src/output/index.jssrc/output/index.js

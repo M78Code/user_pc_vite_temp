@@ -111,10 +111,10 @@ import { api_filter } from "src/api/index.js";
 // 无网络展示组件
 import noData from "src/base-h5/components/common/no-data.vue";
 import SFilter from "src/base-h5/components/skeleton/filter.vue"
-import { UserCtr, compute_img_url,MenuData, i18n_t, get_server_file_path, useMittEmit, MITT_TYPES } from 'src/core/'
+import { UserCtr, compute_img_url,MenuData, i18n_t, get_server_file_path, useMittEmit, MITT_TYPES } from "src/output/index.js"
 import { ref, watch, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import lodash from 'lodash'
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 
 // 构建版本
 // BUILD_VERSION:window.env.config.BUILD_VERSION,
@@ -767,3 +767,4 @@ if (get_menu_type.value == 30) {
 <style lang="scss" scoped>
 @import url('./index_old.scss');
 </style>
+src/outputsrc/output

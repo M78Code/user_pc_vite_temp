@@ -27,7 +27,7 @@ import keyBoard from './bet-keyboard.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import lodash_ from "lodash"
-import { useMittOn, MITT_TYPES } from "src/core/index.js";
+import { useMittOn, MITT_TYPES } from "src/output/index.js";
 
 let flicker_timer = null
 const money_span_single = ref()

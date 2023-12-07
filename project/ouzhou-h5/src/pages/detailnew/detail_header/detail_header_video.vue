@@ -9,7 +9,7 @@
 <script setup>
 import lodash from 'lodash'
 import custom_video from "src/base-h5/components/details/components/videos2.vue";
-import { MITT_TYPES, MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, UserCtr, useMittEmit } from 'src/core';
+import { MITT_TYPES, MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, UserCtr, useMittEmit } from "src/output/index.js";
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import { useRoute } from 'vue-router';
 import { ref, onMounted, defineProps } from "vue";

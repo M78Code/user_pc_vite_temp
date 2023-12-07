@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 </script>
 
 <style lang="scss">

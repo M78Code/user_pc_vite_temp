@@ -14,7 +14,7 @@ import {
 import { api_details } from "src/api/index";
 import store from "src/store-redux/index.js";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
-import {utils,is_eports_csid,LayOutMain_pc,MatchDetailCalss, } from 'src/core/index.js';
+import {utils,is_eports_csid,LayOutMain_pc,MatchDetailCalss, } from 'src/output/index.js';
 import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
