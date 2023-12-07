@@ -3,9 +3,8 @@
 <template>
 	<div class="result-wrap">
 		<!-- 滚动区域 -->
-		<q-scroll-area v-if="(search_data?.team && search_data?.team.length > 0) ||
-			(search_data?.league && search_data?.league.length > 0) || (search_data?.bowling && search_data?.bowling.length > 0)" class="fit rule-scroll-area" ref="scrollRef">
-			<div class="serach-background" @click.stop>
+		<q-scroll-area v-if="load_data_state === 'data'" class="fit rule-scroll-area" ref="scrollRef">
+			<div class="serach-background">
 				<!-- 搜索展示 -->
 				<div v-if="search_loading" class="loading search_loading"><img :src="compute_local_project_file_path('/image/gif/loading_ou.gif')" alt=""></div>
 				<div class="content">
@@ -200,12 +199,11 @@
 </template>
   
 <script setup>
-import { ref, reactive, watch, onBeforeUnmount, nextTick, computed, onMounted } from 'vue'
+import { ref, watch, onBeforeUnmount, nextTick, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import lodash from 'lodash'
 
 import search from "src/core/search-class/search.js"
-import PageSourceData from "src/core/page-source/page-source.js";
 import { get_search_result } from "src/api/module/search/index.js";
 import { UserCtr, compute_local_project_file_path, compute_value_by_cur_odd_type } from "src/core/";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
@@ -397,10 +395,8 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 	//调用接口获取获取搜索结果数据
 	get_search_result(params).then(res => {
 		update_show_type('result')
-		load_data_state.value = 'data'
-		const { bowling, league, team } = res.data.data
 		search_data.value = res.data.data
-		if (!res.data.data || (!bowling && !league && !team)) {
+		if (is_empty_data()) {
 			load_data_state.value = 'empty'
 			search_loading = false
 			return
@@ -408,6 +404,7 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 		expand_bowling.value = true;
 		expand_league.value = true;
 		expand_team.value = true
+		load_data_state.value = 'data'
 		search_loading = false
 		// console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
