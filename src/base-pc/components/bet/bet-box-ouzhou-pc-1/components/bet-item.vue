@@ -1,6 +1,6 @@
 
 <template>
-    <div class="bet-list">
+    <div class="bet-list bor-b">
         <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
         <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
             <div class="fw-s-s bet-left">
@@ -9,7 +9,7 @@
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}-{{ items.playId }}
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                     <!-- 盘口 -->
@@ -55,7 +55,9 @@
            
         </div>
         
-        <betInput :items="items"></betInput>
+        <div v-if="BetData.is_bet_single">
+            <betInput :items="items"></betInput>
+        </div>
        
     </div>
 </template>
@@ -85,6 +87,7 @@ const set_delete = () => {
 
 <style scoped lang="scss">
 .bet-list {
+    
     .bet-content {
         min-height: 76px;
         padding: 12px;

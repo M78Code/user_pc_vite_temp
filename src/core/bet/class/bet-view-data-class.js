@@ -140,18 +140,34 @@ class BetViewData {
       bet_amount_list = obj
     }
     let bet_amount = {}
-    bet_amount_list.forEach(item => {
-      // 单关 使用 投注项作为 key值 在投注列表做对应关系
-      //  串关使用 type 复连串 30001
-      let value = BetData.is_bet_single ? item.playOptionsId : item.type
-      bet_amount[value] = {
-        min_money: item.minBet, // 最小限额
-        max_money: item.orderMaxPay, // 最大限额
-        globalId: item.globalId,  //  风控响应id
-        seriesOdds: item.seriesOdds, // 赔率  // 串关使用 3串1
-      }
-    })
-    this.bet_min_max_money = bet_amount
+    // 串关 投注限额
+    if( BetData.is_bet_single){
+      bet_amount_list.forEach(item => {
+        // 单关 使用 投注项作为 key值 在投注列表做对应关系
+        bet_amount[item.playOptionsId] = {
+          min_money: item.minBet, // 最小限额
+          max_money: item.orderMaxPay, // 最大限额
+          globalId: item.globalId,  //  风控响应id
+        }
+      })
+      this.bet_min_max_money = bet_amount
+      
+    }else{
+      let special_series = this.bet_special_series.map(item=>{
+        //  串关使用 type 复连串 30001
+        let obj = bet_amount_list.find(page => page.type == item.id) || {}
+        if(obj.type){
+          return {
+            ...item,
+            min_money: obj.minBet, // 最小限额
+            max_money: obj.orderMaxPay, // 最大限额
+            globalId: obj.globalId,  //  风控响应id
+            seriesOdds: obj.seriesOdds, // 赔率  // 串关使用 3串1
+          }
+        }
+      })
+      this.bet_special_series = special_series
+    }
 
     // console.error("最大最小值",this.bet_min_max_money)
     this.set_bet_view_version()

@@ -13,7 +13,7 @@
         </div>
         <div class="cursor re" @click="show_single_change()">
           <div class="f-e-c">
-            {{ BetData.is_bet_single }}-{{ BetData.is_bet_merge }}
+            <!-- {{ BetData.is_bet_single }}-{{ BetData.is_bet_merge }} -->
             <span v-if="BetData.is_bet_single && !BetData.is_bet_merge">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="BetData.is_bet_single && BetData.is_bet_merge">{{ i18n_t('bet.merge') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
@@ -33,31 +33,38 @@
 
       <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}} -->
       <!-- 单关 投注 -->
-      <template v-if="BetViewDataClass.bet_order_status == 1">
-        <template v-if="BetData.is_bet_single">
-          <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
+      <div>
+        <div v-if="BetViewDataClass.bet_order_status == 1">
+          <template v-if="BetData.is_bet_single">
+            <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
+                <betItem :items="item" :key="index" :index="index" />
+            </div>
+          </template>
+          <template v-else>
+            <div v-for="(item,index) in BetData.bet_s_list" :key="item.playOptionsId">
               <betItem :items="item" :key="index" :index="index" />
-          </div>
-        </template>
-        <template v-else>
-          <div v-for="(item,index) in BetData.bet_s_list" :key="item.playOptionsId">
-            <betItem :items="item" :key="index" :index="index" />
+            </div>
+            <!-- 串关投注 限额 -->
+            <template v-if="BetData.bet_s_list.length > 1">
+              <div v-for="(item,index) in BetViewDataClass.bet_special_series" :key="index" class="bor-b">
+                <betSpecialInput :items="item" />
+              </div>
+            </template>
+          </template>
         </div>
+  
+        <!-- 投注后的结果 -->
+        <template v-else>
+          <template v-if="BetData.is_bet_single">
+            <div v-for="(item,index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
+              <betResult :items="item" :key="index" :index="index" />
+            </div>
+          </template>
         </template>
-      </template>
-
-      <!-- 投注后的结果 -->
-      <template v-else>
-        <template v-if="BetData.is_bet_single">
-          <div v-for="(item,index) in BetViewDataClass.orderNo_bet_obj" :key="item.orderNo">
-            <betResult :items="item" :key="index" :index="index" />
-          </div>
-        </template>
-      </template>
+      </div>
        
-      <!-- 底部投注信息 -->
-      <betFooter v-show="BetData.bet_single_list.length || BetData.bet_s_list.length"/>
-      
+       <!-- 底部投注信息 -->
+       <betFooter v-show="BetData.bet_single_list.length || BetData.bet_s_list.length"/>
     </div>
   </div>
 </template>
@@ -71,6 +78,7 @@ import betTitle from "./components/bet-title.vue"  // 投注头部
 import betItem from "./components/bet-item.vue"  // 投注列表
 import betFooter from "./components/bet-footer.vue"  // 投注底部信息
 import betResult from "./components/bet-result.vue"  // 投注结果
+import betSpecialInput from "./components/bet-special-input.vue"
 
 const ref_data = reactive({
   show_single: false,

@@ -197,13 +197,7 @@ export const useGetItem = ({ props }) => {
    * @return {Boolean} 是否包含
    */
   const bet_item_select = (id) => {
-    if (BetData.is_bet_single) {
-      // 检查单关是否选中
-      return BetData.bet_single_list.includes(id);
-    } else {
-      // 检查串关是否选中
-      return BetData.bet_list.includes(id);
-    }
+    return BetData.bet_oid_list.includes(id);
   };
 
 

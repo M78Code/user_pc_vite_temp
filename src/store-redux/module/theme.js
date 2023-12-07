@@ -19,7 +19,7 @@ export default function themeReducer(state = initialState, action) {
     case "SET_THEME":
       // 设置永久持久化主题信息
       SessionStorage.set("theme", data);
-      LocalStorage.set("theme", data);
+      // LocalStorage.set("theme", data);
       return { ...state, theme: data };
     /** 初始化主题 */
     case "INIT_THEME":

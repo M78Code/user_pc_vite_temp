@@ -39,7 +39,6 @@ if (default_theme) {
 } else {
   default_theme_key = theme_list[0].key
 }
-
 // 设置默认主题
 LocalStorage.set('theme',default_theme_key)
 

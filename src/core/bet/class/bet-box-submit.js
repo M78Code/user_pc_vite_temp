@@ -752,7 +752,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: get_handicap(ol_obj,hl_obj,other.is_detail,mid_obj), // 投注项名称
+        handicap: get_handicap(ol_obj,hl_obj,mid_obj,other.is_detail,), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
@@ -771,17 +771,18 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         let min_series = lodash_.get(UserCtr.user_info,'configVO.minSeriesNum',2)
         let man_series = lodash_.get(UserCtr.user_info,'configVO.maxSeriesNum',10)
         // 串关 数量不是大于1条投注项 则提示
-        if( BetData.bet_s_list.length < min_series){
+        if( BetData.bet_s_list.length +1 < min_series){
             BetViewDataClass.set_bet_before_message({
                 code: 'sasdasd',
                 message: i18n_tc('bet.bet_min_item',min_series,{ 'num': min_series})
             })
-        }else if(BetData.bet_s_list.length < man_series){
+        }else if(BetData.bet_s_list.length >= man_series){
             // 串关 数量不能大于设置的数量
             BetViewDataClass.set_bet_before_message({
                 code: 'sasdasd',
                 message: i18n_tc('bet.bet_max_item',man_series,{ 'num': man_series})
             })
+            return
         } else{
             BetViewDataClass.set_bet_before_message({})
         }
@@ -968,10 +969,10 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         b = ol_obj.on
 
         if(ol_obj.ots == 'T1'){
-            a = mid_obj.mhn
+            a = mid_obj.mhn || ''
         }
         if(ol_obj.ots == 'T2'){
-            a = mid_obj.man
+            a = mid_obj.man || ''
         }
         // 加入是否有球头判断 
         if(['T1','T2'].includes(ol_obj.ots) && !hl_obj.hv){
@@ -983,8 +984,8 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
         // 首页大小类玩法
         if(['Over',"Under"].includes(ol_obj.ot)){
-            a = ol_obj.onbl
-            b = ol_obj.onb
+            a = ol_obj.onbl || ''
+            b = ol_obj.onb || ''
         }
 
         text = `${a} <span class='ty-span'>${b}</span>`  

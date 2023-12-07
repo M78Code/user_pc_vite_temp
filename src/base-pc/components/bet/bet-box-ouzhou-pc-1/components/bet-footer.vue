@@ -81,7 +81,7 @@ const set_confirm = () => {
     width: 100%;
     background: var(--q-gb-bg-c-4);
     border-top: 0.5px solid var(--q-gb-bd-c-6);
-
+    
     .bet-content {
         width: 100%;
         height: 100%;
