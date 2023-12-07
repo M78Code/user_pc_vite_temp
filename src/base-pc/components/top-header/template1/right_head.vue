@@ -287,7 +287,7 @@ export default defineComponent({
     // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
       // console.log('e', e.target.className);
-      const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape', 'bet-title', 'f-b-c bet-content'];
+      const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape', 'bet-title', 'f-b-c bet-content', 'middle_info_tab diff', 'middle_info_tab'];
       if (is_focus.value && SearchPCClass.search_isShow) {
         if (!target_class_list.includes(e.target.className)) {
           SearchPCClass.set_search_isShow(false);
