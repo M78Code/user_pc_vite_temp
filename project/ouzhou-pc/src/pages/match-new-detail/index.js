@@ -5,11 +5,11 @@ import { useRouter } from "vue-router";
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
   MenuData,
-  UserCtr,
   MatchDetailCalss,
   SearchPCClass,
   utils
 } from "src/output/index";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import {
   filter_odds_func,
   handle_course_data,

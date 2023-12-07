@@ -21,7 +21,7 @@
 import { have_collect_ouzhou, no_collect_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import { MenuData } from "src/output/index.js"
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { UserCtr } from  "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import collapse from "project_path/src/pages/home/components/collapse.vue"
 import MatchCollect from 'src/core/match-collect'
 import { api_common } from "src/api/index.js";

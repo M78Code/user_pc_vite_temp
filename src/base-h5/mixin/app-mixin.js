@@ -4,7 +4,7 @@ import { LocalStorage } from 'src/core/utils/module/web-storage.js'
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { enter_params, compute_css_variables, PROJECT_NAME,LocalStorage } from "src/output/index.js";
+import { enter_params, compute_css_variables, PROJECT_NAME } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js";

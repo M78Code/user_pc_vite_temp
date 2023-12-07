@@ -10,10 +10,10 @@ import {
   useMittOn,
   useMittEmit,
   MITT_TYPES,
-  UserCtr,
   MatchDetailCalss,
   MatchDataWarehouse_H5_Detail_Common,
 } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { useRoute } from "vue-router";
 import { api_details } from "src/api/index";
 import { computed } from "vue";

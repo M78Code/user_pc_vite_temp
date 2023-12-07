@@ -48,7 +48,8 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { useRoute } from 'vue-router'
 
 import { api_common } from "src/api/index.js";
-import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/output/index.js";
+import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 const toast = defineAsyncComponent(() =>
   import("src/base-h5/components/common/toast.vue")

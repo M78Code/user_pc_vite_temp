@@ -7,7 +7,8 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import MatchListCardClass from '../match-card/match-list-card-class'
 import MatchListParams from '../composables/match-list-params'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, i18n_t, UserCtr, MenuData, useMittEmit, MITT_TYPES, utils } from 'src/output'
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, i18n_t, MenuData, useMittEmit, MITT_TYPES, utils } from 'src/output'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
 import { get_now_server } from 'src/core/utils/module/other.js'

@@ -50,7 +50,8 @@
 import { ref, computed, onMounted ,onUnmounted,reactive, onBeforeMount } from "vue";
 import lodash_ from "lodash"
 import { useRoute } from "vue-router";
-import { LayOutMain_pc, UserCtr, GlobalAccessConfig } from "src/output/index.js";
+import { LayOutMain_pc, GlobalAccessConfig } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_betting, api_common } from "src/api/"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";

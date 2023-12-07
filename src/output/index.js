@@ -27,7 +27,7 @@ import {
 } from "src/core/mitt/index.js";
 import uid from "src/core/uuid/index.js";
 import SearchData from "src/core/search-class/search-data-class.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+// import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
 import MatchListDetailMiddleware from "src/core/match-detail/match-detail-h5/match-list-detail-h5/index.js";
 import {
@@ -294,7 +294,6 @@ export {
   uid,
   SearchData,
   MatchDetailCtr,
-  UserCtr,
   IS_PC,
   PROJECT_NAME,
   MenuData,

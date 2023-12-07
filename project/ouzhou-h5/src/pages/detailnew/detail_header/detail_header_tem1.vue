@@ -88,8 +88,9 @@ import matchStage from "src/base-h5/components/match/match-stage.vue";  // 详�
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
-import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zone  } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX,format_time_zone_time, format_time_zone  } from "src/output/index.js";
 import matchScore from "./match-score/index.vue"
+import UserCtr from "src/core/user-config/user-ctr.js";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({

@@ -25,12 +25,12 @@ import {
   useMitt,
   MITT_TYPES,
   utils,
-  UserCtr,
   MatchDataWarehouse_H5_List_Common,
   MenuData,
   SearchData,
 useMittEmit,
 } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { onMounted, ref, toRaw, watch, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import detail_header_tem1 from "../detail_header/detail_header_tem1.vue";
