@@ -20,8 +20,10 @@ class MatchUtils {
       // ms 1 100 为 已开赛
       if ([1,110].includes(+t.ms)) {
         started.push(t)
+        t.start_flag = 3
       } else {
         not_started.push(t)
+        t.start_flag = 4
       }
     })
     // 设置开赛，未开赛标题以及数量

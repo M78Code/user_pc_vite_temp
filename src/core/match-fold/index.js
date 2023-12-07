@@ -91,9 +91,9 @@ class MatchFold {
       // 全部
       if (!type) return this.set_match_fold(key, { show_card })
       // 进行中
-      if (type === 1 && [1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card })
+      if ([1,3].includes(type) && [1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card })
       // 未开赛
-      if (type === 2 && ![1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card })
+      if ([2,4].includes(type) && ![1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card })
     })
     if (csid) {
       let flag = true

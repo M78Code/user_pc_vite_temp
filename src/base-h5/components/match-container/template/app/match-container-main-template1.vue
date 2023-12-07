@@ -376,12 +376,12 @@ export default {
     align-items: center;
     color: var(--q-gb-t-c-20);
     background: var(--q-gb-bg-c-15);
-      justify-content: space-between;
+    justify-content: space-between;
     &.progress{
-      border-top: 2px solid #74C4FF
+      border-top: 2px solid rgba(116, 196, 255, 0.5);
     }
     &.not_begin{
-      border-top: 2px solid #E95B5B
+      border-top: 2px solid rgba(233, 91, 91, 0.51);
     }
 
     img {
@@ -409,7 +409,7 @@ export default {
     margin: 0 4px;
   }
   .match-inner-container {
-    width: 98%;
+    padding: 0 0.05rem;
     margin: 0 auto;
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
@@ -771,8 +771,8 @@ export default {
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
     background: var(--q-gb-bg-c-15);
-    border-top: 1px solid var(--q-gb-bd-c-4);
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 
     .odd-title-i-w {
       width: 50%;

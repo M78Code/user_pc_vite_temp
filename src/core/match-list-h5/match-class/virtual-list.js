@@ -108,7 +108,7 @@ class VirtualList {
     if (match_stage_height && [1, 2].includes(+start_flag)) total += match_stage_height
     // 显示球种类别
     if (this.is_show_ball && is_show_ball_title) total += ball_title_height
-    if (this.is_change_handicap_height !== 0) total += this.is_change_handicap_height
+    // if (this.is_change_handicap_height !== 0) total += this.is_change_handicap_height
     // 本来应该是 联赛高度 show_league_height + 缓存容器高度 5 = 31； 
     // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去 buffer_height ； 赛事之间相叠避免漏光
     if (is_show_league && show_card) {
@@ -153,6 +153,7 @@ class VirtualList {
       const virtual_key = this.get_match_height_key(mid)
       // 赛事高度
       const match_height = this.get_match_total_height(match, index)
+      console.log(match_height)
       // 退出循环
       if (match_count >= page_count) return true 
       if (match.mid && accrual_height > start_position) {
