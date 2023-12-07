@@ -77,7 +77,9 @@ class BetViewData {
     };
     //pc 专用参数
     this.bet_special_pc = {
-      //
+      bet_count: 0,
+      bet_total: 0,
+      bet_win: 0,
     };
     // 是否显示全屏下投注弹窗
     this.bet_show = ref(false)

@@ -13,7 +13,7 @@
         </div>
         <div class="cursor re" @click="show_single_change()">
           <div class="f-e-c">
-            <!-- {{ BetData.is_bet_single }}-{{ BetData.is_bet_merge }} -->
+            {{ BetData.is_bet_single }}-{{ BetData.is_bet_merge }}
             <span v-if="BetData.is_bet_single && !BetData.is_bet_merge">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="BetData.is_bet_single && BetData.is_bet_merge">{{ i18n_t('bet.merge') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
