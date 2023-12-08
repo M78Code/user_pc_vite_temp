@@ -15,13 +15,13 @@
                   <div class="nonebox4-fourth-num-sun" data-number='1'>1</div>
                   <div class="nonebox4-fourth-num-sun" data-number='4'>4</div>
                   <div class="nonebox4-fourth-num-sun" data-number='7'>7</div>
-                  <div class="nonebox4-fourth-num-sun" data-number='0'>0</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='.'>.</div>
               </div>
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='2'>2</div>
                   <div class="nonebox4-fourth-num-sun" data-number='5'>5</div>
                   <div class="nonebox4-fourth-num-sun" data-number='8'>8</div>
-                  <div class="nonebox4-fourth-num-sun" data-number='.'>.</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='0'>0</div>  
               </div>
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun" data-number='3'>3</div>
@@ -30,7 +30,7 @@
                   <div class="nonebox4-fourth-num-sun" data-number='10'>00</div>
               </div>
               <div class="nonebox4-fourth-num">
-                  <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
+                  <div class="nonebox4-fourth-num-sun fontstyle" data-number='max'>{{ i18n_t('bet.max')}}</div>
                   <!-- <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div> -->
                   <div class="nonebox4-fourth-num-sun key-cell" data-num="x" @click.stop="_handleDeleteKey()">
                     <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`" alt="" data-num="x">
@@ -357,6 +357,9 @@ onUnmounted(() => {
     flex: auto;
     height: 25%;
   }
+}
+.fontstyle{
+  font-size: 0.14rem !important;
 }
 .nonebox4-fourth-num-sun {
     width: 100%;
