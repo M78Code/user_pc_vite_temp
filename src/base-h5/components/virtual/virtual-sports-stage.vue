@@ -445,12 +445,13 @@ export default defineComponent({
           state.player.video.setAttribute('autoplay','autoplay');
         }
 
+        state.player.play()
         // 右侧菜单为显示状态则暂停视频播放
-        if (!right_menu_show) {
-          state.player.play()
-        } else {
-          state.player.pause()
-        }
+        // if (!right_menu_show) {
+        //   state.player.play()
+        // } else {
+        //   state.player.pause()
+        // }
       });
       // 播放
       state.player.on('play',() => {
@@ -630,10 +631,10 @@ export default defineComponent({
           state.random_inited = true;
         }
         if(VirtualData.current_league){
-          let p = lodash.cloneDeep(get_prev_v_sports_params);
+          let p = lodash.cloneDeep(VirtualData.prev_v_sports_params);
           let p_key = `${current_sub_menu_id.value}-${VirtualData.current_league.menuId}`;
           p[p_key] = lodash.cloneDeep(new_);
-          set_prev_v_sports_params(p);
+          VirtualData.set_prev_v_sports_params(p);
         }
       },500);
     };
