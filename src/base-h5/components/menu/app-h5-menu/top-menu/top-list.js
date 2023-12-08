@@ -1,4 +1,4 @@
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 
 /**
  * 一级菜单展示 原逻辑

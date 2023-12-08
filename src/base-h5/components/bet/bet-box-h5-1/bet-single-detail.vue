@@ -39,7 +39,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import { format_currency } from "src/core/format/module/format-currency.js"
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 const money = ref('10')  //输入框金额
 const money_ok = ref(true)   //金额是否合适

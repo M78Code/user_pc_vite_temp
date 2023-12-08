@@ -15,7 +15,7 @@
 
 import LeftMenuTemplate1 from "src/base-pc/components/menus/menu.vue";
 
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 
 </script>
 

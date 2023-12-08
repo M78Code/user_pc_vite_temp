@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-  import { formete_date, i18n_t  } from "src/core/index.js";
+  import { formete_date, i18n_t  } from "src/output/index.js";
   import { get_server_file_path } from "src/core/file-path/file-path.js";
 
   const props = defineProps({

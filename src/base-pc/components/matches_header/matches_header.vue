@@ -44,7 +44,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
-import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/core/index.js"
+import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
@@ -158,7 +158,7 @@ const set_tab_list = (news_) =>{
 	// 左侧菜单
 	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
 		let sport_tab = lodash_.get( ref_data.ouzhou_filter_config,'sport_tab', [])  
-		if ([90, 91].includes(MenuData.current_ball_type)) {
+		if ([90, 91].includes(+MenuData.current_ball_type)) {
 			sport_tab = sport_tab.filter((n)=>{return n.value != 4003 && n.value != 4002})
 		}
 		if(IS_FOR_NEIBU_TEST){
@@ -167,6 +167,7 @@ const set_tab_list = (news_) =>{
 			sport_tab = sport_tab.filter((n)=>{return n.value != 4003})
 			tab_list.value = sport_tab
 		}
+		
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}

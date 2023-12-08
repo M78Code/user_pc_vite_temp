@@ -1,5 +1,6 @@
 import { ref } from "vue";
-import { project_name } from 'src/core'
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+export const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 import PageSourceData from "src/core/page-source/page-source.js";
 const { page_source } = PageSourceData;
 // 浏览器高度
@@ -200,13 +201,13 @@ class LayOutMain {
    * @description 设置左侧配置
    */
   set_layout_left_config() {
-    this.layout_left_width = different_version_config[project_name].left_width
+    this.layout_left_width = different_version_config[PROJECT_NAME].left_width
   }
   /**
    * @description 设置右侧配置
    */
   set_layout_right_config() {
-    this.layout_right_width = different_version_config[project_name].right_width
+    this.layout_right_width = different_version_config[PROJECT_NAME].right_width
     // 如果是主页的话 是没有右侧详情的
     if (page_source == 'ouzhou-home') {
       this.layout_right_width = 0

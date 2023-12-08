@@ -78,7 +78,7 @@ import { post_chat_likemessage } from "src/public/api/module/chatroom/index.js";
 import bet_item_mixin  from "src/public/components/bet_item/bet_item_mixin";
 import { api_details } from "src/api/index";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { UserCtr,MatchDetailCalss } from "src/core/index";
+import { UserCtr,MatchDetailCalss } from "src/output/index.js";
 export default {
   name: "bet_record_info",
   mixins:[bet_item_mixin],
@@ -679,3 +679,4 @@ export default {
   }
 }
 </style>
+src/output/index

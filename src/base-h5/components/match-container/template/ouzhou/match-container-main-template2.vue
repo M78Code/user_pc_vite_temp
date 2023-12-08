@@ -61,10 +61,10 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { i18n_t } from 'src/core/index.js'
+import { i18n_t } from 'src/output/index.js'
 import { lang, theme } from 'src/base-h5/mixin/userctr.js'
 import { menu_type } from 'src/base-h5/mixin/menu.js'
-import { compute_img_url } from "src/core/index.js"
+import { compute_img_url } from "src/output/index.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
 import { IconWapper } from 'src/components/icon'
@@ -403,3 +403,4 @@ export default {
   }
 }
 </style>
+src/output/index.jssrc/output/index.js

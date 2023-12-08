@@ -1,8 +1,8 @@
   import SliderX from "src/base-pc/components/match-detail/match_info/slider_x.vue"
-  import { UserCtr ,MatchDetailCalss,MITT_TYPES,useMittOn} from "src/core/index";
+  import { UserCtr ,MatchDetailCalss,MITT_TYPES,useMittOn} from "src/output/index";
   import { TabWapper as Tabs } from "src/components/common/tab"
   import { api_details } from "src/api/index";
-import { useMittEmit } from "src/core";
+import { useMittEmit } from "src/output";
 
  
   export default {

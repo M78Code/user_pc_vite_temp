@@ -16,7 +16,7 @@
 
 <script setup>
 import { IconWapper } from 'src/components/icon'
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 const emit = defineEmits(['on_go_top'])
 
     /**

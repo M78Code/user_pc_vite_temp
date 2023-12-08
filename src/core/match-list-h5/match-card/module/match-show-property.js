@@ -1,6 +1,6 @@
 import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";
 import store from "src/store-redux/index.js";
-import MenuData from "src/core/menu-h5/menu-data-class.js";
+import { MenuData} from "src/output/module/menu-data.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 
 const main_menu_type = 3

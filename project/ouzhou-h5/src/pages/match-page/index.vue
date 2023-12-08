@@ -26,7 +26,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import { IconWapper } from 'src/components/icon'
 import BaseData from 'src/core/base-data/base-data.js'
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
@@ -243,4 +243,4 @@ const goBackToLeague = () => {
     font-weight: bold;
   }
 }
-</style>
+</style>src/core/utils/common/module/ws-message.js

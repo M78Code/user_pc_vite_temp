@@ -51,7 +51,7 @@ import {
   i18n_t,
   MatchDataWarehouse_PC_List_Common as MatchListData,
   time_conversion,
-} from "src/core/index.js";
+} from "src/output/index.js";
 import MatchListCardData from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-pc/list-template/index.js";

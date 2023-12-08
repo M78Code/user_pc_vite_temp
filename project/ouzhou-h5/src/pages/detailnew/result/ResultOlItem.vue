@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 
-import { utils } from 'src/core/index'
+import { utils } from "src/output/index.js"
 
 const props = withDefaults(defineProps<{
   value: TYPES.OlResult,
@@ -161,4 +161,4 @@ let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
 .hpt-3{
   --private-inner-container-padding: 0px 20px;
 }
-</style>
+</style>/index

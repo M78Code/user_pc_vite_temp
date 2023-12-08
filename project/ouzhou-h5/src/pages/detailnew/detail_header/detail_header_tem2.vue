@@ -1,6 +1,6 @@
 <template>
   <div class="detail_header_tem2">
-    <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-156':'detail-header-221']">
+    <div class="detail-header-video">
       <iframe v-if="animation_src && right_actions_label == 'animation'"
         id="replayIframe"
         :src="animation_src+'&rdm='+iframe_rdm"
@@ -72,7 +72,8 @@ import { onMounted, ref, toRef, watch,onUnmounted, computed } from "vue";
 import lodash from "lodash";
 import { api_common, api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
-import { useMittOn, useMitt,MITT_TYPES, UserCtr } from "src/core/index.js"
+import { useMittOn, useMitt,MITT_TYPES } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import SwitchButtons from "./components/SwitchButtons.vue"
 import right_actions from "./components/right_actions.vue"
 import custom_video from "./detail_header_video.vue";
@@ -335,12 +336,6 @@ onMounted(() => {
   position: relative;
   /**.change-header-fix z-index:91; 需大于其 */
   z-index: 102;
-  .detail-header-221 {
-    height: 221px;
-  }
-  .detail-header-156 {
-    height: 156px;
-  }
   .detail-header-video {
     // height: auto;
     width: 100vw;

@@ -6,7 +6,7 @@
 </template>
 <script setup lang="ts">
 import { api_details } from 'src/api';
-import { MITT_TYPES, useMittEmit } from 'src/core';
+import { MITT_TYPES, useMittEmit } from "src/output/index.js";
 
 type Props = {
   value: TYPES.OddInfo

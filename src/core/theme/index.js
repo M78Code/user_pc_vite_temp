@@ -11,7 +11,7 @@
 
 import server_theme_list from "app/job/output/theme/index.json";
 import { server_key_map } from "src/boot/i18n.js";
-import { LocalStorage } from "src/core/utils/module/web-storage.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import lodash from 'lodash'
 
 //查找默认的主题
@@ -39,7 +39,7 @@ if (default_theme) {
 } else {
   default_theme_key = theme_list[0].key
 }
-
+console.log('fsduhbgysdgbudafbdaufa', default_theme_key);
 // 设置默认主题
 LocalStorage.set('theme',default_theme_key)
 

@@ -7,7 +7,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
-import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData} from "src/core/index"; 
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData} from "src/output/index"; 
 // 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -15,9 +15,9 @@ import uid from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import { useMittEmitterGenerator } from "src/core/index.js";
-import { SessionStorage } from "src/core/utils/index.js"
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import { useMittEmitterGenerator } from "src/output/index.js";
+import { SessionStorage } from "src/core/utils/common/index.js"
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
 import { details_ws } from "src/core/match-detail/details-ws.js";
 export const category_info = (category_arr=[]) => {
     /* 引入ws处理指令 */

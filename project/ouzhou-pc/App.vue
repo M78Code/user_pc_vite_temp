@@ -10,11 +10,7 @@
 import notLogin from 'src/base-pc/components/not-login/template1.vue'
 import appload from "./app-load.vue";
 import app_mixin from "src/base-pc/mixin/app-mixin.js";
-import { SessionStorage } from "src/core/";
-import { useRoute } from 'vue-router';
 import "./src/css/common.scss";
-import STANDARD_KEY from "src/core/standard-key";
-const token_key = STANDARD_KEY.get("token");
 
 export default {
   mixins: [app_mixin],
@@ -36,3 +32,4 @@ export default {
   }
 };
 </script>
+src/output
