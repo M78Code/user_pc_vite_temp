@@ -461,4 +461,4 @@ onMounted(() => {
     border-right: none !important;
   }
 }
-</style>
+</style>src/core/utils/common/module/match-list-utils.js

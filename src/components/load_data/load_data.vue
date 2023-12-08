@@ -393,4 +393,3 @@ export default {
   }
 }
 </style>
-src/output/indexsrc/output/index.js

@@ -98,7 +98,7 @@ import { computed, ref, watch, onMounted,inject, onUnmounted } from 'vue';
 import lodash from 'lodash'
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
-import { get_match_status } from 'src/core/utils/index'
+import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/output/index.js"
 import details  from "src/core/match-list-pc/details-class/details.js"
@@ -409,4 +409,4 @@ onUnmounted(() => {
 }
 
 </style>
-src/output/index.jssrc/output/index.js
+src/output/index.jssrc/output/index.jssrc/core/utils/common/index

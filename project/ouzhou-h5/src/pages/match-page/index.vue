@@ -243,4 +243,4 @@ const goBackToLeague = () => {
     font-weight: bold;
   }
 }
-</style>
+</style>src/core/utils/common/module/ws-message.js

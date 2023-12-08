@@ -13,7 +13,7 @@ import {   i18n_t,  useMittEmit, MITT_TYPES, utils } from 'src/output/module/con
 import {  MenuData } from 'src/output/module/menu-data.js'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
-import { get_now_server } from 'src/core/utils/module/other.js'
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 class MatchPage {

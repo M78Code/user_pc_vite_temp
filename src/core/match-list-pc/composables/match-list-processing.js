@@ -1,12 +1,11 @@
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
-import { virtual_sport_format } from 'src/core/format/module/format-match.js'
 import { MenuData }  from "src/output/module/menu-data.js";
 
-import { mx_collect_count, set_collect_count, match_collect_status } from "./match-list-collect.js";
+import {   match_collect_status } from "./match-list-collect.js";
 
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";

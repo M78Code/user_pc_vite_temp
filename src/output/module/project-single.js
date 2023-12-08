@@ -1,6 +1,6 @@
 /**
  * 业务逻辑  相关
- * 菜单 ，卡片 ，表征 ，非数据仓库的其他业务逻辑
+ *  单例
  * 通用项目：  各个版本 体育 客户端 H5,PC ,
  * 不通用项目：活动动画等其他 项目
  *
@@ -44,4 +44,5 @@ export { default as SearchPCClass } from "src/core/search-class/seach-pc-calss.j
 
 export { default as SearchData } from "src/core/search-class/search-data-class.js";
 
-export * from "src/core/utils/project/go-where.js";
+ 
+export * from "src/core/utils/project/index.js";

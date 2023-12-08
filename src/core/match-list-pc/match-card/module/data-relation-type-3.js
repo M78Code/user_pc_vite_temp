@@ -29,7 +29,7 @@
       ouzhou_league_container_template,
    
     } from "../config/card-template-config.js"
-    import MenuData from "src/core/menu-pc/menu-data-class.js";
+    import { MenuData} from "src/output/module/menu-data.js"
     import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
     import { compute_sport_id  } from 'src/core/constant/index.js'
 

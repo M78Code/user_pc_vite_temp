@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { utils } from 'src/core/utils/index.js';
+import { utils } from 'src/core/utils/common/index.js';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import stage_child_1 from "src/project/components/match/otherStage/otherStage-1.vue";    // 详情页下滑动置顶title栏-足球的赛事时间
 import stage_child_2 from "src/project/components/match/otherStage/otherStage-2.vue";    // 详情页下滑动置顶title栏-篮球的赛事时间
@@ -137,4 +137,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped></style>src/core/utils/common/index.js

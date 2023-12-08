@@ -40,7 +40,7 @@ import lodash from 'lodash';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/output/index.js";
-import { get_match_status } from 'src/core/utils/index'
+import { get_match_status } from 'src/core/utils/common/index'
 import { get_remote_time } from "src/core/format/module/format-date.js"
 import tips from "src/base-pc/components/match-detail/tips1/tips1.vue"
 import { utils } from 'src/core/utils/module/utils.js'
@@ -114,4 +114,4 @@ const play_key = computed(() => {
     }
   }
 }
-</style>
+</style>src/core/utils/common/module/utils.js

@@ -17,7 +17,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { useRoute } from "vue-router";
 import { api_details } from "src/api/index";
 import { computed } from "vue";
-import { SessionStorage } from "src/core/utils/index.js";
+import { SessionStorage } from "src/core/utils/common/index.js";
 const route = useRoute();
 const props = defineProps({
   match_odds_info: {
@@ -141,4 +141,4 @@ const handle_zhiding = (params) => {
   margin-right: 0.06rem;
 }
 </style>
-src/output
+src/outputsrc/core/utils/common/index.js

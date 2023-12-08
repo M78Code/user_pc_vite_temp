@@ -38,7 +38,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { format_total_score } from "src/core/format/index.js"
 import matchStage from "src/base-h5/components/match/match-stage.vue";  // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
 //国际化
-import { go_where } from "src/core/utils/index.js"
+import { go_where } from "src/core/utils/common/index.js"
 import { useRoute,useRouter } from "vue-router";
 export default defineComponent({
   name: "change_header",
@@ -188,3 +188,4 @@ export default defineComponent({
 <style lang="scss">
 
 </style>
+src/core/utils/common/index.js

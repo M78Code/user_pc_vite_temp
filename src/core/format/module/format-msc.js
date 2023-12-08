@@ -4,7 +4,8 @@
 import { ref } from 'vue'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js";
-import MenuData from "src/core/menu-h5/menu-data-class.js";
+import { MenuData} from "src/output/module/menu-data.js"
+
 import PageSourceData from "src/core/page-source/page-source.js";
 
 // TODO: 待替换菜单模块 store

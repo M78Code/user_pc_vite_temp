@@ -16,7 +16,7 @@ import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { useMittEmitterGenerator } from "src/output/index.js";
-import { SessionStorage } from "src/core/utils/index.js"
+import { SessionStorage } from "src/core/utils/common/index.js"
 
 
 export const category_info = (category_arr=[]) => {

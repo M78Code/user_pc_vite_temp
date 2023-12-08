@@ -1,6 +1,6 @@
 import { loadLanguageAsync } from "src/output/index.js";
 import { throttle } from "lodash";
-import { LocalStorage } from 'src/core/utils/module/web-storage.js'
+import { LocalStorage } from 'src/core/utils/common/module/web-storage.js'
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import STANDARD_KEY from "src/core/standard-key";

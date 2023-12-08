@@ -1,7 +1,7 @@
 
 import { ref, computed, onDeactivated, onMounted, onUnmounted, watch, nextTick } from "vue"
 import { useRoute } from 'vue-router'
-import { play_title } from 'src/core/utils/module/play-title.js'
+import { play_title } from 'src/core/utils/common/module/play-title.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"

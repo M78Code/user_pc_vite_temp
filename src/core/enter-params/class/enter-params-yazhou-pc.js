@@ -16,7 +16,7 @@
 // 例子：?gotohash=sports-2267075-239-1
 
 import { get_query_string } from "src/output/module/constant-utils.js";
-import { LocalStorage } from 'src/core/utils/module/web-storage.js'
+import { LocalStorage } from 'src/core/utils/common/module/web-storage.js'
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
 class EnterParamsYazhouPc {

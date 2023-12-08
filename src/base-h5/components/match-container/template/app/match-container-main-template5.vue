@@ -947,4 +947,4 @@ export default {
 
 /* ********赛事容器相关********** -E*/
 </style>
-  src/output/index.jssrc/output/index.jssrc/output/index.js
+ 

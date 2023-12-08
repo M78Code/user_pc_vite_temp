@@ -71,4 +71,4 @@ watch(() => MatchListData.data_version.version, (new_value, old_value) => {
 })
 
 </script>
-src/output/index.js
+src/output/index.jssrc/core/utils/common/module/match-list-utils.js

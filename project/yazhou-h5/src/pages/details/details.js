@@ -9,7 +9,7 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index";
-import { SessionStorage } from "src/core/utils/index.js"
+import { SessionStorage } from "src/core/utils/common/index.js"
 
 export const details_main = () => {
 const router = useRouter();

@@ -268,4 +268,4 @@ ServerTime.get_server_time()
 .rightMenu {
   -webkit-overflow-scrolling: unset !important;
 }
-</style>
+</style>src/core/utils/common/module/web-storage.js

@@ -1,7 +1,7 @@
 import lodash from 'lodash'
 
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
-import { addWsMessageListener } from "src/core/utils/module/ws-message.js";
+import { addWsMessageListener } from "src/core/utils/common/module/ws-message.js";
 import { api_bymids } from "./match-list-featch.js";
 // import { fetch_match_list } from '../match-list-composition.js'
 import { MatchDataWarehouse_PC_List_Common } from 'src/output/module/match-data-base.js';

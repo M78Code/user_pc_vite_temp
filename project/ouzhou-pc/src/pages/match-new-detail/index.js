@@ -21,7 +21,7 @@ import { LayOutMain_pc } from "src/output";
 import lodash_ from "lodash";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
-import { addWsMessageListener } from "src/core/utils/module/ws-message.js";
+import { addWsMessageListener } from "src/core/utils/common/module/ws-message.js";
 export function usedetailData(route) {
   const router = useRouter();
   const category_list = ref([]); //分类数据

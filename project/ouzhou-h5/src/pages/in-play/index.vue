@@ -90,4 +90,4 @@ const changeMenu = (mi) =>{
       }
     }
   }
-</style>
+</style>src/core/utils/common/module/ws-message.js

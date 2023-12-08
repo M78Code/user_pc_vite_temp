@@ -234,4 +234,4 @@ onUnmounted(() => {
 <style scoped lang="scss">
   @import "./index.scss";
 </style>
-src/output/index.jssrc/output
+src/output/index.jssrc/outputsrc/core/utils/common/module/ws-message.js

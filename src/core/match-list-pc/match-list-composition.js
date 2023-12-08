@@ -16,7 +16,7 @@ import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData} from "src/output/module/menu-data.js"
 import { fethc_collect_match, collect_count } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";

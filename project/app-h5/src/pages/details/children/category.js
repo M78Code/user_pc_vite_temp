@@ -16,8 +16,8 @@ import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { useMittEmitterGenerator } from "src/output/index.js";
-import { SessionStorage } from "src/core/utils/index.js"
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import { SessionStorage } from "src/core/utils/common/index.js"
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
 import { details_ws } from "src/core/match-detail/details-ws.js";
 export const category_info = (category_arr=[]) => {
     /* 引入ws处理指令 */

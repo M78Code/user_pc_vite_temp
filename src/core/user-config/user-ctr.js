@@ -18,7 +18,7 @@ import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
 
-import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
+import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import {GLOBAL_CONSTANT } from "src/output/module/constant-utils.js"

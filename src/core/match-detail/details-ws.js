@@ -11,7 +11,7 @@ import {
   MITT_TYPES,
   useMittEmit,
 } from "src/core/index";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
 
 export const details_ws = () => {
   /**

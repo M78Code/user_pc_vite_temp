@@ -104,7 +104,7 @@
 
 import { computed, ref, onUnmounted } from 'vue';
 import lodash from 'lodash'
-import { get_match_status } from 'src/core/utils/index'
+import { get_match_status } from 'src/core/utils/common/index'
 import { get_remote_time } from "src/core/format/module/format-date.js"
 import { utils } from 'src/core/utils/module/utils.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
@@ -286,4 +286,4 @@ onUnmounted(() => {
   }
 }
 </style>
-src/output/index.jssrc/output/index.js
+src/output/index.jssrc/output/index.jssrc/core/utils/common/module/utils.js

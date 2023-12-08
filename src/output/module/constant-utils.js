@@ -5,13 +5,13 @@
  * 通用项目： 各个版本 体育 客户端 H5,PC ,  活动动画等其他 项目
  * 不通用项目：无
  *
- * 必须 内部 单独引用 或者  从 src\output\constant-utils.js 引用 问题不大
+ * 必须 内部 单独引用 或者  从 src\output\module\constant-utils.js 引用 问题不大
  * 但是不能 引用 非这个文件内引入的内容
  */
 
 export * from "src/core/format/index.js";
 export * from "src/core/constant/index.js";
-export * from "src/core/utils/index.js";
+export * from "src/core/utils/common/index.js";
 export * from "src/core/file-path/file-path";
 
 export { default as STANDARD_KEY } from "src/core/standard-key";

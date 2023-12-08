@@ -13,7 +13,6 @@ import "src/base-pc/core/globel-mitt";
 import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/output/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { wslog, httplog } from "src/core/log/";
-import {get_query_string as urlparams } from "src/output/index.js";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
@@ -236,4 +235,4 @@ export default {
   white-space: nowrap;
 }
 </style>
-  src/output/index.jssrc/output/index.jssrc/output/index.jssrc/output/index.js
+ 

@@ -26,7 +26,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDetailCalss } from "src/output/index.js"
-import { SessionStorage } from "src/core/utils/index.js"
+import { SessionStorage } from "src/core/utils/common/index.js"
 
 export default defineComponent({
   name: "details_tab",
@@ -280,4 +280,4 @@ export default defineComponent({
 //   z-index: 90;
 // }
 </style>
-src/output/indexsrc/output/index.jssrc/output/index.js
+src/core/utils/common/index.js

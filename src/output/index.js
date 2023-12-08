@@ -8,6 +8,11 @@
  * import { xxxx } from "src/output/index.js";
  * import { is_eports_csid  } from "src/output/index.js";
  *
+ * 
+ * 警告：
+ * src/core/ 目录和  src/i18n  这两个目录内 
+ * 严禁引用 src/output/index.js  
+ * 但是可以引用 ： src/output/module/*.js
  */
 
  
