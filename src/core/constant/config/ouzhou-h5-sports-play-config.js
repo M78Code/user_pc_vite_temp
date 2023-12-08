@@ -301,7 +301,7 @@ export const use_sports_play_title = () => {
         label: i18n_t('list.play1'), //'全场独赢',
         ol: [
           { ot: '1', title: i18n_t('list.win1') }, //"主胜"
-          { ot: 'X', title: i18n_t('search.dogfall') }, // "平局"
+          { ot: 'X', title: i18n_t('list.dogfall') }, // "平局"
           { ot: '2', title: i18n_t('list.win2')} // "客胜"
         ]
       },
@@ -344,8 +344,8 @@ export const use_sports_play_title = () => {
         hpid: '39',
         label: i18n_t('list.play2'), // '全场让球',
         ol: [
-          { ot: '1', title: i18n_t('ouzhou.match.home_handicap') }, // "主队让分"
-          { ot: '2', title: i18n_t('ouzhou.match.away_handicap') }, // "客队让分"
+          { ot: '1', title: i18n_t('ouzhou.bet_col.bet_col_39.bet_col_1') }, // "主队让分"
+          { ot: '2', title: i18n_t('ouzhou.bet_col.bet_col_39.bet_col_2') }, // "客队让分"
         ]
       },
     ],
