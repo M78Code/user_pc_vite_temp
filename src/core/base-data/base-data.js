@@ -37,7 +37,7 @@ import menu_i18n_default from "./config/menu-i18n.json";
 import ws_user_info from "./config/user_info.json";
 //vr 默认的 用于ws模拟
 import vr_menu_info from "./config/vr_menu_info.json";
-import { MenuData } from "src/output/computed.js"
+import { MenuData } from "src/output/project-computed.js"
 import { LocalStorage } from 'src/core/utils/module/web-storage.js'
 import {
   useMittOn,

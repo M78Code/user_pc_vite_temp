@@ -6,7 +6,7 @@
  */
 
 import { ref } from 'vue'
-import { MenuData, PROJECT_NAME } from 'src/output/computed.js'
+import { MenuData, PROJECT_NAME } from 'src/output/project-computed.js'
 import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";

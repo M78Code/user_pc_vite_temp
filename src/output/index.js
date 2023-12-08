@@ -1,7 +1,9 @@
- 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
+ 
+
+  export const  PROJECT_NAME =  BUILD_VERSION_CONFIG.PROJECT_NAME
+  export const  IS_PC =  BUILD_VERSION_CONFIG.IS_PC
 
 //通用
 // import { useRouter, useRoute } from 'vue-router';
@@ -14,20 +16,12 @@ export * from "src/core/constant/index.js";
 export * from "src/core/utils/index.js";
 export * from "src/core/enter-params/index.js";
 
-export * from 'src/core/file-path/file-path'
+export * from "src/core/file-path/file-path";
 // ==============================   间接转出     项目无差异的        ======================================
-import { i18n, loadLanguageAsync, map_lang, t, i18n_t } from "src/boot/i18n.js";
-
-import {
-  useMittOn,
-  useMittEmit,
-  useMitt,
-  useMittEmitterGenerator,
-  MITT_TYPES,
-} from "src/core/mitt/index.js";
-import uid from "src/core/uuid/index.js";
-import SearchData from "src/core/search-class/search-data-class.js";
-// import UserCtr from "src/core/user-config/user-ctr.js";
+ 
+export { default as uid } from "src/core/uuid/index.js";
+export { default as SearchData } from "src/core/search-class/search-data-class.js";
+export { default as UserCtr } from "src/core/user-config/user-ctr.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
 import MatchListDetailMiddleware from "src/core/match-detail/match-detail-h5/match-list-detail-h5/index.js";
 import {
@@ -38,224 +32,40 @@ import {
   AllDomain,
 } from "src/core/http/index.js";
 
-import PageSourceData from "src/core/page-source/page-source.js";
-import GlobalAccessConfig from "src/core/access-config/access-config.js";
+export { default as PageSourceData } from "src/core/page-source/page-source.js";
+export { default as GlobalAccessConfig } from "src/core/access-config/access-config.js";
 
 // ==============================  间接转出     默认输出   项目有差异的    ======================================
 
 // pc
 
-import MenuData_PC from "src/core/menu-pc/menu-data-class.js";
-import MenuData_PC_Yazhou from "src/core/menu-pc-yazhou/menu-data-class.js";
-import MatchListCard_PC from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import MatchListCardData_PC from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 // 搜索组件类
-import  SearchPCClass  from "src/core/search-class/seach-pc-calss.js";
+export { default as SearchPCClass } from "src/core/search-class/seach-pc-calss.js";
 // h5
 
-import MenuData_H5 from "src/core/menu-h5/menu-data-class.js";
-import MatchListCard_H5 from "src/core/match-list-h5/match-card/match-list-card-class.js";
-import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
-
-import MenuData_App_h5 from "src/core/menu-app-h5/menu-data-class.js";
-import OZ_MenuData_App_h5 from "src/core/menu-app-h5/oz-menu-data-class.js";
-
-let MenuData = IS_PC ? MenuData_PC : MenuData_H5;
-// if( ['ouzhou-h5','app-h5'].includes(PROJECT_NAME)){
-//   MenuData = MenuData_App_h5
-// }
-
-switch (PROJECT_NAME) {
-  case 'ouzhou-h5':
-    MenuData = OZ_MenuData_App_h5
-    break;
-  case 'app-h5':
-    MenuData = MenuData_App_h5
-    break;
-  case 'yazhou-pc': 
-    MenuData = MenuData_PC_Yazhou
-    break;
-  case 'ouzhou-pc':
-    MenuData = MenuData_PC
-    break;
-  default:
-    break;
-}
-
-const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
-const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
+export * from "./project-computed.js";
 
 //=================================     pc全局开关类 =================================
-import  GlobalSwitchClass  from "src/core/global/global.js";
+export { default as GlobalSwitchClass } from "src/core/global/global.js";
 
-//=================================     数据仓库=================================
-import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
-
-/**
- * 1. 数据仓库会存在多个实例 ，
- * 2. WS层会转换 postmassage 直接作用数据分发到 各个数据仓库
- * 3. 数据仓库的销毁逻辑有待确认
- * 4. 详情赛事相当于一条数据的赛事列表
- * 5. 列表页渲染流程逻辑：
- *    列表使用菜单计算模板，通过模板配置渲染视图框架 生成好格子，
- *    ==>>> 通过单个玩法 ols 下的 _hpid 或者 _hpid_fn   玩法ID （动态的通过算法自己实现，和数据仓库无关）
- *    ==>>> 通过玩法ID 去数据仓库 取数据 显示赔率填坑
- * 6. 详情页渲染流程逻辑：
- *    详情页使用 玩法集和玩法ID映射关系 ，过滤显示 需要显示的玩法数据
- *    ==>>> 本质上详情页的数据都是全量的，并且需要留存，
- *    ==>>> 玩法集菜单切换 ，只是所有投注 玩法 tab 下数据的显示隐藏
- *    ==>>> 玩法置顶逻辑在 详情页视图控制对象内做，或者在另外单独的对象类来做，本身属于视图 和数据仓库无关
- *    ==>>> 每个玩法的玩法显示模板数据内有，读取显示进行渲染相关的详情模板就可以了，
- *    ==>>> 同列表一样 ，详情玩法模板 ，只提供辅助参数和视图填充逻辑 ，不负责赔率等合并，一样的只显示框架，进行数据填坑
- *
- *
- *
- *
- */
-
-// 使用方式  别名：   MatchDataWarehouseInstance  暂时不推荐  最好别用
-// import {MatchDataWarehouse_PC_List_Common as MatchDataWarehouseInstance} from "src/core/data-warehouse/index.js"
-// 或者  推荐
-// import {MatchDataWarehouse_PC_List_Common  } from "src/core/data-warehouse/index.js"
-
-/**
- *
- * PC 的电竞列表 ，虚拟体育的 足蓝 ，以及其他虚拟体育 的 列表 和 详情 在开发过程中确认  备注清楚
- *
- * 所有的H5列表数据 以及详情数据 都需要在这里有所 备注 ，
- *
- * 因为 投注  和 数据来源进行脱离 按照固定的数据结构查找对应的赛事数据 ，理论上来讲所有的赛事 列表和详情 都需要走 这个数据仓库 ，
- *
- *
- */
-
-/**
- * PC  数据仓库 常规赛事   通用列表
- */
-
-const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_PC_List_Common",
-});
-
-/**
- * 欧洲版 PC/H5 数据仓库 15mins 顶部列表
- */
-
-const MatchDataWarehouse_ouzhou_PC_l5mins_List_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_ouzhou_PC_l5mins_List_Common",
-});
-
-/**
- * 欧洲版 PC/H5 数据仓库 五大联赛 仓库
- */
-
-const MatchDataWarehouse_ouzhou_PC_five_league_List_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_ouzhou_PC_five_league_List_Common",
-});
-
-/**
- * 欧洲版 PC/H5 数据仓库 热推 顶部列表
- */
-
-const MatchDataWarehouse_ouzhou_PC_hots_List_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_ouzhou_PC_hots_List_Common",
-});
-
-/**
- * 欧洲版 PC/H5 数据仓库 滚球 列表
- */
-
-const MatchDataWarehouse_ouzhou_PC_in_play_List_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_ouzhou_PC_in_play_List_Common",
-});
-
-/**
- * 欧洲版 PC/H5 数据仓库 通用列表
- */
-
-const MatchDataWarehouse_ouzhou_PC_List_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_ouzhou_PC_List_Common",
-});
-
-/**
- * PC  数据仓库  常规赛事  通用详情
- */
-
-const MatchDataWarehouse_PC_Detail_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_PC_Detail_Common",
-});
-
-
-//============================================ H5 ,PC 分割线  ====================================================
-
-/**
- *
- * H5 的电竞列表 ，虚拟体育的 足蓝 ，以及其他虚拟体育 的 列表 和 详情 在开发过程中确认  备注清楚
- *
- * 所有的H5列表数据 以及详情数据 都需要在这里有所 备注 ，
- *
- * 因为 投注  和 数据来源进行脱离 按照固定的数据结构查找对应的赛事数据 ，理论上来讲所有的赛事 列表和详情 都需要走 这个数据仓库 ，
- *
- * 甚至是 H5 的猜你喜欢 轮播区域也一样
- */
-
-/**
- * H5  数据仓库 常规赛事   通用列表
- */
-const MatchDataWarehouse_H5_List_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_H5_List_Common",
-  set_list_to_obj: 1,
-});
-
-/**
- * H5  数据仓库  常规赛事  通用详情
- */
-
-const MatchDataWarehouse_H5_Detail_Common = new MatchDataBase({
-  name_code: "MatchDataWarehouse_H5_Detail_Common",
-});
-console.log("----------------",MatchDataWarehouse_H5_Detail_Common.list_to_obj)
-/**
- * H5  数据仓库 热门页面的    竞足 和其他热门联赛 不含精选赛事 /如果竞足需要拆分就拆分出去 ，应该不需要
- */
-
-const MatchDataWarehouse_H5_List_Hot_Main = new MatchDataBase({
-  name_code: "MatchDataWarehouse_H5_List_Hot_Main",
-});
-
-/**
- * H5  数据仓库 热门页面 和 所有常规赛事页面显示 的 精选赛事   ，不含 详情页的精选推荐  , 这个会跨页 因此不推荐销毁
- */
-
-const MatchDataWarehouse_H5_List_Jingxuan = new MatchDataBase({
-  name_code: "MatchDataWarehouse_H5_List_Jingxuan",
-});
-
-/**
- * H5  数据仓库   详情页的精选推荐 ，比如赛果页面 的精选推荐 ，或者详情页 没赔率显示的 依据当前赛事计算的精选推荐
- */
-
-const MatchDataWarehouse_H5_Detail_Jingxuan = new MatchDataBase({
-  name_code: "MatchDataWarehouse_H5_Detail_Jingxuan",
-});
 /***
  * 详情操作类
  */
-export const MatchDetailCalss = new MatchDetailCtr()
+export const MatchDetailCalss = new MatchDetailCtr();
 /***
  * H5详情中间件
  */
-const MatchListH5DetailMiddleware = new MatchListDetailMiddleware()
+export const MatchListH5DetailMiddleware = new MatchListDetailMiddleware();
 /**
  * PC  布局
  */
 
-import LayOutMain_pc from "src/core/layout/index.js";
+export { default as LayOutMain_pc } from "src/core/layout/index.js";
 
 /**
  * CSS 变量
  */
-import { compute_css_variables } from "src/core/css-var/index.js"
+export { compute_css_variables } from "src/core/css-var/index.js";
 
 /**
  * img 变量
@@ -263,13 +73,15 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 export * from "src/core/server-img/";
 /**
  *
- * 所有的用法 都一样 注意 这里输出的 模块不能 用这种方法 
+ * 所有的用法 都一样 注意 这里输出的 模块不能 用这种方法
  * import { xxxx } from "src/core/index.js";
  *
  * import { is_eports_csid  } from "src/core/index.js";
  *
  */
-import ServerTime from 'src/core/server-time/server-time.js'
+import ServerTime from "src/core/server-time/server-time.js";
+
+export * from "./match-data-base.js";
 
 export {
   //
@@ -293,7 +105,7 @@ export {
   MITT_TYPES,
   uid,
   SearchData,
-  MatchDetailCtr,
+ 
   IS_PC,
   PROJECT_NAME,
   MenuData,
@@ -302,20 +114,8 @@ export {
   PageSourceData,
   GlobalAccessConfig,
   MatchListH5DetailMiddleware,
-  MatchDataWarehouse_PC_List_Common,
-  MatchDataWarehouse_PC_Detail_Common,
-  MatchDataWarehouse_H5_List_Common,
-  MatchDataWarehouse_H5_Detail_Common,
-  MatchDataWarehouse_H5_List_Hot_Main,
-  MatchDataWarehouse_H5_List_Jingxuan,
-  MatchDataWarehouse_H5_Detail_Jingxuan,
-  MatchDataWarehouse_ouzhou_PC_l5mins_List_Common,
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common,
-  MatchDataWarehouse_ouzhou_PC_five_league_List_Common,
-  MatchDataWarehouse_ouzhou_PC_List_Common,
-  MatchDataWarehouse_ouzhou_PC_in_play_List_Common,
   LayOutMain_pc,
   compute_css_variables,
   GlobalSwitchClass,
-  SearchPCClass
+  SearchPCClass,
 };

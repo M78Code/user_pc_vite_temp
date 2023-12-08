@@ -8,8 +8,7 @@ import MenuData_PC from "src/core/menu-pc/menu-data-class.js";
 import MenuData_PC_Yazhou from "src/core/menu-pc-yazhou/menu-data-class.js";
 import MatchListCard_PC from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardData_PC from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-// 搜索组件类
-import  SearchPCClass  from "src/core/search-class/seach-pc-calss.js";
+ 
 // h5
 
 import MenuData_H5 from "src/core/menu-h5/menu-data-class.js";

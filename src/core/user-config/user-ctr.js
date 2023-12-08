@@ -14,7 +14,6 @@ import axios from "axios";
 import { uid } from 'quasar';
 
 import { get_server_file_path } from "src/core/file-path/file-path.js";
-import { default_theme_key } from "src/core/theme/"
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
@@ -22,6 +21,7 @@ import ServerTime from 'src/core/server-time/server-time.js';
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import {GLOBAL_CONSTANT } from "src/output/constant-utils.js"
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 // #TODO 接口统一管理的文件，后续替换
@@ -122,8 +122,7 @@ class UserCtr {
       })
     }
     this.callbackUrl = ''
-    //电竞图片地址 
-    this.e_sports_img_domain = ''
+ 
     
 
     // 常规体育的 图片地址 
@@ -1031,7 +1030,8 @@ class UserCtr {
         // 持久化电竞图片域名
         LocalStorage.set('e_sports_domain_img', temp);
         // 设置全局电竞图片域名信息
-        this.e_sports_img_domain = temp;
+        GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG = temp;
+
       }
     } catch (error) {
       console.error(error);
