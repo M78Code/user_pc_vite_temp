@@ -3,7 +3,7 @@ import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { enter_params } from "src/output/index.js";
+import { enter_params } from 'src/core/enter-params/index.js'
 import { LocalStorage } from 'src/core/utils/module/web-storage.js'
  
  
