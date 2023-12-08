@@ -1,6 +1,6 @@
- 
+
 import BetData from "src/core/bet/class/bet-data-class.js";
- 
+
 /**
  * @description: 复位盘口变换标志
  * @param {Object} that 视图对象
