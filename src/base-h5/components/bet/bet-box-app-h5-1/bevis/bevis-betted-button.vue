@@ -37,7 +37,8 @@ const set_retain_selection = () => {
 </script>
 
 <template>
-  <div style="display:none">{{ BetData.bet_data_class_version }} -{{UserCtr.user_version}}-{{ BetViewDataClass.bet_view_version }}</div>
+  <div style="display:none">{{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
+  
   <div class="tip component bet-btn-item">
     <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
       <div class="displayflex">
@@ -48,7 +49,7 @@ const set_retain_selection = () => {
     
   </div>
   <nav class="betted-button" @click="bindClick">
-    <p v-if="!!BetData.is_bet_single">{{ i18n_t('app_h5.bet.confirm')}}</p>
+    <p v-if="BetData.is_bet_single">{{ i18n_t('app_h5.bet.confirm')}}</p>
     <p v-else>
       {{ statusObj[BetViewDataClass.bet_order_status] }}
       <span>合计 {{ format_money2(BetData.bet_amount) }}</span>

@@ -19,7 +19,7 @@
         </div>
         <div class="content-rmb">RMB</div>
       </div>
-      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)" style="display:none">
+      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
         <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
         <div class="" v-else @click="set_bet_pre">+{{ i18n_t('pre_record.book')}}</div>
       </div>

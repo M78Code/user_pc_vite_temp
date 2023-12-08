@@ -9,17 +9,20 @@
       <div class="nonebox4-content">
           <div class="nonebox4-content-left">
               <div class="nonebox4-content-left-title" v-html="item.handicap"></div>
-              <div class="nonebox4-content-left-content">
+              <div class="nonebox4-content-left-content" :class="!item.home?'nonebox4-content-left-content-no':''">
                   <div class="nonebox4-content-left-content-xian"></div>
                   <div class="nonebox4-content-left-content-text">
                       <div>{{ item.playName }} </div>
-                      <div>{{ item.home }} VS {{ item.away }}</div>
+                      <div v-if="item.home">{{ item.home }} VS {{ item.away }}</div> 
                       <div>{{ item.tid_name }}</div>
                   </div>
               </div>
           </div>
           <div class="nonebox4-content-right">
               <div class="nonebox4-content-right-profit"><span class="nonebox4-content-right-profit-type">@</span>{{ format_odds(item.oddFinally, item.sportId) }}</div>
+              <div class="nonebox4-content-right-num">
+                <div>6</div>
+            </div>
           </div>
       </div>
      
@@ -42,6 +45,19 @@
   </script>
   
   <style lang="scss" scoped>
+  .nonebox4-content-right-num{
+    background: var(--q-gb-bg-c-9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--q-gb-bg-c-8);
+    border-radius: 1rem;
+    font-size: 16px;
+    margin-top: 44px;
+    float: right;
+    height: 20px;
+    padding: 0 5px;
+}
   .nonebox4-content{
       width: 100%;
       //margin-top: 10px;
@@ -60,6 +76,9 @@
       height: 70px;
       display: flex;
       margin-top: 5px;
+  }
+  .nonebox4-content-left-content-no{
+    height: 48px;
   }
   .nonebox4-content-left-content-xian{
       width: 2px;
@@ -82,20 +101,6 @@
   .nonebox4-content-right-profit-type{
       font-size: 0.14rem;
   }
-  .nonebox4-content-right-num{
-      width: 20px;
-      height: 20px;
-      background: #2394fc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #666;
-      border-radius: 50%;
-      font-size: 16px;
-      margin-top: 44px;
-      float: right;
-  }
-
   .nonebox4-content-right{
     margin-top: -6px;
   }
