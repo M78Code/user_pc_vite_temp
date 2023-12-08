@@ -94,6 +94,14 @@ const ref_data = reactive({
 			{ label: 'ouzhou.match.dota', value: 2101 },
 			{ label: 'ouzhou.match.kog', value: 2102 },
 			{ label: 'ouzhou.match.csgo', value: 2103 }	
+		],
+		vr_sports: [
+      { label: 'ouzhou.match.vr_football', value: 30301 }, //vr足球
+			{ label: 'ouzhou.match.vr_basketball', value: 30304 }, //vr篮球
+			{ label: 'ouzhou.match.vr_horse_racing', value: 30311 }, //vr赛马
+			{ label: 'ouzhou.match.vr_greyhounds', value: 30302 }, //vr赛狗
+			{ label: 'ouzhou.match.vr_motorbike', value: 30312 }, //vr摩托车
+			{ label: 'ouzhou.match.vr_speedway', value: 30313 }	//vr泥地摩托车
 		]
 	},
 	
@@ -191,11 +199,11 @@ const set_tab_list = (news_) =>{
 		tab_list.value = ouzhou_filter_config
 	}
 
-	// 电竞
+	// vr体育
 	if (MenuData.is_vr()) {
 		matches_header_title.value = 'VR体育'
 		match_list_top.value = '134px'
-		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'esports', [])  
+		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'vr_sports', [])  
 		tab_list.value = ouzhou_filter_config
 	}
 
