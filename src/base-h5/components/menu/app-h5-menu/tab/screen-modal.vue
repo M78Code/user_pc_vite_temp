@@ -142,7 +142,7 @@ import { api_search } from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 无网络展示组件
 import NoData from "src/base-h5/components/common/no-data.vue";
-import {compute_local_project_file_path} from 'src/core';
+import {compute_local_project_file_path} from "src/output/index.js";
 defineOptions({
   name: "screen-modal" // 设置组件名称
 });

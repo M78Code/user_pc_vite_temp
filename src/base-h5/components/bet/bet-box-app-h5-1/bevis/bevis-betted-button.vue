@@ -3,7 +3,7 @@
 -->
 <script setup>
 import { defineEmits } from "vue"
-import { i18n_t } from "src/core"
+import { i18n_t } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_money2 } from "src/core/format/index.js"

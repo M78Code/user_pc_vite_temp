@@ -1,5 +1,5 @@
 import { i18n_t } from "src/boot/i18n.js";
-import {is_eports_csid} from "src/core/index"; 
+import {is_eports_csid} from "src/output/module/constant-utils"; 
 
 /**
  *@description 赔率展示优化，见优化单 13807,电竞不走这个逻辑

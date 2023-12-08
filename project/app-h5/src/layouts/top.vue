@@ -44,7 +44,7 @@ import {
 import { useRoute } from "vue-router";
 import lodash_ from "lodash";
 
-import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
+import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -155,8 +155,10 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     //球种滚动初始化
     nextTick(()=>{
-      scrollTabMenu.value.scrollTabMenu()
-      searchTabMenu.value.searchTabMenu()
+      try {
+        scrollTabMenu.value.scrollTabMenu()
+        searchTabMenu.value.searchTabMenu()
+      } catch(_) {} 
     })
   })
 
@@ -264,3 +266,4 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   left: 0
 }
 </style>
+src/output

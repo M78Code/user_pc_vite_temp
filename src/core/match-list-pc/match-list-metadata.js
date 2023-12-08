@@ -1,8 +1,7 @@
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
 import BaseData from 'src/core/base-data/base-data.js';
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData} from "src/output/module/menu-data.js"
 import { set_match_base_info_by_mids_info } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { compute_sport_id } from 'src/core/constant/index.js'
 import { handle_match_list_request_when_ok } from './match-list-composition.js'
 import { match_list_handle_set } from './match-handle-data.js'
 // 根据 mid 获取 联赛列表数据

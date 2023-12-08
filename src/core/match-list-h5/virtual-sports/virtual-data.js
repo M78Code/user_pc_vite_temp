@@ -9,7 +9,7 @@ import VirtualVideo from './virtual-video'
 import { api_virtual, api_common } from "src/api/index.js";
 import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { get_now_server } from 'src/core/utils/module/other.js'
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 
 class VirtualData {
   constructor () {

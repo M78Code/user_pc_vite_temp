@@ -730,3 +730,4 @@ export default defineComponent({
   padding-bottom: .48rem;
 }
 </style>
+src/core/utils/common/module/other.js

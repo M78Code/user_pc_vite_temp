@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { i18n_t} from "src/core/index"
+import { i18n_t} from "src/output/index.js"
 export default {
   props:{
     show_type: String
@@ -116,3 +116,4 @@ export default {
   }
 }
 </style>
+src/output/index

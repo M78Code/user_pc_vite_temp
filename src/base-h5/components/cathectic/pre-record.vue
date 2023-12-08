@@ -63,7 +63,7 @@ import lodash from "lodash";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { project_name } from "src/core";
+import { project_name } from "src/output/index.js";
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
 
@@ -442,3 +442,4 @@ onUnmounted(() => {
     background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
     }
 </style>
+src/output

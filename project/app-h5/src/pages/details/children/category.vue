@@ -89,7 +89,7 @@ import no_data from "src/base-h5/components/common/no-data.vue"
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
 
-import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
 // 引入加载中的组件
 import loading from "src/base-h5/components/common/loading.vue"
 // 精选赛事
@@ -97,7 +97,7 @@ import detailMatchList from 'src/base-h5/components/details/components/detail-ma
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path, compute_img_url } from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path, compute_img_url } from  "src/output/index.js"
 // import { Level_one_detail_odd_info } from "../category-list.js";
 import { category_info } from "./category.js"
 import { reactive, nextTick, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

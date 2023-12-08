@@ -11,14 +11,14 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
-  PageSourceData,
-  is_eports_csid,
-  GlobalSwitchClass
-} from "src/core/index.js";
+} from "src/output/module/match-data-base.js";
+import { is_eports_csid } from 'src/output/module/constant-utils.js'
+import { GlobalSwitchClass } from 'src/core/global/global.js'
+import PageSourceData from "src/core/page-source/page-source.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from "src/core/match-list-pc/match-scroll.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData} from "src/output/module/menu-data.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import * as api_websocket from "src/api/module/socket/socket_api.js";

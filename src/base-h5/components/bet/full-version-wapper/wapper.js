@@ -12,7 +12,6 @@ const component_config = {
   registered_component_key: "BetBox",
   default_component_key: "BetOuzhouH5",
   all_components_obj,
-  
 };
 const wapper_config = compute_component_wapper_config(component_config);
 export default wapper_config;

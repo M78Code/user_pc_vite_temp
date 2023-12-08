@@ -202,7 +202,7 @@
 import ballSpin from './ball_spin.vue';
 import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { useMittOn, useMittEmit, MITT_TYPES,compute_img_url,UserCtr, format_odds, calc_bifen, i18n_t } from 'src/core/index.js'
+import { useMittOn, useMittEmit, MITT_TYPES,compute_img_url,UserCtr, format_odds, calc_bifen, i18n_t } from 'src/output/index.js'
 import { ref, onMounted, watch, computed, onUnmounted,nextTick } from 'vue';
 
 

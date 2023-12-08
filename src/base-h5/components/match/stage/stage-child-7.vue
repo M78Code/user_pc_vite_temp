@@ -14,7 +14,7 @@
 <script>
 // import { mapGetters } from "vuex"
 // import msc from "src/public/mixins/common/msc.js";
-import { numberToChinese } from 'src/core/index.js';
+import { numberToChinese } from 'src/output/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 export default {
   // mixins: [msc],

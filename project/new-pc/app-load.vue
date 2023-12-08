@@ -10,15 +10,14 @@
 </template>
 <script setup>
 import "src/base-pc/core/globel-mitt";
-import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/core/index.js";
+import { PageSourceData ,GlobalSwitchClass,LayOutMain_pc} from "src/output/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { wslog, httplog } from "src/core/log/";
-import {get_query_string as urlparams } from "src/core/index.js";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
-import { t } from "src/core/index.js";
+import { t } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
@@ -194,7 +193,7 @@ onUnmounted(() => {
 });
 </script>
 <script>
-import { PageSourceData ,LayOutMain_pc} from "src/core/index.js";
+import { PageSourceData ,LayOutMain_pc} from "src/output/index.js";
 export default {
   watch: {
   // 监听路由变化 并记录到layout类中
@@ -236,4 +235,4 @@ export default {
   white-space: nowrap;
 }
 </style>
-  
+ 

@@ -1,11 +1,3 @@
-import PageSourceData from "src/core/page-source/page-source.js";
-import {
-  MatchDataWarehouse_H5_List_Common as MatchListData,
-  MatchDataWarehouse_H5_Detail_Common as MatchDetailData,
-} from "src/core/index.js";
-
-import baseData from "src/core/base-data/base-data.js";
-
 /**
  * H5   列表 和 详情  之间的 数据中间件
  *
@@ -45,7 +37,7 @@ import baseData from "src/core/base-data/base-data.js";
  *
  */
 
-export default class MatchListDetailMiddleware {
+ class MatchListDetailMiddleware {
   constructor() {
     this.init();
     // 来源页面  source_page
@@ -88,3 +80,6 @@ export default class MatchListDetailMiddleware {
     MatchDataWarehouse_target.set_match_details(mid_obj);
   }
 }
+
+
+export default new MatchListDetailMiddleware()

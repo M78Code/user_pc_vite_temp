@@ -132,8 +132,8 @@
 <script>
 import { NoDataWapper as noData } from "src/components/common/no-data";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import {i18n_t,compute_css_obj} from "src/core/index"
-import { is_eports_csid } from 'src/core/index.js'
+import {i18n_t,compute_css_obj} from "src/output/index.js"
+import { is_eports_csid } from 'src/output/index.js'
 import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";

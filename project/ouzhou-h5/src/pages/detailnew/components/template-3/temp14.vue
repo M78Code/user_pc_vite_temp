@@ -189,7 +189,7 @@
 import lodash from "lodash";
 import store from "src/store-redux";
 import odds_new from "base_path/components/details/components/tournament-play/unit/odds-new.vue";
-import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core';
+import { utils, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 
@@ -287,3 +287,4 @@ export default defineComponent({
   border-radius: 4px;
 }
 </style>
+src/output

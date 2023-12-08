@@ -1,7 +1,7 @@
-import { PageSourceData, fileds_map_common } from "src/core/index.js";
+import { fileds_map_common } from "src/output/module/constant-utils.js";
 import LayOutMain_pc from "src/core/layout/index.js";
-import BetViewDataClass from "./bet-view-data-class"
-import { get_score_config,get_market_is_show } from "./bet-box-submit"
+import BetViewDataClass from "./bet-view-data-class.js"
+import { get_score_config } from "./bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { ref } from "vue"
 import lodash_ from "lodash"

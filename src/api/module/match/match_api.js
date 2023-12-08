@@ -5,7 +5,6 @@
  */
 
 import {http} from "src/core/http/index.js";
-import axios from 'axios'
 
 const { API_PREFIX = {},PROJECT_NAME:project_name } = window.BUILDIN_CONFIG;
 const { API_PREFIX_BAT:prefix_user } = API_PREFIX;

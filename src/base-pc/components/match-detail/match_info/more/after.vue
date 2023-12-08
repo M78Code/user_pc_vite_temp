@@ -257,7 +257,7 @@ import {MatchProcessFullVersionWapper} from "src/components/match-process/index.
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { IconWapper } from 'src/components/icon'
 import { nextTick } from "vue";
-import { socre_dict,stage_dict} from "src/core";
+import { socre_dict,stage_dict} from "src/output/index.js";
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper,
@@ -771,3 +771,4 @@ export default {
   max-width: 314px !important;
 }
 </style>
+src/output

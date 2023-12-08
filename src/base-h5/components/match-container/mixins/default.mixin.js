@@ -3,13 +3,13 @@ import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { useMittEmit, MITT_TYPES, UserCtr } from  "src/core"
+import { useMittEmit, MITT_TYPES, UserCtr } from  "src/output"
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
-import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/core/index.js"
+import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
 import { format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,

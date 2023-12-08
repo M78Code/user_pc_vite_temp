@@ -47,7 +47,7 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
 export default defineComponent({
   // #TODO mixins
@@ -268,3 +268,4 @@ div[class*="virtual-num"] {
   }
 }
 </style>
+src/output

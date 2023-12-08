@@ -25,7 +25,7 @@ import {mx_use_list_res} from "src/core/match-list-pc/composables/match-list-pro
 
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import {  LayOutMain_pc, UserCtr,PageSourceData } from 'src/core/index.js';
+import {  LayOutMain_pc, UserCtr,PageSourceData } from 'src/output/index.js';
 import { api_match } from "src/api/index.js";
 import "../match-list/match_list.scss";
 export default {

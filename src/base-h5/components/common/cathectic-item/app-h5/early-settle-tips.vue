@@ -22,7 +22,7 @@
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { IconWapper } from 'src/components/icon'
-import { i18n_t } from "src/core/index.js";
+import { i18n_t } from "src/output/index.js";
 import { ref } from 'vue'
 
 // 提前兑现规则申明弹框

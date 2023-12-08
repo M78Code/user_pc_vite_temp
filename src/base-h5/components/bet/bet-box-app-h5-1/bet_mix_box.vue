@@ -24,9 +24,6 @@ import betMixBoxChild from "./bet_mix_box_child.vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 
-
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
-
 const bet_show = ref(false)
 
 

@@ -10,8 +10,7 @@ import {
   useMitt,
   MITT_TYPES,
   useMittEmit,
-} from "src/core/index";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+} from "src/output/index";
 
 export const details_ws = () => {
   /**
@@ -33,7 +32,7 @@ export const details_ws = () => {
   const handler_ws_cmd = (cmd, data,mid) => {
     // 如果mid与我们的赛事id不一致 不处理  C105在数据仓库处理
     if (lodash.get(data, "cd.mid") != mid || cmd == "C105") return;
-    console.log(cmd, data, "datacmd");
+    // console.log(cmd, data, "datacmd");
     switch (cmd) {
       // 赛事订阅(C8)-新增玩法/新增盘口(C303)
       case "C303":

@@ -246,7 +246,8 @@
 import { onMounted, ref, reactive, watch, computed } from 'vue'
 import { useGetOrderList } from './tableConfig'
 import { formatTime } from 'src/core/format/index.js'
-import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/core/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/output/index.js'
 import Pagination from 'project_path/src/components/Pagination.vue'
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'

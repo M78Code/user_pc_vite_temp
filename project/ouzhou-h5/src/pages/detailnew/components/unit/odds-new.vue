@@ -26,7 +26,7 @@
 // #TODO mixins
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import lodash from "lodash";
-import { project_name } from 'src/core'
+import { project_name } from "src/output/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
@@ -167,3 +167,4 @@ export default defineComponent({
   }
 }
 </style>
+src/output

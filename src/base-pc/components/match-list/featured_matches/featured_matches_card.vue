@@ -39,20 +39,23 @@
   </div>
 </template>
 <script setup>
+import { ref, watch, onBeforeUnmount } from 'vue';
+
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { ref, watch, onBeforeUnmount, computed } from 'vue';
 import { api_details } from 'src/api';
 import template2 from './template2.vue';
 import { useRouter } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn, get_match_status } from 'src/core'
+import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, MITT_TYPES, useMittOn, get_match_status } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { get_ouzhou_data_tpl_id, get_handicap_index_by, get_match_to_map_obj, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
+
 const router = useRouter();
 const cache_data = SessionStorage.get('get_hots', []);
 if (cache_data.length) {
@@ -330,3 +333,4 @@ get_featurd_list()
   }
 }
 </style>
+src/output

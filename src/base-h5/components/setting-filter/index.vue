@@ -58,10 +58,10 @@
   </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/core/index.js";
+import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES,SessionStorage } from "src/core/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX} from 'src/core';
+import { useMittEmit, MITT_TYPES,SessionStorage } from "src/output/index.js";
+import {LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
 import {
   ref,
   watch,
@@ -72,10 +72,9 @@ import {
 } from "vue";
 import Switch from "./components/switch.vue";
 import { standard_edition } from "src/base-h5/mixin/userctr.js";
-import { UserCtr } from "src/core/";
-import { LocalStorage } from "src/core/index.js";
+import { UserCtr } from "src/output/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { default_theme_key } from "src/core/theme/";
-
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
@@ -132,6 +131,9 @@ const setting_list = ref([
 
 const closedHandle = () => {
   emit("closedHandle");
+    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+    text: "footer-refresh"
+  })
 };
 /**
  * 打开联赛筛选框
@@ -281,4 +283,4 @@ const activity_handle = item => {
     }
   }
 }
-</style>
+</style>/index.jssrc/outputsrc/outputsrc/output/index.jssrc/core/utils/common/module/web-storage.js

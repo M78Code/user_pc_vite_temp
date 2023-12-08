@@ -37,7 +37,7 @@ import { useRouter } from 'vue-router'
 import { ref,reactive,onMounted,onUnmounted,nextTick } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
-import { compute_css_obj, MenuData } from "src/core/index.js";
+import { compute_css_obj, MenuData } from "src/output/index.js";
 import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 const ref_data = reactive({
@@ -73,9 +73,10 @@ function set_menu_lv2(item = {},event) {
   // 选中后点击无效
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
+  emits('changeMenu',item)
   nextTick(()=>{
-  // 设置菜单点击事件
-  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
+  设置菜单点击事件
+  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
   })
 }
 /**
