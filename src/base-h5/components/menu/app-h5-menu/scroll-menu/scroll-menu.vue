@@ -71,7 +71,7 @@ function set_menu_lv2(item = {},event) {
   // if (item.mi === 2000) router.push('/esports')
   event = event || scrollTab.value[0];
   // 选中后点击无效
-  if (item.mi == MenuData.current_lv_2_menu_i) return;
+  // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
   nextTick(()=>{
   // 设置菜单点击事件
