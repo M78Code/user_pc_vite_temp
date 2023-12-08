@@ -37,7 +37,7 @@ import {
 import { useRoute } from 'vue-router'
 
 import { TopMenuWapper } from "src/base-h5/components/top-menu/"
-// import { BetBoxWapper } from "src/base-h5/components/bet";
+// import { BetBoxWapper } from "src/base-h5/components/bet/index.js";
 import { FooterWapper } from "src/base-h5/components/footer-bar/"
 
 import BetData from "src/core/bet/class/bet-data-class.js";
