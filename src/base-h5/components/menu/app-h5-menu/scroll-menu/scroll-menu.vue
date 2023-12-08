@@ -73,10 +73,11 @@ function set_menu_lv2(item = {},event) {
   // 选中后点击无效
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
-  nextTick(()=>{
+  emits('changeMenu',item)
+  // nextTick(()=>{
   // 设置菜单点击事件
-  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
-  })
+  // useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
+  // })
 }
 /**
  * 初始化滚动条
