@@ -132,6 +132,7 @@ const changeDate = (index) => {
  * @param {*} index 
  */
 const changeDatetab = (item, index) => {
+    if (store.menu_time === item?.val) return
     store.tabModel = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
