@@ -31,7 +31,7 @@
 <script>
 // import { mapGetters } from "vuex";
 // import msc from "src/public/mixins/common/msc.js";
-import { format_mgt_time } from "src/core/format/common/index.js"
+import { format_mgt_time } from "src/output/index.js"
 export default {
   // mixins: [msc],
   name: "match_csid",
@@ -59,4 +59,4 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
-src/core/format/common/index.js
+src/output/index.js

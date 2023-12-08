@@ -85,7 +85,7 @@ import team_img from 'src/base-h5/components/details/team-img.vue'
 import match_stage from 'src/base-h5/components/match/match-stage.vue';
 import match_dialog_stage from 'src/base-h5/components/match/match-dialog-stage.vue';
 import show_start_time from 'src/base-h5/components/details/wight/show-start-time.vue'
-import { format_total_score } from 'src/core/format/common/index.js'
+import { format_total_score } from 'src/output/index.js'
 import { useRoute, useRouter } from "vue-router"
 let route = useRoute()
 let router = useRouter()
@@ -243,4 +243,4 @@ export default {
   border-bottom-right-radius: 0.1rem;
 }
 </style>
-src/core/format/common/index.js
+src/output/index.js

@@ -52,7 +52,7 @@ import SRecord from "src/base-h5/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
-import { format_M_D } from 'src/core/format/common/index.js'
+import { format_M_D } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -415,4 +415,4 @@ const props = defineProps({
 .early2 {
   background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
 }
-</style>src/core/format/common/index.js
+</style>src/output/index.js

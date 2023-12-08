@@ -83,7 +83,7 @@
 
 <script setup>
 import { computed, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue"
-import { format_total_score } from "src/core/format/common/index.js"
+import { format_total_score } from "src/output/index.js"
 import { api_home } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
@@ -215,4 +215,4 @@ const normal_ = computed(() => {
 
 <style scoped lang="scss">
  @import "../styles/may-also-like.scss";
-</style>src/core/format/common/index.js
+</style>src/output/index.js

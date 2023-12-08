@@ -48,7 +48,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { i18n_t } from "src/boot/i18n.js";;
-import { formatTime, format_money2, format_balance } from 'src/core/format/common/index.js'
+import { formatTime, format_money2, format_balance } from 'src/output/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 
 let props = defineProps({
@@ -134,4 +134,4 @@ template {
   }
 }
 </style>
-src/core/format/common/index.js
+src/output/index.js

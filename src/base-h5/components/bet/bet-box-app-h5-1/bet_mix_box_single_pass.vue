@@ -30,7 +30,7 @@
   </template>
   <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { format_odds, format_currency, formatTime } from "src/core/format/common/index.js"
+  import { format_odds, format_currency, formatTime } from "src/output/index.js"
   
   import betSingleDetail from './bet-single-detail.vue';
   
@@ -106,4 +106,4 @@
   }
   
   </style>
-  src/core/format/common/index.js
+  src/output/index.js

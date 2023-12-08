@@ -37,8 +37,8 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { format_money3, format_money2 } from 'src/core/format/common/index.js'
-import { format_currency } from "src/core/format/module/format-currency.js"
+import { format_money3, format_money2 } from 'src/output/index.js'
+import { format_currency } from "src/output/index.js"
 import { i18n_t } from "src/output/index.js"
 
 const money = ref('10')  //输入框金额
@@ -514,4 +514,4 @@ onUnmounted(() => {
 }
 
 /* ************** 左边内容 ************** -E */
-</style>src/core/format/common/module/format-currency.jssrc/core/format/common/index.js
+</style>src/core/format/common/module/format-currency.jssrc/output/index.js

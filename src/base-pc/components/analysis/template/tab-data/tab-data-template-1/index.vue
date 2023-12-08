@@ -225,7 +225,7 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 
-import { format_result } from 'src/core/format/common/index.js'
+import { format_result } from 'src/output/index.js'
 
 import { BasePanelFullVersionWapper as basePanel } from 'src/base-pc/components/analysis/template/base-panel/index.js'
 import { api_analysis } from 'src/api/index'
@@ -594,4 +594,4 @@ function getAge(birthdate) {
     }
   }
 }
-</style>src/core/format/common/index.js
+</style>src/output/index.js

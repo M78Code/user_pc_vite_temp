@@ -60,7 +60,7 @@
 
 <script setup>
 // import { mapGetters } from "vuex";
-import { format_money2 } from "src/core/format/common/index.js"
+import { format_money2 } from "src/output/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
@@ -146,4 +146,4 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
   }
 }
 </style>
-src/core/format/common/index.js
+src/output/index.js

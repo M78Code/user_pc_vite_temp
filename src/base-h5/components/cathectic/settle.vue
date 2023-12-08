@@ -84,7 +84,7 @@ import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import SRecord from "src/base-h5/components/skeleton/record.vue";
 import lodash from "lodash"
 import store from 'src/store-redux/index.js'
-import { format_M_D } from 'src/core/format/common/index.js'
+import { format_M_D } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
@@ -499,4 +499,4 @@ onUnmounted(() => {
   .is-show {
     visibility: hidden;
   }
-</style>src/core/format/common/index.js
+</style>src/output/index.js

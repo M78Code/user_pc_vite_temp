@@ -66,7 +66,7 @@
 
 <script>
 // import { mapGetters } from "vuex"
-import { format_datas } from "src/core/format/common/index.js"
+import { format_datas } from "src/output/index.js"
 import { defineComponent,ref,onMounted } from "vue";
 import { MatchDetailCalss } from "src/output/index.js";
 export default defineComponent({
@@ -177,4 +177,4 @@ export default defineComponent({
 }
 </style>
 
-src/outputsrc/core/format/common/index.js
+src/outputsrc/output/index.js

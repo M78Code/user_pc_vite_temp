@@ -122,7 +122,7 @@
 <script setup>
 import { reactive, computed, ref } from "vue"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { format_odds, format_currency, formatTime } from "src/core/format/common/index.js"
+import { format_odds, format_currency, formatTime } from "src/output/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
@@ -431,4 +431,4 @@ const cancel_operate = () =>{
 .appoint_cursor{
   cursor: pointer;
 }
-</style>src/core/format/common/index.js
+</style>src/output/index.js

@@ -14,7 +14,7 @@
 <script setup>
 import { ref} from 'vue';
 import lodash_ from 'lodash'
-import { format_odds } from "src/core/format/common/index.js"
+import { format_odds } from "src/output/index.js"
 
 const props = defineProps({
     item: { },
@@ -39,4 +39,4 @@ const props = defineProps({
         float: right;
     }
 }
-</style>src/core/format/common/index.js
+</style>src/output/index.js
