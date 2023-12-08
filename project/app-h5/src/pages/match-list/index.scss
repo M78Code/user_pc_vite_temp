@@ -6,14 +6,12 @@
   height: 100%;
   overflow-y: hidden;
   position: relative;
+  flex: 10;
   transition: transform 0.2s;
-  // padding-top: 1rem;
-  // padding-bottom: 2.2rem;
-  /*border-top: 0.01rem solid transparent;*/
-  background: var(--q-gb-bg-c-17);
   .match-list-container{
-    height: calc(100% - 44px - 50px - 32px - 48px);
+    height: 100%;
   }
+  background: var(--q-gb-bg-c-17);
   .animation{
     animation: my-animation 0.3s ease-in
   }

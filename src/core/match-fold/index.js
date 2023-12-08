@@ -5,7 +5,7 @@
 import lodash from 'lodash'
 import { ref } from 'vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { project_name } from 'src/core'
 
 class MatchFold {
   constructor () {
@@ -25,13 +25,15 @@ class MatchFold {
   set_match_mid_fold_obj (match) {
     if (!match) return
     const key = this.get_match_fold_key(match)
+    // 除欧洲版，都默认折叠
+    const show_card = project_name === 'ouzhou-h5'
     // 次要玩法头部是否显示
     const show_tab = this.compute_show_tab_play(match)
     Object.assign(this.match_mid_fold_obj.value, {
       [key]: {
         show_tab,
         // 赛事区域
-        show_card: true,
+        show_card,
         // 次要玩法内容区
         show_tab_content: false
       }
@@ -39,32 +41,41 @@ class MatchFold {
   }
   /**
    * @description h5 设置球种折叠映射对象
-   * @param { falg } 展开/ 折叠
+   * @param { flag } 展开/ 折叠
    */
-  set_ball_seed_csid_fold_obj (csid_key, falg = true) {
+  set_ball_seed_csid_fold_obj (csid_key, flag = undefined) {
+    const state = this.get_default_fold_state_by_csid(flag)
     Object.assign(this.ball_seed_csid_fold_obj.value, {
-      [csid_key]: falg
+      [csid_key]: state
     })
     // console.log(this.ball_seed_csid_fold_obj.value)
   }
   // 进行中球种折叠映射对象
-  set_progress_csid_fold_obj (csid_key, falg = true) {
+  set_progress_csid_fold_obj (csid_key, flag = undefined) {
+    const state = this.get_default_fold_state_by_csid(flag)
     Object.assign(this.progress_csid_fold_obj.value, {
-      [csid_key]: falg
+      [csid_key]: state
     })
   }
   // 未开赛球种折叠映射对象
-  set_not_begin_csid_fold_obj (csid_key, falg = true) {
+  set_not_begin_csid_fold_obj (csid_key, flag = undefined) {
+    const state = this.get_default_fold_state_by_csid(flag)
     Object.assign(this.not_begin_csid_fold_obj.value, {
-      [csid_key]: falg
+      [csid_key]: state
     })
+  }
+  // 获取默认的球种折叠对象
+  get_default_fold_state_by_csid (flag) {
+    const state = project_name === 'ouzhou-h5'
+    return flag !== undefined ? flag : state
   }
  
   /**
    * @description 联赛折叠
    * @param { match } 赛事对象
+   * @param { type } 0 全部；1 进行中； 2 未开赛
    */
-  set_league_fold (match) {
+  set_league_fold (match, type) {
     // 赛事 mids
     const { tid, csid, warehouse_type } = match
     let list = []
@@ -77,7 +88,12 @@ class MatchFold {
       if (!item || item.tid !== tid) return
       const key = this.get_match_fold_key(item)
       const show_card = !lodash.get(this.match_mid_fold_obj.value, `${key}.show_card`, false)
-      this.set_match_fold(key, { show_card })
+      // 全部
+      if (!type) return this.set_match_fold(key, { show_card })
+      // 进行中
+      if ([1,3].includes(type) && [1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card })
+      // 未开赛
+      if ([2,4].includes(type) && ![1,110].includes(+item.ms)) return this.set_match_fold(key, { show_card })
     })
     if (csid) {
       let flag = true
@@ -139,8 +155,8 @@ class MatchFold {
    * @returns string
    */
   get_match_fold_key (match) {
-    const { mid, tid, warehouse_type = '' } = match
-    return warehouse_type ? `${warehouse_type}_${tid}_${mid}` : `${tid}_${mid}`
+    const { mid, tid, warehouse_type = '', start_flag = '' } = match
+    return warehouse_type ? `${warehouse_type}_${tid}_${mid}_${start_flag}` : `${tid}_${mid}_${start_flag}`
   } 
   /**
    * @description 设置赛事折叠

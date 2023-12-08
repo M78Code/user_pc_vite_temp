@@ -1,9 +1,10 @@
-// 暂时自定义样式覆盖
-
 #app-h5 {
-  // .sport-menu-item{
-  //   width: 0.68rem;
-  // }
+  .scroll-wrapper{
+    background: var(--q-gb-bg-c-21);
+  }
+  .s-w-item{
+    background: var(--q-gb-bg-c-21);
+  }
   // 赛事列表 页
   .match-list-page{
     background: var(--q-gb-bd-c-1);

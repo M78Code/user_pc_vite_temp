@@ -63,40 +63,51 @@ const props = defineProps({
                 tid: '0'
             },
             {
-                name: "欧冠",
+                name: "世界杯",
                 val: 1,
+                img: "",
+                tid: '166'
+            },
+            {
+                name: "欧冠",
+                val: 2,
                 tid: '6408',
                 img: ""
             },
             {
                 name: "英超",
-                val: 2,
+                val: 3,
                 img: "",
                 tid: '180',
 
             },
             {
                 name: "意甲",
-                val: 3,
+                val: 4,
                 tid: '239',
                 img: ""
             },
             {
                 name: "西甲",
-                val: 4,
-                img: "",
-                tid: '320'
-            },
-            {
-                name: "法甲",
                 val: 5,
                 img: "",
-                tid: '79'
+                tid: '320'
             },
             {
                 name: "德甲",
                 val: 6,
                 tid: "276"
+            },
+            {
+                name: "法甲",
+                val: 7,
+                img: "",
+                tid: '79'
+            },
+            {
+                name: "中超",
+                val: 8,
+                tid: "6344"
             }
         ]
     },
@@ -173,7 +184,7 @@ function key_down(event) {
     width: 100%;
     height: 0.32rem;
     overflow: hidden;
-    padding: 0 0.05rem;
+    padding: 0 0.06rem;
     position: relative;
 
     .search-tab-content {

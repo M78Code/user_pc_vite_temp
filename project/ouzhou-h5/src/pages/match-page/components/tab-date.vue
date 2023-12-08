@@ -71,6 +71,9 @@ import { MenuData } from "src/core/";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import STANDARD_KEY from "src/core/standard-key";
+import {  LocalStorage } from "src/core/index.js"
+const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
@@ -183,7 +186,9 @@ watch(() => store.areaList, () => {
     // }
 })
 onMounted(() => {
-    setDefaultData(MenuData.menu_mi.value || '101');//默认足球
+    //当前激活球种id  如果本地有存储值就取本地存储的值
+    const session_info = LocalStorage.get(menu_h5);
+    setDefaultData(session_info?.menu_mi || MenuData.menu_mi.value || '101');//默认足球
     store.curSelectedOption = store.selectOptions[0]
     emitters.value = {
         emitters_1: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off

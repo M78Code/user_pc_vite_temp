@@ -49,7 +49,7 @@
     let league_card_mids_arr = {}
     // 所有卡片列表
     let match_list_card_key_arr = [];
-
+    console.log('match_list', match_list);
     
     // 所有卡片样式对象
     let all_card_obj = {}

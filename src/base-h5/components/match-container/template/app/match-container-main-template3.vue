@@ -267,6 +267,9 @@ export default {
 </script>
    
 <style scoped lang="scss">
+.match-container-main-template3{
+  border-top: 0.05rem solid var(--q-gb-bg-c-21)
+}
 /* ********赛事容器相关********** -S*/
 .play-icon {
   background-image: var(--q-color-img-bg-103);
@@ -319,11 +322,12 @@ export default {
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
     display: flex;
+    padding: 0 0.05rem;
     flex-direction: column;
     align-items: center;
     background: var(--q-gb-bg-c-15);
     .buffer-container{
-      background: var(--q-gb-bg-c-10);;
+      background: var(--q-gb-bg-c-21);
       height: 5px;
       width: 100%;
     }
@@ -360,7 +364,6 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    padding-left: 6px;
     background: var(--q-match-page-bg-color-10);
 
     .match-odds-container-border-radius {
@@ -692,9 +695,9 @@ export default {
     font-size: 0.1rem;
     color: #303442;
     flex-direction: row-reverse;
-    background: var(--q-match-page-bg-color-10);
-    border-top: 1px solid #e9e9e9;
-    border-bottom: 1px solid #e9e9e9;
+    background: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 
     .odd-title-i-w {
       width: 50%;

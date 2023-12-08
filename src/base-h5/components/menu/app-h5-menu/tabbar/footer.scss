@@ -22,7 +22,7 @@
 /* **********拖拽菜单********************* *-S*/
 .container-menu-w {
   width: 100%;
-  position: fixed;
+  position: sticky;
   left: 0;
   bottom: 0;
   z-index: 500;
