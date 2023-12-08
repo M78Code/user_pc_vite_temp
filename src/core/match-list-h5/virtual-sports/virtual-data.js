@@ -1,6 +1,7 @@
 
 /**
  * @description 虚拟体育数据处理
+ * @description 赛事数据管理，赛事列表更新
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
@@ -45,6 +46,13 @@ class VirtualData {
     this.virtual_m_list_data_cache_key = 'virtual_m_list_data_cache_key'
      // 是否是用户（顶部按钮）刷新
     this.is_user_refreshing =false;
+    //上次请求的虚拟赛事列表参数
+    this.prev_v_sports_params = {};
+  }
+
+  // 设置上次请求的虚拟赛事列表参数
+  set_prev_v_sports_params(data){
+    this.prev_v_sports_params = data
   }
 
   // 设置虚拟体育菜单
@@ -420,7 +428,7 @@ class VirtualData {
       return;
     }
     //当前赛事
-    let match = lodash.cloneDeep(this.get_prev_v_sports_params[p_key]);
+    let match = lodash.cloneDeep(this.prev_v_sports_params[p_key]);
     if(match){
       match.match_status = 2;
       this.is_video_playing = false;
@@ -695,6 +703,8 @@ class VirtualData {
       }
       return r;
     })[0];
+    console.log('found lll', found);
+    
     if(found){
       this.match_list_by_no = [];
       clearTimeout(this.timer_v_1); // 此setTimeout 解决bug 22990
