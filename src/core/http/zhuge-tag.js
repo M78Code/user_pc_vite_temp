@@ -7,7 +7,7 @@
  *
  */
 import { get } from "lodash";
-import { DateForMat } from "src/core/format/index.js";
+import { DateForMat } from "src/core/format/common/index.js";
 import { deepMerge,get_query_string } from "../utils/common";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 import UserCtr from "src/core/user-config/user-ctr.js";

@@ -80,7 +80,7 @@
 
 <script>
 // import { mapGetters } from "vuex"
-import { format_datas } from "src/core/format/index.js"
+import { format_datas } from "src/output/index.js"
 import { defineComponent,ref,onMounted } from "vue";
 import { MatchDetailCalss } from "src/output/index.js";
 export default defineComponent({
@@ -216,4 +216,4 @@ export default defineComponent({
 }
 </style>
 
-src/output
+src/outputsrc/output/index.js

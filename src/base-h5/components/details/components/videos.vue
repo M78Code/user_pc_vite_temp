@@ -297,7 +297,7 @@ import lodash from "lodash";
 
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES, MenuData, MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouse, MatchDetailCalss,LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
-import { format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/output/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
@@ -857,4 +857,4 @@ export default defineComponent({
 <style scoped lang="scss">
   @import "../styles/videos.scss";
 </style>
-src/output/index.jssrc/output/index.js
+src/output/index.jssrc/output/index.jssrc/output/index.js

@@ -17,7 +17,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { i18n_t } from "src/boot/i18n.js"
 import { utils } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { get_remote_time } from "src/core/format/index.js"
+import { get_remote_time } from "src/output/index.js"
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe)
@@ -102,4 +102,4 @@ onMounted(compute_colse_tips_time)
         border-top-left-radius: 0;
     }
 }
-</style>
+</style>src/output/index.js

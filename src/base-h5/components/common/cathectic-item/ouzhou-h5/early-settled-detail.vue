@@ -44,7 +44,7 @@ import { IconWapper } from 'src/components/icon'
 import { ref, computed, onMounted } from 'vue'
 import { Platform } from "quasar";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
-import { formatTime } from 'src/core/format/index.js'
+import { formatTime } from 'src/output/index.js'
 const props = defineProps({
   item_data: {
     type: Object
@@ -142,4 +142,4 @@ template {
       font-size: 0.24rem;
     }
   }
-</style>
+</style>src/output/index.js

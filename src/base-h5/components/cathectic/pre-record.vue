@@ -52,7 +52,7 @@
 import { ref, getCurrentInstance, watch, onUnmounted, onMounted } from 'vue'
 import { api_betting } from "src/api/index.js";
 import commonCathecticItem from "src/base-h5/components/common/common-cathectic-item.vue";
-import { format_M_D } from 'src/core/format/index.js'
+import { format_M_D } from 'src/output/index.js'
 // 合并投注项提示弹框
 import cancleConfirmPop from 'src/base-h5/components/cathectic/cancle-confirm-pop.vue';
 import settleVoid from "src/base-h5/components/cathectic/settle-void.vue";
@@ -442,4 +442,4 @@ onUnmounted(() => {
     background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
     }
 </style>
-src/output
+src/outputsrc/output/index.js

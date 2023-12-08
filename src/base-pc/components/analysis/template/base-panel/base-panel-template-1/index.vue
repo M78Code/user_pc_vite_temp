@@ -430,7 +430,7 @@ import { t } from "src/output/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // const { match,tournamentTypeFinish,vs_info } = useRegistPropsHelper(component_symbol, defineProps(need_register_props))
-import { formatTime, result_filter } from 'src/core/format/index.js'
+import { formatTime, result_filter } from 'src/output/index.js'
 import { MSelectFullVersionWapper as MSelect } from 'src/base-pc/components/analysis/template/m-select/index.js'
 const props = defineProps(need_register_props)
 //杯赛数据
@@ -458,4 +458,4 @@ onUnmounted(() => {
 
 </script>
 
-<style lang="scss" scoped>@import url('./index.scss');</style>
+<style lang="scss" scoped>@import url('./index.scss');</style>src/output/index.js

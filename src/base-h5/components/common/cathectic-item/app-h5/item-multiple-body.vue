@@ -58,7 +58,7 @@ import { ref, onMounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { bet_result } from "src/core/bet-record/util.js";
 import { i18n_t } from 'src/output/index.js'
-import { format_money2 } from 'src/core/format/index.js'
+import { format_money2 } from 'src/output/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
@@ -229,4 +229,4 @@ template {
     color: #D2D2D2
   }
 }
-</style>
+</style>src/output/index.js

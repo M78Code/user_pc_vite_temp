@@ -19,6 +19,7 @@
      <!-- {{ get_match_detail.msid }} -->
         
         <div class="match-detail-time-collect" v-if="show_collect" >
+
           <!-- 显示视频按钮 -->
           <div v-if="status == 1 || status == 3" @click="handleChange('video')">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video"/>
@@ -150,6 +151,10 @@ const status = computed(() => {
   return 4;
  
 });
+
+watch(() => props.get_match_detail, (value) => {
+  console.log(value, "props.get_match_detail");
+})
 
 const show_time_counting = computed(() => {
   let csid = Number(props.get_match_detail.csid);

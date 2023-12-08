@@ -60,7 +60,7 @@ import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from 'lodash'
 import { get_odds_active, utils } from "src/output/index.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -419,4 +419,4 @@ onUnmounted(() => {
 
 .left_cell {
   text-align: left !important;
-}</style>
+}</style>src/core/format/common/module/format-odds-conversion-mixin.js

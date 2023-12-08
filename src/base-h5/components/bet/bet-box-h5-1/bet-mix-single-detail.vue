@@ -33,7 +33,7 @@
 import betting from 'src/core/bet/common-helper/index.js';
 // const licia_format = require('licia/format');
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { format_money3,format_money2 } from 'src/core/format/index.js'
+import { format_money3,format_money2 } from 'src/output/index.js'
 import { nextTick } from "vue"
 
 const money = ref('')  //输入框金额
@@ -512,3 +512,4 @@ onUnmounted(() => {
   }
 }
 </style>
+src/output/index.js

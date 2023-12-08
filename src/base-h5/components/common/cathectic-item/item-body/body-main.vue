@@ -114,7 +114,7 @@ import {
   MatchDataWarehouse_H5_Detail_Common as MatchDetailDataWarehouse, 
   MatchDataWarehouse_H5_List_Common as MatchListDataWarehouse
 } from 'src/output/index.js'
-import { format_time_zone_time, format_odds, format_score, formatTime } from 'src/core/format'
+import { format_time_zone_time, format_odds, format_score, formatTime } from 'src/core/format/common'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
@@ -503,4 +503,4 @@ const props =defineProps({
   }
 }
 </style>
-src/outputsrc/output/index.js
+src/outputsrc/output/index.jssrc/core/format/common

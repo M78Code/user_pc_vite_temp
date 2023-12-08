@@ -67,7 +67,7 @@ import scroll from "src/base-h5/components/common/record-scroll/scroll.vue";
 import { ref, watch, computed, onMounted, onUnmounted } from 'vue'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {useMittEmit, useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
-import { formatTime } from 'src/core/format/index.js'
+import { formatTime } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import loading from "src/base-h5/components/common/loading.vue"
 //语言设置
@@ -332,4 +332,4 @@ template {
 /**提前结算*/
 .early2 {
   background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
-}</style>
+}</style>src/output/index.js

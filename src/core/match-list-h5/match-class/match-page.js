@@ -126,6 +126,10 @@ class MatchPage {
    * @return {Undefined} Undefined
    */
   footer_event(obj) {
+    // 每日活动
+    if (obj && obj.text == "activities") {
+      console.log('每日活动')
+    }
     // 排序
     if (obj && obj.text == "sortRules") {
       //TODO DOM滚动到顶部的方法不应该在这里

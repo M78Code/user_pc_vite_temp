@@ -49,7 +49,7 @@ import no_data from "src/base-h5/components/common/no-data.vue";
 import { MenuData, UserCtr, compute_css_obj } from "src/output/index.js";
 import lodash from "lodash";
 import { useRouter } from "vue-router";
-import { DateForMat } from "src/core/format/index.js";
+import { DateForMat } from "src/output/index.js";
 import { lang } from "src/base-h5/mixin/userctr";
 import base_data from "src/core/base-data/base-data.js";
 
@@ -601,4 +601,4 @@ onMounted(() => {
     }
   }
 
-</style>src/output
+</style>src/outputsrc/output/index.js

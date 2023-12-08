@@ -49,3 +49,5 @@ public/app-h5/server-resource/*
 /project/activity/index.html
 /project/animation/index.html
 /project/template-project/index.html
+/project/activity/src/css/server-img/other-img
+/project/activity/src/store

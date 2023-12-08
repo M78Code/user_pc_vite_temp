@@ -182,7 +182,7 @@ import { theme_list, theme_map } from "src/core/theme/"
 import { api_account } from 'src/api/index';
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { api_betting } from "src/api/index";
-import { format_money2 } from "src/core/format/index.js";
+import { format_money2 } from "src/output/index.js";
 import { debounce } from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { loadLanguageAsync, compute_css_obj, useMittOn, useMittEmit, MITT_TYPES, MenuData, UserCtr } from "src/output/index.js";
@@ -695,4 +695,4 @@ $index in (en: 1,
 }
 
 /* ************** 切换语言前面的图标 ************** -E */
-</style>
+</style>src/output/index.js

@@ -22,7 +22,7 @@
   import lodash from 'lodash';
   import { computed, onMounted, onUnmounted, ref, watch } from "vue"
   // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
-  import { format_mgt_time } from "src/core/format/index.js"
+  import { format_mgt_time } from "src/output/index.js"
   import { utils } from 'src/core/utils/common/index.js';
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 // import { format_mgt_time } from "src/output/index.js";
@@ -141,4 +141,4 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped></style>
-src/core/utils/common/index.js
+src/core/utils/common/index.jssrc/output/index.js

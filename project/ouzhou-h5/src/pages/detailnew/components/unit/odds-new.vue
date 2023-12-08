@@ -29,7 +29,7 @@ import lodash from "lodash";
 import { project_name } from "src/output/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
 
 export default defineComponent({
   // #TODO mixins
@@ -167,4 +167,4 @@ export default defineComponent({
   }
 }
 </style>
-src/output
+src/outputsrc/core/format/common/module/format-odds-conversion-mixin.js

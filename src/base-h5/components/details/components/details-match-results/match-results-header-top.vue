@@ -22,7 +22,7 @@
 import lodash from "lodash";
 // import msc from "src/base-h5/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/output/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
@@ -127,4 +127,4 @@ export default defineComponent({
   }
 }
 </style>
-src/output
+src/outputsrc/output/index.js

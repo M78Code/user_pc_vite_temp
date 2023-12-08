@@ -22,7 +22,7 @@ import { axios_loop } from "src/core/http/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
 // import { format_plays, format_sort_data } from "src/core/format/index";
-import { formatTime } from "src/core/format/index.js"
+import { formatTime } from "src/core/format/common/index.js"
 import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data ,is_eports_csid,MatchDetailCalss,SearchPCClass,GlobalSwitchClass,LayOutMain_pc} from "src/output/index"; 
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";

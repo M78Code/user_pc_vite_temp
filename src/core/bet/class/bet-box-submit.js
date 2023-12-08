@@ -2,7 +2,7 @@ import { api_betting } from "src/api/index.js"
 import BetData from "./bet-data-class.js"
 import BetViewDataClass from "./bet-view-data-class.js"
 import BetWsMessage from "./bet-ws-message.js"
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { 
     MatchDataWarehouse_PC_List_Common, 

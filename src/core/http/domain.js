@@ -73,7 +73,7 @@ import axios from "axios";
  
 import { SessionStorage ,LocalStorage} from "src/output/module/constant-utils.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
- import { format_api_to_obj } from "src/core/format/index.js"
+ import { format_api_to_obj } from "src/core/format/common/index.js"
 import STANDARD_KEY from "src/core/standard-key";
 import { isFunction } from "lodash";
 // 域名计算逻辑所用的 单独的 axios 实例

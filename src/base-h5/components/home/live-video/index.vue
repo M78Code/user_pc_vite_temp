@@ -105,7 +105,7 @@ import SLive from "src/base-h5/components/skeleton/live.vue"
 import noData from 'src/base-h5/components/common/no-data.vue'
 import scrollTop from 'src/base-h5/components/common/record-scroll/scroll-top.vue'
 import countingDown from 'src/base-h5/components/common/counting-down.vue'
-import { format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/output/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useRouter } from "vue-router";
@@ -758,4 +758,4 @@ get_init(1)
   }
 }
 </style>
-src/output/index.jssrc/output
+src/output/index.jssrc/outputsrc/output/index.js

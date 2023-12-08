@@ -73,16 +73,16 @@
 </template>
 
 <script setup>
-// import {odd_convert} from "src/core/format/index.js";
+// import {odd_convert} from "src/output/index.js";
 // import betting from 'src/core/bet/common-helper/index.js';
 // import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 // import betSingleDetail from './bet-single-detail.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // import { UserCtr } from "src/output/index.js";
-import { calc_bifen, format_odds } from "src/core/format/index.js";
+import { calc_bifen, format_odds } from "src/output/index.js";
 import { ref, onMounted, watch, computed, onUnmounted, watchEffect } from 'vue';
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 
@@ -361,3 +361,4 @@ const handleonmousedown = () => {
   transform: scaleY(0.5);
 }
 </style>
+src/core/format/common/module/format-odds-conversion-mixin.jssrc/output/index.js

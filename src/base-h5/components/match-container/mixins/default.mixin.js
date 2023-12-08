@@ -10,7 +10,7 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
-import { format_how_many_days, format_week } from "src/core/format/index.js"
+import { format_how_many_days, format_week } from "src/core/format/common/index.js"
 
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0 } from 'src/base-h5/core/utils/local-image.js'
@@ -82,6 +82,9 @@ export default defineComponent({
     // 当前赛事数据
     match () {
       return this.match_of_list;
+    },
+    is_show_all () {
+      return MenuData.is_zaopan() || MenuData.is_scroll_ball()
     },
     // 上一场赛事数据
     prev_match () {
@@ -216,7 +219,7 @@ export default defineComponent({
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
       // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag)
+      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag) && MenuData.is_today()
     },
     // 获取赛事数量
     get_match_count () {
@@ -243,13 +246,13 @@ export default defineComponent({
     }
   },
   watch: {
-    // match_of_list: {
-    //   deep: true,
-    //   handler (c_match) {
-    //     this.media_button_button_type_check()
-    //     this.mmp_map_title = matchListClass.match_period_map(c_match);
-    //   }
-    // },
+    match_of_list: {
+      deep: true,
+      handler (c_match) {
+        this.media_button_button_type_check()
+        this.mmp_map_title = matchListClass.match_period_map(c_match);
+      }
+    },
     'match_of_list.msc': {
       immediate: true,
       deep: true,

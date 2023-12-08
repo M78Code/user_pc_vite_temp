@@ -5,7 +5,7 @@ import { play_title } from 'src/core/utils/common/module/play-title.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { format_msc } from "src/core/format/index.js"
+import { format_msc } from "src/core/format/common/index.js"
 import { project_name,MenuData,compute_css_obj,utils,UserCtr,i18n_t,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";

@@ -6,9 +6,9 @@
  * 使用  {{ compute_value_by_cur_odd_type(val}}
  * 实现 匹配不到 后 向下 取值
  */
-import { esports_csid } from "../../constant/config/csid"
+import { esports_csid } from "../../../constant/config/csid"
 import UserCtr from 'src/core/user-config/user-ctr'
-// import { format_odds } from "src/core/format/module/format-odds.js"
+ 
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
 const oddsTable = {

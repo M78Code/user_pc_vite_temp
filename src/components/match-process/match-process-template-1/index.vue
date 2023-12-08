@@ -56,7 +56,7 @@
 <script setup>
 import { computed, ref, watch,onMounted, onUnmounted } from "vue";
 import matchDate from "src/components/match-process/match-process-template-1/match_date.vue";
-// import { format_second_ms } from "src/core/format/index.js";
+// import { format_second_ms } from "src/output/index.js";
 import {
   get_match_status,
   utils,
@@ -64,7 +64,7 @@ import {
   format_string,
   is_eports_csid
 } from "src/output/index.js"
-import { get_mmp_name } from "src/core/format/module/format-msc.js"
+import { get_mmp_name } from "src/output/index.js"
 import {
   useRegistPropsHelper,
 } from "src/composables/regist-props/index.js";
@@ -406,4 +406,4 @@ onUnmounted(() => {
     position: relative;
 }
 </style>
-src/output/index
+src/output/indexsrc/core/format/common/module/format-msc.js

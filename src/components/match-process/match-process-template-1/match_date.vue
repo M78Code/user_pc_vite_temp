@@ -70,7 +70,7 @@ import lodash from "lodash";
 
 // import { t } from "src/output/index.js";;
 // import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
-import { get_remote_time,format_date_base_obj } from "src/core/format/index.js"
+import { get_remote_time,format_date_base_obj } from "src/output/index.js"
 // const licia_format = require("licia/format");
 
 export default {
@@ -436,4 +436,4 @@ export default {
   },
 };
 </script>
-src/output/index.js
+src/output/index.jssrc/output/index.js

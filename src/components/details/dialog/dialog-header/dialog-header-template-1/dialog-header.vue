@@ -25,7 +25,7 @@
 
 <script>
 import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue' // 详情页头部联赛名文字超出隐藏无缝滚动
-import { go_where } from "src/core/utils/common/index.js"
+import { go_where } from "src/core/utils/project/module/go-where.js"  
 export default {
   name: 'dialog_header',
   data(){

@@ -39,7 +39,7 @@
 import lodash from "lodash"
 // import store from "src/store-redux/index.js";
 // import { UserCtr } from "src/output/index.js";
-import { format_money2 } from 'src/core/format/module/format-money.js'
+import { format_money2 } from 'src/output/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
 import userData from "src/core/user-config/user-ctr.js"
@@ -252,4 +252,4 @@ onUnmounted(() => {
 .arrow {
   transform: scale(-1);
 }</style>
-src/output
+src/outputsrc/core/format/common/module/format-money.js

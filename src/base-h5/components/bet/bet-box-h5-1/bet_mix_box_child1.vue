@@ -142,7 +142,7 @@
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 // import BetData from "src/core/bet/class/bet-data-class.js";
 // import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
-import { format_money2 } from "src/core/format/index.js"
+import { format_money2 } from "src/output/index.js"
 import { ref, onMounted,watch,computed,onUnmounted,nextTick } from 'vue';
 import lodash from 'lodash'
 
@@ -546,3 +546,4 @@ onUnmounted(() => {
   background: var(--q-color-img-bg-98) no-repeat center / contain;
 }
 </style>
+src/output/index.js
