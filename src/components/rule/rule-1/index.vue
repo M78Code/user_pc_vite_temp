@@ -80,10 +80,10 @@ onMounted(()=>{
 <style lang="scss" scoped>
 .rule-wrap {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
-    padding-bottom: 100px;
+    // padding-bottom: 100px;
     .rule-content {
         width: 100%;
         flex: 1;
