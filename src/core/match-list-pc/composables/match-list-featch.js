@@ -1,5 +1,6 @@
 import lodash from "lodash";
 import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { ref } from 'vue';
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { PageSourceData } from "src/core/index.js";
@@ -16,6 +17,7 @@ import filterHeader from 'src/core/filter-header/filter-header.js'
 import { match_list_handle_set } from '../match-handle-data'
 import {set_load_data_state} from '../match-list-composition'
 
+const league_list_obj = ref({})
 
 /**
  * @Description 删除赛事数据 卡片
@@ -93,13 +95,12 @@ export const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
     MenuData.set_multi_column();
   }
 };
-let league_list_obj = {}
 /**
    * @Description 设置联赛列表对象
    * @param {object} league_list_obj
    */
 const set_league_list_obj = (val={}) => {
-  league_list_obj = val;
+  league_list_obj.value = val;
 }
 /**
    * @Description 获取前12场展开的赛事mid
@@ -114,7 +115,7 @@ const get_first_unfold_mids = () => {
   let match_status_type_arr = ["livedata", "nolivedata"];
   match_status_type_arr.forEach((match_status_type) => {
     // 遍历联赛列表
-    let league_list = lodash.get(league_list_obj, match_status_type, []);
+    let league_list = lodash.get(league_list_obj.value, match_status_type, []);
     league_list.forEach((league_obj) => {
       // 赛事计数大于12 不执行
       if (unfold_match_count >= 12) {

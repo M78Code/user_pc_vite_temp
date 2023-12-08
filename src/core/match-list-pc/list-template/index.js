@@ -47,6 +47,7 @@ import  * as template_117_config from "./module/template-117.js"
 import  * as template_118_config from "./module/template-118.js"
 import  * as template_119_config from "./module/template-119.js"
 import  * as template_120_config from "./module/template-120.js"
+import  * as template_124_config from "./module/template-124.js"
 
 
 /**
@@ -101,6 +102,7 @@ export const  MATCH_LIST_TEMPLATE_CONFIG={
     template_118_config,
     template_119_config,
     template_120_config,
+    template_124_config
 }
 
  
