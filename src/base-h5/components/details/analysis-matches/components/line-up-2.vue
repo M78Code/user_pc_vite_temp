@@ -193,7 +193,7 @@
     <!--  首发阵容，替补阵容 伤停阵容-->
     <template v-if="!no_data">
       <!-- 首发名单-->
-      <div class="title" v-if="lodash.isEmpty(detail_data)">
+      <div class="title title-border" v-if="lodash.isEmpty(detail_data)">
         {{i18n_t('analysis_football_matches.starting_lineup') }}
       </div>
       <div class="public_form football_standings" v-if="lodash.isEmpty(detail_data)">
@@ -274,96 +274,8 @@
         <!-- 没有数据 组件 TODO: 待处理-->
         <div v-if="lodash.get(line_up_data_home, 'up.length') <= 0 && lodash.get(line_up_data_away, 'up.length') <= 0" class="no-list">{{ i18n_t('common.no_data') }}</div>
       </div>
-      <!-- 伤停名单-->
-      <div class="title">
-        <span>{{i18n_t('analysis_football_matches.Injury_situation') }}</span>
-      </div>
-      
-        
-      <div class="public_form football_standings">
-        <!-- 没有数据 组件 -->
-      <div v-if="Object.keys(injury_situation_data).length <= 0" class="no-list">
-          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/def_common.svg`" alt="">
-          {{ i18n_t('app_h5.detail.not_data_Injury') }}
-        </div>
-        <template v-else>
-           <!-- 头部 -->
-          <div class="header">
-          <div>
-            <team-img
-              v-if="!lodash.isEmpty(detail_data)"
-              :type="0"
-              :csid="detail_data.csid"
-              :url="lodash.get(detail_data,'malu[0]')"
-              :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
-              :size="44"
-            ></team-img>
-            <span>{{detail_data.man}}</span>
-          </div>
-          <div>
-            <team-img
-              v-if="!lodash.isEmpty(detail_data)"
-              :type="0"
-              :csid="detail_data.csid"
-              :url="lodash.get(detail_data,'mhlu[0]')"
-              :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
-              :size="44"
-            ></team-img>
-            <span>{{detail_data.mhn}}</span>
-          </div>
-          </div>
-        <!-- 主内容 -->
-        <div class="content-item">
-            <!-- 主队 -->
-          <div class="home-team-item">
-            <div class="team-item" v-for="(item, i) in injury_situation_data['1']" :key="i+'a'">
-              <div class="col1">
-                <!-- 联赛icon -->
-                <img class="match_logo"
-                    :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
-                    @error="league_icon_error"
-                />
-              </div>
-              <div class="name-position">
-                <div class="col3 ellipsis">
-                  <template v-if="UserCtr.lang == 'en'">&ensp;</template>
-                  {{ (item.playerName.length > 6 ? item.playerName.slice(0, 6) + '...' : item.playerName) || '-' }}
-                </div>
-                <div class="col2">{{ item.positionName || '-' }}</div>
-              </div>
-              <div class="col4 end-btn">
-                <span>{{ item.shirtNumber }}</span>
-              </div>
-              
-            </div>
-          </div>
-          <!-- 客队 -->
-          <div class="away-team-item">
-            <div class="team-item" v-for="(item, i) in injury_situation_data['2']" :key="i+'a'">
-              <div class="col1">
-                <!-- 联赛icon -->
-                <img class="match_logo"
-                    :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
-                    @error="league_icon_error"
-                />
-              </div>
-              <div class="name-position">
-                <div class="col3 ellipsis">
-                  <template v-if="UserCtr.lang == 'en'">&ensp;</template>
-                  {{ (item.playerName.length > 6 ? item.playerName.slice(0, 6) + '...' : item.playerName) || '-' }}
-                </div>
-                <div class="col2">{{ item.positionName || '-' }}</div>
-              </div>
-              <div class="col4 end-btn">
-                <span>{{ item.shirtNumber }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        </template>
-      </div>
       <!-- 替补名单-->
-      <div class="title">
+      <div class="title title-border">
         <span>{{i18n_t('analysis_football_matches.bench_lineup') }}</span>
       </div>
       <div class="public_form football_standings">
@@ -457,6 +369,95 @@
         
         
       </div>
+      <!-- 伤停名单-->
+      <div class="title title-border">
+        <span>{{i18n_t('analysis_football_matches.Injury_situation') }}</span>
+      </div>
+      
+        
+      <div class="public_form football_standings">
+        <!-- 没有数据 组件 -->
+      <div v-if="Object.keys(injury_situation_data).length <= 0" class="no-list">
+          <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/def_common.svg`" alt="">
+          {{ i18n_t('app_h5.detail.not_data_Injury') }}
+        </div>
+        <template v-else>
+           <!-- 头部 -->
+          <div class="header">
+          <div>
+            <team-img
+              v-if="!lodash.isEmpty(detail_data)"
+              :type="0"
+              :csid="detail_data.csid"
+              :url="lodash.get(detail_data,'malu[0]')"
+              :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
+              :size="44"
+            ></team-img>
+            <span>{{detail_data.man}}</span>
+          </div>
+          <div>
+            <team-img
+              v-if="!lodash.isEmpty(detail_data)"
+              :type="0"
+              :csid="detail_data.csid"
+              :url="lodash.get(detail_data,'mhlu[0]')"
+              :fr="MenuData.get_menu_type() != 3000 ? lodash.get(detail_data,'frmhn[0]') : detail_data.frmhn"
+              :size="44"
+            ></team-img>
+            <span>{{detail_data.mhn}}</span>
+          </div>
+          </div>
+        <!-- 主内容 -->
+        <div class="content-item">
+            <!-- 主队 -->
+          <div class="home-team-item">
+            <div class="team-item" v-for="(item, i) in injury_situation_data['1']" :key="i+'a'">
+              <div class="col1">
+                <!-- 联赛icon -->
+                <img class="match_logo"
+                    :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
+                    @error="league_icon_error"
+                />
+              </div>
+              <div class="name-position">
+                <div class="col3 ellipsis">
+                  <template v-if="UserCtr.lang == 'en'">&ensp;</template>
+                  {{ (item.playerName.length > 6 ? item.playerName.slice(0, 6) + '...' : item.playerName) || '-' }}
+                </div>
+                <div class="col2">{{ item.positionName || '-' }}</div>
+              </div>
+              <div class="col4 end-btn">
+                <span>{{ item.shirtNumber }}</span>
+              </div>
+              
+            </div>
+          </div>
+          <!-- 客队 -->
+          <div class="away-team-item">
+            <div class="team-item" v-for="(item, i) in injury_situation_data['2']" :key="i+'a'">
+              <div class="col1">
+                <!-- 联赛icon -->
+                <img class="match_logo"
+                    :src=" item.thirdPlayerPicUrl ? get_server_file_path(item.thirdPlayerPicUrl) : default_url"
+                    @error="league_icon_error"
+                />
+              </div>
+              <div class="name-position">
+                <div class="col3 ellipsis">
+                  <template v-if="UserCtr.lang == 'en'">&ensp;</template>
+                  {{ (item.playerName.length > 6 ? item.playerName.slice(0, 6) + '...' : item.playerName) || '-' }}
+                </div>
+                <div class="col2">{{ item.positionName || '-' }}</div>
+              </div>
+              <div class="col4 end-btn">
+                <span>{{ item.shirtNumber }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </template>
+      </div>
+
     </template>
   </div>
 </template>
@@ -856,6 +857,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
       align-items: center;
       justify-content: center;
       height: 2.5rem;
+      color:#AFB3C8;
       img {
         width: 1.8rem;
         height: 1.8rem;
@@ -1054,5 +1056,7 @@ import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js"
     }
   }
 }
+.title-border{
+  border-bottom: 1px solid var(--q-gb-bd-c-4);
+}
 </style>
-src/output
