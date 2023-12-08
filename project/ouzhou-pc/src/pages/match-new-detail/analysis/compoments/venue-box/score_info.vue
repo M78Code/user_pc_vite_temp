@@ -652,7 +652,10 @@ watch(
   align-items: center;
   text-overflow: ellipsis;
   &.csid_1 {
-    margin-left: 11px;
+    margin-left: 4px;
+  }
+  &.csid_2 {
+    margin-left: 8px;
   }
 }
 

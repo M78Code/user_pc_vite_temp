@@ -653,7 +653,7 @@ export const details_main = () => {
         .then((res) => {
           const res_data = lodash.get(res, "data");
           //转移所有中文投注名称
-          if(UserCtr.lang == "zh"){
+          if(UserCtr.lang == "zh" && !lodash.isEmpty(res.data)){
             res.data[0].marketName = '所有盘口'
           }
           state_data.data_list = res_data;
@@ -855,10 +855,10 @@ export const details_main = () => {
         set_goto_detail_matchid(event_data.mid);
       } else {
         // 如果不是演播厅的，才有退出回到 列表
-        if (lodash.get(state_data.get_video_url, "active") != "lvs") {
+        // if (lodash.get(state_data.get_video_url, "active") != "lvs") {
           // 没有返回赛事数据就跳转到列表页
-          // router.push({ name: "matchList" });
-        }
+          router.go("-1");
+        // }
       }
     });
   };

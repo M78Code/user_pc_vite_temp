@@ -25,6 +25,25 @@ class MatchResponsive {
     this.ball_other_seed_league_count = ref({})
     // 投注项
     this.active_odd = ref('')
+    // 赛事显示、隐藏信息
+    this.show_match_info = ref({})
+  }
+
+   /**
+   * @description 设置赛事显示、隐藏信息
+   * @param {Boolean} val
+   */
+  set_show_match_info (key, flag) {
+    Object.assign(this.show_match_info.value, {
+      [key]: flag
+    })
+  }
+  /**
+   * @description 重置赛事显示、隐藏信息
+   * @param {Boolean} val
+   */
+  clear_show_match_info() {
+    this.show_match_info.value = {}
   }
 
   /**

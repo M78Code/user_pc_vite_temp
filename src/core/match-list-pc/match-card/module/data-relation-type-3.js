@@ -300,7 +300,6 @@
         temp_match_status_title_card_obj.match_count = match_status_type_match_count
       }
     })
-    console.log('match_list_card_key_arr', match_list_card_key_arr);
     // MatchListCardData.set_all_card_obj(all_card_obj)
     // 合并所有卡片样式对象
     // 已开赛 到卡片key的 映射对象

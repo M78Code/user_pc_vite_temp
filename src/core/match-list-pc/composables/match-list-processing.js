@@ -89,6 +89,7 @@ const deal_with_list_data = (data) => {
  * @return {undefined} undefined
  */
 const mx_list_res = (data, backend_run, cut, collect) => {
+	console.log('dataasdasfaf', data);
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
 	// 将全量数据接口 切割成含有mid元素的对象数组
@@ -403,11 +404,10 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	clearTimeout(virtual_list_timeout_id);
 	// 赛事列表
 	let match_list = lodash.get(data, "data.data", []);
-	if (!match_list) {
+	if (!match_list.length) {
 		match_list = lodash.get(data, "data", []);
 	}
 	set_league_list_obj(match_list)
-	match_list = match_list || [];
 	//虚拟体育 接口数据结构转换
 	// lockie
 	if (is_virtual && !is_search && false) {
