@@ -8,6 +8,11 @@ export const event_animation = {
         animation_svg: '危险球位置',
         animation_svg_path: getSvgPath(0),
         animation_fun: '',
+        svg_config: {
+            duration: '2s',
+            repeatCount: '1', // 1 indefinite
+            fill: 'freeze',
+        }
     },
     // 危险进攻
     dangerous_attack: {

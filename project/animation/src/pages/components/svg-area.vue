@@ -3,18 +3,23 @@
     <q-btn color="secondary" @click="get_event_code()" label="随机推送事件" />
     <div class="animation-content">
 <!--      <img :src="svg_src">-->
-      <object ref="svgCount" :data="svg_src" type="image/svg+xml" />
+<!--      <object ref="svgCount" :data="svg_src" type="image/svg+xml" />-->
+      <svg_tmp v-if="isShowSvg"></svg_tmp>
     </div>
   </div>
 </template>
 <script>
 
 import { defineComponent } from 'vue'
+import svg_tmp from "project/animation/src/pages/components/svg_tmp.vue"
 export default defineComponent({
   props: ['svg_src'],
+  components: {
+    svg_tmp
+  },
   data() {
-    // sportId=1&dataSourceCode=PA&matchId=2928959
     return {
+      isShowSvg: false,
     }
   },
   watch: {
@@ -24,6 +29,7 @@ export default defineComponent({
   methods: {
     // 生成随机事件
     get_event_code () {
+      this.isShowSvg = !this.isShowSvg
       this.$emit('get_event_code')
     },
   },

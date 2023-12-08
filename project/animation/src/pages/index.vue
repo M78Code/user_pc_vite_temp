@@ -10,7 +10,7 @@
             <BackendConfig />
         </div>
        <div class="col q-ml-sm" style="height: 100vh;overflow: auto;">
-         <svg_area @get_event_code="get_event_code" :svg_src="svg_src" />
+         <svg_area  @get_event_code="get_event_code" :svg_src="svg_src" />
         <!-- <div
             v-for="(item, index) in dataObj"
             :key="index"
