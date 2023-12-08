@@ -79,6 +79,8 @@ import custom_video from "./detail_header_video.vue";
 import matchCollect from "src/core/match-collect";
 import { debounce } from "quasar";
 import score_component from "./detail_header_tem1.vue";
+import NavbarSubscribe from "src/base-h5/components/top-menu/top-menu-ouzhou-1/detail-top/nav-bar-subscribe";
+import { Promise } from "licia-es";
 const props = defineProps({
   get_match_detail: {
     type: Object,
@@ -89,7 +91,17 @@ const props = defineProps({
     default: ""
   }
 });
-
+// 点击返回的时候会触发此函数
+const listener = (status) => {
+  if (!status) {
+    right_actions_label.value = 'score';
+  }
+}
+const nav_bar_subscribe = NavbarSubscribe.instance;
+// 注册事件
+nav_bar_subscribe.listener(listener);
+// 测试数据
+// nav_bar_subscribe.change_status(false);
 
 const detail = computed(() => props.get_match_detail)
 
@@ -131,9 +143,9 @@ const status = computed(() => {
   return 4;
  
 });
-
-
-watch(() => status, (value) => {
+// 默认为animation，所以设置为false
+nav_bar_subscribe.change_status(false);
+watch(status, (value) => {
     // 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示
     if (value == 2) {
       right_actions_label.value = 'animation';
@@ -143,6 +155,17 @@ watch(() => status, (value) => {
     }
 })
 
+watch(right_actions_label, (value) => {
+  console.log(right_actions_label, "right_actions_label");
+  if (['animation', 'video'].includes(value)) {
+    nav_bar_subscribe.change_status(false);
+  }else {
+    // 异步操作，避免执行到队列时导致数据更新问题
+    Promise.resolve().then(() => {
+      nav_bar_subscribe.change_status(true);
+    })
+  }
+})
 
 const football_score_icon_list = ref([
   {
