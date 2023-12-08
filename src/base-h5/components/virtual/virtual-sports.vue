@@ -76,8 +76,8 @@
       <div v-if="!ranking_list_change" class="v-sports-main-list" 
         :class="{'v-sports-main-list-style': standard_edition === 1}" 
         :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}">
-        <!-- 虚拟体育足球赛事列表 -->
-        <v-s-match-list v-if="[1001,1004].includes(current_sub_menu_id)" :virtual_match_list="match_item_batch.matchs"
+        <!-- 虚拟体育足球赛事列表 --> <!-- 先用match_list_by_no，后面要换成match_list_all_batches.match --> 
+        <v-s-match-list v-if="[1001,1004].includes(current_sub_menu_id)" :virtual_match_list="match_list_by_no"
           :match_list_loaded="match_list_loaded" :csid="current_sub_menu_id" :v_menu_changed="v_menu_changed"
           @switch_match="switch_match_handle"  @start="match_start_handle">
         </v-s-match-list>
@@ -243,7 +243,9 @@ export default defineComponent({
 
     //当前联赛的全部轮次
     const match_list_all_batches = computed(() => {
-      return VirtualData.virtual_match_list || []
+      const match_list_all_batches = [...VirtualData.virtual_match_list];
+      match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      return match_list_all_batches || []
     })
 
     const expend_match = (item)=>{
