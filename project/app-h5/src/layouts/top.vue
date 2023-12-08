@@ -155,8 +155,10 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     //球种滚动初始化
     nextTick(()=>{
-      scrollTabMenu.value.scrollTabMenu()
-      searchTabMenu.value.searchTabMenu()
+      try {
+        scrollTabMenu.value.scrollTabMenu()
+        searchTabMenu.value.searchTabMenu()
+      } catch(_) {} 
     })
   })
 

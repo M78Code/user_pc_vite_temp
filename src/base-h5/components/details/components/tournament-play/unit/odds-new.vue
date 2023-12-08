@@ -10,9 +10,11 @@
       <span v-if="odds_value() < 1.01 && get_cur_odd == 'EU'">
         <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" alt="" style=" width: 0.12rem"/>
       </span>
-      <span v-else class="odds" :class="[{'red_text': status == 10, 'green_text': status == -10,'white_text':BetData.bet_oid_list.includes(ol_data.id_) }]">
+      <span v-else class="odds" :class="[{'is_up': status == 10, 'is_down': status == -10,'white_text':BetData.bet_oid_list.includes(ol_data.id_) }]">
         <span>{{ odds_value() }}</span>
-        <span class='change-icon' :class="{'icon-red':status == 10,'icon-green':status == -10}"></span>
+        <!-- <span class='change-icon' :class="{'icon-red':status == 10,'icon-green':status == -10}"></span> -->
+        <img class="up_down" v-if="status == 10" :src="is_up_app" alt="" />
+        <img class="up_down" v-if="status == -10" :src="is_down_app" alt="" />
       </span>
     </template>
     <template v-else>
@@ -32,6 +34,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { i18n_t } from "src/boot/i18n.js";
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
@@ -104,7 +107,9 @@ export default defineComponent({
       calc_text,
       lodash,
       project_name,
-      BetData
+      BetData,
+      is_up_app,
+      is_down_app
     }
   }
 })
@@ -143,4 +148,15 @@ export default defineComponent({
     background-image: var(--q-color-com-img-bg-19);
   }
 }
+.up_down{
+    width: 12px;
+    height: 11px;
+}
+.is_up{
+      //color: #E95B5B;
+      color: var(--q-gb-t-c-21);
+    }
+ .is_down{
+   color: #4AB06A;
+ }
 </style>
