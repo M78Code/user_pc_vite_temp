@@ -21,7 +21,7 @@ import ServerTime from 'src/core/server-time/server-time.js';
 import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-import {GLOBAL_CONSTANT } from "src/output/constant-utils.js"
+import {GLOBAL_CONSTANT } from "src/output/module/constant-utils.js"
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 // #TODO 接口统一管理的文件，后续替换

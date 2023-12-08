@@ -37,7 +37,7 @@
  *
  */
 
-export default class MatchListDetailMiddleware {
+ class MatchListDetailMiddleware {
   constructor() {
     this.init();
     // 来源页面  source_page
@@ -80,3 +80,6 @@ export default class MatchListDetailMiddleware {
     MatchDataWarehouse_target.set_match_details(mid_obj);
   }
 }
+
+
+export default new MatchListDetailMiddleware()

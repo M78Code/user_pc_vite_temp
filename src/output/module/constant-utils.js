@@ -20,7 +20,7 @@ export { default as uid } from "src/core/uuid/index.js";
 export { i18n, loadLanguageAsync, map_lang, t, i18n_t } from "src/boot/i18n.js";
 
 //模块之间通信 ，去耦合化的一个 键值对 仓库
-export { GLOBAL_CONSTANT } from "src/core/constant/globalindex.js";
+export { GLOBAL_CONSTANT } from "src/core/constant/global/index.js";
 
 //模块之间通信 ，去耦合化的一个 事件通信 仓库
 export {
@@ -36,3 +36,4 @@ import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 
 export const  PROJECT_NAME =  BUILD_VERSION_CONFIG.PROJECT_NAME
 export const  IS_PC =  BUILD_VERSION_CONFIG.IS_PC
+export const  project_name = PROJECT_NAME

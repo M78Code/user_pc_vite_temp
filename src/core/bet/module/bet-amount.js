@@ -1,6 +1,6 @@
 import {
   api_betting
-} from "src/output/index.js";
+} from "src/api/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import {

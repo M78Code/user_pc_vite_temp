@@ -15,11 +15,15 @@ import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
-import { useMittEmit, MITT_TYPES,project_name, MenuData,
+import { 
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
   MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
-} from 'src/output'
+} from 'src/output/module/match-data-base.js'
+
+
+import { useMittEmit, MITT_TYPES,project_name,} from "src/output/module/constant-utils.js"
+import {  MenuData,} from "src/output/module/menu-data.js"
 
 class MatchMeta {
 

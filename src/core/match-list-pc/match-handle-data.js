@@ -4,11 +4,11 @@
 
 
 import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
-import { MenuData, PROJECT_NAME } from 'src/output/project-computed.js'
-import { get_match_status } from 'src/output/constant-utils.js'
+import { MenuData, PROJECT_NAME } from 'src/output/module/menu-data.js'
+import { get_match_status } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import BaseData from "src/core/base-data/base-data.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
 
 /**
    * @Description  根据菜单ID 获取一个菜单对象
