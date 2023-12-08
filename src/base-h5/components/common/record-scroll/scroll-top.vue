@@ -14,7 +14,8 @@
 </template>
 
 <script setup>
-import { utils,UserCtr, compute_img_url, PROJECT_NAME } from 'src/output/index.js'
+import { utils } from 'src/output/index.js'
+import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
 import { scroll_top_icon } from 'src/base-h5/core/utils/local-image.js'

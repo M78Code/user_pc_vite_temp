@@ -32,23 +32,18 @@ import {
   onMounted,
   onUnmounted,
   defineAsyncComponent,
-  nextTick,
   watch
 } from "vue";
+import { useRoute } from 'vue-router'
 
-
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import betBar from "src/base-h5/components/bet/bet-ouzhou-h5/bet-bar.vue";
-import { MenuWapper } from "src/base-h5/components/menu";
 import { TopMenuWapper } from "src/base-h5/components/top-menu/"
-import { BetBoxWapper } from "src/base-h5/components/bet";
+// import { BetBoxWapper } from "src/base-h5/components/bet";
 import { FooterWapper } from "src/base-h5/components/footer-bar/"
 
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { useRoute } from 'vue-router'
 
 import { api_common } from "src/api/index.js";
-import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
+import { useMittOn, MITT_TYPES, i18n_t } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 const toast = defineAsyncComponent(() =>
