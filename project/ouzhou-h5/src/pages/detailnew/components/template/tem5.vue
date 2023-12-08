@@ -307,4 +307,3 @@ onMounted(() => {
   top: 2px;
 }
 </style>
-src/output/index.js

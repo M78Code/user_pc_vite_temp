@@ -171,4 +171,3 @@ function tab_click(obj) {
   }
 }
 </style>
-src/output/index.js

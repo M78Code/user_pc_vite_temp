@@ -179,4 +179,3 @@ watch(
   }
 }
 </style>
-src/output/index.js

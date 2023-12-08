@@ -349,4 +349,3 @@ let none_league_icon_black =  ("image/bw3/png/home_page/Avatar_black.png")
   }
 }
 </style>
-src/output/index.js

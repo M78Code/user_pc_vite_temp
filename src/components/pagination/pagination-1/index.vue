@@ -324,4 +324,3 @@ const goToPage = val => {
   cursor: pointer;
 }
 </style>
-src/output/index.js

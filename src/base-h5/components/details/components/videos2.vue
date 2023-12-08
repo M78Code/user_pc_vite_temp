@@ -2330,4 +2330,3 @@ export default {
 
 /* ************** 视频全屏的样式 ************** -E */
 </style>
-src/output/index.js

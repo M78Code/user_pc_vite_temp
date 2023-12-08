@@ -1347,4 +1347,3 @@ const click_wapper_handle = obj =>{
   font-size: 12px;
 }
 </style>
-src/output/index.js

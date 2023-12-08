@@ -383,4 +383,3 @@ export default defineComponent({
   }
 }
 </style>
-src/output/index.js

@@ -114,4 +114,3 @@ const collect = lodash.throttle(() => {
   background-size: 100%;
 }
 </style>
-src/output/index.js

@@ -227,4 +227,3 @@ const get_mmp = (mst) => {
   }
 }
 </style>
-src/output/index.js

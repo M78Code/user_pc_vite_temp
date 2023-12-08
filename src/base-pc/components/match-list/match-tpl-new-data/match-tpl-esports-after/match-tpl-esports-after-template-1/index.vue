@@ -106,4 +106,3 @@ watch(() => MatchListData.data_version.version, (new_value, old_value) => {
   top: 18px!important;
 }
 </style>
-src/output/index.js

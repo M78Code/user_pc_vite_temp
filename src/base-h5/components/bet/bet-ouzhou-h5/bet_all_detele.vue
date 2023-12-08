@@ -134,4 +134,3 @@
       height: 0.4rem;
     }
 </style>
-src/output/index.js

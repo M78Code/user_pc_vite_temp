@@ -39,4 +39,3 @@ export default {
 
 <style lang="scss" scoped>
 </style>
-src/output/index.js

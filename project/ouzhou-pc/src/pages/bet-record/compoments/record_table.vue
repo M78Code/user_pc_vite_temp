@@ -723,4 +723,3 @@ const hand_copy = (data) => {
 //   // thead tr:first-child th
 //   //   top: 0
 // }</style>
-src/output/index.js

@@ -615,4 +615,3 @@ function on_change_list_type (type) {
 }
 /** 联赛排序 -E*/
 </style>
-src/output/index.js

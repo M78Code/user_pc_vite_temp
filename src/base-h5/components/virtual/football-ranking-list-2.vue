@@ -190,4 +190,3 @@ watch(() => props.tid, () => {
   }
 }
 </style>
-src/output/index.js

@@ -236,4 +236,3 @@ function refresh_data() {
     }
 }
 </style>
-src/output/index.js

@@ -14,4 +14,3 @@ const props = defineProps({
 <style scoped>
  
 </style>
-src/output/index.js

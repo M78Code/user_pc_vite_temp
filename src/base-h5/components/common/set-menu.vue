@@ -696,4 +696,3 @@ $index in (en: 1,
 
 /* ************** 切换语言前面的图标 ************** -E */
 </style>
-src/output/index.js

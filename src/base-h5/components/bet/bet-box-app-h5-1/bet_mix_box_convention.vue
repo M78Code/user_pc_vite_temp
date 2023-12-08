@@ -69,4 +69,3 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
   font-size: 14px;
 }
 </style>
-src/output/index.js

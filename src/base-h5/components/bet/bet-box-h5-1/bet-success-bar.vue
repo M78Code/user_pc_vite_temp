@@ -97,4 +97,3 @@ const get_s_count_data = ref(store_state.get_s_count_data)
   }
 }
 </style>
-src/output/index.js

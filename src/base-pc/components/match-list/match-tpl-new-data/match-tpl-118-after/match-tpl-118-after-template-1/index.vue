@@ -147,4 +147,3 @@ function compute_match_all_handicap_data_champion(match) {
 
 
 </style>
-src/output/index.js

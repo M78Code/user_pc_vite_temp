@@ -425,4 +425,3 @@ template {
     color: var(--q-gb-bg-c-9);
   }
 </style>
-src/output/index.js

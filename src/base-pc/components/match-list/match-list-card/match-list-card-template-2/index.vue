@@ -39,6 +39,7 @@
 </template>
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch, provide } from "vue";
+
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from "src/base-pc/components/match-list/play-match-type/index.js";
 import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from "src/base-pc/components/match-list/play-match-league/index.js";
 import { MatchCardFullVersionWapper as MatchCard } from "src/base-pc/components/match-list/match-card/index.js";
@@ -167,4 +168,3 @@ onUnmounted(() => {
   font-weight: 600;
 }
 </style>
-src/output/index.js

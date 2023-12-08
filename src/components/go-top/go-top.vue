@@ -51,4 +51,3 @@ const emit = defineEmits(['on_go_top'])
   }
 }
 </style>
-src/output/index.js

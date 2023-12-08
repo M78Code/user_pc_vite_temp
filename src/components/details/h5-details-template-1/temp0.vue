@@ -344,4 +344,3 @@ export default defineComponent({
   vertical-align: middle;
 }
 </style>
-src/output/index.js

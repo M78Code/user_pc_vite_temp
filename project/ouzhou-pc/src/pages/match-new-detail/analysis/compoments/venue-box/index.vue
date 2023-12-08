@@ -252,4 +252,3 @@ const tab_click = (type) => {
   color: rgb(255, 112, 0) !important;
 }
 </style>
-src/output/index.js

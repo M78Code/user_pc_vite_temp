@@ -97,4 +97,3 @@ const cancle_pre_order = () => {
   
 }
 </style>
-src/output/index.js

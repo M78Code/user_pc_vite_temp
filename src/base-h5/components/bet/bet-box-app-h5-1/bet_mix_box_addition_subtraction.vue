@@ -102,4 +102,3 @@ const set_bet_obj_config = () => {
         margin-top: -0.01rem;
     }
 </style>
-src/output/index.js

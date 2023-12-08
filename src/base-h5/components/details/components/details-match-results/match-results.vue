@@ -128,4 +128,3 @@ const props = defineProps({
   padding-bottom: 0
 }
 </style>
-src/output/index.js

@@ -306,4 +306,3 @@ export default defineComponent({
     left: 63px;
   }
 }</style>
-src/output/index.js

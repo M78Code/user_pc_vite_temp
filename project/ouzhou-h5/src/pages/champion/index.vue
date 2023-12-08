@@ -121,4 +121,3 @@ onMounted(async () => {
   }
 }
 </style>
-src/output/index.js

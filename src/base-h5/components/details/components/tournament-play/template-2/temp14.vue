@@ -280,4 +280,3 @@ export default defineComponent({
   border-radius: 4px;
 }
 </style>
-src/output/index.js

@@ -91,4 +91,3 @@ const pack_up = (val) => {
     }
   }
 </style>
-src/output/index.js

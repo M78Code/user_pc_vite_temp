@@ -337,4 +337,3 @@ onUnmounted(() => {
 .arrow {
   transform: scale(-1);
 }</style>
-src/output/index.js

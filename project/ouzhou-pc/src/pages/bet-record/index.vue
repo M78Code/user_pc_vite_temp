@@ -76,4 +76,3 @@ onActivated(() => {
   }
 }
 </style>
-src/output/index.js

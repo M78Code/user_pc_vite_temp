@@ -69,4 +69,3 @@ let alertTips = ref(false)
   }
 }
 </style>
-src/output/index.js

@@ -81,4 +81,3 @@ export default {
   justify-content: center;
 }
 </style>
-src/output/index.js

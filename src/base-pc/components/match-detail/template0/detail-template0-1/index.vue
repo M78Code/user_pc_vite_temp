@@ -187,4 +187,3 @@ const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,is
   }
 }
 </style>
-src/output/index.js

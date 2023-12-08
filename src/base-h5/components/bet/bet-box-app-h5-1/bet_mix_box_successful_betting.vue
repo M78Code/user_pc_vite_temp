@@ -55,4 +55,3 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 }
 
 </style>
-src/output/index.js

@@ -117,4 +117,3 @@ const props = defineProps({
   }
 }
 </style>
-src/output/index.js

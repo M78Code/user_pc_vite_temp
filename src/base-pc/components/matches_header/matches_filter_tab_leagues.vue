@@ -306,4 +306,3 @@ onUnmounted(() => {
   right: 0;
 }
 </style>
-src/output/index.js

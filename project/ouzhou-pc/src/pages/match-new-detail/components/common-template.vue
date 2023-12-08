@@ -278,4 +278,3 @@ onMounted(() => {
   height: 16px;
 }
 </style>
-src/output/index.js

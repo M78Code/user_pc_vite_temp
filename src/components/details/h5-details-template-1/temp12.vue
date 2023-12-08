@@ -386,4 +386,3 @@ export default defineComponent({
   font-size: 0.14rem;
 }
 </style>
-src/output/index.js

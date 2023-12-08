@@ -233,4 +233,3 @@ const del_bet_item = () => {
   }
 }
 </style>
-src/output/index.js

@@ -85,4 +85,3 @@ setTimeout(function (){
     }
 }
 </style>
-src/output/index.js

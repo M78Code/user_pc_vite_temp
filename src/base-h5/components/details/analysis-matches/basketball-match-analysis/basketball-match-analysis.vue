@@ -148,4 +148,3 @@ const tab_click = ([tab, type]) => {
 
 
 </style>
-src/output/index.js

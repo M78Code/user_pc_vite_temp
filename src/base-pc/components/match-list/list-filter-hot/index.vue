@@ -347,4 +347,3 @@ function handle_click_menu_mi_500(mi) {
   }
 }
 </style>
-src/output/index.js

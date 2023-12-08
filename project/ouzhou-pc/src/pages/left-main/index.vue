@@ -27,4 +27,3 @@ import { MenuData } from "src/output/index.js";
   width: 100%;
 }
 </style>
-src/output/index.js

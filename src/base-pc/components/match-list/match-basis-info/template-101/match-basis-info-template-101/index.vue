@@ -437,4 +437,3 @@ onUnmounted(() => {
   text-overflow: ellipsis;
   white-space: nowrap;
 }</style>
-src/output/index.js

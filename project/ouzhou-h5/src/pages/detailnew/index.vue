@@ -278,4 +278,3 @@ export default {
   // height: 100vh;
 }
 </style>
-src/output/index.js

@@ -61,4 +61,3 @@ function handle_click() {
   }
 }
 </style>
-src/output/index.js

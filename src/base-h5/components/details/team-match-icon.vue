@@ -217,4 +217,3 @@ export default defineComponent({
   float: left;
 }
 </style>
-src/output/index.js

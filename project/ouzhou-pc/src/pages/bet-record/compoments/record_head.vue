@@ -31,4 +31,3 @@ const tabList = ref([
 <style lang="scss" scoped>
 @import './record_head.scss';
 </style>
-src/output/index.js
