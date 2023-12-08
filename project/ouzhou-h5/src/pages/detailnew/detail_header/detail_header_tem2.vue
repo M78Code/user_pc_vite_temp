@@ -1,6 +1,6 @@
 <template>
   <div class="detail_header_tem2">
-    <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-156':'detail-header-221']">
+    <div class="detail-header-video">
       <iframe v-if="animation_src && right_actions_label == 'animation'"
         id="replayIframe"
         :src="animation_src+'&rdm='+iframe_rdm"
@@ -313,12 +313,6 @@ onMounted(() => {
   position: relative;
   /**.change-header-fix z-index:91; 需大于其 */
   z-index: 102;
-  .detail-header-221 {
-    height: 221px;
-  }
-  .detail-header-156 {
-    height: 156px;
-  }
   .detail-header-video {
     // height: auto;
     width: 100vw;

@@ -108,7 +108,7 @@
                         <div class="team-left">
                           <template v-if="home_red_score || home_yellow_score">
                             <!-- 红牌 -->
-                            <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            <span class='score-punish red' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
                               {{ home_red_score }}
                             </span>
                             <!-- 黄牌 -->
@@ -144,7 +144,7 @@
                       <div class='team-title-container'>
                         <!-- 红、黄牌， 发球方绿点 -->
                         <div class="team-left">
-                          <template v-if="home_red_score || home_yellow_score">
+                          <template v-if="away_red_score || away_yellow_score">
                             <!-- 红牌 -->
                             <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results }">
                               {{ away_red_score }}
