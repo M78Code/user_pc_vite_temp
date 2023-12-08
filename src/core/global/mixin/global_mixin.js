@@ -13,8 +13,8 @@ import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter, useRoute } from "vue-router";
 import filterHeader from "src/core/filter-header/filter-header.js";
-import { MatchDetailCalss } from "src/output/index.js"; 
-import { MenuData } from 'src/output/project-computed.js'
+import { MatchDetailCalss }  from "src/output/module/project-single.js""; 
+import { MenuData } from 'src/output/module/menu-data.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import GlobalSwitchClass  from "src/core/global/global.js";

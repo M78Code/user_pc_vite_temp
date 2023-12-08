@@ -20,7 +20,7 @@
 
 import lodash from "lodash";
 
-import { utils } from 'src/output/constant-utils.js'
+import { utils } from 'src/output/module/constant-utils.js'
 /**
  * @Description 设置默认模板
  * @param {Number} num 列数

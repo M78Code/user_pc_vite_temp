@@ -11,7 +11,7 @@ import {
 } from "src/core/mitt/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import store from "src/store-redux/index.js";
-import { SessionStorage } from "src/output/constant-utils.js";
+import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
 
 const menu_key = STANDARD_KEY.get("menu_pc");

@@ -36,3 +36,4 @@ import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 
 export const  PROJECT_NAME =  BUILD_VERSION_CONFIG.PROJECT_NAME
 export const  IS_PC =  BUILD_VERSION_CONFIG.IS_PC
+export const  project_name = PROJECT_NAME
