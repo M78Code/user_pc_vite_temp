@@ -392,7 +392,8 @@ const set_clear = () => {
 }
 
 onUnmounted(() => {
-  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off()
+  timer = null
 })
 </script>
 <style lang="scss" scoped>
