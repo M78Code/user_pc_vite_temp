@@ -16,7 +16,7 @@
             style="margin-left:5px"
           />
         </span>
-     {{ get_match_detail.msid }}
+     <!-- {{ get_match_detail.msid }} -->
         
         <div class="match-detail-time-collect" v-if="show_collect" >
           <!-- 显示视频按钮 -->
