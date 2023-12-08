@@ -76,8 +76,8 @@ const get_init_data = () =>{
     const session_info = LocalStorage.get(menu_h5);
     leftDataList.value = MenuData.menu_list;
     MenuData.set_current_lv1_menu(props.menu_type);
-    //MenuData.set_menu_mi(session_info?.menu_mi || MenuData.menu_mi.value || dataList()[0]?.mi);
-    MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
+    MenuData.set_menu_mi(session_info?.menu_mi || MenuData.menu_mi.value || dataList()[0]?.mi);
+    // MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
     playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
 
     nextTick(()=>{
