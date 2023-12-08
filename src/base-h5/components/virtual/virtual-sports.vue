@@ -10,15 +10,15 @@
     </div>
     <div class="virtual-content-wrapper">
     <div class="virtual-sports-card">
-      <div class="tab-title">
+      <div class="tab-title" @click.stop="expend_video = !expend_video">
         <div class="league-name right-border">{{ lengue_name }}</div>
         <div class="status">
           <!-- <span class="num">第10轮</span>
           <span class="state">比赛中</span> -->
-          <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+          <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
         </div>
       </div>
-      <template v-if="!no_virtual_match">
+      <div v-show="expend_video">
           <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
           <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
           <virtual-sports-stage
@@ -49,10 +49,10 @@
                 </div>
               </div>
           </div>
-      </template>
+      </div>
     </div>
     <div class="virtual-sports-card">
-      <div class="tab-title tab-border">
+      <div class="tab-title tab-border" @click.stop="()=>{ }">
         <div class="league-name right-border">{{ lengue_name }}</div>
         <div class="status">
           <!-- <span class="num">第10轮</span>
@@ -130,7 +130,8 @@
       </div>
       <!-- 占位撑开高度 -->
     </template>
-    <no-data v-else which='noMatch' height='500'></no-data>
+    <!-- 无赛事逻辑有变，先注释了 -->
+    <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
     </div>
     </div>
     
@@ -236,7 +237,8 @@ export default defineComponent({
       top_menu_changed: false,
       // 定时器
       procee_again_timer: null,
-      timer1_: null
+      timer1_: null,
+      expend_video: true
     });
     const match_list_by_no = computed(() => {
       return VirtualData.match_list_by_no || []
@@ -322,6 +324,7 @@ export default defineComponent({
       // useMittOn(MITT_TYPES.EMIT_ARRIVED10,arrived10_handle);
       // useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
       // match_ended_status2_handle();
+
     });
 
     onUnmounted(() => {
@@ -450,7 +453,6 @@ export default defineComponent({
         // 比赛已开始, 获取视频接口
         
         VirtualVideo.get_video_process_by_api(() => {
-          console.log('lzx 2222');
           VirtualVideo.get_match_video_process(state.current_match).bind(VirtualVideo)();
         });
       }
@@ -482,6 +484,7 @@ export default defineComponent({
             }
           }
           state.current_match = match;
+          console.log('switch_match_handle2', 'lll')
         }
         else{
           if(match.start_now_sub < 0){
@@ -493,6 +496,7 @@ export default defineComponent({
           }
           else{
             state.current_match = match;
+            console.log('switch_match_handle4', 'lll')
           }
         }
 
@@ -524,6 +528,7 @@ export default defineComponent({
         VirtualData.set_current_batch({});
       }
       state.tab_item_i = i;
+      VirtualData.set_tab_item_i(i);
       if(tab_items.value && tab_items.value.length && i > -1){
         let current_league = tab_items.value[i];
         state.lengue_name = current_league.name
@@ -658,6 +663,9 @@ export default defineComponent({
     }
     .icon{
       transform: rotate(180deg);
+      &.expend_icon {
+        transform: rotate(90deg);
+      }
     }
   }
 }
@@ -673,10 +681,10 @@ export default defineComponent({
 .virtual-sports-card {
   background: #fff;
   border-radius: 4px;
+  margin-bottom: .08rem;
 }
 .virtual-sports-menu {
     display: flex;
-    margin-bottom: .08rem;
     padding: .1rem;
     padding-bottom: 0;
     background: var(--q-gb-bd-c-1);
