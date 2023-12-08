@@ -293,7 +293,7 @@ import CountingDownStart from 'src/base-h5/components/common/counting-down-start
 import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import PageSourceData  from  "src/src/core/format/common/index.jsurce.js";
+import PageSourceData  from  "src/output/index.js";
 import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX  } from "src/output/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/default-odd-template/odd-list-wrap.vue';
