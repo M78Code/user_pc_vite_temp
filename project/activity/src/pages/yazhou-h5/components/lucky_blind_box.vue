@@ -286,7 +286,10 @@ import data_pager from "project/activity/src/components/data_pager.vue";
 import active_count_down from "./active_count_down.vue";
 import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
-import utils from 'project/activity/src/utils/utils.js';
+import {gtag_config_send,
+gtag_view_send,
+gtag_event_send,
+zhuge_event_send  ,format_time_zone_time ,is_time_limit } from "project_path/src/core/index.js"
 import { UserCtr } from "project_path/src/core/index.js";
 
 export default {
@@ -464,7 +467,7 @@ export default {
     },
     // 点击礼盒切换
     lihe_list_click(item, i, frequent_clicks){
-      if(utils.is_time_limit() || (this.lihe_index == i && frequent_clicks)) return //  防止调用多次接口
+      if(is_time_limit() || (this.lihe_index == i && frequent_clicks)) return //  防止调用多次接口
       this.lihe_index = i
       this.lihe_name.name = item.name
       if(!this.get_Lucky_box) return
@@ -529,7 +532,7 @@ export default {
         if(this.get_user.activityList[this.activityIndex].period == 3) return this.$toast('活动已结束', 1000)
         if(this.lihe_name.num_ber <= 0) return this.$toast('盲盒已被抢完', 1000)
         if(this.get_Lucky_box.tokenNum < this.lihe_name.Number_tokens_consumed) {this.gift_box_alert = false; return this.$toast('奖券不足', 1000)}
-        if(utils.is_time_limit() || this.lottery_loading) return //  防止调用多次接口
+        if(is_time_limit() || this.lottery_loading) return //  防止调用多次接口
         try {
           this.lottery_loading = true
           // boxType	盲盒类型，1：白银盲盒  2：黄金盲盒  3：钻石盲盒
@@ -539,7 +542,7 @@ export default {
             this.amount_of_winning = data.award
             this.gift_box_alert = true
             this.get_Lucky_box_init()
-            this.$utils.gtag_event_send('H5_luckybox_getAwardClick', 'H5_活动', 'H5_幸运盲盒', parseInt(data.award))
+            .gtag_event_send('H5_luckybox_getAwardClick', 'H5_活动', 'H5_幸运盲盒', parseInt(data.award))
           } else if(['0410505'].includes(code)) { // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
             this.$emit('to_maintenance')
             return
@@ -575,7 +578,7 @@ export default {
     // 历史记录接口
     async expand_history( cpn_number ) {
       //  防止调用多次接口
-      if(utils.is_time_limit()) return
+      if(is_time_limit()) return
       try {
         // 服务器时间
         // 查询最近90天的历史记录
@@ -629,7 +632,7 @@ export default {
      */
     utc_to_gmt_no_8_ms2_(value) {
       if (!value) { return '' }
-      let time = this.$utils.format_time_zone_time(parseInt(value));
+      let time =  format_time_zone_time(parseInt(value));
       let [y, m, d, h, mm, s] = this.format_date_base(time)
       return {y, m, d, h, mm, s}
     }

@@ -177,6 +177,8 @@ const random = function(minNum,maxNum){
 }
 //头部引入  
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
+import {  rem } from "project_path/src/core/index.js"
+
 export default {
   name: 'compose',
   components:{
@@ -237,7 +239,7 @@ export default {
     }
   },
   created() {
-    this.is_has_scroll = innerHeight < this.$utils.rem(7)
+    this.is_has_scroll = innerHeight < rem(7)
     this.frame = 0
     this.get_lottory_merge()
     this.create_particle()
@@ -436,7 +438,7 @@ export default {
     create_particle(){
       // 生成粒子
       let width = innerWidth
-      let height = this.$utils.rem(4)
+      let height = rem(4)
       let count = 20
 
       let particle_list = []

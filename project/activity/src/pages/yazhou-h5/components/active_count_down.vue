@@ -20,6 +20,7 @@ import common from "project/activity/src/mixins/module/common.js";
 import acticity_mixin from "../mixin/acticity_mixin";
 //头部引入  
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
+import {  format_time_zone_time } from "project_path/src/core/index.js"
 export default {
   name: "active_count_down",
   mixins: [common, acticity_mixin],
@@ -131,7 +132,7 @@ export default {
      */
     utc_to_gmt_no_8_ms2_(value) {
       if (!value) { return '' }
-      let time = this.$utils.format_time_zone_time(parseInt(value));
+      let time =  format_time_zone_time(parseInt(value));
       let [y, m, d, h, mm, s] = this.format_date_base(time)
       return {y, m, d, h, mm, s}
     }
