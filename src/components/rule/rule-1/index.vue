@@ -19,7 +19,7 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
 
 import { loadLanguageAsync } from "src/output/index.js";
-import { LocalStorage } from "src/core/utils/module/web-storage.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({})
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));

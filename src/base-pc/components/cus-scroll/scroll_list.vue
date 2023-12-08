@@ -31,7 +31,7 @@ import resizeObserver from "src/base-pc/components/match-results/resize-observer
 import { onMounted, onUnmounted, ref} from "vue";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import { utils_info } from 'src/core/utils/module/match-list-utils.js';
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 
 const props = defineProps({

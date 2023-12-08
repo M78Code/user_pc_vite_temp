@@ -72,7 +72,7 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import STANDARD_KEY from "src/core/standard-key";
-import {  LocalStorage } from "src/core/index.js"
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);

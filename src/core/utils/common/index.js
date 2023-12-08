@@ -9,7 +9,7 @@ export  *  from './module/other.js'
 export  *  from './module/Qs.js'
 export  *  from './module/tooltip.js'
 export  *  from './module/urParamsInit.js'
-export  *  from './common/module/utils.doc.json'
+export  *  from './module/utils.doc.json'
 export  *  from './module/utils.js'
 export  *  from './module/web-storage.js'
 export  *  from './module/mmp.js'
@@ -17,6 +17,5 @@ export  *  from './module/play-title.js'
 
 export  *  from './module/dynamic-component.js'
 export  *  from './module/ws-message.js'
-export * from "./module/web-storage.js"
 
  

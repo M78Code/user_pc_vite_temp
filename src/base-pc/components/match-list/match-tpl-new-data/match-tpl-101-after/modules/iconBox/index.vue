@@ -21,7 +21,7 @@
 <script setup>
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { i18n_t } from "src/output/index.js";
-import { utils } from 'src/core/utils/module/utils.js'
+import { utils } from 'src/core/utils/common/module/utils.js'
 import details from "src/core/match-list-pc/details-class/details.js"
 import lodash from 'lodash';
 

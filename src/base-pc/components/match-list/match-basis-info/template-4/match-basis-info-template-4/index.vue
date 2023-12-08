@@ -43,7 +43,7 @@ import { t } from "src/output/index.js";
 import { get_match_status } from 'src/core/utils/common/index'
 import { get_remote_time } from "src/core/format/module/format-date.js"
 import tips from "src/base-pc/components/match-detail/tips1/tips1.vue"
-import { utils } from 'src/core/utils/module/utils.js'
+import { utils } from 'src/core/utils/common/module/utils.js'
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const props = defineProps({

@@ -21,7 +21,7 @@ import { wslog } from "src/core/log/";
 import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
-import { LocalStorage } from 'src/core/utils/module/web-storage.js'
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { reactive, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 

@@ -11,7 +11,6 @@
 import appload from "./app-load.vue";
 import app_mixin from "src/base-h5/mixin/app-mixin.js";
 import NotLogin from 'src/base-h5/components/common/not-login.vue';
-import {LocalStorage} from "src/output/index.js"
 export default {
   mixins: [app_mixin],
   components: {

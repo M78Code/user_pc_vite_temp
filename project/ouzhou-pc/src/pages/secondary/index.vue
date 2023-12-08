@@ -55,7 +55,7 @@ import matchResults from "src/base-pc/components/results/match-results.vue";
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { loadLanguageAsync } from "src/output/index.js";
-import { LocalStorage } from "src/core/utils/module/web-storage.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 //数据列表
 const list_data = reactive([
   { id: "announcement", name: "Announcement", i18filed: 'announcement' },
