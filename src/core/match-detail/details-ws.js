@@ -10,8 +10,7 @@ import {
   useMitt,
   MITT_TYPES,
   useMittEmit,
-} from "src/core/index";
-import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
+} from "src/output/index";
 
 export const details_ws = () => {
   /**
