@@ -443,11 +443,11 @@ onUnmounted(() => {
   background: var(--q-gb-t-c-1) !important;
   display: flex;
   justify-content: space-between;
-  padding: 0 0.3rem;
+  padding: 0 0.2rem;
   border-radius: 0.7rem;
   color: var(--q-gb-t-c-14);
   font-size: 0.14rem;
-  padding-left: 0.1rem;
+  padding-left: 0.05rem;
 }
 .yb-info-hui{
 background: var(--q-gb-t-c-5) !important;
@@ -525,7 +525,7 @@ background: var(--q-gb-t-c-5) !important;
   top: 0;
   bottom: 0;
   z-index: 550;
-  backdrop-filter: blur(5px);
+  // backdrop-filter: blur(5px);
   background: rgba(0, 0, 0, 0.5);
 }
 

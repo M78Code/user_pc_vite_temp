@@ -1,6 +1,6 @@
 <template>
   <div class="detail_header_tem2">
-    <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-134':'detail-header-230']">
+    <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-156':'detail-header-221']">
       <iframe v-if="animation_src && right_actions_label == 'animation'"
         id="replayIframe"
         :src="animation_src+'&rdm='+iframe_rdm"
@@ -11,7 +11,8 @@
       ></iframe>
       <custom_video class="custom-video" :status="status" v-if="right_actions_label == 'video'" :get_detail_data="detail"/>
       <!-- {{ detail }} -->
-      <score_component :get_match_detail="detail" v-show="right_actions_label == 'score'" :key="right_actions_label"/>    
+      <score_component :get_match_detail="detail" 
+            v-show="right_actions_label == 'score'" :key="right_actions_label" @handle-change="handle_change"/>    
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
@@ -61,7 +62,8 @@
         </div>
       </div>
     </div> -->
-    <right_actions @handle-type="handle_type" :status="status" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
+    <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'"
+                  :status="status" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
   </div>
 </template>
   
@@ -82,7 +84,12 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  label: {
+    type: String,
+    default: ""
+  }
 });
+
 
 const detail = computed(() => props.get_match_detail)
 
@@ -159,6 +166,11 @@ const football_score_icon_list = ref([
     msc_key: "S5"
   },
 ])
+
+const handle_change = (value) => {
+  right_actions_label.value = value;
+}
+
 /**
  *@description // 比分板数据
  *@param {*}
@@ -300,11 +312,11 @@ onMounted(() => {
   position: relative;
   /**.change-header-fix z-index:91; 需大于其 */
   z-index: 102;
-  .detail-header-230 {
-    height: 230px;
+  .detail-header-221 {
+    height: 221px;
   }
-  .detail-header-134 {
-    height: 134px;
+  .detail-header-156 {
+    height: 156px;
   }
   .detail-header-video {
     // height: auto;

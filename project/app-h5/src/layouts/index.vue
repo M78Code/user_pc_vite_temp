@@ -20,7 +20,7 @@
       <BetBoxWapper use_component_key='BetBoxAppH5_1' />
 
       <!--页脚-->
-      <Tabbar id="page-footer" class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports','category', 'esports_sports'].includes(route.name)">
+      <Tabbar id="page-footer" class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports', 'esports_sports'].includes(route.name)">
       </Tabbar>
 
       <!-- 筛选+搜索   已脱离文档流-->
