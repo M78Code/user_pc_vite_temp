@@ -148,7 +148,7 @@
                                :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">
                               <div class="single-name">
-                                <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span :class="BetData.bet_oid_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_14">
                                 {{append_single.on}}
                               </span>
@@ -162,7 +162,7 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">  
                               <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">22
-                                <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span class="fz_14 odd-color">
                                 {{append_single.on}}
                               </span>
@@ -184,7 +184,7 @@
                           <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                             <div class="bet-item-ky-container">  
                               <div class="single-name" v-show="get_detail_data.csid != 1">
-                                <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
+                                <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                                 <span class="fz_14 night-style">
                                 {{append_single.on}}
                               </span>
@@ -208,7 +208,7 @@
                       <div class="play-box-sty details-color " style="flex:1;" :class="get_detail_data.csid == 1? 'odds-lock' : '' ">
                         <div class="bet-item-ky-container">  
                           <div class="single-name details_t_color7" v-show="get_detail_data.csid != 1">
-                            <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
+                            <!-- <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span> -->
                             <span class="size-color fz_14 odd-color">
                             {{append_single.on}}
                           </span>
