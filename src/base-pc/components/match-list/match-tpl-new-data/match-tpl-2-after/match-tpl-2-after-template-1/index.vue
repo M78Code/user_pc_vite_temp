@@ -39,7 +39,7 @@
 <script setup>
 import { ref } from 'vue';
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData, compute_local_project_file_path } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, compute_local_project_file_path } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -67,3 +67,4 @@ const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_o
 const match = MatchListData.list_to_obj.mid_obj[props.mid+'_'];
 
 </script>
+src/output/index.js

@@ -35,7 +35,7 @@
 
 <script setup>
 // import bettinglist from 'src/project/mixins/betting/betting.js';
-import { UserCtr ,compute_img_url} from "src/core/index.js";
+import { UserCtr ,compute_img_url} from "src/output/index.js";
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 

@@ -44,7 +44,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import MatchListCardClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';
 import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
-import { compute_css_obj } from "src/core/index.js";
+import { compute_css_obj } from "src/output/index.js";
 
 const props = defineProps({
   card_style_obj: {

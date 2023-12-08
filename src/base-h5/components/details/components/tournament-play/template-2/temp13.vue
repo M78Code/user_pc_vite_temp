@@ -236,7 +236,7 @@
 <script>
 import lodash from "lodash";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils,LOCAL_PROJECT_FILE_PREFIX ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from 'src/core/index.js';
+import {utils,LOCAL_PROJECT_FILE_PREFIX ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"

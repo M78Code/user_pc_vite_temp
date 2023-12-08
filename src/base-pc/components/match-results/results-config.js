@@ -16,7 +16,7 @@ import { api_common,api_analysis } from "src/api/";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { useRoute, useRouter } from "vue-router";
-import { format_day,is_eports_csid } from "src/core/index.js";
+import { format_day,is_eports_csid } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 // import { axios_loop } from "src/core/http/index.js";
 // import menu_config from "src/core/menu-pc/menu-data-class.js";
@@ -31,7 +31,7 @@ import {
   format_sort_data,
   utils,
   MITT_TYPES,
-} from "src/core/index.js";
+} from "src/output/index.js";
 export const useGetResultConfig = () => {
   const route = useRoute();
   const router = useRouter();
@@ -637,7 +637,7 @@ export const useGetResultConfig = () => {
         state.results_list = [];
         state.load_data_state = "empty";
       }
-    });
+    })
   };
 
   /**

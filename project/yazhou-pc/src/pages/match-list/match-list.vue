@@ -145,8 +145,8 @@ import EsportsHeader from "src/base-pc/components/match-list/esports-header/inde
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import {mounted_fn, load_data_state, show_refresh_mask, collect_count, is_show_hot, on_refresh } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { PageSourceData,compute_css_obj } from 'src/core/index.js';
-import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/core/index.js";
+import { PageSourceData,compute_css_obj } from 'src/output/index.js';
+import {MatchDataWarehouse_PC_List_Common as MatchListData ,GlobalAccessConfig} from "src/output/index.js";
 import "./match_list.scss";
 const { page_source } = PageSourceData;
 export default {
@@ -247,3 +247,4 @@ export default {
   font-size: 13px;
 }
 </style>
+src/output/index.jssrc/output/index.js

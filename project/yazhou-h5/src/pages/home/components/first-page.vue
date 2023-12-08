@@ -43,7 +43,7 @@
   // import skt_home_bw3 from "src/base-h5/mixins/websocket/data/skt_home_bw3.js";
   // 公告栏跑马灯
   import VMarquee from 'src/base-h5/components/marquee/marquee.vue'
-  import { compute_css_obj } from "src/core/";
+  import { compute_css_obj } from "src/output/index.js";
   // mixins: [skt_home_bw3, match_list_mixin],
   //余额
   let balance_obj = ref({});

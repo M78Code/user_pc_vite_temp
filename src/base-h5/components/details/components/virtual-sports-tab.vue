@@ -31,7 +31,7 @@ import { useRoute, useRouter } from "vue-router"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import lodash from "lodash"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core";
+import { MatchDetailCalss,MenuData,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
 import { defineComponent,ref,onMounted,watch,onUnmounted,computed } from "vue";
 export default defineComponent({
   props:[
@@ -364,3 +364,4 @@ export default defineComponent({
   background-size: 100% 100%;
 }
 </style>
+src/output

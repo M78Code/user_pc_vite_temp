@@ -17,8 +17,7 @@ import BUILDIN_CONFIG from "app/job/output/env/index.js";
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 // Import Quasar css
 import "quasar/src/css/index.sass";
-import { LocalStorage, SessionStorage  } from "src/core/utils/index.js";
-import { i18n } from "src/core/index.js";
+import { i18n } from "src/output/index.js";
 import router from './src/router/index.js'
 //引入全局初始化样式
 import "./src/css/app.scss"

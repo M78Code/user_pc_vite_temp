@@ -56,7 +56,7 @@ import { ref, reactive, onMounted, watch, computed, onUnmounted } from 'vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
+import { UserCtr, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 import lodash_ from 'lodash'
 
 const active_index = ref(BetData.active_index)

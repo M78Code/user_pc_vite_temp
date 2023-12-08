@@ -19,7 +19,7 @@
 <script setup>
 import { ref } from 'vue'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 
 const get_is_hengping = ref()

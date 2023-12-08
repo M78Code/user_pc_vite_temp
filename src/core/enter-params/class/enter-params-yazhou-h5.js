@@ -1,8 +1,12 @@
-import { get_query_string } from "src/core/index.js";
-import { LocalStorage } from "src/core/index.js";
+import { get_query_string } from "src/core/utils/index.js";
+import { LocalStorage } from 'src/core/utils/module/web-storage.js'
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
-import { UserCtr, GlobalAccessConfig, MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/module/menu-data.js";
+import GlobalAccessConfig from "src/core/access-config/access-config.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import GlobalAccessConfig from "src/core/access-config/access-config.js";
+
 /**
  * url所带的部分参数
  * s=01

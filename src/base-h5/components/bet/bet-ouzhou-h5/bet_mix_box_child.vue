@@ -107,7 +107,7 @@ import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr, i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { UserCtr, i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/output/index.js";
 import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'

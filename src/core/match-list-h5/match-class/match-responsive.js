@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { use_sports_play_title } from 'src/core/constant/index.js'
-import { MenuData } from "src/core/index";
+import { MenuData } from "src/output/index";
 
 /**
  * @description 赛事页面级别的 响应式参数

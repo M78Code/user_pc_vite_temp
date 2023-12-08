@@ -6,16 +6,12 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
 import {
-  useMittOn,
   useMittEmit,
-  useMittEmitterGenerator,
   MITT_TYPES,
-} from "src/core/index.js"
-
-import {utils} from "src/core/index.js";
+} from "src/core/mitt/index.js";
+import LayOutMain_pc from "src/core/layout/index.js";
 import store from "src/store-redux/index.js";
-import { compute_sport_id  } from 'src/core/constant/index.js'
-import { LayOutMain_pc, SessionStorage } from "src/core/index.js";
+import { SessionStorage } from "src/output/module/constant-utils.js";
 import STANDARD_KEY from "src/core/standard-key";
 
 const menu_key = STANDARD_KEY.get("menu_pc");

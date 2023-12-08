@@ -1,10 +1,6 @@
 
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
-import lodash from "lodash";
-
-
 
 import {conpute_match_list_card_offset,set_fold_match_list_scroll_top} from  "./card-show-offset.js"
 

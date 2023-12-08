@@ -80,7 +80,6 @@ import {
 } from "./module/add-and-remove.js";
 import { update_match_style } from './module/update-match-style.js'
 import { set_card_show_level } from './module/card-show-offset.js'
-import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { ref } from "vue";
 

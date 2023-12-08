@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" />
+    <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
     <div class="match-results-container-styles">
         <match-container />
@@ -50,7 +50,7 @@ import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
-import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/core/"
+import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/output/index.js"
 
 
 // 新修改
@@ -112,6 +112,7 @@ const set_scroll_data_list = (data_list = []) => {
 
 // 设置滑动菜单的选中id
 const set_scroll_current = item => {
+    if (!item) return
     state.current_mi = item.mi
     let params = {
         mi:item.mi,
@@ -135,7 +136,7 @@ const selectFinishHandle = (val) => {
 
 onMounted(()=>{
     MenuData.set_current_lv1_menu(28)
-    useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
+    // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
     VirtualList.set_is_show_ball(false)
     VirtualList.set_is_change_handicap_height(-22)
     switchHandle(0)
@@ -144,10 +145,11 @@ onMounted(()=>{
 onUnmounted(()=>{
     VirtualList.set_is_show_ball(true)
     VirtualList.set_is_change_handicap_height(0)
-    useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+    // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
 })
 
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
 </style>
+src/output

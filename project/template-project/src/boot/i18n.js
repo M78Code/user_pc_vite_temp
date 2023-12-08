@@ -1,5 +1,5 @@
 import { createI18n } from 'vue-i18n'
- 
+import { LocalStorage } from 'src/core/utils/module/web-storage.js'
 // 所有语中使用到的公共的国际化字符串
 // import other from 'src/i18n/other
 const locale = LocalStorage.get('lang', "zh"); //緩存的值

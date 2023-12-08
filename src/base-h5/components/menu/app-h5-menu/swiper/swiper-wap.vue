@@ -19,7 +19,7 @@
 import SwiperNav from "./swiper-nav.vue";
 import { ref, onMounted } from "vue";
 import { api_home } from "src/api/index.js";
-import { get_server_file_path } from 'src/core/';
+import { get_server_file_path } from "src/output/index.js";
 import { useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
 const store_state = store.getState();
@@ -1702,3 +1702,4 @@ getSwiperList();
         }
     }
 </style>
+src/output

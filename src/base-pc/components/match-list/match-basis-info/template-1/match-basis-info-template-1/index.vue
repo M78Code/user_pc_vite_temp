@@ -102,18 +102,16 @@
 
 <script setup>
 
-import { computed, ref, watch, onUnmounted } from 'vue';
+import { computed, ref, onUnmounted } from 'vue';
 import lodash from 'lodash'
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
-import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
+import { get_remote_time } from "src/core/format/module/format-date.js"
 import { utils } from 'src/core/utils/module/utils.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { MenuData, MatchDataWarehouse_PC_List_Common } from "src/core/index.js"
+import { MenuData } from "src/output/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { i18n_t, compute_local_project_file_path } from "src/core/index.js";
+import { i18n_t, compute_local_project_file_path } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import {get_main_score} from 'src/core/match-list-pc/match-handle-data.js'
 
@@ -288,3 +286,4 @@ onUnmounted(() => {
   }
 }
 </style>
+src/output/index.jssrc/output/index.js

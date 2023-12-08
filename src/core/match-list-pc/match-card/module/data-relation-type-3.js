@@ -12,7 +12,7 @@
      * 
      * 处理  13
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData,i18n_t } from 'src/core/index.js'
+    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/module/match-data-base.js'
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import BaseData from "src/core/base-data/base-data.js";

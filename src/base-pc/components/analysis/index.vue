@@ -72,7 +72,7 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 import { formatTime,msc_array_obj } from 'src/core/format/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import store from 'src/store-redux/index.js'
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/output/index.js";
 let state = store.getState();
 
 export default {

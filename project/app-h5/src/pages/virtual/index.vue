@@ -54,7 +54,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 import lodash from "lodash";
 import { api_common } from "src/api/index";
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
-import { i18n_t, MenuData } from 'src/core/'
+import { i18n_t, MenuData } from "src/output/index.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 // 回到顶部
@@ -430,3 +430,4 @@ onUnmounted(() => {
   height: calc(100% - .94rem);
 }
 </style>
+src/output

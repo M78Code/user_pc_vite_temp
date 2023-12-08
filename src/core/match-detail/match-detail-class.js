@@ -8,8 +8,8 @@
 import { ref ,reactive} from "vue"
 import { SessionStorage } from "src/core/utils/index.js"
 import { debounce } from "lodash";
-import { MatchDataWarehouse_H5_Detail_Common } from "src/core/index";
-export default class MatchDetailCtr {
+import { MatchDataWarehouse_H5_Detail_Common } from "src/output/index";
+class MatchDetailCtr {
  
   constructor( ) {
     this.init();
@@ -452,3 +452,8 @@ export default class MatchDetailCtr {
     return o.os == 1 && o._hs != 11
   }
 }
+
+
+
+
+export default  new  MatchDetailCtr()

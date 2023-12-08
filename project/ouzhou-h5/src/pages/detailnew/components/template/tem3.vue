@@ -55,7 +55,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
 import olStatus from "../ol_status.vue";
 import { odd_lock_ouzhou } from "src/base-h5/core/utils/local-image.js";
-import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/core/index.js"
+import { compute_value_by_cur_odd_type,MatchDetailCalss } from "src/output/index.js"
 import ResultOlItem from "../../result/ResultOlItem.vue";
 // import { storage_bet_info } from 'src/public/utils/bet/bet_info.js'
 // import EMITTER from  "src/global/mitt.js"

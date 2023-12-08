@@ -67,7 +67,7 @@ import {
     computed
 } from "vue";
 import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
-import { MenuData } from "src/core/";
+import { MenuData } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -173,7 +173,7 @@ const setDefaultData = (val) => {
     store.current_menu_mi = val;
     //球种改变设置今日
     // MenuData.set_date_time(week[0].val);
-    store.menu_time = week[0]
+    store.menu_time = week[0].val
     store.second_tab_index = 0;
     scrollDateRef.value && scrollDateRef.value.scrollTo(0, "start-force");
 }
@@ -457,4 +457,4 @@ const areaListChange = (item) => {
         height: calc(100% - 105px);
     }
 }</style>
-  
+  src/output

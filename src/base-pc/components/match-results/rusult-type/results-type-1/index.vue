@@ -239,7 +239,7 @@
 </template>
 
 <script>
-import { is_eports_csid } from 'src/core/index.js'
+import { is_eports_csid } from 'src/output/index.js'
 import soccer from  "src/base-pc/components/match-results/template/soccer.vue";
 import basketball from "src/base-pc/components/match-results/template/basketball.vue";
 import tennis from "src/base-pc/components/match-results/template/tennis.vue";

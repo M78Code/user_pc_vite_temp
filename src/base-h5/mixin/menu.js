@@ -1,6 +1,6 @@
 import { watch, computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import { MenuData } from 'src/core/'
+import { MenuData } from 'src/output'
 import PageSourceData from "src/core/page-source/page-source.js";
 const page_source = ref(PageSourceData.page_source) // 当前页面来源
 
