@@ -426,6 +426,9 @@ class MatchMeta {
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+    const list = lodash.get(res, 'data', [])
+    if (list.length < 1) return
+    await MatchCollect.get_collect_match_data(list)
     this.handle_custom_matchs(res)
   }
 
@@ -559,7 +562,7 @@ class MatchMeta {
       if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
       const data = lodash.get(res, 'data', [])
       // 一期只做  足球、篮球、网球、冠军
-      const list = data.filter((t) => ['1','2'].includes(t.csid))
+      const list = data.filter((t) => ['1','2','5'].includes(t.csid))
       this.handler_match_list_data({ list: list, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
     })
   }
