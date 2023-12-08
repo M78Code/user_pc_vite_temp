@@ -43,13 +43,13 @@
 </template>
 <script setup>
 import { watch, ref, onMounted } from "vue";
-import { useMittOn, MITT_TYPES } from "src/core/";
+import { useMittOn, MITT_TYPES } from "src/output/index.js";
 // 无网络展示组件
 import no_data from "src/base-h5/components/common/no-data.vue";
-import { MenuData, UserCtr, compute_css_obj } from "src/core/";
+import { MenuData, UserCtr, compute_css_obj } from "src/output/index.js";
 import lodash from "lodash";
 import { useRouter } from "vue-router";
-import { DateForMat } from "src/core/format/index.js";
+import { DateForMat } from "src/core/format/common/index.js";
 import { lang } from "src/base-h5/mixin/userctr";
 import base_data from "src/core/base-data/base-data.js";
 
@@ -601,4 +601,4 @@ onMounted(() => {
     }
   }
 
-</style>
+</style>src/outputsrc/core/format/common/index.js

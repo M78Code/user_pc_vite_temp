@@ -42,8 +42,8 @@ import {storage_bet_info} from "src/core/bet/module/bet_info.js"; //#TODO core/i
 import {set_bet_obj_config} from "src/core/bet/class/bet-box-submit.js"
 // import EMITTER from "src/global/mitt.js";
 import {useMittEmit, MITT_TYPES} from "src/core/mitt"
-import {LOCAL_PROJECT_FILE_PREFIX} from "src/core";
-import {MatchDetailCalss} from "src/core"
+import {LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
+import {MatchDetailCalss} from "src/output/index.js"
 import _ from "lodash"
 
 // /** @type {{match_odds_info:Array<{hl:Array<TYPES.Hl>}}} */
@@ -262,3 +262,4 @@ onMounted(() => {
     }
 }
 </style>
+src/outputsrc/output

@@ -123,6 +123,7 @@
 import no_data from "../no_data/no_data.vue";
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
 
+import {  is_eports_csid } from "project_path/src/core/index.js"
 
 export default {
   name: "loadData",
@@ -193,7 +194,7 @@ export default {
  
     //是否电子竞技
     is_eports(){
-        return this.$utils.is_eports_csid(+this.$route.params.csid)
+        return is_eports_csid(+this.$route.params.csid)
     },
     cur_state(){
       return this.state

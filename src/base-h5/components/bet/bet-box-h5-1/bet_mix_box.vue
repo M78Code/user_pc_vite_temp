@@ -17,11 +17,8 @@
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 // import betMixBoxChild1 from "./bet_mix_box_child1.vue";
 import betMixBoxChild2 from "./bet_mix_box_child2.vue";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import BetData from "src/core/bet/class/bet-data-class.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
-
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 
 const bet_show = ref(false)
 

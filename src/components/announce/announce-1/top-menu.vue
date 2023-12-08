@@ -2,7 +2,8 @@
 <template>
     <!-- top菜单内容 -->
     <div class="top-menu-content">
-        <q-tabs class="fit rule-scroll-area">
+        <q-tabs class="fit rule-scroll-area" outside-arrows
+        mobile-arrows>
             <q-tab class="cursor-pointer" v-for="(item, index) in data" :key="index" @click="tabs_click(item, index)">
                 <div class="top-menu-title"
                     :class="{ active: tab_index == index, topmenutitles:tab_index == index, 'no-subtab': !item.subtab || item.subtab.length == 0 }">        

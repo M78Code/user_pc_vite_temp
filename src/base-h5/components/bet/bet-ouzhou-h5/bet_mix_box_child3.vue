@@ -37,7 +37,7 @@
   </template>
   <script setup>
     // import betInputInfo1 from "./bet_input_info1.vue";
-    import { compute_value_by_cur_odd_type } from "src/core/index.js"
+    import { compute_value_by_cur_odd_type } from "src/output/index.js"
 
     const props = defineProps({
       items:{}
@@ -119,4 +119,4 @@
     display: flex;
   }
   </style>
-  
+  src/output/index.js

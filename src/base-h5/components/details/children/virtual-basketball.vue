@@ -467,3 +467,4 @@ export default defineComponent({
   font-weight: 600;
 }
 </style>
+src/core/utils/common/module/other.js

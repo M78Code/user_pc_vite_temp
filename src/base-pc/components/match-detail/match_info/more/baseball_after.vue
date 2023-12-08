@@ -146,7 +146,7 @@ import store from "src/store-redux/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { IconWapper } from 'src/components/icon'
 import { nextTick } from "vue";
-import { socre_dict,useMittOn, MITT_TYPES, useMittEmit} from "src/core";
+import { socre_dict,useMittOn, MITT_TYPES, useMittEmit} from "src/output/index.js";
 import LayOutMain from "src/core/layout/index.js"
 // 两局之间的局间休息--根据赛事阶段比对文档[http://lan-confluence.sportxxxr1pub.com/pages/viewpage.action?pageId=24127556]，特殊处理为 mct +1 和不显示发球方
 const _mmp = [422, 424, 426, 428, 430, 432, 434, 436, 43810, 43811, 43812, 43813, 43814, 43815, 43816, 43817, 43818, 43819];

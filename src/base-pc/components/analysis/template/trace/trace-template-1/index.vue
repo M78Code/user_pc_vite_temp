@@ -27,7 +27,7 @@
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
-import { formatTime } from 'src/core/format/index.js'
+import { formatTime } from 'src/core/format/common/index.js'
 </script>
 
 <style lang="scss" scoped>
@@ -113,3 +113,4 @@ import { formatTime } from 'src/core/format/index.js'
     }
   }
 }</style>
+src/core/format/common/index.js

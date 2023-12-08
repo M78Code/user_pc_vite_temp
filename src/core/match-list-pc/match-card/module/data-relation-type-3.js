@@ -12,7 +12,7 @@
      * 
      * 处理  13
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData,i18n_t } from 'src/core/index.js'
+    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/module/match-data-base.js'
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import BaseData from "src/core/base-data/base-data.js";
@@ -29,7 +29,7 @@
       ouzhou_league_container_template,
    
     } from "../config/card-template-config.js"
-    import MenuData from "src/core/menu-pc/menu-data-class.js";
+    import { MenuData} from "src/output/module/menu-data.js"
     import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
     import { compute_sport_id  } from 'src/core/constant/index.js'
 
@@ -300,7 +300,6 @@
         temp_match_status_title_card_obj.match_count = match_status_type_match_count
       }
     })
-    console.log('match_list_card_key_arr', match_list_card_key_arr);
     // MatchListCardData.set_all_card_obj(all_card_obj)
     // 合并所有卡片样式对象
     // 已开赛 到卡片key的 映射对象

@@ -17,7 +17,7 @@
                    
                     <span class="sport-icon-wrap"
                       :style="compute_css_obj({key:current_mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image', position:format_type(item)})"></span>
-                    <div v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000" class="sport-match-count">
+                    <div v-if="props.is_show_badge" v-show="item.ct > 0 && MenuData.top_menu_title.mi != 50000" class="sport-match-count">
                       {{ item.ct || 0 }}
                     </div>
                   </div>
@@ -33,15 +33,17 @@
       </div>
 </template>
 <script setup>
+import { useRouter } from 'vue-router'
 import { ref,reactive,onMounted,onUnmounted,nextTick } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
-import { compute_css_obj, MenuData } from "src/core/index.js";
+import { compute_css_obj, MenuData } from "src/output/index.js";
 import {scrollMenuEvent} from "../utils";
 import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 const ref_data = reactive({
     emit_lsit:{}
 })
+const router = useRouter()
 const menu_show_id = reactive([0,300,50000,2000]);//全部 vr 收藏 电竞显示
 const scrollTab = ref(null);
 const props = defineProps({
@@ -54,20 +56,27 @@ const props = defineProps({
   current_mi:{
     type: String || Number,
     default: ''
-  }
+  },
+  is_show_badge:{
+    type: Boolean,
+    default: true
+  },
 })
+
 const emits = defineEmits(['changeList'])
 /**
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  // if (item.mi === 2000) router.push('/esports')
   event = event || scrollTab.value[0];
   // 选中后点击无效
-  if (item.mi == MenuData.current_lv_2_menu_i) return;
+  // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
+  emits('changeMenu',item)
   nextTick(()=>{
-  // 设置菜单点击事件
-  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item )
+  设置菜单点击事件
+  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
   })
 }
 /**
@@ -165,7 +174,7 @@ onUnmounted(()=>{
           height: 100%;
           flex-shrink: 0;
           color: var(--q-gb-t-c-19);
-          .current {
+          &.current {
             //color: var(--q-gb-bd-c-2);
             color: var(--q-gb-t-c-20);
             .inner-w {

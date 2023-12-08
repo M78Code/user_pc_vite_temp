@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import {utils } from 'src/core/index.js';
-import { format_time_zone_time, format_H_M } from "src/core/format/index.js"
+import {utils } from 'src/output/index.js';
+import { format_time_zone_time, format_H_M } from "src/core/format/common/index.js"
 //国际化
 
 
@@ -80,4 +80,4 @@ export default {
   display: flex;
   justify-content: center;
 }
-</style>
+</style>src/core/format/common/index.js

@@ -43,7 +43,7 @@ import match_icon from "src/base-h5/components/details/match-icon/match-icon-2.v
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
-import {utils } from 'src/core/index.js'
+import {utils } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 
 export default defineComponent({

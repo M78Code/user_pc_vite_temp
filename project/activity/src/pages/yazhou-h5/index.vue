@@ -94,9 +94,12 @@ import acticity_mixin from "./mixin/acticity_mixin.js";
 import { UserCtr } from "project_path/src/core/index.js";
 
 import _ from 'lodash';
-import utils from 'project/activity/src/utils/utils.js';
  
-
+ 
+import {gtag_config_send,
+gtag_view_send,
+gtag_event_send,
+zhuge_event_send  ,format_time_zone_time ,is_time_limit } from "project_path/src/core/index.js"
 
 export default {
   name: "activity_task",
@@ -183,14 +186,14 @@ export default {
         if((new Date().getTime() - _.get(this.get_user,'upd_time',0)<3000)){
           let data = this.get_user;
 		  // 配置埋点信息
-          utils.gtag_config_send(data.userId);
+          gtag_config_send(data.userId);
           this.initialization_menu(data.activityList,act)
         } else {
           let {data, code} = await api_admin.get_user_info_bytoken({token: params_obj.get('token') || this.get_user_token});
           if(data != null && code == 200){
             this.set_user(data);
             // 配置埋点信息
-            utils.gtag_config_send(data.userId);
+            gtag_config_send(data.userId);
             this.initialization_menu(data.activityList,act)
           }
         }
@@ -234,7 +237,7 @@ export default {
         this.activity_status_picture(item)
       })
       // 成功进入活动页
-      utils.gtag_view_send('H5_activity', '/activity_task')
+      gtag_view_send('H5_activity', '/activity_task')
     },
     // 活动时间状态图片 period 或者 this.isDuringDate(time1,time2)： 1 未开始  2 进行中   3 已结束
     activity_status_picture(item) {
@@ -281,21 +284,21 @@ export default {
               // 防止在点击当前页签时重复计算
               if (!isCurrentTab) {
                 // 配置埋点信息
-                utils.gtag_config_send(data.userId);
+                gtag_config_send(data.userId);
                 let eventLabel = ''
                 // 埋点采集任务中心tab点击
                 if (activityId == '10007') {
-                  utils.gtag_event_send('H5_edtask_click', 'H5_活动', 'H5_每日任务', new Date().getTime())
+                  gtag_event_send('H5_edtask_click', 'H5_活动', 'H5_每日任务', new Date().getTime())
                   eventLabel = "H5_每日任务页签";
                 } else if (activityId == '10008') {
-                  utils.gtag_event_send('H5_grtask_click', 'H5_活动', 'H5_成长任务', new Date().getTime())
+                  gtag_event_send('H5_grtask_click', 'H5_活动', 'H5_成长任务', new Date().getTime())
                   eventLabel = "H5_成长任务页签";
                 } else if (activityId == '10009') {
-                  utils.gtag_event_send('H5_luckybox_click', 'H5_活动', 'H5_幸运盲盒', new Date().getTime())
+                  gtag_event_send('H5_luckybox_click', 'H5_活动', 'H5_幸运盲盒', new Date().getTime())
                   eventLabel = "H5_幸运盲盒页签";
                 }
                 if (eventLabel) {
-                  utils.zhuge_event_send(eventLabel, this.get_user);
+                  zhuge_event_send(eventLabel, this.get_user);
                 }
               }
             }
@@ -333,7 +336,7 @@ export default {
           this.tab_click(_.cloneDeep(data.activityList)[this.activity_index], _.cloneDeep(data.activityList)[this.activity_index].activityId, this.activity_index, 'not_need_click')
           this.set_user(data);
           // 配置埋点信息
-          utils.gtag_config_send(data.userId);
+          gtag_config_send(data.userId);
         }
       },800)
     },

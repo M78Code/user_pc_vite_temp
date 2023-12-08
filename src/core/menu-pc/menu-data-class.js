@@ -1,22 +1,25 @@
-import base_data_instance from "src/core/base-data/base-data.js";
+import { nextTick, ref } from "vue";
+import lodash_ from 'lodash';
+
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { computed_menu_to_match_templte } from 'src/core/match-list-pc/list-template/pc-menu-match-template.js'
 import { computed_menu_to_match_templte_ouzhou } from 'src/core/match-list-pc/list-template/ouzhou-pc-menu-match-template.js'
 import PageSource from 'src/core/page-source/page-source.js'
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+export const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+import {
+  SessionStorage,
+} from "src/output/module/constant-utils.js"
+import STANDARD_KEY from "src/core/standard-key";
+import LayOutMain_pc from "src/core/layout/index.js";
 import {
   useMittEmit,
   MITT_TYPES,
-  PROJECT_NAME,
-  SessionStorage,
-  LayOutMain_pc
-} from "src/core/index.js"
+} from "src/core/mitt/index.js";
 const menu_key = STANDARD_KEY.get("menu_pc");
 
-import STANDARD_KEY from "src/core/standard-key";
 
-import {i18n_t } from "src/boot/i18n.js";
-import { nextTick, ref } from "vue";
-import lodash_ from 'lodash';
+
 import BaseData from "src/core/base-data/base-data.js"
 
 
@@ -193,18 +196,18 @@ class MenuData {
    * 滚球盘 数量计算
    */
   compute_menu_root_cont() {
-    // console.log("compute_menu_root_cont",base_data_instance.mew_menu_list_res)
+    // console.log("compute_menu_root_cont",BaseData.mew_menu_list_res)
     //过滤常规球类
     let mi_100_arr = []; //常规体育
     let mi_2000_arr = []; //电竞
 
     // 遍历 新菜单数据
-    base_data_instance.mew_menu_list_res.map((x) => {
+    BaseData.mew_menu_list_res.map((x) => {
       // 拿到 基础赛种 id
       let mif = 1 * x.mi;
       //常规体育
       // 这个全部数量，应该只统计常规赛事的数量，不包含电子竞技和虚拟体育，
-      if (base_data_instance.left_menu_base_mi_arr.includes(mif)) {
+      if (BaseData.left_menu_base_mi_arr.includes(mif)) {
         // 滚球对象
         let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
         item.mif = mif;
@@ -212,7 +215,7 @@ class MenuData {
         mi_100_arr.push(item);
       }
       //电竞
-      if (base_data_instance.sports_mi.includes(mif)) {
+      if (BaseData.sports_mi.includes(mif)) {
         // 滚球对象
         let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
         mi_2000_arr.push(item);
@@ -220,7 +223,7 @@ class MenuData {
     });
 
     //  VR  体育的
-    // let vr_menu_obj = base_data_instance.mew_menu_list_res.find(
+    // let vr_menu_obj = BaseData.mew_menu_list_res.find(
     //   (x) => x.mi == 300
     // ) || {
     //   sl: [],
@@ -228,7 +231,7 @@ class MenuData {
     // let vr_sl = vr_menu_obj["sl"] || [];
 
     const mi_500_obj =
-      base_data_instance.mew_menu_list_res.find((x) => x.mi == 500) || {};
+      BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {};
     let mi_1_num = 0;
 
     mi_100_arr &&
@@ -662,7 +665,7 @@ class MenuData {
    */
   get_current_left_menu_name() {
     let mi = this.left_menu_result.lv1_mi;
-    let str = base_data_instance.menus_i18n_map[mi] || mi;
+    let str = BaseData.menus_i18n_map[mi] || mi;
     return str;
   }
   /**
@@ -741,7 +744,7 @@ class MenuData {
    * $this.update_menu_version()
    */
   update_menu_version() {
-    base_data_instance.menu_version = Date.now();
+    BaseData.menu_version = Date.now();
   }
   // 根据菜单id 获取对应的euid
   get_mid_for_euid(mi) {
@@ -812,7 +815,7 @@ class MenuData {
    * @param {undefined}
    */
   get_menu_data() {
-    base_data_instance.init_mew_menu_list();
+    BaseData.init_mew_menu_list();
   }
   /**
    * 通过CSID 计算 label

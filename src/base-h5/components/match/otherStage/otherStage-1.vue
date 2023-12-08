@@ -24,7 +24,7 @@
 // import { mapGetters, mapMutations, mapActions } from "vuex"
 // import msc from "src/public/mixins/common/msc.js";
 // import { format_mgt_time } from "src/core/format/index.js"
-import { utils } from 'src/core/utils/index.js';
+import { utils } from 'src/core/utils/common/index.js';
 export default {
   // mixins: [msc],
   name: 'dialogStage_1',
@@ -40,3 +40,4 @@ export default {
 
 <style lang="scss" scoped>
 </style>
+src/core/utils/common/index.js

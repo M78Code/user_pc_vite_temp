@@ -7,7 +7,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // import websocket_data from "src/base-h5/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "src/base-h5/mixins/betting/betting.js";
-import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData} from "src/core/index"; 
+import {MatchDataWarehouse_H5_Detail_Common,format_plays, MatchDetailCalss,MenuData} from "src/output/index"; 
 // 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
@@ -15,11 +15,13 @@ import uid from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import { useMittEmitterGenerator } from "src/core/index.js";
-import { SessionStorage } from "src/core/utils/index.js"
-
-
+import { useMittEmitterGenerator } from "src/output/index.js";
+import { SessionStorage } from "src/core/utils/common/index.js"
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
+import { details_ws } from "src/core/match-detail/details-ws.js";
 export const category_info = (category_arr=[]) => {
+    /* 引入ws处理指令 */
+  const { handler_ws_cmd } = details_ws();
   const router = useRouter();
   const route = useRoute();
   let emitters = []
@@ -97,7 +99,7 @@ export const category_info = (category_arr=[]) => {
   // onUnmounted(off)
   // ==================待优化之前遗留================
   const get_detail_data = computed(() => {
-    return "";
+    return MatchDataWarehouseInstance.value.get_quick_mid_obj(route.params.mid)
   });
   const get_details_item = ref(component_data.matchInfoCtr.current_category_id);
   
@@ -128,10 +130,10 @@ export const category_info = (category_arr=[]) => {
   });
   // ==================================
   // 监听详情数据仓库版本号更新odds_info数据
-  watch(() => MatchDataWarehouseInstance.value.data_version.version, () => {
+  watch(() => get_detail_data.value, () => {
     match_list_normal()
     match_list_new()
-  })
+  },{deep:true})
 
   // 监听tab的ID变动时重新赋值
   watch(() => component_data.matchInfoCtr.current_category_id, () => {
@@ -165,7 +167,7 @@ export const category_info = (category_arr=[]) => {
     // match_list_normal_data.value = lodash.get(MatchDataWarehouseInstance.value, `list_to_obj.mid_obj[${route.params.mid}_].odds_info`);
     match_list_normal_data.value = MatchDataWarehouseInstance.value.listSortNormal(route.params.mid);
   };
-
+  let message_fun = null
   onMounted(() => {
     initEvent()
     // 获取置顶列表数据
@@ -173,7 +175,12 @@ export const category_info = (category_arr=[]) => {
     // 获取非置顶列表数据
     match_list_normal()
     on_listeners()
-    
+    message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+      if (lodash.get(data, "cd.mid") != match_id.value || cmd == "C105") return;
+      handler_ws_cmd(cmd, data,match_id.value);
+      // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
+      // console.error('flag','cmd:',cmd,data);
+    })
   })
   // #TODO VUEX
   // methods: {
@@ -680,7 +687,7 @@ export const category_info = (category_arr=[]) => {
       // 赛事id
       mid: match_id.value,
       // userId或者uuid
-      cuid: get_uid,
+      cuid: UserCtr.uid,
       round:
         get_menu_type == 2000
           ? component_data.matchInfoCtr.category_arr &&
@@ -871,16 +878,13 @@ export const category_info = (category_arr=[]) => {
       });
   };
 
-  /** 批量注册mitt */
-// const { emitters_off } = useMittEmitterGenerator([
-//   { type: MITT_TYPES.EMIT_REF_API, initEvent },
-//   { type: MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list },
-// ])
 const on_listeners = () => {
   // #TODO: IMIT
   emitters =[
    useMittOn( MITT_TYPES.EMIT_REF_API, initEvent ),
    useMittOn( MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list),
+   //ws调取oddinfo接口
+   useMittOn( MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET, socket_upd_list),
   ]
 };
 const off_listeners = () => {
@@ -889,6 +893,9 @@ const off_listeners = () => {
 };
   onUnmounted(() => {
     off_listeners()
+    // 组件销毁时销毁监听函数
+    ws_message_listener.ws_remove_message_listener(message_fun);
+    message_fun = null;
   })
   return {
     component_data,

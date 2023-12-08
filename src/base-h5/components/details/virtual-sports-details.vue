@@ -56,7 +56,7 @@ import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { MatchDetailCalss,MenuData } from "src/core";
+import { MatchDetailCalss,MenuData } from "src/output/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_details",
@@ -542,3 +542,4 @@ export default defineComponent({
 }
 </style>
 
+src/output

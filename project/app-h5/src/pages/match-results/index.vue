@@ -9,14 +9,15 @@
             </div>
         </template>
         <template v-slot:right>
-                <img
-                    class="right-icon"
-                    @click="state.select_dialog = true"
-                    :src="compute_local_project_file_path('/image/svg/navbar_icon.svg')"
-                    alt=""
-                />
+            <img
+                class="right-icon"
+                @click="state.select_dialog = true"
+                :src="compute_local_project_file_path('/image/svg/navbar_icon.svg')"
+                alt=""
+            />
         </template>
     </navigation-bar>
+    
     <div class="slide-box">
         <div v-for="(item, index) in state.slideMenu" @click="slideHandle(item,$event)" :class="['slide-item', state.currentSlideValue == item.field1 &&
             'slide-item-active']" :key="'slide-' + index">
@@ -24,18 +25,16 @@
         </div>
     </div>
 
-    <ScrollMenu :scrollDataList="state.slideMenu_sport" :current_mi="state.current_mi" />
+    <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
     <div class="match-results-container-styles">
         <match-container />
     </div>
 
-    <!--  弹窗  -->
-    <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+    <!-- <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
-        <!-- 搜索联赛 -->
         <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
-    </div>
+    </div> -->
     
 
 </template>
@@ -51,7 +50,11 @@ import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
-import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/core/"
+import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/output/index.js"
+
+
+// 新修改
+
 
 const inner_height = window.innerHeight;  // 视口高度
 const switchMenu = ['普通赛果', '冠军赛果']
@@ -104,22 +107,19 @@ const set_scroll_data_list = (data_list = []) => {
     })
     state.slideMenu_sport = scroll_data
     state.current_mi = scroll_data[0]?.mi
-
-    MenuData.set_result_menu_api_params(scroll_data[0])
-
-    set_result_menu_api()
+    set_scroll_current(scroll_data[0])
 }
 
 // 设置滑动菜单的选中id
-const set_scroll_current = val => {
-    state.current_mi = val.mi
-    MenuData.set_result_menu_api_params(val)
-
-    set_result_menu_api()
-}
-
-const set_result_menu_api = () => {
-    // 设置菜单对应源数据
+const set_scroll_current = item => {
+    if (!item) return
+    state.current_mi = item.mi
+    let params = {
+        mi:item.mi,
+        md:state.currentSlideValue,
+        sport:item.sport
+    }
+    MenuData.set_result_menu_api_params(params)
     MatchMeta.get_results_match()
 }
 
@@ -136,19 +136,20 @@ const selectFinishHandle = (val) => {
 
 onMounted(()=>{
     MenuData.set_current_lv1_menu(28)
-    switchHandle(0)
-    useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
+    // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
     VirtualList.set_is_show_ball(false)
     VirtualList.set_is_change_handicap_height(-22)
+    switchHandle(0)
 })
 
 onUnmounted(()=>{
     VirtualList.set_is_show_ball(true)
     VirtualList.set_is_change_handicap_height(0)
-    useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+    // useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
 })
 
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
 </style>
+src/output

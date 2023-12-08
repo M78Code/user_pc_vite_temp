@@ -66,9 +66,9 @@
 
 <script>
 // import { mapGetters } from "vuex"
-import { format_datas } from "src/core/format/index.js"
+import { format_datas } from "src/core/format/common/index.js"
 import { defineComponent,ref,onMounted } from "vue";
-import { MatchDetailCalss } from "src/core";
+import { MatchDetailCalss } from "src/output/index.js";
 export default defineComponent({
   name: "virtual-match-statistic",
   setup(){
@@ -177,3 +177,4 @@ export default defineComponent({
 }
 </style>
 
+src/outputsrc/core/format/common/index.js

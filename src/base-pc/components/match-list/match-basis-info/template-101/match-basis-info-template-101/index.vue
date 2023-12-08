@@ -101,10 +101,11 @@
 import { computed, ref, watch, inject, onMounted, onUnmounted } from 'vue';
 import lodash from 'lodash'
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { get_match_status } from 'src/core/utils/index'
+import { get_match_status } from 'src/core/utils/common/index'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, compute_img_url, UserCtr } from "src/core/index.js"
-import { get_remote_time } from "src/core/format/index.js"
+import { MenuData, MatchDataWarehouse_PC_List_Common, i18n_t, compute_img_url } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { get_remote_time } from "src/core/format/common/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { useRouter, useRoute } from "vue-router";
@@ -435,4 +436,4 @@ onUnmounted(() => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}</style>
+}</style>src/core/utils/common/indexsrc/core/format/common/index.js

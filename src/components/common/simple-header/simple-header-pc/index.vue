@@ -155,3 +155,4 @@ function refresh() {
   }
 }
 </style>
+src/core/format/common/module/format-date.js

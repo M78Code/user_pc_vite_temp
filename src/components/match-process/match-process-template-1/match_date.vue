@@ -64,13 +64,13 @@
 // import msc_mixin from "/mixins/common/msc.js";
 // import time_format_mixin from "/mixins/common/time_format";
 import timer from "src/components/timer/timer.vue";
-import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/core/index.js';
+import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/output/index.js';
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
 import lodash from "lodash";
 
-// import { t } from "src/core/index.js";;
+// import { t } from "src/output/index.js";;
 // import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
-import { get_remote_time,format_date_base_obj } from "src/core/format/index.js"
+import { get_remote_time,format_date_base_obj } from "src/core/format/common/index.js"
 // const licia_format = require("licia/format");
 
 export default {
@@ -436,3 +436,4 @@ export default {
   },
 };
 </script>
+src/output/index.jssrc/core/format/common/index.js

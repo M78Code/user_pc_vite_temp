@@ -8,8 +8,8 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/core/index";
-import { SessionStorage } from "src/core/utils/index.js"
+import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, LOCAL_PROJECT_FILE_PREFIX, MenuData,MatchDataWarehouse_H5_List_Common } from "src/output/index";
+import { SessionStorage } from "src/core/utils/common/index.js"
 
 export const details_main = () => {
   const router = useRouter();
@@ -20,6 +20,8 @@ export const details_main = () => {
   // console.log("Store", store)
   // const state = store.getState()
   // 球类id
+  const  MatchDataBaseH5 = ref(MatchDataWarehouse_H5_List_Common)
+  console.log(MatchDataBaseH5.value,'MatchDataBaseH5');
   const sport_id = ref(route.params.mcid)
   const matchDetailCtr = ref(MatchDetailCalss)
   // 控制视频说明弹窗
@@ -220,10 +222,11 @@ export const details_main = () => {
     state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
   })
   // // 刷新页面时获取当前玩法集ID
-  // onMounted(() => {
-  //   console.error(route);
-  //   matchDetailCtr.value.current_category_id = route.params.mcid
-  // })
+  onMounted(() => {
+    console.log(matchid.value,'matchid.value');
+    // debugger
+    console.log(MatchDataBaseH5.value.get_quick_mid_obj("2968012"),'MatchDataBaseH5.get_quick_mid_obj(mid)');
+  })
   /**
    *@description: 点击详情任意地方显示视频对阵信息
    *@param {Undefined}
@@ -653,7 +656,7 @@ export const details_main = () => {
         .then((res) => {
           const res_data = lodash.get(res, "data");
           //转移所有中文投注名称
-          if(UserCtr.lang == "zh"){
+          if(UserCtr.lang == "zh" && !lodash.isEmpty(res.data)){
             res.data[0].marketName = '所有盘口'
           }
           state_data.data_list = res_data;
@@ -855,10 +858,10 @@ export const details_main = () => {
         set_goto_detail_matchid(event_data.mid);
       } else {
         // 如果不是演播厅的，才有退出回到 列表
-        if (lodash.get(state_data.get_video_url, "active") != "lvs") {
+        // if (lodash.get(state_data.get_video_url, "active") != "lvs") {
           // 没有返回赛事数据就跳转到列表页
-          // router.push({ name: "matchList" });
-        }
+          router.go("-1");
+        // }
       }
     });
   };
@@ -974,6 +977,7 @@ export const details_main = () => {
     matchDetailCtr,
     get_info_show,
     get_bet_show,
+    MatchDataBaseH5,
     details_click,
     change_go_back,
     details_refresh,

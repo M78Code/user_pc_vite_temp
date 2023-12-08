@@ -1,6 +1,6 @@
 /***/
 //  应有引入的方法
-import { SessionStorage } from "src/core/utils/index.js"
+import { SessionStorage } from "src/core/utils/common/index.js"
 const { htmlVariables } = window.BUILDIN_CONFIG;
 function gtag_config_send(user_id) {
   // 设置默认启动参数

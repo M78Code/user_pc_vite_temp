@@ -245,11 +245,11 @@ import TeamText from "src/base-h5/components/details/team-text.vue";   // 中立
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 // 公共方法
-import { utils } from 'src/core/utils/index.js';
-import { MenuData, UserCtr } from "src/core/index.js";
+import { utils } from 'src/core/utils/common/index.js';
+import { MenuData, UserCtr } from "src/output/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import store from "src/store-redux/index.js";
-import { format_total_score, format_time_zone_time, format_time_zone, formatTime } from "src/core/format/index.js"
+import { format_total_score, format_time_zone_time, format_time_zone, formatTime } from "src/core/format/common/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 
 const props = defineProps({
@@ -596,4 +596,4 @@ export default defineComponent({
 <style scoped lang="scss">
 /****************** 横屏投注弹窗*******************/
 @import "../../styles/header-top.scss";
-</style>
+</style>src/core/utils/common/index.jssrc/core/format/common/index.js

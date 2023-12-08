@@ -44,11 +44,11 @@
 
 <script setup>
 import { ref, computed, defineComponent, onUnmounted, watch, defineAsyncComponent,markRaw } from 'vue';
-import { utils } from 'src/core/utils/index.js';
+import { utils } from 'src/core/utils/common/index.js';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import { i18n_t } from "src/boot/i18n.js"
-import { format_time_zone, formatTime } from 'src/core/format/index.js'
+import { format_time_zone, formatTime } from 'src/core/format/common/index.js'
 
 import stage_child_1 from "./stage/stage-child-1.vue";  // 详情页显示足球赛事第几节以及赛事时间
 import stage_child_2 from "./stage/stage-child-2.vue";  // 详情页显示篮球赛事第几节以及赛事时间
@@ -131,4 +131,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped></style>src/core/utils/common/index.jssrc/core/format/common/index.js

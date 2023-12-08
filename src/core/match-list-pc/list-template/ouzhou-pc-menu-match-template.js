@@ -1,4 +1,3 @@
-import { PROJECT_NAME } from 'src/core/index.js';
 
 /**
  * 通过菜单id 来映射显示每个菜单下边的默认模板
@@ -22,10 +21,10 @@ const menu_to_match_templte = {
   106201: { label: "美式足球-今日-让球&大小", value: "120" },
   106301: { label: "美式足球-早盘-让球&大小", value: "120" },
   // 电竞
-  2100: { label: "电竞-英雄联盟", value: "24" },
-  2101: { label: "电竞-Dota2", value: "24" },
-  2102: { label: "电竞-CS·GO", value: "24" },
-  2103: { label: "电竞-王者荣耀", value: "24" },
+  2100: { label: "电竞-英雄联盟", value: "124" },
+  2101: { label: "电竞-Dota2", value: "124" },
+  2102: { label: "电竞-CS·GO", value: "124" },
+  2103: { label: "电竞-王者荣耀", value: "124" },
 
   // 滚球
   101: { label: "滚球-足球", value: "101" },

@@ -8,14 +8,13 @@ import {
   useMitt,
   MITT_TYPES,
   utils,
-  UserCtr,
   MenuData,
   SearchData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5
-} from "src/core/index";
-import { details_ws } from "./details-ws";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
-
+} from "src/output/index";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
+import { details_ws } from "src/core/match-detail/details-ws.js";
 export const details_main = (router, route) => {
   const mid= ref(route.params.mid);
   const csid= ref(route.params.csid);

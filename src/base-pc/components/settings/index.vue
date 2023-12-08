@@ -94,8 +94,9 @@ import { i18n_t } from "src/boot/i18n.js"
 import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "src/i18n/pc/langs/index.mjs";
-import { loadLanguageAsync } from "src/core/index.js";
-import { useMittEmit, MITT_TYPES, compute_css_obj, UserCtr } from 'src/core/'
+import { loadLanguageAsync } from "src/output/index.js";
+import { useMittEmit, MITT_TYPES, compute_css_obj } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { theme_map } from "src/core/theme/"
 
@@ -285,6 +286,7 @@ function on_click_lang(lang_) {
  * @return {undefined} undefined
  */
 function change_theme() {
+    console.log('fsudhfudshgbsdghsdg');
     const theme = UserCtr.theme
     const ary = Object.keys(theme_map);
     let idx = ary.findIndex(i => i == theme)
@@ -417,4 +419,4 @@ function change_theme() {
     }
 }
 </style>
-  
+ 

@@ -31,7 +31,8 @@ import searchHot from './components/search-hot.vue'// 搜索热门
 import searchHistory from './components/search-history.vue' // 搜索历史
 import iSuggestion from './components/i-suggestion.vue'// 搜索联想建议
 import SSearch from "src/base-h5/components/skeleton/search.vue"// 骨架屏
-import { MenuData, UserCtr, SearchData, i18n_t, SessionStorage, useMittEmit, MITT_TYPES } from 'src/core'
+import { MenuData, SearchData, i18n_t, SessionStorage, useMittEmit, MITT_TYPES } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { api_search } from 'src/api/'
 import lodash from "lodash"
 const { get_fetch_search_history, get_remove_search_history, get_fetch_hot_search, get_hotselect3 } = api_search || {};
@@ -212,3 +213,4 @@ if (SearchData.search_term.length > 0) {
 }
 </style>
 
+src/output

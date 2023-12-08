@@ -39,12 +39,12 @@
 <script setup>
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { api_betting } from "src/api/index.js";
-import { i18n_t, compute_local_project_file_path } from 'src/core/index.js'
+import { i18n_t, compute_local_project_file_path } from 'src/output/index.js'
 import { IconWapper } from 'src/components/icon'
 import { ref, computed, onMounted } from 'vue'
 import { Platform } from "quasar";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
-import { formatTime } from 'src/core/format/index.js'
+import { formatTime } from 'src/core/format/common/index.js'
 const props = defineProps({
   item_data: {
     type: Object
@@ -142,4 +142,4 @@ template {
       font-size: 0.24rem;
     }
   }
-</style>
+</style>src/core/format/common/index.js

@@ -6,7 +6,7 @@
  */
 
 import { ref } from 'vue'
-import { MenuData, project_name } from 'src/core'
+import { MenuData, PROJECT_NAME } from 'src/output/module/menu-data.js'
 import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -153,7 +153,6 @@ class VirtualList {
       const virtual_key = this.get_match_height_key(mid)
       // 赛事高度
       const match_height = this.get_match_total_height(match, index)
-      console.log(match_height)
       // 退出循环
       if (match_count >= page_count) return true 
       if (match.mid && accrual_height > start_position) {
@@ -200,7 +199,7 @@ class VirtualList {
     // 是否全部折叠状态
     const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
     const is_result = MenuData.is_results()
-    if (project_name === 'ouzhou-h5') {  // 欧洲版
+    if (PROJECT_NAME === 'ouzhou-h5') {  // 欧洲版
       if (is_result) {
         // 赛果
         position = scrollTop - 800
@@ -211,7 +210,7 @@ class VirtualList {
         // 球种折叠
         position = scrollTop - 200
       }
-    } else if (project_name === 'app-h5') { // 复刻版
+    } else if (PROJECT_NAME === 'app-h5') { // 复刻版
       if (is_result) {
         // 赛果
         position = scrollTop - 800

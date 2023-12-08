@@ -32,6 +32,7 @@ let pre_load_video = {
    * @param {undefined} undefined
    */
   load_video_resources() {
+    console.log('DOMAIN_RESULT', window.BUILDIN_CONFIG.DOMAIN_RESULT, DOMAIN_RESULT);
     if (is_load_video_resources.value) return;
     is_load_video_resources.value = true;
     if (timer_load_video) {
@@ -42,7 +43,7 @@ let pre_load_video = {
       api_details.post_video_refer().then((res) => {
         // 获取视频动画域名
         let video_src =
-          DOMAIN_RESULT.live_domains[0] || lodash.get(res, "data.data.referUrl", "");
+        window.BUILDIN_CONFIG.DOMAIN_RESULT.live_domains[0] || lodash.get(res, "data.data.referUrl", "");
         video_src = video_src.replace(/https?:/, "") + "?is_preload=1";
         let animation_src = lodash.get(res, "data.data.aniUrl", "");
         let obj = {

@@ -197,11 +197,11 @@ import betCollusionInput from './bet-collusion-input.vue'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path } from "src/core/index.js";
+import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path } from "src/output/index.js";
 import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
 import { get_query_bet_amount_common, submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
-import { format_money3, format_money2 } from 'src/core/format/index.js'
+import { format_money3, format_money2 } from 'src/core/format/common/index.js'
 import acceptRules from "./accept-rules.vue"
 
 //串关的按钮
@@ -574,7 +574,7 @@ background: var(--q-gb-t-c-5) !important;
   top: 0;
   bottom: 0;
   z-index: 550;
-  backdrop-filter: blur(5px);
+  // backdrop-filter: blur(5px);
   background: rgba(0, 0, 0, 0.5);
 }
 
@@ -761,4 +761,4 @@ background: var(--q-gb-t-c-5) !important;
 .set-opacity{
   background:var(--q-gb-bg-c-9)
 }
-</style>
+</style>src/core/format/common/index.js

@@ -19,7 +19,7 @@
         </div>
         <div class="content-rmb">RMB</div>
       </div>
-      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)" style="display:none">
+      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
         <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
         <div class="" v-else @click="set_bet_pre">+{{ i18n_t('pre_record.book')}}</div>
       </div>
@@ -39,7 +39,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { ref, reactive, onMounted,computed, onUnmounted } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 
 let timer1 = null

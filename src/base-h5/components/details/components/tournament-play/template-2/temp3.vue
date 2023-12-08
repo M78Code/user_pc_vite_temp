@@ -16,7 +16,7 @@
                      :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':utils.calc_win(ol_item.result)}]">
                   <div class="ellipsis remark details_t_color6 fz_14" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                   <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
-                    {{ol_item.on || ol_item.ott}}2
+                    {{ol_item.on || ol_item.ott}}
                   </span>
                   </div>
                   <div class="text-right odds-wrap">
@@ -107,7 +107,7 @@
 // import { mapGetters } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from 'src/core/index.js';
+import {utils, LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from 'src/output/index.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"

@@ -65,7 +65,7 @@ import lodash from 'lodash'
 import {
   get_odds_active,
   utils,
-} from "src/core/index.js";
+} from "src/output/index.js";
 import { format_odds_value } from 'src/core/format/module/format-odds.js';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
@@ -376,4 +376,4 @@ onUnmounted(() => {
 .left_cell {
   text-align: left !important;
 }
-</style>
+</style>src/core/format/common/module/format-odds.jssrc/core/format/common/module/format-odds-conversion-mixin.js

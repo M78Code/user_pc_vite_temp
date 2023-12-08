@@ -10,7 +10,7 @@
         <div class="date-tab-content">
             <ul class="date-tab-content-ul">
                 <li ref="dateTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
-                    @click="changeTabMenu(index, $event)">
+                    @click="changeTabMenu(item, index, $event)">
                     {{ item.name }}
                 </li>
             </ul>
@@ -21,9 +21,10 @@
 <script setup>
 import { onMounted, onUnmounted,ref, watch } from "vue";
 import { scrollMenuEvent } from "../utils";
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import { api_common } from "src/api/"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 const props = defineProps({
     defaultVal: {
@@ -49,7 +50,7 @@ onUnmounted(()=>{
 * 选中事件
 * @param {*} val 
 */
-const changeTabMenu = (i, event) => {
+const changeTabMenu = (item, i, event) => {
     event = event || dateTab.value[0];
     if(activeOn.value === i)return;
     activeOn.value = i;
@@ -59,6 +60,9 @@ const changeTabMenu = (i, event) => {
     set_menu_match_date()
 
     scrollMenuEvent(event, ".date-tab-content-ul", ".active");
+
+    MatchMeta.filter_match_by_time(item?.val)
+    MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
 }
 /**
  * 默认值
@@ -138,4 +142,4 @@ defineExpose({set_active_val,changeTabMenu})
         }
     }
 }</style>
-  
+  src/output/index.js

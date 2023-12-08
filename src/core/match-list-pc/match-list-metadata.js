@@ -1,8 +1,7 @@
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
 import BaseData from 'src/core/base-data/base-data.js';
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData} from "src/output/module/menu-data.js"
 import { set_match_base_info_by_mids_info } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { compute_sport_id } from 'src/core/constant/index.js'
 import { handle_match_list_request_when_ok } from './match-list-composition.js'
 import { match_list_handle_set } from './match-handle-data.js'
 // 根据 mid 获取 联赛列表数据
@@ -279,7 +278,7 @@ function set_base_data_init_ouzhou(play_num = '01') {
 				});
 				//常规赛事下 所有的滚球数据
 				mi_100_arr.forEach((item) => {
-					let livedata = get_match_list_by_mid_for_base_data_res(item, csid, current_ball_type);
+					let livedata = get_match_list_by_mid_for_base_data_res(item, csid, csid);
 					matchs_list = [...matchs_list, ...livedata];
 				});
 				// } else {
@@ -368,6 +367,8 @@ function set_base_data_init_ouzhou(play_num = '01') {
 		// MatchListData.set_list(
 		// 	matchs_list,
 		// );
+		console.log('matchs_list', matchs_list, data);
+
 		handle_match_list_request_when_ok(data, false, true, true);
 
 		let ts1 = Date.now();

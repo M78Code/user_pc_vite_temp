@@ -8,14 +8,14 @@ import { get } from "lodash";
 import { wslog } from "../log/";
 import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
-import { usePageVisibilityChange } from "src/core/utils/module/event-hook.js";
+import { usePageVisibilityChange } from "src/core/utils/common/module/event-hook.js";
 import domain from "./domain";
  
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 
-import { SessionStorage ,LocalStorage} from "src/core/utils/index.js"
+import { SessionStorage ,LocalStorage} from "src/output/module/constant-utils.js"
 // import ws from "../ws/ws.js";
 
 import STANDARD_KEY from "src/core/standard-key";

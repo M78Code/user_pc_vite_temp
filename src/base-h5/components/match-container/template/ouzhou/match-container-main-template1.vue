@@ -158,7 +158,7 @@
                         <div class="team-left">
                           <template v-if="home_red_score || home_yellow_score">
                             <!-- 红牌 -->
-                            <span class='score-punish' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
+                            <span class='score-punish red' v-show="home_red_score" :class="{ flash: is_show_home_red && !is_results }">
                               {{ home_red_score }}
                             </span>
                             <!-- 黄牌 -->
@@ -207,7 +207,7 @@
                       <div class='team-title-container'>
                         <!-- 红、黄牌， 发球方绿点 -->
                         <div class="team-left">
-                          <template v-if="home_red_score || home_yellow_score">
+                          <template v-if="away_red_score || away_yellow_score">
                             <!-- 红牌 -->
                             <span class='score-punish red' v-show="away_red_score" :class="{ flash: is_show_away_red && !is_results}">
                               {{ away_red_score }}
@@ -273,7 +273,7 @@
 <script>
 
 import { ref, computed, watch, nextTick, onMounted } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
+import { LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
 
 import { IconWapper } from 'src/components/icon'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -285,8 +285,8 @@ import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/co
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/core/index.js"
-import { format_time_zone } from "src/core/format/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/output/index.js"
+import { format_time_zone } from "src/core/format/common/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou, neutral_site } from 'src/base-h5/core/utils/local-image.js'
 import { sports_play_data, use_sports_play_title } from 'src/core/constant/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
@@ -1432,7 +1432,12 @@ export default {
     }
   }
 }
+:deep(.q-item){
+  min-height: 42px;
+  border-bottom: 1px solid #e2e2e2;
+}
 /* **************日期********************** -E*/
 /* ********赛事容器相关********** -E*/
 </style>
   
+src/output/index.jssrc/output/index.jssrc/core/format/common/index.js

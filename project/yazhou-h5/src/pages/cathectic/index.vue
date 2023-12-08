@@ -51,7 +51,7 @@
   import store from 'src/store-redux/index.js'
   import UserCtr from "src/core/user-config/user-ctr.js";
   import { i18n_t } from "src/boot/i18n.js";
-  import {compute_css_obj} from "src/core/index.js"
+  import {compute_css_obj} from "src/output/index.js"
   import { compute_css_variables } from "src/core/css-var/index.js"
   
   let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
@@ -216,4 +216,4 @@
     }
   }
   </style>
-  
+  src/output/index.js

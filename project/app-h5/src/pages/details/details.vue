@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <div class="comopnent details_container">
     <!-- 骨架屏  -->
-    <!-- <SDetails v-if="skeleton_finish"/> -->
     <div
       class="details-fat scroll relative-position"
       :class="{
@@ -9,14 +8,14 @@
       'show-replay-video': get_is_dp_video_full_screen && !get_is_hengping,
       'video-full-screen': get_is_hengping,
       'details-bet': viewTab === 'bet' &&is_esports}"
-      :style="[{height:`${scroller_height}px`, ...page_style}]"
+      :style="page_style"
       v-cloak ref="details_box"
       @touchstart.passive="start"
       @scroll="detail_scrolling"
       @touchmove.passive="moved"
       @click="details_click"
       v-if="is_show_detail_header_data">
-      <div>
+      <div >
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
             <videos v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
@@ -85,7 +84,7 @@
                 <div>
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
                   <category v-if="[0,1,110].includes(+detail_data.ms) && viewTab === 'bet'" :category_arr="matchDetailCtr.category_arr" ref="category"></category>
-                  <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
+                  <no-data v-else which='noMatch' height='500'></no-data>
                 </div>
               </div>
             </div>
@@ -147,7 +146,7 @@ import detailsDialog from "src/base-h5/components/details/details-dialog.vue";  
 import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
 import changeHeader from "src/base-h5/components/details/components/header/change-header.vue";  // 详情页下拉置顶title
 import info_rules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
-// import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
+import SDetails from "src/base-h5/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import category from "./children/category.vue";
 // import chatroom from "src/base-h5/components/details/components/chatroom/chatroom.vue"
 import analysisFootballMatches from "src/base-h5/components/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"
@@ -157,7 +156,8 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
-import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/core/";
+import {compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_esports } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab
@@ -165,6 +165,7 @@ import detailsTab from "src/base-h5/components/details/components/details-tab-2.
 //首发组件
 import lineUp from "src/base-h5/components/details/analysis-matches/components/line-up-2.vue"
 import highlights from "src/base-h5/components/details/analysis-matches/highlights/highlights.vue"
+import  no_data  from "src/base-h5/components/common/no-data.vue";
 export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
@@ -175,10 +176,10 @@ export default defineComponent({
     "details-dialog": detailsDialog,
     changeHeader,
     detailsTab,
-//     // "no-data": no_data,
+    "no-data": no_data,
     "info-rules": info_rules,
     videos: videos,
-//     // SDetails,
+     SDetails,
     category,
     lineUp,
     highlights
@@ -597,11 +598,11 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-  /****************** 横屏投注弹窗*******************/
-  // @import "./styles/details-bet.scss";
-</style>
-<style scoped lang="scss">
 @import "./styles/details.scss";
+.details_container {
+  flex:10;
+  height:0;
+}
 .details-fat {
   background-color: var(--q-gb-bg-c-17);
 .details-f9 {
@@ -629,3 +630,4 @@ export default defineComponent({
   padding: 0;
 }
 </style>
+src/output

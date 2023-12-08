@@ -152,14 +152,14 @@
     ],
     "bet_col": {
       "bet_col_1": {
-        "bet_col_1": "Home",
-        "bet_col_X": "Draw",
-        "bet_col_2": "Away"
+        "bet_col_1": "1",
+        "bet_col_X": "X",
+        "bet_col_2": "2"
       },
       "bet_col_32": {
-        "bet_col_1": "Home",
-        "bet_col_X": "Draw",
-        "bet_col_2": "Away"
+        "bet_col_1": "1",
+        "bet_col_X": "X",
+        "bet_col_2": "2"
       },
       "bet_col_2": {
         "bet_col_Over": "Over",
@@ -174,24 +174,24 @@
         "bet_col_2": "Away"
       },
       "bet_col_38": {
-        "bet_col_Over": "Over",
-        "bet_col_Under": "Under"
+        "bet_col_Over": "Total",
+        "bet_col_Under": "Total"
       },
       "bet_col_39": {
         "bet_col_1": "HDP",
         "bet_col_2": "HDP"
       },
       "bet_col_153": {
-        "bet_col_1": "Home",
-        "bet_col_2": "Away"
+        "bet_col_1": "1",
+        "bet_col_2": "2"
       },
       "bet_col_154": {
-        "bet_col_1": "Handicap",
-        "bet_col_2": "Handicap"
+        "bet_col_1": "Set Handicap",
+        "bet_col_2": "Set Handicap"
       },
       "bet_col_155": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
+        "bet_col_1": "Game Handicap",
+        "bet_col_2": "Game Handicap"
       },
       "bet_col_172": {
         "bet_col_1": "HDP",
@@ -2642,7 +2642,7 @@
     "S111": "",
     "S1111": "FT",
     "S113": "Service Fault Count",
-    "S114": "Break Success Rate",
+    "S114": "Break Rate",
     "S115": "Score Count",
     "S116": "Received Score Count",
     "S117": "Service Winner Rate",

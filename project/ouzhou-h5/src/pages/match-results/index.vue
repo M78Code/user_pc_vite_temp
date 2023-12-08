@@ -13,7 +13,7 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import matchContainer from "src/base-h5/components/match-list/index.vue";
-import { i18n_t, compute_css_obj, MenuData } from "src/core/index.js";
+import { i18n_t, compute_css_obj, MenuData } from "src/output/index.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';

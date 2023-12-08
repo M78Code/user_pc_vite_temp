@@ -12,7 +12,7 @@
 
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 const tab = ref('unsettled')
 const emits = defineEmits(['tab_change'])
 const active = ref('unsettled')

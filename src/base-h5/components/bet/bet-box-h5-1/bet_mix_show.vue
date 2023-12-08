@@ -196,10 +196,10 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
-import { calc_bifen, format_odds } from "src/core/format/index.js";
+import { calc_bifen, format_odds } from "src/core/format/common/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
-import { useMittOn,compute_img_url,UserCtr, useMittEmit, MITT_TYPES } from "src/core/"
+import { useMittOn,compute_img_url,UserCtr, useMittEmit, MITT_TYPES } from "src/output/index.js"
 
 import lodash from 'lodash'
 
@@ -1450,3 +1450,4 @@ const clear_timer = () => {
   transform: scaleY(0.5);
 }
 </style>
+src/outputsrc/core/format/common/module/format-odds-conversion-mixin.jssrc/core/format/common/index.js

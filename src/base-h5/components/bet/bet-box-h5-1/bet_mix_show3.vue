@@ -84,13 +84,13 @@
 import betSingleDetail from './bet-single-detail.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-// import { UserCtr } from "src/core/index.js";
-import { calc_bifen, format_odds } from "src/core/format/index.js";
+// import { UserCtr } from "src/output/index.js";
+import { calc_bifen, format_odds } from "src/core/format/common/index.js";
 import { ref, onMounted, watch, computed, onUnmounted, watchEffect } from 'vue';
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import {project_name} from "src/core/"
+import {project_name} from "src/output/index.js"
 
 import lodash from 'lodash'
 
@@ -366,3 +366,4 @@ const handleonmousedown = () => {
   transform: scaleY(0.5);
 }
 </style>
+src/outputsrc/core/format/common/module/format-odds-conversion-mixin.jssrc/core/format/common/index.js

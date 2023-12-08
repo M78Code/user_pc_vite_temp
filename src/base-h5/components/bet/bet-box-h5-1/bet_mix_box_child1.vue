@@ -138,11 +138,11 @@
 // import ballSpin from './ball_spin.vue';
 // import betBar from "./bet_bar.vue";
 // import betConflictTips from './bet-conflict-tips'
-// import {utils } from 'src/core/index.js';
+// import {utils } from 'src/output/index.js';
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 // import BetData from "src/core/bet/class/bet-data-class.js";
 // import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
-import { format_money2 } from "src/core/format/index.js"
+import { format_money2 } from "src/core/format/common/index.js"
 import { ref, onMounted,watch,computed,onUnmounted,nextTick } from 'vue';
 import lodash from 'lodash'
 
@@ -546,3 +546,4 @@ onUnmounted(() => {
   background: var(--q-color-img-bg-98) no-repeat center / contain;
 }
 </style>
+src/core/format/common/index.js
