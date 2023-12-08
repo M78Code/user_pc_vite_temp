@@ -83,7 +83,7 @@ const utils = {
    * @Description 加载视频播放器js
    * @param {undefined} undefined
   */
-   load_player_js(){
+   load_player_js(is_old){
     if(this.is_load_player_js) return
     this.is_load_player_js = true
     let dom_ = document
@@ -91,10 +91,10 @@ const utils = {
     let  BUILD_VERSION=  window.BUILDIN_CONFIG.BUILD_VERSION
 
 
-    dplayer_el.src = `${BUILD_VERSION?'/'+BUILD_VERSION:''}/lib/video/DPlayer.min.js`
+    dplayer_el.src = `${BUILD_VERSION?'/'+BUILD_VERSION:''}/lib/video/${is_old ? 'DPlayer2': 'DPlayer'}.min.js`
     // if (!/(iPhone|iPad|iPod|iOS|Mac OS)/i.test(navigator.userAgent)) {
       let hls_el = dom_.createElement('script');
-      hls_el.src = `${BUILD_VERSION?'/'+BUILD_VERSION:''}/lib/video/hls.js`
+      hls_el.src = `${BUILD_VERSION?'/'+BUILD_VERSION:''}/lib/video/${is_old ? 'hls2': 'hls'}.js`
       dom_.head.appendChild(hls_el)
     // }
     dom_.head.appendChild(dplayer_el)
