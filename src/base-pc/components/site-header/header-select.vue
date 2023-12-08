@@ -96,7 +96,7 @@ import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/common/index.js"
 // import userCtr from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { get_remote_time } from "src/core/format/module/format-date.js"
+import { get_remote_time } from "src/output/index.js"
 
 /** 是否内嵌 */
 const is_iframe = ref(LayOutMain_pc.is_iframe)

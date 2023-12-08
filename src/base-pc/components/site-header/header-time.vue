@@ -12,7 +12,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, defineComponent } from 'vue'
-import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/format/module/format-date.js"
+import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/output/index.js"
 
 /** 日期时间 */
 const date_time = ref('')

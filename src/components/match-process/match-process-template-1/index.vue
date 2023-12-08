@@ -64,7 +64,7 @@ import {
   format_string,
   is_eports_csid
 } from "src/output/index.js"
-import { get_mmp_name } from "src/core/format/module/format-msc.js"
+import { get_mmp_name } from "src/output/index.js"
 import {
   useRegistPropsHelper,
 } from "src/composables/regist-props/index.js";

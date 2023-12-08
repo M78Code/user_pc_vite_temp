@@ -88,7 +88,7 @@ import lodash from "lodash";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_odds_active, utils } from "src/output/index.js";
-import { format_odds_value } from "src/core/format/module/format-odds.js";
+import { format_odds_value } from "src/output/index.js";
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 
 const is_mounted = ref(true);

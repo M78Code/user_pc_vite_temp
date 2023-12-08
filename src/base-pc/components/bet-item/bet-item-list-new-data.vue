@@ -66,7 +66,7 @@ import {
   get_odds_active,
   utils,
 } from "src/output/index.js";
-import { format_odds_value } from 'src/core/format/module/format-odds.js';
+import { format_odds_value } from 'src/output/index.js';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";

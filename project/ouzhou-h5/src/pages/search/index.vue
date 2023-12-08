@@ -273,7 +273,7 @@ const { get_insert_history, get_fetch_hot_search } = api_search || {};
 import { is_results } from 'src/base-h5/mixin/menu.js'
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { formatTime } from 'src/core/format/module/format-date.js';
+import { formatTime } from 'src/output/index.js';
 import BaseData from "src/core/base-data/base-data.js";
 
 const input_value = ref('');
