@@ -179,7 +179,7 @@ export const category_info = (category_arr=[]) => {
       if (lodash.get(data, "cd.mid") != match_id.value || cmd == "C105") return;
       handler_ws_cmd(cmd, data,match_id.value);
       // let flag =  MatchDetailCalss.handler_details_ws_cmd(cmd)
-      console.error('flag','cmd:',cmd,data);
+      // console.error('flag','cmd:',cmd,data);
     })
   })
   // #TODO VUEX

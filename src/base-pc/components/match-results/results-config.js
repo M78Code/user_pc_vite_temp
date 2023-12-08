@@ -637,7 +637,7 @@ export const useGetResultConfig = () => {
         state.results_list = [];
         state.load_data_state = "empty";
       }
-    });
+    })
   };
 
   /**
