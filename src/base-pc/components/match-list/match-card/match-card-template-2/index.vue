@@ -12,14 +12,11 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, provide,inject, watch } from 'vue';
+import { ref, onMounted, onUnmounted, provide,inject } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { LayOutMain_pc, utils } from "src/output/index.js";
+import { LayOutMain_pc } from "src/output/index.js";
 import { get_match_template_id } from 'src/core/match-list-pc/match-handle-data.js';
-import {
-  socket_remove_match
-} from "src/core/match-list-pc/match-list-composition.js";
 // 玩法模板 101 欧洲版 常规赛事
 import { MatchTpl101AfterFullVersionWapper as MatchTpl101After } from "src/base-pc/components/match-list/match-tpl-new-data/match-tpl-101-after/index.js";
 // 欧洲版 冠军模板
