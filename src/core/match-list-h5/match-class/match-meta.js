@@ -462,7 +462,7 @@ class MatchMeta {
    * @description 获取电竞赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_esports_match() {
-    // this.clear_match_info()
+    this.clear_match_info()
     VirtualList.clear_virtual_info()
     // 电竞的冠军
     const category = MenuData.get_menu_type() === 100 ? 2 : 1

@@ -279,7 +279,7 @@ function set_base_data_init_ouzhou(play_num = '01') {
 				});
 				//常规赛事下 所有的滚球数据
 				mi_100_arr.forEach((item) => {
-					let livedata = get_match_list_by_mid_for_base_data_res(item, csid, current_ball_type);
+					let livedata = get_match_list_by_mid_for_base_data_res(item, csid, csid);
 					matchs_list = [...matchs_list, ...livedata];
 				});
 				// } else {
@@ -368,6 +368,8 @@ function set_base_data_init_ouzhou(play_num = '01') {
 		// MatchListData.set_list(
 		// 	matchs_list,
 		// );
+		console.log('matchs_list', matchs_list, data);
+
 		handle_match_list_request_when_ok(data, false, true, true);
 
 		let ts1 = Date.now();

@@ -772,7 +772,7 @@ export default {
     border-bottom: 1px solid #e2e2e2;
 
     .odd-title-i-w {
-      width: 50%;
+      width: 1.9rem;
       overflow: hidden;
 
       .odd-t-i-wrapper {
@@ -1292,7 +1292,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);  
   width: 100%;
   color: var(--q-gb-t-c-19);
-  padding-left: 6px;
+  padding-left: 11px;
   height: 0.2rem;
   display: flex;
   align-items: center;
@@ -1488,6 +1488,7 @@ export default {
         color: #AFB3C8 !important;
         .counting{
           font-size: 11px;
+          color: var(--q-gb-t-c-19);
         }
       }
     }
