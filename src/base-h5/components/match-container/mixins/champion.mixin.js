@@ -1,7 +1,7 @@
  
  
 import lodash from 'lodash'
-import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,get_odds_active } from "src/core/index.js"
+import {MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,get_odds_active } from "src/output/index.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { menu_type } from 'src/base-h5/mixin/menu.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';

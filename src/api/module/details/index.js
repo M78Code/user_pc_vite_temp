@@ -1,4 +1,4 @@
-import { UserCtr } from "src/core";
+import { UserCtr } from "src/output";
 import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_JOB:prefix,API_PREFIX_ACTIVITY:prefix2} = API_PREFIX;

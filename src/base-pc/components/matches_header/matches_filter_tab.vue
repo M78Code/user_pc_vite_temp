@@ -29,10 +29,10 @@
 
 <script setup>
   import { ref,onMounted } from 'vue';
-  import { UserCtr,MenuData, i18n_t,LocalStorage} from 'src/core/index.js'
+  import { MenuData } from 'src/output/index.js'
   import { handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { compute_img_url } from 'src/core/server-img/index.js'
-
+  import { LocalStorage } from 'src/core/utils/module/web-storage.js'
     // 是否显示左边按钮
   const show_left_btn = ref(false);
   // 是否显示右边按钮

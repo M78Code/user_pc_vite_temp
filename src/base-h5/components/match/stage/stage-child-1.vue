@@ -25,7 +25,7 @@
   import { format_mgt_time } from "src/core/format/index.js"
   import { utils } from 'src/core/utils/index.js';
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-// import { format_mgt_time } from "src/core/index";
+// import { format_mgt_time } from "src/output/index.js";
   const props = defineProps({
     detail_data: {
       type: Object,
@@ -39,11 +39,11 @@
     // 计时器步长
     const step = ref(1) 
     // 显示比赛时间
-    const mmp_arr = ref(['6','7','41','42'])
+    const mmp_arr = ['6','7','41','42']
     // 时间
     const showTime = ref('') 
     // 上下半场
-    const mmp_arr1 = ref(["31", "33"])
+    const mmp_arr1 = ["31", "33"]
     // 延时器
     const showTimeInterval = ref(null)
 

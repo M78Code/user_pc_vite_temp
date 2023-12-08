@@ -157,7 +157,8 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
-import {UserCtr,compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/core/";
+import {compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_esports } from "src/base-h5/mixin/menu";
 // 详情页中部玩法集tab
@@ -629,3 +630,4 @@ export default defineComponent({
   padding: 0;
 }
 </style>
+src/output

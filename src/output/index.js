@@ -3,12 +3,7 @@
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 
- 
-
 //通用
-
-import lodash from "lodash";
-
 // import { useRouter, useRoute } from 'vue-router';
 // const router = useRouter();
 // const route = useRoute();
@@ -32,7 +27,7 @@ import {
 } from "src/core/mitt/index.js";
 import uid from "src/core/uuid/index.js";
 import SearchData from "src/core/search-class/search-data-class.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+// import UserCtr from "src/core/user-config/user-ctr.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
 import MatchListDetailMiddleware from "src/core/match-detail/match-detail-h5/match-list-detail-h5/index.js";
 import {
@@ -246,7 +241,7 @@ const MatchDataWarehouse_H5_Detail_Jingxuan = new MatchDataBase({
 /***
  * 详情操作类
  */
-const MatchDetailCalss = new MatchDetailCtr()
+export const MatchDetailCalss = new MatchDetailCtr()
 /***
  * H5详情中间件
  */
@@ -274,7 +269,7 @@ export * from "src/core/server-img/";
  * import { is_eports_csid  } from "src/core/index.js";
  *
  */
-import ServerTime from './server-time/server-time'
+import ServerTime from 'src/core/server-time/server-time.js'
 
 export {
   //
@@ -299,8 +294,6 @@ export {
   uid,
   SearchData,
   MatchDetailCtr,
-  MatchDetailCalss,
-  UserCtr,
   IS_PC,
   PROJECT_NAME,
   MenuData,

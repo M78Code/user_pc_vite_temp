@@ -51,7 +51,7 @@
 <script>
 // import { mapGetters } from "vuex"
 import lodash from "lodash"
-import { LOCAL_PROJECT_FILE_PREFIX, PROJECT_NAME } from 'src/core/index.js'
+import { LOCAL_PROJECT_FILE_PREFIX, PROJECT_NAME } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 
 export default {
@@ -198,3 +198,4 @@ export default {
 
 /*************** 字体样式 *************** -E*/
 </style>
+src/output/index.js

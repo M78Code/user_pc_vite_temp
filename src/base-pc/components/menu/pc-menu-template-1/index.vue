@@ -123,7 +123,8 @@
 import { ref, onMounted, computed,nextTick } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
-import { MenuData, UserCtr } from "src/core/index.js"
+import { MenuData } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
@@ -1346,3 +1347,4 @@ const click_wapper_handle = obj =>{
   font-size: 12px;
 }
 </style>
+src/output/index.js

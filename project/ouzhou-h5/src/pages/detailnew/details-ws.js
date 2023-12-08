@@ -13,9 +13,9 @@ import {
   useMitt,
   MITT_TYPES,
   utils,
-  UserCtr,
   MatchDataWarehouse_H5_List_Common,
-} from "src/core/index";
+} from "src/output/index";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
 export const details_ws = (router, route) => {

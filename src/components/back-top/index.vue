@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import { i18n_t } from "src/core/index.js"
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { i18n_t } from "src/output/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { ref, watch } from "vue";
 import lodash from "lodash";
 
@@ -95,3 +95,4 @@ watch(() => props.scrollEle, (val) => {
 }
 
 </style>
+src/output/index.jssrc/output/index.js

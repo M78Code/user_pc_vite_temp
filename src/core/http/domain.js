@@ -72,7 +72,7 @@ import { ref } from "vue";
 import axios from "axios";
 
  
-import { SessionStorage ,LocalStorage} from "src/core/utils/index.js"
+import { SessionStorage ,LocalStorage} from "src/output/constant-utils.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
  import { format_api_to_obj } from "src/core/format/index.js"
 import STANDARD_KEY from "src/core/standard-key";

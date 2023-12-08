@@ -56,7 +56,7 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
 import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from "src/output/index.js"
 import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_esports, is_collect } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
@@ -374,3 +374,4 @@ onUnmounted(() => {
   justify-content: center;
 }
 </style>
+src/output

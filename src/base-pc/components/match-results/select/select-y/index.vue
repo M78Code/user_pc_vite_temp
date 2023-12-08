@@ -73,7 +73,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from "vue";
-import { i18n_t } from "src/core/index";
+import { i18n_t } from "src/output/index.js";
 import { IconWapper } from 'src/components/icon'
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 // import { mapGetters } from "vuex";
@@ -81,7 +81,7 @@ import {
   useMittOn,
   useMittEmitterGenerator,
   MITT_TYPES,
-} from "src/core/index.js";
+} from "src/output/index.js";
 const option = ref(null); //选中项
 const isShow = ref(false); // 是否展示联赛列表
 const active = ref(null); //选择的下标
@@ -568,3 +568,4 @@ onUnmounted(() => {
   }
 }
 </style>
+src/output/indexsrc/output/index.js

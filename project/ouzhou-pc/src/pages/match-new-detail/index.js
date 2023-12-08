@@ -5,11 +5,11 @@ import { useRouter } from "vue-router";
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
   MenuData,
-  UserCtr,
   MatchDetailCalss,
   SearchPCClass,
   utils
-} from "src/core/index";
+} from "src/output/index";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import {
   filter_odds_func,
   handle_course_data,
@@ -17,7 +17,7 @@ import {
 } from "src/core/utils/matches_list.js";
 import { useGetGlobal } from "src/core/global/mixin/global_mixin.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
-import { LayOutMain_pc } from "src/core/";
+import { LayOutMain_pc } from "src/output";
 import lodash_ from "lodash";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";

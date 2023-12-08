@@ -122,7 +122,7 @@
 </template>
 <script setup>
 import lodash from 'lodash'
-import { format_odds,format_currency,formatTime } from 'src/core/index.js'
+import { format_odds,format_currency,formatTime } from 'src/output/index.js'
 import { IconWapper } from 'src/components/icon'
 import { MARKET_RANG_FLAG_LIST,MARKET_NO_SCORE_LIST } from "src/core/constant/config/play-mapping.js";
 import { i18n_t } from "src/boot/i18n.js"
@@ -243,3 +243,4 @@ const props = defineProps({
   }
 }
 </style>
+src/output/index.js

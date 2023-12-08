@@ -1,14 +1,14 @@
 <script name="event-date-standard" setup>
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import { format_time_zone  } from "src/core";
+import { format_time_zone  } from "src/output/index.js";
 import { get_mmp_name } from "src/core/format/module/format-msc.js"
 import {
     get_match_status,
     utils,
     format_string,
     is_eports_csid
-} from "src/core/index"
+} from "src/output/index.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import { defineProps, computed } from "vue"
 const props = defineProps({
@@ -196,4 +196,4 @@ const covert_mct = ({ mct, mmp, ms }) => {
         font-size: 0.15rem;
     }
 }
-</style>
+</style>src/output/index

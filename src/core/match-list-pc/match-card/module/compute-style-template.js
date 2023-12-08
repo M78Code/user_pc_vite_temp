@@ -25,7 +25,9 @@
  */
 let count = 0
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME, time_conversion } from 'src/core/index.js'
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/index.js'
+import { PROJECT_NAME } from 'src/output/computed.js'
+import { time_conversion } from 'src/output/constant-utils.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
 import MenuData from "src/core/menu-pc/menu-data-class.js";

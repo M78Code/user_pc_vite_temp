@@ -11,11 +11,13 @@ import { ref,nextTick } from "vue";
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {
-  useMittEmit,
-  MITT_TYPES,
   SessionStorage,
   LocalStorage
-} from "src/core/index.js"
+} from "src/output/constant-utils.js"
+import {
+  useMittEmit,
+  MITT_TYPES,
+} from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 import STANDARD_KEY from "src/core/standard-key";

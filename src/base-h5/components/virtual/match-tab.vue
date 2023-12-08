@@ -23,7 +23,7 @@
 // #TODO VUEX
 // import { mapGetters, mapMutations } from "vuex"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import lodash from "lodash";
 import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
@@ -415,3 +415,4 @@ export default defineComponent({
   }
 }
 </style>
+src/output/index.js

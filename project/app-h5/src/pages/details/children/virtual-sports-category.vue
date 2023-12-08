@@ -59,7 +59,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent,ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import {debounce} from "lodash";
-import { MatchDataWarehouse_H5_Detail_Common ,MatchDetailCalss,UserCtr } from "src/core";
+import { MatchDataWarehouse_H5_Detail_Common ,MatchDetailCalss } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import {details_main} from "../details.js";
 export default defineComponent({
@@ -939,3 +940,4 @@ export default defineComponent({
   height: 0.18rem;
 }
 </style>
+src/output/index.js

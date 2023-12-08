@@ -1,4 +1,4 @@
-import { api_match_list, api_common } from "src/api/index.js";
+import {  api_common } from "src/api/index.js";
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
 import { onMounted, ref, watch, onUnmounted, toRaw } from "vue";
 import {
@@ -8,11 +8,11 @@ import {
   useMitt,
   MITT_TYPES,
   utils,
-  UserCtr,
   MenuData,
   SearchData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5
-} from "src/core/index";
+} from "src/output/index";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { details_ws } from "./details-ws";
 import * as ws_message_listener from "src/core/utils/module/ws-message.js";
 
@@ -133,7 +133,7 @@ export const details_main = (router, route) => {
       m_plays.push(Number(play));
       return plays && plays.includes(Number(play));
     });
-    if (list) {
+    if (!lodash.isEmpty(list)) {
       MatchDataWarehouseInstance.value.set_match_details(
         getMidInfo(route.params.mid),
         [...list]
@@ -216,11 +216,10 @@ export const details_main = (router, route) => {
    */
   const get_matchDetail_getMatchOddsInfo = (params) => {
     //赛果页面调用赛果玩法详情接口
-    // match_odds_info.value = get_match_odds_info.value;
     //接口调用
     let obj_ = {
       // axios api对象
-      axios_api: api_match_list.get_detail_list,
+      axios_api: api_common.get_matchDetail_getMatchOddsInfo,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -234,7 +233,7 @@ export const details_main = (router, route) => {
         // if (tab_selected_obj.value.marketName) {
           detail_tabs_change(tab_selected_obj.value);
         // } else {
-        //   match_odds_info.value = res.data;
+          get_match_odds_info.value = res.data;
         // }
    
         // MatchDataWarehouseInstance.value.set_match_details(
@@ -292,8 +291,8 @@ export const details_main = (router, route) => {
    */
   const get_category_list_info = (params) => {
     // category_list.value = get_category_list.value;
-    api_match_list
-      .get_detail_category(params)
+    api_common
+      .get_category_list(params)
       .then((res) => {
         // console.log("get_category_list", res);
         category_list.value = res.data;
@@ -322,7 +321,7 @@ export const details_main = (router, route) => {
   function getMatchDetailMatchInfo(params) {
     let obj_ = {
       // axios api对象
-      axios_api: api_match_list.get_detail_data,
+      axios_api: api_common.get_matchDetail_MatchInfo,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -348,7 +347,7 @@ export const details_main = (router, route) => {
         // detail_store.get_detail_params
         MatchDataWarehouseInstance.value.set_match_details(
           toRaw(match_detail.value),
-          []
+          get_match_odds_info.value
         );
       },
       // axios中catch回调方法
@@ -408,11 +407,10 @@ export const details_main = (router, route) => {
    */
    const socketOddinfo = lodash.throttle((params) => {
     //赛果页面调用赛果玩法详情接口
-    // match_odds_info.value = get_match_odds_info.value;
     //接口调用
     let obj_ = {
       // axios api对象
-      axios_api: api_match_list.get_detail_list,
+      axios_api: api_common.get_matchDetail_getMatchOddsInfo,
       // axios api对象参数
       params: params,
       // 唯一key值

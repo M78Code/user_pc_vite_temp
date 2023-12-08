@@ -85,7 +85,7 @@
 <script setup>
 import { computed } from "vue"
 import skeleton from './index.vue'
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 const props = defineProps({
   loading_body: Boolean

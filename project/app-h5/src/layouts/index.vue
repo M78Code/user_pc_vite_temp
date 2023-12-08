@@ -62,14 +62,15 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t, UserCtr,MenuData } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 // import { FooterWapper } from "src/components/footer/index.js";
 import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
-import { MenuWapper } from "src/base-h5/components/menu";
+// import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";
-import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
-import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
-import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
+// import activityIcon from "src/base-h5/components/common/activity-icon.vue"; // 设置
+// import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
+// import selectDia from "src/base-h5/components/match-list/components/select-dia.vue"
 import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 // import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import layoutTop from "./top.vue"
@@ -394,3 +395,4 @@ if (UserCtr.get_user_token()) {
   /* **********注单记录********************* *-E*/
 }
 </style>
+src/output
