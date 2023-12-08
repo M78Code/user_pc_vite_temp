@@ -3,10 +3,10 @@
 <template>
 	<div class="result-wrap">
 		<!-- 滚动区域 -->
+		<div v-if="search_loading" class="loading search_loading"><img :src="compute_local_project_file_path('/image/gif/loading_ou.gif')" alt=""></div>
 		<q-scroll-area v-if="load_data_state === 'data'" class="fit rule-scroll-area" ref="scrollRef">
 			<div class="serach-background">
 				<!-- 搜索展示 -->
-				<div v-if="search_loading" class="loading search_loading"><img :src="compute_local_project_file_path('/image/gif/loading_ou.gif')" alt=""></div>
 				<div class="content">
 					<ul class="list">
 						<!-- <div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div> -->
@@ -395,18 +395,17 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 	search_loading = true
 	//调用接口获取获取搜索结果数据
 	get_search_result(params).then(res => {
+		search_loading = false
 		update_show_type('result')
 		search_data.value = res.data.data
 		if (is_empty_data()) {
 			load_data_state.value = 'empty'
-			search_loading = false
 			return
 		}
 		expand_bowling.value = true;
 		expand_league.value = true;
 		expand_team.value = true
 		load_data_state.value = 'data'
-		search_loading = false
 		// console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;

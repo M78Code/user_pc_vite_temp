@@ -70,7 +70,7 @@
             {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
           </div>
         </div>
-        <div class="dele-wrap yb_px12 yb_py10 row"  @touchmove.prevent>
+        <div class="dele-wrap yb_px12 yb_py8 row"  @touchmove.prevent>
           <!-- 右 自动接受跟好赔率 -->
           <span>
             <i class="img2" :class="{ 'img3': BetData.bet_is_accept }" @click="toggle_accept"></i>
@@ -131,7 +131,7 @@
               <!-- 投注 -->
               <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
                 class="row justify-center items-center content-center yb-info">
-                <div class="jiantou">></div>
+                <div class="jiantou"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt=""></div>
                 <div>{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
                 <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
               </div>
@@ -194,7 +194,7 @@ import betCollusionInput from './bet-collusion-input.vue'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/output/index.js";
+import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common, submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
@@ -454,7 +454,7 @@ background: var(--q-gb-t-c-5) !important;
 }
 .yb-info-money{
   font-size: 0.12rem;
-  color: var(--q-gb-bg-c-9);
+  color:rgba(255, 255, 255, 0.6);
   margin-left: 0.05rem;
 }
 
@@ -589,14 +589,13 @@ background: var(--q-gb-t-c-5) !important;
   flex: auto;
   border-radius: 4px;
   height: 0.5rem;
-  line-height: 0.51rem;
+  line-height: 0.49rem;
   overflow: hidden;
 }
 
 .bet-box>p {
   height: 100%;
   text-align: center;
-  line-height: 0.52rem;
 }
 
 /* ************** 底部右侧按钮 ************** -E */
@@ -619,7 +618,7 @@ background: var(--q-gb-t-c-5) !important;
 
 /* ************** 选中状态 **************  */
 .img3 {
-  background-image: url($SCSSPROJECTPATH+"/image/bet/select_a.svg");
+  background-image: url($SCSSPROJECTPATH+"/image/bet/select_fuke.svg");
   // background-image: var(--q-color-com-img-bg-68);
 }
 
@@ -714,4 +713,3 @@ background: var(--q-gb-t-c-5) !important;
   background:var(--q-gb-bg-c-9)
 }
 </style>
-src/output/index.js

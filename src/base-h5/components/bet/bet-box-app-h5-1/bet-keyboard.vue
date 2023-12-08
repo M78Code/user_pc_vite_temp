@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="keyboard yb_pb6" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
+  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
       <div class="nonebox4-fourth">
           <div class="nonebox4-fourth-a">
               <div class="nonebox4-fourth-a-son" v-for="(item,index) of addnum" :key='item' :data-number='index'>{{item}}</div>
@@ -33,9 +33,9 @@
                   <div class="nonebox4-fourth-num-sun" data-number='max'>{{ i18n_t('bet.max')}}</div>
                   <!-- <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div> -->
                   <div class="nonebox4-fourth-num-sun key-cell" data-num="x" @click.stop="_handleDeleteKey()">
-                    <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del_1.svg`" alt="" data-num="x">
+                    <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`" alt="" data-num="x">
                   </div>
-                  <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)">{{ i18n_t('bet.pack_up')}}</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='shouqi'  @click.stop="shou(item,$event)"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/pack_up-keyboard.svg`" alt=""></div>
               </div>
           </div>
           
@@ -176,7 +176,7 @@ const _handleKeyPress = (e) => {
       break;
     // 数字键
     default:
-      _handleNumberKey(num);
+      _handleNumberKey(num, e);
       break;
   }
   let emit_name = 'EMIT_INPUT_BET_MONEY'
@@ -224,11 +224,15 @@ const _handleDeleteKey = () => {
   BetData.set_bet_amount(money.value )
 }
 // 数字建
-const _handleNumberKey = (num) => {
-  
+const _handleNumberKey = (num, e) => {
+  let dom = document.querySelectorAll('.nonebox4-fourth-a-son')
+  for(let i = 0; i < dom.length; i++) {
+    dom[i].classList.remove('active')
+  }
   if (!num) return
   let money_ = BetData.bet_amount
   if (['qon', 'qtw', 'qth','qfo','qfi'].includes(num)) {
+    e.target.classList.add('active')
     if (!money_) {
       money_ = ref_data.add_num[num]
     } else {
@@ -304,13 +308,10 @@ onUnmounted(() => {
 @import url( "src/base-h5/css/bet/bet_single_detail.scss");
 .nonebox4-fourth {
     width: 100%;
-    background-color: var(--q-gb-bg-c-9);
-    border-radius: 10px;
-    padding-left: 4px;
-    padding-right: 4px;
-    padding-top: 4px;
-    padding-bottom: 2px;
-    margin-top: 10px;
+    background-color: var(--q-gb-bg-c-22);
+    border-radius: .1rem;
+    padding: .04rem;
+    margin-top: .08rem;
 }
 .nonebox4-fourth-a {
     width: 100%;
@@ -318,7 +319,10 @@ onUnmounted(() => {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-   
+    margin-bottom: .08rem;
+}
+.nonebox4-fourth-a:last-child {
+  margin-bottom: 0;
 }
 .nonebox4-fourth-a-son {
     display: flex;
@@ -330,11 +334,14 @@ onUnmounted(() => {
     font-size: 0.18rem;
     font-weight: bold;
     border-radius: 0.08rem;
-    margin-left: 0.01rem;
-    margin-right: 2px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    margin: 0 .02rem;
+    padding: .05rem 0;
+    border: 1px solid transparent;
     //box-shadow: 0 2px 2px #eeeeee;
+  &.active {
+    background: url( $SCSSPROJECTPATH+"/image/svg/selected.svg") no-repeat bottom right / .2rem .2rem var(--q-gb-bg-c-15);
+    border-color: var(--q-gb-t-c-1);
+  }
 }
 .nonebox4-fourth-num {
     height: 156px;
@@ -343,8 +350,13 @@ onUnmounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-left: 2px;
-    margin-right: 2px;
+    margin: 0 .02rem;
+}
+.nonebox4-fourth-num:last-child {
+  .nonebox4-fourth-num-sun:nth-child(2) {
+    flex: auto;
+    height: 25%;
+  }
 }
 .nonebox4-fourth-num-sun {
     width: 100%;
@@ -356,10 +368,9 @@ onUnmounted(() => {
     //box-shadow: 0 2px 2px #eeeeee;
     color: #333;
     font-size: 0.22rem;
-    font-weight: bold;
-    border-radius: 6px;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    font-weight: 700;
+    border-radius: .08rem;
+    margin: .02rem 0;
 }
 .nonebox4-fourth-num-sun2 {
     width: 100%;
@@ -373,13 +384,11 @@ onUnmounted(() => {
     font-size: 14px;
     font-weight: bold;
     border-radius: 6px;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin: .02rem 0;
     height: 50px;
 }
 
 .keyboard {
-  height: 1.98rem;
   -webkit-overflow-scrolling: touch;
   font-size: 20px;
   font-weight: 500;

@@ -298,7 +298,7 @@ onUnmounted(() => {
 }
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
-  margin-top: 0.1rem;
+  margin-top: 0.08rem;
   background: var(--q-gb-bg-c-22);
   border-radius: 0.01rem;
   display: flex;
@@ -319,7 +319,7 @@ onUnmounted(() => {
     position: relative;
     display: flex;
     align-items: center;
-    color: var(--q-gb-t-c-3);
+    color: var(--q-gb-t-c-11);
   }
 }
 .bet-single-detail {
@@ -328,7 +328,6 @@ onUnmounted(() => {
 }
 /* ************** 右边内容 ************** -S */
 .content-b {
-  width: 1.6rem;
   height: 0.4rem;
   border-radius: 4px;
   font-size: 0.16rem;
@@ -339,6 +338,9 @@ onUnmounted(() => {
   align-items: center;
   justify-content: flex-start;
   width: 70%;
+  .limit-txt {
+    color: #C9CDDB;
+  }
 }
 /* ************** 右边内容 ************** -E */
 .set-opacity {
