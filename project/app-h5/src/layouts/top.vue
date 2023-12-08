@@ -6,7 +6,7 @@
  * @Description:  
 -->
 <template>
-  <template v-if="['matchList', 'sport_menu'].includes(route.name)">
+  <template v-if="['matchList', 'sport_menu', 'esports_sports'].includes(route.name)">
     <!--  顶部菜单 -->
     <TopMenu />
 

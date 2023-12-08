@@ -32,7 +32,7 @@
       <div v-if="show_sport_title" @click.stop
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
-          {{ match_of_list.csna }} ({{ get_match_count }})
+          {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }})
         </span>
       </div>
 
@@ -403,9 +403,8 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-21);
+    background: var(--q-gb-bg-c-17);
     height: 5px;
-    margin: 0 4px;
   }
   .match-inner-container {
     padding: 0 0.05rem;
@@ -446,7 +445,6 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    padding-left: 6px;
     background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
@@ -774,7 +772,7 @@ export default {
     border-bottom: 1px solid #e2e2e2;
 
     .odd-title-i-w {
-      width: 50%;
+      width: 1.9rem;
       overflow: hidden;
 
       .odd-t-i-wrapper {
@@ -1294,7 +1292,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);  
   width: 100%;
   color: var(--q-gb-t-c-19);
-  padding-left: 6px;
+  padding-left: 11px;
   height: 0.2rem;
   display: flex;
   align-items: center;
@@ -1490,6 +1488,7 @@ export default {
         color: #AFB3C8 !important;
         .counting{
           font-size: 11px;
+          color: var(--q-gb-t-c-19);
         }
       }
     }

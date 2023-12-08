@@ -20,7 +20,7 @@
       <BetBoxWapper use_component_key='BetBoxAppH5_1' />
 
       <!--页脚-->
-      <Tabbar class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports','category'].includes(route.name)">
+      <Tabbar id="page-footer" class="m-layout" v-if="['sport_menu', 'matchList', 'virtual_sports','category', 'esports_sports'].includes(route.name)">
       </Tabbar>
 
       <!-- 筛选+搜索   已脱离文档流-->
@@ -321,9 +321,10 @@ if (UserCtr.get_user_token()) {
   }
 
   .page_container {
-    height: calc(100% - 50px);
     overflow: hidden;
     // margin-top: 50px;
+    display: flex;
+    flex-direction: column;
     padding-top: 0 !important;
   }
 

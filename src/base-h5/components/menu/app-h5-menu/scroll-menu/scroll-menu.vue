@@ -33,6 +33,7 @@
       </div>
 </template>
 <script setup>
+import { useRouter } from 'vue-router'
 import { ref,reactive,onMounted,onUnmounted,nextTick } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
@@ -42,6 +43,7 @@ import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 const ref_data = reactive({
     emit_lsit:{}
 })
+const router = useRouter()
 const menu_show_id = reactive([0,300,50000,2000]);//全部 vr 收藏 电竞显示
 const scrollTab = ref(null);
 const props = defineProps({
@@ -56,11 +58,13 @@ const props = defineProps({
     default: ''
   }
 })
+
 const emits = defineEmits(['changeList'])
 /**
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  // if (item.mi === 2000) router.push('/esports')
   event = event || scrollTab.value[0];
   // 选中后点击无效
   if (item.mi == MenuData.current_lv_2_menu_i) return;
