@@ -14,8 +14,9 @@
         <q-tab v-for="(item ,index) in option" :key="index "
                 @click.stop="selectSport(item,index)"
                 :class="active_sport === index ? 'active' : ''"
+                 class="tabs_item"
                 >
-          <div class="tabs_item">
+          <div>
             {{ item }}
           </div>
         </q-tab>
@@ -159,8 +160,8 @@ html,body{
       height: 12px;
       background: #D9D9D9;
       position: absolute;
-      right:  -24px;
-      top: 3px;
+      right:  0px;
+      top: 18px;
     }
   }
   .active{
