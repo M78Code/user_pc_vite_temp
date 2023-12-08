@@ -196,4 +196,4 @@ const covert_mct = ({ mct, mmp, ms }) => {
         font-size: 0.15rem;
     }
 }
-</style>src/output/index
+</style>src/output/indexsrc/core/format/common/module/format-msc.js

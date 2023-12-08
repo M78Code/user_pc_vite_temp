@@ -216,7 +216,7 @@ import store from "src/store-redux/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { pre_load_video } from "src/core/pre-load/index.js"
 import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
-import { format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/core/format/common/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js";;
 import { useRoute } from "vue-router"
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/output/index.js";
@@ -869,4 +869,4 @@ setup(props, context){
 <style scoped lang="scss">
 @import '../styles/highlights.scss';
 </style>
-src/output/index.jssrc/output/index
+src/output/index.jssrc/output/indexsrc/core/format/common/index.js

@@ -382,4 +382,4 @@ export default defineComponent({
     }
   }
 }
-</style>
+</style>src/core/format/common/module/format-score.js

@@ -7,7 +7,7 @@
  * @Description: http方法次数统计
  */
 import { SessionStorage , LocalStorage } from "src/core/utils/common/module/web-storage.js";
-import { DateForMat } from "src/core/format/index.js";
+import { DateForMat } from "src/core/format/common/index.js";
 import { throttle } from "lodash";
 class HttpLog {
   /**

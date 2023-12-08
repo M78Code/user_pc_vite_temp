@@ -60,7 +60,7 @@ import { calc_text } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { outcome } from "src/core/bet-record/util.js";
-import { formatTime, format_money2, format_balance } from 'src/core/format/index.js'
+import { formatTime, format_money2, format_balance } from 'src/core/format/common/index.js'
 let props = defineProps({
   data_f: {
     type: Object
@@ -151,3 +151,4 @@ p {
     }
 }
 </style>
+src/core/format/common/index.js

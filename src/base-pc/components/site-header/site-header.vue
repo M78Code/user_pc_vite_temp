@@ -92,7 +92,7 @@ import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
 import { SessionStorage, utils } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { format_money2 } from "src/core/format/index.js"
+import { format_money2 } from "src/core/format/common/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 /** api */
 import { api_account } from "src/api/index.js";
@@ -524,4 +524,4 @@ watch(
 
 <style lang="scss">
 @import './site-header.scss';
-</style>
+</style>src/core/format/common/index.js

@@ -4,7 +4,7 @@ import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/core/format/common/index.js"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { nextTick } from "vue";

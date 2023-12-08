@@ -43,7 +43,7 @@ import BetKeyboard from "../common/bet-keyboard.vue"
 
 import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { format_odds, format_currency, format_currency2 } from "src/core/format/index.js"
+import { format_odds, format_currency, format_currency2 } from "src/core/format/common/index.js"
 import { IconWapper } from 'src/components/icon'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -272,4 +272,4 @@ input[type="number"] {
     margin-bottom: 10px;
 }
 
-</style>
+</style>src/core/format/common/index.js

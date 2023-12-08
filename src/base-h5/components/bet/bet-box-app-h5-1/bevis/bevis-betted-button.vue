@@ -6,7 +6,7 @@ import { defineEmits } from "vue"
 import { i18n_t } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { format_money2 } from "src/core/format/index.js"
+import { format_money2 } from "src/core/format/common/index.js"
 
 const statusObj = {
   1: '投注状态',
@@ -115,4 +115,4 @@ const set_retain_selection = () => {
   }
   text-align: center;
 }
-</style>
+</style>src/core/format/common/index.js

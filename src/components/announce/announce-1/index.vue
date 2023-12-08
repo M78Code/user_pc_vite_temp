@@ -35,7 +35,7 @@ import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-
 import topMenu from "./top-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_home } from "src/api/index.js"
-import { format_str } from "src/core/format/index.js";
+import { format_str } from "src/core/format/common/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
@@ -224,3 +224,4 @@ onMounted(() => {
 
 /** 公告栏内容 -E*/
 </style>
+src/core/format/common/index.js

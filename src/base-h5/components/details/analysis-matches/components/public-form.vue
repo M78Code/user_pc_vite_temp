@@ -80,7 +80,7 @@
 import { onUnmounted, watch, ref } from 'vue'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { DateForMat } from "src/core/format/index.js"
+import { DateForMat } from "src/core/format/common/index.js"
 import { project_name } from "src/output/index.js"
 
 // TODO: 后续修改调整
@@ -269,4 +269,4 @@ import { project_name } from "src/output/index.js"
   }
 }
 </style>
-src/output
+src/outputsrc/core/format/common/index.js
