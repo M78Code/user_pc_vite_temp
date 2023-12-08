@@ -89,7 +89,7 @@
 <script setup>
 import { useCommon } from "../../use-common";
 import { computed, ref } from "vue";
-import { format_three_data } from "src/core/index";
+import { format_three_data } from "src/output/index.js";
 const other = ref({});
 const emit = defineEmits(["sort_index", "set_panel_status"]);
 
@@ -280,3 +280,4 @@ const handicap = computed(() => {
   }
 }
 </style>
+src/output/index

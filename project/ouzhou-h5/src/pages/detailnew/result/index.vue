@@ -25,12 +25,12 @@ import {
   useMitt,
   MITT_TYPES,
   utils,
-  UserCtr,
   MatchDataWarehouse_H5_List_Common,
   MenuData,
   SearchData,
 useMittEmit,
-} from "src/core/index";
+} from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { onMounted, ref, toRaw, watch, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import detail_header_tem1 from "../detail_header/detail_header_tem1.vue";
@@ -196,4 +196,4 @@ function getMatchDetail(params) {
   background-color: var(--q-gb-bg-c-2);
 }
 </style>
-./result.js
+./result.jssrc/output/index

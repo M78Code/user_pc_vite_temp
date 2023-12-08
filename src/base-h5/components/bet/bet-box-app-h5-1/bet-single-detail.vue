@@ -39,7 +39,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { ref, reactive, onMounted,computed, onUnmounted } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 
 let timer1 = null

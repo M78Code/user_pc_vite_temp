@@ -82,7 +82,7 @@
 
 <script setup>
 import { ref, computed, onUnmounted } from 'vue';
-import { i18n_t } from "src/core/index.js";
+import { i18n_t } from "src/output/index.js";
 import lodash from 'lodash' 
 // import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 // import {component_symbol ,need_register_props} from "../config/index.js"

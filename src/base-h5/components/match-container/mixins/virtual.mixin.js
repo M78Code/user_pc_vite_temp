@@ -3,7 +3,7 @@ import { computed, onUnmounted, ref } from 'vue'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { i18n_t} from 'src/core/index.js'
+import { i18n_t} from 'src/output/index.js'
 import data_pager from "src/base-h5/components/common/data-pager.vue"
 
 const store_state = store.getState()

@@ -1,10 +1,10 @@
-import { LOCAL_PROJECT_FILE_PREFIX }  from 'src/core/index.js'
+import { LOCAL_PROJECT_FILE_PREFIX }  from 'src/output/module/constant-utils'
  
 
  
 
 
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 /**
  * @description: 获取各球种背景图片
  * @param {String} csid 球种id

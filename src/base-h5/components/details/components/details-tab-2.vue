@@ -19,13 +19,13 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
-import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/core/index";
-import { utils } from 'src/core/index.js';
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
+import { utils } from 'src/output/index.js';
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDetailCalss } from "src/core/index.js"
+import { MatchDetailCalss } from "src/output/index.js"
 import { SessionStorage } from "src/core/utils/index.js"
 
 export default defineComponent({
@@ -280,3 +280,4 @@ export default defineComponent({
 //   z-index: 90;
 // }
 </style>
+src/output/indexsrc/output/index.jssrc/output/index.js

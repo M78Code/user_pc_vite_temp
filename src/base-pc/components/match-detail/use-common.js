@@ -5,7 +5,7 @@
 // -->
 import lodash from "lodash";
 import { ref, watch, onMounted, onUnmounted } from "vue";
-import {is_eports_csid} from 'src/core/index.js';
+import {is_eports_csid} from 'src/output/index.js';
 import store from "src/store-redux/index.js";
 import { HandicapTitle } from "src/base-pc/components/match-detail/handicap-title/index.js";
 import betItem from "src/base-pc/components/bet-item/bet_item.vue";

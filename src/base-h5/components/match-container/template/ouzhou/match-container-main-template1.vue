@@ -273,7 +273,7 @@
 <script>
 
 import { ref, computed, watch, nextTick, onMounted } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
+import { LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
 
 import { IconWapper } from 'src/components/icon'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -285,7 +285,7 @@ import ScoreList from 'src/base-h5/components/match-container/template/ouzhou/co
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/core/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/output/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou, neutral_site } from 'src/base-h5/core/utils/local-image.js'
 import { sports_play_data, use_sports_play_title } from 'src/core/constant/index.js'
@@ -1440,3 +1440,4 @@ export default {
 /* ********赛事容器相关********** -E*/
 </style>
   
+src/output/index.jssrc/output/index.js

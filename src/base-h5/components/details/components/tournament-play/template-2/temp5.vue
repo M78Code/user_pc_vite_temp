@@ -186,7 +186,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js"

@@ -162,7 +162,7 @@ import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
 import lodash from 'lodash'
-import { compute_local_project_file_path } from "src/core";
+import { compute_local_project_file_path } from "src/output/index.js";
 const lineupData = ref({});
 const first_home_lineup = ref([]); //主队首发阵容
 const first_away_lineup = ref([]); //客队首发阵容

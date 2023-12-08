@@ -22,12 +22,12 @@
 <script setup>
 import { defineComponent, ref, reactive, watch,computed  } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { MenuData } from 'src/core/'
+import { MenuData } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 const router = useRouter();
 // 底部菜单集合
 const tab_list = ref([
@@ -176,3 +176,4 @@ const jump_page = (item) => {
   }
 }
 </style>
+src/outputsrc/output/index.js

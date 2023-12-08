@@ -50,7 +50,7 @@ import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
-import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/core/"
+import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/output/index.js"
 
 
 // 新修改
@@ -152,3 +152,4 @@ onUnmounted(()=>{
 <style scoped lang="scss">
 @import "./index.scss";
 </style>
+src/output

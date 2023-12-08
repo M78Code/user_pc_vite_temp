@@ -1,4 +1,4 @@
-import { compute_local_project_file_path } from 'src/core'
+import { compute_local_project_file_path } from 'src/output'
 
 export const img1 = compute_local_project_file_path('/image/list/m_list_jiaoqiu_icon.svg')
 // 白色版角球选中图标

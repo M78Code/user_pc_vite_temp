@@ -239,7 +239,7 @@ import {
   useMittEmitterGenerator,
   i18n_t,
   LayOutMain_pc,
-} from "src/core";
+} from "src/output/index.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, onUnmounted } from "vue";
@@ -830,3 +830,4 @@ export default {
   }
 }
 </style>
+src/output

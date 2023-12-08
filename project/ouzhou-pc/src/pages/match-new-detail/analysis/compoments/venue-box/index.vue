@@ -77,7 +77,7 @@ import animal_box from "./animal_box.vue";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import score_info from "./score_info.vue";
 import commingSoon from "./comming-soon.vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { get_match_status } from "src/core/utils/index";
 import lodash_ from "lodash";
 

@@ -168,7 +168,7 @@ import { computed, onMounted, onUnmounted, ref, watch,nextTick } from "vue";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { IconWapper } from "src/components/icon";
 import refresh from "src/components/refresh/refresh.vue";
-import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss,get_media_icon_index,LayOutMain_pc} from "src/core/index";
+import { i18n_t, get_match_status,UserCtr ,GlobalSwitchClass,MatchDetailCalss,get_media_icon_index,LayOutMain_pc} from "src/output/index.js";
 import { compute_css_obj } from "src/core/server-img/index.js";
 import filterHeader from "src/core/filter-header/filter-header.js";
 import { debounce_throttle_cancel } from "src/core/utils/module/other.js";
@@ -664,3 +664,4 @@ onUnmounted(() => {
 }
 /** 提示内容 -S*/
 </style>
+src/output/index

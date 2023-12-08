@@ -99,7 +99,7 @@ import { component_symbol, need_register_props } from "../config/index.js";
 import { useGetValue } from "./use-value.js";
 import { reactive, watch } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
-import { format_balance } from "src/core/index.js";
+import { format_balance } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { IconWapper } from "src/components/icon/index.js";
 import {SelectWrapper} from "src/base-pc/components/match-results/select/index.js";
