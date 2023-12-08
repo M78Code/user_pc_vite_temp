@@ -21,7 +21,7 @@
 // ouzhou-h5 赛事组件
 import { onMounted } from "vue";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js";
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
 

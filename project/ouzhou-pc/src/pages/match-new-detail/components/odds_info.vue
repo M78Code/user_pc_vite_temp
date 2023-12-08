@@ -176,7 +176,7 @@
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed, inject } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX ,get_match_status} from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX ,get_match_status} from "src/output/index.js";
 import template5 from "./template5.vue";
 import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";

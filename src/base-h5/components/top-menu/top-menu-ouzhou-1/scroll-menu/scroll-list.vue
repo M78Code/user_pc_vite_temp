@@ -27,7 +27,7 @@
 import { ref , watch ,nextTick} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData  } from "src/core/";
+import { MenuData  } from "src/output/index.js";
 const emits = defineEmits(['changeMenu']);
 
 const props = defineProps({
@@ -208,4 +208,4 @@ watch(()=>props.current_mi,()=>{
         }
     }
 }</style>
-  
+  src/output

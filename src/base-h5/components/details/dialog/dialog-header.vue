@@ -26,7 +26,7 @@
 <script>
 import seamlessMarquee from 'src/base-h5/components/details/seamless-marquee.vue' // 详情页头部联赛名文字超出隐藏无缝滚动
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { go_where } from "src/core/utils/index.js"
+import { go_where } from "src/core/utils/common/index.js"
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -131,3 +131,4 @@ export default {
 
 /*************** 返回图标icon *************** -E*/
 </style>
+src/core/utils/common/index.js

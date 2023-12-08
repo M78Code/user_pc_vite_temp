@@ -1,10 +1,9 @@
 import lodash from 'lodash'
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 // 电竞赛种csid
 const e_sport_csids = [101, 100, 102, 103];
-import { UserCtr } from 'src/core/'
+
  
- 
+import {GLOBAL_CONSTANT } from "src/output/module/constant-utils.js"
 // 目前环境信息
 const {BUILD_VERSION, NODE_ENV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME } = window.BUILDIN_CONFIG;
 let project_name = PROJECT_NAME
@@ -59,7 +58,7 @@ const get_server_file_path = (path, csid = 0) => {
   // }
   // 电竞图片域名模式
   if (e_sport_csids.includes(1 * csid)) {
-    return `${UserCtr.e_sports_domain_img}/${path}`;
+    return `${GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG}/${path}`;
   }
   //新配置是 数组
   let DOMAIN_RESULT_ = lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT') 

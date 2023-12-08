@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { compute_local_project_file_path } from 'src/core/'
+import { compute_local_project_file_path } from "src/output/index.js"
 
 const arr_const = [
      {
@@ -76,3 +76,4 @@ const props = defineProps({
     }
 }
 </style>
+src/output

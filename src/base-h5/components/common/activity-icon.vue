@@ -14,7 +14,7 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj, UserCtr, get_server_file_path } from "src/core/index.js";
+import { i18n_t, compute_css_obj, UserCtr, get_server_file_path } from "src/output/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { ref } from 'vue'
 import { api_activity } from "src/api";

@@ -29,7 +29,7 @@
 // #TODO VUEX
 // import { mapGetters } from "vuex";
 // import odds_conversion from "src/base-h5/mixins/odds_conversion/odds_conversion.js"
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual_sports_odd_item",
@@ -168,3 +168,4 @@ export default defineComponent({
 
 /* ************** 选中的样式 ************** -EE */
 </style>
+src/output

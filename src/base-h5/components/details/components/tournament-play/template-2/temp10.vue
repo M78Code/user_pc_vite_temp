@@ -33,13 +33,13 @@
 // #TODO vuex
 // import { mapGetters} from "vuex";
 import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
-import { project_name,MatchDetailCalss } from 'src/core'
+import { project_name,MatchDetailCalss } from "src/output/index.js"
 export default defineComponent({
   name: "temp10",
   props: ["item_data", "title"],
@@ -246,3 +246,4 @@ div[class*="virtual-num"] {
   }
 }
 </style>
+src/outputsrc/output

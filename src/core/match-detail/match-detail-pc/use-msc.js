@@ -10,7 +10,7 @@
 // import details from "src/public/utils/detailsClass/details.js"
 import { ref } from "vue";
 import _ from "lodash";
-import { get_match_status } from "src/core/utils/index";
+import { get_match_status } from "src/core/utils/common/index";
 export const useMsc = () => {
   let many_key = [];
   // S120~S159

@@ -31,7 +31,7 @@ import matchResultsHeaderTop from "src/base-h5/components/details/components/det
 import { detail_csid_config } from "src/core/match-detail/match-detail-h5/config/details-bg.js";
 import { ref } from "vue"
 import lodash from "lodash"
-import { MenuData } from "src/core/index.js"
+import { MenuData } from "src/output/index.js"
   
   // 背景图
   const URL = ref(detail_csid_config)

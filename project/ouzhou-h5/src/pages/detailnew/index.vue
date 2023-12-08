@@ -85,7 +85,7 @@ import OddsListContrainer from "./components/OddsListContrainer.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 // import './index.scss'
 export default {

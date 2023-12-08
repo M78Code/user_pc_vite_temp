@@ -21,7 +21,7 @@
 <script setup>
 import { onMounted, onUnmounted,ref, watch } from "vue";
 import { scrollMenuEvent } from "../utils";
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import { api_common } from "src/api/"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
@@ -138,4 +138,4 @@ defineExpose({set_active_val,changeTabMenu})
         }
     }
 }</style>
-  
+  src/output/index.js

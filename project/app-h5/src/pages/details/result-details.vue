@@ -57,7 +57,7 @@ import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { computed, onMounted, onUnmounted, watch, ref, reactive } from "vue";
-import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/core/index";
+import { MatchDataWarehouse_H5_Detail_Common, format_plays, format_sort_data, MatchDetailCalss } from "src/output/index.js";
 
 let route = useRoute()
 // 赛果详情初始化数据仓库数据
@@ -335,3 +335,4 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
   z-index: 10 !important;
 }
 </style>
+src/output/index

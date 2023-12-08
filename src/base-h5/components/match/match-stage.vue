@@ -44,9 +44,9 @@
 
 <script setup>
 import { ref, computed, defineComponent, onUnmounted, watch, defineAsyncComponent,markRaw } from 'vue';
-import { utils } from 'src/core/utils/index.js';
+import { utils } from 'src/core/utils/common/index.js';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 import { format_time_zone, formatTime } from 'src/core/format/index.js'
 
@@ -131,4 +131,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped></style>src/core/utils/common/index.js

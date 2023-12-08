@@ -54,7 +54,7 @@
 import { useCommon } from "../../use-common";
 
 const emit = defineEmits(["sort_index", "set_panel_status"]);
-import { is_eports_csid} from "src/core/index"
+import { is_eports_csid} from "src/output/index.js"
 const props = defineProps({
   match_info: Object, //赛事详情
   screen: String, //match-detail详情页，match-list列表右侧
@@ -112,3 +112,4 @@ const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,be
   }
 }
 </style>
+src/output/index

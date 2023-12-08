@@ -92,7 +92,7 @@ const { get_insert_history } = api_search || {}
 import NoData from 'src/base-h5/components/common/no-data.vue'// 无数据组件
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { UserCtr, MenuData, SearchData,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/'
+import { UserCtr, MenuData, SearchData,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import lodash from 'lodash'
 const router = useRouter()
 // 模糊搜索的数据源
@@ -325,3 +325,4 @@ onBeforeUnmount(() => {
   }
 }
 </style>
+src/output

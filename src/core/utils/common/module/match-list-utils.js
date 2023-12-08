@@ -59,17 +59,6 @@ export const get_match_status = (ms, exclude) => {
 	return is_play;
 };
 
- 
-
-//获取服务器时间
-export const get_remote_time = () => {
-	let { local_time, remote_time } = JSON.parse(
-		localStorage.getItem("get_timestamp")
-	);
-	let now = new Date().getTime();
-	let time = remote_time + (now - local_time);
-	return time;
-};
 
 /**
  * @Description 获取媒体索引

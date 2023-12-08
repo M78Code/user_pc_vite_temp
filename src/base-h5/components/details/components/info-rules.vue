@@ -25,7 +25,7 @@
 // import { mapGetters, mapMutations } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent, ref } from "vue";
 import { i18n_t } from "src/boot/i18n.js";;
-import { useMittEmit, MITT_TYPES } from "src/core/index.js"
+import { useMittEmit, MITT_TYPES } from "src/output/index.js"
 //国际化
 
 

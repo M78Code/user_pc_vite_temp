@@ -6,16 +6,11 @@
  * 使用  {{ compute_value_by_cur_odd_type(val}}
  * 实现 匹配不到 后 向下 取值
  */
-import BetData from "src/core/bet/class/bet-data-class.js";
 import { esports_csid } from "../../constant/config/csid"
-import { useRoute } from "vue-router"
-import {UserCtr} from 'src/core'
-import { includes } from "lodash";
+import UserCtr from 'src/core/user-config/user-ctr'
 // import { format_odds } from "src/core/format/module/format-odds.js"
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
-const all_odds_arr = [] //所有的赔率数组
-const cur_odds_arr = [] // 当前允许的赔率数组
 const oddsTable = {
   EU: '1',
   HK: '2',

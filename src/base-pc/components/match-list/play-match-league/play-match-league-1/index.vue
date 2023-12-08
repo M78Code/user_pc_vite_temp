@@ -56,10 +56,10 @@
 import lodash from 'lodash';
 import { ref, computed, onUnmounted, watch } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { MenuData, compute_css_obj, compute_img_url } from "src/core/index.js";
+import { MenuData, compute_css_obj, compute_img_url } from "src/output/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { utils_info } from 'src/core/utils/module/match-list-utils.js';
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
@@ -187,4 +187,4 @@ onUnmounted(() => {
   }
 
 }
-</style>
+</style>src/core/utils/common/module/match-list-utils.js

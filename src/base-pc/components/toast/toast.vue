@@ -22,7 +22,7 @@
 <script setup>
 import { onMounted,onUnmounted, ref } from 'vue';
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
-import { compute_local_project_file_path } from 'src/core/index.js'
+import { compute_local_project_file_path } from 'src/output/index.js'
 
 /* 是否展示 */
 const is_show = ref(false)
@@ -79,3 +79,4 @@ const show_toast = (msg, delay = 2000) => {
 }
 </style>
 
+src/output/index.js

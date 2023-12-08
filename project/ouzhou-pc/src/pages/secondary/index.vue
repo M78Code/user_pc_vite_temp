@@ -45,8 +45,8 @@
 </template>
 
 <script setup>
-import { LayOutMain_pc } from "src/core/index.js";
-import { compute_local_project_file_path } from "src/core/index.js";
+import { LayOutMain_pc } from "src/output/index.js";
+import { compute_local_project_file_path } from "src/output/index.js";
 import { ref, reactive,onMounted } from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import rule from "src/base-pc/components/rule/index.vue";
@@ -54,8 +54,8 @@ import announce from "src/base-pc/components/announce/index.vue";
 import matchResults from "src/base-pc/components/results/match-results.vue";
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { loadLanguageAsync } from "src/core/index.js";
-import { LocalStorage } from "src/core/utils/module/web-storage.js";
+import { loadLanguageAsync } from "src/output/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 //数据列表
 const list_data = reactive([
   { id: "announcement", name: "Announcement", i18filed: 'announcement' },
@@ -118,4 +118,4 @@ onMounted(()=>{
   height:calc(100% - 80px);
 }
 }
-</style>
+</style>/index.jssrc/output/index.jssrc/core/utils/common/module/web-storage.js

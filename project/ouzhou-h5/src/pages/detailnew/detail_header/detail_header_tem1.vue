@@ -19,6 +19,7 @@
      <!-- {{ get_match_detail.msid }} -->
         
         <div class="match-detail-time-collect" v-if="show_collect" >
+
           <!-- 显示视频按钮 -->
           <div v-if="status == 1 || status == 3" @click="handleChange('video')">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video"/>
@@ -100,8 +101,9 @@ import matchStage from "src/base-h5/components/match/match-stage.vue";  // 详�
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
-import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zone  } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX,format_time_zone_time, format_time_zone  } from "src/output/index.js";
 import matchScore from "./match-score/index.vue"
+import UserCtr from "src/core/user-config/user-ctr.js";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -149,6 +151,10 @@ const status = computed(() => {
   return 4;
  
 });
+
+watch(() => props.get_match_detail, (value) => {
+  console.log(value, "props.get_match_detail");
+})
 
 const show_time_counting = computed(() => {
   let csid = Number(props.get_match_detail.csid);
@@ -309,29 +315,6 @@ const set_basketball_score_icon_list = () => {
   }
 };
 const scoew_icon_list = ref([])
-// console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
-watch(()=>props.get_match_detail, (new_value, old_value) => {
-  scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
-  // set_scoew_icon_list(new_value);
-  // 意义不明
-  current_ball_type.value = sport_ball[new_value?.csid] * 100;
-  set_basketball_score_icon_list()
-})
-watch(
-  () => props.get_match_detail?.msc,
-  (msc) => {
-    set_scoew_icon_list({msc});
-    set_basketball_score_icon_list();
-  },
-  { immediate: false, deep: true }
-);
-watch(()=>props.get_match_detail?.mle,
-  set_basketball_score_icon_list,
-  {
-    immediate:true
-  }
-)
-
 /**
  *@description // 比分板数据
  *@param {*}
@@ -380,6 +363,29 @@ onMounted(()=>{
     //     is_collect.value = props.get_match_detail.mf
     // },320)
 })
+
+// console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
+watch(()=>props.get_match_detail, (new_value, old_value) => {
+  scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
+  // set_scoew_icon_list(new_value);
+  // 意义不明
+  current_ball_type.value = sport_ball[new_value?.csid] * 100;
+  set_basketball_score_icon_list()
+},{ immediate: false, deep: true })
+watch(
+  () => props.get_match_detail?.msc,
+  (msc) => {
+    set_scoew_icon_list({msc});
+    set_basketball_score_icon_list();
+  },
+  { immediate: false, deep: true }
+);
+watch(()=>props.get_match_detail?.mle,
+  set_basketball_score_icon_list,
+  {
+    immediate:true
+  }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -578,3 +584,4 @@ onMounted(()=>{
 }
 
 </style>
+src/output

@@ -12,13 +12,13 @@
      * 
      * 处理 ： 247 
      */
-    import { MatchDataWarehouse_H5_List_Common as MatchListData  } from 'src/core/index.js'
+    import { MatchDataWarehouse_H5_List_Common as MatchListData  } from 'src/output/module/match-data-base.js'
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
     import {compute_style_template_by_match_info} from "./compute-style-template.js"
-    import {get_match_status} from "src/core/index.js"
+    import {get_match_status} from "src/output/module/constant-utils.js"
     import {
       match_status_title_card_template,
       sport_title_card_template,

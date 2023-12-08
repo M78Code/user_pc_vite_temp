@@ -1,15 +1,18 @@
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
-import { virtual_sport_format } from 'src/core/format/module/format-match.js'
-import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { mx_collect_count, set_collect_count, match_collect_status } from "./match-list-collect.js";
-import virtual_composable_fn from './match-list-virtual.js'
+import { MenuData }  from "src/output/module/menu-data.js";
+
+import {   match_collect_status } from "./match-list-collect.js";
+
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
+
+
+import virtual_composable_fn from './match-list-virtual.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -17,11 +20,11 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const vx_filter_select_obj = ref([])
 
-
-
 const load_data_state = ref(null);
 let hot_match_list_timeout;
 let vx_layout_list_type = 'match'
+
+console.error('MenuData-------', );
 // 是否虚拟体育
 let is_virtual = MenuData.is_vr();
 const { route_name } = PageSourceData;

@@ -67,7 +67,7 @@ import { ref, reactive, onMounted, onUnmounted, defineComponent,watch } from "vu
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import { utils, MenuData, LayOutMain_pc, GlobalSwitchClass,SearchPCClass } from 'src/core/index.js'
+import { utils, MenuData, LayOutMain_pc, GlobalSwitchClass,SearchPCClass } from 'src/output/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

@@ -77,8 +77,8 @@ import animal_box from "./animal_box.vue";
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import score_info from "./score_info.vue";
 import commingSoon from "./comming-soon.vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
-import { get_match_status } from "src/core/utils/index";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { get_match_status } from "src/core/utils/common/index";
 import lodash_ from "lodash";
 
 const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
@@ -251,4 +251,4 @@ const tab_click = (type) => {
 .stage-303 {
   color: rgb(255, 112, 0) !important;
 }
-</style>
+</style>src/core/utils/common/index

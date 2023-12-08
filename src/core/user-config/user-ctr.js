@@ -7,25 +7,27 @@
  */
 // #TODO 等后续get_server_file_path、http、infoUpload和pako_pb公共模块开发后再替换
 import { ref,nextTick } from "vue";
-import { get_server_file_path } from "src/core/file-path/file-path.js";
-import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
-import { infoUpload } from "src/core/http/";
-import { ServerTime } from "src/core/";
-
-import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
-import { default_theme_key } from "src/core/theme/"
-
-// #TODO 接口统一管理的文件，后续替换
-import { api_details, api_account, api_common } from "src/api/";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 import { uid } from 'quasar';
-import { i18n_t, i18n } from "..";
+
+import { get_server_file_path } from "src/core/file-path/file-path.js";
+import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
+import { infoUpload } from "src/core/http/index.js";
+import ServerTime from 'src/core/server-time/server-time.js';
+
+import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import {GLOBAL_CONSTANT } from "src/output/module/constant-utils.js"
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+
+// #TODO 接口统一管理的文件，后续替换
+import { api_details, api_account } from "src/api/index.js";
+import * as api_common from 'src/api/module/common/index.js'
+import { i18n_t } from "src/boot/i18n.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 const user_key = STANDARD_KEY.get("user_info");
@@ -120,8 +122,7 @@ class UserCtr {
       })
     }
     this.callbackUrl = ''
-    //电竞图片地址 
-    this.e_sports_img_domain = ''
+ 
     
 
     // 常规体育的 图片地址 
@@ -1033,7 +1034,8 @@ class UserCtr {
         // 持久化电竞图片域名
         LocalStorage.set('e_sports_domain_img', temp);
         // 设置全局电竞图片域名信息
-        this.e_sports_img_domain = temp;
+        GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG = temp;
+
       }
     } catch (error) {
       console.error(error);

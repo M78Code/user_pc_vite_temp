@@ -111,8 +111,8 @@
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
-import { MenuData, score_switch_handle, score_format } from "src/core/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import { MenuData, score_switch_handle, score_format } from "src/output/index.js"
 
 const props = defineProps({
   match: Object,
@@ -420,4 +420,4 @@ onUnmounted(() => {
  
 <style scoped lang="scss">
  @import "../styles/score-list.scss";
-</style>
+</style>src/output/index.js

@@ -1,6 +1,6 @@
-import { get_query_string } from "src/core/utils/";
+import { get_query_string } from "src/core/utils/common";
 import STANDARD_KEY from "src/core/standard-key";
-import { SessionStorage } from "src/core/utils/module/web-storage.js";
+import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 //获取url参数
