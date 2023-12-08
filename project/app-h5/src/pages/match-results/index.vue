@@ -112,6 +112,7 @@ const set_scroll_data_list = (data_list = []) => {
 
 // 设置滑动菜单的选中id
 const set_scroll_current = item => {
+    if (!item) return
     state.current_mi = item.mi
     let params = {
         mi:item.mi,

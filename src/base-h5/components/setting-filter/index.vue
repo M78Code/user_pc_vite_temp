@@ -7,7 +7,8 @@
     <div class="setting-top setting-item">
       <div class="title">
         联赛筛选
-        <span>(已选16)</span>
+        <span>全部</span>
+        <!-- <span>(已选16)</span> -->
       </div>
       <div>
       </div>

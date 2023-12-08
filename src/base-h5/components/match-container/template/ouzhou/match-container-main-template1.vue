@@ -1432,6 +1432,10 @@ export default {
     }
   }
 }
+:deep(.q-item){
+  min-height: 42px;
+  border-bottom: 1px solid #e2e2e2;
+}
 /* **************日期********************** -E*/
 /* ********赛事容器相关********** -E*/
 </style>

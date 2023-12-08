@@ -173,7 +173,7 @@ const setDefaultData = (val) => {
     store.current_menu_mi = val;
     //球种改变设置今日
     // MenuData.set_date_time(week[0].val);
-    store.menu_time = week[0]
+    store.menu_time = week[0].val
     store.second_tab_index = 0;
     scrollDateRef.value && scrollDateRef.value.scrollTo(0, "start-force");
 }
