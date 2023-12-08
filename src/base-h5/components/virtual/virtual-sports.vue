@@ -51,16 +51,16 @@
           </div>
       </div>
     </div>
-    <div class="virtual-sports-card">
-      <div class="tab-title tab-border" @click.stop="()=>{ }">
+    <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
+      <div class="tab-title tab-border" @click.stop="expend_match(match_item_batch)">
         <div class="league-name right-border">{{ lengue_name }}</div>
         <div class="status">
-          <!-- <span class="num">第10轮</span>
-          <span class="state">比赛中</span> -->
-          <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+          <span class="num">{{ match_item_batch.no }}</span>
+          <span class="state">比赛中</span>
+          <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
         </div>
       </div>
-      <template v-if="!no_virtual_match">
+      <template v-if="!no_virtual_match && match_item_batch.is_expend">
       <!--赛事轮|期菜单-->
       <!-- <match-tab
         :is_reset_tab_i="is_reset_tab_i"
@@ -77,7 +77,7 @@
         :class="{'v-sports-main-list-style': standard_edition === 1}" 
         :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}">
         <!-- 虚拟体育足球赛事列表 -->
-        <v-s-match-list v-if="[1001,1004].includes(current_sub_menu_id)" :virtual_match_list="match_list_by_no"
+        <v-s-match-list v-if="[1001,1004].includes(current_sub_menu_id)" :virtual_match_list="match_item_batch.matchs"
           :match_list_loaded="match_list_loaded" :csid="current_sub_menu_id" :v_menu_changed="v_menu_changed"
           @switch_match="switch_match_handle"  @start="match_start_handle">
         </v-s-match-list>
@@ -240,7 +240,18 @@ export default defineComponent({
       timer1_: null,
       expend_video: true
     });
+
+    //当前联赛的全部轮次
+    const match_list_all_batches = computed(() => {
+      return VirtualData.virtual_match_list || []
+    })
+
+    const expend_match = (item)=>{
+      item.is_expend = !item.is_expend;
+    }
+
     const match_list_by_no = computed(() => {
+      
       return VirtualData.match_list_by_no || []
     })
     const tab_items = computed(() => {
@@ -611,6 +622,8 @@ export default defineComponent({
       match_list_by_no,
       current_sub_menu_id,
       get_betbar_show,
+      expend_match,
+      match_list_all_batches
     }
   }
 });
