@@ -7,6 +7,7 @@
             <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading}" :src="item.icon" alt="" />
           </div>
           <div class="menu-item-title" >
+          <dir></dir>
             <span class="title-p1">  {{ item.title }}</span>
           </div>
         </div>
@@ -16,16 +17,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,watch,computed } from "vue";
 import { useRouter } from "vue-router";
 import { LOCAL_PROJECT_FILE_PREFIX,useMittEmit,MITT_TYPES } from "src/core/index.js";
 import { i18n_t } from "src/boot/i18n.js";;
-import { UserCtr } from "src/core/";
+import { UserCtr,MenuData } from "src/core/";
 // 路由
 const router = useRouter();
 //刷新加载中
 const loading = ref(false)
-const footer_list = [
+//是否每日活动
+let is_activities = ref(UserCtr.daily_activities)
+let footer_list = [
   {
     title: i18n_t('menu_itme_name.results'), 
     path_name: "matchResults",
@@ -50,14 +53,23 @@ const footer_list = [
     settle: true,
     id: 4
   },{
-    title: UserCtr.daily_activities ? '每日活动' : i18n_t('footer_menu.refresh'),
+    title: i18n_t('footer_menu.refresh'),
     icon: `${LOCAL_PROJECT_FILE_PREFIX}/image/footer/tabbar_05_nor.png`,
     id: 5,
   }
 ]
 const footer_menu_list = ref(footer_list)
 
-
+/**
+ * 监听用户信息版本号
+*/
+watch(UserCtr.user_version, () => {
+  footer_menu_list.value.forEach(item=>{
+    if (item.id === 5){
+      item.title = UserCtr.daily_activities ? '每日活动' : i18n_t('footer_menu.refresh')
+    }
+  })
+})
 const menu_item_click = (item = {}) => {
   switch(item.id){
 
@@ -82,12 +94,14 @@ const menu_item_click = (item = {}) => {
         settle: item.settle
       });
       break;
-
-    // 刷新
     case 5:
+      //每日活动
       if (UserCtr.daily_activities){
-        console.log('每日活动')
+      useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+          text: "activities",
+        });
       }else {
+        // 刷新
         //加载中
         loading.value = true;
         const timer = setTimeout(() => {

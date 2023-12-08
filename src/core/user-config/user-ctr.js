@@ -216,6 +216,10 @@ class UserCtr {
   */
   set_daily_activities(status) {
     this.daily_activities = status;
+    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+      text: "activities",
+    });
+    this.update()
   }
   /**
    * 设置语言变化
