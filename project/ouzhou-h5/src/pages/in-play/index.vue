@@ -18,7 +18,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 const emitters = ref({})
