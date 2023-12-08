@@ -70,7 +70,7 @@
             {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
           </div>
         </div>
-        <div class="dele-wrap yb_px12 yb_py8 row"  @touchmove.prevent>
+        <div class="dele-wrap yb_py8 row"  @touchmove.prevent>
           <!-- 右 自动接受跟好赔率 -->
           <span>
             <i class="img2" :class="{ 'img3': BetData.bet_is_accept }" @click="toggle_accept"></i>
@@ -109,7 +109,7 @@
       </div>
       <!-- {{BetViewDataClass.bet_order_status}} --- -->
       <!-- 底部按钮 -->
-      <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
+      <div class="row yb_pb8 justify-between" @touchmove.prevent v-if="BetViewDataClass.bet_order_status == 1">
 
           <div v-if="!BetData.is_bet_single" @click.stop="pack_up(4)" class="yb_delete">
             {{i18n_t('app_h5.bet.delete')}}
@@ -129,19 +129,22 @@
             
             <template v-else>
               <!-- 投注 -->
-              <div v-if="BetViewDataClass.bet_order_status == 1" @click="submit_order" :class="{ 'set-opacity': true }"
+              <!--  @click="submit_order"  -->
+              <div v-if="BetViewDataClass.bet_order_status == 1" :class="{ 'set-opacity': true }"
                 class="row justify-center items-center content-center yb-info">
-                <div class="jiantou"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt=""></div>
-                <div>{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
-                <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
+                <q-page-sticky ref="silider" position="bottom-left" :offset="fabPos">
+                  <div class="jiantou" :disable="draggingFab" v-touch-pan.right.prevent.mouse="handle_silider"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false"></div>
+                </q-page-sticky>
+                <div class="middle">{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
+                <div class="roll-right"><img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""></div>
               </div>
-              
+
               <!-- <slider v-if="BetViewDataClass.bet_order_status == 1"></slider> -->
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
               <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
-                <div class="jiantou jiantouhui">></div>
-                <div>{{ i18n_t('bet.betting') }} <span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
-                <div><span class="yb-info-one">></span><span class="yb-info-two">></span><span>></span></div>
+                <div class="jiantou jiantouhui"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt=""></div>
+                <div class="middle">{{ i18n_t('bet.betting') }} <span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
+                <div class="roll-right"><img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""></div>
               </div>
             </template>
           </div>
@@ -195,12 +198,11 @@ import betCollusionInput from './bet-collusion-input.vue'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path } from "src/core/index.js";
-import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
 import { get_query_bet_amount_common, submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/core/format/index.js'
 import acceptRules from "./accept-rules.vue"
-
 
 //串关的按钮
 const is_strand = ref(true)
@@ -286,9 +288,43 @@ const pack_up = (val) => {
   BetViewDataClass.set_clear_bet_view_config()
 }
 
+// 滑块初始化坐标
+const fabPos = reactive([ 20, 11 ])
+const draggingFab = ref(false)
+const silider = ref(null)
+// 向右滑动投注
+const handle_silider = (e) => {
+  if (e.distance.x > 234 || e.isFinal) {
+    reset_silider()
+    return
+  }
+  draggingFab.value = e.isFirst !== true && e.isFinal !== true
+  // console.log('e', e, silider);
+  fabPos.value = [
+    fabPos[0] - e.delta.x,
+    fabPos[1] - e.delta.y
+  ]
+  silider.value.offset[0] = e.distance.x
+  if(e.distance.x > '180') {
+    submit_handle()
+    reset_silider()
+  }
+}
+
+// 重置solider位置
+let timer;
+const reset_silider = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fabPos.value = [ 20, 11 ]
+      silider.value.offset[0] = 20
+    }, 300)
+}
+
 const submit_order = (type) => {
+  
   console.error('touzhule')
-  submit_handle()
+  // submit_handle()
 }
 
 //切换是否接受更好赔率
@@ -376,9 +412,12 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-16);
   }
 }
+.middle {
+  margin-left: .55rem;
+}
 .jiantou{
-  height: 0.4rem;
-  width: 0.4rem;
+  height: 0.44rem;
+  width: 0.44rem;
   border-radius: 50%;
   background: #FFFFFF;
   display: flex;
@@ -386,7 +425,17 @@ onUnmounted(() => {
   justify-content: center;
   color: var(--q-gb-t-c-1);
   font-size: 0.2rem;
+  border: 3px solid #50B5FF;
+  margin-right: -.2rem;
 }
+.roll-right {
+  height: 0.5rem;
+  img {
+    width: 0.5rem;
+    margin-left: -.66rem;
+  }
+}
+
 .jiantouhui{
   color: var(--q-gb-t-c-5);
 }
@@ -400,7 +449,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  margin-right: 0.1rem;
+  margin-right: 0.08rem;
 }
 .yb-dan-btn{
   width: 0.5rem;
@@ -428,7 +477,7 @@ onUnmounted(() => {
   background: var(--q-gb-t-c-7);
 }
 .yb-strand{
-  margin-left: 0.1rem;
+  margin-left: 0.08rem;
   height: 0.5rem;
   width: 0.5rem;
   border-radius: 50%;
@@ -440,14 +489,14 @@ onUnmounted(() => {
   background: var(--q-gb-t-c-7);
 }
 .yb-info{
-  background: var(--q-gb-t-c-1) !important;
+  background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%) !important;
   display: flex;
   justify-content: space-between;
-  padding: 0 0.3rem;
+  // padding-right: 0.26rem;
   border-radius: 0.7rem;
   color: var(--q-gb-t-c-14);
   font-size: 0.14rem;
-  padding-left: 0.1rem;
+  // padding-left: 0.08rem;
 }
 .yb-info-hui{
 background: var(--q-gb-t-c-5) !important;
@@ -499,7 +548,7 @@ background: var(--q-gb-t-c-5) !important;
   z-index: 600;
   overflow: hidden;
   width: 100%;
-  padding: 0 0.16rem;
+  padding: 0 0.14rem;
   -webkit-overflow-scrolling: touch;
   border-radius: 24px 24px 0 0;
   //border: 1px solid;
@@ -586,7 +635,7 @@ background: var(--q-gb-t-c-5) !important;
 
 /* ************** 底部右侧按钮 ************** -S */
 .bet-box {
-  flex: auto;
+  flex: 1;
   border-radius: 4px;
   height: 0.5rem;
   line-height: 0.49rem;
