@@ -83,6 +83,9 @@ export default defineComponent({
     match () {
       return this.match_of_list;
     },
+    is_show_all () {
+      return MenuData.is_zaopan() || MenuData.is_scroll_ball()
+    },
     // 上一场赛事数据
     prev_match () {
       return this.i > 0 ? MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[this.i - 1]) : undefined
@@ -216,7 +219,7 @@ export default defineComponent({
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
       // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag)
+      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag) && MenuData.is_today()
     },
     // 获取赛事数量
     get_match_count () {
@@ -243,13 +246,13 @@ export default defineComponent({
     }
   },
   watch: {
-    // match_of_list: {
-    //   deep: true,
-    //   handler (c_match) {
-    //     this.media_button_button_type_check()
-    //     this.mmp_map_title = matchListClass.match_period_map(c_match);
-    //   }
-    // },
+    match_of_list: {
+      deep: true,
+      handler (c_match) {
+        this.media_button_button_type_check()
+        this.mmp_map_title = matchListClass.match_period_map(c_match);
+      }
+    },
     'match_of_list.msc': {
       immediate: true,
       deep: true,

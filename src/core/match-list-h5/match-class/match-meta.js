@@ -344,6 +344,7 @@ class MatchMeta {
   filter_match_by_time (time) {
     // 所有日期
     this.clear_match_info()
+    VirtualList.clear_virtual_info()
     let target_mids = []
     if (!time) {
       target_mids = lodash.uniq(this.zaopan_mids)
@@ -813,7 +814,7 @@ class MatchMeta {
     let is_classify = false
     if (project_name === 'app-h5') {
       // 滚球不需要
-      if (MenuData.current_lv_1_menu_i == 1) {
+      if (MenuData.is_scroll_ball() || MenuData.is_zaopan()) {
         is_classify = false
       } else {
         // 今日、早盘需要 开赛、未开赛归类

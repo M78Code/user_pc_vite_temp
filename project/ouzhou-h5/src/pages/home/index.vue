@@ -69,7 +69,7 @@ import MatchPlay from './components/match-play.vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { i18n_t } from "src/output/index.js"

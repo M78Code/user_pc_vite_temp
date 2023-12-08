@@ -28,7 +28,7 @@ import { IconWapper } from 'src/components/icon'
 import BaseData from 'src/core/base-data/base-data.js'
 import { MenuData } from "src/output/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
 
 let message_fun = null
 let handler_func = null
