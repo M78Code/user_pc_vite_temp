@@ -283,7 +283,7 @@
       "bet_confirm": "注单已确认",
       "bet_error": "注单失败",
       "reserve_win": "预约金额",
-      "win_amount": "可盈金额"
+      "win_amount": "可赢金额"
     },
     "match": {
       "all": "全部",

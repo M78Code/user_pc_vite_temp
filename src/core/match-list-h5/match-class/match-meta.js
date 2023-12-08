@@ -426,6 +426,9 @@ class MatchMeta {
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+    const list = lodash.get(res, 'data', [])
+    if (list.length < 1) return
+    await MatchCollect.get_collect_match_data(list)
     this.handle_custom_matchs(res)
   }
 
@@ -462,7 +465,7 @@ class MatchMeta {
    * @description 获取电竞赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_esports_match() {
-    // this.clear_match_info()
+    this.clear_match_info()
     VirtualList.clear_virtual_info()
     // 电竞的冠军
     const category = MenuData.get_menu_type() === 100 ? 2 : 1
@@ -559,7 +562,7 @@ class MatchMeta {
       if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
       const data = lodash.get(res, 'data', [])
       // 一期只做  足球、篮球、网球、冠军
-      const list = data.filter((t) => ['1','2'].includes(t.csid))
+      const list = data.filter((t) => ['1','2','5'].includes(t.csid))
       this.handler_match_list_data({ list: list, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
     })
   }
