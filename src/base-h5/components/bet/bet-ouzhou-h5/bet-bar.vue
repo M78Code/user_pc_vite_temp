@@ -228,3 +228,4 @@ const menu_click = () => {
 .arrow {
   transform: scale(-1);
 }</style>
+src/core/format/common/module/format-money.js

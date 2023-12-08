@@ -146,7 +146,7 @@ const status = computed(() => {
 });
 // 默认为animation，所以设置为false
 nav_bar_subscribe.change_status(false);
-watch(status, (value) => {
+watch(() => status, (value) => {
     // 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示
     if (value == 2) {
       right_actions_label.value = 'animation';
@@ -154,6 +154,11 @@ watch(status, (value) => {
     if (value == 3) {
       right_actions_label.value = 'video';
     }
+    if (status == 4) {
+      nav_bar_subscribe.change_status(true);
+    }
+}, {
+  immediate: true
 })
 
 watch(right_actions_label, (value) => {

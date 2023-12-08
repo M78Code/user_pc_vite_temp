@@ -48,7 +48,7 @@
   <script setup>
   import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
   import { compute_value_by_cur_odd_type } from "src/output/index.js"
-  import { format_currency } from "src/core/format/index.js"
+  import { format_currency } from "src/core/format/common/index.js"
   const type = 2//1:等待   2：成功    3：失败
   </script>
   
@@ -189,4 +189,4 @@
     flex-direction: row-reverse;
   }
   </style>
-  src/output/index.js
+  src/output/index.jssrc/core/format/common/index.js

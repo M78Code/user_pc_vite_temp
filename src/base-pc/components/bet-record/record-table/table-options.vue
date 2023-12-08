@@ -514,7 +514,7 @@ import {
   format_btn_balance,
   formete_date,
   format_odds
-} from "src/core/format/index.js";
+} from "src/core/format/common/index.js";
 // import vueSlider from "vue-slider-component";
 import { CANCEL_TYPE } from "./config";
 import { ref } from "vue";
@@ -683,3 +683,4 @@ const item_cancelType = (cancelType) => {
   }
 }
 </style>
+src/core/format/common/index.js

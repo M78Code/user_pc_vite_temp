@@ -210,8 +210,13 @@ import {api_activity} from "project/activity/src/api/index.js";
 import data_pager from "project/activity/src/components/data_pager.vue";
 import acticity_mixin from "../mixin/acticity_mixin";
 import active_count_down from "./active_count_down.vue";
-import utils from 'project/activity/src/utils/utils.js';
+ 
 import { UserCtr } from "project_path/src/core/index.js";
+
+import {gtag_config_send,
+gtag_view_send,
+gtag_event_send,
+zhuge_event_send   ,is_time_limit } from "project_path/src/core/index.js"
 
 export default {
   name: "daily_betting_payouts",
@@ -294,7 +299,7 @@ export default {
     async show_dialog(current) {
       try {
         // 跟产品沟通接口有限频，前端不用做限制
-        if(utils.is_time_limit()) return //  防止调用多次接口
+        if(is_time_limit()) return //  防止调用多次接口
         let parameter = {current, size: 7,  actId: this.actId}
         let {code , data} = await api_activity.get_receiveRecord(parameter)
         if(code == 200 && data.records.length > 0) {
@@ -389,9 +394,9 @@ export default {
             this.get_daily_task_list()
           }, 800)
           if (this.actId == 1) {
-            this.$utils.gtag_event_send('H5_edtask_getAwardClick', 'H5_活动', 'H5_每日任务')
+            this.$gtag_event_send('H5_edtask_getAwardClick', 'H5_活动', 'H5_每日任务')
           } else {
-            this.$utils.gtag_event_send('H5_grtask_getAwardClick', 'H5_活动', 'H5_成长任务')
+            this.$gtag_event_send('H5_grtask_getAwardClick', 'H5_活动', 'H5_成长任务')
           }
         } else if(['0410501', '0401003'].includes(code)) {
           this.$toast(msg, 3000)
