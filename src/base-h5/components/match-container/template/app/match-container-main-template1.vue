@@ -4,8 +4,10 @@
 <template>
   <div class="match-container component match-container-main-template1"
     :class="[{
-    zaopan: is_zaopan
-  }]" 
+      jinri: MenuData.is_today(),
+      zaopan: MenuData.is_zaopan(),
+      gunqiu: MenuData.is_scroll_ball()
+    }]" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 开赛标题  -->
@@ -26,6 +28,11 @@
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
       </div>
+      <!-- 全部 -->
+      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
+        <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+        <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
+      </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
@@ -40,7 +47,7 @@
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
+          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'collapsed': !collapsed}]">
           <div class="league-t-wrap right-border">
           <!-- <div class="league-t-tubiao"></div> -->
             <!-- 联赛收藏 -->
@@ -63,7 +70,7 @@
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div style="width: 100%;" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed }, {'border-top': !match.is_show_league}]" v-if="collapsed">
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
@@ -79,8 +86,7 @@
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
-            <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
-          <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
+          <div :class="['match-odds-container study_height_s hairline-border']">
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" v-if="!show_newer_edition && !is_results">
@@ -134,7 +140,7 @@
                   </div>
                 </div>
                 <!--玩法数量-->
-                <div class="goto-detail" style="margin-right: 0.03rem;" @click='goto_details(match)'>
+                <div class="goto-detail" @click='goto_details(match)'>
                   <span class="count_span" :class="{ esports: 3000 == menu_type }">
                     <span class="mc-n">
                       {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
@@ -241,11 +247,11 @@
                         <!-- 直播 主播 视频 动画  icon 栏目   -->
                         <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()">
-                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.icon_path }]" :src='animation_icon' />
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]" :src='animation_icon' />
                         </div>
                         <!-- 视频 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()">
-                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.icon_path }]" :src='video_icon' />
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
                         </div>
                         <!-- 角球 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
@@ -288,13 +294,12 @@ import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue'
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
-import { icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, MenuData  } from "src/core/index.js"
 import { format_time_zone } from "src/core/format/index.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/default-odd-template/odd-list-wrap.vue';
-import { in_progress, not_begin, animation_icon, video_icon, 
+import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -329,8 +334,8 @@ export default {
       return is_show_ball_title
     })
     return { 
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
-      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,
+      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
     }
   }
@@ -351,6 +356,29 @@ export default {
 .auto-full-width-100 {
   width: 100%;
 }
+.all-league-title{
+  display: flex;
+  height: 30px;
+  background: var(--q-gb-bg-c-15);
+  padding: 0 10px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px solid rgba(254, 174, 43, 0.5);
+  > div {
+    display: flex;
+    align-items: center;
+    > span {
+      padding-left: 5px;
+    }
+  }
+  .expand_item{
+    transition: transform 0.25s ease;
+     transform: rotate(-180deg);
+  }
+  .ball_seed_collapsed{
+    transform: rotate(0);
+  }
+}
 
 .match-container {
   width: 100%;
@@ -370,7 +398,7 @@ export default {
     height: 0.25rem;
     line-height: 1;
     font-size: 0.11rem;
-    padding-left: 0.20rem;
+    padding-left: 0.17rem;
     display: flex;
     align-items: center;
     color: var(--q-gb-t-c-20);
@@ -422,9 +450,30 @@ export default {
       border-top-right-radius: 0.08rem;
     }
     .match-content{
-      background: var(--q-gb-bg-c-15);
-      padding: 0 0.1rem;
+      width: 100%;
+      padding: 0 10px;
+      border-top: 1px solid #E4E6ED;
+      background: var(--q-gb-bg-c-18);
+      border-radius: 0 0 8px 8px;
+      border: 1px solid #fff;
+      &.collapsed{
+        border-top: none;
+      }
+      &.border-top{
+        border-top: 1px solid #E4E6ED;
+      }
     }
+    > .match-indent{
+      border: 1px solid #fff;
+      border-radius: 8px 8px 0 0;
+      border-bottom: 1px solid #E4E6ED !important;
+      &.collapsed{
+        border-radius: 8px;
+        border-bottom: 1px solid #fff !important;
+        border: 1px solid #fff;
+      }
+    }
+    
   }
 
   &.started_and_un_started {
@@ -483,9 +532,6 @@ export default {
 
     .no-radius {
       border-radius: unset;
-    }
-    .no-border{
-      border: none !important;
     }
 
     .odd-list-inner.odd {
@@ -548,7 +594,7 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 15px;
+    padding: 0 5px 0 17px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
@@ -768,11 +814,10 @@ export default {
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
     background: var(--q-gb-bg-c-18);
-    border-top: 1px solid #e2e2e2;
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid #E4E6ED;
 
     .odd-title-i-w {
-      width: 1.9rem;
+      width: 1.84rem;
       overflow: hidden;
 
       .odd-t-i-wrapper {
@@ -799,8 +844,7 @@ export default {
       line-height: 1;
       margin-left: 0.01rem;
       font-size: 0.1rem;
-      color: #AFB3C8 !important;
-      flex-shrink: 0;
+       flex-shrink: 0;
 
       &.boxing {
         width: 0.95rem;
@@ -908,11 +952,11 @@ export default {
   .odd-list-inner {
     height: 0.2rem;
     width: 100%;
-    padding: 0.1rem 2% 0 2%;
     display: flex;
     justify-content: space-between;
     position: relative;
     overflow: hidden;
+    padding-left: 2px;
 
     .triangle-wrapper {
       width: 0.24rem;
@@ -1292,7 +1336,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);  
   width: 100%;
   color: var(--q-gb-t-c-19);
-  padding-left: 11px;
+  padding-left: 1px;
   height: 0.2rem;
   display: flex;
   align-items: center;
@@ -1486,9 +1530,13 @@ export default {
       }
       :deep(.counting-down-wrap){
         color: #AFB3C8 !important;
+        width: 150px !important;
         .counting{
           font-size: 11px;
           color: var(--q-gb-t-c-19);
+        }
+        .special{
+          font-size: 12px;
         }
       }
     }
