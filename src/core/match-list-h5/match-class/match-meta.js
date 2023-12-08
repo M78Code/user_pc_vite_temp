@@ -188,7 +188,7 @@ class MatchMeta {
       const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
       // 球种名称
       // 赛事其他操作
-      this.match_assistance_operations(target)
+      this.match_assistance_operations(target, index)
       return { ...target, tn, csna, is_meta: true }
     })
     // 设置 元数据计算 流程
@@ -290,10 +290,12 @@ class MatchMeta {
    * @description 赛事操作
    * @param { match } 赛事对象
    */
-  match_assistance_operations (match) {
+  match_assistance_operations (match, index) {
     const { tid, csid, mid, ms } = match
     // 初始化赛事折叠
     // MatchFold.set_match_mid_fold_obj(match)
+    
+    MatchResponsive.set_show_match_info(`mid_${match.mid}`, index < 20 ? true : false)
 
     const key = MatchFold.get_match_fold_key(match)
     if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
@@ -424,6 +426,9 @@ class MatchMeta {
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
+    const list = lodash.get(res, 'data', [])
+    if (list.length < 1) return
+    await MatchCollect.get_collect_match_data(list)
     this.handle_custom_matchs(res)
   }
 
@@ -460,11 +465,14 @@ class MatchMeta {
    * @description 获取电竞赛事； 元数据接口暂时未提供所以走老逻辑， 后续会提供
    */
   async get_esports_match() {
+    this.clear_match_info()
+    VirtualList.clear_virtual_info()
     // 电竞的冠军
     const category = MenuData.get_menu_type() === 100 ? 2 : 1
     const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
     const md = lodash.get(MenuData.current_lv_3_menu, 'field1', "")
     const params = this.get_base_params()
+    this.current_euid = `${csid}_${md}`
     const res = await api_common.post_esports_match({
       ...params,
       md,
@@ -473,6 +481,7 @@ class MatchMeta {
       "type":3000,
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
+    if (this.current_euid != `${csid}_${md}`) return
     const list = lodash.get(res, 'data', [])
     this.handler_match_list_data({ list: list })
   }
@@ -553,7 +562,7 @@ class MatchMeta {
       if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
       const data = lodash.get(res, 'data', [])
       // 一期只做  足球、篮球、网球、冠军
-      const list = data.filter((t) => ['1','2'].includes(t.csid))
+      const list = data.filter((t) => ['1','2','5'].includes(t.csid))
       this.handler_match_list_data({ list: list, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
     })
   }
@@ -859,7 +868,7 @@ class MatchMeta {
       Object.assign(t, {
         is_show_league: i === 0 ? true : target_list[i].tid !== target_list[i - 1].tid
       })
-      this.match_assistance_operations(t)
+      this.match_assistance_operations(t, i)
     })
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
@@ -921,7 +930,7 @@ class MatchMeta {
         is_show_league: index === 0 ? true : target_data[index].tid !== target_data[index - 1].tid
       })
       //  赛事操作
-      this.match_assistance_operations(match)
+      this.match_assistance_operations(match, index)
       return match
     })
 

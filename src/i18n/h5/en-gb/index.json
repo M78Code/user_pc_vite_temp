@@ -78,7 +78,8 @@
             "38": "Total Points",
             "39": "HDP",
             "153": "Winner",
-            "155": "HDP",
+            "154": "Set Handicap",
+            "155": "Game Handicap",
             "172": "HDP", 
             "173": "Total Points", 
             "181": "HDP", 
@@ -120,8 +121,8 @@
         "bet_col_Under": "Under"
       },
       "bet_col_4": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
       },
       "bet_col_37": {
         "bet_col_1": "Home",
@@ -132,20 +133,20 @@
         "bet_col_Under": "Under"
       },
       "bet_col_39": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
       },
       "bet_col_153": {
         "bet_col_1": "Home",
         "bet_col_2": "Away"
       },
       "bet_col_154": {
-        "bet_col_1": "Handicap",
-        "bet_col_2": "Handicap"
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
       },
       "bet_col_155": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
+        "bet_col_1": "Home",
+        "bet_col_2": "Away"
       }
     },
     "search": {
