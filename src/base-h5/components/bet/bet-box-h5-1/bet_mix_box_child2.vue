@@ -232,7 +232,7 @@ import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, LOCAL_PROJE
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
-import { format_money3, format_money2 } from 'src/core/format/index.js'
+import { format_money3, format_money2 } from 'src/core/format/common/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import acceptRules from ".//accept-rules.vue"
 
@@ -608,4 +608,4 @@ onUnmounted(() => {
 .yellow-color {
   color: var(--q-color-fs-color-116);
 }
-</style>
+</style>src/core/format/common/index.js

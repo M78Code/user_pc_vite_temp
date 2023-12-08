@@ -376,4 +376,4 @@ onUnmounted(() => {
 .left_cell {
   text-align: left !important;
 }
-</style>
+</style>src/core/format/common/module/format-odds.jssrc/core/format/common/module/format-odds-conversion-mixin.js

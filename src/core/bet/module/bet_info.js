@@ -6,7 +6,7 @@
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
-import {compute_value_by_cur_odd_type} from  "src/core/format/module/format-odds-conversion-mixin.js"
+import {compute_value_by_cur_odd_type} from  "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import { api_betting } from "src/api/index.js";

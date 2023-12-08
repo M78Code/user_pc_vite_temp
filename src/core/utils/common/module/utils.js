@@ -8,7 +8,7 @@ import lodash from 'lodash'
 import { date } from "quasar";
 import { api_common, api_account } from 'src/api/index';
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { DateForMat } from "src/core/format/index.js"
+import { DateForMat } from "src/core/format/common/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
 const OL_RESULTS=['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half'];
