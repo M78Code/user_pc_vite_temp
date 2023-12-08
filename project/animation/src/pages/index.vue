@@ -10,7 +10,7 @@
             <BackendConfig />
         </div>
        <div class="col q-ml-sm" style="height: 100vh;overflow: auto;">
-         <svg_area  @get_event_code="get_event_code" :svg_src="svg_src" />
+         <svg_area  @get_event_code="get_event_code" :svg_src="svg_src" :current_event_code="current_event_code" />
         <!-- <div
             v-for="(item, index) in dataObj"
             :key="index"
@@ -55,6 +55,7 @@ export default defineComponent({
     
     return {
         svg_src: '',
+        current_event_code: '',
         websocket_connection_1_url: WEB_ENV,
         dataObj: [],
         queryParams: null,
@@ -169,6 +170,7 @@ export default defineComponent({
         console.warn(index)
         let data_ = test_data[index] 
       const {eventCode} = data_ || {}
+      this.current_event_code = eventCode
         this.svg_src = (event_animation[eventCode] || {}).animation_svg_path
         console.warn(data_)
         let ws_obj = {

@@ -16,14 +16,14 @@
         :fill="fill"
         :repeatCount="repeatCount" />
     </path>
-    <text style="fill: rgba(255,255,255,0)" x="100" y="150">
-      主场进球
+    <text style="fill: rgba(255,255,255,0)" x="450" y="150">
+      客场进球
 
       <animate
         attributeName="x"
         :dur="'0.5s'"
-        from="0"
-        to="100"
+        from="520"
+        to="450"
         :repeatCount="repeatCount"
         :fill="fill"
       ></animate>
@@ -60,12 +60,12 @@ export default defineComponent({
     createPath(move = 0){
       const rate = this.width/800
       const defaultObj = {
-        x: 140 * rate,
-        y: 95 * rate
+        x: 660*rate,
+        y: 95*rate
       }
       const o = {
-        x: 140 * rate,
-        y: 95 * rate,
+        x: 500*rate,
+        y: 95*rate,
       }
       const {x,y} = o
       // return `M 0 0 L 20 0 L 30 10 L 20 20 L 30 30 L 20 40 L 0 40 L 0 0 Z`;
@@ -73,23 +73,23 @@ export default defineComponent({
       M ${defaultObj.x} ${defaultObj.y}
       L ${x} ${y}
       
-      L ${(x + (move+50)*rate)} ${y}
-      L ${(x + (move+100)*rate)} ${y+20*rate}
+      L ${(x + (move+130)*rate)} ${y}
+      L ${(x + (move+70)*rate)} ${y+20*rate}
       
-      L ${(x + (move+50)*rate)} ${y+40*rate}
-      L ${(x + (move+110)*rate)} ${y+60*rate}
+      L ${(x + (move+110)*rate)} ${y+40*rate}
+      L ${(x + (move+50)*rate)} ${y+60*rate}
       
-      L ${(x + (move+35)*rate)} ${y+80*rate}
-      L ${(x + (move+120)*rate)} ${y+100*rate}
+      L ${(x + (move+120)*rate)} ${y+80*rate}
+      L ${(x + (move+45)*rate)} ${y+95*rate}
       
-      L ${(x + (move+30)*rate)} ${y+120*rate}
-      L ${(x + (move+140)*rate)} ${y+140*rate}
+      L ${(x + (move+125)*rate)} ${y+120*rate}
+      L ${(x + (move+35)*rate)} ${y+130*rate}
       
-      L ${(x + (move+25)*rate)} ${y+165*rate}
-      L ${(x + (move+160)*rate)} ${y+185*rate}
+      L ${(x + (move+125)*rate)} ${y+165*rate}
+      L ${(x + (move+15)*rate)} ${y+175*rate}
       
-      L ${(x + (move+25)*rate)} ${y+210*rate}
-      L ${defaultObj.x - 130*rate} ${y + 210*rate}
+      L ${(x + (move+100)*rate)} ${y+210*rate}
+      L ${defaultObj.x + 130*rate} ${y + 210*rate}
       Z`
       return path;
     },
@@ -97,7 +97,7 @@ export default defineComponent({
       const path = this.createPath()
       return {
         path: this.createPath(),
-        values: `${path};${this.createPath(440)}`,
+        values: `${path};${this.createPath(-440)}`,
       }
     },
     rightPathValues(){},
