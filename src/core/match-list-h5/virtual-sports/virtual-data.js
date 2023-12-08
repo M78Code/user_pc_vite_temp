@@ -55,6 +55,11 @@ class VirtualData {
     this.prev_v_sports_params = data
   }
 
+  // 设置当前选中联赛
+  set_tab_item_i (index) {
+    this.tab_item_i = index
+  }
+
   // 设置虚拟体育菜单
   set_menu_list (menu_list) {
     this.menu_list = menu_list
