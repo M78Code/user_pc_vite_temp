@@ -207,7 +207,7 @@ import ImageCacheLoad from "src/base-h5/components/match-list/components/public-
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/output/index.js"
-import { format_time_zone } from "src/core/format/index.js"
+import { format_time_zone } from "src/core/format/common/index.js"
 import { have_collect_ouzhou, no_collect_ouzhou} from 'src/base-h5/core/utils/local-image.js'
 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
@@ -1314,4 +1314,4 @@ export default {
 /* ********赛事容器相关********** -E*/
 </style>
   
-src/output/index.jssrc/output/index.js
+src/output/index.jssrc/output/index.jssrc/core/format/common/index.js

@@ -252,4 +252,4 @@ onUnmounted(() => {
 .arrow {
   transform: scale(-1);
 }</style>
-src/output
+src/outputsrc/core/format/common/module/format-money.js

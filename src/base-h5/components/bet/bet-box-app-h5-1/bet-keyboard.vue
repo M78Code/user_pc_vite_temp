@@ -312,6 +312,7 @@ onUnmounted(() => {
     border-radius: .1rem;
     padding: .04rem;
     margin-top: .08rem;
+    font-family: Akrobat;
 }
 .nonebox4-fourth-a {
     width: 100%;
@@ -353,6 +354,9 @@ onUnmounted(() => {
     margin: 0 .02rem;
 }
 .nonebox4-fourth-num:last-child {
+  .nonebox4-fourth-num-sun:first-child {
+    font-weight: 600 !important;
+  }
   .nonebox4-fourth-num-sun:nth-child(2) {
     flex: auto;
     height: 25%;

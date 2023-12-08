@@ -9,11 +9,10 @@
  * 但是不能 引用 非这个文件内引入的内容
  */
 
-export * from "src/core/format/index.js";
+export * from "src/core/format/common/index.js";
 export * from "src/core/constant/index.js";
 export * from "src/core/utils/common/index.js";
 export * from "src/core/file-path/file-path";
-
 export { default as STANDARD_KEY } from "src/core/standard-key";
 
 export { default as uid } from "src/core/uuid/index.js";

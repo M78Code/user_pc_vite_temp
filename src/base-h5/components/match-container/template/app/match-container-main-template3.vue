@@ -194,11 +194,11 @@ import ImageCacheLoad from "src/base-h5/components/match-list/components/public-
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 import { i18n_t, compute_img_url, compute_css_obj  } from "src/output/index.js"
-import { format_time_zone } from "src/core/format/index.js"
+import { format_time_zone } from "src/core/format/common/index.js"
 import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, normal_img_is_favorite } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { format_msc, foot_ball_score_handle } from "src/core/format/index.js"
+import { format_msc, foot_ball_score_handle } from "src/core/format/common/index.js"
 import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
@@ -1482,4 +1482,4 @@ export default {
 /* ********右边赛果相关样式********** -E*/
 </style>
   
-src/output/index.jssrc/output/index.js
+src/output/index.jssrc/output/index.jssrc/core/format/common/index.jssrc/core/format/common/index.js

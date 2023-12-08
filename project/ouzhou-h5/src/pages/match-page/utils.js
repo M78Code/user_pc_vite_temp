@@ -1,4 +1,4 @@
-import { format_M_D_PC } from "src/core/format"
+import { format_M_D_PC } from "src/core/format/common"
 import { i18n_t } from "src/output/index.js"
 
 // 月份数组
