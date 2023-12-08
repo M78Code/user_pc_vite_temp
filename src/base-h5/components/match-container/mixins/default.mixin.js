@@ -234,7 +234,7 @@ export default defineComponent({
     },
     // 是否有角球
     get_corner_kick () {
-      const { msc_obj: { S5 } } = this.match_of_list
+      const S5 = lodash.get(this.match_of_list, 'msc_obj.S5', '')
       let is_show = false
       S5 && Object.values(S5).forEach(t => {
         is_show = t && true
@@ -469,7 +469,10 @@ export default defineComponent({
       this.goto_details(this.match_of_list);
     },
 
-
+    // 获取菜单名称， 有的赛事 csna 是空
+    get_current_manu_name () {
+      return MenuData.get_menus_i18n_map({ mi: MenuData.current_lv_2_menu_i })
+    },
         
     /**
      * @description:  直播 视频  动画 点击跳转详情播放

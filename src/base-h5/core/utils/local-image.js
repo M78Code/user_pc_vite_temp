@@ -91,6 +91,11 @@ export const skeleton_white_ouzhou_110 = compute_local_project_file_path('/image
 // 欧洲版 90 赛事高度 骨架屏
 export const skeleton_white_ouzhou_90 = compute_local_project_file_path('/image/skeleton/height-90.jpg')
 
+// 复刻版 117 赛事高度 骨架屏
+export const skeleton_white_app_117 = compute_local_project_file_path('/image/skeleton/height-117.jpg')
+// 复刻版 177 赛事高度 骨架屏
+export const skeleton_white_app_177 = compute_local_project_file_path('/image/skeleton/height-177.jpg')
+
 // 回到顶部
 export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')
 

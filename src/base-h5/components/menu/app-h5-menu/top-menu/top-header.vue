@@ -14,14 +14,18 @@
     </div>
 </template>
 <script setup>
+import { useRoute, useRouter } from 'vue-router'
 import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
 
+const route = useRoute()
+const router = useRouter()
   /**
    * 初始化数据
    */
   const goBack = () =>{
     MenuData.set_top_menu_title({})
     MenuData.set_init_menu_list()
+    if (route.name === 'esports_sports') router.back()
   }
 </script>
 <style lang="scss" scoped>

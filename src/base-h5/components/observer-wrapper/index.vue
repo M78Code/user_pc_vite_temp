@@ -3,31 +3,34 @@
 -->
 
 <template>
-  <section class="observer-container">
-    <div class="observer-item" 
-      v-for="item, index in match_list" 
-      :key="item.mid" 
-      :data-mid="item.mid" 
-      :data-index="index"
-      :style="get_item_style(item, index)">
-      <!-- 赛事卡片 -->
-      <slot name="content" :item="item" :index="index"></slot>
-      <!-- 骨架图 -->
-      <!-- <template v-else>
-        <slot name="skeleton"></slot>
-      </template> -->
-    </div>
-  </section>
+  <main class="main-container">
+    <section class="observer-container">
+      <div class="observer-item" 
+        v-for="item, index in match_list" 
+        :key="item.mid" 
+        :data-mid="item.mid" 
+        :data-index="index"
+        :style="get_item_style(item, index)">
+        <!-- 赛事卡片 -->
+        <slot name="content" :item="item" :index="index"></slot>
+        <!-- 骨架图 -->
+        <!-- <template v-else>
+          <slot name="skeleton"></slot>
+        </template> -->
+      </div>
+    </section>
+  </main>
 </template>
  
 <script setup>
 import lodash from 'lodash'
 import { onMounted, computed, watch, ref } from 'vue';
+import { compute_css_variables } from "src/core/css-var/index.js"
 import { compute_local_project_file_path, project_name } from 'src/core'
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90 } from 'src/base-h5/core/utils/local-image.js'
+import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
 
 const props = defineProps({
   // 渲染数据
@@ -37,10 +40,12 @@ const props = defineProps({
   }
 })
 
+const page_style = ref(null)
 // 当前可视区的 mids 用于获取赔率
 const active_mids = ref([])
 
 onMounted(() => {
+  // 页面css变量植入
   setTimeout(() => {
     handle_start_observer()
   }, 2000)
@@ -126,6 +131,12 @@ const get_background_image = (height) => {
     } else {
       image_src = skeleton_white_ouzhou_90
     }
+  } else if (project_name === 'app-h5') {
+    if (height > 133) {
+      image_src = skeleton_white_app_177
+    } else {
+      image_src = skeleton_white_app_117
+    }
   }
   return image_src
 }
@@ -143,13 +154,17 @@ const get_item_style = (item, index) => {
 </script>
  
 <style scoped lang="scss">
-.observer-container{
-  overflow: auto;
-  height: 667px;
-  .observer-item{
-    content-visibility: auto;
-    background-size: 100% 100%;
-    background-image: url($SCSSPROJECTPATH+'/image/list/skeleton-white.png');
+.main-container{
+  flex: 10;
+  height: 0;
+  .observer-container{
+    overflow: auto;
+    height: 100%;
+    .observer-item{
+      content-visibility: auto;
+      background-size: 100% 100%;
+      background-image: url($SCSSPROJECTPATH+'/image/list/skeleton-white.png');
+    }
   }
- }
+}
 </style>
