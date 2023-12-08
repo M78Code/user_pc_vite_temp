@@ -24,7 +24,7 @@ const { page_source, route_name } = PageSourceData;
 export const remove_league = (remove_tid, callback) => {
   if (MenuData.menu_data.is_esports) {
     // 列表接口数据类型为联赛列表
-    let all_league_obj = league_list_obj;
+    let all_league_obj = league_list_obj.value;
     // 遍历所有赛事数据
     let match_status_type_arr = ["livedata", "nolivedata"];
     match_status_type_arr.forEach((match_status_type) => {
@@ -138,7 +138,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
     MatchListData.list_to_obj.mid_obj,
     `${remove_mid}_.tid`
   );
-  let all_league_obj = league_list_obj;
+  let all_league_obj = league_list_obj.value;
   // 遍历所有赛事数据
   let match_status_type_arr = ["livedata", "nolivedata"];
   match_status_type_arr.forEach((match_status_type) => {
@@ -221,7 +221,7 @@ export const remove_match = (remove_mid, callback) => {
   if (route_name == "search") {
     return;
   }
-  if (lodash.get(league_list_obj, 'livedata') || lodash.get(league_list_obj, 'nolivedata')) {
+  if (lodash.get(league_list_obj.value, 'livedata') || lodash.get(league_list_obj.value, 'nolivedata')) {
     remove_match_when_match_list_mapping_relation_obj_type_1_3(
       remove_mid,
       callback
