@@ -3,7 +3,12 @@
 <template>
 	<div class="result-wrap">
 		<!-- 滚动区域 -->
-		<div v-if="search_loading" class="loading search_loading"><img :src="compute_local_project_file_path('/image/gif/loading1.gif')" alt=""></div>
+		<div v-if="search_loading" class="loading search_loading">
+			<img :src="compute_local_project_file_path('/image/gif/loading1.gif')" alt="">
+			<div>
+				{{ i18n_t('common.loading')}}
+			</div>
+		</div>
 		<q-scroll-area v-if="load_data_state === 'data'" class="fit rule-scroll-area" ref="scrollRef">
 			<div class="serach-background">
 				<!-- 搜索展示 -->
@@ -546,10 +551,17 @@ watch(
 .result-wrap {
 	width: 100%;
 	height: 100%;
-	.search_loading img {
-		width: 100px;
-		height: auto;
-	}
+	.search_loading{
+		flex-direction: column;
+		img {
+			width: 100px;
+			height: auto;
+		}
+		div {
+			font-size: 16px;
+			margin-top: 24px;
+		}
+	} 
 	.load-data-wrap {
 		// height: 400px !important;
 		// min-height: 0;
