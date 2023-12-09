@@ -90,10 +90,9 @@
           </template>
         </div>
       </template>
-     
     </div>
      <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.msid == 5"  :detail_data="get_match_detail" />
+     <matchScore v-if="get_match_detail.csid == 5"  :detail_data="get_match_detail" />
   </div>
 </template>
 
@@ -339,6 +338,31 @@ const set_scoew_icon_list = (new_value) => {
     }
     // console.log("scoew_icon_list", scoew_icon_list);
   }
+};
+
+/**
+ *@description 取出符合网球阶段的比分
+  *@param {Undefined}
+  *@return {Array} 比分集合
+  */
+const initEvent = () => {
+  // // 第一盘比分，第二盘比分，第三盘比分，第四盘比分，第五盘比分;
+  const msc_array = ['S23','S39','S55','S71','S87'];
+  let msc = props.get_match_detail.msc;
+  // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
+  msc = _.sortBy( msc, (item) => {
+    return +(item.split("|")[0]).substring(1)
+  })
+  let score_arr = [];
+  // 循环只取出接口返回的比分里面符合网球阶段的比分
+  _.forEach(msc, (item)=>{
+    // S1 S2 S3 S19 S20 ...
+    let num_index = item.split("|")[0];
+    if(msc_array.includes(num_index)){
+      score_arr.push(item.split("|")[1]);
+    }
+  })
+  return score_arr;
 };
 
 /**
