@@ -5,9 +5,9 @@
  */
 import lodash from "lodash";
 
-import utils from "project/activity/src/utils/utils.js";
-import tooltip from "project/activity/src/utils/tooltip.js"
-// import matchlist from "project/activity/src/public/utils/matchlist/matchlist.js"
+
+import {tooltip} from "project_path/src/core/index.js"
+ 
 
 import Icon from "project/activity/src/components/icon/icon.vue"
 import load_data from "project/activity/src/components/load_data/load_data.vue";
@@ -115,7 +115,7 @@ export default async (app) => {//app, router, store,
 
   window._ = lodash;
 
-  window.$utils = utils
+ 
   // window.$matchlist = matchlist
   // 高精度运算工具对象(例子:this.$mathjs.multiply(1.13,100000))
   window.$mathjs = math;

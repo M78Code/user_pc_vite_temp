@@ -2,7 +2,7 @@ import { api_betting } from "src/api/index.js"
 import BetData from "./bet-data-class.js"
 import BetViewDataClass from "./bet-view-data-class.js"
 import BetWsMessage from "./bet-ws-message.js"
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { 
     MatchDataWarehouse_PC_List_Common, 
@@ -17,10 +17,12 @@ import {
     MatchDataWarehouse_H5_List_Jingxuan,
     MatchDataWarehouse_H5_Detail_Jingxuan,
     
- } from 'src/core/index.js'
+ } from 'src/output/module/match-data-base.js'
 import lodash_ from "lodash"
 import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
-import { MenuData,UserCtr,useMittEmit, MITT_TYPES  } from "src/core/index.js"
+import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
+import { MenuData } from 'src/output/module/menu-data.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js"
 
 let time_out = null

@@ -3,7 +3,12 @@ import {
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData, MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common, PROJECT_NAME } from "src/core/index.js";
+import { 
+	MatchDataWarehouse_PC_List_Common as MatchListData, 
+	MatchDataWarehouse_PC_Detail_Common, 
+} from "src/output/module/match-data-base.js";
+import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+import PageSourceData from "src/core/page-source/page-source.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 // import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
@@ -11,7 +16,7 @@ import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData} from "src/output/module/menu-data.js"
 import { fethc_collect_match, collect_count } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";

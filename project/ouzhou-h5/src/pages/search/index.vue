@@ -257,13 +257,14 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, onUnmounted, reactive } from 'vue';
-import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
+import { compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_delete_history_search, get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 import { api_search } from 'src/api/';
-import { compute_value_by_cur_odd_type } from "src/core/index.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
@@ -272,7 +273,7 @@ const { get_insert_history, get_fetch_hot_search } = api_search || {};
 import { is_results } from 'src/base-h5/mixin/menu.js'
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { formatTime } from 'src/core/format/module/format-date.js';
+import { formatTime } from 'src/output/index.js';
 import BaseData from "src/core/base-data/base-data.js";
 
 const input_value = ref('');
@@ -988,4 +989,4 @@ li {
 }
 </style>
   
-  
+  src/outputsrc/output/index.jssrc/core/format/common/module/format-date.js

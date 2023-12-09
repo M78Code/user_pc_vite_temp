@@ -18,8 +18,8 @@ import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
 
-import { loadLanguageAsync } from "src/core/index.js";
-import { LocalStorage } from "src/core/utils/module/web-storage.js";
+import { loadLanguageAsync } from "src/output/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({})
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -80,10 +80,10 @@ onMounted(()=>{
 <style lang="scss" scoped>
 .rule-wrap {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
-    padding-bottom: 100px;
+    // padding-bottom: 100px;
     .rule-content {
         width: 100%;
         flex: 1;
@@ -93,4 +93,4 @@ onMounted(()=>{
     }
 }
 </style>
-  
+  src/output/index.jssrc/core/utils/common/module/web-storage.js

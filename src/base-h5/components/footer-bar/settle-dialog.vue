@@ -42,7 +42,7 @@ import store  from "src/store-redux"
 //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 // import { useRoute } from 'vue-router'
 import { t } from "src/boot/i18n.js";
-import {compute_img_url} from 'src/core/'
+import {compute_img_url} from "src/output/index.js"
 //国际化
 
   // provide(){
@@ -202,3 +202,4 @@ import {compute_img_url} from 'src/core/'
   }
 }
 </style>
+src/output

@@ -14,8 +14,9 @@
         <q-tab v-for="(item ,index) in option" :key="index "
                 @click.stop="selectSport(item,index)"
                 :class="active_sport === index ? 'active' : ''"
+                 class="tabs_item"
                 >
-          <div class="tabs_item">
+          <div>
             {{ item }}
           </div>
         </q-tab>
@@ -64,7 +65,7 @@
 // import { mapGetters } from "vuex";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import { onMounted, onUnmounted, ref,watch,computed } from "vue";
-import { GlobalSwitchClass} from "src/core/index";
+import { GlobalSwitchClass} from "src/output/index.js";
 const props = defineProps({
   // 当前选中的球种
   sportType: {
@@ -159,8 +160,8 @@ html,body{
       height: 12px;
       background: #D9D9D9;
       position: absolute;
-      right:  -24px;
-      top: 3px;
+      right:  0px;
+      top: 18px;
     }
   }
   .active{
@@ -267,3 +268,4 @@ html,body{
   right: 10px;
 }
 </style>
+src/output/index

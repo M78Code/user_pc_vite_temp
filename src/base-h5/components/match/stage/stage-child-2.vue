@@ -35,7 +35,7 @@
 
 <script>
 // import msc from "src/public/mixins/common/msc.js";
-// import { format_mgt_time } from "src/core/format/index.js"
+// import { format_mgt_time } from "src/output/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import { i18n_t } from "src/boot/i18n.js";
 export default {

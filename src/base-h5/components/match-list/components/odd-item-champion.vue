@@ -28,7 +28,7 @@
 import { computed, onMounted, onUnmounted, ref, watch} from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import lodash from 'lodash'
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
 const props = defineProps({
@@ -149,3 +149,4 @@ const odd_status = computed(() => {
   }
 }
 </style>
+src/core/format/common/module/format-odds-conversion-mixin.js

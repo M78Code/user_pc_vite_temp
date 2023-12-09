@@ -118,13 +118,13 @@ import {
   LOCAL_PROJECT_FILE_PREFIX,
   useMittOn,
   MITT_TYPES,
-} from "src/core/index.js";
+} from "src/output/index.js";
 import odds_info from "./components/odds_info.vue";
 import analysis from "./analysis/index.vue";
 import tabs from "./components/tabs.vue";
 import breadcrumbs from "./components/breadcrumbs.vue";
 import { usedetailData } from "./index";
-import { formatTime, format_M_D_PC } from "src/core/format/index.js";
+import { formatTime, format_M_D_PC } from "src/output/index.js";
 import loading from "./components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
@@ -495,4 +495,4 @@ export default {
   cursor: pointer;
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
-</style>
+</style>src/output/index.js

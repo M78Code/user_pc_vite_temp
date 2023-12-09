@@ -41,12 +41,12 @@
   </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/core/index.js";
+import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
 import { reactive, toRefs, ref } from "vue";
-import { useMittEmit, MITT_TYPES } from "src/core/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from 'src/core';
+import { useMittEmit, MITT_TYPES } from "src/output/index.js";
+import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
 
 defineOptions({
   name: "selectLeague" // 设置组件名称
@@ -161,4 +161,4 @@ defineProps({});
     //transform: translateY(1.03rem);
   }
 }
-</style>
+</style>/index.jssrc/output

@@ -35,7 +35,7 @@
 import MatchDataBaseWS from  "./match-ctr-ws.js"
 import { reactive,toRef} from 'vue'
 import {other_play_name_to_playid} from 'src/core/constant/config/data-class-ctr/other-play-id.js'
-import { match_collect_status } from 'src/core/match-list-pc/composables/match-list-collect.js'
+ 
 export default class MatchDataBase
 {
   /**
@@ -150,10 +150,41 @@ export default class MatchDataBase
     this.cache_match={
       '23432234':{mmp:111111111111,ms:222222222}
     };
+    // ws赛事属性key数据更新时间
+    this.ws_match_key_upd_time_cache = {
+      '23432234':{mmp:111111111,ms:22222222}
+    };
     // 数据版本更新参数 reactive({ version: '123'})
     this.data_version = { version: '123'} ,
     // 所有投注项动态数据时间更新
     this.cache_oid={};
+  }
+  /**
+   * @description: ws赛事属性key数据更新时间
+   * @param {Array} matches 赛事列表
+   * @param {Array} key 基本属性列表
+   * @param {Number} time 时间戳
+   */
+  ws_match_key_upd_time_cache_set(matche, key){
+    let mid = lodash.get(matche,'mid');
+    if( mid && key){
+      lodash.set(this.ws_match_key_upd_time_cache,`[${mid}][${key}]`, new Date().getTime());
+    }
+  }
+
+  /**
+   * @description: 获取ws赛事属性key数据更新时间差(单位毫秒)
+   * @param {Array} matches 赛事列表
+   * @param {Array} key 基本属性列表
+   * @param {Number} time 时间戳
+   */
+  ws_match_key_upd_time_cache_get_time(matche, key){
+    let res = 0;
+    let mid = lodash.get(matche,'mid');
+    if(mid && key){
+      res = lodash.get(this.ws_match_key_upd_time_cache,`[${mid}][${key}]`, 0);
+    }
+    return new Date().getTime()-res;
   }
 
 /**
@@ -1777,6 +1808,10 @@ get_quick_mid_obj_ref(mid){
     // 清除快速检索对象
     this._clear_quick_query_obj(this.list_to_obj);
     this.mids_ation = [];
+    this._clear_obj(this.cache_match);
+    this.cache_match = {};
+    this._clear_obj(this.ws_match_key_upd_time_cache);
+    this.ws_match_key_upd_time_cache = {};
   }
 
   /**
@@ -1792,6 +1827,7 @@ get_quick_mid_obj_ref(mid){
     this._clear_obj(this.MATCH_UPD_TIME_KEYS);
     this._clear_obj(this.cache);
     this._clear_obj(this.cache_match);
+    this._clear_obj(this.ws_match_key_upd_time_cache);
     this._clear_obj(this.cache_oid);
     this.mids_ation = [];
     // 销毁ws数据通信实例

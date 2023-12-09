@@ -6,7 +6,7 @@
  * @Description:  
 -->
 <template>
-  <template v-if="['matchList', 'sport_menu'].includes(route.name)">
+  <template v-if="['matchList', 'sport_menu', 'esports_sports'].includes(route.name)">
     <!--  顶部菜单 -->
     <TopMenu />
 
@@ -44,7 +44,7 @@ import {
 import { useRoute } from "vue-router";
 import lodash_ from "lodash";
 
-import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/";
+import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
@@ -55,6 +55,7 @@ import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 import { TopMenu,ScrollMenu,SearchTab,DateTab } from 'src/base-h5/components/menu/app-h5-menu/index'
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 
+const is_first = ref(true)
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
 const select_dialog = ref(false);//暂时筛选窗口
@@ -154,8 +155,10 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     //球种滚动初始化
     nextTick(()=>{
-      scrollTabMenu.value.scrollTabMenu()
-      searchTabMenu.value.searchTabMenu()
+      try {
+        scrollTabMenu.value.scrollTabMenu()
+        searchTabMenu.value.searchTabMenu()
+      } catch(_) {} 
     })
   })
 
@@ -199,8 +202,14 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     MenuData.set_current_lv_2_menu_i(obj)
     // 设置选中菜单的id
     ref_data.current_mi = obj.mi
+
+    // 刷新页面避免触发2次 set_origin_match_data
+    if (is_first.value) {
+      is_first.value = false
+    } else {
+      set_menu_mi_change_get_api_data()
+    }
     
-    set_menu_mi_change_get_api_data()
   }
 
   // 菜单变化页面请求数据
@@ -229,6 +238,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 清除赛事折叠信息
     MatchDataBaseH5.init()
     MatchFold.clear_fold_info()
+
     // 冠军拉取旧接口； 待 元数据提供 冠军赛事后 再删除
     if (MenuData.is_kemp()) return MatchMeta.get_champion_match()
     // 赛果不走元数据， 直接拉取接口
@@ -238,7 +248,6 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return
-
     // 设置菜单对应源数据
     MatchMeta.set_origin_match_data()
 
@@ -257,3 +266,4 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   left: 0
 }
 </style>
+src/output

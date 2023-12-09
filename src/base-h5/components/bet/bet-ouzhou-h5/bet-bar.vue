@@ -25,7 +25,7 @@
 
 <script setup>
 import lodash from "lodash"
-import { format_money2 } from 'src/core/format/module/format-money.js'
+import { format_money2 } from 'src/output/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
 import userData from "src/core/user-config/user-ctr.js"
@@ -228,3 +228,4 @@ const menu_click = () => {
 .arrow {
   transform: scale(-1);
 }</style>
+src/core/format/common/module/format-money.js

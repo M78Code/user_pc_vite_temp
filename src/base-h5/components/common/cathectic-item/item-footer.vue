@@ -60,7 +60,7 @@
 
 <script setup>
 // import { mapGetters } from "vuex";
-import { format_money2 } from "src/core/format/index.js"
+import { format_money2 } from "src/output/index.js"
 import { ref, onUnmounted, computed } from 'vue'
 import { i18n_t } from "src/boot/i18n.js";
 
@@ -265,3 +265,4 @@ import { i18n_t } from "src/boot/i18n.js";
     }
 }
 </style>
+src/output/index.js

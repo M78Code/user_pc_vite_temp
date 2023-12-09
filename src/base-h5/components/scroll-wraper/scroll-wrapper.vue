@@ -56,7 +56,7 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import VirtualList from "src/core/match-list-h5/match-class/virtual-list.js";
 import RouterScroll from "src/core/match-list-h5/match-class/router-scroll.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,compute_local_project_file_path } from "src/output/index.js"
 import { menu_type, menu_lv2, is_kemp, is_hot, is_detail, is_results, is_esports, is_collect } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
@@ -107,10 +107,10 @@ const get_index_f_data_source = (mid) => {
 
 // 赛事列表容器滚动事件
 const handler_match_container_scroll = lodash.throttle(($ev) => {
-  scroll_top.value = $ev.target.scrollTop
+  const scrollTop = lodash.get($ev.target, 'scrollTop', 0)
+  scroll_top.value = scrollTop
   const length = lodash.get(MatchMeta.complete_matchs, 'length', 0)
   if (get_is_static() || length < 17) return
-  const scrollTop = $ev.target.scrollTop
   if (scrollTop === 0 || (prev_scroll.value === 0 &&  Math.abs(scrollTop) >= 200) || Math.abs(scrollTop - prev_scroll.value) >= 200) {
     prev_scroll.value = scrollTop
     MatchMeta.compute_page_render_list({ scrollTop: $ev.target.scrollTop, type: 2, is_again: false })
@@ -168,16 +168,16 @@ const window_scrolling = () => {
  *   1向上滑,  -1向下滑
  */
 const get_is_show_footer_animate = () => {
-  let scroll_top = null;
-  scroll_top = store_state.matchReducer.list_scroll_top.split('-')[0]
-  let scroll_dir = scroll_top - prev_frame_poi.value;
+  let top = null;
+  top = store_state.matchReducer.list_scroll_top.split('-')[0]
+  let scroll_dir = top - prev_frame_poi.value;
   if (scroll_dir > 0) {
     scroll_dir = 1;
   } else if (scroll_dir < 0) {
     scroll_dir = -1;
   }
   store.dispatch({ type: 'matchReducer/set_list_scroll_direction',  payload: scroll_dir })
-  prev_frame_poi.value = scroll_top;
+  prev_frame_poi.value = top;
 }
 /**
  * @description: 列表回到顶部
@@ -374,3 +374,4 @@ onUnmounted(() => {
   justify-content: center;
 }
 </style>
+src/output

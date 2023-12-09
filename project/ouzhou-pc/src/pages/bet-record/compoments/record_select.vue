@@ -56,7 +56,7 @@
 
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import { formatTime } from 'src/core/format/index.js'
+import { formatTime } from 'src/output/index.js'
 import dayjs from 'dayjs'
 const _dayjs = dayjs()
 const isZH = true
@@ -335,3 +335,4 @@ div.q-menu {
   }
 }
 </style>
+src/output/index.js

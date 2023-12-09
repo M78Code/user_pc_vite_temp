@@ -131,7 +131,7 @@ import { api_common } from "src/api/index.js";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj} from  "src/core/"
+import { useMittOn, useMittEmit, MITT_TYPES ,compute_css_obj} from  "src/output/index.js"
 // 模板id=0(默认模板)
 import temp0 from "./template/temp0.vue"
 // 模板id=1

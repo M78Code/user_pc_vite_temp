@@ -13,7 +13,7 @@
  */
 
 import { ref } from 'vue'
-import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
+// import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
 
 
 const PAGE_SOURCE_POOL_H5 =  [
@@ -129,13 +129,13 @@ class PageSourceData {
     if (page_source == "hot") {
       this.is_show_hot = true;
        // 设置联赛吸顶高度
-      set_sticky_top()
+      // set_sticky_top()
 
     }
     //在列表页面  列表与收藏切换
     if(page_source.includes('match-')){
         // 设置联赛吸顶高度
-        set_sticky_top()
+        // set_sticky_top()
     }
 
   }
@@ -195,6 +195,5 @@ const PageSourceDataProxy =new Proxy(instance, {
     }
   }
 });
-
 
 export default  PageSourceDataProxy ;

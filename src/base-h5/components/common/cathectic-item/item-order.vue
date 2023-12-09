@@ -20,10 +20,10 @@ import ClipboardJS from "clipboard";
 // import { mapMutations } from "vuex";
 import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
-import { formatTime } from 'src/core/format/index.js'
+import { formatTime } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js";
-import { project_name } from 'src/core'
+import { project_name } from "src/output/index.js"
 //国际化
 
 
@@ -83,3 +83,4 @@ import { project_name } from 'src/core'
   line-height: 0.36rem;
 }
 </style>
+src/outputsrc/output/index.js

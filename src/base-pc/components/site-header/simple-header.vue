@@ -28,8 +28,8 @@
 
 <script>
 // src\core\utils\module\match-list-utils.js与src\core\format\module\format-date.js 存在get_remote_time的冲突导出
-// import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/core/index.js" 
-import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/core/format/index.js" 
+// import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js" 
+import { get_remote_time,utc_to_gmt_no_8_ms2 } from "src/output/index.js" 
 import refresh from "src/components/refresh/refresh.vue"
 
 export default {
@@ -134,3 +134,4 @@ export default {
     }
   }
 }</style>
+src/output/index.js

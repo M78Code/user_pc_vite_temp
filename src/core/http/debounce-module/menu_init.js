@@ -3,7 +3,7 @@
  * 菜单接口  缓存、限频、节流
  */
 
- import { LocalStorage } from "../../utils/";
+ import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import AxiosDebounceCache from "./axios-debounce-cache.js"
 
 

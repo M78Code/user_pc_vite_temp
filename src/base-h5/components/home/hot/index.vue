@@ -60,10 +60,10 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import lodash from 'lodash'
-import { utils, MenuData ,compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from 'src/core/index.js';
+import { utils, MenuData ,compute_css_obj, LOCAL_PROJECT_FILE_PREFIX} from 'src/output/index.js';
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchListParams from 'src/core/match-list-h5/composables/match-list-params.js'
-import {compute_img_url} from 'src/core/'
+import {compute_img_url} from "src/output/index.js"
 import { theme } from 'src/base-h5/mixin/userctr.js'
 
 let tabList = ref([])  // tab选项卡内容
@@ -386,3 +386,4 @@ onUnmounted(() => {
     }
   }
 }</style>
+src/output/index.jssrc/output

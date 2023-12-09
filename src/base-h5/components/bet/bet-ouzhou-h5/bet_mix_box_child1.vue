@@ -51,9 +51,9 @@
     </div>
   </template>
   <script setup>
-  import { compute_value_by_cur_odd_type } from "src/core/index.js"
+  import { compute_value_by_cur_odd_type } from "src/output/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr } from "src/core/index.js";
+  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr } from "src/output/index.js";
 
   const props = defineProps({
     items:{}
@@ -230,4 +230,4 @@
   }
   
   </style>
-  
+ 

@@ -1,5 +1,6 @@
 import PageSourceData from "src/core/page-source/page-source.js";
-import { MatchDetailCalss } from "src/core";
+import { MatchDetailCalss }  from "src/output/module/project-single.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 /**
  * PC   列表 和 详情  之间的 数据中间件 
  * 

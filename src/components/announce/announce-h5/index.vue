@@ -42,7 +42,7 @@ import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-
 import tabs from "./tab.vue";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { DateForMat } from 'src/core/format/module/format-date.js'
+import { DateForMat } from 'src/output/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -217,4 +217,4 @@ export default defineComponent({
 }
 </style>
   
-  
+  src/core/format/common/module/format-date.js

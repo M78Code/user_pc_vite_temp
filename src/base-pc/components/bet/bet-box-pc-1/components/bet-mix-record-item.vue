@@ -52,7 +52,7 @@
 </template>
 <script setup>
 // import bet_mix_record_item from "src/public/mixins/bet/bet_mix_record_item.js";
-import { format_odds  } from "src/core/index.js";
+import { format_odds  } from "src/output/index.js";
 import lodash from 'lodash'
 </script>
 <style lang="scss" scoped>

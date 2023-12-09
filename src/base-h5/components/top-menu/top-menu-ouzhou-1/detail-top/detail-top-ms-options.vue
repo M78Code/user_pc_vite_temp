@@ -4,8 +4,8 @@ import EventDateStandard from "./event-date-standard.vue"
 
 import {computed, defineProps, defineEmits} from "vue"
 import {useRouter, useRoute} from "vue-router"
-import {format_total_score} from "src/core/format/index.js"
-import {MenuData} from 'src/core/'
+import {format_total_score} from "src/output/index.js"
+import {MenuData} from "src/output/index.js"
 
 
 const props = defineProps({
@@ -200,4 +200,4 @@ const ChangeActive = function () {
     text-align: center;
     line-height: 20px;
 }
-</style>
+</style>src/output/index.js

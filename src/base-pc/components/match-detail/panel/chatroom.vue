@@ -199,7 +199,7 @@ import charMarquee from "src/project/yabo/components/match_details/panel/compone
 import emoji_picker from "src/project/yabo/components/match_details/panel/components/emoji_picker";
 import ChatroomMsgType from 'src/public/utils/ws/chatroom/chatroom_msgtype.js';
 import { api_chatroom } from "src/public/api/index.js";
-import {utils} from "src/core"
+import {utils} from "src/output/index.js"
 import axios from 'axios'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
@@ -1712,3 +1712,4 @@ export default {
     }
   }
 </style>
+src/output

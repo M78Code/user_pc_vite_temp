@@ -1,5 +1,8 @@
-import { MenuData, GlobalAccessConfig, UserCtr, useMittEmit, MITT_TYPES, t } from 'src/core/index.js'
-import filterHeader from "src/core/filter-header/filter-header.js";
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import { t } from "src/boot/i18n.js";
+import GlobalAccessConfig from "src/core/access-config/access-config.js";
+import { MenuData } from 'src/output/module/menu-data.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
 
 

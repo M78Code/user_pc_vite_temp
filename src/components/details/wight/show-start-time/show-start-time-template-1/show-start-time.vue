@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import {utils } from 'src/core/index.js'
+import {utils } from 'src/output/index.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import { format_H_M  } from "src/core/index.js";
+import { format_H_M  } from "src/output/index.js";
 
 export default defineComponent({
   name: "show_start_time",
@@ -84,3 +84,4 @@ export default defineComponent({
   justify-content: center;
 }
 </style>
+src/output/index.jssrc/output/index.js

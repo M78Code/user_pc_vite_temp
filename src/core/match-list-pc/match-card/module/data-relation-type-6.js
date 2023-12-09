@@ -12,10 +12,7 @@
      * 
      * 处理  56
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
     import MatchListCardData from "./match-list-card-data-class.js";
-    import lodash from "lodash";
-    import {ref} from "vue"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
     import {compute_style_template_by_matchinfo} from "./compute-style-template.js"
@@ -29,7 +26,7 @@
     } from "../config/card-template-config.js"
     import { compute_sport_id  } from 'src/core/constant/index.js'
     import {get_match_template_id} from '../../match-handle-data.js'
-    import MenuData from "src/core/menu-pc/menu-data-class.js";
+    import { MenuData} from "src/output/module/menu-data.js"
 
   /**
    * @Description 计算所有卡片样式数据   5. 冠军赛事列表 全部赛种 不区分是否开赛  6. 冠军赛事列表    单一赛种 不区分是否开赛

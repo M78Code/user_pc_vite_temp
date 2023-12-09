@@ -212,7 +212,7 @@
 <script setup>
 import { ref } from "vue"
 import { VIURTUAL_SPORT, VIRTUAL_PLAY_NOT_NUMBER2, VIRTUAL_SPORT_ID,CANCEL_TYPE } from "src/core/constant/config/play-mapping.js";
-import { format_odds, format_currency, formatTime } from "src/core/format/index.js"
+import { format_odds, format_currency, formatTime } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import BetRecord from "src/core/bet-record/bet-record.js"
@@ -566,3 +566,4 @@ const get_numbers = () => {
 }
 </style>
 
+src/output/index.js

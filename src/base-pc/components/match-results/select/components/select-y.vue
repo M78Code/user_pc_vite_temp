@@ -66,17 +66,17 @@
 import { onMounted, onUnmounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { IconWapper } from "src/components/icon";
-import { GlobalSwitchClass} from "src/core/index";
+import { GlobalSwitchClass} from "src/output/index.js";
 import no_data from "src/components/no_data/no_data.vue";
 const route = useRoute();
 
-import { i18n_t } from "src/core/index";
+import { i18n_t } from "src/output/index.js";
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 import {
   useMittOn,
   useMittEmitterGenerator,
   MITT_TYPES
-} from "src/core/index.js";
+} from "src/output/index.js";
 const option = ref(null); //选中项
 const isShow = ref(false); // 是否展示联赛列表
 const active = ref(null); //选择的下标

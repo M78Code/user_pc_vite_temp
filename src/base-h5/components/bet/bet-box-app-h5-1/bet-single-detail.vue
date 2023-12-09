@@ -19,7 +19,7 @@
         </div>
         <div class="content-rmb">RMB</div>
       </div>
-      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)" style="display:none">
+      <div class="bet_single_info_btn" v-if="BetData.bet_pre_list.includes(item.playOptionsId)">
         <div class="" v-if="ref_data.is_bet_pre" @click="set_bet_pre">{{ i18n_t('app_h5.bet.cancel_appoint') }}</div>
         <div class="" v-else @click="set_bet_pre">+{{ i18n_t('pre_record.book')}}</div>
       </div>
@@ -39,7 +39,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { ref, reactive, onMounted,computed, onUnmounted } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 
 let timer1 = null
@@ -298,7 +298,7 @@ onUnmounted(() => {
 }
 @import url("src/base-h5/css/bet/bet_single_detail.scss");
 .bet_single_detail{
-  margin-top: 0.1rem;
+  margin-top: 0.08rem;
   background: var(--q-gb-bg-c-22);
   border-radius: 0.01rem;
   display: flex;
@@ -319,7 +319,7 @@ onUnmounted(() => {
     position: relative;
     display: flex;
     align-items: center;
-    color: var(--q-gb-t-c-3);
+    color: var(--q-gb-t-c-11);
   }
 }
 .bet-single-detail {
@@ -328,7 +328,6 @@ onUnmounted(() => {
 }
 /* ************** 右边内容 ************** -S */
 .content-b {
-  width: 1.6rem;
   height: 0.4rem;
   border-radius: 4px;
   font-size: 0.16rem;
@@ -339,6 +338,9 @@ onUnmounted(() => {
   align-items: center;
   justify-content: flex-start;
   width: 70%;
+  .limit-txt {
+    color: #C9CDDB;
+  }
 }
 /* ************** 右边内容 ************** -E */
 .set-opacity {

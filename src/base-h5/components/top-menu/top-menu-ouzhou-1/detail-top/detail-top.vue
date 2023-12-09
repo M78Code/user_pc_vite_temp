@@ -40,13 +40,14 @@ import {
   useMittEmit, MITT_TYPES,
   MatchDataWarehouse_H5_Detail_Common,
   MatchDataWarehouse_H5_List_Common,
-} from "src/core/index";
+} from "src/output/index.js";
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData } from 'src/core/';
+import { MenuData } from "src/output/index.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import DetailTopMsOptions from "./detail-top-ms-options.vue";
+import NavbarSubscribe from "./nav-bar-subscribe";
 const route = useRoute()
 const router = useRouter();
 const mid = route.params.mid;
@@ -106,12 +107,24 @@ function getDropDownList(tid='') {
 }
 
 /** 返回上一页 */
-const toHome = () => {
+const toHome = async() => {
   // 设置 元数据计算 流程
-  BaseData.set_is_emit(true)
-  // MatchMeta.clear_match_info()
-  MatchResponsive.set_is_compute_origin(true)
-  router.back()
+  // 先通知观察者返回
+  NavbarSubscribe.instance.back();
+  // 异步获取状态
+  const res = await NavbarSubscribe.instance.get_status();
+  console.log(res, "res====");
+  // 状态为真，可以返回
+  if (res) {
+    BaseData.set_is_emit(true)
+    // MatchMeta.clear_match_info()
+    console.log(111111, "返回上一页");
+    MatchResponsive.set_is_compute_origin(true)
+    router.back()
+  } else {
+    // 状态为false，执行其他操作
+  }
+  
 };
 watch(() => detail_top_pop.value,
   (newPath, oldPath) => {

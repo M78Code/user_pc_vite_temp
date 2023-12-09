@@ -23,7 +23,7 @@ import { defineComponent, computed } from 'vue';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 // TODO:
 // import { mapMutations, mapGetters } from 'vuex';
-import { invalid_url } from 'src/core/index.js'
+import { invalid_url } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";;
 //国际化
 

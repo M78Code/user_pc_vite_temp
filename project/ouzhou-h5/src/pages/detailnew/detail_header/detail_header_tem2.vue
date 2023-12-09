@@ -1,6 +1,6 @@
 <template>
   <div class="detail_header_tem2">
-    <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-134':'detail-header-230']">
+    <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-156':'detail-header-221']">
       <iframe v-if="animation_src && right_actions_label == 'animation'"
         id="replayIframe"
         :src="animation_src+'&rdm='+iframe_rdm"
@@ -11,7 +11,8 @@
       ></iframe>
       <custom_video class="custom-video" :status="status" v-if="right_actions_label == 'video'" :get_detail_data="detail"/>
       <!-- {{ detail }} -->
-      <score_component :get_match_detail="detail" v-show="right_actions_label == 'score'" :key="right_actions_label"/>    
+      <score_component :get_match_detail="detail" 
+            v-show="right_actions_label == 'score'" :key="right_actions_label" @handle-change="handle_change"/>    
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
@@ -61,7 +62,8 @@
         </div>
       </div>
     </div> -->
-    <right_actions @handle-type="handle_type" :status="status" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
+    <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'"
+                  :status="status" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
   </div>
 </template>
   
@@ -70,19 +72,37 @@ import { onMounted, ref, toRef, watch,onUnmounted, computed } from "vue";
 import lodash from "lodash";
 import { api_common, api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
-import { useMittOn, useMitt,MITT_TYPES, UserCtr } from "src/core/index.js"
+import { useMittOn, useMitt,MITT_TYPES } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import SwitchButtons from "./components/SwitchButtons.vue"
 import right_actions from "./components/right_actions.vue"
 import custom_video from "./detail_header_video.vue";
 import matchCollect from "src/core/match-collect";
 import { debounce } from "quasar";
 import score_component from "./detail_header_tem1.vue";
+import NavbarSubscribe from "src/base-h5/components/top-menu/top-menu-ouzhou-1/detail-top/nav-bar-subscribe";
+import { Promise } from "licia-es";
 const props = defineProps({
   get_match_detail: {
     type: Object,
     default: () => ({}),
   },
+  label: {
+    type: String,
+    default: ""
+  }
 });
+// 点击返回的时候会触发此函数
+const listener = (status) => {
+  if (!status) {
+    right_actions_label.value = 'score';
+  }
+}
+const nav_bar_subscribe = NavbarSubscribe.instance;
+// 注册事件
+nav_bar_subscribe.listener(listener);
+// 测试数据
+// nav_bar_subscribe.change_status(false);
 
 const detail = computed(() => props.get_match_detail)
 
@@ -124,8 +144,8 @@ const status = computed(() => {
   return 4;
  
 });
-
-
+// 默认为animation，所以设置为false
+nav_bar_subscribe.change_status(false);
 watch(() => status, (value) => {
     // 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示
     if (value == 2) {
@@ -134,8 +154,24 @@ watch(() => status, (value) => {
     if (value == 3) {
       right_actions_label.value = 'video';
     }
+    if (status == 4) {
+      nav_bar_subscribe.change_status(true);
+    }
+}, {
+  immediate: true
 })
 
+watch(right_actions_label, (value) => {
+  console.log(right_actions_label, "right_actions_label");
+  if (['animation', 'video'].includes(value)) {
+    nav_bar_subscribe.change_status(false);
+  }else {
+    // 异步操作，避免执行到队列时导致数据更新问题
+    Promise.resolve().then(() => {
+      nav_bar_subscribe.change_status(true);
+    })
+  }
+})
 
 const football_score_icon_list = ref([
   {
@@ -159,6 +195,11 @@ const football_score_icon_list = ref([
     msc_key: "S5"
   },
 ])
+
+const handle_change = (value) => {
+  right_actions_label.value = value;
+}
+
 /**
  *@description // 比分板数据
  *@param {*}
@@ -300,11 +341,11 @@ onMounted(() => {
   position: relative;
   /**.change-header-fix z-index:91; 需大于其 */
   z-index: 102;
-  .detail-header-230 {
-    height: 230px;
+  .detail-header-221 {
+    height: 221px;
   }
-  .detail-header-134 {
-    height: 134px;
+  .detail-header-156 {
+    height: 156px;
   }
   .detail-header-video {
     // height: auto;

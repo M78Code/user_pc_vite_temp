@@ -13,7 +13,7 @@
             </div>
             <!-- <ListFilter current_mi="1001"/> -->
         </div>
-        <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
+        <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl || 1">
             <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
             <!-- 临时调试 -->
             <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
@@ -59,7 +59,7 @@ import match_list_card from "src/core/match-list-pc/match-card/match-list-card-c
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import {mounted_fn, handle_destroyed,load_data_state,   on_refresh } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj,useMittEmit,MITT_TYPES, LayOutMain_pc } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj,useMittEmit,MITT_TYPES, LayOutMain_pc } from "src/output/index.js";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import "../match-list/match_list.scss";
 const { page_source } = PageSourceData;
@@ -202,4 +202,4 @@ export default {
     font-size: 13px;
 }
 </style>
-  
+  src/output/index.js

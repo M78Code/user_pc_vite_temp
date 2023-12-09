@@ -55,8 +55,8 @@
         "all_matches": "All Matches",
         "bet_col_Over": "Over",
         "bet_col_Under": "Under",
-        "home_handicap": "H Handicap",
-        "away_handicap": "A Handicap",
+        "home_handicap": "1",
+        "away_handicap": "2",
         "select_time": {
           "3h": "Within 3 hrs",
           "6h": "Within 6 hrs",
@@ -68,17 +68,18 @@
         },
         
         "play_map": {
-            "1": "Winner",
-            "2": "Total Goals",
+            "1": "1 X 2",
+            "2": "O / U",
             "4": "HDP",
             "17": "1st Half - 1x2",
             "18": "1st Half - O/U",
             "19": "1st Half - O/U",
-            "37": "Winner",
-            "38": "Total Points",
-            "39": "HDP",
+            "37": "Moneyline",
+            "38": "Total",
+            "39": "Spread",
             "153": "Winner",
-            "155": "HDP",
+            "154": "Set Handicap",
+            "155": "Game Handicap",
             "172": "HDP", 
             "173": "Total Points", 
             "181": "HDP", 
@@ -120,8 +121,8 @@
         "bet_col_Under": "Under"
       },
       "bet_col_4": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
+        "bet_col_1": "1",
+        "bet_col_2": "2"
       },
       "bet_col_37": {
         "bet_col_1": "Home",
@@ -132,20 +133,20 @@
         "bet_col_Under": "Under"
       },
       "bet_col_39": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
+        "bet_col_1": "1",
+        "bet_col_2": "2"
       },
       "bet_col_153": {
         "bet_col_1": "Home",
         "bet_col_2": "Away"
       },
       "bet_col_154": {
-        "bet_col_1": "Handicap",
-        "bet_col_2": "Handicap"
+        "bet_col_1": "1",
+        "bet_col_2": "2"
       },
       "bet_col_155": {
-        "bet_col_1": "HDP",
-        "bet_col_2": "HDP"
+        "bet_col_1": "1",
+        "bet_col_2": "2"
       }
     },
     "search": {
@@ -1047,12 +1048,17 @@
     "msg2": "Stay calm. \"Refresh\" to restore~"
   },
   "list": {
-    "win1": "Home",
-    "win2": "Away",
+    "win1": "1",
+    "win2": "2",
+    "dogfall": "X",
     "play": "Market",
     "play1": "1x2",
     "play2": "Handicap",
     "play3": "Total Goals",
+    "home_hdp": "1",
+    "away_hdp": "2",
+    "over": "Over",
+    "under": "Under",
     "after_time_start": "Start in {0} minutes",
     "after_time_start2": "Start in {0} minutes",
     "go_to_details": "details",

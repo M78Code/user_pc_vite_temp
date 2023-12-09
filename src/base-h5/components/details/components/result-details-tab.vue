@@ -28,7 +28,7 @@ import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { onMounted, onUnmounted, ref, watch } from "vue"
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 //国际化
 
 const router = useRouter()

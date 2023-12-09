@@ -33,7 +33,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { PROJECT_NAME, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
+import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 import { is_collect, menu_type } from 'src/base-h5/mixin/menu.js'
 
 // yazhou-h5 赛事列表

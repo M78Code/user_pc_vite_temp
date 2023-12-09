@@ -6,7 +6,7 @@
  */
 
 import { ref } from 'vue'
-import { MenuData, project_name } from 'src/core'
+import { MenuData, PROJECT_NAME } from 'src/output/module/menu-data.js'
 import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -104,11 +104,11 @@ class VirtualList {
     // 赛事相叠高度 缓冲容器是 5px - buffer_height  就是交叠高度
     let match_overlap_height = reduce_buffer_height ? reduce_buffer_height - buffer_height : 0
     let total = 0
-    // 显示开赛、未开赛 match_stage_height - 缓冲高度
-    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_stage_height
+    // 显示开赛、未开赛 match_stage_height - 缓冲高度  并且不需要缓冲高度 所以 - 3
+    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_stage_height - 3
     // 显示球种类别
     if (this.is_show_ball && is_show_ball_title) total += ball_title_height
-    if (this.is_change_handicap_height !== 0) total += this.is_change_handicap_height
+    // if (this.is_change_handicap_height !== 0) total += this.is_change_handicap_height
     // 本来应该是 联赛高度 show_league_height + 缓存容器高度 5 = 31； 
     // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去 buffer_height ； 赛事之间相叠避免漏光
     if (is_show_league && show_card) {
@@ -199,7 +199,7 @@ class VirtualList {
     // 是否全部折叠状态
     const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
     const is_result = MenuData.is_results()
-    if (project_name === 'ouzhou-h5') {  // 欧洲版
+    if (PROJECT_NAME === 'ouzhou-h5') {  // 欧洲版
       if (is_result) {
         // 赛果
         position = scrollTop - 800
@@ -210,7 +210,7 @@ class VirtualList {
         // 球种折叠
         position = scrollTop - 200
       }
-    } else if (project_name === 'app-h5') { // 复刻版
+    } else if (PROJECT_NAME === 'app-h5') { // 复刻版
       if (is_result) {
         // 赛果
         position = scrollTop - 800
@@ -219,7 +219,7 @@ class VirtualList {
         position = scrollTop - 234 * 5
       } else {
         // 球种折叠
-        position = scrollTop - 234 * 5
+        position = scrollTop - 200
       }
     }
     return position

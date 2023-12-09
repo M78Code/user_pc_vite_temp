@@ -187,7 +187,7 @@ import {
   is_eports_csid,
   LOCAL_PROJECT_FILE_PREFIX,
   stage_dict,
-} from "src/core/index.js";
+} from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 import { handle_course_data } from "src/core/utils/matches_list.js";
 import _ from "lodash";
@@ -652,7 +652,10 @@ watch(
   align-items: center;
   text-overflow: ellipsis;
   &.csid_1 {
-    margin-left: 11px;
+    margin-left: 4px;
+  }
+  &.csid_2 {
+    margin-left: 8px;
   }
 }
 

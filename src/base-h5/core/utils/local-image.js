@@ -1,4 +1,4 @@
-import { compute_local_project_file_path } from 'src/core'
+import { compute_local_project_file_path } from 'src/output'
 
 export const img1 = compute_local_project_file_path('/image/list/m_list_jiaoqiu_icon.svg')
 // 白色版角球选中图标
@@ -76,7 +76,7 @@ export const no_data_collect = compute_local_project_file_path('/image/png/no_da
 export const coming_soon = compute_local_project_file_path('/image/png/coming_soon.png')
 export const no_wifi = compute_local_project_file_path('/image/list/no-wifi.png')
 // 角球图标
-export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.svg')
+export const corner_icon = compute_local_project_file_path('/image/list/corner_icon.png')
 // app-h5 提前结算
 export const mearlys_icon_app = compute_local_project_file_path('/image/list/midfield_icon_app.svg')
 
@@ -85,6 +85,16 @@ export const midfield_icon_app = compute_local_project_file_path('/image/list/mi
 export const neutral_site = compute_local_project_file_path('/image/list/neutral_site.png')
 export const is_up_app = compute_local_project_file_path('/image/list/icon_up.png')
 export const is_down_app = compute_local_project_file_path('/image/list/icon_down.png')
+
+// 欧洲版 110 赛事高度 骨架屏
+export const skeleton_white_ouzhou_110 = compute_local_project_file_path('/image/skeleton/height-110.jpg')
+// 欧洲版 90 赛事高度 骨架屏
+export const skeleton_white_ouzhou_90 = compute_local_project_file_path('/image/skeleton/height-90.jpg')
+
+// 复刻版 117 赛事高度 骨架屏
+export const skeleton_white_app_117 = compute_local_project_file_path('/image/skeleton/height-117.jpg')
+// 复刻版 177 赛事高度 骨架屏
+export const skeleton_white_app_177 = compute_local_project_file_path('/image/skeleton/height-177.jpg')
 
 // 回到顶部
 export const scroll_top_icon = compute_local_project_file_path('/image/list/icon-top.png')

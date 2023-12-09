@@ -5,14 +5,14 @@
  */
 
 <template>
-  <template v-if="wslog.ws_run">
+  <div v-if="wslog.ws_run">
     <div class="time-show">
       <span>{{ CURRENT_ENV_MAP[CURRENT_ENV] }}:{{ log_time }}</span>
     </div>
     <div class="time-show-copy" @click="copy_token()"> 
       <span>☺</span>
     </div>
-  </template>
+  </div>
 </template>
 <script setup>
 import { copyToClipboard } from "quasar";

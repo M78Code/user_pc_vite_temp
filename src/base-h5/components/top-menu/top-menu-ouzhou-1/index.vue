@@ -65,7 +65,7 @@
 
   import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter, useRoute } from "vue-router";
-import { format_money2,UserCtr } from "src/core/";
+import { format_money2,UserCtr } from "src/output/index.js";
 import leftMenu from "./components/left-menu/left-menu.vue";
 import detailTopInfo from "./detail-top/detail-top.vue";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
@@ -287,3 +287,4 @@ onUnmounted(()=>{
   backdrop-filter: blur(2px);
 }
 </style>
+src/output

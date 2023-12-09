@@ -107,11 +107,11 @@ import betBar from "./bet-bar.vue";
 //import betInputInfo from "//bet_input_info";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr, i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/core/index.js";
+import { UserCtr, i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES  } from "src/output/index.js";
 import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
-import { format_money3, format_money2 } from 'src/core/format/index.js'
+import { format_money3, format_money2 } from 'src/output/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 
 const state = 6 //1单关投注  2：合并单关   3：串关投注   4:单关投注等待、单关投注成功、单关投注失败    5:合并单关等待、合并单关成功、合并单关失败   6：串关投注等待、串关投注成功、串关投注失败
@@ -589,4 +589,4 @@ background: var(--q-gb-t-c-3) !important;
 .set-opacity{
   background:var(--q-gb-bg-c-9)
 }
-</style>
+</style>src/output/index.js

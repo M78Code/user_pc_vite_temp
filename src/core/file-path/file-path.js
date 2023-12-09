@@ -1,10 +1,9 @@
 import lodash from 'lodash'
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 // 电竞赛种csid
 const e_sport_csids = [101, 100, 102, 103];
-import { UserCtr } from 'src/core/'
+
  
- 
+import {GLOBAL_CONSTANT } from "src/output/module/constant-utils.js"
 // 目前环境信息
 const {BUILD_VERSION, NODE_ENV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME } = window.BUILDIN_CONFIG;
 let project_name = PROJECT_NAME
@@ -59,7 +58,7 @@ const get_server_file_path = (path, csid = 0) => {
   // }
   // 电竞图片域名模式
   if (e_sport_csids.includes(1 * csid)) {
-    return `${UserCtr.e_sports_domain_img}/${path}`;
+    return `${GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG}/${path}`;
   }
   //新配置是 数组
   let DOMAIN_RESULT_ = lodash.get(window.BUILDIN_CONFIG,'DOMAIN_RESULT') 
@@ -70,7 +69,7 @@ const get_server_file_path = (path, csid = 0) => {
 
   if (CURRENT_ENV == 'idc_sandbox' || CURRENT_ENV == 'idc_pre' || CURRENT_ENV == 'idc_ylcs') {
     // let api_domain = config.domain[CURRENT_ENV][0];
-    let api_domain = DOMAIN_RESULT.first_one
+    let api_domain = DOMAIN_RESULT_.first_one
     // 试玩环境使用生产api图片
     // api_domain = config.domain['idc_online'][0];
     api_domain = api_domain.replace(/\/\/.*?\./, '//image.');
@@ -79,7 +78,7 @@ const get_server_file_path = (path, csid = 0) => {
 
   if ((NODE_ENV == 'development')) {
     // let api_domain = config.domain[CURRENT_ENV][0]; //config没有赋值domain 从老项目迁移
-    const { img_domains } = DOMAIN_RESULT
+    const { img_domains } = DOMAIN_RESULT_
     let api_domain = img_domains[0]
     api_domain = api_domain && api_domain.replace(/\/\/.*?\./, '//image.');
     return `${api_domain}/${path}`;
