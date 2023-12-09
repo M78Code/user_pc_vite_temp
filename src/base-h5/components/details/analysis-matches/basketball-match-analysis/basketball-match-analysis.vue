@@ -89,7 +89,7 @@ const props = defineProps({
     nextTick(() => {
       // TODO: 后续修改调整 $refs $utils
       if (analysis_basketball_matches.value) {
-        analysis_basketball_matches.value.style.minHeight = window.innerHeight - utils.rem(0.84) + 'px'; ;
+        analysis_basketball_matches.value.style.minHeight = window.innerHeight - rem(0.84) + 'px'; ;
       }
     })
     if (['zh', 'tw'].includes(UserCtr.lang)) {
@@ -122,7 +122,7 @@ const tab_click = ([tab, type]) => {
     } else if (tab.component == 'articleMain') {
       eventLabel = 'H5_情报分析_资讯'
     }
-    // this.$utils.zhuge_event_send(eventLabel, this.UserCtr);
+    // this.$send_zhuge_event(eventLabel, this.UserCtr);
   }
 }
 

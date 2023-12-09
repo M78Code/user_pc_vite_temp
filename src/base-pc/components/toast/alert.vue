@@ -76,7 +76,7 @@ const is_domain_error = ref(false)
 const is_invalid = ref(UserCtr.is_invalid)
 onMounted(() => {
   is_show.value = is_invalid.value
-  if (utils.is_iframe) {
+  if (is_iframe) {
     console.log('非内嵌')
     backDrop.value = true;
   }

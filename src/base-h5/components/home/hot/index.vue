@@ -160,7 +160,7 @@ const get_list = (first) => {
           // 滑动tab动画操作
           clearTimeout(timer2.value)
           timer2.value = setTimeout(() => {
-            scrollBox.value && utils.tab_move2(index, scrollBox.value, true)
+            scrollBox.value && tab_move2(index, scrollBox.value, true)
             // 初始选择竞足
             // change_tab(tabList.value[index], index)
           }, 80);
@@ -231,7 +231,7 @@ const change_tab = (item, index, is_self) => {
   check_clear_bet(item)
   // set_hot_tab_item(item)
   // 滑动tab动画操作
-  utils.tab_move2(index, scrollBox.value)
+  tab_move2(index, scrollBox.value)
 
   //  调用列表页接口
   // useMittEmit(MITT_TYPES.EMIT_TAB_HOT_CHANGING);

@@ -170,7 +170,7 @@ let scrollArea = ref(null)
 // ]),
 
 watch(() => tab_Index.value, (index) => {
-  utils.tab_move2(index, scrollBox.value)
+  tab_move2(index, scrollBox.value)
   if (index == 0) {   //收藏时显示暂无收藏,非收藏时显示暂无直播赛事
     no_menu_txt.value = 'collect'
   } else {
@@ -254,7 +254,7 @@ const changeTab = (tab, index) => {
 }
 // 收藏 接口
 const on_collection = (item) => {
-  if (!utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)) return
+  if (!judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)) return
 
   let params = {
     cuid: UserCtr.get_uid(), //用户ID/或UUid

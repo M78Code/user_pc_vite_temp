@@ -24,7 +24,7 @@
           <!-- 打开赛事分析窗口 -->
           <div
             class="sr-link-icon-w"
-            v-if="utils.is_show_sr_flg(match_infoData)"
+            v-if="is_show_sr_flg(match_infoData)"
             @click.stop="sr_click_handle(match_infoData, 'details')"
             v-tooltip="{ content: i18n_t('common.analysis') }"
           >

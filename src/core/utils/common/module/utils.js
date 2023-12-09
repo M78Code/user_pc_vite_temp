@@ -9,16 +9,19 @@ import { date } from "quasar";
 import { api_common, api_account } from 'src/api/index';
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { DateForMat } from "src/core/format/common/index.js"
-import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
+
 
 const OL_RESULTS=['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half'];
 
+//模块之间通信 ，去耦合化的一个 键值对 仓库
+export { GLOBAL_CONSTANT } from "src/core/constant/global/index.js";
+
+ 
+
 export const utils = {
 
-  // 是否加载播放器js
-  is_load_player_js:false,
-  // 是否已加载视频动画资源
-  is_load_video_resources:false,
+ 
+
   timer1_: null,
   //用户切换的时间点(用于阻止用户过快点击)
   change_time:null,
@@ -41,43 +44,8 @@ export const utils = {
     }
     return url
   },
-  /**
-   * @Description:获取uuid(自动生成)
-   * @Author success
-   * @Date 2019/12/06 18:00:10
-   */
-  get_uuid () {
-    return (this.request_uuid = uid().replace(/-/g, ""));
-  },
-  /**
-   * @Description:获取request_id(自动生成)
-   * @Author success
-   * @Date 2019/12/06 18:00:10
-   */
-  get_request_id: function () {
-    var ret = "";
-    var request_uuid = sessionStorage.getItem("request_uuid");
-    if (request_uuid) {
-      ret = `${request_uuid}-${new Date().getTime()}`;
-    } else {
-      var uuid_ = this.get_uuid();
-      sessionStorage.setItem("request_uuid", uuid_);
-      ret = `${uuid_}-${new Date().getTime()}`;
-    }
-    return ret;
-  },
-  // 删除数据,释放内存
-  del: function (any) {
-    if (any && lodash.isObject(any)) {
-      if (any instanceof Array) {
-        any.splice(0, any.length);
-      } else {
-        for (const key in any) {
-          delete any[key]
-        }
-      }
-    }
-  },
+ 
+ 
 
 
   /**
@@ -231,8 +199,8 @@ export const utils = {
    * @param {undefined} undefined
    */
   load_video_resources(){
-    if(this.is_load_video_resources) return
-    this.is_load_video_resources = true
+    if(this.IS_LOAD_VIDEO_RESOURCES) return
+    this.IS_LOAD_VIDEO_RESOURCES = true
 
     clearTimeout(this.timer1_)
     const that = this
@@ -266,8 +234,8 @@ export const utils = {
    * @param {undefined} undefined
   */
    load_player_js(){
-    if(this.is_load_player_js) return
-    this.is_load_player_js = true
+    if(this.IS_LOAD_PLAYER_JS) return
+    this.IS_LOAD_PLAYER_JS = true
     let dom_ = document
     let dplayer_el = domlodash.createElement('script');
     let  BUILD_VERSION=  window.BUILDIN_CONFIG.BUILD_VERSION
@@ -480,103 +448,8 @@ export const utils = {
     return "r-unkown"
   },
 
-  /**
-   * @description: 埋点Google Analytics GA_TRACKING_ID config配置
-   * @param {*} user_id 用户id
-   * @return {*}
-   */
-  gtag_config_send(user_id){
-    // 设置默认启动参数
-    // GA 埋点开关开启---照常统计，和生产环境保持一致
-    window.gtag_run = 1;
-    let url_search = SEARCH_PARAMS.init_param;
-    // 获取诸葛埋点开关
-    let gtag = url_search.get('gtag');
-    if(gtag){
-      // 设置诸葛埋点开关
-      window.gtag_run = 1;
-    }
-    // 诸葛埋点开关关闭时,直接终止
-    if(!window.gtag_run){
-      return
-    }
-    if(user_id){
-      // 设置用户ID持久化
-      sessionStorage.setItem('user_id',user_id);
-    } else {
-      // user_id无效时情况上次的缓存
-      sessionStorage.setItem('user_id','');
-      return;
-    }
-    if(!window.INIT_GTAG && window.gtag_run){
-      // if (!['393605793762643968', '393605857419595776', '393605916458618880', '393605993054998528', '393606048289787904'].includes(user_id)) {
-      //   return;
-      // }
-      // 初始化埋点信息
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function gtag() { dataLayer.push(arguments); }
-      window.gtag('js', new Date());
-      // 配置埋点信息
-      window.gtag('config', window.BUILDIN_CONFIG.GA_TRACKING_ID,{user_id});
-      // 设置埋点是否已经配置过
-      window.INIT_GTAG = true;
-
-    }
-  },
-
-  /**
-   * @description: 埋点发送网页跟踪信息
-   * @param {*} title 网页的标题（例如“首页”）
-   * @param {*} path 网址的路径部分。此值应以斜杠 (/) 字符开头
-   * @return {*}
-   */
-  gtag_view_send(title, path){
-    let user_id = sessionStorage.getItem('user_id');
-    if(user_id && window.gtag_run){
-      // 初始化埋点Google Analytics GA_TRACKING_ID config配置
-      if(!window.INIT_GTAG){
-        this.gtag_config_send(user_id);
-      }
-      // if (!['393605793762643968', '393605857419595776', '393605916458618880', '393605993054998528', '393606048289787904'].includes(user_id)) {
-      //   return;
-      // }
-      // 埋点发送网页跟踪信息
-      window.gtag('config', window.BUILDIN_CONFIG.GA_TRACKING_ID, {
-        'page_title' : title, // 'homepage',
-        'page_path': path, // '/home'
-        user_id,// 用户id
-      });
-      // console.log('gtag_view_send:'+JSON.stringify({title, path}));
-    }
-  },
-  /**
-   * @description: 埋点发送事件跟踪信息
-   * @param {*} action 事件报告中显示为事件操作的字符串
-   * @param {*} category 显示为事件类别的字符串
-   * @param {*} label 显示为事件标签的字符串
-   * @param {*} value 显示为事件价值的非负整数
-   * @return {*}
-   */
-  gtag_event_send(action, category, label, value){
-    let user_id = sessionStorage.getItem('user_id');
-    if(user_id && window.gtag_run){
-      // 初始化埋点Google Analytics GA_TRACKING_ID config配置
-      if(!window.INIT_GTAG){
-        this.gtag_config_send(user_id);
-      }
-      // if (!['393605793762643968', '393605857419595776', '393605916458618880', '393605993054998528', '393606048289787904'].includes(user_id)) {
-      //   return;
-      // }
-      // 埋点发送事件跟踪信息
-      window.gtag('event', action, {
-        'event_category': category,
-        'event_label': label,
-        user_id,// 用户id
-        value
-      });
-      console.log('gtag_event_send:'+JSON.stringify({action, category, label, value}));
-    }
-  },
+ 
+  
   /**
    * @description: zhuge埋点identify方法(识别用户)
    * @param {*} user_id
@@ -596,61 +469,8 @@ export const utils = {
     }
   },
 
-  /**
-   * @description: zhuge埋点setSuperProperty方法(设置事件通用属性)
-   * @param {*} obj 通用属性
-   * @return {*}
-   */
-   zhuge_setSuperProperty(obj={}){
-    if(window.zhuge_run && window.zhuge) {
-      // 设置事件通用属性
-      window.zhuge.setSuperProperty(obj);
-      console.log('zhuge setSuperProperty: ',JSON.stringify({ obj}));
-    }
-  },
-
-  /**
-   * @description: zhuge埋点track方法(自定义事件)
-   * @param {*} eventLabel
-   * @param {*} obj
-   * @return {*}
-   */
-  zhuge_track(eventLabel,obj={}){
-    if(window.zhuge_run && window.zhuge) {
-      // 自定义事件
-      window.zhuge.track(eventLabel,obj)
-      console.log('zhuge track: ',JSON.stringify({eventLabel,obj}));
-    }
-  },
-  /**
-   * 发送诸葛埋点事件
-   * @param {*} name 事件标签
-   * @param {*} user_info 用户信息
-   * @param {*} eventPropsObj 新增的属性键值对
-   */
-  zhuge_event_send(name, user_info, eventPropsObj = {}) {
-    let objKey = {
-      clickTime: "点击时间",
-      userName: "用户名",
-      userId: "用户ID",
-      merchantId: "商户ID",
-      languageVersion: "语言版本",
-      terminal: "访问终端",
-      eventLabel: "事件标签",
-    }
-    let _obj = {
-      [objKey.eventLabel]: name,
-      [objKey.clickTime]: DateForMat(new Date(), 'yyyy-MM-dd hh:mm:ss'),
-      [objKey.userName]: lodash.get(user_info, 'userName'),
-      [objKey.userId]: lodash.get(user_info, 'userId'),
-      [objKey.merchantId]: lodash.get(user_info, 'mId'),
-      [objKey.languageVersion]: lodash.get(user_info, 'languageName'),
-      [objKey.terminal]: "H5",
-    };
-    Object.assign(_obj, eventPropsObj)
-    this.zhuge_track(name, _obj);
-  },
-
+ 
+ 
   /**
    * @description: 加载诸葛sdk JS
    * @param {*} mid 商户id
@@ -874,7 +694,7 @@ export const utils = {
       timers:1000
     }
     // axios_api轮询调用方法
-    //this.$utils.axios_api_loop(obj_);
+    //this.$axios_api_loop(obj_);
    * @param {Object} obj
    * @param {*} obj.axios_api axios api对象
    * @param {*} obj.params 参数
@@ -1125,30 +945,7 @@ export const utils = {
       }
       return res;
     },
-       /**
-    * @description:H5详情盘口
-    * @param {*} ol_item
-    * @return {*}
-    */
-   go_to_bet(ol_item){
-    const {oid,_hid,_hn,_mid } = ol_item
-    let params = {
-      oid, // 投注项id ol_obj
-      _hid, // hl_obj 
-      _hn,  // hn_obj
-      _mid,  //赛事id mid_obj
-    }
-    let other = {
-      is_detail: false,
-      // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
-      // 根据赛事纬度判断当前赛事属于 那种投注类型
-      bet_type: 'common_bet',
-      // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
-      device_type: 1,  
-      // 数据仓库类型
-      match_data_type: "h5_detail",
-  }
-    set_bet_obj_config(params,other)
+
   },
 };
 

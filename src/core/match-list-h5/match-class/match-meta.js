@@ -22,7 +22,7 @@ import {
 } from 'src/output/module/match-data-base.js'
 
 
-import { useMittEmit, MITT_TYPES,project_name,} from "src/output/module/constant-utils.js"
+import { useMittEmit, MITT_TYPES,project_name,} from "src/output/module/constant-js"
 import {  MenuData,} from "src/output/module/menu-data.js"
 
 class MatchMeta {
@@ -270,12 +270,12 @@ class MatchMeta {
    */
   set_match_default_properties(match, index, mids) {
     // 是否展示联赛标题
-    const is_show_league = MatchUtils.get_match_is_show_league(index, mids)
-    const is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
+    const is_show_league = Matchget_match_is_show_league(index, mids)
+    const is_show_no_play = Matchget_match_is_show_no_play(index, mids)
     // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
-    const handicap_index = MatchUtils.get_handicap_index_by(match);
-    const { home_score, away_score } = MatchUtils.get_match_score(match)
-    const { home_red_score, away_red_score, home_yellow_score, away_yellow_score } = MatchUtils.get_match_red_yellow_card(match)
+    const handicap_index = Matchget_handicap_index_by(match);
+    const { home_score, away_score } = Matchget_match_score(match)
+    const { home_red_score, away_red_score, home_yellow_score, away_yellow_score } = Matchget_match_red_yellow_card(match)
     return {
       source_index: index,
       is_show_no_play,
@@ -696,8 +696,8 @@ class MatchMeta {
       dataList.forEach(t => {
         t.match_data_type = 'h5_in_play_league'
       })
-      const arr_list = MatchUtils.handler_match_classify_by_csid(dataList)
-      match_list = MatchUtils.get_home_in_play_data(arr_list)
+      const arr_list = Matchhandler_match_classify_by_csid(dataList)
+      match_list = Matchget_home_in_play_data(arr_list)
       // this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
       this.handler_match_list_data({ list: match_list, warehouse: MatchDataBaseInPlayH5, type: 2, is_virtual: false, merge: 'cover' })
     }
@@ -711,7 +711,7 @@ class MatchMeta {
     assemble_15_minute_data = (payload) => {
       return payload.map((item) => {
         const { ms, mst } = item
-        const { title, isLock } = MatchUtils.get_match_15_minute_stage(ms, mst)
+        const { title, isLock } = Matchget_match_15_minute_stage(ms, mst)
         return {
           title,
           isLock,
@@ -860,7 +860,7 @@ class MatchMeta {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return 
 
-    const target_list = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
+    const target_list = Matchhandler_match_classify_by_csid(list).filter((t) => t.mid)
 
     const custom_match_mids = target_list.map(t => t.mid)
 
@@ -907,12 +907,12 @@ class MatchMeta {
     let target_data = []
     if (is_classify) {
       // 赛事归类(开赛-未开赛) 里面包含了球种归类、联赛归类
-      target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
+      target_data = Matchhandler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
       // 球种归类
-      const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
+      const result_data = Matchhandler_match_classify_by_csid(list).filter((t) => t.mid)
       // 联赛归类
-      target_data = MatchUtils.handler_match_classify_by_tid(result_data)
+      target_data = Matchhandler_match_classify_by_tid(result_data)
     }
 
     // 重置折叠对象
@@ -929,7 +929,7 @@ class MatchMeta {
       
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, target_data.map(t => t.mid))
-      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
+      const is_show_ball_title = Matchget_match_is_show_ball_title(index, target_data)
       
       Object.assign(match, params, {
         is_show_ball_title,
@@ -986,14 +986,14 @@ class MatchMeta {
     const is_classify = this.get_is_classify()
 
     // 赛事归类开赛、未开赛
-    const target_data = is_classify ? MatchUtils.handler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list.filter((t) => t.mid)
+    const target_data = is_classify ? Matchhandler_match_classify_by_ms(match_list).filter((t) => t.mid) : match_list.filter((t) => t.mid)
     // 过滤赛事 
     this.complete_mids = mids
     this.complete_matchs = target_data.map((t, index) => {
       // 设置联赛下的赛事数量， 不能是虚拟计算过后得
       MatchResponsive.set_ball_seed_league_count(t)
       // is_show_ball_title 和顺序有关 得放在最终赋值处
-      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
+      const is_show_ball_title = Matchget_match_is_show_ball_title(index, target_data)
       return { 
         ...t, 
         is_show_ball_title

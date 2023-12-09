@@ -76,7 +76,7 @@ export default {
       this.$emit('tab_click',[tab, type]);
       // 滚动目标到屏幕显示区域
       nextTick(()=>{
-        this.$utils.tab_move(i, this.$refs.tab_ul_scroller, this.$refs.tab_item)
+        this.$tab_move(i, this.$refs.tab_ul_scroller, this.$refs.tab_item)
       })
     },
     handle_show_tab(item, index) {

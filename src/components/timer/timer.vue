@@ -89,7 +89,7 @@ export default {
     }
   },
   methods: {
-    counting_time_ctr_show_format: utils.counting_time_ctr_show_format_ouzhou,
+    counting_time_ctr_show_format: counting_time_ctr_show_format_ouzhou,
     // 启动计时器
     start() {
       const that = this;

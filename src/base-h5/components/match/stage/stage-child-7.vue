@@ -50,7 +50,7 @@ export default {
         //   const first_mct = 1;
         //   let n_mct = first_mct;
         //   if(UserCtr.lang == 'zh'){
-        //     n_mct = utils.numberToChinese(first_mct)
+        //     n_mct = numberToChinese(first_mct)
         //   }
         //   r = game_count.replace('%s',new_num);
         // }

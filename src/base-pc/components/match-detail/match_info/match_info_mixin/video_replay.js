@@ -195,7 +195,7 @@ import { useMittEmit } from "src/output";
             titleInfo: `${item.homeAway} ${this.event_name(item.eventCode)}: ${item.firstNum}`
           }
           // 检查地址是否有效存在
-          // this.is_exist_media = utils.url_exists(this.media_src)
+          // this.is_exist_media = url_exists(this.media_src)
           // if (!this.is_exist_media) {
           //   return false
           // }

@@ -209,7 +209,7 @@ export default defineComponent({
       const sl = lodash.get(tab, 'sl', [])
       // 热门 先写死 index: 5
       MenuData.set_current_lv1_menu({ mi: 500, sl: sl }, 5);
-      if (tab.index == tabIndex.value || utils.is_time_limit(800)) {
+      if (tab.index == tabIndex.value || is_time_limit(800)) {
         // 切换多语言需处理选中效果 样式
         if (tab.index == 0) {
           calc_tab_select(tab);
@@ -248,7 +248,7 @@ export default defineComponent({
       calc_tab_select(tab);
       // 埋点采集热门赛事点击
       if (tab.index === 1) {
-        utils.zhuge_event_send("H5_热门赛事", UserCtr);
+        send_zhuge_event("H5_热门赛事", UserCtr);
       }
     };
     //计算选中居中偏移值
