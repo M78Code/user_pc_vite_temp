@@ -22,17 +22,8 @@ import { api_analysis } from "src/api/"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 
 import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
-import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item2.vue'
-import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 
-const defer_render = use_defer_render()
 const matchs_data = ref([])
-const is_show_match_item = computed(() => {
-  return (index) => {
-    return defer_render(index)
-  }
-})
-
 const inner_height = window.innerHeight;  // 视口高度
 const props = defineProps({})
 const state = reactive({

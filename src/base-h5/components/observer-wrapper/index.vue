@@ -14,7 +14,7 @@
         <!-- 赛事卡片 -->
         <slot name="content" :item="item" :index="index">
           <template v-if="is_show_match_item(index)">
-            <ObserverItem :index="index" :item="item"></ObserverItem>
+            <ObserverItem3 :index="index" :item="item"></ObserverItem3>
           </template>
         </slot>
       </div>
@@ -34,6 +34,8 @@ import { onMounted, computed, watch, ref, nextTick, onUnmounted } from 'vue';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { compute_local_project_file_path, project_name } from 'src/output/index.js';
+// yazhou-h5 亚洲版
+import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item.vue';
 // app-h5 复刻版
 import ObserverItem2 from 'src/base-h5/components/observer-wrapper/observer-item2.vue';
 // ouzhou-h5 欧洲版
