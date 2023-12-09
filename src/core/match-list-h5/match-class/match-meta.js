@@ -711,7 +711,7 @@ class MatchMeta {
     assemble_15_minute_data = (payload) => {
       return payload.map((item) => {
         const { ms, mst } = item
-        const { title, isLock } = Matchget_match_15_minute_stage(ms, mst)
+        const { title, isLock } = MatchUtils.get_match_15_minute_stage(ms, mst)
         return {
           title,
           isLock,
@@ -929,7 +929,7 @@ class MatchMeta {
       
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, target_data.map(t => t.mid))
-      const is_show_ball_title =  get_match_is_show_ball_title(index, target_data)
+      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
       
       Object.assign(match, params, {
         is_show_ball_title,

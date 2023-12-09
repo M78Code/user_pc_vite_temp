@@ -248,7 +248,7 @@ const handle_ouzhou_home_hots = async (data) => {
   if (data && data.length > 0) {
     const arr_data = data.map(t => {
       const match = MatchDataBaseHotsH5.get_quick_mid_obj(t?.mid)
-      const { home_score, away_score } = Matchget_match_score(match)
+      const { home_score, away_score } = MatchUtils.get_match_score(match)
       return {
         ...match,
         home_score, 
