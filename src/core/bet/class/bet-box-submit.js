@@ -950,7 +950,8 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
         // 首页大小类玩法
         if(['Over',"Under"].includes(ol_obj.ot)){
-            a = ol_obj.onbl
+            // 英文列表是 简写
+            a =  UserCtr.lang == 'en' ? ol_obj.ot : ol_obj.onbl
             b = ol_obj.onb
         }
 
