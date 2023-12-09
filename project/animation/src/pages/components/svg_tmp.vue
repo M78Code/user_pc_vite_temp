@@ -1,6 +1,5 @@
 <template>
-  <svg :width="width" :height="height">
-    <!--          <path :d="rightPath()" fill="blue">-->
+  <svg :width="width" :height="height" :key="key_1">
     <path :d="svgPath.path" fill="rgba(0,0,0,.3)">
       <animate
         attributeName="d"
@@ -18,7 +17,6 @@
     </path>
     <text style="fill: rgba(255,255,255,0)" x="100" y="150">
       主场进球
-
       <animate
         attributeName="x"
         :dur="'0.5s'"
@@ -48,7 +46,17 @@ export default defineComponent({
       repeatCount: '1', // 1 indefinite
       fill: 'freeze',
       svgPath: {},
+      key_1: false
     };
+  },
+  watch: {
+    current_event_code(n,o) {
+      // 进球
+      console.warn(n)
+      if(n != o) {
+        this.key_1 = !this.key_1
+      }
+    }
   },
   mounted () {
     this.svgPath = this.rightPath()
@@ -57,6 +65,15 @@ export default defineComponent({
     })
   },
   methods: {
+    // 获取path标点
+    get_svg_path_before(code) {
+
+
+    },
+    get__svg_path_after(code) {
+
+
+    },
     createPath(move = 0){
       const rate = this.width/800
       const defaultObj = {

@@ -1,12 +1,7 @@
 <template>
   <div>
-    <!-- <q-btn color="secondary" @click="get_event_code()" label="随机推送事件" /> -->
     <div class="animation-content bg">
-<!--      <img :src="svg_src">-->
-<!--      <object ref="svgCount" :data="svg_src" type="image/svg+xml" />-->
-      <svg_tmp :height="svgHeight" :width="svgWidth" v-if="tmp === 0"></svg_tmp>
-      <svg3 :height="svgHeight" :width="svgWidth" v-if="tmp === 1"></svg3>
-<!--      <Svg3 :height="svgHeight" :width="svgWidth" v-if="isShowSvg1" />-->
+      <svg_tmp :current_event_code="current_event_code"></svg_tmp>
       <img ref="bgConainer" src="/public/animation/足球背景.png">
     </div>
   </div>
@@ -15,15 +10,13 @@
 
 import { defineComponent } from 'vue'
 import svg_tmp from "project/animation/src/pages/components/svg_tmp.vue"
-import svg2 from "project/animation/src/pages/components/svg2.vue"
-import svg3 from "project/animation/src/pages/components/svg3.vue"
+// import svg2 from "project/animation/src/pages/components/svg2.vue"
+// import svg3 from "project/animation/src/pages/components/svg3.vue"
 import { event_animation } from '../../globle/event.js'
 export default defineComponent({
   props: ['svg_src', 'current_event_code'],
   components: {
     svg_tmp,
-    svg2,
-    svg3,
   },
   computed:{
     tmp(){
