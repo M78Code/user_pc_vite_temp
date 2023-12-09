@@ -912,7 +912,7 @@ class MatchMeta {
       // 球种归类
       const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
       // 联赛归类
-      target_data = Matchhandler_match_classify_by_tid(result_data)
+      target_data = MatchUtils.handler_match_classify_by_tid(result_data)
     }
 
     // 重置折叠对象
