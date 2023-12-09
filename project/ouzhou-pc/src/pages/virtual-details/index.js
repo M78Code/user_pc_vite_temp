@@ -1,5 +1,5 @@
 import { ref, onMounted, watch, onUnmounted } from "vue";
-import { api_match_list, api_common, api_details } from "src/api";
+import { api_virtual, api_common, api_details } from "src/api";
 import { useRouter } from "vue-router";
 // import store from "src/store-redux-vuex/index.js";
 import {
@@ -43,9 +43,9 @@ export function usedetailData(route) {
   const {
     get_detail_category,
     get_detail_list,
-    get_detail_data,
+    get_detail_data:get_virtual_match_detail,
     getMatchDetailByTournamentId,
-  } = api_match_list; // 接口
+  } = api_virtual; // 接口
 
   //const userInfo = state.userReducer.userInfo; // 用户数据
   const { user_info } = UserCtr; // 用户数据
