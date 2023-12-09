@@ -59,11 +59,7 @@ const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
 let handicap_list = lodash.cloneDeep(match_tpl_info.get_15mins_odds_list()) //只有一个数组哦
 const emits = defineEmits(['del'])
-watch(() => match.value.hps15Minutes, (v) => {
-  console.log(v, 'jiffy35')
-}, { deep: true })
 const ols_data = computed(() => {
-  console.log(match.value, 'jiffy34')
   const { mid, hps15Minutes } = match.value
   const jieduan = lodash.find(hps15Minutes, (i) => handicap_list._hpid == i.hpid) //找到玩法ID 和阶段
   const ot_Map = lodash.keyBy(lodash.get(jieduan, 'hl[0].ol',lodash.get(jieduan, 'hl.ol', [])), (i) => i.ot) //找到ol数据

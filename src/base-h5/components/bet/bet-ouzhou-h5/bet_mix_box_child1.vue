@@ -13,7 +13,7 @@
                   <div class="nonebox4-content-left-info">
                     <div class="nonebox4-content-left-content-text">
                       <div class="nonebox4-content-left-content-text-one">
-                        <div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap"></div>
+                        <div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap.replace('undefined','')"></div>
                         <div>
                             <div class="nonebox4-content-right" v-if="items.ol_os == 1">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
@@ -61,9 +61,10 @@
 
   const type = 2;//1:不涨也不少    2：增长     3：减少
   const del=()=>{
-    BetData.bet_list_remove(0)
-    BetData.set_clear_bet_info()
-    useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
+    console.error('items',props.items)
+    // BetData.bet_list_remove(0)
+    // BetData.set_clear_bet_info()
+    // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   }
   </script>
   

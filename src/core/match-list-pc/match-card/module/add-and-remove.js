@@ -97,7 +97,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
           );
         }
       } else {
-        // console.log(mid, old_match_style_obj)
+        console.error('jiffy',mid, old_match_style_obj)
       }
     });
     // 设置列表总高度

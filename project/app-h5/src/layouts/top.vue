@@ -22,7 +22,7 @@
     <!--  -->
     <!-- <SwitchWap /> -->
     <!--  -->
-    <SearchTab ref="searchTabMenu"/>
+    <SearchTab ref="searchTabMenu" v-if="MenuData.current_lv_1_menu_i =='2'"/>
      <!-- 筛选+搜索  已脱离文档流-->
     <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
@@ -142,6 +142,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     set_menu_mi_change_get_api_data()
   }
   watch(()=> MenuData.current_lv_1_menu_mi.value, new_ => {
+    ref_data.scroll_data_list = [];
     // 今日 滚球 冠军
     if( [1,2,400].includes(1*new_) ){
       set_scroll_data_list(new_)
@@ -150,7 +151,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     if( [3,6].includes(1*new_)){
       nextTick(()=>{
         dateTabMenu.value.set_active_val()
-        dateTabMenu.value.changeTabMenu(0)
+        dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[0],0)
       })
     }
     //球种滚动初始化

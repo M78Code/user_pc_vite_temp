@@ -11,13 +11,13 @@
 					<ul class="list">
 						<!-- <div class="title">{{ i18n_t('ouzhou.search.view_all_match') }}</div> -->
 						<!-- 滚球 -->
-						<div  v-if="!lodash.isEmpty(show_bowling_list)">
+						<div  v-if="search_data.bowling.length > 0">
 							<div @click="expand_bowling = !expand_bowling">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.underway') }}</div>
 								</div>
 								<div v-show="expand_bowling">
-									<li v-for="(value, name, index) in show_bowling_list" :key="name">
+									<li v-for="(value, name, index) in show_bowling_list(search_data.bowling)" :key="name">
 										<div class="list_top" @click="bowling_top_click(value)">
 											<span v-html="red_color(value.tn)"></span><img
 												:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
@@ -69,14 +69,14 @@
 							</div>
 						</div>
 						<!-- 搜索 联赛 -->
-						<div v-if="search_data?.league && search_data?.league.length > 0">
+						<div v-if="search_data.league.length > 0">
 							<div @click="expand_league = !expand_league">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.league') }}</div>
 								</div>
 							</div>
 							<div v-show="expand_league">
-								<li v-for="(item, index) in search_data?.league" :key="index">
+								<li v-for="(item, index) in search_data.league" :key="index">
 									<div class="list_top" @click="league_click(item)">
 										<span v-html="red_color(item.leagueName)"></span><img
 											:src="compute_local_project_file_path('image/svg/right_arrow.svg')" alt="">
@@ -123,14 +123,14 @@
 							</div>
 						</div>
 						<!-- 搜索 队伍 -->
-						<div v-if="search_data?.team && search_data.team?.length > 0">
+						<div v-if="search_data.team.length > 0">
 							<div @click="expand_team = !expand_team">
 								<div class="middle_info_tab diff">
 									<div class="color">{{ i18n_t('ouzhou.search.team') }}</div>
 								</div>
 							</div>
 							<div v-show="expand_team">
-								<li v-for="(item, index) in search_data?.team" :key="index">
+								<li v-for="(item, index) in search_data.team" :key="index">
 									<!-- <div v-if="item.matchList[0].tn">
 										<div class="list_top" @click="match_top_click(item)">
 											<span v-html="red_color(item.matchList[0].tn)"></span>
@@ -199,7 +199,7 @@
 </template>
   
 <script setup>
-import { ref, watch, onBeforeUnmount, nextTick, computed } from 'vue'
+import { ref, watch, onBeforeUnmount, nextTick, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import lodash from 'lodash'
 
@@ -234,7 +234,7 @@ const router = useRouter()
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
-
+let timer = null
 const search_type = ref(null)
 const keyword = ref('')
 const get_props = (props) => {
@@ -247,24 +247,7 @@ const expand_bowling = ref(true);
 const expand_league = ref(true);
 const expand_team = ref(true)
 
-// 进行中同联赛下的赛事放在一起
-const show_bowling_list = computed(() => {
-	const obj = {}
-	const bowling = search_data.value?.bowling || []
-	bowling.forEach(item => {
-		const {csid, tn } = item;
-		if(!obj[tn]) {
-			obj[tn] = {
-				tn,
-				csid,
-				children: [item]
-			}
-		} else {
-			obj[tn].children.push(item)
-		}
-	})
-	return obj;
-});
+
 /**
  * @Description:点击滚球搜索
  * @param {string} league 点击联赛标题
@@ -363,7 +346,6 @@ function league_item_click(match) {
 	})
 }
 
-const timer = ref(null)
 /**
  * @Description:获取搜索结果数据
  * @param {string} keyword 搜索关键字
@@ -373,7 +355,11 @@ const timer = ref(null)
 /** 数据加载状态 */
 const load_data_state = ref('data')
 /** 搜索结果数据 */
-const search_data = ref([])
+const search_data = reactive({
+	team: [],
+	bowling: [],
+	league: []
+})
 let search_loading = false;
 const _get_search_result = lodash.debounce((keyword, is_loading) => {
 	if (!keyword) {
@@ -397,7 +383,10 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 	get_search_result(params).then(res => {
 		search_loading = false
 		update_show_type('result')
-		search_data.value = res.data.data
+		const o_data = res.data.data
+		search_data.team = o_data?.team || []
+		search_data.bowling = o_data?.bowling || []
+		search_data.league = o_data?.league || []
 		if (is_empty_data()) {
 			load_data_state.value = 'empty'
 			return
@@ -406,11 +395,11 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 		expand_league.value = true;
 		expand_team.value = true
 		load_data_state.value = 'data'
-		// console.log('res', search_data.value);
+		// console.log('res', search_data);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;
-		clearTimeout(timer.value)
-		timer.value = setTimeout(() => {
+		clearTimeout(timer)
+		timer = setTimeout(() => {
 			// 如果是从详情页返回
 			if (search.back_keyword.keyword) {
 				nextTick(() => {
@@ -433,9 +422,9 @@ const sports_id = ['2', '5'];
 
 // 判断数据为空
 const is_empty_data = () => {
-	if(!(search_data.value?.team && search_data.value?.team.length > 0) &&
-	!(search_data.value?.bowling && search_data.value?.bowling.length > 0) &&
-	!(search_data.value?.league && search_data.value?.league.length > 0)) return true
+	if(!(search_data.team.length > 0) &&
+	!(search_data.bowling.length > 0) &&
+	!(search_data.league.length > 0)) return true
 }
 
 /**
@@ -446,17 +435,17 @@ const get_match_base_hps_by_mids = async () => {
 	if (is_empty_data()) return;
 	// 拿到所有滚球，联赛，队伍 mid
 	match_mid_Arr = []
-	search_data.value?.team.forEach((item, index) => {
+	search_data.team.forEach((item, index) => {
 		item.matchList.forEach((i, idx) => {
 			match_mid_Arr.push(i.mid)
 		})
 	})
-	search_data.value?.league.forEach((item, index) => {
+	search_data.league.forEach((item, index) => {
 		item.matchList.forEach((i, idx) => {
 			match_mid_Arr.push(i.mid)
 		})
 	})
-	search_data.value?.bowling.forEach((item, index) => {
+	search_data.bowling.forEach((item, index) => {
 		match_mid_Arr.push(item.mid)
 	})
 	if (match_mid_Arr.length < 1) return;
@@ -475,28 +464,46 @@ const get_match_base_hps_by_mids = async () => {
 			const { data } = res;
 			// 使用获得比分的 mid 和搜索结果的 mid 做比较，将赔率信息返回给搜索结果
 			for (let i = 0; i < data.length; i++) {
-				for (let j = 0; j < search_data.value.team.length; j++) {
-					search_data.value.team[j].matchList.forEach((item, index) => {
+				for (let j = 0; j < search_data.team.length; j++) {
+					search_data.team[j].matchList.forEach((item, index) => {
 						if (data[i].mid === item.mid) {
-							search_data.value.team[j].matchList[index] = data[i]
+							search_data.team[j].matchList[index] = data[i]
 						}
 					})
 				}
-				for (let k = 0; k < search_data.value.league.length; k++) {
-					search_data.value.league[k].matchList.forEach((item, index) => {
+				for (let k = 0; k < search_data.league.length; k++) {
+					search_data.league[k].matchList.forEach((item, index) => {
 						if (data[i].mid === item.mid) {
-							search_data.value.league[k].matchList[index] = data[i]
+							search_data.league[k].matchList[index] = data[i]
 						}
 					})
 				}
-				for (let l = 0; l < search_data.value.bowling.length; l++) {
-					if (data[i].mid === search_data.value.bowling[l].mid) {
-						search_data.value.bowling[l] = data[i]
+				for (let l = 0; l < search_data.bowling.length; l++) {
+					if (data[i].mid === search_data.bowling[l].mid) {
+						search_data.bowling[l] = data[i]
 					}
 				}
 			}
 		}
 	})
+}
+
+// 进行中同联赛下的赛事放在一起
+function show_bowling_list(search_data_bowling=[]) {
+  const obj = {}
+	search_data_bowling.forEach(item => {
+		const {csid, tn } = item;
+		if(!obj[tn]) {
+			obj[tn] = {
+				tn,
+				csid,
+				children: [item]
+			}
+		} else {
+			obj[tn].children.push(item)
+		}
+	})
+	return obj;
 }
 
 //  文字特殊处理，颜色操作
@@ -513,9 +520,9 @@ const get_odd_os = (ov) => {
 
 const {off}=useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props);
 onBeforeUnmount(() => {
-	if (timer.value) {
-		clearTimeout(timer.value)
-		timer.value = null
+	if (timer) {
+		clearTimeout(timer)
+		timer = null
 	}
 	off()
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
