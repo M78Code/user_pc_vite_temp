@@ -93,7 +93,7 @@ import { t,compute_css_obj } from "src/output/index.js";
 import { get_match_tpl_title } from 'src/output/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
+import { utils_info } from 'src/core/utils/common/module/match-list-js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import store from 'src/store-redux/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -399,4 +399,4 @@ function set_fold() {
   width: 18px;
   height: 18px;
 }
-</style>src/core/utils/common/module/match-list-utils.jssrc/output/index.js
+</style>src/core/utils/common/module/match-list-jssrc/output/index.js

@@ -369,7 +369,7 @@ onUnmounted(() => {
   set_order_ing({ change_: 1, value_: [] })
   set_order_no('')
 
-  utils.del(series_order_respList.value);
+  del(series_order_respList.value);
 
   set_active_index(0);//活动子项置为初始值
   set_keyboard_show(true)

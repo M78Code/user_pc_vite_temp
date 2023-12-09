@@ -3,7 +3,7 @@ import lodash from 'lodash'
 const e_sport_csids = [101, 100, 102, 103];
 
  
-import {GLOBAL_CONSTANT } from "src/output/module/constant-utils.js"
+import {GLOBAL_CONSTANT } from "src/output/module/constant-js"
 // 目前环境信息
 const {BUILD_VERSION, NODE_ENV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME } = window.BUILDIN_CONFIG;
 let project_name = PROJECT_NAME

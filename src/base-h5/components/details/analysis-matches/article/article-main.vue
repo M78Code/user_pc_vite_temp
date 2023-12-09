@@ -86,7 +86,7 @@ const calc_height = () => {
     ele.scrollTop = 0
     if (!ele.style.height) {
       // TODO: 后续修改调整  $utils
-      ele.style.height = window.innerHeight - utils.rem(0.92) + 'px'
+      ele.style.height = window.innerHeight - rem(0.92) + 'px'
       ele.style.maxHeight = 'unset'
     }
   }
@@ -239,7 +239,7 @@ const handle_stay_duration = (article_id) => {
       return
     }
     // TODO: $utils 后续修改调整
-    utils.zhuge_event_send(EVENT_NAME, UserCtr, zhuge_obj)
+    send_zhuge_event(EVENT_NAME, UserCtr, zhuge_obj)
     enter_article_time.value = Date.now()
   }
   /**

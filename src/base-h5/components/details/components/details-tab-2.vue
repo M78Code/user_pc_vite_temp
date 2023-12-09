@@ -105,7 +105,7 @@ export default defineComponent({
       // 点击的玩法是当前选中的玩法
       if(matchDetailCtr.value.current_category_id == uId) return false;
       // 移动当前玩法的位置
-      utils.tab_move2(index, data.reset_scroll_dom)
+      tab_move2(index, data.reset_scroll_dom)
       MatchDetailCalss.set_details_item(uId);
       // set_subscript_game_index(index)
       let search_term = route.query.search_term
@@ -132,9 +132,9 @@ export default defineComponent({
       let zhuge_obj = {
         "玩法集名称": item.marketName,
         "玩法集ID": item.id,
-        "球种名称": utils.csid_to_sport_name(get_detail_data.csid)
+        "球种名称": csid_to_sport_name(get_detail_data.csid)
       }
-      utils.zhuge_event_send('TY_H5_详情页/大屏_玩法分类导航_点击', UserCtr,zhuge_obj);
+      send_zhuge_event('TY_H5_详情页/大屏_玩法分类导航_点击', UserCtr,zhuge_obj);
     };
     /**
      * @Description 获取当前选中详情玩法集

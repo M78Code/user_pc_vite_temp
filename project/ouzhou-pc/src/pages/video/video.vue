@@ -15,7 +15,7 @@
 
       <!-- 统计/聊天室 -->
       <template v-if="show_video_replay || show_chatroom">
-        <div class="video-bottom-panel" :class="{ 'iframe-video-bottom-panel': $utils.is_iframe }">
+        <div class="video-bottom-panel" :class="{ 'iframe-video-bottom-panel': $is_iframe }">
           <div class="panel-wrapper" :class="{ 'no-chatroom': !show_chatroom }">
             <div>
               <!-- 精彩回放 -->
@@ -32,7 +32,7 @@
       <!-- 本场数据 -->
       <template v-else>
         <div class="data-title yb-flex-center"
-          v-if="!$utils.is_eports_csid($route.params.csid) && $route.params.video_size != 1">
+          v-if="!$is_eports_csid($route.params.csid) && $route.params.video_size != 1">
           <div class="img"></div>
           <!-- 本场数据 -->
           <div>{{ $t('video.data') }}</div>
@@ -229,7 +229,7 @@ function exit_full_screen(size) {
       }
     })
     sessionStorage.setItem('auto_play_media', '1');
-  } else if (video.from == 0 && size == 'xl' && !this.$utils.is_eports_csid(this.$route.params.csid)) {
+  } else if (video.from == 0 && size == 'xl' && !this.$is_eports_csid(this.$route.params.csid)) {
     this.$router.push({
       name: 'video',
       params: {
@@ -242,7 +242,7 @@ function exit_full_screen(size) {
     })
   } else {
     MatchDetailCalss.set_is_back_btn_click(true);
-    this.$utils.redirect_router('/home')
+    this.$redirect_router('/home')
   }
   let time = Date.now()
   MatchDetailCalss.set_play_media({
@@ -355,7 +355,7 @@ function refresh_data() {
 //   //赛事关闭
 //   'match_info.ms'(new_) {
 //     // 如果赛事不是滚球  并且不是未开赛
-//     if(this.$utils.get_match_status(new_) != 1 && this.match_info.ms != 0 && ![3,4,5].includes(+this.$route.params.play_type)) {
+//     if(this.$get_match_status(new_) != 1 && this.match_info.ms != 0 && ![3,4,5].includes(+this.$route.params.play_type)) {
 //       video.match_close(this.mid);
 //     }
 //   },

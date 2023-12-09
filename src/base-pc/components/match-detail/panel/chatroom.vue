@@ -360,7 +360,7 @@ export default {
       this.$refs['chat_scroll_area'].style.height = chatroom_height - panel_header_height - chat_handle_bar_height + 'px'
     }
     // 内嵌右侧
-    else if (utils.is_iframe) {
+    else if (is_iframe) {
       this.$refs['chat_scroll_area'].style.height = this.chatroom_height - panel_header_height - chat_handle_bar_height + 'px'
     }
     

@@ -19,7 +19,7 @@
                     <!-- os: 1、开盘 2、封盘 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':calc_win(ol_item.result)}]">
                         <div class="ellipsis">
                           <span class="size-color">{{ol_item.on || ol_item.ott}}</span>
                         </div>
@@ -111,7 +111,7 @@ export default defineComponent({
       // }
     });
     const go_to_bet = (ol_item) => {
-      utils.go_to_bet(ol_item)
+      go_to_bet(ol_item)
     }
     return {
       ...toRefs(data),

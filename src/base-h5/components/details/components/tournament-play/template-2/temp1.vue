@@ -18,8 +18,8 @@
                       <!-- 主程序 start -->
                       <div
                         class="play-box-style details_color first-radius warp"
-                        @click="utils.go_to_bet(ol_item)"
-                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                        @click="go_to_bet(ol_item)"
+                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                       >
                         <div class="text-center odds-wrap">
                           <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -91,8 +91,8 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color first-radius warp"
-                          @click="utils.go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                          @click="go_to_bet(ol_item)"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -166,8 +166,8 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color warp"
-                          @click="utils.go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':utils.calc_win(ol_item.result)}]"
+                          @click="go_to_bet(ol_item)"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -241,8 +241,8 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color last-radius"
-                          @click="utils.go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(ol_item.result)}]"
+                          @click="go_to_bet(ol_item)"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>

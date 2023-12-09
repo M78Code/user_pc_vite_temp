@@ -13,8 +13,8 @@
       {{i18n_t('mmp')[1][detail_data.mmp]}}
       <!-- 计时器 -->
       <span >
-        <span v-if="mmp_arr.includes(detail_data.mmp)" >&nbsp;&nbsp;{{ utils.counting_time_ctr_show_format(detail_data,$filters.format_mgt_time(match_time_dt))}}</span>
-        <span v-if="detail_data.mmp == '0' ">&nbsp;&nbsp;{{ utils.counting_time_ctr_show_format(detail_data,'00:00')}}</span>    
+        <span v-if="mmp_arr.includes(detail_data.mmp)" >&nbsp;&nbsp;{{ counting_time_ctr_show_format(detail_data,$filters.format_mgt_time(match_time_dt))}}</span>
+        <span v-if="detail_data.mmp == '0' ">&nbsp;&nbsp;{{ counting_time_ctr_show_format(detail_data,'00:00')}}</span>    
       </span>
     </span>
   </span>

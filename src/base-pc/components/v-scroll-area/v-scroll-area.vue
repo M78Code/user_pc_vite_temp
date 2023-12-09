@@ -57,7 +57,7 @@ const props = defineProps({
 })
 
 // 是否内嵌
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 
 const ref_v_scroll_area = ref('ref_v_scroll_area');
 const header_height = ref(0);

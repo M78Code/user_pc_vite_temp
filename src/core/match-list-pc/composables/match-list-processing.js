@@ -129,10 +129,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				count_mf = lodash.get(data, 'data.collectCount', 0)
 				console.error(error);
 			}
-			set_collect_count({
-				type: "set",
-				count: lodash.get(data, "data.collectCount", 0),
-			});
+			// set_collect_count({
+			// 	type: "set",
+			// 	count: lodash.get(data, "data.collectCount", 0),
+			// });
 		}
 		// 如果是专业版 && 今日、早盘、串关之间的切换 && 之前有筛选 && 并且当前没有筛选
 		if (

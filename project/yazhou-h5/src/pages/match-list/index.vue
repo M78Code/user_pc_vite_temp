@@ -84,7 +84,7 @@ onMounted(() => {
     MatchListCard.sliding_can_trigger_process_distance = 500;
   }
   // 记录埋点，进入列表页
-  utils.gtag_view_send("H5_match", "/match");
+  gtag_view_send("H5_match", "/match");
   // 详情精选赛事页需清空map折叠状态
   store.dispatch({ type: 'topMenuReducer/set_collapse_map_match', payload: {} })
   // 事件初始化
@@ -137,7 +137,7 @@ const back_top = () => {
  */
 const event_init = () => {
   // 详情页的视频预加载
-  utils.load_video_resources(store_state.get_uid, "is_details_page");
+  load_video_resources(store_state.get_uid, "is_details_page");
   // 不让浏览器记住上次的滚动位置
   if ("scrollRestoration" in History) {
     history.scrollRestoration = "manual";

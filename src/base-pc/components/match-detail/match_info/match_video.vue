@@ -16,7 +16,7 @@
       <!-- 提示消息 -->
       <icon-wapper class="icon" v-if="!is_esports" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
           <!-- 提示内容 -->
-      <div :class="['tip-content',{'is-iframe':utils.is_iframe}]" v-if="is_show_content" @click.stop>
+      <div :class="['tip-content',{'is-iframe':is_iframe}]" v-if="is_show_content" @click.stop>
         <div class="content-wrap relative-position">
           <div class="yb-icon-triangle"></div>
           <!-- 此版面现实的所有直播内容仅供参考........ -->

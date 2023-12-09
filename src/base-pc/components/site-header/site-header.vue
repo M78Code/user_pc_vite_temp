@@ -137,7 +137,7 @@ const menu_data = reactive({})
 /** 地址栏隐藏logo */
 const is_hide_icon = ref(false)
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 /** 刷新组件loading */
 const data_loaded = ref(false)
 /** 当前顶部菜单选中的索引 */

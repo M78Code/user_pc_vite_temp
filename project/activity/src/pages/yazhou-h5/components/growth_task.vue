@@ -216,7 +216,7 @@ import { UserCtr } from "project_path/src/core/index.js";
 import {gtag_config_send,
 gtag_view_send,
 gtag_event_send,
-zhuge_event_send   ,is_time_limit } from "project_path/src/core/index.js"
+send_zhuge_event   ,is_time_limit } from "project_path/src/core/index.js"
 
 export default {
   name: "daily_betting_payouts",

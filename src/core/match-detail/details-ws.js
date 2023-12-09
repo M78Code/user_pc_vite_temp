@@ -2,16 +2,8 @@
  处理详情ws逻辑
 */
 
-import { onMounted, ref, watch, onUnmounted, toRaw } from "vue";
-import {
-  MatchDetailCalss,
-  MatchDataWarehouse_H5_Detail_Common,
-  useMittOn,
-  useMitt,
-  MITT_TYPES,
-  useMittEmit,
-} from "src/output/index";
-
+import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { MatchDataWarehouse_H5_Detail_Common } from "src/output/module/match-data-base.js";
 export const details_ws = () => {
   /**
    * @description: 处理ws指令 与返回来的数据
@@ -36,7 +28,7 @@ export const details_ws = () => {
     switch (cmd) {
       // 赛事订阅(C8)-新增玩法/新增盘口(C303)
       case "C303":
-        useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+        useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
         break;
        // 赛事开赛状态(C302)  
       case "C302":
@@ -51,7 +43,7 @@ export const details_ws = () => {
         break;
        //  玩法集变更(C112)    
       case "C112":
-        useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+        useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
         break; 
        case "C102":
           RCMD_C102(data);
@@ -75,6 +67,7 @@ export const details_ws = () => {
       if (!skt_data || skt_data.length < 1) return;
       // 重新拉取数据;
       useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+      useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
     }
     /**
      * @description: 赛事级别盘口状态(C104)  hs: 0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态
@@ -87,6 +80,7 @@ export const details_ws = () => {
       if (skt_data.mhs == 0 || skt_data.mhs == 11) {
         // 重新拉取数据;
         useMittEmit(MITT_TYPES.EMIT_GET_ODDS_LIST)
+        useMittEmit(MITT_TYPES.EMIT_MATCH_DETAIL_SOCKET)
       } else if (skt_data.mhs == 1) {
         // 设置盘口状态
       } else if (skt_data.mhs == 2) {

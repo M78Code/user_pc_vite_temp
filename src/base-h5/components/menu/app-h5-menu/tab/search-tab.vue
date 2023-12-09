@@ -133,7 +133,7 @@ const league_data = ref([])
  * @return {}
  */
  const format_type = ( item = {} ) => {
-    return league_sprite_images_postion[+item.tid]
+    return league_sprite_images_postion[+item.val]
 }
 /**
  * 选中的数据

@@ -36,8 +36,8 @@
                                             <!-- 主程序 start -->
                                             <div
                                                 class="play-box-style"
-                                                @click="utils.go_to_bet(ol_item)"
-                                                :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win': utils.calc_win(ol_item.result)}]">
+                                                @click="go_to_bet(ol_item)"
+                                                :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win': calc_win(ol_item.result)}]">
                                                 <odds-new :item_data="item_data" :ol_data="ol_item"></odds-new>
                                             </div>
                                             <!-- 主程序 end -->
@@ -92,8 +92,8 @@
                                     <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                                         <template v-if="ol_item.os == 1">
                                             <!-- 主程序 start -->
-                                            <div class="play-box-style" @click="utils.go_to_bet(ol_item)"
-                                                 :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]">
+                                            <div class="play-box-style" @click="go_to_bet(ol_item)"
+                                                 :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]">
                                                 <odds-new :item_data="item_data" :ol_data="ol_item"></odds-new>
                                             </div>
                                             <!-- 主程序 end -->
@@ -150,8 +150,8 @@
                                     <template v-if="ol_item.os == 1">
                                         <!-- 主程序 start -->
                                         <div class="ellipsis remark play-box-style bw_mr1">{{ ol_item.on }}</div>
-                                        <div @click="utils.go_to_bet(ol_item)"
-                                             :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]"
+                                        <div @click="go_to_bet(ol_item)"
+                                             :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]"
                                              class="play-box-style col">
                                             <odds-new :item_data="item_data" :ol_data="ol_item"></odds-new>
                                         </div>

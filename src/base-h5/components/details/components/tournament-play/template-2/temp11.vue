@@ -10,7 +10,7 @@
       <div class="row virtual-bet-wrapper">
         <!-- 分割线 -->
         <div v-for="(item,index) in odds_list"
-             @click="utils.go_to_bet(item)" :key="index"
+             @click="go_to_bet(item)" :key="index"
              :style="{width:odds_list.length > 30 ?'25%':'20%'}"
              class="item-style2" :class="[![0,1,2,3,4].includes(index) ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'blue-color':'']"
         >

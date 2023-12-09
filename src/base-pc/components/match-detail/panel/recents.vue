@@ -69,18 +69,18 @@
                 'item handicap-item',
                 'os-' + lodash.get(item, `hps.0.hl.0.ol.${index}.os`),
                 {
-                  item_border: !(lodash.get(item, 'hps.0.hl') && utils.mx_get_bet_simple(item, index, 'oid')),
+                  item_border: !(lodash.get(item, 'hps.0.hl') && mx_get_bet_simple(item, index, 'oid')),
                 }
               ]"
             >
               <bet-item
-                v-if="lodash.get(item, 'hps.0.hl') && utils.mx_get_bet_simple(item,index,'oid')"
+                v-if="lodash.get(item, 'hps.0.hl') && mx_get_bet_simple(item,index,'oid')"
                 :key="`item_0_${i}`"
                 class="item_border"
                 :match_info="item"
-                :play_data="utils.mx_get_bet_simple(item,index,'play')"
-                :bet_data="utils.mx_get_bet_simple(item,index,'bet_data')"
-                :bet_ids="utils.mx_get_bet_simple(item,index,'bet_id')"
+                :play_data="mx_get_bet_simple(item,index,'play')"
+                :bet_data="mx_get_bet_simple(item,index,'bet_data')"
+                :bet_ids="mx_get_bet_simple(item,index,'bet_id')"
                 style="padding: 0 10px"
                 bet_source="recent"
                 :bet_info="{
@@ -123,7 +123,7 @@ import {
   i18n_t,
   LayOutMain_pc,
 } from "src/output/index.js";
-import { utils } from "src/core/utils/common/module/utils.js";
+import { utils } from "src/core/utils/common/module/js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 export default {
