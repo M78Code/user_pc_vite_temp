@@ -62,7 +62,7 @@
         </div>
       </div>
     </div> -->
-    <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'"
+    <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'" :detail="props.get_match_detail"
                   :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
   </div>
 </template>
@@ -92,6 +92,8 @@ const props = defineProps({
     default: ""
   }
 });
+
+
 // 点击返回的时候会触发此函数
 const listener = (status) => {
   if (!status) {
@@ -345,7 +347,10 @@ onMounted(() => {
     height: 221px;
   }
   .detail-header-156 {
-    height: 156px;
+    // height: 156px;
+  }
+  .detail-header-134 {
+    height: 134px;
   }
   .detail-header-video {
     // height: auto;

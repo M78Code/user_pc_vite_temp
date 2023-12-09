@@ -711,8 +711,8 @@ class UserCtr {
         // .theme02_y0 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
         // `
         style_el.innerHTML = `
-      .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
-      `;
+        .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
+        `;
         document.head.appendChild(style_el);
       }
     };

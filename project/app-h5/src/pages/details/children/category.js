@@ -130,7 +130,9 @@ export const category_info = (category_arr=[]) => {
   });
   // ==================================
   // 监听详情数据仓库版本号更新odds_info数据
-  watch(() => get_detail_data.value, () => {
+  watch(() => MatchDataWarehouseInstance.value.list_to_obj, () => {
+    debugger
+    console.log(2222);
     match_list_normal()
     match_list_new()
   },{deep:true})
@@ -407,11 +409,6 @@ export const category_info = (category_arr=[]) => {
         };
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
         const res = await axios_api_loop(_obj);
-        // 数据存入数据仓库
-        MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,res.data)
-        // if (component_data.send_gcuuid != res.gcuuid) {
-        //   return;
-        // }
         component_data.first_load = false;
         if (!lodash.get(res, "data") || lodash.get(res, "data.length") == 0) {
           component_data.is_loading = false;
@@ -484,6 +481,7 @@ export const category_info = (category_arr=[]) => {
       details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
       SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
       // 切换tab时变更mid_obj里面的odds_info对象数据
+      console.log(temp,'temp');
       MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,temp)
       // set_details_data_cache(details_data_cache);
       
