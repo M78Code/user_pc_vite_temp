@@ -13,7 +13,6 @@
 // import common from "src/project/mixins/constant/module/common.js"
 // import match_main from "src/base-h5/components/match-list/index.vue"
 import { defineComponent, onMounted, ref } from "vue";
-import { utils } from "src/core/utils/common/index.js"
 
 export default defineComponent({
   // mixins:[common],

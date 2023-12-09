@@ -37,13 +37,8 @@
 
 import { computed} from 'vue';
 import lodash from 'lodash';
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/output/index.js";
-import { get_match_status } from 'src/core/utils/common/index'
-import { get_remote_time } from "src/output/index.js"
 import tips from "src/base-pc/components/match-detail/tips1/tips1.vue"
-import { utils } from 'src/core/utils/common/module/js'
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const props = defineProps({
