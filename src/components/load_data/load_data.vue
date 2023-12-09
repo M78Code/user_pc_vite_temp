@@ -316,7 +316,6 @@ export default {
     justify-content: center;
     font-size: 12px;
     text-align: center;
-    padding-top: 30%;
     .img {
       width: 180px;
       height: 180px;

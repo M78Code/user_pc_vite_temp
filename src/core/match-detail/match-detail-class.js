@@ -162,6 +162,7 @@ class MatchDetailCtr {
    *  @param {} category_list  category/getCategoryList  返回的实际的   数据
    */
     compute_category_refer(category_list=[]){
+      if(lodash.isEmpty(category_list)) return
      this.category_arr=category_list.sort((a,b)=>a.orderNo-b.orderNo)
      let obj={}
      category_list.map(x=>{
