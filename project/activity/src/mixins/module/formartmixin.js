@@ -4,7 +4,8 @@
  * @Description: 时间格式化处理
  */
 
-const licia_format = require('licia/format');
+import  { format as  licia_format } from "licia"
+ 
 export default {
   methods: {
       /**

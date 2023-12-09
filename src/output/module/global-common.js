@@ -9,13 +9,7 @@
 
 export { default as UserCtr } from "src/core/user-config/user-ctr.js";
  
-export {
-    http,
-    axios_loop,
-    infoUpload,
-    zhuge,
-    AllDomain,
-  } from "src/core/http/index.js";
+export * from "src/core/http/index.js";
  
   
   export { default as ServerTime } from "src/core/server-time/server-time.js";

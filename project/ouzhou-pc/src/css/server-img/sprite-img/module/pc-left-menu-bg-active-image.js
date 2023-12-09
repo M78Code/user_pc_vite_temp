@@ -3,10 +3,12 @@
 // 
 
 import server_resource from "app/job/output/assets/index.json";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
+import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-  default:"pc-left-menu-bg-image",
+  default:"pc-left-menu-bg-active-image",
   // local_dev: "pc-left-menu-bg-image",
   // local_test: "pc-left-menu-bg-image",
   // local_ylcs: "pc-left-menu-bg-image",
@@ -16,6 +18,7 @@ const config = {
   // idc_online: "pc-left-menu-bg-image",
  
 };
+// x y 
 const item = {
   item_0: 1, //下标从0开始
   item_1: 0, //
@@ -88,8 +91,8 @@ const item = {
   item_300: 43,
   item_2000: 36,
   item_400: 34, 
-
 };
+
 /**
  * 根据item 计算雪碧图位置
  * @param {*} position 下标从0开始
@@ -116,7 +119,7 @@ function compute_position(position,size) {
  * @param {*} param0
  * @returns
  */
-function compute_css_obj({ position, theme  ,path ,size }) {
+function compute_css_obj({ position, theme  ,path, size  }) {
   // 当前主题的 服务端配置
    let theme_config=   server_resource[theme] ||{}
     //最终资源键 计算
