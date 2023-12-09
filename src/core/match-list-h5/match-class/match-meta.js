@@ -488,7 +488,7 @@ class MatchMeta {
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true });
     if (this.current_euid != `${csid}_${md}`) return
     const list = lodash.get(res, 'data', [])
-    this.handler_match_list_data({ list: list })
+    return this.handler_match_list_data({ list: list })
   }
 
   /**
@@ -1032,6 +1032,8 @@ class MatchMeta {
 
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_current_page_render_list(scroll_top)
+
+    console.log(match_datas)
 
     // 欧洲版首页 五大联赛 当前渲染的 mids
     this.match_mids = match_datas.map(t =>  t.mid)

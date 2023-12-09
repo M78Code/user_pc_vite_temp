@@ -75,6 +75,7 @@ import { standard_edition } from "src/base-h5/mixin/userctr.js";
 import { UserCtr } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { default_theme_key } from "src/core/theme/";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
@@ -170,6 +171,13 @@ const switch_handle = item => {
 const version_handle = item => {
   const status = item.switchValue === "rightVal" ? 2 : 1;
   UserCtr.set_standard_edition(status);
+  useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+  MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+  // if (status === 1) {
+  //   setTimeout(() => {
+  //     useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+  //   }, 1000)
+  // }
 };
 /**
  *@description 处理排序规则
