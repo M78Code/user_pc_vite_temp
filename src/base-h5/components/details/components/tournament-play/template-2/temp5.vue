@@ -191,7 +191,7 @@ import lodash from "lodash";
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp5",
   props: ["item_data","title"],
@@ -206,6 +206,7 @@ export default defineComponent({
       calc_win,
       BetData,
       LOCAL_PROJECT_FILE_PREFIX,
+      go_to_bet
     }
   }
 })

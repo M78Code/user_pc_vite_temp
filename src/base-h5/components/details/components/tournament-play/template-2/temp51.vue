@@ -20,7 +20,7 @@
                     <!-- os: 1、开盘 2、封盘 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active_play':'',{'win':calc_win(ol_item.result)}]">
+                      <div class="play-box" @click="go_to_fun(ol_item)" :class="[BetData.bet_oid_list.includes(ol_item.id_)?'active_play':'',{'win':calc_win(ol_item.result)}]">
                         <div class="ellipsis">
                           <span class="size-color">{{ol_item.on || ol_item.ott}}</span>
                         </div>
@@ -86,6 +86,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp51",
   props: ["item_data", "title"],
@@ -104,13 +105,13 @@ export default defineComponent({
       //   $data[key] = null
       // }
     });
-    const go_to_bet = (ol_item) => {
+    const go_to_fun = (ol_item) => {
       go_to_bet(ol_item)
     }
     return {
       ...toRefs(data),
       BetData,
-      go_to_bet,
+      go_to_fun,
       LOCAL_PROJECT_FILE_PREFIX,
       calc_win
     }

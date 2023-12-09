@@ -66,8 +66,11 @@ const breadCrumbs_firstOne = computed(()=>{
 const jumpTo = ()=>{
   // router.go(-1)
   let route_name = lodash_.get(MenuData.router_info,'pre_route')
-  router.push({name:route_name})
-
+  if (route_name == 'league') {
+    jumpToLeagues()
+  } else {
+    router.push({name:route_name})
+  }
 }
 const jumpToLeagues  = () => {
   const { csid = 1, tid, tn } = props.detail_info

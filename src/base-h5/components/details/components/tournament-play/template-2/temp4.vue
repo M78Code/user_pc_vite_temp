@@ -362,6 +362,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { useRoute } from "vue-router";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -467,6 +468,7 @@ export default defineComponent({
       other_item_list,
       max_count_ol,
       LOCAL_PROJECT_FILE_PREFIX,
+      go_to_bet
     }
   }
 })

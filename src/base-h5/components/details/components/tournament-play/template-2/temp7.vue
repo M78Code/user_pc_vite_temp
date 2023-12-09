@@ -261,7 +261,7 @@ import { LOCAL_PROJECT_FILE_PREFIX,calc_win } from 'src/output/index.js';
 import BetData from "src/core/bet/class/bet-data-class.js"
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
-
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp7",
   // #TODO mixins
@@ -278,7 +278,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     return {
-      
+      go_to_bet,
       BetData
     }
   }
