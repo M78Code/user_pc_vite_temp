@@ -1,7 +1,5 @@
 <template>
-  <div class="component odd-hl-wrap" :class="[type,'hpt-'+hpt,{
-      'have-title': hasTitle
-    }]"
+  <div class="component odd-hl-wrap" :class="[type,'hpt-'+hpt]"
   >
     <slot name="title"></slot>
     <slot>
@@ -53,12 +51,17 @@ const olName = `'${props.data.ol[0].on}'`
 
 <style lang="scss">
 .component.odd-hl-wrap{
-  &.hpt-1,&.hpt-3,&.hpt-5.dis{
+  &.hpt-1,&.hpt-3.have-title,&.hpt-5.dis{
     .ol-name,.separate{
       display: none;
     }
     .ol-content{
       justify-content: center;
+    }
+  }
+  &.hpt-3:not(.have-title){
+    .odd-ol-wrap{
+      flex-direction: column;
     }
   }
   &.hpt-5{
