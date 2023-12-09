@@ -679,7 +679,7 @@ export const category_info = (category_arr=[]) => {
     });
   };
   // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口
-  const socket_upd_list = (skt_data, callback) => {
+  const socket_upd_list =lodash.throttle((skt_data, callback) => {
     // 调用接口的参数
     let params = {
       // 当前选中玩法项的id
@@ -782,7 +782,7 @@ export const category_info = (category_arr=[]) => {
           // component_data.matchInfoCtr.setList([]);
         }
       });
-  };
+    },1000);
 
   const save_hshow = (temp, list_old) => {
     let middle_data = null;

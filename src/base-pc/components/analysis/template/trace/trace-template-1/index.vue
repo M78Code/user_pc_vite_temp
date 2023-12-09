@@ -113,4 +113,3 @@ import { formatTime } from 'src/output/index.js'
     }
   }
 }</style>
-src/output/index.js

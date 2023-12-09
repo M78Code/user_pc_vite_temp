@@ -83,4 +83,3 @@ import { project_name } from "src/output/index.js"
   line-height: 0.36rem;
 }
 </style>
-src/outputsrc/output/index.js

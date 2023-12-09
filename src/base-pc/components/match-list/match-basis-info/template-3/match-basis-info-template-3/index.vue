@@ -124,4 +124,4 @@ const team_names = computed(() => {
      align-items: center;
   }
 }
-</style>src/core/utils/common/module/js
+</style>

@@ -419,4 +419,4 @@ onUnmounted(() => {
 
 .left_cell {
   text-align: left !important;
-}</style>src/core/format/common/module/format-odds-conversion-mixin.js
+}</style>

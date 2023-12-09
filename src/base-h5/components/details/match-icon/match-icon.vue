@@ -361,4 +361,3 @@ export default defineComponent({
   margin-right: 0.04rem;
 }
 </style>
-src/outputsrc/output/index.js

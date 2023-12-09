@@ -589,4 +589,4 @@ background: var(--q-gb-t-c-3) !important;
 .set-opacity{
   background:var(--q-gb-bg-c-9)
 }
-</style>src/output/index.js
+</style>

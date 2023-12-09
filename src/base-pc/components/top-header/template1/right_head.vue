@@ -632,4 +632,3 @@ export default defineComponent({
   color: #ffe5d1;
 }
 </style>
-src/outputsrc/output/index.js

@@ -524,4 +524,4 @@ watch(
 
 <style lang="scss">
 @import './site-header.scss';
-</style>src/output/index.js
+</style>

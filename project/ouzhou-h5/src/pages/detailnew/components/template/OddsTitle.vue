@@ -9,13 +9,12 @@
 </template>
 <script setup lang="ts">
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   data: TYPES.OddInfo
-}>()
-
-const len = props.data.title.length
-const show = len > 1 && len <= 4
-
+  show?: boolean
+}>(),{
+  show:true
+})
 </script>
 
 <style scoped lang="scss">

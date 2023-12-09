@@ -102,4 +102,4 @@ onMounted(compute_colse_tips_time)
         border-top-left-radius: 0;
     }
 }
-</style>src/output/index.js
+</style>

@@ -608,4 +608,4 @@ onUnmounted(() => {
 .yellow-color {
   color: var(--q-color-fs-color-116);
 }
-</style>src/output/index.js
+</style>

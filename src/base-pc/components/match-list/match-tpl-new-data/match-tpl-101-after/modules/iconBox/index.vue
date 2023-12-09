@@ -42,4 +42,4 @@ const props = defineProps({
     height: 12px;
     background-size: 100% 100%;
 }
-</style>src/core/utils/common/module/js
+</style>

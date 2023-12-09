@@ -381,4 +381,4 @@ function change(index) {
 
 <style lang="scss" scoped>
 @import './site-header.scss';
-</style>src/core/format/common/module/format-date.jssrc/output/index.js
+</style>

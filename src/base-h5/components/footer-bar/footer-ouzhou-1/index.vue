@@ -176,4 +176,3 @@ const jump_page = (item) => {
   }
 }
 </style>
-src/outputsrc/output/index.js

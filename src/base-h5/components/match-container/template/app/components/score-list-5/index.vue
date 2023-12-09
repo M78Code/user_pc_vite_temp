@@ -425,4 +425,4 @@ onUnmounted(() => {
  
 <style scoped lang="scss">
 @import "./index.scss";
-</style>src/output/index.js
+</style>

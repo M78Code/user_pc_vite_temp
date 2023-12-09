@@ -1,13 +1,13 @@
 <template>
-  <div class="component odd-hl-wrap"
-    :class="[type,'hpt-'+hpt,{
-      'have-title': hasTitle
-    }]"
+  <div class="component odd-hl-wrap" :class="[type,'hpt-'+hpt]"
   >
+    <slot name="title"></slot>
     <slot>
-      <template v-for="item in data.ol" :key="item">
-        <OddOlItem :value="item" :type="type"></OddOlItem>
-      </template>
+      <div class="odd-ol-wrap">
+        <template v-for="item in data.ol" :key="item.oid">
+          <OddOlItem :value="item" :type="type"></OddOlItem>
+        </template>
+      </div>
     </slot>
   </div>
 </template>
@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<{
   type: 'default'
 })
 const hasTitle = computed(()=>props.oddInfo?.title.length)
+const olName = `'${props.data.ol[0].on}'`
 
 </script>
 
@@ -31,31 +32,47 @@ const hasTitle = computed(()=>props.oddInfo?.title.length)
 .component{
   background-color: #fff;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  .odd-ol-wrap{
+    display: flex;
+    flex-wrap: wrap;
+  }
   &.fill{
-    flex-direction: column;
+    .odd-ol-wrap{
+      flex-direction: column;
+    }
+  }
+  &.hpt-5{
+    --odd-template-before-content: v-bind(olName);
   }
 }
 
 </style>
 
 <style lang="scss">
-.component{
-  &.hpt-1,&.hpt-3{
+.component.odd-hl-wrap{
+  &.hpt-1,&.hpt-3.have-title,&.hpt-5.dis{
     .ol-name,.separate{
       display: none;
     }
     .ol-content{
       justify-content: center;
     }
-    .odd-image{
-      position: absolute;
-      transform: translateX(100%);
+  }
+  &.hpt-3:not(.have-title){
+    .odd-ol-wrap{
+      flex-direction: column;
     }
   }
   &.hpt-5{
     .component.odd-ol-item{
       flex-basis: 50%;
+      &:nth-last-child(2){
+        flex-basis: 100%;
+      }
+      &:nth-child(-n+2){
+        flex-basis: 50%;
+      }
     }
   }
   &.hpt-10,&.hpt-15{
@@ -72,10 +89,6 @@ const hasTitle = computed(()=>props.oddInfo?.title.length)
       }
       .item{
         text-align: center;
-      }
-      .odd-image{
-        position: absolute;
-        transform: translateX(100%);
       }
     }
   }

@@ -97,14 +97,14 @@ export default defineComponent({
     },
     //  动画按钮
     animationUrl_icon () {
-      let is_theme01 = theme.value.includes('theme-0')
+      let is_theme01 = theme.value?.includes('theme-0')
       let animationUrl_icon = is_theme01 ? animationUrl_icon_theme01 : animationUrl_icon_theme02
       return animationUrl_icon
     },
     //  视频按钮
     muUrl_icon () {
-      let is_theme01 = theme.value.includes('theme-0')
-      let is_y0 = theme.value.includes('y0')
+      let is_theme01 = theme.value?.includes('theme-0')
+      let is_y0 = theme.value?.includes('y0')
       let muUrl_icon = ''
       if (is_y0) {
         muUrl_icon = is_theme01 ? muUrl_theme01_y0 : muUrl_theme02_y0

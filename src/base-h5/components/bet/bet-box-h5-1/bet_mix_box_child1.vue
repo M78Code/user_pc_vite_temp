@@ -546,4 +546,3 @@ onUnmounted(() => {
   background: var(--q-color-img-bg-98) no-repeat center / contain;
 }
 </style>
-src/output/index.js

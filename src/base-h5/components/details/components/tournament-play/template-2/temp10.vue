@@ -245,5 +245,4 @@ div[class*="virtual-num"] {
     background-position-y: calc(var(--per) * 5);
   }
 }
-</style>
-src/outputsrc/output
+</style>src/output
