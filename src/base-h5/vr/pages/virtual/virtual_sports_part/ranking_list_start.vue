@@ -52,9 +52,10 @@
 </template>
 
 <script>
-import { api_v_sports } from "project_path/api";
-import no_data from "project_path/components/common/no_data"
+import { api_v_sports } from "src/base-h5/vr/api";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import no_data from "src/base-h5/vr/components/common/no_data.vue"
+
 export default {
   name: "ranking_list_start",
   components: {

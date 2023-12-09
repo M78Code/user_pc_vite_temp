@@ -16,7 +16,8 @@
             <div class="col">{{$root.$t('common.virtual_sports')}} {{_.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
             <div class="no-single" @click="$root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)"></div>
-            <set-menu />
+            <!-- 复刻版暂时用不到先注释了 -->
+            <!-- <set-menu /> -->
           </div>
           <!-- 虚拟体育菜单 -->
           <div class="virtual-menu-list" ref='virtual_menu_list'>
@@ -50,14 +51,6 @@
 
     </div>
 
-    <!-- 回到顶部按钮组件 -->
-    <scroll-top
-        v-show="!right_menu_show && list_scroll_top > 0"
-        ref="scroll_top"
-        :list_scroll_top="list_scroll_top"
-        @back-top="back_top"
-    />
-
     <!-- 简版 底部菜单 -->
     <virtual-footer-menu v-show="!right_menu_show" />
 
@@ -66,11 +59,12 @@
 
 <script>
 import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports.vue";    // 虚拟体育
-import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
-import { api_v_sports} from "src/project/api/index";
+// import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
+import { api_v_sports } from "src/base-h5/vr/api";
+
 import utils from "src/core/utils/common/module/utils.js";
-import scroll_top from "src/project/components/record_scroll/scroll_top";
 import virtualFooterMenu from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
+import axios_api_loop from "src/core/http/axios-loop.js"
 
 export default {
   name:'match_main',
@@ -243,7 +237,7 @@ export default {
       this.set_virtual_data_loading(1)
       let obj_ = {
         // axios api对象
-        axios_api:api_v_sports.get_virtual_menus,
+        axios_api: api_v_sports.get_virtual_menus,
         // axios api对象参数
         params:{},
         // axios中then回调方法
@@ -283,7 +277,7 @@ export default {
         timers:1100
       }
       // axios_api轮询调用方法
-      utils.axios_api_loop(obj_);
+      axios_api_loop(obj_);
     },
     /**
      * 虚拟体育菜单加载完成
@@ -325,7 +319,6 @@ export default {
   components: {
     virtualSports,
     setMenu,
-    "scroll-top": scroll_top,
     virtualFooterMenu,
   }
 };

@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import common from "project_path/mixins/constant/module/common.js"
+import common from "src/base-h5/vr/mixin/constant/module/common.js"
 export default {
   mixins:[common],
   props:{

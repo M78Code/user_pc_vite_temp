@@ -161,11 +161,11 @@
 </template>
 
 <script>
-import virtualSportsTimer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
-import common from "project_path/mixins/constant/module/common.js";
-import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
+import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
+import common from "src/base-h5/vr/mixin/constant/module/common.js";
+// import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
 import loading from 'project_path/components/common/loading.vue';
-import dateMatchList from 'project_path/pages/virtual/virtual_sports_part/date_match_list.vue'
+import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_list.vue'
 import virtualBasketball from 'project_path/pages/details/children/virtual_basketball.vue'
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 export default {
@@ -781,7 +781,7 @@ export default {
   components:{
     'virtual-sports-timer':virtualSportsTimer,
     dateMatchList,
-    settleDialog,
+    // settleDialog,
     loading,
     virtualBasketball
   },

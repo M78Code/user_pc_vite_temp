@@ -30,10 +30,9 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import group_matches from "project_path/pages/virtual/virtual_sports_part/group_matches.vue";
-import knockout from "project_path/pages/virtual/virtual_sports_part/knockout.vue";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import group_matches from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_matches.vue";
+import knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/knockout.vue";
 
 export default {
   name: "virtual_sports_part",

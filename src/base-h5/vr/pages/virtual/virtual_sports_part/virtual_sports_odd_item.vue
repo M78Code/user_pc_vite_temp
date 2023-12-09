@@ -32,7 +32,8 @@
 </template>
 
 <script>
-import odds_conversion from "src/public/mixins/odds_conversion/odds_conversion.js"
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import odds_conversion from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js"
 
 export default {
   mixins:[odds_conversion],

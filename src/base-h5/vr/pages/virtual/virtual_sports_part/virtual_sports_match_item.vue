@@ -160,13 +160,12 @@
 </template>
 
 <script>
-import v_s_odd_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
-import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import v_s_odd_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
+import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
 import odd_column_item from "project_path/pages/match-list/components/odd_column_item.vue"
 import betting from 'project_path/mixins/betting/betting.js';
-import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
-import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-
+import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
 export default {
   mixins:[betting,virtual_sports_m_item_mixin],
   props:{
