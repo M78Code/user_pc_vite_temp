@@ -3,12 +3,14 @@
  * @Date: 2021-01-05 21:38:34
  * @Description:
  */
-import { mapGetters, mapMutations} from "vuex";
 import VSport from "src/public/utils/vsport/vsport.js"
-
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 export default {
   methods:{
-    ...mapMutations(['set_video_process_loaded']),
+  	// ...mapMutations(['set_video_process_loaded']),
+	set_video_process_loaded(data){
+		VR_CTR.set_video_process_loaded(data);
+	},
     /**
      * 获取赛事比分
      * @param {Object} match 赛事
@@ -75,16 +77,20 @@ export default {
     }
   },
   computed:{
-    ...mapGetters({
-      video_process_loaded:'get_video_process_loaded',
-      sub_menu_type: 'get_curr_sub_menu_type',
-      current_league:'get_current_league',
-      current_batch:'get_current_batch',
-    }),
+	//...mapGetters({
+    //  video_process_loaded:'get_video_process_loaded',
+    //  sub_menu_type: 'get_curr_sub_menu_type',
+    //  current_league:'get_current_league',
+    //  current_batch:'get_current_batch',
+    //}),
+	get_video_process_data(){return VR_CTR.get_video_process_loaded()},
+	sub_menu_type(){return ''},
+	get_video_process_data(){return VR_CTR.get_current_league()},
+	get_video_process_data(){return VR_CTR.get_current_batch()},
   },
-  // watch:{
-  //   get_video_process_data(){
-  //     this.get_score_match(this.match_item);
-  //   }
-  // }
+  watch:{
+    get_video_process_data(){
+      this.get_score_match(this.match_item);
+    }
+  }
 }

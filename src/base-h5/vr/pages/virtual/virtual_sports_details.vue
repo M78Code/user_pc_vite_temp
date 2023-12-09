@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import { mapGetters,mapMutations } from "vuex"
 import common from 'src/project/mixins/constant/module/common.js';
 import virtual_sports_mixin from "src/project/mixins/virtual_sports/virtual_sports_mixin.js"
 import virtual_sports_tab from 'src/project/pages/details/components/virtual_sports_tab.vue'
@@ -58,22 +57,34 @@ import virtual_match_statistic from 'src/project/pages/details/components/virtua
 import {api_v_sports} from 'src/project/api/index.js'
 import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/public/utils/vsport/vsport.js';
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 export default {
   mixins:[common,virtual_sports_mixin],
   name:'virtual_sports_details',
   computed: {
-    ...mapGetters({
-      is_show_analyse: 'get_is_show_details_analyse',
-      matchid: "get_goto_detail_matchid",
-      get_current_gotodetail_match:"get_current_gotodetail_match",
-      sub_menuid: 'get_current_sub_menuid',
-      sub_menu_type: 'get_curr_sub_menu_type',
-      current_league: 'get_current_league',
-      current_batch:'get_current_batch',
-      video_process_data:'get_video_process_data',
-      get_bet_list:'get_bet_list',
-      get_betbar_show:'get_betbar_show',
-    }),
+    // ...mapGetters({
+    //   is_show_analyse: 'get_is_show_details_analyse',
+    //   matchid: "get_goto_detail_matchid",
+    //   get_current_gotodetail_match:"get_current_gotodetail_match",
+    //   sub_menuid: 'get_current_sub_menuid',
+    //   sub_menu_type: 'get_curr_sub_menu_type',
+    //   current_league: 'get_current_league',
+    //   current_batch:'get_current_batch',
+    //   video_process_data:'get_video_process_data',
+    //   get_bet_list:'get_bet_list',
+    //   get_betbar_show:'get_betbar_show',
+    // }),
+    is_show_analyse(){return },
+    matchid(){return },
+    get_current_gotodetail_match(){return },
+    sub_menuid(){return },
+    sub_menu_type(){return },
+    current_league(){return VR_CTR.get_current_league()},
+    current_batch(){return VR_CTR.get_current_batch()},
+    video_process_data(){return VR_CTR.get_video_process_data()},
+    get_bet_list(){return },
+    get_betbar_show(){return },
+    
   },
   components: {
     'virtual-sports-tab': virtual_sports_tab,
@@ -162,16 +173,24 @@ export default {
     // this.set_detail_data('')
   },
   methods: {
-    ...mapMutations([
-      'set_menu_type',
-      'set_goto_detail_matchid',
-      'set_detail_data',
-      'set_current_sub_menuid',
-      'set_curr_sub_menu_type',
-      'set_current_gotodetail_match',
-      'set_video_process_data',
-      'set_is_show_details_analyse'
-    ]),
+    // ...mapMutations([
+    //   'set_menu_type',
+    //   'set_goto_detail_matchid',
+    //   'set_detail_data',
+    //   'set_current_sub_menuid',
+    //   'set_curr_sub_menu_type',
+    //   'set_current_gotodetail_match',
+    //   'set_video_process_data',
+    //   'set_is_show_details_analyse'
+    // ]),
+    set_menu_type(){},
+    set_goto_detail_matchid(){},
+    set_detail_data(){},
+    set_current_sub_menuid(){},
+    set_curr_sub_menu_type(){},
+    set_current_gotodetail_match(){},
+    set_video_process_data(data){VR_CTR.set_video_process_data(data)},
+    set_is_show_details_analyse(){},
     /**
      * 虚拟体育刷新
      */

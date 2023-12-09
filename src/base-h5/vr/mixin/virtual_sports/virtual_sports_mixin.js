@@ -3,10 +3,11 @@
  * @Date: 2020-12-30 10:37:23
  * @Description:
  */
-import { mapMutations } from "vuex"
 import { api_v_sports } from "src/project/api/index.js";
 import VSport from "src/public/utils/vsport/vsport.js"
 import { api_common} from "src/project/api/index.js";  // 引入api接口封装文件
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+
 
 export default {
   data(){
@@ -62,11 +63,9 @@ export default {
     this.$root.$on(this.emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
   },
   methods:{
-    ...mapMutations({
-      set_virtual_data_loading:'set_virtual_data_loading',
-      set_prev_v_sports:"set_prev_v_sports",
-      set_current_batch:"set_current_batch",
-    }),
+	set_virtual_data_loading(data){VR_CTR.set_virtual_data_loading(data)},
+	set_prev_v_sports(data){VR_CTR.set_prev_v_sports(data)},
+	set_current_batch(data){VR_CTR.set_current_batch(data)},
     /**
      * @description: 虚拟菜单数据未空时的逻辑处理函数
      * @return {*}

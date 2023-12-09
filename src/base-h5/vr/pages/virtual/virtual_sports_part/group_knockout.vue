@@ -33,6 +33,7 @@
 import {mapGetters} from "vuex";
 import group_matches from "project_path/pages/virtual/virtual_sports_part/group_matches.vue";
 import knockout from "project_path/pages/virtual/virtual_sports_part/knockout.vue";
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 
 export default {
   name: "virtual_sports_part",
@@ -104,9 +105,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      current_batch:'get_current_batch'
-    }),
+    current_batch(){
+      return VR_CTR.get_current_batch();
+    }
   },
   methods: {
     // 点击菜单切换

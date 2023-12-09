@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import utils from "utils/utils";
 export default {
   name:'match_tab',
@@ -69,11 +69,20 @@ export default {
     this.$root.$on(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END,this.ingame_result_show_end);
   },
   computed: {
-    ...mapGetters({
-      sub_menu_type: 'get_curr_sub_menu_type',
-      current_batch:'get_current_batch',
-      get_access_config: 'get_access_config',
-    }),
+    // ...mapGetters({
+    //   sub_menu_type: 'get_curr_sub_menu_type',
+    //   current_batch:'get_current_batch',
+    //   get_access_config: 'get_access_config',
+    // }),
+    sub_menu_type(){
+      return '';
+    },
+    current_batch(){
+      return VR_CTR.get_current_batch();
+    },
+    get_access_config(){
+      return {};
+    },
     // 联赛的类型 field3: 空:不是杯赛 不为空:是杯赛
     league_type(){
       return this.current_league ? this.current_league.field3 : ''
@@ -140,7 +149,13 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['set_current_mid','set_detail_data']),
+    // ...mapMutations(['set_current_mid','set_detail_data']),
+    set_detail_data(){
+      // TODO 需要对应
+    },
+    set_current_mid(mid){
+      VR_CTR.set_current_mid(mid)
+    },
     /**
      * 篮球倒计时到达
      * @param {Undefined}

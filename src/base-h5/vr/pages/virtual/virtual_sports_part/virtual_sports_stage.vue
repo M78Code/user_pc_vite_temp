@@ -161,14 +161,13 @@
 </template>
 
 <script>
-import {mapGetters,mapMutations} from 'vuex';
 import virtualSportsTimer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
 import common from "project_path/mixins/constant/module/common.js";
 import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
 import loading from 'project_path/components/common/loading.vue';
 import dateMatchList from 'project_path/pages/virtual/virtual_sports_part/date_match_list.vue'
 import virtualBasketball from 'project_path/pages/details/children/virtual_basketball.vue'
-
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 export default {
   name:'VirtualSportsStage',
   mixins:[common],
@@ -256,11 +255,14 @@ export default {
     this.user_destroy_resource();
   },
   methods:{
-    ...mapMutations([
-      'set_settle_dialog_bool',
-      'set_prev_v_sports_params',
-      'set_is_show_menu'
-    ]),
+    // ...mapMutations([
+    //   'set_settle_dialog_bool',
+    //   'set_is_show_menu'
+    // ]),
+    set_settle_dialog_bool(){},
+    set_is_show_menu(){},
+    set_prev_v_sports_params(data){VR_CTR.set_prev_v_sports_params(data)},
+
     /**
      *@description 计算类名
      *@param {Number} rank_i 编号
@@ -643,16 +645,20 @@ export default {
     },
   },
   computed:{
-    ...mapGetters({
-      sub_menu_type: 'get_curr_sub_menu_type',
-      current_league: 'get_current_league',
-      current_batch: 'get_current_batch',
-      video_process_data: 'get_video_process_data',
-      get_is_show_settle_tab: 'get_is_show_settle_tab',
-      get_prev_v_sports_params:'get_prev_v_sports_params',
-      // 抽屉菜单显示状态
-      right_menu_show: 'get_is_show_menu'
-    }),
+    // ...mapGetters({
+    //   sub_menu_type: 'get_curr_sub_menu_type',
+    //   get_is_show_settle_tab: 'get_is_show_settle_tab',
+    //   // 抽屉菜单显示状态
+    //   right_menu_show: 'get_is_show_menu'
+    // }),
+    current_league(){return VR_CTR.get_current_league()},
+    current_batch(){return VR_CTR.get_current_batch()},
+    video_process_data(){return VR_CTR.get_video_process_data()},
+    get_prev_v_sports_params(){return VR_CTR.get_prev_v_sports_params()},
+    sub_menu_type(){return 1},
+    get_is_show_settle_tab(){return 1},
+    right_menu_show(){return 1},
+
     // 主队名
     home_name(){
       let result = '';

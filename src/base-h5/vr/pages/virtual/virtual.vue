@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
 import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports.vue";    // 虚拟体育
 import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
 import { api_v_sports} from "src/project/api/index";
@@ -168,15 +167,22 @@ export default {
     clearTimeout(this.timer_super28);
   },
   methods: {
-    ...mapMutations([
-      "set_list_scroll_top_iconshow", // 设置滚动图标显示
-      "set_menu_type",    // 设置当前主菜单menu_type值
-      'set_virtual_current_sub_menuid',   // 设置当前选中的二级菜单id
-      'set_curr_sub_menu_type',   // 设置当前选中的二级菜单type
-      'set_virtual_data_loading',  // 设置虚拟体育数据loading状态
-      'set_current_esport_csid',   // 设置电竞游戏csid
-      'set_is_user_refreshing',    // 设置用户刷新状态
-    ]),
+    // ...mapMutations([
+    //   "set_list_scroll_top_iconshow", // 设置滚动图标显示
+    //   "set_menu_type",    // 设置当前主菜单menu_type值
+    //   'set_virtual_current_sub_menuid',   // 设置当前选中的二级菜单id
+    //   'set_curr_sub_menu_type',   // 设置当前选中的二级菜单type
+    //   'set_virtual_data_loading',  // 设置虚拟体育数据loading状态
+    //   'set_current_esport_csid',   // 设置电竞游戏csid
+    //   'set_is_user_refreshing',    // 设置用户刷新状态
+    // ]),
+    set_list_scroll_top_iconshow(){},
+    set_menu_type(){},
+    set_virtual_current_sub_menuid(){},
+    set_curr_sub_menu_type(){},
+    set_virtual_data_loading(){},
+    set_current_esport_csid(){},
+    set_is_user_refreshing(){},
     /**
      * @description: 赛事列表回到顶部
      */
@@ -297,16 +303,24 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      get_virtual_current_sub_menuid: "get_virtual_current_sub_menuid", // 当前选中的二级菜单id
-      get_curr_sub_menu_type: "get_curr_sub_menu_type", // 当前选中的二级菜单type
-      get_prev_menu_type:"get_prev_menu_type",//赛事列表筛选逻辑使用的menu_type
-      get_is_close_video:"get_is_close_video",
-      get_is_banner_jump:"get_is_banner_jump",
-      get_golistpage:"get_golistpage",
-      get_theme:'get_theme',
-      right_menu_show:'get_is_show_menu',
-    }),
+    // ...mapGetters({
+    //   get_virtual_current_sub_menuid: "get_virtual_current_sub_menuid", // 当前选中的二级菜单id
+    //   get_curr_sub_menu_type: "get_curr_sub_menu_type", // 当前选中的二级菜单type
+    //   get_prev_menu_type:"get_prev_menu_type",//赛事列表筛选逻辑使用的menu_type
+    //   get_is_close_video:"get_is_close_video",
+    //   get_is_banner_jump:"get_is_banner_jump",
+    //   get_golistpage:"get_golistpage",
+    //   get_theme:'get_theme',
+    //   right_menu_show:'get_is_show_menu',
+    // }),
+    get_virtual_current_sub_menuid(){return 1},
+    get_curr_sub_menu_type(){return 1},
+    get_prev_menu_type(){return 1},
+    get_is_close_video(){return 1},
+    get_is_banner_jump(){return 1},
+    get_golistpage(){return 1},
+    get_theme(){return 1},
+    right_menu_show(){return 1},
   },
   components: {
     virtualSports,

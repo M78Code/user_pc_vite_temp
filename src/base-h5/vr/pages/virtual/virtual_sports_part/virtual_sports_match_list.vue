@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue";
 import virtual_sports_match_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_item.vue";
 import betting from 'project_path/mixins/betting/betting.js';
@@ -53,10 +52,11 @@ export default {
     this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.odd_pan_handle)
   },
   methods:{
-    ...mapActions([
-      // 设置玩法项默认选中
-      "set_details_item",
-    ]),
+    // ...mapActions([
+    //   // 设置玩法项默认选中
+    //   "set_details_item",
+    // ]),
+    set_details_item(){},
     /**
      * 切换赛事
      * @param {Number} i 赛事下标
@@ -85,10 +85,12 @@ export default {
     }
   },
   computed:{
-    ...mapGetters({
-      footer_sub_menu_id:"get_footer_sub_menu_id",
-      get_newer_standard_edition:"get_newer_standard_edition",//新手版1    标准版  2
-    }),
+    // ...mapGetters({
+    //   footer_sub_menu_id:"get_footer_sub_menu_id",
+    //   get_newer_standard_edition:"get_newer_standard_edition",//新手版1    标准版  2
+    // }),
+    footer_sub_menu_id(){return ''},
+    get_newer_standard_edition(){return 2},
   },
   components:{
     'v-s-match-timer':v_s_match_timer,

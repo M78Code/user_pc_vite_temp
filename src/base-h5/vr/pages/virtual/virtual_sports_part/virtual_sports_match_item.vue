@@ -160,12 +160,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
 import v_s_odd_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
 import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
 import odd_column_item from "project_path/pages/match-list/components/odd_column_item.vue"
 import betting from 'project_path/mixins/betting/betting.js';
 import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+
 export default {
   mixins:[betting,virtual_sports_m_item_mixin],
   props:{
@@ -195,11 +196,14 @@ export default {
     this.$root.$on(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.xu_ni_ty_standard_odd_status);
   },
   methods:{
-    ...mapActions([
-      // 设置玩法项默认选中
-      "set_details_item",
-    ]),
-    ...mapMutations(['set_current_gotodetail_match','set_toast']),
+    // ...mapActions([
+    //   // 设置玩法项默认选中
+    //   "set_details_item",
+    // ]),
+    // ...mapMutations(['set_current_gotodetail_match','set_toast']),
+    set_details_item(){},
+    set_current_gotodetail_match(){},
+    set_toast(){},
     /**
      * 篮球早盘倒计时结束显示列表比分
      */
@@ -507,15 +511,23 @@ export default {
     }
   },
   computed:{
-    ...mapGetters({
-      footer_sub_menu_id:"get_footer_sub_menu_id",
-      get_video_process_data:"get_video_process_data",
-      get_newer_standard_edition:"get_newer_standard_edition",
-      get_n_s_changed_loaded:"get_n_s_changed_loaded",
-      get_curr_sub_menu_type:"get_curr_sub_menu_type",
-      get_theme:'get_theme',
-      get_access_config:'get_access_config',
-    }),
+    // ...mapGetters({
+    //   footer_sub_menu_id:"get_footer_sub_menu_id",
+    //   get_video_process_data:"get_video_process_data",
+    //   get_newer_standard_edition:"get_newer_standard_edition",
+    //   get_n_s_changed_loaded:"get_n_s_changed_loaded",
+    //   get_curr_sub_menu_type:"get_curr_sub_menu_type",
+    //   get_theme:'get_theme',
+    //   get_access_config:'get_access_config',
+    // }),
+    footer_sub_menu_id(){return false;},
+    get_video_process_data(){return VR_CTR.get_video_process_data();},
+    get_newer_standard_edition(){return false;},
+    get_n_s_changed_loaded(){return false;},
+    get_curr_sub_menu_type(){return false;},
+    get_theme(){return false;},
+    get_access_config(){return false;},
+    
     show_debugger_line(){
       let wsl = sessionStorage.getItem('wsl');
       if(wsl == '9999') return true;

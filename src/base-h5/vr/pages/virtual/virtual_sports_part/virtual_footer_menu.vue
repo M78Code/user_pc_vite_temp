@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations} from "vuex";
 
 export default {
   name: 'floatingMenu',
@@ -58,9 +57,10 @@ export default {
     this.init_play_way_selected();
   },
   methods:{
-    ...mapMutations([
-      'set_footer_sub_menu_id',
-    ]),
+    // ...mapMutations([
+    //   'set_footer_sub_menu_id',
+    // ]),
+    set_footer_sub_menu_id(){},
     /**
      * 初始化玩法选中项
      */
@@ -95,12 +95,16 @@ export default {
     }
   },
   computed:{
-    ...mapGetters([
-      "get_show_favorite_list",
-      "get_curr_sub_menu_type",
-      "get_newer_standard_edition", // 1新手版 2标准版
-      "get_theme"
-    ]),
+    // ...mapGetters([
+    //   "get_show_favorite_list",
+    //   "get_curr_sub_menu_type",
+    //   "get_newer_standard_edition", // 1新手版 2标准版
+    //   "get_theme"
+    // ]),
+    get_show_favorite_list(){return ''},
+    get_curr_sub_menu_type(){return ''},
+    get_newer_standard_edition(){return ''},
+    get_theme(){return ''},
 
     footer_sub_m_list(){
       return [

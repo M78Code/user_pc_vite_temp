@@ -118,7 +118,6 @@
 </template>
 
 <script>
-import { mapGetters,mapMutations } from "vuex"
 import common from 'project_path/mixins/constant/module/common.js';
 import virtual_sports_mixin from "project_path/mixins/virtual_sports/virtual_sports_mixin.js"
 import noData from "project_path/components/common/no_data.vue";
@@ -135,6 +134,8 @@ import dynamic_ranking from "project_path/pages/virtual/virtual_sports_part/dyna
 import result_page from "project_path/pages/match-list/components/result_page.vue"
 import virtual_skeleton from "project_path/components/skeleton/virtual_sports/virtual.vue"
 import setting from "src/project/components/common/setting";
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -204,12 +205,10 @@ export default {
     this.match_ended_status2_handle();
   },
   methods:{
-    ...mapMutations({
-      set_current_league:"set_current_league",
-      set_video_process_data:"set_video_process_data",
-      set_prev_v_sports_params:"set_prev_v_sports_params",
-      set_current_mid:'set_current_mid',
-    }),
+	set_current_league(data){VR_CTR.set_current_league(data)},
+	set_video_process_data(data){VR_CTR.set_video_process_data(data)},
+	set_prev_v_sports_params(data){VR_CTR.set_prev_v_sports_params(data)},
+	set_current_mid(data){VR_CTR.set_current_mid(data)},
     // 顶部菜单切换状态改变
     handle_top_menu_change(status) {
       this.top_menu_changed = status
@@ -446,19 +445,26 @@ export default {
   },
   computed:{
     //
-    ...mapGetters({
-      sub_menuid: 'get_current_sub_menuid',
-      sub_menu_type: 'get_curr_sub_menu_type',
-      current_league: 'get_current_league',
-      current_batch:'get_current_batch',
-      get_video_process_data:"get_video_process_data",
-      get_prev_v_sports_params:"get_prev_v_sports_params",
-      get_prev_v_sports:"get_prev_v_sports",
-      is_show_analyse:"get_is_show_details_analyse",
-      get_bet_list:"get_bet_list",
-      get_betbar_show:"get_betbar_show",
-      get_newer_standard_edition:"get_newer_standard_edition",
-    }),
+    // ...mapGetters({
+    //   sub_menuid: 'get_current_sub_menuid',
+    //   sub_menu_type: 'get_curr_sub_menu_type',
+    //   is_show_analyse:"get_is_show_details_analyse",
+    //   get_bet_list:"get_bet_list",
+    //   get_betbar_show:"get_betbar_show",
+    //   get_newer_standard_edition:"get_newer_standard_edition",
+    // }),
+    current_league(){return VR_CTR.get_current_league()},
+    current_batch(){return VR_CTR.get_current_batch()},
+    get_video_process_data(){return VR_CTR.get_video_process_data()},
+    get_prev_v_sports_params(){return VR_CTR.get_prev_v_sports_params()},
+    get_prev_v_sports(){return VR_CTR.get_prev_v_sports()},
+    sub_menuid(){return 1},
+    sub_menu_type(){return 1},
+    is_show_analyse(){return 1},
+    get_bet_list(){return 1},
+    get_betbar_show(){return 1},
+    get_newer_standard_edition(){return 1},
+
     //标签页列表
     tab_items(){
       let r = [];

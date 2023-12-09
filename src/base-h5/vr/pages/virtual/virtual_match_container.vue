@@ -128,7 +128,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import data_pager from "src/public/components/common/data_pager.vue"
 import setting from "src/project/components/common/setting";
 const static_serve = window.env.config.static_serve[0];
@@ -281,7 +280,9 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['get_lang', 'get_theme']),
+    // ...mapGetters(['get_lang', 'get_theme']),
+    get_lang(){return 'zh'},
+    get_theme(){return ''},
     stage_result(){
       let result = "";
       // teamGroup 阶段 GROUPS 小组赛  Q16 32强 Q8 16强 Q4 8强 SEMIFINAL 半决赛  FINAL 决赛

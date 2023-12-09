@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name:'dynamic_ranking_timer',
   props:{
@@ -42,9 +40,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      sub_menu_type: 'get_curr_sub_menu_type',
-    }),
+    // ...mapGetters({
+    //   sub_menu_type: 'get_curr_sub_menu_type',
+    // }),
+    sub_menu_type(){return ''},
   },
   watch:{
     'match.upd_data':{

@@ -81,11 +81,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
 import common from 'project_path/mixins/constant/module/common.js';
 import teamImg from 'project_path/components/details/team_img.vue';
 import dateMatchSdata from 'project_path/pages/virtual/virtual_sports_part/date_match_s_data.vue'
 import { api_v_sports } from "project_path/api";
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+
 export default {
   mixins:[common],
   props:{
@@ -315,9 +316,10 @@ export default {
     },
   },
   computed:{
-    ...mapGetters([
-      'get_current_batch'
-    ])
+  //   ...mapGetters([
+  //     'get_current_batch'
+  //   ])
+  	get_current_batch(){return VR_CTR.get_current_batch()};
   },
   components:{
     'date-match-sdata':dateMatchSdata,

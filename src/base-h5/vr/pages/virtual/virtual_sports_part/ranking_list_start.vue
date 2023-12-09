@@ -53,9 +53,8 @@
 
 <script>
 import { api_v_sports } from "project_path/api";
-import {mapGetters} from "vuex";
 import no_data from "project_path/components/common/no_data"
-
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 export default {
   name: "ranking_list_start",
   components: {
@@ -122,11 +121,20 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([
-      "get_current_mid",
-      "get_curr_sub_menu_type",
-      "get_theme"
-    ]),
+    // ...mapGetters([
+    //   "get_current_mid",
+    //   "get_curr_sub_menu_type",
+    //   "get_theme"
+    // ]),
+    get_current_mid(){
+      return VR_CTR.get_current_mid();
+    },
+    get_curr_sub_menu_type(){
+      return '';
+    },
+    get_theme(){
+      return '';
+    },
   },
   destroyed () {
     for (const key in this.$data) {

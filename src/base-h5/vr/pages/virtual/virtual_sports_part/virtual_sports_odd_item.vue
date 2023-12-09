@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import odds_conversion from "src/public/mixins/odds_conversion/odds_conversion.js"
 
 export default {
@@ -57,7 +56,8 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['get_bet_list']),
+    // ...mapGetters(['get_bet_list']),
+    get_bet_list(){},
     /**
      * @description: 计算最终显示的赔率
      * @param {Undefined} Undefined
