@@ -119,9 +119,9 @@
 
 <script>
 import { mapGetters,mapMutations } from "vuex"
-import common from 'project_path/mixins/constant/module/common.js';
-import virtual_sports_mixin from "project_path/mixins/virtual_sports/virtual_sports_mixin.js"
-import noData from "project_path/components/common/no_data.vue";
+import common from 'src/base-h5/vr/mixin/constant/module/common.js';
+import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
+import noData from "src/base-h5/vr/components/common/no_data.vue";
 import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
 import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"
 import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
@@ -133,7 +133,7 @@ import utils from "utils/utils";
 import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue"
 import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
 import result_page from "project_path/pages/match-list/components/result_page.vue"
-import virtual_skeleton from "project_path/components/skeleton/virtual_sports/virtual.vue"
+import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
 import setting from "src/project/components/common/setting";
 export default {
   mixins:[common,virtual_sports_mixin],

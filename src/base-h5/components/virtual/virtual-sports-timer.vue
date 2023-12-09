@@ -21,7 +21,7 @@
 
 <script>
 // #TODO mixins
-// import common from 'project_path/mixins/constant/module/common.js'
+// import common from 'src/base-h5/vr/mixin/constant/module/common.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

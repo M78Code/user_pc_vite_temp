@@ -163,7 +163,7 @@
 <script>
 import {mapGetters,mapMutations} from 'vuex';
 import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
-import common from "project_path/mixins/constant/module/common.js";
+import common from "src/base-h5/vr/mixin/constant/module/common.js";
 import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
 import loading from 'project_path/components/common/loading.vue';
 import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_list.vue'
