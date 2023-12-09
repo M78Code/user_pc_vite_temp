@@ -80,11 +80,11 @@ const routes = [
         name: "video",
         component: () => import("../pages/video/video.vue")
       },
-      //       {
-      //         path: "/virtual_details/:mid/:tid/:csid",
-      //         name: "virtual_details",
-      //         component: () => import(`../pages/test/index.vue`),
-      //       },
+      {
+        path: "/virtual_details/:mid/:tid/:csid",
+        name: "virtual_details",
+        component: () => import(`../pages/virtual-details/index.vue`),
+      },
       //       {
       //         path: "/video/:mid/:tid/:csid/:play_type/:video_size",
       //         name: "video",
@@ -118,6 +118,7 @@ const routes = [
     name: "rule",
     component: () => import("../pages/rule/index.vue"),
   },
+  // vr 详情
   {
     path: "/secondary",
     name: "secondary",
