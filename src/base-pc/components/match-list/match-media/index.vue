@@ -252,4 +252,4 @@ function collect (){
       margin: 0;
     }
   }
-}</style>/index
+}</style>/indexsrc/core/constant/project/data-class-ctr/index.js
