@@ -68,10 +68,13 @@ const deal_with_list_data = (data) => {
 	data.forEach(item => {
 		// mids 为  123,44344,1231232, 格式的mids字符串 转化为 mid层级
 		let mid = item.mids.split(',');
+
 		mid.forEach(option => {
+			const match=MatchListData.get_quick_mid_obj(mid)||{}
 			let mid_info = {
 				...item,
 				mid: option,
+				...match,
 			}
 			delete mid_info.mids;
 			mid_arr.push(mid_info)
@@ -104,7 +107,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	if (MenuData.is_kemp()) {
 		all_league_list.push(...lodash.get(res_data, "data", []));
 	}
-	!backend_run && deal_with_list_data(all_league_list);
+	deal_with_list_data(all_league_list);
 	// 设置数据仓库 联赛列表对象
 	set_league_list_obj(res_data)
 	if (code == 200 && all_league_list.length > 0) {
@@ -174,10 +177,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			MenuData.set_filter_select_obj(new_filter);
 		}
 		if (![2, 3].includes(MenuData.menu_root) && MenuData.cur_menu_type.pre_name) {
-			store.dispatch({
-				type: 'remove_pre_filter_select_obj',
-				data: {}
-			})
+			// store.dispatch({
+			// 	type: 'remove_pre_filter_select_obj',
+			// 	data: {}
+			// })
 		}
 
 		// 计算列表卡片样式

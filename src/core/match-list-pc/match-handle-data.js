@@ -449,19 +449,19 @@ export function match_list_handle_set(match_list) {
 */
 export const get_match_score = (match, is_no_format) => {
     if (!match) return {home_score: '0', away_score: '0'}
+    let msc_obj = {}
     if (is_no_format) {
-        let msc_obj = {}
-        for (let i in match.msc) {
-            let format = match.msc[i].split("|");
+        match.msc.forEach(item => {
+            let format = item.split("|");
             msc_obj[format[0]] = {
-            home: format[1].split(":")[0],
-            away: format[1].split(":")[1],
+                home: format[1].split(":")[0],
+                away: format[1].split(":")[1],
             };
-        }
-        match.msc_obj = msc_obj;
+        })
+        // match.msc_obj = msc_obj;
     }
     let key = "S1";
-    let { csid, mmp, msc_obj = {} } = match;
+    let { csid, mmp} = match;
     // 足球 | 手球
     if ([1, 11].includes(+csid)) {
         // S7:加时赛比分

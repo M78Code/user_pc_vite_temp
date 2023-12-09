@@ -75,7 +75,6 @@ export default defineComponent({
       return route.params.mid || get_detail_data.mid
     });
     watch(() => MatchDetailCalss.details_data_version.version, (val, old) => {
-      console.log(MatchDetailCalss,'MatchDetailCalss.current_category_id');
       current_category_id.value = MatchDetailCalss.current_category_id || SessionStorage.get("DETAIL_TAB_ID") ||'0'
     })
    
