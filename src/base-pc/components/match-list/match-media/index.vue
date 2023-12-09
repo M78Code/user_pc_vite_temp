@@ -53,7 +53,7 @@ import {is_eports_csid}  from "src/core/constant/util/csid-util";
 import { get_match_status, t, compute_css_obj,MatchDetailCalss } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import details from 'src/core/match-list-pc/details-class/details.js'
-import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
+import { other_play_name_to_playid } from 'src/output/index.js';
 import store from 'src/store-redux/index.js';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
@@ -252,4 +252,4 @@ function collect (){
       margin: 0;
     }
   }
-}</style>/indexsrc/core/constant/project/data-class-ctr/index.js
+}</style>/indexsrc/core/constant/project/data-class-ctr/index.jssrc/core/constant/common/module/csid-util

@@ -4,7 +4,7 @@
 import { ref, computed, onUnmounted, getCurrentInstance } from "vue";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
-import  { computed_background } from  "src/core/constant/config/csid.js"
+import  { computed_background } from  "src/output/module/constant-utils.js"
 //  // api详情
 import { api_details } from "src/api";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";

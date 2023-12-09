@@ -1,4 +1,4 @@
-export default {
+export  const  choose_config= {
     "1": [
       {first_hpid: "1", second_hpid: "2"},
       {first_hpid: "1", second_hpid: "4"},
