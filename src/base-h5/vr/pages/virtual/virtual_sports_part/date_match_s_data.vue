@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import teamImg from 'project_path/components/details/team_img.vue'
+import teamImg from 'src/base-h5/vr/components/team_img.vue';
 
 export default {
   props:{
