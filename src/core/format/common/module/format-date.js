@@ -292,7 +292,7 @@ export const counting_time_ctr_show_format = (match, counting_time) => {
      * @param counting_time 需要显示的时间
      * @return undefined
      */
-   export function   counting_time_ctr_show_format(match,counting_time) {
+   export function   counting_time_ctr_show_format_hm(match,counting_time) {
     let counting_time_ = counting_time;
     // 红猫赛事只显示分钟不显示秒
     if(lodash.get(match,'cds')=='1500' && lodash.get(match,'csid')==1 && counting_time){
