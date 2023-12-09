@@ -58,7 +58,6 @@ import { computed, ref, watch,onMounted, onUnmounted } from "vue";
 import matchDate from "src/components/match-process/match-process-template-1/match_date.vue";
 import {
   get_match_status,
-  utils,
   i18n_t,
   format_string,
   is_eports_csid

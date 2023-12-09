@@ -56,7 +56,7 @@ import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
-import { LayOutMain_pc, utils } from 'src/output/index.js'
+import { LayOutMain_pc } from 'src/output/index.js'
 // 搜索初始化组件
 import searchInt from "./search-init.vue"
 //搜索赛事组件
