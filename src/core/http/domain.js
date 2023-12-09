@@ -71,7 +71,7 @@
 import axios from "axios";
 
  
-import { SessionStorage ,LocalStorage} from "src/output/module/constant-utils.js"
+import { SessionStorage ,LocalStorage} from "src/output/module/constant-utils-common.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
  import { format_api_to_obj } from "src/core/format/common/index.js"
 import STANDARD_KEY from "src/core/standard-key";

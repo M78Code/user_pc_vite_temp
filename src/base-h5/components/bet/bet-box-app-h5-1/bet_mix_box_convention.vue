@@ -46,8 +46,8 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
     margin-top: 10px;
 }
 .nonebox4-content-result-left{
-    font-size: 10px;
-    color: var(--q-gb-t-c-3);
+    font-size: 12px;
+    color: var(--q-gb-t-c-11);
 }
 .nonebox4-content-result-right{
     font-size: 14px;
@@ -65,7 +65,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
     background-color: #2394fc;
     border-radius: 6px;
 }
-.orderNumber{
-  font-size: 14px;
-}
+// .orderNumber{
+//   font-size: 14px;
+// }
 </style>

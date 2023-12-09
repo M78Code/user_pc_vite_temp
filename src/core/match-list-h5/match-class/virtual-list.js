@@ -121,6 +121,9 @@ class VirtualList {
       // 联赛不显示 赛事显示
       total += main_handicap_height
     }
+    // 特殊高度
+    const special_height = this.get_match_special_height(match, index)
+    total += special_height
     return total
   }
 
@@ -223,6 +226,30 @@ class VirtualList {
       }
     }
     return position
+  }
+
+  // 赛事 特殊高度 
+  // 例如： 复刻版下的新手版、高度不同
+  get_match_special_height (match, index) {
+    const menu_lv_v1 = MenuData.current_lv_1_menu_i
+    // 折叠对象
+    const fold_data = MatchFold.match_mid_fold_obj.value
+    // 赛事折叠信息
+    const fold_key = MatchFold.get_match_fold_key(match)
+    // 赛事是否显示
+    const show_card = lodash.get(fold_data[fold_key], `show_card`)
+    let special_height = 0
+    if (PROJECT_NAME === 'app-h5') {
+      if (UserCtr.standard_edition == 1) {
+        if (show_card) {
+          special_height += -34
+          if (match.is_show_league) special_height += -22
+        }
+      } else {
+        if (index === 0 && [1,3].includes(+menu_lv_v1)) special_height += 25
+      }
+    }
+    return special_height
   }
 
   /**
