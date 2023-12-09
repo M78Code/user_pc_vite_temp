@@ -57,7 +57,8 @@
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
       <!-- {{get_match_detail.ms }} -->
       <!-- 赛果需要显示比分 添加4 -->
-      <template v-if=" [1,4].includes(get_match_detail.ms)">
+      <!-- 赛事状态：0未开赛，1 进行中 -->
+      <template v-if=" [1,4,3].includes(get_match_detail.ms)">
         <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
           <div
             class="list"
