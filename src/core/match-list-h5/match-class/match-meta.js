@@ -907,7 +907,7 @@ class MatchMeta {
     let target_data = []
     if (is_classify) {
       // 赛事归类(开赛-未开赛) 里面包含了球种归类、联赛归类
-      target_data = handler_match_classify_by_ms(list).filter((t) => t.mid)
+      target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
       // 球种归类
       const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
