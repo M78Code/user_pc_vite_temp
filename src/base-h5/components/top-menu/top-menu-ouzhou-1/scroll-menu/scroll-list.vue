@@ -41,7 +41,7 @@ const props = defineProps({
     },
     // 当前选中的值
     current_mi:{
-        type: String || Number,
+        type: [String, Number],
         default: ''
     },
     is_show_badge:{
