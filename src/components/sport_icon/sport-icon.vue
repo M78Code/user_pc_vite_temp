@@ -58,9 +58,6 @@ export default {
       default: false,
     }
   },
-  created(){
-    console.error('ttttt',this.sport_id)
-  }
 };
 </script>
 
