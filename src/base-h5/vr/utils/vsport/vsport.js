@@ -16,7 +16,7 @@
 import { api_v_sports } from "src/base-h5/vr/api";
 import LoopCallback from "src/base-h5/vr/class/loop_callback.js";
 
-const sleep = require('licia/sleep');
+import licia from "licia";
 export default class VSport {
   /**
    * @Description:构造函数
@@ -185,7 +185,7 @@ export default class VSport {
         time = new Date().getTime();
         // 消费一条记录
         this.work();
-        await sleep(800);
+        await licia.sleep(800);
         this.current_time += (new Date().getTime()-time);
       }
     })();

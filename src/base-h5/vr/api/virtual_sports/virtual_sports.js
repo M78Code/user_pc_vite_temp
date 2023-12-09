@@ -5,7 +5,8 @@
  */
 import http from "src/core/http/axios-warpper.js";
 
-let prefix = window.env.config.api.API_PREFIX_JOB;
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_user} = API_PREFIX;
 
 
 //虚拟体育菜单

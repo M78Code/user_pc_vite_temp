@@ -8,12 +8,12 @@
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
       <!-- 头部 -->
       <div class="virtual-head">
-        <div class="type-bg" :class="'bg'+_.get(sub_menu_list,`[${sub_menu_i}].field1`)">
+        <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="back-wrap">
             <div class="detail-back" @click="$common.go_where({back_to: 'go_back_from_virtual'})"></div>
             <!-- 虚拟体育 -->
-            <div class="col">{{$root.$t('common.virtual_sports')}} {{_.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
+            <div class="col">{{$root.$t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
             <div class="no-single" @click="$root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)"></div>
             <!-- 复刻版暂时用不到先注释了 -->
@@ -61,10 +61,13 @@
 import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports.vue";    // 虚拟体育
 // import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
 import { api_v_sports } from "src/base-h5/vr/api";
-
+import { debounce } from "lodash";
 import { utils } from "src/core/utils/common/module/utils.js";
 import virtualFooterMenu from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
 import axios_api_loop from "src/core/http/axios-loop.js"
+import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
+
+import lodash from "lodash"
 
 export default {
   name:'match_main',
@@ -105,7 +108,7 @@ export default {
     this.timer_super28 = setTimeout(()=>{
       this.set_menu_type(900);
     }, 500)
-    this.cancel_ref = this.debounce(this.cancel_ref,200)
+    this.cancel_ref = debounce(this.cancel_ref,200)
   },
   mounted() {
     // 浏览器窗口变化事件监听
@@ -145,7 +148,7 @@ export default {
   destroyed() {
     // 设置上次的菜单类型
     this.set_menu_type(this.get_prev_menu_type)
-    this.debounce_throttle_cancel(this.cancel_ref);
+    debounce_throttle_cancel(this.cancel_ref);
     // this.$root.$off(this.emit_cmd.EMIT_WINDOW_RESIZE, this.window_resize_on);
     this.$root.$off(this.emit_cmd.EMIT_COUNTING_DOWN_START_ENDED,this.counting_down_start_ended_on);
 
@@ -224,7 +227,7 @@ export default {
     get_sub_menu_c_index(){
       let r = 0;
       let sub_menu_id = this.get_virtual_current_sub_menuid;
-      r = _.findIndex(this.sub_menu_list,{
+      r = lodash.findIndex(this.sub_menu_list,{
         field1: sub_menu_id
       })
       if(r < 0) r = 0;
@@ -246,12 +249,12 @@ export default {
             res.data.forEach(sub_menu => {
               sub_menu.menuName = sub_menu.name;
             });
-            this.sub_menu_list = _.cloneDeep(res.data);
+            this.sub_menu_list = lodash.cloneDeep(res.data);
 
             this.sub_menu_i = this.get_sub_menu_c_index();
             if(this.sub_menu_list.length){
               if(this.sub_menu_id_f_detail){
-                let index = _.findIndex(this.sub_menu_list, item => item.menuId == this.sub_menu_id_f_detail);
+                let index = lodash.findIndex(this.sub_menu_list, item => item.menuId == this.sub_menu_id_f_detail);
                 this.sub_menu_i = index;
                 this.sub_menu_id_f_detail = '';
               }
@@ -318,7 +321,7 @@ export default {
   },
   components: {
     virtualSports,
-    setMenu,
+    // setMenu,
     virtualFooterMenu,
   }
 };

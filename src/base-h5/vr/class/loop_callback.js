@@ -2,7 +2,7 @@
  * @Author: success
  * @Description: 自动循环回调函数工具类
  */
-const sleep = require('licia/sleep');
+import licia from "licia";
 export default class LoopCallback {
   /**
    * @Description:构造函数
@@ -50,7 +50,7 @@ export default class LoopCallback {
           }
         }
         this.l_count++;
-        await sleep(this.config.step);
+        await licia.sleep(this.config.step);
         if(ret || (this.l_count>=this.config.loop_count) || this.l_count>this.config.max){
           this.run = false;
         }
