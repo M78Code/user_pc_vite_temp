@@ -4,49 +4,6 @@ export const utils = {
   //用户切换的时间点(用于阻止用户过快点击)
   change_time: null,
   /**
-   * @Description 获取滚动条宽度  quasar源码复制的
-   * @param {undefined} undefined
-  */
-  getScrollbarWidth() {
-    const
-      inner = document.createElement('p'),
-      outer = document.createElement('div');
-    this.css(inner, {
-      width: '100%',
-      height: '200px'
-    })
-    this.css(outer, {
-      position: 'absolute',
-      top: '0px',
-      left: '0px',
-      visibility: 'hidden',
-      width: '200px',
-      height: '150px',
-      overflow: 'hidden'
-    })
-    outer.appendChild(inner)
-    document.body.appendChild(outer)
-    const w1 = inner.offsetWidth
-    outer.style.overflow = 'scroll'
-    let w2 = inner.offsetWidth
-    if (w1 === w2) {
-      w2 = outer.clientWidth
-    }
-    outer.remove()
-    return w1 - w2
-  },
-  /**
-   * @Description 设置css quasar源码复制的
-   * @param {undefined} undefined
-  */
-  css(element, css) {
-    const style = element.style
-    Object.keys(css).forEach(prop => {
-      style[prop] = css[prop]
-    })
-  },
-
-  /**
    * 阻止用户频繁点击切换
    */
   is_time_limit(time1 = 500) {
@@ -58,7 +15,6 @@ export const utils = {
     }
     return flag;
   },
-
   to_thousands(num) {
     return (num || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
   },
