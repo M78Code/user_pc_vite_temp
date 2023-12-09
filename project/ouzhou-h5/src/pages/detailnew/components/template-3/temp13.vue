@@ -239,11 +239,10 @@
 import store from "src/store-redux";
 import lodash from "lodash";
 import odds_new from "base_path/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import {LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-
+import { is_integer } from "project_path/src/core/index.js"
 export default defineComponent({
   name: "temp13",
   props:{
@@ -258,7 +257,6 @@ export default defineComponent({
     const store_state = store.getState()
     const route = useRoute()
     let init_data = reactive({
-      utils,
       // 滑动left
       left: 0
     });
@@ -375,7 +373,7 @@ export default defineComponent({
         let temp_num = props.item_data.hl.length / 3
 
         // 是整数则减一，否则向下取整
-        if (init_data.is_integer(temp_num)) {
+        if (is_integer(temp_num)) {
           slide_num = temp_num - 1
         } else {
           slide_num = Math.floor(temp_num)
