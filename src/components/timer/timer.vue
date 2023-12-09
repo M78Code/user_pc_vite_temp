@@ -11,12 +11,12 @@
   <div class="timer-layout">
       <!-- 为什么要使用visibility: hidden;隐藏  占位了啊兄弟们 -->
     <span class="timer-layout0" v-show="false">{{time_str_old}}</span>
-    <span class="timer-layout2" :class="[date_show_type === 'inline' && 'no-absolute' ]">{{ counting_time_ctr_show_format(match, time_str)}}</span>
+    <span class="timer-layout2" :class="[date_show_type === 'inline' && 'no-absolute' ]">{{ counting_time_ctr_show_format_ouzhou(match, time_str)}}</span>
   </div>
 </template>
 <script>
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-import { counting_time_ctr_show_format_ouzhou } from 'src/output/index.js'
+import { counting_time_ctr_show_format_ouzhou } from 'src/core/format/common/index.js'
 
 export default {
   name: "Timer",
@@ -28,7 +28,8 @@ export default {
       time_str: "",
       time_str_old: "",
       // 增量临时值
-      timer_tmp: 0
+      timer_tmp: 0,
+      counting_time_ctr_show_format_ouzhou
     };
   },
   props: {
@@ -89,7 +90,6 @@ export default {
     }
   },
   methods: {
-    counting_time_ctr_show_format: counting_time_ctr_show_format_ouzhou,
     // 启动计时器
     start() {
       const that = this;

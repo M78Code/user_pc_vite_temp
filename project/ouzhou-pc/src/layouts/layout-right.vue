@@ -28,9 +28,10 @@
 // import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 
 import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+
 import analysis from "../pages/match-new-detail/analysis/index.vue";
 import { LayOutMain_pc } from "src/output/index.js";
-import { useRoute } from "vue-router";
 const route = useRoute();
 const right_status = ref(null);
 const show_right = ref(false);
