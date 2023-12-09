@@ -171,7 +171,7 @@ export function fetch_match_list(is_socket = false, cut) {
 					show_refresh_mask.value = false;
 				} catch (error) {
 					//如果是代码报错不要走重复请求
-					console.log('error', err);
+					console.log('error', error);
 				}
 			})
 			.catch((err) => {
