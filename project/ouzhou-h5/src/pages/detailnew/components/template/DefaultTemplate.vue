@@ -1,8 +1,10 @@
 <template>
   <div class="component default-template">
-    <OddsTitle :data="data" v-if="state.title"></OddsTitle>
-      <template v-for="item in data.hl">
-        <OddHlWrap :data="item" :type="state.olType" :hpt="data.hpt" :oddInfo="data">
+    <OddsTitle :data="data" v-if="state.title" :show="haveTitle"></OddsTitle>
+      <template v-for="item in data.hl" :key="item.hid">
+        <OddHlWrap :data="item" :type="state.olType" :hpt="data.hpt" :oddInfo="data"
+          :class="{'have-title':haveTitle}"
+        >
           <template #title v-if="state.innerTitle">
             <OddsTitle :data="data"></OddsTitle>
           </template>
@@ -23,6 +25,7 @@ const props = defineProps<{
 }>()
 
 const state = common.getTemplateState(props.data)
+const haveTitle = common.haveTitle(props.data)
 
 </script>
 
