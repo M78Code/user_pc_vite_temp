@@ -35,7 +35,7 @@ const to_Uint8Array = (b64Data) =>{
 }
 
 
-const pako_pb = {
+export const pako_pb = {
   /**
    * @description: base64编码转换
    * @param {String} data  base64编码PB数据
@@ -65,4 +65,4 @@ const pako_pb = {
     return res;
   }
 };
-export default pako_pb;
+ 

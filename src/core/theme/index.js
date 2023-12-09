@@ -13,7 +13,9 @@ import server_theme_list from "app/job/output/theme/index.json";
 import { server_key_map } from "src/boot/i18n.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import lodash from 'lodash'
-
+ //模块之间通信 ，去耦合化的一个 键值对 仓库
+ export { GLOBAL_CONSTANT } from "src/core/constant/global/index.js";
+ 
 //查找默认的主题
 const theme_map = {}
 for (let key in server_theme_list) {
@@ -40,7 +42,7 @@ if (default_theme) {
   default_theme_key = theme_list[0].key
 }
 // 设置默认主题
-LocalStorage.set('theme',default_theme_key)
+LocalStorage.set('default-theme',default_theme_key)
 
 export {
   theme_list,
