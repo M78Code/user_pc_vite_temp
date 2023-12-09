@@ -3,7 +3,7 @@
     <div class="match-result">
         <date-tab v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
         <!-- <match-container /> -->
-        <ObserverWrapper :match_list="matchs_data"></ObserverWrapper>
+        <ObserverWrapper :match_list="matchs_data" com_type="ouzhou-h5"></ObserverWrapper>
     </div>
 
 </template>
