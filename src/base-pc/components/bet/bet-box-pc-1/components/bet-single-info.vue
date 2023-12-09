@@ -123,7 +123,7 @@
 import { reactive, computed, ref } from "vue"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds, format_currency, formatTime } from "src/output/index.js"
-import { odds_type_name } from "src/core/constant/index.js"
+import { odds_type_name } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { i18n_t } from "src/boot/i18n.js"
 import { get_query_bet_amount_pre } from "src/core/bet/class/bet-box-submit.js"

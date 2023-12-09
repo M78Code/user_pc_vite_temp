@@ -8,8 +8,8 @@ import BetViewData from "src/core/bet/class/bet-view-data-class.js";
 import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { PLAY_LET_BALL,PLAY_GOAL,PLAY_TODAY_SCORE,PLAY_ALL_KINDS,PLAY_RESULT } from "src/core/constant/config/play-mapping.js";
-import { play_name_mapping_csid } from "src/core/constant/config/csid.js";
+import { PLAY_LET_BALL,PLAY_GOAL,PLAY_TODAY_SCORE,PLAY_ALL_KINDS,PLAY_RESULT } from "src/output/module/constant-utils.js";
+import { play_name_mapping_csid } from "src/output/module/constant-utils.js";
 import _ from "lodash";
 
  

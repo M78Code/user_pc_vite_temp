@@ -6,7 +6,7 @@
  * 使用  {{ compute_value_by_cur_odd_type(val}}
  * 实现 匹配不到 后 向下 取值
  */
-import { esports_csid } from "../../../constant/config/csid"
+import { esports_csid } from "src/core/constant/common/module/csid.js"
 import UserCtr from 'src/core/user-config/user-ctr'
  
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";

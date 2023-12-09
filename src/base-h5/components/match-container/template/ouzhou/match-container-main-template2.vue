@@ -34,7 +34,7 @@
     <template v-for="(hp, index) of match_of_list.hps">
       <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
 
-        <div class="hps-wrap-title flex items-center justify-between" :class="{ 'is-favorite': false }">
+        <div class="hps-wrap-title flex items-center justify-between" :class="{ 'is-favorite': false }" @click.stop>
           <div class="match-title items-center font-weight match-title-width">
             <div class="hpn-wrap ellipsis">
               {{hp.hps}}

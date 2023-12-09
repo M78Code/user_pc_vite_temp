@@ -8,7 +8,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import { ref } from "vue";
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
-import {PLAY_TODAY_SCORE} from "src/core/constant/config/play-mapping.js"; 
+import {PLAY_TODAY_SCORE} from "src/output/module/constant-utils.js"; 
 import lodash from "lodash";
 /**
  * @description: 获取比赛分数 格式: (主队比分-客队比分)export const 
