@@ -13,8 +13,7 @@
 </template>
 
 <script setup lang="ts">
-
-
+import {calcOlResult} from "src/output/index.js"
 const props = withDefaults(defineProps<{
   value: TYPES.OlResult,
   /** 玩法模板 */ hpt?: -1|0|1|3,

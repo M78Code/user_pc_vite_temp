@@ -159,7 +159,7 @@ import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import utils from 'src/base-h5/core/utils/index.js'
+// import utils from 'src/base-h5/core/utils/index.js'
 
 import 'src/base-h5/css/pages/virtual-sports.scss'
 
@@ -728,4 +728,3 @@ export default defineComponent({
     }
   }
 </style>
-src/core/utils/common/module/other.js

@@ -4,7 +4,6 @@ export * from  "./util/csid-util.js"
 
 
 export  *  from './config/betting/index.js'
-export  *  from './config/data-class-ctr/index.js'
 export  *  from './config/play-mapping/index.js'
 export  *  from './config/csid.js'
 export  *  from './config/fileds-map.js'

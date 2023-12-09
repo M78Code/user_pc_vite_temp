@@ -184,8 +184,6 @@ const play_name_obj = computed(() => {
   return play_name_obj
 })
 
-is_collect.value = Boolean(lodash.get(match.value, 'mf'))
-
 /**
  * @Description 赛事收藏 
 */
@@ -219,7 +217,7 @@ const away_avatar2 = computed(()=>{
 // 监听收藏变化
 watch(() => match.value.mf, (n) => {
   is_collect.value = Boolean(n)
-})
+}, { immediate: true})
 
 //进球特效防抖
 // hide_home_goal = this.debounce(hide_home_goal,5000);

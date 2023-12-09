@@ -33,12 +33,13 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import tiaozhuanPanel from "src/base-h5/components/match-list/components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
 import matchContainer from "src/base-h5/components/match-list/index.vue";
-import SList from "src/base-h5/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
+// import SList from "src/base-h5/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
-import { MenuData, score_switch_handle,  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
+import { MenuData, score_switch_handle,  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js";
+import {pre_load_video  } from "src/core/pre-load/module/pre-load-video.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;  
 import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
@@ -145,7 +146,7 @@ const back_top = () => {
  */
 const event_init = () => {
   // 详情页的视频预加载
-  load_video_resources(store_state.get_uid, "is_details_page");
+  pre_load_video.load_video_resources(store_state.get_uid, "is_details_page");
   // 不让浏览器记住上次的滚动位置
   if ("scrollRestoration" in History) {
     history.scrollRestoration = "manual";

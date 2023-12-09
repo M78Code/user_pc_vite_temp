@@ -742,7 +742,7 @@ height: 4rem;
   }
 }
 // 分页条样式
-::v-deep .pagination-wrapper {
+:deep(.pagination-wrapper) {
     height: 0.4rem;
     align-items: center;
 }

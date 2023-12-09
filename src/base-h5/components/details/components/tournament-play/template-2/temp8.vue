@@ -14,20 +14,20 @@
             <div class="team-name">{{team.teamName}}</div>
           </div>
           <div class="row team justify-between">
-            <div class="col-4 team-odds" @click="go_to_bet(`20033${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20033${team.teamId}`] && play_obj[`20033${team.teamId}`].oid) && 'team-odds2']">
+            <div class="col-4 team-odds" @click="go_to_fun(`20033${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20033${team.teamId}`] && play_obj[`20033${team.teamId}`].oid) && 'team-odds2']">
               <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20033${team.teamId}.ov`) / 100000,null,hsw_obj[20033])}}
               </div>
             </div>
-            <div class="col-4 team-odds" @click="go_to_bet(`20034${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20034${team.teamId}`] && play_obj[`20034${team.teamId}`].oid) && 'team-odds2']">
+            <div class="col-4 team-odds" @click="go_to_fun(`20034${team.teamId}`,index)" :class="[BetData.bet_oid_list.includes(play_obj && play_obj[`20034${team.teamId}`] && play_obj[`20034${team.teamId}`].oid) && 'team-odds2']">
               <div v-if="lodash.get(play_obj,`20034${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20034${team.teamId}.ov`) / 100000,null,hsw_obj[20034])}}
               </div>
             </div>
             <div v-if="'1009' != sub_menu_type"
-            class="col-4 team-odds" @click="go_to_bet(`20035${team.teamId}`,index)" :class="BetData.bet_oid_list.includes(play_obj && play_obj[`20035${team.teamId}`] && play_obj[`20035${team.teamId}`].oid) && 'team-odds2'">
+            class="col-4 team-odds" @click="go_to_fun(`20035${team.teamId}`,index)" :class="BetData.bet_oid_list.includes(play_obj && play_obj[`20035${team.teamId}`] && play_obj[`20035${team.teamId}`].oid) && 'team-odds2'">
               <div v-if="lodash.get(play_obj,`20035${team.teamId}.os`) == 2"><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
               <div v-else>
                 {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20035${team.teamId}.ov`) / 100000,null,hsw_obj[20035])}}
@@ -50,6 +50,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useMittEmit, MITT_TYPES,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -113,7 +114,7 @@ export default defineComponent({
      *@param {Number} index 下标，用来识别第几匹马
      *@return {Undefined} undefined
      */
-    const go_to_bet = (ol_item,index) => {
+    const go_to_fun = (ol_item,index) => {
       ol_item = play_obj.value[ol_item]
       ol_item.num = index + 1
       go_to_bet(ol_item)
@@ -129,7 +130,7 @@ export default defineComponent({
       LOCAL_PROJECT_FILE_PREFIX,
       is_select,
       get_odds,
-      go_to_bet,
+      go_to_fun,
       play_obj
     }
   }
