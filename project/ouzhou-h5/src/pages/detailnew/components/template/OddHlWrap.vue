@@ -29,7 +29,7 @@ const olName = `'${props.data.ol[0].on}'`
 </script>
 
 <style scoped lang="scss">
-.component{
+.odd-hl-wrap{
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -44,6 +44,11 @@ const olName = `'${props.data.ol[0].on}'`
   }
   &.hpt-5{
     --odd-template-before-content: v-bind(olName);
+  }
+  &.hpt-4{
+    .odd-ol-wrap{
+      flex-direction: column;
+    }
   }
 }
 
