@@ -19,7 +19,7 @@
 </template>
   
 <script setup>
-import { onMounted, onUnmounted,ref, watch } from "vue";
+import { onMounted, onUnmounted,ref, nextTick } from "vue";
 import { scrollMenuEvent } from "../utils";
 import { MenuData } from "src/output/index.js";
 import { api_common } from "src/api/"
@@ -38,10 +38,12 @@ const props = defineProps({
 
 });
 const dateTab = ref(null)
-const activeOn = ref('');//默认值
+const activeOn = ref(0);//默认值
 
 onMounted(() => {
-    changeTabMenu(0)
+    nextTick(()=>{
+        changeTabMenu(props.dataList?.[0],0)
+    })
 })
 onUnmounted(()=>{
     set_active_val()
@@ -113,7 +115,8 @@ defineExpose({set_active_val,changeTabMenu})
                 flex-shrink: 0;
                 text-align: center;
                 font-weight: 400;
-
+                font-size: 12px;
+                color: #7981A4;
                 // &:first-child {
                 //     width: 0.4rem;
                 // }
@@ -126,17 +129,13 @@ defineExpose({set_active_val,changeTabMenu})
                         content: "";
                         position: absolute;
                         width: 60%;
-                        height: 1px;
+                        height: 2px;
                         background-color: var(--q-gb-t-c-1);
                         bottom: 1px;
                         left: 50%;
                         margin-left: -30%;
+                        border-radius: 25px;
                     }
-                }
-
-                span {
-                    font-size: 12px;
-                    color: #7981A4;
                 }
             }
         }
