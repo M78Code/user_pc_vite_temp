@@ -55,7 +55,7 @@
         </div>
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
-      <!-- {{ console.log(get_match_detail.ms) }} -->
+      <!-- {{get_match_detail.ms }} -->
       <!-- 赛果需要显示比分 添加4 -->
       <template v-if=" [1,4].includes(get_match_detail.ms)">
         <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
@@ -63,12 +63,12 @@
             class="list"
             v-for="item in football_score_icon_list"
             :key="item.msc_key"
-          >
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["home"] : "" }}</span>
+          > 
+            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["home"] : "0" }}</span>
             <span :class="[item.bg_url, 'score-icon']">
               <!-- <img class="score-icon" :src="item.url" alt="" /> -->
             </span>
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["away"] : ""}}</span>
+            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["away"] : "0"}}</span>
           </div>
         </div>
         <div
@@ -91,7 +91,7 @@
      
     </div>
      <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.msid == 5" :detail_data="get_match_detail" />
+     <matchScore v-if="get_match_detail.msid == 5"  :detail_data="get_match_detail" />
   </div>
 </template>
 
