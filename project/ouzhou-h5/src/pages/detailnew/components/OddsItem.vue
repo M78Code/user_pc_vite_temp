@@ -49,7 +49,7 @@ const order = computed(() => {
 })
 
 
-const wsl = Number(sessionStorage.getItem('wsl')) == 9999
+const wsl = sessionStorage.getItem('TY_SDK_WSL')
 </script>
 
 <style scoped lang="scss">
