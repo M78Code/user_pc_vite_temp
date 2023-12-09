@@ -696,8 +696,8 @@ class MatchMeta {
       dataList.forEach(t => {
         t.match_data_type = 'h5_in_play_league'
       })
-      const arr_list = Matchhandler_match_classify_by_csid(dataList)
-      match_list = Matchget_home_in_play_data(arr_list)
+      const arr_list = MatchUtils.handler_match_classify_by_csid(dataList)
+      match_list = MatchUtils.get_home_in_play_data(arr_list)
       // this.handler_match_list_data({ list: match_list, type: 2, is_virtual: false })
       this.handler_match_list_data({ list: match_list, warehouse: MatchDataBaseInPlayH5, type: 2, is_virtual: false, merge: 'cover' })
     }
@@ -860,7 +860,7 @@ class MatchMeta {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return 
 
-    const target_list = Matchhandler_match_classify_by_csid(list).filter((t) => t.mid)
+    const target_list = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
 
     const custom_match_mids = target_list.map(t => t.mid)
 
@@ -910,9 +910,9 @@ class MatchMeta {
       target_data = handler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
       // 球种归类
-      const result_data = Matchhandler_match_classify_by_csid(list).filter((t) => t.mid)
+      const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
       // 联赛归类
-      target_data = Matchhandler_match_classify_by_tid(result_data)
+      target_data = MatchUtils.handler_match_classify_by_tid(result_data)
     }
 
     // 重置折叠对象
