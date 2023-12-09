@@ -9,7 +9,9 @@
         </div>
       </template>
       <template v-else>
-        <div class="item ol-name" :alt="olName"> {{ olName }} </div>
+        <div class="item ol-name" :alt="olName">
+          <span class="ol-name-span">{{ olName }}</span>
+        </div>
         <div class="separate"></div>
         <div class="item ol-content">
           <div class="ol-content-ov">
@@ -188,6 +190,10 @@ function resetStatus() {
   .ol-name{
     text-align: left;
     justify-content: start;
+    @extend .overflow;
+    .ol-name-span{
+      @extend .overflow;
+    }
   }
   .ol-content{
     flex: none;
