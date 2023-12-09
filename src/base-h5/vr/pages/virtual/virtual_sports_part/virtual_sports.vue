@@ -135,7 +135,7 @@ import result_page from "src/base-h5/vr/pages/result/result_page.vue"
 import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
 import setting from "src/project/components/common/setting";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -200,8 +200,10 @@ export default {
     utils.load_player_js()
   },
   mounted(){
-    this.$root.$on(this.emit_cmd.EMIT_ARRIVED10,this.arrived10_handle);
-    this.$root.$on(this.emit_cmd.EMIT_MATCH_EDNED_STATUS2,this.match_ended_status2_handle);
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_ARRIVED10, this.arrived10_handle).off,
+      useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2, match_ended_status2_handle).off,
+    ]
     this.match_ended_status2_handle();
   },
   methods:{
@@ -543,9 +545,7 @@ export default {
     if(this.video_process_obj && this.video_process_obj.destroy){
       this.video_process_obj.destroy();
     }
-    this.$root.$off(this.emit_cmd.EMIT_ARRIVED10,this.arrived10_handle);
-    this.$root.$off(this.emit_cmd.EMIT_MATCH_EDNED_STATUS2,this.match_ended_status2_handle);
-
+    this.emitters.map((x) => x())
     this.clear_timer()
 
     for (const key in this.$data) {

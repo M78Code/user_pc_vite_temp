@@ -27,6 +27,8 @@
 <script>
 import { api_common } from "src/project/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
+
 export default {
   name: 'virtual_sports_tab',
   data(){
@@ -83,9 +85,10 @@ export default {
     // 延时器
     this.timer1_ = null;
     this.timer_ = null;
-    this.$root.$on(this.emit_cmd.EMIT_REFRESH_DETAILS_TAB, this.initEvent)
-    this.$root.$on(this.emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
-
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent).off,
+      useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
+    ]
     this.initEvent();
     this.play_list()
     this.set_is_show_details_analyse(false)
@@ -214,8 +217,7 @@ export default {
     }
   },
   destroyed() {
-    this.$root.$off(this.emit_cmd.EMIT_REFRESH_DETAILS_TAB, this.initEvent);
-    this.$root.$off(this.emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
+    this.emitters.map((x) => x())
     this.set_fewer(1);
     clearTimeout(this.timer1_)
     clearInterval(this.timer_);
