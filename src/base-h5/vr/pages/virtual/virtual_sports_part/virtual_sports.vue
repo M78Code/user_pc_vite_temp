@@ -128,7 +128,7 @@ import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/gro
 import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
 import virtualSportsTab from "project_path/pages/details/components/virtual_sports_tab.vue"
 import virtual_sports_category from "project_path/pages/details/children/virtual_sports_category.vue"
-import utils from "utils/utils";
+import utils from "src/core/utils/common/module/utils.js";
 import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue"
 import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
 import result_page from "project_path/pages/match-list/components/result_page.vue"

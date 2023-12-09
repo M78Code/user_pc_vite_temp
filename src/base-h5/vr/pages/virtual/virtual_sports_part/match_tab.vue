@@ -28,7 +28,7 @@
 
 <script>
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-import utils from "utils/utils";
+import utils from "src/core/utils/common/module/utils.js";
 export default {
   name:'match_tab',
   props:{

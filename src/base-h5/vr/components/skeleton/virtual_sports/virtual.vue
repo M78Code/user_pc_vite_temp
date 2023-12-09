@@ -73,11 +73,12 @@
 
 <script>
 import skeleton from 'src/project/components/skeleton/index.vue'
-import { mapGetters } from "vuex"
+// import { mapGetters } from "vuex"
 export default {
   components:{ skeleton },
   computed:{
-    ...mapGetters(["get_newer_standard_edition"]),
+    // ...mapGetters(["get_newer_standard_edition"]),
+    get_newer_standard_edition(){ return ''}
   },
   data(){
     return {
