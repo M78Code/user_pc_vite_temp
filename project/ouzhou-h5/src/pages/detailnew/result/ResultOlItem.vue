@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<{
 }>(),{
   hpt: -1
 })
-let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
+let state:TYPES.OlResultState = calcOlResult(props.value.result)
 
 
 </script>

@@ -21,7 +21,7 @@
       <q-scroll-area
         :visible="true"
         ref="ref_v_scroll_area"
-        :thumb-style="{ right: utils.is_iframe ? '-8px' : '-10.5px' }"
+        :thumb-style="{ right: is_iframe ? '-8px' : '-10.5px' }"
         class="fit v-scrollarea"
       >
         <q-scroll-observer @scroll="on_scroll" />

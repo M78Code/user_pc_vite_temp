@@ -86,7 +86,7 @@ const menu_obj = ref({})
 //  const { menu_obj } = betReducer
 
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 
 /** 
  * siteHeader组件props数据

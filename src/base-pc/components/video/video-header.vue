@@ -57,7 +57,7 @@
     <!-- 右边按钮 -->
     <div class="right-wrap">
       <!-- 统计分析 -->
-      <div class="yb-flex-center" v-show="$utils.is_show_sr_flg(match_info)" @click="sr_click_handle">
+      <div class="yb-flex-center" v-show="$is_show_sr_flg(match_info)" @click="sr_click_handle">
         <icon size="14px" name="icon-signal" />
         <q-tooltip v-if="version_name == 'zhuanye'" anchor="top middle" self="center middle" :content-style="tooltip_style">{{$root.$t('common.analysis')}}</q-tooltip>
       </div>
@@ -110,8 +110,8 @@ export default {
       const away_score = _.get(this.main_score,'away',0);
       let scoring = false
       if (
-        this.$utils.is_eports_csid(csid) && // 电竞赛事
-        this.$utils.get_match_status(ms, [ 110 ]) // 且为滚球（进行中）状态
+        this.$is_eports_csid(csid) && // 电竞赛事
+        this.$get_match_status(ms, [ 110 ]) // 且为滚球（进行中）状态
       ) {
         // 电竞未开赛 展示为 第一局
         const mmp_state = mmp || 1
@@ -181,7 +181,7 @@ export default {
       
       clearTimeout(this.back_to_timer)
       this.back_to_timer = setTimeout(() => {
-        this.$utils.redirect_router('/home')
+        this.$redirect_router('/home')
         let time = Date.now()
         
         this.set_play_media({

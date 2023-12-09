@@ -99,7 +99,7 @@ import _ from 'lodash';
 import {gtag_config_send,
 gtag_view_send,
 gtag_event_send,
-zhuge_event_send  ,format_time_zone_time ,is_time_limit } from "project_path/src/core/index.js"
+send_zhuge_event  ,format_time_zone_time ,is_time_limit } from "project_path/src/core/index.js"
 
 export default {
   name: "activity_task",
@@ -298,7 +298,7 @@ export default {
                   eventLabel = "H5_幸运盲盒页签";
                 }
                 if (eventLabel) {
-                  zhuge_event_send(eventLabel, this.get_user);
+                  send_zhuge_event(eventLabel, this.get_user);
                 }
               }
             }

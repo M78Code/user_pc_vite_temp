@@ -13,7 +13,7 @@
 import { api_common, api_analysis } from "src/api";
 import lodash_ from "lodash";
 import { ref } from "vue";
-import { SessionStorage, sprite_images_postion } from "src/output/module/constant-utils.js";
+import { SessionStorage, sprite_images_postion } from "src/output/module/constant-js";
 import {
   useMittEmit,
   MITT_TYPES,

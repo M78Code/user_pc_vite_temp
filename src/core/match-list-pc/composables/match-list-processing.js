@@ -5,7 +5,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { MenuData }  from "src/output/module/menu-data.js";
 
-import {   match_collect_status } from "./match-list-collect.js";
+import {   match_collect_status, set_collect_count } from "./match-list-collect.js";
 
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";

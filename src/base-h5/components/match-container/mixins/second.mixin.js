@@ -546,7 +546,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
 
   // 滚动次要玩法选中项到屏幕显示区域
   nextTick(() => {
-    utils.tab_move(sub_i, sub_play_scroller.value, sub_play_scroll_item.value)
+    tab_move(sub_i, sub_play_scroller.value, sub_play_scroll_item.value)
   })
 
   if (item && item.title && item.id && operate_type !== 'is-auto') {   // 解决bug 24153
@@ -643,7 +643,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
       "玩法集ID": '',
       "区域位置": "主列表"
     }
-    utils.zhuge_event_send('TY_H5_足球_玩法分类导航_点击', UserCtr, zhugeObj)
+    send_zhuge_event('TY_H5_足球_玩法分类导航_点击', UserCtr, zhugeObj)
   }
   save_second_play_mid_map_unfold_status(item);
   if (item.id == 17) {

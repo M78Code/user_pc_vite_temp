@@ -10,8 +10,8 @@
     <div
       v-show="route.params.video_size != 1"
       class="serach-wrap column"
-      :style="{ right: `${search_width}px`, paddingRight: `${utils.is_iframe ? 10 : 14}px`}"
-      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': utils.is_iframe }"
+      :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
+      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
     >
       <!-- <search-input v-model:show_type="show_type" /> -->
       <!-- 遮罩层样式.bottom-wrap -->

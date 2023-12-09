@@ -8,7 +8,7 @@
       <span v-if="detail_data.ms == 0">
         <span v-if="!start_time_other">
           <!-- {{(new Date(+detail_data.mgt)).Format(i18n_t('time3'))}} -->
-          {{utils.format_time_zone(+detail_data.mgt).Format(i18n_t('time3'))}}
+          {{format_time_zone(+detail_data.mgt).Format(i18n_t('time3'))}}
         </span>
         <span v-else>
           {{i18n_t("list.after_time_start",[longTime_other])}}

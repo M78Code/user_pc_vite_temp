@@ -23,7 +23,7 @@
 <script setup>
 import { ref, computed, inject } from 'vue';
 
-import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
+import { utils_info } from 'src/core/utils/common/module/match-list-js';
 import { get_match_status } from 'src/core/utils/common/index'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
@@ -241,4 +241,4 @@ function getCurState(hipo) {
     height: 100%;
   }
 }
-</style>src/core/utils/common/module/match-list-utils.js
+</style>src/core/utils/common/module/match-list-js

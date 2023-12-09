@@ -4,5 +4,9 @@
  */
 export const GLOBAL_CONSTANT={
     //  电竞图片域名
-    E_SPORTS_DOMAIN_IMG:''
+    E_SPORTS_DOMAIN_IMG:'',
+     // 是否加载播放器js
+    IS_LOAD_PLAYER_JS:false,
+      // 是否已加载视频动画资源
+  IS_LOAD_VIDEO_RESOURCES:false,
 }

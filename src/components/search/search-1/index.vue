@@ -101,7 +101,7 @@ const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe);
+const is_iframe = ref(is_iframe);
 /** 左侧列表显示形式 normal：展开 mini：收起 */
 const main_menu_toggle = ref(MenuData.main_menu_toggle)
 

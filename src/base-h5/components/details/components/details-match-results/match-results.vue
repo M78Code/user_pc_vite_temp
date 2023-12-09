@@ -114,7 +114,7 @@ const props = defineProps({
   // },
   onMounted (() => {
     if (analysis_detail.value) {
-      analysis_detail.value.style.minHeight = window.innerHeight - utils.rem(1.24) + 'px';
+      analysis_detail.value.style.minHeight = window.innerHeight - rem(1.24) + 'px';
     }})
 </script>
 

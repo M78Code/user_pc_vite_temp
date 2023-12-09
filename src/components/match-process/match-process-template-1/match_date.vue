@@ -53,7 +53,7 @@
 
       <!-- 显示:00:00 || 节制  -->
       <span v-show="[0, 2].includes(inplay_match_type)">{{
-       utils.counting_time_ctr_show_format(match, inplay_match_content)
+       counting_time_ctr_show_format(match, inplay_match_content)
       }}</span>
     </template>
   </div>

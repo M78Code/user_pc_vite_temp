@@ -17,7 +17,7 @@
             <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
               <template v-if="ol_item.os == 1">
                 <div @click="go_to_bet(ol_item)"
-                     :class="[{'win':utils.calc_win(ol_item.result),'active-play':get_bet_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
+                     :class="[{'win':calc_win(ol_item.result),'active-play':get_bet_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
                      :key="index2" class="play-box">
                   <div class="remark">{{olitem_name(ol_item)}}</div>
                   <div>

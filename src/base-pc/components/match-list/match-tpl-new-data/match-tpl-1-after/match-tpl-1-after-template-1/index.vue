@@ -113,7 +113,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 // useRegistPropsHelper(component_symbol, need_register_props)
-import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
+import { utils_info } from 'src/core/utils/common/module/match-list-js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
@@ -461,4 +461,4 @@ onMounted(() => {
     border-right: none !important;
   }
 }
-</style>src/core/utils/common/module/match-list-utils.js
+</style>src/core/utils/common/module/match-list-js

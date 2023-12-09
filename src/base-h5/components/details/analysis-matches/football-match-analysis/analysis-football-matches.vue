@@ -97,7 +97,7 @@ export default defineComponent({
       nextTick(() => {
         if (analysis_football_matches.value) {
           // TODO: utils后续修改调整
-          analysis_football_matches.value.style.minHeight = window.innerHeight - utils.rem(0.84) + 'px'; ;
+          analysis_football_matches.value.style.minHeight = window.innerHeight - rem(0.84) + 'px'; ;
         }
     })
     createTabds();

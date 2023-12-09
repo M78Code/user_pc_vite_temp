@@ -22,6 +22,6 @@
        }
     }
     if(lcm_name){
-    //  this.$utils.send_zhuge_event(`PC_${lcm_name}_投注成功`, {"成单栏目类型": lcm_name});
+    //  this.$send_zhuge_event(`PC_${lcm_name}_投注成功`, {"成单栏目类型": lcm_name});
     }
   }
