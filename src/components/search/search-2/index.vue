@@ -10,8 +10,8 @@
     <div
       v-show="route.params.video_size != 1"
       class="serach-wrap column"
-      :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
-      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
+      :style="{ right: `${search_width}px`, paddingRight: `${utils_info.is_iframe ? 10 : 14}px`}"
+      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': utils_info.is_iframe }"
     >
       <!-- <search-input v-model:show_type="show_type" /> -->
       <!-- 遮罩层样式.bottom-wrap -->
@@ -53,6 +53,7 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, defineComponent,watch, defineProps } from "vue";
 import lodash from "lodash";
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';

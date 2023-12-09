@@ -191,6 +191,7 @@ export default {
   data() {
     return {
       compute_css_obj,
+      filterHeader,
       // 菜单数据
       // menu_data: $menu.menu_data,
       i18n_t,

@@ -6,15 +6,16 @@
  * @Description:  
 -->
 <template>
-    <div class="search-tab-wap" v-show="!Array.isArray(menu_lv2) && [401,1016,1013,1011,1012].includes(+menu_lv2?.mi)">
+    <!-- <div class="search-tab-wap" v-show="!Array.isArray(menu_lv2) && [401,1016,1013,1011,1012].includes(+menu_lv2?.mi)"> -->
+    <div class="search-tab-wap">
     <!-- <div class="search-tab-wap"> -->
         <div class="search-tab-content">
             <ul class="search-tab-content-ul">
-                <li ref="searchTab" :class="{ active: activeOn === item.tid }" v-for="(item, index) in dataList" :key="index"
+                <li ref="searchTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
                     @click="changeTab(item.tid,index,$event)">
                     <!-- <img v-show="item.img" :src="item.img" /> -->
-                    <span v-if="+item.tid" class="sport-icon-wrap"
-                      :style="compute_css_obj({key: activeOn === item.tid ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
+                    <span v-if="item.tid !== '0'" class="sport-icon-wrap"
+                      :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
                     {{ item.name }}
                 </li>
             </ul>
@@ -47,9 +48,9 @@
 import { ref } from "vue";
 import search from "./img/search.svg";
 import {scrollMenuEvent} from "../utils";
-import { useMittEmit, MITT_TYPES } from "src/output/index.js";
-import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
-import  screenModal from './screen-modal.vue'
+// import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import  screenModal from './screen-modal.vue';
+// import { MenuData } from "src/output/index.js";
 import { compute_css_obj,league_sprite_images_postion } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({
@@ -125,7 +126,7 @@ const props = defineProps({
 const drawerRight = ref(false)
 const searchTab = ref(null)
 
-const activeOn = ref(props.defaultVal || '0');//默认值
+const activeOn = ref(props.defaultVal || 0);//默认值
 const league_data = ref([])
 /**
  * @description: 联赛转化背景
@@ -148,8 +149,8 @@ const select_change = (value) => {
  * @param {*} val
  */
 const changeTab = (tid,i,event) => {
-    if(activeOn.value === tid)return;
-    activeOn.value = tid;
+    if(activeOn.value === i)return;
+    activeOn.value = i;
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
     if (tid === '0') {
         MatchMeta.set_origin_match_data({})
@@ -161,7 +162,7 @@ const changeTab = (tid,i,event) => {
  * 初始化滚动条
  */
  const searchTabMenu = () =>{
-    activeOn.value = '0';
+    activeOn.value = 0;
     scrollMenuEvent(searchTab.value[0],".search-tab-content-ul",".active");
 }
 defineExpose({searchTabMenu});

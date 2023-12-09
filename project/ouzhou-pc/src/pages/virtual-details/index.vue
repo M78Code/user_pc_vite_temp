@@ -1,8 +1,8 @@
 <template>
-  <div class="detail-page" v-if="!detail_loading">
+  <div class="detail-page" v-show="!detail_loading">
     <div class="match-detail-container">
       <div class="match-detail-bread">
-        <!-- 详情页面包屑 -->
+        <!-- vr 详情页面包屑 -->
         <breadcrumbs :detail_info="detail_info || {}" />
         <div class="bread-right">
           <!-- <img
@@ -105,7 +105,7 @@
       <analysis :detail_info="detail_info || {}" />
     </div> -->
   </div>
-  <div class="detail-loading" v-if="detail_loading">
+  <div class="detail-loading" v-show="detail_loading">
     <loading></loading>
   </div>
 </template>
