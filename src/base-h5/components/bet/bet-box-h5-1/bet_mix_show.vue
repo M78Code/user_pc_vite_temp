@@ -187,16 +187,12 @@
 </template>
 
 <script setup>
-
-// import {odd_convert} from "src/output/index.js";
-// import betting from 'src/core/bet/common-helper/index.js';
-// import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
+ 
 import betSingleDetail from './bet_single_detail.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
-// import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
+ 
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-
-import { calc_bifen, format_odds } from "src/output/index.js";
+ 
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { compute_value_by_cur_odd_type } from "src/output/index.js"
 import { useMittOn,compute_img_url,UserCtr, useMittEmit, MITT_TYPES } from "src/output/index.js"

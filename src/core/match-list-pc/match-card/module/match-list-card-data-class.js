@@ -1,6 +1,6 @@
 import { reactive, ref } from "vue";
 import lodash from 'lodash';
-import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
+import {choose_config} from 'src/output/module/constant-utils.js'
 
 /**
  * 列表表征数据存放实例

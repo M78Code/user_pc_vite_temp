@@ -159,10 +159,12 @@ const computed_process_name = computed(() => {
     return '';
   }
   let csid = lodash.get(props, 'match.csid')
-  let mmp = lodash.get(props, 'match.mmp')
+  let mmp = lodash.get(props, 'match.mmp', '')
   let mle = lodash.get(props, 'match.mle')
+
   let process_name = get_mmp_name(csid, mmp) || "";
   // 即将开赛
+
   if (lodash.get(props, 'match.ms') == 110) {
     process_name = i18n_t("common.match_soon");
   }

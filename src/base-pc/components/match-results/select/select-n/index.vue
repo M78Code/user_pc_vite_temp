@@ -67,7 +67,7 @@
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import { onMounted, onUnmounted, ref,watch,computed } from "vue";
 import { GlobalSwitchClass} from "src/output/index.js";
-import lodash from "lodash";
+import { throttle } from "lodash";
 const props = defineProps({
   // 当前选中的球种
   sportType: {
@@ -134,7 +134,7 @@ const showOption = (type) => {
  * @param String item 球种名称
  */
 
-const selectSport = lodash.debounce((item,index) => {
+const selectSport = lodash.throttle((item,index) => {
   sport.value = item;
   active_sport.value = index;
   // console.error('sportsport',sport)
