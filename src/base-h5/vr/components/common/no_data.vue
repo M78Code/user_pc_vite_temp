@@ -130,7 +130,7 @@ export default {
   },
   computed: {
     // ...mapGetters(['get_theme']),
-    get_theme(){}
+    get_theme(){ return 'theme01' }
   },
   methods: {
     refresh_data(){

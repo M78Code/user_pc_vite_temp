@@ -63,7 +63,7 @@
               <!--雪碧图-->
               <div
                 v-else
-                class="team-icon-w" v-img="([_.get(match,'homeUrl'), _.get(match,'t1FirstWd'),_.get(match,'csid')])"
+                class="team-icon-w" v-img="([lodash.get(match,'homeUrl'), lodash.get(match,'t1FirstWd'),lodash.get(match,'csid')])"
               />
               <div class="team-title">{{match.homeName}}</div>
             </div>
@@ -91,7 +91,7 @@
               <!--雪碧图-->
               <div
                 v-else
-                class="team-icon-w" v-img="([_.get(match,'awayUrl'), _.get(match,'t2FirstWd'),_.get(match,'csid')])"
+                class="team-icon-w" v-img="([lodash.get(match,'awayUrl'), lodash.get(match,'t2FirstWd'),lodash.get(match,'csid')])"
               />
               <div class="team-title">{{match.awayName}}</div>
             </div>
@@ -283,7 +283,7 @@ export default {
   computed:{
     // ...mapGetters(['get_lang', 'get_theme']),
     get_lang(){return 'zh'},
-    get_theme(){return ''},
+    get_theme(){return 'theme01'},
     stage_result(){
       let result = "";
       // teamGroup 阶段 GROUPS 小组赛  Q16 32强 Q8 16强 Q4 8强 SEMIFINAL 半决赛  FINAL 决赛

@@ -59,6 +59,8 @@ import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_pa
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { debounce } from "lodash";
+
 export default {
   mixins:[common,virtual_sports_mixin],
   name:'virtual_sports_details',
@@ -137,8 +139,8 @@ export default {
        mid: this.matchid || mid_,
     }
     api_v_sports.get_virtual_match_detail(parma).then(res => {
-      let code = _.get(res,'code');
-      let data = _.get(res,'data');
+      let code = lodash.get(res,'code');
+      let data = lodash.get(res,'data');
       if(code == 200 && data){
         this.init_match_fields(data);
         this.match = data;
@@ -163,7 +165,7 @@ export default {
     .catch(err => {
       console.error(err)
     });
-    this.cancel_ref = this.debounce(this.cancel_ref,200)
+    this.cancel_ref = debounce(this.cancel_ref,200)
   },
   destroyed() {
     this.debounce_throttle_cancel(this.cancel_ref);
@@ -255,7 +257,7 @@ export default {
           if(!m_o_video) return;
           if(this.current_match && (this.current_match.batchNo == m_o_video.batchNo ||
             this.current_match.mid == m_o_video.mid) ){
-            Object.assign(this.current_match,_.cloneDeep(m_o_video));
+            Object.assign(this.current_match,lodash.cloneDeep(m_o_video));
           }
           if(this.current_match){
             this.current_match.start_now_sub = Number(this.current_match.mgt) - this.get_now_server();
@@ -303,7 +305,7 @@ export default {
 
               if(!detail_setted){
                 detail_setted = true;
-                this.set_current_gotodetail_match(_.cloneDeep(this.current_match));
+                this.set_current_gotodetail_match(lodash.cloneDeep(this.current_match));
               }
 
             });
@@ -383,7 +385,7 @@ export default {
           }
           if(!detail_setted){
             detail_setted = true;
-            this.set_current_gotodetail_match(_.cloneDeep(this.current_match));
+            this.set_current_gotodetail_match(lodash.cloneDeep(this.current_match));
           }
         });
 

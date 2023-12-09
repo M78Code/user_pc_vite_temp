@@ -208,9 +208,9 @@ export default {
         else{
           if(!this.current_league) return;
           let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
-          let match_list_map = _.cloneDeep(this.get_prev_v_sports);
+          let match_list_map = lodash.cloneDeep(this.get_prev_v_sports);
           if(!match_list_map) match_list_map = {};
-          match_list_map[p_key] = _.cloneDeep(this.virtual_match_list);
+          match_list_map[p_key] = lodash.cloneDeep(this.virtual_match_list);
           this.set_prev_v_sports(match_list_map);
           this.no_virtual_match = false;
 
@@ -383,14 +383,14 @@ export default {
 
       let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
       //赛事列表
-      let match_list = _.cloneDeep(this.get_prev_v_sports[p_key]);
+      let match_list = lodash.cloneDeep(this.get_prev_v_sports[p_key]);
       if(match_list){
         match_list.forEach(m => {
           m.mhs = 11;
         });
         this.virtual_match_list = match_list;
         this.sub_nav_changed({
-          nav:_.cloneDeep(this.virtual_match_list[0]),
+          nav:lodash.cloneDeep(this.virtual_match_list[0]),
           i:0
         });
       }
@@ -399,11 +399,11 @@ export default {
         return;
       }
       //当前赛事
-      let match = _.cloneDeep(this.get_prev_v_sports_params[p_key]);
+      let match = lodash.cloneDeep(this.get_prev_v_sports_params[p_key]);
       if(match){
         match.match_status = 2;
         this.is_video_playing = false;
-        this.current_match = _.cloneDeep(match);
+        this.current_match = lodash.cloneDeep(match);
         if(match_list && match_list.length){
           let params = {mids:match.mid};
           api_v_sports.get_virtual_match_result(params).then(res => {
@@ -517,7 +517,7 @@ export default {
         dom_stage.user_destroy_resource();
       }
       this.gen_video_api_cache_key();
-      this.set_current_batch(_.cloneDeep(data));
+      this.set_current_batch(lodash.cloneDeep(data));
       if(this.sub_menu_type == 1004){
         useMittEmit(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, 0)
       }
@@ -606,7 +606,7 @@ export default {
         if(res.code == 200){
           if(res.data && res.data.detail && Object.keys(res.data.detail).length){
             if(!is_no_match_data){
-              let video_data = _.cloneDeep(res.data);
+              let video_data = lodash.cloneDeep(res.data);
               this.set_basketball_video_data(video_data);
               this.set_video_process_data(video_data);
               useMittEmit(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,res.data);
@@ -662,7 +662,7 @@ export default {
         api_common.get_Video_MaxTime(params).then(res => {
           let res_data = null;
           if (res.code == 200) {
-            res_data = _.get(res,'data');
+            res_data = lodash.get(res,'data');
             let totalTime = res_data[params.tid];
             if(totalTime){
               if(!this.video_pro_maxtime){
@@ -726,7 +726,7 @@ export default {
             if(this.current_match.mmp == "INGAME"){
               if(n_title_list.length == 1 && this.no_title_list.length > 1){
                 let f_b_no = n_title_list[0].batchNo;
-                let found_i = _.findIndex(this.no_title_list,{batchNo:f_b_no});
+                let found_i = lodash.findIndex(this.no_title_list,{batchNo:f_b_no});
                 if(found_i > -1){
                   return;
                 }
@@ -758,9 +758,9 @@ export default {
             this.append_match_result(match_list,this.match_list_by_no);
 
             //赛事列表
-            let cache_dict = _.cloneDeep(this.get_prev_v_sports);
+            let cache_dict = lodash.cloneDeep(this.get_prev_v_sports);
             let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
-            cache_dict[p_key] = _.cloneDeep(this.virtual_match_list);
+            cache_dict[p_key] = lodash.cloneDeep(this.virtual_match_list);
             this.set_prev_v_sports(cache_dict);
             useMittEmit(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED,match_list);
           }
@@ -804,7 +804,7 @@ export default {
             if(res.code == 200){
               if(res.data && res.data.detail && Object.keys(res.data.detail).length){
                 get_data = true;
-                let copied_video = _.cloneDeep(res.data);
+                let copied_video = lodash.cloneDeep(res.data);
                 this.set_basketball_video_data(copied_video);
                 this.set_video_process_data(copied_video);
                 useMittEmit(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,copied_video);
@@ -834,7 +834,7 @@ export default {
 
         if(this.get_video_process_data.batchNo == batchNo){
           let p_data_detail = this.get_video_process_data.detail;
-          let detail_copied = _.cloneDeep(p_data_detail);
+          let detail_copied = lodash.cloneDeep(p_data_detail);
           if(detail_copied && detail_copied[match.mid]){
             got_data = true;
             Object.assign(match,detail_copied[match.mid]);

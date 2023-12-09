@@ -159,7 +159,7 @@ export default {
           this.basketball_end_time = this.get_rest_time_str(600000 - parseInt(start_time * 90))
           this.basketball_line_width = parseInt(start_time / 6000 * 10000) / 100
 
-          let score = _.get(this.basketball_score,`${this.current_match.mid}.score`) || [0,0]
+          let score = lodash.get(this.basketball_score,`${this.current_match.mid}.score`) || [0,0]
           this.score.home = Math.ceil(this.basketball_line_width / 100 * score[0])
           this.score.away = Math.ceil(this.basketball_line_width / 100 * score[1])
 
@@ -180,10 +180,10 @@ export default {
         mids:this.current_match.mid
       }
       api_v_sports.get_v_match_score_api(params).then( res => {
-        let code = _.get(res,'code')
-        let basketball_score = _.get(res,'data')
+        let code = lodash.get(res,'code')
+        let basketball_score = lodash.get(res,'data')
         if(code == 200 && basketball_score[this.current_match.mid]){
-          _.each(basketball_score, item => {
+          lodash.each(basketball_score, item => {
             if(item.S1){
               item.score = item.S1.split(':')
             }
@@ -191,7 +191,7 @@ export default {
           this.basketball_score = basketball_score
           let rest_time = this.get_now_server() - this.current_match.mgt
           if(rest_time > 6000){
-            let score = _.get(this.basketball_score,`${this.current_match.mid}.score`) || [0,0]
+            let score = lodash.get(this.basketball_score,`${this.current_match.mid}.score`) || [0,0]
             this.score.home = score[0]
             this.score.away = score[1]
           }
@@ -220,8 +220,8 @@ export default {
         tid: this.current_match.tid
       }
       api_v_sports.get_virtual_video_process(params).then(res => {
-        if(_.get(res,'code') == 200){
-          let score_list = _.get(res,`data.detail.${this.current_match.mid}.list`) || []
+        if(lodash.get(res,'code') == 200){
+          let score_list = lodash.get(res,`data.detail.${this.current_match.mid}.list`) || []
           if(score_list.length > 0){
             this.basketball_score = score_list[score_list.length-1]
 

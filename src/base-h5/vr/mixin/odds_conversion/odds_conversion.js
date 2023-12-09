@@ -99,7 +99,7 @@ export default {
         if(other_items.length){
           // 合并数据，根据id去重
           const arr = [...other_items,...this.other_item_list]
-          const uniq_arr = _.uniqWith(arr, (arr_val, oth_val)=>{
+          const uniq_arr = lodash.uniqWith(arr, (arr_val, oth_val)=>{
             if(arr_val.id_ === oth_val.id_ ) {
               return true
             }
@@ -285,7 +285,7 @@ export default {
       }
       
       // 赔率类型错误
-      let index = _.findIndex(this.odds_constant, o => {
+      let index = lodash.findIndex(this.odds_constant, o => {
         return o.value == odd_type;
       });
       val = this.calc_odds(val,csid);

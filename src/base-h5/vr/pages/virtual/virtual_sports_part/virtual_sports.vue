@@ -129,6 +129,7 @@ import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_p
 import virtualSportsTab from "src/base-h5/vr/components/virtual_sports_tab.vue"
 import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
 import { utils } from "src/core/utils/common/module/utils.js";
+import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue"
 import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
 import result_page from "src/base-h5/vr/pages/result/result_page.vue"
@@ -197,12 +198,12 @@ export default {
   },
   created() {
     this.timer1_ = 0;
-    utils.load_player_js()
+    pre_load_video.load_player_js()
   },
   mounted(){
     this.emitters = [
       useMittOn(MITT_TYPES.EMIT_ARRIVED10, this.arrived10_handle).off,
-      useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2, match_ended_status2_handle).off,
+      useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2, this.match_ended_status2_handle).off,
     ]
     this.match_ended_status2_handle();
   },
@@ -389,7 +390,7 @@ export default {
         if(!current_league){
           current_league = this.tab_items[0];
         }
-        this.set_current_league(_.cloneDeep(current_league));
+        this.set_current_league(lodash.cloneDeep(current_league));
       }else{
         this.set_current_league({});
       }
@@ -494,7 +495,7 @@ export default {
         }
 
         let current_league = this.tab_items[this.tab_item_i];
-        this.set_current_league(_.cloneDeep(current_league));
+        this.set_current_league(lodash.cloneDeep(current_league));
         // this.tab_item_click_handle(this.tab_item_i,'is_force');
       }
     },
