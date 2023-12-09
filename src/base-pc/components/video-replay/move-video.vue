@@ -687,4 +687,4 @@ const play_video = () => {
   color: red;
   background-color: rgba(255, 255, 255, 0.8);
 }
-</style>src/core/utils/common/module/utils.js
+</style>

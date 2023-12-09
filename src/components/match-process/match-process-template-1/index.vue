@@ -398,5 +398,4 @@ onUnmounted(() => {
 .c-match-process{
     position: relative;
 }
-</style>
-src/output/indexsrc/core/format/common/module/format-msc.js
+</style>src/core/format/common/module/format-msc.js

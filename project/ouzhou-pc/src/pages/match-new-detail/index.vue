@@ -495,4 +495,4 @@ export default {
   cursor: pointer;
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
-</style>src/output/index.js
+</style>

@@ -157,4 +157,3 @@ import { project_name } from "src/output/index.js"
   }
 }
 </style>
-src/output

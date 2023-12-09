@@ -261,5 +261,4 @@ onMounted(() => {
         background: red;
     }
 }
-</style>
-src/outputsrc/output
+</style>src/output

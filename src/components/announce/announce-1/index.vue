@@ -224,4 +224,3 @@ onMounted(() => {
 
 /** 公告栏内容 -E*/
 </style>
-src/output/index.js

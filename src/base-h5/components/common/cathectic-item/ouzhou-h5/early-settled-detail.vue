@@ -142,4 +142,4 @@ template {
       font-size: 0.24rem;
     }
   }
-</style>src/output/index.js
+</style>

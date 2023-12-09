@@ -137,4 +137,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>src/core/utils/common/index.js
+<style lang="scss" scoped></style>

@@ -47,4 +47,4 @@ export default defineComponent({
   overflow-x: hidden;
   overflow-y: auto;
 }
-</style>src/core/utils/common/index.js
+</style>

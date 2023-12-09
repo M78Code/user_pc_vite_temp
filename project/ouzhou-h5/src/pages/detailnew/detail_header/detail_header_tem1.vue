@@ -584,4 +584,3 @@ watch(()=>props.get_match_detail?.mle,
 }
 
 </style>
-src/output

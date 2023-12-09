@@ -269,4 +269,3 @@ import { project_name } from "src/output/index.js"
   }
 }
 </style>
-src/outputsrc/output/index.js

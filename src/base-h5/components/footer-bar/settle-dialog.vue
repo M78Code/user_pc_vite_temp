@@ -202,4 +202,3 @@ import {compute_img_url} from "src/output/index.js"
   }
 }
 </style>
-src/output

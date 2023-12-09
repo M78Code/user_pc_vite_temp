@@ -243,4 +243,3 @@ export default {
   border-bottom-right-radius: 0.1rem;
 }
 </style>
-src/output/index.js

@@ -305,4 +305,4 @@ function toDetails(item){
     margin-right: 0;
   }
 }
-</style>src/output/index.js
+</style>

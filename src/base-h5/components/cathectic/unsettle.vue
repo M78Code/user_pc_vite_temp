@@ -415,4 +415,4 @@ const props = defineProps({
 .early2 {
   background-image: url($SCSSPROJECTPATH + "/image/svg/select_a.svg");
 }
-</style>src/output/index.js
+</style>

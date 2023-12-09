@@ -141,4 +141,3 @@ const handle_zhiding = (params) => {
   margin-right: 0.06rem;
 }
 </style>
-src/outputsrc/core/utils/common/index.js
