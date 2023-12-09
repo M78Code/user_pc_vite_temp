@@ -22,7 +22,7 @@ import {
 } from 'src/output/module/match-data-base.js'
 
 
-import { useMittEmit, MITT_TYPES,project_name,} from "src/output/module/constant-js"
+import { useMittEmit, MITT_TYPES,project_name,} from "src/output/module/constant-utils.js"
 import {  MenuData,} from "src/output/module/menu-data.js"
 
 class MatchMeta {

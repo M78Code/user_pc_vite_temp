@@ -9,7 +9,7 @@ import { MenuData } from 'src/output/module/menu-data.js'
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
 import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from 'src/output/module/match-data-base.js'
 import { MatchDetailCalss } from 'src/output/module/project-single.js'
-import { utils,is_virtual_csid,is_eports_csid } from 'src/output/module/constant-js'
+import { utils,is_virtual_csid,is_eports_csid } from 'src/output/module/constant-utils.js'
 //引入列表跳详情中间件 
 import  MatchListDetailMiddlewareClass  from "src/core/match-detail/match-detail-pc/match-list-detail-pc/index.js"
 export default {

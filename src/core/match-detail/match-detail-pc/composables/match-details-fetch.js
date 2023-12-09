@@ -12,7 +12,7 @@ import { update_match_time } from "src/core/bet/common-helper/module/common-spor
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
 } from "src/output/module/match-data-base.js";
-import { is_eports_csid } from 'src/output/module/constant-js'
+import { is_eports_csid } from 'src/output/module/constant-utils.js'
 import { GlobalSwitchClass } from 'src/core/global/global.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
