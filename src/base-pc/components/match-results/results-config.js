@@ -14,7 +14,7 @@ import {
 } from "vue";
 import { api_common,api_analysis } from "src/api/";
 import lodash from "lodash";
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import { useRoute, useRouter } from "vue-router";
 import { format_day,is_eports_csid } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -32,7 +32,7 @@ export const useGetResultConfig = () => {
   const route = useRoute();
   const router = useRouter();
   const  sport =ref(null); //体育下拉框选中项
-  const store_state = store.getState();
+  // const store_state = store.getState();
   const state = reactive({
     model: {
       from: formatTime(new Date(new Date() - 86400000), "yyyy/MM/dd"),
