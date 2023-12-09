@@ -89,3 +89,18 @@ export const debounce_throttle_cancel = (fun) => {
     fun.cancel();
   }
 }
+
+
+
+  /**
+   * 阻止用户频繁点击切换
+   */
+  export function  is_time_limit(time1=500){
+    let flag = true;
+    let now = new Date().getTime();
+    if(!this.change_time || (now - this.change_time) > time1){
+      flag = false;
+      this.change_time = now;
+    }
+    return flag;
+  }

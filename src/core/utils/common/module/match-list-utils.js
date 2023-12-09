@@ -76,29 +76,4 @@ export const get_media_icon_index = (type) => {
  * @description 检测视频地址是否可用
  */
 
-export const url_exists = (url) => {
-	var http = new XMLHttpRequest();
-	http.open("HEAD", url, false);
-	http.send();
-	return http.status != 404;
-};
-
-/**
- * 红猫赛事显示倒计时优化
- * @param  match 赛事信息
- * @param  counting_time 显示时间
- *
- */
-export const counting_time_ctr_show_format = (match, counting_time) => {
-	// counting_time 格式00:00
-	let counting_time_ = counting_time;
-	// 红猫赛事只显示分钟不显示秒
-	if (
-		get(match, "cds") == "RC" &&
-		get(match, "csid") == 1 &&
-		counting_time
-	) {
-		counting_time_ = get(counting_time_.split(":"), "[0]");
-	}
-	return counting_time_;
-};
+ 

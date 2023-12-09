@@ -121,7 +121,7 @@ export default {
     click_popup(e){
       let  height =  ['15minutes','5minutes'].includes(this.type) ? 236 : 105
       let bottom = e.target.getBoundingClientRect().bottom
-      let margin = this.$getScrollbarWidth()
+      let margin = getScrollbarWidth()
       let innerHeight = window.innerHeight - margin
       if (bottom + height > innerHeight) {
         this.popup_class = 'style2'
