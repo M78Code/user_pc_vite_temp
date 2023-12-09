@@ -4,8 +4,8 @@
       <template v-for="title in data.title" :key="title.otd">
         <div class="ol-column">
           <OddsTitle class="ol-title" :list="[title]"></OddsTitle>
-            <template v-for="item in data.hl[0].ol" :key="item.oid">
-              <OddOlItem :value="item" v-if="item.otd == title.otd">
+            <template v-for="item in data.hl[0].ol">
+              <OddOlItem :value="item" v-if="item.otd == title.otd" :key="item.oid">
               </OddOlItem>
             </template>
         </div>
