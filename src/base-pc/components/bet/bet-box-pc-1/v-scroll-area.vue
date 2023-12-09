@@ -58,7 +58,7 @@ const props = defineProps({
 })
 
 // 是否内嵌
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 
 const ref_bet_scroll_area_bet_list = ref(null);
 const header_height = ref(0);

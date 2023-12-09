@@ -155,7 +155,7 @@ import noData from "src/base-h5/components/common/no-data.vue";
 import virtualSkeleton from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
 import lodash from "lodash";
 import { IconWapper } from 'src/components/icon'
-import { get_now_server } from 'src/core/utils/module/other.js'
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -189,7 +189,7 @@ export default defineComponent({
   
   setup(props, evnet) {
     // 一开始就加载所需js文件
-    utils.load_player_js('old')
+    load_player_js('old')
     const { params, is_user_refresh, v_match_router_ente } = toRefs(props);
     const state = reactive({
       // 事件集合

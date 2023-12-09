@@ -150,7 +150,7 @@ const record_zhuge_point = (menu_type) => {
     eventLabel = "PC_热门赛事";
   }
   // 发送埋点事件
-  // $utils.send_zhuge_event(eventLabel);
+  // $send_zhuge_event(eventLabel);
 };
 /**
  * @Description 设置用户偏好

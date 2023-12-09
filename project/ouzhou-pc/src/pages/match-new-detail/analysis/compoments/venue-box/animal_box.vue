@@ -138,7 +138,7 @@ const get_video_url = () => {
         // this.show_type = show_type
         return;
       }
-      // let live_type = this.$utils.get_media_icon_index(media_type)
+      // let live_type = this.$get_media_icon_index(media_type)
       let live_type = 1;
 
       // 此处为最终处理后的视频url

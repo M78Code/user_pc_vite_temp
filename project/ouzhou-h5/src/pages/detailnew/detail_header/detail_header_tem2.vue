@@ -81,7 +81,7 @@ import matchCollect from "src/core/match-collect";
 import { debounce } from "quasar";
 import score_component from "./detail_header_tem1.vue";
 import NavbarSubscribe from "src/base-h5/components/top-menu/top-menu-ouzhou-1/detail-top/nav-bar-subscribe";
-import { Promise } from "licia-es";
+// import { Promise } from "licia-es";
 const props = defineProps({
   get_match_detail: {
     type: Object,

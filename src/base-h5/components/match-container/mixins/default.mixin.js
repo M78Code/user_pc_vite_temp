@@ -97,14 +97,14 @@ export default defineComponent({
     },
     //  动画按钮
     animationUrl_icon () {
-      let is_theme01 = theme.value.includes('theme-0')
+      let is_theme01 = theme.value?.includes('theme-0')
       let animationUrl_icon = is_theme01 ? animationUrl_icon_theme01 : animationUrl_icon_theme02
       return animationUrl_icon
     },
     //  视频按钮
     muUrl_icon () {
-      let is_theme01 = theme.value.includes('theme-0')
-      let is_y0 = theme.value.includes('y0')
+      let is_theme01 = theme.value?.includes('theme-0')
+      let is_y0 = theme.value?.includes('y0')
       let muUrl_icon = ''
       if (is_y0) {
         muUrl_icon = is_theme01 ? muUrl_theme01_y0 : muUrl_theme02_y0
@@ -777,7 +777,7 @@ export default defineComponent({
       const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list.msc, true)
 
       // 比分处理
-      const { home_score, away_score } = MatchUtils.get_match_score({ ...this.match_of_list, msc_obj })
+      const { home_score, away_score } = Matchget_match_score({ ...this.match_of_list, msc_obj })
 
       this.home_score = home_score
       this.away_score = away_score

@@ -32,7 +32,7 @@
 import { ref, onMounted, computed, nextTick, watch } from 'vue';
 import lodash from 'lodash';
 
-import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
+import { utils_info } from 'src/core/utils/common/module/match-list-js';
 import { get_match_status } from 'src/core/utils/common/index'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -219,4 +219,4 @@ function getCurState(hipo) {
     }
   }
 }
-</style>src/core/utils/common/module/match-list-utils.js
+</style>src/core/utils/common/module/match-list-js

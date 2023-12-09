@@ -13,7 +13,7 @@
     <div class="msg_container t_msg_container" v-if="msgItem.type == msgType.normal">
       <div class="msg_text t_msg_text">
         <span class="msg-content">{{ msgItem.content }}</span>
-        <span class="msg-time">{{$utils.formatDate(msgItem.updateTime, 'HH:mm')}}</span>
+        <span class="msg-time">{{$formatDate(msgItem.updateTime, 'HH:mm')}}</span>
       </div>
     </div>
     <div class="bet-info" v-if="msgItem.type == msgType.bet">

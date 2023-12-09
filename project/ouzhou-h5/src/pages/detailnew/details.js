@@ -251,7 +251,7 @@ export const details_main = (router, route) => {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
   };
   /*
    **监听数据仓库版本号
@@ -358,7 +358,7 @@ export const details_main = (router, route) => {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
     //初次调用成功后 赋值init未false
     get_category_list_info({
       sportId: csid.value,
@@ -438,7 +438,7 @@ export const details_main = (router, route) => {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
   }, 2000);
   /**
    * @description: RCMD_C109

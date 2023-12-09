@@ -196,7 +196,7 @@ export default defineComponent({
       if (index < 0) return
       state.sub_nav_focus_i = index
       state.sub_focus_batch_no = batchNo;
-      utils.tab_move2(state.sub_nav_focus_i, scrollBox.value)
+      tab_move2(state.sub_nav_focus_i, scrollBox.value)
       let current_sub_nav = no_title_list.value[state.sub_nav_focus_i];
 
       VirtualData.sub_nav_changed({

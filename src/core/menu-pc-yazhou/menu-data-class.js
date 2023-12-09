@@ -11,7 +11,7 @@ import {
 } from "src/core/mitt/index.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import store from "src/store-redux/index.js";
-import { SessionStorage } from "src/output/module/constant-utils.js";
+import { SessionStorage } from "src/output/module/constant-js";
 import STANDARD_KEY from "src/core/standard-key";
 
 const menu_key = STANDARD_KEY.get("menu_pc");
@@ -579,7 +579,7 @@ class MenuData {
    * @return {undefined} undefined
    */
   is_esports() {
-    // this.$utils.is_eports_csid(this.$route.params.csid)
+    // this.$is_eports_csid(this.$route.params.csid)
     return (
       this.menu_root == 2000 ||
       (this.match_list_api_config || {}).sports == "dianjing"

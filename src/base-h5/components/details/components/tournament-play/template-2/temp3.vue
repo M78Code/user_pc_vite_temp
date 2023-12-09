@@ -12,8 +12,8 @@
             <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
                 <!-- 主程序 start -->
-                <div class="play-box-style details_color warp" @click="utils.go_to_bet(ol_item)"
-                     :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':utils.calc_win(ol_item.result)}]">
+                <div class="play-box-style details_color warp" @click="go_to_bet(ol_item)"
+                     :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':calc_win(ol_item.result)}]">
                   <div class="ellipsis remark details_t_color6 fz_14" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                   <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                     {{ol_item.on || ol_item.ott}}
