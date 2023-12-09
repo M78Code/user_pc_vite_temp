@@ -78,7 +78,7 @@
 <script setup>
 // TODO: 后续修改调整
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
-import { utils, SessionStorage } from "src/output/index.js";
+import {  SessionStorage } from "src/output/index.js";
 import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
 import lodash from "lodash";
 import { useRoute, useRouter } from "vue-router";

@@ -95,7 +95,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      utils,
+      
       lodash,
       BetData,
       get_bet_list,

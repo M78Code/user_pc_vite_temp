@@ -220,7 +220,7 @@ import odds_new from "base_path/components/details/components/tournament-play/un
 import lodash from "lodash";
 import store from "src/store-redux";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
 import {reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref} from "vue";
 import {useRoute} from "vue-router"
 import {i18n_t} from "src/boot/i18n.js";
@@ -241,7 +241,7 @@ export default defineComponent({
         const store_state = store.getState()
         const route = useRoute()
         let data = reactive({
-            utils,
+            
             // 最大显示行数
             show_more_max: 5,
             show_more_switch: false,

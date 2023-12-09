@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import {utils } from 'src/output/index.js';
 import { format_time_zone_time, format_H_M } from "src/output/index.js"
 //国际化
 
@@ -29,7 +28,7 @@ export default {
       longTime: '',
       // 是否显示开赛时间
       start_time: false,
-      utils,
+      
       format_time_zone_time,
       format_H_M
     }

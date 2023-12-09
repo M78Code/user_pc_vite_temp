@@ -100,7 +100,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      utils,
+      
       is_select,
       go_to_bet,
       temp_odds

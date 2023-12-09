@@ -91,7 +91,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      utils,
+      
       is_select,
       get_odds,
       init,
