@@ -5,13 +5,13 @@
 -->
 <template>
   <div class="match-search">
-    <div class="search-top">
-      <div class="btn-group" ref="BtnGroupRef" >
+    <div class="search-top" ref="wrapRef">
+      <div class="btn-group" ref="itemWrapRef">
         <div
-          v-for="item in tab_options"
+          v-for="(item, index) in tab_options"
           :key="item.value"
           class="btn-group-item"
-          @click="tab_click(item)"
+          @click="tab_click(item, index)"
         >
           <span
             :class="{
@@ -49,7 +49,10 @@ const props = defineProps({
 });
 
 const active_value = ref("");
-const BtnGroupRef = ref(null)
+
+const wrapRef = ref(null)
+const itemWrapRef = ref(null)
+const currentIndex = ref(0)
 
 watch(
   () => props.modelValue,
@@ -61,9 +64,10 @@ const emits = defineEmits(["update:modelValue"]);
 const is_fold = ref(false);
 
 // 筛选点击
-const tab_click = (item) => {
+const tab_click = (item,  index) => {
   active_value.value = item.value;
   emits("update:modelValue", item.value);
+  currentIndex.value = index;
 };
 // 一键折叠
 const fold_odds = () => {
