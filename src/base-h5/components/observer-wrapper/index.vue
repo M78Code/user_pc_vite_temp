@@ -26,7 +26,7 @@
 import lodash from 'lodash'
 import { onMounted, computed, watch, ref } from 'vue';
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { compute_local_project_file_path, project_name } from 'src/core'
+import { compute_local_project_file_path, project_name } from 'src/output/index.js'
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
