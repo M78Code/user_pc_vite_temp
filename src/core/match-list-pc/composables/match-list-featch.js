@@ -251,6 +251,8 @@ const api_bymids = (
     // HTTP拉取最新信息合并
     api(params)
       .then((res) => {
+
+        
         set_home_loading_time_record("ok");
         // 组件和路由不匹配
         // if (page_source == "details" && page_source != "details") return;
@@ -289,9 +291,11 @@ const api_bymids = (
             MatchListData.set_list(
               match_list,
             );
-            set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
+            //只有主列表才有这项操作 计算赛事卡片
+            if(MatchListData == MatchDataWarehouse_PC_List_Common){
+              set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
+            }
           }
-          
         } else if (code == "0400500" && by_mids_fun_count++ < 3) {
           by_mids_fun();
           league_load_status = "empty";

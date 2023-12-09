@@ -29,7 +29,7 @@ export default {
     sport_id: [Number, String],
     // 选中状态
     status: {
-      type: String,
+      type:[Number, String],
       default: 2,
     },
     // 图标大小
