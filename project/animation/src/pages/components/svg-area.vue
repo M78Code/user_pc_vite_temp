@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="animation-content bg">
-      <svg_tmp :current_event_code="current_event_code"></svg_tmp>
+      <svg_tmp :height="svgHeight" :width="svgWidth" :current_event_code="current_event_code"></svg_tmp>
       <img ref="bgConainer" src="/public/animation/足球背景.png">
     </div>
   </div>
@@ -27,6 +27,8 @@ export default defineComponent({
   data() {
     return {
       isShowSvg: false,
+      svgWidth: '',
+      svgHeight: '',
     }
   },
   watch: {
@@ -44,11 +46,6 @@ export default defineComponent({
         this.svgWidth = clientWidth
         this.svgHeight = clientHeight
       }
-      this.$nextTick(() => {
-        const {clientHeight,clientWidth} = this.$refs.bgConainer
-        this.svgWidth = clientWidth
-        this.svgHeight = clientHeight
-      })
     },
     // 生成随机事件
     get_event_code () {

@@ -1,43 +1,265 @@
 const getSvgPath = (key) => {
-    return `/public/animation/svg/${key}.svg`;
+  return `/public/animation/svg/${key}.svg`
 }
 // 事件动画配置
 export const event_animation = {
-    // 危险球位置
-    dang_poss: {
-        animation_svg: '危险球位置',
-        animation_svg_path: getSvgPath(0),
-        animation_svg_tmp: 0,
-        animation_fun: '',
-        svg_config: {
-            duration: '2s',
-            repeatCount: '1', // 1 indefinite
-            fill: 'freeze',
-        }
+  // 危险球位置
+  dang_poss: {
+    animation_svg: '危险球位置',
+    animation_svg_path: getSvgPath(0),
+    svg_path_config: {
+      init: [140, 95], // 初始位置
+      beforePath: [
+        [0, 0],
+        
+        [50, 0],
+        [100, 20],
+        
+        [50, 40],
+        [110, 60],
+        
+        [35, 80],
+        [120, 100],
+        
+        [30, 120],
+        [140, 140],
+        
+        [25, 165],
+        [160, 185],
+        
+        [25, 210],
+        [-130, 210]
+      ], // Svg 路径
+      afterPathMove: 440, // 正数向右移动
+      // svg动画参数配置
+      pathAnimateParams: {
+        dur: '2s',
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        fill: 'freeze',
+        colors: ['rgba(0,0,0,.3)', "url(#gradient);rgba(0,0,0,.8)"], // 从一个颜色渐变到第二个颜色
+      },
+      // svg 文字动画参数配置
+      textAnimateParams: {
+        text: '主场进球', // 配置文字
+        from: '0', // 从第一个位置 
+        to: '100', // =》 到第二个位置
+        dur: '0.5s', // 文字动画时间
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        x: '100', // 文字初始x轴位置
+        y: '150', // 文字初始y轴位置
+        colors: ['rgba(255,255,255,0)', 'url(#gradient);rgba(255,255,255,.8)']
+      }
     },
-    // 危险进攻
-    dangerous_attack: {
-        animation_svg: '危险进攻',
-        animation_svg_path: getSvgPath(1),
-        animation_svg_tmp: 1,
-    },
-    // 安全球位置-safe_ball
-    ball_safe: {
-        animation_svg: '安全球位置',
-        animation_svg_path: getSvgPath(2),
-        animation_svg_tmp: 0,
-    },
-    // 05' - 进球-goal
-    goal: {
-        animation_svg: '进球',
-        animation_svg_path: getSvgPath(3),
-        animation_svg_tmp: 1,
-    },
-    // 进球确认
-    goal_confirm: {
-        animation_svg: '进球确认',
-        animation_svg_path: getSvgPath(4),
-        animation_svg_tmp: 0,
+    animation_svg_tmp: 0,
+    animation_fun: '',
+    svg_config: {
+      dur: '2s',
+      repeatCount: '1', // 1 indefinite
+      fill: 'freeze'
     }
-   
+  },
+  // 危险进攻
+  dangerous_attack: {
+    animation_svg: '危险进攻',
+    svg_path_config: {
+      init: [660, 95], // 初始位置
+      startInit: [500, 95], // 初始偏移
+      beforePath: [
+        [0, 0],
+        [0, 0],
+
+        [130, 0],
+        [70, 20],
+
+        [110, 40],
+        [50, 60],
+
+        [120, 80],
+        [45, 95],
+
+        [125, 120],
+        [35, 130],
+
+        [125, 165],
+        [15, 175],
+
+        [100, 210],
+        [130, 210]
+      ], // Svg 路径
+      afterPathMove: -440, // 正数向右移动
+      // svg动画参数配置
+      pathAnimateParams: {
+        dur: '2s',
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        fill: 'freeze',
+        colors: ['rgba(0,0,0,.3)', "url(#gradient);rgba(0,0,0,.8)"], // 从一个颜色渐变到第二个颜色
+      },
+      // svg 文字动画参数配置
+      textAnimateParams: {
+        text: '客场进球', // 配置文字
+        from: '520', // 从第一个位置 
+        to: '450', // =》 到第二个位置
+        dur: '0.5s', // 文字动画时间
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        x: '450', // 文字初始x轴位置
+        y: '150', // 文字初始y轴位置
+        colors: ['rgba(255,255,255,0)', 'url(#gradient);rgba(255,255,255,.8)']
+      }
+    },
+    animation_svg_path: getSvgPath(1),
+    animation_svg_tmp: 1
+  },
+  // 安全球位置-safe_ball
+  ball_safe: {
+      animation_svg: '安全球位置',
+      animation_svg_path: getSvgPath(2),
+    svg_path_config: {
+      init: [660, 95], // 初始位置
+      startInit: [500, 95], // 初始偏移
+      beforePath: [
+        [0, 0],
+        [0, 0],
+
+        [130, 0],
+        [70, 20],
+
+        [110, 40],
+        [50, 60],
+
+        [120, 80],
+        [45, 95],
+
+        [125, 120],
+        [35, 130],
+
+        [125, 165],
+        [15, 175],
+
+        [100, 210],
+        [130, 210]
+      ], // Svg 路径
+      afterPathMove: -440, // 正数向右移动
+      // svg动画参数配置
+      pathAnimateParams: {
+        dur: '2s',
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        fill: 'freeze',
+        colors: ['rgba(0,0,0,.3)', "url(#gradient);rgba(0,0,0,.8)"], // 从一个颜色渐变到第二个颜色
+      },
+      // svg 文字动画参数配置
+      textAnimateParams: {
+        text: '客场进球', // 配置文字
+        from: '520', // 从第一个位置 
+        to: '450', // =》 到第二个位置
+        dur: '0.5s', // 文字动画时间
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        x: '450', // 文字初始x轴位置
+        y: '150', // 文字初始y轴位置
+        colors: ['rgba(255,255,255,0)', 'url(#gradient);rgba(255,255,255,.8)']
+      }
+    },
+      animation_svg_tmp: 0,
+  },
+  // 05' - 进球-goal
+  goal: {
+      animation_svg: '进球',
+      animation_svg_path: getSvgPath(3),
+    svg_path_config: {
+      init: [660, 95], // 初始位置
+      startInit: [500, 95], // 初始偏移
+      beforePath: [
+        [0, 0],
+        [0, 0],
+
+        [130, 0],
+        [70, 20],
+
+        [110, 40],
+        [50, 60],
+
+        [120, 80],
+        [45, 95],
+
+        [125, 120],
+        [35, 130],
+
+        [125, 165],
+        [15, 175],
+
+        [100, 210],
+        [130, 210]
+      ], // Svg 路径
+      afterPathMove: -440, // 正数向右移动
+      // svg动画参数配置
+      pathAnimateParams: {
+        dur: '2s',
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        fill: 'freeze',
+        colors: ['rgba(0,0,0,.3)', "url(#gradient);rgba(0,0,0,.8)"], // 从一个颜色渐变到第二个颜色
+      },
+      // svg 文字动画参数配置
+      textAnimateParams: {
+        text: '客场进球', // 配置文字
+        from: '520', // 从第一个位置 
+        to: '450', // =》 到第二个位置
+        dur: '0.5s', // 文字动画时间
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        x: '450', // 文字初始x轴位置
+        y: '150', // 文字初始y轴位置
+        colors: ['rgba(255,255,255,0)', 'url(#gradient);rgba(255,255,255,.8)']
+      }
+    },
+      animation_svg_tmp: 1,
+  },
+  // 进球确认
+  goal_confirm: {
+      animation_svg: '进球确认',
+      animation_svg_path: getSvgPath(4),
+    svg_path_config: {
+      init: [660, 95], // 初始位置
+      startInit: [500, 95], // 初始偏移
+      beforePath: [
+        [0, 0],
+        [0, 0],
+
+        [130, 0],
+        [70, 20],
+
+        [110, 40],
+        [50, 60],
+
+        [120, 80],
+        [45, 95],
+
+        [125, 120],
+        [35, 130],
+
+        [125, 165],
+        [15, 175],
+
+        [100, 210],
+        [130, 210]
+      ], // Svg 路径
+      afterPathMove: -440, // 正数向右移动
+      // svg动画参数配置
+      pathAnimateParams: {
+        dur: '2s',
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        fill: 'freeze',
+        colors: ['rgba(0,0,0,.3)', "url(#gradient);rgba(0,0,0,.8)"], // 从一个颜色渐变到第二个颜色
+      },
+      // svg 文字动画参数配置
+      textAnimateParams: {
+        text: '客场进球', // 配置文字
+        from: '520', // 从第一个位置 
+        to: '450', // =》 到第二个位置
+        dur: '0.5s', // 文字动画时间
+        repeatCount: '1', // 1 indefinite 动画执行次数
+        x: '450', // 文字初始x轴位置
+        y: '150', // 文字初始y轴位置
+        colors: ['rgba(255,255,255,0)', 'url(#gradient);rgba(255,255,255,.8)']
+      }
+    },
+      animation_svg_tmp: 0,
+  }
 }
