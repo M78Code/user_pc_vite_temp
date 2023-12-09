@@ -1,6 +1,6 @@
 <template>
-  <div class="component odds-title" v-if="show">
-    <template v-for="item in data.title">
+  <div class="component odds-title" v-if="vif">
+    <template v-for="item in list">
       <div class="item ol-title">
         <span class="overflow">{{ item.osn }}</span>
       </div>
@@ -8,13 +8,16 @@
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue';
+
 
 const props = withDefaults(defineProps<{
-  data: TYPES.OddInfo
+  list: TYPES.OddTitle[]
   show?: boolean
 }>(),{
   show:true
 })
+const vif = computed(()=>props.show&&props.list?.length)
 </script>
 
 <style scoped lang="scss">
@@ -26,7 +29,7 @@ const props = withDefaults(defineProps<{
   text-wrap: nowrap;
 }
 
-.component {
+.component.odds-title {
   width: 100%;
   display: flex;
   padding: 8px 0;
