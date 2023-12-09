@@ -1369,7 +1369,14 @@ export default {
           text-overflow: ellipsis;
           white-space: nowrap;
           font-size: 12px;
-          font-weight: bold;
+          color: #1A1A1A;
+          position: relative;
+          top: -1px;
+          font-weight: 500;
+        }
+        .special{
+          font-size: 12px;
+          color: #1A1A1A;
         }
       }
 
