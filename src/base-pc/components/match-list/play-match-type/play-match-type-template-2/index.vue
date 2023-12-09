@@ -37,7 +37,7 @@
 </template>
   
 <script setup>
-import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
+import {choose_config} from 'src/output/index.js'
 import sport_icon from "src/base-pc/components/sport_icon.vue";
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';

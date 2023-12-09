@@ -1,7 +1,7 @@
 
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
-import { PLAY_LET_BALL,PLAY_GOAL,PLAY_ALL_KINDS,PLAYER_ID,PLAY_RESULT} from "src/core/constant/config/play-mapping.js";
+import { PLAY_LET_BALL,PLAY_GOAL,PLAY_ALL_KINDS,PLAYER_ID,PLAY_RESULT} from "src/output/module/constant-utils.js";
 
 
 /**

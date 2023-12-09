@@ -19,7 +19,7 @@ import {
     
  } from 'src/output/module/match-data-base.js'
 import lodash_ from "lodash"
-import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
+import { ALL_SPORT_PLAY } from "src/output/module/constant-utils.js"
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import { MenuData } from 'src/output/module/menu-data.js'
 import UserCtr from "src/core/user-config/user-ctr.js";

@@ -40,7 +40,7 @@ import betItem from "src/base-pc/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
-import { compute_sport_id } from 'src/core/constant/index.js'
+import { compute_sport_id } from 'src/output/index.js'
 import {get_match_to_map_obj} from 'src/core/match-list-pc/match-handle-data.js'
 const props = defineProps({
   // 盘口列表
