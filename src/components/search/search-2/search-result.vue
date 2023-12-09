@@ -234,7 +234,7 @@ const router = useRouter()
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
-
+let timer = null
 const search_type = ref(null)
 const keyword = ref('')
 const get_props = (props) => {
@@ -248,8 +248,8 @@ const expand_league = ref(true);
 const expand_team = ref(true)
 
 // 进行中同联赛下的赛事放在一起
-const show_bowling_list = computed(() => {
-	const obj = {}
+function show_bowling_list() {
+  const obj = {}
 	const bowling = search_data.value?.bowling || []
 	bowling.forEach(item => {
 		const {csid, tn } = item;
@@ -264,7 +264,7 @@ const show_bowling_list = computed(() => {
 		}
 	})
 	return obj;
-});
+}
 /**
  * @Description:点击滚球搜索
  * @param {string} league 点击联赛标题
@@ -363,7 +363,6 @@ function league_item_click(match) {
 	})
 }
 
-const timer = ref(null)
 /**
  * @Description:获取搜索结果数据
  * @param {string} keyword 搜索关键字
@@ -409,8 +408,8 @@ const _get_search_result = lodash.debounce((keyword, is_loading) => {
 		// console.log('res', search_data.value);
 		get_match_base_hps_by_mids();
 		let _ref_scroll = scrollRef.value;
-		clearTimeout(timer.value)
-		timer.value = setTimeout(() => {
+		clearTimeout(timer)
+		timer = setTimeout(() => {
 			// 如果是从详情页返回
 			if (search.back_keyword.keyword) {
 				nextTick(() => {
@@ -513,9 +512,9 @@ const get_odd_os = (ov) => {
 
 const {off}=useMittOn(MITT_TYPES.EMIT_SET_SEARCH_CHANGE, get_props);
 onBeforeUnmount(() => {
-	if (timer.value) {
-		clearTimeout(timer.value)
-		timer.value = null
+	if (timer) {
+		clearTimeout(timer)
+		timer = null
 	}
 	off()
 	useMittEmit(MITT_TYPES.EMIT_SET_SEARCH_CHANGE_WIDTH, {
