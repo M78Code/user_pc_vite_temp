@@ -711,7 +711,7 @@ class MatchMeta {
     assemble_15_minute_data = (payload) => {
       return payload.map((item) => {
         const { ms, mst } = item
-        const { title, isLock } = Matchget_match_15_minute_stage(ms, mst)
+        const { title, isLock } = MatchUtils.get_match_15_minute_stage(ms, mst)
         return {
           title,
           isLock,
