@@ -929,7 +929,7 @@ class MatchMeta {
       
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, target_data.map(t => t.mid))
-      const is_show_ball_title =  MatchUtils.get_match_is_show_ball_title(index, target_data)
+      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
       
       Object.assign(match, params, {
         is_show_ball_title,
