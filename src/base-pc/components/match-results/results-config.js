@@ -12,11 +12,11 @@ import {
   watch,
   nextTick
 } from "vue";
-import { api_common,api_analysis } from "src/api/";
+import { api_common, api_analysis } from "src/api/";
 import lodash from "lodash";
 // import store from "src/store-redux/index.js";
 import { useRoute, useRouter } from "vue-router";
-import { format_day,is_eports_csid } from "src/output/index.js";
+import { format_day, is_eports_csid } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 // import { axios_loop } from "src/core/http/index.js";
 // import menu_config from "src/core/menu-pc/menu-data-class.js";
@@ -31,7 +31,7 @@ import {
 export const useGetResultConfig = () => {
   const route = useRoute();
   const router = useRouter();
-  const  sport =ref(null); //体育下拉框选中项
+  const sport = ref(null); //体育下拉框选中项
   // const store_state = store.getState();
   const state = reactive({
     model: {
@@ -252,7 +252,7 @@ export const useGetResultConfig = () => {
         state.year = state._date.getFullYear();
         state.mouth = state._date.getMonth() + 1;
         state.day = state._date.getDate();
-        
+
         showDate(null, null);
         get_sportType(); //获取球种
       } else {
@@ -422,7 +422,7 @@ export const useGetResultConfig = () => {
         // 接口报错时页面展示为空
         state.load_data_state = "empty";
       });
-      
+
   };
 
   /**
@@ -437,9 +437,9 @@ export const useGetResultConfig = () => {
     // 判断两次请求之间，选择的时间范围是否有变化
     if (
       state.pournament_params.startTime !=
-        new Date(state.startDateSearch).getTime() ||
+      new Date(state.startDateSearch).getTime() ||
       state.pournament_params.endTime !=
-        new Date(`${state.endDateSearch} 23:59:59`).getTime()
+      new Date(`${state.endDateSearch} 23:59:59`).getTime()
     ) {
       state.timeChanged = true;
     } else {
@@ -675,7 +675,7 @@ export const useGetResultConfig = () => {
         .then((res) => {
           const code = lodash.get(res, "code");
           const data = lodash.get(res, "data");
-          
+
           if (code == 200 && data.length) {
             data.forEach((item) => {
               if (item && item.posrList && item.posrList.length > 0) {
@@ -735,8 +735,8 @@ export const useGetResultConfig = () => {
         .catch((err) => {
           state.details_load = "empty";
         });
-        // state.$refs.result_ref&&state.$refs.result_ref.change_current_events_type();
-        state?.$refs?.result_ref?.change_current_events_type();
+      // state.$refs.result_ref&&state.$refs.result_ref.change_current_events_type();
+      state?.$refs?.result_ref?.change_current_events_type();
       change_playback_type();
     }
   };
@@ -776,7 +776,7 @@ export const useGetResultConfig = () => {
           state.results_playback_list;
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   /**
    * @description:排序赛果
@@ -929,7 +929,7 @@ export const useGetResultConfig = () => {
     state.pournament_params.tournamentId = "";
     state.pournament_params.nameStr = "";
     state.init = true; //查询赛事
-   get_pournament(1); //联动调取联赛数据
+    get_pournament(1); //联动调取联赛数据
   };
 
   /**
@@ -975,7 +975,7 @@ export const useGetResultConfig = () => {
   const ipt_search = (data) => {
     state.pournament_params.nameStr = data[0];
     state.pournament_params.hot = data[1];
-   get_pournament(2);
+    get_pournament(2);
   };
   /**
    * @description: 开始日期选择
@@ -1051,9 +1051,9 @@ export const useGetResultConfig = () => {
     }
     let is_change =
       new Date(state.startDateSearch).getTime() !=
-        state.pournament_params.startTime ||
+      state.pournament_params.startTime ||
       new Date(`${state.endDateSearch} 23:59:59`).getTime() !=
-        state.pournament_params.endTime ||
+      state.pournament_params.endTime ||
       state.change_runninBar;
     if (state.results_params.sportType == "1" && state.is_highlights) {
       state.results_params.isPlayBack = 1;
@@ -1135,30 +1135,32 @@ export const useGetResultConfig = () => {
     }, 2000);
   };
 
-/**
- * @description: 页码变化
- * @param {Array} tableData 分页组件传过来的值
- */
-const changePage = (v) => {
-  state.results_params.page.current = v.current 
-  get_results();
-}
-/**
- * @description: 去那页
- * @param {Array} tableData 分页组件传过来的值
- */
-const goPageChange = (v) => {
-  state.results_params.page.current = v
-  get_results();
-}
-/**
- * @description: 每页多少条
- * @param {Array} tableData 分页组件传过来的值
- */
-const pageSizeChange = (v) => {
-  state.results_params.page.size = v.value
-  get_results();
-}
+  /**
+   * @description: 页码变化
+   * @param {Array} tableData 分页组件传过来的值
+   */
+  const changePage = (v) => {
+    v.current = v.current < 1 ? 1 : v.current
+    state.results_params.page.current = v.current;
+    get_results();
+  }
+  /**
+   * @description: 去那页
+   * @param {Array} tableData 分页组件传过来的值
+   */
+  const goPageChange = (v) => {
+    state.results_params.page.current = v
+    get_results();
+  }
+  /**
+   * @description: 每页多少条
+   * @param {Array} tableData 分页组件传过来的值
+   */
+  const pageSizeChange = (v) => {
+    console.error('vvvvvvvvvvv222v22')
+    state.results_params.page.size = v.value
+    get_results();
+  }
   /**
    * @description: 日期升降序
    *
@@ -1201,7 +1203,7 @@ const pageSizeChange = (v) => {
   //生成事件监听
   const { emitters_off } = useMittEmitterGenerator([
     // 球种下拉框更新选中球种
-    { type: MITT_TYPES.EMIT_CHANGE_SPORT, callback: setSport},
+    { type: MITT_TYPES.EMIT_CHANGE_SPORT, callback: setSport },
     // 下拉框选择球种
     { type: MITT_TYPES.EMIT_SElECT_SPORT, callback: choose_sport },
     // 监听是否关闭日期选择器
