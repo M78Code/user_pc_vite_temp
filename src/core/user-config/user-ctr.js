@@ -17,6 +17,7 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
+import { default_theme_key } from 'src/core/theme/index.js'
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
@@ -74,7 +75,7 @@ class UserCtr {
     // 用户语言
     this.lang = LocalStorage.get("lang");
     // 用户主题  日间版本 ，夜间版本 可能有多版本哦 不止二个
-    this.theme = LocalStorage.get("theme");
+    this.theme = LocalStorage.get("theme", default_theme_key);
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 盘口
     this.odds = {

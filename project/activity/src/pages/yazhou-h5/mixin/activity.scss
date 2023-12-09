@@ -274,7 +274,7 @@
         }
       }
     }
-    ::v-deep .pager-wrap {
+    :deep(.pager-wrap) {
       height: unset;
     }
     .close {
@@ -372,7 +372,7 @@
         background-size: 100%;
         color: #fff;
       }
-      ::v-deep .pagination-wrapper {
+      :deep(.pagination-wrapper) {
         ul {
           .active {
             background: #4276FB !important;
@@ -393,7 +393,7 @@
     }
   }
   .slot_machine_scroll {
-    ::v-deep .synthSlider {
+    :deep(.synthSlider) {
       .action {
         .synthButtons {
           span {
@@ -402,7 +402,7 @@
         }
       }
     }
-    ::v-deep .confirm {
+    :deep(.confirm) {
       .confirmTips {
         span {
           color: #fff;
@@ -414,12 +414,12 @@
         }
       }
     }
-    ::v-deep .upgrade {
+    :deep(.upgrade) {
       span:nth-child(3) {
         color: #3D72FA;
       }
     }
-    ::v-deep .synthSucc {
+    :deep(.synthSucc) {
       p {
         .msg {
           color: #3D72FA;

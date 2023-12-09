@@ -191,7 +191,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
-import { useMittEmit, MITT_TYPES ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
+import { useMittEmit, MITT_TYPES ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win} from "src/output/index.js"
 //国际化
 
 
