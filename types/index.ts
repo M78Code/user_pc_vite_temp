@@ -52,7 +52,7 @@ declare namespace TYPES {
     /** ? */ otd: number
   }
 
-  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os,K.ott,K.otd {
+  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os,K.ott,K.otd,K.otv {
   }
   /** Ol投注项 结果 */ interface OlResult extends Ol,K.result{
   }
@@ -86,7 +86,7 @@ declare namespace TYPES {
   type OlResultArray =  ['r-unkown','r-unkown2','r-tie','r-lose','r-win','r-win-half','r-lose-half']
   type OlResultState= OlResultArray[K.result[keyof K.result]]
 
-  export type OlItemType =  'default' | 'fill'
+  export type OlItemType =  'default' | 'fill' | 'auto' | 'column'
 }
 
 /** 属性字段复用注释 */
