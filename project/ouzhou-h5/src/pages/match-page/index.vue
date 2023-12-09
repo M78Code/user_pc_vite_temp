@@ -110,6 +110,7 @@ const onTabChange = e => {
       onChangeDate(time) // 默认展示12个小时的数据
       break
     case 'Outrights':
+      MatchMeta.clear_match_info()
       MenuData.set_current_lv1_menu(400);
       // MenuData.set_menu_mi('101');
       // MatchMeta.set_origin_match_data()

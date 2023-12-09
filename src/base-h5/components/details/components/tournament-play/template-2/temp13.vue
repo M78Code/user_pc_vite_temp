@@ -36,7 +36,7 @@
                       <template v-if="append_single._hs == 0 || append_single._hs == 11">
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
-                          <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
+                          <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
                                :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">  
                               <div class="single-name">
@@ -144,7 +144,7 @@
                       <template v-if="append_single._hs == 0 || append_single._hs == 11">
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
-                          <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
+                          <div class="play-box-sty details-color" @click="go_to_fun(append_single)"
                                :class="[BetData.bet_oid_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">
                               <div class="single-name">
@@ -241,6 +241,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp13",
   props: ["item_data", "title"],
@@ -384,7 +385,7 @@ export default defineComponent({
         init_data.left += dom_width
       }
     }, 500);
-    const go_to_bet = (ol_item) => {
+    const go_to_fun = (ol_item) => {
       append_single_list.value.map((item)=>{
         ol_item.oid == item.oid ?  item.show_bgc = true: item.show_bgc = false
       })
@@ -414,7 +415,7 @@ export default defineComponent({
       touch_pan,
       bet_slide,
       route,
-      go_to_bet,
+      go_to_fun,
       LOCAL_PROJECT_FILE_PREFIX,
       calc_win
     }
