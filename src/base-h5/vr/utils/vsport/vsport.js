@@ -14,7 +14,7 @@
  *
  */
 import { api_v_sports } from "src/base-h5/vr/api";
-import LoopCallback from "src/public/utils/loop_callback.js";
+import LoopCallback from "src/base-h5/vr/class/loop_callback.js";
 
 const sleep = require('licia/sleep');
 export default class VSport {

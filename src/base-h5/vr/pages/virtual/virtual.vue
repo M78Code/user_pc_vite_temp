@@ -62,7 +62,7 @@ import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virt
 // import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
 import { api_v_sports } from "src/base-h5/vr/api";
 
-import utils from "src/core/utils/common/module/utils.js";
+import { utils } from "src/core/utils/common/module/utils.js";
 import virtualFooterMenu from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
 import axios_api_loop from "src/core/http/axios-loop.js"
 

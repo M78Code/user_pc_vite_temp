@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+import odd_convert from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js"
 // import betting from 'src/project/mixins/betting/betting.js';
 
 export default{

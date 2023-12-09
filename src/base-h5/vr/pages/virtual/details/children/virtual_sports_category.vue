@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import tournament_play_new from "src/project/pages/details/components/tournament_play/tournament_play_new.vue"
+import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
  // 引入接口封装文件
 import { api_common } from "src/api/index.js";
  // 引入投注逻辑mixin
@@ -47,7 +47,7 @@ import loading from 'src/base-h5/components/common/loading.vue';
  // 引入quasar
 import { dom } from 'quasar'
  // 引入处理数据的封装方法
-import MatchInfoCtr from "src/public/utils/dataClassCtr/matchInfoCtr.js";
+import MatchInfoCtr from "src/base-h5/vr/utils/vsport/matchInfoCtr.js";
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 

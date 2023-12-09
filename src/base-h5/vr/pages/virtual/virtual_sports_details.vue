@@ -426,7 +426,7 @@ export default {
     }
 
     /*  刷新按钮 */
-    @include keyframes(loading-ring-animate) {
+    @keyframes loading-ring-animate {
       0% {
         transform: rotate(0deg);
       }

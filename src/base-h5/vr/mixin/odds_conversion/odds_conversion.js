@@ -6,7 +6,7 @@
  * 使用  {{ compute_value_by_cur_odd_type(val}}
  * 实现 匹配不到 后 向下 取值
  */
-import utils from 'src/public/utils/utils.js'
+import { utils } from "src/core/utils/common/module/utils.js";
 export default {
   data() {
     return {

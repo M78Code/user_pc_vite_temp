@@ -33,7 +33,8 @@
 </template>
 
 <script>
-import skeleton from 'src/project/components/skeleton/index.vue'
+import skeleton from 'src/base-h5/vr/components/skeleton/index.vue'
+
 export default {
   components:{ skeleton },
   data(){

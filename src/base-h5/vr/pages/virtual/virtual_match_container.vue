@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import data_pager from "src/public/components/common/data_pager.vue"
+import data_pager from "src/base-h5/components/common/data-pager.vue"
 // import setting from "src/project/components/common/setting";
 const static_serve = window.env.config.static_serve[0];
 export default {
