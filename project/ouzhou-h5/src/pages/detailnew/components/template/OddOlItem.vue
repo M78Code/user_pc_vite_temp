@@ -3,9 +3,9 @@
     :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
   >
     <div class="icontainer" v-if="vif"
-      @click="common.betClick(value)"
+      @click="onClick"
     >
-      <template v-if="isLock">
+      <template v-if="isLock" @click.stop>
         <div class="ol-lock">
           <img :src="odd_lock_ouzhou" alt="lock" class="ol-lock-img">
         </div>
@@ -92,6 +92,12 @@ const isLock = computed(() => {
     return true
   }
 })
+function onClick(){
+  if(isLock.value){
+    return
+  }
+  common.betClick(props.value)
+}
 
 let timer = 0
 function resetStatus() {
