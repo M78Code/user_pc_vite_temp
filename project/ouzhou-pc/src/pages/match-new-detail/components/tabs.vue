@@ -50,7 +50,6 @@ const props = defineProps({
 
 const active_value = ref("");
 const BtnGroupRef = ref(null)
-const hasHorizontalScrollbar = ref(false)
 
 watch(
   () => props.modelValue,
@@ -73,17 +72,6 @@ const fold_odds = () => {
 
 };
 
-const getHorizontalScrollbar = function(){
-  hasHorizontalScrollbar.value = false;
-  if (BtnGroupRef.value) {
-    hasHorizontalScrollbar.value = BtnGroupRef.value.scrollWidth > BtnGroupRef.value.clientWidth;
-  }
-}
-onMounted(()=>{
-  setTimeout(() => {
-    getHorizontalScrollbar()
-  }, 160);
-})
 </script>
 
 <style lang="scss" scoped>
