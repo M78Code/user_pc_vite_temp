@@ -23,14 +23,14 @@
           <template v-if="get_user.activityList[activityIndex].period == 1">
             <span class="count_down_css">
               <span>距离活动开始还有</span>
-              <active_count_down :endTime='inStartTime' :noNeedCss="true"></active_count_down>
+              <ActiveCountDown :endTime='inStartTime' :noNeedCss="true"></ActiveCountDown>
             </span>
           </template>
           <template v-else-if="get_user.activityList[activityIndex].period == 2">
             <template v-if="get_user.activityList[activityIndex].type == 2 && inEndTime">
               <span class="count_down_css">
                 <span>距离活动关闭还有</span>
-                <active_count_down :endTime='inEndTime' :noNeedCss="true"></active_count_down>
+                <ActiveCountDown :endTime='inEndTime' :noNeedCss="true"></ActiveCountDown>
               </span>
             </template>
             <span v-else>活动长期有效</span>
@@ -70,7 +70,7 @@
         </p>
         <!-- 数字滚轮 -->
         <div class="scroller" ref="scroller">
-          <number-scroll :status="tiger_status" :result="tiger_result" :initArr="initNums" @stop="stop" :config="slot_config" v-if="showNumScroll" ref="number_scroll" />
+          <NumberScroll :status="tiger_status" :result="tiger_result" :initArr="initNums" @stop="stop" :config="slot_config" v-if="showNumScroll" ref="number_scroll" />
         </div>
         <!-- 两边的小三角形 -->
         <p class="triangles" v-if="triangle_fade > 0">
@@ -277,7 +277,7 @@
           </div>
           <div class="pagination_wrap" v-if="gameHistoryLists.list.length > 0">
             <div class="pagination_with_input">
-              <data-pager
+              <DataPager
                 :key="gameHistoryLists.params.type"
                 class="record-data-pager"
                 :total="gameHistoryLists.params.total"
@@ -319,10 +319,10 @@
   </div>
 </template>
 <script>
-import {api_activity} from "project/activity/src/api/index.js";
-import active_count_down from "./active_count_down.vue";
-import number_scroll from './number_scroll.vue';
-import data_pager from "project/activity/src/components/data_pager.vue";
+import {api_activity} from "src/api/index.js";
+import ActiveCountDown from "./active_count_down.vue";
+import NumberScroll from './number_scroll.vue';
+import DataPager from "project/activity/src/components/data_pager.vue";
 import compose from './compose.vue';
 import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
@@ -417,9 +417,9 @@ export default {
   },
   components: {
     // Alert,
-    'active_count_down':active_count_down,
-    'number-scroll': number_scroll,
-    'data-pager': data_pager,
+    ActiveCountDown,
+    NumberScroll,
+     DataPager,
     compose
   },
   props: {
@@ -431,17 +431,17 @@ export default {
     slotTimeStamp: String,
     period: Number, // 1 未开始 2 进行中 3 已结束
     activityIndex: {
-      type: Number | String,
+      type: Number  ,
       default: 2
     },
     // 活动开始时间
     inStartTime: {
-      type: Number | String,
+      type: Number  ,
       default: 0
     },
     // 活动结束时间
     inEndTime: {
-      type: Number | String,
+      type: Number ,
       default: 0
     },
     isIphoneX: Boolean

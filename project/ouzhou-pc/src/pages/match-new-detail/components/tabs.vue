@@ -6,7 +6,7 @@
 <template>
   <div class="match-search">
     <div class="search-top" ref="wrapRef">
-      <div class="btn-group" ref="itemWrapRef">
+      <div class="btn-group relative-position" ref="itemWrapRef" :style="{left:item_wrap_left+'px'}">
         <div
           v-for="(item, index) in tab_options"
           :key="item.value"
@@ -50,9 +50,10 @@ const props = defineProps({
 
 const active_value = ref("");
 
-const wrapRef = ref(null)
-const itemWrapRef = ref(null)
+const wrapRef = ref(null) //item_wrap_width
+const itemWrapRef = ref(null) // item_total_width
 const currentIndex = ref(0)
+const item_wrap_left = ref(0) //item包裹left
 
 watch(
   () => props.modelValue,
@@ -67,7 +68,21 @@ const is_fold = ref(false);
 const tab_click = (item,  index) => {
   active_value.value = item.value;
   emits("update:modelValue", item.value);
-  currentIndex.value = index;
+
+  let num = index - currentIndex.value
+  if(!num) return
+  if(currentIndex.value > index){
+    if(left_btn_show()){
+      hand_cilck_move(80 + item_wrap_left.value)
+    }
+  }else{
+    if(right_btn_show()){
+      hand_cilck_move(-50 + item_wrap_left.value)
+    }
+  }
+
+  currentIndex.value = index
+
 };
 // 一键折叠
 const fold_odds = () => {
@@ -75,6 +90,32 @@ const fold_odds = () => {
     useMittEmit(MITT_TYPES.EMIT_SHOW_FOLD, is_fold.value);
 
 };
+
+/**
+ * @Description:左边按钮是否显示
+ * @return {boolean}
+ */
+function left_btn_show() {
+  return item_wrap_left.value < 0;
+}
+
+/**
+ * @Description:右边按钮是否显示
+ * @return {boolean}
+ */
+function right_btn_show() {
+  return itemWrapRef.value.clientWidth > wrapRef.value.clientWidth && item_wrap_left.value > (wrapRef.value.clientWidth - itemWrapRef.value.clientWidth - 50);
+}
+
+function hand_cilck_move(left) {
+  let max_left = 0 - (itemWrapRef.value.clientWidth - wrapRef.value.clientWidth + 50)
+  if (left >= 0) {
+    left = 0
+  } else if ( left < max_left){
+    left = max_left
+  }
+  item_wrap_left.value = left
+}
 
 </script>
 
@@ -118,6 +159,7 @@ const fold_odds = () => {
     }
   }
   .search-top {
+    position: relative;
     flex:1;
     height: 50px;
     background-color: var(--q-gb-bg-c-4);
@@ -129,20 +171,17 @@ const fold_odds = () => {
   }
 
   .btn-group {
+    position: absolute;
+    white-space: nowrap;
     border-radius: 16px;
     box-sizing: border-box;
-    display: flex;
     align-items: center;
-    overflow-x: auto;
-
     .btn-group-item {
-      flex-shrink: 0;
-      flex-grow: 0;
       font-size: 12px;
       // margin-right: 20px;
       padding: 4px 5px;
       height: 100%;
-      display: flex;
+      display: inline-block;
       align-items: center;
       justify-content: center;
 
