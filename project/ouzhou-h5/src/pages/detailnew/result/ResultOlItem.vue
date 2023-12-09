@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-
+import { calcOlResult } from 'src/output/index'
 
 const props = withDefaults(defineProps<{
   value: TYPES.OlResult,

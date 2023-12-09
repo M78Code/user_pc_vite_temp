@@ -23,7 +23,7 @@ import {
   useMittEmit,
   MITT_TYPES
 } from "src/core/mitt/index.js";
-import {VIRTUAL_PLAY_LET_BALL, ESPORTS_PLAY_LET_BALL} from "src/core/constant/config/play-mapping.js";
+import {VIRTUAL_PLAY_LET_BALL, ESPORTS_PLAY_LET_BALL} from "src/output/module/constant-utils.js";
 import _ from "lodash";
 
 

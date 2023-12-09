@@ -50,7 +50,6 @@ import DetailTopMsOptions from "./detail-top-ms-options.vue";
 import NavbarSubscribe from "./nav-bar-subscribe";
 const route = useRoute()
 const router = useRouter();
-const mid = route.params.mid;
 const refresh_is_active = ref(false);
 const active = ref(0);
 const show_list = ref(false);
@@ -59,6 +58,9 @@ const isMatchResultRoute = route.name == 'result'
 const refLeagueName = ref('')
 
 
+const mid = computed(()=>{
+  return route.params.mid
+})
 const getCsna = computed(()=>{
   return MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route?.params?.mid)?.csna
 })
@@ -84,22 +86,14 @@ function getDropDownList(tid='') {
     dateTime: Date.now()
   }).then(res => {
     if(res.code == '200'){
-      console.log(res.data,"drop_down_list")
       return drop_down_list.value = res.data
     }else {
       console.error(res)
     }
   }).then((data)=>{
-    if(data.length){
-      refLeagueName.value = data[0].tn
-      data.forEach((item,index)=>{
-        if(item.mid == mid){
-          active.value = index
-        }
-      }) 
-    }else {
-
-    }
+    if( !data.length ) return
+    refLeagueName.value = data[0].tn
+    active.value = data.findIndex((x)=> x.mid == mid.value )
   })
   .catch(err => {
     console.error(err)

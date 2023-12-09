@@ -20,7 +20,7 @@ class BetRecord {
     this.early_money_list = {}
 
     //是否在加载中
-    this.is_loading = false
+    this.is_loading = true
     //list_data里面最后的一条数据的日期 '2020-11-17'
     this.last_record = ''
     // 是否存在下一页
@@ -65,7 +65,7 @@ class BetRecord {
     this.list_data = {}
     this.is_early = false
     this.early_money_list = {}
-    this.is_loading = false
+    this.is_loading = true
     this.last_record = ''
     this.is_hasnext = false
     this.is_limit = false
@@ -85,10 +85,10 @@ class BetRecord {
     url_api(params).then(reslut => {
       let res = reslut.status ? reslut.data : reslut
       this.is_limit = false
+      this.is_loading = false;
       if (res.code == 200) {
         let { record, hasNext } = lodash.get(res, "data");
         this.is_hasnext = hasNext
-        this.is_loading = false;
         // record 为null时 => 赋值为空对象
         if(!record) record = {}
         for (let item of Object.values(record)) {
@@ -107,10 +107,8 @@ class BetRecord {
         this.selected === 0 && this.check_early_order()
       } else if (res.code == '0401038') {
         this.is_limit = true
-        this.is_loading = false
         return
       } else {
-        this.is_loading = false;
         return;
       }
       //容错处理，接口再调一次

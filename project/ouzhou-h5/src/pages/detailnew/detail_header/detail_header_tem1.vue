@@ -57,7 +57,6 @@
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
       <!-- {{get_match_detail.ms }} -->
       <!-- 赛果需要显示比分 添加4 -->
-      <!-- 赛事状态：0未开赛，1 进行中 -->
       <template v-if=" [1,4,3].includes(get_match_detail.ms)">
         <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
           <div
@@ -360,9 +359,9 @@ const collect_click = () => {
 // }, 200);
 
 onMounted(()=>{
-    // setTimeout(function (){
-    //     is_collect.value = props.get_match_detail.mf
-    // },320)
+  setTimeout(function (){
+    console.log(props.get_match_detail?.ms,"赛果没有比分截图这里")
+  },1200)
 })
 
 // console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
@@ -449,7 +448,7 @@ watch(()=>props.get_match_detail?.mle,
       justify-content: space-between;
       align-items: center;
       position: relative;
-      padding: 20px 12px 14px 20px;
+      padding: 10px 12px 14px 20px;
       .match-detail-time-label {
         color: var(--q-gb-t-c-3);
         padding-right: 10px;

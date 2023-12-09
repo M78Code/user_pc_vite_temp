@@ -341,6 +341,9 @@ input::-ms-reveal {
 .img-loading {
   background-image: url($SCSSPROJECTPATH+"/image/loading1.gif");
 }
+.refresh .refresh-img {
+  background-image: url($SCSSPROJECTPATH+"/image/image/refresh.png");
+}
 .record_api_limited .img {
   background-image: url($SCSSPROJECTPATH+"/image/theme01/img/png/user_api_limited.png");
 }
@@ -419,4 +422,12 @@ div[class*="ranking-bg-style"] {
   }
 }
 
-/* *** 虚拟体育 ************ -E */
+/*  默认联赛logo */
+.leagues-logo-default  {
+  background-image: url($SCSSPROJECTPATH+"/image/svg/league_logo_01.svg") !important;
+}
+
+/*  默认联赛logo */
+// .leagues-logo-default {
+//   background-image: url($SCSSPROJECTPATH+"/image/svg/league_logo_02.svg") !important;
+// }
