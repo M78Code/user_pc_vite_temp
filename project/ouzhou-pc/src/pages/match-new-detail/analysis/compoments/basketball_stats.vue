@@ -120,7 +120,7 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import lodash from "lodash";
+// import lodash from "lodash";
 import { allBallObj } from "../compoments/venue-box/score_config";
 const props = defineProps({
   detail_info: {
