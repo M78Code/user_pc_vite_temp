@@ -12,6 +12,7 @@
           <sport_icon
             :sport_id="detail_info.csid"
             :status="false"
+            :cds="detail_info.cds"
             size="18px"
             class="icon"
             style="margin: 0 10px"

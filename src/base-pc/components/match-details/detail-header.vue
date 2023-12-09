@@ -82,7 +82,7 @@
   
   <script setup>
   import { ref, defineExpose, onUnmounted } from "vue";
-  import {is_eports_csid}  from "src/core/constant/util/csid-util";
+  import {is_eports_csid}  from "src/core/constant/common/module/csid-util.js";
   import {i18n_t}  from "src/output/index.js";
   import ZhuGe from "src/core/http/zhuge-tag";
   import details from "src/core/match-detail/match-detail-pc/match-detail.js";

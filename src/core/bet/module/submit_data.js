@@ -8,7 +8,7 @@ import { ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash_ from "lodash";
 
-import { MARKET_RANG_FLAG_LIST,BASKETBALL_BY_APPOINTMENT_let } from "src/output/module/constant-utils.js";
+import { MARKET_RANG_FLAG_LIST,BASKETBALL_BY_APPOINTMENT_let } from "src/core/constant/common/index.js";
 
 
 const  post_submit_bet_list_gcuuid = ref(uid())

@@ -44,8 +44,6 @@
           ol_data.csid
         ) }}
       </span>
-      <div>
-      </div>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
         <div class="odds-icon" v-if="odds_lift == 'up'" :style="compute_css_obj({ key: 'pc-home-arrow-up' })"></div>
