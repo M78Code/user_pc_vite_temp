@@ -84,7 +84,7 @@ function sub_click(item, index) {
         // background-color: var(--q-gb-bg-c-6);
         background-color:#E2E2E2;
     }
-    ::v-deep .q-tab__indicator{
+    :deep(.q-tab__indicator){
         display: none;
     }
     .top-menu-title {
@@ -147,7 +147,7 @@ top: 90%;
 transform: translate(-50%, 0);
 background: #ffb001;
 }
-::v-deep .q-tabs__content{
+:deep(.q-tabs__content){
     justify-content: start !important;
 }
 </style>
