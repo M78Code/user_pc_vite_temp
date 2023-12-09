@@ -22,6 +22,7 @@ import { LayOutMain_pc } from "src/output";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
 import { addWsMessageListener } from "src/core/utils/common/module/ws-message.js";
+import axios_api_loop from "src/core/http/axios-loop.js"
 export function usedetailData(route) {
   const router = useRouter();
   const category_list = ref([]); //分类数据
