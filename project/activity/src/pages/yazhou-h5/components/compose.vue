@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import {api_activity} from "project/activity/src/api/index.js";
+import {api_activity} from "src/api/index.js";
 import slider from "./slider.vue";
 import lottery from "./lottery.vue";
 // 生成随机数
@@ -188,7 +188,7 @@ export default {
   props: {
     lotteryNum: {
       type: Object,
-      default: {}
+      default: ()=>{}
     }
   },
   data() {

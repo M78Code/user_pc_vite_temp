@@ -1033,8 +1033,6 @@ class MatchMeta {
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_current_page_render_list(scroll_top)
 
-    console.log(match_datas)
-
     // 欧洲版首页 五大联赛 当前渲染的 mids
     this.match_mids = match_datas.map(t =>  t.mid)
 
@@ -1235,6 +1233,7 @@ class MatchMeta {
     let { list = [], warehouse = MatchDataBaseH5, is_again = true } = config
     // ws 订阅
     this.set_ws_active_mids({ list: this.match_mids, warehouse})
+    warehouse.clear()
     // 设置仓库渲染数据
     warehouse.set_list(list)
     this.is_ws_trigger = false

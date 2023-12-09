@@ -21,7 +21,7 @@ export function px_2_rem(px) {
  * @return {Number}
  */
 export const rem = (value) => {
-  let font_size = (innerWidth * 100) / 375;
+  let font_size = ( window.innerWidth * 100) / 375;
   return Math.ceil(value * font_size);
 };
 /**
