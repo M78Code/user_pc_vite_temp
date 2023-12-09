@@ -29,7 +29,7 @@ const olName = `'${props.data.ol[0].on}'`
 </script>
 
 <style scoped lang="scss">
-.component{
+.odd-hl-wrap{
   background-color: #fff;
   display: flex;
   flex-direction: column;

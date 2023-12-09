@@ -117,7 +117,7 @@ function resetStatus() {
   text-wrap: nowrap;
 }
 
-.component {
+.component.odd-ol-item{
   width: 100%;
   display: flex;
   align-items: center;
