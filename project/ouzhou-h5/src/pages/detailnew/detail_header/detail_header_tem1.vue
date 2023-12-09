@@ -448,7 +448,7 @@ watch(()=>props.get_match_detail?.mle,
       justify-content: space-between;
       align-items: center;
       position: relative;
-      padding: 20px 12px 14px 20px;
+      padding: 10px 12px 14px 20px;
       .match-detail-time-label {
         color: var(--q-gb-t-c-3);
         padding-right: 10px;
