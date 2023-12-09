@@ -4,17 +4,16 @@
   >
     <slot>
       <div class="icontainer">
-        <span class="item state">{{ i18n_t('bet_record.bet_no_status0'+value.result) }}</span>
-        <span class="separate"></span>
         <span class="item content" :alt="value.on||value.ott"> {{ value.on||value.ott }} </span>
+        <span class="separate"></span>
+        <span class="item state">{{ i18n_t('bet_record.bet_no_status0'+value.result) }}</span>
       </div>
     </slot>
   </div>
 </template>
 
 <script setup lang="ts">
-
-import { utils } from "src/output/index.js"
+import { calcOlResult } from 'src/output/index'
 
 const props = withDefaults(defineProps<{
   value: TYPES.OlResult,
@@ -83,12 +82,12 @@ let state:TYPES.OlResultState = calcOlResult(props.value.result)
     width: 8px;
   }
   >.state{
-    @extend .left;
+    @extend .right;
     font-weight: 700;
     color: var(--private-state-color);
   }
   >.content{
-    @extend .right;
+    @extend .left;
     color: #000000;
   }
 }

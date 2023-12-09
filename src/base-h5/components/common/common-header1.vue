@@ -36,7 +36,6 @@ import lodash from 'lodash'
 import seamlessMarquee from 'src/base-h5/components/details/seamless-marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
-import { utils } from 'src/output/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import { MatchDataWarehouse_H5_Detail_Common as matchDetailData, MenuData } from "src/output/index.js";

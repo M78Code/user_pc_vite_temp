@@ -101,7 +101,7 @@ export const category_info = (category_arr=[]) => {
   const get_detail_data = computed(() => {
     return MatchDataWarehouseInstance.value.get_quick_mid_obj(route.params.mid)
   });
-  const get_details_item = ref(component_data.matchInfoCtr.current_category_id);
+  const get_details_item = ref(component_data.matchInfoCtr.current_category_id) || 0;
   
   const get_goto_detail_matchid = computed(() => {
     return "get_goto_detail_matchid";
@@ -130,7 +130,8 @@ export const category_info = (category_arr=[]) => {
   });
   // ==================================
   // 监听详情数据仓库版本号更新odds_info数据
-  watch(() => get_detail_data.value, () => {
+  watch(() => MatchDataWarehouseInstance.value.list_to_obj, () => {
+    console.log(2222);
     match_list_normal()
     match_list_new()
   },{deep:true})
@@ -335,7 +336,7 @@ export const category_info = (category_arr=[]) => {
       mcid: component_data.matchInfoCtr.current_category_id,
       mid: match_id.value, // 赛事id
       // cuid: get_uid.value, // userId或者uuid
-      cuid: UserCtr.uid,
+      cuid: UserCtr.get_uid(),
       round: null,
     };
     // 如果是 赛果下边的 电竞，则加 isESport 参数
@@ -363,7 +364,7 @@ export const category_info = (category_arr=[]) => {
       : get_menu_type.value == 2000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-    component_data.send_gcuuid = UserCtr.uid
+    component_data.send_gcuuid = UserCtr.get_uid()
     params.cuid = component_data.send_gcuuid;
     let temp = [];
     // 记录是否走的是缓存
@@ -407,11 +408,6 @@ export const category_info = (category_arr=[]) => {
         };
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
         const res = await axios_api_loop(_obj);
-        // 数据存入数据仓库
-        MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,res.data)
-        // if (component_data.send_gcuuid != res.gcuuid) {
-        //   return;
-        // }
         component_data.first_load = false;
         if (!lodash.get(res, "data") || lodash.get(res, "data.length") == 0) {
           component_data.is_loading = false;
@@ -480,10 +476,10 @@ export const category_info = (category_arr=[]) => {
 
       temp = save_hshow(temp); // 保存当前相关hshow状态;
       // 当前玩法集下数据缓存和所有的投注项
-      
-      details_data_cache[`${match_id.value}-${get_details_item.value}`] = temp;
+      details_data_cache[`${match_id.value}-${get_details_item.value ?? 0}`] = temp;
       SessionStorage.set("DETAILS_DATA_CACHE", details_data_cache)
       // 切换tab时变更mid_obj里面的odds_info对象数据
+      console.log(temp,'temp');
       MatchDataWarehouseInstance.value.set_match_details(MatchDataWarehouseInstance.value.get_quick_mid_obj(params.mid) ,temp)
       // set_details_data_cache(details_data_cache);
       
@@ -687,7 +683,7 @@ export const category_info = (category_arr=[]) => {
       // 赛事id
       mid: match_id.value,
       // userId或者uuid
-      cuid: UserCtr.uid,
+      cuid: UserCtr.get_uid(),
       round:
         get_menu_type == 2000
           ? component_data.matchInfoCtr.category_arr &&
@@ -714,7 +710,7 @@ export const category_info = (category_arr=[]) => {
       : get_menu_type == 2000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-      component_data.send_gcuuid = UserCtr.uid;
+      component_data.send_gcuuid = UserCtr.get_uid();
     params.cuid = component_data.send_gcuuid;
     http(params)
       .then((res) => {

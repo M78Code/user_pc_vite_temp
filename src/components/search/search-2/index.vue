@@ -10,8 +10,8 @@
     <div
       v-show="route.params.video_size != 1"
       class="serach-wrap column"
-      :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px`}"
-      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
+      :style="{ right: `${search_width}px`, paddingRight: `${utils_info.is_iframe ? 10 : 14}px`}"
+      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': utils_info.is_iframe }"
     >
       <!-- <search-input v-model:show_type="show_type" /> -->
       <!-- 遮罩层样式.bottom-wrap -->
@@ -53,6 +53,7 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, defineComponent,watch, defineProps } from "vue";
 import lodash from "lodash";
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
@@ -69,6 +70,9 @@ import searchResult from "./search-result.vue"
 import { api_search } from "src/api/index.js";
 
 import { compute_css_variables } from "src/core/css-var/index.js"
+
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 const props = defineProps({})
@@ -167,9 +171,9 @@ function set_sports_list() {
   api_search.get_search_sport().then(res => {
     if (lodash.get(res, 'code') == 200) {
       const list = lodash.get(res, 'data') || []
-      // 根据商户过滤篮球赛事
-      const ls = ["1", "2", "5"]  //只显示足、篮、网
-      sports_list = list.filter(item => ls.includes(item.id))
+      // 内部测试展示所有球种，线上只放开足、篮
+      const ls = ["1", "2"] 
+      sports_list = IS_FOR_NEIBU_TEST ? list : list.filter(item => ls.includes(item.id))
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id
       if (csid) {

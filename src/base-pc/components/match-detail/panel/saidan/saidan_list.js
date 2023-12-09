@@ -18,7 +18,7 @@ export default {
         return {
             toast:false,
             show_loading:false,
-            utils,
+            
             // class_foter: 'red',//订单状态的颜色类名
             params: {
                 page: 1, //当前页

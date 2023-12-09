@@ -257,7 +257,7 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, onUnmounted, reactive } from 'vue';
-import { compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/output/index.js";
+import { compute_local_project_file_path,  compute_img_url, SearchData, MenuData } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";

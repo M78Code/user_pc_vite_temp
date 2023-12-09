@@ -2,7 +2,7 @@ import lodash from 'lodash'
 import BaseData from 'src/core/base-data/base-data.js'
 import { MenuData } from 'src/output/module/menu-data.js'
 import PageSourceData from "src/core/page-source/page-source.js";
-import { use_playingMethods_15 } from "src/core/constant/config/15-minute.js";
+import { use_playingMethods_15 } from "src/output/module/constant-utils.js";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 
 class MatchUtils {
@@ -66,7 +66,7 @@ class MatchUtils {
    * @description 赛事联赛归类 
    * @param {*} list 赛事数据
    */
-   handler_match_classify_by_tid (list) {
+  handler_match_classify_by_tid (list) {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return []
     const tid_list = list.map(l => l.tid)

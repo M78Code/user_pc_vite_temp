@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-page" v-show="!detail_loading">
+  <div class="detail-page" v-if="!detail_loading">
     <div class="match-detail-container">
       <div class="match-detail-bread">
         <!-- 详情页面包屑 -->
@@ -105,15 +105,15 @@
       <analysis :detail_info="detail_info || {}" />
     </div> -->
   </div>
-  <div class="detail-loading" v-show="detail_loading">
+  <div class="detail-loading" v-if="detail_loading">
     <loading></loading>
   </div>
 </template>
 
 <script>
-import { onMounted, ref, provide, onUnmounted } from "vue";
+import { onMounted, ref, onUnmounted } from "vue";
 import {
-  utils,
+  
   MenuData,
   LOCAL_PROJECT_FILE_PREFIX,
   useMittOn,
@@ -148,8 +148,6 @@ export default {
       current_key,
       detail_loading,
       detail_info,
-      // sportId,
-      all_hl_item,
       init,
       show_close_thehand,
       matchDetailList,
@@ -157,7 +155,6 @@ export default {
       refresh,
       get_match_detail,
     } = usedetailData(route);
-    provide("all_hl_item", all_hl_item);
 
     const showDetailList = ref(false);
     const match_click = (item) => {
@@ -224,7 +221,7 @@ export default {
       detail_loading,
       detail_info,
       sportId,
-      all_hl_item,
+      // all_hl_item,
       init,
       show_close_thehand,
       matchDetailList,
@@ -455,7 +452,7 @@ export default {
 }
 .detail-loading {
   height: 100%;
-  &::v-deep {
+  & :deep {
     .loading_box {
       padding-top: 330px;
     }
@@ -486,7 +483,7 @@ export default {
   display: flex;
 }
 
-::v-deep .q-expansion-item {
+:deep(.q-expansion-item) {
   .q-focus-helper {
     visibility: hidden;
   }

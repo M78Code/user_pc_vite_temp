@@ -327,7 +327,7 @@ const checked_current_tab = payload => {
 		right: 0;
 		top: 0;
 		width: 226px;
-		height: 78px;
+		height: 80px;
 		background-size: 226px ;
 	}
 

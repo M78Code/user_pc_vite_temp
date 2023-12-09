@@ -119,7 +119,6 @@
 <script>
 // #TODO vuex
 // import { mapGetters } from "vuex";
-import {utils } from 'src/output/index.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { format_time_zone_time, format_money2,format_odds, format_score } from "src/output/index.js"
 import { t } from "src/boot/i18n.js";;
@@ -147,7 +146,7 @@ export default defineComponent({
   components: {},
   setup(props, evnet) {
     let data = reactive({
-      utils,
+      
       is_win: false,   //这一单是否赢钱了
       class_foter: '',//订单状态的颜色类名
       bet_result: {

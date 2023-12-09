@@ -29,7 +29,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
-import {utils, MatchDetailCalss } from 'src/output/index.js'
+import { MatchDetailCalss } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 资讯页
 import articleMain from "src/base-h5/components/details/analysis-matches/article/article-main.vue"

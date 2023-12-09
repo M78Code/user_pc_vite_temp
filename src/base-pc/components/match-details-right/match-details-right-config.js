@@ -3,7 +3,7 @@ import { api_details } from "src/api";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
-import  { computed_background } from  "src/core/constant/config/csid.js"
+import  { computed_background } from  "src/output/index.js"
 import {
   useMittOn,
   MITT_TYPES,
@@ -12,7 +12,7 @@ import {
   is_eports_csid,
   MatchDataWarehouse_PC_Detail_Common,
   format_plays,
-  utils,
+  
   format_sort_data,
   useMittEmitterGenerator,
   useMittEmit,

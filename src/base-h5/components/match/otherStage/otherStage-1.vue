@@ -23,8 +23,7 @@
 <script>
 // import { mapGetters, mapMutations, mapActions } from "vuex"
 // import msc from "src/public/mixins/common/msc.js";
-// import { format_mgt_time } from "src/output/index.js"
-import { utils } from 'src/core/utils/common/index.js';
+import { counting_time_ctr_show_format } from 'src/core/format/common/index.js'
 export default {
   // mixins: [msc],
   name: 'dialogStage_1',

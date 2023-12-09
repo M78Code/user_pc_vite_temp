@@ -14,7 +14,7 @@
       @scroll="detail_scrolling"
       @touchmove.passive="moved"
       @click="details_click"
-      v-if="is_show_detail_header_data">
+      v-if="!lodash.isEmpty(detail_data)">
       <div >
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
@@ -156,7 +156,7 @@ import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { details_main } from "./details.js";
 import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide,defineAsyncComponent } from "vue";
-import {compute_css_obj,compute_img_url,MatchDetailCalss,MenuData,utils} from "src/output/index.js";
+import {compute_css_obj,compute_img_url,MatchDetailCalss,MenuData} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {is_esports } from "src/base-h5/mixin/menu";

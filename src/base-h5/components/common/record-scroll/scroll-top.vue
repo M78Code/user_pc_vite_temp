@@ -19,6 +19,8 @@ import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
 import { scroll_top_icon } from 'src/base-h5/core/utils/local-image.js'
 
+import { utils } from 'src/core/utils/common/module/utils.js'
+
 const emits = defineEmits(['back-top'])
 const props = defineProps({
   // 父组件滚动高度
@@ -78,7 +80,7 @@ const scroll_top_image = computed(() => {
    */
 const back_top = () => {
   //  防止调用多次
-  if (is_time_limit(500)) return
+  if (utils.is_time_limit(500)) return
   emits('back-top')
 }
 onDeactivated(() => {

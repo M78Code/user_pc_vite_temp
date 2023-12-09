@@ -10,6 +10,7 @@
       <q-tabs class="select_n_tabs" inline-label
         outside-arrows
         mobile-arrows
+        no-caps
 >
         <q-tab v-for="(item ,index) in option" :key="index "
                 @click.stop="selectSport(item,index)"
@@ -66,6 +67,7 @@
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
 import { onMounted, onUnmounted, ref,watch,computed } from "vue";
 import { GlobalSwitchClass} from "src/output/index.js";
+import { throttle } from "lodash";
 const props = defineProps({
   // 当前选中的球种
   sportType: {
@@ -100,10 +102,6 @@ const { off } = useMittOn(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, (e)=>{
   showOption(e)
 });
 onUnmounted(off);
-watch(props.sportType,(val)=>{
-  // console.log(val,'val');
-}
-)
 //筛选出空数据
 const option = computed(() => {
   return props.options.filter(item =>  item !== '')
@@ -135,14 +133,23 @@ const showOption = (type) => {
  * @description 下拉框选择球种
  * @param String item 球种名称
  */
-const selectSport = (item,index) => {
+
+const selectSport = lodash.throttle((item,index) => {
   sport.value = item;
   active_sport.value = index;
   // console.error('sportsport',sport)
   showOption();
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
   useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);
-};
+}, 300)
+// const selectSport = (item,index) => {
+//   sport.value = item;
+//   active_sport.value = index;
+//   // console.error('sportsport',sport)
+//   showOption();
+//   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
+//   useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);
+// };
 </script>
 <style lang="scss" scoped>
 html,body{

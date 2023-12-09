@@ -35,7 +35,7 @@ function onClick() {
 </script>
 
 <style scoped lang="scss">
-.component {
+.component.odds-set-top {
   width: 0.14rem;
   height: 0.14rem;
   background-repeat: no-repeat;

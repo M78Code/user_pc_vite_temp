@@ -7,10 +7,10 @@
         <div class="begin-time din_font">{{ get_mmp(match.mst) }}</div>
       </div>
     </div>
-    <div class="club-name" :class="{'bold': get_handicap_index_by(match) == 1}" @click="jump_to_details()">
+    <div class="club-name" :class="{ 'bold': get_handicap_index_by(match) == 1 }" @click="jump_to_details()">
       {{ match.mhn }}
     </div>
-    <div class="union-name" :class="{'bold': get_handicap_index_by(match) == 2}" @click="jump_to_details()">
+    <div class="union-name" :class="{ 'bold': get_handicap_index_by(match) == 2 }" @click="jump_to_details()">
       {{ match.man }}
     </div>
     <div class="odds-box din_font">
@@ -32,10 +32,10 @@ import { useRouter } from 'vue-router';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t , useMittEmit,MITT_TYPES} from "src/output/index.js"
+import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, i18n_t, useMittEmit, MITT_TYPES } from "src/output/index.js"
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
-import { get_handicap_index_by} from 'src/core/match-list-pc/match-handle-data.js'
+import { get_handicap_index_by } from 'src/core/match-list-pc/match-handle-data.js'
 
 const router = useRouter()
 const props = defineProps({
@@ -44,7 +44,7 @@ const props = defineProps({
 });
 const match = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_obj_ref(props.mid)
 const jump_to_details = () => {
-  const { tid, csid,mid } = match.value;
+  const { tid, csid, mid } = match.value;
   //比分板跳转到详情页
   router.push({
     name: 'details',
@@ -57,20 +57,20 @@ const jump_to_details = () => {
 }
 const current_check_betId = ref(MenuData.current_check_betId.value);
 let match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`]
-let handicap_list = ref(lodash.cloneDeep(match_tpl_info.get_15mins_odds_list())) //只有一个数组哦
+let handicap_list = lodash.cloneDeep(match_tpl_info.get_15mins_odds_list()) //只有一个数组哦
 const emits = defineEmits(['del'])
 const ols_data = computed(() => {
-  const { mid } = match.value
-  const jieduan = lodash.find(match.value.hps15Minutes, (i) => handicap_list.value._hpid == i.hpid) //找到玩法ID 和阶段
-  const ot_Map = lodash.keyBy(lodash.get(jieduan, 'hl[0].ol', []), (i) => i.ot) //找到ol数据
-  handicap_list.value.ols.forEach((ol) => {
+  const { mid, hps15Minutes } = match.value
+  const jieduan = lodash.find(hps15Minutes, (i) => handicap_list._hpid == i.hpid) //找到玩法ID 和阶段
+  const ot_Map = lodash.keyBy(lodash.get(jieduan, 'hl[0].ol',lodash.get(jieduan, 'hl.ol', [])), (i) => i.ot) //找到ol数据
+  return lodash.cloneDeep(handicap_list.ols).map((ol) => {
     const ol_data = ot_Map[ol.ot]
     if (ol_data) {
       const ref_oid = lodash.get(MatchDataWarehouse_ouzhou_PC_l5mins_List_Common, `list_to_obj.ol_obj.${mid}_${ol_data.oid}`, {})
       Object.assign(ol, ref_oid)
     }
+    return ol
   })
-  return handicap_list.value.ols
 })
 watch(() => match.hSpecial, (v, o) => {
   if (v != o && v != undefined && o != undefined) {
@@ -157,10 +157,12 @@ const get_mmp = (mst) => {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.union-name, .club-name {
+
+.union-name,
+.club-name {
   &.bold {
-        color: var(--q-gb-t-c-2);
-      }
+    color: var(--q-gb-t-c-2);
+  }
 }
 
 

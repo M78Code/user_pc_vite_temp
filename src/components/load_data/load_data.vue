@@ -191,6 +191,7 @@ export default {
   data() {
     return {
       compute_css_obj,
+      filterHeader,
       // 菜单数据
       // menu_data: $menu.menu_data,
       i18n_t,
@@ -316,7 +317,6 @@ export default {
     justify-content: center;
     font-size: 12px;
     text-align: center;
-    padding-top: 30%;
     .img {
       width: 180px;
       height: 180px;

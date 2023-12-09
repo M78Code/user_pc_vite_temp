@@ -15,7 +15,7 @@
       {
         'color-highlight': ol_data.handicap_highlight,
         style2: ol_data.onbl && ol_data.csid == 2,
-        left_cell: is_iframe,
+        left_cell: utils_info.is_iframe,
         'injury-time-goal': ol_data.ot === 'ClutchGoal',
         nogoal: ol_data.ot === 'NoGoal',
       },
@@ -29,7 +29,7 @@
     <!-- 赔率 -->
     <div class="odds" :class="[odds_lift]" :style="[1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
         +ol_data._hpid
-      ) && is_iframe
+      ) && utils_info.is_iframe
         ? 'flex:1.5'
         : ''
       ">
@@ -44,8 +44,6 @@
           ol_data.csid
         ) }}
       </span>
-      <div>
-      </div>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
         <div class="odds-icon" v-if="odds_lift == 'up'" :style="compute_css_obj({ key: 'pc-home-arrow-up' })"></div>
@@ -63,6 +61,7 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 // 定时器对象

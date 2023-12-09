@@ -356,7 +356,7 @@
 // import { mapGetters, mapMutations } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament_play/unit/odds_new.vue";
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
-import {utils } from 'src/output/index.js';
+
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   // #TODO mixins
@@ -400,7 +400,7 @@ export default defineComponent({
       max_count_ol = get_ol_list();
     })
     return {
-      utils,
+      
       change_ms,
       go_to_bet
     }

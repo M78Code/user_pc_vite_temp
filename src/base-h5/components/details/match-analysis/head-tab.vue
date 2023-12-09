@@ -27,7 +27,6 @@
 // import {mapGetters, mapMutations} from "vuex";
 import { ref, nextTick, computed, onUnmounted, onMounted, inject } from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import {utils } from 'src/core/utils/common/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash from "lodash"
 

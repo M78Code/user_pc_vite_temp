@@ -50,7 +50,7 @@ const common = {
       if(oddInfo.title.length){
         return 'fill'
       }
-    }else if(oddInfo.hpt == 3 && !common.haveTitle(oddInfo)){
+    }else if(oddInfo.hpt == 18 || (oddInfo.hpt == 3 && !common.haveTitle(oddInfo))){
       return 'fill'
     }
     return 'default'

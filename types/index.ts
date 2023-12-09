@@ -52,9 +52,9 @@ declare namespace TYPES {
     /** ? */ otd: number
   }
 
-  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os,K.ott {
+  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os,K.ott,K.otd {
   }
-  /** Ol投注项 结果 */ interface OlResult extends K.ot,K.oid,K.on,K.result,K.ott,K.otd {
+  /** Ol投注项 结果 */ interface OlResult extends Ol,K.result{
   }
 
   /** 非足球活力值排名 */ interface Rank {
@@ -142,7 +142,7 @@ declare namespace K {
     /** 投注项的name? */ on: string,
   };
     /** 投注项列ID? */ type otd = {
-    /** 投注项列ID? */ otd: string
+    /** 投注项列ID? */ otd: number
   };
   /** 投注项头名称 */ type ott = {
     /** 投注项头名称 */ ott: string

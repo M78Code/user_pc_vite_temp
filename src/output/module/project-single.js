@@ -31,6 +31,11 @@ export { default as LayOutMain_pc } from "src/core/layout/index.js";
 export * from "src/core/server-img/";
 
 /**
+ * 默认主题
+ */
+export * from "src/core/theme/index.js";
+
+/**
  * CSS 变量
  */
 export { compute_css_variables } from "src/core/css-var/index.js";
@@ -44,10 +49,6 @@ export { default as SearchPCClass } from "src/core/search-class/seach-pc-calss.j
 
 export { default as SearchData } from "src/core/search-class/search-data-class.js";
 
- 
-
 export { default as TabMove } from "src/core/tab-move/tab-move.js";
 
  
-export * from "src/core/utils/project/index.js";
-export * from "src/core/format/project/index.js";

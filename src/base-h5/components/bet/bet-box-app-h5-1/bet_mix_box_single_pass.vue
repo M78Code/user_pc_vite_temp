@@ -12,7 +12,7 @@
               <div class="nonebox4-content-left-content" :class="!item.home?'nonebox4-content-left-content-no':''">
                   <div class="nonebox4-content-left-content-xian"></div>
                   <div class="nonebox4-content-left-content-text">
-                      <div>{{ item.playName }} 【{{i18n_t(`odds.${UserCtr.odds.cur_odds}`)}}】</div>
+                      <div>{{ item.playName }} <span class="font-color">【{{i18n_t(`odds.${UserCtr.odds.cur_odds}`)}}】</span></div>
                       <div v-if="item.home">{{ item.home }} VS {{ item.away }}</div> 
                       <div>{{ item.tid_name }}</div>
                   </div>
@@ -46,7 +46,8 @@
   
   <style lang="scss" scoped>
   .nonebox4-content-right-num{
-    background: var(--q-gb-bg-c-9);
+    // background: var(--q-gb-bg-c-9);
+    background:#d2ebff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,6 +101,9 @@
   }
   .nonebox4-content-right-profit-type{
       font-size: 0.14rem;
+  }
+  .font-color{
+    color: var(--q-gb-t-c-1);
   }
   .nonebox4-content-right{
     margin-top: -6px;

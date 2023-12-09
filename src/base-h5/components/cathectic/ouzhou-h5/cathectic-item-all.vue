@@ -50,7 +50,7 @@
         </div>
       </template>
       <!-- 没有数据 -->
-      <settle-void v-else></settle-void>
+      <settle-void v-if="!BetRecordClass.is_loading && lodash.isEmpty(BetRecordClass.early_money_list)"></settle-void>
     </scroll>
   </div>
 </template>

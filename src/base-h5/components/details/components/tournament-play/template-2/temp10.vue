@@ -40,6 +40,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { project_name,MatchDetailCalss } from "src/output/index.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp10",
   props: ["item_data", "title"],
@@ -95,7 +96,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      utils,
+      go_to_bet,
       lodash,
       BetData,
       get_bet_list,

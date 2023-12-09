@@ -213,10 +213,8 @@ import active_count_down from "./active_count_down.vue";
  
 import { UserCtr } from "project_path/src/core/index.js";
 
-import {gtag_config_send,
-gtag_view_send,
-gtag_event_send,
-send_zhuge_event   ,is_time_limit } from "project_path/src/core/index.js"
+import {GATAG 
+   ,is_time_limit } from "project_path/src/core/index.js"
 
 export default {
   name: "daily_betting_payouts",
@@ -742,7 +740,7 @@ height: 4rem;
   }
 }
 // 分页条样式
-::v-deep .pagination-wrapper {
+:deep(.pagination-wrapper) {
     height: 0.4rem;
     align-items: center;
 }

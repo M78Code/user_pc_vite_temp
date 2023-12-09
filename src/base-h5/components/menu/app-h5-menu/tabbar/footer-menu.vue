@@ -7,7 +7,6 @@
             <img class="menu-item-img" :class="{'loading-animation':item.id === 5 && loading}" :src="item.icon" alt="" />
           </div>
           <div class="menu-item-title" >
-          <dir></dir>
             <span class="title-p1">  {{ item.title }}</span>
           </div>
         </div>

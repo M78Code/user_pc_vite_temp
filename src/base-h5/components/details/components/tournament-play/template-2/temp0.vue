@@ -186,14 +186,14 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 // #TODO mixins
 import lodash from "lodash";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
-import { useMittEmit, MITT_TYPES ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
+import { useMittEmit, MITT_TYPES ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win} from "src/output/index.js"
 //国际化
-
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 
 export default defineComponent({
   // #TODO mixins
@@ -206,7 +206,7 @@ export default defineComponent({
   setup(props, evnet) {
     const route = useRoute()
     let data = reactive({
-      utils,
+      
       // 最大显示行数
       show_more_max:5,
       show_more_switch:false,
@@ -302,7 +302,8 @@ export default defineComponent({
       change_show,
       hide_show_more_layout,
       LOCAL_PROJECT_FILE_PREFIX,
-      BetData
+      BetData,
+      go_to_bet
     }
   }
 })

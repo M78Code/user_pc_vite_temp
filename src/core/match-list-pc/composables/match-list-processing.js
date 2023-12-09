@@ -5,7 +5,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { MenuData }  from "src/output/module/menu-data.js";
 
-import {   match_collect_status, set_collect_count } from "./match-list-collect.js";
+import {   match_collect_status, set_collect_count, mx_collect_count  } from "./match-list-collect.js";
 
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -111,9 +111,9 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		is_show_hot.value = false;
 		// 设置收藏数量
 		// lockie
-		if (vx_filter_select_obj.value.length > 0) {
-			mx_collect_count();
-		} else {
+		// if (vx_filter_select_obj.value.length > 0) {
+		// 	mx_collect_count();
+		// } else {
 			try {
 				// 组装所有赛事,检测赛事收藏,算总共的收藏赛事数量
 				all_league_list.forEach(item => {
@@ -133,7 +133,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			// 	type: "set",
 			// 	count: lodash.get(data, "data.collectCount", 0),
 			// });
-		}
+		// }
 		// 如果是专业版 && 今日、早盘、串关之间的切换 && 之前有筛选 && 并且当前没有筛选
 		if (
 			!backend_run &&

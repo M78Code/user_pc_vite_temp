@@ -19,15 +19,15 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
-import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
-
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,csid_to_sport_name } from "src/output/index.js";
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDetailCalss } from "src/output/index.js"
 import { SessionStorage } from "src/output/module/constant-utils.js";
-
+import tab_move from "src/core/tab-move/tab-move.js";
+import zhuge from "src/core/http/zhuge-tag.js";
 export default defineComponent({
   name: "details_tab",
   props: {
@@ -105,7 +105,7 @@ export default defineComponent({
       // 点击的玩法是当前选中的玩法
       if(matchDetailCtr.value.current_category_id == uId) return false;
       // 移动当前玩法的位置
-      tab_move2(index, data.reset_scroll_dom)
+      tab_move.tab_move2(index, data.reset_scroll_dom)
       MatchDetailCalss.set_details_item(uId);
       // set_subscript_game_index(index)
       let search_term = route.query.search_term
@@ -134,7 +134,7 @@ export default defineComponent({
         "玩法集ID": item.id,
         "球种名称": csid_to_sport_name(get_detail_data.csid)
       }
-      send_zhuge_event('TY_H5_详情页/大屏_玩法分类导航_点击', UserCtr,zhuge_obj);
+      zhuge.send_zhuge_event('TY_H5_详情页/大屏_玩法分类导航_点击', UserCtr,zhuge_obj);
     };
     /**
      * @Description 获取当前选中详情玩法集

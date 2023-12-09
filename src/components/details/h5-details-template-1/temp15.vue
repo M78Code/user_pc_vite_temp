@@ -75,7 +75,7 @@ export default defineComponent({
   // mixins:[odd_convert],
   setup(props, evnet) {
     const data = reactive({
-      utils,
+      
       name_: '',  //计算类名
       len: 0,  //有效的ol的个数
     });
