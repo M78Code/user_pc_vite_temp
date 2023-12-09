@@ -67,7 +67,7 @@
         <key-board v-if="BetData.bet_keyboard_show" :config="BetData.bet_single_list[0]" :index="0"></key-board>
         <div class="tip component bet-btn-item" v-if="BetViewDataClass.error_message">
           <div class="bet-error">
-            {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
+          {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
           </div>
         </div>
         <div class="dele-wrap yb_py8 row"  @touchmove.prevent>

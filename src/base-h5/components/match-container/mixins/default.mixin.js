@@ -11,7 +11,7 @@ import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
 import { format_how_many_days, format_week } from "src/core/format/common/index.js"
-
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0 } from 'src/base-h5/core/utils/local-image.js'
 
@@ -940,7 +940,8 @@ export default defineComponent({
       // store.dispatch({ type: 'matchReducer/set_details_item',  payload: 0 });
       // 进入详情前，将当前赛事信息存入仓库
       // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
-
+      //元数据存入本地
+      LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
       if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
         this.$router.push(`/result_details/${item.mid}/0`);
       }
@@ -962,6 +963,7 @@ export default defineComponent({
           if(this.$route.name == 'matchResults' ||item.ms==4){
             name = 'result'
           }
+
           this.$router.push({name,params})
         }
       }
