@@ -28,7 +28,7 @@
       league_container_card_template,
       no_data_card_template
     } from "../config/card-template-config.js"
-    import { compute_sport_id  } from 'src/core/constant/index.js'
+    import { compute_sport_id  } from 'src/output/module/constant-utils.js'
     import { MenuData} from "src/output/module/menu-data.js"
 
   /**

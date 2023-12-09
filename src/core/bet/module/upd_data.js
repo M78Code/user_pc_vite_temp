@@ -5,7 +5,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import { set_submit_status } from "./status.js";
 // import mathjs from "src/core/utils/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
-import {NO_MERAGE_MARKETVALUE} from "src/core/constant/config/play-mapping.js";
+import {NO_MERAGE_MARKETVALUE} from "src/output/module/constant-utils.js";
 
  
 // import  MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js"
