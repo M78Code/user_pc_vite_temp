@@ -28,8 +28,9 @@ import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_common } from "src/api/index.js";
-import PageSourceData from "src/core/page-source/page-source.js";
+// import PageSourceData from "src/core/page-source/page-source.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { useMittOn,MITT_TYPES } from "src/output"
 const props = defineProps({})
 const state = reactive({
   current_mi:'',//默认赛种
@@ -64,6 +65,7 @@ const tabData = ref([
  * @param {*} val 
  */
 const on_update = async (val,type) => {
+  val = val || tabValue.value;
   state.slideMenu_sport = await getListCount(val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val),val);
   // state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
   MenuData.set_current_lv1_menu(val);
@@ -77,11 +79,12 @@ const on_update = async (val,type) => {
  */
 const getListCount = async (list,type) =>{
   let collect = JSON.parse(JSON.stringify(list))|| [];
-  let euid_list = ''
+  let euid_list = [];
     // 获取对应的旧菜单id    
-    collect.forEach(item =>{
-        euid_list += MenuData.get_mid_for_euid(type==400?`${+item.mi+300}`:`${item.mi}${type}`) + ','
+    euid_list = collect.map((item,index)=>{
+      return MenuData.get_mid_for_euid(type==400?`${+item.mi+300}`:`${item.mi}${type}`);
     })
+    euid_list = euid_list.toString()
     let type_ = {
         1:1,
         2:3,
@@ -139,10 +142,13 @@ onMounted(()=>{
   MenuData.set_collect_id(50000);
   const index = tabData.value.findIndex(n=>{return n.val == tabValue.value});
   on_update(tabData.value[index].val,1)
-  if(scrollListRef.value) scrollListRef.value.reset(state.current_mi)
+  if(scrollListRef.value) scrollListRef.value.reset(state.current_mi);
+  useMittOn(MITT_TYPES.EMIT_COLLECT_MATCH_OZ, on_update)
 })
 onUnmounted(() => {
-  MenuData.set_collect_id('')
+  MenuData.set_collect_id('');
+  useMittOn(MITT_TYPES.EMIT_COLLECT_MATCH_OZ).off
+
 })
 </script>
 <style scoped lang="scss">
