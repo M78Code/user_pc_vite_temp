@@ -6,6 +6,7 @@
 </template>
 <script setup lang="ts">
 import DefaultTemplate from './DefaultTemplate.vue';
+import Template4 from './Template4.vue';
 import common from './common.js'
 
 const props = defineProps<{
@@ -17,6 +18,9 @@ const Template = computedTemplate()
 const titleLen = props.data.title?.length
 
 function computedTemplate(){
+  if(props.data.hpt == 4){
+    return Template4
+  }
   return DefaultTemplate
 }
 function onClick(){

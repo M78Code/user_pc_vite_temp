@@ -135,6 +135,7 @@ export default {
     const label = ref("");
     
     const handle_change = (value) => {
+      console.log(value, "valuessss");
       label.value = value;
     }
     return{
