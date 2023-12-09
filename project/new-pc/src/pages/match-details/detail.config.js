@@ -13,7 +13,7 @@ import { useMittEmit, useMittOn, MITT_TYPES ,useMittEmitterGenerator} from "src/
 import { useGetGlobal } from  "src/core/global/mixin/global_mixin.js"
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
-import  { computed_background } from  "src/core/constant/config/csid.js"
+import  { computed_background } from  "src/output/index.js"
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
