@@ -23,7 +23,7 @@ export default {
       let f = 0;
       if(this.get_video_process_data){
         let p_data_detail = this.get_video_process_data.detail;
-        let detail_copied = _.cloneDeep(p_data_detail);
+        let detail_copied = lodash.cloneDeep(p_data_detail);
 
         if(detail_copied && detail_copied[match.mid]){
           Object.assign(match,detail_copied[match.mid]);

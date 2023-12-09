@@ -69,7 +69,7 @@ export default {
 
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
     anlyse_show(){
-      return _.get(this.get_access_config, 'statisticsSwitch') && this.$route.name != 'virtual_sports' && this.get_detail_data.csid != 1004
+      return lodash.get(this.get_access_config, 'statisticsSwitch') && this.$route.name != 'virtual_sports' && this.get_detail_data.csid != 1004
     }
   },
   watch: {
@@ -204,7 +204,7 @@ export default {
         let params = { sportId: this.sub_menu_type,mid: new_mid};
         api_common.get_category_list(params).then(res =>{
           if(res.code == 200 && res.data){
-            this.data_list = _.get(res, "data");
+            this.data_list = lodash.get(res, "data");
             let first_data_item = this.data_list[0];
             if(first_data_item){
               // 将玩法集第一个存入store，后续赛种/赛事期数跳转时做判断用

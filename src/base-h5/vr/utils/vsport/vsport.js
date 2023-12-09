@@ -48,7 +48,7 @@ export default class VSport {
       // 赛事信息对象,消费数据
       this.sport_data = sport_data;
       if(sport_data.list){
-        this.upd_list = _.cloneDeep(sport_data.list);
+        this.upd_list = lodash.cloneDeep(sport_data.list);
       }
       // 设置比赛的总时长 默认90s
       if(sport_data.totalTime){
@@ -115,7 +115,7 @@ export default class VSport {
       // 赛事信息对象,消费数据
       this.sport_data = sport_data;
       if(sport_data && sport_data.list){
-        this.upd_list = _.cloneDeep(sport_data.list);
+        this.upd_list = lodash.cloneDeep(sport_data.list);
       }
       // 记录上一次的回调数据对象
       this.item_obj_old = null;
@@ -349,7 +349,7 @@ export default class VSport {
       await api_v_sports.get_virtual_video_process(params).then(res => {
         if(res.code == 200){
           if(res.data && res.data.detail && Object.keys(res.data.detail).length){
-            let match_play_data = _.cloneDeep(res.data);
+            let match_play_data = lodash.cloneDeep(res.data);
             if(match_play_data){
               this.upd_match_play_data(match_play_data, mid)
             }
@@ -370,9 +370,9 @@ export default class VSport {
   upd_match_play_data(match_play_data, mid){
     this.match_play_data_obj[match_play_data.batchNo] = match_play_data;
     if(mid){
-      this.match_info = _.get(match_play_data,`detail[${mid}]`)
+      this.match_info = lodash.get(match_play_data,`detail[${mid}]`)
       if(this.match_info){
-        this.upd_list = _.cloneDeep(this.match_info.list);
+        this.upd_list = lodash.cloneDeep(this.match_info.list);
         this.total_time = parseFloat(this.match_info.totalTime);
       }
     }

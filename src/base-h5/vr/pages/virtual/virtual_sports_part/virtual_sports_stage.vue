@@ -105,7 +105,7 @@
         <div v-else class="football-score row justify-center items-center">
           <div class="name-wrap left">
             <div class="match-name ellipsis">{{home_name}}</div>
-            <img v-img="([_.get(current_match,'mhlu'), _.get(current_match,'frmhn')])" />
+            <img v-img="([lodash.get(current_match,'mhlu'), lodash.get(current_match,'frmhn')])" />
           </div>
           <div class="msc-wrap yb-flex-center">
             <div class="match-end">{{$root.$t('collect.match_end')}}</div>
@@ -131,7 +131,7 @@
             </div>
           </div>
           <div class="name-wrap right">
-            <img v-img="([_.get(current_match,'malu'), _.get(current_match,'frman')])" />
+            <img v-img="([lodash.get(current_match,'malu'), lodash.get(current_match,'frman')])" />
             <div class="match-name ellipsis">{{away_name}}</div>
           </div>
         </div>
@@ -558,7 +558,7 @@ export default {
         }
       }
       if(this.virtual_result_rank_data.length && this.sub_menu_type == 1009) {
-        let arr = _.sortBy(this.virtual_result_rank_data, 'ranking')
+        let arr = lodash.sortBy(this.virtual_result_rank_data, 'ranking')
         for (const item of arr) {
           res.push(item.no)
         }
@@ -600,9 +600,9 @@ export default {
           this.random_inited = true;
         }
         if(this.current_league){
-          let p = _.cloneDeep(this.get_prev_v_sports_params);
+          let p = lodash.cloneDeep(this.get_prev_v_sports_params);
           let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
-          p[p_key] = _.cloneDeep(new_);
+          p[p_key] = lodash.cloneDeep(new_);
           this.set_prev_v_sports_params(p);
         }
       },500);

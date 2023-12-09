@@ -5,9 +5,9 @@
 -->
 
 <template>
-  <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="DOM_ID_SHOW && `list-${_.get(odd_item, 'oid')}`">
+  <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="DOM_ID_SHOW && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 (列表简单版时非足球赛事角球菜单时设置为关盘)-->
-    <div v-if="lock || (placeholder == 1 || is_close(get_odd_status()) || (_.get(odds_class_object,'is-jiaoqiu') && _.get(match,'csid') != 1) && $route.name=='matchList')" class="item-inner">
+    <div v-if="lock || (placeholder == 1 || is_close(get_odd_status()) || (lodash.get(odds_class_object,'is-jiaoqiu') && lodash.get(match,'csid') != 1) && $route.name=='matchList')" class="item-inner">
       <template  v-if="!lock && is_show_lock">
         -
       </template>
@@ -20,7 +20,7 @@
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title'
         :class="{three:column_ceil > 2,standard:n_s == 2}"
-        v-if="(!is_fengpan(get_odd_status()) && [11,18,19].includes(+_.get(current_tab_item, 'id'))) || ((odd_item.on || convert_num(odd_item) === 0) && match.csid != 1)"
+        v-if="(!is_fengpan(get_odd_status()) && [11,18,19].includes(+lodash.get(current_tab_item, 'id'))) || ((odd_item.on || convert_num(odd_item) === 0) && match.csid != 1)"
         v-html="transfer_on(odd_item)">
       </div>
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
@@ -30,8 +30,8 @@
     <div v-else class="item-inner have-on" :class="{close: is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item)}">
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title'
-        :class="{three:column_ceil > 2,standard:n_s == 2,small:[11].includes(+_.get(current_tab_item, 'id'))}"
-        v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [11,18,19].includes(+_.get(current_tab_item, 'id'))) ) ||
+        :class="{three:column_ceil > 2,standard:n_s == 2,small:[11].includes(+lodash.get(current_tab_item, 'id'))}"
+        v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [11,18,19].includes(+lodash.get(current_tab_item, 'id'))) ) ||
               (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item))
               && match.csid != 1"
         v-html="transfer_on(odd_item)">
@@ -47,7 +47,7 @@
           win:[4,5].includes(+odd_item.result),
           lose:[0,1,2,3,6].includes(+odd_item.result),
           standard:n_s == 2,
-          small:[11].includes(+_.get(current_tab_item, 'id'))
+          small:[11].includes(+lodash.get(current_tab_item, 'id'))
         }">
         {{odd_append_value}}<!--获取赔率或赛果-->
         <span class="change-icon" v-show="red_green_status"
@@ -65,6 +65,8 @@
 import odd_convert from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js"
 // import betting from 'src/project/mixins/betting/betting.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { debounce } from "lodash";
+
 export default{
   name:"oddColumnItem",
   props:{
@@ -112,7 +114,7 @@ export default{
       useMittOn(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, this.match_result_data_loaded).off,
     ]
     // 点击事件防抖处理
-    this.item_click3 = this.debounce(this.item_click3, 450, {'leading': true, trailing: false});
+    this.item_click3 = debounce(this.item_click3, 450, {'leading': true, trailing: false});
   },
   computed:{
     // ...mapGetters([
@@ -133,13 +135,13 @@ export default{
     get_cur_odd(){},
     get_newer_standard_edition(){},
     get_menu_type(){},
-    get_theme(){},
+    get_theme(){ return 'theme01' },
     get_foot_ball_screen_changing(){},
     get_lang(){},
     footer_sub_menu_id(){},
     // 当前玩法ID
     hpid(){
-      return _.get(this.odd_field,'hpid');
+      return lodash.get(this.odd_field,'hpid');
     },
     // 判断边框border-radius样式
     odds_class_object(){
@@ -203,7 +205,7 @@ export default{
       if (this.get_menu_type == 900) {  //虚拟体育
         flag = this.get_bet_list.includes(this.odd_item.oid);
       } else {
-        let id_ = _.get(this.odd_field,'hl[0].hn')? `${this.match.mid}_${this.odd_field.hpid || this.odd_field.chpid}_${this.odd_item.ot}_${this.odd_field.hl[0].hn}` : this.odd_item.oid
+        let id_ = lodash.get(this.odd_field,'hl[0].hn')? `${this.match.mid}_${this.odd_field.hpid || this.odd_field.chpid}_${this.odd_item.ot}_${this.odd_field.hl[0].hn}` : this.odd_item.oid
         flag = this.get_bet_list.includes(id_);
       }
       this.$emit('select_change',{flag,i:this.odd_item_i});
@@ -211,8 +213,8 @@ export default{
     },
     // 是否显示 -
     is_show_lock () {
-      const ol = _.get(this.odd_field, 'hl[0].ol', "")
-      return _.isEmpty(ol)
+      const ol = lodash.get(this.odd_field, 'hl[0].ol', "")
+      return lodash.isEmpty(ol)
     }
   },
   methods:{
@@ -296,12 +298,12 @@ export default{
     // on转换html
     transfer_on(odd_item){
       // 5分钟玩法
-      if(this.match.csid == 1 && [19].includes(+_.get(this.current_tab_item, 'id')) ){
+      if(this.match.csid == 1 && [19].includes(+lodash.get(this.current_tab_item, 'id')) ){
         return odd_item.onb || odd_item.on;
       }
       // 波胆
       let on = odd_item.onb || odd_item.on;
-      if(this.match.csid == 1 && [18].includes(+_.get(this.current_tab_item, 'id')) ){
+      if(this.match.csid == 1 && [18].includes(+lodash.get(this.current_tab_item, 'id')) ){
         on = odd_item.ot
         if(odd_item.ot == 'Other' && ['zh', 'tw'].includes(this.get_lang)){
           on = '其他'
@@ -321,12 +323,12 @@ export default{
 
       // 特色组合玩法盘口字体颜色
       let on_value = null
-      if ([11].includes(+_.get(this.current_tab_item, 'id')) && odd_item.on) {
+      if ([11].includes(+lodash.get(this.current_tab_item, 'id')) && odd_item.on) {
         if (this.get_lang === 'th') on = on.replace(/\s+/g, "")
         on_value = `<span style="color: var(--q-color-fs-color-135);padding-left: ${this.get_lang === 'th' ? 0 : '3px'}">${odd_item.on}</span>`
       }
       let replaced = on
-      if(![18].includes(+_.get(this.current_tab_item, 'id'))){
+      if(![18].includes(+lodash.get(this.current_tab_item, 'id'))){
         replaced = on.replace(/[\/0-9\+\-\.]/ig,found => {
           return `<span style="color:${color}">${found}</span>`
         });
@@ -357,20 +359,20 @@ export default{
     get_odd_data(){
       let ol = null;
       try{
-        if(_.get(this.odd_field,'hl[0]')){
+        if(lodash.get(this.odd_field,'hl[0]')){
           ol = this.odd_field.hl[0].ol;
         }
       } catch(e){
         console.error(e);
       }
       if(ol && ol.length){
-        if([11,18,19].includes(+_.get(this.current_tab_item, 'id'))){
+        if([11,18,19].includes(+lodash.get(this.current_tab_item, 'id'))){
           this.odd_item = this.ol_list_item
         }else{
           this.odd_item = ol[this.odd_item_i];
         }
       } else {
-        this.odd_item = {"oid":"","mid":_.get(this.odd_field,'mid')}
+        this.odd_item = {"oid":"","mid":lodash.get(this.odd_field,'mid')}
       }
     },
     /**
@@ -448,7 +450,7 @@ export default{
       handler(){
         let ol_list = this.get_ollist_no_close(this.odd_field);
         if(ol_list){
-          if([11,18,19].includes(+_.get(this.current_tab_item, 'id'))){
+          if([11,18,19].includes(+lodash.get(this.current_tab_item, 'id'))){
             this.odd_item = this.ol_list_item
           }else{
             if(this.odd_item)

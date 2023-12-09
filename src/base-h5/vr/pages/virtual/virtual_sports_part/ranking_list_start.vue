@@ -134,7 +134,7 @@ export default {
       return '';
     },
     get_theme(){
-      return '';
+      return 'theme01';
     },
   },
   destroyed () {

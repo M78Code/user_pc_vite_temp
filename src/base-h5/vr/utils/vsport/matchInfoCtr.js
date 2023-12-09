@@ -41,7 +41,7 @@ export default class MatchInfoCtr
    */
   setMatchObj(obj){
     Object.assign(this.match_obj,obj);
-    this.match_obj = _.cloneDeep(this.match_obj);
+    this.match_obj = lodash.cloneDeep(this.match_obj);
   }
 
   /**
@@ -53,7 +53,7 @@ export default class MatchInfoCtr
     if(list && (list instanceof Array) && list.length)
     {
       // 赛事信息集合
-      // this.list = _.cloneDeep(list);
+      // this.list = lodash.cloneDeep(list);
       let list_ = this.list;
       // 所有投注项对象
       let ol_obj_= this.ol_obj;
@@ -321,7 +321,7 @@ export default class MatchInfoCtr
   //   // if(obj.mid&&obj.hpid&&this.match_obj&&this.match_obj.hps&&(this.match_obj.hps instanceof Array))
   //   if(obj.mid)
   //   {
-  //     let item = _.cloneDeep(obj);
+  //     let item = lodash.cloneDeep(obj);
   //     // let hps_ = []
   //     // 增加新盘口和押注项对象
   //     if (item && item.hps && item.hps.length) {
@@ -432,7 +432,7 @@ export default class MatchInfoCtr
               });
             }
 
-            // let play_ = _.cloneDeep(obj);
+            // let play_ = lodash.cloneDeep(obj);
             // 修改玩法信息
             if(obj&&obj.hl&&(obj.hl instanceof Array))
             {
@@ -460,7 +460,7 @@ export default class MatchInfoCtr
                 }
               });
             }
-            let play_ = _.cloneDeep(obj);
+            let play_ = lodash.cloneDeep(obj);
             Object.assign(play,play_);
             play_.hl.forEach(item_hl => {
               if(item_hl){
@@ -502,7 +502,7 @@ export default class MatchInfoCtr
                 }
               });
             }
-            play_ = _.cloneDeep(play_);
+            play_ = lodash.cloneDeep(play_);
             if(play_&&play_.hl&&(play_.hl instanceof Array))
             {
               play_.hl.forEach(item_hl => {

@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { debounce } from "lodash";
 
 export default {
   name: 'floatingMenu',
@@ -47,7 +48,7 @@ export default {
     }
   },
   created(){
-    this.cancel_loading = this.debounce(this.cancel_loading,500)
+    this.cancel_loading = debounce(this.cancel_loading,500)
   },
   destroyed () {
     this.debounce_throttle_cancel(this.cancel_loading);
@@ -104,7 +105,7 @@ export default {
     get_show_favorite_list(){return ''},
     get_curr_sub_menu_type(){return ''},
     get_newer_standard_edition(){return ''},
-    get_theme(){return ''},
+    get_theme(){return 'theme01'},
 
     footer_sub_m_list(){
       return [

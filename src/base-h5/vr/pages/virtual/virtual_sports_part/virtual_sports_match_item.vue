@@ -59,7 +59,7 @@
             </div>
             <!-- 玩法数量 -->
             <div v-if="match_item.mc">
-              {{_.get(get_access_config,'handicapNum') ? `${match_item.mc}+`: $root.$t('footer_menu.more')}}
+              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+`: $root.$t('footer_menu.more')}}
             </div>
           </div>
         </div>
@@ -480,7 +480,7 @@ export default {
      */
     goto_details(match) {
       let mid = match.mid;
-      let copied = _.cloneDeep(match);
+      let copied = lodash.cloneDeep(match);
       this.set_current_gotodetail_match(copied);
       this.set_details_item(0);
       this.$router.push({
@@ -509,7 +509,7 @@ export default {
 
       let hl_item = this.get_hl_item(match_item)
       if (!hl_item) return;
-      ol_item.id_ = _.get(hl_item,'hl[0].hn') ?
+      ol_item.id_ = lodash.get(hl_item,'hl[0].hn') ?
         `${match_item.mid}_${hl_item.chpid || hl_item.hpid}_${ol_item.ot}_${hl_item.hl[0].hn}` : ol_item.oid;
       this.bet_click3(match_item, hl_item, ol_item);
     }
@@ -529,7 +529,7 @@ export default {
     get_newer_standard_edition(){return false;},
     get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){return false;},
-    get_theme(){return false;},
+    get_theme(){return 'theme01'},
     get_access_config(){return false;},
     
     show_debugger_line(){

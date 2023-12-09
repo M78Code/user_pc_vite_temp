@@ -131,7 +131,7 @@ export default {
 
         // 虚拟泥地摩托车赛果只有6个结果,每行展示2个
         if(this.sub_menu_type == 1009 && this.plays && this.plays.length == 6) {
-          let arr = _.chunk(this.plays, 2);
+          let arr = lodash.chunk(this.plays, 2);
           this.best_three_list = arr[0]
           this.best_middle_list = arr[1]
           this.last_three_list = arr[2]
@@ -162,7 +162,7 @@ export default {
       return res;
     },
     sort_plays(plays_){
-      let new_plays = _.sortBy(plays_,(item)=>{
+      let new_plays = lodash.sortBy(plays_,(item)=>{
         return item.playId
       })
       this.plays = new_plays
@@ -179,10 +179,10 @@ export default {
       }
       // 传值赛事id: mid
       api_common.get_virtual_matchResult(params).then( res => {
-        let code = _.get(res,'code')
+        let code = lodash.get(res,'code')
         if(code == 200){
-          this.rank = _.get(res,'data.rank') || []
-          this.plays = _.get(res,'data.plays')
+          this.rank = lodash.get(res,'data.rank') || []
+          this.plays = lodash.get(res,'data.plays')
           this.$emit('send_virtual_result_rank_data', this.rank)
           this.sort_plays(this.plays)
           if(callback){
