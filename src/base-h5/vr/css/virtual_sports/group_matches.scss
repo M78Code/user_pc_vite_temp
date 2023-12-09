@@ -1,0 +1,26 @@
+[class*=theme0] {
+  .group-rank {
+    /*  ͷ�� */
+    .header {
+      background: var(--q-color-page-bg-color-1);
+      color:  var(--q-color-fs-color-9);
+      > div {
+        color: var(--q-color-fs-color-9);
+      }
+    }
+    .group-item {
+      background:var(--q-color-page-bg-color-95);
+      &::after {
+        border-color: var(--q-color-border-color-5) !important;
+      }
+    }
+    .group-name {
+      color:var(--q-color-fs-color-135);
+      border-bottom: 0.01rem solid  var(--q-color-border-color-11);
+    }
+    .team-item {
+      border-bottom: 1px solid  var(--q-color-border-color-11);
+      color: var(--q-color-fs-color-7);
+    }
+  }
+}

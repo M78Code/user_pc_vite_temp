@@ -47,7 +47,7 @@ const router = createRouter({
         {
           path: "/virtual",  // vr体育
           name: "virtual_sports",
-          component: () => import("../pages/virtual/index.vue"),
+          component: () => import("src/base-h5/vr/pages/virtual/virtual.vue"),
         },
         {
           path: "/esports", // 电竞

@@ -1,0 +1,34 @@
+/*
+ * @Author: Cable
+ * @Description: 虚拟体育样式
+ */
+[class*=theme0] {
+  .virtual-sports {
+    .match-tab {
+      background:var(--q-color-page-bg-color-102);
+      box-shadow: var(--q-color-com-box-shadow-12);
+      .part-nav {
+        .sub-nav-item {
+          color: var(--q-color-fs-color-48);
+          &.focus {
+
+            color:var(--q-color-fs-color-151) !important;
+            // color:var(--q-color-fs-color-6) !important;
+          }
+          &.footbal {
+            color: var(--q-color-fs-color-139);
+          }
+          &:after {
+            background-color:var(--q-color-fs-color-6);
+          }
+        }
+      }
+      .sr-icon-wrapper {
+        background:var(--q-color-page-bg-color-102);
+        &:after {
+          background: var(--q-color-page-bg-color-99);
+        }
+      }
+    }
+  }
+}
