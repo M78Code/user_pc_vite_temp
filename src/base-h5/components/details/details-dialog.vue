@@ -158,8 +158,7 @@ import matchStage from 'src/base-h5/components/match/match-stage.vue';   // 下�
 import matchDialogStage from 'src/base-h5/components/match/match-dialog-stage.vue';   // 详情点击下拉显示当前赛事的时间
 import showStartTime from 'src/base-h5/components/details/wight/show-start-time.vue'   // 详情页同联赛的赛事即将开赛显示时间
 // 工具
-import { format_total_score } from 'src/core/format/module/format-score.js'
-import { UserCtr, MenuData,compute_css_obj,useMittEmit, MITT_TYPES, MatchDetailCalss } from "src/output/index.js";
+import { UserCtr, MenuData,compute_css_obj,useMittEmit, MITT_TYPES, MatchDetailCalss, format_total_score } from "src/output/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
  
 
