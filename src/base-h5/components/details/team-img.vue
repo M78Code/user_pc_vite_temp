@@ -85,4 +85,3 @@ export default {
   height: 0.3rem;
 }
 </style>
-src/output/index

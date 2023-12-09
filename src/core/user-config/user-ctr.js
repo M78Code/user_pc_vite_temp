@@ -17,11 +17,10 @@ import { get_server_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
-import { default_theme_key } from "src/core/theme/"
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-import {GLOBAL_CONSTANT } from "src/output/module/constant-utils.js"
+import {GLOBAL_CONSTANT } from "src/output/module/constant-js"
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 // #TODO 接口统一管理的文件，后续替换
@@ -368,7 +367,7 @@ class UserCtr {
     // let zhuge_obj = {
     //   版本类型: edition == 1 ? "简易" : "标准",
     // };
-    // $utils.zhuge_event_send("TY_H5_菜单_版本_点击", UserCtr.user_info, zhuge_obj);
+    // $send_zhuge_event("TY_H5_菜单_版本_点击", UserCtr.user_info, zhuge_obj);
   }
   set_balance(balance) {
     this.balance = 1 * balance;

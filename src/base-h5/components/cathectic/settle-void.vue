@@ -99,4 +99,3 @@ const go_bet = () => {
   margin-top: 0.1rem;
 }
 </style>
-src/output

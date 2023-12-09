@@ -378,4 +378,3 @@ export default defineComponent({
   }
 }
 </style>
-src/outputsrc/output/index.js

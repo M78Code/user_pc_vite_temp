@@ -30,7 +30,7 @@ export default defineComponent({
       container_height.value = 'auto';
     }
     else{
-      container_height.value = innerHeight - utils.rem(1.68);
+      container_height.value = innerHeight - rem(1.68);
     }
     })
     return {
@@ -47,4 +47,4 @@ export default defineComponent({
   overflow-x: hidden;
   overflow-y: auto;
 }
-</style>src/core/utils/common/index.js
+</style>

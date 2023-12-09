@@ -93,7 +93,7 @@ export default defineComponent({
     const go_to_bet = (index) =>{
       let ol_item = data.champion_list[index]
       ol_item.num = index + 1
-      utils.go_to_bet(ol_item)
+      go_to_bet(ol_item)
     };
     onMounted(() => {
       init()
@@ -235,4 +235,3 @@ div[class*="virtual-num"] {
   }
 }
 </style>
-src/output

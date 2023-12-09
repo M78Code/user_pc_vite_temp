@@ -65,7 +65,7 @@ const { menu_type } = MenuData;
 const scrollBox = ref(null)
 // 页面初始高度
 let originHeight = 0;
-const get_y0_suffix = '' // utils.get_y0_suffix()
+const get_y0_suffix = '' // get_y0_suffix()
 
 //定时器
 let cancleTimer, event_handle_timer, timer00, fun;
@@ -107,7 +107,7 @@ async function get_sport_list() {
             // 存储列表页二级菜单 球类id
             SearchData.set_cur_csid(SearchData.cur_csid);
             nextTick(() => {
-              utils.tab_move2(index, scrollBox.value, true)
+              tab_move2(index, scrollBox.value, true)
             })
             return
           }
@@ -124,7 +124,7 @@ async function get_sport_list() {
       SearchData.set_cur_csid(data[index].id);
       // 赛种滚动条
       nextTick(() => {
-        utils.tab_move2(index, scrollBox.value, true)
+        tab_move2(index, scrollBox.value, true)
       })
     } else {
       // 存储 球类id
@@ -172,7 +172,7 @@ function goto_details(match) {
 // 点击球种调用搜索接口
 function change_record(val) {
   index_num.value = val;
-  utils.tab_move2(val, scrollBox.value)
+  tab_move2(val, scrollBox.value)
   // 点击球种更换球类ID
   SearchData.set_cur_csid(sport_list.value[val].id);
   // 点击球种,搜索框内容不为空时,调用搜索接口
@@ -565,4 +565,3 @@ onBeforeUnmount(() => {
   }
 }
 </style>
-src/output

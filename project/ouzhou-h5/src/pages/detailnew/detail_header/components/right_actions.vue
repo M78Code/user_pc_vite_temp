@@ -11,7 +11,7 @@
 <script setup>
 import { emit } from 'licia/fullscreen';
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 // import videos from "src/base-h5/components/details/components/videos2.vue";   // 详情页视频+动画直播区域
 const props = defineProps({
     // 是否收藏
@@ -32,8 +32,22 @@ const props = defineProps({
     isVideo: {
         type: Boolean,
         default: false
+    },
+    rightActionsLabel: {
+        type: String,
+        default: 'animation'
     }
 });
+
+watch(() => props.rightActionsLabel, (value) => {
+    select.value = value;
+    if (value == "video") {
+        is_video.value = true;
+    }
+    if (value == "animation") {
+        is_video.value = false;
+    }
+})
 
 const emits = defineEmits(['handleType'])
 // 展示的项,根据不同的值显示不同的actions

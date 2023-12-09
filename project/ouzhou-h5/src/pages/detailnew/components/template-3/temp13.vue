@@ -36,7 +36,7 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': utils.calc_win(append_single.result)}]">
+                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">  
                               <div class="single-name">
                                 <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
@@ -144,7 +144,7 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(append_single.result)}]">
+                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
                             <div class="bet-item-ky-container" :class="[{'click-bet-bgc':append_single.show_bgc}]">
                               <div class="single-name">
                                 <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
@@ -375,7 +375,7 @@ export default defineComponent({
         let temp_num = props.item_data.hl.length / 3
 
         // 是整数则减一，否则向下取整
-        if (init_data.utils.is_integer(temp_num)) {
+        if (init_data.is_integer(temp_num)) {
           slide_num = temp_num - 1
         } else {
           slide_num = Math.floor(temp_num)
@@ -400,7 +400,7 @@ export default defineComponent({
       append_single_list.value.map((item)=>{
         ol_item.oid == item.oid ?  item.show_bgc = true: item.show_bgc = false
       })
-      utils.go_to_bet(ol_item)
+      go_to_bet(ol_item)
     };
     onMounted(() => {
       // 原created
@@ -712,4 +712,3 @@ export default defineComponent({
   background:#D1EBFF;
 }
 </style>
-src/output

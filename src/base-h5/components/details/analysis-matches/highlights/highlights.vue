@@ -332,7 +332,7 @@ setup(props, context){
     // 监听iframe传来的消息
     window.addEventListener("message", handleMessage);
     if (events_scroller.value) {
-      events_scroller.value.style.minHeight = window.innerHeight - utils.rem(1.94) + 'px';
+      events_scroller.value.style.minHeight = window.innerHeight - rem(1.94) + 'px';
     }
 
     // 每隔1分钟请求一次精彩回放接口
@@ -492,7 +492,7 @@ setup(props, context){
 
     // 滚动目标到屏幕显示区域
     nextTick(() => {
-      utils.tab_move(index, slider_video.value[0].slider_x, slider_video[0].item_wrapper, true)
+      tab_move(index, slider_video.value[0].slider_x, slider_video[0].item_wrapper, true)
     })
   }
   // 点击精彩回放视频时，控件显示状态变更

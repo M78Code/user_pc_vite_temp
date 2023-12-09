@@ -711,4 +711,4 @@ const clear_timer = () => {
 
 .arrow2 {
   transform: rotate(0);
-}</style>src/output/index.js
+}</style>

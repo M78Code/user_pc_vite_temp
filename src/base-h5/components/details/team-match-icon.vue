@@ -100,7 +100,7 @@ export default defineComponent({
      * @return {String}
      */
     const details_collect = (match_obj) => {
-      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
+      if( !judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
       if ( state_data.favorite_loading ) return;

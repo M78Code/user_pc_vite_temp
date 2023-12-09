@@ -249,4 +249,3 @@ const score_list = computed(() => {
   }
 }
 </style>
-src/output/index

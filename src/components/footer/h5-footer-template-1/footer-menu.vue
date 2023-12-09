@@ -339,7 +339,7 @@ const menu_item_click = (item, i) => {
   //关注
   else if (item.id === 1) {
     if (
-      !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)
+      !judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)
     )
       return;
     if (footer_clicked_handleing.value) return;

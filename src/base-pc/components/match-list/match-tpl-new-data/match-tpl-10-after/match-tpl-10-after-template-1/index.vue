@@ -14,8 +14,8 @@
       <div class="match-handicap-item">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
-          <basis-info2 v-if="is_mounted && $utils.get_match_status(match.ms,[110]) == 0" :match="match" />
-          <basis-info5 v-if="is_mounted && $utils.get_match_status(match.ms,[110]) == 1" :match="match" />
+          <basis-info2 v-if="is_mounted && $get_match_status(match.ms,[110]) == 0" :match="match" />
+          <basis-info5 v-if="is_mounted && $get_match_status(match.ms,[110]) == 1" :match="match" />
         </div>
 
         <!-- 赛事盘口投注项 -->

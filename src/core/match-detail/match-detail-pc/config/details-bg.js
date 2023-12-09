@@ -1,4 +1,4 @@
-import { compute_local_project_file_path } from "src/output/module/constant-utils.js";
+import { compute_local_project_file_path } from "src/output/module/constant-js";
 const detail_csid_config= {
   CSID_1: {
     csid: '1',

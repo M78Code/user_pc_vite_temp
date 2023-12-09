@@ -15,7 +15,7 @@
       {
         'color-highlight': ol_data.handicap_highlight,
         style2: ol_data.onbl && ol_data.csid == 2,
-        left_cell: utils.is_iframe,
+        left_cell: is_iframe,
         'injury-time-goal': ol_data.ot === 'ClutchGoal',
         nogoal: ol_data.ot === 'NoGoal',
       },
@@ -29,7 +29,7 @@
     <!-- 赔率 -->
     <div class="odds" :class="[odds_lift]" :style="[1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
         +ol_data._hpid
-      ) && utils.is_iframe
+      ) && is_iframe
         ? 'flex:1.5'
         : ''
       ">
@@ -419,4 +419,4 @@ onUnmounted(() => {
 
 .left_cell {
   text-align: left !important;
-}</style>src/core/format/common/module/format-odds-conversion-mixin.js
+}</style>

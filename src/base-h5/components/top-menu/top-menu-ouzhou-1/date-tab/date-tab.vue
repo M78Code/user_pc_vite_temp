@@ -10,7 +10,7 @@
 </template>
   
 <script setup>
-import { dateWeekFormat } from "../utils.js";
+import { dateWeekFormat } from "../js";
 const props = defineProps({
     reverse: {
         type: Boolean,

@@ -297,6 +297,5 @@ onMounted(() => {
         background: red;
     }
 }
-@import "src/base-h5/components/details/styles/tournament-play-new.scss"
+@import "src/base-h5/components/details/styles/tournament-play-new.scss";
 </style>
-src/output

@@ -49,7 +49,7 @@
                     <div>
                       <!-- <span class="middle-span">08/23</span>
                       <span>03:00</span> -->
-                      <span v-if="!item.acCode" class="middle-span">{{(new Date(utils.format_time_zone_time(+ lodash.get(item, 'detailList[0].beginTime')))).Format('MM/dd hh:mm')}}</span>
+                      <span v-if="!item.acCode" class="middle-span">{{(new Date(format_time_zone_time(+ lodash.get(item, 'detailList[0].beginTime')))).Format('MM/dd hh:mm')}}</span>
                     </div>
                   </div>
                   <div class="item-middle">
@@ -119,8 +119,8 @@
                     </div>
                     <div class="bottom-right">
                       <span>投注时间:</span> 
-                      <!-- <span>{{(new Date(utils.format_time_zone_time(+data.betTime))).Format(i18n_t('time4'))}}</span>MM/dd hh:mm -->
-                      <span>{{(new Date(utils.format_time_zone_time( +lodash.get(item, 'betTime') ))).Format('MM/dd hh:mm')}}</span>
+                      <!-- <span>{{(new Date(format_time_zone_time(+data.betTime))).Format(i18n_t('time4'))}}</span>MM/dd hh:mm -->
+                      <span>{{(new Date(format_time_zone_time( +lodash.get(item, 'betTime') ))).Format('MM/dd hh:mm')}}</span>
                       <!-- <span>08/20</span><span>17:28</span> -->
                     </div>
                 </div>

@@ -80,4 +80,4 @@ export default {
   display: flex;
   justify-content: center;
 }
-</style>src/output/index.js
+</style>

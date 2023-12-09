@@ -2,7 +2,7 @@
 /**
  * @description 需要动态传入的组件
  */
-import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
+import { PROJECT_NAME } from 'src/output/module/constant-js'
 
 // 组件配置 （需要使用相对路径）
 const comp_config = {

@@ -30,7 +30,7 @@
                        :key="ol_index"
                        class="on-name-osn"
                        @click="go_to_bet(ol_item)"
-                       :class="[get_bet_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
+                       :class="[get_bet_list.includes(ol_item.id_)?'bet-click':'',{'win':calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
@@ -154,7 +154,7 @@
                        :key="ol_index"
                        class="on-name-osn"
                        @click="go_to_bet(ol_item)"
-                       :class="[get_bet_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
+                       :class="[get_bet_list.includes(ol_item.id_)?'bet-click':'',{'win':calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
@@ -323,7 +323,7 @@ export default defineComponent({
     );
     const go_to_bet = (ol_item) => {
       if(ol_item.os == 1 && ol_item._hs != 1){      
-        utils.go_to_bet(ol_item)
+        go_to_bet(ol_item)
       }
     };
     return {
@@ -401,4 +401,3 @@ export default defineComponent({
 
 
 </style>
-src/output

@@ -28,11 +28,11 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color warp"
-                                @click="utils.go_to_bet(ol_list_0[ol_index0 - 1])"
+                                @click="go_to_bet(ol_list_0[ol_index0 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': get_bet_list.includes(ol_list_0[ol_index0 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
-                                  'win': utils.calc_win(ol_list_0[ol_index0 - 1].result),
+                                  'win': calc_win(ol_list_0[ol_index0 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }">
                               <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':get_bet_list.includes(ol_list_0[ol_index0 - 1].id_)}]">
@@ -111,11 +111,11 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color warp"
-                                @click="utils.go_to_bet(ol_list_1[ol_index1 - 1])"
+                                @click="go_to_bet(ol_list_1[ol_index1 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': get_bet_list.includes(ol_list_1[ol_index1 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
-                                  'win': utils.calc_win(ol_list_1[ol_index1 - 1].result),
+                                  'win': calc_win(ol_list_1[ol_index1 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
@@ -193,11 +193,11 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color"
-                                @click="utils.go_to_bet(ol_list_2[ol_index2 - 1])"
+                                @click="go_to_bet(ol_list_2[ol_index2 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': get_bet_list.includes(ol_list_2[ol_index2 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
-                                  'win': utils.calc_win(ol_list_2[ol_index2 - 1].result),
+                                  'win': calc_win(ol_list_2[ol_index2 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
@@ -274,8 +274,8 @@
                     <!-- 主程序 start -->
                     <div
                         class="play-box-style details_color"
-                        @click="utils.go_to_bet(ol_item)"
-                        :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
+                        @click="go_to_bet(ol_item)"
+                        :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
                       <div class="ellipsis details_t_color6 fz_13" :class="{'text-right': !['344'].includes(item_data.hpid)}">
                         <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
                           {{ol_item.on}}
@@ -589,4 +589,3 @@ export default defineComponent({
 //   margin-bottom:4px
 // }
 </style>
-src/output

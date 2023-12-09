@@ -272,4 +272,4 @@ input[type="number"] {
     margin-bottom: 10px;
 }
 
-</style>src/output/index.js
+</style>

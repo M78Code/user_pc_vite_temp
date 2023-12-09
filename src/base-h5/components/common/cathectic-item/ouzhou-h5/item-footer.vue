@@ -146,4 +146,3 @@ import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
   }
 }
 </style>
-src/output/index.js

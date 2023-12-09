@@ -277,10 +277,10 @@ export default defineComponent({
 
         // 非横屏并且"所有投注"不在最后
         if (!state_data.get_is_hengping && all_bet_index !== data.length - 1) {
-          // state_data.data_list = utils.swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
+          // state_data.data_list = swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
         } else if (state_data.get_is_hengping && all_bet_index !== 1) {
           // 横屏并且"所有投注"不在热门后面
-          // state_data.data_list = utils.swapArray(deep_data_list, 1, all_bet_index)
+          // state_data.data_list = swapArray(deep_data_list, 1, all_bet_index)
         }
       },
       { deep: true }
@@ -296,7 +296,7 @@ export default defineComponent({
 
       const deep_data_list = lodash.cloneDeep(state_data.data_list)
         // 横屏时接口返回数据时“所有投注”已排在最后(接口依据orderNo这个字段来排序返回)，解决42812BUG
-        // data_list = utils.swapArray(deep_data_list, 1, deep_data_list.length - 1)
+        // data_list = swapArray(deep_data_list, 1, deep_data_list.length - 1)
       }
     );
     // 顶部切换赛事后，默认展示投注视图
@@ -384,7 +384,7 @@ export default defineComponent({
       () => state_data.viewTab,
       (val) => {
         // #TODO $utils
-        // $utils.zhuge_event_send('H5_情报分析', data.UserCtr);
+        // $send_zhuge_event('H5_情报分析', data.UserCtr);
         if(val == 'bet'){
           initEvent(true)
         }
@@ -438,7 +438,7 @@ export default defineComponent({
       },500);
       // 原mounted
       get_chatroom_info()
-    //   utils.load_video_resources(data.get_uid, 'is_details_page')
+    //   load_video_resources(data.get_uid, 'is_details_page')
     //   set_zhiding_info( false );
     //   set_video_zhiding( false );
       if (!location.search.includes('keep_url')) {
@@ -481,7 +481,7 @@ export default defineComponent({
 
       off_listeners()
       clear_timer()
-      utils.clear_timer()
+      clear_timer()
       sessionStorage.removeItem('video_details');
 
       //删除详情页玩法缓存
@@ -630,4 +630,3 @@ export default defineComponent({
   padding: 0;
 }
 </style>
-src/output

@@ -135,7 +135,7 @@ onBeforeUnmount(set_is_show_settle_tab)
  * @return {String}
  */
 const details_collect = (match_obj) => {
-  if (!utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch())) return
+  if (!judge_collectSwitch(GlobalAccessConfig.get_collectSwitch())) return
   // 如果还在请求中则return
   if (favorite_loading) return;
   let txt = 0;

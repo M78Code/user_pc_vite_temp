@@ -3,8 +3,8 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c text-1a1 h15">
-                    <span class="text-flow">{{ items.playOptionName}}</span> 
+                <div class="w-100 f-s-c text-1a1">
+                    <span class="text-flow-none">{{ items.playOptionName}}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
                 <div class="w-100 f-s-c my-4">
@@ -152,8 +152,12 @@ const props = defineProps({
         white-space: nowrap;
     }
     .text-flow-none{
-        width: 76%;
-        line-height: 14px;
+        max-width: 84%;
+        line-height: 16px;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);

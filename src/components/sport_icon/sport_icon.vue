@@ -72,4 +72,3 @@ export default {
   background-size: 100% auto;
 }
 </style>
-src/output

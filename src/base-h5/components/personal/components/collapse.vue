@@ -83,4 +83,3 @@ import { onMounted, ref } from 'vue'
     }
   }
 </style>
-src/output

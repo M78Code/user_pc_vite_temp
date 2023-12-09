@@ -29,4 +29,3 @@ export default {
     height: inherit;
   }
 </style>
-src/output

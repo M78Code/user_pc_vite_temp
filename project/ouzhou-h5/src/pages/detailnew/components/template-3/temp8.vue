@@ -120,7 +120,7 @@ export default defineComponent({
     const go_to_bet = (ol_item,index) => {
       ol_item = play_obj[ol_item]
       ol_item.num = index + 1
-      utils.go_to_bet(ol_item)
+      go_to_bet(ol_item)
       // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
@@ -269,4 +269,3 @@ div[class*="virtual-num"] {
   }
 }
 </style>
-src/output

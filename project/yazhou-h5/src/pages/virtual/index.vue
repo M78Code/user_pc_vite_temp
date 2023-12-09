@@ -169,7 +169,7 @@ const vir_refresh = () => {
  * 虚拟体育菜单切换
  */
 const virtual_menu_changed = (i) => {
-  utils.tab_move(i,scroll_main.vlaue, scroll_box.vlaue)
+  tab_move(i,scroll_main.vlaue, scroll_box.vlaue)
   sub_menu_i.value = i;
   current_sub_menu.value = sub_menu_list.value[i];
   virtual_sports_params.csid = current_sub_menu.value.menuId;
@@ -443,4 +443,3 @@ onUnmounted(() => {
   }
 }
 </style>
-src/outputsrc/core/utils/common/index.js
