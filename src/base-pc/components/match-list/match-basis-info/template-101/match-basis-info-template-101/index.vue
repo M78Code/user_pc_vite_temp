@@ -207,7 +207,6 @@ const away_score = computed(() => {
 let handicap_index = computed(() => {
   return get_handicap_index_by(match.value)
 })
-is_collect.value = Boolean(lodash.get(match.value, 'mf'))
 onMounted(() => {
   mitt_list = [
     useMittOn(MITT_TYPES.EMIT_VAR_EVENT, handle_var_event).off
@@ -224,7 +223,7 @@ const collect = () => {
 // 监听收藏变化
 watch(() => match.value.mf, (n) => {
   is_collect.value = Boolean(n)
-})
+}, { immediate: true})
 //进球特效防抖
 // hide_home_goal = this.debounce(hide_home_goal,5000);
 // hide_away_goal = this.debounce(hide_away_goal,5000);

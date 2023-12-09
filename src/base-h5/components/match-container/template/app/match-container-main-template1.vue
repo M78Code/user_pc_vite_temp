@@ -15,14 +15,14 @@
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
-          <div>
+          <div class="match-status-title">
             <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
           </div>
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
         <template v-else>
-          <div>
+          <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
@@ -258,13 +258,13 @@
                           v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
                           <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
                         </div>
-                        <!-- 角球 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
-                          <img :class="['live-icon-btn']" :src='corner_icon' />
-                        </div>
                         <!-- 此赛事支持提前结算 -->
                         <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
                           <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
+                        </div>
+                        <!-- 角球 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
+                          <img :class="['live-icon-btn']" :src='corner_icon' />
                         </div>
                       </div>
                     </div>
@@ -352,6 +352,10 @@ export default {
 
 .auto-full-width-100 {
   width: 100%;
+}
+.match-status-title {
+  display: flex;
+  align-items: center;
 }
 .all-league-title{
   display: flex;
