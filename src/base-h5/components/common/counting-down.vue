@@ -23,7 +23,7 @@
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import { ref, computed, watch, nextTick, onActivated, onMounted, onUnmounted, onDeactivated } from "vue"
-import { i18n_t } from 'src/output/index.js'
+import { i18n_t, match_vr_step } from 'src/output/index.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { counting_time_ctr_show_format } from 'src/core/format/common/index.js'
 const props = defineProps({
