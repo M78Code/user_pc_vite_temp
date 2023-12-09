@@ -1,33 +1,54 @@
 <!-- 事件组件，必须参数： 赛种ID：sportId 赛事id：matchId 数据源：dataSourceCode -->
 <template>
-    <div class="row q-pa-lg" style="background: #1a1a1a;">
-        <!-- <div class="col-12" @click="get_data_list" style="">拉取数据</div> -->
-        <div class="col-6" style="height: 100vh;overflow: auto;">
-            <timeline
-                class="components-item" 
-                :list="dataObj"
-            />
-            <BackendConfig />
+    <div style="background: #1a1a1a;">
+        <div style=" height: 60px;">
+            参数栏 <b class="text-red">xingxing</b>
         </div>
-       <div class="col q-ml-sm" style="height: 100vh;overflow: auto;">
-         <svg_area  @get_event_code="get_event_code" :svg_src="svg_src" :current_event_code="current_event_code" />
-        <!-- <div
-            v-for="(item, index) in dataObj"
-            :key="index"
-            class="content-list-item text-panda-text-light"
-            style="margin:10px"
-            :class="item.class"
-          >
-            <div class="content-list-item-circle"></div>
-            <div class="content-list-item-time">
+        <div class="row q-pa-lg">
+            <!-- 左边 -->
+            <div class="col-6">
+                <!-- 动画 -->
+                <div class="q-ml-sm">
+                    <b class="text-red">足球动画区域（xingxing）</b>
+                    <br>
+                    <q-btn 
+                        color="secondary" 
+                        @click="get_event_code()" 
+                        label="随机推送事件" 
+                    />
+                    <b class="text-blue">自动生成事件开启中。。。</b>
+                    <svg_area :svg_src="svg_src" :current_event_code="current_event_code" />
+                </div>
+                <!-- 比分 -->
+                <div style="height: 100px;">
+                    赛事比分区域<b class="text-red">lowen</b>
+                </div>
+                <!-- 对接后台展示区域 -->
+                <div style="height: 100px;">
+                    对接后台展示区域<b class="text-red">freeze</b>
+                </div>
             </div>
-            <div class="content-list-item-info">
-              <span>
-                {{ item.currentTime }}' - {{ item.eventName }}-{{ item.eventCode }}
-              </span>
+            <!-- 右边 -->
+            <div class="col-6">
+                <!-- 最新的2条事件 -->
+                <div class="q-py-sm border-1">
+                    <b class="text-red">最新的2条事件</b>
+                    <timeline
+                        class="components-item" 
+                        :list="dataObj.slice(0,2)"
+                    />
+                </div>
+                <!-- 全部事件 -->
+                <div class="q-py-sm q-mt-sm border-1" style="height: calc(100vh - 240px); overflow: auto;">
+                    <b class="text-red">全部事件</b>
+                    <!-- <BackendConfig /> -->
+                    <timeline
+                        class="components-item" 
+                        :list="dataObj"
+                    />
+                </div>
             </div>
-        </div> -->
-       </div>
+        </div>
     </div>
 </template>
 <script>
@@ -68,7 +89,8 @@ export default defineComponent({
             ],
             "protocolVersion": 2,
             "uuid": uid()
-        }
+        },
+        autoEventTimer: null
     }
  },
  created() {
@@ -80,15 +102,27 @@ export default defineComponent({
     // 必须参数判断
     if(!sportId || !matchId || !dataSourceCode) {
         console.error('参数缺失')
+        this.set_timer(1)
     }else {
         this.get_query_params()
         this.websocket_connection_connect(1);
         console.warn(this.websocket_connection_connect)
         this.get_data_list()
     }
-    
  },
  methods: {
+    // type 1 开始 2 结束
+    set_timer(type) {
+        if(type == 1) {
+            this.set_timer(2)
+            this.autoEventTimer = setInterval(()=> {
+                this.get_event_code()
+            },2000)
+        }else {
+            clearInterval(this.autoEventTimer)
+            this.autoEventTimer = null
+        }
+    },
     set_websocket_data(data) {
         // console.warn('页面接收到消息')
         // console.warn(data)
@@ -166,11 +200,11 @@ export default defineComponent({
     },
     // 生成随机事件
     get_event_code() {
+        console.warn('自动获取生成时间')
         let index = Math.floor(Math.random()*5)
-        console.warn(index)
         let data_ = test_data[index] 
-      const {eventCode} = data_ || {}
-      this.current_event_code = eventCode
+        const {eventCode} = data_ || {}
+        this.current_event_code = eventCode
         this.svg_src = (event_animation[eventCode] || {}).animation_svg_path
         console.warn(data_)
         let ws_obj = {
@@ -195,5 +229,8 @@ export default defineComponent({
     // bug单 7658 要求这样做
     padding-left: 30px;
     // margin auto
+}
+.border-1 {
+    border: 1px solid var(--q-color-panda-table-border);
 }
 </style>

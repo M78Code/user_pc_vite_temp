@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn color="secondary" @click="get_event_code()" label="随机推送事件" />
+    <!-- <q-btn color="secondary" @click="get_event_code()" label="随机推送事件" /> -->
     <div class="animation-content bg">
 <!--      <img :src="svg_src">-->
 <!--      <object ref="svgCount" :data="svg_src" type="image/svg+xml" />-->
