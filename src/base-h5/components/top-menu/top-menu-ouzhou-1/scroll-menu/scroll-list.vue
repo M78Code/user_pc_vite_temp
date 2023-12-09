@@ -194,7 +194,7 @@ watch(()=>props.current_mi,()=>{
         }
 
         :deep(.sport-img) {
-            transition: all 0.25s ease;
+            // transition: all 0.25s ease;
         }
     }
 
