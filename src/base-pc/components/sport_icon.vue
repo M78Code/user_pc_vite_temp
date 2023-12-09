@@ -61,8 +61,8 @@ const sport_number = {
   38: 52, //飞镖 ?
   39: 53, //沙球 ?
   22: 55, //射击 ？
-  90: 87, // 电子足球
-  91: 89,  // 电子篮球
+  90: 88, // 电子足球
+  91: 90,  // 电子篮球
   1001: 88, //VR足球
   1002: 94, //VR赛狗
   1004: 90, //VR篮球
@@ -111,9 +111,9 @@ const props = defineProps({
 })
 const icon_styles = computed(() => {
   let sport_id = props.sport_id
-  //  电子足球电子篮球 修改下sport_id
+  //  电子足球电子篮球 修改下sport_id,详情比分榜用
   if (props.cds=='B03') {
-    sport_id=sport_id==1?90:sport_id==2?91:sport_id
+    sport_id=sport_id==1?90:sport_id==2?91:sport_id==1
   }
   //雪碧图样式 计算方式参考备注文件
   //欧洲版是灰色图标
