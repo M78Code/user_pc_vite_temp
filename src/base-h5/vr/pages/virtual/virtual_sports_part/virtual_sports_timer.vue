@@ -26,7 +26,7 @@
 
 <script>
 import common from 'src/base-h5/vr/mixin/constant/module/common.js'
-
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
   name: 'virtual_sports_timer',
   mixins:[common],
@@ -159,7 +159,7 @@ export default {
         let seconds = Math.floor(remaining_time / 1000);
         //提前10秒通知锁盘
         if(seconds <= 10 && !(seconds % 3)){
-          this.$root.$emit(this.emit_cmd.EMIT_ARRIVED10,{
+          useMittEmit(MITT_TYPES.EMIT_ARRIVED10, {
             mid:this.match.mid,
             batchNo:this.match.batchNo
           });

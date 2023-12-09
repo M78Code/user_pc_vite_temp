@@ -7,6 +7,7 @@ import { api_v_sports } from "src/project/api/index.js";
 import VSport from "src/public/utils/vsport/vsport.js"
 import { api_common} from "src/project/api/index.js";  // 引入api接口封装文件
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 
 export default {
@@ -847,7 +848,7 @@ export default {
               //当赛事结束,检查所有赛事是否结束
               if(match.match_status == 2){
                 this.is_video_playing = false;
-                this.$root.$emit(this.emit_cmd.EMIT_MATCH_EDNED_STATUS2,match);
+                useMittEmit(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2, match);
               }
               if(match.match_status > 0){
                 match.mhs = 1;
