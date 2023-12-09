@@ -332,7 +332,7 @@ onMounted(()=>{
         -right: 0;
         -background-color: var(--q-gb-bd-c-2);
     }
-    ::v-deep .q-tab__indicator{
+    :deep(.q-tab__indicator){
             display: none;
         }
   };

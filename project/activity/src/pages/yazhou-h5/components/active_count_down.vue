@@ -168,7 +168,7 @@ export default {
   display: flex;
   justify-content: center;
 
-  ::v-deep span {
+  :deep(span) {
     font-family: dinMedium;
     font-size: 0.18rem;
     color: #ff7000;
