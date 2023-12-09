@@ -96,9 +96,13 @@ const cacheStoreData = () => {
 }
 
 const onTabChange = e => {
+  console.log(store.tabActive)
   switch (store.tabActive) {
-    case 'Matces':
+    case 'Matches':
       clearSessionStorageData()
+      MenuData.set_current_lv1_menu('2');
+      MatchMeta.set_prev_scroll(0)
+      MatchMeta.set_origin_match_data()
       break
     case 'League':
       MenuData.set_current_lv1_menu(2);
