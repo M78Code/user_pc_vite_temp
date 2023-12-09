@@ -28,7 +28,7 @@ import lodash from 'lodash'
         } else if(lodash.get(detail_data,'ctt')==1 && [1,2].includes(lodash.get(detail_data,'csid')*1)){
           // 是机器开出的虚拟赛事时,使用atf时间系数换算时间
           // ctt (0 人 1机器)   atf (时间系数)
-          res=Number(lodash.get(this.detail_data,'atf',1))*step;
+          res=Number(lodash.get(detail_data,'atf',1))*step;
         }
         return res;
       }

@@ -1,5 +1,5 @@
 <!--
- *  yazhou-h5 亚洲版 赛事 item
+ * ouzhou-h5 欧洲版 赛事 item
 -->
 
 <template>
@@ -14,8 +14,7 @@
 <script setup>
 import { computed } from 'vue';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-// import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
-import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/app/match-container-main-template1.vue"; 
+import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template3.vue"; 
 
 const props = defineProps({
  item: {

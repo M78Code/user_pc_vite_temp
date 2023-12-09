@@ -15,7 +15,7 @@
 </template>
 <script setup>
 import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
-
+import { useRoute , useRouter } from "vue-router";
 const route = useRoute()
 const router = useRouter()
   /**

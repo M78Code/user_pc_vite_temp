@@ -1,5 +1,5 @@
 <!--
- *  yazhou-h5 亚洲版 赛事 item
+ * app-h5 复刻版 赛事 item
 -->
 
 <template>
