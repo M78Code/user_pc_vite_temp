@@ -169,4 +169,3 @@ export default {
     /* margin-left: -30px; 如果有特殊需求 请再组件上加 不要加公共组件内*/
   }
 </style>
-src/core/utils/common/index.js

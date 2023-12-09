@@ -28,7 +28,7 @@ import lodash from 'lodash'
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
-import { SessionStorage, utils,SearchPCClass } from 'src/output/index.js'
+import { SessionStorage, SearchPCClass } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import { i18n_t } from "src/boot/i18n.js"
