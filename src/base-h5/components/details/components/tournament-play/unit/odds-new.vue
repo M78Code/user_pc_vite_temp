@@ -32,7 +32,7 @@ import lodash from "lodash";
 import { project_name,MatchDetailCalss } from "src/output/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
 export default defineComponent({

@@ -12,7 +12,7 @@
               <div class="nonebox4-content-left-content" :class="!item.home?'nonebox4-content-left-content-no':''">
                   <div class="nonebox4-content-left-content-xian"></div>
                   <div class="nonebox4-content-left-content-text">
-                      <div>{{ item.playName }} </div>
+                      <div>{{ item.playName }} 【{{i18n_t(`odds.${UserCtr.odds.cur_odds}`)}}】</div>
                       <div v-if="item.home">{{ item.home }} VS {{ item.away }}</div> 
                       <div>{{ item.tid_name }}</div>
                   </div>
@@ -30,8 +30,8 @@
   </template>
   <script setup>
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { format_odds, format_currency, formatTime } from "src/core/format/common/index.js"
-  
+  import { format_odds, format_currency, formatTime } from "src/output/index.js"
+  import { UserCtr } from "src/output/index.js";
   import betSingleDetail from './bet-single-detail.vue';
   
   const props = defineProps({
@@ -106,4 +106,4 @@
   }
   
   </style>
-  src/core/format/common/index.js
+  src/output/index.js

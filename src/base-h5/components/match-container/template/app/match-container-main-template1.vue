@@ -293,9 +293,8 @@ import CountingDownStart from 'src/base-h5/components/common/counting-down-start
 import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import PageSourceData  from  "src/src/core/format/common/index.jsurce.js";
-import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX  } from "src/output/index.js"
-import { format_time_zone } from "src/core/format/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData } from "src/output/index.js"
+import { format_time_zone } from "src/output/index.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/default-odd-template/odd-list-wrap.vue';
 import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
@@ -1597,4 +1596,4 @@ export default {
 /* ********赛事容器相关********** -E*/
 </style>
   
-src/output/index.jssrc/output/index.jssrc/core/format/common/index.js
+src/output/index.jssrc/output/index.jssrc/output/index.js

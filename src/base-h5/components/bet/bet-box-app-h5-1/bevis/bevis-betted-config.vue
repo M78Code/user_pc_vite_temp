@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps } from "vue"
-import { format_odds } from "src/core/format/common/index.js"
+import { format_odds } from "src/output/index.js"
 
 const props = defineProps({
     item: {},
@@ -52,4 +52,4 @@ const props = defineProps({
         font-size: 0.12rem;
     }
 }
-</style>src/core/format/common/index.js
+</style>src/output/index.js

@@ -75,7 +75,7 @@ function set_menu_lv2(item = {},event) {
   scrollMenuEvent(event,".s-menu-container",".current");
   emits('changeMenu',item)
   nextTick(()=>{
-  设置菜单点击事件
+  // 设置菜单点击事件
   useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
   })
 }

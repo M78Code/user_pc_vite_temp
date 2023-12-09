@@ -5,9 +5,6 @@
  */
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import {
-//   compute_value_by_cur_odd_type
-// } from "src/core/format/module/format-odds-conversion-mixin.js";
-// import {
 //   get_bet_amount_param
 // } from "./bet-amount.js";
 // import {

@@ -29,7 +29,7 @@ import { useCurrencyInput } from 'vue-currency-input'
 
 import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { format_odds, format_currency } from "src/core/format/common/index.js"
+import { format_odds, format_currency } from "src/output/index.js"
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -266,4 +266,4 @@ const set_click_keybord = obj => {
     left: 0px;
   }
 }
-</style>src/core/format/common/index.js
+</style>src/output/index.js

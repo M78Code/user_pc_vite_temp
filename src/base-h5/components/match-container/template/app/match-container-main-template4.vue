@@ -137,7 +137,7 @@ import ImageCacheLoad from "src/base-h5/components/match-list/components/public-
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 import { i18n_t, compute_img_url } from "src/output/index.js"
-import { format_time_zone } from "src/core/format/common/index.js"
+import { format_time_zone } from "src/output/index.js"
 import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -439,4 +439,4 @@ export default {
 }
 /* ********赛事容器相关********** -E*/
   </style>
- src/core/format/common/index.js
+ src/output/index.js

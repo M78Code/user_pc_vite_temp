@@ -22,7 +22,7 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/api/index'
-import { formatDate } from 'src/core/format/common/index.js'
+import { formatDate } from 'src/output/index.js'
 const route = useRoute();
 const articleDetail = ref({});
 const start_article_tiem = ref(new Date().getTime());
@@ -170,4 +170,4 @@ onUnmounted(() => {
 /*  内容区 */
 .rule-scroll-area {
   flex: 1;
-}</style>src/core/format/common/index.js
+}</style>src/output/index.js

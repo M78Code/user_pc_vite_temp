@@ -22,7 +22,7 @@
 
 <script>
 // import msc from "src/public/mixins/common/msc.js";
-// import { format_mgt_time } from "src/core/format/index.js"
+// import { format_mgt_time } from "src/output/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 import { utils } from 'src/output/index.js';
 export default {
