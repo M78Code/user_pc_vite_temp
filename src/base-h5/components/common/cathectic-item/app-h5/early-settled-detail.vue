@@ -51,7 +51,7 @@
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import earlySettleTips from "src/base-h5/components/common/cathectic-item/app-h5/early-settle-tips.vue";
 import { api_betting } from "src/api/index.js";
-import { utils, i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/output/index.js'
+import {  i18n_t, compute_css_obj, compute_local_project_file_path } from 'src/output/index.js'
 import { ref, computed, onMounted } from 'vue'
 const props = defineProps({
   item_data: {

@@ -41,7 +41,7 @@
 </template>
 
 <script setup>
-import { utils, SearchData, useMittEmit, useMittOn, MenuData,  MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import {  SearchData, useMittEmit, useMittOn, MenuData,  MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import SSearch from "src/base-h5/components/skeleton/search.vue"// 骨架屏
 import { api_search } from 'src/api/'

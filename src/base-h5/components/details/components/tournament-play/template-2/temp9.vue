@@ -85,7 +85,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      utils,
+      
       BetData,
       get_bet_list,
       get_curr_sub_menu_type,

@@ -35,7 +35,7 @@ function set_base_data_init() {
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
 		current_ball_type: csid,
-		left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
+		left_menu_result: { lv2_mi="", lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
 		mid_menu_result: { csid: mi, mif, root, mid_menu_mi },
 		menu_data_version,
 	} = MenuData;

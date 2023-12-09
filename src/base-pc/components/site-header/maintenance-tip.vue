@@ -15,7 +15,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { i18n_t } from "src/boot/i18n.js"
-import { utils } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_remote_time } from "src/output/index.js"
 
