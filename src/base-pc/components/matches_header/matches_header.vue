@@ -273,6 +273,7 @@ const checked_current_tab = payload => {
 	if(MenuData.is_collect){
 		//切换滚球 今日 早盘  球种初始化为足球背景
 	 	MenuData.set_current_ball_type(1)
+	 	// MenuData.set_current_ball_type(MenuData.menu_current_mi || 1)
 		if( payload.value == 3001){
 			obj.current_mi = 1011
 		}
@@ -289,6 +290,7 @@ const checked_current_tab = payload => {
 			MenuData.set_menu_root(2)
 		}
 		MenuData.set_menu_current_mi(obj.current_mi)
+		// MenuData.set_menu_current_mi(MenuData.menu_current_mi || obj.current_mi)
 	}
 	if (MenuData.is_esports()) {
 		obj.current_mi = payload.value*1

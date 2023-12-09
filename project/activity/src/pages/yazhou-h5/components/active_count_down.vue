@@ -5,38 +5,44 @@
 -->
 <template>
   <div class="" :class="[noNeedCss ? '' : 'CountdownTitle']">
-    <template v-if="day>0">
-      <span>{{day}}</span>天
+    <template v-if="day > 0">
+      <span>{{ day }}</span
+      >天
     </template>
-    <span>{{hour}}</span>{{noNeedCss? ':' : '时'}}
-    <span>{{minute}}</span>{{noNeedCss? ':' : '分'}}
-    <span>{{second}}</span>{{noNeedCss? '' : '秒'}}
+    <span>{{ hour }}</span
+    >{{ noNeedCss ? ":" : "时" }} <span>{{ minute }}</span
+    >{{ noNeedCss ? ":" : "分" }} <span>{{ second }}</span
+    >{{ noNeedCss ? "" : "秒" }}
   </div>
 </template>
 
 <script>
-
 import common from "project/activity/src/mixins/module/common.js";
 import acticity_mixin from "../mixin/acticity_mixin";
-//头部引入  
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
-import {  format_time_zone_time } from "project_path/src/core/index.js"
+//头部引入
+import {
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "project_path/src/core/index.js";
+import { format_time_zone_time } from "project_path/src/core/index.js";
 export default {
   name: "active_count_down",
   mixins: [common, acticity_mixin],
   props: {
     endTime: {
-      type: Number | String,
-      default: 0
+      type:  '',
+     
     },
     noNeedCss: {
-      type: Boolean,
-      default: false
+      type: false,
+    
     },
     timer: {
-      type: Boolean,
-      default: false
-    }
+      type: false,
+  
+    },
   },
   data() {
     return {
@@ -63,8 +69,8 @@ export default {
   methods: {
     // 倒计时组件
     timeDown(from_date) {
-      if(isNaN(from_date) && typeof from_date.replace == 'function' ){
-        from_date = from_date.replace(/-/g, '/')
+      if (isNaN(from_date) && typeof from_date.replace == "function") {
+        from_date = from_date.replace(/-/g, "/");
       }
       let endTime = null;
       let nowTime = null;
@@ -77,7 +83,10 @@ export default {
         endTime = new Date(from_date);
         // 当前时间
         nowTime = this.utc_to_gmt_no_8_ms2_(stime);
-        let hour = (nowTime.h <= 11 ? 11 : (23 + 12)) - nowTime.h < 10 ? "0" + ((nowTime.h <= 11 ? 11 : (23 + 12)) - nowTime.h) : (nowTime.h <= 11 ? 11 : (23 + 12)) - nowTime.h ;
+        let hour =
+          (nowTime.h <= 11 ? 11 : 23 + 12) - nowTime.h < 10
+            ? "0" + ((nowTime.h <= 11 ? 11 : 23 + 12) - nowTime.h)
+            : (nowTime.h <= 11 ? 11 : 23 + 12) - nowTime.h;
         let m_ = 59 - nowTime.mm;
         let s_ = 59 - nowTime.s;
         // `${endTime.y}-${endTime.m}-${endTime.d} ${endTime.h}:${endTime.mm}:${endTime.s}`
@@ -88,7 +97,7 @@ export default {
         leftTime = parseInt((endTime.getTime() - stime) / 1000);
       }
       // 如果是NAN，则初始化数据，return
-      if(isNaN(leftTime)) {
+      if (isNaN(leftTime)) {
         this.day = 0; //天
         this.hour = 0; //时
         this.minute = 0; //分
@@ -104,16 +113,16 @@ export default {
         this.$emit("time-end");
         clearTimeout(this.time2_);
         // 倒计时结束 刷新当面页面
-        this.time2_ = setTimeout(()=> {
-          this.noNeedCss && useMittEmit(MITT_TYPES.EMIT_INDEX_REFRESH_END)
-        },1000)
+        this.time2_ = setTimeout(() => {
+          this.noNeedCss && useMittEmit(MITT_TYPES.EMIT_INDEX_REFRESH_END);
+        }, 1000);
         this.day = 0; //天
         this.hour = 0; //时
         this.minute = 0; //分
         this.second = 0; //秒
       }
       if (this.flag == true) {
-        return
+        return;
       }
       this.day = d; //天
       this.hour = h; //时
@@ -131,20 +140,22 @@ export default {
      * 获取服务器时间的年月日时分秒
      */
     utc_to_gmt_no_8_ms2_(value) {
-      if (!value) { return '' }
-      let time =  format_time_zone_time(parseInt(value));
-      let [y, m, d, h, mm, s] = this.format_date_base(time)
-      return {y, m, d, h, mm, s}
-    }
+      if (!value) {
+        return "";
+      }
+      let time = format_time_zone_time(parseInt(value));
+      let [y, m, d, h, mm, s] = this.format_date_base(time);
+      return { y, m, d, h, mm, s };
+    },
   },
   destroyed() {
     clearInterval(this.time1_);
-    this.time1_ = null
+    this.time1_ = null;
 
     clearTimeout(this.time2_);
-    this.time2_ = null
-  }
-}
+    this.time2_ = null;
+  },
+};
 </script>
 
 <style lang="scss" scoped>

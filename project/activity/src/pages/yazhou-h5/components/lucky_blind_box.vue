@@ -33,14 +33,14 @@
           <template v-if="get_user.activityList[activityIndex].period == 1">
             <span class="count_down_css">
               <span>距离活动开始还有</span>
-              <active_count_down :endTime='inStartTime' :noNeedCss="true"></active_count_down>
+              <ActiveCountDown :endTime='inStartTime' :noNeedCss="true"></ActiveCountDown>
             </span>
           </template>
           <template v-else-if="get_user.activityList[activityIndex].period == 2">
             <template v-if="get_user.activityList[activityIndex].type == 2 && inEndTime">
               <span class="count_down_css">
                 <span>距离活动关闭还有</span>
-                <active_count_down :endTime='inEndTime' :noNeedCss="true"></active_count_down>
+                <ActiveCountDown :endTime='inEndTime' :noNeedCss="true"></ActiveCountDown>
               </span>
             </template>
             <span v-else>活动长期有效</span>
@@ -82,7 +82,7 @@
         </div>
         <div class="Lucky_blind_box_content">
           <template v-if="get_user.activityList[activityIndex].period == 1">
-            <active_count_down :endTime='inStartTime'></active_count_down>
+            <ActiveCountDown :endTime='inStartTime'></ActiveCountDown>
             <div class="juli">距离活动开始还有</div>
             <div class="btn" >
               敬请期待
@@ -90,11 +90,11 @@
           </template>
           <template v-if="lihe_name.num_ber <= 0 && get_user.activityList[activityIndex].period == 2  && !show_nextbox_countdown">
             <div class="juli">距离下一次盲盒派发还有</div>
-            <active_count_down :endTime='+nextTimeToRelease' :timer="true"></active_count_down>
+            <ActiveCountDown :endTime='+nextTimeToRelease' :timer="true"></ActiveCountDown>
           </template>
           <template v-if="lihe_name.num_ber <= 0 && get_user.activityList[activityIndex].period == 2  && show_nextbox_countdown">
             <div class="juli">距离下一次盲盒派发还有</div>
-            <active_count_down :endTime='next_time' @time-end="get_Lucky_box_init('first')"></active_count_down>
+            <ActiveCountDown :endTime='next_time' @time-end="get_Lucky_box_init('first')"></ActiveCountDown>
           </template>
           <div class="Unboxing-list" v-if="get_user.activityList[activityIndex].period == 2 ">
             <p>
@@ -145,7 +145,7 @@
                 </div>
               </div>
             </div>
-            <data-pager
+            <DataPager
               class="record-data-pager"
               :total="top50_page_info.pages"
               :pageSize = 5
@@ -190,7 +190,7 @@
               </p>
             </div>
           </div>
-          <data-pager
+          <DataPager
             class="record-data-pager"
             :total="result_page_info.pages"
             :pageSize = 7
@@ -249,7 +249,7 @@
         <div>
           <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
           <div>
-            <span>本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<font color="#ff7000">1.5</font>或香港盘<font color="#ff7000">0.5</font>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；</span>
+            <span>本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<span color="#ff7000">1.5</span>或香港盘<span color="#ff7000">0.5</span>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；</span>
           </div>
         </div>
         <div>
@@ -273,7 +273,7 @@
 /**
  *  get_user.activityList[activityIndex].period  1 未开始  2 进行中   3 已结束
  */
-import {api_activity} from "project/activity/src/api/index.js";
+import {api_activity} from "src/api/index.js";
 let lh1 =  "activity/yazhou-h5/activity/lucky/lh1.png";
 let lh2 =  "activity/yazhou-h5/activity/lucky/lh2.png";
 let lh3 =  "activity/yazhou-h5/activity/lucky/lh3.png";
@@ -282,8 +282,8 @@ let gift2 =  "activity/yazhou-h5/activity/lucky/gift2.png";
 let gift3 =  "activity/yazhou-h5/activity/lucky/gift3.png";
 
 import acticity_mixin from "../mixin/acticity_mixin";
-import data_pager from "project/activity/src/components/data_pager.vue";
-import active_count_down from "./active_count_down.vue";
+import DataPager from "project/activity/src/components/data_pager.vue";
+import ActiveCountDown from "./active_count_down.vue";
 import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
 import { GATAG ,format_time_zone_time ,is_time_limit } from "project_path/src/core/index.js"
@@ -294,24 +294,24 @@ export default {
   mixins: [acticity_mixin, common, formartmixin],
   props: {
     activityIndex: {
-      type: Number | String,
+      type: Number  ,
       default: 2
     },
     // 活动开始时间
     inStartTime: {
-      type: Number | String,
+      type: Number  ,
       default: 0
     },
     // 活动结束时间
     inEndTime: {
-      type: Number | String,
+      type: Number ,
       default: 0
     },
     isIphoneX: Boolean
   },
   components:{
-    'data-pager':data_pager,
-    'active_count_down':active_count_down,
+    DataPager,
+    ActiveCountDown
   },
   data() {
     return {
@@ -369,7 +369,7 @@ export default {
         m: 0,
         s: 0
       },
-      $g_image_preffix: ''
+      
     }
   },
   computed: {
@@ -593,7 +593,7 @@ export default {
         let {code , data} = await api_activity.get_lucky_box_history(parameter)
         if(code == 200 && data.records.length > 0) {
           this.history_records = data.records
-          this.$set(this.result_page_info, 'pages' , +data.total )
+          // this.$set(this.result_page_info, 'pages' , +data.total )
           this.history_alert = true
         }else if ( ['0401038'].includes(code) ){
           const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
@@ -618,7 +618,7 @@ export default {
         let {code , data} = await api_activity.get_lucky_box_top50(parameter)
         if(code == 200 && Object.keys(data).length > 0) {
           this.lucky_top_50 = data
-          this.$set(this.top50_page_info, 'pages' , +data.length )
+          // this.$set(this.top50_page_info, 'pages' , +data.length )
         }
       } catch (err) {
         console.error(err);

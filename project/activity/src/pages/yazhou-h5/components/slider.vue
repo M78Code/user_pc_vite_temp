@@ -16,13 +16,13 @@
 
 export default {
   props: {
-    value: Number | String,
+    value: Number  ,
     min:{
-      type:Number | String,
+      type:Number  ,
       default:0
     },
     max: {
-      type:Number | String,
+      type:Number  ,
       default:100
     },
   },

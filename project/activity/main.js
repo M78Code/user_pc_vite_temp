@@ -5,12 +5,11 @@ import "./src/css/app.scss"
 import App from './App.vue'
  
 import _ from 'lodash';
-import { HackError } from './hack-error';
+ 
 import { i18n, loadLanguageAsync } from "./src/boot/i18n.js";
 import global from './src/boot/globals';
 
-
-new HackError();
+ 
 
 // 兼容旧项目里面的 lodash
 window._ = _;

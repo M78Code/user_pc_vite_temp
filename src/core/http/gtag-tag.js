@@ -63,7 +63,7 @@ function gtag_view_send(title, path) {
     //   return;
     // }
     // 埋点发送网页跟踪信息
-    window.gtag("config", config.value.GA_TRACKING_ID, {
+    window.gtag("config", htmlVariables.GA_TRACKING_ID, {
       page_title: title, // 'homepage',
       page_path: path, // '/home'
       user_id, // 用户信息

@@ -138,9 +138,8 @@ onMounted(async () => {
   handler_func = lodash.debounce(({ cmd, data }) => {
     handle_webscoket_cmd(cmd, data)
   }, 1000)
-
   // 删除赛事防抖
-  const handler_remove = () => lodash.debounce(() => {
+  const handler_remove = lodash.debounce(() => {
     MatchMeta.set_is_ws_trigger(true)
     if (tabValue.value === 'featured') {
       get_ouzhou_home_data()
