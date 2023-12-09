@@ -189,11 +189,11 @@ const ChangeActive = function () {
     font-weight: bold;
 }
 
-::v-deep .event-date-standard {
+:deep(.event-date-standard) {
     color: #fff;
 }
 
-::v-deep .match_stage {
+:deep(.match_stage) {
     width: 72px;
     height: 40px;
     color: #fff;

@@ -452,7 +452,7 @@ export default {
 }
 .detail-loading {
   height: 100%;
-  &::v-deep {
+  & :deep {
     .loading_box {
       padding-top: 330px;
     }
@@ -483,7 +483,7 @@ export default {
   display: flex;
 }
 
-::v-deep .q-expansion-item {
+:deep(.q-expansion-item) {
   .q-focus-helper {
     visibility: hidden;
   }
