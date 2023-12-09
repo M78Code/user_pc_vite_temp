@@ -192,6 +192,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router";
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp14",
   props: ["item_data", "title"],
@@ -225,7 +226,8 @@ export default defineComponent({
       get_cur_odd,
       get_detail_data,
       LOCAL_PROJECT_FILE_PREFIX,
-      calc_win
+      calc_win,
+      go_to_bet
     }
   }
 })

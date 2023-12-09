@@ -30,7 +30,7 @@
                   <div v-for="(ol_item, ol_index) in hl_item.ol"
                        :key="ol_index"
                        class="on-name-osn"
-                       @click="go_to_bet(ol_item)"
+                       @click="go_to_fun(ol_item)"
                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
@@ -154,7 +154,7 @@
                   <div v-for="(ol_item, ol_index) in hl_item.ol"
                        :key="ol_index"
                        class="on-name-osn"
-                       @click="go_to_bet(ol_item)"
+                       @click="go_to_fun(ol_item)"
                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
@@ -271,6 +271,7 @@ import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp12",
   props: ["item_data", "title"],
@@ -314,7 +315,7 @@ export default defineComponent({
         immediate: true,
       }
     );
-    const go_to_bet = (ol_item) => {
+    const go_to_fun = (ol_item) => {
       if(ol_item.os == 1 && ol_item._hs != 1){      
         go_to_bet(ol_item)
       }
@@ -327,7 +328,7 @@ export default defineComponent({
       home_name,
       away_name,
       LOCAL_PROJECT_FILE_PREFIX,
-      go_to_bet
+      go_to_fun
     }
   }
 })
