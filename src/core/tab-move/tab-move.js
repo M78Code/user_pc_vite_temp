@@ -102,4 +102,6 @@ class TabMove {
   }
 }
 
-export default new TabMove()
+const tab_move = new TabMove();
+
+export default tab_move
