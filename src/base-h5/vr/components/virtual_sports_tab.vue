@@ -27,8 +27,7 @@
 <script>
 import { api_common } from "src/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
   name: 'virtual_sports_tab',
   data(){
@@ -169,7 +168,7 @@ export default {
 
       this.set_details_item(uId);
       // 点击玩法对页面吸顶tab做高度处理
-      this.$root.$emit(this.emit_cmd.EMIT_DETAILILS_TAB_CHANGED)
+      useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // 虚拟体育切换玩法集,滚动条高度默认恢复为0
       this.$emit('virtual_play_height')
       if(this.get_fewer == 3){

@@ -278,8 +278,7 @@ export default {
             });
           });
         }
-        this.$root.$emit(this.emit_cmd.EMIT_IS_ALL_END_NOTICE);
-
+        useMittEmit(MITT_TYPES.EMIT_IS_ALL_END_NOTICE);
         //1011赛马、1002赛狗、1010摩托车、1009泥地摩托车结束时更新下一期
         if([1011, 1002, 1010, 1009].includes(this.sub_menu_type)){
           this.timer1_ = setTimeout(() => {
@@ -307,7 +306,7 @@ export default {
         else if(flag == 'is_basketball_pre'){
           this.get_video_process_by_api();
           this.get_score_basket_ball();
-          this.$root.$emit(this.emit_cmd.EMIT_PRE_COUNTING_EDN); //篮球早盘倒计时结束
+          useMittEmit(MITT_TYPES.EMIT_PRE_COUNTING_EDN);//篮球早盘倒计时结束
         }
       }
       else{
@@ -339,7 +338,7 @@ export default {
           else if(match.mmp == 'PREGAME'){
             if(match.start_now_sub <= 0){
               this.get_video_process_by_api();
-              this.$root.$emit(this.emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED);
+              useMittEmit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
             }
           }
           this.current_match = match;

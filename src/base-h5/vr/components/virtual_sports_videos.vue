@@ -31,6 +31,7 @@
 <script>
 import settleDialog from "src/base-h5/components/footer-bar/settle-dialog.vue";
 import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
   name:'virtual_sports_videos',
   data(){
@@ -70,7 +71,7 @@ export default {
      *@return {Undefined} undefined
      */
     open(){
-      this.$root.$emit(this.emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
     },
     /**
      *@description: 关闭投注记录显示

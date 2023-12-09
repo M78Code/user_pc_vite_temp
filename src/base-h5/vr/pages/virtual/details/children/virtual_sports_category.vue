@@ -618,7 +618,7 @@ export default {
     },
 
     triggle_tabs_update(){
-      this.$root.$emit(this.emit_cmd.EMIT_TABS_LIST_UPDATE_HANDLE);
+      useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
     },
 
     // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口

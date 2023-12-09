@@ -5,7 +5,7 @@
  */
 import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 export default {
   methods:{
@@ -43,7 +43,7 @@ export default {
             }
             //视频时间更新,快进视频到相应的时间点
             if(res.upd == 1){
-              this.$root.$emit(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+              useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
             }
             switch (Number(match.csid)) {
               case 1001:

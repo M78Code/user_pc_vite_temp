@@ -58,6 +58,7 @@ import {api_v_sports} from "src/base-h5/vr/api";
 import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
   mixins:[common,virtual_sports_mixin],
   name:'virtual_sports_details',
@@ -208,7 +209,7 @@ export default {
       this.refreshing = false;
     },
     api_interface(){
-      this.$root.$emit(this.emit_cmd.EMIT_REF_API, 'details_refresh')
+      useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh');
     },
     /**
      *@description: 虚拟体育切换玩法集,滚动条高度默认恢复为0
@@ -273,7 +274,7 @@ export default {
               this.current_match.show_time = res.show_time;
               //当赛事结束
               if(this.current_match.match_status == 2){
-                this.$root.$emit(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+                useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
               }
               //开赛后封盘
               if(this.current_match.match_status > 0){
@@ -281,7 +282,7 @@ export default {
               }
               //视频时间更新,快进视频到相应的时间点
               if(res.upd == 1){
-                this.$root.$emit(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+                useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
               }
               switch (Number(this.current_match.csid)) {
                 case 1001:
@@ -354,7 +355,7 @@ export default {
           this.current_match.show_time = res.show_time;
           //当赛事结束
           if(this.current_match.match_status == 2){
-            this.$root.$emit(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+            useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
           }
           //开赛后封盘
           if(this.current_match.match_status > 0){
@@ -362,7 +363,7 @@ export default {
           }
           //视频时间更新,快进视频到相应的时间点
           if(res.upd == 1){
-            this.$root.$emit(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+            useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
           }
           switch (Number(this.current_match.csid)) {
             case 1001:

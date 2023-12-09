@@ -15,7 +15,7 @@
             <!-- 虚拟体育 -->
             <div class="col">{{$root.$t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
-            <div class="no-single" @click="$root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)"></div>
+            <div class="no-single" @click="click_event()"></div>
             <!-- 复刻版暂时用不到先注释了 -->
             <!-- <set-menu /> -->
           </div>
@@ -188,6 +188,9 @@ export default {
     back_top() {
       this.$refs.scrollArea && this.$refs.scrollArea.scrollTo(0,0)
     },
+    click_event(){
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
+    },
     /**
      * @description: 更新赛事列表滚动高度
      */
@@ -274,7 +277,7 @@ export default {
         },
         // axios中catch回调方法
         fun_catch: err => {
-          this.$root.$emit(this.emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA);
+          useMittEmit(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA);
         },
         // 最大循环调用次数(异常时会循环调用),默认3次
         max_loop:3,
@@ -290,7 +293,7 @@ export default {
     virtual_menus_loaded(menues){
       if(!menues || !menues.length){
         this.current_sub_menu = {};
-        this.$root.$emit(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,false);
+        useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         return;
       }
       this.virtual_sports_params.csid = menues[this.sub_menu_i].menuId;

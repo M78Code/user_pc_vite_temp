@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
   name: "no_data",
   data() {
@@ -133,9 +134,7 @@ export default {
   },
   methods: {
     refresh_data(){
-      this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
-        text: "footer-refresh"
-      });
+      useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {text: "footer-refresh"});
     }
   }
 }

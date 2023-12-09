@@ -129,6 +129,7 @@
 
 <script>
 import data_pager from "src/base-h5/components/common/data-pager.vue"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 // import setting from "src/project/components/common/setting";
 const static_serve = window.env.config.static_serve[0];
 export default {
@@ -276,7 +277,7 @@ export default {
      * 数据页变化
      */
     data_page_changed($event){
-      this.$root.$emit(this.emit_cmd.EMIT_VIRTUAL_RESULT_PAGE_CHANGE,$event);
+      useMittEmit(MITT_TYPES.EMIT_VIRTUAL_RESULT_PAGE_CHANGE, $event);
     }
   },
   computed:{
