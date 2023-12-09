@@ -19,7 +19,6 @@
      <!-- {{ get_match_detail.msid }} -->
         
         <div class="match-detail-time-collect" v-if="show_collect" >
-
           <!-- 显示视频按钮 -->
           <div v-if="status == 1 || status == 3" @click="handleChange('video')">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video"/>
@@ -44,14 +43,17 @@
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">{{ get_match_detail.mhn }}</div>
-        <div class="match-detail-num" v-if="scoew_icon_list['S1']">
-          {{ scoew_icon_list["S1"].home }}
+        <span v-if="false">{{ detail_count }}</span>
+        <div class="match-detail-num" >
+          <!-- {{ scoew_icon_list["S1"].home }} -->
+          {{ detail_count?.home }}
         </div>
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">{{ get_match_detail.man }}</div>
-        <div class="match-detail-num" v-if="scoew_icon_list['S1']">
-          {{ scoew_icon_list["S1"].away }}
+        <div class="match-detail-num" v-if=" get_match_detail.man">
+          <!-- {{ scoew_icon_list["S1"].away }} -->
+          {{ detail_count?.away }}
         </div>
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
@@ -154,6 +156,11 @@ const status = computed(() => {
 
 watch(() => props.get_match_detail, (value) => {
   console.log(value, "props.get_match_detail");
+})
+
+//比分
+const detail_count = computed(() => {
+  return scoew_icon_list.value['S1'];
 })
 
 const show_time_counting = computed(() => {
@@ -314,7 +321,7 @@ const set_basketball_score_icon_list = () => {
     ];
   }
 };
-const scoew_icon_list = ref([])
+const scoew_icon_list = ref({})
 /**
  *@description // 比分板数据
  *@param {*}
@@ -365,7 +372,7 @@ onMounted(()=>{
 })
 
 // console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
-watch(()=>props.get_match_detail, (new_value, old_value) => {
+watch(props.get_match_detail, (new_value, old_value) => {
   scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
   // set_scoew_icon_list(new_value);
   // 意义不明
