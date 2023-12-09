@@ -26,10 +26,8 @@
 import {defineAsyncComponent} from 'vue'
 import home from "./components/first-page.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
-import { utils } from "src/core/utils/common/index.js";
 import { onUnmounted, watch, ref, computed, onMounted, defineComponent, nextTick, } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js"; // mixins: [router_mixins],
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";

@@ -16,6 +16,7 @@
 </template>
 <script>
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+import { counting_time_ctr_show_format_ouzhou } from 'src/output/index.js'
 
 export default {
   name: "Timer",

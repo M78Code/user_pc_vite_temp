@@ -105,8 +105,6 @@
 import { computed, ref, onUnmounted } from 'vue';
 import lodash from 'lodash'
 import { get_match_status } from 'src/core/utils/common/index'
-import { get_remote_time } from "src/output/index.js"
-import { utils } from 'src/core/utils/common/module/utils.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { MenuData } from "src/output/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"

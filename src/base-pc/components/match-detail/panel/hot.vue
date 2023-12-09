@@ -243,7 +243,6 @@ import {
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, onUnmounted } from "vue";
-import { utils } from "src/core/utils/common/module/utils.js";
 export default {
   // mixins: [skt_data_list_hot],
   components: {
@@ -253,7 +252,6 @@ export default {
   },
   data() {
     return {
-      utils,
       tooltip_style,
       i18n_t,
       // 菜单数据
