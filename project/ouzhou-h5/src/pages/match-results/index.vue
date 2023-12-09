@@ -2,13 +2,14 @@
     <scroll-list menu_type="28" :is_show_badge="false" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
     <div class="match-result">
         <date-tab v-if="state.slideMenu" :defaultVal="state.currentSlideValue"  :dateList="state.slideMenu" @changeDate="changeDate"/>
-        <match-container />
+        <!-- <match-container /> -->
+        <ObserverWrapper :match_list="matchs_data"></ObserverWrapper>
     </div>
 
 </template>
 <script setup>
 import lodash_ from 'lodash'
-import { watch,onMounted, onBeforeMount, reactive,ref,nextTick, onUnmounted } from "vue";
+import { watch,onMounted, onBeforeMount, reactive,ref,nextTick, onUnmounted, computed } from "vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
@@ -19,6 +20,18 @@ import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll
 import dateTab from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/date-tab/date-tab.vue';
 import { api_analysis } from "src/api/"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt";
+
+import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
+import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item2.vue'
+import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
+
+const defer_render = use_defer_render()
+const matchs_data = ref([])
+const is_show_match_item = computed(() => {
+  return (index) => {
+    return defer_render(index)
+  }
+})
 
 const inner_height = window.innerHeight;  // 视口高度
 const props = defineProps({})
@@ -37,11 +50,12 @@ const selectFinishHandle = (val) => {
  * @param {*} item 
  */
 const changeDate = (item,index) =>{
+    matchs_data.value = []
     useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
     if (state.currentSlideValue === item.val) return
     state.currentSlideValue = item.val
     MenuData.set_result_menu(index);
-     getData(state.slideMenu_sport.filter((n)=>{return n.mi === state.current_mi})[0],item.val)
+    getData(state.slideMenu_sport.filter((n)=>{return n.mi === state.current_mi})[0],item.val)
 }
 /**
  * 球种点击
@@ -109,14 +123,15 @@ const switchHandle = async ()=> {
  * @param {*} item 
  * @param {*} date 
  */
-const getData = (item,date) =>{
+const getData = async (item,date) =>{
     let params = {
         mi:item.mi,
         md:date,
         sport:item.sport
     }
     MenuData.set_result_menu_api_params(params)
-    MatchMeta.get_results_match()
+    matchs_data.value = await MatchMeta.get_results_match()
+    useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
 }
 onMounted(()=>{
     VirtualList.set_is_show_ball(false)
@@ -133,7 +148,8 @@ onUnmounted(() => {
 <style scoped lang="scss">
 @import "./index.scss";
 .match-result{
-    // height: calc(100% - 1.73rem);
+    display: flex;
+    flex-direction: column;
     height: 0;
     flex: 1;
     overflow: hidden;
