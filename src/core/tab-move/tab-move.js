@@ -101,3 +101,5 @@ class TabMove {
     }
   }
 }
+
+export default new TabMove()

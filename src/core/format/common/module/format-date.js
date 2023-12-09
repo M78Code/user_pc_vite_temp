@@ -269,7 +269,7 @@ export const format_time_zone_time = (time, offset = 8) => {
  * @param  counting_time 显示时间
  *
  */
-export const counting_time_ctr_show_format = (match, counting_time) => {
+export const counting_time_ctr_show_format_rc = (match, counting_time) => {
   // counting_time 格式00:00
   let counting_time_ = counting_time;
   // 红猫赛事只显示分钟不显示秒
