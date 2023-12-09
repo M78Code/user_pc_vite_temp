@@ -50,6 +50,7 @@ import { dom } from 'quasar'
 import MatchInfoCtr from "src/base-h5/vr/utils/vsport/matchInfoCtr.js";
 import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 
 const { height, width, css} = dom
@@ -212,8 +213,6 @@ export default {
     this.get_video_timer = null;
     // 满足刷新页面保持向上展开的状态
     this.set_fewer(1);
-    this.$root.$on(this.emit_cmd.EMIT_REF_API, this.initEvent);
-
     if(this.$route.query.mid || this.$route.name == 'virtual_sports'){
       this.init_vsport();
     }
@@ -238,7 +237,10 @@ export default {
 
     // 重置顶部菜单切换状态
     this.$emit('top_menu_change', false)
-    this.$root.$on(this.emit_cmd.EMIT_CATEGORY_SKT, this.sendSocketInitCmd);
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_REF_API, this.initEvent).off,
+      useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, this.sendSocketInitCmd).off,
+    ]
     //函数防抖 在500毫秒内只触发最后一次需要执行的事件
     this.socket_upd_list = this.debounce(this.socket_upd_list, 500);
 
@@ -779,8 +781,9 @@ export default {
    */
   destroyed(){
     // 取消订阅事件
-    this.$root.$off(this.emit_cmd.EMIT_REF_API, this.initEvent);
-    this.$root.$off(this.emit_cmd.EMIT_CATEGORY_SKT, this.sendSocketInitCmd);
+    // this.$root.$off(this.emit_cmd.EMIT_REF_API, this.initEvent);
+    // this.$root.$off(this.emit_cmd.EMIT_CATEGORY_SKT, this.sendSocketInitCmd);
+    this.emitters.map((x) => x());
     if(this.vsport){
       this.vsport.destroy();
     }

@@ -64,7 +64,7 @@
 <script>
 import odd_convert from "src/base-h5/vr/mixin/odds_conversion/odds_conversion.js"
 // import betting from 'src/project/mixins/betting/betting.js';
-
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default{
   name:"oddColumnItem",
   props:{
@@ -107,8 +107,10 @@ export default{
   },
   mounted(){
     this.get_odd_data();
-    this.$root.$on(this.emit_cmd.EMIT_ARRIVED10,this.arrived10_handle);
-    this.$root.$on(this.emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,this.match_result_data_loaded);
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_ARRIVED10, this.arrived10_handle).off,
+      useMittOn(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, this.match_result_data_loaded).off,
+    ]
     // 点击事件防抖处理
     this.item_click3 = this.debounce(this.item_click3, 450, {'leading': true, trailing: false});
   },
@@ -488,8 +490,9 @@ export default{
     }
   },
   destroyed(){
-    this.$root.$off(this.emit_cmd.EMIT_ARRIVED10,this.arrived10_handle);
-    this.$root.$off(this.emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,this.match_result_data_loaded);
+    // this.$root.$off(this.emit_cmd.EMIT_ARRIVED10,this.arrived10_handle);
+    // this.$root.$off(this.emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,this.match_result_data_loaded);
+    this.emitters.map((x) => x());
     this.debounce_throttle_cancel(this.item_click3);
     clearTimeout(this.timer_);
     this.timer_ = null;

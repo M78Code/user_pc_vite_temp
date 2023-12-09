@@ -166,6 +166,8 @@ import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/vi
 import odd_column_item from "src/base-h5/vr/pages/bet/odd_column_item.vue"
 // import betting from 'project_path/mixins/betting/betting.js';
 import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+
 export default {
   // mixins:[betting,virtual_sports_m_item_mixin],
   mixins:[virtual_sports_m_item_mixin],
@@ -188,12 +190,14 @@ export default {
     }
   },
   created(){
-    this.$root.$on(this.emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,this.video_process_init_video);
   },
   mounted(){
-    this.$root.$on(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle)
     this.video_process_init_video();
-    this.$root.$on(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.xu_ni_ty_standard_odd_status);
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, this.video_process_init_video).off,
+      useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN, this.pre_counting_end_handle).off,
+      useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, this.xu_ni_ty_standard_odd_status).off,
+    ]
   },
   methods:{
     // ...mapActions([
@@ -560,9 +564,10 @@ export default {
     if(this.vsports){
       this.vsports.destroy();
     }
-    this.$root.$off(this.emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,this.video_process_init_video);
-    this.$root.$off(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle)
-    this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.xu_ni_ty_standard_odd_status)
+    // this.$root.$off(this.emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,this.video_process_init_video);
+    // this.$root.$off(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle)
+    // this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.xu_ni_ty_standard_odd_status)
+    this.emitters.map((x) => x());
   }
 }
 </script>

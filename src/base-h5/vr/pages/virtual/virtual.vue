@@ -66,6 +66,7 @@ import { utils } from "src/core/utils/common/module/utils.js";
 import virtualFooterMenu from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 import lodash from "lodash"
 
@@ -150,7 +151,8 @@ export default {
     this.set_menu_type(this.get_prev_menu_type)
     debounce_throttle_cancel(this.cancel_ref);
     // this.$root.$off(this.emit_cmd.EMIT_WINDOW_RESIZE, this.window_resize_on);
-    this.$root.$off(this.emit_cmd.EMIT_COUNTING_DOWN_START_ENDED,this.counting_down_start_ended_on);
+    // this.$root.$off(this.emit_cmd.EMIT_COUNTING_DOWN_START_ENDED,this.counting_down_start_ended_on);
+    this.emitters && this.emitters.map((x) => x());
 
     utils.clear_timer();
 

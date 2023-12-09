@@ -7,8 +7,7 @@ import { api_v_sports } from "src/base-h5/vr/api";
 import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
 import { api_common } from "src/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
-
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 export default {
   data(){
@@ -61,7 +60,9 @@ export default {
     this.checking_first_delete_timer = null;
     //重调用视频进程接口时钟
     this.procee_again_timer = null;
-    this.$root.$on(this.emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA, this.no_virtual_menu_data).off,
+    ]
   },
   methods:{
 	set_virtual_data_loading(data){VR_CTR.set_virtual_data_loading(data)},
@@ -1003,7 +1004,8 @@ export default {
     }
   },
   beforeDestroy(){
-    this.$root.$off(this.emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
+    this.emitters.map((x) => x());
+    // this.$root.$off(this.emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
   },
   destroyed () {
     this.clear_mixin_timer();

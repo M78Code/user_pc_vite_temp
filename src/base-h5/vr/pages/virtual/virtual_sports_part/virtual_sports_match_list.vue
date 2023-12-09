@@ -30,6 +30,7 @@ import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/vi
 import virtual_sports_match_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_item.vue";
 // import betting from 'project_path/mixins/betting/betting.js';
 import SVirtual from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 
 export default {
   // mixins:[betting],
@@ -47,10 +48,13 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.odd_pan_handle);
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, this.odd_pan_handle).off,
+    ]
   },
   destroyed(){
-    this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.odd_pan_handle)
+    // this.$root.$off(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,this.odd_pan_handle)
+    this.emitters.map((x) => x());
   },
   methods:{
     // ...mapActions([

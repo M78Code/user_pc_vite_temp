@@ -29,6 +29,8 @@
 <script>
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { utils } from "src/core/utils/common/module/utils.js";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+
 export default {
   name:'match_tab',
   props:{
@@ -64,9 +66,11 @@ export default {
     }
   },
   mounted(){
-    this.$root.$on(this.emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED,this.basket_ball_time_handle);
-    this.$root.$on(this.emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL,this.end_playing_basketball_handle);
-    this.$root.$on(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END,this.ingame_result_show_end);
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED, this.basket_ball_time_handle).off,
+      useMittOn(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL, this.end_playing_basketball_handle).off,
+      useMittOn(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END, this.ingame_result_show_end).off,
+    ]
   },
   computed: {
     // ...mapGetters({
@@ -291,9 +295,10 @@ export default {
     }
   },
   destroyed(){
-    this.$root.$off(this.emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED,this.basket_ball_time_handle);
-    this.$root.$off(this.emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL,this.end_playing_basketball_handle);
-    this.$root.$off(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END,this.ingame_result_show_end);
+    // this.$root.$off(this.emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED,this.basket_ball_time_handle);
+    // this.$root.$off(this.emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL,this.end_playing_basketball_handle);
+    // this.$root.$off(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END,this.ingame_result_show_end);
+    this.emitters.map((x) => x());
     clearTimeout(this.timer1_)
   }
 }

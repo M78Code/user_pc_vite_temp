@@ -168,6 +168,7 @@ import loading from 'src/base-h5/components/common/loading.vue';
 import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_list.vue'
 import virtualBasketball from 'src/base-h5/vr/pages/virtual/details/children/virtual_basketball.vue'
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
   name:'VirtualSportsStage',
   mixins:[common],
@@ -242,12 +243,14 @@ export default {
     this.next_batch_no = this.$root.$t('virtual_sports.next_batch_no');
     // 期号国际化字符串
     this.next_date_no = this.$root.$t('virtual_sports.next_date_no');
-    this.$root.$on(this.emit_cmd.EMIT_IS_ALL_END_NOTICE,this.all_ended_handle);
-    this.$root.$on(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,this.sync_video_data_handle);
-    this.$root.$on(this.emit_cmd.EMIT_CURRENT_VIDEO_PROCESS_INITED,this.set_init_video_on);
-    this.$root.$on(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,this.set_loading_state);
-    this.$root.$on(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle)
-    this.$root.$on(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT,this.visibilitychange_handle)
+    this.emitters = [
+      useMittOn(MITT_TYPES.EMIT_IS_ALL_END_NOTICE, this.all_ended_handle).off,
+      useMittOn(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, this.sync_video_data_handle).off,
+      useMittOn(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED, this.set_init_video_on).off,
+      useMittOn(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING, this.set_loading_state).off,
+      useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN, this.pre_counting_end_handle).off,
+      useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.visibilitychange_handle).off,
+    ]
     this.timer_super28 = setTimeout(() => {
       this.video_process_init_video();
     },500);
@@ -791,13 +794,13 @@ export default {
       this.player = null;
     }
 
-    this.$root.$off(this.emit_cmd.EMIT_IS_ALL_END_NOTICE,this.all_ended_handle);
-    this.$root.$off(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,this.sync_video_data_handle);
-    this.$root.$off(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,this.set_loading_state);
-    this.$root.$off(this.emit_cmd.EMIT_CURRENT_VIDEO_PROCESS_INITED,this.set_init_video_on);
-    this.$root.$off(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle);
-    this.$root.$off(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT,this.visibilitychange_handle)
-
+    // this.$root.$off(this.emit_cmd.EMIT_IS_ALL_END_NOTICE,this.all_ended_handle);
+    // this.$root.$off(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,this.sync_video_data_handle);
+    // this.$root.$off(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,this.set_loading_state);
+    // this.$root.$off(this.emit_cmd.EMIT_CURRENT_VIDEO_PROCESS_INITED,this.set_init_video_on);
+    // this.$root.$off(this.emit_cmd.EMIT_PRE_COUNTING_EDN,this.pre_counting_end_handle);
+    // this.$root.$off(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT,this.visibilitychange_handle)
+    this.emitters.map((x) => x());
     this.clear_timer();
 
     // 清除数据
