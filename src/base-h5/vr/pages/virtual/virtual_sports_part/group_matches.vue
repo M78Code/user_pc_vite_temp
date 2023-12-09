@@ -40,7 +40,6 @@
 <script>
 import { api_v_sports } from "src/base-h5/vr/api";
 import no_data from "src/base-h5/vr/components/common/no_data.vue";
-import {mapGetters} from "vuex";
 
 export default {
   name: "group_matches",
@@ -48,7 +47,8 @@ export default {
     "no-data": no_data
   },
   computed: {
-    ...mapGetters(['get_lang']),
+    // ...mapGetters(['get_lang']),
+    get_lang(){ return 'zh' }
   },
   props:{
     tid: {

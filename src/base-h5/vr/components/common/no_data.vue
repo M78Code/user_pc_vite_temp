@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "no_data",
   data() {
@@ -130,7 +128,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['get_theme']),
+    // ...mapGetters(['get_theme']),
+    get_theme(){}
   },
   methods: {
     refresh_data(){
