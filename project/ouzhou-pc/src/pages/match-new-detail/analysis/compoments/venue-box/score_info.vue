@@ -96,7 +96,7 @@
                 "
               >
               </span>
-              <span v-else style="margin-right: 6px"></span>
+              <span v-else style="background-color: #d9d9d9"  class="round"></span>
               <span class="txt">{{ props.row.name }}</span>
             </span>
           </q-td>
