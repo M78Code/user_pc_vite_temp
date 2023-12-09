@@ -19,25 +19,19 @@
 
 <script setup>
 import {
-  MatchDetailCalss,
   MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,
-  useMittOn,
   useMitt,
   MITT_TYPES,
-  
-  MatchDataWarehouse_H5_List_Common,
-  MenuData,
-  SearchData,
-useMittEmit,
+  useMittEmit,
 } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { onMounted, ref, toRaw, watch, onUnmounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { ref, toRaw } from "vue";
+import { useRoute } from "vue-router";
 import detail_header_tem1 from "../detail_header/detail_header_tem1.vue";
 // import odds_info from "./components/odds_info.vue";
 import odds_info from "../components/odds_info.vue";
 import loading_page from 'src/components/details/loading/index.vue'
-import { api_match_list, api_common, api_analysis } from "src/api/index.js";
+import { api_common, api_analysis } from "src/api/index.js";
 
 import './index.scss'
 

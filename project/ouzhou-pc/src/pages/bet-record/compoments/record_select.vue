@@ -126,6 +126,14 @@ watch(() => props.current_tab, (newVal) => {
   cash_value.value = ['']
 })
 watch(date, (newVal) => {
+  if(Array.isArray(newVal)){
+    date_value.value = newVal[0] + '-' + newVal[0]
+    return ;
+  }
+  if(newVal.from && newVal.from === newVal.to){
+    date.value = [newVal.from]
+    return ;
+  }
   date_value.value = newVal.from + '-' + newVal.to
 })
 const emit = defineEmits(['itemFilter'])
@@ -154,7 +162,11 @@ const time_click = (item) => {
   current_time.value = item.value
   params.timeType = item.value
   tipMsg.value = msgList[item.value]
-  date.value = { from, to }
+  if(from === to){
+    date.value = [from]
+  } else {
+    date.value = { from, to }
+  }
   emitClick()
 }
 const emitClick = () => {
