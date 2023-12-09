@@ -59,7 +59,7 @@
             </div>
             <!-- 玩法数量 -->
             <div v-if="match_item.mc">
-              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+`: $root.$t('footer_menu.more')}}
+              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+`: i18n_t('footer_menu.more')}}
             </div>
           </div>
         </div>

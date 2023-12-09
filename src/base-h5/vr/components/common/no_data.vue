@@ -42,31 +42,31 @@ export default {
         collect: {
           url:    "image/bw3/svg/no_shouc.svg",
           url2:    "image/bw3/svg/no_shouc2.svg",
-          txt: this.$root.$t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
+          txt: i18n_t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
         },
         noWifi: {
           url:    "image/bw3/svg/nowifi.svg",
-          txt: this.$root.$t('msg.msg_nodata_09'),//'网络不给力',
+          txt: i18n_t('msg.msg_nodata_09'),//'网络不给力',
         },
         noMatch: {
           url:    "image/bw3/svg/noMatch.svg",
           url2:    "image/bw3/png/noMatch2.png",
-          txt: this.$root.$t('msg.msg_nodata_02'),//'空空如也~',
+          txt: i18n_t('msg.msg_nodata_02'),//'空空如也~',
         },
         noMatchNew: {
           url:    "image/bw3/png/noMatch_new.png",
           url2:    "image/bw3/png/noMatch2_new.png",
-          txt: this.$root.$t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
+          txt: i18n_t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
         },
         noMessage: {
           url:    "image/bw3/svg/noMatch.svg",
           url2:    "image/bw3/png/noMatch2.png",
-          txt: this.$root.$t('msg.msg_nodata_17'),//'暂无消息记录~',
+          txt: i18n_t('msg.msg_nodata_17'),//'暂无消息记录~',
         },
         nolive: {
           url:    "image/bw3/svg/no_livedata.svg",
           url2:    "image/bw3/svg/no_livedata2.svg",
-          txt: this.$root.$t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
+          txt: i18n_t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
         }
       },
       top_height: 0,
@@ -99,31 +99,31 @@ export default {
         collect: {
           url:    "image/bw3/svg/no_shouc.svg",
           url2:    "image/bw3/svg/no_shouc2.svg",
-          txt: this.$root.$t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
+          txt: i18n_t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
         },
         noWifi: {
           url:    "image/bw3/svg/nowifi.svg",
-          txt: this.$root.$t('msg.msg_nodata_09'),//'网络不给力',
+          txt: i18n_t('msg.msg_nodata_09'),//'网络不给力',
         },
         noMatch: {
           url:    "image/bw3/svg/noMatch.svg",
           url2:    "image/bw3/png/noMatch2.png",
-          txt: this.$root.$t('msg.msg_nodata_02'),//'空空如也~',
+          txt: i18n_t('msg.msg_nodata_02'),//'空空如也~',
         },
         noMatchNew: {
           url:    "image/bw3/png/noMatch_new.png",
           url2:    "image/bw3/png/noMatch2_new.png",
-          txt: this.$root.$t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
+          txt: i18n_t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
         },
         noMessage: {
           url:    "image/bw3/svg/noMatch.svg",
           url2:    "image/bw3/png/noMatch2.png",
-          txt: this.$root.$t('msg.msg_nodata_17'),//'暂无消息记录~',
+          txt: i18n_t('msg.msg_nodata_17'),//'暂无消息记录~',
         },
         nolive: {
           url:    "image/bw3/svg/no_livedata.svg",
           url2:    "image/bw3/svg/no_livedata2.svg",
-          txt: this.$root.$t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
+          txt: i18n_t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
         }
       };
     }

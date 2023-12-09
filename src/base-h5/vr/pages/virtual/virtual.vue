@@ -13,7 +13,7 @@
           <div class="back-wrap">
             <div class="detail-back" @click="$common.go_where({back_to: 'go_back_from_virtual'})"></div>
             <!-- 虚拟体育 -->
-            <div class="col">{{$root.$t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
+            <div class="col">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
             <div class="no-single" @click="click_event()"></div>
             <!-- 复刻版暂时用不到先注释了 -->

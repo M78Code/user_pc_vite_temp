@@ -48,7 +48,7 @@ export default {
     get_odd_value(ol_item){
       let r = "";
       if(ol_item.result === "0" || ol_item.result === 0 || ol_item.result){
-        r = this.$root.$t(`virtual_sports.result[${ol_item.result}]`);
+        r = i18n_t(`virtual_sports.result[${ol_item.result}]`);
       }
       else{
         r = this.odds_value;

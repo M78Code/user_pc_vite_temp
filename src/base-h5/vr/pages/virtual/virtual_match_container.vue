@@ -31,9 +31,9 @@
             <div class="date-number">
             </div>
             <div class="title-i-w row items-center">
-              <div>{{$root.$t('virtual_sports.champion')}}</div>
-              <div>{{$root.$t('virtual_sports.runner_up')}}</div>
-              <div>{{$root.$t('virtual_sports.third_place')}}</div>
+              <div>{{i18n_t('virtual_sports.champion')}}</div>
+              <div>{{i18n_t('virtual_sports.runner_up')}}</div>
+              <div>{{i18n_t('virtual_sports.third_place')}}</div>
             </div>
             <div class="date-number">
             </div>
@@ -50,7 +50,7 @@
               </div>
             </div>
             <div class="date-number">
-              {{(new Date(+match.matchTime)).Format($root.$t('time4'))}}
+              {{(new Date(+match.matchTime)).Format(i18n_t('time4'))}}
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@
           </div>
           <div class="row justify-between">
             <div class="match-time">
-              {{(new Date(+match.matchTime)).Format($root.$t('time4'))}}
+              {{(new Date(+match.matchTime)).Format(i18n_t('time4'))}}
             </div>
             <div class="row match-type justify-center"
               v-html="stage_result">
@@ -152,7 +152,7 @@ export default {
   },
   methods:{
     get_batch_no_by_language(batch_no){
-      let lang = `${this.$root.$t('virtual_sports.date_number_title')}`;
+      let lang = `${i18n_t('virtual_sports.date_number_title')}`;
       let r = `${batch_no} ${lang}`;
       if(this.get_lang == 'vi'){
         r = lang.replace('%s',batch_no);
@@ -296,7 +296,7 @@ export default {
       }
       if(this.match.teamGroup && !this.match.sportId == '1004'){
         if(this.match.matchDay){
-          let m_str = this.$root.$t('virtual_sports.matchDay');
+          let m_str = i18n_t('virtual_sports.matchDay');
           let append_space = "&nbsp;&nbsp;"
           if(['zh','tw'].includes(this.get_lang)){
             append_space = "";
@@ -305,7 +305,7 @@ export default {
         }
         else{
           let lang_key = `virtual_sports.${this.match.teamGroup}`
-          result = `${this.$root.$t(lang_key)}`;
+          result = `${i18n_t(lang_key)}`;
 
           let found_str_list = [];
           let found = result.match(/[0-9]/ig);
@@ -324,7 +324,7 @@ export default {
 
         // legOrder 回合
         if(this.match.legOrder){
-          let lang_leg_order = this.$root.$t('virtual_sports.legOrder');
+          let lang_leg_order = i18n_t('virtual_sports.legOrder');
           let append_space = "&nbsp;&nbsp;"
           if(['zh','tw', 'hk'].includes(this.get_lang)){
             append_space = "";
@@ -335,7 +335,7 @@ export default {
       }
       // matchDay 轮次
       else if(this.match.matchDay && !this.match.sportId == '1004'){
-        let m_str = this.$root.$t('virtual_sports.matchDay');
+        let m_str = i18n_t('virtual_sports.matchDay');
         let append_space = "&nbsp;&nbsp;"
         if(['zh','tw', 'hk'].includes(this.get_lang)){
           append_space = "";
@@ -345,24 +345,24 @@ export default {
       // 虚拟篮球显示期数matchesGroupId
       else if(this.match.sportId == '1004'){
         if(this.get_lang == 'vi'){
-          let w = this.$root.$t('virtual_sports.date_number_title');
+          let w = i18n_t('virtual_sports.date_number_title');
           result = w.replace('%s',`&nbsp;<span style="color: ${color_1}">${this.match.batchNo}</span>`);
         }
         else{
           result = `<span style="color: ${color_1};font-family:dinRegular;">
             ${this.match.batchNo}
-          </span>&nbsp;<span>${this.$root.$t('virtual_sports.date_number_title')}</span>`;
+          </span>&nbsp;<span>${i18n_t('virtual_sports.date_number_title')}</span>`;
         }
       }
       else{
-        let language_des = this.$root.$t('virtual_sports.date_number_title');
+        let language_des = i18n_t('virtual_sports.date_number_title');
         if(language_des.indexOf('%s') > -1){
           result = language_des.replace('%s',`&nbsp;<span style="color: ${color_1}">${this.match.batchNo}</span>`);
         }
         else{
           result = `<span style="color:${color_1};font-family:dinRegular;">
             ${this.match.batchNo}
-          </span>&nbsp;<span>${this.$root.$t('virtual_sports.date_number_title')}</span>`;
+          </span>&nbsp;<span>${i18n_t('virtual_sports.date_number_title')}</span>`;
         }
       }
       return result;

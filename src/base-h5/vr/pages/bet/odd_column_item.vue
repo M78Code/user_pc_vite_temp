@@ -262,11 +262,11 @@ export default{
     get_odd_append_value(ol_item){
       let r = "";
       if(ol_item.result === "0" || ol_item.result){
-        r = this.$root.$t(`virtual_sports.result[${ol_item.result}]`);
+        r = i18n_t(`virtual_sports.result[${ol_item.result}]`);
       } else{
         let dict_result = this.ol_dictionary[ol_item.oid];
         if(dict_result === "0" || dict_result){
-          r = this.$root.$t(`virtual_sports.result[${dict_result}]`);
+          r = i18n_t(`virtual_sports.result[${dict_result}]`);
         } else{
           r = this.odds_value;
         }

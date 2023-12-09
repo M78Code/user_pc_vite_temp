@@ -98,10 +98,10 @@ export default {
   data() {
     return {
       tabs: [
-        {name: this.$root.$t('virtual_sports.top_16'), key: 'Q8'},
-        {name: this.$root.$t('virtual_sports.quarter_finals'), key: 'Q4'},
-        {name: this.$root.$t('virtual_sports.semifinals'), key: 'SEMIFINAL'},
-        {name: this.$root.$t('virtual_sports.finals'), key: 'FINAL'}
+        {name: i18n_t('virtual_sports.top_16'), key: 'Q8'},
+        {name: i18n_t('virtual_sports.quarter_finals'), key: 'Q4'},
+        {name: i18n_t('virtual_sports.semifinals'), key: 'SEMIFINAL'},
+        {name: i18n_t('virtual_sports.finals'), key: 'FINAL'}
       ],
       tab_index: -1,
       visible: false,
@@ -125,7 +125,7 @@ export default {
       if(this.tab_index == i) return
       // 判断选项卡里边有没有数据
       if (!Object.keys(this.check_if_there_tab).includes(item.key)) {
-        this.$toast(this.$root.$t('virtual_sports.no_data') + this.$root.$t(`${item.name}`), 1000)
+        this.$toast(i18n_t('virtual_sports.no_data') + i18n_t(`${item.name}`), 1000)
         return
       }
       this.knockout_list_filter(i)
