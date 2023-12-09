@@ -66,7 +66,7 @@ class MatchUtils {
    * @description 赛事联赛归类 
    * @param {*} list 赛事数据
    */
-   handler_match_classify_by_tid (list) {
+  handler_match_classify_by_tid (list) {
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return []
     const tid_list = list.map(l => l.tid)
