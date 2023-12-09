@@ -11,7 +11,7 @@
           <!-- <div class="v-icon switch-icon"></div> -->
           <sport_icon
             :sport_id="detail_info.csid"
-            :status="false"
+            :status="true"
             :cds="detail_info.cds"
             size="18px"
             class="icon"
