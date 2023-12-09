@@ -142,14 +142,14 @@ body {
 
     .refresh {
       color: var(--q-layout-color-1);
-      padding-top: 12%;
-
+      display: flex;
+      background-color: var(--q-gb-bg-c-4);
       .img404 {
         background-image: var(--qq--public-bg-image5); // TODO: png/page404_01.png
       }
 
       .refresh-img {
-        background-image: var(--qq--public-bg-image6); // TODO: png/refresh_01.png
+        // background-image: var(--qq--public-bg-image6); // TODO: png/refresh_01.png
       }
 
       .btn {
