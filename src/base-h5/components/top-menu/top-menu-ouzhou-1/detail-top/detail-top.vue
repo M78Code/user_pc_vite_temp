@@ -107,12 +107,10 @@ const toHome = async() => {
   NavbarSubscribe.instance.back();
   // 异步获取状态
   const res = await NavbarSubscribe.instance.get_status();
-  console.log(res, "res====");
   // 状态为真，可以返回
   if (res) {
     BaseData.set_is_emit(true)
     // MatchMeta.clear_match_info()
-    console.log(111111, "返回上一页");
     MatchResponsive.set_is_compute_origin(true)
     router.back()
   } else {

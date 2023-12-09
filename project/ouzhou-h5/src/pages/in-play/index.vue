@@ -13,13 +13,13 @@
 import lodash from 'lodash'
 import scrollMenu from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-menu.vue';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
-import { MenuData } from "src/output/index.js";
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import { MenuData } from "src/output/index.js";
 
 const emitters = ref({})
 let message_fun = null
