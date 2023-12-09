@@ -33,7 +33,7 @@
 import { MatchDataWarehouse_H5_List_Common as MatchListData  } from 'src/output/module/match-data-base.js'
 import MatchListCardData from "./match-list-card-data-class.js"
 import lodash from "lodash"
-import { update_match_parent_card_style } from "./js"
+import { update_match_parent_card_style } from "src/core/match-list-pc/match-card/module/utils.js"
 import { league_title_card_template } from "../template/card-template-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../template"
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
