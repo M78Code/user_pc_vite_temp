@@ -56,7 +56,6 @@
 <script setup>
 import { computed, ref, watch,onMounted, onUnmounted } from "vue";
 import matchDate from "src/components/match-process/match-process-template-1/match_date.vue";
-// import { format_second_ms } from "src/output/index.js";
 import {
   get_match_status,
   utils,
@@ -64,13 +63,7 @@ import {
   format_string,
   is_eports_csid
 } from "src/output/index.js"
-import { get_mmp_name } from "src/output/index.js"
-import {
-  useRegistPropsHelper,
-} from "src/composables/regist-props/index.js";
-import { component_symbol, need_register_props } from "../config/index.js";
-useRegistPropsHelper(component_symbol, need_register_props);
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { get_mmp_name } from 'src/core/format/project/module/format-msc.js'
 import lodash from "lodash";
 
 // mixins: [global_mixin, msc_mixin, time_format_mixin],

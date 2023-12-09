@@ -209,9 +209,10 @@ async function  get_menu_of_favorite_count(list,type) {
         400:100,
     }
     let parmas = {
-        euid: euid_list,
+        //20001 冠军 的收藏id 传固定的
+        euid: type == 400 ? 20001 : euid_list,
         //排序	 int 类型 1 按热门排序 2 按时间排序
-        sort: PageSourceData.sort_type,
+        sort: 1,
         //1：滚球，2：即将开赛，3：今日赛事，4：早盘，100：冠军
         type: type_[type], 
         cuid: UserCtr.get_cuid(),
