@@ -50,7 +50,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
-import {  i18n_t, utils,compute_img_url} from "src/output/index.js"
+import {  i18n_t,compute_img_url} from "src/output/index.js"
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 const emitters = ref({})
