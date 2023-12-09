@@ -375,7 +375,7 @@ class VirtualList {
       //     // 计算出 当前赛事的容器高度，以rem 计算
       //     current_list_total_height += +this.get_match_dom_height_by_match_data(h_map);
       //   }
-      //   let many_distances = utils.px_2_rem(scroll_top) - (current_list_total_height / page_count) * 7; // 可视区域  每一场的平均高度 × 7
+      //   let many_distances = px_2_rem(scroll_top) - (current_list_total_height / page_count) * 7; // 可视区域  每一场的平均高度 × 7
       //   current_screen_match = []; // 列表页可视区域 赛事的数据
       //   for (let i = 0; i < match_list_length; i++) {
       //     let h_map = this.match_height_map_list[i];

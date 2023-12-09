@@ -169,7 +169,7 @@ export default defineComponent({
       }
     );
     onMounted(() => {
-      $utils.load_player_js()
+      $load_player_js()
       // useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, timer);
 
       // 原mounted

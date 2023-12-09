@@ -827,7 +827,7 @@ export default {
       //
       //   // 滚动目标到屏幕显示区域
       //   this.$nextTick(()=>{
-      //     this.$utils.tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
+      //     this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
       //   })
       // }
 
@@ -840,7 +840,7 @@ export default {
       this.check_replay_url(this.replay_video_src)
       // 滚动目标到屏幕显示区域
       this.$nextTick(()=>{
-        this.$utils.tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
+        this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
       })
       
       
@@ -1388,7 +1388,7 @@ export default {
       const { configValue, eventSwitch } = lodash.get(this.get_user, 'merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && lodash.get(this.get_detail_data, 'csid') == '1') {
         this.get_football_replay(0)
-        this.$utils.load_player_js()
+        this.$load_player_js()
         clearInterval(this.get_replay_video_timer)
         this.get_replay_video_timer = setInterval(() => {
           this.get_football_replay(0)

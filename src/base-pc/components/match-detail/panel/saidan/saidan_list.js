@@ -9,7 +9,7 @@ import {
     api_details
     // api_account,
   } from "src/api/index";
-import utils from 'src/public/utils/utils.js'
+import utils from 'src/public/utils/js'
 import { mapGetters, mapActions } from "vuex";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 export default {

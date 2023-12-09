@@ -19,7 +19,7 @@
  
  
 //所有项目通用： 业务逻辑  无关  ： 常量，工具函数 ，国际化 ，顶层通信用的 全局常量和 MITT
-export * from "./module/constant-utils.js";
+export * from "./module/constant-js";
  
 //所有项目通用： 业务逻辑 无关  ： 用户类，接口请求 ，埋点
 export * from "./module/global-common.js";

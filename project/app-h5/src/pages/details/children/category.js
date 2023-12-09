@@ -599,7 +599,7 @@ export const category_info = (category_arr=[]) => {
         timers:1000
       }
        // axios_api轮询调用方法
-       $utils.axios_api_loop(obj_);
+       $axios_api_loop(obj_);
        *
        * @param {*} axios_api axios api对象
        * @param {*} params 参数

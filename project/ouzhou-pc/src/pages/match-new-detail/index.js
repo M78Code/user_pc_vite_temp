@@ -211,7 +211,7 @@ export function usedetailData(route) {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
   };
 
   /**
@@ -246,7 +246,7 @@ export function usedetailData(route) {
         timers: 1100,
       };
 
-      utils.axios_api_loop(obj_);
+      axios_api_loop(obj_);
     }
     catch (error) {
       console.error("details-list", error);
@@ -322,7 +322,7 @@ export function usedetailData(route) {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
 
   };
     /**

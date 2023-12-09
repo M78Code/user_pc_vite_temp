@@ -35,7 +35,7 @@ function openActivity() {
         return
     }
 
-    // $utils.zhuge_event_send('H5_任务中心', user_info);
+    // $send_zhuge_event('H5_任务中心', user_info);
     router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
     alert("跳活动页面")
 }

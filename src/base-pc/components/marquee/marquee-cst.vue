@@ -101,7 +101,7 @@ const notice_info = reactive({
 })
 
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 
 /** 内嵌版 收起左侧菜单 */
 const left_tabs = [

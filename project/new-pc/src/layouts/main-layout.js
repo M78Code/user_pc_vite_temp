@@ -31,5 +31,5 @@ methods_map_store["SET_SHOW_FILTER_POPUP"](false);
 methods_map_store["SET_MATCH_DETAILS_PARAMS"]({});
 // // 进入首页
 //gtag打点
-// utils.gtag_view_send('PC_home', '/home')
+// gtag_view_send('PC_home', '/home')
  

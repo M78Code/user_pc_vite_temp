@@ -12,7 +12,7 @@
         <!-- 统计分析 -->
         <!-- <div class="sr-link-icon-w">
             <div v-tooltip="{ content: i18n_t('common.analysis') }" 
-            v-if="utils.is_show_sr_flg(match)"
+            v-if="is_show_sr_flg(match)"
             @click.stop='details.sr_click_handle(match)'
             :style="compute_css_obj({key: 'pc-home-match-analysis'})"></div>
         </div> -->
@@ -21,7 +21,7 @@
 <script setup>
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { i18n_t } from "src/output/index.js";
-import { utils } from 'src/core/utils/common/module/utils.js'
+import { utils } from 'src/core/utils/common/module/js'
 import details from "src/core/match-list-pc/details-class/details.js"
 import lodash from 'lodash';
 
@@ -42,4 +42,4 @@ const props = defineProps({
     height: 12px;
     background-size: 100% 100%;
 }
-</style>src/core/utils/common/module/utils.js
+</style>src/core/utils/common/module/js

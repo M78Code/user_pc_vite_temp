@@ -359,7 +359,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	// tabIndex.value = index;
 	sport_kind_id.value = sport_id;
 	// tab 默认居中及移动动画
-	utils.tab_move2(index, tab_growp.value);
+	tab_move2(index, tab_growp.value);
 	if (keyword) {
 		input_value.value = keyword
 	}

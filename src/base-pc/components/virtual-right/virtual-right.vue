@@ -170,7 +170,7 @@ export default {
     }
   },
   created() {
-    this.$utils.load_player_js()
+    this.$load_player_js()
     this.$root.$on(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.timer);
   },
   destroyed() {

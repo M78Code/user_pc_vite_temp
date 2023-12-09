@@ -313,7 +313,7 @@ export default {
         if (["34", "50", "120"].includes(res.mmp) && !lodash.get(res, 'score_obj.S170')) {
           res.score_obj.S170 = this.default;
         }
-        if (this.$utils.get_match_status(res.ms) && ["6", "7"].includes(res.mmp)) {
+        if (this.$get_match_status(res.ms) && ["6", "7"].includes(res.mmp)) {
           this.timestamp = parseInt(res.mst);
           this.start_timer();
         }

@@ -47,7 +47,7 @@ import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
-import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
+import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
 import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/output/index.js"

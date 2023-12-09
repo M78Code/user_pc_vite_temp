@@ -189,7 +189,7 @@ export default defineComponent({
   
   setup(props, evnet) {
     // 一开始就加载所需js文件
-    utils.load_player_js('old')
+    load_player_js('old')
     const { params, is_user_refresh, v_match_router_ente } = toRefs(props);
     const state = reactive({
       // 事件集合

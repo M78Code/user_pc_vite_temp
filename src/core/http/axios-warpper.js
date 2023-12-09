@@ -15,7 +15,7 @@ import domain from "./domain";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 const { BUILD_VERSION, CURRENT_ENV ,PROJECT_NAME ,IS_PC} = BUILD_VERSION_CONFIG;
 
-import { SessionStorage ,LocalStorage} from "src/output/module/constant-utils.js"
+import { SessionStorage ,LocalStorage} from "src/output/module/constant-js"
 // import ws from "../ws/ws.js";
 
 import STANDARD_KEY from "src/core/standard-key";
