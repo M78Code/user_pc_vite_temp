@@ -503,4 +503,3 @@ const props =defineProps({
   }
 }
 </style>
-src/outputsrc/output/index.jssrc/core/format/common

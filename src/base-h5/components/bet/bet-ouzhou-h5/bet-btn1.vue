@@ -118,4 +118,3 @@ const set_retain_selection = () => {
     }
   }
 </style>
-src/output/index.jssrc/output/index.js

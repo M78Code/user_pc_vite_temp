@@ -857,4 +857,3 @@ export default defineComponent({
 <style scoped lang="scss">
   @import "../styles/videos.scss";
 </style>
-src/output/index.jssrc/output/index.jssrc/output/index.js
