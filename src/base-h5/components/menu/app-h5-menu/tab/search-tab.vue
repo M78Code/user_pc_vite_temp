@@ -63,10 +63,12 @@ const props = defineProps({
                 tid: '0'
             },
             {
+                // 世界杯2022(在卡塔尔) FIFA World Cup 2022 (In Qatar) - 10011003169
+                // FIFA足球(10分钟比赛) - 世界杯 FIFA Efootball (10 mins) - World Cup - 10011003541
                 name: "世界杯",
                 val: 1,
                 img: "",
-                tid: '166'
+                tid: '10011003169, 10011003541'
             },
             {
                 name: "欧冠",
@@ -75,10 +77,12 @@ const props = defineProps({
                 img: ""
             },
             {
+                // 英格兰超级联赛 England Premier League - 10011000
+                // FIFA 2023 - 英格兰超级联赛 (8分钟) FIFA 2023 - England Premier League (8mins) - 1292581040691029461
                 name: "英超",
                 val: 3,
                 img: "",
-                tid: '180',
+                tid: '10011000, 1292581040691029461',
 
             },
             {
@@ -105,9 +109,11 @@ const props = defineProps({
                 tid: '79'
             },
             {
+                // 中国超级联赛 China Super League - 10011006344 
+                // SRL中国超级联赛 SRL China Super League - 10011020404
                 name: "中超",
                 val: 8,
-                tid: "6344"
+                tid: "10011006344, 10011020404"
             }
         ]
     },

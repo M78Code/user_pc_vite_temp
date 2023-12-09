@@ -119,14 +119,20 @@ const set_init_sport = (val) =>{
   }
 }
 onMounted(async () => {
-  MenuData.set_current_lv1_menu(1);
-  set_init_sport(tabValue.value)
-  set_default_home_data()
-  get_ouzhou_home_data()
-  set_default_home_hots()
-  get_ouzhou_home_hots()
-  get_five_league_matchs()
 
+  if (tabValue.value === 'top_events') {
+    // 设置 元数据计算 流程
+    state.current_mi = MenuData.top_events_list?.[0]?.mi;
+    get_top_events_match(MenuData.top_events_list?.[0]?.csid)
+  } else { 
+    MenuData.set_current_lv1_menu(1);
+    set_init_sport(tabValue.value)
+    set_default_home_data()
+    get_ouzhou_home_data()
+    set_default_home_hots()
+    get_ouzhou_home_hots()
+    get_five_league_matchs()
+  }
 
   // 接口请求防抖
   handler_func = lodash.debounce(({ cmd, data }) => {
@@ -420,4 +426,3 @@ onUnmounted(() => {
   }
 }
 </style>
-src/output/index.jssrc/output/index.jssrc/core/utils/common/module/ws-message.js

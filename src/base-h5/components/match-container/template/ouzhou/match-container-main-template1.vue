@@ -1439,5 +1439,3 @@ export default {
 /* **************日期********************** -E*/
 /* ********赛事容器相关********** -E*/
 </style>
-  
-src/output/index.jssrc/output/index.jssrc/output/index.js

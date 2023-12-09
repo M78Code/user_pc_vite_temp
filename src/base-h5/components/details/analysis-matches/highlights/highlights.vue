@@ -869,4 +869,3 @@ setup(props, context){
 <style scoped lang="scss">
 @import '../styles/highlights.scss';
 </style>
-src/output/index.jssrc/output/indexsrc/output/index.js

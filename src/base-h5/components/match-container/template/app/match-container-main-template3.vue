@@ -1482,4 +1482,3 @@ export default {
 /* ********右边赛果相关样式********** -E*/
 </style>
   
-src/output/index.jssrc/output/index.jssrc/output/index.jssrc/output/index.js

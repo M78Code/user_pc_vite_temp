@@ -84,4 +84,3 @@ export default defineComponent({
   justify-content: center;
 }
 </style>
-src/output/index.jssrc/output/index.js
