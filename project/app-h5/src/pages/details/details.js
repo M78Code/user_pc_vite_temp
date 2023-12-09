@@ -520,7 +520,8 @@ export const details_main = () => {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
-            MatchDataWarehouseInstance.set_match_details(res_data,lodash.get(MatchDataWarehouseInstance.get_list_obj(matchid.value),"odds_info",[]))
+            //lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value),"odds_info",[]) 防止oddinfo接口先获取到数据（matchdetail接口限频导致可能会失败）
+            MatchDataWarehouseInstance.set_match_details(res_data,lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value),"odds_info",[]))
             //如果是切换tab页
             if (state_data.refresh) {
               //获取玩法集 

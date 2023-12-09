@@ -922,13 +922,18 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
-    let detail_mark = [3,13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
+    let detail_mark = [13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
     let lsit_mark = [2,173,38,114]
     // 详情
     if(is_detail){
-        text = `${ol_obj.ott} <span class='ty-span'>${ol_obj.on}</span>`  
+        // 有球头 球头需要变色
+        if(hl_obj.hv){
+            text = `${ol_obj.ott} <span class='ty-span'>${ol_obj.on}</span>`  
+        }else{
+            text = `${ol_obj.ott} ${ol_obj.on}`  
+        }
         if(detail_mark.includes(ol_obj._hpid*1)){
-            text = `<span class='ty-span'>${ol_obj.otv}</span>` 
+            text = `${ol_obj.otv}` 
         }
     }else{
         let a = '' ,b = '' 
@@ -953,9 +958,21 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
             // 英文列表是 简写
             a =  UserCtr.lang == 'en' ? ol_obj.ot : ol_obj.onbl
             b = ol_obj.onb
+
+            // h5数据格式和pc不一样
+            if(BetData.deviceType == 1){
+                a = ol_obj.on.split(' ')[0]
+                b = ol_obj.on.split(' ')[1]
+            }
         }
 
-        text = `${a} <span class='ty-span'>${b}</span>`  
+        // 平 不变色
+        if(ol_obj.ot == 'X'){
+            text = `${b}` 
+        }else{
+            text = `${a} <span class='ty-span'>${b}</span>` 
+        }
+
     }
 
     return text

@@ -231,6 +231,7 @@ class VirtualList {
   // 赛事 特殊高度 
   // 例如： 复刻版下的新手版、高度不同
   get_match_special_height (match, index) {
+    const menu_lv_v1 = MenuData.current_lv_1_menu_i
     // 折叠对象
     const fold_data = MatchFold.match_mid_fold_obj.value
     // 赛事折叠信息
@@ -244,6 +245,8 @@ class VirtualList {
           special_height += -34
           if (match.is_show_league) special_height += -22
         }
+      } else {
+        if (index === 0 && [1,3].includes(+menu_lv_v1)) special_height += 25
       }
     }
     return special_height

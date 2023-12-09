@@ -4,17 +4,17 @@
 
 <template>
   <template v-if="is_show">
-     <MatchContainerMainTemplate1
+     <MatchContainerMainTemplate3
        :i="index"
        :match_of_list="item">
-     </MatchContainerMainTemplate1>
+     </MatchContainerMainTemplate3>
    </template>
 </template>
 
 <script setup>
 import { computed } from 'vue';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template3.vue"; 
+import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template3.vue"; 
 
 const props = defineProps({
  item: {
