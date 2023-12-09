@@ -138,9 +138,8 @@ onMounted(async () => {
   handler_func = lodash.debounce(({ cmd, data }) => {
     handle_webscoket_cmd(cmd, data)
   }, 1000)
-
   // 删除赛事防抖
-  const handler_remove = () => lodash.debounce(() => {
+  const handler_remove = lodash.debounce(() => {
     MatchMeta.set_is_ws_trigger(true)
     if (tabValue.value === 'featured') {
       get_ouzhou_home_data()
@@ -155,6 +154,7 @@ onMounted(async () => {
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       const { cd: { mid = '', mhs = 0, mmp = 1, ms = 110 } } = data
       if (mhs == 2 || mmp == '999' || !MatchMeta.is_valid_match(ms)) {
+        debugger
         handler_remove()
       }
     } else {
