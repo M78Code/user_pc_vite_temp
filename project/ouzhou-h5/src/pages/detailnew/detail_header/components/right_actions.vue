@@ -150,7 +150,7 @@ const handleClick = (item, index) => {
     position: absolute;
     right: 0;
     z-index: 999;
-    width: 100%;
+    // width: 100%; // 不需要100%吧? 挡住其他ui事件了
     display: flex;
     justify-content: flex-end;
     .list {
