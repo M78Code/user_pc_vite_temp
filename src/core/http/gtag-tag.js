@@ -97,7 +97,7 @@ function gtag_event_send(action, category, label, value) {
     });
   }
 }
-export default {
+export {
   gtag_config_send,
   gtag_view_send,
   gtag_event_send,

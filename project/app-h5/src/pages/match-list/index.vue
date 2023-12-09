@@ -44,7 +44,7 @@ import * as ws_message_listener from "src/core/utils/common/module/ws-message.js
 import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
-
+import  {gtag_view_send}  from "src/core/http/gtag-tag.js";
 const route = useRoute();
 const store_state = store.getState();
 // const websocket_store = use_websocket_store()
