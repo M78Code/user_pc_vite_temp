@@ -61,7 +61,8 @@
 import { mapGetters, mapMutations } from "vuex";
 import virtualSports from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports.vue";    // 虚拟体育
 // import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
-import { get_virtual_menus } from "src/base-h5/vr/api/virtual_sports/virtual_sports.js";
+import { api_v_sports } from "src/base-h5/vr/api";
+
 import utils from "src/core/utils/common/module/utils.js";
 import virtualFooterMenu from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
 import axios_api_loop from "src/core/http/axios-loop.js"
@@ -230,7 +231,7 @@ export default {
       this.set_virtual_data_loading(1)
       let obj_ = {
         // axios api对象
-        axios_api: get_virtual_menus,
+        axios_api: api_v_sports.get_virtual_menus,
         // axios api对象参数
         params:{},
         // axios中then回调方法

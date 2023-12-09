@@ -85,7 +85,7 @@ import { mapGetters } from "vuex"
 import common from 'src/base-h5/vr/mixin/constant/module/common.js';
 import teamImg from 'project_path/components/details/team_img.vue';
 import dateMatchSdata from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_s_data.vue'
-import { api_v_sports } from "project_path/api";
+import { api_v_sports } from "src/base-h5/vr/api";
 export default {
   mixins:[common],
   props:{

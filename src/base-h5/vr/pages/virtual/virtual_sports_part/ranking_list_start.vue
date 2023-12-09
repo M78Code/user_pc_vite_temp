@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import { api_v_sports } from "project_path/api";
+import { api_v_sports } from "src/base-h5/vr/api";
 import {mapGetters} from "vuex";
-import no_data from "project_path/components/common/no_data"
+import no_data from "src/base-h5/vr/components/common/no_data.vue"
 
 export default {
   name: "ranking_list_start",

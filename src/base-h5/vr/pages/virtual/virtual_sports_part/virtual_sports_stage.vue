@@ -164,7 +164,7 @@
 import {mapGetters,mapMutations} from 'vuex';
 import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
 import common from "src/base-h5/vr/mixin/constant/module/common.js";
-import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
+// import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
 import loading from 'project_path/components/common/loading.vue';
 import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date_match_list.vue'
 import virtualBasketball from 'project_path/pages/details/children/virtual_basketball.vue'
@@ -775,7 +775,7 @@ export default {
   components:{
     'virtual-sports-timer':virtualSportsTimer,
     dateMatchList,
-    settleDialog,
+    // settleDialog,
     loading,
     virtualBasketball
   },
