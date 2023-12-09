@@ -17,7 +17,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { useRoute } from "vue-router";
 import { api_details } from "src/api/index";
 import { computed } from "vue";
-import { SessionStorage } from "src/core/utils/common/index.js";
+import { SessionStorage } from "src/output/module/constant-utils.js";;
 const route = useRoute();
 const props = defineProps({
   match_odds_info: {

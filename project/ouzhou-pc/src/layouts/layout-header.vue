@@ -2,7 +2,7 @@
 <template>
   <!-- v-show="route.params.video_size != 1" -->
   <div class="yb-layout-margin-header c-site-header relative-position"
-    :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }"
+    :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': utils_info.is_iframe }"
     :style="page_style">
     <div>
       <TemHeader />
@@ -22,24 +22,21 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, } from 'vue'
 import { useRoute, useRouter } from "vue-router";
-
-import { SessionStorage, utils } from 'src/output/index.js'
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
+import { SessionStorage } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
-
-import timer from "src/base-pc/components/site-header/timer.vue"
 import gift_package from '/ouzhou-pc/image/common/activity_banner/gift_package.png'
 import { compute_css_variables } from "src/core/css-var/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import TemHeader from "src/base-pc/components/top-header/template1/template1.vue";
-import { i18n_tc } from 'src/boot/i18n';
 const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
-
+/** 是否内嵌 */
 const props = defineProps({
   /** 
    * 是否有小红点提示
@@ -60,11 +57,7 @@ const route = useRoute()
 const router = useRouter()
 
 
-const menu_obj = ref({})
-//  const { menu_obj } = betReducer
 
-/** 是否内嵌 */
-const is_iframe = ref(is_iframe)
 
 /** 
  * siteHeader组件props数据

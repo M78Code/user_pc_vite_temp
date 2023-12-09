@@ -26,7 +26,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useRoute, useRouter } from "vue-router"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDetailCalss } from "src/output/index.js"
-import { SessionStorage } from "src/core/utils/common/index.js"
+import { SessionStorage } from "src/output/module/constant-utils.js";
 
 export default defineComponent({
   name: "details_tab",

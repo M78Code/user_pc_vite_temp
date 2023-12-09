@@ -64,10 +64,9 @@
 // import msc_mixin from "/mixins/common/msc.js";
 // import time_format_mixin from "/mixins/common/time_format";
 import timer from "src/components/timer/timer.vue";
-import {get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/output/index.js';
+import {get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond, get_remote_time,format_date_base_obj, counting_time_ctr_show_format_ouzhou} from 'src/output/index.js';
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
 import lodash from "lodash";
-
 // import { t } from "src/output/index.js";;
 // import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { get_remote_time,format_date_base_obj } from "src/output/index.js"
@@ -102,10 +101,10 @@ export default {
 
   data() {
     return {
-      
       is_eports_csid,
       get_match_status,
       format_second_ms,
+      counting_time_ctr_show_format_ouzhou,
       // 滚球显示类型 -1：不显示, 0：00:00, 1：计时器, 2：节制  3：不显示
       inplay_match_type: 1,
       // 滚球显示00:00 || 节制

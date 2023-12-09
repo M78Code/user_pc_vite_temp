@@ -50,12 +50,8 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import lodash from "lodash";
 import { api_common } from "src/api/index";
-import axios_api_loop from "src/core/http/axios-loop.js"
-import { go_where } from "src/core/utils/project/module/go-where.js"  
 import { i18n_t, MenuData } from "src/output/index.js"
-import base_data from "src/core/menu-h5/menu-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { theme } from 'src/base-h5/mixin/userctr.js'
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 // 回到顶部
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";

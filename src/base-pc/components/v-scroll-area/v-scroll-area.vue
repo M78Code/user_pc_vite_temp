@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from "vue"
+import { ref,  onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
 
 import {LayOutMain_pc } from 'src/output/index.js'

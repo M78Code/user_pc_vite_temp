@@ -252,7 +252,6 @@ export default {
   },
   data() {
     return {
-      
       tooltip_style,
       i18n_t,
       // 菜单数据

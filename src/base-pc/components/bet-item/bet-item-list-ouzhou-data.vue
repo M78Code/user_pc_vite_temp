@@ -58,7 +58,7 @@
 <script setup>
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from 'lodash'
-import { get_odds_activ } from "src/output/index.js";
+import { get_odds_active } from "src/output/index.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
