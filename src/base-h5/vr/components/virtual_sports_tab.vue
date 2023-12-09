@@ -282,6 +282,13 @@ export default {
   text-align: center;
 }
 
+/* 属性前缀 */
+@mixin webkit($property, $value) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
 .tab-btn {
   width: 0.12rem;
   height: 0.12rem;

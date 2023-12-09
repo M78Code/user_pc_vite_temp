@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex"
 import tournament_play_new from "src/project/pages/details/components/tournament_play/tournament_play_new.vue"
  // 引入接口封装文件
 import { api_common } from 'src/project/api/index.js'
@@ -105,21 +104,34 @@ export default {
   },
 
   computed:{
-    ...mapGetters([
-      'get_detail_data',
-      'get_details_item',
-      'get_first_details_item',
-      'get_goto_detail_matchid',
-      'get_uid',
-      'get_show_video',
-      "get_details_tabs_list",
-      "get_fewer",
-      "get_current_mid",
-      "get_menu_type",
-      "get_current_league",
-      'get_is_user_refreshing',
-      'get_is_show_details_analyse',
-    ]),
+    // ...mapGetters([
+    //   'get_detail_data',
+    //   'get_details_item',
+    //   'get_first_details_item',
+    //   'get_goto_detail_matchid',
+    //   'get_uid',
+    //   'get_show_video',
+    //   "get_details_tabs_list",
+    //   "get_fewer",
+    //   "get_current_mid",
+    //   "get_menu_type",
+    //   "get_current_league",
+    //   'get_is_user_refreshing',
+    //   'get_is_show_details_analyse',
+    // ]),
+    get_detail_data(){},
+    get_details_item(){},
+    get_first_details_item(){},
+    get_goto_detail_matchid(){},
+    get_uid(){},
+    get_show_video(){},
+    get_details_tabs_list(){},
+    get_fewer(){},
+    get_current_mid(){},
+    get_menu_type(){},
+    get_current_league(){},
+    get_is_user_refreshing(){},
+    get_is_show_details_analyse(){},
     // 置顶列表
     match_list_new() {
       return this.matchInfoCtr.listSortNew()
@@ -245,11 +257,14 @@ export default {
   mounted () {
   },
   methods: {
-    ...mapMutations([
-      "set_fewer",
-      "set_detail_data_assign",
-      'set_is_user_refreshing',
-    ]),
+    // ...mapMutations([
+    //   "set_fewer",
+    //   "set_detail_data_assign",
+    //   'set_is_user_refreshing',
+    // ]),
+    set_fewer(){},
+    set_detail_data_assign(){},
+    set_is_user_refreshing(){},
     /**
      * 获取赛马最终结果
      */

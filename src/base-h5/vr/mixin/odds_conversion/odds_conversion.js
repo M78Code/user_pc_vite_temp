@@ -6,7 +6,6 @@
  * 使用  {{ compute_value_by_cur_odd_type(val}}
  * 实现 匹配不到 后 向下 取值
  */
-import { mapGetters } from "vuex";
 import utils from 'src/public/utils/utils.js'
 export default {
   data() {
@@ -59,12 +58,14 @@ export default {
     utils.del(this.oddsTable);
   },
   computed: {
-    ...mapGetters({
-      // 所有赛事种类赔率对象
-      allKindsOdds_obj: "get_allKindsOdds_obj",
-      // 当前赔率
-      'get_cur_odd': 'get_cur_odd'
-    })
+    // ...mapGetters({
+    //   // 所有赛事种类赔率对象
+    //   allKindsOdds_obj: "get_allKindsOdds_obj",
+    //   // 当前赔率
+    //   'get_cur_odd': 'get_cur_odd'
+    // })
+    allKindsOdds_obj(){return ''},
+    get_cur_odd(){return ''},
   },
   methods: {
     // 两个浮点数相减
