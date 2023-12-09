@@ -7,7 +7,7 @@ import {
 	MatchDataWarehouse_PC_List_Common as MatchListData, 
 	MatchDataWarehouse_PC_Detail_Common, 
 } from "src/output/module/match-data-base.js";
-import { PROJECT_NAME } from 'src/output/module/constant-js'
+import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";

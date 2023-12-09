@@ -20,7 +20,7 @@
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
     import {compute_style_template_by_matchinfo} from "./compute-style-template.js"
-    import {get_match_status} from "src/output/module/constant-js"
+    import {get_match_status} from "src/output/module/constant-utils.js"
     import {
       ouzhou_match_status_title_card_template,
       ouzhou_sport_title_card_template,

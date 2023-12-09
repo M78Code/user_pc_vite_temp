@@ -14,7 +14,7 @@
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
 import { computed, ref, watch } from "vue";
-import { SessionStorage, sprite_images_postion } from "src/output/module/constant-js";
+import { SessionStorage, sprite_images_postion } from "src/output/module/constant-utils.js";
 import BaseData from "src/core/base-data/base-data.js";
 import {
   useMittEmit,

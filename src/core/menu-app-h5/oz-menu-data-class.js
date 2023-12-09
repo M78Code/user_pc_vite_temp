@@ -13,7 +13,7 @@ import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import {
   SessionStorage,
   LocalStorage
-} from "src/output/module/constant-js"
+} from "src/output/module/constant-utils.js"
 import {
   useMittEmit,
   MITT_TYPES,
