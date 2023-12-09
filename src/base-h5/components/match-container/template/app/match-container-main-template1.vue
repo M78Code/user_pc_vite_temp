@@ -258,13 +258,13 @@
                           v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
                           <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
                         </div>
-                        <!-- 角球 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
-                          <img :class="['live-icon-btn']" :src='corner_icon' />
-                        </div>
                         <!-- 此赛事支持提前结算 -->
                         <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
                           <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
+                        </div>
+                        <!-- 角球 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
+                          <img :class="['live-icon-btn']" :src='corner_icon' />
                         </div>
                       </div>
                     </div>

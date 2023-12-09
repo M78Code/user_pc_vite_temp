@@ -35,9 +35,8 @@
             {{ lodash.get(match, 'mhn') }}
           </div>
           <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_home_goal && false">
+          <div class="yb-flex-center" v-if="is_show_home_goal">
             <div class="yb-goal-gif" :style="compute_css_obj({ key: 'goal_image' })">
-              <!-- <img :src="compute_img_url('goal_image')" /> -->
             </div>
             <div class="gif-text">{{ i18n_t('common.goal') }}</div>
           </div>
@@ -73,8 +72,9 @@
             {{ lodash.get(match, 'man') }}{{ play_name_obj.suffix_name }}
           </div>
           <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_away_goal && false">
-            <div class="yb-goal-gif"></div>
+          <div class="yb-flex-center" v-if="is_show_away_goal">
+            <div class="yb-goal-gif" :style="compute_css_obj({ key: 'goal_image' })">
+            </div>
             <div class="gif-text">{{ i18n_t('common.goal') }}</div>
           </div>
           <div class="yb-flex-center" v-if="is_show_away_var" v-tooltip="{ content: var_text, overflow: 1 }">
@@ -207,7 +207,6 @@ const away_score = computed(() => {
 let handicap_index = computed(() => {
   return get_handicap_index_by(match.value)
 })
-is_collect.value = Boolean(lodash.get(match.value, 'mf'))
 onMounted(() => {
   mitt_list = [
     useMittOn(MITT_TYPES.EMIT_VAR_EVENT, handle_var_event).off
@@ -224,7 +223,7 @@ const collect = () => {
 // 监听收藏变化
 watch(() => match.value.mf, (n) => {
   is_collect.value = Boolean(n)
-})
+}, { immediate: true})
 //进球特效防抖
 // hide_home_goal = this.debounce(hide_home_goal,5000);
 // hide_away_goal = this.debounce(hide_away_goal,5000);

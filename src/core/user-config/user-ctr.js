@@ -21,7 +21,7 @@ import { default_theme_key } from 'src/core/theme/index.js'
 import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-import {GLOBAL_CONSTANT } from "src/output/module/constant-utils.js"
+import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 // #TODO 接口统一管理的文件，后续替换
