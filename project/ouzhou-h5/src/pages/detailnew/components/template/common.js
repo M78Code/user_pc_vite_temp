@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
-const hideTitle = [0]
+const hideTitle = [0,18]
 const innerTitle = [12,14]
 
 const other = {
