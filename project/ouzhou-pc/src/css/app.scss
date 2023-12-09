@@ -422,4 +422,12 @@ div[class*="ranking-bg-style"] {
   }
 }
 
-/* *** 虚拟体育 ************ -E */
+/*  默认联赛logo */
+.leagues-logo-default  {
+  background-image: url($SCSSPROJECTPATH+"/image/svg/league_logo_01.svg") !important;
+}
+
+/*  默认联赛logo */
+// .leagues-logo-default {
+//   background-image: url($SCSSPROJECTPATH+"/image/svg/league_logo_02.svg") !important;
+// }

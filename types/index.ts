@@ -52,9 +52,9 @@ declare namespace TYPES {
     /** ? */ otd: number
   }
 
-  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os,K.ott {
+  /** ol玩法投注项 */ interface Ol extends K.ot,K.on, K.ov, K.oid, K.obv, K.os,K.ott,K.otd {
   }
-  /** Ol投注项 结果 */ interface OlResult extends K.ot,K.oid,K.on,K.result,K.ott,K.otd {
+  /** Ol投注项 结果 */ interface OlResult extends Ol,K.result{
   }
 
   /** 非足球活力值排名 */ interface Rank {

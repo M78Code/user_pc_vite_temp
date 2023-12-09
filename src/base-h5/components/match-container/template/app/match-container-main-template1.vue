@@ -1188,12 +1188,14 @@ export default {
           }
 
           .team-t-title-w {
+            overflow: hidden;
+            display: -webkit-box;
             font-size: 0.12rem;
             flex-shrink: 0;
-            max-width: 90%;
-            text-overflow: ellipsis;
+            max-width: 100%;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
             word-break: break-all;
             color: var(--q-gb-t-c-20) !important;
 

@@ -8,7 +8,7 @@ let id = 0
 let show_id = 0
 
 // 悬浮气泡指令
-const tooltip = function(html,style,time,tipid,width,height,overflow,m_width){
+export const tooltip = function(html,style,time,tipid,width,height,overflow,m_width){
   let tooltip_el = document.getElementById('v-tooltip')
   if(html == 'cancel'){
     if(tipid == show_id || tipid == 0){
@@ -42,5 +42,5 @@ const tooltip = function(html,style,time,tipid,width,height,overflow,m_width){
   },time)
 }
 
-export default tooltip;
+ 
   

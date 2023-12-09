@@ -2,16 +2,26 @@
  * @Description:  app-h5   新手版 
 -->
 <template>
-  <div :style="{ marginTop: is_hot ? '0' : '' }" class="match-container component match-container-main-template5" :class="{ collect: isCollectMenuTab }">
+  <div :style="{ marginTop: is_hot ? '0' : '' }" class="match-container component app-match-container-main-template5" :class="{ collect: isCollectMenuTab }">
     <template v-if="match">
       <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
-      <!-- 未开赛标题  -->
-      <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
-        <img src='../../../../../base-h5/assets/match-list/icon_notstarted.png' />
-
-        <span class="din-regular">
-          {{ i18n_t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">(0)</span>
-        </span>
+     <!-- 开赛标题  -->
+      <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
+        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
+        <!-- 进行中 -->
+        <template v-if="+match.start_flag === 1">
+          <div class="match-status-title">
+            <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
+          </div>
+          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+        </template>
+        <!-- 未开赛 -->
+        <template v-else>
+          <div class="match-status-title">
+            <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
+          </div>
+          <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
+        </template>
       </div>
       <!-- 已开赛标题  -->
       <!-- <div class="match-status-fixed flex items-center" v-else>
@@ -22,9 +32,9 @@
         </span>
       </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
+      <!-- <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
-      </div>
+      </div> -->
 
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', { 'collapsed': !collapsed }]">
@@ -225,13 +235,11 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js"
 
 import { i18n_t, compute_img_url } from "src/output/index.js"
 import { format_time_zone } from "src/output/index.js"
-import { mearlys_icon } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
-import _ from 'lodash'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import lodash from 'lodash';
 import { ref, watch, onMounted, onUnmounted } from 'vue';
@@ -240,6 +248,8 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 
+import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
+  normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 export default {
   name: "match-container-main-template8",
@@ -305,7 +315,6 @@ export default {
     const curMatchOdds = ref([])
 
     watch(() => props.match_of_list, (newVal) => {
-      console.log('match_of_listmatch_of_listmatch_of_list', newVal)
       curMatchOdds.value = newVal?.hps?.[0]?.hl?.[0]?.ol || []
     }, { immediate: true })
 
@@ -363,9 +372,11 @@ export default {
       ButtonTypes,
       format_odds_value,
       curMatchOdds,
-      _,
+      isCollectMenuTab,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
-      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, mearlys_icon, footer_menu_id
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
+      in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
+      normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app
     }
   }
 }
@@ -396,14 +407,38 @@ export default {
   height: auto;
   position: relative;
 
-  &.collect {}
-
   .match-status-fixed {
-    padding:0 0 0 14px;
-    gap: 4px;
+    width: 100%;
+    height: 0.25rem;
+    line-height: 1;
+    font-size: 0.11rem;
+    padding-left: 0.17rem;
     display: flex;
     align-items: center;
-    height: 25px;
+    color: var(--q-gb-t-c-20);
+    background: var(--q-gb-bg-c-15);
+    justify-content: space-between;
+    &.progress{
+      border-top: 2px solid rgba(116, 196, 255, 0.5);
+    }
+    &.not_begin{
+      border-top: 2px solid rgba(233, 91, 91, 0.51);
+    }
+
+    img {
+      margin-right: .06rem;
+      width: .13rem;
+      height: .13rem;
+    }
+    .expand_item{
+      transition: transform 0.25s ease;
+      transform: rotate(-180deg);
+      width: 20px;
+      height: 16px;
+    }
+    .collapsed{
+      transform: rotate(0);
+    }
   }
 
   .match-inner-container {
@@ -872,7 +907,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 4px 0 0;
+      // padding: 4px 0 0;
 
       .right {
         display: flex;

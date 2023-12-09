@@ -12,7 +12,7 @@
       <q-separator color="orange"/>
     </div>
     <div class="detail-container-position">
-      <odds_info :match_odds_info="matchResults" :match_detail="matchDetail" :loading="loading"/>
+      <OddsListContrainer :match_odds_info="matchResults" :match_detail="matchDetail" :loading="loading"/>
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ import { useRoute } from "vue-router";
 import detail_header_tem1 from "../detail_header/detail_header_tem1.vue";
 // import odds_info from "./components/odds_info.vue";
 import odds_info from "../components/odds_info.vue";
+import OddsListContrainer from "../components/OddsListContrainer.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import { api_common, api_analysis } from "src/api/index.js";
 
