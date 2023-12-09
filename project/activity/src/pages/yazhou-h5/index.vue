@@ -164,7 +164,8 @@ export default {
     this.first_timer2 = 0;
     this.timer2_ = 0;
     // 初始化tab 选项卡
-    let {act} = this.$route.params
+ 
+    let  act  =  '10007'
     //isAPP为true时,活动中心返回按钮就隐藏 不传isAPP或者为false时就正常显示 
     if(sessionStorage.getItem('isAPP') == 1 ){
       this.isAPP = true

@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- <div v-if="is_mobile"><PageH5 /></div> -->
-    <div>sssssssssssssss</div>
-    <PageH5 />
+    <div class=" ">动画单独项目</div>
+    <LayoutH5 />
   </div>
 </template>
 
