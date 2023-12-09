@@ -463,7 +463,7 @@ class MatchMeta {
     const list = lodash.get(res, 'data', [])
     const length = lodash.get(list, 'length', 0)
     if (length < 1) return this.set_page_match_empty_status({ state: true });
-    this.handler_match_list_data({ list: list, type: 1 })
+    return this.handler_match_list_data({ list: list, type: 2, is_virtual: false })
   }
 
   /**
@@ -970,6 +970,8 @@ class MatchMeta {
 
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
+
+    return matchs_data
   }
 
   /**
