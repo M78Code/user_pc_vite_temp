@@ -292,7 +292,6 @@ if(this.emitters_off){this.emitters_off()}
     justify-content: center;
     font-size: 12px;
     text-align: center;
-    padding-top: 30%;
     .img {
       width: 180px;
       height: 180px;

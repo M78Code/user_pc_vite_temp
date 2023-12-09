@@ -206,7 +206,6 @@ export default defineComponent({
   // mixins:[odd_convert],
   setup(props, evnet) {
     let data = reactive({
-      utils
     });
     const get_cur_odd = computed(() => {
       return ""

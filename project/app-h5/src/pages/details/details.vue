@@ -14,7 +14,7 @@
       @scroll="detail_scrolling"
       @touchmove.passive="moved"
       @click="details_click"
-      v-if="is_show_detail_header_data">
+      v-if="!lodash.isEmpty(detail_data)">
       <div >
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
