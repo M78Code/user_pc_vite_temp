@@ -3,8 +3,8 @@
   
   <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj,null,!MenuData.is_home())">
     <div class="left-box">
-      <sport_icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
-        :sport_id="card_style_obj.csid" size="18px" class="icon" color_type="gray_ball" />
+      <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
+        :sport_id="card_style_obj.csid" :key="card_style_obj.csid" key_name="pc-left-menu-bg-active-image" size="18" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
       
       <span v-if="!MenuData.is_esports()">{{ cur_title_info.name }}</span>
@@ -38,7 +38,7 @@
   
 <script setup>
 import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
-import sport_icon from "src/base-pc/components/sport_icon.vue";
+import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
@@ -134,7 +134,7 @@ function handle_hpid_choose(item) {
 
   .icon {
     width: 16px;
-    height: 16;
+    height: 16px;
     margin-right: 8px;
   }
 

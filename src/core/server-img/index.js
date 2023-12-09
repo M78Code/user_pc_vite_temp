@@ -13,7 +13,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
  */
 const compute_css_obj = (params = {}) => {
   const theme = UserCtr.theme || "theme-1";
-  let { key, position, path=0 } = params;
+  let { key, position, path=0, size } = params;
   if (!key) {
     return {};
   }
@@ -21,7 +21,7 @@ const compute_css_obj = (params = {}) => {
   if (params.hasOwnProperty("position")) {
     //精灵图
     if (all_sprit_fn[key]) {
-      result = all_sprit_fn[key]({ position, theme, path });
+      result = all_sprit_fn[key]({ position, theme, path, size });
     }
   } else {
     //常规单图  other

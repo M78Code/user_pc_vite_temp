@@ -19,7 +19,7 @@
       <ul class="menu-list">
         <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi == item.mi && MenuData.left_menu_result.menu_type==0 }" v-for="item in popular" :key="item.mi"
           @click="jump_func(item,'0')">
-          <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
+          <sport-icon :sport_id="BaseData.compute_sport_id(item.mi)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
         </li>
       </ul>
@@ -33,7 +33,7 @@
         <template v-for="item in BaseData.left_menu_base_mi" :key="item">
           <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }"
            v-if="item.ct" @click="jump_func(item,'1')">
-            <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
+            <sport-icon :sport_id="BaseData.compute_sport_id(item.mi)" key_name="pc-left-menu-bg-active-image"  size="18" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
           </li>
         </template>
@@ -43,15 +43,15 @@
     <div class="menu-nav-li" v-if="IS_FOR_NEIBU_TEST">
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
-          <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
+          <sport-icon :sport_id="BaseData.compute_sport_id(400)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
         <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
-          <sport_icon :sport_id="BaseData.compute_sport_id(2000)" size="18px" class="icon" />
+          <sport-icon :sport_id="BaseData.compute_sport_id(2000)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
         </li>
         <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
-          <sport_icon :sport_id="BaseData.compute_sport_id(300)" size="18px" class="icon" />
+          <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[300] || "" }}
         </li>
       </ul>
@@ -66,7 +66,8 @@
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useRouter,useRoute } from "vue-router";
 import BaseData from "src/core/base-data/base-data.js";
-import sport_icon from "src/base-pc/components/sport_icon.vue";
+// import sport-icon from "src/base-pc/components/sport-icon.vue";
+import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
 // 菜单配置
 import { MenuData,useMittEmit,MITT_TYPES } from "src/output/index.js"
