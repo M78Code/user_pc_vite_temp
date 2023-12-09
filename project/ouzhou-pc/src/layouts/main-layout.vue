@@ -57,7 +57,7 @@ import { compute_css_variables } from "src/core/css-var/index.js"
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import BetData from 'src/core/bet/class/bet-data-class.js'
 
-import layoutHeader from "./layout-header.vue";
+// import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
 import layoutRight from "./layout-right.vue";
 import toastComponents from "src/base-pc/components/toast/toast.vue";

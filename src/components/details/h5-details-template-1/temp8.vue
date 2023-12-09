@@ -108,7 +108,7 @@ export default defineComponent({
       $emit("bet_click_", {ol_item, hl_data:play_obj2[ol_item.hpid]});
     };
     return {
-      utils,
+      
       is_select,
       get_odds,
       go_to_bet,

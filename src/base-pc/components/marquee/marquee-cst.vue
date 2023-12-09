@@ -68,7 +68,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import { api_home } from "src/api/index";
 import gSettings from 'src/base-pc/components/settings/index.vue';
 import langs from "src/i18n/pc/langs/index.mjs";
-import { utils,compute_local_project_file_path } from 'src/output/index.js'
+import { compute_local_project_file_path } from 'src/output/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";

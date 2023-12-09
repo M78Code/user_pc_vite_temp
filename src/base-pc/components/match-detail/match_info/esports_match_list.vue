@@ -33,7 +33,7 @@ import {
   LayOutMain_pc,
   GlobalSwitchClass,
   useMittEmit,
-  utils,
+  
   UserCtr
 } from "src/output/index.js";
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";

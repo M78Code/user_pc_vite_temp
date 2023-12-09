@@ -215,7 +215,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { pre_load_video } from "src/core/pre-load/index.js"
-import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
+import {  LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 import { format_total_score } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js";;
 import { useRoute } from "vue-router"

@@ -185,7 +185,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import {  LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
@@ -212,7 +212,7 @@ export default defineComponent({
       useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
-      utils,
+      
       go_to_bet,
       get_bet_list,
       LOCAL_PROJECT_FILE_PREFIX,

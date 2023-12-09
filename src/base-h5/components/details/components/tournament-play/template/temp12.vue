@@ -265,7 +265,7 @@
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX} from 'src/output/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX} from 'src/output/index.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -283,7 +283,7 @@ export default defineComponent({
   setup(props, evnet) {
     const store_state = store.getState()
     let data = reactive({
-      utils,
+      
       // 主队是否显示
       valid_home: false,
       // 客队是否显示

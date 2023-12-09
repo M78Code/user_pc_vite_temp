@@ -20,7 +20,6 @@
 // #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
 import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js";
-
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router"

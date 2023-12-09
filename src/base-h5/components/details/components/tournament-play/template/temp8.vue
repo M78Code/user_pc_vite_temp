@@ -123,7 +123,7 @@ export default defineComponent({
       useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
-      utils,
+      
       lodash,
       get_bet_list,
       get_cur_odd,

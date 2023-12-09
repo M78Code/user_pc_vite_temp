@@ -182,11 +182,8 @@
 import { onMounted, ref, computed, watch } from "vue";
 import { sport_columns, socre_dict } from "./score_config";
 import {
-  get_match_status,
   i18n_t,
-  is_eports_csid,
   LOCAL_PROJECT_FILE_PREFIX,
-  stage_dict,
 } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 import { handle_course_data } from "src/core/utils/matches_list.js";
