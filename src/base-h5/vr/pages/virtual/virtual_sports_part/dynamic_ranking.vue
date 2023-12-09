@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import virtual_sports_d_r_timer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_d_r_timer.vue"
+import virtual_sports_d_r_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_d_r_timer.vue"
 export default {
   name:'dynamic_ranking',
   props:{
