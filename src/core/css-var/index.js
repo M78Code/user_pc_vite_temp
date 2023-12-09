@@ -1,6 +1,7 @@
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 import themes from "app/job/output/css/index";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 
 /**/
 // const theme= ref(UserCtr.theme);
@@ -13,8 +14,7 @@ import themes from "app/job/output/css/index";
  * @param {*} module   :    css 目录下 ：  global   /  component  目录下 ：文件名字  ： 例如  background
  */
 export function compute_css_variables({ category, module }) {
-  console.log('UserCtrUserCtrUserCtr', UserCtr);
-  const _theme_key = themes[UserCtr.theme]
+  const _theme_key = themes[LocalStorage.get('theme')]
   let final_obj = {}
   if (_theme_key) {
     let css_obj =lodash.get(_theme_key[category],module,{})

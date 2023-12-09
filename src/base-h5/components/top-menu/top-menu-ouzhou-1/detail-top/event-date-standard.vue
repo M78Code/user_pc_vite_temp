@@ -2,7 +2,7 @@
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import { format_time_zone  } from "src/output/index.js";
-import { get_mmp_name } from "src/output/index.js"
+import { get_mmp_name } from 'src/core/format/project/module/format-msc.js'
 import {
     get_match_status,
     utils,
