@@ -34,19 +34,11 @@ export function usedetailData(route) {
   const current_key = ref(""); // 当前tab   key
 
   const detail_loading = ref(true); //loading
-
-  const all_hl_item = ref([]);
-
   const tabList = ref([]);
 
   const show_close_thehand = ref(false); // 是否显示无数据图标
 
   const matchDetailList = ref([]);
-
-  let timer = "";
-  let mst_timer = "";
-  // let state = store.getState();
-
   const {
     get_detail_category,
     get_detail_list,
@@ -79,15 +71,7 @@ export function usedetailData(route) {
     if (!val) return;
     get_match_detail(val);
   });
-  // 监听分类切换数据
-  // watch(()=>route.query, (val) => {
-  //   // todo
-  //   // sportId = val.sportId
-  //   // mid = val.mid
-  //   current_id.value = val.mid
-  // },
-  // {immediate:true}
-  // );
+
 
   //  根据分类id 过滤数据
   const get_match_detail = (value) => {
@@ -126,24 +110,6 @@ export function usedetailData(route) {
 
 
     show_close_thehand.value = list.length == 0;
-
-    setTimeout(() => {
-      get_all_hl_item();
-    }, 3300);
-  };
-
-  const get_all_hl_item = () => {
-    all_hl_item.value = [];
-    if (!detail_list.value) return;
-    for (const item of detail_list.value) {
-      if (item.hl.length > 0) {
-        for (const opt of item.hl) {
-          opt.ol.forEach((element) => {
-            all_hl_item.value.push(element);
-          });
-        }
-      }
-    }
   };
 
   /**
@@ -593,8 +559,6 @@ export function usedetailData(route) {
   }).off)
   onUnmounted(() => {
     off();
-    clearInterval(timer);
-    clearInterval(mst_timer);
     message_fun.forEach((i) => i());
     // off_init()
     clearTimeout(back_to_timer);
@@ -702,7 +666,6 @@ export function usedetailData(route) {
     refresh,
     get_match_detail,
     sportId,
-    all_hl_item,
     init,
     show_close_thehand,
     matchDetailList,

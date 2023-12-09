@@ -175,7 +175,7 @@
 
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { onMounted, ref, computed, inject } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { LOCAL_PROJECT_FILE_PREFIX ,get_match_status} from "src/output/index.js";
 import template5 from "./template5.vue";
 import template18 from "./template18.vue";
@@ -214,9 +214,6 @@ const mouse_in = ref(false);
 const scrollRef = ref(null);
 const current_ol = ref({ oid: "" });
 const emit = defineEmits(["change"]);
-let all_hl_item = inject("all_hl_item");
-
-const odds_lift_obj = ref({});
 
 const columnTotal = (item) => {
   let total;
@@ -228,12 +225,7 @@ const columnTotal = (item) => {
   return `repeat(${total}, 1fr)`;
 };
 
-//  计算赔率变化
-const sun_ov = (ol) => {
-  if (all_hl_item.value.length > 0 && ol) {
-    const obj = all_hl_item.value.find((item) => item.oid == ol.oid);
-  }
-};
+
 //  模板4 数据处理
 const sun_ol = (ol, item) => {
   let maxCount = 0;
