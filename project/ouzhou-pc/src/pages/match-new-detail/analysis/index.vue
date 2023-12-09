@@ -35,7 +35,7 @@
             :key="item.id"
             @click="tabClick(item)"
             :class="[{ 'is-active': item.id === active }, 'tabs-item']"
-            >{{ item.label }}
+            >{{ item.label() }}
           </span>
         </div>
 
@@ -87,7 +87,7 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 let detail_info = ref({});
 const active = ref(1);
 const tabList = ref([
-  { label: i18n_t("common.panel_total"), id: 1 },
+  { label: () => i18n_t("common.panel_total"), id: 1 },
   // { label: "Timeline", id: 2 },
 ]);
 

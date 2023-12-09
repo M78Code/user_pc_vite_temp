@@ -40,6 +40,7 @@ import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vu
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 ,MenuData, score_switch_handle} from "src/output/index.js"
+import {pre_load_video  } from "src/core/pre-load/module/pre-load-video.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
@@ -136,7 +137,7 @@ const back_top = () => {
  */
 const event_init = () => {
   // 详情页的视频预加载
-  load_video_resources(store_state.get_uid, "is_details_page");
+  pre_load_video.load_video_resources(store_state.get_uid, "is_details_page");
   // 不让浏览器记住上次的滚动位置
   if ("scrollRestoration" in History) {
     history.scrollRestoration = "manual";
