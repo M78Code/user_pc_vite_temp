@@ -354,7 +354,7 @@
 // import { mapGetters, mapMutations } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
@@ -458,7 +458,7 @@ export default defineComponent({
       return max;
     }
     return {
-      utils,
+      
       change_ms,
       go_to_bet,
       ol_list_0,

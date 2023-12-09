@@ -65,7 +65,6 @@
 // import time_format_mixin from "/mixins/common/time_format";
 import timer from "src/components/timer/timer.vue";
 import {get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/output/index.js';
-import { utils } from "src/core/utils/common/module/utils.js"
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
 import lodash from "lodash";
 
@@ -103,7 +102,7 @@ export default {
 
   data() {
     return {
-      utils,
+      
       is_eports_csid,
       get_match_status,
       format_second_ms,

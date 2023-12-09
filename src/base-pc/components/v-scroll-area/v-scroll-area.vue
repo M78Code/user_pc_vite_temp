@@ -39,7 +39,7 @@
 import { ref, reactive, onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
 
-import {utils,LayOutMain_pc } from 'src/output/index.js'
+import {LayOutMain_pc } from 'src/output/index.js'
 
 import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 

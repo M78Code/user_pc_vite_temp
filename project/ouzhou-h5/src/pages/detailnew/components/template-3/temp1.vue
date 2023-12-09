@@ -315,7 +315,7 @@
 import lodash from "lodash"
 import odds_new from "../unit/odds-new.vue";
 // import odd_convert from "src/core/odds-conversion/odds_conversion-mixin.js";
-import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { MenuData, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
@@ -347,7 +347,7 @@ export default defineComponent({
       return ['result_details', 'match_result'].includes(route.name)
     });
     return {
-      utils,
+      
       lodash,
       get_bet_list,
       get_cur_odd,

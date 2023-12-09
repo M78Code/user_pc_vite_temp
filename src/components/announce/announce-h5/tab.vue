@@ -18,7 +18,6 @@
   
 <script setup>
 import { ref, watch } from 'vue'
-import { utils } from 'src/output/index.js';
 
 const props = defineProps({
     tabList: {

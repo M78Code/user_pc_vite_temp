@@ -5,7 +5,7 @@ import { format_time_zone  } from "src/output/index.js";
 import { get_mmp_name } from 'src/core/format/project/module/format-msc.js'
 import {
     get_match_status,
-    utils,
+    
     format_string,
     is_eports_csid
 } from "src/output/index.js"

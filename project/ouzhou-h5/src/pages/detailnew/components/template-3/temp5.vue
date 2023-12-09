@@ -206,7 +206,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import oddsNew from "base_path/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils, LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
 import lodash from "lodash";
 import store from "src/store-redux";
 import BetData from "src/core/bet/class/bet-data-class.js"
@@ -230,7 +230,7 @@ export default defineComponent({
             return lodash.get(item_data, 'hl[0].ol[0].os')
         });
         return {
-            utils,
+            
             get_bet_list,
             LOCAL_PROJECT_FILE_PREFIX,
         }

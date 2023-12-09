@@ -123,7 +123,6 @@ import {
   i18n_t,
   LayOutMain_pc,
 } from "src/output/index.js";
-import { utils } from "src/core/utils/common/module/utils.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 export default {
@@ -134,7 +133,7 @@ export default {
   // mixins: [skt_data_list_recent],
   data() {
     return {
-      utils,
+      
       recent_data: [], //列表数据
       match_ctr: MatchDetailsData,
       socket_name: "recent", // 接入socket的名称

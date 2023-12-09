@@ -51,7 +51,6 @@ import { onMounted, onUnmounted, ref } from "vue";
 import lodash from "lodash";
 import { api_common } from "src/api/index";
 import axios_api_loop from "src/core/http/axios-loop.js"
-import { utils } from "src/core/utils/common/index.js"
 import { go_where } from "src/core/utils/project/module/go-where.js"  
 import { i18n_t, MenuData } from "src/output/index.js"
 import base_data from "src/core/menu-h5/menu-data-class.js";

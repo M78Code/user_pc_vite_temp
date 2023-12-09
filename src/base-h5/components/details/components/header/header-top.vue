@@ -245,7 +245,6 @@ import TeamText from "src/base-h5/components/details/team-text.vue";   // 中立
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 // 公共方法
-import { utils } from 'src/core/utils/common/index.js';
 import { MenuData, UserCtr } from "src/output/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import store from "src/store-redux/index.js";

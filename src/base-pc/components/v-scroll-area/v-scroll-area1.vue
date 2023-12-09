@@ -58,7 +58,6 @@
 
 <script setup>
 import { ref,onMounted,onUnmounted } from "vue";
-import {utils } from 'src/output/index.js'
 // import menu_data from 'src/core/menu-pc/menu-data-class.js'
 
 // import { useMittEmit } from 'src/core/mitt/index.js'
