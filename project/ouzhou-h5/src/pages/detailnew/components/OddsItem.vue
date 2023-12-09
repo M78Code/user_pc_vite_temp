@@ -3,7 +3,7 @@
     <q-separator color="orange" />
     <div class="odds-hpn" @click="toggleUnfold">
       <span class="odds-hpn-text">{{ data.hpn }}</span>
-      <!-- template{{ data.hpt }} -->
+      hpt{{ data.hpt }}
       <!-- 置顶按钮 -->
       <OddsSetTop :value="data"></OddsSetTop>
       <span class="odds-hpn-icon" :class="unfold ?'down':'up'" @click.stop="toggleUnfold"></span>
