@@ -286,23 +286,7 @@ export const counting_time_ctr_show_format = (match, counting_time) => {
 
  
  
-    /**
-     * @description 赛事显示倒计时优化显示
-     * @param match 赛事信息
-     * @param counting_time 需要显示的时间
-     * @return undefined
-     */
-    export function  counting_time_ctr_show_format(match,counting_time) {
-      // counting_time 格式00:00
-      let counting_time_ = counting_time;
-      // 红猫赛事只显示分钟不显示秒
-      if(lodash.get(match,'cds')=='1500' && lodash.get(match,'csid')==1 && counting_time){
-        counting_time_ = lodash.get(counting_time_.split(':'),'[0]');
-      } else if(lodash.get(match,'ctt')==1 && [1,2].includes(lodash.get(match,'csid')*1) && counting_time){
-        counting_time_ = lodash.get(counting_time_.split(':'),'[0]');
-      }
-      return counting_time_;
-    }
+ 
     /**
      * @description 赛事显示倒计时优化显示
      * @param match 赛事信息
