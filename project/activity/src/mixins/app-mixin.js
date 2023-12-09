@@ -5,7 +5,7 @@ const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 
 import { enter_params,  LocalStorage  ,useMittOn, 
   MITT_TYPES ,http, AllDomain,
-  url_param_ctr_init, watch_route_fun
+  url_param_ctr_init, watch_route_fun,STANDARD_KEY
 } from "project_path/src/core/index.js";
  
 

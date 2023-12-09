@@ -151,10 +151,9 @@ export default defineComponent({
           }
         }
       }, 400);
-      // 活动页面比较简单，不用延时触发
-      if (this.$route.name == "activity_task") {
+ 
         this.inner_height = window.innerHeight;
-      }
+     
       // 动态设置属性--vh基准值
       this.handle_set_vh();
     },

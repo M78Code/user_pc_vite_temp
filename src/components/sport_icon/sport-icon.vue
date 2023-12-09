@@ -5,8 +5,8 @@
 -->
 <template>
   <span v-if="sport_id != -1" class="q-icon icon c-icon sport-img"
-  :style="[compute_css_obj({key:'pc-left-menu-bg-image', position: `item_${sport_id}`}),`width:${size};height:${size}`]"
-  :class="{img36:size == '18px' && !is_esports,'sport-img-new': isVideoIcon}" >
+  :style="[compute_css_obj({key: key_name, position: `item_${sport_id}`,size}),`width:${size}px;height:${size}px`]"
+  :class="{'sport-img-new': isVideoIcon}" >
   </span>
 </template>
 
@@ -21,17 +21,21 @@ export default {
     };
   },
   props: {
+    key_name: {
+      type: String,
+      default: '',
+    },
     // 球种 ID
     sport_id: [Number, String],
     // 选中状态
     status: {
       type: String,
-      default: "",
+      default: 2,
     },
     // 图标大小
     size: {
       type: String,
-      default: "20px",
+      default: "20",
     },
     // 图标色调
     color: {

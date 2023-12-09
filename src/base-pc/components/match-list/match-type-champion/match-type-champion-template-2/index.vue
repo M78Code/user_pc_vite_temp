@@ -39,7 +39,7 @@
 <script setup>
 import { ref, reactive, watch } from 'vue'
 import lodash from 'lodash';
-// import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
+// import sportIcon from "src/public/components/sport_icon/sport-icon.vue"
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import MatchListCardClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';

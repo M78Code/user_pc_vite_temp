@@ -101,4 +101,8 @@ export default {
   "pc-home-neutral": {
     default: "pc-home-neutral"
   },
+  //进球图片
+  "goal_image": {
+    default: "goal_image"
+  },
 };

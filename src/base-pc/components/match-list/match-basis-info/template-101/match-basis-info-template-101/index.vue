@@ -35,9 +35,8 @@
             {{ lodash.get(match, 'mhn') }}
           </div>
           <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_home_goal && false">
+          <div class="yb-flex-center" v-if="is_show_home_goal">
             <div class="yb-goal-gif" :style="compute_css_obj({ key: 'goal_image' })">
-              <!-- <img :src="compute_img_url('goal_image')" /> -->
             </div>
             <div class="gif-text">{{ i18n_t('common.goal') }}</div>
           </div>
@@ -73,8 +72,9 @@
             {{ lodash.get(match, 'man') }}{{ play_name_obj.suffix_name }}
           </div>
           <!-- 进球动画 -->
-          <div class="yb-flex-center" v-if="is_show_away_goal && false">
-            <div class="yb-goal-gif"></div>
+          <div class="yb-flex-center" v-if="is_show_away_goal">
+            <div class="yb-goal-gif" :style="compute_css_obj({ key: 'goal_image' })">
+            </div>
             <div class="gif-text">{{ i18n_t('common.goal') }}</div>
           </div>
           <div class="yb-flex-center" v-if="is_show_away_var" v-tooltip="{ content: var_text, overflow: 1 }">
@@ -235,9 +235,9 @@ watch(() => match.value.mf, (n) => {
 // 监听主比分变化
 watch(home_score, (n, o) => {
   //推送时间是否过期
-  // let is_time_out = (get_remote_time()-match.value.ws_update_time)<3000   && is_time_out 
+  let is_time_out = MatchDataWarehouse_PC_List_Common.ws_match_key_upd_time_cache_get_time() < 3000
   // 足球 并且已开赛
-  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && n > o) {
+  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
     reset_event();
     is_show_home_goal.value = true;
   }
@@ -245,7 +245,7 @@ watch(home_score, (n, o) => {
 // 监听主比分变化
 watch(away_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time() - match.value.ws_update_time) < 3000
+  let is_time_out = MatchDataWarehouse_PC_List_Common.ws_match_key_upd_time_cache_get_time() < 3000
   // 足球 并且已开赛
   if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
     reset_event();

@@ -14,7 +14,8 @@
         <!-- 赛事卡片 -->
         <slot name="content" :item="item" :index="index">
           <template v-if="is_show_match_item(index)">
-            <ObserverItem3 :index="index" :item="item"></ObserverItem3>
+            <!-- <ObserverItem3 :index="index" :item="item"></ObserverItem3> -->
+            <component :is="target_com" :index="index" :item="item"></component>
           </template>
         </slot>
       </div>
@@ -40,6 +41,8 @@ import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item.
 import ObserverItem2 from 'src/base-h5/components/observer-wrapper/observer-item2.vue';
 // ouzhou-h5 欧洲版
 import ObserverItem3 from 'src/base-h5/components/observer-wrapper/observer-item3.vue';
+//app-h5 新手版  -- 临时
+import ObserverItem4 from 'src/base-h5/components/observer-wrapper/observer-item4.vue';
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
 
@@ -49,8 +52,27 @@ const props = defineProps({
   match_list: {
     type: Array,
     required: true
+  },
+  // 组件类型
+  com_type: {
+    type: String,
+    default: () => 'app-h5'
   }
 })
+
+// 组件配置
+const com_config = {
+  'app-h5': ObserverItem2,
+  'yazhou-h5': ObserverItem,
+  'ouzhou-h5': ObserverItem3,
+  'app-h5-new': ObserverItem4
+}
+
+// 所渲染的组件
+const target_com = computed(() => {
+  return com_config[props.com_type]
+})
+
 
 const container = ref(null)
 const observer = ref(null)
@@ -145,7 +167,8 @@ const handler = (key, falg) => {
  */
 const is_show_match_item = computed(() => {
   return (index) => {
-    return defer_render(index)
+    // defer_render(index)
+    return true
   }
 })
 
@@ -194,7 +217,7 @@ const get_item_style = (item, index) => {
   const height = get_inner_height(item, index)
   const skeleton = get_background_image(item) 
   return {
-    height: `${height}px`,
+    // height: `${height}px`,
     backgroundImage: `url(${skeleton})`
   }
 }

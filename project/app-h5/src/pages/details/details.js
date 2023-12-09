@@ -14,7 +14,7 @@ import {SessionStorage,
    MITT_TYPES,
    UserCtr
   } from "src/output/index.js";
-
+  import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 export const details_main = () => {
   const router = useRouter();
   const route = useRoute();
@@ -25,8 +25,7 @@ export const details_main = () => {
   // const state = store.getState()
   // 球类id
   const  MatchDataBaseH5 = ref(MatchDataWarehouse_H5_List_Common)
-  console.log(MatchDataBaseH5.value,'MatchDataBaseH5');
-  const sport_id = ref(route.params.mcid)
+  const sport_id = ref(route.params.csid)
   const matchDetailCtr = ref(MatchDetailCalss)
   // 控制视频说明弹窗
   const get_bet_show = ref(false)
@@ -227,9 +226,10 @@ export const details_main = () => {
   })
   // // 刷新页面时获取当前玩法集ID
   onMounted(() => {
-    console.log(matchid.value,'matchid.value');
-    // debugger
-    console.log(MatchDataBaseH5.value.get_quick_mid_obj("2968012"),'MatchDataBaseH5.get_quick_mid_obj(mid)');
+    // LocalStorage.get("YUAN_MATCH_DETAIL_DATA")
+    MatchDataWarehouseInstance.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
+    state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
+    console.log(state_data.detail_data ,"state_data.detail_data");
   })
   /**
    *@description: 点击详情任意地方显示视频对阵信息
@@ -520,7 +520,7 @@ export const details_main = () => {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
-            MatchDataWarehouseInstance.set_match_details(res_data)
+            MatchDataWarehouseInstance.set_match_details(res_data,lodash.get(MatchDataWarehouseInstance.get_list_obj(matchid.value),"odds_info",[]))
             //如果是切换tab页
             if (state_data.refresh) {
               //获取玩法集 
@@ -908,6 +908,7 @@ export const details_main = () => {
     // 清空操作类的mid
     MatchDataWarehouseInstance.remove_match(lodash.get(route, 'params.mid'))
     MatchDetailCalss.set_match_details_params({})
+    LocalStorage.remove("LocalStorage")
   })
   const on_listeners = () => {
     // #TODO: IMIT

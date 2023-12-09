@@ -92,8 +92,13 @@
                       <!-- 10/20 15:30 -->
                       <span
                         class="time"
-                        v-if="!props.row.acCode && item.beginTime"
+                        v-if="!props.row.acCode && item.beginTime&&props.row.seriesType!=3"
                       >{{formatTime(item.beginTime, lang=='vi'?'hh:MM dd/mm':'mm/dd hh:MM')}}</span>
+
+                      <span
+                        class="time"
+                        v-if="!props.row.acCode && item.beginTime&&props.row.seriesType==3"
+                      >{{formatTime(item.beginTime, lang=='vi'?'hh:MM:SS dd/mm':'mm/dd hh:MM:SS')}}</span>
                       <!-- <span style="color:#8A8986">bet closed:{{
                         formatTime(item.beginTime, "yyyy-mm-dd hh:MM:ss")
                       }}

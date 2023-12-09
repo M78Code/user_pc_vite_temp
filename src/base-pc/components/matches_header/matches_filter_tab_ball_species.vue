@@ -8,7 +8,7 @@
           <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
             <div class="filter-tab-item">
               <div class="filter-icon">
-                <sport_icon :sport_id="BaseData.compute_sport_id(item.mif)" :status="MenuData.mid_menu_result.current_mi == item.mi"  size="24px" class="icon" />
+                <sport-icon :sport_id="BaseData.compute_sport_id(item.mif)" :key_name="MenuData.mid_menu_result.current_mi == item.mi ?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image'"  size="22" class="icon" />
                 <div class="filter-count">{{ item.ct || 0 }}</div>
               </div>
               <div :class="{ checked_text: MenuData.mid_menu_result.current_mi == item.mi }" class="label-text">
@@ -79,7 +79,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
-import sport_icon from "src/base-pc/components/sport_icon.vue";
+import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/components/match-list/list-filter/index.js"
 import { MenuData ,useMittOn,MITT_TYPES, } from "src/output/index.js"

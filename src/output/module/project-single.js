@@ -31,6 +31,11 @@ export { default as LayOutMain_pc } from "src/core/layout/index.js";
 export * from "src/core/server-img/";
 
 /**
+ * 默认主题
+ */
+export * from "src/core/theme/index.js";
+
+/**
  * CSS 变量
  */
 export { compute_css_variables } from "src/core/css-var/index.js";
