@@ -21,7 +21,7 @@
       <q-scroll-area
         :visible="true"
         ref="ref_v_scroll_area"
-        :thumb-style="{ right: utils.is_iframe ? '-8px' : '-10.5px' }"
+        :thumb-style="{ right: is_iframe ? '-8px' : '-10.5px' }"
         class="fit v-scrollarea"
       >
         <q-scroll-observer @scroll="on_scroll" />
@@ -57,8 +57,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted,onUnmounted } from "vue";
-import {utils } from 'src/output/index.js'
+import { ref,onMounted } from "vue";
 // import menu_data from 'src/core/menu-pc/menu-data-class.js'
 
 // import { useMittEmit } from 'src/core/mitt/index.js'

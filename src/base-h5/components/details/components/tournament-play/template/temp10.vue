@@ -111,7 +111,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      utils,
+      
       lodash,
       is_select,
       get_bet_list,
@@ -263,4 +263,3 @@ div[class*="virtual-num"] {
   }
 }
 </style>
-src/output

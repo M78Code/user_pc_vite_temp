@@ -766,5 +766,4 @@ if (get_menu_type.value == 30) {
 </script>
 <style lang="scss" scoped>
 @import url('./index_old.scss');
-</style>
-src/outputsrc/output
+</style>src/output

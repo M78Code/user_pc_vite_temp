@@ -83,7 +83,7 @@
           <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
         </span>
         <!-- 统计分析 -->
-        <div class="sr-link-icon-w" v-tooltip="{ content: i18n_t('common.analysis') }" v-if="utils.is_show_sr_flg(match)"
+        <div class="sr-link-icon-w" v-tooltip="{ content: i18n_t('common.analysis') }" v-if="is_show_sr_flg(match)"
           @click.stop='details.sr_click_handle(match)'>
           <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
         </div>
@@ -105,8 +105,6 @@
 import { computed, ref, onUnmounted } from 'vue';
 import lodash from 'lodash'
 import { get_match_status } from 'src/core/utils/common/index'
-import { get_remote_time } from "src/output/index.js"
-import { utils } from 'src/core/utils/common/module/utils.js'
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { MenuData } from "src/output/index.js"
 import details from "src/core/match-list-pc/details-class/details.js"

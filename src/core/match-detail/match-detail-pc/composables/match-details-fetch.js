@@ -150,7 +150,7 @@ const get_matchInfo_fun = (loop_count, mid) => {
            * @description 格式化msc数据
            * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
            */
-          data.msc = detailUtils.build_msc(data);
+          data.msc = detailbuild_msc(data);
           MatchDetailsData.set_list_from_match_details(data);
           let str = mid + "_";
           let midval = lodash.get(data, "mid");
@@ -399,7 +399,7 @@ const get_match_detail_base = (
                 }
               }
               // 同步数据到详情
-              let msc = detailUtils.build_msc(match_obj);
+              let msc = detailbuild_msc(match_obj);
               match_obj.msc = msc;
               Object.assign(MatchDetailsData.match_obj, match_obj);
             }

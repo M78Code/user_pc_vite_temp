@@ -32,3 +32,15 @@ export function getInitData() {
     gr: LocalStorage.get("gr").toLocaleUpperCase(),
   };
 }
+
+ /**
+  * 判断 url 是否有效 
+  * @param {*} url 
+  * @returns 
+  */
+export function url_exists(url){
+  var  http = new  XMLHttpRequest();
+  http.open('HEAD', url, false);
+  http.send();
+  return  http.status != 404;
+}

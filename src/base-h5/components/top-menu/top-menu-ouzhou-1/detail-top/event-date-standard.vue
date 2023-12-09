@@ -5,7 +5,6 @@ import { format_time_zone  } from "src/output/index.js";
 import { get_mmp_name } from 'src/core/format/project/module/format-msc.js'
 import {
     get_match_status,
-    utils,
     format_string,
     is_eports_csid
 } from "src/output/index.js"
@@ -147,7 +146,7 @@ const covert_mct = ({ mct, mmp, ms }) => {
     let new_num = mct;
 
     if (lang == "zh") {
-        new_num = utils.numberToChinese(mct);
+        new_num = numberToChinese(mct);
     }
     let rs = format_string(i18n_t("mmp.7.x"), new_num);
     return rs;

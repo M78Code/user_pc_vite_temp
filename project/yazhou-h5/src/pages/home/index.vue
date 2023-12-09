@@ -26,10 +26,8 @@
 import {defineAsyncComponent} from 'vue'
 import home from "./components/first-page.vue"; // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
 import setMenu from "src/base-h5/components/common/set-menu.vue"; // 设置
-import { utils } from "src/core/utils/common/index.js";
 import { onUnmounted, watch, ref, computed, onMounted, defineComponent, nextTick, } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js"; // mixins: [router_mixins],
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js";
@@ -209,7 +207,7 @@ export default defineComponent({
       const sl = lodash.get(tab, 'sl', [])
       // 热门 先写死 index: 5
       MenuData.set_current_lv1_menu({ mi: 500, sl: sl }, 5);
-      if (tab.index == tabIndex.value || utils.is_time_limit(800)) {
+      if (tab.index == tabIndex.value || is_time_limit(800)) {
         // 切换多语言需处理选中效果 样式
         if (tab.index == 0) {
           calc_tab_select(tab);
@@ -248,7 +246,7 @@ export default defineComponent({
       calc_tab_select(tab);
       // 埋点采集热门赛事点击
       if (tab.index === 1) {
-        utils.zhuge_event_send("H5_热门赛事", UserCtr);
+        send_zhuge_event("H5_热门赛事", UserCtr);
       }
     };
     //计算选中居中偏移值
@@ -553,4 +551,4 @@ export default defineComponent({
     }
 
   }
-}</style>src/core/utils/common/index.js
+}</style>

@@ -38,8 +38,7 @@ import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { i18n_t, compute_local_project_file_path } from "src/output/index.js";
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { utils } from "src/output/index.js";
-
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 /* 退出登录通知-中文 */
 const logout_notice = compute_local_project_file_path('/image/image/logout_notice.png')
 /* 退出登录通知-英文 */
@@ -76,8 +75,7 @@ const is_domain_error = ref(false)
 const is_invalid = ref(UserCtr.is_invalid)
 onMounted(() => {
   is_show.value = is_invalid.value
-  if (utils.is_iframe) {
-    console.log('非内嵌')
+  if (utils_info.is_iframe) {
     backDrop.value = true;
   }
 })

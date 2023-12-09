@@ -1,5 +1,8 @@
 <template>
-  <component :is="Template" :data="data" @click.capture="onClick"></component>
+  <component :is="Template" :data="data" @click.capture="onClick"
+    class="component"
+    :class="['template-'+data.hpt,'title-' + titleLen]"
+  ></component>
 </template>
 <script setup lang="ts">
 import DefaultTemplate from './DefaultTemplate.vue';
@@ -10,8 +13,8 @@ const props = defineProps<{
 }>()
 
 const templates = [];
-
 const Template = computedTemplate()
+const titleLen = props.data.title?.length
 
 function computedTemplate(){
   return DefaultTemplate
@@ -23,5 +26,45 @@ function onClick(){
 </script>
 
 <style scoped lang="scss">
-
+.component{
+  --odd-template-ol-item-flex-basis-count: v-bind(titleLen);
+  --odd-template-before-content:'';
+}
+</style>
+<style lang="scss">
+.component.template-{
+  &0{
+    .component.odds-title{
+      display: none;
+    }
+  }
+  &4{
+    &.title-3{
+      .component.odd-ol-item{
+        flex-basis: calc(100%/var(--odd-template-ol-item-flex-basis-count));
+      }
+    }
+  }
+  &5.dis{
+    .odd-ol-wrap,.odds-title{
+      &::before{
+        content: var(--odd-template-before-content);
+        display: flex;
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 -1px 1px 1px #F5F5F5;
+      }
+    }
+    .odd-ol-wrap::before{
+      flex-basis: calc(100%/3);
+    }
+  }
+  &14{
+    .component.odd-ol-item{
+      flex-basis: calc(100%/var(--odd-template-ol-item-flex-basis-count));
+    }
+  }
+}
 </style>

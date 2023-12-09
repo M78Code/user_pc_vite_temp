@@ -20,7 +20,6 @@
 
 import lodash from "lodash";
 
-import { utils } from 'src/output/module/constant-utils.js'
 /**
  * @Description 设置默认模板
  * @param {Number} num 列数
@@ -181,7 +180,7 @@ export const set_template_width_base = (
   if (total_width < 930) {
     config.media_width = 40;
   }
-  if (utils.is_iframe) {
+  if (is_iframe) {
     config.process_team_width = 56 + 182;
     config.media_width = 44;
   }
@@ -200,7 +199,7 @@ export const set_template_width_base = (
   // 设置赛事阶段加主客队宽度
   config.process_team_width = config.process_team_width;
   // 设置主客队信息宽度
-  if (utils.is_iframe) {
+  if (is_iframe) {
     config.team_width = config.process_team_width - 56;
   } else {
     config.team_width = config.process_team_width - 77;

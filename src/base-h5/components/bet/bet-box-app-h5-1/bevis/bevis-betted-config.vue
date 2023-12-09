@@ -52,4 +52,4 @@ const props = defineProps({
         font-size: 0.12rem;
     }
 }
-</style>src/output/index.js
+</style>

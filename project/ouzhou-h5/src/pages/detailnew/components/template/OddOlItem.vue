@@ -9,11 +9,15 @@
         </div>
       </template>
       <template v-else>
-        <div class="item ol-name" :alt="olName"> {{ olName }} </div>
+        <div class="item ol-name" :alt="olName">
+          <span class="ol-name-span">{{ olName }}</span>
+        </div>
         <div class="separate"></div>
         <div class="item ol-content">
-          <span>{{ ov }}</span>
-          <img class="odd-image" :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
+          <div class="ol-content-ov">
+            <span>{{ ov }}</span>
+            <img class="odd-image" :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
+          </div>
         </div>
       </template>
     </div>
@@ -146,18 +150,26 @@ function resetStatus() {
 
 .ol-content {
   color: var(--private-ol-content-color);
+  position: relative;
   display: flex;
   align-items: center;
   vertical-align: middle;
 }
-
+.ol-content-ov{
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
 .odd-image {
   display: flex;
   --private-local-odd-image-size: 14px;
   width: var(--private-local-odd-image-size);
   height: var(--private-local-odd-image-size);
+  position: absolute;
   object-fit: contain;
   visibility: hidden;
+  left: 100%;
 }
 
 .ol-lock {
@@ -178,14 +190,14 @@ function resetStatus() {
   .ol-name{
     text-align: left;
     justify-content: start;
+    @extend .overflow;
+    .ol-name-span{
+      @extend .overflow;
+    }
   }
   .ol-content{
     flex: none;
     justify-content: end;
-    .odd-image{
-      position: absolute;
-      transform: translateX(100%);
-    }
   }
 }
 </style>

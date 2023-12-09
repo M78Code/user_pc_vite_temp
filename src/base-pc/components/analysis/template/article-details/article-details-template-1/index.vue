@@ -170,4 +170,4 @@ onUnmounted(() => {
 /*  内容区 */
 .rule-scroll-area {
   flex: 1;
-}</style>src/output/index.js
+}</style>

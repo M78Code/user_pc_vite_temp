@@ -5,7 +5,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { MenuData }  from "src/output/module/menu-data.js";
 
-import {   match_collect_status } from "./match-list-collect.js";
+import {   match_collect_status, set_collect_count } from "./match-list-collect.js";
 
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -92,7 +92,6 @@ const deal_with_list_data = (data) => {
  * @return {undefined} undefined
  */
 const mx_list_res = (data, backend_run, cut, collect) => {
-	console.log('dataasdasfaf', data);
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
 	// 将全量数据接口 切割成含有mid元素的对象数组
@@ -130,10 +129,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				count_mf = lodash.get(data, 'data.collectCount', 0)
 				console.error(error);
 			}
-			set_collect_count({
-				type: "set",
-				count: lodash.get(data, "data.collectCount", 0),
-			});
+			// set_collect_count({
+			// 	type: "set",
+			// 	count: lodash.get(data, "data.collectCount", 0),
+			// });
 		}
 		// 如果是专业版 && 今日、早盘、串关之间的切换 && 之前有筛选 && 并且当前没有筛选
 		if (

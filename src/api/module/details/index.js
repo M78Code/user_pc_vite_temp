@@ -1,4 +1,4 @@
-import { UserCtr } from "src/output";
+import { UserCtr } from "src/output/module/global-common.js";
 import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_JOB:prefix,API_PREFIX_ACTIVITY:prefix2} = API_PREFIX;
@@ -57,7 +57,7 @@ export const get_match_odds_info = (params, config = {}, url = "/v1/w/matchDetai
 //赛事盘口详情 （视频页，调用H5接口）PB
 export const get_match_detail_m = (params, config = {}, url = "/v1/m/matchDetail/getMatchOddsInfoPB") => http.get(`${prefix}${url}`, params)
 
-/** 玩法置顶 猜测应该和get_category_playTop一样
+/** 玩法置顶 应该和get_category_playTop一样
  * @param {Object} params
  * @param {1|0} params.status 置顶状态 1标识当前置顶，请求取消置顶;0请求置顶
  * @param {String} params.playId 玩法ID

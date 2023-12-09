@@ -10,7 +10,7 @@
 // import details from "src/public/utils/detailsClass/details.js"
 import { ref } from "vue";
 import _ from "lodash";
-import { get_match_status } from "src/core/utils/common/index";
+import { get_match_status } from 'src/output/module/constant-utils.js'
 export const useMsc = () => {
   let many_key = [];
   // S120~S159
@@ -280,7 +280,7 @@ export const useMsc = () => {
   const set_main_score = (match) => {
     let _home_score = "";
     let _away_score = "";
-    if (this.$utils.get_match_status(match.ms)) {
+    if (this.$get_match_status(match.ms)) {
       let key = "S1";
       _home_score = "0";
       _away_score = "0";
@@ -426,7 +426,7 @@ export const useMsc = () => {
       //网球当前局得分
       if (csid == 5) {
         match.score = BetCommonHelper.msc_array_obj(match.msc);
-        let is_zero = this.$utils.get_match_status(match.ms);
+        let is_zero = this.$get_match_status(match.ms);
         details.init_score(match.score, ["S103"], is_zero);
       }
 

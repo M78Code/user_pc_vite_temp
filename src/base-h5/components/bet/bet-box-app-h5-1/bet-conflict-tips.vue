@@ -39,4 +39,4 @@ const props = defineProps({
         float: right;
     }
 }
-</style>src/output/index.js
+</style>

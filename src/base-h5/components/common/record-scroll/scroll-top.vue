@@ -14,7 +14,6 @@
 </template>
 
 <script setup>
-import { utils } from 'src/output/index.js'
 import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
@@ -79,7 +78,7 @@ const scroll_top_image = computed(() => {
    */
 const back_top = () => {
   //  防止调用多次
-  if (utils.is_time_limit(500)) return
+  if (is_time_limit(500)) return
   emits('back-top')
 }
 onDeactivated(() => {

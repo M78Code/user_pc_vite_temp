@@ -80,18 +80,18 @@
             <span
               class="table-name"
               :class="{
-                [`csid_${_.get(detail_info, 'csid')}`]: true,
+                [`csid_${lodash.get(detail_info, 'csid')}`]: true,
               }"
             >
               <!-- 发球方小圆点 -->
               <span
                 class="round"
                 v-if="
-                  _.get(detail_info, 'mmp') != 0 &&
-                  _.get(detail_info, 'csid') != '4' &&
-                  ((_.get(detail_info, 'mat') == 'away' &&
+                  lodash.get(detail_info, 'mmp') != 0 &&
+                  lodash.get(detail_info, 'csid') != '4' &&
+                  ((lodash.get(detail_info, 'mat') == 'away' &&
                     props.rowIndex === 1) ||
-                    (_.get(detail_info, 'mat') == 'home' &&
+                    (lodash.get(detail_info, 'mat') == 'home' &&
                       props.rowIndex === 0))
                 "
               >
@@ -182,15 +182,12 @@
 import { onMounted, ref, computed, watch } from "vue";
 import { sport_columns, socre_dict } from "./score_config";
 import {
-  get_match_status,
   i18n_t,
-  is_eports_csid,
   LOCAL_PROJECT_FILE_PREFIX,
-  stage_dict,
 } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 import { handle_course_data } from "src/core/utils/matches_list.js";
-import _ from "lodash";
+// import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
 const props = defineProps({
@@ -228,7 +225,7 @@ const get_base_data = (val) => {
     { name: detail_info["man"], key: "away" },
   ];
   let res = "";
-  if (!_.isEmpty(val) && ["1", "2", "3"].includes(String(detail_info.csid))) {
+  if (!lodash.isEmpty(val) && ["1", "2", "3"].includes(String(detail_info.csid))) {
     res = get_score_result(list, val);
   } else {
     //   篮球 赛前无数据
@@ -531,6 +528,7 @@ watch(
         format_msc(res);
       }
     }
+    
     if (["1", "2", "3"].includes(res.csid + "")) {
       get_base_data(res);
     }

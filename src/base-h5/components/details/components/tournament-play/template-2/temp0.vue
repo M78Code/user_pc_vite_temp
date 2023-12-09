@@ -22,11 +22,11 @@
                           <!-- <div
                             class="play-box-style details_color"
                             @click="go_to_bet(ol_item)"
-                            :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                            :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           > -->
                           <div
                             class="play-box-style details_color"
-                            @click="utils.go_to_bet(ol_item)"
+                            @click="go_to_bet(ol_item)"
                             :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_13 odds-on">
@@ -107,8 +107,8 @@
                     <!-- 主程序 start -->
                     <div
                       class="play-box-style details_color"
-                      @click="utils.go_to_bet(ol_item)"
-                      :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                      @click="go_to_bet(ol_item)"
+                      :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_13">
                         <span class="size-color" :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
@@ -186,7 +186,7 @@ import odds_new from "src/base-h5/components/details/components/tournament-play/
 // #TODO mixins
 import lodash from "lodash";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router"
 import { i18n_t } from "src/boot/i18n.js";
@@ -206,7 +206,7 @@ export default defineComponent({
   setup(props, evnet) {
     const route = useRoute()
     let data = reactive({
-      utils,
+      
       // 最大显示行数
       show_more_max:5,
       show_more_switch:false,
@@ -283,7 +283,7 @@ export default defineComponent({
      */
     const change_show = () => {
       if (data.show_more) {
-        let distance = (data.len - 5) * utils.rem(0.52)
+        let distance = (data.len - 5) * rem(0.52)
         if (route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {

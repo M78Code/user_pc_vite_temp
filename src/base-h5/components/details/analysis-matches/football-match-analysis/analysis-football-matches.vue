@@ -29,7 +29,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
-import {utils, MatchDetailCalss } from 'src/output/index.js'
+import { MatchDetailCalss } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 资讯页
 import articleMain from "src/base-h5/components/details/analysis-matches/article/article-main.vue"
@@ -97,7 +97,7 @@ export default defineComponent({
       nextTick(() => {
         if (analysis_football_matches.value) {
           // TODO: utils后续修改调整
-          analysis_football_matches.value.style.minHeight = window.innerHeight - utils.rem(0.84) + 'px'; ;
+          analysis_football_matches.value.style.minHeight = window.innerHeight - rem(0.84) + 'px'; ;
         }
     })
     createTabds();

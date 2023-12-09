@@ -16,7 +16,7 @@ import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import { useMittEmitterGenerator } from "src/output/index.js";
-import { SessionStorage } from "src/core/utils/common/index.js"
+import { SessionStorage } from "src/output/module/constant-utils.js";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
 import { details_ws } from "src/core/match-detail/details-ws.js";
 export const category_info = (category_arr=[]) => {
@@ -599,7 +599,7 @@ export const category_info = (category_arr=[]) => {
         timers:1000
       }
        // axios_api轮询调用方法
-       $utils.axios_api_loop(obj_);
+       $axios_api_loop(obj_);
        *
        * @param {*} axios_api axios api对象
        * @param {*} params 参数
@@ -679,7 +679,7 @@ export const category_info = (category_arr=[]) => {
     });
   };
   // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口
-  const socket_upd_list = (skt_data, callback) => {
+  const socket_upd_list =lodash.throttle((skt_data, callback) => {
     // 调用接口的参数
     let params = {
       // 当前选中玩法项的id
@@ -782,7 +782,7 @@ export const category_info = (category_arr=[]) => {
           // component_data.matchInfoCtr.setList([]);
         }
       });
-  };
+    },1000);
 
   const save_hshow = (temp, list_old) => {
     let middle_data = null;

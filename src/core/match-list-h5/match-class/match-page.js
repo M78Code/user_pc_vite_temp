@@ -9,7 +9,7 @@ import MatchListCardClass from '../match-card/match-list-card-class'
 import MatchListParams from '../composables/match-list-params'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
-import {   i18n_t,  useMittEmit, MITT_TYPES, utils } from 'src/output/module/constant-utils.js'
+import {   i18n_t,  useMittEmit, MITT_TYPES } from 'src/output/module/constant-utils.js'
 import {  MenuData } from 'src/output/module/menu-data.js'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
@@ -514,7 +514,7 @@ class MatchPage {
           //直接发请求    单次数 请求的方法
           obj_.max_loop = 1;
           obj_.timers = 0;
-          utils.axios_api_loop(obj_);
+          axios_api_loop(obj_);
         } else {
           // 记录timer
           if (this.timexasxsxsx) { clearTimeout(this.timexasxsxsx) }
@@ -522,7 +522,7 @@ class MatchPage {
             //直接发请求    单次数 请求的方法
             obj_.max_loop = 1;
             obj_.timers = 0;
-            utils.axios_api_loop(obj_);
+            axios_api_loop(obj_);
             this.timexasxsxsx = null
           }, 100);
           // info.delay_time ||
@@ -530,7 +530,7 @@ class MatchPage {
       } else {
         //直接发请求    多 次数  循环请求 的方法
         // axios_api轮询调用方法
-        utils.axios_api_loop(obj_);
+        axios_api_loop(obj_);
       }
     }
   }

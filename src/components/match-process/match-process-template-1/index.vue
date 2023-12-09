@@ -58,7 +58,6 @@ import { computed, ref, watch,onMounted, onUnmounted } from "vue";
 import matchDate from "src/components/match-process/match-process-template-1/match_date.vue";
 import {
   get_match_status,
-  utils,
   i18n_t,
   format_string,
   is_eports_csid
@@ -332,7 +331,7 @@ const covert_mct = ({ mct, mmp, ms }) => {
   let new_num = mct;
 
   if (lang == "zh") {
-    new_num = utils.numberToChinese(mct);
+    new_num = numberToChinese(mct);
   }
   let rs = format_string(i18n_t("mmp.7.x"), new_num);
   return rs;
@@ -398,5 +397,4 @@ onUnmounted(() => {
 .c-match-process{
     position: relative;
 }
-</style>
-src/output/indexsrc/core/format/common/module/format-msc.js
+</style>src/core/format/common/module/format-msc.js

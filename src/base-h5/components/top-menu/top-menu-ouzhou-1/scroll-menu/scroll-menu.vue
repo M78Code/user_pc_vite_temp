@@ -11,9 +11,9 @@
             <q-virtual-scroll ref="scrollRef" v-if="leftDataList.length" :items="leftDataList"
                 virtual-scroll-horizontal v-slot="{ item, index }">
                 <div v-if="![400,2000,300].includes(item.mi) && get_cont(item)" @click="on_change_play(item)"
-                    :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
+                    :key="index" dense clickable :class="['play_item', { active: +item.mi === +playValue }]">
                     <span class="icon">
-                        <sport-icon size="24" :status="item.mi === playValue" :sport_id="item.mi" />
+                        <sport-icon size="24" :status="+item.mi === +playValue" :sport_id="item.mi" />
                         <span class="badge" v-if="props.is_show_badge"><q-badge rounded :label="get_cont(item)" /></span>
                     </span>
                     <div class="label">{{ item.mi == '2000' ? "Esports" : BaseData.menus_i18n_map[item.mi] }} </div>
@@ -78,7 +78,7 @@ const get_init_data = () =>{
     MenuData.set_current_lv1_menu(props.menu_type);
     MenuData.set_menu_mi(session_info?.menu_mi || MenuData.menu_mi.value || dataList()[0]?.mi);
     // MenuData.set_menu_mi(MenuData.menu_mi.value || dataList()[0]?.mi);
-    playValue.value = MenuData.menu_mi.value || dataList()[0]?.mi;
+    playValue.value = session_info?.menu_mi ||MenuData.menu_mi.value || dataList()[0]?.mi;
 
     nextTick(()=>{
         const index = dataList().findIndex(n=>n.mi ==  playValue.value) || 0;

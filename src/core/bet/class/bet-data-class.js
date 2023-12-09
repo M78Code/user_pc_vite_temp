@@ -1,4 +1,4 @@
-import { fileds_map_common } from "src/output/module/constant-utils.js";
+import { fileds_map_common } from "src/core/constant/config/fileds-map.js";
 import LayOutMain_pc from "src/core/layout/index.js";
 import BetViewDataClass from "./bet-view-data-class.js"
 import { get_score_config } from "./bet-box-submit.js"

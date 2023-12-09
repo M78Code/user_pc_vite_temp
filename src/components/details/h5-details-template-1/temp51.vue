@@ -19,7 +19,7 @@
                     <!-- os: 1、开盘 2、封盘 -->
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active_play':'',{'win':calc_win(ol_item.result)}]">
                         <div class="ellipsis">
                           <span class="size-color">{{ol_item.on || ol_item.ott}}</span>
                         </div>
@@ -79,7 +79,7 @@
 // import { mapGetters } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament_play/unit/odds_new.vue";
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
-import {utils } from 'src/output/index.js';
+
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp51",

@@ -10,7 +10,7 @@
       <div class="row virtual-bet-wrapper">
         <!-- 分割线 -->
         <div v-for="(item,index) in odds_list"
-             @click="utils.go_to_bet(item)" :key="index"
+             @click="go_to_bet(item)" :key="index"
              :style="{width:odds_list.length > 30 ?'25%':'20%'}"
              class="item-style2" :class="[![0,1,2,3,4].includes(index) ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'blue-color':'']"
         >
@@ -34,7 +34,7 @@
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
 import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX,utils } from "src/output/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -226,4 +226,3 @@ div[class*="virtual-num"] {
   }
 }
 </style>
-src/output

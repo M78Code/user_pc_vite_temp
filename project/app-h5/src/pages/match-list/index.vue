@@ -38,13 +38,13 @@ import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vu
 import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
-import { MenuData, score_switch_handle, utils,  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
+import { MenuData, score_switch_handle,  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;  
 import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
-
+import  {gtag_view_send}  from "src/core/http/gtag-tag.js";
 const route = useRoute();
 const store_state = store.getState();
 // const websocket_store = use_websocket_store()
@@ -104,7 +104,7 @@ onMounted(() => {
     MatchListCard.sliding_can_trigger_process_distance = 500;
   }
   // 记录埋点，进入列表页
-  utils.gtag_view_send("H5_match", "/match");
+  gtag_view_send("H5_match", "/match");
   // 详情精选赛事页需清空map折叠状态
   store.dispatch({ type: 'topMenuReducer/set_collapse_map_match', payload: {} })
   // 事件初始化
@@ -145,7 +145,7 @@ const back_top = () => {
  */
 const event_init = () => {
   // 详情页的视频预加载
-  utils.load_video_resources(store_state.get_uid, "is_details_page");
+  load_video_resources(store_state.get_uid, "is_details_page");
   // 不让浏览器记住上次的滚动位置
   if ("scrollRestoration" in History) {
     history.scrollRestoration = "manual";

@@ -19,7 +19,7 @@
         {
           'color-highlight': ol_data.handicap_highlight,
           style2: ol_data.onbl && ol_data.csid == 2,
-          left_cell: utils.is_iframe,
+          left_cell: is_iframe,
           'injury-time-goal': ol_data.ot === 'ClutchGoal',
           nogoal: ol_data.ot === 'NoGoal',
         },
@@ -37,7 +37,7 @@
       :style="
         [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
           +ol_data._hpid
-        ) && utils.is_iframe
+        ) && is_iframe
           ? 'flex:1.5'
           : ''
       "
@@ -64,7 +64,6 @@ import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from 'lodash'
 import {
   get_odds_active,
-  utils,
 } from "src/output/index.js";
 import { format_odds_value } from 'src/output/index.js';
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"

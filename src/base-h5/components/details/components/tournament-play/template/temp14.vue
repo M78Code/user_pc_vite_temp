@@ -24,7 +24,7 @@
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -84,7 +84,7 @@
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -135,7 +135,7 @@
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
-                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':get_bet_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -189,7 +189,7 @@
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import {  LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
@@ -203,7 +203,7 @@ export default defineComponent({
   setup(props, evnet) {
     const store_state = store.getState()
     const data = reactive({
-      utils,
+      
       // 滑动left
       left: 0
     });

@@ -11,7 +11,7 @@
     <span class="title-space-1" ref="title-space" v-show="title">
       {{title}}
     </span>
-    <span v-if="show_time_counting" ref="counting" class="counting" v-html="utils.counting_time_ctr_show_format(match,counting_time)"></span>
+    <span v-if="show_time_counting" ref="counting" class="counting" v-html="counting_time_ctr_show_format(match,counting_time)"></span>
     <span ref="special-match" class="special din-regular" :class="{'mar-l5': u_like}" :data-d="`${match.csid}-${match.mmp}`"
       v-show="[2,4,6,15,16].includes(+match.csid) && [301,302,303].includes(+match.mmp)"><!--csid:16水球-->
       {{match.mlet}}
@@ -23,9 +23,9 @@
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import { ref, computed, watch, nextTick, onActivated, onMounted, onUnmounted, onDeactivated } from "vue"
-import { i18n_t, utils } from 'src/output/index.js'
+import { i18n_t } from 'src/output/index.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-
+import { counting_time_ctr_show_format } from 'src/core/format/common/index.js'
 const props = defineProps({
   m_id:String|Number, // 赛事id
   is_add:Boolean,     // 是否为累加计时器
@@ -56,7 +56,7 @@ const hotReqTime = ref(0)
 
 onMounted(() => {
   // 初始化修正设置步长
-  step.value = utils.match_vr_step(props.match,step.value);
+  step.value = match_vr_step(props.match,step.value);
   // 红猫赛事使用mstrc字段数据
   let mstrc = lodash.get(props.match,'mstrc');
   if(lodash.get(props.match,'cds')=='1500' && mstrc){

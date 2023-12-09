@@ -280,4 +280,3 @@ const handicap = computed(() => {
   }
 }
 </style>
-src/output/index

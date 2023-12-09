@@ -265,4 +265,3 @@ import { i18n_t } from "src/boot/i18n.js";
     }
 }
 </style>
-src/output/index.js

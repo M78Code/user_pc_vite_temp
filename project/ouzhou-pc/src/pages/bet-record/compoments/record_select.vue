@@ -335,4 +335,3 @@ div.q-menu {
   }
 }
 </style>
-src/output/index.js

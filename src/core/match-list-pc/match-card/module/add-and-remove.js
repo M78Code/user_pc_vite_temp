@@ -1,4 +1,4 @@
-import { update_match_parent_card_style } from "./utils.js";
+import { update_match_parent_card_style } from "src/core/match-list-pc/match-card/module/utils.js";
 import { compute_style_template_by_matchinfo } from "./compute-style-template.js";
 import { get_match_template_id } from '../../match-handle-data.js'
 import { conpute_match_list_card_offset } from "./card-show-offset.js";

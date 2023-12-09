@@ -23,7 +23,7 @@
 // #TODO VUEX
 // import { mapGetters, mapMutations } from "vuex"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import lodash from "lodash";
 import { menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
@@ -196,7 +196,7 @@ export default defineComponent({
       if (index < 0) return
       state.sub_nav_focus_i = index
       state.sub_focus_batch_no = batchNo;
-      utils.tab_move2(state.sub_nav_focus_i, scrollBox.value)
+      tab_move2(state.sub_nav_focus_i, scrollBox.value)
       let current_sub_nav = no_title_list.value[state.sub_nav_focus_i];
 
       VirtualData.sub_nav_changed({

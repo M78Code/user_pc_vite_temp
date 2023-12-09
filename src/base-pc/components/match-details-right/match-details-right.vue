@@ -65,7 +65,7 @@
             <!-- bet 体育竞猜 -->
             <div class="sports-guessing" v-if="route.name == 'video'">
               <div>
-                <template v-if="utils.is_iframe">
+                <template v-if="is_iframe">
                   <!-- <sport-icon :sport_id="route.params.csid" :is_esports="is_esports" size="18px" class="icon sport-img-new" status="2" />  todo 雪碧图组件 -->
                   <span class="home-vs-away">
                     <span>{{ match_infoData.mhn }}</span>
@@ -270,7 +270,7 @@ import {
   LayOutMain_pc,
   GlobalSwitchClass,
   useMittEmit,
-  utils,
+  
   UserCtr
 } from "src/output/index.js";
 import  videoHistoryLine  from "src/base-pc/components/video-replay/video-history-line.vue";
@@ -372,7 +372,7 @@ const show_more = computed(() => {
 // 聊天室高度
 const chatroom_height = () => {
   // 内嵌右侧
-  if (utils.is_iframe) {
+  if (is_iframe) {
     return vx_get_layout_size.content_height - headerHeight - 7;
   }
 };
@@ -468,4 +468,3 @@ const is_show_margin = computed(() => {
 <style lang="scss">
 @import "../match-details//match-details.scss";
 </style>
-src/output/index

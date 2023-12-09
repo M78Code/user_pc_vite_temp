@@ -77,7 +77,7 @@
   <script setup>
   // TODO: 后续修改调整
   import GlobalAccessConfig from "src/core/access-config/access-config.js";
-  import { utils, SessionStorage } from "src/output/index.js";
+  import {  SessionStorage } from "src/output/index.js";
   import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
   import lodash from "lodash";
   import { useRoute, useRouter } from "vue-router";
@@ -337,7 +337,7 @@
     //关注
     else if (item.id === 1) {
       if (
-        !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)
+        !judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)
       )
         return;
       if (footer_clicked_handleing.value) return;

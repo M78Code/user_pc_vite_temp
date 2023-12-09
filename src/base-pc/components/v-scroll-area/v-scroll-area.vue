@@ -36,10 +36,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from "vue"
+import { ref,  onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
 
-import {utils,LayOutMain_pc } from 'src/output/index.js'
+import {LayOutMain_pc } from 'src/output/index.js'
 
 import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
@@ -57,7 +57,7 @@ const props = defineProps({
 })
 
 // 是否内嵌
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 
 const ref_v_scroll_area = ref('ref_v_scroll_area');
 const header_height = ref(0);

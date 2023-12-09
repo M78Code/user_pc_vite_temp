@@ -579,7 +579,7 @@ class MenuData {
    * @return {undefined} undefined
    */
   is_esports() {
-    // this.$utils.is_eports_csid(this.$route.params.csid)
+    // this.$is_eports_csid(this.$route.params.csid)
     return (
       this.menu_root == 2000 ||
       (this.match_list_api_config || {}).sports == "dianjing"

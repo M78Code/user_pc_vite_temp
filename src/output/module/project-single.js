@@ -45,5 +45,9 @@ export { default as SearchPCClass } from "src/core/search-class/seach-pc-calss.j
 export { default as SearchData } from "src/core/search-class/search-data-class.js";
 
  
+
+export { default as TabMove } from "src/core/tab-move/tab-move.js";
+
+ 
 export * from "src/core/utils/project/index.js";
 export * from "src/core/format/project/index.js";

@@ -111,9 +111,9 @@
 </template>
 
 <script>
-import { onMounted, ref, provide, onUnmounted } from "vue";
+import { onMounted, ref, onUnmounted } from "vue";
 import {
-  utils,
+  
   MenuData,
   LOCAL_PROJECT_FILE_PREFIX,
   useMittOn,
@@ -148,8 +148,6 @@ export default {
       current_key,
       detail_loading,
       detail_info,
-      // sportId,
-      all_hl_item,
       init,
       show_close_thehand,
       matchDetailList,
@@ -157,7 +155,6 @@ export default {
       refresh,
       get_match_detail,
     } = usedetailData(route);
-    provide("all_hl_item", all_hl_item);
 
     const showDetailList = ref(false);
     const match_click = (item) => {
@@ -224,7 +221,7 @@ export default {
       detail_loading,
       detail_info,
       sportId,
-      all_hl_item,
+      // all_hl_item,
       init,
       show_close_thehand,
       matchDetailList,
@@ -495,4 +492,4 @@ export default {
   cursor: pointer;
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
-</style>src/output/index.js
+</style>

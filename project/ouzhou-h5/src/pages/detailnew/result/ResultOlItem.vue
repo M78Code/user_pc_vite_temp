@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 
-import { utils } from "src/output/index.js"
 
 const props = withDefaults(defineProps<{
   value: TYPES.OlResult,
@@ -22,7 +21,7 @@ const props = withDefaults(defineProps<{
 }>(),{
   hpt: -1
 })
-let state:TYPES.OlResultState = utils.calcOlResult(props.value.result)
+let state:TYPES.OlResultState = calcOlResult(props.value.result)
 
 
 </script>

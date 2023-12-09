@@ -136,7 +136,7 @@ class matchListClass {
    * @description: 点击球种折叠
    */
   ball_folding_click(csid) {
-    if (utils.is_time_limit(200)) { return }
+    if (is_time_limit(200)) { return }
 
     let collapse_csid_map = lodash.cloneDeep(this.get_collapse_csid_map)
     let collapse_map_match = lodash.cloneDeep(this.get_collapse_map_match)

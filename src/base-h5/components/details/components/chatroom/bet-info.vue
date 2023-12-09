@@ -10,7 +10,7 @@
       <div class="bet-header">
         <span class="tips"></span>
         <span>{{bet_data.matchInfo}}</span>
-        <span class="msg-time">{{$utils.formatDate(msgInfo.updateTime, 'HH:mm')}}</span>
+        <span class="msg-time">{{$formatDate(msgInfo.updateTime, 'HH:mm')}}</span>
       </div>
 
       <!-- 中间内容区 -->
@@ -357,4 +357,3 @@ export default defineComponent({
   }
 }
 </style>
-src/output/index.js

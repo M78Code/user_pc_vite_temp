@@ -34,7 +34,7 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': utils.calc_win(append_single.result)}]">
+                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win': calc_win(append_single.result)}]">
                             <div class="single-name">
                               <span class="fz_14 ver-ali-top">{{devote_value_d(append_single.ot)}}</span>
                               <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_16">
@@ -130,7 +130,7 @@
                         <!-- os=1 开盘 -->
                         <template v-if="append_single.os == 1">
                           <div class="play-box-sty details-color" @click="go_to_bet(append_single)"
-                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(append_single.result)}]">
+                               :class="[get_bet_list.includes(append_single.id_)?['details-bg5','white_text']:'',{'win':calc_win(append_single.result)}]">
                             <div class="single-name">
                               <span class="fz_14 ver-ali-top">{{devote_value_x(append_single.ot)}}</span>
                               <span :class="get_bet_list.includes(append_single.id_) ? 'size-color-wit':'size-color'" class="fz_16">
@@ -215,7 +215,7 @@
 import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -234,7 +234,7 @@ export default defineComponent({
     const store_state = store.getState()
     const route = useRoute()
     let init_data = reactive({
-      utils,
+      
       // 滑动left
       left: 0
     });
@@ -351,7 +351,7 @@ export default defineComponent({
         let temp_num = props.item_data.hl.length / 3
 
         // 是整数则减一，否则向下取整
-        if (init_data.utils.is_integer(temp_num)) {
+        if (init_data.is_integer(temp_num)) {
           slide_num = temp_num - 1
         } else {
           slide_num = Math.floor(temp_num)

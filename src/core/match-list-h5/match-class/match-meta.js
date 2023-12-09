@@ -907,7 +907,7 @@ class MatchMeta {
     let target_data = []
     if (is_classify) {
       // 赛事归类(开赛-未开赛) 里面包含了球种归类、联赛归类
-      target_data = MatchUtils.handler_match_classify_by_ms(list).filter((t) => t.mid)
+      target_data = handler_match_classify_by_ms(list).filter((t) => t.mid)
     } else {
       // 球种归类
       const result_data = MatchUtils.handler_match_classify_by_csid(list).filter((t) => t.mid)
@@ -929,7 +929,7 @@ class MatchMeta {
       
       // 设置赛事默认参数
       const params = this.set_match_default_properties(match, index, target_data.map(t => t.mid))
-      const is_show_ball_title = MatchUtils.get_match_is_show_ball_title(index, target_data)
+      const is_show_ball_title =  MatchUtils.get_match_is_show_ball_title(index, target_data)
       
       Object.assign(match, params, {
         is_show_ball_title,

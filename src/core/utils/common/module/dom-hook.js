@@ -4,7 +4,7 @@
  * @param {*} config  一些配置项 暂时没有用只是用于扩展
  * @returns {paly,stop}
  * */
-function useImageElmentHook(imgdom, config = {}) {
+export const useImageElmentHook = (imgdom, config = {}) => {
   const _dom = imgdom;
   function play() {
     if (_dom.storeCanvas) {
@@ -33,7 +33,7 @@ function useImageElmentHook(imgdom, config = {}) {
       canvas.width = width;
       canvas.height = height;
       // 绘制图片帧（第一帧）
-      canvas.getContext("2d").drawImage( 0, 0, width, height);
+      canvas.getContext("2d").drawImage(0, 0, width, height);
       // 重置当前图片
       try {
         _dom.src = canvas.toDataURL("image/gif");
@@ -54,4 +54,65 @@ function useImageElmentHook(imgdom, config = {}) {
   return { play, stop };
 }
 
-export { useImageElmentHook };
+/**
+ * @Description 设置css quasar源码复制的
+ * @param {undefined} undefined
+*/
+export const set_css = (element, css) => {
+  const style = element.style
+  Object.keys(css).forEach(prop => {
+    style[prop] = css[prop]
+  })
+}
+/**
+ * @Description 获取滚动条宽度  quasar源码复制的
+ * @param {undefined} undefined
+*/
+export const getScrollbarWidth = () => {
+  const
+    inner = document.createElement('p'),
+    outer = document.createElement('div');
+  set_css(inner, {
+    width: '100%',
+    height: '200px'
+  })
+  set_css(outer, {
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    visibility: 'hidden',
+    width: '200px',
+    height: '150px',
+    overflow: 'hidden'
+  })
+  outer.appendChild(inner)
+  document.body.appendChild(outer)
+  const w1 = inner.offsetWidth
+  outer.style.overflow = 'scroll'
+  let w2 = inner.offsetWidth
+  if (w1 === w2) {
+    w2 = outer.clientWidth
+  }
+  outer.remove()
+  return w1 - w2
+}
+
+
+/**
+* @description 修改dom元素类名
+* @param domClassName string 要获取元素的类名
+* @param newName string 要修改成的类名
+* @return undefined
+*/
+export function modify_dom_classname(domClassName, newName = '') {
+  let scrollContainerW = document.getElementsByClassName(domClassName)
+  if (scrollContainerW.length > 0) {
+    for (let i = 0; i < scrollContainerW.length > 0; i++) {
+      scrollContainerW[i].className = newName
+    }
+  }
+}
+
+
+
+

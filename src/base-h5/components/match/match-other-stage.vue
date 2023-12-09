@@ -8,7 +8,7 @@
       <span v-if="detail_data.ms == 0">
         <span v-if="!start_time_other">
           <!-- {{(new Date(+detail_data.mgt)).Format(i18n_t('time3'))}} -->
-          {{utils.format_time_zone(+detail_data.mgt).Format(i18n_t('time3'))}}
+          {{format_time_zone(+detail_data.mgt).Format(i18n_t('time3'))}}
         </span>
         <span v-else>
           {{i18n_t("list.after_time_start",[longTime_other])}}
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { utils } from 'src/core/utils/common/index.js';
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import stage_child_1 from "src/project/components/match/otherStage/otherStage-1.vue";    // 详情页下滑动置顶title栏-足球的赛事时间
 import stage_child_2 from "src/project/components/match/otherStage/otherStage-2.vue";    // 详情页下滑动置顶title栏-篮球的赛事时间
@@ -54,7 +53,7 @@ export default {
       longTime_other: '',
       start_time_other: false,
       match_time_dt:0, // 赛事时间
-      utils,
+      
     };
   },
   computed: {
@@ -137,4 +136,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>src/core/utils/common/index.js
+<style lang="scss" scoped></style>

@@ -23,7 +23,7 @@ import { get } from "lodash";
       timers:1000
     }
     // axios_api轮询调用方法
-    this.$utils.axios_api_loop(obj_);
+    this.$axios_api_loop(obj_);
    * @param {*} axios_api axios api对象
    * @param {*} params 参数
    * @param {*} fun_then axios中then回调方法

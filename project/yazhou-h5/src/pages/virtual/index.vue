@@ -59,7 +59,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 import lodash from "lodash";
 import { api_common } from "src/api/index";
 import axios_api_loop from "src/core/http/axios-loop.js"
-import { go_where, utils } from "src/core/utils/common/index.js"
+import { go_where } from "src/core/utils/common/index.js"
 import { i18n_t, MenuData } from "src/output/index.js"
 import base_data from "src/core/menu-h5/menu-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
@@ -169,7 +169,7 @@ const vir_refresh = () => {
  * 虚拟体育菜单切换
  */
 const virtual_menu_changed = (i) => {
-  utils.tab_move(i,scroll_main.vlaue, scroll_box.vlaue)
+  tab_move(i,scroll_main.vlaue, scroll_box.vlaue)
   sub_menu_i.value = i;
   current_sub_menu.value = sub_menu_list.value[i];
   virtual_sports_params.csid = current_sub_menu.value.menuId;
@@ -443,4 +443,3 @@ onUnmounted(() => {
   }
 }
 </style>
-src/outputsrc/core/utils/common/index.js

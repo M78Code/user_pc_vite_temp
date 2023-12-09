@@ -16,7 +16,7 @@
       <!-- 提示消息 -->
       <icon-wapper class="icon" v-if="!is_esports" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
           <!-- 提示内容 -->
-      <div :class="['tip-content',{'is-iframe':utils.is_iframe}]" v-if="is_show_content" @click.stop>
+      <div :class="['tip-content',{'is-iframe':is_iframe}]" v-if="is_show_content" @click.stop>
         <div class="content-wrap relative-position">
           <div class="yb-icon-triangle"></div>
           <!-- 此版面现实的所有直播内容仅供参考........ -->
@@ -135,7 +135,7 @@ import noVideo from "src/base-pc/components/match-detail/match_info/no_video.vue
 import videoReplayError from "src/base-pc/components/video-replay/video-replay-error.vue"
 import { IconWapper } from 'src/components/icon'
 import info from "src/base-pc/components/match-detail/match_info/info.vue";
-import { i18n_t,format_second_ms,utils,LayOutMain_pc,compute_css_obj} from "src/output/index.js"
+import { i18n_t,format_second_ms,LayOutMain_pc,compute_css_obj} from "src/output/index.js"
 export default {
   mixins: [match_video],
   components: {
@@ -150,7 +150,7 @@ export default {
     return {
       compute_css_obj,
       LayOutMain_pc,
-      utils,
+      
       route:this.$route,
       router:this.$router,
       format_second_ms,
@@ -459,4 +459,3 @@ export default {
   }
 }
 </style>
-src/output/index

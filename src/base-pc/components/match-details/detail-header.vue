@@ -24,7 +24,7 @@
           <!-- 打开赛事分析窗口 -->
           <div
             class="sr-link-icon-w"
-            v-if="utils.is_show_sr_flg(match_infoData)"
+            v-if="is_show_sr_flg(match_infoData)"
             @click.stop="sr_click_handle(match_infoData, 'details')"
             v-tooltip="{ content: i18n_t('common.analysis') }"
           >
@@ -83,7 +83,7 @@
   <script setup>
   import { ref, defineExpose, onUnmounted } from "vue";
   import {is_eports_csid}  from "src/core/constant/util/csid-util";
-  import {utils,i18n_t}  from "src/output/index.js";
+  import {i18n_t}  from "src/output/index.js";
   import ZhuGe from "src/core/http/zhuge-tag";
   import details from "src/core/match-detail/match-detail-pc/match-detail.js";
   import info from 'src/base-pc/components/match-detail/match_info/info.vue'  

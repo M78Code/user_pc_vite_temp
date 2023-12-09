@@ -37,7 +37,7 @@ import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
-import { utils,SearchPCClass,compute_local_project_file_path } from 'src/output/index.js';
+import { SearchPCClass,compute_local_project_file_path } from 'src/output/index.js';
 
 import { IconWapper } from 'src/components/icon/index.js'
 
@@ -51,7 +51,7 @@ const img_search_icon_y0 = compute_local_project_file_path('/image/svg/y0-search
 /** 国际化 */
 
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe);
+const is_iframe = ref(is_iframe);
 
 /** stroe仓库 */
 const { searchReducer, menuReducer } = store.getState();

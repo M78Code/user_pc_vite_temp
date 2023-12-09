@@ -1,6 +1,9 @@
 import { reactive } from "vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 
+const hideTitle = [0]
+const innerTitle = [12,14]
+
 const other = {
   is_detail: true,
   // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
@@ -47,10 +50,48 @@ const common = {
       if(oddInfo.title.length){
         return 'fill'
       }
+    }else if(oddInfo.hpt == 3 && !common.haveTitle(oddInfo)){
+      return 'fill'
     }
-
     return 'default'
-  }
+  },
+  /** 是否显示投注项标题
+   * @param {TYPES.OddInfo} oddInfo 
+   * @returns {Boolean}
+   */
+  showTitle(oddInfo){
+    if(hideTitle.includes(oddInfo.hpt)||innerTitle.includes(oddInfo.hpt)){
+      return false
+    }
+    return true
+  },
+  /** 是否显示投注项内联标题
+   * @param {TYPES.OddInfo} oddInfo 
+   * @returns {Boolean}
+   */
+  showInnerTitle(oddInfo){
+    return innerTitle.includes(oddInfo.hpt)
+  },
+  /**
+   * 
+   * @param {TYPES.OddInfo} oddInfo 
+   * @returns {{title:boolean,innerTitle:boolean,olType:TYPES.OlItemType}}
+   */
+  getTemplateState(oddInfo){
+    return {
+      title: common.showTitle(oddInfo),
+      innerTitle: common.showInnerTitle(oddInfo),
+      olType: common.getOlType(oddInfo),
+    }
+  },
+  /**
+   * @param {TYPES.OddInfo} oddInfo 
+   * @returns {Boolean}
+   */
+  haveTitle(oddInfo){
+    const len = oddInfo.title.length
+    return len > 1 && len <= 4
+  },
 }
 
 export default common

@@ -82,7 +82,6 @@
 <script setup>
 import skeleton from './index.vue'
 import { ref, onMounted } from 'vue';
-import { utils } from "src/output/index.js"
 
 const thumbStyle = ref({
   background: "transparent"
@@ -94,7 +93,7 @@ const props = defineProps({
 onMounted(() => {
   // 骨架屏高度计算 弹框的高度bounced_high - 头部tab高度 - 搜索框高度
   let rem_1 = window.innerWidth * 100 / 375;
-  skeleton_height.value = window.innerHeight - rem_1 + 50 - utils.rem(0.56 + 0.5) + 'px'
+  skeleton_height.value = window.innerHeight - rem_1 + 50 - rem(0.56 + 0.5) + 'px'
 })
 </script>
 
@@ -142,4 +141,3 @@ onMounted(() => {
   }
 }
 </style>
-src/output
