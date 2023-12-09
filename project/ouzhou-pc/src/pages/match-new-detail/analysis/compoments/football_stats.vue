@@ -5,7 +5,7 @@
  * @Description: 足球赛事分析页
 -->
 <template>
-  <div class="detail-tab" v-if="!_.isEmpty(score_list)">
+  <div class="detail-tab" v-if="!lodash.isEmpty(score_list)">
     <div>
       <div class="detail-tab-team">
         <div class="detail-tab-team-pos">
@@ -60,7 +60,7 @@
 <script setup>
 import { onMounted, ref,computed } from "vue";
 import { i18n_t } from "src/boot/i18n.js"
-import _ from "lodash"
+// import _ from "lodash"
 const props =  defineProps({
   detail_info: {  // 赛事详情
     type: Object,
