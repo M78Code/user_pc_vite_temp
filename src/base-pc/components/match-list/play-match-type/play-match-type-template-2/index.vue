@@ -37,8 +37,8 @@
 </template>
   
 <script setup>
-import choose_config from 'src/core/constant/config/ouzhou-pc-choose-config.js'
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
+import {choose_config} from 'src/output/index.js'
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
@@ -69,6 +69,7 @@ function handle_click() {
   }
 }
 const cur_title_info = computed(() => {
+ 
   let { card_type = 'no_start_title', csid, match_count } = props.card_style_obj;
   let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
   let title_obj = {
@@ -103,6 +104,7 @@ function handle_hpid_choose(item) {
   current_csid_hpids.value = item
   MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid, item)
 }
+
 
 </script>
 <style lang="scss" scoped>

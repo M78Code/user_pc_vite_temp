@@ -1,9 +1,11 @@
 <template>
-  <div class="component odd-ol-item" v-if="vif"
-    :class="[{ 'active': active }, status, type]"
+  <div class="component odd-ol-item"
+    :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
   >
-    <div class="icontainer" @click="common.betClick(value)">
-      <template v-if="isLock">
+    <div class="icontainer" v-if="vif"
+      @click="onClick"
+    >
+      <template v-if="isLock" @click.stop>
         <div class="ol-lock">
           <img :src="odd_lock_ouzhou" alt="lock" class="ol-lock-img">
         </div>
@@ -21,7 +23,21 @@
         </div>
       </template>
     </div>
+    <!-- 赛果 -->
+    <div class="icontainer ol-result" v-else
+    >
+      <div class="item ol-name" :alt="olName">
+        <span class="ol-name-span">{{ olName }}</span>
+      </div>
+      <div class="separate"></div>
+      <div class="item ol-content or-state">
+        <div class="ol-content-ov">
+          {{ i18n_t('bet_record.bet_no_status0'+value['result']) }}
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- <ResultOlItem :value="value"></ResultOlItem> -->
 </template>
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
@@ -35,9 +51,11 @@ import {
   ouzhou_white_down,
   ouzhou_white_up
 } from "src/base-h5/core/utils/local-image.js";
+import ResultOlItem from '../../result/ResultOlItem.vue';
+import { calcOlResult } from 'src/output/index'
 
 const props = withDefaults(defineProps<{
-  value: TYPES.Ol,
+  value: TYPES.OlResult|TYPES.Ol,
   type?: TYPES.OlItemType
 }>(), {
   type: 'default'
@@ -74,6 +92,12 @@ const isLock = computed(() => {
     return true
   }
 })
+function onClick(){
+  if(isLock.value){
+    return
+  }
+  common.betClick(props.value)
+}
 
 let timer = 0
 function resetStatus() {
@@ -104,11 +128,15 @@ function resetStatus() {
   flex-basis: 25%;
 
   --private-ol-content-color: #FF7000;
-
+  &.r-win,&.r-win-half{
+    background-color: #FFC8C8; //#TODO: css var
+    .ol-result{
+      --private-ol-content-color: #FF4646; //#TODO: css var
+    }
+  }
   &.active {
     background-color: #FF70001A;
   }
-
   &.none {}
 
   &.up,
@@ -130,6 +158,9 @@ function resetStatus() {
 .icontainer {
   display: flex;
   width: 100%;
+  &.ol-result{
+    --private-ol-content-color: #8A8986; //#TODO: css var
+  }
 }
 
 .separate {

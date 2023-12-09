@@ -28,7 +28,7 @@ class MatchCollect {
       cf: league_collect ? 0 : 1,
       cuid: UserCtr.get_uid()
     }).then(res => {
-      if (+res.code !== 200) return
+      if (+res.code !== 200) return;
     })
     // 收藏页手动处理数据
     MenuData.is_collect() && MatchMeta.set_collect_match(value, 1)

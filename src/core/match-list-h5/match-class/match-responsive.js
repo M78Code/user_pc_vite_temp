@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { use_sports_play_title } from 'src/core/constant/index.js'
+import { use_sports_play_title } from 'src/output/module/constant-utils.js'
 import { MenuData } from "src/output/index";
 
 /**

@@ -2,7 +2,14 @@
     <div class="right-actions">
         <ul class="list">
             <li v-for="(item, i) in list" :key="i" class="item" @click="handleClick(item, index)">
-                <img :src="props.isCollect && item.label == 'collect' ? item.active : item.img" alt="" class="icon" v-if="item.img" />
+                <div>
+                    <img :src="props.isCollect && item.label == 'collect' ? item.active : item.img" alt="" class="icon" v-if="item.img" />
+                    <p v-else class="score">
+                        <span>{{ item.score[0] || 0 }}</span>
+                        <span>:</span>
+                        <span>{{ item.score[1] || 0 }}</span>
+                    </p>
+                </div>
             </li>
         </ul>
     </div>
@@ -36,8 +43,32 @@ const props = defineProps({
     rightActionsLabel: {
         type: String,
         default: 'animation'
+    },
+    // 详情
+    detail: {
+        type: Object,
+        default: () => ({})
     }
 });
+
+const scoew_icon_list = ref([])
+/**
+ *@description // 比分板数据
+ *@param {*}
+ *@return {*}
+ */
+const set_scoew_icon_list = (new_value) => {
+  if (new_value && new_value.msc) {
+    for (let key in new_value.msc) {
+      let score_key_arr = new_value.msc[key].split("|");
+      let score_value_arr = score_key_arr[1].split(":");
+      scoew_icon_list.value[score_key_arr[0]] = {
+        home: score_value_arr[0],
+        away: score_value_arr[1],
+      };
+    }
+  }
+};
 
 watch(() => props.rightActionsLabel, (value) => {
     select.value = value;
@@ -48,6 +79,11 @@ watch(() => props.rightActionsLabel, (value) => {
         is_video.value = false;
     }
 })
+
+watch(props.detail, (value) => {
+    // console.log(value, "value===");
+    scoew_icon_list.value = value?.msc_obj||set_scoew_icon_list(value)
+}, {deep: true, immediate: true})
 
 const emits = defineEmits(['handleType'])
 // 展示的项,根据不同的值显示不同的actions
@@ -67,7 +103,7 @@ const is_video = ref(props.isVideo);
 const list = computed(() => {
     const res = [
         {label: 'animation', img: is_video.value ? `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video.png` :  `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation.png`, value: 0},
-        {label: 'score', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/score.png`, value: 1},
+        {label: 'score',  value: 1, score: [scoew_icon_list.value['S1'].home, scoew_icon_list.value['S1'].away]},
         {label: 'collect', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect_gray.png`, active: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`, value: 2},
     ];
     return res.filter(e => mapObj.value[props.status].includes(e.value));
@@ -169,5 +205,13 @@ const handleClick = (item, index) => {
             height: 16px;
         }
     }
+}
+
+.score {
+    color: white;
+    font-size: 12px;
+    padding: 0px 3px;
+    border-radius: 4px;
+    border: 2px solid #ffffff;
 }
 </style>
