@@ -3,8 +3,8 @@
   
   <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj,null,!MenuData.is_home())">
     <div class="left-box">
-      <sport_icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
-        :sport_id="card_style_obj.csid" size="18px" class="icon" color_type="gray_ball" />
+      <sport_icon v-if="card_style_obj?.card_type == 'sport_title'"  :data-id="card_style_obj.csid"
+        :sport_id="MenuData.current_ball_type" size="18px" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
       
       <span v-if="!MenuData.is_esports()">{{ cur_title_info.name }}</span>
@@ -69,6 +69,7 @@ function handle_click() {
   }
 }
 const cur_title_info = computed(() => {
+ 
   let { card_type = 'no_start_title', csid, match_count } = props.card_style_obj;
   let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
   let title_obj = {
@@ -103,6 +104,7 @@ function handle_hpid_choose(item) {
   current_csid_hpids.value = item
   MatchListCardDataClass.set_csid_current_hpids(props.card_style_obj.csid, item)
 }
+
 
 </script>
 <style lang="scss" scoped>
