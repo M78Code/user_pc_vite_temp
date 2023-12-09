@@ -21,9 +21,8 @@
 <script setup>
   import lodash from 'lodash';
   import { computed, onMounted, onUnmounted, ref, watch } from "vue"
-  // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
+  import { counting_time_ctr_show_format } from 'src/core/format/common/index.js'
   import { format_mgt_time } from "src/output/index.js"
-  import { utils } from 'src/core/utils/common/index.js';
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 // import { format_mgt_time } from "src/output/index.js";
   const props = defineProps({
