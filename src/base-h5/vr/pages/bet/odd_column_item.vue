@@ -63,7 +63,7 @@
 </template>
 <script>
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
-import betting from 'src/project/mixins/betting/betting.js';
+// import betting from 'src/project/mixins/betting/betting.js';
 
 export default{
   name:"oddColumnItem",
@@ -83,7 +83,8 @@ export default{
       default:false
     },
   },
-  mixins:[odd_convert,betting],
+  // mixins:[odd_convert,betting],
+  mixins:[odd_convert],
   data(){
     return {
       // 投注项

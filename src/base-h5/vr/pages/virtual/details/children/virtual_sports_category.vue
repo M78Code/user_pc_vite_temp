@@ -39,23 +39,23 @@
 <script>
 import tournament_play_new from "src/project/pages/details/components/tournament_play/tournament_play_new.vue"
  // 引入接口封装文件
-import { api_common } from 'src/project/api/index.js'
+import { api_common } from "src/api/index.js";
  // 引入投注逻辑mixin
-import betting from "src/project/mixins/betting/betting.js";
+// import betting from "src/project/mixins/betting/betting.js";
  // 引入加载中的组件
-import loading from "src/project/components/common/loading.vue"
+import loading from 'src/base-h5/components/common/loading.vue';
  // 引入quasar
 import { dom } from 'quasar'
  // 引入处理数据的封装方法
 import MatchInfoCtr from "src/public/utils/dataClassCtr/matchInfoCtr.js";
-import VSport from 'src/public/utils/vsport/vsport.js';
-import axios_debounce_cache from "utils/http/axios_debounce_cache";
+import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
+import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 
 
 const { height, width, css} = dom
 
 export default {
-  mixins:[betting],
+  // mixins:[betting],
   name: 'virtual_sports_category',
   data(){
     return {

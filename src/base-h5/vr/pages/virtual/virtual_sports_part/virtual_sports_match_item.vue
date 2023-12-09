@@ -568,7 +568,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@include keyframes(dir_remind_animate) {
+
+
+@keyframes dir_remind_animate {
   0% {
     transform: translateX(0);
     opacity: 0;
@@ -583,7 +585,7 @@ export default {
   }
 }
 
-@include keyframes(dir_right_remind_animate) {
+@keyframes dir_right_remind_animate {
   0% {
     transform: translateX(-0.09rem);
     opacity: 0;

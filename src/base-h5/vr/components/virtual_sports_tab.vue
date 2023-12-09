@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { api_common } from "src/project/api/index.js";
+import { api_common } from "src/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 

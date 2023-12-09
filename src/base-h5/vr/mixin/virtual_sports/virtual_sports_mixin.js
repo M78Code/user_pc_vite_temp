@@ -3,9 +3,9 @@
  * @Date: 2020-12-30 10:37:23
  * @Description:
  */
-import { api_v_sports } from "src/project/api/index.js";
-import VSport from "src/public/utils/vsport/vsport.js"
-import { api_common} from "src/project/api/index.js";  // 引入api接口封装文件
+import { api_v_sports } from "src/base-h5/vr/api";
+import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
+import { api_common } from "src/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
 

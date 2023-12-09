@@ -3,7 +3,7 @@
  * @Date: 2021-01-05 21:38:34
  * @Description:
  */
-import VSport from "src/public/utils/vsport/vsport.js"
+import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/"
 

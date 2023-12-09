@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import { api_v_sports } from "src/project/api/index.js";
-import common from 'src/project/mixins/constant/module/common.js';
-import teamImg from 'src/project/components/details/team_img.vue'
+import { api_v_sports } from "src/base-h5/vr/api";
+import common from 'src/base-h5/vr/mixin/constant/module/common.js';
+import teamImg from 'src/base-h5/vr/components/team_img.vue';
 export default {
   name: "virtual_basketball",
   mixins:[common],

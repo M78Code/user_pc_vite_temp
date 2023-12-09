@@ -133,7 +133,7 @@ import virtual_sports_stage from "src/base-h5/vr/pages/virtual/virtual_sports_pa
 import dynamic_ranking from "src/base-h5/vr/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
 import result_page from "src/base-h5/vr/pages/result/result_page.vue"
 import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
-import setting from "src/project/components/common/setting";
+// import setting from "src/project/components/common/setting";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 export default {
@@ -536,7 +536,7 @@ export default {
     'dynamic-ranking': dynamic_ranking,
     'result-page': result_page,
     noData,
-    'setting': setting,
+    // 'setting': setting,
 
     'virtual-skeleton':virtual_skeleton,
   },

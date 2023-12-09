@@ -129,7 +129,7 @@
 
 <script>
 import data_pager from "src/public/components/common/data_pager.vue"
-import setting from "src/project/components/common/setting";
+// import setting from "src/project/components/common/setting";
 const static_serve = window.env.config.static_serve[0];
 export default {
   name:'virtual_match_container',
@@ -424,7 +424,7 @@ export default {
   },
   components:{
     'data-pager':data_pager,
-    setting
+    // setting
   },
 }
 </script>

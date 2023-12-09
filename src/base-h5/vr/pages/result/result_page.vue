@@ -90,7 +90,7 @@
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 
 // 引入接口封装文件
-import { api_common } from 'src/project/api/index.js'
+import { api_common } from "src/api/index.js";
 export default {
   mixins:[odd_convert],
   name:'result_page',

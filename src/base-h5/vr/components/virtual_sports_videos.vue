@@ -30,7 +30,7 @@
 
 <script>
 import settleDialog from "src/project/components/footer_bar/settle_dialog.vue";
-import virtualSportsTimer from "src/project/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
+import virtualSportsTimer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
 export default {
   name:'virtual_sports_videos',
   data(){

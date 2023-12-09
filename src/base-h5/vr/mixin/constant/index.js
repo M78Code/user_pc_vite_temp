@@ -4,7 +4,7 @@
  * @Description: 所有import路径替换成相对路径
  */
 
-import common  from "src/project/mixins/constant/module/common.js"
+import common  from "src/base-h5/vr/mixin/constant/module/common.js"
 export default {
   // 混入常量
   mixins:[common]
