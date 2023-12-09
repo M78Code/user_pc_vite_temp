@@ -221,7 +221,7 @@ export default {
       detail_loading,
       detail_info,
       sportId,
-      all_hl_item,
+      // all_hl_item,
       init,
       show_close_thehand,
       matchDetailList,

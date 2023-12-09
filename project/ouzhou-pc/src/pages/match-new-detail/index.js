@@ -7,7 +7,7 @@ import {
   MenuData,
   MatchDetailCalss,
   SearchPCClass,
-  utils
+  // utils
 } from "src/output/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {
@@ -18,7 +18,7 @@ import {
 import { useGetGlobal } from "src/core/global/mixin/global_mixin.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 import { LayOutMain_pc } from "src/output";
-import lodash_ from "lodash";
+// import lodash. from "lodash";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
 import { addWsMessageListener } from "src/core/utils/common/module/ws-message.js";
@@ -106,7 +106,7 @@ export function usedetailData(route) {
       list || []
     );
     detail_list.value =
-      lodash_.get(getMidInfo(route.params.mid), "odds_info") || [];
+      lodash.get(getMidInfo(route.params.mid), "odds_info") || [];
 
 
     show_close_thehand.value = list.length == 0;
@@ -149,7 +149,7 @@ export function usedetailData(route) {
       // axios中then回调方法
       fun_then: (res) => {
           // 空赛事数据跳转回首页
-          if (lodash_.isEmpty(res.data)) {
+          if (lodash.isEmpty(res.data)) {
             router.push({
               name: "home",
             });
@@ -326,7 +326,7 @@ export function usedetailData(route) {
   const update_data = (val) => {
     if (!val) return;
     detail_info.value = getMidInfo(val);
-    all_list.value = lodash_.get(getMidInfo(val), "odds_info");
+    all_list.value = lodash.get(getMidInfo(val), "odds_info");
   };
   /**
    * @description: 从仓库获取获取赛事信息
@@ -362,7 +362,7 @@ export function usedetailData(route) {
     };
 
     api_details.set_playTop(params).then((res) => {
-      const code = lodash_.get(res, "code");
+      const code = lodash.get(res, "code");
       if (code == 200) {
         if (!params.status) {
           //置顶
