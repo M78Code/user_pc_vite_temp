@@ -40,6 +40,7 @@ import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp10",
   props: ["item_data", "title"],
@@ -93,7 +94,7 @@ export default defineComponent({
       lodash,
       temp_odds,
       LOCAL_PROJECT_FILE_PREFIX,
-      utils
+      go_to_bet
     }
   }
 })

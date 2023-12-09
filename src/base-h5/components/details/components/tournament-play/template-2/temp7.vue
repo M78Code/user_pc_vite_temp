@@ -257,12 +257,11 @@
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
+import { LOCAL_PROJECT_FILE_PREFIX,calc_win } from 'src/output/index.js';
 import BetData from "src/core/bet/class/bet-data-class.js"
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp7",
   // #TODO mixins
@@ -273,12 +272,13 @@ export default defineComponent({
   },
   data() {
     return {
+      calc_win,
       LOCAL_PROJECT_FILE_PREFIX
     }
   },
   setup(props, evnet) {
     return {
-      
+      go_to_bet,
       BetData
     }
   }

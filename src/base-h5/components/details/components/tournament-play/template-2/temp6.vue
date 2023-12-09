@@ -280,7 +280,7 @@
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import { LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance  } from 'src/output/index.js';
+import { LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance ,calc_win } from 'src/output/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
@@ -289,7 +289,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 //国际化
 import BetData from "src/core/bet/class/bet-data-class.js"
-
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -434,7 +434,7 @@ export default defineComponent({
     };
     return {
       ...toRefs(state_data),
-      
+      calc_win,
       i18n_t,
       BetData,
       get_cur_odd,
@@ -450,6 +450,7 @@ export default defineComponent({
       check_score,
       set_highlight_cls,
       LOCAL_PROJECT_FILE_PREFIX,
+      go_to_bet
     }
   }
 })
