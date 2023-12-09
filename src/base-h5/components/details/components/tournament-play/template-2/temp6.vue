@@ -289,7 +289,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 //国际化
 import BetData from "src/core/bet/class/bet-data-class.js"
-
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -450,6 +450,7 @@ export default defineComponent({
       check_score,
       set_highlight_cls,
       LOCAL_PROJECT_FILE_PREFIX,
+      go_to_bet
     }
   }
 })

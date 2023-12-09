@@ -113,6 +113,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router";
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -139,6 +140,7 @@ export default defineComponent({
       get_is_hengping,
       is_match_result,
       LOCAL_PROJECT_FILE_PREFIX,
+      go_to_bet
     }
   }
 })

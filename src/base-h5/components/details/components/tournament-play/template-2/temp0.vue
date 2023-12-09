@@ -193,7 +193,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { useMittEmit, MITT_TYPES ,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win} from "src/output/index.js"
 //国际化
-
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 
 export default defineComponent({
   // #TODO mixins
@@ -302,7 +302,8 @@ export default defineComponent({
       change_show,
       hide_show_more_layout,
       LOCAL_PROJECT_FILE_PREFIX,
-      BetData
+      BetData,
+      go_to_bet
     }
   }
 })
