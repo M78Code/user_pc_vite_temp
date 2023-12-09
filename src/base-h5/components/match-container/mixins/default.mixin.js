@@ -777,7 +777,7 @@ export default defineComponent({
       const msc_obj = MatchDataBaseH5.serialized_score_obj(this.match_of_list.msc, true)
 
       // 比分处理
-      const { home_score, away_score } = Matchget_match_score({ ...this.match_of_list, msc_obj })
+      const { home_score, away_score } = MatchUtils.get_match_score({ ...this.match_of_list, msc_obj })
 
       this.home_score = home_score
       this.away_score = away_score
