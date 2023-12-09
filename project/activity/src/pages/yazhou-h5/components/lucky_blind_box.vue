@@ -286,10 +286,7 @@ import data_pager from "project/activity/src/components/data_pager.vue";
 import active_count_down from "./active_count_down.vue";
 import common from "project/activity/src/mixins/module/common.js";
 import formartmixin from 'project/activity/src/mixins/module/formartmixin.js';
-import {gtag_config_send,
-gtag_view_send,
-gtag_event_send,
-send_zhuge_event  ,format_time_zone_time ,is_time_limit } from "project_path/src/core/index.js"
+import { GATAG ,format_time_zone_time ,is_time_limit } from "project_path/src/core/index.js"
 import { UserCtr } from "project_path/src/core/index.js";
 
 export default {
