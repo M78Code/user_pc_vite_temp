@@ -73,10 +73,10 @@ export default defineComponent({
     });
     const score = computed(() => {
       return {
-        // format_total_score(props.detail_data, 0),
-        // format_total_score(props.detail_data, 1)
-        home: '',
-        away: '',
+        
+       
+        home: format_total_score(props.detail_data, 0),
+        away: format_total_score(props.detail_data, 1)
       }
     });
     const eports_scoring = computed(() => {
@@ -172,7 +172,7 @@ export default defineComponent({
 
 .header-font {
   font-size: 0.16rem;
-  color: var(--q-gb-t-c-18);
+  color: var(--q-gb-t-c-14);
   letter-spacing: 0;
   font-weight: 600;
 }
