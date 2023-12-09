@@ -274,5 +274,3 @@ function confirm() {
 
 /** 弹窗样式 -E*/
 </style>
-
-src/output/index.jssrc/output/index.js

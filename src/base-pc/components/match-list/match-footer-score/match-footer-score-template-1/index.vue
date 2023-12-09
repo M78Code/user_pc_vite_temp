@@ -233,4 +233,3 @@ function scorll (type) {
   }
 }
 </style>
-src/output/index.jssrc/output/index.jssrc/output/index.js

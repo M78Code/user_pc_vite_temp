@@ -95,4 +95,3 @@ watch(() => props.scrollEle, (val) => {
 }
 
 </style>
-src/output/index.jssrc/output/index.js

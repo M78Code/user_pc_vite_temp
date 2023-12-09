@@ -35,4 +35,3 @@ const imgSrc = reactive({
     margin: 0 auto;
 }
 </style>
-  src/output/index.jssrc/core/utils/common/module/web-storage.js

@@ -436,4 +436,3 @@ export default {
   },
 };
 </script>
-src/output/index.jssrc/output/index.js

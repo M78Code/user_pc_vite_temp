@@ -135,4 +135,3 @@ import { t } from "src/output/index.js";
   }
 }
 </style>
-src/output/index.jssrc/output/index.js

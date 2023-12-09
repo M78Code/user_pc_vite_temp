@@ -403,4 +403,3 @@ export default {
   }
 }
 </style>
-src/output/index.jssrc/output/index.js
