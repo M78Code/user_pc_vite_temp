@@ -101,3 +101,7 @@ class TabMove {
     }
   }
 }
+
+const tab_move = new TabMove();
+
+export default tab_move

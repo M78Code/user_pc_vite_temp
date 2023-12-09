@@ -85,7 +85,6 @@ import { onMounted, onActivated, onUnmounted, ref, watch, computed, nextTick } f
 import { IconWapper } from "src/components/icon";
 import { BackTop } from "src/components/back-top";
 import LoadData from "src/components/load_data/load_data.vue";
-console.log('fsadhgbuadghbdg');
 
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/index.vue"; //热门赛事列表 头部筛选
@@ -97,7 +96,6 @@ import ScrollList from "src/base-pc/components/cus-scroll/scroll_list.vue";
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue"; //电竞赛事列表筛选
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 import PlayMatchLeague from './play-match-league.vue'
-
 
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import {

@@ -40,7 +40,7 @@ import { compute_local_project_file_path } from 'src/output/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 import store from "src/store-redux/index.js";
 import { useRoute } from "vue-router";
-import {  utils } from "src/core/utils/common/module/js";
+import {  utils } from "src/core/utils/common/module/utils.js";
 const route =useRoute()
 // 是否pc项目
 const IS_PC = window.BUILDIN_CONFIG.PROJECT_NAME.includes('pc')
