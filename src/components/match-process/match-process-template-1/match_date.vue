@@ -67,7 +67,7 @@ import timer from "src/components/timer/timer.vue";
 import {get_match_status,i18n_t,get_remote_time } from 'src/output/index.js';
 import { counting_time_ctr_show_format_ouzhou,format_second_ms ,counting_time_ctr_show_format ,format_time_zone_millisecond,format_date_base_obj} from "src/core/format/common/index.js"
 
-import {is_eports_csid}  from "src/core/constant/util/csid-util";
+import {is_eports_csid}  from "src/core/constant/common/module/csid-util.js";
 import lodash from "lodash";
 // import { t } from "src/output/index.js";;
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
