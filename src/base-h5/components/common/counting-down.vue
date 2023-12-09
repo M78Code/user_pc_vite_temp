@@ -23,7 +23,7 @@
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import { ref, computed, watch, nextTick, onActivated, onMounted, onUnmounted, onDeactivated } from "vue"
-import { i18n_t, utils } from 'src/output/index.js'
+import { i18n_t } from 'src/output/index.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 const props = defineProps({
