@@ -2,34 +2,25 @@
  * app-h5  复刻版  -  电竞赛事
 -->
 <template>
-  <ObserverWrapper :match_list="MatchMeta.complete_matchs">
-    <!-- 内容区 -->
-    <template v-slot:content="{ item, index }">
-      <template v-if="is_show_match_item(index)">
-        <ObserverItem :index="index" :item="item"></ObserverItem>
-      </template>
-    </template>
-  </ObserverWrapper>
+  <ObserverWrapper :match_list="matchs_data"></ObserverWrapper>
 </template>
  
 <script setup>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
-import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item.vue'
-import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 
-const defer_render = use_defer_render()
+
+const matchs_data = ref([])
 
 onMounted(() => {
-  MatchMeta.get_esports_match()
+  get_esports_match()
 })
 
-const is_show_match_item = computed(() => {
-  return (index) => {
-    return defer_render(index)
-  }
-})
+const get_esports_match = async () => {
+  matchs_data.value = await MatchMeta.get_esports_match()
+  console.log( matchs_data.value )
+}
 
 </script>
  
