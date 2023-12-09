@@ -50,8 +50,9 @@ const common = {
       if(oddInfo.title.length){
         return 'fill'
       }
+    }else if(oddInfo.hpt == 3 && !common.haveTitle(oddInfo)){
+      return 'fill'
     }
-
     return 'default'
   },
   /** 是否显示投注项标题
@@ -82,6 +83,14 @@ const common = {
       innerTitle: common.showInnerTitle(oddInfo),
       olType: common.getOlType(oddInfo),
     }
+  },
+  /**
+   * @param {TYPES.OddInfo} oddInfo 
+   * @returns {Boolean}
+   */
+  haveTitle(oddInfo){
+    const len = oddInfo.title.length
+    return len > 1 && len <= 4
   },
 }
 
