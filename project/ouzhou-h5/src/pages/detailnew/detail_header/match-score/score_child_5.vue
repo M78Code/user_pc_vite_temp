@@ -39,9 +39,14 @@ const scoreArray = computed(() => {
     width: 100%;
     height: 100%;
     display: flex;
+    background: #ffffff;
     align-items: center;
+    padding: 0 17px;
+    font-size: 14px;
+    border-top: 1px solid #F5F5F5;
     .score{
-        margin-right: 8px;
+        margin-right: 20px;
+       
     }
 }
 </style>

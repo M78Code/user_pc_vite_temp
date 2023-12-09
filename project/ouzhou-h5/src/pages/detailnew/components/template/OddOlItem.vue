@@ -37,7 +37,6 @@
       </div>
     </div>
   </div>
-  <!-- <ResultOlItem :value="value"></ResultOlItem> -->
 </template>
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
@@ -117,7 +116,7 @@ function resetStatus() {
   text-wrap: nowrap;
 }
 
-.component {
+.component.odd-ol-item{
   width: 100%;
   display: flex;
   align-items: center;

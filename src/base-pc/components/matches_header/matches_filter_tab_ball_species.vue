@@ -1,6 +1,7 @@
 <template>
   <div class="current-filter-wrap" ref="area_obj_wrap">
     <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
+      <div v-show="false">{{UserCtr.user_version}}-{{BaseData.base_data_version}}</div>
       <!-- 常规体育 -->
       <!-- 暂时只显示足、篮 => [101, 102] -->
       <template v-for="(item, index) in mi_100_arr" :key="index">
@@ -81,6 +82,7 @@
 import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/components/match-list/list-filter/index.js"
 import { MenuData ,useMittOn,MITT_TYPES, } from "src/output/index.js"
 import { compute_img_url } from 'src/core/server-img/index.js'

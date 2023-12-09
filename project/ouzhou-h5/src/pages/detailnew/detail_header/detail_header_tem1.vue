@@ -19,7 +19,6 @@
      <!-- {{ get_match_detail.msid }} -->
         
         <div class="match-detail-time-collect" v-if="show_collect" >
-
           <!-- 显示视频按钮 -->
           <div v-if="status == 1 || status == 3" @click="handleChange('video')">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video"/>
@@ -44,14 +43,17 @@
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">{{ get_match_detail.mhn }}</div>
-        <div class="match-detail-num" v-if="scoew_icon_list['S1']">
-          {{ scoew_icon_list["S1"].home }}
+        <span v-if="false">{{ detail_count }}</span>
+        <div class="match-detail-num" >
+          <!-- {{ scoew_icon_list["S1"].home }} -->
+          {{ detail_count?.home }}
         </div>
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">{{ get_match_detail.man }}</div>
-        <div class="match-detail-num" v-if="scoew_icon_list['S1']">
-          {{ scoew_icon_list["S1"].away }}
+        <div class="match-detail-num" v-if=" get_match_detail.man">
+          <!-- {{ scoew_icon_list["S1"].away }} -->
+          {{ detail_count?.away }}
         </div>
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
@@ -88,10 +90,9 @@
           </template>
         </div>
       </template>
-     
     </div>
      <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.msid == 5"  :detail_data="get_match_detail" />
+     <matchScore v-if="get_match_detail.csid == 5"  :detail_data="get_match_detail" />
   </div>
 </template>
 
@@ -154,6 +155,11 @@ const status = computed(() => {
 
 watch(() => props.get_match_detail, (value) => {
   console.log(value, "props.get_match_detail");
+})
+
+//比分
+const detail_count = computed(() => {
+  return scoew_icon_list.value['S1'];
 })
 
 const show_time_counting = computed(() => {
@@ -314,7 +320,7 @@ const set_basketball_score_icon_list = () => {
     ];
   }
 };
-const scoew_icon_list = ref([])
+const scoew_icon_list = ref({})
 /**
  *@description // 比分板数据
  *@param {*}
@@ -332,6 +338,31 @@ const set_scoew_icon_list = (new_value) => {
     }
     // console.log("scoew_icon_list", scoew_icon_list);
   }
+};
+
+/**
+ *@description 取出符合网球阶段的比分
+  *@param {Undefined}
+  *@return {Array} 比分集合
+  */
+const initEvent = () => {
+  // // 第一盘比分，第二盘比分，第三盘比分，第四盘比分，第五盘比分;
+  const msc_array = ['S23','S39','S55','S71','S87'];
+  let msc = props.get_match_detail.msc;
+  // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
+  msc = _.sortBy( msc, (item) => {
+    return +(item.split("|")[0]).substring(1)
+  })
+  let score_arr = [];
+  // 循环只取出接口返回的比分里面符合网球阶段的比分
+  _.forEach(msc, (item)=>{
+    // S1 S2 S3 S19 S20 ...
+    let num_index = item.split("|")[0];
+    if(msc_array.includes(num_index)){
+      score_arr.push(item.split("|")[1]);
+    }
+  })
+  return score_arr;
 };
 
 /**
@@ -365,7 +396,7 @@ onMounted(()=>{
 })
 
 // console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
-watch(()=>props.get_match_detail, (new_value, old_value) => {
+watch(props.get_match_detail, (new_value, old_value) => {
   scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
   // set_scoew_icon_list(new_value);
   // 意义不明

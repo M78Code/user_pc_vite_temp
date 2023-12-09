@@ -142,7 +142,7 @@ declare namespace K {
     /** 投注项的name? */ on: string,
   };
     /** 投注项列ID? */ type otd = {
-    /** 投注项列ID? */ otd: string
+    /** 投注项列ID? */ otd: number
   };
   /** 投注项头名称 */ type ott = {
     /** 投注项头名称 */ ott: string
