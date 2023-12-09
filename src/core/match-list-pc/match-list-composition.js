@@ -3,9 +3,9 @@ import {
 } from "vue";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { 
-	MatchDataWarehouse_PC_List_Common as MatchListData, 
-	MatchDataWarehouse_PC_Detail_Common, 
+import {
+	MatchDataWarehouse_PC_List_Common as MatchListData,
+	MatchDataWarehouse_PC_Detail_Common,
 } from "src/output/module/match-data-base.js";
 import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -16,7 +16,7 @@ import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
-import { MenuData} from "src/output/module/menu-data.js"
+import { MenuData } from "src/output/module/menu-data.js"
 import { fethc_collect_match, collect_count } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
@@ -129,49 +129,53 @@ export function fetch_match_list(is_socket = false, cut) {
 		/**返回数据处理************/
 		api && api(_params)
 			.then((res) => {
-				// 组件和路由不匹配 菜单id不匹配aa
-				// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
-				api_error_count = 0;
-				if (res.code == 200) {
-					try {				//处理服务器返回的 列表 数据   fetch_match_list
-						handle_match_list_request_when_ok(
-							JSON.parse(JSON.stringify(res)),
-							is_socket,
-							cut
-						);
-					} finally {
-						if (lodash.get(res, "data.length") != undefined || lodash.get(res, "data.data.length") != undefined) {
-							const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
-							set_load_data_state(len ? 'data' : 'empty')
+				try {
+					// 组件和路由不匹配 菜单id不匹配aa
+					// if ((page_source != "details") || _params.euid != match_api.params.euid) return;
+					api_error_count = 0;
+					if (res.code == 200) {
+						try {				//处理服务器返回的 列表 数据   fetch_match_list
+							handle_match_list_request_when_ok(
+								JSON.parse(JSON.stringify(res)),
+								is_socket,
+								cut
+							);
+						} finally {
+							if (lodash.get(res, "data.length") != undefined || lodash.get(res, "data.data.length") != undefined) {
+								const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
+								set_load_data_state(len ? 'data' : 'empty')
+							}
+							else {
+								const livedata = lodash.get(res, "data.livedata.length", 0)
+								const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
+								set_load_data_state(livedata + nolivedata > 0 ? 'data' : 'empty')
+							}
 						}
-						else {
-							const livedata = lodash.get(res, "data.livedata.length", 0)
-							const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
-							set_load_data_state(livedata + nolivedata > 0 ? 'data' : 'empty')
+
+					} else if (res.code == "0401038") {
+						// let is_collect = this.vx_layout_list_type == 'collect'
+						// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
+						if (MenuData.is_collect && res.code == '0401038') {
+							set_load_data_state("api_limited")
+
+						}
+						if (!is_socket) {
+							set_load_data_state("api_limited")
+						}
+					} else {
+						if (!is_socket) {
+							set_load_data_state("empty")
+
 						}
 					}
-
-				} else if (res.code == "0401038") {
-					// let is_collect = this.vx_layout_list_type == 'collect'
-					// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
-					if (MenuData.is_collect && res.code == '0401038') {
-						set_load_data_state("api_limited")
-
-					}
-					if (!is_socket) {
-						set_load_data_state("api_limited")
-					}
-				} else {
-					if (!is_socket) {
-						set_load_data_state("empty")
-
-					}
+					show_refresh_mask.value = false;
+				} catch (error) {
+					//如果是代码报错不要走重复请求
+					console.log('error', err);
 				}
-
-				show_refresh_mask.value = false;
 			})
 			.catch((err) => {
-				console.log('error', err);
+				console.log('catch', err);
 				show_refresh_mask.value = false;
 				// 如果是用户切换菜单
 				if (!is_socket) {
