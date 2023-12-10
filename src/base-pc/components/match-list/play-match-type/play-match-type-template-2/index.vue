@@ -7,8 +7,7 @@
         :sport_id="MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-active-image" size="18" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
       
-      <span v-if="!MenuData.is_esports()">{{ cur_title_info.name }}</span>
-      <span v-else>{{ BaseData.menus_i18n_map[MenuData.menu_current_mi] }}</span>
+      <span>{{ BaseData.menus_i18n_map[Number(MenuData.current_ball_type) + 100] }}</span>
       <!-- 赛事数量 -->
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
@@ -38,17 +37,13 @@
   
 <script setup>
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
-import {choose_config} from 'src/output/index.js'
+import {choose_config, t} from 'src/output/index.js'
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
 import MenuData from 'src/core/menu-pc/menu-data-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
-import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
-import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-import { t, useEventListener } from "src/output/index.js";
 import BaseData from "src/core/base-data/base-data.js";
 
 const route = useRoute()
