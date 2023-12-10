@@ -1,6 +1,6 @@
 <!--
  * @Date: 2021-06-02 14:37:10
- * @FilePath: /user-pc1/project/activity/src/pages/yazhou-pc/public_alert.vue
+ * @FilePath: /user-pc1/project/activity/src/components/public_alert/public_alert.vue
  * @Description: 公共弹窗
  * @Author: Echo
 -->

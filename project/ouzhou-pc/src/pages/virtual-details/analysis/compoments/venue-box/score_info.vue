@@ -666,7 +666,7 @@ watch(
   width: 6px;
   height: 6px;
   border-radius: 8px;
-  background-color: var(--q-gb-bg-c-12);
+  background-color: var(--q-gb-bg-c-1);
   margin-right: 4px;
 }
 

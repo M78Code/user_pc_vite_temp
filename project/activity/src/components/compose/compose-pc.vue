@@ -188,10 +188,10 @@
 </template>
 
 <script>
-import {api_activity} from "project/activity/src/api/index.js";
+import {api_activity} from "src/api/index.js";
 import slider from "project/activity/src/pages/yazhou-pc/slot_machine/slider.vue"
 import lottery from "project/activity/src/pages/yazhou-pc/slot_machine/lottery.vue"
-import Alert from "project/activity/src/pages/yazhou-pc/public_alert.vue";
+import Alert from "project/activity/src/components/public_alert/public_alert.vue";
 import silver_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/silver_card.png";
 import gold_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/gold_card.png";
 import diamond_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/diamond_card.png";

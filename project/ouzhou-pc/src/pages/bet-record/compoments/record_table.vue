@@ -48,7 +48,7 @@
               <template v-if="props.row.seriesType != '1' || props.row.seriesType == '3'">{{props.row.seriesValue}}</template>
               <!-- 单关 -->
               <template v-else>
-                <template v-for="(item, index) in props.row.orderVOS">
+                <template v-for="(item, index) in props.row.orderVOS" :key="index">
                   <div>{{ match_type[item.matchType] }}</div>
                   <span>
                   {{ item.playName }}
@@ -64,13 +64,12 @@
             <q-td key="detail" :props="props">
               <div class="detail-options">
                 <div class="record-detail-list">
-                  <div v-for="(item, index) in props.row.orderVOS" class="record-detail">
+                  <div v-for="(item, index) in props.row.orderVOS" :key="index" class="record-detail">
                     <div class="record-detail-item">
                       <div class="record-detail-icon">
-                        <sport_icon :sport_id="item.sportId" :status="false" size="18px" class="icon"
-                                    style="margin:0 10px" />
+                       
+                        <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
                       </div>
-
                       <span> {{ item.matchName }}</span>
                       <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
@@ -250,6 +249,7 @@ import { formatTime } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/output/index.js'
 import Pagination from 'project_path/src/components/Pagination.vue'
+import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
@@ -263,6 +263,9 @@ const pageCurrent = ref('1')
 const getRowIndex = (rowIndex) => {
   return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
 }
+
+const cts_mid = ref([15,27,28,23,31,32,24,33,34])
+
 const emit = defineEmits(['itemFilter'])
 const props = defineProps({
   current_tab: {
@@ -274,6 +277,8 @@ const props = defineProps({
     default: ''
   }
 })
+
+console.error('sss',props)
 
 const match_type = {
   1: i18n_t("bet.morning_session"),

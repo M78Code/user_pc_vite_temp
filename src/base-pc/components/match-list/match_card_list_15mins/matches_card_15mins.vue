@@ -28,7 +28,7 @@
 
 <script setup>
 import { computed, ref, watch, toRef } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -38,12 +38,17 @@ import sport_icon from "src/base-pc/components/match-list/sport_icon.vue";
 import { get_handicap_index_by } from 'src/core/match-list-pc/match-handle-data.js'
 
 const router = useRouter()
+const route = useRoute();
 const props = defineProps({
   mid: String,
   idx: Number
 });
 const match = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_obj_ref(props.mid)
 const jump_to_details = () => {
+  let obj = {
+    pre_route : route.name
+  }
+  MenuData.set_router_info(obj)
   const { tid, csid, mid } = match.value;
   //比分板跳转到详情页
   router.push({

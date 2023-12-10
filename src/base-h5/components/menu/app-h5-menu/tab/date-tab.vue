@@ -40,11 +40,11 @@ const props = defineProps({
 const dateTab = ref(null)
 const activeOn = ref(0);//默认值
 
-onMounted(() => {
-    nextTick(()=>{
-        // changeTabMenu(props.dataList?.[0],0)
-    })
-})
+// onMounted(() => {
+//     nextTick(()=>{
+//         // changeTabMenu(props.dataList?.[0],0)
+//     })
+// })
 onUnmounted(()=>{
     set_active_val()
 })
@@ -59,7 +59,7 @@ const changeTabMenu = (item, i, event) => {
     // 设置日期
     MenuData.set_date_time(props.dataList?.[i]?.val)
 
-    // set_menu_match_date()
+    set_menu_match_date()
 
     scrollMenuEvent(event, ".date-tab-content-ul", ".active");
 
