@@ -207,12 +207,15 @@ watch(() => props.get_match_detail, (value) => {
   if (s1_data['S103']) {
     console.log('网球比分', s1_data['S103']);
     tennis_point.value = s1_data['S103'];
+  }else {
+    tennis_point.value =[0,0]
   }
 })
 
 //比分
 const detail_count = computed(() => {
-  return scoew_icon_list.value['S1'];
+  console.log(scoew_icon_list.value, "scoew_icon_list.value");
+  return scoew_icon_list.value['S1'] || [0,0];
 })
 
 const show_time_counting = computed(() => {
@@ -380,6 +383,7 @@ const scoew_icon_list = ref({})
  *@return {*}
  */
 const set_scoew_icon_list = (new_value) => {
+  scoew_icon_list.value = {};
   if (new_value && new_value.msc) {
     for (let key in new_value.msc) {
       let score_key_arr = new_value.msc[key].split("|");
@@ -389,7 +393,8 @@ const set_scoew_icon_list = (new_value) => {
         away: score_value_arr[1],
       };
     }
-    // console.log("scoew_icon_list", scoew_icon_list);
+    console.log("scoew_icon_list", scoew_icon_list);
+    
   }
 };
 
@@ -450,6 +455,7 @@ onMounted(()=>{
 
 // console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
 watch(props.get_match_detail, (new_value, old_value) => {
+  console.log(new_value, "new_value");
   scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
   // set_scoew_icon_list(new_value);
   // 意义不明
@@ -459,8 +465,11 @@ watch(props.get_match_detail, (new_value, old_value) => {
 watch(
   () => props.get_match_detail?.msc,
   (msc) => {
-    set_scoew_icon_list({msc});
-    set_basketball_score_icon_list();
+    console.log(msc, "msc====");
+
+      set_scoew_icon_list({msc});
+      set_basketball_score_icon_list();
+    
   },
   { immediate: false, deep: true }
 );
