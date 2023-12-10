@@ -4,6 +4,7 @@
 import { ref } from 'vue'
 import { api_common } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";
 import { MenuData} from "src/output/module/menu-data.js"
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
@@ -22,9 +23,15 @@ class MatchCollect {
 
   handle_match_collect (value) {
     const { tid } = value
+    let mids = []
+    lodash.each(MatchDataBaseH5.match_list,cur_match=>{
+      if(cur_match.tid == tid){
+        mids.push(cur_match.mid)
+      }
+    })
     const league_collect = this.get_league_collect_state(tid)
     api_common.add_or_cancel_tournament({
-      tid,
+      mid: mids.join(','),
       cf: league_collect ? 0 : 1,
       cuid: UserCtr.get_uid()
     }).then(res => {
