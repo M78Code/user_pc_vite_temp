@@ -47,6 +47,7 @@ import lodash_ from "lodash";
 import { reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { format_money2 } from "src/output/index.js";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { i18n_t, compute_css_obj, MenuData,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES,compute_local_project_file_path } from  "src/output/index.js"
 
@@ -93,8 +94,10 @@ watch(UserCtr.user_version, () => {
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
+    
     MenuData.set_current_lv1_menu(item.mi);
     // MenuData.get_menu_lvmi_list(item.mi)
+    MatchMeta.set_origin_match_data()
 }
 
 /**
