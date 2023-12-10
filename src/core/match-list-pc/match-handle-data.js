@@ -9,7 +9,7 @@ import { get_match_status } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
-
+import { match_state_convert_score_dict,history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
 /**
    * @Description  根据菜单ID 获取一个菜单对象
    * @param {number} menu_id 菜单ID
@@ -70,7 +70,7 @@ export function get_match_template_id({ csid }) {
     // 所以加一个配置  
     // 欧洲版从100开始  
     // 亚洲版从0开始
-    
+
     const different_version_config = {
         "ouzhou-pc": 100,
         "yazhou-pc": 0,
@@ -183,6 +183,85 @@ export function get_main_score(match) {
     return [_home_score, _away_score]
 }
 
+
+/**
+   * @description 获取历史比分列表
+   * @param  {object} match  当场赛事信息
+ * @param {*} match 
+ * @returns  [历史比分，总分，当前分]
+ */
+export function get_history_score_list(match) {
+    let csid = Number(match.csid)
+    // 比分列表
+    let score_list = [];
+    // 需显示的比分集
+    let score_dict = history_score_dict[`csid_${csid}`] || [];
+    // 篮球半场
+    if (csid == 2 && match.mle == 17) {
+        score_dict = history_score_dict.csid_2_half
+    }
+
+    // 赛事阶段对应的 比分 key
+    let cur_score_key = lodash.get(match_state_convert_score_dict, `csid_${csid}.mmp_${match.mmp}`)
+    // 斯诺克根据第几局获取比分key
+    if (csid == 7) {
+        cur_score_key = lodash.get(match_state_convert_score_dict, `csid_${csid}.${match.mct}`)
+    }
+    // 主队总分
+    let total_home = 0
+    // 客队总分
+    let total_away = 0
+
+    // 是否有S120 比分
+    let has_s120 = false
+    // 是否有S121 比分
+    let has_s121 = false
+    // 遍历需显示比分集
+    score_dict.forEach(key => {
+        let cur_score = match.msc_obj[key]
+        // 接口有返回对应比分
+        if (cur_score) {
+            if (key == 'S120') {
+                has_s120 = true
+            } else if (key == 'S121') {
+                has_s121 = true
+            }
+            score_list.push(cur_score)
+            // 总分累加
+            total_home += Number(cur_score.home)
+            total_away += Number(cur_score.away)
+
+        } else if (key == cur_score_key) {
+            if (key == 'S120') {
+                has_s120 = true
+            } else if (key == 'S121') {
+                has_s121 = true
+            }
+            // 当前局服务器没有返回默认为 0-0
+            score_list.push({
+                home: 0,
+                away: 0
+            })
+        }
+    })
+
+    // 如果是排球 并且有第二局比分  并且没有第一局比分 则给第一局比分设置空比分
+    if (match.csid == 9 && has_s121 && !has_s120) {
+        score_list.unshift({
+            home: '',
+            away: ''
+        })
+    }
+    let cur_score;
+    // 设置当前局比分
+    //篮球有半场玩法第二节设置上半场比分未当前局比分
+    if (match.csid == 2 && match.mmp == 14 && match.up_half_text) {
+        cur_score = lodash.get(match, 'score_obj.S2', { home: '', away: '' })
+    } else {
+        cur_score = lodash.last(score_list) || { home: 0, away: 0 }
+    }
+    return [score_list, `${total_home}-${total_away}(${total_home + total_away})`, cur_score]
+}
 
 /**
    * @description: 获取将赛事详情非坑位对象,以便提高操作速度和效率
@@ -352,19 +431,19 @@ export function get_match_to_map_obj(match, key_arr) {
 */
 export function get_handicap_index_by(match) {
     let result = 0;
-    if (match ) {
+    if (match) {
         let hpid = get_handicap_w_id(match.csid);
-        const hps= lodash.get(match,'hps')||lodash.get(match,'hpsData[0].hps',[])
-        let hp_item =hps.find((item) => item.hpid == hpid);
+        const hps = lodash.get(match, 'hps') || lodash.get(match, 'hpsData[0].hps', [])
+        let hp_item = hps.find((item) => item.hpid == hpid);
         if (hp_item) {
-            let hl_item = lodash.get(hp_item,'hl[0]')||lodash.get(hp_item,'hl');
+            let hl_item = lodash.get(hp_item, 'hl[0]') || lodash.get(hp_item, 'hl');
 
             // 网球csid 5  让盘hpid 154
             if (!hl_item || !hl_item.ol) {
                 if (match.csid == 5) {
                     hp_item = hps.filter((item) => item.hpid == 154)[0];
                     if (hp_item) {
-                        hl_item =  lodash.get(hp_item,'hl[0]')||lodash.get(hp_item,'hl')
+                        hl_item = lodash.get(hp_item, 'hl[0]') || lodash.get(hp_item, 'hl')
                     }
                 }
             }
@@ -444,14 +523,14 @@ export function match_list_handle_set(match_list) {
         })
 }
 
- /**
+/**
 * @description 获取比分 比分变化 或者 赛事阶段变化时调用
 * @param  {object} match  当场赛事信息
 */
 export const get_match_score = (match) => {
-    if (!match) return {home_score: '0', away_score: '0'}
+    if (!match) return { home_score: '0', away_score: '0' }
     let key = "S1";
-    let { csid, mmp, msc_obj} = match;
+    let { csid, mmp, msc_obj } = match;
     // 足球 | 手球
     if ([1, 11].includes(+csid)) {
         // S7:加时赛比分
@@ -475,7 +554,7 @@ export const get_match_score = (match) => {
 * @param  {object} match  当场赛事信息
 */
 export const get_match_score_result = (match) => {
-    if (!match) return {home_score: '0', away_score: '0'}
+    if (!match) return { home_score: '0', away_score: '0' }
     let msc_obj = {}
     match.msc.forEach(item => {
         let format = item.split("|");
