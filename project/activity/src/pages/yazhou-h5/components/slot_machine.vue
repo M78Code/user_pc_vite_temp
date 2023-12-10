@@ -10,14 +10,14 @@
     <div class="introduction text-666">
       <div class="active-object">
       <div>
-        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动对象：</span>
           <span>本场馆全体会员</span>
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动时间：</span>
           <template v-if="get_user.activityList[activityIndex].period == 1">
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span style="width: 1.91rem">活动内容：</span>
           <span>本场馆内完成任务获得的普通奖券，可在合成系统中向上合成为白银、黄金、钻石奖券，用以参加对应档次的老虎机抽奖</span>
@@ -74,12 +74,12 @@
         </div>
         <!-- 两边的小三角形 -->
         <p class="triangles" v-if="triangle_fade > 0">
-          <img class="left" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
-          <img class="right" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
+          <img class="left" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
+          <img class="right" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
         </p>
         <p class="triangles" v-else>
-          <img class="left" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
-          <img class="right" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
+          <img class="left" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
+          <img class="right" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
         </p>
 
         <!-- 当前奖金 -->
@@ -121,7 +121,7 @@
         </div>
         <!-- 摇杆 -->
         <div class="rocker">
-          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1}/0${rocker_anim_index}.png`)" alt="">
+          <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1}/0${rocker_anim_index}.png`)" alt="">
         </div>
         <!-- 老虎机周围的装饰 -->
         <img class="goldmoney"  src="activity/yazhou-h5/activity/slot_machine/goldmoney.png" alt="">
@@ -137,7 +137,7 @@
       <!-- 切换老虎机的按钮 -->
       <div class="switch_slots" v-if="currentSlotData.length">
         <p @click="switch_slots(index)" v-for="(item, index) in currentSlotData" :key="index">
-          <img v-if="currentSlotIndex == index && index < 3" :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/slot_machine/rocker_${item.slotId}.png`)" />
+          <img v-if="currentSlotIndex == index && index < 3" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/rocker_${item.slotId}.png`)" />
           <img v-else  src="activity/yazhou-h5/activity/slot_machine/grey_rocker.png" />
           <span :class="currentSlotIndex == index ? 'active': ''">
             <span>{{item.slotName}}</span>

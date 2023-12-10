@@ -3,7 +3,7 @@
     <div class="active-object">
       <div>
         <img
-          :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
             get_theme.includes('y0') ? '_y0' : ''
           }.png`"
           alt=""
@@ -15,7 +15,7 @@
       </div>
       <div>
         <img
-          :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
             get_theme.includes('y0') ? '_y0' : ''
           }.png`"
           alt=""
@@ -52,7 +52,7 @@
       </div>
       <div>
         <img
-          :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
             get_theme.includes('y0') ? '_y0' : ''
           }.png`"
           alt=""
@@ -114,7 +114,7 @@
             <template v-if="[1, 3].includes(v.bonusType)">
               <img
                 class="completed"
-                :src="`${$g_image_preffix}/activity/yazhou-h5/activity/completed${
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/completed${
                   get_theme.includes('y0') ? '_y0' : ''
                 }.svg`"
                 alt=""
@@ -239,7 +239,7 @@
       <div class="rules-object">
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -254,7 +254,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -272,7 +272,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -295,7 +295,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -321,7 +321,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -334,7 +334,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
