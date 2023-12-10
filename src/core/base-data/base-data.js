@@ -8,7 +8,7 @@ import { nextTick, ref } from "vue";
 import { i18n_t, i18n } from "src/boot/i18n.js";
 import { dianjing_sublist } from "src/output/module/constant-utils.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-// import BaseWsMessage from "./base-ws-message"
+import BaseWsMessage from "./base-ws-message"
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
@@ -186,20 +186,25 @@ class BaseData {
     }, 2000);
 
     // ws请求订阅
-    // BaseWsMessage.init()
+    BaseWsMessage.init()
   }
   /**
    * 新旧菜单映射关系
    * @returns 
    */
   base_menu_id_togger = () =>{
-    const data = mi_euid_mapping_default.data;//静态json
-    const base_menu_obj =Object.fromEntries(Object.keys(data).map(item => [data[item].p || data[item].h, item]));
+    //静态json
+    const data = mi_euid_mapping_default.data;
+    // 判断 h5 / pc
+    let type = 'p'
+    if(PROJECT_NAME.includes('h5')){
+      type = 'h'
+    }
+    const base_menu_obj = Object.fromEntries(Object.keys(data).map(item => [data[item][type] , item]));
     return base_menu_obj;
   }
   // 菜单数量变化
   set_base_c301_change(list = []) {
-    // list.forEach(item => item.mi = base_menu_id_new[item.menuId])
     list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }

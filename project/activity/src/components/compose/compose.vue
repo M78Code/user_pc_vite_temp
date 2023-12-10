@@ -168,9 +168,9 @@
 </template>
 
 <script>
-import {api_activity} from "project/activity/src/api/index.js";
-import slider from "./slider.vue";
-import lottery from "./lottery.vue";
+import {api_activity} from "src/api/index.js";
+import slider from "../slider/slider.vue";
+import lottery from "../lottery/lottery.vue";
 // 生成随机数
 const random = function(minNum,maxNum){
   return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
@@ -188,7 +188,7 @@ export default {
   props: {
     lotteryNum: {
       type: Object,
-      default: {}
+      default: ()=>{}
     }
   },
   data() {
@@ -270,7 +270,7 @@ export default {
     get_lottory_merge() {
       // this.$refs.showCard.play();
       this.$emit('play_show_card')
-      api_activity.get_synth_config().then(res => {
+      api_activity.get_activity_slot_config().then(res => {
         let {code, data} = {...res}
         if (code == 200) {
           if (_.get(data, 'synthConfig.length')) {

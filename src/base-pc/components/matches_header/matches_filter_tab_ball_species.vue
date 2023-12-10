@@ -1,22 +1,23 @@
 <template>
   <div class="current-filter-wrap" ref="area_obj_wrap">
     <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
+      <div v-show="false">{{UserCtr.user_version}}-{{BaseData.base_data_version}}</div>
       <!-- 常规体育 -->
       <!-- 暂时只显示足、篮 => [101, 102] -->
       <template v-for="(item, index) in mi_100_arr" :key="index">
         <div class="current-filter-tab" v-if="!MenuData.is_scroll_ball() || item.ct > 0 " >
-          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.mid_menu_result.current_mi == item.mi }">
+          <div class="filter-label" @click="choose_filter_tab(item)" :class="{ checked:  MenuData.menu_current_mi == item.mi }">
             <div class="filter-tab-item">
               <div class="filter-icon">
-                <sport-icon :sport_id="BaseData.compute_sport_id(item.mif)" :key_name="MenuData.mid_menu_result.current_mi == item.mi ?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image'"  size="22" class="icon" />
+                <sport-icon :sport_id="BaseData.compute_sport_id(item.mif)" :key_name="MenuData.menu_current_mi == item.mi ?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image'"  size="22" class="icon" />
                 <div class="filter-count">{{ item.ct || 0 }}</div>
               </div>
-              <div :class="{ checked_text: MenuData.mid_menu_result.current_mi == item.mi }" class="label-text">
+              <div :class="{ checked_text: MenuData.menu_current_mi == item.mi }" class="label-text">
                 {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif] || "" }}
               </div>
             </div>
             <!-- <img class="current-mark" :class="{ 'show-mark': MenuData.mid_menu_result.current_mi == item.mi }" :style="compute_css_obj({key: 'pc-home-mask-group'})" alt=""> -->
-            <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.current_mi == item.mi}"></div>
+            <div class="current-mark" :class="{'show-mark':  MenuData.menu_current_mi == item.mi}"></div>
           </div>
           <div class="filter-tab-split-line" v-show="index != mi_100_arr.length - 1"></div>
         </div>
@@ -81,6 +82,7 @@
 import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/components/match-list/list-filter/index.js"
 import { MenuData ,useMittOn,MITT_TYPES, } from "src/output/index.js"
 import { compute_img_url } from 'src/core/server-img/index.js'

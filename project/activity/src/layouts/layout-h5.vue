@@ -2,7 +2,8 @@
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
       <q-page class="flex flex-center">
-        <PageH5 />
+        <div>动画单独项目</div>
+        <PageH5 class="" style="height: 100vh" />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -45,12 +46,14 @@ export default defineComponent({
       UserCtr.get_user_token() ||
       window.SEARCH_PARAMS.get_url_param(window.location.href).get("token");
     await UserCtr.get_user_info(token);
-    document.getElementById("loading-root-ele").style.visibility = "hidden";
+    // document.getElementById("loading-root-ele")?.style?.visibility = "hidden";
     // html宽度基准值不为375的商户(如：外层样式宽度为750)
     this.wpx = url_search.get("wpx");
     this.inner_height = window.innerHeight;
     //created 内 执行
     this.handle_generat_emitters();
+    // this.onResize()
+    this.limit_rem();
   },
   mounted() {},
   methods: {
@@ -125,19 +128,19 @@ export default defineComponent({
           if (this.wpx) {
             if (max_width > this.wpx) {
               this.limit_rem();
-              document.getElementById("q-app").classList.add("max_limit_w750");
+              document.getElementById("ty-app").classList.add("max_limit_w750");
             } else {
               document
-                .getElementById("q-app")
+                .getElementById("ty-app")
                 .classList.remove("max_limit_w750");
             }
           } else {
             if (max_width > 500) {
               this.limit_rem();
-              document.getElementById("q-app").classList.add("max_limit_rem");
+              document.getElementById("ty-app").classList.add("max_limit_rem");
             } else {
               document
-                .getElementById("q-app")
+                .getElementById("ty-app")
                 .classList.remove("max_limit_rem");
             }
           }
@@ -151,9 +154,9 @@ export default defineComponent({
           }
         }
       }, 400);
- 
-        this.inner_height = window.innerHeight;
-     
+
+      this.inner_height = window.innerHeight;
+
       // 动态设置属性--vh基准值
       this.handle_set_vh();
     },

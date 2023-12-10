@@ -326,7 +326,17 @@ class UserCtr {
   set_is_user_no_handle({ commit }, val) {
     this.is_user_no_handle = val;
   }
-
+  /**
+   * 刷新用户信息
+   */
+  async refresh_user_info(){
+    await this.get_user_info(this.get_user_token())
+  }
+ /**
+  * 获取用户信息
+  * @param {*} token 
+  * @param {*} callback 
+  */
   async get_user_info(token, callback) {
     let res = await api_account.get_user_info({
       token,

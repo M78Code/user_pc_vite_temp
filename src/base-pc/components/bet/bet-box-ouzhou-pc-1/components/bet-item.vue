@@ -301,6 +301,7 @@ const set_delete = () => {
     .text-flow-none{
         max-width: 84%;
         line-height: 16px;
+        word-wrap: break-word;
         :deep(.ty-span) {
             margin-left: 4px;
             color: var(--q-gb-t-c-2);

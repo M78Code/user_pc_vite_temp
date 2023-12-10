@@ -7,21 +7,31 @@
   <div class="pagination-wrapper">
     <button class="btn_number pre" :disabled="preDisable" @click="goPre">
       <span>&#60;</span>
-    </button> <!--上一页按钮-->
+    </button>
+    <!--上一页按钮-->
     <!--页码列表-->
     <ul>
-      <li v-for="index in pages" :key="index"  ref="pages">
-        <div class="btn_number" @click="jumpToPage(index)" v-if="isShowBtn(index)" :class="current===index?'active':''">{{index}}</div>
-        <div v-else-if="isShowEllipsis (index)" class="ellipsis">&#8230;</div> <!--省略号-->
+      <li v-for="index in pages" :key="index" ref="pages">
+        <div
+          class="btn_number"
+          @click="jumpToPage(index)"
+          v-if="isShowBtn(index)"
+          :class="current === index ? 'active' : ''"
+        >
+          {{ index }}
+        </div>
+        <div v-else-if="isShowEllipsis(index)" class="ellipsis">&#8230;</div>
+        <!--省略号-->
       </li>
     </ul>
     <button class="btn_number next" :disabled="nextDisable" @click="goNext">
       <span>&#62;</span>
-    </button> <!--上一页按钮-->
+    </button>
+    <!--上一页按钮-->
   </div>
 </template>
 
-<script type='text/ecmascript-6'>
+<script type="text/ecmascript-6">
 export default {
   props: {
     total: {
@@ -169,4 +179,3 @@ export default {
   }
 }
 </style>
-
