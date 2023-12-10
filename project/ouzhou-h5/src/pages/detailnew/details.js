@@ -274,7 +274,7 @@ export const details_main = (router, route) => {
   function update_data(val) {
     if (!val) return;
     match_detail.value = getMidInfo(val);
-    match_odds_info.value = lodash.get(getMidInfo(val), "odds_info");
+    match_odds_info.value = lodash.get(getMidInfo(val), "odds_info",[]);
   }
   /**
    * @description: 从仓库获取获取赛事信息
@@ -596,6 +596,7 @@ export const details_main = (router, route) => {
     off()
     // 关闭详情订阅
     MatchDataWarehouseInstance.value.set_active_mids([])
+    LocalStorage.remove("YUAN_MATCH_DETAIL_DATA")
   })
   // 监听赛事状态mmp的值
   watch(
