@@ -47,8 +47,16 @@ const tabClick = (item, index) => {
   // active.value = item.id
   emit('detail_tabs_change', item)
   // console.log("reset_scroll_dom", reset_scroll_dom.value.clientWidth);
-  tab_move2(index, reset_scroll_dom.value);
+  tabMove(index)
+  // tab_move2(index, reset_scroll_dom.value);
 }
+const offset = window.screen.availWidth/2
+function tabMove(index){
+  /** @type {HTMLElement} */ const scrollDom = reset_scroll_dom.value
+  /** @type {HTMLElement} */ const activeItem = scrollDom.children[index]
+  scrollDom.scrollTo(activeItem.offsetLeft - offset + activeItem.offsetWidth/2,0)
+}
+//#region 一个破动画怎么要写这么多代码啊, 写的真变态啊 看我写一个tabMove
 /**
  * 点击自定义的tab 选项滑动到中间动画
  * 1)先让选中的元素滚到可视区域的最左边 scrollLeft
@@ -56,6 +64,8 @@ const tabClick = (item, index) => {
  * 3)最后向左移动item一半的距离 offsetWidth / 2
  * @param  {Object} （currentIndex 点击的下标，scrollBox 点击下标的父元素）
  * @return {Undefined} undefined
+ * @deprecated 怎么要写这么多代码啊, 写的真变态啊 看我写一个tabMove
+ * 
  */
 const tab_move2 = (currentIndex, scrollBox, whether_to_slide) => {
   // debugger
@@ -87,6 +97,7 @@ const tab_move2 = (currentIndex, scrollBox, whether_to_slide) => {
     }
   }, whether_to_slide ? '' : 15)
 };
+//#endregion
 
 //#region 一件收起/展开 初始情况为一键收起
 function changeAll(){
@@ -143,6 +154,8 @@ onMounted(() => {
   transition: 2s all;
   display: flex;
   align-items: center;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
   &::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }
@@ -160,7 +173,7 @@ onMounted(() => {
     text-transform: capitalize;
     color: var(--q-gb-t-c-4);
     cursor: pointer;
-
+    scroll-snap-align: center center;
   }
 
   .is-active {
