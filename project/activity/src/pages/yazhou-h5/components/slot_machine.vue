@@ -322,10 +322,10 @@
 <script>
 
 import slot_machine_mixin  from "project/activity/src/mixins/slot_machine/slot_machine.js";  
-import NumberScroll from 'project/activity/src/components/number_scroll/number_scroll.vue';
-import compose from 'project/activity/src/components/compose/compose.vue';
-import DataPager from "project/activity/src/components/data_pager/data_pager.vue";
-import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down.vue";
+import NumberScroll from 'project/activity/src/components/number_scroll/number_scroll-h5.vue';
+import compose from 'project/activity/src/components/compose/compose-h5.vue';
+import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
+import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
 export default {
   mixins: [ slot_machine_mixin],
   components: {
@@ -373,7 +373,7 @@ export default {
   }
 
   .slot_machine_content {
-    background:  var(--q-color-com-img-bg-122) no-repeat top center;
+    background:  var(--qq--color-com-img-bg-122) no-repeat top center;
     background-size: 120%;
     margin-top: 0.8rem;
     // 老虎机
@@ -861,14 +861,14 @@ export default {
       }
 
       .synthetic_lottory {
-        background-image: var(--q-color-com-img-bg-117);
+        background-image: var(--qq--color-com-img-bg-117);
         background-size: cover;
         color: #fff;
         margin-right: 0.2rem;
       }
 
       .game_history {
-        background-image: var(--q-color-com-img-bg-118);
+        background-image: var(--qq--color-com-img-bg-118);
         background-size: cover;
         color: #333;
       }
@@ -881,7 +881,7 @@ export default {
     }
 
     p {
-      background: var(--q-color-img-bg-99) no-repeat left 0.07rem;
+      background: var(--qq--color-img-bg-99) no-repeat left 0.07rem;
       padding-left: 0.17rem;
       background-size: 0.12rem;
       line-height: 27px;
@@ -898,14 +898,14 @@ export default {
 .theme02_y0 {
   .activity-rules {
     p {
-      background: var(--q-color-com-img-bg-121) no-repeat left 0.07rem;
+      background: var(--qq--color-com-img-bg-121) no-repeat left 0.07rem;
     }
   }
   .tabs_content {
     .slot_machine_content {
       .btns {
         .synthetic_lottory {
-          background-image: var(--q-color-com-img-bg-120);
+          background-image: var(--qq--color-com-img-bg-120);
         }
       }
     }
