@@ -60,6 +60,7 @@ import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
+import ServerTime from "src/core/server-time/server-time.js"
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -152,7 +153,7 @@ export default {
           Object.assign(this.current_match,data);
         }
 
-        let now_se = this.get_now_server();
+        let now_se = ServerTime.get_remote_time();
         let mgt_n = Number(data.mgt);
         if(now_se > mgt_n){
           this.get_video_process_by_api(() => {
@@ -260,7 +261,7 @@ export default {
             Object.assign(this.current_match,lodash.cloneDeep(m_o_video));
           }
           if(this.current_match){
-            this.current_match.start_now_sub = Number(this.current_match.mgt) - this.get_now_server();
+            this.current_match.start_now_sub = Number(this.current_match.mgt) - ServerTime.get_remote_time();
             this.set_current_sub_menuid(this.current_match.csid);
             let detail_setted = false;
             if(this.vsport_operate && typeof this.vsport_operate.destroy == 'function'){

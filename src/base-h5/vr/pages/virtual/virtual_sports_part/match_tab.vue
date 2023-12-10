@@ -193,7 +193,7 @@ export default {
       }
       this.sub_nav_focus_i = lodash.findIndex(this.no_list,{batchNo:batchNo});
       this.sub_focus_batch_no = batchNo;
-      utils.tab_move2(this.sub_nav_focus_i, this.$refs.scrollBox)
+      // utils.tab_move2(this.sub_nav_focus_i, this.$refs.scrollBox)
       let current_sub_nav = this.no_list[this.sub_nav_focus_i];
 
       this.$emit('sub_nav_change',{

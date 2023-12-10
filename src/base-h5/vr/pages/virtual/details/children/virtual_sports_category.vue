@@ -52,7 +52,7 @@ import VSport from 'src/base-h5/vr/utils/vsport/vsport.js';
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
-
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 
 const { height, width, css} = dom
 
@@ -129,9 +129,9 @@ export default {
     get_show_video(){},
     get_details_tabs_list(){},
     get_fewer(){},
-    get_current_mid(){},
+    get_current_mid(){ return VR_CTR.get_current_mid() },
     get_menu_type(){},
-    get_current_league(){},
+    get_current_league(){ return VR_CTR.get_current_league() },
     get_is_user_refreshing(){},
     get_is_show_details_analyse(){},
     // 置顶列表

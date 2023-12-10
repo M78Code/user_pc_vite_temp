@@ -27,6 +27,7 @@
 <script>
 import common from 'src/base-h5/vr/mixin/constant/module/common.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import ServerTime from "src/core/server-time/server-time.js"
 export default {
   name: 'virtual_sports_timer',
   mixins:[common],
@@ -100,9 +101,9 @@ export default {
       if(!this.match || !this.match.mgt || !this.match.mid){
         return;
       }
-      let ms = Number(this.match.mgt) - this.get_now_server();
+      let ms = Number(this.match.mgt) - ServerTime.get_remote_time();
       let single_circle = 60 * 1000;
-      let now = this.get_now_server();
+      let now = ServerTime.get_remote_time();
       if(this.start == null) this.start = now;
       //最初时间(用于计算总圈数)
       let timer_key = `virtual-sports-timer`;

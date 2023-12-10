@@ -137,6 +137,8 @@ import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/
 // import setting from "src/project/components/common/setting";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import ServerTime from "src/core/server-time/server-time.js"
+
 export default {
   mixins:[common,virtual_sports_mixin],
   props:{
@@ -325,7 +327,7 @@ export default {
     switch_match_handle(i){
       let match = this.match_list_by_no[i];
       if(match){
-        let server_now = this.get_now_server();
+        let server_now = ServerTime.get_remote_time()
         match.start_now_sub = Number(match.mgt) - server_now;
         if(this.sub_menu_type == 1004){
           if(match.mmp == 'INGAME'){
@@ -500,6 +502,8 @@ export default {
       }
     },
     current_sub_menu(){
+      console.error(666)
+      console.error(66677, this.current_league)
       let prev_league_id = ''
       if(this.current_league){
         prev_league_id = this.current_league.menuId;

@@ -169,6 +169,8 @@ import dateMatchList from 'src/base-h5/vr/pages/virtual/virtual_sports_part/date
 import virtualBasketball from 'src/base-h5/vr/pages/virtual/details/children/virtual_basketball.vue'
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import ServerTime from "src/core/server-time/server-time.js"
+
 export default {
   name:'VirtualSportsStage',
   mixins:[common],
@@ -400,7 +402,7 @@ export default {
         }
       });
       if(this.current_match.mgt){
-        let time_ = this.get_now_server()-Number(this.current_match.mgt);
+        let time_ = ServerTime.get_remote_time()-Number(this.current_match.mgt);
         if(time_>0){
           this.player.seek(time_/1000);
           this.seek_to_target = time_/1000;
@@ -472,7 +474,7 @@ export default {
       if(this.video_process_data && this.video_process_data.nextTime){
 
         let start = Number(this.video_process_data.nextTime);
-        let now = this.get_now_server();
+        let now = ServerTime.get_remote_time();
         let sub_time = start - now;
 
         if(this.next_match_timer){

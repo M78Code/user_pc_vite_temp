@@ -44,6 +44,8 @@ class VirtualCtr {
       virtual_menu_list: [],
       // 当前虚拟体育选中的二级菜单id
       virtual_current_sub_menuid: "",
+      // 当前选中的二级菜单menu_type
+      curr_sub_menu_type: null,
     });
   }
 
@@ -87,6 +89,11 @@ class VirtualCtr {
   get_current_sub_menuid() {
     return this.state.current_sub_menuid;
   }
+  get_curr_sub_menu_type(state) {
+    return state.curr_sub_menu_type;
+  }
+
+  
 
   // get发放2
   prev_v_sports(){
@@ -179,6 +186,9 @@ class VirtualCtr {
   }
   set_current_sub_menuid(v) {
     this.state.current_sub_menuid = v;
+  }
+  set_curr_sub_menu_type(v) {
+    this.state.curr_sub_menu_type = v;
   }
 }
 const VR_CTR = new VirtualCtr();

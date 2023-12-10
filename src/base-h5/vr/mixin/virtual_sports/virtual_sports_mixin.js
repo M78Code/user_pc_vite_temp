@@ -8,7 +8,7 @@ import VSport from "src/base-h5/vr/utils/vsport/vsport.js"
 import { api_common } from "src/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-
+import ServerTime from "src/core/server-time/server-time.js"
 export default {
   data(){
     return {
@@ -137,6 +137,7 @@ export default {
      * @return {String}
      */
     get_virtual_sport_local(is_user_clicked){
+      console.error('111')
       this.gen_video_api_cache_key();
       let params = this.param_generate();
       if(!params) {
@@ -152,7 +153,9 @@ export default {
         this.no_title_list = [];
         this.virtual_data_loading = true;
       }
+      console.error('222')
       api_v_sports.get_virtual_sport_list(params).then(res => {
+        console.error('333')
         this.virtual_data_loading = false;
         useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         this.set_virtual_data_loading(0);
@@ -189,7 +192,7 @@ export default {
             let found = res.data[0];
             if(found){
               let c_match = this.append_init_fields(found.matchs[0]);
-              let server_now = this.get_now_server();
+              let server_now = ServerTime.get_remote_time();
               c_match.start_now_sub = Number(c_match.mgt) - server_now;
               this.current_match = c_match;
               this.set_current_mid(this.current_match.mid);
@@ -469,7 +472,7 @@ export default {
     check_next_no_start_time(){
       if(this.virtual_match_list && this.virtual_match_list.length > 1){
         let mgt = Number(this.virtual_match_list[1].matchs[0].mgt);
-        let now = this.get_now_server();
+        let now = ServerTime.get_remote_time();
         let sub = mgt - now;
         //下一轮开赛
         if(sub <= 0){
@@ -537,7 +540,7 @@ export default {
           });
           if(this.match_list_by_no.length){
             this.current_match = this.match_list_by_no[0];
-            let server_now = this.get_now_server();
+            let server_now = ServerTime.get_remote_time();
             this.current_match.start_now_sub = Number(this.current_match.mgt) - server_now;
             if(this.sub_menu_type == 1004){
               if(this.current_match.mmp == "PREGAME"){
@@ -642,7 +645,7 @@ export default {
           totalTime = totalTime * 1;
           let mgt = match.mgt * 1;
           let future = mgt + totalTime * 1000;
-          let now_server = this.get_now_server();
+          let now_server = ServerTime.get_remote_time();
           if(future - now_server < 1000){
             this.update_no_title_list();
           }
@@ -685,7 +688,7 @@ export default {
           let first_m_item = first_t_item.match[0];
           if(first_m_item){
             let mgt = first_m_item.mgt * 1;
-            let time_ = this.get_now_server() - mgt;
+            let time_ = ServerTime.get_remote_time() - mgt;
             if(time_ > -1){
               this.checking_first_delete_batchNo = first_m_item.batchNo;
               invok_video_process(first_m_item);
