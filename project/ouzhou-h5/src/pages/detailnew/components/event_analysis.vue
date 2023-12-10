@@ -62,7 +62,7 @@
         </template>
         <template v-else>
             <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/no-data.png`" alt="">
-            <div class="no-data-text">{{ i18n_t("ouzhou.common.no_data") }}</div>
+            <div class="no-data-text">{{ i18n_t("common.no_data") }}</div>
         </template>
       </template>
       <template v-else>
