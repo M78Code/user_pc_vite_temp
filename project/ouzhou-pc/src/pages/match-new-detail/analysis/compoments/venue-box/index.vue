@@ -13,7 +13,7 @@
             :sport_id="detail_info.csid"
             :status="true"
             :cds="detail_info.cds"
-            size="18px"
+            size="20px"
             class="icon"
             style="margin: 0 10px"
           />
@@ -75,7 +75,7 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import animal_box from "./animal_box.vue";
-import sport_icon from "src/base-pc/components/sport_icon.vue";
+import sport_icon from "./sport_icon.vue";
 import score_info from "./score_info.vue";
 import commingSoon from "./comming-soon.vue";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
