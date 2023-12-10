@@ -34,7 +34,7 @@
       </span>
     </div>
     <div class="body-main">
-      <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> <span>{{data_b.orderNo}}</span></p>
+      <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> <span @click="copy">{{data_b.orderNo}}</span></p>
       <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
       <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
@@ -50,7 +50,9 @@ import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { formatTime, format_money2, format_balance } from 'src/output/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
-
+import ClipboardJS from "clipboard";
+import { Platform } from "quasar";
+import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
 let props = defineProps({
     data_b: {
       type: Object
@@ -69,6 +71,32 @@ let props = defineProps({
       return false
     }
   }
+  /**
+ *@description 复制订单号
+  *@param {Object} evt 事件对象
+  */
+const copy = (evt) => {
+  let orderno = props.data_b.orderNo
+  const clipboard = new ClipboardJS(".text-left", {
+    text: () => orderno
+  })
+  clipboard.on('success', () => {
+    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.copy_suc"))
+    // h5嵌入时Safari阻止弹窗
+    if (!Platform.is.safari) {
+      try {
+        location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    clipboard.destroy()
+  })
+  clipboard.on('error', () => {
+    clipboard.destroy()
+  })
+  clipboard.onClick(evt)
+}
 
 </script>
 
