@@ -53,7 +53,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'"
+      <div class="score" v-if="show_type == 'all' && get_match_status(match.ms)"
         v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">{{ home_score }}</div>
     </div>
     <!-- 客队信息 -->
@@ -90,7 +90,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all'"
+      <div class="score" :key="lodash.get(match, 'mid')" v-if="show_type == 'all' && get_match_status(match.ms)"
         v-tooltip="{ content: is_15min ? i18n_t('list.15min_stage') : '', overflow: 1 }">
         {{ away_score }}
       </div>
