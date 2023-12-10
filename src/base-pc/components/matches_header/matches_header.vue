@@ -161,12 +161,12 @@ const set_tab_list = (news_) =>{
 		if ([90, 91].includes(+MenuData.current_ball_type)) {
 			sport_tab = sport_tab.filter((n)=>{return n.value != 4003 && n.value != 4002})
 		}
-		if(IS_FOR_NEIBU_TEST){
+		// if(IS_FOR_NEIBU_TEST){
 			tab_list.value = sport_tab; 
-		}else{
-			sport_tab = sport_tab.filter((n)=>{return n.value != 4003})
-			tab_list.value = sport_tab
-		}
+		// }else{
+		// 	sport_tab = sport_tab.filter((n)=>{return n.value != 4003})
+		// 	tab_list.value = sport_tab
+		// }
 		
 		// 设置赛种名称
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
@@ -176,13 +176,12 @@ const set_tab_list = (news_) =>{
 	if (MenuData.is_collect) {
 		matches_header_title.value = 'ouzhou.menu.collect';
 		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', [])  
-		if(IS_FOR_NEIBU_TEST){
+		// if(IS_FOR_NEIBU_TEST){
 			tab_list.value = ouzhou_filter_config; 
-		}else{
-			// ouzhou_filter_config.push( { label: 'menu.match_winner', value: 3004 })
-			ouzhou_filter_config = ouzhou_filter_config.filter((n)=>{return n.value != 3004})
-			 tab_list.value = ouzhou_filter_config
-		}
+		// }else{
+		// 	ouzhou_filter_config = ouzhou_filter_config.filter((n)=>{return n.value != 3004})
+		// 	 tab_list.value = ouzhou_filter_config
+		// }
 		
 	}
 	// 冠军
