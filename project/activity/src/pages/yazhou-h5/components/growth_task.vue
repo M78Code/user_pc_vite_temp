@@ -201,6 +201,7 @@
         </div>
       </div>
     </q-dialog>
+
     <q-dialog v-model="daily_task_success">
       <div class="daily_task_dialog" @click.self="daily_task_success = false">
         <div class="task_success">
@@ -234,6 +235,9 @@
         />
       </div>
     </q-dialog>
+
+
+    
     <div class="activity-rules">
       <div class="title">活动规则</div>
       <div class="rules-object">

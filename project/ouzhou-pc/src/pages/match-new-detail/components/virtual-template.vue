@@ -1,72 +1,27 @@
 <!--
  * @Author: cooper
  * @Date: 2023-05-20 12:13:55
- * @Description:模板5
+ * @Description:vr模版
 -->
 
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
-  <div v-if="[10].includes(match_info.hpt)" class="temp-simple">
-    <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
-      <div
-        v-for="o in match_info.hl[0].ol"
-        :key="o?.oid"
-        :class="{
-          'temp-active': BetData.bet_oid_list.includes(o.oid),
-          temp: true,
-        }"
-        @click="betItemClick(match_info.hl[0], o)"
-      >
-        <div
-          :title="o.ott"
-          :style="{
-            color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#484848',
-          }"
-          v-show="!match_info.hl[0].hs"
-          class="oid-width"
-        >
-          {{ o.ott }}
-          <span>{{ o.on }} </span>
-        </div>
-        <div v-show="!match_info.hl[0].hs">
-          <bet-item
-            :key="`bet_0_${o.hild}`"
-            :ol_data="o"
-            :current_ol="current_ol"
-          >
-          </bet-item>
-          <!-- {{ Math.floor(o.ov / 1000) / 100 }} -->
-        </div>
-        <div
-          style="text-align: center; width: 100%"
-          v-show="match_info.hl[0].hs"
-        >
-          <img
-            class="vector"
-            :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/vector.png`"
-            alt=""
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-  <div v-else class="temp-simple">
+
+  <div class="temp-simple">
     <div v-for="item in match_info.hl" :key="item.hid">
       <div
         class="temp_grid"
-        :style="{ gridTemplateColumns: columnTotal(item) }"
       >
         <template v-for="(o, index) in item.ol" :key="index">
-          <div v-if="o && o.oid">
+          <div v-if="o && o.oid" style="width:20%">
             <div
               :class="{
                 'temp-active':
                   current_ol && BetData.bet_oid_list.includes(o.oid),
                 temp: true,
                 'temp-right':
-                  item.ol.length % 2 !== 0 &&
-                  index == item.ol.length - 1 &&
-                  columnNum == 2,
+                  item.ol.length % 2 == 0 &&
+                  index == item.ol.length - 1 
               }"
               @click="betItemClick(item, o)"
             >
@@ -81,13 +36,6 @@
               >
                 <span class="oid-width" :title="o.ott">{{ o.ott }}</span>
                 <span
-                  v-if="
-                    [0].includes(match_info.hpt) && match_info.title.length > 0
-                  "
-                  v-html="getOn(match_info, o)"
-                ></span>
-                <span
-                  v-else
                   :style="{
                     color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',
                   }"
@@ -147,19 +95,7 @@ const columnNum = ref(0); // 获取当前分成几列展示
 const columnTotal = (item) => {
   let total;
   const { match_info } = props;
-  if (match_info.title.length > 0 && ![0, 3].includes(match_info.hpt)) {
-    if (match_info.hpt === 10) {
-      total = 3;
-    } else {
-      if (["362"].includes(match_info.hpid)) {
-        total = 2;
-      } else {
-        total = match_info.title.length;
-      }
-    }
-  } else {
-    total = 2;
-  }
+  total = 5
   columnNum.value = total;
   return `repeat(${total}, 1fr)`;
 };
@@ -171,27 +107,7 @@ const betItemClick = (item, o) => {
   bet_oid.value = o.oid;
   emit("betItemClick", item, o, props.match_info.hpn);
 };
-//  模板hpt0 数字 需要给颜色
-const getOn = (match_info, o) => {
-  let result = "";
-  if (
-    match_info &&
-    match_info.hl[0].hv &&
-    match_info.hpt == 0 &&
-    match_info.title.length > 0
-  ) {
-    const hv = match_info.hl[0].hv;
-    result = o.on.replace(hv, `<span>${hv}</span>`);
-  }
-  return result;
-};
 
-const odds_change = (obj) => {
-};
-
-// 事件执行函数
-
-const active = ref(1);
 
 onMounted(() => {
 });
@@ -209,16 +125,17 @@ onMounted(() => {
 }
 
 .temp_grid {
-  display: grid;
+  display: flex;
   text-align: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   .temp {
     cursor: pointer;
     min-height: 45px;
     line-height: 45px;
-    //  border-top: 1px solid #E2E2E2;
-    border-left: 1px solid var(--q-gb-bd-c-2);
     border-bottom: 1px solid var(--q-gb-bd-c-2);
+    border-right: 1px solid var(--q-gb-bd-c-2);
 
     &:hover {
       background: var(--q-gb-bg-c-5);
@@ -232,8 +149,7 @@ onMounted(() => {
 
 // 两列展示最后一列为左边的数据的话应给加一个有边框
 .temp-right {
-  border-right: 1px solid var(--q-gb-bd-c-2);
-  margin-right: -1px;
+  border-left: 1px solid var(--q-gb-bd-c-2);
 }
 
 .temp-simple {

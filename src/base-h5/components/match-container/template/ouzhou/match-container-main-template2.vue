@@ -27,7 +27,7 @@
         
       </div>
 
-      <img class="national_icon" :src="league_collect_state ? have_collect_ouzhou : no_collect_ouzhou" alt="" @click.stop="handle_match_collect">
+      <img class="national_icon" :src="match_collect_state ? have_collect_ouzhou : no_collect_ouzhou" alt="" @click.stop="handle_match_collect">
 
     </div>
 

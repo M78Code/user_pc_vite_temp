@@ -87,7 +87,7 @@ const ov = computed(() => {
 const isLock = computed(() => {
   if (props.value) {
     // @ts-ignore
-    return props.value.os == 2 || ov.value == 0 || props.value._hs == 1
+    return props.value.os == 2 || ov.value == 0 || props.value._hs == 1 || props.value._ms == 1
   } else {
     return true
   }

@@ -38,22 +38,12 @@ function get_match_list_by_mid_for_base_data_res(mid, csid, type) {
 };
 // 使用元数据默认显示 后面替换
 function set_base_data_init() {
-	console.log('set_base_data_initset_base_data_initset_base_data_init', MenuData)
-	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
+		left_menu_result: { lv2_mi = "", lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
+		mid_menu_result: { csid: mi, mif, root, mid_menu_mi },
 		current_ball_type: csid,
 	} = MenuData;
-	if (MenuData.left_menu_result) {
-		const {
-			left_menu_result: { lv2_mi = "", lv1_mi, has_mid_menu, guanjun, jinri_zaopan }
-		} = MenuData;
-	}
-	if (MenuData.mid_menu_result) {
-		const {
-			mid_menu_result: { csid: mi, mif, root, mid_menu_mi },
-		} = MenuData;
-	}
 	let mid = lv2_mi;
 	let midf = lv1_mi;
 	// 有中间件数据 不能是早盘 使用 mi

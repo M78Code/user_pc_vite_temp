@@ -4,6 +4,7 @@
 import { ref } from 'vue'
 import { api_common } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";
 import { MenuData} from "src/output/module/menu-data.js"
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
@@ -21,18 +22,21 @@ class MatchCollect {
   }
 
   handle_match_collect (value) {
-    const { tid } = value
-    const league_collect = this.get_league_collect_state(tid)
-    api_common.add_or_cancel_tournament({
-      tid,
-      cf: league_collect ? 0 : 1,
-      cuid: UserCtr.get_uid()
-    }).then(res => {
-      if (+res.code !== 200) return;
-    })
-    // 收藏页手动处理数据
-    MenuData.is_collect() && MatchMeta.set_collect_match(value, 1)
-    this.handle_league_collect_state(tid)
+    const { mid,tid } = value
+      const match_state = this.get_match_collect_state(value)
+      api_common.add_or_cancel_match({
+        mid,
+        cf: match_state ? 0 : 1,
+        cuid: UserCtr.get_uid()
+      }).then(res => {
+        if(res && res.code == '200' && MenuData.is_collect()){
+          useMittEmit(MITT_TYPES.EMIT_COLLECT_MATCH_OZ);
+        }
+        if (+res.code !== 200) return
+      })
+      // 收藏页手动处理数据
+      MenuData.is_collect() && MatchMeta.set_collect_match(value, 2)
+      this.set_match_collect_state(value, !match_state)
   }
 
   /**

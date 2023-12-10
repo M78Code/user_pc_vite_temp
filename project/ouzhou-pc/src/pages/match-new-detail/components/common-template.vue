@@ -20,7 +20,7 @@
         <div
           :title="o.ott"
           :style="{
-            color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#484848',
+            color:  '#484848',
           }"
           v-show="!match_info.hl[0].hs"
           class="oid-width"

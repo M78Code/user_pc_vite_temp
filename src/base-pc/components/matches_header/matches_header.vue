@@ -95,14 +95,14 @@ const ref_data = reactive({
 			{ label: 'ouzhou.match.kog', value: 2102 },
 			{ label: 'ouzhou.match.csgo', value: 2103 }	
 		],
-		vr_sports: [
-      { label: 'ouzhou.match.vr_football', value: 30301 }, //vr足球
-			{ label: 'ouzhou.match.vr_basketball', value: 30304 }, //vr篮球
-			{ label: 'ouzhou.match.vr_horse_racing', value: 30311 }, //vr赛马
-			{ label: 'ouzhou.match.vr_greyhounds', value: 30302 }, //vr赛狗
-			{ label: 'ouzhou.match.vr_motorbike', value: 30312 }, //vr摩托车
-			{ label: 'ouzhou.match.vr_speedway', value: 30313 }	//vr泥地摩托车
-		]
+		// vr_sports: [
+      	// 	{ label: 'ouzhou.match.vr_football', value: 30301 }, //vr足球
+		// 	{ label: 'ouzhou.match.vr_basketball', value: 30304 }, //vr篮球
+		// 	{ label: 'ouzhou.match.vr_horse_racing', value: 30311 }, //vr赛马
+		// 	{ label: 'ouzhou.match.vr_greyhounds', value: 30302 }, //vr赛狗
+		// 	{ label: 'ouzhou.match.vr_motorbike', value: 30312 }, //vr摩托车
+		// 	{ label: 'ouzhou.match.vr_speedway', value: 30313 }	//vr泥地摩托车
+		// ]
 	},
 	
 }) 
@@ -200,12 +200,12 @@ const set_tab_list = (news_) =>{
 	}
 
 	// vr体育
-	if (MenuData.is_vr()) {
-		matches_header_title.value = 'VR体育'
-		match_list_top.value = '134px'
-		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'vr_sports', [])  
-		tab_list.value = ouzhou_filter_config
-	}
+	// if (MenuData.is_vr()) {
+	// 	matches_header_title.value = 'VR体育'
+	// 	match_list_top.value = '134px'
+	// 	let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'vr_sports', [])  
+	// 	tab_list.value = ouzhou_filter_config
+	// }
 
 	if (tab_list.value.length) {
 		if(MenuData.mid_menu_result.filter_tab){
@@ -272,7 +272,7 @@ const checked_current_tab = payload => {
 	if(MenuData.is_collect){
 		//切换滚球 今日 早盘  球种初始化为足球背景
 	 	// MenuData.set_current_ball_type(1)
-	 	MenuData.set_current_ball_type(MenuData.menu_current_mi || 1)
+	 	MenuData.set_current_ball_type(MenuData.menu_current_mi - 400 || 1)
 		if( payload.value == 3001){
 			obj.current_mi = 1011
 		}

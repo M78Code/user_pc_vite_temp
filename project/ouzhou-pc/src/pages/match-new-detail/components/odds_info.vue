@@ -12,6 +12,7 @@
       :class="{ 'odds-wrap': item.hl[0].hs != 2 }"
     >
       <q-expansion-item
+      v-if="item.hl[0].hs != 2"
         v-model="item.expanded"
         :expand-icon-toggle="false"
         :hide-expand-icon="true"
@@ -21,8 +22,8 @@
       >
         <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
-          <div class="odds-item" v-if="item.hl[0].hs != 2">
-            {{ item.hpn }} ++{{ item.hpid }}
+          <div class="odds-item">
+            {{ item.hpn }}
             <span v-if="item.hps && get_match_status(detail_info.ms) == 1">
               ({{ item.hps.split("|")[1] }})
             </span>
@@ -64,7 +65,7 @@
                   class="odds-title-li"
                 >
                   <span
-                    v-if="![0, 1, 2, 3, 7, 10, 18].includes(item.hpt)"
+                    v-if="![0, 1, 2, 3, 7, 10,14, 18].includes(item.hpt)"
                     class="handicap-value-text"
                     >{{ opt.osn }}</span
                   >
@@ -128,7 +129,7 @@
             </div>
             <!-- 公共模板 -->
             <common-template
-              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt) && item.hpid != 103"
+              v-if="[0, 1, 2, 3, 7, 10,13,14,15].includes(item.hpt) && item.hpid != 103"
               :match_info="item"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
@@ -146,6 +147,13 @@
               v-if="[18].includes(item.hpt)"
               :match_info="item"
               :hpid="item.hpid"
+              :current_ol="current_ol"
+              @betItemClick="betItemClick"
+            />
+             <!-- vr 虚拟体育模板 -->
+             <virtual-template
+              v-if="[11].includes(item.hpt)"
+              :match_info="item"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
             />
@@ -187,6 +195,7 @@ import {
 import template5 from "./template5.vue";
 import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";
+import virtualTemplate from "./virtual-template.vue";
 import betItem from "./bet-item-list-new-data.vue";
 import { BackTop } from "src/components/back-top";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";

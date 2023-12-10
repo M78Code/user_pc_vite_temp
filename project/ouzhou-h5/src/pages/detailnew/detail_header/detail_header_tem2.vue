@@ -127,7 +127,17 @@ const animation_src = ref("");
 const status = computed(() => {
   // 动画>源视频>比分板  
   const get_detail_data = props.get_match_detail;
-  
+  // 优先判断label
+  if (props.label) {
+    console.log(props.label, "props.label");
+    if (props.label == 'animation') {
+      return 2;
+    }
+
+    if (props.label == 'video') {
+      return 3;
+    }
+  }
   // <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
   if (get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))) {
     

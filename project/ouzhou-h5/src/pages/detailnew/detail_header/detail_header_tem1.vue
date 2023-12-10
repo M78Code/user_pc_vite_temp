@@ -8,7 +8,11 @@
      
       <div class="match-detail-time">
         <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
-          <match-stage :detail_data="get_match_detail" ></match-stage>
+          
+          <match-stage :detail_data="get_match_detail" v-if="start_text == -1"></match-stage>
+          <span v-else>
+            {{ i18n_tc('list.after_time_start2', [minue]) }}
+          </span>
           <q-badge
             v-if="get_match_detail.mng == 1"
             text-color="white"
@@ -16,7 +20,7 @@
             style="margin-left:5px"
           />
         </span>
-     <!-- {{ get_match_detail.msid }} -->
+       
         
         <div class="match-detail-time-collect" v-if="show_collect" >
           <!-- 显示视频按钮 -->
@@ -42,18 +46,30 @@
         </div>
       </div>
       <div class="match-detail-score">
-        <div class="match-detail-team-name">{{ get_match_detail.mhn }}</div>
+        <div class="match-detail-team-name">
+         <span :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
+         <span>{{ get_match_detail.mhn }}</span>
+        </div>
         <span v-if="false">{{ detail_count }}</span>
         <div class="match-detail-num" >
           <!-- {{ scoew_icon_list["S1"].home }} -->
-          {{ detail_count?.home }}
+          <span class="active-num"> {{ detail_count?.home }}</span>
+          <span v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[0] }}</span>
         </div>
       </div>
       <div class="match-detail-score">
-        <div class="match-detail-team-name">{{ get_match_detail.man }}</div>
+        <div class="match-detail-team-name">
+         <span :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
+          <span>{{ get_match_detail.man }}</span>
+
+          
+        </div>
         <div class="match-detail-num" v-if=" get_match_detail.man">
           <!-- {{ scoew_icon_list["S1"].away }} -->
-          {{ detail_count?.away }}
+          <span class="active-num"> {{ detail_count?.away }}</span>
+          <span v-if="get_match_detail.csid == 5 " class="default-num">{{ tennis_point[1] }}</span>
+
+         
         </div>
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
@@ -92,7 +108,7 @@
       </template>
     </div>
      <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.csid == 5 && detail_count?.home"  :detail_data="get_match_detail" />
+     <matchScore v-if="get_match_detail.csid == 5 "  :detail_data="get_match_detail" />
   </div>
 </template>
 
@@ -105,6 +121,7 @@ import MatchCollect from 'src/core/match-collect'
 import { LOCAL_PROJECT_FILE_PREFIX,format_time_zone_time, format_time_zone  } from "src/output/index.js";
 import matchScore from "./match-score/index.vue"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { i18n_tc } from "src/boot/i18n";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -118,7 +135,28 @@ const props = defineProps({
   }
 });
 
+
+/**
+     * @description: 设置发球方绿点显示
+     * @param {Object} item 赛事对象
+     * @param {Object} side 'home'主队  'away'客队
+     * @return {Boolean} 是否显示发球方
+     */
+const set_serving_side = (item, side) => {
+  return item.ms == 1 && item.mat == side;
+}
+
+// 网球当前比分
+const tennis_point = ref([0,0])
+
 const emits = defineEmits('handle-change')
+
+const start_text = ref(-1)
+
+// 多少分钟之后开赛
+const minue = computed(() => {
+  return Math.floor(start_text.value / 1000 /60);
+})
 
 // 比赛开始，显示右侧actions状态
 const actionsStatus = ref(true);
@@ -154,12 +192,27 @@ const status = computed(() => {
 });
 
 watch(() => props.get_match_detail, (value) => {
-  console.log(value, "props.get_match_detail");
+  // format_time_zone(+item.mgt).Format(i18n_t('time4'))
+  const now = Date.now();
+  if ((props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0)) {
+    start_text.value = Math.floor((+props.get_match_detail.mgt - now)) 
+  }
+  
+  const s1_data = value.msc.map(e => e.split('|')).reduce((pre, cur) => {
+      pre[cur[0]] = cur[1].split(':');
+      return pre;
+  }, {});
+  if (s1_data['S103']) {
+    console.log('网球比分', s1_data['S103']);
+    tennis_point.value = s1_data['S103'];
+  }else {
+    tennis_point.value =[0,0]
+  }
 })
 
 //比分
 const detail_count = computed(() => {
-  return scoew_icon_list.value['S1'];
+  return scoew_icon_list.value['S1'] || [0,0];
 })
 
 const show_time_counting = computed(() => {
@@ -327,6 +380,7 @@ const scoew_icon_list = ref({})
  *@return {*}
  */
 const set_scoew_icon_list = (new_value) => {
+  scoew_icon_list.value = {};
   if (new_value && new_value.msc) {
     for (let key in new_value.msc) {
       let score_key_arr = new_value.msc[key].split("|");
@@ -336,7 +390,7 @@ const set_scoew_icon_list = (new_value) => {
         away: score_value_arr[1],
       };
     }
-    // console.log("scoew_icon_list", scoew_icon_list);
+    
   }
 };
 
@@ -406,8 +460,9 @@ watch(props.get_match_detail, (new_value, old_value) => {
 watch(
   () => props.get_match_detail?.msc,
   (msc) => {
-    set_scoew_icon_list({msc});
-    set_basketball_score_icon_list();
+      set_scoew_icon_list({msc});
+      set_basketball_score_icon_list();
+    
   },
   { immediate: false, deep: true }
 );
@@ -518,13 +573,23 @@ watch(()=>props.get_match_detail?.mle,
       .match-detail-team-name {
         // font-weight: bold;
         font-size: 15px;
+        display: flex;
+        align-items: center;
       }
       .match-detail-num {
         //color: #ff7000;
         /** 设计图的500无效 */
         font-weight: 700;
         font-size: 15px;
+        
+      }
+
+      .active-num {
         @extend .current-score-color;
+      }
+      .default-num {
+        color: black;
+        margin-left: 14px;
       }
     }
     .match-detail-item-list {
@@ -608,7 +673,20 @@ watch(()=>props.get_match_detail?.mle,
      color: var(--q-gb-t-c-3) !important;
   }
 }
+.active-circle, .circle {
+  width: 5px; 
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 7px;
+}
 
+.active-circle {
+  background-color: #FF7000;
+}
+.circle {
+  background-color: #D9D9D9;
+}
 .icon-video, .icon-animation {
   width: 14px;
   height: 14px;

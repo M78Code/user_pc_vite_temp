@@ -905,7 +905,6 @@ const set_orderNo_bet_obj = order_no_list => {
 
 // 获取盘口值 附加值
 const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
-
     // ## 详情页的取值，直接取 ol 层级的 `ott` + `on`,当遇到下面几种玩法时，直接取 `otv`,
     // 3-全场让球赛果  69-上半场让球赛果  71-下半场让球赛果  
     // 220-球员得分 221-球员三分球 271-球员助攻 272-球员篮板
@@ -937,9 +936,10 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
     }else{
         let a = '' ,b = '' 
+        a = ol_obj.ott
         b = ol_obj.on
-
         if(ol_obj.ots == 'T1'){
+            
             a = mid_obj.mhn
         }
         if(ol_obj.ots == 'T2'){
@@ -955,24 +955,17 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
         // 首页大小类玩法
         if(['Over',"Under"].includes(ol_obj.ot)){
-            // 英文列表是 简写
-            a =  UserCtr.lang == 'en' ? ol_obj.ot : ol_obj.onbl
-            b = ol_obj.onb
-
             // h5数据格式和pc不一样
-            if(BetData.deviceType == 1){
-                a = ol_obj.on.split(' ')[0]
-                b = ol_obj.on.split(' ')[1]
-            }
+            a = ol_obj.on.split(' ')[0]
+            b = ol_obj.on.split(' ')[1]
         }
-
+            
         // 平 不变色
         if(ol_obj.ot == 'X'){
-            text = `${b}` 
+            text = `${a}<span class='ty-span'>${b}</span>`  
         }else{
-            text = `${a} <span class='ty-span'>${b}</span>` 
+            text = `${a}<span class='ty-span'>${b}</span>` 
         }
-
     }
 
     return text

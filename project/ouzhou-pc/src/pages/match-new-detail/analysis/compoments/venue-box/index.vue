@@ -9,14 +9,9 @@
       <div class="analysis-top">
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
-          <sport_icon
-            :sport_id="detail_info.csid"
-            :status="true"
-            :cds="detail_info.cds"
-            size="20px"
-            class="icon"
-            style="margin: 0 10px"
-          />
+          <sport-icon style="margin: 0 10px"
+          :sport_id="MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-image" size="20" class="icon" />
+
           <!--<span class="analysis-top-txt">{{ detail_info.tn }}</span>-->
           <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
           <span class="match-detail-head-name m-10">v</span>
@@ -75,11 +70,13 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import animal_box from "./animal_box.vue";
-import sport_icon from "./sport_icon.vue";
 import score_info from "./score_info.vue";
 import commingSoon from "./comming-soon.vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js";
+import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import { get_match_status } from 'src/output/module/constant-utils.js'
+
+
 
 const animal = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal.png`;
 const animal_active = `${LOCAL_PROJECT_FILE_PREFIX}/image/png/video/animal_active.png`;
