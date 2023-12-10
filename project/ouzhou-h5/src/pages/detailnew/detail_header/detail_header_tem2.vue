@@ -129,6 +129,7 @@ const status = computed(() => {
   const get_detail_data = props.get_match_detail;
   // 优先判断label
   if (props.label) {
+    console.log(props.label, "props.label");
     if (props.label == 'animation') {
       return 2;
     }

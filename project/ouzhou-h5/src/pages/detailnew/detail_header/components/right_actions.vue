@@ -93,14 +93,19 @@ watch(() => props.detail, (value) => {
     }
     const data = value?.msc_obj||set_scoew_icon_list(value);
     scoew_icon_list.value = data;
-    
+    console.log(value, "value.msc");
     const s1_data = value.msc.map(e => e.split('|')).reduce((pre, cur) => {
         pre[cur[0]] = cur[1].split(':');
         return pre;
     }, {});
+    
     if (s1_data['S1']) {
         point.value = [s1_data['S1'][0], s1_data['S1'][1]]
+    }else {
+        point.value = [0, 0]
+
     }
+    
 }, {deep: true, immediate: true})
 
 const emits = defineEmits(['handleType'])
