@@ -122,7 +122,16 @@ export default {
         }
       },
       immediate:true
-    }
+    },
+    'props.results_list': {
+      handler(new_) {
+          nextTick(()=>{
+            let obj = this.yabo_common.get_refs_info('scrollArea', null, this);
+            obj && obj.setScrollPosition();
+          });
+      },
+      immediate:true
+    },
   },
   methods: {
     /**
