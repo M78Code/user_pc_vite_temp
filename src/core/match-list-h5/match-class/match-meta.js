@@ -1033,8 +1033,6 @@ class MatchMeta {
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_current_page_render_list(scroll_top)
 
-    console.log('123131', match_datas)
-
     // 欧洲版首页 五大联赛 当前渲染的 mids
     this.match_mids = match_datas.map(t =>  t.mid)
 
