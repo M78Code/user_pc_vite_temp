@@ -15,10 +15,17 @@
         <div>{{tab_item.name}}</div>
       </div>
     </div>
-
-    <template v-if="!no_virtual_match">
+    <div class="virtual-sports-card">
+      <div class="tab-title" @click.stop="expend_video = !expend_video">
+        <div class="league-name right-border">{{ lengue_name }}</div>
+        <div class="status">
+          <span class="num">第10轮</span>
+          <span class="state">比赛中</span>
+          <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
+        </div>
+      </div>
       <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
-      <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
+          <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
       <virtual-sports-stage ref="virtual_sports_stage"
         :is_before_destroy="is_before_destroy"
         :key="current_match.mid"
@@ -35,6 +42,9 @@
       <div class="test-line" v-if="show_debug">
         {{current_match.mid}}
       </div>
+    </div>
+    <div class="virtual-sports-card"></div>
+    <template v-if="!no_virtual_match">
       <!--赛事轮|期菜单-->
       <match-tab
         :is_reset_tab_i="is_reset_tab_i"
@@ -112,7 +122,7 @@
       </div>
       <!-- 占位撑开高度 -->
     </template>
-    <no-data v-else which='noMatch' height='500'></no-data>
+    <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
 
   </div>
 </template>
@@ -138,6 +148,7 @@ import virtual_skeleton from "src/base-h5/vr/components/skeleton/virtual_sports/
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
+import { IconWapper } from 'src/components/icon'
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -196,6 +207,10 @@ export default {
       virtual_result_rank_data:[],
       // 顶部菜单切换状态
       top_menu_changed: false,
+      // 当前联赛名称
+      lengue_name: '',
+      // 是否展开视频
+      expend_video: true
     }
   },
   created() {
@@ -389,6 +404,7 @@ export default {
       this.tab_item_i = i;
       if(this.tab_items && this.tab_items.length && this.tab_item_i > -1){
         let current_league = this.tab_items[this.tab_item_i];
+        this.lengue_name = current_league.name
         if(!current_league){
           current_league = this.tab_items[0];
         }
@@ -498,11 +514,10 @@ export default {
 
         let current_league = this.tab_items[this.tab_item_i];
         this.set_current_league(lodash.cloneDeep(current_league));
-        // this.tab_item_click_handle(this.tab_item_i,'is_force');
+        this.tab_item_click_handle(this.tab_item_i,'is_force');
       }
     },
     current_sub_menu(){
-      console.error(666)
       console.error(66677, this.current_league)
       let prev_league_id = ''
       if(this.current_league){
@@ -541,7 +556,7 @@ export default {
     'result-page': result_page,
     noData,
     // 'setting': setting,
-
+    'icon-wapper': IconWapper,
     'virtual-skeleton':virtual_skeleton,
   },
   destroyed(){
@@ -586,6 +601,47 @@ export default {
     }
   }
 }
+
+.tab-title{
+  height: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 9px;
+  &.tab-border {
+    border-bottom: 1px solid #eee;
+    height: 24px;
+  }
+  .league-name{
+    color: #303442;
+    font-weight: 600;
+    padding-left: 0.07rem;
+  }
+  .status{
+    .state{
+      margin: 0 5px;
+      color: #fff;
+      padding: 0 6px;
+      border-radius: 3px;
+      font-size: 0.11rem;
+      display: inline-block;
+      background: #7981A4;
+    }
+    .icon{
+      transform: rotate(180deg);
+      &.expend_icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+.virtual-sports-card {
+  background: #fff;
+  border-radius: 4px;
+  margin-bottom: .08rem;
+}
+
 
 .list-wrapper {
   margin: 0.04rem 0;
