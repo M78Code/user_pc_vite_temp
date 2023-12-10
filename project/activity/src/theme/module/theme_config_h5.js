@@ -1,4 +1,6 @@
+// 公用变量
 const theme_common = {
+     // 渐变背景图和背景图片
     "com-img-bg-117": `url("/activity/yazhou-h5/activity/slot_machine/waiting.svg")`,
     'com-img-bg-117': `url("/activity/yazhou-h5/activity/slot_machine/waiting.svg")`,
     'com-img-bg-118': `url("/activity/yazhou-h5/activity/slot_machine/history_list_bg.png")`,
@@ -41,18 +43,22 @@ const theme_common = {
     'com-img-bg-218': `url("/activity/yazhou-h5/activity/slot_machine/numbers/9.png")`,
 }
 
+// 主题橙色----日间版
 const theme01 = {
     "img-bg-99": `url("/activity/yazhou-h5/activity/smaller.png")`,
 }
 
+// 主题橙色----夜间版
 const theme02 = {
     "img-bg-99": `url("/activity/yazhou-h5/activity/smaller.png")`
 }
 
+// 主题蓝色----日间版
 const theme01_y0 = {
     "img-bg-99": `url("/activity/yazhou-h5/activity/smaller_y0.png")`,
 }
 
+// 主题蓝色----夜间版
 const theme02_y0 = {
     "img-bg-99": `url("/activity/yazhou-h5/activity/smaller_y0.png")`,
 }
