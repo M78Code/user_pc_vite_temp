@@ -944,7 +944,9 @@ export default {
 
         .score-title-text {
           height:100%;
-          margin-top: .02rem;
+          display: flex;
+          align-items: center;
+          // margin-top: .02rem;
         }
 
         .timer-wrapper-c {

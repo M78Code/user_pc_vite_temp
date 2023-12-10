@@ -57,7 +57,7 @@ const props = withDefaults(defineProps<{
   value: TYPES.OlResult|TYPES.Ol,
   type?: TYPES.OlItemType
 }>(), {
-  type: 'column'
+  type: 'default'
 })
 const sportId = MatchDetailCalss.params.sportId
 // @ts-ignore
@@ -267,7 +267,9 @@ function resetStatus() {
     }
   }
   &.auto{
+    padding: 10px 0;
     .icontainer{
+      margin-top: 10px;
       width: 100%;
       flex-wrap: wrap;
       justify-content: center;
@@ -286,7 +288,7 @@ function resetStatus() {
       flex-basis: 50%;
     }
     .ol-content{
-      flex-basis: 40%;
+      flex-basis: 30%;
     }
   }
 }

@@ -43,9 +43,9 @@
           :match_info="detail_info"
           :is_esports="false"
       ></video_type_ctr>
-      <div class="detail-loading" v-if="iframe_loading">
+      <!-- <div class="detail-loading" v-if="iframe_loading">
         <loading></loading>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -58,7 +58,7 @@ import video from "src/core/video/video.js";
 import url_add_param from "src/core/enter-params/util/index.js";
 import video_type_ctr from "src/core/video/video_type_ctr.vue";
 import icon from "src/components/icon/icon-1/index.vue";
-import loading from "../../../components/loading/index.vue";
+// import loading from "../../../components/loading/index.vue";
 import _ from "lodash";
 const props = defineProps({
   detail_info: {

@@ -171,8 +171,8 @@ function set_sports_list() {
   api_search.get_search_sport().then(res => {
     if (lodash.get(res, 'code') == 200) {
       const list = lodash.get(res, 'data') || []
-      // 内部测试展示所有球种，线上只放开足、篮
-      const ls = ["1", "2"] 
+      // 内部测试展示所有球种，线上只放开足、篮 网 电足 电篮
+      const ls = ["1", "2","5","90","91"];
       sports_list = IS_FOR_NEIBU_TEST ? list : list.filter(item => ls.includes(item.id))
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id
@@ -287,6 +287,7 @@ export default defineComponent({
   .search-result {
     // box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
     margin-top: 9px;
+    width: 1470px;
   }
 
   &.mini {
@@ -304,13 +305,16 @@ export default defineComponent({
 	width: 100%;
 	z-index: 1;
 	color: var(--q-gb-t-c-5);
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 	.tab {
 		background-color: var(--q-gb-bg-c-4);
 		border-radius: 40px;
 		text-align: center;
 		font-size: 14px;
 		flex-shrink: 0;
-		padding: 6px 20px;
+		padding: 6px 16px;
     cursor: pointer;
     margin-right: 10px;
 

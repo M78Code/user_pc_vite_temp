@@ -42,7 +42,7 @@ const activeOn = ref(0);//默认值
 
 onMounted(() => {
     nextTick(()=>{
-        changeTabMenu(props.dataList?.[0],0)
+        // changeTabMenu(props.dataList?.[0],0)
     })
 })
 onUnmounted(()=>{
@@ -59,11 +59,12 @@ const changeTabMenu = (item, i, event) => {
     // 设置日期
     MenuData.set_date_time(props.dataList?.[i]?.val)
 
-    set_menu_match_date()
+    // set_menu_match_date()
 
     scrollMenuEvent(event, ".date-tab-content-ul", ".active");
 
     MatchMeta.filter_match_by_time(item?.val)
+    console.log(item?.val)
     MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
 }
 /**
