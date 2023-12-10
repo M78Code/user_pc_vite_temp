@@ -1,5 +1,5 @@
 
-import { ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 import lodash_ from "lodash"
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -18,6 +18,11 @@ const mi_2000_arr = ref([]);
 const mi_400_obj = ref([]);
 const mi_500_obj = ref([]);
 const vr_menu_obj = ref([]);
+
+const ref_data = reactive({
+    time_out_1:null,
+    time_out_ :null
+}) 
 
 resolve_mew_menu_res();
 
@@ -194,6 +199,7 @@ function compute_quanbu_euid() {
     };
 }
 
+
 // 收藏切换获取最新的赛种数量数据
 async function  get_menu_of_favorite_count(list,type) {
     let euid_list = ''
@@ -202,6 +208,9 @@ async function  get_menu_of_favorite_count(list,type) {
         euid_list += MenuData.get_mid_for_euid(item.mi) + ','
         item.ct = 0
     })
+    clearInterval(ref_data.time_out_)
+    clearInterval(ref_data.time_out_1)
+
     let type_ = {
         1:1,
         2:3,
@@ -240,8 +249,16 @@ async function  get_menu_of_favorite_count(list,type) {
                 return item
             })
         }
+        ref_data.time_out_ = setInterval(()=>{
+            get_menu_of_favorite_count(list,type)
+        },5000)
+        mi_100_arr.value = list
         return list
     } catch(error){
+        ref_data.time_out_1 = setInterval(()=>{
+           get_menu_of_favorite_count(list,type)
+        },5000)
+        mi_100_arr.value = list
         return list
     }
 }

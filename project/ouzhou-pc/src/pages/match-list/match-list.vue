@@ -49,11 +49,11 @@
         <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="{'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home()}">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
-        <!-- <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
+        <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
           v-show="five_leagues_card_key_arr.length && MenuData.is_home()" />
         <div v-for="card_key in five_leagues_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
-        </div> -->
+        </div>
         <template v-slot:after>
           <div style="height: 15px"></div>
           <back-top :onClick="on_go_top" />
@@ -149,13 +149,13 @@ export default {
 
     const { ws_destroyed: ws_destroyed_common } = use_match_list_ws()
     const match_list_card_key_arr = ref([]);
-    // const five_leagues_card_key_arr = ref([]);
+    const five_leagues_card_key_arr = ref([]);
     const match_list_top = ref("76px");
     let mitt_list = null
     const MatchListCardDataClass_match_list_card_key_arr = () => {
       nextTick(() => {
         match_list_card_key_arr.value = MatchListCardDataClass.match_list_card_key_arr;
-        // five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
+        five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
       })
     };
     const is_conming_soon = computed(() => {
@@ -202,7 +202,7 @@ export default {
       matches_15mins_list,
       match_count,
       match_list_card_key_arr,
-      // five_leagues_card_key_arr,
+      five_leagues_card_key_arr,
       compute_css_obj,
       MatchListCardDataClass,
       load_data_state,

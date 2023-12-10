@@ -17,8 +17,11 @@
       <!-- 遮罩层样式.bottom-wrap -->
       <div class="bottom-wrap col search-result relative-position">
         <div class="sports-tab" ref="tab" v-if="sports_list.length">
-          <div v-for="(item, index) in sports_list" :key="item.id" @click="set_sports_tab_index(index)"
-            :class="['tab', sports_tab_index === index ? 'active' : '']">{{ item.sportName }}</div>
+          <search-tab-warp 
+            :sports_list="sports_list" 
+            :sports_tab_index="sports_tab_index"
+            @change_tabs="set_sports_tab_index"
+          ></search-tab-warp>
         </div>
         <!-- 初始化 -->
         <search-int
@@ -60,6 +63,8 @@ import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { LayOutMain_pc } from 'src/output/index.js'
 // 搜索初始化组件
 import searchInt from "./search-init.vue"
+// 搜索tabs组件
+import searchTabWarp from "./search_tab_warp.vue"
 //搜索赛事组件
 import searchSports from "./search-sports.vue"
 // 搜索玩法组件
@@ -306,27 +311,5 @@ export default defineComponent({
 	z-index: 1;
 	color: var(--q-gb-t-c-5);
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-	.tab {
-		background-color: var(--q-gb-bg-c-4);
-		border-radius: 40px;
-		text-align: center;
-		font-size: 14px;
-		flex-shrink: 0;
-		padding: 6px 16px;
-    cursor: pointer;
-    margin-right: 10px;
-
-		&:last-child {
-			margin-right: 0;
-		}
-
-		&.active {
-			background-color: var(--q-gb-bg-c-1);
-			color: var(--q-gb-t-c-1);
-		}
-
-	}
 }
 </style>

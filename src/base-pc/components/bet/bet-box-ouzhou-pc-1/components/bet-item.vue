@@ -13,7 +13,7 @@
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                     <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none text-009 font400" v-if="[1].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
+                    <span class="text-a1a text-flow-none text-009 font400" v-if="ref_data.only_win.includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
                     <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                 </div>
                 <div class="w-100 fon12 font400 text-8A8986-i">{{ items.tid_name }}</div>
@@ -88,6 +88,7 @@ const props = defineProps({
 })
 
 const ref_data = reactive({
+    only_win: [1,37,242,1,153,20001,20043],
     show_money: false, // 显示快捷金额
     max_money: 0, // 最大限额
     money_list: [],

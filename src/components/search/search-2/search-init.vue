@@ -213,7 +213,6 @@ onMounted(init)
 }
 
 .init-wrap {
-    margin-bottom: 10px;
     background-color: #fff;
     font-size: 14px;
     font-weight: 500;
@@ -224,6 +223,7 @@ onMounted(init)
         border-bottom: 1px solid #282b37;
         height: 46px;
         margin-bottom: 8px;
+        background-color: #f3f3f3;
         .line {
             height: 14px;
             width: 3px;

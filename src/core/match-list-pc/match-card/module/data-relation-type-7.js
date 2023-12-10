@@ -105,37 +105,8 @@
       // 赛种ID到卡片key的映射
       csid_to_card_key_obj_five[csid_key] = csid_to_card_key_obj_five[csid_key] || []
 
-      // 是否创建了一个赛事开赛状态标题卡片
-      let is_create_match_status_card = false
-      // 如果当前赛事开赛状态 不等于上一个赛事开赛状态  需要添加一个开赛状态标题卡片
-      if(MatchListCardData.match_list_mapping_relation_obj_type == 4 && match_ms != pre_match_ms && !is_five_leagues){
-        pre_match_ms = match_ms
-        card_key = match_ms == 1 ? 'play_title' : 'no_start_title'
-        // 判断开赛状态标题卡片是否创建过，防止傻逼后台返回傻逼数据， 有可能会出现重复开赛状态标题卡片
-        if(!match_list_card_key_arr.includes(card_key)){
-          is_create_match_status_card = true
-          // 赛事开赛状态标题卡片处理
-          card_index += 1
-          match_list_card_key_arr.push(card_key)
-
-          // 打入开赛状态标题卡片特征
-          all_card_obj[card_key] = {
-            ...ouzhou_match_status_title_card_template,
-            // 卡片索引
-            card_index,
-            // 卡片类型
-            card_type: card_key,
-          }
-          // 如果不是ws调用  设置折叠数据
-          if(!is_ws_call){
-            Object.assign(all_card_obj[card_key],fold_template)
-          }
-        }
-
-      }
-
       // 如果当前联赛 不等于上一个联赛,或者刚创建了一个赛事开赛状态标题卡片，  需要添加一个联赛标题卡片
-      if(_match.tid != pre_match_tid || is_create_match_status_card){
+      if(_match.tid != pre_match_tid){
         // 生成自定义联赛ID
         league_repeat_count_obj[_match.tid]++
         cus_tid = `${_match.tid}_${league_repeat_count_obj[_match.tid]}`
@@ -217,14 +188,7 @@
       // 赛事表征数据
       all_card_obj[_match.mid+'_'] =  compute_style_template_by_matchinfo(_match, get_match_template_id(_match), true)
     })
-
-    // 设置赛事状态标题卡片下的赛事数量
-    if(all_card_obj['play_title']){
-      all_card_obj['play_title'].match_count = play_match_count
-    }
-    if(all_card_obj['no_start_title']){
-      all_card_obj['no_start_title'].match_count = no_start_match_count
-    }
+    console.log('five_leagues_card_key_arr',five_leagues_card_key_arr)
      // 已开赛 到卡片key的 映射对象
      MatchListCardData.set_all_card_obj({
       // 合并所有卡片样式对象

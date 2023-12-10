@@ -12,6 +12,7 @@
       :class="{ 'odds-wrap': item.hl[0].hs != 2 }"
     >
       <q-expansion-item
+      v-if="item.hl[0].hs != 2"
         v-model="item.expanded"
         :expand-icon-toggle="false"
         :hide-expand-icon="true"
@@ -21,7 +22,7 @@
       >
         <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
-          <div class="odds-item" v-if="item.hl[0].hs != 2">
+          <div class="odds-item">
             {{ item.hpn }}
             <span v-if="item.hps && get_match_status(detail_info.ms) == 1">
               ({{ item.hps.split("|")[1] }})
