@@ -272,6 +272,7 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
   * @param {function} callback  回调函数
   */
   const get_animation_url = (params)=>{
+    
     const match = props.get_match_detail
       const tempUrl = JSON.parse(JSON.stringify(animation_src.value))
       animation_src.value = ''
@@ -311,9 +312,10 @@ const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
       }
       animationUrl = animationUrl + `&rdm=${new Date().getTime()}`
       animation_src.value = animationUrl
+      console.log(animationUrl, "ssssssssss");
     }
   }).catch( err => {
-    console.error(err);
+    console.error(err, "ssssssssss");
         animation_src.value = tempUrl
   })
 }

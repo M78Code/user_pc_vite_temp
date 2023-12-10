@@ -54,6 +54,10 @@ const props = defineProps({
 const scoew_icon_list = ref({
     S1: {home: 0, away: 0}
 })
+
+// 比分
+const point = ref([0,0]);
+
 /**
  *@description // 比分板数据
  *@param {*}
@@ -82,9 +86,21 @@ watch(() => props.rightActionsLabel, (value) => {
     }
 })
 
-watch(props.detail, (value) => {
+watch(() => props.detail, (value) => {
     // console.log(value, "value===");
-    scoew_icon_list.value = value?.msc_obj||set_scoew_icon_list(value)
+    if (!value || !value.msc) {
+        return;
+    }
+    const data = value?.msc_obj||set_scoew_icon_list(value);
+    scoew_icon_list.value = data;
+    
+    const s1_data = value.msc.map(e => e.split('|')).reduce((pre, cur) => {
+        pre[cur[0]] = cur[1].split(':');
+        return pre;
+    }, {});
+    if (s1_data['S1']) {
+        point.value = [s1_data['S1'][0], s1_data['S1'][1]]
+    }
 }, {deep: true, immediate: true})
 
 const emits = defineEmits(['handleType'])
@@ -100,7 +116,7 @@ const mapObj = computed(() => {
 
 const score_point = computed(() => {
     console.log(scoew_icon_list.value, "[scoew_icon_list.value");
-    return props.detail.msc ?  [0,0] : [scoew_icon_list.value.S1.home, scoew_icon_list.value.S1.away]
+    return [scoew_icon_list.value.S1.home, scoew_icon_list.value.S1.away]
 })
 
 // 是否时视频
@@ -108,11 +124,10 @@ const is_video = ref(props.isVideo);
 // 选择的item
 
 const list = computed(() => {
-    console.log(scoew_icon_list.value);
     const res = [
         {label: 'animation', img: is_video.value ? `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video.png` :  `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation.png`, value: 0},
         // {label: 'score',  value: 1, score: [  scoew_icon_list.value['S1']?.home, scoew_icon_list.value['S1']?.away]},
-        {label: 'score',  value: 1, score: [score_point.value[0], score_point.value[1]]},
+        {label: 'score',  value: 1, score: [point.value[0], point.value[1]]},
         {label: 'collect', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect_gray.png`, active: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`, value: 2},
     ];
     return res.filter(e => mapObj.value[props.status].includes(e.value));

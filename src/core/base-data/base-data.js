@@ -137,7 +137,7 @@ class BaseData {
     // 是否通知元数据处理完成
     this.is_emit = false
 
-    this.conventionalType = [101,102]; 
+    this.conventionalType = [101,102,105,190,191]; 
   }
   /**
    * 初始化数据
