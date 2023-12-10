@@ -43,9 +43,11 @@ export default {
      */
     match_collect_state () {
       // 获取当前收藏状态
-      const state = MatchCollect.get_match_collect_state(this.match_of_list)
-      MatchCollect.set_match_collect_state(this.match_of_list, !state)
+      return MatchCollect.get_match_collect_state(this.match_of_list)
     },
+    is_collect() {
+      return Boolean(lodash.get(this.match_of_list, 'tf'))
+    }
   },
   methods: {
     /**
