@@ -10,7 +10,7 @@
       <div class="row virtual-bet-wrapper">
         <div class="row justify-between champion-item col-6"
              v-for="(item,index) in champion_list" :key="index"
-             @click="go_to_bet(index)"  :class="BetData.bet_oid_list.includes(item.oid)&& 'champion-item2'"
+             @click="go_to_fun(index)"  :class="BetData.bet_oid_list.includes(item.oid)&& 'champion-item2'"
         >
           <div  class="row">
             <div class="temp9-sort" :class="`virtual-num-${index+1} csid-${[1010].includes(sub_menu_type) ? '1002' : sub_menu_type} ${[1010].includes(sub_menu_type) ? `motorcycle-${index+1}` : ''}`"></div>
@@ -32,8 +32,9 @@ import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp9",
   props: ["item_data", "title"],
@@ -78,20 +79,20 @@ export default defineComponent({
     const go_to_bet = (index) =>{
       let ol_item = data.champion_list[index]
       ol_item.num = index + 1
-      utils.go_to_bet(ol_item)
+      go_to_fun(ol_item)
     };
     onMounted(() => {
       init()
     })
     return {
       ...toRefs(data),
-      utils,
+      
       BetData,
       get_bet_list,
       get_curr_sub_menu_type,
       get_odds,
       init,
-      go_to_bet,
+      go_to_fun,
       LOCAL_PROJECT_FILE_PREFIX
     }
   }

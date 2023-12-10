@@ -18,7 +18,7 @@
       <span v-show="red_green_status"
         :class="['change-icon', {'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}]">
       </span>
-      {{get_odds_value(ol_item)}}
+      {{ compute_value_by_cur_odd_type(ol_item.ov,ol_item._hpid,'',csid) }}
     </div>
     <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
   </div>
@@ -28,7 +28,7 @@
 import { computed, onMounted, onUnmounted, ref, watch} from "vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import lodash from 'lodash'
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
 const props = defineProps({
@@ -67,14 +67,7 @@ const odd_status = computed(() => {
   //return $common.odds.get_odds_active(ol_item.ms,hs,ol_item.os);
   return props.ol_item;
 })
-1
-const get_odds_value = (ol_item,hsw) => {
-  let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
-  let csid = props.csid;
-  let r1 = compute_value_by_cur_odd_type(ov,ov._hpid,'',csid)
-  const result = r1.split('.')[1] === '00' ? r1.split('.')[0] : r1
-  return result || 0;
-}
+
 
 </script>
 
@@ -156,3 +149,4 @@ const get_odds_value = (ol_item,hsw) => {
   }
 }
 </style>
+src/core/format/common/module/format-odds-conversion-mixin.js

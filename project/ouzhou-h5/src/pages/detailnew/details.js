@@ -1,4 +1,4 @@
-import { api_match_list, api_common } from "src/api/index.js";
+import {  api_common } from "src/api/index.js";
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
 import { onMounted, ref, watch, onUnmounted, toRaw } from "vue";
 import {
@@ -7,15 +7,14 @@ import {
   useMittOn,
   useMitt,
   MITT_TYPES,
-  utils,
-  UserCtr,
+  axios_loop as axios_api_loop,
   MenuData,
   SearchData,
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5
-} from "src/core/index";
-import { details_ws } from "./details-ws";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
-
+} from "src/output/index";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
+import { details_ws } from "src/core/match-detail/details-ws.js";
 export const details_main = (router, route) => {
   const mid= ref(route.params.mid);
   const csid= ref(route.params.csid);
@@ -133,7 +132,7 @@ export const details_main = (router, route) => {
       m_plays.push(Number(play));
       return plays && plays.includes(Number(play));
     });
-    if (list) {
+    if (!lodash.isEmpty(list)) {
       MatchDataWarehouseInstance.value.set_match_details(
         getMidInfo(route.params.mid),
         [...list]
@@ -216,11 +215,10 @@ export const details_main = (router, route) => {
    */
   const get_matchDetail_getMatchOddsInfo = (params) => {
     //赛果页面调用赛果玩法详情接口
-    // match_odds_info.value = get_match_odds_info.value;
     //接口调用
     let obj_ = {
       // axios api对象
-      axios_api: api_match_list.get_detail_list,
+      axios_api: api_common.get_matchDetail_getMatchOddsInfo,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -234,7 +232,7 @@ export const details_main = (router, route) => {
         // if (tab_selected_obj.value.marketName) {
           detail_tabs_change(tab_selected_obj.value);
         // } else {
-        //   match_odds_info.value = res.data;
+          get_match_odds_info.value = res.data;
         // }
    
         // MatchDataWarehouseInstance.value.set_match_details(
@@ -253,7 +251,7 @@ export const details_main = (router, route) => {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
   };
   /*
    **监听数据仓库版本号
@@ -292,8 +290,8 @@ export const details_main = (router, route) => {
    */
   const get_category_list_info = (params) => {
     // category_list.value = get_category_list.value;
-    api_match_list
-      .get_detail_category(params)
+    api_common
+      .get_category_list(params)
       .then((res) => {
         // console.log("get_category_list", res);
         category_list.value = res.data;
@@ -322,7 +320,7 @@ export const details_main = (router, route) => {
   function getMatchDetailMatchInfo(params) {
     let obj_ = {
       // axios api对象
-      axios_api: api_match_list.get_detail_data,
+      axios_api: api_common.get_matchDetail_MatchInfo,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -348,7 +346,7 @@ export const details_main = (router, route) => {
         // detail_store.get_detail_params
         MatchDataWarehouseInstance.value.set_match_details(
           toRaw(match_detail.value),
-          []
+          get_match_odds_info.value
         );
       },
       // axios中catch回调方法
@@ -360,7 +358,7 @@ export const details_main = (router, route) => {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
     //初次调用成功后 赋值init未false
     get_category_list_info({
       sportId: csid.value,
@@ -402,17 +400,16 @@ export const details_main = (router, route) => {
     }
   };
   /**
-   *@description 获取详情页面玩法集接口(/v1/m/category/getCategoryList)
+   *@description 获取详情页面oddinfo
    *@param {obj} params 请求参数
    *@return {obj}
    */
    const socketOddinfo = lodash.throttle((params) => {
     //赛果页面调用赛果玩法详情接口
-    // match_odds_info.value = get_match_odds_info.value;
     //接口调用
     let obj_ = {
       // axios api对象
-      axios_api: api_match_list.get_detail_list,
+      axios_api: api_common.get_matchDetail_getMatchOddsInfo,
       // axios api对象参数
       params: params,
       // 唯一key值
@@ -441,7 +438,7 @@ export const details_main = (router, route) => {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
   }, 2000);
   /**
    * @description: RCMD_C109
@@ -542,8 +539,10 @@ export const details_main = (router, route) => {
         // 赛事订阅(C8)-新增玩法/新增盘口(C303)
         case "C303":
           socketOddinfo({
-            sportId: csid.value,
-            mid:mid.value,
+            mcid: 0,
+            cuid: cuid.value,
+            mid: mid.value,
+            newUser: 0,
           })
           break;
          // 赛事开赛状态(C302)  
@@ -560,8 +559,10 @@ export const details_main = (router, route) => {
          //  玩法集变更(C112)    
         case "C112":
           socketOddinfo({
-            sportId: csid.value,
-            mid:mid.value,
+            mcid: 0,
+            cuid: cuid.value,
+            mid: mid.value,
+            newUser: 0,
           })
           break; 
          case "C102":
@@ -581,8 +582,10 @@ export const details_main = (router, route) => {
     if(ws_status.ws_status != 1){
       MatchDataWarehouseInstance.value.scmd_c8_ws_reconnect()
       socketOddinfo({
-        sportId: csid.value,
-        mid:mid.value,
+        mcid: 0,
+        cuid: cuid.value,
+        mid: mid.value,
+        newUser: 0,
       })
     }
   });

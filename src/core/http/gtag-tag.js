@@ -1,6 +1,6 @@
 /***/
 //  应有引入的方法
-import { SessionStorage  } from "src/core/index.js";
+import { SessionStorage } from "src/output/module/constant-utils-common.js";
 const { htmlVariables } = window.BUILDIN_CONFIG;
 function gtag_config_send(user_id) {
   // 设置默认启动参数
@@ -63,7 +63,7 @@ function gtag_view_send(title, path) {
     //   return;
     // }
     // 埋点发送网页跟踪信息
-    window.gtag("config", config.value.GA_TRACKING_ID, {
+    window.gtag("config", htmlVariables.GA_TRACKING_ID, {
       page_title: title, // 'homepage',
       page_path: path, // '/home'
       user_id, // 用户信息
@@ -97,8 +97,12 @@ function gtag_event_send(action, category, label, value) {
     });
   }
 }
-export default {
+
+const GATAG={
   gtag_config_send,
   gtag_view_send,
   gtag_event_send,
 };
+
+
+export    default  GATAG

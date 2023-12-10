@@ -35,12 +35,10 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { i18n_t, compute_local_project_file_path } from "src/core/index.js";
+import { i18n_t, compute_local_project_file_path } from "src/output/index.js";
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { utils } from "src/core/index.js";
-
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 /* 退出登录通知-中文 */
 const logout_notice = compute_local_project_file_path('/image/image/logout_notice.png')
 /* 退出登录通知-英文 */
@@ -77,8 +75,7 @@ const is_domain_error = ref(false)
 const is_invalid = ref(UserCtr.is_invalid)
 onMounted(() => {
   is_show.value = is_invalid.value
-  if (utils.is_iframe) {
-    console.log('非内嵌')
+  if (utils_info.is_iframe) {
     backDrop.value = true;
   }
 })
@@ -108,10 +105,11 @@ function show_alert(data) {
   text.value = data.text || "";
   if (text.value == "" || is_show.value) return;
   is_show.value = true;
-
+  backDrop.value = true;//不允许点击空白关闭
   btn_text.value = data.btn_text || i18n_t('common.confirm')
   // 弹框时,关闭视频播放窗口
   useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, { cmd: "colse" })
+
 }
 /**
  * @Description:域名错误弹窗
@@ -275,4 +273,3 @@ function confirm() {
 
 /** 弹窗样式 -E*/
 </style>
-

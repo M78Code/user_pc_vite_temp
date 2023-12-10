@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onBeforeUnmount, getCurrentInstance, onMounted } from 'vue'
-import { SessionStorage  } from "src/core/index.js";
+import { SessionStorage } from "src/output/module/constant-utils.js";
 // import menu_stay_time from "/utils/menuClass/menu_stay_time.js"
 
 /** 时间 */
@@ -68,4 +68,4 @@ function set_time_str() {
     transform: translateX(100px);
 }
 </style>
-  
+  src/core/utils/common/index.js

@@ -14,7 +14,7 @@
 <script>
 // import { mapGetters } from "vuex"
 // import msc from "src/public/mixins/common/msc.js";
-import { numberToChinese } from 'src/core/index.js';
+import { numberToChinese } from 'src/output/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 export default {
   // mixins: [msc],
@@ -50,7 +50,7 @@ export default {
         //   const first_mct = 1;
         //   let n_mct = first_mct;
         //   if(UserCtr.lang == 'zh'){
-        //     n_mct = utils.numberToChinese(first_mct)
+        //     n_mct = numberToChinese(first_mct)
         //   }
         //   r = game_count.replace('%s',new_num);
         // }

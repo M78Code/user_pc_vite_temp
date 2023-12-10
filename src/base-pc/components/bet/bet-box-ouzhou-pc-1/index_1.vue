@@ -71,7 +71,7 @@
 
 <script setup>
 import { reactive } from "vue"
-import { UserCtr} from "src/core/"
+import { UserCtr} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import betTitle from "./components/bet-title.vue"  // 投注头部

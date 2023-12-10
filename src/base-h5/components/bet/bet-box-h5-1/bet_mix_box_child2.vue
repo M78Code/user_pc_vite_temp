@@ -222,17 +222,17 @@ import keyBoard from './/bet-keyboard.vue';
 import ballSpin from './/ball-spin.vue';
 import betBar from ".//bet-bar.vue";
 
-// import {utils } from 'src/core/index.js';
+// 
 // import { api_betting } from "src/api/index.js";
 // import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/core/index.js";
+import { UserCtr,compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 // import { hide_bet_series_but } from "src/core/bet/index.js"
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
-import { format_money3, format_money2 } from 'src/core/format/index.js'
+import { format_money3, format_money2 } from 'src/output/index.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import acceptRules from ".//accept-rules.vue"
 

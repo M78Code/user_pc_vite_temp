@@ -1,15 +1,18 @@
 import { ref, nextTick } from "vue";
 import lodash from "lodash";
+
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { UserCtr, t, PageSourceData, MenuData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
+import { MenuData }  from "src/output/module/menu-data.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import { league_list_obj } from './match-list-featch.js';
 import { api_common, api_match } from "src/api/index.js";
-// 收藏api
-const get_collect_matches_api = api_match.post_fetch_collect_list_high_light;
 // 全局赛事收藏信息
 const match_collect_data = { data: null };
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 // 前端控制是否禁用收藏功能   ENABLE_COLLECT_API
@@ -371,6 +374,7 @@ export const match_collect_status = (match, obj) => {
  */
 const mx_collect_leagues = async (match, is_champion) => {
   let cur_collect_state = Number(!match.tf);
+  console.log(match, 'match', cur_collect_state)
   let _params = {
     tid: match.tid,
     cuid: UserCtr.get_uid(),
@@ -407,6 +411,7 @@ const mx_collect_leagues = async (match, is_champion) => {
   //     MatchListCard.get_match_list_mapping_relation_obj_type()
   //   )
   // );
+  
   mids_arr.forEach((mid) => {
     let match_item = MatchListData.list_to_obj.mid_obj[mid + "_"] || {};
     match_item.tf = cur_collect_state;
@@ -423,8 +428,8 @@ const mx_collect_leagues = async (match, is_champion) => {
       let match_length;
       if (MenuData.is_esports()) {
         match_length =
-          lodash.get(MatchListData.league_list_obj, "livedata.length", 0) +
-          lodash.get(MatchListData.league_list_obj, "nolivedata.length", 0);
+          lodash.get(league_list_obj.value, "livedata.length", 0) +
+          lodash.get(league_list_obj.value, "nolivedata.length", 0);
       } else {
         match_length = MatchListData.match_list.length;
       }
@@ -445,7 +450,7 @@ const mx_collect_leagues = async (match, is_champion) => {
   //   );
   // }
   // 获取列表最新的收藏数量
-  await mx_collect_count();
+  mx_collect_count();
   await fethc_collect_match()
   // })
   // .catch((err) => {

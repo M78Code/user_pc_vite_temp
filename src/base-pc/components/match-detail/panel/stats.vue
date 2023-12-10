@@ -10,7 +10,7 @@
         v-if="show_header"
         :title="i18n_t('common.panel_total')" icon="stats">
       <template v-slot:append>
-        <div class="square-wrapper flex flex-center" v-if="$utils.is_show_sr_flg(match_info)" @click="sr_click_handle">
+        <div class="square-wrapper flex flex-center" v-if="$is_show_sr_flg(match_info)" @click="sr_click_handle">
           <icon size="12px" name="icon-signal" />
           <q-tooltip anchor="top middle" self="center middle" :content-style="tooltip_style">{{i18n_t('common.analysis')}}</q-tooltip>
         </div>

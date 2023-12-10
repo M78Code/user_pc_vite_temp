@@ -25,7 +25,7 @@
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box" @click="utils.go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -85,7 +85,7 @@
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
-                      <div class="play-box" @click="utils.go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -136,7 +136,7 @@
                 <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
-                      <div class="play-box" @click="utils.go_to_bet(ol_item)" :class="{'win':utils.calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
+                      <div class="play-box" @click="go_to_bet(ol_item)" :class="{'win':calc_win(ol_item.result),'active':BetData.bet_oid_list.includes(ol_item.id_)}">
                         <div class="ellipsis remark">
                         <span class="item-fat">
                           {{ol_item.on.trim().split(" ")[0]}}
@@ -188,13 +188,14 @@
 // #TODO vuex
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance  } from 'src/core/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win  } from 'src/output/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp16",
   props: ["item_data", "title"],
@@ -205,7 +206,6 @@ export default defineComponent({
   // mixins:[odd_convert],
   setup(props, evnet) {
     let data = reactive({
-      utils
     });
     const get_cur_odd = computed(() => {
       return ""
@@ -226,7 +226,8 @@ export default defineComponent({
       get_cur_odd,
       get_detail_data,
       LOCAL_PROJECT_FILE_PREFIX,
-      utils
+      calc_win,
+      go_to_bet
     }
   }
 })

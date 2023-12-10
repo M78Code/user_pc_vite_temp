@@ -5,7 +5,7 @@
  */
 import { ref } from "vue";
 import lodash_ from "lodash"
-import BetData from "./bet-data-class"
+import BetData from "./bet-data-class.js"
 
 class BetViewData {
   constructor() { 
@@ -244,6 +244,8 @@ class BetViewData {
       case '0402006':
       case '0402007':
       case '0402008':
+        text = "bet_message.m_0402001"
+        break
       case '0402011':
       case '0402012':
       case '0402016':

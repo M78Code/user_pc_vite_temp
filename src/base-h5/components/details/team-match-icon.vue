@@ -43,7 +43,6 @@ import match_icon from "src/base-h5/components/details/match-icon/match-icon-2.v
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
-import {utils } from 'src/core/index.js'
 import { i18n_t } from "src/boot/i18n.js";
 
 export default defineComponent({
@@ -100,7 +99,7 @@ export default defineComponent({
      * @return {String}
      */
     const details_collect = (match_obj) => {
-      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
+      if( !judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
       if ( state_data.favorite_loading ) return;

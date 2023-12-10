@@ -43,7 +43,7 @@ import bodyMain from "src/base-h5/components/common/cathectic-item/item-body/bod
 import lodash from 'lodash'
 import { ref, onMounted, onUnmounted} from 'vue'
 import { t } from "src/boot/i18n.js";;
-import { project_name } from 'src/core'
+import { project_name } from "src/output/index.js"
 
   //按钮名字
   let btn_text = ref('')

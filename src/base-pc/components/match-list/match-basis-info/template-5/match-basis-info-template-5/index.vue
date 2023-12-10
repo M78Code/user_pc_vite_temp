@@ -55,7 +55,7 @@
           <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
         </span>
         <!-- 统计分析 -->
-        <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
+        <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
           <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
         </div>
         <!-- 玩法数量 -->
@@ -73,7 +73,7 @@
 <script setup>
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 // mixins:[match_basis_info_mixin],
-import { compute_local_project_file_path } from "src/core";
+import { compute_local_project_file_path } from "src/output/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -96,7 +96,7 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(props.match.mid)
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_${match_style_obj.data_tpl_id}_config`].width_config
 
 
-import { t } from "src/core/index.js";
+import { t } from "src/output/index.js";
 </script>
 <style lang="scss" scoped>
 .basic-col {

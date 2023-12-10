@@ -4,7 +4,22 @@
  * @Description: 赛事分析页动画/视频
 -->
 <template>
-  <div class="box-bc" @mouseenter="video_enter" @mouseleave="video_leave">
+  <div class="box-bc relative-position" @mouseenter="video_enter" @mouseleave="video_leave">
+
+    <!-- 右上角提示內容 -->
+    <div class="right-icon" @click.stop="is_show_content = !is_show_content">
+      <!-- 提示消息 -->
+      <icon class="icon" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
+      <!-- 提示内容 -->
+      <div :class="['tip-content']" v-if="is_show_content" @click.stop>
+        <div class="content-wrap relative-position">
+          <div class="yb-icon-triangle"></div>
+          <!-- 此版面现实的所有直播内容仅供参考........ -->
+          <div class="content">{{ i18n_t("common.live_notice") }}</div>
+        </div>
+      </div>
+    </div>
+
     <div class="iframe_box">
       <iframe
         id="video-iframe"
@@ -19,7 +34,15 @@
         allowfullscreen="true"
         allow="autoplay"
       ></iframe>
-
+      <video_type_ctr
+          @mouseenter="video_enter"
+          v-show="is_video_hover"
+          :ctr_data={video_type:1}
+          :is_video_hover="is_video_hover"
+          :video_fullscreen_disabled="true"
+          :match_info="detail_info"
+          :is_esports="false"
+      ></video_type_ctr>
       <div class="detail-loading" v-if="iframe_loading">
         <loading></loading>
       </div>
@@ -30,9 +53,11 @@
 <script setup>
 import { onMounted, ref, watch, nextTick } from "vue";
 import { api_match_list } from "src/api";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 import video from "src/core/video/video.js";
 import url_add_param from "src/core/enter-params/util/index.js";
+import video_type_ctr from "src/core/video/video_type_ctr.vue";
+import icon from "src/components/icon/icon-1/index.vue";
 import loading from "../../../components/loading/index.vue";
 import _ from "lodash";
 const props = defineProps({
@@ -48,6 +73,8 @@ const props = defineProps({
   },
 });
 const iframe_loading = ref();
+const is_video_hover = ref(false); // 鼠标是否经过视频
+const is_show_content = ref(false); //是否显示提示信息
 
 const { post_video_url } = api_match_list; // 接口
 watch(
@@ -128,7 +155,7 @@ const get_video_url = () => {
         // this.show_type = show_type
         return;
       }
-      // let live_type = this.$utils.get_media_icon_index(media_type)
+      // let live_type = this.$get_media_icon_index(media_type)
       let live_type = 1;
 
       // 此处为最终处理后的视频url
@@ -196,6 +223,7 @@ const get_animation_url = () => {
  * @return {undefined} undefined
  */
 const video_enter = () => {
+  is_video_hover.value = true;
   video.send_message({
     cmd:'show_controller',
     val:true
@@ -207,6 +235,7 @@ const video_enter = () => {
  * @return {undefined} undefined
  */
 const video_leave = () => {
+  is_video_hover.value = false;
   video.send_message({
     cmd:'show_controller',
     val:false
@@ -245,4 +274,53 @@ const video_leave = () => {
 }
 .video-iframe {
 }
+
+// 屏蔽不需要的功能
+.box-bc :deep(.full-screen-wrap) {
+  display: none !important;
+}
+.box-bc :deep(.xl-screen-wrap) {
+  display: none !important;
+}
+
+.right-icon {
+  position: absolute;
+  width: 100%;
+  z-index: 8;
+  //声明图标
+  .icon {
+
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    cursor: pointer;
+
+  }
+
+  //声明容器
+  .tip-content {
+    position: absolute;
+    top: 32px;
+    right: 10px;
+    width: 70%;
+    &.is-iframe{
+      width:95%;
+    }
+    .content-wrap {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 9px 28px;
+      font-size: 12px;
+      color: #fff;
+    }
+    .yb-icon-triangle {
+      position: absolute;
+      top: -5px;
+      right: 7.5px;
+      &::before {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+}
+
 </style>

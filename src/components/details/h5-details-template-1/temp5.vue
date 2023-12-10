@@ -31,7 +31,7 @@
                   <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]">
                         <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                       </div>
                       <!-- 主程序 end -->
@@ -81,7 +81,7 @@
                   <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]">
                         <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                       </div>
                       <!-- 主程序 end -->
@@ -133,7 +133,7 @@
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
                     <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]" class="play-box-style col">
+                    <div @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]" class="play-box-style col">
                       <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                     </div>
                     <!-- 主程序 end -->
@@ -182,7 +182,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament_play/unit/odds_new.vue";
-import {utils } from 'src/core/index.js';
+
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp5",
@@ -221,7 +221,7 @@ export default defineComponent({
       max_count_ol = get_ol_list();
     })
     return {
-      utils,
+      
       change_ms,
       go_to_bet
     }

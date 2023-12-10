@@ -2,7 +2,8 @@
 <template>
     <!-- top菜单内容 -->
     <div class="top-menu-content">
-        <q-tabs class="fit rule-scroll-area">
+        <q-tabs class="fit rule-scroll-area" outside-arrows
+        mobile-arrows>
             <q-tab class="cursor-pointer" v-for="(item, index) in data" :key="index" @click="tabs_click(item, index)">
                 <div class="top-menu-title"
                     :class="{ active: tab_index == index, topmenutitles:tab_index == index, 'no-subtab': !item.subtab || item.subtab.length == 0 }">        
@@ -83,7 +84,7 @@ function sub_click(item, index) {
         // background-color: var(--q-gb-bg-c-6);
         background-color:#E2E2E2;
     }
-    ::v-deep .q-tab__indicator{
+    :deep(.q-tab__indicator){
         display: none;
     }
     .top-menu-title {
@@ -146,7 +147,7 @@ top: 90%;
 transform: translate(-50%, 0);
 background: #ffb001;
 }
-::v-deep .q-tabs__content{
+:deep(.q-tabs__content){
     justify-content: start !important;
 }
 </style>

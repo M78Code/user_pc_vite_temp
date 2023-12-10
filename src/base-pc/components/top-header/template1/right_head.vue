@@ -111,11 +111,12 @@
 
 <script>
 import { defineComponent, onMounted, ref, watch, onUnmounted, nextTick } from "vue";
-import { format_balance, UserCtr, LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/core/";
 import { useRouter, useRoute } from 'vue-router';
+
+import { format_balance, LOCAL_PROJECT_FILE_PREFIX, MenuData, loadLanguageAsync, compute_local_project_file_path } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { api_account, api_betting } from 'src/api/index';
-import { loadLanguageAsync, compute_local_project_file_path } from "src/core/index.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import searchCom from 'src/components/search/search-2/index.vue';
@@ -287,7 +288,7 @@ export default defineComponent({
     // 点击其他位置关闭弹框及初始化状态
     function hide_search(e) {
       // console.log('e', e.target.className);
-      const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape', 'bet-title', 'f-b-c bet-content'];
+      const target_class_list = ['search-input change_width', 'icon-close', 'tab', 'tab active', 'windows desktop landscape', 'bet-title', 'f-b-c bet-content', 'middle_info_tab diff', 'middle_info_tab'];
       if (is_focus.value && SearchPCClass.search_isShow) {
         if (!target_class_list.includes(e.target.className)) {
           SearchPCClass.set_search_isShow(false);

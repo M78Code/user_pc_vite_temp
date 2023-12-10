@@ -10,10 +10,7 @@
 			<span class="close_btn" @click="go_back">{{ i18n_t('ouzhou.search.close') }}</span>
 		</div>
 		<!-- 搜索 历史 -->
-		<div class="content" v-if="(show_history && history_data &&
-			!(search_data?.bowling && search_data?.bowling.length) &&
-			!(search_data.teamH5 && search_data.teamH5.length > 0) &&
-			!(search_data.league && search_data.league.length > 0) > 0) || !input_value">
+		<div class="content" v-if="(show_history && history_data && is_empty_data) || !input_value">
 			<!-- <div class="middle_info_tab">EXAMPLE SEARCHES</div> -->
 			<!-- 球类 tabs -->
 			<div class="middle_info_tab top_tab" ref="tab_growp" v-if="sport_kind_data.length">
@@ -96,27 +93,27 @@
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
-												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
+												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[0].ot') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[1].on', '') }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0].ov')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="i.csid != '2' && i.csid != '5'">
+											<template v-if="!sports_id.includes(i.csid)">
 												<div class="flex_1"
-													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
 											</template>
 											<div class="flex_1"
-												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
-												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
+												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[1].on', '') }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -152,28 +149,27 @@
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[0]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[0].on }}</div>
-												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[0].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[0].os', '') === 1">
+												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[0].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[0].on', '') }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[0].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="i.csid != '2' && i.csid != '5'">
+											<template v-if="!sports_id.includes(i.csid)">
 												<div class="flex_1"
-													v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													v-if="lodash.get(i, 'hps[0].hl.length', '') > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
 											</template>
 											<div class="flex_1"
-												v-if="i?.hps?.[0]?.hl.length > 0 && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && i?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ i.csid == '2' ? i?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : i?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
-												<!-- i?.hps?.[0].hl?.[0].ol?.[1]?.on -->
-												<div class="red">{{ get_odd_os(i?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												v-if="lodash.get(i, 'hps[0].hl.length', 0) > 0 && lodash.get(i, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(i, 'hps[0].hl[0].ol[1].os', '') === 1">
+												<div>{{ sports_id.includes(i.csid) ? lodash.get(i, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(i, 'hps[0].hl[0].ol[1].on', '') }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(i, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -207,29 +203,27 @@
 										</div>
 										<div style="display: flex;flex-direction: row; flex: 1">
 											<div class="flex_1"
-												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[0].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[0].on  }}</div>
-												<!-- }}i18n_t('bet.home_win') -->
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[0]?.ov) }}</div>
+												v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
+												<div>{{ sports_id.includes(item.csid) ? lodash.get(item, 'hps[0].hl[0].ol[0].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(item, 'hps[0].hl[0].ol[0].on', '') }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[0].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 											</div>
-											<template v-if="item.csid != '2' && item.csid != '5'">
+											<template v-if="!sports_id.includes(item.csid)">
 												<div class="flex_1"
-													v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
+													v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
 													<div>{{ i18n_t('ouzhou.search.dogfall') }}</div>
-													<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[2]?.ov) }}</div>
+													<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[2].ov', '')) }}</div>
 												</div>
 												<div class="flex_1" v-else>
 													<img class="lock" :src="odd_lock_ouzhou" alt="lock">
 												</div>
 											</template>
 											<div class="flex_1"
-												v-if="item?.hps?.[0]?.hl.length > 0 && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.ov && item?.hps?.[0]?.hl?.[0]?.ol?.[1]?.os === 1">
-												<div>{{ item.csid == '2' ? item?.hps?.[0].hl?.[0].ol?.[1].ot === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : item?.hps?.[0].hl?.[0].ol?.[1].on }}</div>
-												<!-- i18n_t('bet.away_win')  -->
-												<div class="red">{{ get_odd_os(item?.hps?.[0].hl?.[0].ol?.[1]?.ov) }}</div>
+												v-if="lodash.get(item, 'hps[0].hl.length', 0) > 0 && lodash.get(item, 'hps[0].hl[0].ol[1].ov', '') && lodash.get(item, 'hps[0].hl[0].ol[1].os', '') === 1">
+												<div>{{ sports_id.includes(item.csid) ? lodash.get(item, 'hps[0].hl[0].ol[1].ot', '') === '1' ? i18n_t('ouzhou.bet_col.bet_col_1.bet_col_1') : i18n_t('ouzhou.bet_col.bet_col_1.bet_col_2') : lodash.get(item, 'hps[0].hl[0].ol[1].on', '') }}</div>
+												<div class="red">{{ get_odd_os(lodash.get(item, 'hps[0].hl[0].ol[1].ov', '')) }}</div>
 											</div>
 											<div class="flex_1" v-else>
 												<img class="lock" :src="odd_lock_ouzhou" alt="lock">
@@ -244,9 +238,7 @@
 			</div>
 		</div>
 		<!-- 搜索 无结果 -->
-		<div class="content not-data" v-if="(!(search_data?.bowling && search_data?.bowling.length) &&
-			!(search_data?.teamH5 && search_data?.teamH5.length > 0) &&
-			!(search_data?.league && search_data?.league.length > 0) &&
+		<div class="content not-data" v-if="(is_empty_data &&
 			(!show_hot || !show_history) &&
 			!search_loading)">
 			<!-- 球类 tabs -->
@@ -265,13 +257,14 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, onUnmounted, reactive } from 'vue';
-import { UserCtr, compute_local_project_file_path, utils, compute_img_url, SearchData, MenuData } from "src/core/";
+import { compute_local_project_file_path,  compute_img_url, SearchData, MenuData } from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_delete_history_search, get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 import { api_search } from 'src/api/';
-import { compute_value_by_cur_odd_type } from "src/core/index.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
@@ -280,7 +273,7 @@ const { get_insert_history, get_fetch_hot_search } = api_search || {};
 import { is_results } from 'src/base-h5/mixin/menu.js'
 import matchContainer from "src/base-h5/components/match-list/index.vue";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { formatTime } from 'src/core/format/module/format-date.js';
+import { formatTime } from 'src/output/index.js';
 import BaseData from "src/core/base-data/base-data.js";
 
 const input_value = ref('');
@@ -293,6 +286,9 @@ const uid = UserCtr.get_uid();
 const expand_bowling = ref(true);
 const expand_league = ref(true);
 const expand_team = ref(true)
+
+// 不展示平局的球种csid
+const sports_id = ['2', '5'];
 
 //定时器
 let go_detail_or_result_timer;
@@ -363,7 +359,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	// tabIndex.value = index;
 	sport_kind_id.value = sport_id;
 	// tab 默认居中及移动动画
-	utils.tab_move2(index, tab_growp.value);
+	tab_move2(index, tab_growp.value);
 	if (keyword) {
 		input_value.value = keyword
 	}
@@ -402,6 +398,14 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 		console.log(e);
 	});
 }, 500)
+
+
+// 判断数据为空
+const is_empty_data = () => {
+	if(!(search_data?.teamH5 && search_data?.teamH5.length > 0) &&
+	!(search_data?.bowling && search_data?.bowling.length > 0) &&
+	!(search_data.league && search_data.league.length > 0)) return true
+}
 
 const render_match_results_list = (res) => {
 	// MatchMeta.match_mids = []
@@ -530,10 +534,7 @@ const get_hot_search = () => {
  */
 let match_mid_Arr = [];
 const get_match_base_hps_by_mids = async () => {
-	if (!(search_data.value?.teamH5 && search_data.value?.teamH5.length > 0) &&
-		!(search_data.value?.league && search_data.value?.league.length > 0) &&
-		!(search_data.value?.bowling && search_data.value?.bowling.length > 0)
-	) return;
+	if (!is_empty_data()) return;
 	// 拿到所有滚球，联赛，队伍 mid
 	match_mid_Arr = []
 	search_data.value?.teamH5.forEach((item, index) => {
@@ -987,5 +988,4 @@ li {
 	position: unset;
 }
 </style>
-  
   

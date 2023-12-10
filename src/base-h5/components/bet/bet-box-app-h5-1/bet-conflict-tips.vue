@@ -14,7 +14,7 @@
 <script setup>
 import { ref} from 'vue';
 import lodash_ from 'lodash'
-import { format_odds } from "src/core/format/index.js"
+import { format_odds } from "src/output/index.js"
 
 const props = defineProps({
     item: { },

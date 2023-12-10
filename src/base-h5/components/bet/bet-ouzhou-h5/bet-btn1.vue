@@ -24,10 +24,10 @@
 </template>
 
 <script setup>
-import { useMittEmit, MITT_TYPES,i18n_t  } from "src/core/index.js";
+import { useMittEmit, MITT_TYPES,i18n_t  } from "src/output/index.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/core/index.js"
+import { LOCAL_PROJECT_FILE_PREFIX,UserCtr } from "src/output/index.js"
 
 const pack_up = (val) => {
   // TODO: 临时调试用

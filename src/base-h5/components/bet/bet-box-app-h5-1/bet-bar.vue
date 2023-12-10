@@ -17,7 +17,7 @@
         <div class="nonebox4-first-right">
             <div class="nonebox4-first-right-window" @click.stop="get_balance">
                 <div class="nonebox4-first-right-window-num">{{ format_money2(userData.balance) }}</div>
-                <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }"></div>
+                <div class="refesh" :class="{ 'refesh2': is_loading_balance }"></div>
             </div>
         </div>
     </div>
@@ -27,8 +27,8 @@
 <script setup>
 import lodash from "lodash"
 // import store from "src/store-redux/index.js";
-import { compute_local_project_file_path, i18n_t } from "src/core/index.js";
-import { format_money2 } from 'src/core/format/module/format-money.js'
+import { compute_local_project_file_path, i18n_t } from "src/output/index.js";
+import { format_money2 } from 'src/output/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
 import userData from "src/core/user-config/user-ctr.js"
@@ -168,8 +168,8 @@ onUnmounted(() => {
 }
 .nonebox4-first-left-img {
     display: flex;
-    width: 0.25rem;
-    height: 0.25rem;
+    width: 0.22rem;
+    height: 0.22rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -180,7 +180,7 @@ onUnmounted(() => {
 .nonebox4-first-left-text {
     margin-left: 0.05rem;
     display: flex;
-    font-size: 16px;
+    font-size: .16rem;
     font-weight: 500;
     font-family: PingFang SC;
 }
@@ -196,17 +196,14 @@ onUnmounted(() => {
     flex-direction: row;
     align-items: center;
     background-color: var(--q-gb-bg-c-22);
-    padding-right: 3px;
-    padding-left: 10px;
+    padding: .04rem .08rem;
     border-radius: 0.2rem;
     height: 0.28rem;
-    width: 1.47rem;
 }
 .nonebox4-first-right-window-num {
     display: flex;
     font-size: 20px;
-    font-weight: bold;
-    margin-right: 4px;
+    font-weight: 700;
     color: var(--q-gb-t-c-20);
     font-family: Akrobat;
 }
@@ -328,7 +325,7 @@ onUnmounted(() => {
 .refesh {
   width: 0.2rem;
   height: 0.2rem;
-  background: url( $SCSSPROJECTPATH+"/image/bet/shuaxin.svg") no-repeat center / 100% 100%;
+  background: url( $SCSSPROJECTPATH+"/image/svg/refresh.svg") no-repeat center / 100% 100%;
   // background: var(--q-color-com-img-bg-58) no-repeat center / 100% 100%;
   margin-left: 0.05rem
 }
@@ -339,4 +336,4 @@ onUnmounted(() => {
 
 .arrow {
   transform: scale(-1);
-}</style>
+}</style>src/core/format/common/module/format-money.js

@@ -91,12 +91,12 @@ import popupLanguage from "src/base-pc/components/popup-select/popup-language.vu
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import {LayOutMain_pc, get_server_file_path,compute_img_url } from 'src/core/index.js'
+import {LayOutMain_pc, get_server_file_path,compute_img_url } from 'src/output/index.js'
 import store from "src/store-redux/index.js";
-import { format_money2 } from "src/core/format/index.js"
-// import userCtr from 'src/core/index.js'
+import { format_money2 } from "src/output/index.js"
+// import userCtr from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { get_remote_time } from "src/core/format/module/format-date.js"
+import { get_remote_time } from "src/output/index.js"
 
 /** 是否内嵌 */
 const is_iframe = ref(LayOutMain_pc.is_iframe)

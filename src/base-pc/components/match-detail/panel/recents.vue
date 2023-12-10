@@ -69,18 +69,18 @@
                 'item handicap-item',
                 'os-' + lodash.get(item, `hps.0.hl.0.ol.${index}.os`),
                 {
-                  item_border: !(lodash.get(item, 'hps.0.hl') && utils.mx_get_bet_simple(item, index, 'oid')),
+                  item_border: !(lodash.get(item, 'hps.0.hl') && mx_get_bet_simple(item, index, 'oid')),
                 }
               ]"
             >
               <bet-item
-                v-if="lodash.get(item, 'hps.0.hl') && utils.mx_get_bet_simple(item,index,'oid')"
+                v-if="lodash.get(item, 'hps.0.hl') && mx_get_bet_simple(item,index,'oid')"
                 :key="`item_0_${i}`"
                 class="item_border"
                 :match_info="item"
-                :play_data="utils.mx_get_bet_simple(item,index,'play')"
-                :bet_data="utils.mx_get_bet_simple(item,index,'bet_data')"
-                :bet_ids="utils.mx_get_bet_simple(item,index,'bet_id')"
+                :play_data="mx_get_bet_simple(item,index,'play')"
+                :bet_data="mx_get_bet_simple(item,index,'bet_data')"
+                :bet_ids="mx_get_bet_simple(item,index,'bet_id')"
                 style="padding: 0 10px"
                 bet_source="recent"
                 :bet_info="{
@@ -106,25 +106,19 @@
 </template>
 
 <script>
-import { api_details, api_match } from "src/api/index";
+import { api_details } from "src/api/index";
 import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
-import { IconWapper } from 'src/components/icon/index.js'
 import bet_item from "src/base-pc/components/bet-item/bet_item.vue";
 // import skt_data_list_hot from "src/public/mixins/websocket/data/skt_data_list_hot.js";  todo  ws更新
-import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
 import {
-  GlobalSwitchClass,
   UserCtr,
   MenuData,
   MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,
   useMittOn,
   MITT_TYPES,
-  useMittEmitterGenerator,
   i18n_t,
   LayOutMain_pc,
-} from "src/core";
-import { utils } from "src/core/utils/module/utils.js";
-import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
+} from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 export default {
   components: {
@@ -134,7 +128,6 @@ export default {
   // mixins: [skt_data_list_recent],
   data() {
     return {
-      utils,
       recent_data: [], //列表数据
       match_ctr: MatchDetailsData,
       socket_name: "recent", // 接入socket的名称

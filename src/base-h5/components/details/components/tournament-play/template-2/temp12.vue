@@ -30,8 +30,8 @@
                   <div v-for="(ol_item, ol_index) in hl_item.ol"
                        :key="ol_index"
                        class="on-name-osn"
-                       @click="go_to_bet(ol_item)"
-                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
+                       @click="go_to_fun(ol_item)"
+                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
@@ -154,8 +154,8 @@
                   <div v-for="(ol_item, ol_index) in hl_item.ol"
                        :key="ol_index"
                        class="on-name-osn"
-                       @click="go_to_bet(ol_item)"
-                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':utils.calc_win(ol_item.result)}]"
+                       @click="go_to_fun(ol_item)"
+                       :class="[BetData.bet_oid_list.includes(ol_item.id_)?'bet-click':'',{'win':calc_win(ol_item.result)}]"
                   >
                     <!-- ms就是外层的赛事级别状态mhs: 0开 2关 1封 11锁 -->
                     <!-- 开盘or锁盘 正常显示 -->
@@ -266,11 +266,12 @@
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from 'src/core/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win } from 'src/output/index.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp12",
   props: ["item_data", "title"],
@@ -281,7 +282,7 @@ export default defineComponent({
   // mixins:[ odd_convert ],
   setup(props, evnet) {
     let data = reactive({
-      utils,
+      
       // 主队是否显示
       valid_home: false,
       // 客队是否显示
@@ -314,19 +315,20 @@ export default defineComponent({
         immediate: true,
       }
     );
-    const go_to_bet = (ol_item) => {
+    const go_to_fun = (ol_item) => {
       if(ol_item.os == 1 && ol_item._hs != 1){      
-        utils.go_to_bet(ol_item)
+        go_to_bet(ol_item)
       }
     };
     return {
       ...toRefs(data),
+      calc_win,
       BetData,
       get_detail_data,
       home_name,
       away_name,
       LOCAL_PROJECT_FILE_PREFIX,
-      go_to_bet
+      go_to_fun
     }
   }
 })

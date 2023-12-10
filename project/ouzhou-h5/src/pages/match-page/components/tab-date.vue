@@ -67,10 +67,13 @@ import {
     computed
 } from "vue";
 import { dateWeekMatchesFormat, farmatSportImg } from '../utils';
-import { MenuData } from "src/core/";
+import { MenuData } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import STANDARD_KEY from "src/core/standard-key";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
@@ -129,6 +132,7 @@ const changeDate = (index) => {
  * @param {*} index 
  */
 const changeDatetab = (item, index) => {
+    if (store.menu_time === item?.val) return
     store.tabModel = false;
     const move_index = week.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
@@ -163,13 +167,13 @@ const changeDatetab = (item, index) => {
  */
 const setDefaultData = (val) => {
     // 重置
-    store.tabActive = 'Matches'
+    // store.tabActive = 'Matches'
     MenuData.set_current_lv1_menu(2);
     // MenuData.set_menu_mi(val);
     store.current_menu_mi = val;
     //球种改变设置今日
     // MenuData.set_date_time(week[0].val);
-    store.menu_time = week[0]
+    store.menu_time = week[0].val
     store.second_tab_index = 0;
     scrollDateRef.value && scrollDateRef.value.scrollTo(0, "start-force");
 }
@@ -183,7 +187,9 @@ watch(() => store.areaList, () => {
     // }
 })
 onMounted(() => {
-    setDefaultData(MenuData.menu_mi.value || '101');//默认足球
+    //当前激活球种id  如果本地有存储值就取本地存储的值
+    const session_info = LocalStorage.get(menu_h5);
+    setDefaultData(session_info?.menu_mi || MenuData.menu_mi.value || '101');//默认足球
     store.curSelectedOption = store.selectOptions[0]
     emitters.value = {
         emitters_1: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
@@ -451,4 +457,4 @@ const areaListChange = (item) => {
         height: calc(100% - 105px);
     }
 }</style>
-  
+  src/output

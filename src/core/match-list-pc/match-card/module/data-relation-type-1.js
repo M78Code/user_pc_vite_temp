@@ -12,7 +12,7 @@
      * 
      * 处理  13
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
+    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/module/match-data-base.js'
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
 
@@ -27,9 +27,9 @@
       league_container_card_template,
    
     } from "../config/card-template-config.js"
-    import MenuData from "src/core/menu-pc/menu-data-class.js";
+    import { MenuData} from "src/output/module/menu-data.js"
     import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-    import { compute_sport_id  } from 'src/core/constant/index.js'
+    import { compute_sport_id  } from 'src/output/module/constant-utils.js'
 
   /**
    * @Description 更新所有未折叠 但是赛事没数据的 赛事

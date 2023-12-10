@@ -18,7 +18,7 @@
                       <div
                         class="play-box-style details_color first-radius warp"
                         @click="go_to_bet(ol_item)"
-                        :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                        :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                       >
                         <div class="text-center odds-wrap">
                           <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -91,7 +91,7 @@
                         <div
                           class="play-box-style details_color first-radius warp"
                           @click="go_to_bet(ol_item)"
-                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -166,7 +166,7 @@
                         <div
                           class="play-box-style details_color warp"
                           @click="go_to_bet(ol_item)"
-                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':utils.calc_win(ol_item.result)}]"
+                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -241,7 +241,7 @@
                         <div
                           class="play-box-style details_color last-radius"
                           @click="go_to_bet(ol_item)"
-                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(ol_item.result)}]"
+                          :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -315,7 +315,7 @@
 import lodash from "lodash"
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/core/odds-conversion/odds_conversion-mixin.js";
-import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import { MenuData, LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -350,7 +350,7 @@ export default defineComponent({
       useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
-      utils,
+      
       lodash,
       get_bet_list,
       get_cur_odd,

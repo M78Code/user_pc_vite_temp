@@ -202,7 +202,7 @@
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
-import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel,compute_local_project_file_path } from 'src/core/index'
+import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel,compute_local_project_file_path } from "src/output/index.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { IconWapper } from 'src/components/icon'
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'

@@ -6,7 +6,7 @@
 import lodash from 'lodash'
 import MatchCtr from './match-ctr'
 import { i18n_t } from "src/boot/i18n.js";
-import { numberToChinese } from "src/core";
+import { numberToChinese } from "src/output/module/constant-utils.js";
 class matchListClass {
   /**
   * @description:斯诺克7局显示处理
@@ -136,7 +136,7 @@ class matchListClass {
    * @description: 点击球种折叠
    */
   ball_folding_click(csid) {
-    if (utils.is_time_limit(200)) { return }
+    if (is_time_limit(200)) { return }
 
     let collapse_csid_map = lodash.cloneDeep(this.get_collapse_csid_map)
     let collapse_map_match = lodash.cloneDeep(this.get_collapse_map_match)

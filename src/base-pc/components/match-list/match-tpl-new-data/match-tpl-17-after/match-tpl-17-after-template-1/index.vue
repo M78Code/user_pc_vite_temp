@@ -37,10 +37,8 @@
 
 import { ref, watch, defineProps } from 'vue';
 
-import { t, get_match_status, compute_local_project_file_path, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/core/index.js";
-import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
+import { compute_local_project_file_path, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';

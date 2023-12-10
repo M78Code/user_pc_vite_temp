@@ -93,7 +93,7 @@ export default {
       }else if(this.type === '5minutes'){
         // 5分钟
         // 滚球时  绝杀球（补时） 不展示  且标题展示 “下一个进球” 排除110-即将开赛的状态，即将开赛展示原文案
-        if (this.$utils.get_match_status(lodash.get(this, 'ms'), [110]) == 1) {
+        if (this.$get_match_status(lodash.get(this, 'ms'), [110]) == 1) {
           return {
             title:i18n_t('list.5minutes_roll'),
             content:lodash.dropRight(i18n_t('list.5minutes_details')),
@@ -115,13 +115,13 @@ export default {
   methods:{
     // 获取提示的标题  滚球时文案不同  排除110-即将开赛的状态，即将开赛展示原文案
     get_tip_title(item){
-      return this.$utils.get_match_status(lodash.get(this, 'ms'), [110]) == 1 ? (item.title_roll || item.title) : item.title
+      return this.$get_match_status(lodash.get(this, 'ms'), [110]) == 1 ? (item.title_roll || item.title) : item.title
     },
       //展开角球罚牌说明
     click_popup(e){
       let  height =  ['15minutes','5minutes'].includes(this.type) ? 236 : 105
       let bottom = e.target.getBoundingClientRect().bottom
-      let margin = this.$utils.getScrollbarWidth()
+      let margin = getScrollbarWidth()
       let innerHeight = window.innerHeight - margin
       if (bottom + height > innerHeight) {
         this.popup_class = 'style2'

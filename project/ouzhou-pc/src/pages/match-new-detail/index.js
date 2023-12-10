@@ -5,11 +5,11 @@ import { useRouter } from "vue-router";
 import {
   MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance,
   MenuData,
-  UserCtr,
   MatchDetailCalss,
   SearchPCClass,
-  utils
-} from "src/core/index";
+  // utils
+} from "src/output/index";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import {
   filter_odds_func,
   handle_course_data,
@@ -17,11 +17,12 @@ import {
 } from "src/core/utils/matches_list.js";
 import { useGetGlobal } from "src/core/global/mixin/global_mixin.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
-import { LayOutMain_pc } from "src/core/";
-import lodash_ from "lodash";
+import { LayOutMain_pc } from "src/output";
+// import lodash. from "lodash";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
-import { addWsMessageListener } from "src/core/utils/module/ws-message.js";
+import { addWsMessageListener } from "src/core/utils/common/module/ws-message.js";
+import axios_api_loop from "src/core/http/axios-loop.js"
 export function usedetailData(route) {
   const router = useRouter();
   const category_list = ref([]); //分类数据
@@ -34,19 +35,11 @@ export function usedetailData(route) {
   const current_key = ref(""); // 当前tab   key
 
   const detail_loading = ref(true); //loading
-
-  const all_hl_item = ref([]);
-
   const tabList = ref([]);
 
   const show_close_thehand = ref(false); // 是否显示无数据图标
 
   const matchDetailList = ref([]);
-
-  let timer = "";
-  let mst_timer = "";
-  // let state = store.getState();
-
   const {
     get_detail_category,
     get_detail_list,
@@ -79,15 +72,7 @@ export function usedetailData(route) {
     if (!val) return;
     get_match_detail(val);
   });
-  // 监听分类切换数据
-  // watch(()=>route.query, (val) => {
-  //   // todo
-  //   // sportId = val.sportId
-  //   // mid = val.mid
-  //   current_id.value = val.mid
-  // },
-  // {immediate:true}
-  // );
+
 
   //  根据分类id 过滤数据
   const get_match_detail = (value) => {
@@ -122,28 +107,10 @@ export function usedetailData(route) {
       list || []
     );
     detail_list.value =
-      lodash_.get(getMidInfo(route.params.mid), "odds_info") || [];
+      lodash.get(getMidInfo(route.params.mid), "odds_info") || [];
 
 
     show_close_thehand.value = list.length == 0;
-
-    setTimeout(() => {
-      get_all_hl_item();
-    }, 3300);
-  };
-
-  const get_all_hl_item = () => {
-    all_hl_item.value = [];
-    if (!detail_list.value) return;
-    for (const item of detail_list.value) {
-      if (item.hl.length > 0) {
-        for (const opt of item.hl) {
-          opt.ol.forEach((element) => {
-            all_hl_item.value.push(element);
-          });
-        }
-      }
-    }
   };
 
   /**
@@ -183,7 +150,7 @@ export function usedetailData(route) {
       // axios中then回调方法
       fun_then: (res) => {
           // 空赛事数据跳转回首页
-          if (lodash_.isEmpty(res.data)) {
+          if (lodash.isEmpty(res.data)) {
             router.push({
               name: "home",
             });
@@ -211,7 +178,7 @@ export function usedetailData(route) {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
   };
 
   /**
@@ -246,7 +213,7 @@ export function usedetailData(route) {
         timers: 1100,
       };
 
-      utils.axios_api_loop(obj_);
+      axios_api_loop(obj_);
     }
     catch (error) {
       console.error("details-list", error);
@@ -322,7 +289,7 @@ export function usedetailData(route) {
       // 异常调用时延时时间,毫秒数,默认1000
       timers: 1100,
     };
-    utils.axios_api_loop(obj_);
+    axios_api_loop(obj_);
 
   };
     /**
@@ -360,7 +327,7 @@ export function usedetailData(route) {
   const update_data = (val) => {
     if (!val) return;
     detail_info.value = getMidInfo(val);
-    all_list.value = lodash_.get(getMidInfo(val), "odds_info");
+    all_list.value = lodash.get(getMidInfo(val), "odds_info");
   };
   /**
    * @description: 从仓库获取获取赛事信息
@@ -396,7 +363,7 @@ export function usedetailData(route) {
     };
 
     api_details.set_playTop(params).then((res) => {
-      const code = lodash_.get(res, "code");
+      const code = lodash.get(res, "code");
       if (code == 200) {
         if (!params.status) {
           //置顶
@@ -593,8 +560,6 @@ export function usedetailData(route) {
   }).off)
   onUnmounted(() => {
     off();
-    clearInterval(timer);
-    clearInterval(mst_timer);
     message_fun.forEach((i) => i());
     // off_init()
     clearTimeout(back_to_timer);
@@ -702,7 +667,6 @@ export function usedetailData(route) {
     refresh,
     get_match_detail,
     sportId,
-    all_hl_item,
     init,
     show_close_thehand,
     matchDetailList,

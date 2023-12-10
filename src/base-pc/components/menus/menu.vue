@@ -19,7 +19,7 @@
       <ul class="menu-list">
         <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi == item.mi && MenuData.left_menu_result.menu_type==0 }" v-for="item in popular" :key="item.mi"
           @click="jump_func(item,'0')">
-          <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
+          <sport-icon :sport_id="BaseData.compute_sport_id(item.mi)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
         </li>
       </ul>
@@ -33,7 +33,7 @@
         <template v-for="item in BaseData.left_menu_base_mi" :key="item">
           <li class="f-s-c" :class="{ 'menu_checked': MenuData.left_menu_result.lv1_mi  == item.mi && MenuData.left_menu_result.menu_type==1 }"
            v-if="item.ct" @click="jump_func(item,'1')">
-            <sport_icon :sport_id="BaseData.compute_sport_id(item.mi)" size="18px" class="icon" />
+            <sport-icon :sport_id="BaseData.compute_sport_id(item.mi)" key_name="pc-left-menu-bg-active-image"  size="18" class="icon" />
             {{ (BaseData.menus_i18n_map || {})[item.mi] || "" }}
           </li>
         </template>
@@ -43,12 +43,16 @@
     <div class="menu-nav-li" v-if="IS_FOR_NEIBU_TEST">
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
-          <sport_icon :sport_id="BaseData.compute_sport_id(400)" size="18px" class="icon" />
+          <sport-icon :sport_id="BaseData.compute_sport_id(400)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
         <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
-          <sport_icon :sport_id="BaseData.compute_sport_id(2000)" size="18px" class="icon" />
+          <sport-icon :sport_id="BaseData.compute_sport_id(2000)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
+        </li>
+        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
+          <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
+          {{ (BaseData.menus_i18n_map || {})[300] || "" }}
         </li>
       </ul>
     </div>
@@ -62,13 +66,14 @@
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
 import { useRouter,useRoute } from "vue-router";
 import BaseData from "src/core/base-data/base-data.js";
-import sport_icon from "src/base-pc/components/sport_icon.vue";
+// import sport-icon from "src/base-pc/components/sport-icon.vue";
+import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // import { use_base_data,useMenuData,useMenuI18n } from "./base_data";
 // 菜单配置
-import { MenuData, UserCtr,useMittEmit,MITT_TYPES } from "src/core/index.js"
+import { MenuData,useMittEmit,MITT_TYPES } from "src/output/index.js"
 
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
+const { PROJECT_NAME,IS_FOR_NEIBU_TEST, BUILD_VERSION } = BUILD_VERSION_CONFIG;
 
 const popular = ([{mi:101},{mi:102}])
 
@@ -142,7 +147,65 @@ const jump_func = (payload ={},type) => {
  * 电竞
  */
 const esportsClick = ()=>{
- //
+   // 点击菜单的时候如果在详情页应跳转出来先
+  if (['league','details','search'].includes(route.name)) {
+    router.push('/home')
+  }
+  let obj = {
+    lv1_mi : 2000,
+    has_mid_menu: true, // 有中间菜单
+    lv2_mi: 2100, // 二级菜单id
+    menu_type: 1, // 左侧热门或者赛种
+  }
+  //太多了 后续做优化
+  MenuData.set_menu_root(2000, true)
+  MenuData.set_is_collect(false)
+  MenuData.set_left_menu_result(obj)
+  MenuData.set_menu_current_mi(obj.lv2_mi)
+  MenuData.set_current_ball_type(2100)
+
+  let mid_config = {
+    ...MenuData.mid_menu_result,
+    md: '',
+    filter_tab: 2100
+  }
+  MenuData.set_mid_menu_result(mid_config)
+
+  nextTick(()=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 2100)
+  })
+}
+/**
+ * 电竞
+ */
+ const vrClick = ()=>{
+   // 点击菜单的时候如果在详情页应跳转出来先
+  if (['league','details','search'].includes(route.name)) {
+    router.push('/home')
+  }
+  let obj = {
+    lv1_mi : 300,
+    has_mid_menu: true, // 有中间菜单
+    lv2_mi: 31001, // 二级菜单id
+    menu_type: 1, // 左侧热门或者赛种
+  }
+  //太多了 后续做优化
+  MenuData.set_menu_root(300, true)
+  MenuData.set_is_collect(false)
+  MenuData.set_left_menu_result(obj)
+  MenuData.set_menu_current_mi(obj.lv2_mi)
+  MenuData.set_current_ball_type(31001)
+
+  let mid_config = {
+    ...MenuData.mid_menu_result,
+    md: '',
+    filter_tab: 31001
+  }
+  MenuData.set_mid_menu_result(mid_config)
+
+  nextTick(()=>{
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE, 31001)
+  })
 }
 // 冠军
 const outrights = () => {
@@ -187,3 +250,4 @@ const outrights = () => {
     @import "src/components/bet-box/bet/bet.scss";
   </style>
  -->
+src/output/index.js

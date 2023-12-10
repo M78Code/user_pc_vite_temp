@@ -83,12 +83,12 @@
 
 <script setup>
 import { computed, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue"
-import { format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/output/index.js"
 import { api_home } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'
-import { i18n_t, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { i18n_t, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import teamImg from "src/base-h5/components/details/team-img.vue";   // 详情页蓝色背景上的大型字母图标
 import countingDown from "src/base-h5/components/common/counting-down.vue";  // 赛事进行中每秒变化的计时器

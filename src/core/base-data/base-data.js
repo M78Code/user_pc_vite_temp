@@ -3,9 +3,10 @@
 // 电竞球种 menu_id 规则 ：2000  +对应球种 id   csid  2000 + 100   =2100   英雄联盟
 // 虚拟球种 menu_id 规则 ：30000 +对应球种 id   csid  30000 + 1001 =31001   VR足球
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
-import { i18n_t, i18n } from "src/boot/i18n.js";
 import { nextTick, ref } from "vue";
-import { dianjing_sublist } from "src/core/constant/config/csid.js"
+
+import { i18n_t, i18n } from "src/boot/i18n.js";
+import { dianjing_sublist } from "src/output/module/constant-utils.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import BaseWsMessage from "./base-ws-message"
 const { PROJECT_NAME,BUILD_VERSION,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
@@ -37,12 +38,13 @@ import menu_i18n_default from "./config/menu-i18n.json";
 import ws_user_info from "./config/user_info.json";
 //vr 默认的 用于ws模拟
 import vr_menu_info from "./config/vr_menu_info.json";
+import { MenuData } from "src/output/module/menu-data.js"
+import { LocalStorage } from 'src/core/utils/common/module/web-storage.js'
 import {
   useMittOn,
   useMittEmit,
-  useMittEmitterGenerator,
-  MITT_TYPES,MenuData,LocalStorage
-} from "src/core/index.js"
+  MITT_TYPES,
+} from "src/core/mitt/index.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 const base_data_key = STANDARD_KEY.get("base_data_key");
@@ -192,13 +194,18 @@ class BaseData {
    * @returns 
    */
   base_menu_id_togger = () =>{
-    const data = mi_euid_mapping_default.data;//静态json
-    const base_menu_obj =Object.fromEntries(Object.keys(data).map(item => [data[item].p || data[item].h, item]));
+    //静态json
+    const data = mi_euid_mapping_default.data;
+    // 判断 h5 / pc
+    let type = 'p'
+    if(PROJECT_NAME.includes('h5')){
+      type = 'h'
+    }
+    const base_menu_obj = Object.fromEntries(Object.keys(data).map(item => [data[item][type] , item]));
     return base_menu_obj;
   }
   // 菜单数量变化
   set_base_c301_change(list = []) {
-    // list.forEach(item => item.mi = base_menu_id_new[item.menuId])
     list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
@@ -619,14 +626,14 @@ class BaseData {
       // 更新版本
       this.base_data_version.value = Date.now();
     }
-    console.error('this',this)
+    // console.error('this',this)
   }
 
   /**
    * 计算虚拟体育 的 数据对象
    */
   async set_vr_mi_config() {
-    let res = await api_common.get_virtual_menu({});
+    // let res = await api_common.get_virtual_menu({});
     // VR 体育的 配置
 
     // let mi_300_obj = lodash_.get(res, 'data')

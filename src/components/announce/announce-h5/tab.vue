@@ -18,7 +18,6 @@
   
 <script setup>
 import { ref, watch } from 'vue'
-import { utils } from 'src/core/index.js';
 
 const props = defineProps({
     tabList: {
@@ -40,7 +39,7 @@ const scrollBox = ref(null)
 // 监听 tabIndex 下标变化
 watch(
     () => props.tabIndex,
-    (n, o) => utils.tab_move2(n, scrollBox.value),
+    (n, o) => tab_move2(n, scrollBox.value),
     {
         immediate: true,
         deep: true
@@ -135,3 +134,4 @@ function changeTab(tab,index) {
 }
 </style>
 
+src/output/index.js

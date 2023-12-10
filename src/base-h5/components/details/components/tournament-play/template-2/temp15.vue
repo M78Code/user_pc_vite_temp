@@ -18,8 +18,8 @@
           <template v-if="ol_item._mhs == 0 || ol_item._mhs == 11">
             <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
               <template v-if="ol_item.os == 1">
-                <div @click="utils.go_to_bet(ol_item)"
-                     :class="[{'win':utils.calc_win(ol_item.result),'active-play':BetData.bet_oid_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
+                <div @click="go_to_bet(ol_item)"
+                     :class="[{'win':calc_win(ol_item.result),'active-play':BetData.bet_oid_list.includes(ol_item.id_), 'border-top': index2 > 2},name_]"
                      :key="index2" class="play-box">
                   <div class="remark">{{olitem_name(ol_item)}}</div>
                   <div>
@@ -69,11 +69,12 @@ import { colors } from 'quasar';
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 import store from "src/store-redux/index.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from 'src/core/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp15",
   props: ["item_data", "title"],
@@ -84,7 +85,7 @@ export default defineComponent({
   // mixins:[odd_convert],
   setup(props, evnet) {
     const init_data = reactive({
-      utils,
+      
       name_: '',  //计算类名
       len: 0,  //有效的ol的个数
     });
@@ -159,7 +160,8 @@ export default defineComponent({
       calc_num,
       calc_classname,
       LOCAL_PROJECT_FILE_PREFIX,
-      utils
+      calc_win,
+      go_to_bet
     }
   }
 })

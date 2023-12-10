@@ -112,7 +112,7 @@
                   {
                     item_border: !(
                       lodash.get(item, 'hps.0.hl') &&
-                      utils.mx_get_bet_simple(item, index, 'oid')
+                      mx_get_bet_simple(item, index, 'oid')
                     ),
                   },
                 ]"
@@ -120,14 +120,14 @@
                 <bet-item
                   v-if="
                     lodash.get(item, 'hps.0.hl') &&
-                    utils.mx_get_bet_simple(item, index, 'oid')
+                    mx_get_bet_simple(item, index, 'oid')
                   "
                   :key="`item_0_${index}`"
                   class="item_border"
                   :match_info="item"
-                  :play_data="utils.mx_get_bet_simple(item, index, 'play')"
-                  :bet_data="utils.mx_get_bet_simple(item, index, 'bet_data')"
-                  :bet_ids="utils.mx_get_bet_simple(item, index, 'bet_id')"
+                  :play_data="mx_get_bet_simple(item, index, 'play')"
+                  :bet_data="mx_get_bet_simple(item, index, 'bet_data')"
+                  :bet_ids="mx_get_bet_simple(item, index, 'bet_id')"
                   style="padding: 0 10px"
                   bet_source="recent"
                   :bet_info="{
@@ -182,7 +182,7 @@
             </div>
             <div
               class="wrap-icon hot"
-              v-show="utils.is_show_sr_flg(item)"
+              v-show="is_show_sr_flg(item)"
               @click="sr_click_handle(item, 1)"
             >
               <icon-wapper name="icon-signal" size="14px" color="#5A6074" />
@@ -239,11 +239,10 @@ import {
   useMittEmitterGenerator,
   i18n_t,
   LayOutMain_pc,
-} from "src/core";
+} from "src/output/index.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, onUnmounted } from "vue";
-import { utils } from "src/core/utils/module/utils.js";
 export default {
   // mixins: [skt_data_list_hot],
   components: {
@@ -253,7 +252,6 @@ export default {
   },
   data() {
     return {
-      utils,
       tooltip_style,
       i18n_t,
       // 菜单数据
@@ -350,7 +348,7 @@ export default {
       } else {
         this.slide = type;
       }
-      this.utils.send_zhuge_event("PC_热门推荐_切换控件点击");
+      this.send_zhuge_event("PC_热门推荐_切换控件点击");
     },
     /**
      * 接收列表收藏状态变化
@@ -530,7 +528,7 @@ export default {
       });
       let info = {};
       info["点击状态"] = mf ? "取消收藏" : "收藏";
-      this.utils.send_zhuge_event("PC_热门推荐_收藏点击", info);
+      this.send_zhuge_event("PC_热门推荐_收藏点击", info);
     },
 
     /**
@@ -559,7 +557,7 @@ export default {
      * @return {undefined} undefined
      */
     go_detail(item) {
-      this.utils.send_zhuge_event("PC_热门推荐_详情页入口点击");
+      this.send_zhuge_event("PC_热门推荐_详情页入口点击");
       this.$router.push({
         name: "details",
         params: {

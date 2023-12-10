@@ -26,48 +26,42 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import { IconWapper } from 'src/components/icon'
 import BaseData from 'src/core/base-data/base-data.js'
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import NoData from "src/base-h5/components/common/no-data.vue";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
 
 let message_fun = null
 let handler_func = null
 const emitters = ref({})
 
 onMounted(() => {
-  if (sessionStorage.getItem('match_list_params')) {
-		const data = JSON.parse(sessionStorage.getItem('match_list_params'))
-    // console.log('onMountedonMountedonMountedonMounted', store, data)
+  const data = sessionStorage.getItem('match_list_params') && JSON.parse(sessionStorage.getItem('match_list_params'))
+  if (data && data.tabActive === "League") {
     Object.keys(store).forEach(key => {
       store[key] = data[key]
     })
     MatchMeta.clear_match_info()
     MatchMeta.get_ouzhou_leagues_list_data(data.selectLeague.tid, data.curSelectedOption.timestamp)
-
 	} else {
+    MatchMeta.set_prev_scroll(0)
     onTabChange()
     initMatchPage()
     BaseData.is_emit && MatchMeta.set_origin_match_data()
-  }
-  MatchMeta.set_prev_scroll(0)
-  // onTabChange()
-  // initMatchPage()
+    // 接口请求防抖
+    handler_func = lodash.debounce(({ cmd, data }) => {
+      MatchMeta.handle_ws_directive({ cmd, data })
+    }, 1000)
 
-
-  // 接口请求防抖
-  handler_func = lodash.debounce(({ cmd, data }) => {
-    MatchMeta.handle_ws_directive({ cmd, data })
-  }, 1000)
-
-  // 增加监听接受返回的监听函数
-  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-    handler_func({ cmd, data })
-    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
-      MatchMeta.handle_remove_match(data)
-    } else {
+    // 增加监听接受返回的监听函数
+    message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
       handler_func({ cmd, data })
-    }
-  })
+      if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+        MatchMeta.handle_remove_match(data)
+      } else {
+        handler_func({ cmd, data })
+      }
+    })
+  }
 
   window.addEventListener('beforeunload', clearSessionStorageData)
 
@@ -102,9 +96,13 @@ const cacheStoreData = () => {
 }
 
 const onTabChange = e => {
+  console.log(store.tabActive)
   switch (store.tabActive) {
-    case 'Matces':
+    case 'Matches':
       clearSessionStorageData()
+      MenuData.set_current_lv1_menu('2');
+      MatchMeta.set_prev_scroll(0)
+      MatchMeta.set_origin_match_data()
       break
     case 'League':
       MenuData.set_current_lv1_menu(2);
@@ -112,6 +110,7 @@ const onTabChange = e => {
       onChangeDate(time) // 默认展示12个小时的数据
       break
     case 'Outrights':
+      MatchMeta.clear_match_info()
       MenuData.set_current_lv1_menu(400);
       // MenuData.set_menu_mi('101');
       // MatchMeta.set_origin_match_data()
@@ -249,4 +248,4 @@ const goBackToLeague = () => {
     font-weight: bold;
   }
 }
-</style>
+</style>src/core/utils/common/module/ws-message.js

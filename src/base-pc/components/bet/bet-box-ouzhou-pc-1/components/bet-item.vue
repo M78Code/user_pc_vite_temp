@@ -64,7 +64,8 @@
 
 <script setup>
 
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,UserCtr,i18n_t } from "src/core/"
+import { onMounted, onUnmounted, reactive } from "vue"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 
@@ -186,6 +187,7 @@ const set_delete = () => {
     .text-flow-none{
         max-width: 84%;
         line-height: 16px;
+        word-wrap: break-word;
         :deep(.ty-span) {
             margin-left: 4px;
             color: var(--q-gb-t-c-2);

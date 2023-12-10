@@ -18,8 +18,8 @@
                       <!-- 主程序 start -->
                       <div
                         class="play-box-style details_color first-radius warp"
-                        @click="utils.go_to_bet(ol_item)"
-                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                        @click="go_to_bet(ol_item)"
+                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                       >
                         <div class="text-center odds-wrap">
                           <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -91,8 +91,8 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color first-radius warp"
-                          @click="utils.go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                          @click="go_to_bet(ol_item)"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -166,8 +166,8 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color warp"
-                          @click="utils.go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':utils.calc_win(ol_item.result)}]"
+                          @click="go_to_bet(ol_item)"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text','first-rad']:'',,{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -241,8 +241,8 @@
                         <!-- 主程序 start -->
                         <div
                           class="play-box-style details_color last-radius"
-                          @click="utils.go_to_bet(ol_item)"
-                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':utils.calc_win(ol_item.result)}]"
+                          @click="go_to_bet(ol_item)"
+                          :class="[BetData.bet_oid_list.includes(ol_item.id_)?['details-bg5','white_text']:'',{'win':calc_win(ol_item.result)}]"
                         >
                           <div class="text-center odds-wrap">
                             <div class="col text-center ellipsis led">{{ol_item.ott}}{{ol_item.on}}</div>
@@ -316,11 +316,12 @@
 import lodash from "lodash"
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/core/odds-conversion/odds_conversion-mixin.js";
-import {utils, MenuData, LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from 'src/core/index.js';
+import { MenuData, LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,calc_win } from 'src/output/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
@@ -345,14 +346,15 @@ export default defineComponent({
       return ['result_details', 'match_result'].includes(route.name)
     });
     return {
-      utils,
+      calc_win,
       lodash,
       get_cur_odd,
       menu_type,
       get_detail_data,
       is_match_result,
       LOCAL_PROJECT_FILE_PREFIX,
-      BetData
+      BetData,
+      go_to_bet
     }
   }
 })

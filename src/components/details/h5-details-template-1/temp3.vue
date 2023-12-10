@@ -12,7 +12,7 @@
               <template v-if="ol_item.os == 1">
                 <!-- 主程序 start -->
                 <div class="play-box-style details_color warp" @click="go_to_bet(ol_item)"
-                     :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':utils.calc_win(ol_item.result)}]">
+                     :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'','bor-style',{'win':calc_win(ol_item.result)}]">
                   <div class="ellipsis remark details_t_color6 fz_14" :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
                   <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
                     {{ol_item.on || ol_item.ott}}
@@ -106,7 +106,7 @@
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament_play/unit/odds_new.vue";
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
-import {utils } from 'src/core/index.js';
+
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   // #TODO mixins
@@ -130,7 +130,7 @@ export default defineComponent({
       // this.$emit("bet_click_", {ol_item});
     };
     return {
-      utils,
+      
       is_match_result,
       go_to_bet
     }

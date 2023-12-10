@@ -1,7 +1,7 @@
 [class*=theme0] {
-  .match-list-container, .loading-more-container {
+  .match-list-container, .loading-more-container, .main-container {
     background: var(--q-gb-bg-c-10);
-    .scroll-wrapper {
+    .scroll-wrapper, .observer-container {
       background: var(--q-gb-bg-c-10);
       .s-w-item {
         background: var(--q-gb-bg-c-10);
@@ -111,7 +111,6 @@
                 }
               }
               .odd-column-item2 {
-                background: var(--q-match-page-bg-color-10) ;
                 &:after {
                   background-color: transparent;
                 }
@@ -122,14 +121,14 @@
                   }
                 }
                 .odd-value {
-                  color:var(--q-gb-t-c-18);
+                  color:var(--q-gb-t-c-20);
                 }
               }
             }
           }
         }
         .league {
-          background:var(--q-gb-bg-c-15);
+          background:var(--q-gb-bg-c-18);
           border-color: var(--q-gb-bd-c-3);
           color: var(--q-gb-t-c-4);
 
@@ -146,7 +145,7 @@
           }
         }
         .date-container {
-           background:var(--q-gb-bg-c-15) ;
+           background:var(--q-gb-bg-c-18) ;
           &.simple {
             .title-space-1 {
               color: var(--q-match-fs-color-137);
@@ -234,7 +233,7 @@
           }
         }
         .odd-list {
-           background:var(--q-gb-bg-c-15);
+           background:var(--q-gb-bg-c-18);
           &.result {
             border-color: var(--q-gb-bd-c-3);
           }
@@ -319,7 +318,7 @@
                   }
                 }
                 .odd-value {
-                  color:var(--q-gb-t-c-18);
+                  color:var(--q-gb-t-c-20);
                 }
               }
               /* ************** 新手版投注项选择样式 ************** -E */
@@ -365,7 +364,7 @@
             }
             /* ************** 标准版投注项选择样式 ************** -S */
             .odd-column-item2 {
-              background: var(--q-gb-bg-c-18);
+              background: var(--q-gb-bg-c-15);
               &:after {
                 background-color: transparent;
               }
@@ -376,7 +375,7 @@
                 }
               }
               .odd-value {
-                color:var(--q-gb-t-c-18);
+                color:var(--q-gb-t-c-20);
               }
             }
             /* ************** 标准版投注项选择样式 ************** -E */

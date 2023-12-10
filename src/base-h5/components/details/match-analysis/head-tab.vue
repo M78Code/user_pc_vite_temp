@@ -27,7 +27,6 @@
 // import {mapGetters, mapMutations} from "vuex";
 import { ref, nextTick, computed, onUnmounted, onMounted, inject } from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
-import {utils } from 'src/core/utils/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash from "lodash"
 
@@ -72,7 +71,7 @@ import lodash from "lodash"
       emit('tab_click',[tab, type]);
       // 滚动目标到屏幕显示区域
       nextTick(()=>{
-        utils.tab_move(i, tab_ul_scroller, tab_item)
+        tab_move(i, tab_ul_scroller, tab_item)
       })
     }
   const handle_show_tab = (item, index) => {
@@ -171,3 +170,4 @@ import lodash from "lodash"
   }
 }
 </style>
+src/core/utils/common/index.js

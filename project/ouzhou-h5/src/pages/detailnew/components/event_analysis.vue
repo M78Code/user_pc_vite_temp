@@ -62,7 +62,7 @@
         </template>
         <template v-else>
             <img class="no-data" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/bet/no-data.png`" alt="">
-            <div class="no-data-text">No Data</div>
+            <div class="no-data-text">{{ i18n_t("common.no_data") }}</div>
         </template>
       </template>
       <template v-else>
@@ -76,7 +76,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import basket_ball_stats from './basketball_stats.vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 const props = defineProps({
   match_odds_info: {
     type: Array,

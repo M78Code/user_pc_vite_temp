@@ -17,7 +17,7 @@
 
 <script>
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 export default defineComponent({
   name: 'emoji_selector',
   setup(props, evnet) {

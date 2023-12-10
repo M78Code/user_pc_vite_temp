@@ -41,7 +41,7 @@ import basketballIncident from "src/base-h5/components/details/analysis-matches/
  // 赛果详情 事件 组件
 import timeLine from 'src/base-h5/components/details/components/details-match-results/time-line.vue';
 import { i18n_t } from "src/boot/i18n.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js'
+import {LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js'
 import { ref, onMounted } from "vue";
 
 
@@ -114,7 +114,7 @@ const props = defineProps({
   // },
   onMounted (() => {
     if (analysis_detail.value) {
-      analysis_detail.value.style.minHeight = window.innerHeight - utils.rem(1.24) + 'px';
+      analysis_detail.value.style.minHeight = window.innerHeight - rem(1.24) + 'px';
     }})
 </script>
 

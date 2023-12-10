@@ -4,10 +4,12 @@
  * @Description: 赛事详情相关操作类
  */
 import { api_details } from "src/api/index";
-import { UserCtr, MITT_TYPES,useMittEmit, MenuData } from "src/core/index.js"; 
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { MenuData } from 'src/output/module/menu-data.js'
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js"
-import {utils,is_virtual_csid,is_eports_csid,MatchDetailCalss,MatchDataWarehouse_PC_Detail_Common as MatchDetailsData,LayOutMain_pc } from 'src/core/index.js'
-import GlobalAccessConfig from "src/core/access-config/access-config.js";
+import { MatchDataWarehouse_PC_Detail_Common as MatchDetailsData } from 'src/output/module/match-data-base.js'
+import { MatchDetailCalss } from 'src/output/module/project-single.js'
+import { is_virtual_csid,is_eports_csid } from 'src/output/module/constant-utils.js'
 //引入列表跳详情中间件 
 import  MatchListDetailMiddlewareClass  from "src/core/match-detail/match-detail-pc/match-list-detail-pc/index.js"
 export default {
@@ -52,7 +54,7 @@ export default {
       },
       query: route_query
     });
-    if(go_detail_type != 'no_switch' || ((varl || vurl) && mms == 2 && utils.get_match_status(ms) == 1)){
+    if(go_detail_type != 'no_switch' || ((varl || vurl) && mms == 2 && get_match_status(ms) == 1)){
       // 供右侧数据加载使用
       let media_type = mvs > -1 ? 'animation' : 'auto'
       this.on_switch_match(media_type,match);

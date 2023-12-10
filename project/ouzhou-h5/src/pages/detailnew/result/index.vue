@@ -12,32 +12,27 @@
       <q-separator color="orange"/>
     </div>
     <div class="detail-container-position">
-      <odds_info :match_odds_info="matchResults" :match_detail="matchDetail" :loading="loading"/>
+      <OddsListContrainer :match_odds_info="matchResults" :match_detail="matchDetail" :loading="loading"/>
     </div>
   </div>
 </template>
 
 <script setup>
 import {
-  MatchDetailCalss,
   MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance,
-  useMittOn,
   useMitt,
   MITT_TYPES,
-  utils,
-  UserCtr,
-  MatchDataWarehouse_H5_List_Common,
-  MenuData,
-  SearchData,
-useMittEmit,
-} from "src/core/index";
-import { onMounted, ref, toRaw, watch, onUnmounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+  useMittEmit,
+} from "src/output/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { ref, toRaw } from "vue";
+import { useRoute } from "vue-router";
 import detail_header_tem1 from "../detail_header/detail_header_tem1.vue";
 // import odds_info from "./components/odds_info.vue";
 import odds_info from "../components/odds_info.vue";
+import OddsListContrainer from "../components/OddsListContrainer.vue";
 import loading_page from 'src/components/details/loading/index.vue'
-import { api_match_list, api_common, api_analysis } from "src/api/index.js";
+import { api_common, api_analysis } from "src/api/index.js";
 
 import './index.scss'
 
@@ -196,4 +191,4 @@ function getMatchDetail(params) {
   background-color: var(--q-gb-bg-c-2);
 }
 </style>
-./result.js
+./result.jssrc/output/index

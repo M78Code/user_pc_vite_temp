@@ -52,9 +52,9 @@ import SRecord from "src/base-h5/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
-import { format_M_D } from 'src/core/format/index.js'
+import { format_M_D } from 'src/output/index.js'
 import { i18n_t } from "src/boot/i18n.js";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 import store from 'src/store-redux/index.js'

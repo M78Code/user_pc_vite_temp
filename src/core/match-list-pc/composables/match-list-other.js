@@ -4,18 +4,17 @@
 
 import { ref } from 'vue';
 
-import { MatchDataWarehouse_PC_List_Common } from "src/core/index.js";
-import { get_match_status } from 'src/core/index.js'
+import { MatchDataWarehouse_PC_List_Common } from "src/output/module/match-data-base.js";
+import { get_match_status } from 'src/output/module/constant-utils.js'
 import { get_match_to_map_obj } from 'src/core/match-list-pc/match-handle-data.js'
 
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 let other_play_current_play = {};
 
-import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
+import { other_play_name_to_playid } from 'src/core/constant/project/module/data-class-ctr/index.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import { template } from 'lodash';
-
+ 
 
 /**
    * @Description 克隆数组

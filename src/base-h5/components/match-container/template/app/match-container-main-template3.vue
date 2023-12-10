@@ -183,7 +183,7 @@
 <script>
 
 import { ref, computed, onMounted } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
+import { LOCAL_PROJECT_FILE_PREFIX } from  "src/output/index.js"
 
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
@@ -193,12 +193,12 @@ import OddListWrap from 'src/base-h5/components/match-list/components/odd-list-w
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
-import { format_time_zone } from "src/core/format/index.js"
+import { i18n_t, compute_img_url, compute_css_obj  } from "src/output/index.js"
+import { format_time_zone } from "src/output/index.js"
 import { mearlys_icon, in_progress, not_begin, normal_img_not_favorite_white, normal_img_is_favorite } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
-import { format_msc, foot_ball_score_handle } from "src/core/format/index.js"
+import { format_msc, foot_ball_score_handle } from "src/output/index.js"
 import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_menu_id } from 'src/base-h5/mixin/menu.js'
 
 import default_mixin from '../../mixins/default.mixin.js'
@@ -267,6 +267,9 @@ export default {
 </script>
    
 <style scoped lang="scss">
+.match-container-main-template3{
+  border-top: 0.05rem solid var(--q-gb-bg-c-21)
+}
 /* ********赛事容器相关********** -S*/
 .play-icon {
   background-image: var(--q-color-img-bg-103);
@@ -319,11 +322,12 @@ export default {
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
     display: flex;
+    padding: 0 0.05rem;
     flex-direction: column;
     align-items: center;
     background: var(--q-gb-bg-c-15);
     .buffer-container{
-      background: var(--q-gb-bg-c-10);;
+      background: var(--q-gb-bg-c-21);
       height: 5px;
       width: 100%;
     }
@@ -360,7 +364,6 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    padding-left: 6px;
     background: var(--q-match-page-bg-color-10);
 
     .match-odds-container-border-radius {
@@ -692,9 +695,9 @@ export default {
     font-size: 0.1rem;
     color: #303442;
     flex-direction: row-reverse;
-    background: var(--q-match-page-bg-color-10);
-    border-top: 1px solid #e9e9e9;
-    border-bottom: 1px solid #e9e9e9;
+    background: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 
     .odd-title-i-w {
       width: 50%;

@@ -38,8 +38,8 @@
                 <span class="datails-order">{{ props.row.orderNo }}</span>
                 <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/bet_copy.png`" alt="" class="copy_icon"
                      :title="i18n_t('ouzhou.record.copy')" @click="hand_copy(props.row.orderNo)">
-                <!-- <img :src="bet_copy" alt="" class="copy_icon" title="copy"  @click="utils.copy(props.row.orderNo)" > -->
-                <!-- <i class="icon-icon_copy copy" color="red" @copy_iconclick="utils.copy(props.row.orderNo)"></i> -->
+                <!-- <img :src="bet_copy" alt="" class="copy_icon" title="copy"  @click="copy(props.row.orderNo)" > -->
+                <!-- <i class="icon-icon_copy copy" color="red" @copy_iconclick="copy(props.row.orderNo)"></i> -->
               </div>
             </q-td>
             <!-- 投注玩法 -->
@@ -92,8 +92,13 @@
                       <!-- 10/20 15:30 -->
                       <span
                         class="time"
-                        v-if="!props.row.acCode && item.beginTime"
+                        v-if="!props.row.acCode && item.beginTime&&props.row.seriesType!=3"
                       >{{formatTime(item.beginTime, lang=='vi'?'hh:MM dd/mm':'mm/dd hh:MM')}}</span>
+
+                      <span
+                        class="time"
+                        v-if="!props.row.acCode && item.beginTime&&props.row.seriesType==3"
+                      >{{formatTime(item.beginTime, lang=='vi'?'hh:MM:SS dd/mm':'mm/dd hh:MM:SS')}}</span>
                       <!-- <span style="color:#8A8986">bet closed:{{
                         formatTime(item.beginTime, "yyyy-mm-dd hh:MM:ss")
                       }}
@@ -245,8 +250,9 @@
 <script setup>
 import { onMounted, ref, reactive, watch, computed } from 'vue'
 import { useGetOrderList } from './tableConfig'
-import { formatTime } from 'src/core/format/index.js'
-import { UserCtr, format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/core/index.js'
+import { formatTime } from 'src/output/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/output/index.js'
 import Pagination from 'project_path/src/components/Pagination.vue'
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'

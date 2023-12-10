@@ -30,13 +30,13 @@
  *
  */
 
-import { MatchDataWarehouse_H5_List_Common as MatchListData  } from 'src/core/index.js'
+import { MatchDataWarehouse_H5_List_Common as MatchListData  } from 'src/output/module/match-data-base.js'
 import MatchListCardData from "./match-list-card-data-class.js"
 import lodash from "lodash"
-import { update_match_parent_card_style } from "./utils.js"
+import { update_match_parent_card_style } from "src/core/match-list-pc/match-card/module/utils.js"
 import { league_title_card_template } from "../template/card-template-config.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../template"
-import { LocalStorage, utils } from "src/core/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 /**
  * @Description 获取其他玩法盘口高度
  * @param {string | Number } csid  赛种id
@@ -334,7 +334,7 @@ export const compute_style_template_by_match_height = (match) => {
 const compute_match_total = (match_style_obj) => {
   let height = Object.values(match_style_obj).filter(t => typeof t === 'number').reduce((a, b) => a + b, 0)
   return height
-  // return utils.px_2_rem(height)
+  // return px_2_rem(height)
 }
 
 /**

@@ -1,12 +1,12 @@
 
 import { ref, computed, onDeactivated, onMounted, onUnmounted, watch, nextTick } from "vue"
 import { useRoute } from 'vue-router'
-import { play_title } from 'src/core/utils/module/play-title.js'
+import { play_title } from 'src/core/utils/common/module/play-title.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { format_msc } from "src/core/format/index.js"
-import { project_name,MenuData,compute_css_obj,utils,UserCtr,i18n_t,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { format_msc } from "src/core/format/common/index.js"
+import { project_name,MenuData,compute_css_obj,UserCtr,i18n_t,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
 import oddListWrap from './odd-list-wrap.vue';
@@ -546,7 +546,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
 
   // 滚动次要玩法选中项到屏幕显示区域
   nextTick(() => {
-    utils.tab_move(sub_i, sub_play_scroller.value, sub_play_scroll_item.value)
+    tab_move(sub_i, sub_play_scroller.value, sub_play_scroll_item.value)
   })
 
   if (item && item.title && item.id && operate_type !== 'is-auto') {   // 解决bug 24153
@@ -643,7 +643,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
       "玩法集ID": '',
       "区域位置": "主列表"
     }
-    utils.zhuge_event_send('TY_H5_足球_玩法分类导航_点击', UserCtr, zhugeObj)
+    send_zhuge_event('TY_H5_足球_玩法分类导航_点击', UserCtr, zhugeObj)
   }
   save_second_play_mid_map_unfold_status(item);
   if (item.id == 17) {

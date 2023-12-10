@@ -88,7 +88,7 @@ import { BetRecordViewWapper } from "src/base-pc/components/bet-record-view";
 // // 通屏垂直滚动
 import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { MenuData, LayOutMain_pc } from "src/core/index.js";
+import { MenuData, LayOutMain_pc } from "src/output/index.js";
 import { api_betting } from "src/api/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
@@ -149,7 +149,7 @@ const record_zhuge_point = (menu_type) => {
     eventLabel = "PC_热门赛事";
   }
   // 发送埋点事件
-  // $utils.send_zhuge_event(eventLabel);
+  // $send_zhuge_event(eventLabel);
 };
 /**
  * @Description 设置用户偏好

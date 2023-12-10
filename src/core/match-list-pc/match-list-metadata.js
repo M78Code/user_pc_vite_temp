@@ -1,20 +1,20 @@
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
 import BaseData from 'src/core/base-data/base-data.js';
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData } from "src/output/module/menu-data.js"
 import { set_match_base_info_by_mids_info } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { compute_sport_id } from 'src/core/constant/index.js'
 import { handle_match_list_request_when_ok } from './match-list-composition.js'
 import { match_list_handle_set } from './match-handle-data.js'
 // 根据 mid 获取 联赛列表数据
 function get_match_list_by_mid_for_base_data_res(mid, csid, type) {
 	// 元数据
-	const { mi_tid_mids_res = {}, base_data_res = {} } = BaseData;
+	const { mi_tid_mids_res = {}, mids_map, } = BaseData;
 	let matchs_list = [];
 
 	let current_type = type
 	if (MenuData.is_kemp()) {
 		current_type = csid;
 	}
+
 	// 常规赛种/联赛  滚球 ld  未开赛 nd
 	let livedata = ((mi_tid_mids_res[mid] || {})[current_type] || []).map((item) => ({
 		tid: item.tid,
@@ -23,11 +23,17 @@ function get_match_list_by_mid_for_base_data_res(mid, csid, type) {
 		mids_info: item.mids,
 	})) || [];
 	// 常规赛种 联赛 滚球 下面的赛事信息
-	livedata.filter((item) => {
-		let match_list = (base_data_res.matchsList || []).find((page) => item.mids_info.includes(page.mid)) || {};
-		// 空的不要
-		if (match_list.mid) { matchs_list.push(match_list); }
-	}) || [];
+	livedata.forEach((item) => {
+		lodash.get(item, 'mids_info', []).forEach(mid => {
+			if (mid) {
+				const or_math = mids_map[`mid_` + mid]
+				if (or_math) {
+					matchs_list.push(or_math);
+				}
+
+			}
+		})
+	});
 	return matchs_list;
 };
 // 使用元数据默认显示 后面替换
@@ -36,7 +42,7 @@ function set_base_data_init() {
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
 		current_ball_type: csid,
-		left_menu_result: { lv2_mi, lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
+		left_menu_result: { lv2_mi = "", lv1_mi, has_mid_menu, guanjun, jinri_zaopan },
 		mid_menu_result: { csid: mi, mif, root, mid_menu_mi },
 		menu_data_version,
 	} = MenuData;
@@ -254,9 +260,10 @@ function set_base_data_init_ouzhou(play_num = '01') {
 			if (!mid) return;
 			// 常规赛种/联赛   滚球 ld
 			let livedata = (mi_tid_mids_res[mid].ld || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids })) || [];
-			// 常规赛种/联赛   未开赛 nd
+			// // 常规赛种/联赛   未开赛 nd
 			let nolivedata = (mi_tid_mids_res[mid].nd || []).map((item) => ({ tid: item.tid, csid, mids: item.mids.join(","), mids_info: item.mids, })) || [];
-			// 常规赛种、联赛  滚球 详细内容
+			// // 常规赛种、联赛  滚球 详细内容
+
 			let live_match = get_match_list_by_mid_for_base_data_res(mid, csid, "ld");
 			// 常规赛种、联赛  未开赛 详细内容
 			let nolive_match = get_match_list_by_mid_for_base_data_res(mid, csid, "nd");
@@ -279,7 +286,7 @@ function set_base_data_init_ouzhou(play_num = '01') {
 				});
 				//常规赛事下 所有的滚球数据
 				mi_100_arr.forEach((item) => {
-					let livedata = get_match_list_by_mid_for_base_data_res(item, csid, current_ball_type);
+					let livedata = get_match_list_by_mid_for_base_data_res(item, csid, csid);
 					matchs_list = [...matchs_list, ...livedata];
 				});
 				// } else {
@@ -363,13 +370,12 @@ function set_base_data_init_ouzhou(play_num = '01') {
 		}
 		if (MenuData.is_left_zaopan() || matchs_list.length <= 0) return;
 		// 赛事列表 卡片数据
-		// 设置列表数据仓库
 		match_list_handle_set(matchs_list)
-		// MatchListData.set_list(
-		// 	matchs_list,
-		// );
+		// 设置列表数据仓库
+		MatchListData.set_list(
+			matchs_list,
+		);
 		handle_match_list_request_when_ok(data, false, true, true);
-
 		let ts1 = Date.now();
 		let mids_arr = [];
 		(matchs_list || []).forEach((match) => {

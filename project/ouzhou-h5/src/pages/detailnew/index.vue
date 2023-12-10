@@ -12,13 +12,13 @@
     <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
       <div v-if="match_detail?.mvs > -1">
       <!-- 动画组件 -->
-      <detail_header_tem2 :get_match_detail="match_detail || {}" />
+      <detail_header_tem2 :get_match_detail="match_detail || {}" :label="label"/>
     </div>
     <div v-else class="mini-header-container"  @click="onClickTest">
       <div class="header-fix" ref="header_fix">
          <!-- v-if="!changeHeader" -->
         <div ref="scroll_video_height" class="relative-position scroll_video_h">
-          <detail_header_tem1 :get_match_detail="match_detail || {}" />
+          <detail_header_tem1 :get_match_detail="match_detail || {}" @handle-change="handle_change"/>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
           <!-- 玩法模板 -->
           <div ref="fixedHeight" class="match-detail-odds-scroll"
             :class="[match_detail?.mvs > -1 ? 'match-detail-odds-height2' : 'match-detail-odds-height3']">
-            <odds_info :match_odds_info="match_odds_info" :match_detail="match_detail"
+            <OddsListContrainer :match_odds_info="match_odds_info" :match_detail="match_detail"
               :loading="loading" v-model:allCloseState="allCloseState"/>
           </div>
           <!-- <div class="match-detail-odds-bottom"></div> -->
@@ -85,7 +85,7 @@ import OddsListContrainer from "./components/OddsListContrainer.vue";
 import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 
 // import './index.scss'
 export default {
@@ -131,7 +131,15 @@ export default {
      changeHeader,
      MatchDataWarehouseInstance
     } = details_main(router,route)
+
+    const label = ref("");
+    
+    const handle_change = (value) => {
+      console.log(value, "valuessss");
+      label.value = value;
+    }
     return{
+      handle_change,
       detail_store,
       match_odds_info,
       match_detail,
@@ -161,6 +169,8 @@ export default {
      }
   } 
 }
+
+
 
 </script>
 

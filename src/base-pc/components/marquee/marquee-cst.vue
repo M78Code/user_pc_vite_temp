@@ -68,11 +68,11 @@ import { i18n_t } from "src/boot/i18n.js"
 import { api_home } from "src/api/index";
 import gSettings from 'src/base-pc/components/settings/index.vue';
 import langs from "src/i18n/pc/langs/index.mjs";
-import { utils,compute_local_project_file_path } from 'src/core/index.js'
+import { compute_local_project_file_path } from 'src/output/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";
-import { useMittEmit, MITT_TYPES,compute_img_url } from 'src/core/'
+import { useMittEmit, MITT_TYPES,compute_img_url } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 
@@ -101,7 +101,7 @@ const notice_info = reactive({
 })
 
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 
 /** 内嵌版 收起左侧菜单 */
 const left_tabs = [
@@ -488,4 +488,4 @@ onUnmounted(clear_timer)
     }
 }
 </style>
-  
+ 

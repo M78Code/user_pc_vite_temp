@@ -11,7 +11,7 @@
         <div v-for="(item,index) in odds_list" :key="index"
              class="col-4 item-height"
              :class="[index >= 3 ? 'border-bot':'',BetData.bet_oid_list.includes(item.oid) ? 'blue-color':'']"
-             @click="utils.go_to_bet(item)"
+             @click="go_to_bet(item)"
         >
           <div class="row justify-center">
             <div v-for="(item_data_count,index2) in item.two_num" :key="index2">
@@ -33,13 +33,14 @@
 // #TODO vuex
 // import { mapGetters} from "vuex";
 import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
-import { project_name,MatchDetailCalss } from 'src/core'
+import { project_name,MatchDetailCalss } from "src/output/index.js"
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   name: "temp10",
   props: ["item_data", "title"],
@@ -95,7 +96,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      utils,
+      go_to_bet,
       lodash,
       BetData,
       get_bet_list,
@@ -245,4 +246,4 @@ div[class*="virtual-num"] {
     background-position-y: calc(var(--per) * 5);
   }
 }
-</style>
+</style>src/output

@@ -11,7 +11,7 @@
         <div class="home">
             <div class="team_name home-name allow-user-select">{{lodash.get(match_info,'mhn')}}</div>
             <div class="img-wrap">
-              <template v-if="$utils.is_eports_csid(match_info.csid)">
+              <template v-if="$is_eports_csid(match_info.csid)">
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                   v-img="([lodash.get(match_info,'mhlu'),lodash.get(match_info,'frmhn'),lodash.get(match_info,'csid')])"
@@ -57,7 +57,7 @@
         <!-- 客队 S -->
         <div class="away">
             <div class="img-wrap">
-              <template v-if="$utils.is_eports_csid(match_info.csid)">
+              <template v-if="$is_eports_csid(match_info.csid)">
                 <img
                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                   v-img="([lodash.get(match_info,'malu'),lodash.get(match_info,'frman'),lodash.get(match_info,'csid')])"

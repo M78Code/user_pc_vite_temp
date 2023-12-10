@@ -6,7 +6,7 @@
  */
 
 import { ref } from 'vue'
-import { MenuData, project_name } from 'src/core'
+import { MenuData, PROJECT_NAME } from 'src/output/module/menu-data.js'
 import MatchFold from 'src/core/match-fold'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -104,11 +104,11 @@ class VirtualList {
     // 赛事相叠高度 缓冲容器是 5px - buffer_height  就是交叠高度
     let match_overlap_height = reduce_buffer_height ? reduce_buffer_height - buffer_height : 0
     let total = 0
-    // 显示开赛、未开赛 match_stage_height - 缓冲高度
-    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_stage_height
+    // 显示开赛、未开赛 match_stage_height - 缓冲高度  并且不需要缓冲高度 所以 - 3
+    if (match_stage_height && [1, 2].includes(+start_flag)) total += match_stage_height - 3
     // 显示球种类别
     if (this.is_show_ball && is_show_ball_title) total += ball_title_height
-    if (this.is_change_handicap_height !== 0) total += this.is_change_handicap_height
+    // if (this.is_change_handicap_height !== 0) total += this.is_change_handicap_height
     // 本来应该是 联赛高度 show_league_height + 缓存容器高度 5 = 31； 
     // 但是并不需要那么高的间隙（赛事之间的间隙， 取缓存容器的高度） 所以减去 buffer_height ； 赛事之间相叠避免漏光
     if (is_show_league && show_card) {
@@ -121,6 +121,9 @@ class VirtualList {
       // 联赛不显示 赛事显示
       total += main_handicap_height
     }
+    // 特殊高度
+    const special_height = this.get_match_special_height(match, index)
+    total += special_height
     return total
   }
 
@@ -199,7 +202,7 @@ class VirtualList {
     // 是否全部折叠状态
     const csid_status = MenuData.menu_csid && MatchFold.ball_seed_csid_fold_obj.value[`csid_${MenuData.menu_csid}`]
     const is_result = MenuData.is_results()
-    if (project_name === 'ouzhou-h5') {  // 欧洲版
+    if (PROJECT_NAME === 'ouzhou-h5') {  // 欧洲版
       if (is_result) {
         // 赛果
         position = scrollTop - 800
@@ -210,7 +213,7 @@ class VirtualList {
         // 球种折叠
         position = scrollTop - 200
       }
-    } else if (project_name === 'app-h5') { // 复刻版
+    } else if (PROJECT_NAME === 'app-h5') { // 复刻版
       if (is_result) {
         // 赛果
         position = scrollTop - 800
@@ -219,10 +222,34 @@ class VirtualList {
         position = scrollTop - 234 * 5
       } else {
         // 球种折叠
-        position = scrollTop - 234 * 5
+        position = scrollTop - 200
       }
     }
     return position
+  }
+
+  // 赛事 特殊高度 
+  // 例如： 复刻版下的新手版、高度不同
+  get_match_special_height (match, index) {
+    const menu_lv_v1 = MenuData.current_lv_1_menu_i
+    // 折叠对象
+    const fold_data = MatchFold.match_mid_fold_obj.value
+    // 赛事折叠信息
+    const fold_key = MatchFold.get_match_fold_key(match)
+    // 赛事是否显示
+    const show_card = lodash.get(fold_data[fold_key], `show_card`)
+    let special_height = 0
+    if (PROJECT_NAME === 'app-h5') {
+      if (UserCtr.standard_edition == 1) {
+        if (show_card) {
+          special_height += -34
+          if (match.is_show_league) special_height += -22
+        }
+      } else {
+        if (index === 0 && [1,3].includes(+menu_lv_v1)) special_height += 25
+      }
+    }
+    return special_height
   }
 
   /**
@@ -375,7 +402,7 @@ class VirtualList {
       //     // 计算出 当前赛事的容器高度，以rem 计算
       //     current_list_total_height += +this.get_match_dom_height_by_match_data(h_map);
       //   }
-      //   let many_distances = utils.px_2_rem(scroll_top) - (current_list_total_height / page_count) * 7; // 可视区域  每一场的平均高度 × 7
+      //   let many_distances = px_2_rem(scroll_top) - (current_list_total_height / page_count) * 7; // 可视区域  每一场的平均高度 × 7
       //   current_screen_match = []; // 列表页可视区域 赛事的数据
       //   for (let i = 0; i < match_list_length; i++) {
       //     let h_map = this.match_height_map_list[i];

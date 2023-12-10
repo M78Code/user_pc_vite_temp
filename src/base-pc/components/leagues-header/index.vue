@@ -28,7 +28,7 @@
 import { ref,onMounted,onUnmounted, watch } from 'vue';
 import lodash_ from "lodash"
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from 'vue-router';
 import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
@@ -98,8 +98,9 @@ const getName = () => {
 	return name
 }
 const jumpTo = ()=>{
-	let route_name = lodash_.get(MenuData.router_info,'pre_route')
-  	router.push({name:route_name})
+	// let route_name = lodash_.get(MenuData.router_info,'pre_route') || 'home'
+	// console.log(route_name, 'route_name')
+  	router.push({name:'home'})
 }
 
 </script>

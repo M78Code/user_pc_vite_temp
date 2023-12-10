@@ -14,7 +14,7 @@
                     :key="index" dense clickable :class="['play_item', { active: item.mi === playValue }]">
                     <span class="icon">
                         <sport-icon size="24" :status="item.mi === playValue" :sport_id="item.mi" />
-                        <span class="badge" v-if="props.is_show_badge && item.ct"><q-badge rounded :label="item.ct || 0" /></span>
+                        <span class="badge" v-if="props.is_show_badge"><q-badge rounded :label="item.ct || 0" /></span>
                     </span>
                     <div class="label">{{BaseData.menus_i18n_map[+item.mi>1000 && +item.mi<2000?`3${item.mi}`:item.mi] }} </div>
                     <span class="round"></span>
@@ -27,7 +27,7 @@
 import { ref , watch ,nextTick} from "vue"
 import sportIcon from "../components/left-menu/sport-icon.vue"
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData  } from "src/core/";
+import { MenuData  } from "src/output/index.js";
 const emits = defineEmits(['changeMenu']);
 
 const props = defineProps({
@@ -41,7 +41,7 @@ const props = defineProps({
     },
     // 当前选中的值
     current_mi:{
-        type: String || Number,
+        type: [String, Number],
         default: ''
     },
     is_show_badge:{
@@ -194,7 +194,7 @@ watch(()=>props.current_mi,()=>{
         }
 
         :deep(.sport-img) {
-            transition: all 0.25s ease;
+            // transition: all 0.25s ease;
         }
     }
 
@@ -208,4 +208,4 @@ watch(()=>props.current_mi,()=>{
         }
     }
 }</style>
-  
+  src/output

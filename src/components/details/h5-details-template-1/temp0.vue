@@ -21,7 +21,7 @@
                           <div
                             class="play-box-style details_color"
                             @click="go_to_bet(ol_item)"
-                            :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                            :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_13 odds-on">
                               <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
@@ -102,7 +102,7 @@
                     <div
                       class="play-box-style details_color"
                       @click="go_to_bet(ol_item)"
-                      :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                      :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_13">
                         <span class="size-color" :class="[{'white_text':get_bet_list.includes(ol_item.id_)},{'gray': is_number(ol_item.ott) || is_number(ol_item.on) }]">
@@ -180,7 +180,7 @@ import odds_new from "src/base-h5/components/details/components/tournament_play/
 import { i18n_t } from "src/boot/i18n.js"
 // #TODO mixins 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
-import {utils } from 'src/core/index.js';
+
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 
 export default defineComponent({
@@ -193,7 +193,7 @@ export default defineComponent({
   props: ["item_data", "title"],
   setup(props, evnet) {
     const data = reactive({
-      utils,
+      
       // 最大显示行数
       show_more_max:5,
       show_more_switch:false,
@@ -271,7 +271,7 @@ export default defineComponent({
      */
     const change_show = () => {
       if (data.show_more) {
-        let distance = (data.len - 5) * utils.rem(0.52)
+        let distance = (data.len - 5) * rem(0.52)
         if ($route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {

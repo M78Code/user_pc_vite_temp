@@ -152,14 +152,17 @@ import {FliterCheckbox} from "src/components/fliter-checkbox/index.js";
 import selectY from "src/base-pc/components/match-results/select/components/select-y.vue"
 import { api_analysis } from "src/api/";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { LayOutMain_pc } from "src/core/index.js";
-import { GlobalSwitchClass} from "src/core/index";
+import { LayOutMain_pc } from "src/output/index.js";
+import { GlobalSwitchClass} from "src/output/index.js";
+
+import { loadLanguageAsync } from "src/output/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import {
   i18n_t,
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,
-} from "src/core/index.js";
+} from "src/output/index.js";
 import lodash from "lodash"
 const emit = defineEmits(['refresh'])
 const props = defineProps({
@@ -307,6 +310,9 @@ const confirmDate=()=>{
 function refresh() {
   emit("refresh")
 }
+onMounted(()=>{
+ loadLanguageAsync(LocalStorage.get('lang'));
+})
 </script>
 
 <style scoped lang="scss">
@@ -326,7 +332,7 @@ function refresh() {
         -right: 0;
         -background-color: var(--q-gb-bd-c-2);
     }
-    ::v-deep .q-tab__indicator{
+    :deep(.q-tab__indicator){
             display: none;
         }
   };

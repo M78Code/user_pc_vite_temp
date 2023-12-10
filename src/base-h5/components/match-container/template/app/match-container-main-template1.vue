@@ -4,8 +4,10 @@
 <template>
   <div class="match-container component match-container-main-template1"
     :class="[{
-    zaopan: is_zaopan
-  }]" 
+      jinri: MenuData.is_today(),
+      zaopan: MenuData.is_zaopan(),
+      gunqiu: MenuData.is_scroll_ball()
+    }]" 
     :style="{ marginTop: is_hot ? '0' : '' }">
     <template v-if="match" >
       <!-- 开赛标题  -->
@@ -13,18 +15,23 @@
         :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
-          <div>
+          <div class="match-status-title">
             <img :src="in_progress" /> <span class="din-regular"> 进行中</span>
           </div>
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
         <!-- 未开赛 -->
         <template v-else>
-          <div>
+          <div class="match-status-title">
             <img :src="not_begin" /> <span class="din-regular"> {{ i18n_t('list.match_no_start') }}</span>
           </div>
           <img :class="['expand_item', {collapsed: collapsed}]" :src="expand_item" alt="">
         </template>
+      </div>
+      <!-- 全部 -->
+      <div class="all-league-title" v-if="i === 0 && is_show_all" @click.stop="handle_ball_seed_fold">
+        <div> <img :src="icon_date" alt=""> <span>全部联赛</span> </div>
+        <img :class="['expand_item', {ball_seed_collapsed: !ball_seed_collapsed}]" :src="expand_item" alt="">
       </div>
       <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
       <div class="buffer-container" v-if="match.is_show_league && !is_show_opening_title && i !== 0"></div>
@@ -32,7 +39,7 @@
       <div v-if="show_sport_title" @click.stop
         :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span">
-          {{ match_of_list.csna }} ({{ get_match_count }})
+          {{ match_of_list.csna || get_current_manu_name() }} ({{ get_match_count }})
         </span>
       </div>
 
@@ -40,7 +47,7 @@
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
-          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
+          :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'collapsed': !collapsed}]">
           <div class="league-t-wrap right-border">
           <!-- <div class="league-t-tubiao"></div> -->
             <!-- 联赛收藏 -->
@@ -63,7 +70,7 @@
         </div>
         <!-- 卡片主内容 -->
         <!-- <q-slide-transition> -->
-        <div style="width: 100%;" v-if="collapsed">
+        <div :class="['match-content', { 'collapsed': collapsed }, {'border-top': !match.is_show_league}]" v-if="collapsed">
           <!--标准版 赔率标题栏-->
           <div class="odd-title-wraper row " v-if="match.is_show_league" @click.stop :style="{width: collapsed ? '100%' : 0}">
             <div class="odd-title-i-w flex">
@@ -79,8 +86,7 @@
             </div>
           </div>
           <!--  一整块赛事的 div 内容 ： 1. 左边 【时间，队名，比分】   2. 右边 【赔率 模块】  -->
-            <!-- <div style="border-top: 1px solid #000; width: 96%;"></div>  ！-->
-          <div :class="['match-odds-container study_height_s hairline-border', {'border-top': !match.is_show_league}]">
+          <div :class="['match-odds-container study_height_s hairline-border']">
             <div class="match-odds-container-border-radius">
               <!-- 上边的 赛事日期标准版,包含 比分组件 -->
               <div class="date-container match-indent" v-if="!show_newer_edition && !is_results">
@@ -134,7 +140,7 @@
                   </div>
                 </div>
                 <!--玩法数量-->
-                <div class="goto-detail" style="margin-right: 0.03rem;" @click='goto_details(match)'>
+                <div class="goto-detail" @click='goto_details(match)'>
                   <span class="count_span" :class="{ esports: 3000 == menu_type }">
                     <span class="mc-n">
                       {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
@@ -182,7 +188,6 @@
                           <div class="yb-goal-gif" :class="{ 'yb-goal-yo': theme.includes('y0') }"></div>
                           <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
                         </div>
-                       
                       </div>
                       <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
                       <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
@@ -219,20 +224,20 @@
                         </template>
                         <!-- 进球动画 -->
                         <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
-                      <div class="yb-goal-gif yb-goal-yo"></div>
-                      <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                          <!-- 进球图标 -->
+                          <div class="yb-goal-gif yb-goal-yo"></div>
+                          <div class="gif-text">{{ i18n_t('match_result.goal') }}</div>
+                        </div>
+                      </div>
+                    <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
+                    <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
+                      :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
+                      {{ away_score }}
                     </div>
-                   
-                  </div>
-                  <!--进行中的赛事显示比分 ,如果是比分判定中，则不显示比分-->
-                  <div class="score full-score" v-show="match_of_list.ms > 0 && !is_results && !eports_scoring"
-                    :class="{ 'visibility-hidden': match_of_list.ms == 110 }">
-                    {{ away_score }}
-                  </div>
-                  <!--发球方绿点-->
-                  <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
-                    v-show="set_serving_side(match_of_list, 'away')">
-                  </span>
+                    <!--发球方绿点-->
+                    <span class="serving-party" :class="{ 'simple': standard_edition == 1 }"
+                      v-show="set_serving_side(match_of_list, 'away')">
+                    </span>
                   </div>
                   <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
                   <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_results"
@@ -242,24 +247,24 @@
                         <!-- 直播 主播 视频 动画  icon 栏目   -->
                         <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()">
-                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.icon_path }]" :src='animation_icon' />
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.animationUrl }]" :src='animation_icon' />
                         </div>
                         <!-- 视频 -->
                         <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()">
-                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.icon_path }]" :src='video_icon' />
-                        </div>
-                        <!-- 角球 -->
-                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
-                          <img :class="['live-icon-btn']" :src='corner_icon' />
-                        </div>
-                        <!-- 此赛事支持提前结算 -->
-                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
-                          <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
+                          <img :class="['live-icon-btn', { disabled: !media_button_state_obj.muUrl }]" :src='video_icon' />
                         </div>
                         <!-- mng 是否中立场   1:是中立场，0:非中立场-->
                         <div class="live-i-b-wrap v-mode-span row items-center"
                           v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
                           <img class="neutral-icon-btn l-bottom" :src='midfield_icon_app' />
+                        </div>
+                        <!-- 此赛事支持提前结算 -->
+                        <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
+                          <img :src="mearlys_icon_app" alt="" style="width:0.2rem">
+                        </div>
+                        <!-- 角球 -->
+                        <div class="live-i-b-wrap v-mode-span row items-center" @click="media_button_handle()" v-if="match.csid == 1 && get_corner_kick">
+                          <img :class="['live-icon-btn']" :src='corner_icon' />
                         </div>
                       </div>
                     </div>
@@ -282,20 +287,16 @@
 <script>
 
 import { ref, computed, watch, nextTick } from 'vue'
-import { LOCAL_PROJECT_FILE_PREFIX } from  "src/core"
-
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
 import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
-import { icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import PageSourceData  from  "src/core/page-source/page-source.js";
-import { i18n_t, compute_img_url, compute_css_obj  } from "src/core/index.js"
-import { format_time_zone } from "src/core/format/index.js"
+import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData } from "src/output/index.js"
+import { format_time_zone } from "src/output/index.js"
 import OddListWrap from 'src/base-h5/components/match-container/template/app/components/default-odd-template/odd-list-wrap.vue';
-import { in_progress, not_begin, animation_icon, video_icon, 
+import { in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
   normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app } from 'src/base-h5/core/utils/local-image.js'
 
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
@@ -330,8 +331,8 @@ export default {
       return is_show_ball_title
     })
     return { 
-      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin,
-      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,
+      lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX,in_progress,not_begin, MenuData,
+      is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, animation_icon, video_icon,icon_date,
       normal_img_not_favorite_white,not_favorite_app, normal_img_is_favorite, PageSourceData, corner_icon, mearlys_icon_app, midfield_icon_app, is_zaopan, expand_item
     }
   }
@@ -352,6 +353,33 @@ export default {
 .auto-full-width-100 {
   width: 100%;
 }
+.match-status-title {
+  display: flex;
+  align-items: center;
+}
+.all-league-title{
+  display: flex;
+  height: 30px;
+  background: var(--q-gb-bg-c-15);
+  padding: 0 10px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 2px solid rgba(254, 174, 43, 0.5);
+  > div {
+    display: flex;
+    align-items: center;
+    > span {
+      padding-left: 5px;
+    }
+  }
+  .expand_item{
+    transition: transform 0.25s ease;
+     transform: rotate(-180deg);
+  }
+  .ball_seed_collapsed{
+    transform: rotate(0);
+  }
+}
 
 .match-container {
   width: 100%;
@@ -371,17 +399,17 @@ export default {
     height: 0.25rem;
     line-height: 1;
     font-size: 0.11rem;
-    padding-left: 0.20rem;
+    padding-left: 0.17rem;
     display: flex;
     align-items: center;
     color: var(--q-gb-t-c-20);
     background: var(--q-gb-bg-c-15);
-      justify-content: space-between;
+    justify-content: space-between;
     &.progress{
-      border-top: 2px solid #74C4FF
+      border-top: 2px solid rgba(116, 196, 255, 0.5);
     }
     &.not_begin{
-      border-top: 2px solid #E95B5B
+      border-top: 2px solid rgba(233, 91, 91, 0.51);
     }
 
     img {
@@ -404,12 +432,11 @@ export default {
     margin-right: 0.1rem;
   }
   .buffer-container{
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-17);
     height: 5px;
-    margin: 0 4px;
   }
   .match-inner-container {
-    width: 98%;
+    padding: 0 0.05rem;
     margin: 0 auto;
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
@@ -424,9 +451,30 @@ export default {
       border-top-right-radius: 0.08rem;
     }
     .match-content{
-      background: var(--q-gb-bg-c-15);
-      padding: 0 0.1rem;
+      width: 100%;
+      padding: 0 10px;
+      border-top: 1px solid #E4E6ED;
+      background: var(--q-gb-bg-c-18);
+      border-radius: 0 0 8px 8px;
+      border: 1px solid #fff;
+      &.collapsed{
+        border-top: none;
+      }
+      &.border-top{
+        border-top: 1px solid #E4E6ED;
+      }
     }
+    > .match-indent{
+      border: 1px solid #fff;
+      border-radius: 8px 8px 0 0;
+      border-bottom: 1px solid #E4E6ED !important;
+      &.collapsed{
+        border-radius: 8px;
+        border-bottom: 1px solid #fff !important;
+        border: 1px solid #fff;
+      }
+    }
+    
   }
 
   &.started_and_un_started {
@@ -447,8 +495,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    padding-left: 6px;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -486,9 +533,6 @@ export default {
 
     .no-radius {
       border-radius: unset;
-    }
-    .no-border{
-      border: none !important;
     }
 
     .odd-list-inner.odd {
@@ -551,7 +595,7 @@ export default {
     height: 20px;
     border-radius: 0;
     font-size: 12px;
-    padding: 0 5px 0 20px;
+    padding: 0 5px 0 17px;
     background: var(--q-gb-bg-c-21);
     line-height: 20px;
     font-size: 11px;
@@ -737,7 +781,7 @@ export default {
       .favorited-icon{
         width: 14px;
         height: 14px;
-        margin: 0 10px 0 12px;
+        margin: 0 10px 0 11px;
         position: relative;
         flex-shrink: 0;
         > img {
@@ -770,12 +814,11 @@ export default {
     font-size: 0.1rem;
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-15);
-    border-top: 1px solid var(--q-gb-bd-c-4);
-    border-bottom: 1px solid var(--q-gb-bd-c-4);
+    background: var(--q-gb-bg-c-18);
+    border-bottom: 1px solid #E4E6ED;
 
     .odd-title-i-w {
-      width: 50%;
+      width: 1.84rem;
       overflow: hidden;
 
       .odd-t-i-wrapper {
@@ -802,8 +845,7 @@ export default {
       line-height: 1;
       margin-left: 0.01rem;
       font-size: 0.1rem;
-      color: #AFB3C8 !important;
-      flex-shrink: 0;
+       flex-shrink: 0;
 
       &.boxing {
         width: 0.95rem;
@@ -911,11 +953,11 @@ export default {
   .odd-list-inner {
     height: 0.2rem;
     width: 100%;
-    padding: 0.1rem 2% 0 2%;
     display: flex;
     justify-content: space-between;
     position: relative;
     overflow: hidden;
+    padding-left: 2px;
 
     .triangle-wrapper {
       width: 0.24rem;
@@ -1098,6 +1140,13 @@ export default {
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+          .yb-flex-center{
+            padding-left: 2px;
+            .yb-goal-gif{
+              background-image: url($SCSSPROJECTPATH+"/image/common/goal_gif.png");
+            }
+          }
+          
 
           /*图标*/
           .team-icon {
@@ -1139,12 +1188,14 @@ export default {
           }
 
           .team-t-title-w {
+            overflow: hidden;
+            display: -webkit-box;
             font-size: 0.12rem;
             flex-shrink: 0;
-            max-width: 90%;
-            text-overflow: ellipsis;
+            max-width: 100%;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
             word-break: break-all;
             color: var(--q-gb-t-c-20) !important;
 
@@ -1288,7 +1339,7 @@ export default {
   background-color: var(--q-color-com-bg-color-12);  
   width: 100%;
   color: var(--q-gb-t-c-19);
-  padding-left: 6px;
+  padding-left: 1px;
   height: 0.2rem;
   display: flex;
   align-items: center;
@@ -1482,8 +1533,13 @@ export default {
       }
       :deep(.counting-down-wrap){
         color: #AFB3C8 !important;
+        width: 150px !important;
         .counting{
           font-size: 11px;
+          color: var(--q-gb-t-c-19);
+        }
+        .special{
+          font-size: 12px;
         }
       }
     }

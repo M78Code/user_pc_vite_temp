@@ -6,15 +6,16 @@
  * @Description:  
 -->
 <template>
-    <div class="search-tab-wap" v-show="!Array.isArray(menu_lv2) && [401,1016,1013,1011,1012].includes(+menu_lv2?.mi)">
+    <!-- <div class="search-tab-wap" v-show="!Array.isArray(menu_lv2) && [401,1016,1013,1011,1012].includes(+menu_lv2?.mi)"> -->
+    <div class="search-tab-wap">
     <!-- <div class="search-tab-wap"> -->
         <div class="search-tab-content">
             <ul class="search-tab-content-ul">
-                <li ref="searchTab" :class="{ active: activeOn === item.tid }" v-for="(item, index) in dataList" :key="index"
+                <li ref="searchTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
                     @click="changeTab(item.tid,index,$event)">
                     <!-- <img v-show="item.img" :src="item.img" /> -->
-                    <span v-if="+item.tid" class="sport-icon-wrap"
-                      :style="compute_css_obj({key: activeOn === item.tid ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
+                    <span v-if="item.tid !== '0'" class="sport-icon-wrap"
+                      :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
                     {{ item.name }}
                 </li>
             </ul>
@@ -47,10 +48,10 @@
 import { ref } from "vue";
 import search from "./img/search.svg";
 import {scrollMenuEvent} from "../utils";
-import { useMittEmit, MITT_TYPES } from "src/core/index.js";
-import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
-import  screenModal from './screen-modal.vue'
-import { compute_css_obj,league_sprite_images_postion } from "src/core/index.js";
+// import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
+import  screenModal from './screen-modal.vue';
+// import { MenuData } from "src/output/index.js";
+import { compute_css_obj,league_sprite_images_postion } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({
     dataList: {
@@ -63,40 +64,57 @@ const props = defineProps({
                 tid: '0'
             },
             {
-                name: "欧冠",
+                // 世界杯2022(在卡塔尔) FIFA World Cup 2022 (In Qatar) - 10011003169
+                // FIFA足球(10分钟比赛) - 世界杯 FIFA Efootball (10 mins) - World Cup - 10011003541
+                name: "世界杯",
                 val: 1,
+                img: "",
+                tid: '10011003169, 10011003541'
+            },
+            {
+                name: "欧冠",
+                val: 2,
                 tid: '6408',
                 img: ""
             },
             {
+                // 英格兰超级联赛 England Premier League - 10011000
+                // FIFA 2023 - 英格兰超级联赛 (8分钟) FIFA 2023 - England Premier League (8mins) - 1292581040691029461
                 name: "英超",
-                val: 2,
+                val: 3,
                 img: "",
-                tid: '180',
+                tid: '10011000, 1292581040691029461',
 
             },
             {
                 name: "意甲",
-                val: 3,
+                val: 4,
                 tid: '239',
                 img: ""
             },
             {
                 name: "西甲",
-                val: 4,
-                img: "",
-                tid: '320'
-            },
-            {
-                name: "法甲",
                 val: 5,
                 img: "",
-                tid: '79'
+                tid: '320'
             },
             {
                 name: "德甲",
                 val: 6,
                 tid: "276"
+            },
+            {
+                name: "法甲",
+                val: 7,
+                img: "",
+                tid: '79'
+            },
+            {
+                // 中国超级联赛 China Super League - 10011006344 
+                // SRL中国超级联赛 SRL China Super League - 10011020404
+                name: "中超",
+                val: 8,
+                tid: "10011006344, 10011020404"
             }
         ]
     },
@@ -108,7 +126,7 @@ const props = defineProps({
 const drawerRight = ref(false)
 const searchTab = ref(null)
 
-const activeOn = ref(props.defaultVal || '0');//默认值
+const activeOn = ref(props.defaultVal || 0);//默认值
 const league_data = ref([])
 /**
  * @description: 联赛转化背景
@@ -116,7 +134,7 @@ const league_data = ref([])
  * @return {}
  */
  const format_type = ( item = {} ) => {
-    return league_sprite_images_postion[+item.tid]
+    return league_sprite_images_postion[+item.val]
 }
 /**
  * 选中的数据
@@ -131,8 +149,8 @@ const select_change = (value) => {
  * @param {*} val
  */
 const changeTab = (tid,i,event) => {
-    if(activeOn.value === tid)return;
-    activeOn.value = tid;
+    if(activeOn.value === i)return;
+    activeOn.value = i;
     event && scrollMenuEvent(event,".search-tab-content-ul",".active");
     if (tid === '0') {
         MatchMeta.set_origin_match_data({})
@@ -144,7 +162,7 @@ const changeTab = (tid,i,event) => {
  * 初始化滚动条
  */
  const searchTabMenu = () =>{
-    activeOn.value = '0';
+    activeOn.value = 0;
     scrollMenuEvent(searchTab.value[0],".search-tab-content-ul",".active");
 }
 defineExpose({searchTabMenu});
@@ -173,7 +191,7 @@ function key_down(event) {
     width: 100%;
     height: 0.32rem;
     overflow: hidden;
-    padding: 0 0.05rem;
+    padding: 0 0.06rem;
     position: relative;
 
     .search-tab-content {
@@ -254,4 +272,4 @@ function key_down(event) {
     height: auto;
 }
 </style>
-  
+ 

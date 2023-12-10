@@ -90,9 +90,9 @@ import store from "src/store-redux/index.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
-import { SessionStorage, utils } from 'src/core/index.js'
+import { SessionStorage } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { format_money2 } from "src/core/format/index.js"
+import { format_money2 } from "src/output/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 /** api */
 import { api_account } from "src/api/index.js";
@@ -137,7 +137,7 @@ const menu_data = reactive({})
 /** 地址栏隐藏logo */
 const is_hide_icon = ref(false)
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 /** 刷新组件loading */
 const data_loaded = ref(false)
 /** 当前顶部菜单选中的索引 */

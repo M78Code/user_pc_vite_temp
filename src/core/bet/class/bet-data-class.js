@@ -1,8 +1,11 @@
-import { fileds_map_common, useMittEmit,MITT_TYPES } from "src/core/index.js";
+
+
+import { fileds_map_common } from "src/output/module/constant-utils.js";
+import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import LayOutMain_pc from "src/core/layout/index.js";
-import BetViewDataClass from "./bet-view-data-class"
-import { get_score_config,get_market_is_show } from "./bet-box-submit"
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import BetViewDataClass from "./bet-view-data-class.js"
+import { get_score_config,get_market_is_show } from "./bet-box-submit.js"
+import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { ref } from "vue"
 import lodash_ from "lodash"

@@ -29,11 +29,11 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color warp"
-                                @click="utils.go_to_bet(ol_list_0[ol_index0 - 1])"
+                                @click="go_to_bet(ol_list_0[ol_index0 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
-                                  'win': utils.calc_win(ol_list_0[ol_index0 - 1].result),
+                                  'win': calc_win(ol_list_0[ol_index0 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }">
                               <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)}]">
@@ -112,11 +112,11 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color warp"
-                                @click="utils.go_to_bet(ol_list_1[ol_index1 - 1])"
+                                @click="go_to_bet(ol_list_1[ol_index1 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
-                                  'win': utils.calc_win(ol_list_1[ol_index1 - 1].result),
+                                  'win': calc_win(ol_list_1[ol_index1 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
@@ -194,11 +194,11 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color"
-                                @click="utils.go_to_bet(ol_list_2[ol_index2 - 1])"
+                                @click="go_to_bet(ol_list_2[ol_index2 - 1])"
                                 :class="{
                                   'details-bg5 first-rad': BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].id_),
                                   'bor-style': ol_index != max_count_ol-1,
-                                  'win': utils.calc_win(ol_list_2[ol_index2 - 1].result),
+                                  'win': calc_win(ol_list_2[ol_index2 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
@@ -275,8 +275,8 @@
                     <!-- 主程序 start -->
                     <div
                         class="play-box-style details_color"
-                        @click="utils.go_to_bet(ol_item)"
-                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
+                        @click="go_to_bet(ol_item)"
+                        :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
                       <div class="ellipsis details_t_color6 fz_13" :class="{'text-right': !['344'].includes(item_data.hpid)}">
                         <span :class="[{'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                           {{ol_item.on}}
@@ -355,13 +355,14 @@
 // import { mapGetters, mapMutations } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils,LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance  } from 'src/core/index.js';
+import {LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance ,calc_win } from 'src/output/index.js';
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { useRoute } from "vue-router";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -454,7 +455,7 @@ export default defineComponent({
       return max;
     }
     return {
-      utils,
+      calc_win,
       change_ms,
       ol_list_0,
       ol_list_1,
@@ -467,6 +468,7 @@ export default defineComponent({
       other_item_list,
       max_count_ol,
       LOCAL_PROJECT_FILE_PREFIX,
+      go_to_bet
     }
   }
 })

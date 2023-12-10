@@ -38,11 +38,9 @@
 <script setup>
 import { api_match,socket_api } from "src/api/index.js";
 import { ref, reactive, onMounted,computed } from "vue"
-import { UserCtr,compute_value_by_cur_odd_type } from "src/core/index.js"
-import BetData from "src/core/bet/class/bet-data-class.js"
-import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 
 
 import { useRouter } from "vue-router"

@@ -30,7 +30,7 @@
 <script setup>
 import lodash_ from "lodash"
 import { onMounted, onUnmounted, reactive,ref } from "vue"
-import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/core/"
+import {MITT_TYPES,useMittOn,formatMoney,UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import mathJs from 'src/core/bet/common/mathjs.js'

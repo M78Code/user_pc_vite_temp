@@ -9,7 +9,7 @@ import {
     api_details
     // api_account,
   } from "src/api/index";
-import utils from 'src/public/utils/utils.js'
+import utils from 'src/public/utils/js'
 import { mapGetters, mapActions } from "vuex";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 export default {
@@ -18,7 +18,7 @@ export default {
         return {
             toast:false,
             show_loading:false,
-            utils,
+            
             // class_foter: 'red',//订单状态的颜色类名
             params: {
                 page: 1, //当前页

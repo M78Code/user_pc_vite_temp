@@ -24,7 +24,7 @@
           <!-- 打开赛事分析窗口 -->
           <div
             class="sr-link-icon-w"
-            v-if="utils.is_show_sr_flg(match_infoData)"
+            v-if="is_show_sr_flg(match_infoData)"
             @click.stop="sr_click_handle(match_infoData, 'details')"
             v-tooltip="{ content: i18n_t('common.analysis') }"
           >
@@ -82,9 +82,9 @@
   
   <script setup>
   import { ref, defineExpose, onUnmounted } from "vue";
-  import {is_eports_csid}  from "src/core/constant/util/csid-util";
-  import {utils,i18n_t}  from "src/core/index";
-  import ZhuGe from "src/core/http/zhuge-tag";
+  import {is_eports_csid}  from "src/core/constant/common/module/csid-util.js";
+  import {i18n_t}  from "src/output/index.js";
+  import ZHUGE from "src/core/http/zhuge-tag";
   import details from "src/core/match-detail/match-detail-pc/match-detail.js";
   import info from 'src/base-pc/components/match-detail/match_info/info.vue'  
   // // 玩法tab条
@@ -146,9 +146,9 @@
   const sr_click_handle = (match, type) => {
     if (type == "details") {
       // 发送埋点事件
-      ZhuGe.send_zhuge_event("PC_情报分析");
+      ZHUGE.send_zhuge_event("PC_情报分析");
     } else if (type == 1) {
-      ZhuGe.send_zhuge_event("PC_热门推荐_赛事分析点击");
+      ZHUGE.send_zhuge_event("PC_热门推荐_赛事分析点击");
     }
     details.sr_click_handle(match);
   };
@@ -322,4 +322,4 @@
       }
     }
   </style>
-  
+  src/output/indexsrc/core/constant/common/module/csid-util

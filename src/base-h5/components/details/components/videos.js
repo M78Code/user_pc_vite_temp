@@ -4,11 +4,11 @@ import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { format_total_score } from "src/core/format/index.js"
+import { format_total_score } from "src/core/format/common/index.js"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { nextTick } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output";
 export const video_info = () => {
   const router = useRouter();
   const route = useRoute();
@@ -317,7 +317,7 @@ export const video_info = () => {
     this.check_replay_url(this.replay_video_src)
     // 滚动目标到屏幕显示区域
     nextTick(() => {
-      this.$utils.tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
+      this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
     })
 
 
@@ -864,7 +864,7 @@ export const video_info = () => {
     const { configValue, eventSwitch } = _.get(this.UserCtr, 'user_info.merchantEventSwitchVO', {})
     if (configValue == 1 && eventSwitch == 1 && _.get(this.get_detail_data, 'csid') == '1') {
       this.get_football_replay(0)
-      this.$utils.load_player_js()
+      this.$load_player_js()
       clearInterval(this.get_replay_video_timer)
       this.get_replay_video_timer = setInterval(() => {
         this.get_football_replay(0)

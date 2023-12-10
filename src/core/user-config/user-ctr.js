@@ -7,25 +7,28 @@
  */
 // #TODO 等后续get_server_file_path、http、infoUpload和pako_pb公共模块开发后再替换
 import { ref,nextTick } from "vue";
-import { get_server_file_path } from "src/core/file-path/file-path.js";
-import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
-import { infoUpload } from "src/core/http/";
-import { ServerTime } from "src/core/";
-
-import { LocalStorage, SessionStorage } from "src/core/utils/module/web-storage.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { default_theme_key } from "src/core/theme/"
-import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-const { PROJECT_NAME,BUILD_VERSION } = BUILD_VERSION_CONFIG;
-
-// #TODO 接口统一管理的文件，后续替换
-import { api_details, api_account, api_common } from "src/api/";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 import { uid } from 'quasar';
-import { i18n_t, i18n } from "..";
+
+import { get_server_file_path } from "src/core/file-path/file-path.js";
+import {pako_pb} from "src/core/pb-decode/custom_pb_pako.js";
+import { infoUpload } from "src/core/http/index.js";
+import ServerTime from 'src/core/server-time/server-time.js';
+ 
+ 
+import { LocalStorage, SessionStorage } from "src/core/utils/common/module/web-storage.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
+
+// #TODO 接口统一管理的文件，后续替换
+import { api_details, api_account } from "src/api/index.js";
+import * as api_common from 'src/api/module/common/index.js'
+import { i18n_t } from "src/boot/i18n.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 const user_key = STANDARD_KEY.get("user_info");
@@ -73,7 +76,7 @@ class UserCtr {
     // 用户语言
     this.lang = LocalStorage.get("lang");
     // 用户主题  日间版本 ，夜间版本 可能有多版本哦 不止二个
-    this.theme = LocalStorage.get("theme");
+    this.theme = LocalStorage.get("theme",  LocalStorage.get('default-theme') );
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 盘口
     this.odds = {
@@ -120,8 +123,7 @@ class UserCtr {
       })
     }
     this.callbackUrl = ''
-    //电竞图片地址 
-    this.e_sports_img_domain = ''
+ 
     
 
     // 常规体育的 图片地址 
@@ -216,6 +218,10 @@ class UserCtr {
   */
   set_daily_activities(status) {
     this.daily_activities = status;
+    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+      text: "activities",
+    });
+    this.update()
   }
   /**
    * 设置语言变化
@@ -321,7 +327,17 @@ class UserCtr {
   set_is_user_no_handle({ commit }, val) {
     this.is_user_no_handle = val;
   }
-
+  /**
+   * 刷新用户信息
+   */
+  async refresh_user_info(){
+    await this.get_user_info(this.get_user_token())
+  }
+ /**
+  * 获取用户信息
+  * @param {*} token 
+  * @param {*} callback 
+  */
   async get_user_info(token, callback) {
     let res = await api_account.get_user_info({
       token,
@@ -364,7 +380,7 @@ class UserCtr {
     // let zhuge_obj = {
     //   版本类型: edition == 1 ? "简易" : "标准",
     // };
-    // $utils.zhuge_event_send("TY_H5_菜单_版本_点击", UserCtr.user_info, zhuge_obj);
+    // $send_zhuge_event("TY_H5_菜单_版本_点击", UserCtr.user_info, zhuge_obj);
   }
   set_balance(balance) {
     this.balance = 1 * balance;
@@ -706,8 +722,8 @@ class UserCtr {
         // .theme02_y0 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
         // `
         style_el.innerHTML = `
-      .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
-      `;
+        .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
+        `;
         document.head.appendChild(style_el);
       }
     };
@@ -1030,7 +1046,8 @@ class UserCtr {
         // 持久化电竞图片域名
         LocalStorage.set('e_sports_domain_img', temp);
         // 设置全局电竞图片域名信息
-        this.e_sports_img_domain = temp;
+        GLOBAL_CONSTANT.E_SPORTS_DOMAIN_IMG = temp;
+
       }
     } catch (error) {
       console.error(error);

@@ -103,11 +103,21 @@ const props = defineProps({
     type: String,
     default: () => "",
   },
+   // 数据源
+   cds: {
+    type: String,
+    default: () => "",
+  },
 })
 const icon_styles = computed(() => {
+  let sport_id = props.sport_id
+  //  电子足球电子篮球 修改下sport_id,详情比分榜用
+  if (props.cds=='B03') {
+    sport_id=sport_id==1?90:sport_id==2?91:sport_id==1
+  }
   //雪碧图样式 计算方式参考备注文件
   //欧洲版是灰色图标
-  let number = sport_number[props.sport_id] + (props.color_type === 'gray_ball' ? 1 : 0)
+  let number = sport_number[sport_id] + (props.color_type === 'gray_ball' ? 1 : 0)
   // 如果是未选中状态Y轴坐标下移一位
   number = props.status ? number : number + 1;
   if (!number && number !== 0) {

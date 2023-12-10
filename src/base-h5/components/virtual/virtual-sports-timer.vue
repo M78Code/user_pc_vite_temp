@@ -23,7 +23,7 @@
 // #TODO mixins
 // import common from 'project_path/mixins/constant/module/common.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { get_now_server } from 'src/core/utils/module/other.js'
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual-sports-timer",
@@ -280,3 +280,4 @@ export default defineComponent({
   }
 }
 </style>
+src/core/utils/common/module/other.js

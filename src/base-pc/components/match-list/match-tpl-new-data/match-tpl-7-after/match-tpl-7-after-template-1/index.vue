@@ -79,7 +79,7 @@
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
 import { computed, ref, watch } from 'vue';
-import { MatchDataWarehouse_PC_List_Common as MatchListData, compute_local_project_file_path } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, compute_local_project_file_path } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';

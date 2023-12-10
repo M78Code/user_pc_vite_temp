@@ -3,10 +3,12 @@
 */
 
 
-import { csid_to_tpl_id } from 'src/core/constant/util/csid-util.js'
-import { MenuData, get_match_status, PageSourceData, PROJECT_NAME, format_msc } from 'src/core/index.js'
+import { csid_to_tpl_id } from 'src/core/constant/common/module/csid-util.js'
+import { MenuData, PROJECT_NAME } from 'src/output/module/menu-data.js'
+import { get_match_status } from 'src/output/module/constant-utils.js'
+import PageSourceData from "src/core/page-source/page-source.js";
 import BaseData from "src/core/base-data/base-data.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
 
 /**
    * @Description  根据菜单ID 获取一个菜单对象
@@ -120,11 +122,14 @@ export function get_ouzhou_data_tpl_id(csid) {
             return 101
         case 2:
             return 102;
+        case 4:
+            return 104;
         case 5:
             return 109;
         case 6:
             return 120;
         case 7:
+            return 112;
         case 10:
         case 8:
         case 9:
@@ -134,6 +139,11 @@ export function get_ouzhou_data_tpl_id(csid) {
             return 117;
         case 12:
             return 119;
+        case 100:
+        case 101:
+        case 102:
+        case 103:
+            return 124;
         default:
             return 101;
     }
@@ -437,21 +447,44 @@ export function match_list_handle_set(match_list) {
 * @description 获取比分 比分变化 或者 赛事阶段变化时调用
 * @param  {object} match  当场赛事信息
 */
-export const get_match_score = (match, is_no_format) => {
+export const get_match_score = (match) => {
     if (!match) return {home_score: '0', away_score: '0'}
-    if (is_no_format) {
-        let msc_obj = {}
-        for (let i in match.msc) {
-            let format = match.msc[i].split("|");
-            msc_obj[format[0]] = {
+    let key = "S1";
+    let { csid, mmp, msc_obj} = match;
+    // 足球 | 手球
+    if ([1, 11].includes(+csid)) {
+        // S7:加时赛比分
+        if ([32, 33, 41, 42, 110].includes(+mmp)) {
+            key = "S7";
+        }
+        // S170:点球大战比分
+        else if ([34, 50, 120].includes(+mmp)) {
+            key = "S170";
+        }
+    }
+    // 主队比分
+    let home_score = lodash.get(msc_obj, `${key}.home`, "0")
+    // 客队比分
+    let away_score = lodash.get(msc_obj, `${key}.away`, "0")
+    return { home_score, away_score }
+}
+
+/**
+* @description 搜索结果，获取比分
+* @param  {object} match  当场赛事信息
+*/
+export const get_match_score_result = (match) => {
+    if (!match) return {home_score: '0', away_score: '0'}
+    let msc_obj = {}
+    match.msc.forEach(item => {
+        let format = item.split("|");
+        msc_obj[format[0]] = {
             home: format[1].split(":")[0],
             away: format[1].split(":")[1],
-            };
-        }
-        match.msc_obj = msc_obj;
-    }
+        };
+    })
     let key = "S1";
-    let { csid, mmp, msc_obj = {} } = match;
+    let { csid, mmp } = match;
     // 足球 | 手球
     if ([1, 11].includes(+csid)) {
         // S7:加时赛比分

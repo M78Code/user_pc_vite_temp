@@ -37,8 +37,8 @@ import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { UserCtr } from "src/core/index.js";
-import { format_money2, format_money3 } from 'src/core/index.js'
+import { UserCtr } from "src/output/index.js";
+import { format_money2, format_money3 } from 'src/output/index.js'
 
 
 const money = ref('')  //输入框金额

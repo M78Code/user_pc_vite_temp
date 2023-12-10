@@ -12,7 +12,7 @@
      * 
      * 处理  13
      */
-    import { MatchDataWarehouse_PC_List_Common as MatchListData,i18n_t } from 'src/core/index.js'
+    import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/module/match-data-base.js'
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import BaseData from "src/core/base-data/base-data.js";
@@ -29,9 +29,9 @@
       ouzhou_league_container_template,
    
     } from "../config/card-template-config.js"
-    import MenuData from "src/core/menu-pc/menu-data-class.js";
+    import { MenuData} from "src/output/module/menu-data.js"
     import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-    import { compute_sport_id  } from 'src/core/constant/index.js'
+    import { compute_sport_id  } from 'src/output/module/constant-utils.js'
 
   /**
    * @Description 更新所有未折叠 但是赛事没数据的 赛事
@@ -73,7 +73,6 @@
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type3 =(all_league_obj,is_ws_call,is_remove_call)=>{
     let template_id = MenuData.get_match_tpl_number()
     // 赛事模板ID
-
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
     // 未开赛 到卡片key的 映射对象
@@ -124,7 +123,6 @@
       let league_list = lodash.get(all_league_obj,match_status_type,[])
 
       let sort_league_list = lodash.cloneDeep(league_list);
-      sort_league_list.push({})
       // 上一个联赛
       let pre_league_info = {}
       // 判断是否是相同的联赛
@@ -134,23 +132,25 @@
       // 遍历联赛列表
       sort_league_list.forEach( (league_obj) => {
         // 如果上一个联赛对象id不等于当前的联赛对象id
+
         if (pre_league_info.tid != league_obj.tid) {
           // 重新给上一个联赛对象赋值
           pre_league_info = league_obj
+          same_tid = lodash.cloneDeep(league_obj);
           if (same_tid['mids']) {
             same_adjacent_tid_list.push(same_tid)          
           }
-          same_tid = lodash.cloneDeep(league_obj);
         } else {
           same_tid['mids'] += ',' + league_obj.mids;
         }
       })
       sort_league_list = same_adjacent_tid_list;
-
       // 将组合好的数据赋值给用来计算的数组
       league_list = lodash.cloneDeep(sort_league_list);
       
+      
       league_list.forEach( (league_obj,league_index) => {
+
         let csid_key = 'csid_'+league_obj.csid
         csid_to_card_key_obj[csid_key] = csid_to_card_key_obj[csid_key] || []
         league_repeat_count_obj[league_obj.tid] = league_repeat_count_obj[league_obj.tid] || 0
@@ -160,7 +160,7 @@
         // 赛事ID数组
         let mids_arr = league_obj.mids.split(',')
         match_status_type_match_count += mids_arr.length
-        // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡片
+        // 如果当前赛种 不等于上一个赛种  需要添加一个球种标题卡
         if(league_obj.csid != pre_match_csid){
           pre_match_csid = league_obj.csid
           card_key = `sport_title_${league_obj.csid}`
@@ -182,27 +182,27 @@
             Object.assign(all_card_obj[card_key],fold_template)
           }
         }
-        // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
-        if(league_index == 0 && MatchListCardData.match_list_mapping_relation_obj_type == 1){
-          // 已开赛、未开赛标题卡片处理
-          card_index += 1
-          card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
-          match_list_card_key_arr.push(card_key)
-          // 打入已开赛、未开赛标题卡片特征
-          all_card_obj[card_key] = {
-            ...ouzhou_match_status_title_card_template,
-            // 卡片索引
-            card_index,
-            // 卡片类型
-            card_type: card_key,
-            test: 1,
-          }
-          temp_match_status_title_card_obj = all_card_obj[card_key]
-          // 如果不是ws调用  设置折叠数据
-          if(!is_ws_call){
-            Object.assign(all_card_obj[card_key],fold_template)
-          }
-        }
+        // // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
+        // if(league_index == 0 && MatchListCardData.match_list_mapping_relation_obj_type == 1){
+        //   // 已开赛、未开赛标题卡片处理
+        //   card_index += 1
+        //   card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
+        //   match_list_card_key_arr.push(card_key)
+        //   // 打入已开赛、未开赛标题卡片特征
+        //   all_card_obj[card_key] = {
+        //     ...ouzhou_match_status_title_card_template,
+        //     // 卡片索引
+        //     card_index,
+        //     // 卡片类型
+        //     card_type: card_key,
+        //     test: 1,
+        //   }
+        //   temp_match_status_title_card_obj = all_card_obj[card_key]
+        //   // 如果不是ws调用  设置折叠数据
+        //   if(!is_ws_call){
+        //     Object.assign(all_card_obj[card_key],fold_template)
+        //   }
+        // }
 
         // 联赛标题卡片处理
         card_index += 1

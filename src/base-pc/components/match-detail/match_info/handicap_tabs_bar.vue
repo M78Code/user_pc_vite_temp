@@ -100,13 +100,13 @@ import {
 } from "vue";
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
-import ZhuGe from "src/core/http/zhuge-tag";
+import ZHUGE from "src/core/http/zhuge-tag";
 import { CommonTabFullVersionWapper } from "src/base-pc/components/tab/common-tab/index.js";
 import { IconWapper } from 'src/components/icon/index.js'
 import lodash from 'lodash'
-import {i18n_t} from 'src/core/index'
+import {i18n_t} from "src/output/index.js"
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
-import { MatchDetailCalss } from "src/core/index"; 
+import { MatchDetailCalss } from "src/output/index.js"; 
 export default defineComponent({
   name: "HandicapTab",
   components: {
@@ -203,7 +203,7 @@ export default defineComponent({
               ? "详情页"
               : "右侧列表",
         };
-        ZhuGe.send_zhuge_event("TY_PC_足球_玩法分类导航_点击", zhuge_obj);
+        ZHUGE.send_zhuge_event("TY_PC_足球_玩法分类导航_点击", zhuge_obj);
       }
     };
 

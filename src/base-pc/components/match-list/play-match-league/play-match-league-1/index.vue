@@ -5,7 +5,7 @@
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
-        <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
+        <div class="yb-flex-center" v-if="!MenuData.is_esports()" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
           <!-- 联赛是否收藏 -->
           <div @click.stop="collect" class="icon-wrap m-star-wrap-league"
             v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
@@ -14,7 +14,7 @@
           </div>
         </div>
         <!-- 联赛图标 -->
-        <div class="league-icon-wrap">
+        <div class="league-icon-wrap" :style="{marginRight: MenuData.is_esports() && '0'}">
           <span class="soprts_id_icon" v-if="menu_config.is_esports()"
             :style="compute_css_obj({ key: 'pc-left-menu-bg-image', position: `item_${BaseData.compute_sport_id(card_style_obj.league_obj.csid)}` })"></span>
           <img v-else :src="leagueIcon" />
@@ -39,7 +39,6 @@
           :key="col_index" :style="{ 'width': match_list_tpl_size.bet_width + 'px' }">
           <div class="play-name-item" v-for="(item_title, item_index) in item.ols" :key="item_index">
             <!-- {{ item_title.otb }} -->
-            <!-- {{ item_title }} -->
             {{ $t(`ouzhou.bet_col.bet_col_${item_title._hpid}.bet_col_${item_title.ot}`) }}
           </div>
         </div>
@@ -53,14 +52,13 @@
 </template>
 
 <script setup>
-// import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
+// import sportIcon from "src/public/components/sport_icon/sport-icon.vue"
 import lodash from 'lodash';
 import { ref, computed, onUnmounted, watch } from 'vue';
 import BaseData from "src/core/base-data/base-data.js"
-import { MenuData, compute_css_obj, compute_img_url } from "src/core/index.js";
+import { MenuData, compute_css_obj, compute_img_url } from "src/output/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { get_ouzhou_data_tpl_id } from 'src/core/match-list-pc/match-handle-data.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
@@ -93,7 +91,7 @@ const is_collect = ref(false);
 watch(() => props.card_style_obj, () => {
   //第一次进页面时，收藏从接口获取状态，后续点击前端控制
   is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
-})
+}, { immediate: true })
 // 获取菜单类型
 if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)

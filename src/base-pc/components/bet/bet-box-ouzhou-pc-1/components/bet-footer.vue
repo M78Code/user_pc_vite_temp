@@ -38,7 +38,7 @@ import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
-import { i18n_t,UserCtr,format_money2 } from "src/core/"
+import { i18n_t,UserCtr ,format_money2} from "src/output/index.js"
 
 // 提交投注信息
 const set_bet_submit = () => {

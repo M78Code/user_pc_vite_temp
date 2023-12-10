@@ -6,7 +6,7 @@
         :class="['sport_bg', `${get_sports_bg(get_match_detail?.csid)}`]"
       ></div>
      
-      <div class="match-detail-time ">
+      <div class="match-detail-time">
         <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
           <match-stage :detail_data="get_match_detail" ></match-stage>
           <q-badge
@@ -16,46 +16,61 @@
             style="margin-left:5px"
           />
         </span>
-        <div class="match-detail-time-collect" v-if="show_collect" @click="collect_click">
+     <!-- {{ get_match_detail.msid }} -->
+        
+        <div class="match-detail-time-collect" v-if="show_collect" >
+          <!-- 显示视频按钮 -->
+          <div v-if="status == 1 || status == 3" @click="handleChange('video')">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video"/>
+          </div>
+          <!-- 显示动画按钮 -->
+          <div v-if="status == 1 || status == 2" @click="handleChange('animation')">
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation_gray.png`" alt="" class="icon-animation"/>
+          </div>
           <img
             v-if="is_collect"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`"
             alt=""
+            @click="collect_click"
           />
           <img
             v-else
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect.png`"
             alt=""
+            @click="collect_click"
           />
         </div>
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">{{ get_match_detail.mhn }}</div>
-        <div class="match-detail-num" v-if="scoew_icon_list['S1']">
-          {{ scoew_icon_list["S1"].home }}
+        <span v-if="false">{{ detail_count }}</span>
+        <div class="match-detail-num" >
+          <!-- {{ scoew_icon_list["S1"].home }} -->
+          {{ detail_count?.home }}
         </div>
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">{{ get_match_detail.man }}</div>
-        <div class="match-detail-num" v-if="scoew_icon_list['S1']">
-          {{ scoew_icon_list["S1"].away }}
+        <div class="match-detail-num" v-if=" get_match_detail.man">
+          <!-- {{ scoew_icon_list["S1"].away }} -->
+          {{ detail_count?.away }}
         </div>
       </div>
       <!-- 疑似某些情况下 get_match_detail.ms 不为1导致比分板消失 -->
-      <!-- {{ console.log(get_match_detail.ms) }} -->
+      <!-- {{get_match_detail.ms }} -->
       <!-- 赛果需要显示比分 添加4 -->
-      <template v-if=" [1,4].includes(get_match_detail.ms)">
+      <template v-if=" [1,4,3].includes(get_match_detail.ms)">
         <div class="match-detail-item-list" v-if="get_match_detail.csid == '1'">
           <div
             class="list"
             v-for="item in football_score_icon_list"
             :key="item.msc_key"
-          >
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["home"] : "" }}</span>
+          > 
+            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["home"] : "0" }}</span>
             <span :class="[item.bg_url, 'score-icon']">
               <!-- <img class="score-icon" :src="item.url" alt="" /> -->
             </span>
-            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["away"] : ""}}</span>
+            <span>{{ scoew_icon_list[item.msc_key] ? scoew_icon_list[item.msc_key]["away"] : "0"}}</span>
           </div>
         </div>
         <div
@@ -75,10 +90,9 @@
           </template>
         </div>
       </template>
-     
     </div>
      <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.msid == 5" :detail_data="get_match_detail" />
+     <matchScore v-if="get_match_detail.csid == 5"  :detail_data="get_match_detail" />
   </div>
 </template>
 
@@ -88,8 +102,9 @@ import matchStage from "src/base-h5/components/match/match-stage.vue";  // 详�
 import countingDown from 'src/base-h5/components/common/counting-down.vue'   // 赛事进行中每秒变化的计时器
 import { api_match,api_common } from "src/api/index.js";
 import MatchCollect from 'src/core/match-collect'
-import { LOCAL_PROJECT_FILE_PREFIX,UserCtr,format_time_zone_time, format_time_zone  } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX,format_time_zone_time, format_time_zone  } from "src/output/index.js";
 import matchScore from "./match-score/index.vue"
+import UserCtr from "src/core/user-config/user-ctr.js";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -103,6 +118,8 @@ const props = defineProps({
   }
 });
 
+const emits = defineEmits('handle-change')
+
 // 比赛开始，显示右侧actions状态
 const actionsStatus = ref(true);
   // 赛事收藏状态
@@ -110,6 +127,41 @@ const  is_collect = computed(()=>{
   if(lodash.isEmpty(props.get_match_detail)) return
   return MatchCollect.get_match_collect_state(props.get_match_detail)
 }) 
+/** @type {import('vue').ComputedRef<number>} 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示 */
+const status = computed(() => {
+  // 动画>源视频>比分板  
+  const get_detail_data = props.get_match_detail;
+  
+  // <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
+  if (get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))) {
+    
+    if (get_detail_data.mvs > -1 && get_detail_data.mms > 1) {
+      return 1;
+    }
+    // 动画状态大于-1时，显示动画按钮 
+    if (get_detail_data.mvs > -1) {
+      return 2;
+    }
+    //  视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 --
+    if (get_detail_data.mms > 1) {
+      return 3;
+    }
+    
+  }
+
+  return 4;
+ 
+});
+
+watch(() => props.get_match_detail, (value) => {
+  console.log(value, "props.get_match_detail");
+})
+
+//比分
+const detail_count = computed(() => {
+  return scoew_icon_list.value['S1'];
+})
+
 const show_time_counting = computed(() => {
   let csid = Number(props.get_match_detail.csid);
   let mmp = Number(props.get_match_detail.mmp);
@@ -236,6 +288,11 @@ const get_sports_bg = (csid) => {
   }
   return `sports_bg${num}`;
 };
+
+const handleChange = (label)  => {
+  emits('handle-change', label)
+}
+
 const set_basketball_score_icon_list = () => {
   if (lodash.get(props.get_match_detail, "mle") == "17") {
     basketball_score_icon_list.value = [
@@ -263,30 +320,7 @@ const set_basketball_score_icon_list = () => {
     ];
   }
 };
-const scoew_icon_list = ref([])
-// console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
-watch(()=>props.get_match_detail, (new_value, old_value) => {
-  scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
-  // set_scoew_icon_list(new_value);
-  // 意义不明
-  current_ball_type.value = sport_ball[new_value?.csid] * 100;
-  set_basketball_score_icon_list()
-})
-watch(
-  () => props.get_match_detail?.msc,
-  (msc) => {
-    set_scoew_icon_list({msc});
-    set_basketball_score_icon_list();
-  },
-  { immediate: false, deep: true }
-);
-watch(()=>props.get_match_detail?.mle,
-  set_basketball_score_icon_list,
-  {
-    immediate:true
-  }
-)
-
+const scoew_icon_list = ref({})
 /**
  *@description // 比分板数据
  *@param {*}
@@ -304,6 +338,31 @@ const set_scoew_icon_list = (new_value) => {
     }
     // console.log("scoew_icon_list", scoew_icon_list);
   }
+};
+
+/**
+ *@description 取出符合网球阶段的比分
+  *@param {Undefined}
+  *@return {Array} 比分集合
+  */
+const initEvent = () => {
+  // // 第一盘比分，第二盘比分，第三盘比分，第四盘比分，第五盘比分;
+  const msc_array = ['S23','S39','S55','S71','S87'];
+  let msc = props.get_match_detail.msc;
+  // sortBy方法  比分升序排列 取出比分阶段后面的数字作为判断条件 返回是数组
+  msc = _.sortBy( msc, (item) => {
+    return +(item.split("|")[0]).substring(1)
+  })
+  let score_arr = [];
+  // 循环只取出接口返回的比分里面符合网球阶段的比分
+  _.forEach(msc, (item)=>{
+    // S1 S2 S3 S19 S20 ...
+    let num_index = item.split("|")[0];
+    if(msc_array.includes(num_index)){
+      score_arr.push(item.split("|")[1]);
+    }
+  })
+  return score_arr;
 };
 
 /**
@@ -331,10 +390,33 @@ const collect_click = () => {
 // }, 200);
 
 onMounted(()=>{
-    // setTimeout(function (){
-    //     is_collect.value = props.get_match_detail.mf
-    // },320)
+  setTimeout(function (){
+    console.log(props.get_match_detail?.ms,"赛果没有比分截图这里")
+  },1200)
 })
+
+// console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
+watch(props.get_match_detail, (new_value, old_value) => {
+  scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
+  // set_scoew_icon_list(new_value);
+  // 意义不明
+  current_ball_type.value = sport_ball[new_value?.csid] * 100;
+  set_basketball_score_icon_list()
+},{ immediate: false, deep: true })
+watch(
+  () => props.get_match_detail?.msc,
+  (msc) => {
+    set_scoew_icon_list({msc});
+    set_basketball_score_icon_list();
+  },
+  { immediate: false, deep: true }
+);
+watch(()=>props.get_match_detail?.mle,
+  set_basketball_score_icon_list,
+  {
+    immediate:true
+  }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -397,7 +479,7 @@ onMounted(()=>{
       justify-content: space-between;
       align-items: center;
       position: relative;
-      padding: 20px 12px 14px 20px;
+      padding: 10px 12px 14px 20px;
       .match-detail-time-label {
         color: var(--q-gb-t-c-3);
         padding-right: 10px;
@@ -409,11 +491,19 @@ onMounted(()=>{
         background: #0cbeb9;
       }
       .match-detail-time-collect {
-        width: 14px;
-        height: 14px;
-        position: absolute;
-        right: 20px;
+        // width: 14px;
+        // height: 14px;
+        // position: absolute;
+        // right: 20px;
+        display: flex;
+        align-items: center;
         z-index: 2;
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 16px;
+        }
         img {
           width: 14px;
           height: 14px;
@@ -424,7 +514,7 @@ onMounted(()=>{
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0px 20px 0 20px;
+      padding: 0px 20px 10px 20px;
       .match-detail-team-name {
         // font-weight: bold;
         font-size: 15px;
@@ -518,4 +608,10 @@ onMounted(()=>{
      color: var(--q-gb-t-c-3) !important;
   }
 }
+
+.icon-video, .icon-animation {
+  width: 14px;
+  height: 14px;
+}
+
 </style>

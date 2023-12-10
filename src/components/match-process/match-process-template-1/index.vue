@@ -56,22 +56,13 @@
 <script setup>
 import { computed, ref, watch,onMounted, onUnmounted } from "vue";
 import matchDate from "src/components/match-process/match-process-template-1/match_date.vue";
-// import { format_second_ms } from "src/core/format/index.js";
 import {
   get_match_status,
-  utils,
   i18n_t,
-  score_switch_handle,
   format_string,
   is_eports_csid
-} from "src/core/index"
-import { get_mmp_name } from "src/core/format/module/format-msc.js"
-import {
-  useRegistPropsHelper,
-} from "src/composables/regist-props/index.js";
-import { component_symbol, need_register_props } from "../config/index.js";
-useRegistPropsHelper(component_symbol, need_register_props);
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+} from "src/output/index.js"
+import { get_mmp_name } from 'src/core/format/project/module/format-msc.js'
 import lodash from "lodash";
 
 // mixins: [global_mixin, msc_mixin, time_format_mixin],
@@ -168,10 +159,12 @@ const computed_process_name = computed(() => {
     return '';
   }
   let csid = lodash.get(props, 'match.csid')
-  let mmp = lodash.get(props, 'match.mmp')
+  let mmp = lodash.get(props, 'match.mmp', '')
   let mle = lodash.get(props, 'match.mle')
-  let process_name = get_mmp_name(csid, mmp) || "";
+
+  let process_name = Object.keys(get_mmp_name(csid, mmp)).length ? get_mmp_name(csid, mmp) : "";
   // 即将开赛
+  if (!Object.keys(process_name).length) process_name = ''
   if (lodash.get(props, 'match.ms') == 110) {
     process_name = i18n_t("common.match_soon");
   }
@@ -340,7 +333,7 @@ const covert_mct = ({ mct, mmp, ms }) => {
   let new_num = mct;
 
   if (lang == "zh") {
-    new_num = utils.numberToChinese(mct);
+    new_num = numberToChinese(mct);
   }
   let rs = format_string(i18n_t("mmp.7.x"), new_num);
   return rs;
@@ -406,4 +399,4 @@ onUnmounted(() => {
 .c-match-process{
     position: relative;
 }
-</style>
+</style>src/core/format/common/module/format-msc.js

@@ -29,31 +29,17 @@
       </div>
       <no-data
         v-else-if="['empty','notice-empty','code_empty'].includes(cur_state)"
-        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?t('common.code_empty'):(($store.state.filter.open_select_time?t('filter.empty'):t('common.no_data'))))"
+        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?t('common.code_empty'):(('$store.state.filter.open_select_time'?t('filter.empty'):t('common.no_data'))))"
         :msg2="no_data_msg2"
         :marginBottom="'0px'"
         width="180px"
         height="180px"
         :color="color"
         class="empty-wrap"
-        :class="{filter_img:$store.state.filter.open_select_time}"
+        :class="{filter_img:'$store.state.filter.open_select_time'}"
       >
       </no-data>
-      <no-data v-else-if="['all_empty','new_empty'].includes(cur_state) &&is_eports"
-        :msg="t('common.no_data')"
-        :type_name="'esports-size'"
-        :marginBottom="'0px'"
-        width="203px"
-        height="180px"
-        :color="color"
-        class="empty-wrap esports"
-      >
-        <!-- <div class="empty-btn-wrap" >
-          <div class="empty-btn" @click="journey">
-            {{t('common.go_now')}}
-           </div>
-        </div> -->
-      </no-data>
+  
       <div class="list_right_empty" v-else-if="['all_empty','new_empty'].includes(cur_state)">
         <div class="img"></div>
         <span>{{t(`common.${cur_state}`)}}</span>
@@ -121,8 +107,9 @@
 
 <script>
 import no_data from "../no_data/no_data.vue";
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "project_path/src/core/index.js";
 
+ 
 
 export default {
   name: "loadData",
@@ -191,10 +178,7 @@ export default {
 
   computed: {
  
-    //是否电子竞技
-    is_eports(){
-        return this.$utils.is_eports_csid(+this.$route.params.csid)
-    },
+  
     cur_state(){
       return this.state
     }
@@ -291,7 +275,6 @@ if(this.emitters_off){this.emitters_off()}
     justify-content: center;
     font-size: 12px;
     text-align: center;
-    padding-top: 30%;
     .img {
       width: 180px;
       height: 180px;

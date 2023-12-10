@@ -6,7 +6,7 @@ import WsCmd from "./ws-cmd.js";
 /**
  * @Description:ws接收消息类
  */
-import { useMittEmit,MITT_TYPES } from "src/core/index";
+import { useMittEmit,MITT_TYPES } from "src/output/index";
 export class WsRev {
   /**
    * @Description:接收消息

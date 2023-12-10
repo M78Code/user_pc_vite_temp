@@ -2,7 +2,7 @@ import { api_betting } from "src/api/index.js"
 import BetData from "./bet-data-class.js"
 import BetViewDataClass from "./bet-view-data-class.js"
 import BetWsMessage from "./bet-ws-message.js"
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 import { 
     MatchDataWarehouse_PC_List_Common, 
@@ -17,12 +17,13 @@ import {
     MatchDataWarehouse_H5_List_Jingxuan,
     MatchDataWarehouse_H5_Detail_Jingxuan,
     
- } from 'src/core/index.js'
+ } from 'src/output/module/match-data-base.js'
 import lodash_ from "lodash"
-import { ALL_SPORT_PLAY } from "src/core/constant/config/play-mapping.js"
-import { MenuData,UserCtr,useMittEmit, MITT_TYPES } from "src/core/index.js"
-import { i18n_tc } from "src/boot/i18n.js"
-
+import { ALL_SPORT_PLAY } from "src/output/module/constant-utils.js"
+import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
+import { MenuData } from 'src/output/module/menu-data.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 
 let time_out = null
 let time_api_out = null
@@ -472,7 +473,7 @@ const submit_handle = type => {
     params.seriesOrders = seriesOrders
     // 测试投注失败
     // BetViewDataClass.set_bet_order_status(5)
-    // return
+    //return
     api_betting.post_submit_bet_list(params).then(res => {
         // BetViewDataClass.set_tip_message(res)
         // BetData.tipmsg=res.msg  // 不能这样处理 查看 BetViewDataClass.set_bet_before_message 方法
@@ -643,6 +644,17 @@ const set_error_message_config = (res ={},type,order_state) => {
 // params 各种id 用于查找数据对应的值 
 // other 灵活数据
 // const set_bet_obj_config = (mid_obj,hn_obj,hl_obj,ol_obj) =>{
+/**
+ * 
+ * @param {{ oid, _hid, _hn, _mid}} params 
+ * @param {Object} other 
+ * @param {Boolean} other.is_detail
+ * @param {'common_bet'|''} other.bet_type
+ * @param {1|2|3|4|5} other.device_type 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+ * @param {'h5_detail'|'h5_list'} other.match_data_type
+ * @param {String} other.play_name 玩法名
+ * @returns 
+ */
 const set_bet_obj_config = (params = {}, other = {}) => {
     console.error('投注项需要数据', params, 'other', other);
     // 切换投注状态
@@ -752,7 +764,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         tid_name: mid_obj.tn,  // 联赛名称
         match_ms: mid_obj.ms, // 赛事阶段
         match_time: mid_obj.mgt, // 开赛时间
-        handicap: get_handicap(ol_obj,hl_obj,mid_obj,other.is_detail,), // 投注项名称
+        handicap: get_handicap(ol_obj,hl_obj,mid_obj,other.is_detail), // 投注项名称
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
@@ -818,9 +830,14 @@ const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
           // 冠军玩法 部分玩法hpid相同 
         if(MenuData.is_kemp()){
             let hpn_list = lodash_.get(mid_obj,`hpsPns`,[])
+            if(hpn_list.length < 1){
+                hpn_list = lodash_.get(mid_obj,`hps`,[])
+            }
             let hpn_obj = hpn_list.find(item => item.hid == ol_obj._hid) || {}
             if(hpn_obj.hid){
-                hpn = hpn_obj.hpn
+                hpn = hpn_obj.hpn || hpn_obj.hps
+            }else{
+                hpn = i18n_t('bet.bet_winner')
             }
         }
         if(hpn){
@@ -956,23 +973,28 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
-    let detail_mark = [3,13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
+    let detail_mark = [13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
     let lsit_mark = [2,173,38,114]
     // 详情
     if(is_detail){
-        text = `${ol_obj.ott} <span class='ty-span'>${ol_obj.on}</span>`  
+        // 有球头 球头需要变色
+        if(hl_obj.hv){
+            text = `${ol_obj.ott} <span class='ty-span'>${ol_obj.on}</span>`  
+        }else{
+            text = `${ol_obj.ott} ${ol_obj.on}`  
+        }
         if(detail_mark.includes(ol_obj._hpid*1)){
-            text = `<span class='ty-span'>${ol_obj.otv}</span>` 
+            text = `${ol_obj.otv}` 
         }
     }else{
         let a = '' ,b = '' 
         b = ol_obj.on
 
         if(ol_obj.ots == 'T1'){
-            a = mid_obj.mhn || ''
+            a = mid_obj.mhn
         }
         if(ol_obj.ots == 'T2'){
-            a = mid_obj.man || ''
+            a = mid_obj.man
         }
         // 加入是否有球头判断 
         if(['T1','T2'].includes(ol_obj.ots) && !hl_obj.hv){
@@ -984,15 +1006,29 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
         // 首页大小类玩法
         if(['Over',"Under"].includes(ol_obj.ot)){
-            a = ol_obj.onbl || ''
-            b = ol_obj.onb || ''
+            // 英文列表是 简写
+            a =  UserCtr.lang == 'en' ? ol_obj.ot : ol_obj.onbl
+            b = ol_obj.onb
+
+            // h5数据格式和pc不一样
+            if(BetData.deviceType == 1){
+                a = ol_obj.on.split(' ')[0]
+                b = ol_obj.on.split(' ')[1]
+            }
         }
 
-        text = `${a} <span class='ty-span'>${b}</span>`  
+        // 平 不变色
+        if(ol_obj.ot == 'X'){
+            text = `${b}` 
+        }else{
+            text = `${a} <span class='ty-span'>${b}</span>` 
+        }
+
     }
 
     return text
 }
+        
 // 是否显示基准分 
 const get_mark_score = (ol_obj,mid_obj) => {
     // debugger
@@ -1041,7 +1077,26 @@ const get_market_is_show = (obj={}) =>{
 
     return !!hl_obj.hid
 }
-
+const   go_to_bet=(ol_item)=>{
+    const {oid,_hid,_hn,_mid } = ol_item
+    let params = {
+      oid, // 投注项id ol_obj
+      _hid, // hl_obj 
+      _hn,  // hn_obj
+      _mid,  //赛事id mid_obj
+    }
+    let other = {
+      is_detail: false,
+      // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
+      // 根据赛事纬度判断当前赛事属于 那种投注类型
+      bet_type: 'common_bet',
+      // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+      device_type: 1,  
+      // 数据仓库类型
+      match_data_type: "h5_detail",
+  }
+    set_bet_obj_config(params,other)
+}   
 export {
     get_query_bet_amount_common,
     get_query_bet_amount_pre,
@@ -1052,4 +1107,5 @@ export {
     get_market_is_show,
     // 订阅投注项的 ws
     set_market_id_to_ws,
+    go_to_bet
 }

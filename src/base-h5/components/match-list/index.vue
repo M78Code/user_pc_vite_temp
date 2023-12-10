@@ -33,8 +33,10 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { PROJECT_NAME, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/core/index.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
+import { PROJECT_NAME } from 'src/output/module/menu-data.js'
 import { is_collect, menu_type } from 'src/base-h5/mixin/menu.js'
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 // yazhou-h5 赛事列表
 import MatchList1 from './components/match-list1.vue'
@@ -42,6 +44,10 @@ import MatchList1 from './components/match-list1.vue'
 import MatchList2 from './components/match-list2.vue'
 // ouzhou-h5 赛事列表
 import MatchList3 from './components/match-list3.vue'
+
+// app-h5 observer-wrapper 新手版 赛事列表
+import MatchList4 from './components/match-list4.vue'
+
 // 无网络展示组件
 import NoData from "src/base-h5/components/common/no-data.vue"; 
 // 次要玩法描述组件
@@ -87,6 +93,8 @@ const config = {
 }
 
 const target_com = computed(() => {
+  // app 新手版 临时处理
+  // if (PROJECT_NAME === 'app-h5' && standard_edition.value === 1) return MatchList4
   return config[PROJECT_NAME]
 })
 
@@ -134,6 +142,9 @@ const clear_timer = () => {
 .match-list-container {
   overflow: hidden;
   position: relative;
+  .main-container{
+    height: 100%;
+  }
 }
 
 .empty_page {

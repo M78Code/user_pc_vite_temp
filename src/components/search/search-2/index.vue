@@ -10,8 +10,8 @@
     <div
       v-show="route.params.video_size != 1"
       class="serach-wrap column"
-      :style="{ right: `${search_width}px`, paddingRight: `${utils.is_iframe ? 10 : 14}px`}"
-      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': utils.is_iframe }"
+      :style="{ right: `${search_width}px`, paddingRight: `${utils_info.is_iframe ? 10 : 14}px`}"
+      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': utils_info.is_iframe }"
     >
       <!-- <search-input v-model:show_type="show_type" /> -->
       <!-- 遮罩层样式.bottom-wrap -->
@@ -53,22 +53,19 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, defineComponent,watch, defineProps } from "vue";
 import lodash from "lodash";
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import { useRoute } from "vue-router";
-import { useMittOn, MITT_TYPES, useMittEmit } from 'src/core/mitt';
+import { useMittOn, MITT_TYPES } from 'src/core/mitt';
 import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
-import { LayOutMain_pc, utils } from 'src/core/index.js'
-// 搜索输入框组件
-import searchInput from "./search-input.vue"
-// // 搜索初始化组件
+import { LayOutMain_pc } from 'src/output/index.js'
+// 搜索初始化组件
 import searchInt from "./search-init.vue"
 //搜索赛事组件
 import searchSports from "./search-sports.vue"
-// // 搜索玩法组件
+// 搜索玩法组件
 import searchPlay from "./search-play.vue"
 // 搜索查询结果组件
 import searchResult from "./search-result.vue"
-// 引入tab切换栏组件
-import { TabWapper as Tab } from "src/components/common/tab"
 // 搜索模块js
 import { api_search } from "src/api/index.js";
 
@@ -174,9 +171,9 @@ function set_sports_list() {
   api_search.get_search_sport().then(res => {
     if (lodash.get(res, 'code') == 200) {
       const list = lodash.get(res, 'data') || []
-      // IS_FOR_NEIBU_TEST 是否内部自测环境， 是：开放所有赛种， 否：只开放足、篮
-      const ls = ["1", "2"]  //足、篮
-      sports_list = !IS_FOR_NEIBU_TEST ? list.filter(item => ls.includes(item.id)) : list
+      // 内部测试展示所有球种，线上只放开足、篮
+      const ls = ["1", "2"] 
+      sports_list = IS_FOR_NEIBU_TEST ? list : list.filter(item => ls.includes(item.id))
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id
       if (csid) {

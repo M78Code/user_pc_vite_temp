@@ -63,13 +63,13 @@
 <script setup>
 
 import { computed, onMounted, reactive, ref } from 'vue';
-import { t } from "src/core/index.js";
+import { t } from "src/output/index.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-import { get_match_status } from 'src/core/index.js'
+import { get_match_status } from 'src/output/index.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/index.js";
 import lodash from 'lodash';
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 

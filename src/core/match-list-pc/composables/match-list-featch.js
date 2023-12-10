@@ -1,21 +1,23 @@
 import lodash from "lodash";
 import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { ref } from 'vue';
 
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
-import { PageSourceData } from "src/core/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-import { MatchDataWarehouse_PC_List_Common  } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common  } from "src/output/module/match-data-base.js";
 import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-list-other.js';
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { match_collect_status } from './match-list-collect'
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData }  from "src/output/module/menu-data.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as api_websocket from "src/api/module/socket/socket_api.js";
 import filterHeader from 'src/core/filter-header/filter-header.js'
 import { match_list_handle_set } from '../match-handle-data'
 import {set_load_data_state} from '../match-list-composition'
 
+const league_list_obj = ref({})
 
 /**
  * @Description 删除赛事数据 卡片
@@ -93,13 +95,12 @@ export const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
     MenuData.set_multi_column();
   }
 };
-let league_list_obj = {}
 /**
    * @Description 设置联赛列表对象
    * @param {object} league_list_obj
    */
 const set_league_list_obj = (val={}) => {
-  league_list_obj = val;
+  league_list_obj.value = val;
 }
 /**
    * @Description 获取前12场展开的赛事mid
@@ -114,7 +115,7 @@ const get_first_unfold_mids = () => {
   let match_status_type_arr = ["livedata", "nolivedata"];
   match_status_type_arr.forEach((match_status_type) => {
     // 遍历联赛列表
-    let league_list = lodash.get(league_list_obj, match_status_type, []);
+    let league_list = lodash.get(league_list_obj.value, match_status_type, []);
     league_list.forEach((league_obj) => {
       // 赛事计数大于12 不执行
       if (unfold_match_count >= 12) {
@@ -250,6 +251,8 @@ const api_bymids = (
     // HTTP拉取最新信息合并
     api(params)
       .then((res) => {
+
+        
         set_home_loading_time_record("ok");
         // 组件和路由不匹配
         // if (page_source == "details" && page_source != "details") return;
@@ -288,9 +291,11 @@ const api_bymids = (
             MatchListData.set_list(
               match_list,
             );
-            set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
+            //只有主列表才有这项操作 计算赛事卡片
+            if(MatchListData == MatchDataWarehouse_PC_List_Common){
+              set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
+            }
           }
-          
         } else if (code == "0400500" && by_mids_fun_count++ < 3) {
           by_mids_fun();
           league_load_status = "empty";

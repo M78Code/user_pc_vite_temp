@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { format_money2,UserCtr } from "src/core/"
+import { format_money2,UserCtr } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 
 // 展开 收起 投注项

@@ -7,11 +7,11 @@
  *
  */
 import { get } from "lodash";
-import { DateForMat } from "src/core/format/index.js";
-import { deepMerge,get_query_string } from "../utils";
+import { DateForMat } from "src/core/format/common/index.js";
+import { deepMerge,get_query_string } from "../utils/common";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
-import { UserCtr } from "src/core/index.js";
-class ZhuGe {
+import UserCtr from "src/core/user-config/user-ctr.js";
+class ZHUGE {
   config = {
     enable: LOCAL_FUNCTION_SWITCH.LOG,
     js_url: "https://updata.yaohuakuo.com/zhuge.js?v=",
@@ -233,4 +233,4 @@ class ZhuGe {
 //   return zhuge_obj;
 // }
 
-export default new ZhuGe();
+export default new ZHUGE();

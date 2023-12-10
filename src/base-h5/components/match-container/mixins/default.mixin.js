@@ -3,15 +3,15 @@ import lodash from 'lodash'
 import { defineComponent } from 'vue'
 import { api_common } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { useMittEmit, MITT_TYPES, UserCtr } from  "src/core"
+import { useMittEmit, MITT_TYPES, UserCtr } from  "src/output"
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
-import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/core/index.js"
-import { format_how_many_days, format_week } from "src/core/format/index.js"
-
+import { i18n_t,MenuData, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,MatchDetailCalss } from "src/output/index.js"
+import { format_how_many_days, format_week } from "src/core/format/common/index.js"
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0 } from 'src/base-h5/core/utils/local-image.js'
 
@@ -83,6 +83,9 @@ export default defineComponent({
     match () {
       return this.match_of_list;
     },
+    is_show_all () {
+      return MenuData.is_zaopan() || MenuData.is_scroll_ball()
+    },
     // 上一场赛事数据
     prev_match () {
       return this.i > 0 ? MatchDataBaseH5.get_quick_mid_obj(MatchMeta.match_mids[this.i - 1]) : undefined
@@ -94,14 +97,14 @@ export default defineComponent({
     },
     //  动画按钮
     animationUrl_icon () {
-      let is_theme01 = theme.value.includes('theme-0')
+      let is_theme01 = theme.value?.includes('theme-0')
       let animationUrl_icon = is_theme01 ? animationUrl_icon_theme01 : animationUrl_icon_theme02
       return animationUrl_icon
     },
     //  视频按钮
     muUrl_icon () {
-      let is_theme01 = theme.value.includes('theme-0')
-      let is_y0 = theme.value.includes('y0')
+      let is_theme01 = theme.value?.includes('theme-0')
+      let is_y0 = theme.value?.includes('y0')
       let muUrl_icon = ''
       if (is_y0) {
         muUrl_icon = is_theme01 ? muUrl_theme01_y0 : muUrl_theme02_y0
@@ -216,7 +219,7 @@ export default defineComponent({
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
       // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag)
+      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag) && MenuData.is_today()
     },
     // 获取赛事数量
     get_match_count () {
@@ -234,7 +237,7 @@ export default defineComponent({
     },
     // 是否有角球
     get_corner_kick () {
-      const { msc_obj: { S5 } } = this.match_of_list
+      const S5 = lodash.get(this.match_of_list, 'msc_obj.S5', '')
       let is_show = false
       S5 && Object.values(S5).forEach(t => {
         is_show = t && true
@@ -243,13 +246,13 @@ export default defineComponent({
     }
   },
   watch: {
-    // match_of_list: {
-    //   deep: true,
-    //   handler (c_match) {
-    //     this.media_button_button_type_check()
-    //     this.mmp_map_title = matchListClass.match_period_map(c_match);
-    //   }
-    // },
+    match_of_list: {
+      deep: true,
+      handler (c_match) {
+        this.media_button_button_type_check()
+        this.mmp_map_title = matchListClass.match_period_map(c_match);
+      }
+    },
     'match_of_list.msc': {
       immediate: true,
       deep: true,
@@ -362,6 +365,9 @@ export default defineComponent({
         cf: match_state ? 0 : 1,
         cuid: UserCtr.get_uid()
       }).then(res => {
+        if(res && res.code == '200' && MenuData.is_collect()){
+          useMittEmit(MITT_TYPES.EMIT_COLLECT_MATCH_OZ);
+        }
         if (+res.code !== 200) return
       })
       // 收藏页手动处理数据
@@ -373,7 +379,7 @@ export default defineComponent({
      * @description 球种折叠
      */
     handle_ball_seed_fold () {
-      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' }  = this.match_of_list
+      const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
@@ -383,10 +389,10 @@ export default defineComponent({
      * @description 联赛折叠
      */
     handle_league_fold () {
-      const { tid, is_virtual = false, warehouse_type = '' }  = this.match_of_list
+      const { tid, is_virtual = false, warehouse_type = '', start_flag = '' }  = this.match_of_list
       // 首页热门，详情页，不需要用到折叠
       if (is_hot.value || is_detail.value) return;
-      MatchFold.set_league_fold(this.match_of_list)
+      MatchFold.set_league_fold(this.match_of_list, start_flag)
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
@@ -469,7 +475,10 @@ export default defineComponent({
       this.goto_details(this.match_of_list);
     },
 
-
+    // 获取菜单名称， 有的赛事 csna 是空
+    get_current_manu_name () {
+      return MenuData.get_menus_i18n_map({ mi: MenuData.current_lv_2_menu_i })
+    },
         
     /**
      * @description:  直播 视频  动画 点击跳转详情播放
@@ -931,7 +940,8 @@ export default defineComponent({
       // store.dispatch({ type: 'matchReducer/set_details_item',  payload: 0 });
       // 进入详情前，将当前赛事信息存入仓库
       // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
-
+      //元数据存入本地
+      LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
       if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
         this.$router.push(`/result_details/${item.mid}/0`);
       }
@@ -953,6 +963,7 @@ export default defineComponent({
           if(this.$route.name == 'matchResults' ||item.ms==4){
             name = 'result'
           }
+
           this.$router.push({name,params})
         }
       }

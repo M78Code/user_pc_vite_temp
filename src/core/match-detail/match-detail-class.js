@@ -6,10 +6,9 @@
  */
  
 import { ref ,reactive} from "vue"
-import { SessionStorage } from "src/core/utils/index.js"
+import { SessionStorage } from "src/output/module/constant-utils.js";
 import { debounce } from "lodash";
-import { MatchDataWarehouse_H5_Detail_Common } from "src/core/index";
-export default class MatchDetailCtr {
+class MatchDetailCtr {
  
   constructor( ) {
     this.init();
@@ -162,6 +161,7 @@ export default class MatchDetailCtr {
    *  @param {} category_list  category/getCategoryList  返回的实际的   数据
    */
     compute_category_refer(category_list=[]){
+      if(lodash.isEmpty(category_list)) return
      this.category_arr=category_list.sort((a,b)=>a.orderNo-b.orderNo)
      let obj={}
      category_list.map(x=>{
@@ -452,3 +452,8 @@ export default class MatchDetailCtr {
     return o.os == 1 && o._hs != 11
   }
 }
+
+
+
+
+export default  new  MatchDetailCtr()

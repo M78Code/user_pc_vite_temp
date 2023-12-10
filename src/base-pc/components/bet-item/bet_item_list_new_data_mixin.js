@@ -167,7 +167,7 @@ const bet_item = {
       }
       val = (val || '0').toString();
       let ret = val;
-      if (!this.$utils.is_eports_csid(this.ol_data.csid) && val.includes('.')){
+      if (!this.$is_eports_csid(this.ol_data.csid) && val.includes('.')){
         if (val >= 100) {
           if (val.split('.')[1] == '00') {
             ret = val.split('.')[0];
@@ -332,7 +332,7 @@ const bet_item = {
           bet_source: 'match_list',
           row_index: -1
         };
-        this.$utils.send_zhuge_event("PC_首页_投注点击分类", {"详情区域": "中间列表"});
+        this.$send_zhuge_event("PC_首页_投注点击分类", {"详情区域": "中间列表"});
         // 判断是否为虚拟体育
         if(BetData.is_virtual_bet) {
           //点击押注按钮操作 (虚拟体育)

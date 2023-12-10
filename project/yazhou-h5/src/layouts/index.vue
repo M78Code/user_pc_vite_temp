@@ -54,7 +54,7 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/core/";
+import { useMittOn, MITT_TYPES, i18n_t, UserCtr } from "src/output/index.js";
 import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/base-h5/components/menu";
 import { BetBoxWapper } from "src/base-h5/components/bet";

@@ -63,10 +63,10 @@
 import {ref ,reactive, defineEmits,onMounted,onUnmounted } from "vue";
 import sportIcon from "./sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData } from 'src/core/';
+import { MenuData } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { LocalStorage } from "src/core/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { useMittOn,useMittEmit,MITT_TYPES } from "src/core/mitt/index.js" 
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 const router = useRouter();

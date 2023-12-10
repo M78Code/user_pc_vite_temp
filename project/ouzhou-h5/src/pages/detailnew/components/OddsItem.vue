@@ -3,22 +3,24 @@
     <q-separator color="orange" />
     <div class="odds-hpn" @click="toggleUnfold">
       <span class="odds-hpn-text">{{ data.hpn }}</span>
+      <template v-if="wsl">
+        hpt{{ data.hpt }}
+      </template>
       <!-- 置顶按钮 -->
       <OddsSetTop :value="data"></OddsSetTop>
-      <span class="odds-hpn-icon" :class="unfold ?'down':'up'"></span>
+      <span class="odds-hpn-icon" :class="unfold ?'down':'up'" @click.stop="toggleUnfold"></span>
     </div>
     <div v-show="unfold">
-      <!-- <OddTemplateDynamicComponent></OddTemplateDynamicComponent> -->
-      ----
+      <OddTemplateDynamicComponent :data="data"></OddTemplateDynamicComponent>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch, computed } from "vue";
-import OddsSetTop from './OddsSetTop.vue'
 import AllCloseControl from "./AllCloseControl";
+import OddsSetTop from './OddsSetTop.vue'
 
-// import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
+import OddTemplateDynamicComponent from "./template/OddTemplateDynamicComponent.vue";
 
 type Props = {
   data: TYPES.OddInfo
@@ -43,15 +45,18 @@ function toggleUnfold(){
 const order = computed(() => {
   // order 最小值-2147483648, hton目前长度13, 故substring(4)
   return -Number(props.data.hton.substring(4))
+  // return props.data.hpt
 })
 
+
+const wsl = sessionStorage.getItem('TY_SDK_WSL')
 </script>
 
 <style scoped lang="scss">
 .odds-hpn{
   display: flex;
   align-items: center;
-  padding: 15px 20px;
+  padding: 15px 13px 15px 20px;
   background-color: #fff;
   .odds-hpn-text {
     flex: 1;
@@ -66,6 +71,7 @@ const order = computed(() => {
 .odds-hpn-icon {
   width: 14px;
   height: 14px;
+  margin-left: 14px;
   background: url($SCSSPROJECTPATH+ "/image/detail/down.png") no-repeat center;
   transition: transform .5s cubic-bezier(0, 0.2, 0, 1);
   &.up {

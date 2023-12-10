@@ -1,15 +1,18 @@
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
-import { virtual_sport_format } from 'src/core/format/module/format-match.js'
-import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { mx_collect_count, set_collect_count, match_collect_status } from "./match-list-collect.js";
-import virtual_composable_fn from './match-list-virtual.js'
+import { MenuData }  from "src/output/module/menu-data.js";
+
+import {   match_collect_status, set_collect_count, mx_collect_count  } from "./match-list-collect.js";
+
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/core/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, MatchDataWarehouse_PC_Detail_Common } from "src/output/module/match-data-base.js";
+
+
+import virtual_composable_fn from './match-list-virtual.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { match_list_handle_set } from '../match-handle-data.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
@@ -17,13 +20,13 @@ import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/mat
 const { virtual_list_timeout_id, is_vr_numer } = virtual_composable_fn();
 const vx_filter_select_obj = ref([])
 
-
-
 const load_data_state = ref(null);
 let hot_match_list_timeout;
 let vx_layout_list_type = 'match'
+
+console.error('MenuData-------', );
 // 是否虚拟体育
-let is_virtual = MenuData.is_virtual_sport;
+let is_virtual = MenuData.is_vr();
 const { route_name } = PageSourceData;
 //
 let is_search = PageSourceData.is_search();
@@ -65,10 +68,13 @@ const deal_with_list_data = (data) => {
 	data.forEach(item => {
 		// mids 为  123,44344,1231232, 格式的mids字符串 转化为 mid层级
 		let mid = item.mids.split(',');
+
 		mid.forEach(option => {
+			const match=MatchListData.get_quick_mid_obj(mid)||{}
 			let mid_info = {
 				...item,
 				mid: option,
+				...match,
 			}
 			delete mid_info.mids;
 			mid_arr.push(mid_info)
@@ -101,16 +107,16 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	if (MenuData.is_kemp()) {
 		all_league_list.push(...lodash.get(res_data, "data", []));
 	}
-	!backend_run && deal_with_list_data(all_league_list);
+	deal_with_list_data(all_league_list);
 	// 设置数据仓库 联赛列表对象
 	set_league_list_obj(res_data)
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
 		// 设置收藏数量
 		// lockie
-		if (vx_filter_select_obj.value.length > 0) {
-			mx_collect_count();
-		} else {
+		// if (vx_filter_select_obj.value.length > 0) {
+		// 	mx_collect_count();
+		// } else {
 			try {
 				// 组装所有赛事,检测赛事收藏,算总共的收藏赛事数量
 				all_league_list.forEach(item => {
@@ -126,11 +132,11 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 				count_mf = lodash.get(data, 'data.collectCount', 0)
 				console.error(error);
 			}
-			set_collect_count({
-				type: "set",
-				count: lodash.get(data, "data.collectCount", 0),
-			});
-		}
+			// set_collect_count({
+			// 	type: "set",
+			// 	count: lodash.get(data, "data.collectCount", 0),
+			// });
+		// }
 		// 如果是专业版 && 今日、早盘、串关之间的切换 && 之前有筛选 && 并且当前没有筛选
 		if (
 			!backend_run &&
@@ -171,10 +177,10 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			MenuData.set_filter_select_obj(new_filter);
 		}
 		if (![2, 3].includes(MenuData.menu_root) && MenuData.cur_menu_type.pre_name) {
-			store.dispatch({
-				type: 'remove_pre_filter_select_obj',
-				data: {}
-			})
+			// store.dispatch({
+			// 	type: 'remove_pre_filter_select_obj',
+			// 	data: {}
+			// })
 		}
 
 		// 计算列表卡片样式
@@ -402,12 +408,11 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	let code = lodash.get(data, "code");
 	clearTimeout(virtual_list_timeout_id);
 	// 赛事列表
-	let match_list = lodash.get(data, "data.data");
-	if (!match_list) {
-		match_list = lodash.get(data, "data");
+	let match_list = lodash.get(data, "data.data", []);
+	if (!match_list.length) {
+		match_list = lodash.get(data, "data", []);
 	}
 	set_league_list_obj(match_list)
-	match_list = match_list || [];
 	//虚拟体育 接口数据结构转换
 	// lockie
 	if (is_virtual && !is_search && false) {

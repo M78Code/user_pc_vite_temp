@@ -67,7 +67,7 @@ import { ref, reactive, onMounted, onUnmounted, defineComponent,watch } from "vu
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import { utils, MenuData, LayOutMain_pc, GlobalSwitchClass,SearchPCClass } from 'src/core/index.js'
+import {  MenuData, LayOutMain_pc, GlobalSwitchClass,SearchPCClass } from 'src/output/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -101,7 +101,7 @@ const page_style = ref('')
 page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
 
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe);
+const is_iframe = ref(is_iframe);
 /** 左侧列表显示形式 normal：展开 mini：收起 */
 const main_menu_toggle = ref(MenuData.main_menu_toggle)
 

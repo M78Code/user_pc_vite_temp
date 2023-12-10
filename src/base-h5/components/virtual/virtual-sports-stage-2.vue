@@ -164,8 +164,8 @@ import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 
 import lodash from "lodash"
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
-import { get_now_server } from 'src/core/utils/module/other.js'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({

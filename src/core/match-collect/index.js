@@ -4,9 +4,9 @@
 import { ref } from 'vue'
 import { api_common } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import { MenuData} from "src/output/module/menu-data.js"
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
 
 class MatchCollect {
   constructor () {
@@ -28,7 +28,7 @@ class MatchCollect {
       cf: league_collect ? 0 : 1,
       cuid: UserCtr.get_uid()
     }).then(res => {
-      if (+res.code !== 200) return
+      if (+res.code !== 200) return;
     })
     // 收藏页手动处理数据
     MenuData.is_collect() && MatchMeta.set_collect_match(value, 1)

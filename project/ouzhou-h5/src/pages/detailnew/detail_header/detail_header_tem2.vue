@@ -1,7 +1,7 @@
 <template>
   <div class="detail_header_tem2">
-    <div class="detail-header-video">
-      <iframe v-show="animation_src && right_actions_label == 'animation'"
+    <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-156':'detail-header-221']">
+      <iframe v-if="animation_src && right_actions_label == 'animation'"
         id="replayIframe"
         :src="animation_src+'&rdm='+iframe_rdm"
         style="width:100%;height:100%;"
@@ -9,7 +9,10 @@
         frameborder="0"
         scrolling="no"
       ></iframe>
-      <custom_video v-if="right_actions_label == 'video'"/>
+      <custom_video class="custom-video" :status="status" v-if="right_actions_label == 'video'" :get_detail_data="detail"/>
+      <!-- {{ detail }} -->
+      <score_component :get_match_detail="detail" 
+            v-show="right_actions_label == 'score'" :key="right_actions_label" @handle-change="handle_change"/>    
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
@@ -59,25 +62,60 @@
         </div>
       </div>
     </div> -->
-    <right_actions @handle-type="handle_type"/>
+    <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'" :detail="props.get_match_detail"
+                  :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
   </div>
 </template>
   
 <script setup>
-import { onMounted, ref, toRef, watch,onUnmounted } from "vue";
+import { onMounted, ref, toRef, watch,onUnmounted, computed } from "vue";
 import lodash from "lodash";
-import { api_match,api_match_list } from "src/api/index.js";
+import { api_common, api_match,api_match_list } from "src/api/index.js";
 import { get_animation_mock } from "../mock.js";
-import { useMittOn, useMitt,MITT_TYPES } from "src/core/index.js"
+import { useMittOn, useMitt,MITT_TYPES } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import SwitchButtons from "./components/SwitchButtons.vue"
 import right_actions from "./components/right_actions.vue"
 import custom_video from "./detail_header_video.vue";
+import matchCollect from "src/core/match-collect";
+import { debounce } from "quasar";
+import score_component from "./detail_header_tem1.vue";
+import NavbarSubscribe from "src/base-h5/components/top-menu/top-menu-ouzhou-1/detail-top/nav-bar-subscribe";
+// import { Promise } from "licia-es";
 const props = defineProps({
   get_match_detail: {
     type: Object,
     default: () => ({}),
   },
+  label: {
+    type: String,
+    default: ""
+  }
 });
+
+watch(props.label, (value) => {
+  right_actions_label.value = value;
+})
+// 点击返回的时候会触发此函数
+const listener = (status) => {
+  if (!status) {
+    right_actions_label.value = 'score';
+  }
+}
+const nav_bar_subscribe = NavbarSubscribe.instance;
+// 注册事件
+nav_bar_subscribe.listener(listener);
+// 测试数据
+// nav_bar_subscribe.change_status(false);
+
+const detail = computed(() => props.get_match_detail)
+
+  // 赛事收藏状态
+const  is_collect = computed(()=>{
+  if(lodash.isEmpty(props.get_match_detail)) return
+  return matchCollect.get_match_collect_state(props.get_match_detail)
+}) 
+
 const scoew_icon_list = ref({});
 const iframe_rdm = ref("")
 iframe_rdm.value = new Date().getTime();
@@ -85,6 +123,60 @@ iframe_rdm.value = new Date().getTime();
 /** @type {import('vue').Ref<'animation'|'video'>} */
 const right_actions_label = ref('animation')
 const animation_src = ref("");
+/** @type {import('vue').ComputedRef<number>} 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示 */
+const status = computed(() => {
+  // 动画>源视频>比分板  
+  const get_detail_data = props.get_match_detail;
+  
+  // <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
+  if (get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))) {
+    
+    if (get_detail_data.mvs > -1 && get_detail_data.mms > 1) {
+      return 1;
+    }
+    // 动画状态大于-1时，显示动画按钮 
+    if (get_detail_data.mvs > -1) {
+      return 2;
+    }
+    //  视频状态大于1时，显示视频按钮 i18n_t('match_info.video')是国际化取值 --
+    if (get_detail_data.mms > 1) {
+      return 3;
+    }
+    
+  }
+
+  return 4;
+ 
+});
+// 默认为animation，所以设置为false
+nav_bar_subscribe.change_status(false);
+watch(() => status, (value) => {
+    // 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示
+    if (value == 2) {
+      right_actions_label.value = 'animation';
+    }
+    if (value == 3) {
+      right_actions_label.value = 'video';
+    }
+    if (status == 4) {
+      nav_bar_subscribe.change_status(true);
+    }
+}, {
+  immediate: true
+})
+
+watch(right_actions_label, (value) => {
+  console.log(right_actions_label, "right_actions_label");
+  if (['animation', 'video'].includes(value)) {
+    nav_bar_subscribe.change_status(false);
+  }else {
+    // 异步操作，避免执行到队列时导致数据更新问题
+    Promise.resolve().then(() => {
+      nav_bar_subscribe.change_status(true);
+    })
+  }
+})
+
 const football_score_icon_list = ref([
   {
     bg_url: "shangbanchang",
@@ -107,6 +199,11 @@ const football_score_icon_list = ref([
     msc_key: "S5"
   },
 ])
+
+const handle_change = (value) => {
+  right_actions_label.value = value;
+}
+
 /**
  *@description // 比分板数据
  *@param {*}
@@ -138,18 +235,35 @@ const handle_type = (label) => {
   switch (label) {
     case 'animation':
     case 'video':
-      right_actions_label.value = label;
-      break;
     case 'score':
-      // 切换比分，通知父组件切换
+      right_actions_label.value = label;
       break;
     case 'collect':
       // 点击收藏，通知父组件更新收藏状态
+      // emit('change')
+      collect_click();
       break;
     default:
       break;
   }
 }
+
+/**
+ *@description // 收藏
+ *@param {*}
+ *@return {*}
+ */
+ const collect_click = debounce(() => {
+  matchCollect.set_match_collect_state(props.get_match_detail, !is_collect.value)
+    api_common.add_or_cancel_match({
+        mid: props.get_match_detail.mid,
+        cf: !is_collect.value ? 0 : 1,
+        cuid: UserCtr.get_uid()
+    }).then(res => {
+        if (res.code != 200) return
+    })
+ 
+}, 300)
 const img_url_host = "http://image-new.sportxxxifbdxm2.com/";
   /**
   * @Description:获取动画播放地址
@@ -231,8 +345,17 @@ onMounted(() => {
   position: relative;
   /**.change-header-fix z-index:91; 需大于其 */
   z-index: 102;
+  .detail-header-221 {
+    height: 221px;
+  }
+  .detail-header-156 {
+    // height: 156px;
+  }
+  .detail-header-134 {
+    height: 134px;
+  }
   .detail-header-video {
-    height: 230px;
+    // height: auto;
     width: 100vw;
     background: #e2e2e2;
     .video {
@@ -341,5 +464,17 @@ onMounted(() => {
       vertical-align: middle;
     }
   }
+}
+
+.custom-video {
+  width: 100%;
+  height: 100%;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+.mt-10 {
+  margin-top: 10px;
 }
 </style>

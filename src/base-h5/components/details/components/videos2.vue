@@ -185,7 +185,9 @@
           <template v-if="get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <div class="hengping-title row">
               <!-- 返回按钮 -->
-              <div class="video_back yb_mx10" @click="close_video" style="height: 0.16rem"></div>
+              
+                <div class="video_back yb_mx10" @click="close_video" style="height: 0.16rem"></div>
+              
               <!-- 对阵信息 -->
               <span class="hengping-duiming ellipsis">{{title.mhn}}</span>
               <span :style="{visibility: get_detail_data.ms == 110 ? 'hidden':'visible'}" class="score-title yb_mx4">{{eports_scoring?(i18n_t('mmp.eports_scoring')):title.msc}}</span>
@@ -198,7 +200,7 @@
           </template>
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
-              <div class="col-1 go-back-btn-wrap" @click="close_video">
+              <div class="col-1 go-back-btn-wrap" @click="close_video" v-if="show_animation_and_video_status">
                 <div class="video_back"></div>
               </div>
               <!-- 动画不显示对阵信息 -->
@@ -215,17 +217,22 @@
 
         <div v-show="show_icons && !load_error && !is_playing_replay" class="icons2">
           <!-- 演播厅和 演播厅赛前图标 -->
-          <div class="img-wrap" v-if="show_lvs" @click="toggle_click(4, 'lvs' )">
+          <div class="img-wrap" v-if="show_lvs " @click="toggle_click(4, 'lvs' )">
             <img :src="lodash.get(get_detail_data,'lss') == 1 ? studio_icon : lvs_icon_pre"/>
           </div>
-          <!-- 视频 -->
-          <div class="img-wrap" v-if="get_detail_data.mms >= 2 && get_video_url.active != 'muUrl'" @click="toggle_click(4, 'muUrl')">
-            <img :src="shipin"/>
-          </div>
-          <!-- 动画 -->
-          <div class="img-wrap" v-if="get_detail_data.mvs > -1 && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
-            <img :src="donghua"/>
-          </div>
+          
+          <template v-if="show_animation_and_video_status">
+            <!-- 视频 -->
+            <div class="img-wrap" v-if="get_detail_data.mms >= 2 && get_video_url.active != 'muUrl'" @click="toggle_click(4, 'muUrl')">
+              <img :src="shipin"/>
+            </div>
+          </template>
+          <template v-if="show_animation_and_video_status">
+            <!-- 动画 -->
+            <div class="img-wrap" v-if="get_detail_data.mvs > -1 && get_video_url.active != 'animationUrl' && !get_is_full_screen" @click="toggle_click(4, 'animationUrl')">
+              <img :src="donghua"/>
+            </div>
+          </template>
 
            <!-- 视频 info 说明弹窗 -->
            <div class="img-wrap" v-if="show_animation || get_is_full_screen || media_type === 'progress_bar_video'">
@@ -292,7 +299,7 @@ import basketball_match_analysis from "src/base-h5/components/details/analysis-m
 // import uid from "src/core/uuid/index.js"
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
-import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/core/index.js"
+import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 
 export default {
   name: "videos",
@@ -516,6 +523,10 @@ export default {
 
       return this.slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
     },
+    // 是否展示动画和视频按钮
+    show_animation_and_video_status() {
+      return this.show_icon_status != undefined ||this.show_icon_status != null ? this.show_icon_status : true
+    }
   },
   props:[
     //视频说明是否展示
@@ -524,7 +535,8 @@ export default {
     'is_show_text',
     // 是否展示返回按钮
     'show_go_back',
-    'detail_data' //详情数据
+    'detail_data', //详情数据
+    'show_icon_status', // 是否展示图标
   ],
   watch: {
     // 监听用户是否长时间未操作
@@ -827,7 +839,7 @@ export default {
       //
       //   // 滚动目标到屏幕显示区域
       //   this.$nextTick(()=>{
-      //     this.$utils.tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
+      //     this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
       //   })
       // }
 
@@ -840,7 +852,7 @@ export default {
       this.check_replay_url(this.replay_video_src)
       // 滚动目标到屏幕显示区域
       this.$nextTick(()=>{
-        this.$utils.tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
+        this.$tab_move(index, this.$refs.slider_video.$refs.slider_x, this.$refs.slider_video.$refs.item_wrapper, true)
       })
       
       
@@ -1388,7 +1400,7 @@ export default {
       const { configValue, eventSwitch } = lodash.get(this.get_user, 'merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && lodash.get(this.get_detail_data, 'csid') == '1') {
         this.get_football_replay(0)
-        this.$utils.load_player_js()
+        this.$load_player_js()
         clearInterval(this.get_replay_video_timer)
         this.get_replay_video_timer = setInterval(() => {
           this.get_football_replay(0)

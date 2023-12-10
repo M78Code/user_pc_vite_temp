@@ -34,7 +34,7 @@
     <template v-for="(hp, index) of match_of_list.hps">
       <div class="hps-wrap hairline-border" v-if="hp.hs != 2 && !collapsed" :key="index">
 
-        <div class="hps-wrap-title flex items-center justify-between" :class="{ 'is-favorite': false }">
+        <div class="hps-wrap-title flex items-center justify-between" :class="{ 'is-favorite': false }" @click.stop>
           <div class="match-title items-center font-weight match-title-width">
             <div class="hpn-wrap ellipsis">
               {{hp.hps}}
@@ -61,10 +61,10 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { i18n_t } from 'src/core/index.js'
+import { i18n_t } from 'src/output/index.js'
 import { lang, theme } from 'src/base-h5/mixin/userctr.js'
 import { menu_type } from 'src/base-h5/mixin/menu.js'
-import { compute_img_url } from "src/core/index.js"
+import { compute_img_url } from "src/output/index.js"
 import { get_server_file_path } from "src/core/file-path/file-path.js";
 import SportIcon from "src/base-h5/components/top-menu/top-menu-ouzhou-1/components/left-menu/sport-icon.vue"
 import { IconWapper } from 'src/components/icon'

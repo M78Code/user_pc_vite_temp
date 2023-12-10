@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import { MenuData , LocalStorage} from "src/core/";
+import { MenuData , LocalStorage} from "src/output";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -152,11 +152,16 @@ const router = createRouter({
         },
         //测试用
         {
-          path: "/test",
-          name: "test",
+          path: "/observer-wrapper",
+          name: "observer-wrapper",
           component: () => import("../pages/home/test.vue"),
+        },
+        //测试用
+        {
+          path: "/observer",
+          name: "observer",
+          component: () => import("../pages/home/test1.vue"),
         }
-
       ],
     },
     //搜索

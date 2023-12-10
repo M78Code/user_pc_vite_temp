@@ -225,12 +225,12 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 
-import { format_result } from 'src/core/format/index.js'
+import { format_result } from 'src/output/index.js'
 
 import { BasePanelFullVersionWapper as basePanel } from 'src/base-pc/components/analysis/template/base-panel/index.js'
 import { api_analysis } from 'src/api/index'
 
-import { i18n_t,result_filter } from "src/core/index.js";
+import { i18n_t,result_filter } from "src/output/index.js";
 import lodash from 'lodash'
 
 const tabIndex = ref(1); // 当前 tab 所在下标

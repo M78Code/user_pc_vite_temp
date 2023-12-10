@@ -53,8 +53,8 @@
         "home": "体育投注",
         "today": "今日",
         "early": "早盘",
-        "bet_col_Over": "全场大",
-        "bet_col_Under": "全场小",
+        "bet_col_Over": "大于",
+        "bet_col_Under": "小于",
         "home_handicap": "主队让分",
         "away_handicap": "客队让分",
         "tomorrow": "明天",
@@ -139,32 +139,32 @@
         "bet_col_Under": "全场大小"
       },
       "bet_col_4": {
-        "bet_col_1": "主队让球",
-        "bet_col_2": "客队让球"
+        "bet_col_1": "主队",
+        "bet_col_2": "客队"
       },
       "bet_col_37": {
         "bet_col_1": "主胜",
         "bet_col_2": "客胜"
       },
       "bet_col_38": {
-        "bet_col_Over": "主队总分",
-        "bet_col_Under": "客队总分"
+        "bet_col_Over": "总分",
+        "bet_col_Under": "总分"
       },
       "bet_col_39": {
-        "bet_col_1": "主队让分",
-        "bet_col_2": "客队让分"
+        "bet_col_1": "让分",
+        "bet_col_2": "让分"
       },
       "bet_col_153": {
         "bet_col_1": "主胜",
         "bet_col_2": "客胜"
       },
       "bet_col_154": {
-        "bet_col_1": "主队让盘",
-        "bet_col_2": "客队让盘"
+        "bet_col_1": "让盘",
+        "bet_col_2": "让盘"
       },
       "bet_col_155": {
-        "bet_col_1": "主队让局",
-        "bet_col_2": "客队让局"
+        "bet_col_1": "让局",
+        "bet_col_2": "让局"
       }
     },
     "15minutes_bet_col": [
@@ -283,7 +283,7 @@
       "bet_confirm": "注单已确认",
       "bet_error": "注单失败",
       "reserve_win": "预约金额",
-      "win_amount": "可盈金额"
+      "win_amount": "可赢金额"
     },
     "match": {
       "all": "全部",
@@ -435,6 +435,7 @@
     "agree_change2": "接受变化并投注",
     "away_win": "客胜",
     "bet": "单关",
+    "bet_winner": "冠军",
     "bet_10001": "10串1",
     "bet_10001013": "10串1013",
     "bet_2001": "2串1",
@@ -1198,6 +1199,11 @@
     "play1": "全场独赢",
     "play2": "全场让球",
     "play3": "全场大小",
+    "dogfall": "平局",
+    "home_hdp": "主队让球",
+    "away_hdp": "客队让球",
+    "over": "全场大",
+    "under": "全场小",
     "after_time_start": "{0}分钟后开赛",
     "after_time_start2": "{0}分钟后开始",
     "go_to_details": "详情",

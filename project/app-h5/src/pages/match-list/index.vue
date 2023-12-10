@@ -28,22 +28,24 @@
 <script setup>
 import { computed, onUnmounted, onMounted, watch, onDeactivated, ref } from "vue";
 import { useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import tiaozhuanPanel from "src/base-h5/components/match-list/components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
 import matchContainer from "src/base-h5/components/match-list/index.vue";
-import SList from "src/base-h5/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
+// import SList from "src/base-h5/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
 import scrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
+import BaseData from 'src/core/base-data/base-data.js'
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
-import { MenuData, score_switch_handle, utils } from "src/core/index.js";
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/core'
+import { MenuData, score_switch_handle,  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js";
+import {pre_load_video  } from "src/core/pre-load/module/pre-load-video.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;  
 import { menu_type, menu_lv2, is_hot, is_detail, is_zaopan, is_jinzu, is_esports, is_kemp } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 // import matchListCardFold from 'src/core/match-list-h5/match-card/match-list-card-fold.js'
-
+import  GATAG  from "src/core/http/gtag-tag.js";
 const route = useRoute();
 const store_state = store.getState();
 // const websocket_store = use_websocket_store()
@@ -74,7 +76,28 @@ const show_favorite_list = ref(store_state.show_favorite_list);
 const get_is_show_menu = ref(store_state.get_is_show_menu);
 const get_preload_animation_url = ref(store_state.get_preload_animation_url);
 
+let message_fun = null
+let handler_func = null
+
 onMounted(() => {
+
+  BaseData.is_emit && MatchMeta.set_origin_match_data()
+
+  // 接口请求防抖
+  handler_func = lodash.debounce(({ cmd, data }) => {
+    MatchMeta.handle_ws_directive({ cmd, data })
+  }, 1000)
+
+  // 增加监听接受返回的监听函数
+  message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
+    handler_func({ cmd, data })
+    if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
+      MatchMeta.handle_remove_match(data)
+    } else {
+      handler_func({ cmd, data })
+    }
+  })
+
   // 初始化赛事列表操作工具类
   if (standard_edition.value == 2) {
     newer_standard_changing.value = true;
@@ -82,7 +105,7 @@ onMounted(() => {
     MatchListCard.sliding_can_trigger_process_distance = 500;
   }
   // 记录埋点，进入列表页
-  utils.gtag_view_send("H5_match", "/match");
+  GATAG.gtag_view_send("H5_match", "/match");
   // 详情精选赛事页需清空map折叠状态
   store.dispatch({ type: 'topMenuReducer/set_collapse_map_match', payload: {} })
   // 事件初始化
@@ -123,7 +146,7 @@ const back_top = () => {
  */
 const event_init = () => {
   // 详情页的视频预加载
-  utils.load_video_resources(store_state.get_uid, "is_details_page");
+  pre_load_video.load_video_resources(store_state.get_uid, "is_details_page");
   // 不让浏览器记住上次的滚动位置
   if ("scrollRestoration" in History) {
     history.scrollRestoration = "manual";
@@ -186,7 +209,7 @@ const on_listeners = () => {
     emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,(v)=> MatchPage.footer_event(v)).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, (v)=>MatchPage.main_menu_change(v)).off,
     emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, (v)=> MatchListCard.match_list_scroll_handle(v)).off,
-    emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
+    // emitter_11: useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, init_match_callback).off,
     emitter_12: useMittOn(MITT_TYPES.EMIT_MENU_ANIMATION, handle_menu_change).off,
   };
 };

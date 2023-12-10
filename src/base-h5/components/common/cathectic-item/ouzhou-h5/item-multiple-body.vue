@@ -100,10 +100,10 @@ import lodash from 'lodash'
 import { ref, onMounted, computed } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import { bet_result } from "src/core/bet-record/util.js";
-import { i18n_t, project_name } from 'src/core/index.js'
+import { i18n_t, project_name } from 'src/output/index.js'
 import { IconWapper } from 'src/components/icon'
 import { itemFooter, itemOrder, earlySettle, earlySettledDetail } from "src/base-h5/components/common/cathectic-item/ouzhou-h5/index";
-import { formatTime, format_odds } from 'src/core/format/index.js'
+import { formatTime, format_odds } from 'src/output/index.js'
 
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))

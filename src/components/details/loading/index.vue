@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 const props = defineProps({
   propsText: {
     type: String,

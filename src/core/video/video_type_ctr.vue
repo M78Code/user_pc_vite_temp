@@ -21,7 +21,7 @@
         <!-- 流畅 -->
         <div class="video-type-but" :class="{'video-type-but-action':ctr_data.video_type==2}" @click="send_video_type_click(2)">{{get_video_clarity_name2(2)}}</div>
       </div>
-      <img class="close-btn" @click="is_show_type_list = false" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/png/close_white.png`">
+      <img class="close-btn" @click="is_show_type_list = false" src="~public/image/common/png/close_white.png">
     </div>
     <!-- 画中画提示框 -->
       <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ i18n_t('video.open_pip')}}</div>
@@ -56,8 +56,10 @@
 // import { mapGetters, mapActions } from "vuex"
 import video from "src/core/video/video.js"
 import { IconWapper } from 'src/components/icon'
-import { get_media_icon_index,MatchDetailCalss,debounce_throttle_cancel,LOCAL_PROJECT_FILE_PREFIX} from "src/core";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { get_media_icon_index,debounce_throttle_cancel} from "src/output/module/constant-utils.js";
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/core/file-path/file-path.js'
+import { MatchDetailCalss} from "src/output/module/project-single.js";
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 const tooltip_style = 'background:rgba(0,0,0,0.8);padding:4px 5px;border-radius:0px;color:#fff'
 export default {
   components: {
@@ -392,7 +394,7 @@ export default {
     cursor: pointer;
     width: 16px;
     height: 16px;
-    // background-image: url($SCSSPROJECTPATH +"/image/svg/virtual-ref.svg");
+     background-image: url($SCSSPROJECTPATH +"/image/svg/virtual-ref.svg");
     background-size: cover;
     &.is_rotate {
       animation: video-reload-btn 5s linear 0s infinite normal;

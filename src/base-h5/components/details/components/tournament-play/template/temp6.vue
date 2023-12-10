@@ -34,7 +34,7 @@
                               <div
                                   class="play-box-style details_color warp bor-style"
                                   @click="go_to_bet(ol_list_0[ol_index0 - 1])"
-                                  :class="[get_bet_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_list_0[ol_index0 - 1].result)}]"
+                                  :class="[get_bet_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':calc_win(ol_list_0[ol_index0 - 1].result)}]"
                               >
                                 <div class="ellipsis-t remark details_t_color6 fz_16">
                                 <span :class="[{'is-score':check_score(ol_list_0[ol_index0 - 1].on),'white_text':get_bet_list.includes(ol_list_0[ol_index0 - 1].id_)},'size-color']">
@@ -117,7 +117,7 @@
                               <div
                                   class="play-box-style details_color bor-style"
                                   @click="go_to_bet(ol_list_1[ol_index1 - 1])"
-                                  :class="[get_bet_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':utils.calc_win(ol_list_1[ol_index1 - 1].result)}]">
+                                  :class="[get_bet_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':calc_win(ol_list_1[ol_index1 - 1].result)}]">
                                 <div class="ellipsis-t remark details_t_color6 fz_16">
                                 <span :class="[{'is-score':check_score(ol_list_1[ol_index1 - 1].on),'white_text':get_bet_list.includes(ol_list_1[ol_index1 - 1].id_)},'size-color']">
                                   {{ ol_list_1[ol_index1 - 1].on }}
@@ -199,7 +199,7 @@
                             <div
                                 class="play-box-style details_color"
                                 @click="go_to_bet(ol_item)"
-                                :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
+                                :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
                               <div class="ellipsis-t remark details_t_color6 fz_16">
                               <span :class="[{'is-score':check_score(ol_item.on),'white_text':get_bet_list.includes(ol_item.id_)}]">
                                 {{ ol_item.on }}
@@ -279,7 +279,7 @@
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
@@ -404,7 +404,7 @@ export default defineComponent({
      */
     const change_show = () => {
       if (state_data.show_more) {
-        let distance = element.value.offsetHeight - (6 * utils.rem(0.52))
+        let distance = element.value.offsetHeight - (6 * rem(0.52))
         if (route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {
@@ -440,7 +440,7 @@ export default defineComponent({
     };
     return {
       ...toRefs(state_data),
-      utils,
+      
       i18n_t,
       get_bet_list,
       get_cur_odd,

@@ -2,7 +2,7 @@
  * @Author: success
  * @Description: ws通信日志功能类
  */
-import { SessionStorage } from "src/core/utils/module/web-storage.js";
+import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
 const { LOCAL_FUNCTION_SWITCH, PROJECT_NAME } = window.BUILDIN_CONFIG;
 
 class WsLog

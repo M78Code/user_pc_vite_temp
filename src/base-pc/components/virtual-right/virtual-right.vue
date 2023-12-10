@@ -98,7 +98,7 @@ import horseResult from "src/base-pc/components/virtual-right/horse-result.vue"
 import horseReplay from "src/base-pc/components/virtual-right/horse-replay.vue"
 import footbalReplay from "src/base-pc/components/virtual-right/footbal-replay.vue"
 import vScrollArea from "src/base-pc/components/v-scroll-area/v-scroll-area.vue";
-import {VrSportCtr} from "src/core/index"
+import {VrSportCtr} from "src/output/index.js"
 export default {
   name: "virtualRight",
   components:{
@@ -170,7 +170,7 @@ export default {
     }
   },
   created() {
-    this.$utils.load_player_js()
+    this.$load_player_js()
     this.$root.$on(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.timer);
   },
   destroyed() {

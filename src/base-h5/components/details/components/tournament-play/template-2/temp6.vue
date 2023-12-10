@@ -34,8 +34,8 @@
                               <!-- 主程序 start -->
                               <div
                                   class="play-box-style details_color warp bor-style"
-                                  @click="utils.go_to_bet(ol_list_0[ol_index0 - 1])"
-                                  :class="[BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_list_0[ol_index0 - 1].result)}]"
+                                  @click="go_to_bet(ol_list_0[ol_index0 - 1])"
+                                  :class="[BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)?['details-bg5','first-rad']:'',{'win':calc_win(ol_list_0[ol_index0 - 1].result)}]"
                               >
                                 <div class="ellipsis-t remark details_t_color6 fz_16">
                                 <span :class="[{'is-score':check_score(ol_list_0[ol_index0 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)},'size-color']">
@@ -117,8 +117,8 @@
                               <!-- 主程序 start -->
                               <div
                                   class="play-box-style details_color bor-style"
-                                  @click="utils.go_to_bet(ol_list_1[ol_index1 - 1])"
-                                  :class="[BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':utils.calc_win(ol_list_1[ol_index1 - 1].result)}]">
+                                  @click="go_to_bet(ol_list_1[ol_index1 - 1])"
+                                  :class="[BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)?'details-bg5':'',{'win':calc_win(ol_list_1[ol_index1 - 1].result)}]">
                                 <div class="ellipsis-t remark details_t_color6 fz_16">
                                 <span :class="[{'is-score':check_score(ol_list_1[ol_index1 - 1].on),'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)},'size-color']">
                                   {{ ol_list_1[ol_index1 - 1].on }}
@@ -199,8 +199,8 @@
                             <!-- 主程序 start -->
                             <div
                                 class="play-box-style details_color"
-                                @click="utils.go_to_bet(ol_item)"
-                                :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]">
+                                @click="go_to_bet(ol_item)"
+                                :class="[BetData.bet_oid_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]">
                               <div class="ellipsis-t remark details_t_color6 fz_16">
                               <span :class="[{'is-score':check_score(ol_item.on),'white_text':BetData.bet_oid_list.includes(ol_item.id_)}]">
                                 {{ ol_item.on }}
@@ -280,7 +280,7 @@
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance  } from 'src/core/index.js';
+import { LOCAL_PROJECT_FILE_PREFIX,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance ,calc_win } from 'src/output/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
@@ -289,7 +289,7 @@ import { i18n_t } from "src/boot/i18n.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 //国际化
 import BetData from "src/core/bet/class/bet-data-class.js"
-
+import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -401,7 +401,7 @@ export default defineComponent({
      */
     const change_show = () => {
       if (state_data.show_more) {
-        let distance = element.value.offsetHeight - (6 * utils.rem(0.52))
+        let distance = element.value.offsetHeight - (6 * rem(0.52))
         if (route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {
@@ -434,7 +434,7 @@ export default defineComponent({
     };
     return {
       ...toRefs(state_data),
-      utils,
+      calc_win,
       i18n_t,
       BetData,
       get_cur_odd,
@@ -450,6 +450,7 @@ export default defineComponent({
       check_score,
       set_highlight_cls,
       LOCAL_PROJECT_FILE_PREFIX,
+      go_to_bet
     }
   }
 })

@@ -27,11 +27,11 @@
 // import virtualRight from "src/base-pc/components/virtual-right/virtual-right.vue";
 // import matchDetailsRight  from "src/base-pc/components/match-details-right/match-details-right.vue"
 
-import { ref, onBeforeUnmount, watch } from "vue";
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+
 import analysis from "../pages/match-new-detail/analysis/index.vue";
-import { LayOutMain_pc, MenuData } from "src/core/index.js";
-import { useRoute, useRouter } from "vue-router";
+import { LayOutMain_pc } from "src/output/index.js";
 const route = useRoute();
 const right_status = ref(null);
 const show_right = ref(false);

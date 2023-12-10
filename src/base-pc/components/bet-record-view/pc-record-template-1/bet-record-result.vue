@@ -308,7 +308,7 @@
 </template>
 <script setup>
 import { reactive, ref } from "vue"
-import { format_odds, format_currency, formatTime } from "src/core/format/index.js"
+import { format_odds, format_currency, formatTime } from "src/output/index.js"
 import { i18n_t, i18n_tc } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import BetRecord from "src/core/bet-record/bet-record.js"

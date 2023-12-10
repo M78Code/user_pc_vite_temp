@@ -40,16 +40,16 @@ import {
   useMittEmit, MITT_TYPES,
   MatchDataWarehouse_H5_Detail_Common,
   MatchDataWarehouse_H5_List_Common,
-} from "src/core/index";
+} from "src/output/index.js";
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
-import { MenuData } from 'src/core/';
+import { MenuData } from "src/output/index.js";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import DetailTopMsOptions from "./detail-top-ms-options.vue";
+import NavbarSubscribe from "./nav-bar-subscribe";
 const route = useRoute()
 const router = useRouter();
-const mid = route.params.mid;
 const refresh_is_active = ref(false);
 const active = ref(0);
 const show_list = ref(false);
@@ -58,6 +58,9 @@ const isMatchResultRoute = route.name == 'result'
 const refLeagueName = ref('')
 
 
+const mid = computed(()=>{
+  return route.params.mid
+})
 const getCsna = computed(()=>{
   return MatchDataWarehouse_H5_Detail_Common.get_quick_mid_obj(route?.params?.mid)?.csna
 })
@@ -83,22 +86,14 @@ function getDropDownList(tid='') {
     dateTime: Date.now()
   }).then(res => {
     if(res.code == '200'){
-      console.log(res.data,"drop_down_list")
       return drop_down_list.value = res.data
     }else {
       console.error(res)
     }
   }).then((data)=>{
-    if(data.length){
-      refLeagueName.value = data[0].tn
-      data.forEach((item,index)=>{
-        if(item.mid == mid){
-          active.value = index
-        }
-      }) 
-    }else {
-
-    }
+    if( !data.length ) return
+    refLeagueName.value = data[0].tn
+    active.value = data.findIndex((x)=> x.mid == mid.value )
   })
   .catch(err => {
     console.error(err)
@@ -106,12 +101,22 @@ function getDropDownList(tid='') {
 }
 
 /** 返回上一页 */
-const toHome = () => {
+const toHome = async() => {
   // 设置 元数据计算 流程
-  BaseData.set_is_emit(true)
-  // MatchMeta.clear_match_info()
-  MatchResponsive.set_is_compute_origin(true)
-  router.back()
+  // 先通知观察者返回
+  NavbarSubscribe.instance.back();
+  // 异步获取状态
+  const res = await NavbarSubscribe.instance.get_status();
+  // 状态为真，可以返回
+  if (res) {
+    BaseData.set_is_emit(true)
+    // MatchMeta.clear_match_info()
+    MatchResponsive.set_is_compute_origin(true)
+    router.back()
+  } else {
+    // 状态为false，执行其他操作
+  }
+  
 };
 watch(() => detail_top_pop.value,
   (newPath, oldPath) => {
@@ -146,6 +151,9 @@ function change_active(item, index) {
 const refreshAll = (params) => {
   if(params instanceof Event){
     params = route.params
+  }
+  if(route.params.tid){
+    getDropDownList(route.params.tid);
   }
   refresh_is_active.value = true;
   useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS,params)

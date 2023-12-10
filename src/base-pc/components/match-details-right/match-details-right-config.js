@@ -3,7 +3,7 @@ import { api_details } from "src/api";
 import lodash from "lodash";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 import { update_match_time } from "src/core/bet/common-helper/module/common-sport.js";
-import  { computed_background } from  "src/core/constant/config/csid.js"
+import  { computed_background } from  "src/output/index.js"
 import {
   useMittOn,
   MITT_TYPES,
@@ -12,14 +12,14 @@ import {
   is_eports_csid,
   MatchDataWarehouse_PC_Detail_Common,
   format_plays,
-  utils,
+  
   format_sort_data,
   useMittEmitterGenerator,
   useMittEmit,
   MatchDetailCalss,
   LayOutMain_pc,
   GlobalSwitchClass
-} from "src/core/index.js";
+} from "src/output/index.js";
 //moni
 // import MenuData from "./menuData"
 import detailUtils from "src/core/match-detail/match-detail-pc/match-detail.js";
@@ -455,7 +455,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
                   }
                 }
                 // 同步数据到详情
-                let msc = detailUtils.build_msc(match_obj);
+                let msc = detailbuild_msc(match_obj);
                 match_obj.msc = msc;
                 Object.assign(
                   MatchDataWarehouseInstance.match_obj,
@@ -827,7 +827,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
              * @description 格式化msc数据
              * msc: ["S1|48:52"] => msc: {S1:{home: 48,away: 52}}
              */
-            data.msc = detailUtils.build_msc(data);
+            data.msc = detailbuild_msc(data);
             MatchDataWarehouseInstance.set_match_details(data,[]);
             allData.match_infoData = MatchDataWarehouseInstance.get_quick_mid_obj(allData.mid);
             let mid = lodash.get(data, "mid");
@@ -965,7 +965,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
       timers: 1500,
       max_loop: 1,
     };
-    utils.axios_api_loop(_obj);
+    axios_api_loop(_obj);
   };
 
   /**
@@ -1046,7 +1046,7 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
         玩法集ID: obj.item.id,
         区域位置: "大屏",
       };
-      utils.send_zhuge_event("TY_PC_足球_玩法分类导航_点击", zhuge_obj);
+      send_zhuge_event("TY_PC_足球_玩法分类导航_点击", zhuge_obj);
     }
   };
   // 批量清除定时器
@@ -1130,8 +1130,8 @@ const  get_top_id = ref(MatchDetailCalss.top_id)
     // off todo
     // off("check_plays_show", this.check_plays_show);
     // off("close_tips", this.close_tips);
-    // utils.del(this.ol_obj);
-    // utils.del(this.hl_obj);
+    // del(this.ol_obj);
+    // del(this.hl_obj);
     // this.debounce_throttle_cancel(refresh());
     allData.refresh_loading_timer &&
       clearTimeout(allData.refresh_loading_timer);

@@ -17,7 +17,6 @@
 import { ref, watch, nextTick, onMounted, defineAsyncComponent } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
-import {utils } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 文章页
 import articleMain from "src/base-h5/components/details/analysis-matches/article/article-main.vue"
@@ -89,7 +88,7 @@ const props = defineProps({
     nextTick(() => {
       // TODO: 后续修改调整 $refs $utils
       if (analysis_basketball_matches.value) {
-        analysis_basketball_matches.value.style.minHeight = window.innerHeight - utils.rem(0.84) + 'px'; ;
+        analysis_basketball_matches.value.style.minHeight = window.innerHeight - rem(0.84) + 'px'; ;
       }
     })
     if (['zh', 'tw'].includes(UserCtr.lang)) {
@@ -122,7 +121,7 @@ const tab_click = ([tab, type]) => {
     } else if (tab.component == 'articleMain') {
       eventLabel = 'H5_情报分析_资讯'
     }
-    // this.$utils.zhuge_event_send(eventLabel, this.UserCtr);
+    // this.$send_zhuge_event(eventLabel, this.UserCtr);
   }
 }
 

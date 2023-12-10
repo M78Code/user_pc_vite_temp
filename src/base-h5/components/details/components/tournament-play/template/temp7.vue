@@ -29,7 +29,7 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="go_to_bet(ol_item)"
-                              :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win': utils.calc_win(ol_item.result)}]"
+                              :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win': calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
                             <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)},'size-color']">
@@ -106,7 +106,7 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="go_to_bet(ol_item)"
-                              :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win':utils.calc_win(ol_item.result)}]"
+                              :class="[get_bet_list.includes(ol_item.id_)?['details-bg5','first-rad']:'',{'win':calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
                             <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)},'size-color']">
@@ -183,7 +183,7 @@
                           <div
                               class="play-box-style details_color warp"
                               @click="go_to_bet(ol_item)"
-                              :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result)}]"
+                              :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':calc_win(ol_item.result)}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_16">
                             <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)},'size-color']">
@@ -256,7 +256,7 @@
 // import { mapGetters } from "vuex";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import {utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import { LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import BetData from "src/core/bet/class/bet-data-class.js"
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, ref } from "vue";
@@ -281,7 +281,7 @@ export default defineComponent({
       useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
-      utils,
+      
       go_to_bet,
       get_bet_list
     }

@@ -10,7 +10,7 @@
         <div class="date-tab-content">
             <ul class="date-tab-content-ul">
                 <li ref="dateTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
-                    @click="changeTabMenu(index, $event)">
+                    @click="changeTabMenu(item, index, $event)">
                     {{ item.name }}
                 </li>
             </ul>
@@ -19,11 +19,12 @@
 </template>
   
 <script setup>
-import { onMounted, onUnmounted,ref, watch } from "vue";
+import { onMounted, onUnmounted,ref, nextTick } from "vue";
 import { scrollMenuEvent } from "../utils";
-import { MenuData } from "src/core/index.js";
+import { MenuData } from "src/output/index.js";
 import { api_common } from "src/api/"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 
 const props = defineProps({
     defaultVal: {
@@ -37,10 +38,12 @@ const props = defineProps({
 
 });
 const dateTab = ref(null)
-const activeOn = ref('');//默认值
+const activeOn = ref(0);//默认值
 
 onMounted(() => {
-    changeTabMenu(0)
+    nextTick(()=>{
+        changeTabMenu(props.dataList?.[0],0)
+    })
 })
 onUnmounted(()=>{
     set_active_val()
@@ -49,7 +52,7 @@ onUnmounted(()=>{
 * 选中事件
 * @param {*} val 
 */
-const changeTabMenu = (i, event) => {
+const changeTabMenu = (item, i, event) => {
     event = event || dateTab.value[0];
     if(activeOn.value === i)return;
     activeOn.value = i;
@@ -59,6 +62,9 @@ const changeTabMenu = (i, event) => {
     set_menu_match_date()
 
     scrollMenuEvent(event, ".date-tab-content-ul", ".active");
+
+    MatchMeta.filter_match_by_time(item?.val)
+    MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
 }
 /**
  * 默认值
@@ -109,7 +115,8 @@ defineExpose({set_active_val,changeTabMenu})
                 flex-shrink: 0;
                 text-align: center;
                 font-weight: 400;
-
+                font-size: 12px;
+                color: #7981A4;
                 // &:first-child {
                 //     width: 0.4rem;
                 // }
@@ -122,20 +129,16 @@ defineExpose({set_active_val,changeTabMenu})
                         content: "";
                         position: absolute;
                         width: 60%;
-                        height: 1px;
+                        height: 2px;
                         background-color: var(--q-gb-t-c-1);
                         bottom: 1px;
                         left: 50%;
                         margin-left: -30%;
+                        border-radius: 25px;
                     }
-                }
-
-                span {
-                    font-size: 12px;
-                    color: #7981A4;
                 }
             }
         }
     }
 }</style>
-  
+  src/output/index.js

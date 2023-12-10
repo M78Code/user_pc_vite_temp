@@ -1,14 +1,13 @@
 <script name="event-date-standard" setup>
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import { format_time_zone  } from "src/core";
-import { get_mmp_name } from "src/core/format/module/format-msc.js"
+import { format_time_zone  } from "src/output/index.js";
+import { get_mmp_name } from 'src/core/format/project/module/format-msc.js'
 import {
     get_match_status,
-    utils,
     format_string,
     is_eports_csid
-} from "src/core/index"
+} from "src/output/index.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import { defineProps, computed } from "vue"
 const props = defineProps({
@@ -124,7 +123,7 @@ const computed_process_name = computed(() => {
     if (
         lodash.get(match, 'csid')== 3 &&
         props.show_page == "match-list" &&
-        process_name.indexOf("第") == 0
+        process_name?.indexOf("第") == 0
     ) {
         //欧洲版，不用换行
         return props.date_show_type === 'inline' ? process_name : process_name.replace(" ", "<br/>");
@@ -147,7 +146,7 @@ const covert_mct = ({ mct, mmp, ms }) => {
     let new_num = mct;
 
     if (lang == "zh") {
-        new_num = utils.numberToChinese(mct);
+        new_num = numberToChinese(mct);
     }
     let rs = format_string(i18n_t("mmp.7.x"), new_num);
     return rs;
@@ -157,7 +156,6 @@ const covert_mct = ({ mct, mmp, ms }) => {
 
 <template>
     <div class="event-date-standard">
-        <div class="process_name" v-if="!!computed_process_name" v-html="computed_process_name"></div>
         <!--即将开赛 ms = 110-->
         <div class="coming-soon" v-if="ms_info?.ms" v-show="ms_info?.ms == 110">
             {{ i18n_t(`ms[${ms_info?.ms}]`) }}
@@ -172,6 +170,7 @@ const covert_mct = ({ mct, mmp, ms }) => {
         </div>
         <!--倒计时或正计时-->
         <div v-if="ms_info?.ms != 110 && show_counting_down(ms_info)">
+            <div class="process_name" v-if="!!computed_process_name" v-html="computed_process_name"></div>
             <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
             <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="ms_info?.mmp"
                                 :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+ms_info?.csid)" :m_id="ms_info?.mid"
@@ -196,4 +195,4 @@ const covert_mct = ({ mct, mmp, ms }) => {
         font-size: 0.15rem;
     }
 }
-</style>
+</style>src/output/indexsrc/core/format/common/module/format-msc.js

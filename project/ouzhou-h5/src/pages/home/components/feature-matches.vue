@@ -61,7 +61,7 @@
 import lodash from 'lodash'
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { format_time_zone } from "src/core/format/index.js"
+import { format_time_zone } from "src/output/index.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';

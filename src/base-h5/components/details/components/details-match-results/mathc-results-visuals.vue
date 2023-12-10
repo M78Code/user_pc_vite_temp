@@ -90,7 +90,7 @@
 <script setup>
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js"
-import { transform_score } from "src/core/format/index.js"
+import { transform_score } from "src/output/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
  // 国际化比赛阶段比分转换工具
 // import msc from "src/base-h5/mixins/common/msc.js";

@@ -83,19 +83,17 @@
 </template>
 
 <script setup>
-// import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
+// import sportIcon from "src/public/components/sport_icon/sport-icon.vue"
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import lodash from 'lodash';
 import { ref, computed } from 'vue';
-import sprite_img from "src/core/server-img/sprite-img/index.js"
 import BaseData from "src/core/base-data/base-data.js"
-import { t,compute_css_obj } from "src/core/index.js";
-import { get_match_tpl_title } from 'src/core/format/index.js'
+import { t,compute_css_obj } from "src/output/index.js";
+import { get_match_tpl_title } from 'src/output/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { utils_info } from 'src/core/utils/module/match-list-utils.js';
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
-import store from 'src/store-redux/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
@@ -399,4 +397,4 @@ function set_fold() {
   width: 18px;
   height: 18px;
 }
-</style>
+</style>src/output/index.js

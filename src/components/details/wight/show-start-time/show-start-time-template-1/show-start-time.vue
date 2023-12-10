@@ -10,15 +10,14 @@
       {{ $t("list.after_time_start",[longTime])}}
     </span>
     <span v-else>
-      {{   format_H_M(   utils.format_time_zone_time(+detail_data.mgt)     ) }}
+      {{   format_H_M(   format_time_zone_time(+detail_data.mgt)     ) }}
     </span>
   </span>
 </template>
 
 <script>
-import {utils } from 'src/core/index.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import { format_H_M  } from "src/core/index.js";
+import { format_H_M  } from "src/output/index.js";
 
 export default defineComponent({
   name: "show_start_time",

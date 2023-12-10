@@ -69,16 +69,16 @@ import MatchPlay from './components/match-play.vue'
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import MatchContainer from "src/base-h5/components/match-list/index.vue";
-import * as ws_message_listener from "src/core/utils/module/ws-message.js";
+import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";;
 import { api_match } from "src/api/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { i18n_t } from "src/core/index.js"
+import { i18n_t } from "src/output/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import scrollList from 'src/base-h5/components/top-menu/top-menu-ouzhou-1/scroll-menu/scroll-list.vue';
 import { MenuData, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5,
-  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5 } from "src/core/index.js";
+  MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5 } from "src/output/index.js";
 
 provide('get_hots_data', () => {
   get_ouzhou_home_data()
@@ -119,22 +119,27 @@ const set_init_sport = (val) =>{
   }
 }
 onMounted(async () => {
-  MenuData.set_current_lv1_menu(1);
-  set_init_sport(tabValue.value)
-  set_default_home_data()
-  get_ouzhou_home_data()
-  set_default_home_hots()
-  get_ouzhou_home_hots()
-  get_five_league_matchs()
 
+  if (tabValue.value === 'top_events') {
+    // 设置 元数据计算 流程
+    state.current_mi = MenuData.top_events_list?.[0]?.mi;
+    get_top_events_match(MenuData.top_events_list?.[0]?.csid)
+  } else { 
+    MenuData.set_current_lv1_menu(1);
+    set_init_sport(tabValue.value)
+    set_default_home_data()
+    get_ouzhou_home_data()
+    set_default_home_hots()
+    get_ouzhou_home_hots()
+    get_five_league_matchs()
+  }
 
   // 接口请求防抖
   handler_func = lodash.debounce(({ cmd, data }) => {
     handle_webscoket_cmd(cmd, data)
   }, 1000)
-
   // 删除赛事防抖
-  const handler_remove = () => lodash.debounce(() => {
+  const handler_remove = lodash.debounce(() => {
     MatchMeta.set_is_ws_trigger(true)
     if (tabValue.value === 'featured') {
       get_ouzhou_home_data()

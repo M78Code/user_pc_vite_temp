@@ -3,10 +3,10 @@
 -->
 <script setup>
 import { defineEmits } from "vue"
-import { i18n_t } from "src/core"
+import { i18n_t } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { format_money2 } from "src/core/format/index.js"
+import { format_money2 } from "src/output/index.js"
 
 const statusObj = {
   1: '投注状态',
@@ -37,8 +37,9 @@ const set_retain_selection = () => {
 </script>
 
 <template>
-  <div style="display:none">{{ BetData.bet_data_class_version }} -{{UserCtr.user_version}}-{{ BetViewDataClass.bet_view_version }}</div>
-  <div class="tip component bet-btn-item">
+  <div style="display:none">{{ BetData.bet_data_class_version }}-{{ BetViewDataClass.bet_view_version }}</div>
+  
+  <!-- <div class="tip component bet-btn-item">
     <div :class="{'bet-success':BetViewDataClass.error_code == 200, 'bet-loading':BetViewDataClass.error_code == '0000000', 'bet-error': ![200,'0000000'].includes(BetViewDataClass.error_code)}">
       <div class="displayflex">
         {{ BetViewDataClass.error_code_list.includes(BetViewDataClass.error_code) ? i18n_t(BetViewDataClass.error_message) : BetViewDataClass.error_message }}
@@ -46,9 +47,9 @@ const set_retain_selection = () => {
       </div>
     </div>
     
-  </div>
+  </div> -->
   <nav class="betted-button" @click="bindClick">
-    <p v-if="!!BetData.is_bet_single">{{ i18n_t('app_h5.bet.confirm')}}</p>
+    <p v-if="BetData.is_bet_single">{{ i18n_t('app_h5.bet.confirm')}}</p>
     <p v-else>
       {{ statusObj[BetViewDataClass.bet_order_status] }}
       <span>合计 {{ format_money2(BetData.bet_amount) }}</span>

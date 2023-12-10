@@ -14,7 +14,7 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj, UserCtr, get_server_file_path } from "src/core/index.js";
+import { i18n_t, compute_css_obj, UserCtr, get_server_file_path } from "src/output/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { ref } from 'vue'
 import { api_activity } from "src/api";
@@ -35,7 +35,7 @@ function openActivity() {
         return
     }
 
-    // $utils.zhuge_event_send('H5_任务中心', user_info);
+    // $send_zhuge_event('H5_任务中心', user_info);
     router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
     alert("跳活动页面")
 }

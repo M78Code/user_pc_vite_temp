@@ -1,8 +1,8 @@
   import SliderX from "src/base-pc/components/match-detail/match_info/slider_x.vue"
-  import { UserCtr ,MatchDetailCalss,MITT_TYPES,useMittOn} from "src/core/index";
+  import { UserCtr ,MatchDetailCalss,MITT_TYPES,useMittOn} from "src/output/index";
   import { TabWapper as Tabs } from "src/components/common/tab"
   import { api_details } from "src/api/index";
-import { useMittEmit } from "src/core";
+import { useMittEmit } from "src/output";
 
  
   export default {
@@ -195,7 +195,7 @@ import { useMittEmit } from "src/core";
             titleInfo: `${item.homeAway} ${this.event_name(item.eventCode)}: ${item.firstNum}`
           }
           // 检查地址是否有效存在
-          // this.is_exist_media = utils.url_exists(this.media_src)
+          // this.is_exist_media = url_exists(this.media_src)
           // if (!this.is_exist_media) {
           //   return false
           // }

@@ -5,9 +5,9 @@
  */
 import lodash from "lodash";
 
-import utils from "project/activity/src/utils/utils.js";
-import tooltip from "project/activity/src/utils/tooltip.js"
-// import matchlist from "project/activity/src/public/utils/matchlist/matchlist.js"
+
+import {tooltip} from "project_path/src/core/index.js"
+ 
 
 import Icon from "project/activity/src/components/icon/icon.vue"
 import load_data from "project/activity/src/components/load_data/load_data.vue";
@@ -23,7 +23,12 @@ import math from "project/activity/src/boot/mathjs.js"
 import 'project/activity/src/css/common.scss';
 
 
-let BUILD_VERSION =  process.env.NODE_ENV=='development'?'':   require('../../version.js').BUILD_VERSION;
+// 本次打包的 客户端版本
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+
+const {BUILD_VERSION ,CURRENT_ENV,IS_DEV} = BUILD_VERSION_CONFIG
+
+ 
 // 加载所有模板文件
 // const require_all = require.context("project_theme", true, /\.scss$/)
 // require_all.keys().forEach( item => require_all(item))
@@ -38,13 +43,11 @@ export default async (app) => {//app, router, store,
   window.set_prototype = function (key, val) {
     window[key] = val
   }
-  // 目前环境信息
-  const current_env = window.env.config.current_env;
+ 
 
   /** 三方类库 **************************/
   // 重写console.log, 支持ws推送console.log日志
-  // 是否是开发环境
-  const is_development = (window.env.NODE_ENV == 'development');
+ 
   // 是否开启clog打印
   const clog = (sessionStorage.getItem('clog') == 1)?1: ((location.href.indexOf('clog=1') != -1)?1:0);
   sessionStorage.setItem('clog', clog);
@@ -62,7 +65,7 @@ export default async (app) => {//app, router, store,
     };
 
     console.log = function(str){
-      if(is_development)
+      if(IS_DEV)
       {
         // 生产环境不打印日志
         // mFun.call(console, ...arguments);
@@ -108,14 +111,14 @@ export default async (app) => {//app, router, store,
       }
     }
   } else {
-    if(!is_development){
+    if(!IS_DEV){
       console.log = function(str){};
     }
   }
 
   window._ = lodash;
 
-  window.$utils = utils
+ 
   // window.$matchlist = matchlist
   // 高精度运算工具对象(例子:this.$mathjs.multiply(1.13,100000))
   window.$mathjs = math;

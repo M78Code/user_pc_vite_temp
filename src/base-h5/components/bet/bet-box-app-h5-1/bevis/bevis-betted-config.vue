@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps } from "vue"
-import { format_odds } from "src/core/format/index.js"
+import { format_odds } from "src/output/index.js"
 
 const props = defineProps({
     item: {},

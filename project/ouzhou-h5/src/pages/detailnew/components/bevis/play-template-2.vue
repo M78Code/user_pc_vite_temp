@@ -2,7 +2,7 @@
 import olStatus from "../ol_status.vue";
 import {defineProps, defineEmits, computed} from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
-import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/core/index.js"
+import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/output/index.js"
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import ResultOlItem from "../../result/ResultOlItem.vue";
 import lockImg from "../lock_img.vue";
@@ -29,23 +29,21 @@ const go_betting = (data) => {
         <ul class="bet" v-for="(hlChild,hlIndex) of item_data.hl" :key="hlIndex">
             <template v-if="!!hlChild">
                 <template v-for="olChild of hlChild.ol.filter(i=>i.os != 3)" :key="olChild.oid">
-                    <li class="bet-item" :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]"
-                        @click="go_betting(olChild)"
-                    >
+                    <li class="bet-item" :class="[{ 'is-active': BetData.bet_oid_list.includes(olChild?.oid ) }]">
                         <template v-if="olChild.os == 1 && olChild?._hs  != 1 ">
-                            <span class="on-text textOverflow1">
+                            <span class="on-text textOverflow1" @click="go_betting(olChild)">
                                 {{ olChild.on }}
                             </span>
-                                <span class="ov-text">
+                                <span class="ov-text" @click="go_betting(olChild)">
                                 {{ compute_value_by_cur_odd_type(olChild.ov, '', '', MatchDetailCalss.params.sportId) }}
                             </span>
-                            <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )"/>
+                            <olStatus :item_ol_data="olChild" :active="BetData.bet_oid_list.includes(olChild?.oid )" @click="go_betting(olChild)"/>
                         </template>
                         <!-- <template v-if="olChild.os == 2 || olChild._hs == 1">
                             <img class="lock" :src="odd_lock_ouzhou" alt="lock"/>
                         </template> -->
-                        <lockImg :ol_item="olChild" />
-                        <ResultOlItem :value="olChild" :hpt="2"></ResultOlItem>
+                        <lockImg :ol_item="olChild"  @click="go_betting(olChild)"/>
+                        <ResultOlItem :value="olChild" :hpt="2" @click="go_betting(olChild)"></ResultOlItem>
                 </li>
                 </template>
             </template>

@@ -1,16 +1,20 @@
-import lodash from "lodash";
-import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { api_common, api_analysis } from "src/api/index.js";  // API 公共入口
-import { useMittOn, useMittEmit, useMittEmitterGenerator, MITT_TYPES } from "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
-import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
-import UserCtr from "src/core/user-config/user-ctr.js";
-import { MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/core/index";
-import { SessionStorage } from "src/core/utils/index.js"
-
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref, onBeforeMount } from "vue";
+import {SessionStorage,
+   MatchDataWarehouse_H5_Detail_Common,
+   MatchDetailCalss, LOCAL_PROJECT_FILE_PREFIX,
+   MenuData,
+   MatchDataWarehouse_H5_List_Common,
+   GlobalAccessConfig,
+   useMittOn, useMittEmit,
+   useMittEmitterGenerator,
+   MITT_TYPES,
+   UserCtr
+  } from "src/output/index.js";
+  import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 export const details_main = () => {
   const router = useRouter();
   const route = useRoute();
@@ -20,7 +24,8 @@ export const details_main = () => {
   // console.log("Store", store)
   // const state = store.getState()
   // 球类id
-  const sport_id = ref(route.params.mcid)
+  const  MatchDataBaseH5 = ref(MatchDataWarehouse_H5_List_Common)
+  const sport_id = ref(route.params.csid)
   const matchDetailCtr = ref(MatchDetailCalss)
   // 控制视频说明弹窗
   const get_bet_show = ref(false)
@@ -220,10 +225,12 @@ export const details_main = () => {
     state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
   })
   // // 刷新页面时获取当前玩法集ID
-  // onMounted(() => {
-  //   console.error(route);
-  //   matchDetailCtr.value.current_category_id = route.params.mcid
-  // })
+  onMounted(() => {
+    // LocalStorage.get("YUAN_MATCH_DETAIL_DATA")
+    MatchDataWarehouseInstance.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
+    state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
+    console.log(state_data.detail_data ,"state_data.detail_data");
+  })
   /**
    *@description: 点击详情任意地方显示视频对阵信息
    *@param {Undefined}
@@ -513,7 +520,8 @@ export const details_main = () => {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
             // 数据传入数据仓库
-            MatchDataWarehouseInstance.set_match_details(res_data)
+            //lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value),"odds_info",[]) 防止oddinfo接口先获取到数据（matchdetail接口限频导致可能会失败）
+            MatchDataWarehouseInstance.set_match_details(res_data,lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value),"odds_info",[]))
             //如果是切换tab页
             if (state_data.refresh) {
               //获取玩法集 
@@ -652,6 +660,10 @@ export const details_main = () => {
         .get_category_list(params)
         .then((res) => {
           const res_data = lodash.get(res, "data");
+          //转移所有中文投注名称
+          if(UserCtr.lang == "zh" && !lodash.isEmpty(res.data)){
+            res.data[0].marketName = '所有盘口'
+          }
           state_data.data_list = res_data;
 
           // set_details_tabs_list(res_data);
@@ -851,10 +863,10 @@ export const details_main = () => {
         set_goto_detail_matchid(event_data.mid);
       } else {
         // 如果不是演播厅的，才有退出回到 列表
-        if (lodash.get(state_data.get_video_url, "active") != "lvs") {
+        // if (lodash.get(state_data.get_video_url, "active") != "lvs") {
           // 没有返回赛事数据就跳转到列表页
-          // router.push({ name: "matchList" });
-        }
+          router.go("-1");
+        // }
       }
     });
   };
@@ -897,6 +909,7 @@ export const details_main = () => {
     // 清空操作类的mid
     MatchDataWarehouseInstance.remove_match(lodash.get(route, 'params.mid'))
     MatchDetailCalss.set_match_details_params({})
+    LocalStorage.remove("LocalStorage")
   })
   const on_listeners = () => {
     // #TODO: IMIT
@@ -970,6 +983,7 @@ export const details_main = () => {
     matchDetailCtr,
     get_info_show,
     get_bet_show,
+    MatchDataBaseH5,
     details_click,
     change_go_back,
     details_refresh,

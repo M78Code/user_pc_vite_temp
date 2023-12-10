@@ -15,7 +15,7 @@
       {
         'color-highlight': ol_data.handicap_highlight,
         style2: ol_data.onbl && ol_data.csid == 2,
-        left_cell: utils.is_iframe,
+        left_cell: utils_info.is_iframe,
         'injury-time-goal': ol_data.ot === 'ClutchGoal',
         nogoal: ol_data.ot === 'NoGoal',
       },
@@ -29,7 +29,7 @@
     <!-- 赔率 -->
     <div class="odds" :class="[odds_lift]" :style="[1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
         +ol_data._hpid
-      ) && utils.is_iframe
+      ) && utils_info.is_iframe
         ? 'flex:1.5'
         : ''
       ">
@@ -44,8 +44,6 @@
           ol_data.csid
         ) }}
       </span>
-      <div>
-      </div>
       <div class="odds-arrows-wrap">
         <!-- 红升、绿降 -->
         <div class="odds-icon" v-if="odds_lift == 'up'" :style="compute_css_obj({ key: 'pc-home-arrow-up' })"></div>
@@ -56,19 +54,14 @@
 </template>
 
 <script setup>
-// import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 import lodash from 'lodash'
-import {
-  get_odds_active,
-  utils,
-} from "src/core/index.js";
-import { format_odds_value } from 'src/core/format/module/format-odds.js';
+import { get_odds_active } from "src/output/index.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
-import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
-import { useGetItem } from "./bet_item_hooks.js";
-import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
+import { compute_value_by_cur_odd_type } from "src/output/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { compute_css_obj } from 'src/core/server-img/index.js'
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 // 定时器对象
@@ -239,7 +232,7 @@ const disk_text_replace = (lang, onb) => {
  */
 function get_odds_state(mhs, hs, os) {
   let _active = get_odds_active(mhs, hs, os);
-  let id = lodash.get(props.ol_data, "_hn") || lodash.get(props.ol_data, "oid");
+  let id = lodash.get(props.ol_data, "oid");
   let state = "";
   const STATE = {
     // 封盘

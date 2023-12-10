@@ -7,7 +7,8 @@
     <div class="setting-top setting-item">
       <div class="title">
         联赛筛选
-        <span>(已选16)</span>
+        <span>全部</span>
+        <!-- <span>(已选16)</span> -->
       </div>
       <div>
       </div>
@@ -57,24 +58,19 @@
   </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/core/index.js";
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES,SessionStorage } from "src/core/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX} from 'src/core';
+import { useMittEmit, MITT_TYPES,SessionStorage } from "src/output/index.js";
+import {LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
 import {
   ref,
-  watch,
-  computed,
-  nextTick,
-  onBeforeUnmount,
-  onMounted
+ 
 } from "vue";
 import Switch from "./components/switch.vue";
-import { standard_edition } from "src/base-h5/mixin/userctr.js";
-import { UserCtr } from "src/core/";
-import { LocalStorage } from "src/core/index.js";
-import { default_theme_key } from "src/core/theme/";
 
+import { UserCtr } from "src/output/index.js";
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import { default_theme_key } from "src/core/theme/";
+import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
@@ -131,6 +127,9 @@ const setting_list = ref([
 
 const closedHandle = () => {
   emit("closedHandle");
+    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+    text: "footer-refresh"
+  })
 };
 /**
  * 打开联赛筛选框
@@ -167,6 +166,13 @@ const switch_handle = item => {
 const version_handle = item => {
   const status = item.switchValue === "rightVal" ? 2 : 1;
   UserCtr.set_standard_edition(status);
+  useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
+  MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
+  // if (status === 1) {
+  //   setTimeout(() => {
+  //     useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+  //   }, 1000)
+  // }
 };
 /**
  *@description 处理排序规则

@@ -37,14 +37,14 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import lodash from 'lodash';
-// import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
+// import sportIcon from "src/public/components/sport_icon/sport-icon.vue"
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import MatchListCardClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';
 import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
-import { compute_css_obj } from "src/core/index.js";
+import { compute_css_obj } from "src/output/index.js";
 
 const props = defineProps({
   card_style_obj: {
@@ -54,8 +54,10 @@ const props = defineProps({
 })
 
 const is_collect = ref(false);
-//第一次进页面时，收藏从接口获取状态，后续点击前端控制
-is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+watch(() => props.card_style_obj, () => {
+  //第一次进页面时，收藏从接口获取状态，后续点击前端控制
+  is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+}, {immediate: true })
 
 const collect = lodash.throttle(() => {
   mx_collect({ type: 'champion', match: props.card_style_obj.league_obj });

@@ -164,8 +164,8 @@ import VirtualData from 'src/core/match-list-h5/virtual-sports/virtual-data.js'
 import VirtualVideo from 'src/core/match-list-h5/virtual-sports/virtual-video.js'
 
 import lodash from "lodash"
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/core";
-import { get_now_server } from 'src/core/utils/module/other.js'
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -445,12 +445,13 @@ export default defineComponent({
           state.player.video.setAttribute('autoplay','autoplay');
         }
 
+        state.player.play()
         // 右侧菜单为显示状态则暂停视频播放
-        if (!right_menu_show) {
-          state.player.play()
-        } else {
-          state.player.pause()
-        }
+        // if (!right_menu_show) {
+        //   state.player.play()
+        // } else {
+        //   state.player.pause()
+        // }
       });
       // 播放
       state.player.on('play',() => {
@@ -630,10 +631,10 @@ export default defineComponent({
           state.random_inited = true;
         }
         if(VirtualData.current_league){
-          let p = lodash.cloneDeep(get_prev_v_sports_params);
+          let p = lodash.cloneDeep(VirtualData.prev_v_sports_params);
           let p_key = `${current_sub_menu_id.value}-${VirtualData.current_league.menuId}`;
           p[p_key] = lodash.cloneDeep(new_);
-          set_prev_v_sports_params(p);
+          VirtualData.set_prev_v_sports_params(p);
         }
       },500);
     };

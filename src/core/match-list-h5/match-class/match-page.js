@@ -1,17 +1,19 @@
 
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import { csid_map_concede_points_id } from "src/core/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
 import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 import MatchListCardClass from '../match-card/match-list-card-class'
 import MatchListParams from '../composables/match-list-params'
-import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, i18n_t, UserCtr, MenuData, useMittEmit, MITT_TYPES, utils } from 'src/core'
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from 'src/output/module/match-data-base.js'
+import {   i18n_t,  useMittEmit, MITT_TYPES } from 'src/output/module/constant-utils.js'
+import {  MenuData } from 'src/output/module/menu-data.js'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
-import { get_now_server } from 'src/core/utils/module/other.js'
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 class MatchPage {
@@ -124,6 +126,10 @@ class MatchPage {
    * @return {Undefined} Undefined
    */
   footer_event(obj) {
+    // 每日活动
+    if (obj && obj.text == "activities") {
+      console.log('每日活动')
+    }
     // 排序
     if (obj && obj.text == "sortRules") {
       //TODO DOM滚动到顶部的方法不应该在这里
@@ -508,7 +514,7 @@ class MatchPage {
           //直接发请求    单次数 请求的方法
           obj_.max_loop = 1;
           obj_.timers = 0;
-          utils.axios_api_loop(obj_);
+          axios_api_loop(obj_);
         } else {
           // 记录timer
           if (this.timexasxsxsx) { clearTimeout(this.timexasxsxsx) }
@@ -516,7 +522,7 @@ class MatchPage {
             //直接发请求    单次数 请求的方法
             obj_.max_loop = 1;
             obj_.timers = 0;
-            utils.axios_api_loop(obj_);
+            axios_api_loop(obj_);
             this.timexasxsxsx = null
           }, 100);
           // info.delay_time ||
@@ -524,7 +530,7 @@ class MatchPage {
       } else {
         //直接发请求    多 次数  循环请求 的方法
         // axios_api轮询调用方法
-        utils.axios_api_loop(obj_);
+        axios_api_loop(obj_);
       }
     }
   }

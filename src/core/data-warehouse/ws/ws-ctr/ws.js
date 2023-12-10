@@ -8,9 +8,8 @@ import WsSendManger from "./ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { wslog } from "src/core/log/";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { SessionStorage, LocalStorage } from "src/core/utils/module/web-storage.js";
-import { get_query_string as Qs } from "src/core/index.js";
-import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
+import { SessionStorage } from "src/core/utils/common/module/web-storage.js";
+import { get_query_string as Qs } from "src/output/module/constant-utils.js";
 const token_key = STANDARD_KEY.get("token"); //token键
 export default class Ws {
   // 链接异常次数

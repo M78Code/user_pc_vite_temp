@@ -53,7 +53,7 @@
 
       <!-- 显示:00:00 || 节制  -->
       <span v-show="[0, 2].includes(inplay_match_type)">{{
-       utils.counting_time_ctr_show_format(match, inplay_match_content)
+       counting_time_ctr_show_format(match, inplay_match_content)
       }}</span>
     </template>
   </div>
@@ -64,13 +64,13 @@
 // import msc_mixin from "/mixins/common/msc.js";
 // import time_format_mixin from "/mixins/common/time_format";
 import timer from "src/components/timer/timer.vue";
-import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES,format_time_zone_millisecond} from 'src/core/index.js';
-import {is_eports_csid}  from "src/core/constant/util/csid-util";
-import lodash from "lodash";
+import {get_match_status,i18n_t,get_remote_time } from 'src/output/index.js';
+import { counting_time_ctr_show_format_ouzhou,format_second_ms ,counting_time_ctr_show_format ,format_time_zone_millisecond,format_date_base_obj} from "src/core/format/common/index.js"
 
-// import { t } from "src/core/index.js";;
-// import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
-import { get_remote_time,format_date_base_obj } from "src/core/format/index.js"
+import {is_eports_csid}  from "src/core/constant/common/module/csid-util.js";
+import lodash from "lodash";
+// import { t } from "src/output/index.js";;
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 // const licia_format = require("licia/format");
 
 export default {
@@ -102,10 +102,11 @@ export default {
 
   data() {
     return {
-      utils,
       is_eports_csid,
       get_match_status,
       format_second_ms,
+      counting_time_ctr_show_format,
+      counting_time_ctr_show_format_ouzhou,
       // 滚球显示类型 -1：不显示, 0：00:00, 1：计时器, 2：节制  3：不显示
       inplay_match_type: 1,
       // 滚球显示00:00 || 节制
@@ -436,3 +437,4 @@ export default {
   },
 };
 </script>
+src/core/constant/common/module/csid-util

@@ -10,15 +10,15 @@
     </div>
     <div class="virtual-content-wrapper">
     <div class="virtual-sports-card">
-      <div class="tab-title">
+      <div class="tab-title" @click.stop="expend_video = !expend_video">
         <div class="league-name right-border">{{ lengue_name }}</div>
         <div class="status">
           <!-- <span class="num">第10轮</span>
           <span class="state">比赛中</span> -->
-          <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+          <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
         </div>
       </div>
-      <template v-if="!no_virtual_match">
+      <div v-show="expend_video">
           <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
           <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
           <virtual-sports-stage
@@ -49,18 +49,18 @@
                 </div>
               </div>
           </div>
-      </template>
+      </div>
     </div>
-    <div class="virtual-sports-card">
-      <div class="tab-title tab-border">
+    <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
+      <div class="tab-title tab-border" @click.stop="expend_match(match_item_batch)">
         <div class="league-name right-border">{{ lengue_name }}</div>
         <div class="status">
-          <!-- <span class="num">第10轮</span>
-          <span class="state">比赛中</span> -->
-          <icon-wapper class="icon" color="#e1e1e1" name="icon-arrow" size="15px" />
+          <span class="num">{{ match_item_batch.no }}</span>
+          <span class="state">比赛中</span>
+          <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
         </div>
       </div>
-      <template v-if="!no_virtual_match">
+      <template v-if="!no_virtual_match && match_item_batch.is_expend">
       <!--赛事轮|期菜单-->
       <!-- <match-tab
         :is_reset_tab_i="is_reset_tab_i"
@@ -76,7 +76,7 @@
       <div v-if="!ranking_list_change" class="v-sports-main-list" 
         :class="{'v-sports-main-list-style': standard_edition === 1}" 
         :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}">
-        <!-- 虚拟体育足球赛事列表 -->
+        <!-- 虚拟体育足球赛事列表 --> <!-- 先用match_list_by_no，后面要换成match_list_all_batches.match --> 
         <v-s-match-list v-if="[1001,1004].includes(current_sub_menu_id)" :virtual_match_list="match_list_by_no"
           :match_list_loaded="match_list_loaded" :csid="current_sub_menu_id" :v_menu_changed="v_menu_changed"
           @switch_match="switch_match_handle"  @start="match_start_handle">
@@ -130,7 +130,8 @@
       </div>
       <!-- 占位撑开高度 -->
     </template>
-    <no-data v-else which='noMatch' height='500'></no-data>
+    <!-- 无赛事逻辑有变，先注释了 -->
+    <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
     </div>
     </div>
     
@@ -154,10 +155,11 @@ import noData from "src/base-h5/components/common/no-data.vue";
 import virtualSkeleton from "src/base-h5/components/skeleton/virtual-sports/virtual.vue"
 import lodash from "lodash";
 import { IconWapper } from 'src/components/icon'
-import { get_now_server } from 'src/core/utils/module/other.js'
+import { get_now_server } from 'src/core/utils/common/module/other.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+// import utils from 'src/base-h5/core/utils/index.js'
 
 import 'src/base-h5/css/pages/virtual-sports.scss'
 
@@ -186,6 +188,8 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
+    // 一开始就加载所需js文件
+    load_player_js('old')
     const { params, is_user_refresh, v_match_router_ente } = toRefs(props);
     const state = reactive({
       // 事件集合
@@ -233,9 +237,23 @@ export default defineComponent({
       top_menu_changed: false,
       // 定时器
       procee_again_timer: null,
-      timer1_: null
+      timer1_: null,
+      expend_video: true
     });
+
+    //当前联赛的全部轮次
+    const match_list_all_batches = computed(() => {
+      const match_list_all_batches = [...VirtualData.virtual_match_list];
+      match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      return match_list_all_batches || []
+    })
+
+    const expend_match = (item)=>{
+      item.is_expend = !item.is_expend;
+    }
+
     const match_list_by_no = computed(() => {
+      
       return VirtualData.match_list_by_no || []
     })
     const tab_items = computed(() => {
@@ -319,6 +337,7 @@ export default defineComponent({
       // useMittOn(MITT_TYPES.EMIT_ARRIVED10,arrived10_handle);
       // useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
       // match_ended_status2_handle();
+
     });
 
     onUnmounted(() => {
@@ -445,8 +464,9 @@ export default defineComponent({
       }
       else{
         // 比赛已开始, 获取视频接口
+        
         VirtualVideo.get_video_process_by_api(() => {
-          VirtualVideo.get_match_video_process(state.current_match);
+          VirtualVideo.get_match_video_process(state.current_match).bind(VirtualVideo)();
         });
       }
 
@@ -465,7 +485,7 @@ export default defineComponent({
             if(match.start_now_sub <= 0){
               VirtualVideo.get_video_process_by_api(() => {
                 state.current_match = match;
-                VirtualVideo.get_match_video_process(state.current_match);
+                VirtualVideo.get_match_video_process.bind(VirtualVideo, state.current_match)();
               });
             }
           }
@@ -477,17 +497,19 @@ export default defineComponent({
             }
           }
           state.current_match = match;
+          console.log('switch_match_handle2', 'lll')
         }
         else{
           if(match.start_now_sub < 0){
             state.current_match = {};
             VirtualVideo.get_video_process_by_api(() => {
               state.current_match = match;
-              VirtualVideo.get_match_video_process(state.current_match);
+              VirtualVideo.get_match_video_process.bind(VirtualVideo, state.current_match)();
             });
           }
           else{
             state.current_match = match;
+            console.log('switch_match_handle4', 'lll')
           }
         }
 
@@ -519,6 +541,7 @@ export default defineComponent({
         VirtualData.set_current_batch({});
       }
       state.tab_item_i = i;
+      VirtualData.set_tab_item_i(i);
       if(tab_items.value && tab_items.value.length && i > -1){
         let current_league = tab_items.value[i];
         state.lengue_name = current_league.name
@@ -601,6 +624,8 @@ export default defineComponent({
       match_list_by_no,
       current_sub_menu_id,
       get_betbar_show,
+      expend_match,
+      match_list_all_batches
     }
   }
 });
@@ -653,6 +678,9 @@ export default defineComponent({
     }
     .icon{
       transform: rotate(180deg);
+      &.expend_icon {
+        transform: rotate(90deg);
+      }
     }
   }
 }
@@ -668,10 +696,10 @@ export default defineComponent({
 .virtual-sports-card {
   background: #fff;
   border-radius: 4px;
+  margin-bottom: .08rem;
 }
 .virtual-sports-menu {
     display: flex;
-    margin-bottom: .08rem;
     padding: .1rem;
     padding-bottom: 0;
     background: var(--q-gb-bd-c-1);

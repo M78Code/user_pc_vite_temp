@@ -15,7 +15,7 @@
 import template2 from 'src/base-pc/components/match-list/featured_matches/template2.vue';
 import MatchesCard15Mins from './matches_card_15mins.vue';
 import { onBeforeUnmount, watch } from 'vue'
-import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common } from 'src/core'
+import { MatchDataWarehouse_ouzhou_PC_l5mins_List_Common } from "src/output/index.js"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 const props = defineProps({
 	matches_15mins_list: {

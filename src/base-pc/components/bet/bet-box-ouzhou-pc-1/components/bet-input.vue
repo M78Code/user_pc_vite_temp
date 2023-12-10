@@ -40,7 +40,7 @@ import { reactive,onMounted,onUnmounted } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 } from "src/core/"
+import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({

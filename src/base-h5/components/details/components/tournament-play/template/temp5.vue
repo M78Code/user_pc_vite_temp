@@ -34,7 +34,7 @@
                       <div 
                       class="play-box-style" 
                       @click="go_to_bet(ol_item)" 
-                      :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win': utils.calc_win(ol_item.result)}]">
+                      :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win': calc_win(ol_item.result)}]">
                         <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                       </div>
                       <!-- 主程序 end -->
@@ -84,7 +84,7 @@
                   <template v-if="ol_item._hs == 0 || ol_item._hs == 11">
                     <template v-if="ol_item.os == 1">
                       <!-- 主程序 start -->
-                      <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]">
+                      <div class="play-box-style" @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]">
                         <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                       </div>
                       <!-- 主程序 end -->
@@ -136,7 +136,7 @@
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
                     <div class="ellipsis remark play-box-style bw_mr1">{{ol_item.on}}</div>
-                    <div @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':utils.calc_win(ol_item.result)}]" class="play-box-style col">
+                    <div @click="go_to_bet(ol_item)" :class="[get_bet_list.includes(ol_item.id_)?'active-play':'',{'win':calc_win(ol_item.result)}]" class="play-box-style col">
                       <odds-new :item_data="item_data" :ol_data="ol_item" ></odds-new>
                     </div>
                     <!-- 主程序 end -->
@@ -185,7 +185,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import oddsNew from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
-import { utils, LOCAL_PROJECT_FILE_PREFIX } from 'src/core/index.js';
+import {  LOCAL_PROJECT_FILE_PREFIX } from 'src/output/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
@@ -212,7 +212,7 @@ export default defineComponent({
       useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true);
     };
     return {
-      utils,
+      
       go_to_bet,
       get_bet_list,
       LOCAL_PROJECT_FILE_PREFIX,

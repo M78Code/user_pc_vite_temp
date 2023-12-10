@@ -39,33 +39,29 @@
   </div>
 </template>
 <script setup>
+import { ref, watch, onBeforeUnmount } from 'vue';
+
 import betItem from "src/base-pc/components/bet-item/bet-item-list-ouzhou-data.vue"
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
-import { ref, watch, onBeforeUnmount, computed } from 'vue';
 import { api_details } from 'src/api';
 import template2 from './template2.vue';
 import { useRouter } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
-import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, UserCtr, MITT_TYPES, useMittOn, get_match_status } from 'src/core'
+import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, MITT_TYPES, useMittOn, get_match_status } from "src/output/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { get_ouzhou_data_tpl_id, get_handicap_index_by, get_match_to_map_obj, get_match_score } from 'src/core/match-list-pc/match-handle-data.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 
 const router = useRouter();
-
 const cache_data = SessionStorage.get('get_hots', []);
-
 if (cache_data.length) {
   MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(cache_data);
 }
 const matches_featured_list = ref(cache_data)
-const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common, (mid) => {
-  const idx = matches_featured_list.value.findIndex(i => i.mid == mid);
-  idx > -1 && get_featurd_list()
-})
 const get_featurd_list = async () => {
   let params = {
     isHot: 1,
@@ -92,6 +88,10 @@ const get_featurd_list = async () => {
     set_active_mids(mids) //添加ws订阅
   }
 }
+const { ws_destroyed, set_active_mids } = use_match_list_ws(MatchDataWarehouse_ouzhou_PC_hots_List_Common, (mid) => {
+  const idx = matches_featured_list.value.findIndex(i => i.mid == mid);
+  idx > -1 && get_featurd_list() //如果特色赛事ID已经删除 就重新查询
+})
 const mitt_list = [useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, get_featurd_list).off]
 const get_match_item = (mid) => {
   return MatchDataWarehouse_ouzhou_PC_hots_List_Common.get_quick_mid_obj(mid)
@@ -331,4 +331,5 @@ get_featurd_list()
   .margin-box {
     margin-right: 10px;
   }
-}</style>
+}
+</style>

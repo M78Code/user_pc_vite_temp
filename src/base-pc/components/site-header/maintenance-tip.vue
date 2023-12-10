@@ -15,11 +15,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { i18n_t } from "src/boot/i18n.js"
-import { utils, UserCtr } from 'src/core/index.js'
-import { get_remote_time } from "src/core/format/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { get_remote_time } from "src/output/index.js"
 
 /** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
+const is_iframe = ref(is_iframe)
 
 /** 定时器 */
 const countDownTimer = ref(null)

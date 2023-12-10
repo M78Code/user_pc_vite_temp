@@ -29,7 +29,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router';
 
 import { RefreshWapper as Refresh } from "src/components/common/refresh"
-import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/format/module/format-date.js"
+import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/output/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
 
 
@@ -155,3 +155,4 @@ function refresh() {
   }
 }
 </style>
+src/core/format/common/module/format-date.js

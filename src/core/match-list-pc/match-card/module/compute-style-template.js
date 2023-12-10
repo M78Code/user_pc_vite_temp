@@ -23,13 +23,14 @@
  * 最好是写 配置文件
  *
  */
-let count = 0
 
-import { MatchDataWarehouse_PC_List_Common as MatchListData, PROJECT_NAME, time_conversion } from 'src/core/index.js'
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/output/module/match-data-base.js'
+import { PROJECT_NAME } from 'src/output/module/menu-data.js'
+import { time_conversion } from 'src/output/module/constant-utils.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
-import { update_match_parent_card_style } from "./utils.js";
+import { MenuData} from "src/output/module/menu-data.js"
+import { update_match_parent_card_style } from "src/core/match-list-pc/match-card/module/utils.js";
 
 import { league_title_card_template, ouzhou_league_title_template } from "../config/card-template-config.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
@@ -414,7 +415,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 			style_obj.add_handicap_height +
 			style_obj.tab_play_total_height
 		} else {
-			style_obj.total_height = 80;		
+			style_obj.total_height = 80 + style_obj.cur_handicap_height;		
 		}
 	}
 	return style_obj;

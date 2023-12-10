@@ -33,9 +33,9 @@ import {
   LayOutMain_pc,
   GlobalSwitchClass,
   useMittEmit,
-  utils,
+  
   UserCtr
-} from "src/core/index";
+} from "src/output/index.js";
 // import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
 import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
@@ -69,7 +69,7 @@ export default {
     'menu_data.cur_level3_menu':{
       handler(){
         let csid = $menu.get_match_list_api_params().csid
-        if(this.$utils.is_eports_csid(csid) && !['hot','play'].includes(this.vx_cur_menu_type.type_name)){
+        if(this.$is_eports_csid(csid) && !['hot','play'].includes(this.vx_cur_menu_type.type_name)){
           this.get_match_list()
         }
       },
@@ -80,7 +80,7 @@ export default {
       handler(){
         if(['hot','play'].includes(this.vx_cur_menu_type.type_name)){
           let csid = $menu.get_match_list_api_params().csid
-          if(this.$utils.is_eports_csid(csid)){
+          if(this.$is_eports_csid(csid)){
             this.get_match_list()
           }
         }
@@ -105,7 +105,7 @@ export default {
   created(){
     this.set_is_pause_video(this.vx_layout_cur_page.from != 'video')
     if(this.$route.name =='details'){
-        if(this.$utils.is_eports_csid(+this.$route.params.csid)){
+        if(this.$is_eports_csid(+this.$route.params.csid)){
             this.get_match_list()
           }
     }
@@ -158,7 +158,7 @@ export default {
           this.match_ctr.set_list_obj(data, timestap);
           this.match_list = this.match_ctr.list;
           let match_c8 = null;
-          let _skt_mid_obj = this.$utils.ws_c8_obj_format(this.match_ctr.list);
+          let _skt_mid_obj = this.$ws_c8_obj_format(this.match_ctr.list);
           this.match_ctr.list.map((item) => {
             match_c8 = _skt_mid_obj[item.mid];
             if(match_c8)
@@ -248,4 +248,4 @@ export default {
     }
   }
 }
-</style>
+</style>/index

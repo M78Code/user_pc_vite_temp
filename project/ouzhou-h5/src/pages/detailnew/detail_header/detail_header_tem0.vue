@@ -35,10 +35,10 @@ const props = defineProps({
   },
 });
 const scoew_icon_list = ref({});
-const toRef_get_match_detail = toRef(props, "get_match_detail");
-watch(toRef_get_match_detail, (new_value, old_value) => {
+watch(()=>props.get_match_detail, (new_value, old_value) => {
+  scoew_icon_list.value = {};
   set_scoew_icon_list(new_value);
-})
+},{deep:true})
 const set_scoew_icon_list = (new_value) => {
   if (new_value && new_value.msc) {
     for (let key in new_value.msc) {

@@ -8,7 +8,7 @@
     <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
-    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl && false">
+    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl || 1">
       <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
       <!-- 临时调试用 -->
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">
@@ -45,8 +45,8 @@
         <!-- 滚球标题 -->
         <Match-Main-Title :title="$t('menu.match_playing')" :match_count="match_count"
           v-show="match_list_card_key_arr.length && MenuData.is_home()" />
-
-        <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="`card_key_${card_key}`">
+        
+        <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="{'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home()}">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
         <!-- <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
@@ -85,16 +85,18 @@ import { onMounted, onActivated, onUnmounted, ref, watch, computed, nextTick } f
 import { IconWapper } from "src/components/icon";
 import { BackTop } from "src/components/back-top";
 import LoadData from "src/components/load_data/load_data.vue";
+
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/base-pc/components/tab/league-tab/index.js"; //联赛菜单
 import ListFilterHot from "src/base-pc/components/match-list/list-filter-hot/index.vue"; //热门赛事列表 头部筛选
 import listFilterDate from "src/base-pc/components/match-list/list-filter-date/index.vue"; //热门赛事列表  早盘-日期
-import { MatchListCardFullVersionWapper as MatchListCard } from "src/base-pc/components/match-list/match-list-card/index.js"; //赛事列表
+import MatchListCard from "src/base-pc/components/match-list/match-list-card/match-list-card-template-2/index.vue"; //赛事列表
 import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/base-pc/components/match-list/play-virtual-match-type/index.js"; //赛事列表头部——滚球——赛事类型
 import ListHeader from "src/base-pc/components/match-list/list-header/index.vue"; //头部
 import ScrollList from "src/base-pc/components/cus-scroll/scroll_list.vue";
 import EsportsHeader from "src/base-pc/components/match-list/esports-header/index.vue"; //电竞赛事列表筛选
 import ConmingSoon from "src/base-pc/components/conming_soon/conming_soon.vue";
 import PlayMatchLeague from './play-match-league.vue'
+
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import {
   mounted_fn,
@@ -103,10 +105,11 @@ import {
   handle_destroyed
 } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+
 import {
   PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
-} from "src/core/index.js";
+} from "src/output/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
 import MatchMainTitle from "src/base-pc/components/match-list/match_main_title.vue";
 import MatchCardList15Mins from "src/base-pc/components/match-list/match_card_list_15mins/matches_card_list_15mins.vue";

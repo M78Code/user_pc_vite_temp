@@ -12,8 +12,8 @@
     <span v-else>
       {{i18n_t('mmp')[1][detail_data.mmp]}}
       <!-- 计时器 -->
-      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ utils.counting_time_ctr_show_format(detail_data, format_mgt_time(showTime)) }}</span>
-      <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;{{ utils.counting_time_ctr_show_format(detail_data, '00:00')}}</span>
+      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ counting_time_ctr_show_format(detail_data, format_mgt_time(showTime)) }}</span>
+      <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;{{ counting_time_ctr_show_format(detail_data, '00:00')}}</span>
     </span>
   </span>
 </template>
@@ -21,11 +21,10 @@
 <script setup>
   import lodash from 'lodash';
   import { computed, onMounted, onUnmounted, ref, watch } from "vue"
-  // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
-  import { format_mgt_time } from "src/core/format/index.js"
-  import { utils } from 'src/core/utils/index.js';
+  import { counting_time_ctr_show_format } from 'src/core/format/common/index.js'
+  import { format_mgt_time } from "src/output/index.js"
   import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/index.js";
-// import { format_mgt_time } from "src/core/index";
+// import { format_mgt_time } from "src/output/index.js";
   const props = defineProps({
     detail_data: {
       type: Object,
@@ -39,11 +38,11 @@
     // 计时器步长
     const step = ref(1) 
     // 显示比赛时间
-    const mmp_arr = ref(['6','7','41','42'])
+    const mmp_arr = ['6','7','41','42']
     // 时间
     const showTime = ref('') 
     // 上下半场
-    const mmp_arr1 = ref(["31", "33"])
+    const mmp_arr1 = ["31", "33"]
     // 延时器
     const showTimeInterval = ref(null)
 
@@ -141,3 +140,4 @@ onUnmounted(() => {
 
 
 <style lang="scss" scoped></style>
+src/core/utils/common/index.jssrc/output/index.js

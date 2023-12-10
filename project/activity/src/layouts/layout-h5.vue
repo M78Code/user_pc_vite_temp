@@ -2,7 +2,8 @@
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
       <q-page class="flex flex-center">
-        <PageH5 />
+        <div>动画单独项目</div>
+        <PageH5 class="" style="height: 100vh" />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -11,9 +12,14 @@
 import { defineComponent, defineAsyncComponent } from "vue";
 import _ from "lodash";
 import PageH5 from "../pages/yazhou-h5/index.vue";
-//头部引入  
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
-import { UserCtr } from "src/core/index.js";
+//头部引入
+import {
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "project_path/src/core/index.js";
+import { UserCtr } from "project_path/src/core/index.js";
 export default defineComponent({
   name: "layout-h5",
   components: {
@@ -40,12 +46,14 @@ export default defineComponent({
       UserCtr.get_user_token() ||
       window.SEARCH_PARAMS.get_url_param(window.location.href).get("token");
     await UserCtr.get_user_info(token);
-    document.getElementById("loading-root-ele").style.visibility = "hidden";
+    // document.getElementById("loading-root-ele")?.style?.visibility = "hidden";
     // html宽度基准值不为375的商户(如：外层样式宽度为750)
     this.wpx = url_search.get("wpx");
     this.inner_height = window.innerHeight;
-    //created 内 执行 
-this.handle_generat_emitters()
+    //created 内 执行
+    this.handle_generat_emitters();
+    // this.onResize()
+    this.limit_rem();
   },
   mounted() {},
   methods: {
@@ -120,19 +128,19 @@ this.handle_generat_emitters()
           if (this.wpx) {
             if (max_width > this.wpx) {
               this.limit_rem();
-              document.getElementById("q-app").classList.add("max_limit_w750");
+              document.getElementById("ty-app").classList.add("max_limit_w750");
             } else {
               document
-                .getElementById("q-app")
+                .getElementById("ty-app")
                 .classList.remove("max_limit_w750");
             }
           } else {
             if (max_width > 500) {
               this.limit_rem();
-              document.getElementById("q-app").classList.add("max_limit_rem");
+              document.getElementById("ty-app").classList.add("max_limit_rem");
             } else {
               document
-                .getElementById("q-app")
+                .getElementById("ty-app")
                 .classList.remove("max_limit_rem");
             }
           }
@@ -146,10 +154,9 @@ this.handle_generat_emitters()
           }
         }
       }, 400);
-      // 活动页面比较简单，不用延时触发
-      if (this.$route.name == "activity_task") {
-        this.inner_height = window.innerHeight;
-      }
+
+      this.inner_height = window.innerHeight;
+
       // 动态设置属性--vh基准值
       this.handle_set_vh();
     },
@@ -224,39 +231,41 @@ this.handle_generat_emitters()
       }
     },
     /**
-* 生成事件监听  
-*/
-handle_generat_emitters(){
-let event_pairs=  [
-// 投注数量
-{ type:MITT_TYPES.EMIT_GO_TO_VENDER, callback:  () => {
-        this.$nextTick(() => {
-          window.is_token_invalid_show = true;
-          this.is_token_invalid_show = true;
-        });
-      }} ,
-      { type:MITT_TYPES.EMIT_DOMAIN_ERROR_ALERT, callback:  () => {
-        this.$nextTick(() => {
-          this.is_domain_invalid_show = true;
-        });
-      }} 
+     * 生成事件监听
+     */
+    handle_generat_emitters() {
+      let event_pairs = [
+        // 投注数量
+        {
+          type: MITT_TYPES.EMIT_GO_TO_VENDER,
+          callback: () => {
+            this.$nextTick(() => {
+              window.is_token_invalid_show = true;
+              this.is_token_invalid_show = true;
+            });
+          },
+        },
+        {
+          type: MITT_TYPES.EMIT_DOMAIN_ERROR_ALERT,
+          callback: () => {
+            this.$nextTick(() => {
+              this.is_domain_invalid_show = true;
+            });
+          },
+        },
+      ];
+      let { emitters_off } = useMittEmitterGenerator(event_pairs);
+      this.emitters_off = emitters_off;
+    },
 
-
-]
-let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
-this.emitters_off=emitters_off  
-},
-
-
-
-// //移除相应监听事件 //视图销毁钩子函数内执行
-// if(this.emitters_off){this.emitters_off()} 
+    // //移除相应监听事件 //视图销毁钩子函数内执行
+    // if(this.emitters_off){this.emitters_off()}
     // 添加相应监听事件
     on_listeners() {
       // 设置网络状态
       window.addEventListener("offline", this.offlineEvent);
       window.addEventListener("online", this.onlineEvent);
- 
+
       // 阻止双击放大
       document.addEventListener("touchstart", this.touchstart_event_fun);
       // 阻止双指放大

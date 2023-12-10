@@ -4,8 +4,8 @@ import EventDateStandard from "./event-date-standard.vue"
 
 import {computed, defineProps, defineEmits} from "vue"
 import {useRouter, useRoute} from "vue-router"
-import {format_total_score} from "src/core/format/index.js"
-import {MenuData} from 'src/core/'
+import {format_total_score} from "src/output/index.js"
+import {MenuData} from "src/output/index.js"
 
 
 const props = defineProps({
@@ -189,11 +189,11 @@ const ChangeActive = function () {
     font-weight: bold;
 }
 
-::v-deep .event-date-standard {
+:deep(.event-date-standard) {
     color: #fff;
 }
 
-::v-deep .match_stage {
+:deep(.match_stage) {
     width: 72px;
     height: 40px;
     color: #fff;

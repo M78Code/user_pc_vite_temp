@@ -3,16 +3,17 @@
         <div v-show="false">{{BetViewDataClass.bet_view_version}}</div>
         <div class="f-b-s bet-content">
             <div class="fw-s-s bet-left">
-                <div class="w-100 f-s-c text-1a1 h15">
-                    <span class="text-flow">{{ items.playOptionName}}</span> 
+                <div class="w-100 f-s-c text-1a1">
+                    <span class="text-flow-none">{{ items.playOptionName}}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
-                <div class="w-100 f-s-c my-4">
+                <div class="w-100 my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                 </div>
+                <div class="w-100 text-8a8 fon12 font400">{{items.matchName}}</div>
                 <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
                 </div>
             </div>
@@ -54,7 +55,7 @@
 
 <script setup> 
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
-import {i18n_t,format_money2,LOCAL_PROJECT_FILE_PREFIX } from "src/core/"
+import {i18n_t,format_money2,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { IconWapper } from 'src/components/icon/index.js'
 
@@ -164,8 +165,12 @@ const props = defineProps({
         white-space: nowrap;
     }
     .text-flow-none{
-        width: 76%;
-        line-height: 14px;
+        max-width: 84%;
+        line-height: 16px;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
     }
     .bet-odds-value{
         color: var(--q-gb-t-c-2);
