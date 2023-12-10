@@ -193,6 +193,14 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 0.38rem;
+  .circle-time-wrapper svg path{
+    stroke: var(--q-gb-t-c-12);
+  }
+  .final-circle {
+      svg path {
+        stroke: var(--q-gb-bd-c-8);
+      }
+    }
 
   .v-timer-inner {
     width: 1.05rem;
@@ -206,9 +214,10 @@ export default {
     .timer-format {
       // color: #ffb001;
       font-size: 0.24rem;
-
+      color: var(--q-gb-t-c-12) !important;
       &.last {
         // color: #E23E3E;
+        color: var(--q-gb-bd-c-8) !important;
       }
     }
   }

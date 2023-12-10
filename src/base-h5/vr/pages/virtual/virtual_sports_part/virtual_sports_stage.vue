@@ -843,7 +843,7 @@ export default {
   height: 2.02rem;
   margin: auto;
   overflow: hidden;
-  background-image: var(--q-color-com-img-bg-96);
+  background-image: url($SCSSPROJECTPATH+"/image/png/virtual_football.png"); //todo 后续上传到服务器
   background-size: 100% 100%;
   position: relative;
 
@@ -856,7 +856,7 @@ export default {
   }
 
   &.basketball {
-    background-image: var(--q-color-com-img-bg-143);
+    // background-image: var(--q-color-com-img-bg-143);
   }
 
   &.motorcycle {
