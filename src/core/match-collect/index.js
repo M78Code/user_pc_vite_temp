@@ -102,7 +102,6 @@ class MatchCollect {
   get_match_collect_state (match) {
     const { mid = '' } = match
     const match_key = `collect_mid_${mid}`
-    console.log('get_match_collect_stateget_match_collect_stateget_match_collect_state', this.match_mid_collect_obj)
     const match_collect = lodash.get(this.match_mid_collect_obj.value, `${match_key}.match_collect`, false)
     return match_collect
   }
