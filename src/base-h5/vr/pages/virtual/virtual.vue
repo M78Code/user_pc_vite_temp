@@ -322,7 +322,7 @@ export default {
     get_is_banner_jump(){return 1},
     get_golistpage(){return 1},
     get_theme(){return 'theme01'},
-    right_menu_show(){return 1},
+    right_menu_show(){return VR_CTR.get_is_show_menu()},
   },
   components: {
     virtualSports,

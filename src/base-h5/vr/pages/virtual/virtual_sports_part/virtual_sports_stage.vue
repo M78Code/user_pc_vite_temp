@@ -265,7 +265,7 @@ export default {
     //   'set_is_show_menu'
     // ]),
     set_settle_dialog_bool(){},
-    set_is_show_menu(){},
+    set_is_show_menu(data){VR_CTR.set_is_show_menu(data)},
     set_prev_v_sports_params(data){VR_CTR.set_prev_v_sports_params(data)},
 
     /**
@@ -662,7 +662,7 @@ export default {
     get_prev_v_sports_params(){return VR_CTR.get_prev_v_sports_params()},
     sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
     get_is_show_settle_tab(){return 1},
-    right_menu_show(){return 1},
+    right_menu_show(){return VR_CTR.get_is_show_menu()},
 
     // 主队名
     home_name(){

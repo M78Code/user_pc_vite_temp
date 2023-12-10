@@ -54,6 +54,8 @@ class VirtualCtr {
       is_show_details_analyse: false,
       // 赛事id
       goto_detail_matchid: null,
+      //抽屉设置菜单是否显示
+      is_show_menu: false,
     });
   }
 
@@ -109,6 +111,9 @@ class VirtualCtr {
   get_goto_detail_matchid() {
     return this.state.goto_detail_matchid;
   }
+  get_is_show_menu() {
+    return this.state.is_show_menu;
+  }
 
   
 
@@ -151,6 +156,9 @@ class VirtualCtr {
   }
   current_sub_menuid() {
     return this.state.current_sub_menuid;
+  }
+  is_show_menu() {
+    return this.state.is_show_menu;
   }
 
   // set方法
@@ -215,6 +223,9 @@ class VirtualCtr {
   }
   set_goto_detail_matchid(value) {
     this.state.goto_detail_matchid = value;
+  }
+  set_is_show_menu(v) {
+    this.state.is_show_menu = v;
   }
 }
 const VR_CTR = new VirtualCtr();
