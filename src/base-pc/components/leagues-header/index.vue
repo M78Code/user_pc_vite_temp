@@ -100,7 +100,26 @@ const getName = () => {
 const jumpTo = ()=>{
 	// let route_name = lodash_.get(MenuData.router_info,'pre_route') || 'home'
 	// console.log(route_name, 'route_name')
-  	router.push({name:'home'})
+		let obj = {
+			lv1_mi : route.params.sportId*1 +100,
+			has_mid_menu: true, // 有中间菜单
+			lv2_mi: route.params.sportId*1 +100 +''+ 2, // 二级菜单id
+			menu_type: 1, // 左侧热门或者赛种
+		}
+
+		let mid_config = {
+			...MenuData.mid_menu_result,
+			md: '',
+			filter_tab: 4001
+		}
+  
+		MenuData.set_menu_root(202, true)
+		MenuData.set_left_menu_result(obj)
+		MenuData.set_menu_current_mi(route.params.sportId*1 +100)
+  	MenuData.set_current_ball_type(route.params.sportId)
+		MenuData.set_mid_menu_result(mid_config)
+		
+		router.push({name:'home'})
 }
 
 </script>
