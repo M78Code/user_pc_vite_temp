@@ -13,8 +13,8 @@
     <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
       <DateTab ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
-    <div v-if="+MenuData.current_lv_2_menu_i>2000 && +MenuData.current_lv_2_menu_i<3000">
-        <DateTab :dataList="dataList[2000]"  />
+    <div v-if="+MenuData.get_menu_type_special() == 2000">
+        <DateTab ref="dJdateTabMenu" :dataList="dataList[2000]"  />
     </div>
     <!-- 滑动菜单组件 -->
     <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
@@ -57,8 +57,9 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 const is_first = ref(true)
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
-const select_dialog = ref(false);//暂时筛选窗口
+const select_dialog = ref(false);//暂时筛选窗口dJ
 const dateTabMenu = ref(null);//时间dom
+const dJdateTabMenu = ref(null);//电竞时间dom
 const scrollTabMenu = ref(null);//滚球dom
 const searchTabMenu = ref(null);//足球tab dom
 // 监听搜索框状态
@@ -112,6 +113,10 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
         case 2000:
           ref_data.scroll_data_list = BaseData.dianjing_sublist
+          nextTick(()=>{
+            dJdateTabMenu.value.set_active_val();
+            dJdateTabMenu.value.changeTabMenu(BaseData.dianjing_sublist[0],0);
+          })
           break  
         
         case 50000:

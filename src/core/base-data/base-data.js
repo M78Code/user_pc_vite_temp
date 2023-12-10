@@ -197,9 +197,9 @@ class BaseData {
     const data = mi_euid_mapping_default.data;
     // 判断 h5 / pc
     let type = 'p'
-    if(PROJECT_NAME.includes('h5')){
-      type = 'h'
-    }
+    // if(PROJECT_NAME.includes('h5')){
+    //   type = 'h'
+    // }
     const base_menu_obj = Object.fromEntries(Object.keys(data).map(item => [data[item][type] , item]));
     return base_menu_obj;
   }

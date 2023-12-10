@@ -258,7 +258,11 @@ class MenuData {
       /// 4 早盘 11 串关
       config.params.type = this.current_lv_1_menu_i == 3 ? 4 : 11
     }
-
+    if(this.get_menu_type_special()==2000 ){
+      config.api = "get_esports_date_menu_count"
+      /// 4 早盘 11 串关
+      config.params.type = 3000;
+    }
     this.menu_match_date_api_config = config
   }
   /**

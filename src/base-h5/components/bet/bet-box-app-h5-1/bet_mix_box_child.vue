@@ -135,7 +135,7 @@
                 <q-page-sticky ref="silider" position="bottom-left" :offset="fabPos">
                   <div class="jiantou" :disable="draggingFab" v-touch-pan.right.prevent.mouse="handle_silider"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false"></div>
                 </q-page-sticky>
-                <div class="middle">{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
+                <div class="middle">{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "0.00") }}</span></div>
                 <div class="roll-right"><img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""></div>
               </div>
 
@@ -143,7 +143,7 @@
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
               <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
                 <div class="jiantou jiantouhui"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt=""></div>
-                <div class="middle">{{ i18n_t('bet.betting') }} <span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "100.00") }}</span></div>
+                <div class="middle">{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "0.00") }}</span></div>
                 <div class="roll-right"><img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""></div>
               </div>
             </template>
@@ -487,7 +487,7 @@ onUnmounted(() => {
   justify-content: center;
   font-size: 0.2rem;
   color: var(--q-gb-t-c-1);
-  background: var(--q-gb-t-c-7);
+  background: #E8F5FF;
 }
 .yb-info{
   background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%) !important;
@@ -564,9 +564,10 @@ background: var(--q-gb-t-c-5) !important;
   }
 }
 
-.dele-wrap2 {
+.dele-wrap {
   justify-content: flex-start;
   width: 100%;
+  color: var(--q-gb-t-c-11);
 }
 
 .full-shadow {

@@ -104,9 +104,9 @@ export function useGetOrderList () {
       loading.value = false
     }
   }
-  onMounted(() => {
-    handle_fetch_order_list()
-  })
+  // onMounted(() => {
+  //   handle_fetch_order_list()
+  // })
   return {
     columns,
     tableData,
