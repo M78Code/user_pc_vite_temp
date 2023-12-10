@@ -164,7 +164,7 @@ const computed_process_name = computed(() => {
 
   let process_name = Object.keys(get_mmp_name(csid, mmp)).length ? get_mmp_name(csid, mmp) : "";
   // 即将开赛
-
+  if (!Object.keys(process_name).length) process_name = ''
   if (lodash.get(props, 'match.ms') == 110) {
     process_name = i18n_t("common.match_soon");
   }
