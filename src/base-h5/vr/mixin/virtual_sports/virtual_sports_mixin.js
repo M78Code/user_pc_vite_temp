@@ -147,7 +147,7 @@ export default {
         return;
       }
       if(is_user_clicked != 'is_user_refreshing'){
-        useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,true);
+        // useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,true);
         this.virtual_match_list = [];
         this.match_list_by_no = [];
         this.no_title_list = [];
@@ -157,10 +157,10 @@ export default {
       api_v_sports.get_virtual_sport_list(params).then(res => {
         console.error('333')
         this.virtual_data_loading = false;
-        useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
+        // useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         this.set_virtual_data_loading(0);
-        useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
-        useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
+        // useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
+        // useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
 
         if(res.code == 200 && res.data && res.data.length){
           this.virtual_match_list = this.append_result_fields(res.data);

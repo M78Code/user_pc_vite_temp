@@ -528,7 +528,7 @@ export default {
     get_video_process_data(){return VR_CTR.get_video_process_data();},
     get_newer_standard_edition(){return false;},
     get_n_s_changed_loaded(){return false;},
-    get_curr_sub_menu_type(){return false;},
+    get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },
     get_theme(){return 'theme01'},
     get_access_config(){return false;},
     

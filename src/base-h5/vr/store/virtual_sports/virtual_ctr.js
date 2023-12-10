@@ -46,6 +46,8 @@ class VirtualCtr {
       virtual_current_sub_menuid: "",
       // 当前选中的二级菜单menu_type
       curr_sub_menu_type: null,
+      // 详情页的数据
+      detail_data: "",
     });
   }
 
@@ -89,8 +91,11 @@ class VirtualCtr {
   get_current_sub_menuid() {
     return this.state.current_sub_menuid;
   }
-  get_curr_sub_menu_type(state) {
-    return state.curr_sub_menu_type;
+  get_curr_sub_menu_type() {
+    return this.state.curr_sub_menu_type;
+  }
+  get_detail_data() {
+    return this.state.detail_data;
   }
 
   
@@ -189,6 +194,9 @@ class VirtualCtr {
   }
   set_curr_sub_menu_type(v) {
     this.state.curr_sub_menu_type = v;
+  }
+  set_detail_data(payload) {
+    this.state.detail_data = payload;
   }
 }
 const VR_CTR = new VirtualCtr();

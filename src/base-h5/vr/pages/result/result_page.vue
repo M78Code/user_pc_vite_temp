@@ -116,7 +116,7 @@ export default {
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
-    sub_menu_type(){return ''}
+    sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()}
   },
   created() {
     if(this.current_match.match_status == 2){

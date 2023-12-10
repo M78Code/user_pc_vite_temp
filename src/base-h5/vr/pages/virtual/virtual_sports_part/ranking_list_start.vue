@@ -131,7 +131,7 @@ export default {
       return VR_CTR.get_current_mid();
     },
     get_curr_sub_menu_type(){
-      return '';
+      return VR_CTR.get_curr_sub_menu_type()
     },
     get_theme(){
       return 'theme01';

@@ -317,7 +317,7 @@ export default {
     //   right_menu_show:'get_is_show_menu',
     // }),
     get_virtual_current_sub_menuid(){return VR_CTR.get_virtual_current_sub_menuid()},
-    get_curr_sub_menu_type(){return 1},
+    get_curr_sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
     get_prev_menu_type(){return 1},
     get_is_close_video(){return 1},
     get_is_banner_jump(){return 1},

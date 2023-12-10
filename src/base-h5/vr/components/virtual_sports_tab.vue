@@ -59,11 +59,11 @@ export default {
     get_tab_fix(){return },
     get_fewer(){return },
     get_current_league(){return VR_CTR.get_current_league()},
-    get_detail_data(){return {}},
+    get_detail_data(){return VR_CTR.get_detail_data()},
     get_access_config(){return {}},
     matchid(){return ''},
     sub_menu_id(){return VR_CTR.get_current_sub_menuid()},
-    sub_menu_type(){return 0},
+    sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
     is_show_analyse(){return 0},
 
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
@@ -86,7 +86,7 @@ export default {
     this.timer_ = null;
     this.emitters = [
       useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent).off,
-      useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
+      useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent).off,
     ]
     this.initEvent();
     this.play_list()

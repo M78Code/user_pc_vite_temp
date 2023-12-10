@@ -660,7 +660,7 @@ export default {
     current_batch(){return VR_CTR.get_current_batch()},
     video_process_data(){return VR_CTR.get_video_process_data()},
     get_prev_v_sports_params(){return VR_CTR.get_prev_v_sports_params()},
-    sub_menu_type(){return 1},
+    sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
     get_is_show_settle_tab(){return 1},
     right_menu_show(){return 1},
 

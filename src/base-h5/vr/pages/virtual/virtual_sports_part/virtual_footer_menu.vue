@@ -35,6 +35,7 @@
 
 <script>
 import { debounce } from "lodash";
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 
 export default {
   name: 'floatingMenu',
@@ -103,7 +104,7 @@ export default {
     //   "get_theme"
     // ]),
     get_show_favorite_list(){return ''},
-    get_curr_sub_menu_type(){return ''},
+    get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },
     get_newer_standard_edition(){return ''},
     get_theme(){return 'theme01'},
 

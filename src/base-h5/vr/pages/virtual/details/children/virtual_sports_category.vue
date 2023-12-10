@@ -121,7 +121,7 @@ export default {
     //   'get_is_user_refreshing',
     //   'get_is_show_details_analyse',
     // ]),
-    get_detail_data(){},
+    get_detail_data(){ return VR_CTR.get_detail_data() },
     get_details_item(){},
     get_first_details_item(){},
     get_goto_detail_matchid(){},
@@ -268,6 +268,35 @@ export default {
     set_fewer(){},
     set_detail_data_assign(){},
     set_is_user_refreshing(){},
+
+    /**
+     * 描述： 缓存、限频、节流  函数
+     * params  接口参数
+     * cb  调用接口的方法
+     * url_key 去抖动，缓存的 key
+     */
+    cache_limiting_throttling_get_list (params, cb, url_key='menu_init'){
+      let timer = null
+      if(axios_debounce_cache && axios_debounce_cache[url_key] && axios_debounce_cache[url_key]['ENABLED']){
+        let info = axios_debounce_cache[url_key].can_send_request(params)
+        if(info.can_send){
+          //直接发请求 单次数 请求的方法
+          if(cb) {cb()}
+        }else{
+          // 记录timer
+          if(timer) clearTimeout(timer)
+          timer = setTimeout(() => {
+            //直接发请求 单次数 请求的方法
+            if(cb) {cb()}
+            timer =null
+          }, info.delay_time ||1000);
+        }
+      }else{
+        //直接发请求 多次数  循环请求 的方法
+        if(cb) {cb()}
+      }
+    },
+
     /**
      * 获取赛马最终结果
      */
