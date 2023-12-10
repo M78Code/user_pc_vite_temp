@@ -44,12 +44,12 @@ function set_base_data_init() {
 	const {
 		current_ball_type: csid,
 	} = MenuData;
-	if (menuData.left_menu_result) {
+	if (MenuData.left_menu_result) {
 		const {
 			left_menu_result: { lv2_mi = "", lv1_mi, has_mid_menu, guanjun, jinri_zaopan }
 		} = MenuData;
 	}
-	if (menuData.mid_menu_result) {
+	if (MenuData.mid_menu_result) {
 		const {
 			mid_menu_result: { csid: mi, mif, root, mid_menu_mi },
 		} = MenuData;
