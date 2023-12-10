@@ -447,21 +447,10 @@ export function match_list_handle_set(match_list) {
 * @description 获取比分 比分变化 或者 赛事阶段变化时调用
 * @param  {object} match  当场赛事信息
 */
-export const get_match_score = (match, is_no_format) => {
+export const get_match_score = (match) => {
     if (!match) return {home_score: '0', away_score: '0'}
-    let msc_obj = {}
-    if (is_no_format) {
-        match.msc.forEach(item => {
-            let format = item.split("|");
-            msc_obj[format[0]] = {
-                home: format[1].split(":")[0],
-                away: format[1].split(":")[1],
-            };
-        })
-        // match.msc_obj = msc_obj;
-    }
     let key = "S1";
-    let { csid, mmp} = match;
+    let { csid, mmp, msc_obj} = match;
     // 足球 | 手球
     if ([1, 11].includes(+csid)) {
         // S7:加时赛比分
