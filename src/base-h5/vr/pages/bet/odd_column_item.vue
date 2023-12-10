@@ -105,7 +105,8 @@ export default{
     this.timer_=0;
     this.timer1_=0;
     // 设置是否显示投注项dom的id属性值
-    this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+    // this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+    this.DOM_ID_SHOW = false;
   },
   mounted(){
     this.get_odd_data();
@@ -130,7 +131,7 @@ export default{
     // ...mapGetters({
     //   footer_sub_menu_id:"get_footer_sub_menu_id",
     // }),
-    get_bet_list(){},
+    get_bet_list(){ return [] },
     get_current_menu(){},
     get_cur_odd(){},
     get_newer_standard_edition(){},

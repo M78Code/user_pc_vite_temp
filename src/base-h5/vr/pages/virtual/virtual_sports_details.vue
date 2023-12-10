@@ -87,7 +87,7 @@ export default {
     current_league(){return VR_CTR.get_current_league()},
     current_batch(){return VR_CTR.get_current_batch()},
     video_process_data(){return VR_CTR.get_video_process_data()},
-    get_bet_list(){return },
+    get_bet_list(){return []},
     get_betbar_show(){return },
     
   },

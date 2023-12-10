@@ -45,7 +45,7 @@ class VirtualCtr {
       // 当前虚拟体育选中的二级菜单id
       virtual_current_sub_menuid: "",
       // 当前选中的二级菜单menu_type
-      curr_sub_menu_type: null,
+      curr_sub_menu_type: 0,
       // 详情页的数据
       detail_data: "",
       // 视频进程数据
@@ -200,7 +200,7 @@ class VirtualCtr {
     this.state.current_sub_menuid = v;
   }
   set_curr_sub_menu_type(v) {
-    this.state.curr_sub_menu_type = v;
+    this.state.curr_sub_menu_type = Number(v);
   }
   set_detail_data(payload) {
     this.state.detail_data = payload;

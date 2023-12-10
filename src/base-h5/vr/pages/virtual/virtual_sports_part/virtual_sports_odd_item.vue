@@ -58,7 +58,7 @@ export default {
   },
   computed:{
     // ...mapGetters(['get_bet_list']),
-    get_bet_list(){},
+    get_bet_list(){ return [] },
     /**
      * @description: 计算最终显示的赔率
      * @param {Undefined} Undefined

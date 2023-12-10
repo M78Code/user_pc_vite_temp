@@ -112,14 +112,14 @@
                 v-for="(hp_i,hp_i_i) of get_hp_list(0)">
                 <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_i,hp_i_i)}`"
                   :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_i,hp_i_i)">
-                  <odd-column-item
+                  <!-- <odd-column-item
                     :placeholder="ol_item.placeholder"
                     :n_s="get_newer_standard_edition"
                     :column_ceil="get_ol_length(hp_i)"
                     :odd_item_i="ol_item_i"
                     :match="match_item"
                     :odd_field="hp_i"
-                    :hl_hs="get_hl_hs(hp_i)"/>
+                    :hl_hs="get_hl_hs(hp_i)"/> -->
                 </div>
               </div>
             </div>
@@ -129,14 +129,14 @@
                 v-for="(hp_i,hp_i_i) of get_hp_list(1)">
                 <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_i,hp_i_i)}`"
                   :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_i,hp_i_i)">
-                  <odd-column-item
+                  <!-- <odd-column-item
                     :placeholder="ol_item.placeholder"
                     :n_s="get_newer_standard_edition"
                     :column_ceil="get_ol_length(hp_i)"
                     :odd_item_i="ol_item_i"
                     :match="match_item"
                     :odd_field="hp_i"
-                    :hl_hs="get_hl_hs(hp_i)"/>
+                    :hl_hs="get_hl_hs(hp_i)"/> -->
                 </div>
               </div>
             </div>
@@ -163,7 +163,7 @@
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import v_s_odd_item from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
 import v_s_match_timer from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
-import odd_column_item from "src/base-h5/vr/pages/bet/odd_column_item.vue"
+// import odd_column_item from "src/base-h5/vr/pages/bet/odd_column_item.vue"
 // import betting from 'project_path/mixins/betting/betting.js';
 import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
@@ -526,7 +526,7 @@ export default {
     // }),
     footer_sub_menu_id(){return false;},
     get_video_process_data(){return VR_CTR.get_video_process_data();},
-    get_newer_standard_edition(){return false;},
+    get_newer_standard_edition(){return 2;},
     get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },
     get_theme(){return 'theme01'},
@@ -553,7 +553,7 @@ export default {
   components:{
     "v-s-odd-item":v_s_odd_item,
     'v-s-match-timer':v_s_match_timer,
-    "odd-column-item":odd_column_item
+    // "odd-column-item":odd_column_item
   },
   watch:{
     other_status(n){

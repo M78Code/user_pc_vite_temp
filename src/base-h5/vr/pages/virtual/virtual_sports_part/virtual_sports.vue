@@ -465,7 +465,7 @@ export default {
     sub_menuid(){return VR_CTR.get_current_sub_menuid()},
     sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
     is_show_analyse(){return VR_CTR.get_is_show_details_analyse()},
-    get_bet_list(){return 1},
+    get_bet_list(){return []},
     get_betbar_show(){return 1},
     get_newer_standard_edition(){return 1},
 

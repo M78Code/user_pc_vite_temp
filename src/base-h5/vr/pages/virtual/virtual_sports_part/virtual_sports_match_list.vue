@@ -6,7 +6,7 @@
 
 <template>
   <div class="match-list-wrapper" :class="{standard:get_newer_standard_edition == 2}">
-    <template>
+    <div>
       <div class="title-wrap-standard row justify-end" v-if="get_newer_standard_edition == 2">
         <div class="odd-title-wrapper row">
           <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
@@ -20,7 +20,7 @@
         :key="i" :i="i" :match_item="match_item" @switch_match="switch_match_handle"
         @odd_pan="odd_pan_handle" :other_status="standard_odd_status">
       </v-sports-match-item>
-    </template>
+    </div>
   </div>
 </template>
 

@@ -68,7 +68,6 @@ import axios_api_loop from "src/core/http/axios-loop.js"
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
-
 import lodash from "lodash"
 
 export default {
@@ -522,4 +521,12 @@ export default {
     }
   }
 }
+</style>
+
+
+<style lang="scss" scoped>
+@import 'src/base-h5/vr/css/virtual_sports/virtual_sports.scss';
+@import 'src/base-h5/vr/css/virtual_sports/virtual_sports_match_item.scss';
+@import 'src/base-h5/vr/css/virtual_sports/match_tab.scss';
+@import 'src/base-h5/vr/css/virtual_sports/virtual_footer_menu.scss';
 </style>
