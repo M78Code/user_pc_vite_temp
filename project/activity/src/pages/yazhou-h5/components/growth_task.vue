@@ -350,8 +350,8 @@
 
 
 <script>
-import DataPager from "project/activity/src/components/data_pager/data_pager.vue";
-import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down.vue";
+import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
+import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
 import growth_task_mixin  from "project/activity/src/mixins/growth_task/growth_task.js";  
 export default {
   mixins: [ growth_task_mixin],
@@ -630,7 +630,7 @@ export default {
   height: 2.8rem;
   position: relative;
   z-index: -1;
-  background: var(--q-color-com-img-bg-160) no-repeat;
+  background: var(--qq--color-com-img-bg-160) no-repeat;
   background-size: 100% 100%;
   display: flex;
   flex-direction: column;

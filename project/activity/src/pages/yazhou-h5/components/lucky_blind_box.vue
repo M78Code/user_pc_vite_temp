@@ -270,8 +270,8 @@
 </template>
 
 <script>
-import DataPager from "project/activity/src/components/data_pager/data_pager.vue";
-import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down.vue";
+import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
+import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
 import lucky_blind_box_mixin  from "project/activity/src/mixins/lucky_blind_box/lucky_blind_box.js";  
 export default {
 
@@ -471,7 +471,7 @@ export default {
         padding: 0 0.1rem;
         width: 1.4rem;
         height: 0.3rem;
-        background-image: var(--q-color-com-img-bg-164);
+        background-image: var(--qq--color-com-img-bg-164);
         background-size: cover;
         background-repeat: no-repeat;
         font-family: SourceHanSansSC-Medium;
@@ -647,7 +647,7 @@ export default {
 .gift_box_dialog {
   width: 3.45rem;
   height: 4.2rem;
-  background: var(--q-color-com-img-bg-165) no-repeat;
+  background: var(--qq--color-com-img-bg-165) no-repeat;
   background-size: 100% 100%;
   box-shadow: 0 0.06rem 0.15rem 0 rgba(0, 0, 0, 0.11);
   border-radius: 0.2rem;
@@ -792,7 +792,7 @@ export default {
   content: "";
   display: block;
   position: absolute;
-  background: var(--q-color-com-img-bg-165) no-repeat;
+  background: var(--qq--color-com-img-bg-165) no-repeat;
   background-size: 100% 100%;
   width: 0;
   height: 0;

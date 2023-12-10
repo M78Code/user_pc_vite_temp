@@ -1,17 +1,17 @@
 <template>
-  <div class="match-tpl-101 flex flex-start items-center">
+  <div class="match-tpl-101">
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
-    <!-- 赛事基础信息 -->
-    <div class="basic-col"
-      :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
-      <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
-      <component :is="current_basic_info()" :match="match" show_type="all"></component>
-      <!-- <basis-info101 :match="match" show_type="all" /> -->
-      <!-- <basis-info105 v-else :match="match" show_type="all" /> -->
-    </div>
-    <!-- 竖线 -->
-    <div class="vertical-line"></div>
-    <div class="flex flex-1">
+    <div class="flex flex-start items-center">
+      <!-- 赛事基础信息 -->
+      <div class="basic-col"
+        :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
+        <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
+        <component :is="current_basic_info()" :match="match" show_type="all"></component>
+        <!-- <basis-info101 :match="match" show_type="all" /> -->
+        <!-- <basis-info105 v-else :match="match" show_type="all" /> -->
+      </div>
+      <!-- 竖线 -->
+      <div class="vertical-line"></div>
       <!-- 图标信息 -->
       <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
         <icon-box :match="match"></icon-box>
@@ -27,22 +27,22 @@
         </div>
       </div>
     </div>
-
-
-    <!-- 赛事比分 -->
-    <MatchFooterScore :match="match" :is_show_score_content="true"
-      :score_wrap_width="lodash.get(match_list_tpl_size, 'bet_width', 0) * lodash.get(match_list_tpl_size, 'bet_col_count', 0)">
-    </MatchFooterScore>
+    <div class="flex">
+      <div :style="`width:${match_list_tpl_size.process_team_width}px !important;height:28px !important;`">
+      </div>
+      <div class="flex col items-start">
+        <!-- 赛事比分 -->
+        <MatchFooterScore use_component_key="MatchFooterScore2" :match_style_obj="match_style_obj"  v-if="match_style_obj.data_tpl_id==109" :match="match" style="width: 100%;" :is_show_score_content="true">
+        </MatchFooterScore>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-
-import { ref, watch, defineProps, nextTick, inject } from 'vue';
-import lodash from 'lodash'
+import { ref, watch,  inject } from 'vue';
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
-import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
-import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
+import {MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
@@ -142,7 +142,8 @@ export default {
       handicap_list,
       match,
       MenuData,
-      current_mid
+      current_mid,
+      match_style_obj
     }
   }
 }

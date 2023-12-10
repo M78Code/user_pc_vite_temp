@@ -26,7 +26,8 @@
         <!-- 内容 -->
         <div v-show="false">{{ LayOutMain_pc.layout_version }}</div>
         <section class="secondary_content">
-          <q-tab-panels class="secondary_panels" v-model="LayOutMain_pc.layout_secondary_active" animated>
+          <q-tab-panels class="secondary_panels" v-model="LayOutMain_pc.layout_secondary_active" animated transition-prev="slide-down"
+                transition-next="slide-up">
           <!-- 公告 -->
             <q-tab-panel name="announcement">
               <announce></announce>

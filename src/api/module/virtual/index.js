@@ -29,7 +29,10 @@ export const get_elimination_rank = (params, config={}, url  = "/v1/w/virtual/ge
 // 篮球比分
 export const get_basketball_score = (params, config={}, url  = "/v1/w/virtual/getMatchScore") => http.post(`${prefix}${url}`, params, config)
 
-
+// 虚拟体育根据玩法查询盘口信息
+export const get_matchDetail_getVirtualMatchOddsInfo = (params, config, url = "/v1/m/matchDetail/getVirtualMatchOddsInfo") => {
+  return http.get(`${prefix}${url}`, params, {axios_debounce_cache_key:'match_detail_odds_info'});
+};
 
  
   

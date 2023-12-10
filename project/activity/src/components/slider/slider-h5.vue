@@ -132,7 +132,7 @@ export default {
 .c-slider {
   flex: 1;
   height: 18px;
-  background:  var(--q-color-com-img-bg-167)
+  background:  var(--qq--color-com-img-bg-167)
     center center no-repeat;
   background-size: 3.25rem auto;
 
@@ -146,7 +146,7 @@ export default {
   .slider-btn {
     width: 38px;
     height: 38px;
-    background:  var(--q-color-com-img-bg-168)
+    background:  var(--qq--color-com-img-bg-168)
       center center no-repeat;
     background-size: 200%;
     border-radius: 50%;

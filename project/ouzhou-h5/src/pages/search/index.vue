@@ -257,14 +257,14 @@
 </template>
 <script setup>
 import { onMounted, ref, watch, computed, onUnmounted, reactive } from 'vue';
-import { compute_local_project_file_path,  compute_img_url, SearchData, MenuData } from "src/output/index.js";
+import { compute_local_project_file_path,  compute_img_url, SearchData, MenuData, compute_value_by_cur_odd_type } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import router from "../../router";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { get_delete_history_search, get_history_search, get_search_result, get_search_sport } from "src/api/module/search/index.js";
 import { api_search } from 'src/api/';
-import { compute_value_by_cur_odd_type } from "src/output/index.js";
+import tabMove from 'src/core/tab-move/tab-move.js'
 import { api_common, api_match_list } from "src/api/index.js";
 import { odd_lock_ouzhou } from 'src/base-h5/core/utils/local-image.js'
 import NoData from './components/no-data.vue'// 无数据组件
@@ -359,7 +359,7 @@ const get_search_data = lodash.debounce((index = 0, sport_id = 1, keyword) => {
 	// tabIndex.value = index;
 	sport_kind_id.value = sport_id;
 	// tab 默认居中及移动动画
-	tab_move2(index, tab_growp.value);
+	tabMove.tab_move2(index, tab_growp.value);
 	if (keyword) {
 		input_value.value = keyword
 	}

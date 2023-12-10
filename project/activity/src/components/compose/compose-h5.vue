@@ -169,8 +169,8 @@
 
 <script>
 import {api_activity} from "src/api/index.js";
-import slider from "../slider/slider.vue";
-import lottery from "../lottery/lottery.vue";
+import slider from "../slider/slider-h5.vue";
+import lottery from "../lottery/lottery-h5.vue";
 // 生成随机数
 const random = function(minNum,maxNum){
   return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
@@ -534,7 +534,7 @@ export default {
   height: 6rem;
   position: relative;
   background-position: center center;
-  background-image: var(--q-color-com-img-bg-149);
+  background-image: var(--qq--color-com-img-bg-149);
   background-size: 9.6rem auto;
 
   &:before {
@@ -544,7 +544,7 @@ export default {
     height: 100%;
 
 
-    background: var(--q-color-com-img-bg-150) no-repeat;
+    background: var(--qq--color-com-img-bg-150) no-repeat;
     background-position: center center;
     background-size: 5rem auto;
     animation: xuanzhuan 65s linear infinite;
@@ -617,7 +617,7 @@ export default {
   position: absolute;
   left: calc((3.75rem - 1.8rem) / 2);
   top: calc((6rem - 1.8rem) / 2);
-  background: var(--q-color-com-img-bg-151) no-repeat center center;
+  background: var(--qq--color-com-img-bg-151) no-repeat center center;
   background-size: 100% auto;
   z-index: 1;
   // 圆环背景
@@ -626,7 +626,7 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: var(--q-color-com-img-bg-152) no-repeat center center;
+    background: var(--qq--color-com-img-bg-152) no-repeat center center;
     background-size: 1.62rem auto;
   }
   // 六角形
@@ -637,26 +637,26 @@ export default {
     height: 100%;
     top: 0;
     left: 0;
-    background: var(--q-color-com-img-bg-153) no-repeat center center;
+    background: var(--qq--color-com-img-bg-153) no-repeat center center;
     background-size: 1.2rem auto;
     animation: xuanzhuan 5s linear infinite;
     opacity: 0.5;
   }
 
   &.danshan1 .ring-lamp {
-    background-image: var(--q-color-com-img-bg-154);
+    background-image: var(--qq--color-com-img-bg-154);
   }
 
   &.danshan2 .ring-lamp {
-    background-image: var(--q-color-com-img-bg-155);
+    background-image: var(--qq--color-com-img-bg-155);
   }
 
   &.quanshan1 .ring-lamp {
-    background-image: var(--q-color-com-img-bg-156);
+    background-image: var(--qq--color-com-img-bg-156);
   }
 
   &.quanshan2 .ring-lamp {
-    background-image: var(--q-color-com-img-bg-157);
+    background-image: var(--qq--color-com-img-bg-157);
   }
   // 灯
   .ring-lamp {
@@ -696,7 +696,7 @@ export default {
   .bitmap {
     width: 0.8rem;
     height: 0.8rem;
-    background: var(--q-color-com-img-bg-158);
+    background: var(--qq--color-com-img-bg-158);
     background-size: 100% auto;
     animation: card_donghua2 2s;
 
@@ -803,7 +803,7 @@ export default {
 }
 
 .synthSlider {
-  background: var(--q-color-com-img-bg-159) no-repeat 0.07rem -0.8rem;
+  background: var(--qq--color-com-img-bg-159) no-repeat 0.07rem -0.8rem;
   background-size: contain;
 
   .item {

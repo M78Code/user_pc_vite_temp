@@ -1,5 +1,5 @@
 import { ref, onMounted, watch, onUnmounted } from "vue";
-import { api_virtual, api_common, api_details } from "src/api";
+import { api_virtual,api_match_list, api_common, api_details } from "src/api";
 import { useRouter } from "vue-router";
 // import store from "src/store-redux-vuex/index.js";
 import {
@@ -41,11 +41,14 @@ export function usedetailData(route) {
 
   const matchDetailList = ref([]);
   const {
-    get_detail_category,
-    get_detail_list,
-    get_detail_data:get_virtual_match_detail,
-    getMatchDetailByTournamentId,
+    get_matchDetail_getVirtualMatchOddsInfo:get_detail_list,  //接口
+    get_virtual_match_detail:get_detail_data,
+  
   } = api_virtual; // 接口
+  const {
+    get_detail_category
+  } = api_match_list; // 接口
+
 
   //const userInfo = state.userReducer.userInfo; // 用户数据
   const { user_info } = UserCtr; // 用户数据
@@ -156,7 +159,7 @@ export function usedetailData(route) {
             });
             return;
           }
-          getMatchDetailList(res.data);
+          // getMatchDetailList(res.data);  // vr 暂注释
           // detail_loading.value = false;
           detail_info.value = { ...detail_info.value, ...res.data };
           detail_info.value["course"] = handle_course_data(detail_info.value);

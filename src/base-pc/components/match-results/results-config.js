@@ -503,6 +503,11 @@ export const useGetResultConfig = () => {
         if (state.init && (!tid || type == 1)) {
             get_results(); //获取表格数据
           state.init = false;
+          let timer = null
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            state.is_need_request = true
+          }, 300);
         } else {
           // 联赛下拉框点【取消】的时候赛果列表继续展示 暂无数据
           if (state.isSelectConfirmed != 0) {
@@ -1148,11 +1153,6 @@ export const useGetResultConfig = () => {
       if (state.is_need_request){
         get_results(); //获取表格数据
       }
-      let timer = null
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        state.is_need_request = true
-      }, 3000);
   }
   /**
    * @description: 去那页

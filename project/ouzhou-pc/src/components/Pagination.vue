@@ -181,7 +181,7 @@ export default defineComponent({
       })
     })
     watch(() => props.reset_pagination, (newVal) => {
-       state.current = +newVal;
+       state.current = 1;
     })
 
 
