@@ -374,7 +374,6 @@ export const match_collect_status = (match, obj) => {
  */
 const mx_collect_leagues = async (match, is_champion) => {
   let cur_collect_state = Number(!match.tf);
-  console.log(match, 'match', cur_collect_state)
   let _params = {
     tid: match.tid,
     cuid: UserCtr.get_uid(),
