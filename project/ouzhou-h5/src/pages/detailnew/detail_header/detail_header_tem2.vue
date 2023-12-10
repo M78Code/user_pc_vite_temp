@@ -93,7 +93,7 @@ const props = defineProps({
   }
 });
 
-watch(props.label, (value) => {
+watch(()=>props.label, (value) => {
   right_actions_label.value = value;
 })
 // 点击返回的时候会触发此函数

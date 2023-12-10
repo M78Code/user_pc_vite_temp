@@ -192,6 +192,7 @@ const status = computed(() => {
 });
 
 watch(() => props.get_match_detail, (value) => {
+  if(lodash.isEmpty(value)) return
   console.log(value, "props.get_match_detail");
   // format_time_zone(+item.mgt).Format(i18n_t('time4'))
   const now = Date.now();
