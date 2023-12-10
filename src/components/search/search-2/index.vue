@@ -287,6 +287,7 @@ export default defineComponent({
   .search-result {
     // box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
     margin-top: 9px;
+    width: 1470px;
   }
 
   &.mini {
@@ -304,13 +305,16 @@ export default defineComponent({
 	width: 100%;
 	z-index: 1;
 	color: var(--q-gb-t-c-5);
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 	.tab {
 		background-color: var(--q-gb-bg-c-4);
 		border-radius: 40px;
 		text-align: center;
 		font-size: 14px;
 		flex-shrink: 0;
-		padding: 6px 20px;
+		padding: 6px 16px;
     cursor: pointer;
     margin-right: 10px;
 

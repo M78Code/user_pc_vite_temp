@@ -146,7 +146,7 @@
           <img
             alt
             class="loading-static-animation"
-            src="image/wwwassets/bw3/svg/loading-more.svg"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/common/loading-more.svg`"
           />
         </q-inner-loading>
       </div>
