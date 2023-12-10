@@ -9,8 +9,8 @@
 </template>
 
 <script>
-
-import PagePc from "../pages/yazhou-pc/index.vue";
+ 
+import PagePc from "project/activity/src/pages/yazhou-pc/index.vue";
 import layout_mixin  from "project/activity/src/mixins/layout_mixin/layout_mixin.js";  
 export default {
   name: "layout-h5",
