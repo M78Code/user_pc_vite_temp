@@ -8,8 +8,10 @@
       <!-- 体育类别 -->
       <header class="match-header" v-if="show_sport_title" @click.stop="handle_ball_seed_fold">
         <div>
-          <SportIcon size="20"  :status="false" :sport_id="String(Number(match.csid ) + 100)" />
-          <span>{{ match.csna }}</span>
+          <!-- <SportIcon size="20"  :status="false" :sport_id="String(Number(match.csid ) + 100)" />
+          <span>{{ match.csna }}</span> -->
+          <SportIcon size="20"  :status="false" :sport_id="menu_sport.menu_sport_id || String(Number(match.csid ) + 100)" />
+          <span>{{ menu_sport.menu_sport_name||match.csna }}</span>
         </div>
         <div class="select_time">
           <span @click.stop>
@@ -327,7 +329,6 @@ export default {
       const { csid } = ctx.match_of_list
       return lodash.get(MatchResponsive.match_hpid_info.value, `csid_${csid}`, '1')
     })
-
     // 是否显示球种标题
     const show_sport_title = computed(() => {
       const { is_show_ball_title } = ctx.match_of_list
