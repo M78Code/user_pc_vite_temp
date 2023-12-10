@@ -117,7 +117,7 @@ var timer;
 const collect = lodash.throttle(() => {
   mx_collect({ type: 'leagues', match: props.card_style_obj.league_obj });
   // 前端控制收藏状态
-  is_collect.value = !is_collect.value;
+  // is_collect.value = !is_collect.value;
 }, 1000)
 
 const leagueIcon = computed(() => {

@@ -89,7 +89,7 @@
             style="font-weight:400"
           >
             <!-- 距离开赛时间小于一小时显示倒计时 -->
-            {{ i18n_t("list.after_time_start", [longTime]) }}
+            {{ i18n_t("list.after_time_start").replace('%s', longTime) }}
           </span>
           <template v-else>
             <!-- .Format(i18n_t('time3'))  | format_H_M -->
@@ -132,7 +132,7 @@
           style="font-weight:400"
         >
           <!-- 距离开赛时间小于一小时显示倒计时 -->
-          {{ i18n_t("list.after_time_start", [longTime]) }}
+          {{ i18n_t("list.after_time_start").replace('%s', longTime) }}
         </span>
         <span v-else>
           <!--  | format_H_M -->

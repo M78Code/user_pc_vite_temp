@@ -11,7 +11,6 @@ const props = defineProps<{
   data:TYPES.OddInfo
 }>()
 
-const templates = [];
 const Template = common.computedTemplate(props.data.hpt)
 const titleLen = props.data.title?.length
 
