@@ -56,10 +56,10 @@
             class="expansion_ref_slotHeader expansion-vs"
             @click.stop="show_item"
           >
-            <div style="display: flex;align-items: center;">
-              <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
+            <div style="display: flex;align-items: center;" v-if="detail_info&& detail_info.teams">
+              <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.teams[0] }} </span>
               <span class="match-detail-head-name m-10">v</span>
-              <span class="home-vs-away" :title="detail_info.man">{{ detail_info.man }}</span>
+              <span class="home-vs-away" :title="detail_info.man">{{ detail_info.teams[1] }}</span>
             </div>
             <img
               :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/down_arrow.png`"
@@ -119,13 +119,13 @@ import {
   useMittOn,
   MITT_TYPES,
 } from "src/output/index.js";
-import odds_info from "./components/odds_info.vue";
+import odds_info from "../match-new-detail/components/odds_info.vue";
 import analysis from "./analysis/index.vue";
-import tabs from "./components/tabs.vue";
+import tabs from "../match-new-detail/components/tabs.vue";
 import breadcrumbs from "./components/breadcrumbs.vue";
 import { usedetailData } from "./index";
 import { formatTime, format_M_D_PC } from "src/output/index.js";
-import loading from "./components/loading/index.vue";
+import loading from "../match-new-detail/components/loading/index.vue";
 import { useRouter, useRoute } from "vue-router";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 export default {
@@ -213,6 +213,8 @@ export default {
       8: 180,
       9: 270,
       10: 360,
+      1001: 0,
+      1002: 90,
     };
     return {
       tabList,
