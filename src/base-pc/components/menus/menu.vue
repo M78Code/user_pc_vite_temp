@@ -40,20 +40,22 @@
       </ul>
     </div>
     <div class="menu-nav-line" />
-    <div class="menu-nav-li" v-if="IS_FOR_NEIBU_TEST">
+    <div class="menu-nav-li" >
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport-icon :sport_id="BaseData.compute_sport_id(400)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
-        <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
-          <sport-icon :sport_id="BaseData.compute_sport_id(2000)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
-          {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
-        </li>
-        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
-          <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
-          {{ (BaseData.menus_i18n_map || {})[300] || "" }}
-        </li>
+        <template v-if="IS_FOR_NEIBU_TEST">
+          <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
+            <sport-icon :sport_id="BaseData.compute_sport_id(2000)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
+            {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
+          </li>
+          <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
+            <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
+            {{ (BaseData.menus_i18n_map || {})[300] || "" }}
+          </li>
+        </template>
       </ul>
     </div>
 
