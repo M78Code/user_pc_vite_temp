@@ -51,7 +51,9 @@ const props = defineProps({
     }
 });
 
-const scoew_icon_list = ref({})
+const scoew_icon_list = ref({
+    S1: {home: 0, away: 0}
+})
 /**
  *@description // 比分板数据
  *@param {*}
@@ -83,7 +85,6 @@ watch(() => props.rightActionsLabel, (value) => {
 watch(props.detail, (value) => {
     // console.log(value, "value===");
     scoew_icon_list.value = value?.msc_obj||set_scoew_icon_list(value)
-    console.log(scoew_icon_list.value, "scoew_icon_list.value");
 }, {deep: true, immediate: true})
 
 const emits = defineEmits(['handleType'])
@@ -97,6 +98,11 @@ const mapObj = computed(() => {
     }
 })
 
+const score_point = computed(() => {
+    console.log(scoew_icon_list.value, "[scoew_icon_list.value");
+    return props.detail.msc ?  [0,0] : [scoew_icon_list.value.S1.home, scoew_icon_list.value.S1.away]
+})
+
 // 是否时视频
 const is_video = ref(props.isVideo);
 // 选择的item
@@ -106,7 +112,7 @@ const list = computed(() => {
     const res = [
         {label: 'animation', img: is_video.value ? `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video.png` :  `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/animation.png`, value: 0},
         // {label: 'score',  value: 1, score: [  scoew_icon_list.value['S1']?.home, scoew_icon_list.value['S1']?.away]},
-        {label: 'score',  value: 1, score: [ 0, 0]},
+        {label: 'score',  value: 1, score: [score_point.value[0], score_point.value[1]]},
         {label: 'collect', img: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collect_gray.png`, active: `${LOCAL_PROJECT_FILE_PREFIX}/image/detail/collected.png`, value: 2},
     ];
     return res.filter(e => mapObj.value[props.status].includes(e.value));
