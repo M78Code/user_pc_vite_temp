@@ -1,19 +1,16 @@
 <template>
-  <div class="component template-4 template4">
+  <div class="component template-14 template14">
     <div class="main ol-list-container">
-      <template v-for="title in data.title" :key="title.otd">
-        <div class="ol-column">
-          <OddsTitle class="ol-title" :list="[title]"></OddsTitle>
-            <template v-for="item in data.hl[0].ol">
+      <template v-for="hl in data.hl" :key="hl.hid">
+        <template v-for="title in data.title" :key="title.otd">
+          <div class="ol-column">
+            <OddsTitle class="ol-title" :list="[title]"></OddsTitle>
+            <template v-for="item in hl.ol">
               <OddOlItem :value="item" v-if="item.otd == title.otd" :key="item.oid">
               </OddOlItem>
             </template>
-        </div>
-      </template>
-    </div>
-    <div class="other ol-item">
-      <template v-for="item in data.hl[0].ol" :key="item.oid">
-        <OddOlItem :value="item" v-if="item.otd == -1"></OddOlItem>
+          </div>
+        </template>
       </template>
     </div>
   </div>
@@ -32,15 +29,19 @@ const state = common.getTemplateState(props.data)
 </script>
 
 <style scoped lang="scss">
-.component.template4{
+.component.template14{
   display: flex;
   flex-direction: column;
-  background-color: #fff;
   >.main{
     display: flex;
     .ol-column{
       flex: 1;
     }
   }
+}
+</style>
+<style lang="scss">
+.template14.title-2{
+  
 }
 </style>

@@ -12,9 +12,9 @@
       </span>
       <span v-else class="odds" :class="[{'is_up': status == 10, 'is_down': status == -10,'white_text':BetData.bet_oid_list.includes(ol_data.id_) }]">
         <span>{{ odds_value() }}</span>
-        <!-- <span class='change-icon' :class="{'icon-red':status == 10,'icon-green':status == -10}"></span> -->
-        <img class="up_down" v-if="status == 10" :src="is_up_app" alt="" />
-        <img class="up_down" v-if="status == -10" :src="is_down_app" alt="" />
+        <span class='change-icon icon-red' :class="{'icon-red':status == 10,'icon-green':status == -10}"></span>
+        <!-- <img class="up_down"  :src="is_up_app" alt="" /> -->
+        <!-- <img class="up_down" v-if="status == -10" :src="is_down_app" alt="" /> -->
       </span>
     </template>
     <template v-else>
@@ -131,21 +131,22 @@ export default defineComponent({
 }
 
 .change-icon {
-  width: 0.06rem;
+  width: 0.10rem;
   position: absolute;
   right: -0.12rem;
   top: calc(50% - 0.03rem);
-  height: 0.06rem;
+  height: 0.10rem;
   margin-right: 0.02rem;
   background-repeat: no-repeat;
   background-size: contain;
 
   &.icon-green {
-    background-image: var(--q-color-com-img-bg-18);
+    background-image: url($SCSSPROJECTPATH + "/image/list/icon_down.png");
   }
 
   &.icon-red {
-    background-image: var(--q-color-com-img-bg-19);
+    background-image: url($SCSSPROJECTPATH + "/image/list/icon_up.png");
+   
   }
 }
 .up_down{

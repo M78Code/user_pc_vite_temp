@@ -9,7 +9,7 @@
                 </div>
                 <div class="w-100 handicap my-4">
                     <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
-                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}-{{ items.playId }}
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                     <!-- 盘口 -->
@@ -301,6 +301,7 @@ const set_delete = () => {
     .text-flow-none{
         max-width: 84%;
         line-height: 16px;
+        word-wrap: break-word;
         :deep(.ty-span) {
             margin-left: 4px;
             color: var(--q-gb-t-c-2);
