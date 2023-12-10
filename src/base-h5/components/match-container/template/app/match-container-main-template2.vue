@@ -12,6 +12,12 @@
       :class="['league-container flex items-center justify-between right-border', {collapsed: !collapsed}]"
       @click="handle_league_fold">
       <div class="league-wrapper champion flex items-center">
+        <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
+          <!-- 未收藏图标 compute_img_url('icon-favorite')-->
+          <img v-if="!league_collect_state" :src="not_favorite_app" alt="">
+          <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+          <img v-if='league_collect_state' :src="normal_img_is_favorite">
+        </div>
         <span class="league-title-text row justify-between" 
           :class="{'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch())}" >
           {{menu_type == 100 ? match_of_list.onTn : match_of_list.tn}}
@@ -79,6 +85,8 @@ import { icon_date, expand_item } from 'src/base-h5/core/utils/local-image.js'
 
 import champion_mixin from '../../mixins/champion.mixin.js'
 import 'src/base-h5/css/pages/match-container-champion.scss'
+import { not_favorite_app, normal_img_is_favorite} from 'src/base-h5/core/utils/local-image.js'
+
 
 export default {
   name: "match-container-main-template4",
@@ -103,6 +111,8 @@ export default {
       expand_item,
       compute_img_url,
       GlobalAccessConfig,
+      not_favorite_app,
+      normal_img_is_favorite
     }
   }
 }
@@ -180,6 +190,27 @@ export default {
           }
         }
       }
+
+      .favorite-icon-top {
+        width: 0.14rem;
+        height: 100%;
+        height: 0.14rem;
+        flex-shrink: 0;
+        margin-right: .04rem;
+        position: relative;
+
+        img {
+          width: 100%;
+          height: 100%;
+          // vertical-align: middle;
+          margin-top: -2px;
+        }
+
+        .f-icon {
+          display: none;
+        }
+      }
+
 
       .league-title-text {
         font-weight: 600;
