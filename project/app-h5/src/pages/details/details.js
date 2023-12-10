@@ -660,12 +660,7 @@ export const details_main = () => {
         .get_category_list(params)
         .then((res) => {
           const res_data = lodash.get(res, "data",[]);
-          //转移所有中文投注名称
-          if(UserCtr.lang == "zh" && !lodash.isEmpty(res.data)){
-            res.data[0].marketName = '所有盘口'
-          }
           state_data.data_list = res_data;
-
           // set_details_tabs_list(res_data);
           matchDetailCtr.value.compute_category_refer(res_data)
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
