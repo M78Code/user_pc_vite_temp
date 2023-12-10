@@ -58,7 +58,6 @@ const theme_other = {
 };
 
 const theme = {
- 
   "activity-text-gray": "",
   "bg-image-url3": "",
   "bg-image-url51": "",
