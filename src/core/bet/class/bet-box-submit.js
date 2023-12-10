@@ -936,9 +936,10 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
     }else{
         let a = '' ,b = '' 
+        a = ol_obj.ott
         b = ol_obj.on
-
         if(ol_obj.ots == 'T1'){
+            
             a = mid_obj.mhn
         }
         if(ol_obj.ots == 'T2'){
@@ -972,9 +973,9 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
             
         // 平 不变色
         if(ol_obj.ot == 'X'){
-            text = `${b}` 
+            text = `${a}<span class='ty-span'>${b}</span>`  
         }else{
-            text = `${a} <span class='ty-span'>${b}</span>` 
+            text = `${a}<span class='ty-span'>${b}</span>` 
         }
 
         
