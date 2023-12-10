@@ -70,6 +70,7 @@ export function get_match_template_id({ csid }) {
     // 所以加一个配置  
     // 欧洲版从100开始  
     // 亚洲版从0开始
+    
     const different_version_config = {
         "ouzhou-pc": 100,
         "yazhou-pc": 0,
@@ -93,7 +94,7 @@ export function get_match_template_id({ csid }) {
         if (MenuData.is_kemp() || MenuData.is_common_kemp() || MenuData.is_collect_kemp()) {
             return tpl_id
         }
-        return 101
+        return get_ouzhou_data_tpl_id(csid)
     }
     return tpl_id
 }

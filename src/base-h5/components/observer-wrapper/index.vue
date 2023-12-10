@@ -4,22 +4,28 @@
 
 <template>
   <main class="main-container">
-    <section class="observer-container" ref="container" @scroll="handler_container_scroll">
-      <div class="observer-item" 
-        v-for="item, index in match_list" 
-        :key="item.mid" 
-        :data-mid="item.mid" 
-        :data-index="index"
-        :style="get_item_style(item, index)">
-        <!-- 赛事卡片 -->
-        <slot name="content" :item="item" :index="index">
-          <template v-if="is_show_match_item(index)">
-            <!-- <ObserverItem3 :index="index" :item="item"></ObserverItem3> -->
-            <component :is="target_com" :index="index" :item="item"></component>
-          </template>
-        </slot>
-      </div>
-    </section>
+    <template v-if="match_list">
+      <section class="observer-container" ref="container" @scroll="handler_container_scroll">
+        
+          <div class="observer-item" 
+            v-for="item, index in match_list" 
+            :key="item.mid" 
+            :data-mid="item.mid" 
+            :data-index="index"
+            :style="get_item_style(item, index)">
+            <!-- 赛事卡片 -->
+            <slot name="content" :item="item" :index="index">
+              <template v-if="is_show_match_item(index)">
+                <!-- <ObserverItem3 :index="index" :item="item"></ObserverItem3> -->
+                <component :is="target_com" :index="index" :item="item"></component>
+              </template>
+            </slot>
+          </div>
+      </section>
+    </template>
+    <template v-else>
+      <NoData class="empty"  which='noMatch' height='400'></NoData>
+    </template>
     <!-- 回到顶部按钮组件 -->
     <ScrollTop :list_scroll_top="scroll_top" @back-top="go_to_top" />
   </main>
@@ -43,6 +49,7 @@ import ObserverItem2 from 'src/base-h5/components/observer-wrapper/observer-item
 import ObserverItem3 from 'src/base-h5/components/observer-wrapper/observer-item3.vue';
 //app-h5 新手版  -- 临时
 import ObserverItem4 from 'src/base-h5/components/observer-wrapper/observer-item4.vue';
+import NoData from "src/base-h5/components/common/no-data.vue"; 
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
 import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
 
@@ -241,6 +248,14 @@ onUnmounted(() => {
     .observer-item{
       content-visibility: auto;
       background-size: 100% 100%;
+      .empty {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: -0.3rem;
+      }
     }
   }
 }
