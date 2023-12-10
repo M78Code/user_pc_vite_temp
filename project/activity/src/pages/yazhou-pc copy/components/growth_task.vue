@@ -106,10 +106,9 @@
         为避免文字理解差异，本场馆保留本活动最终解释权。
       </p>
     </div>
-    <!-- 领取记录 -->
-    <q-dialog v-model="history_alert">
+    <q-dialog v-model="showHistory">
       <q-layout view="Lhh lpR fff" container class="receiveHistory">
-        <img class="close" src="~public/image/activity_imgs/imgs/dialog_close.png" alt=""    @click.self="history_alert = false" width="30px">
+        <img class="close" src="~public/image/activity_imgs/imgs/dialog_close.png" alt="" @click="closeHistoryList" width="30px">
         <div class="betting_history">
           <div class="content_title text-center text-333">
             领取记录
@@ -157,21 +156,39 @@
     <Toast v-if="showToast" :text="toastText" />
   </div>
 </template>
-
-
-
 <script>
-import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
-import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
-import growth_task_mixin  from "project/activity/src/mixins/growth_task/growth_task.js";  
+import {api_activity} from "src/api/index.js"
+import Alert from "project/activity/src/components/public_alert/public_alert.vue"
+import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
+import LotteryDialog from "project/activity/src/pages/yazhou-pc/lottery_dialog.vue";
+import common from "project/activity/src/pages/yazhou-pc/common";
+import format_date_base from "project/activity/src/mixins/common/formartmixin.js";
+import utils from 'project/activity/src/utils/utils.js'
 export default {
-  mixins: [ growth_task_mixin],
+  name: 'BettingEveryday',
+  mixins: [common, format_date_base],
   components: {
-    DataPager,
-    ActiveCountDown,
+    Alert,
+    Toast,
+    LotteryDialog
+  },
+  props: {
+    id: Number,
+    activityObj: {
+      type: Object,
+      default: {}
+    }
   },
   data() {
     return {
+      showToast: false,
+      showAlert: false,
+      bettingMsg: '', // 弹窗提示语
+      taskList: [], //任务列表
+      userBettingData: {}, // 用户投注数据
+      receiveHistory:[], // 领取奖券记录
+      load_data_state: 'empty',
+      showHistory: false, // 领取记录弹窗
       getLotteryAgain: {}, // 再次领取数据
       taskIds: '', // 任务id
       getLotteryDialog: false, // 领取奖券弹窗
@@ -182,15 +199,385 @@ export default {
         size: 7,
         actId: 0
       },
+      hisToryTotal: 0, // 历史记录总数
+      goToPage: 1, // 历史记录翻页输入框
+      userBettingInfo: {}, // 用户投注数据
+      toastText: '没有可领取的奖项',
+      updateInteval: null, // 定时器
+      activityTime: {}, // 活动时间文案
+      hisToryListDataState: 'empty', // 领取记录数据加载状态
+      timeout_obj:{}, //定时器集合
+      isMaintaining: false, // 是否是维护状态
+      _isMonday: null, // 是否是周一
+      firstDayOfMonth: null, // 是否是每月的1号
+      isGrow: false, // 是否是成长任务
+      countGetList: 0, // 计算当前请求了几次任务列表接口
     }
   },
+  created() {
+    this.init(this.id);
+  },
+  watch: {
+    // 每次切换id时初始化一次
+    id: {
+      handler(e) {
+        this.init(e)
+      }
+    }
+  },
+  methods: {
+    init(id) {
+      // 每次切换tab时这些参数也要初始化
+      this.countGetList = 0;
+      this.taskIds = '';
+      clearInterval(this.updateInteval)
+      // 是否是成长任务
+      if (id == 10008) {
+        this.isGrow = true;
+        // 是否是周一
+        this._isMonday = new Date().getDay() == 1;
+        // 是否是1号
+        this.firstDayOfMonth = new Date().getDate() == 1;
+        // 每小时更新一次
+        this.updateInteval = setInterval(() => {
+          this.getActivityLists(2);
+        }, 60*60*1000);
+        if (this.activityObj.period != 1) {
+          this.getUserBettingInfo();
+        }
+      } else {
+        this.isGrow = false;
+        // 每日任务，没5分钟更新一次
+        this.updateInteval = setInterval(() => {
+          this.getActivityLists(1);
+        }, 5*60*1000);
+      }
+      this.getActivityLists();
+      if (this.activityObj.showTime == 'toStart') {
+        this.countdown(this.activityObj.startAndEndTime.split(',')[0], this.activityObj.showTime);
+      } else if (this.activityObj.showTime == 'toEnd') {
+        this.countdown(this.activityObj.startAndEndTime.split(',')[1], this.activityObj.showTime);
+      } else {
+        this.activityTime = this.activityObj.showTime;
+      }
+      let _now = this.format_date_base(new Date().getTime());
+      // 如果是周一或1号并且是在凌晨开始的5分钟内，就启用倒计时，00:05分后再拉取一次数据并清除倒计时
+      if (_now[3] == '00' && parseInt(_now[4]) < 5) {
+        // 如果是成长任务但不是周一或者1号就不用处理
+        if (this.isGrow && !(this._isMonday || this.firstDayOfMonth)) {return}
+        clearInterval(this.timeout_obj.timerInterval);
+        this.timeout_obj.timerInterval = setInterval(() => {
+          if (new Date().getMinutes() >= 5) {
+            this.getActivityLists();
+            clearInterval(this.timeout_obj.timerInterval);
+            this.timeout_obj.timerInterval = null;
+          }
+        }, 1000);
+      }
+    },
+    showReceiveHistoryList(num) {
+      this.getActivityReceiveRcord(num, this.activityObj.startAndEndTime);
+    },
+    /**
+     * 获取任务列表
+     * @param id 1 每日任务 2 成长任务
+     */
+    getActivityLists(id = null) {
+      let _id = '';
+      if (!id) {
+        _id = this.id == '10007' ? 1 : 2;
+      } else {
+        _id = id;
+      }
+      this.countGetList += 1;
+      if (this.countGetList == 1) {
+        this.load_data_state = 'loading';
+        // 首次请求清空任务列表
+        this.taskList = [];
+      }
+      let param = new FormData();
+      param.append('actId', _id);
+      api_activity.get_activity_list_details(param).then(res => {
+        let code = _.get(res, 'data.code');
+        let data = _.get(res, 'data.data');
+        if (code == '0401038') {
+          this.load_data_state = 'api_limited'
+          return
+        }        
+        // 记录可以领取的任务id
+        let ids = '';
+        // 每天 00:00:00 - 00:05:00 把可领取的任务改成未完成
+        // format_date_base 返回格式为 [YYYY, 'MM', 'DD', 'hh', 'mm', 'ss']
+        let _now = this.format_date_base(new Date().getTime());
+        let _get_gray = false;
+        if (code == 200) {
+          if (data && data.length > 0) {
+            let list = [];
+            data.forEach((item, index) => {
+              // 任务状态为待领取并且当前是首次请求，用于一键领取
+              if (item.bonusType == 3) {
+                if (this.countGetList == 1) {
+                  this.taskIds += item.bonusId + ',';
+                }
+                // 不区分每日任务和成长任务记录的 id，用于判断首页小红点状态发送对应的消息
+                ids += item.bonusId + ',';
+              }
+              // 当前为首次请求时保存数据
+              if (this.countGetList == 1) {
+                list.push(item);
+                // 是否在凌晨的5分钟内
+                if (_now[3] == '00' && parseInt(_now[4]) < 5) {
+                  _get_gray = true;
+                }
+                // 当活动状态处于未开始或者每天的凌晨5分钟内，任务状态也展示为待完成
+                if (this.activityObj.period == 1 || _get_gray) {
+                  list[index].bonusType = 2;
+                }
+              }
+            })
+            // 当前首次请求才替换数据，第二次是另一种任务的请求
+            if (this.countGetList == 1) {
+              if (list.length) {
+                this.taskList = list;
+                this.load_data_state = 'data';
+              } else {
+                this.load_data_state = 'empty';
+              }
+            }
+          } else {
+            // 如果无数据并且是第一次请求就设置暂无数据的提示
+            if (this.countGetList == 1) {
+              this.load_data_state = 'empty';
+            }
+          }
+        } else {
+          // 接口报错处理
+          if (this.countGetList == 1) {
+            this.load_data_state = 'empty';
+          }
+          if (code == '0401013') {
+            this.isMaintaining = false;
+            this.showAlert = true;
+            this.bettingMsg = res.data.msg;
+          }
+        }
+        //如果没有已完成的任务
+        if (!ids) {
+          // 如果当前是首次请求
+          if (this.countGetList == 1) {
+            // 如果当前是每日任务，就去拉取成长任务，反之一样
+            if (_id == 1) {
+              this.getActivityLists(2);
+            } else {
+              this.getActivityLists(1);
+            }
+          } else {
+            // 否则就通知首页导航取消小红点提示
+            // window.opener.postMessage({name: 'cancelActivityDot', dotHide: 1}, '*');
+            // alert('cancelActivityDot')
+          }
+        } else {
+          // 如果当前有可领取任务，也发送通知去更新小红点
+          if (ids && this.activityObj.period == 2 && this.taskIds != '') {
+            // window.opener.postMessage({name: 'cancelActivityDot', dotHide: 0}, '*');
+            // alert('cancelActivityDot')
+          }
+        }
+      }).catch(err => {
+        console.error(err);
+        this.load_data_state = 'empty';
+      })
+    },
+    // 关闭领取记录弹窗
+    closeHistoryList() {
+      this.showHistory = false;
+    },
+    /**
+     * 领取奖券
+     */
+    getLottery(item) {
+      // 活动已结束，不允许点击
+      if (this.activityObj.period == 3) {
+        this.showToast = true;
+        this.toastText = '任务已结束';
+         if (this.timeout_obj.timer1) {clearTimeout(this.timeout_obj.timer1)};
+        this.timeout_obj.timer1= setTimeout(() => {
+          this.showToast = false;
+          this.toastText = '';
+        }, 2000);
+        return;
+      };
+      // 每次调用保存一下数据，用于领取失败时再次开箱
+      this.getLotteryAgain = {...item};
+      const params = {
+        ids: item ? item.bonusId : this.taskIds,
+        ty: this.id == '10008' ? 1 : 0, // 成长任务 1 每日任务 0
+      }
+      // 没有可领取任务时和活动未开始，不允许点击
+      if (!params.ids || this.activityObj.period == 1) {
+        this.showToast = true;
+        this.toastText = '没有可领取的奖项';
+         if (this.timeout_obj.timer2) {clearTimeout(this.timeout_obj.timer2)};
+        this.timeout_obj.timer2=  setTimeout(() => {
+          this.showToast = false;
+          this.toastText = '';
+        }, 2000);
+        return;
+      };
+      api_activity.get_tokyo_receive_lottery(params).then(res => {
+        let code = _.get(res, 'data.code');
+        let data = _.get(res, 'data.data');
+        if (code == 200 && data) {
+          this.getLotteryDialog = true;
+          this.getLotterySuc = true;
+          this.getLotteryNum = data.ticket;
+          utils.gtag_event_send(this.isGrow ? 'PC_grtask_getAwardClick' : 'PC_edtask_getAwardClick', 'PC_活动', this.isGrow ? 'PC_成长任务' : 'PC_每日任务')
+        } else {
+          if (code == '0410502' || code == '0410500' || code == '0410501' || code == '0410506') {
+            this.toastText = res.data.msg;
+            this.showToast = true;
+              if (this.timeout_obj.timer3) {clearTimeout(this.timeout_obj.timer3)};
+            this.timeout_obj.timer3 = setTimeout(() => {
+              this.showToast = false;
+              this.toastText = '';
+            }, 2000);
+          } else if (code == '0400500') {
+            this.getLotteryDialog = true;
+          } else if (code == '0410505') {
+            this.isMaintaining = true;
+            this.showAlert = true;
+            this.bettingMsg = "活动现已维护，感谢您的支持";
+          }
+        }
+        this.taskIds = '';
+        this.countGetList = 0;
+        this.getActivityLists();
+      })
+    },
+    /**
+     * 历史记录跳转到 * 页
+     * @param e 用户输入的页数
+     */
+    goToHistoryPage(e = null) {
+      if (!this.goToPage) return
+      let gotoPage = Number(this.goToPage);
+      if (gotoPage == this.receiveHistoryParams.current) {return}
+      if (((e && e.keyCode == 13) || e == null) && this.goToPage != '' && (gotoPage <= Number(this.hisToryTotal))) {
+        this.receiveHistoryParams.current = gotoPage;
+        this.getActivityReceiveRcord(gotoPage, this.activityObj.startAndEndTime);
+      } else {
+        if (gotoPage > Number(this.hisToryTotal)) {
+          this.goToPage = this.hisToryTotal;
+        }
+        if (gotoPage < 1) {
+          this.goToPage = 1
+        }
+      }
+    },
+    /**
+     * 获取用户的投注数据
+     */
+    getUserBettingInfo() {
+      api_activity.get_activity_user_betting_info().then(res => {
+        let code = _.get(res, 'data.code');
+        let data = _.get(res, 'data.data');
+        if (code == 200 && data) {
+          let obj = data;
+          if (!!obj.mBillAmount) {
+            obj.mBillAmount = obj.mBillAmount.toFixed(2);
+          } else {
+            obj.mBillAmount = '0.00';
+          }
+          if (!!obj.wBillAmount) {
+            obj.wBillAmount = obj.wBillAmount.toFixed(2);
+          } else {
+            obj.wBillAmount = '0.00';
+          }
+          obj.mBetDays ? obj.mBetDays : 0;
+          this.userBettingInfo = obj;
+        }
+      })
+    },
+    closeGetLottery() {
+      this.getLotteryDialog = false;
+    },
+    /**
+     * 奖券领取记录
+     * @param {*} num 分页页数
+     * @param {*} timeStamp 活动时间
+     * @returns
+     */
+    getActivityReceiveRcord(num = null, timeStamp) {
+      if (this.hisToryTotal == 1 && num) {return}
+      this.hisToryListDataState = "loading";
+      this.receiveHistoryParams.actId = this.isGrow ? '2' : '1';
+      if (Number(num) > 0) {
+        this.receiveHistoryParams.current = num;
+      }
+      if (timeStamp) {
+        this.receiveHistoryParams.startTime = "";
+        this.receiveHistoryParams.endTime = timeStamp.split(',')[1];
+        this.receiveHistoryParams.endTime == 0 ? this.receiveHistoryParams.endTime = null : null;
+      }
+      api_activity.get_activity_receive_record(this.receiveHistoryParams).then(res => {
+        let code = _.get(res, "data.code");
+        let data = _.get(res, "data.data");
+        if (code == '0401038') {
+          this.showHistory = true;
+          this.hisToryListDataState = 'api_limited'
+          return
+        }          
+        if (code == 200) {
+          this.hisToryListDataState = "data";
+          const list = [];
+          if (_.get(data, 'records.length') > 0) {
+            data.records.forEach((item, index) => {
+              list[index] = item;
+              if (item.receiveTime) {
+                let _time = this.format_date_base(item.receiveTime);
+                let _format = `${_time[0]}-${_time[1]}-${_time[2]} ${_time[3]}:${_time[4]}`
+                list[index].receiveTime = _format;
+              } else {
+                list[index].receiveTime = '-';
+              }
+            })
+          } else {
+            this.hisToryListDataState = 'empty';
+          }
+          this.showHistory = true;
+          this.receiveHistory = list;
+          this.hisToryTotal = Math.ceil(Number(data.total) / 7);
+          // 活动维护状态
+        } else if (code == '0410505') {
+          this.isMaintaining = true;
+          this.showAlert = true;
+          this.bettingMsg = "活动现已维护，感谢您的支持";
+          this.hisToryListDataState = "empty";
+        } else {
+          this.showHistory = true;
+          this.hisToryListDataState = "empty";
+        }
+        this.$nextTick(() => {
+          utils.set_page_aria_hidden()
+        })
+      }).catch(err => {
+        this.hisToryListDataState = "empty";
+      })
+    }
+  },
+  beforeDestroy() {
+    clearInterval(this.updateInteval)
+    if (this.countTimer1) {
+      clearTimeout(this.countTimer1)
+    }
+       /**清除定时器 */
+    for (const key in this.timeout_obj) {
+      clearTimeout(this.timeout_obj[key]);
+    }
+    this.timeout_obj = {};
+  }
 }
 </script>
- 
- 
-
-
-
 <style lang="scss" scoped>
 .tabs_content {
   .activity-date-time {
