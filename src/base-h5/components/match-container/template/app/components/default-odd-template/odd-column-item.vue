@@ -580,11 +580,11 @@ onUnmounted(() => {
     color: var(--q-color-fs-color-115);
 
     &.standard {
-      font-size: 0.10rem;
+      font-size: 0.12rem;
     }
 
     &.three {
-      font-size: 0.10rem;
+      font-size: 0.11rem;
     }
     .up_down{
       width: 12px;

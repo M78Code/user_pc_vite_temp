@@ -5,8 +5,6 @@
   ></component>
 </template>
 <script setup lang="ts">
-import DefaultTemplate from './DefaultTemplate.vue';
-import Template4 from './Template4.vue';
 import common from './common.js'
 
 const props = defineProps<{
@@ -14,15 +12,9 @@ const props = defineProps<{
 }>()
 
 const templates = [];
-const Template = computedTemplate()
+const Template = common.computedTemplate(props.data.hpt)
 const titleLen = props.data.title?.length
 
-function computedTemplate(){
-  if(props.data.hpt == 4){
-    return Template4
-  }
-  return DefaultTemplate
-}
 function onClick(){
   common.setPlayName(props.data.hpn)
 }
@@ -33,6 +25,7 @@ function onClick(){
 .component{
   --odd-template-ol-item-flex-basis-count: v-bind(titleLen);
   --odd-template-before-content:'';
+  background-color: #fff;
 }
 </style>
 <style lang="scss">

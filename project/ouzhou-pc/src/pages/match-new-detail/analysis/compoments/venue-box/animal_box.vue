@@ -4,7 +4,7 @@
  * @Description: 赛事分析页动画/视频
 -->
 <template>
-  <div class="box-bc" @mouseenter="video_enter" @mouseleave="video_leave">
+  <div class="box-bc relative-position" @mouseenter="video_enter" @mouseleave="video_leave">
 
     <!-- 右上角提示內容 -->
     <div class="right-icon" @click.stop="is_show_content = !is_show_content">
