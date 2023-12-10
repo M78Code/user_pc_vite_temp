@@ -61,6 +61,7 @@ import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
 import ServerTime from "src/core/server-time/server-time.js"
+import { reactive } from 'vue'
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -78,7 +79,7 @@ export default {
     //   get_bet_list:'get_bet_list',
     //   get_betbar_show:'get_betbar_show',
     // }),
-    is_show_analyse(){return },
+    is_show_analyse(){return VR_CTR.get_is_show_details_analyse()},
     matchid(){return },
     get_current_gotodetail_match(){return },
     sub_menuid(){return VR_CTR.get_current_sub_menuid()},
@@ -124,7 +125,7 @@ export default {
     }, 500)
     // 延时器
     this.timer1_ = null;
-    if(window.vue.process_changing_match){
+    if(VR_CTR.state.process_changing_match){
       if(this.sub_menu_type == 1004){
 
       }else{
@@ -299,7 +300,8 @@ export default {
                 case 1002:
                   if(res.upd == 1 && res.item_obj){
                     Object.assign(this.current_match,res.item_obj);
-                    this.$set(this.current_match,'upd_data', JSON.stringify(res.item_obj));
+                    // this.$set(this.current_match,'upd_data', JSON.stringify(res.item_obj));
+                    this.current_match.upd_data = JSON.stringify(res.item_obj);
                   }
                   break;
               }
@@ -345,7 +347,7 @@ export default {
      * 获取本地传递的赛事视频进程
      */
     get_local_match_process_data(){
-      let match = window.vue.process_changing_match;
+      let match = VR_CTR.state.process_changing_match;
       if(match && match.mid == this.$route.query.mid){
         this.current_match = match;
         this.set_current_sub_menuid(this.current_match.csid);
@@ -380,7 +382,8 @@ export default {
             case 1002:
               if(res.upd == 1 && res.item_obj){
                 Object.assign(this.current_match,res.item_obj);
-                this.$set(this.current_match,'upd_data', JSON.stringify(res.item_obj));
+                // this.$set(this.current_match,'upd_data', JSON.stringify(res.item_obj));
+                this.current_match.upd_data = JSON.stringify(res.item_obj)
               }
               break;
           }

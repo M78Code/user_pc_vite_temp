@@ -48,6 +48,10 @@ class VirtualCtr {
       curr_sub_menu_type: null,
       // 详情页的数据
       detail_data: "",
+      // 视频进程数据
+      process_changing_match: '',
+      // 是否显示详情页的统计页面
+      is_show_details_analyse: false,
     });
   }
 
@@ -96,6 +100,9 @@ class VirtualCtr {
   }
   get_detail_data() {
     return this.state.detail_data;
+  }
+  get_is_show_details_analyse(){
+    return this.state.is_show_details_analyse;
   }
 
   
@@ -197,6 +204,9 @@ class VirtualCtr {
   }
   set_detail_data(payload) {
     this.state.detail_data = payload;
+  }
+  set_is_show_details_analyse(value){
+    this.state.is_show_details_analyse = value;
   }
 }
 const VR_CTR = new VirtualCtr();

@@ -64,7 +64,7 @@ export default {
     matchid(){return ''},
     sub_menu_id(){return VR_CTR.get_current_sub_menuid()},
     sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
-    is_show_analyse(){return 0},
+    is_show_analyse(){return VR_CTR.get_is_show_details_analyse()},
 
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
     anlyse_show(){

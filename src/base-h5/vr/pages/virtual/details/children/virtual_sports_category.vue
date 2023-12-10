@@ -325,14 +325,14 @@ export default {
           if(res.upd_time>=-10){
             if(!this.is_lock_add){
               this.set_all_match_os_status(2)
-              this.$forceUpdate();
+              // this.$forceUpdate();
             }
             this.is_lock_add = true;
           }
         } else if(res.match_status == 1){
           if(!this.is_lock_add){
             this.set_all_match_os_status(2)
-            this.$forceUpdate();
+            // this.$forceUpdate();
           }
           this.is_lock_add = true;
         } if(res.match_status == 2){
@@ -340,10 +340,12 @@ export default {
         if(this.source=='virtual_sports_details')
         {
           this.set_detail_data_assign((detail_data)=>{
-            this.$set(detail_data, 'match_status',res.match_status);
+            // this.$set(detail_data, 'match_status',res.match_status);
+            detail_data.match_status = res.match_status;
           });
         } else{
-          this.$set(this.current_match, 'match_status',res.match_status);
+          // this.$set(this.current_match, 'match_status',res.match_status);
+          this.current_match.match_status = res.match_status
         }
         this.match_status = res.match_status;
         // console.log(this.current_match.totalTime+'---------this.current_match----------'+this.current_match.match_status)
@@ -368,10 +370,12 @@ export default {
             if(this.source=='virtual_sports_details')
             {
               this.set_detail_data_assign((detail_data)=>{
-                this.$set(detail_data, 'totalTime',totalTime);
+                // this.$set(detail_data, 'totalTime',totalTime);
+                detail_data.totalTime = totalTime
               });
             } else{
-              this.$set(this.current_match, 'totalTime',totalTime);
+              // this.$set(this.current_match, 'totalTime',totalTime);
+              this.current_match.totalTime = totalTime;
             }
           }
           if(this.get_video_timer) { clearTimeout(this.get_video_timer) }
@@ -705,7 +709,7 @@ export default {
         delete res.data;
         if(callback) callback();
       }).catch(err =>console.error(err));
-      this.$forceUpdate();
+      // this.$forceUpdate();
     },
 
     save_hshow(temp,list_old){

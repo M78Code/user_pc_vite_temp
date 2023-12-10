@@ -57,7 +57,8 @@ export default {
               case 1002:
               case 1009:
                 if(res.upd == 1 && res.item_obj){
-                  this.$set(match,'upd_data', JSON.stringify(res.item_obj));
+                  // this.$set(match,'upd_data', JSON.stringify(res.item_obj));
+                  match.upd_data = JSON.stringify(res.item_obj);
                 }
                 break;
               default:

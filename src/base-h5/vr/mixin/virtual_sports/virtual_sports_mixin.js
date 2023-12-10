@@ -847,7 +847,7 @@ export default {
             this.video_process_obj = new VSport(match,res => {
               match.show_time = res.show_time;
               match.match_status = res.match_status;
-              window.vue.process_changing_match = match;
+              VR_CTR.state.process_changing_match = match;
 
               //当赛事结束,检查所有赛事是否结束
               if(match.match_status == 2){
@@ -872,7 +872,8 @@ export default {
                 case 1010: // 摩托车
                 case 1002: // 赛狗
                   if(res.upd == 1 && res.item_obj){
-                    this.$set(match,'upd_data', JSON.stringify(res.item_obj));
+                    // this.$set(match,'upd_data', JSON.stringify(res.item_obj));
+                    match.upd_data = JSON.stringify(res.item_obj);
                   }
                   break;
                 default:
