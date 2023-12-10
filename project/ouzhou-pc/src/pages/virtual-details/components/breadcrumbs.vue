@@ -13,7 +13,7 @@
       <span>{{ detail_info.tn }}</span>
       <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/t_left.png`" alt="">
     </div>
-    <div class="text-bread_av_color">
+    <div class="text-bread_av_color" v-if="detail_info&&detail_info.teams">
       <span>{{ last_label }}</span>
     </div>
   </div>
