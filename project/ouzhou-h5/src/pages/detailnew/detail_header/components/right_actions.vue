@@ -179,6 +179,11 @@ const handleClick = (item, index) => {
                 is_video.value = !is_video.value;
                 // select.value = is_video.value ? 'animation' :'video';
             }else {
+                // if ()
+                if (props.status == 3) {
+                    return;
+                }
+                console.log(props.status, "props.status===");
                 emits('handleType', 'animation')
                 select.value = 'animation';
             }
