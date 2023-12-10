@@ -8,6 +8,8 @@ const hideTitle = [0,18]
 const innerTitle = [12,14]
 const templates = new Map([[4,Template4],[14,Template14]])
 
+const rowHpid = '106,107'
+
 const other = {
   is_detail: true,
   // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
@@ -56,6 +58,16 @@ const common = {
       }
     }else if(oddInfo.hpt == 18 || (oddInfo.hpt == 3 && !common.haveTitle(oddInfo))){
       return 'fill'
+    }
+    return 'default'
+  },
+  /**
+   * @param {TYPES.OddInfo} oddInfo
+   * @returns {TYPES.OlItemType}
+   */
+  getOlTypeOfTemplate4(oddInfo){
+    if(oddInfo.hpid == '344'){
+      return 'column'
     }
     return 'default'
   },
