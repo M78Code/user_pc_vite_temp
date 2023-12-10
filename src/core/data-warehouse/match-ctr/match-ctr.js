@@ -165,10 +165,10 @@ export default class MatchDataBase
    * @param {Array} key 基本属性列表
    * @param {Number} time 时间戳
    */
-  ws_match_key_upd_time_cache_set(matche, key){
+  ws_match_key_upd_time_cache_set(matche, key, ctsp){
     let mid = lodash.get(matche,'mid');
     if( mid && key){
-      lodash.set(this.ws_match_key_upd_time_cache,`[${mid}][${key}]`, new Date().getTime());
+      lodash.set(this.ws_match_key_upd_time_cache,`[${mid}][${key}]`, ctsp);
     }
   }
 
@@ -184,7 +184,7 @@ export default class MatchDataBase
     if(mid && key){
       res = lodash.get(this.ws_match_key_upd_time_cache,`[${mid}][${key}]`, 0);
     }
-    return new Date().getTime()-res;
+    return res;
   }
 
 /**
