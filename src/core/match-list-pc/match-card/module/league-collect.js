@@ -38,5 +38,6 @@ export const update_league_collect_data_and_get_mids = (tid, status) => {
       mids.push(...card_obj.league_obj.mids.split(','))
     }
   })
+  MatchListCardData.set_list_version()
   return mids
 }

@@ -5,15 +5,18 @@
         <div class="ol-column">
           <OddsTitle class="ol-title" :list="[title]"></OddsTitle>
             <template v-for="item in data.hl[0].ol">
-              <OddOlItem :value="item" v-if="item.otd == title.otd" :key="item.oid">
+              <OddOlItem :value="item" v-if="item.otd == title.otd" :key="item.oid"
+              :type="olType"
+              >
               </OddOlItem>
             </template>
         </div>
       </template>
     </div>
     <div class="other ol-item">
-      <template v-for="item in data.hl[0].ol" :key="item.oid">
-        <OddOlItem :value="item" v-if="item.otd == -1"></OddOlItem>
+      <template v-for="item in data.hl[0].ol" >
+        <OddOlItem :value="item" v-if="item.otd == -1" :key="item.oid"
+          :type="olType"></OddOlItem>
       </template>
     </div>
   </div>
@@ -27,7 +30,7 @@ const props = defineProps<{
   data:TYPES.OddInfo
 }>()
 
-const state = common.getTemplateState(props.data)
+const olType = common.getOlTypeOfTemplate4(props.data)
 
 </script>
 

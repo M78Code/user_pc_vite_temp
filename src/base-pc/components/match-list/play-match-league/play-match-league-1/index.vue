@@ -10,7 +10,7 @@
           <div @click.stop="collect" class="icon-wrap m-star-wrap-league"
             v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
             <div class="collect-start"
-              :style="compute_css_obj({ key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty' })"></div>
+              :style="compute_css_obj({ key: is_collect() ? 'pc-home-star-fill' : 'pc-home-star-empty' })"></div>
           </div>
         </div>
         <!-- 联赛图标 -->
@@ -87,15 +87,15 @@ const csid = (lodash.get(props.card_style_obj, 'league_obj.csid') || MenuData.cu
 let data_tpl_id = get_ouzhou_data_tpl_id(csid)
 const match_tpl_info = MATCH_LIST_TEMPLATE_CONFIG[`template_${data_tpl_id}_config`]
 const match_list_tpl_size = lodash.get(MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`], 'width_config')
-const is_collect = ref(false);
-watch(() => props.card_style_obj, () => {
-  //第一次进页面时，收藏从接口获取状态，后续点击前端控制
-  is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
-}, { immediate: true })
 // 获取菜单类型
 if (!csid && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST)
 }
+
+function is_collect() {
+  return Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+}
+
 /**
  * @Description 设置联赛折叠
 */
@@ -117,7 +117,7 @@ var timer;
 const collect = lodash.throttle(() => {
   mx_collect({ type: 'leagues', match: props.card_style_obj.league_obj });
   // 前端控制收藏状态
-  is_collect.value = !is_collect.value;
+  // is_collect.value = !is_collect.value;
 }, 1000)
 
 const leagueIcon = computed(() => {
