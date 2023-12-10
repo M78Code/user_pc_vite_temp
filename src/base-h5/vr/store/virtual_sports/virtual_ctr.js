@@ -36,6 +36,8 @@ class VirtualCtr {
       prev_v_sports:{},
       // 是否是用户（顶部按钮）刷新
       is_user_refreshing: false,
+      // 虚拟体育赛事接口请求中, 用于防治重复请求
+      virtual_data_loading: 0,
     };
   }
 
@@ -70,6 +72,10 @@ class VirtualCtr {
   get_virtual_data_loading() {
     return this.state.virtual_data_loading;
   }
+  get_virtual_data_loading(state) {
+    return state.virtual_data_loading;
+  }
+
   // get发放2
   prev_v_sports(){
     return this.state.prev_v_sports;
@@ -137,6 +143,9 @@ class VirtualCtr {
   }
   set_is_user_refreshing(value) {
     this.state.is_user_refreshing = value
+  }
+  set_virtual_data_loading(value){
+    this.state.virtual_data_loading = value;
   }
 }
 const VR_CTR = new VirtualCtr();
