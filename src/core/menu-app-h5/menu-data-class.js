@@ -261,7 +261,7 @@ class MenuData {
     if(this.get_menu_type_special()==2000 ){
       config.api = "get_esports_date_menu_count"
       /// 4 早盘 11 串关
-      config.params.type = 3000;
+      config.params.category = 1;//1常规2冠军
     }
     this.menu_match_date_api_config = config
   }

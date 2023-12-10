@@ -731,6 +731,7 @@ class MatchMeta {
    * @description 获取收藏赛事
    */
   async get_collect_match () {
+    this.clear_match_info()
     const mid = MenuData.current_lv_2_menu_i
     let mid_list = lodash.get(MenuData,'collect_list')
     let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
