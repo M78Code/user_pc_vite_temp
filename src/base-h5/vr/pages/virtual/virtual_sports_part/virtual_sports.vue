@@ -198,7 +198,7 @@ export default {
   },
   created() {
     this.timer1_ = 0;
-    pre_load_video.load_player_js()
+    pre_load_video.load_player_js('old')
   },
   mounted(){
     this.emitters = [

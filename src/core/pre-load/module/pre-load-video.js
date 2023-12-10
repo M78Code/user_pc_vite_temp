@@ -14,15 +14,15 @@ let pre_load_video = {
    * @Description 加载视频播放器js
    * @param {undefined} undefined
    */
-  load_player_js() {
+  load_player_js(is_old) {
     if (this.is_load_player_js) return;
     this.is_load_player_js = true;
     let dplayer_el = document.createElement("script");
     let hls_el = document.createElement("script");
     dplayer_el.src = `${
       BUILD_VERSION ? "/" + BUILD_VERSION : ""
-    }/lib/video/DPlayer.min.js`;
-    hls_el.src = `${BUILD_VERSION ? "/" + BUILD_VERSION : ""}/lib/video/hls.js`;
+    }/lib/video/${is_old ? 'DPlayer2' : 'DPlayer'}.min.js`;
+    hls_el.src = `${BUILD_VERSION ? "/" + BUILD_VERSION : ""}/lib/video/${is_old ? 'hls2': 'hls'}.js`;
     document.head.appendChild(dplayer_el);
     document.head.appendChild(hls_el);
   },
