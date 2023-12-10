@@ -43,15 +43,15 @@
             {{lodash.get(match, 'mhn')}}
           </div>
           <!-- 发球方 -->
-          <div class="serve-ball" :class="[match.mat == 'home' && 'active']">
+          <div class="serve-ball" :class="[match.mat == 'home' && 'active']" v-if="get_match_status(match.ms)">
             <div class="point"></div>
           </div>
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
+      <div class="score" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.home') }}</div>
+      <div class="score-game" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S1.home') }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
@@ -77,15 +77,15 @@
             :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
           <!-- 发球方 -->
-          <div class="serve-ball" :class="[match.mat == 'away' && 'active']">
+          <div class="serve-ball" :class="[match.mat == 'away' && 'active']" v-if="get_match_status(match.ms)">
             <div class="point"></div>
           </div>
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
+      <div class="score" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
+      <div class="score-game" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
     </div>
 
 
