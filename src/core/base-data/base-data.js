@@ -60,7 +60,7 @@ class BaseData {
     //基础数据返回值
     this.base_data_res = {};
     //基础数据 版本
-    this.base_data_version = ref(0);
+    this.base_data_version = ref('');
     // 赛种 基础数据  arr
     this.csids_arr = [];
     // 赛种 基础数据  map
