@@ -192,11 +192,9 @@ const status = computed(() => {
 });
 
 watch(() => props.get_match_detail, (value) => {
-  console.log(value, "props.get_match_detail");
   // format_time_zone(+item.mgt).Format(i18n_t('time4'))
   const now = Date.now();
-
-  if (props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0) {
+  if ((props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0)) {
     start_text.value = Math.floor((+props.get_match_detail.mgt - now)) 
   }
   
@@ -214,7 +212,6 @@ watch(() => props.get_match_detail, (value) => {
 
 //比分
 const detail_count = computed(() => {
-  console.log(scoew_icon_list.value, "scoew_icon_list.value");
   return scoew_icon_list.value['S1'] || [0,0];
 })
 
@@ -393,7 +390,6 @@ const set_scoew_icon_list = (new_value) => {
         away: score_value_arr[1],
       };
     }
-    console.log("scoew_icon_list", scoew_icon_list);
     
   }
 };
@@ -455,7 +451,6 @@ onMounted(()=>{
 
 // console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
 watch(props.get_match_detail, (new_value, old_value) => {
-  console.log(new_value, "new_value");
   scoew_icon_list.value = new_value?.msc_obj||set_scoew_icon_list(new_value)
   // set_scoew_icon_list(new_value);
   // 意义不明
@@ -465,8 +460,6 @@ watch(props.get_match_detail, (new_value, old_value) => {
 watch(
   () => props.get_match_detail?.msc,
   (msc) => {
-    console.log(msc, "msc====");
-
       set_scoew_icon_list({msc});
       set_basketball_score_icon_list();
     

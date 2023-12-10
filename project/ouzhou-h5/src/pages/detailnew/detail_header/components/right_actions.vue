@@ -93,7 +93,6 @@ watch(() => props.detail, (value) => {
     }
     const data = value?.msc_obj||set_scoew_icon_list(value);
     scoew_icon_list.value = data;
-    console.log(value, "value.msc");
     const s1_data = value.msc.map(e => e.split('|')).reduce((pre, cur) => {
         pre[cur[0]] = cur[1].split(':');
         return pre;
