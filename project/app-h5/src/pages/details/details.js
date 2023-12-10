@@ -659,7 +659,7 @@ export const details_main = () => {
       api_common
         .get_category_list(params)
         .then((res) => {
-          const res_data = lodash.get(res, "data");
+          const res_data = lodash.get(res, "data",[]);
           //转移所有中文投注名称
           if(UserCtr.lang == "zh" && !lodash.isEmpty(res.data)){
             res.data[0].marketName = '所有盘口'
