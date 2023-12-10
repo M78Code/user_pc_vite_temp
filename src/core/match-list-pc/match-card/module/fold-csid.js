@@ -37,15 +37,15 @@ import {conpute_match_list_card_offset ,set_fold_match_list_scroll_top} from  ".
 
       // 非球种标题类型卡片 设置卡片是否显示
       if(card_obj.card_type != 'sport_title'){
-        card_obj.is_league_fold = false
+        // card_obj.is_league_fold = falsez
         // 设置卡片是否显示
         if(is_sport_fold){
           // 赛种已折叠
           card_obj.is_show_card = false
-          if(card_obj.card_type=='league_title' && is_flod_title==true){
-            card_obj.is_show_card = true//设置卡片是否可见
-            card_obj.is_league_fold = true //设置玩法名称是否可见
-          }
+          // if(card_obj.card_type=='league_title' && is_flod_title==true){
+          //   card_obj.is_show_card = true//设置卡片是否可见
+          //   card_obj.is_league_fold = true //设置玩法名称是否可见
+          // }
         }else{
           // 赛种未折叠
           // 如果是联赛标题卡片则显示 ， 联赛容器卡片是否显示等于自身是否折叠

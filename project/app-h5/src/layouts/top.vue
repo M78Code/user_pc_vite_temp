@@ -112,6 +112,10 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
         case 2000:
           ref_data.scroll_data_list = BaseData.dianjing_sublist
+          nextTick(()=>{
+            dateTabMenu.value.set_active_val();
+            dateTabMenu.value.changeTabMenu(BaseData.dianjing_sublist[0],0);
+          })
           break  
         
         case 50000:
