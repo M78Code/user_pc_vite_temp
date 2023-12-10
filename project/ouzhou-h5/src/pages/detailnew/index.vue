@@ -12,7 +12,7 @@
     <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
     <!-- v-if="match_detail?.mvs > -1 " -->
     <!-- 动画组件 -->
-    <div v-if="match_detail?.mvs > -1 ">
+    <div v-if="match_detail?.mvs > -1 || label">
       <detail_header_tem2 :get_match_detail="match_detail || {}" :label="label"/>
     </div>
     
@@ -141,6 +141,7 @@ export default {
       label.value = value;
     }
     return{
+      label,
       handle_change,
       detail_store,
       match_odds_info,
