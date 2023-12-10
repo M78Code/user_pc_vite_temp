@@ -23,7 +23,8 @@ const ref_data = reactive({
     time_out_1:null,
     time_out_ :null,
     time_type:1,
-    time_list: []
+    time_list: [],
+    time_count:0,
 }) 
 
 resolve_mew_menu_res();
@@ -244,6 +245,7 @@ async function  get_menu_of_favorite_count(list,type) {
     }
     try{
         const { code,data } = await api_common.get_collect_menu_count_pc(parmas)
+        ref_data.time_count = 0
         if(code == 200){
             let collect_list = data || []
            
@@ -278,10 +280,10 @@ async function  get_menu_of_favorite_count(list,type) {
        
         return list
     } catch(error){
-        
+        ref_data.time_count += 1
         mi_100_arr.value = list
         ref_data.time_out_1 = setInterval(()=>{
-            if(MenuData.is_collect){
+            if(MenuData.is_collect && ref_data.time_count < 3){
                 get_menu_of_favorite_count(ref_data.time_list,ref_data.time_type)
             }else{
                 clearInterval(ref_data.time_out_)
