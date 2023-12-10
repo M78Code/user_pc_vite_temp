@@ -20,9 +20,6 @@
           </div>
           <div class="nonebox4-content-right">
               <div class="nonebox4-content-right-profit"><span class="nonebox4-content-right-profit-type">@</span>{{ format_odds(item.oddFinally, item.sportId) }}</div>
-              <div class="nonebox4-content-right-num">
-                <div>6</div>
-            </div>
           </div>
       </div>
      
