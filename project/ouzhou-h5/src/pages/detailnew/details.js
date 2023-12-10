@@ -10,7 +10,8 @@ import {
   axios_loop as axios_api_loop,
   MenuData,
   SearchData,
-  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5
+  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,
+  LocalStorage
 } from "src/output/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
@@ -521,7 +522,8 @@ export const details_main = (router, route) => {
   }
   let message_fun = null;
   onMounted(() => {
-    console.log(MatchDataBaseH5.get_quick_mid_obj(mid.value),'MatchDataBaseH5.get_quick_mid_obj(mid)');
+    MatchDataWarehouseInstance.value.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
+    match_detail.value = MatchDataWarehouseInstance.value.get_quick_mid_obj(mid.value);
     // match_odds_info.value = lodash.get(MatchDataBaseH5.get_quick_mid_obj(mid.value),"hps","[]")
     // match_detail.value = MatchDataBaseH5.get_quick_mid_obj(mid.value) || []
     loading.value = true;
