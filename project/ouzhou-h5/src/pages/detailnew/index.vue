@@ -10,18 +10,21 @@
     <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
     <!-- <template v-if="get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))"> -->
     <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-      <div v-if="match_detail?.mvs > -1">
-      <!-- 动画组件 -->
+    <!-- v-if="match_detail?.mvs > -1 " -->
+    <!-- 动画组件 -->
+    <!-- <div v-if="match_detail?.mvs > -1 ">
       <detail_header_tem2 :get_match_detail="match_detail || {}" :label="label"/>
     </div>
+    
     <div v-else class="mini-header-container"  @click="onClickTest">
       <div class="header-fix" ref="header_fix">
-         <!-- v-if="!changeHeader" -->
         <div ref="scroll_video_height" class="relative-position scroll_video_h">
           <detail_header_tem1 :get_match_detail="match_detail || {}" @handle-change="handle_change"/>
         </div>
       </div>
-    </div>
+    </div> -->
+    <!-- TODO: 统一使用一个组件，此组件里面会判断 -->
+    <detail_header_tem2 :get_match_detail="match_detail || {}" :label="match_detail?.mvs <= -1 ? 'score' : ''"/>
     <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail || {}"/>
     </div>

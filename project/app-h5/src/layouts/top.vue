@@ -13,9 +13,8 @@
     <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
       <DateTab ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
-
-    <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
-        <DateTab :dataList="dataList[MenuData.current_lv_2_menu_i]"  />
+    <div v-if="+MenuData.current_lv_2_menu_i>2000 && +MenuData.current_lv_2_menu_i<3000">
+        <DateTab :dataList="dataList[2000]"  />
     </div>
     <!-- 滑动菜单组件 -->
     <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
@@ -130,8 +129,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 设置vr /收藏 电竞 头信息
       MenuData.set_top_menu_title(val)
       // 清空一级菜单显示 用于后续更新
-      MenuData.current_lv_1_menu_mi.value = ''
-
+      // MenuData.current_lv_1_menu_mi.value = ''
+      MenuData.set_current_lv1_menu('');
       let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
       ref_data.current_mi = obj.mi
@@ -142,13 +141,14 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     set_menu_mi_change_get_api_data()
   }
   watch(()=> MenuData.current_lv_1_menu_mi.value, new_ => {
-    ref_data.scroll_data_list = [];
     // 今日 滚球 冠军
     if( [1,2,400].includes(1*new_) ){
+      ref_data.scroll_data_list = [];
       set_scroll_data_list(new_)
     }
     //早盘 串关
     if( [3,6].includes(1*new_)){
+      ref_data.scroll_data_list = [];
       nextTick(()=>{
         dateTabMenu.value.set_active_val()
         dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[0],0)
