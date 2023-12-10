@@ -52,6 +52,8 @@ class VirtualCtr {
       process_changing_match: '',
       // 是否显示详情页的统计页面
       is_show_details_analyse: false,
+      // 赛事id
+      goto_detail_matchid: null,
     });
   }
 
@@ -103,6 +105,9 @@ class VirtualCtr {
   }
   get_is_show_details_analyse(){
     return this.state.is_show_details_analyse;
+  }
+  get_goto_detail_matchid() {
+    return this.state.goto_detail_matchid;
   }
 
   
@@ -207,6 +212,9 @@ class VirtualCtr {
   }
   set_is_show_details_analyse(value){
     this.state.is_show_details_analyse = value;
+  }
+  set_goto_detail_matchid(value) {
+    this.state.goto_detail_matchid = value;
   }
 }
 const VR_CTR = new VirtualCtr();

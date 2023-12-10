@@ -81,6 +81,7 @@
           <!-- 视频icon -->
           <div class="play-icon-wrapper yb-flex-center"
             v-if="get_newer_standard_edition == 2 && match_item.mms > 0" @click="switch_match_handle(i,match_item)">
+            play
             <span class="video-play-icon" :data_si="match_selected_i" :data_i="i"
               :class="get_play_btn_class(match_item,i)" />
           </div>

@@ -124,7 +124,7 @@ export default {
     get_detail_data(){ return VR_CTR.get_detail_data() },
     get_details_item(){},
     get_first_details_item(){},
-    get_goto_detail_matchid(){},
+    get_goto_detail_matchid(){ VR_CTR.get_goto_detail_matchid() },
     get_uid(){},
     get_show_video(){},
     get_details_tabs_list(){},
@@ -663,6 +663,8 @@ export default {
       }else if(this.$route.name == "virtual_sports_details"){
         mid = this.$route.query.mid
       }
+      console.log(mid, this.$route, '666');
+      
 
       // 调用接口的参数
       let params = {

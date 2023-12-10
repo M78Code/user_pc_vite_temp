@@ -80,7 +80,7 @@ export default {
     //   get_betbar_show:'get_betbar_show',
     // }),
     is_show_analyse(){return VR_CTR.get_is_show_details_analyse()},
-    matchid(){return },
+    matchid(){return VR_CTR.get_goto_detail_matchid()},
     get_current_gotodetail_match(){return },
     sub_menuid(){return VR_CTR.get_current_sub_menuid()},
     sub_menu_type(){return VR_CTR.get_curr_sub_menu_type() },
@@ -140,6 +140,7 @@ export default {
     let parma = {
        mid: this.matchid || mid_,
     }
+    console.log(mid_, parma.mid, 'mid_')
     api_v_sports.get_virtual_match_detail(parma).then(res => {
       let code = lodash.get(res,'code');
       let data = lodash.get(res,'data');
@@ -189,7 +190,7 @@ export default {
     //   'set_is_show_details_analyse'
     // ]),
     set_menu_type(){},
-    set_goto_detail_matchid(){},
+    set_goto_detail_matchid(){ return VR_CTR.set_goto_detail_matchid() },
     set_detail_data(){},
     set_current_sub_menuid(data){return VR_CTR.set_current_sub_menuid(data)},
     set_curr_sub_menu_type(data){ return VR_CTR.set_curr_sub_menu_type(data) },

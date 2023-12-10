@@ -61,7 +61,7 @@ export default {
     get_current_league(){return VR_CTR.get_current_league()},
     get_detail_data(){return VR_CTR.get_detail_data()},
     get_access_config(){return {}},
-    matchid(){return ''},
+    matchid(){return VR_CTR.get_goto_detail_matchid()},
     sub_menu_id(){return VR_CTR.get_current_sub_menuid()},
     sub_menu_type(){return VR_CTR.get_curr_sub_menu_type()},
     is_show_analyse(){return VR_CTR.get_is_show_details_analyse()},

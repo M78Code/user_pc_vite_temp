@@ -137,7 +137,6 @@ export default {
      * @return {String}
      */
     get_virtual_sport_local(is_user_clicked){
-      console.error('111')
       this.gen_video_api_cache_key();
       let params = this.param_generate();
       if(!params) {
@@ -153,9 +152,7 @@ export default {
         this.no_title_list = [];
         this.virtual_data_loading = true;
       }
-      console.error('222')
       api_v_sports.get_virtual_sport_list(params).then(res => {
-        console.error('333')
         this.virtual_data_loading = false;
         // useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         this.set_virtual_data_loading(0);
