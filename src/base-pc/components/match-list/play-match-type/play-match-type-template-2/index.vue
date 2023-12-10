@@ -3,8 +3,8 @@
   
   <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj,null,!MenuData.is_home())">
     <div class="left-box">
-      <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
-        :sport_id="card_style_obj.csid" :key="card_style_obj.csid" key_name="pc-left-menu-bg-active-image" size="18" class="icon" color_type="gray_ball" />
+      <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="MenuData.current_ball_type"
+        :sport_id="MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-active-image" size="18" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
       
       <span v-if="!MenuData.is_esports()">{{ cur_title_info.name }}</span>

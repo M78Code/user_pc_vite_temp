@@ -10,7 +10,7 @@ import {tooltip} from "project_path/src/core/index.js"
  
 
 import Icon from "project/activity/src/components/icon/icon.vue"
-import load_data from "project/activity/src/components/load_data/load_data.vue";
+import load_data from "project/activity/src/components/load_data/load_data-h5.vue";
 
 import * as error_mapping from "project/activity/src/config/error_code_mapping.js";
  
