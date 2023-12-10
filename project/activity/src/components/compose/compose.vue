@@ -169,8 +169,8 @@
 
 <script>
 import {api_activity} from "src/api/index.js";
-import slider from "./slider.vue";
-import lottery from "./lottery.vue";
+import slider from "../slider/slider.vue";
+import lottery from "../lottery/lottery.vue";
 // 生成随机数
 const random = function(minNum,maxNum){
   return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
