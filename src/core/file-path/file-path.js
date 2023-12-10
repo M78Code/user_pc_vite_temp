@@ -239,8 +239,9 @@ const compute_local_common_file_path=(str='')=>{
   }
 
 }
-
+//本地项目内文件  公用的 不带项目标识专用目录的 
 const LOCAL_COMMON_FILE_PREFIX =  BUILD_VERSION ? `/${BUILD_VERSION}` :''
+//本地项目内文件  单个项目 专用的 带 项目 专用目录的 
 const LOCAL_PROJECT_FILE_PREFIX =  BUILD_VERSION ? `/${BUILD_VERSION}/${PROJECT_NAME}` :`/${PROJECT_NAME}`
 
 

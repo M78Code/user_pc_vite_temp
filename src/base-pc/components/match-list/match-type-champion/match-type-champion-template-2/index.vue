@@ -8,6 +8,7 @@
     class="c-match-league"
     :class="{'leagues-pack':card_style_obj.is_league_fold}"
   >
+    <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
     <div class="tr-match-head-ouzhou">
       <div
         class="leagues-wrap"
@@ -29,7 +30,7 @@
         <!-- 冠军联赛是否收藏 -->
         <div @click.stop="collect"
             class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
-            <div class="collect-start" :style="compute_css_obj({key: is_collect ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
+            <div class="collect-start" :style="compute_css_obj({key: is_collect() ? 'pc-home-star-fill' : 'pc-home-star-empty'})"></div>
           </div>
 
       </div>
@@ -45,6 +46,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import MatchListCardClass from 'src/core/match-list-pc/match-card/match-list-card-class.js';
 import {mx_collect} from "src/core/match-list-pc/composables/match-list-collect.js";
 import { compute_css_obj } from "src/output/index.js";
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 const props = defineProps({
   card_style_obj: {
@@ -53,16 +55,20 @@ const props = defineProps({
   },
 })
 
-const is_collect = ref(false);
-watch(() => props.card_style_obj, () => {
-  //第一次进页面时，收藏从接口获取状态，后续点击前端控制
-  is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
-}, {immediate: true })
+// const is_collect = ref(false);
+// watch(() => props.card_style_obj, () => {
+//   //第一次进页面时，收藏从接口获取状态，后续点击前端控制
+//   is_collect.value = Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+// }, {immediate: true })
+
+function is_collect() {
+  return Boolean(lodash.get(props.card_style_obj, 'league_obj.tf'))
+}
 
 const collect = lodash.throttle(() => {
   mx_collect({ type: 'champion', match: props.card_style_obj.league_obj });
   // 前端控制收藏状态
-  is_collect.value = !is_collect.value;
+  // is_collect.value = !is_collect.value;
 }, 1000)
 
 </script>

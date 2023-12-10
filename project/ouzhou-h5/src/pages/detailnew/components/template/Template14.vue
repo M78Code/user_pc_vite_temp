@@ -1,18 +1,20 @@
 <template>
   <div class="component template-14 template14">
-    <div class="main ol-list-container">
-      <template v-for="hl in data.hl" :key="hl.hid">
+    <template v-for="hl in data.hl" :key="hl.hid">
+      <div class="main ol-list-container">
         <template v-for="title in data.title" :key="title.otd">
           <div class="ol-column">
             <OddsTitle class="ol-title" :list="[title]"></OddsTitle>
             <template v-for="item in hl.ol">
-              <OddOlItem :value="item" v-if="item.otd == title.otd" :key="item.oid">
+              <OddOlItem :value="item" v-if="item.otd == title.otd" :key="item.oid"
+                :type="olType"
+              >
               </OddOlItem>
             </template>
           </div>
         </template>
-      </template>
-    </div>
+      </div>
+    </template>
   </div>
 </template>
 <script setup lang="ts">
@@ -24,7 +26,7 @@ const props = defineProps<{
   data:TYPES.OddInfo
 }>()
 
-const state = common.getTemplateState(props.data)
+const olType:TYPES.OlItemType = 'column'
 
 </script>
 

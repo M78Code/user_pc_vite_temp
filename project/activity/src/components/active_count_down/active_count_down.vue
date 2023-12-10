@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import common from "project/activity/src/mixins/module/common.js";
-import acticity_mixin from "../mixin/acticity_mixin";
+import common from "project/activity/src/mixins/common/common.js";
+import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin";
 //头部引入
 import {
   useMittOn,
@@ -187,3 +187,4 @@ export default {
   }
 }
 </style>
+ 

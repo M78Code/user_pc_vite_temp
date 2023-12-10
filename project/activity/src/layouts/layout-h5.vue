@@ -3,7 +3,10 @@
     <q-page-container>
       <q-page class="flex flex-center">
         <div>动画单独项目</div>
-        <PageH5 class="" style="height: 100vh" />
+    
+        <q-scroll-area style="height: 100vh; max-width: 100vw; width: 100vw;  overflow: scroll;" @scroll="handle_scroll"   >
+          <PageH5 class=""   />
+    </q-scroll-area>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -105,6 +108,14 @@ export default defineComponent({
         // 初次进入页面时 默认主题设置
         UserCtr.set_theme();
       }
+    },
+    /**
+     * 滚动输出
+     * @param {*} info 
+     */
+    handle_scroll(info){
+      console.log('滚动输出------',info);
+
     },
 
     //小屏幕rem适配方案，(375的设计稿，16px，可写成.16rem)
