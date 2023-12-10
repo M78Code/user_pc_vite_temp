@@ -2,26 +2,25 @@
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
       <q-page class="flex flex-center">
-        <div>动画单独项目</div>
-    
-        <q-scroll-area style="height: 100vh; max-width: 100vw; width: 100vw;  overflow: scroll;" @scroll="handle_scroll"   >
-          <PageH5 class=""   />
-    </q-scroll-area>
+        <PagePc />
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
- 
+
 <script>
-import PageH5 from "../pages/yazhou-h5/index.vue";
+
+import PagePc from "../pages/yazhou-pc/index.vue";
 import layout_mixin  from "project/activity/src/mixins/layout_mixin/layout_mixin.js";  
 export default {
   name: "layout-h5",
   components: {
-    PageH5,
+    PagePc,
   },
   mixins: [ layout_mixin],
  
 }
 </script>
+ 
+
  

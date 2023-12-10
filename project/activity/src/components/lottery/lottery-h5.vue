@@ -73,7 +73,7 @@ export default {
       background-image: linear-gradient(180deg, #336db5, #e9f0ff);
 
       &.active:after {
-        background-image:  var(--q-color-com-img-bg-161);
+        background-image:  var(--qq--color-com-img-bg-161);
       }
 
       .small-ring:after {
@@ -94,7 +94,7 @@ export default {
       background-image: linear-gradient(180deg, #ef8307, #ffd6b9);
 
       &.active:after {
-        background-image:  var(--q-color-com-img-bg-162);
+        background-image:  var(--qq--color-com-img-bg-162);
       }
 
       .small-ring:after {
@@ -116,7 +116,7 @@ export default {
     background-image: linear-gradient(180deg, #888888, #f7f7f7);
 
     &.active:after {
-      background-image:  var(--q-color-com-img-bg-163);
+      background-image:  var(--qq--color-com-img-bg-163);
     }
 
     .small-ring:after {
