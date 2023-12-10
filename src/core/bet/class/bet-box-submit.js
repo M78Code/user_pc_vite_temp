@@ -1006,15 +1006,8 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
         // 首页大小类玩法
         if(['Over',"Under"].includes(ol_obj.ot)){
-            // 英文列表是 简写
-            a =  UserCtr.lang == 'en' ? ol_obj.ot : ol_obj.onbl
-            b = ol_obj.onb
-
-            // h5数据格式和pc不一样
-            if(BetData.deviceType == 1){
-                a = ol_obj.on.split(' ')[0]
-                b = ol_obj.on.split(' ')[1]
-            }
+            a = ol_obj.on.split(' ')[0]
+            b = ol_obj.on.split(' ')[1]
         }
 
         // 平 不变色

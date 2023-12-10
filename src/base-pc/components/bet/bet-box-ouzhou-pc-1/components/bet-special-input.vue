@@ -19,14 +19,15 @@
         
                 <div>
                     <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount(true)" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${items.min_money}~${format_money3(items.max_money)}`" maxLength="11"  />
+                    :placeholder="`${i18n_t('bet.money_range')} ${format_money3(items.min_money)}~${format_money3(items.max_money)}`" maxLength="11"  />
                 </div>
             
             </div>
             <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
         </div>
         <div>
-            <ul class="bet-bet-money f-b-c" v-show="items.ol_os == 1">
+            {{ ref_data.show_quick }}
+            <ul class="bet-bet-money f-b-c" v-show="items.show_quick ">
                 <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
                     {{index == 'max' ? '' : '+' }}{{obj}}
                 </li>
@@ -40,7 +41,9 @@ import { reactive,onMounted,onUnmounted } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { useMittEmit,useMittOn,MITT_TYPES,UserCtr,formatMoney, format_money3 } from "src/core/"
+import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
+
+import { UserCtr,formatMoney, format_money3 } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 const props = defineProps({
@@ -56,7 +59,6 @@ const ref_data = reactive({
     seriesOdds: '', // 赔率
     show_quick: false, // 显示快捷金额
     emit_lsit: {},
-    show_money: true,
 })
 
 // 复式连串过关投注
@@ -73,11 +75,10 @@ const stop_drap_fn = (state) => {
         draggable: state
     }
     BetData.set_bet_box_draggable(obj)
-
 }
 
 onMounted(() => {
-    show_quick_amount(true)
+    // show_quick_amount(true)
     // // 单关 单注可以默认展开
     // if(BetData.is_bet_single && !BetData.is_bet_merge){
     //     show_quick_amount(true)
@@ -94,7 +95,7 @@ onUnmounted(() => {
 
 // 快捷金额 显示隐藏
 const set_show_quick_money = (obj = {}) => {
-    ref_data.show_money = obj.show
+    ref_data.show_quick = obj.show
     obj.money_list.max = 'MAX'
     ref_data.money_list = obj.money_list
     props.items.max_money = obj.max_money
@@ -168,7 +169,6 @@ const set_win_money = () => {
 
 // 快捷金额 state true   false
 const show_quick_amount = state => {
-    ref_data.show_quick = state
     let money_list = []
     if(state){
         if (BetData.bet_is_single) {

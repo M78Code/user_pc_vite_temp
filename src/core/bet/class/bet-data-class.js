@@ -7,14 +7,17 @@ import BetViewDataClass from "./bet-view-data-class.js"
 import { get_score_config,get_market_is_show } from "./bet-box-submit.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/project/module/format-odds-conversion-mixin.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
-import { ref } from "vue"
+import { nextTick, ref } from "vue"
 import lodash_ from "lodash"
-
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 
 
 class BetData {
-  constructor() { }
+  constructor() {
+   
+  }
   init_core() {
+    console.error('init_core')
     this.deviceType = 1  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
     // 当前赔率
     this.cur_odd = "eu";
@@ -199,6 +202,26 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_show = true;
     // h5 投注栏默认隐藏
     this.h5_bet_box_show = false
+
+    // 获取缓存信息
+    this.set_loacl_config()
+  }
+
+  // 根据缓存信息 设置数据
+  set_loacl_config(){
+    // 获取数据缓存
+    let session_info = LocalStorage.get('bet_data_class');
+    if (!session_info) {
+      return;
+    }
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        if(!['bet_data_class_version'].includes(item) ){
+          this[item] = session_info[item]
+        }
+      }
+    }
+    this.set_bet_data_class_version()
   }
 
   set_h5_bet_box_show(val) {
@@ -593,6 +616,10 @@ this.bet_appoint_ball_head= null */
   // 设置 投注版本
   set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()
+    nextTick(()=>{
+      LocalStorage.set('bet_data_class',this)
+    })
+    console.error('set_bet_data_class_version',JSON.parse(JSON.stringify(this)))
   }, 5)
 
   // 投注成功后 不保留投注项 需要清空投注数据 

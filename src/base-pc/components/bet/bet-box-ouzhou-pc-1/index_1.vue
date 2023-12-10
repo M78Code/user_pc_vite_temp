@@ -1,55 +1,69 @@
 <template>
   <div class="bet-box-info" ref="pondModel" id="drag" >
-    <div v-show="false"> {{UserCtr.user_version}} -- {{BetData.bet_data_class_version}}{{BetViewDataClass.bet_view_version}}</div>
+    <div v-show="false"> {{UserCtr.user_version}} -- {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
     <!-- 头部信息 -->
     <betTitle />
     <!-- 展开项 -->
     <div v-show="BetData.bet_state_show" class="bet-box-content">
 
       <div class="f-b-c px-12 h40 font14 bet-delete-all" v-if="(BetData.bet_single_list.length || BetData.bet_s_list.length) && BetViewDataClass.bet_order_status == 1 ">
+        <!-- 删除全部  -->
         <div class="cursor">
           <span class="icon-delete"></span>
-          <span class="ml-16">删除全部</span>
+          <span class="ml-16">{{i18n_t('common.del_all')}}</span>
         </div>
-        <div class="cursor re" @click="show_single_change()">
-          <div class="f-e-c">
-            <!-- {{ BetData.is_bet_single }}-{{ BetData.is_bet_merge }} -->
-            <span v-if="BetData.is_bet_single && !BetData.is_bet_merge">{{ i18n_t('bet.bet_one_') }}</span>
-            <span v-if="BetData.is_bet_single && BetData.is_bet_merge">{{ i18n_t('bet.merge') }}</span>
+       
+        <div class="cursor re f-e-c bet-text">
+           <!--  单关 合并 切换 -->
+          <div class="f-e-c" @click="show_merge_change()" v-if="BetData.is_bet_single">
+            {{ i18n_t('bet.merge') }} 
+            <span v-if="BetData.is_bet_merge" class="icon-arrow icon-arrow-merge ml-4"></span>
+            <span v-else class="merge-checkbox ml-4"></span> 
+          </div>
+          <!-- 单关 串关 切换 -->
+          <div class="f-e-c ml-16" @click="show_single_change()">
+            <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
-            <span class="icon-arrow" :class="ref_data.show_single ?'arrow':''"></span>
-          </div>
-          <div class="show_single" v-if="ref_data.show_single">
-            <!-- 单关 -->
-            <div :class="BetData.is_bet_single && !BetData.is_bet_merge?'active':''" class="bet-li" @click="set_single_change('single')">{{i18n_t('bet.bet_one_')}}</div>
-            <!-- 串关 -->
-            <div :class="BetData.is_bet_single?'':'active'" class="bet-li" @click="set_single_change('series')">{{i18n_t('bet.bet_series')}}</div>
-            <!-- 单关合并 -->
-            <div :class="BetData.is_bet_single && BetData.is_bet_merge?'active':''" class="bet-li" @click="set_single_change('merge')">{{i18n_t('bet.merge')}}</div>
+            <div class="switch-single ml-4" :class="ref_data.show_single ? '':'arrow-single'">
+              <span></span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}} -->
+      <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
       <!-- 单关 投注 -->
-      <div>
+      <div class="bet-scroll">
         <div v-if="BetViewDataClass.bet_order_status == 1">
           <template v-if="BetData.is_bet_single">
             <div v-for="(item,index) in BetData.bet_single_list" :key="item.playOptionsId">
                 <betItem :items="item" :key="index" :index="index" />
             </div>
           </template>
+          <!-- 串关 投注 -->
           <template v-else>
             <div v-for="(item,index) in BetData.bet_s_list" :key="item.playOptionsId">
               <betItem :items="item" :key="index" :index="index" />
             </div>
+
             <!-- 串关投注 限额 -->
             <template v-if="BetData.bet_s_list.length > 1">
-              <div v-for="(item,index) in BetViewDataClass.bet_special_series" :key="index" class="bor-b">
-                <betSpecialInput :items="item" />
+              <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" />
+
+              <div class="f-s-c">
+                <sapn>{{ i18n_t('bet.bet_n_') }}</sapn>
+                <span class="icon-arrow icon-arrow-series" :class="ref_data.show_single ?'arrow':''"></span>
               </div>
+              <!-- 复式连串过关投注 限额 -->
+              <template v-if="BetData.bet_s_list.length > 1">
+                
+                <div v-for="(item,index) in BetViewDataClass.bet_special_series" :key="index" class="bor-b">
+                  <betSpecialInput :items="item" />
+                </div>
+              </template>
             </template>
+
           </template>
         </div>
   
@@ -70,7 +84,7 @@
 </template>
 
 <script setup>
-import { reactive } from "vue"
+import { reactive, ref } from "vue"
 import { UserCtr} from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
@@ -82,31 +96,25 @@ import betSpecialInput from "./components/bet-special-input.vue"
 
 const ref_data = reactive({
   show_single: false,
+  show_merge: false,
 })
 
 const show_single_change = () => {
   ref_data.show_single = !ref_data.show_single
-}
-
-// 投注类型切换
-const set_single_change = val => {
-  switch(val){
-    case "single":
-      BetData.set_is_bet_single('single')
-      BetData.set_is_bet_merge('no')
-      break
-    
-    case "series":
-      BetData.set_is_bet_single('series')
-      break
-    
-    case "merge":
-      BetData.set_is_bet_single('single')
-      BetData.set_is_bet_merge('merge')
-      break
+  if(ref_data.show_single){
+   return BetData.set_is_bet_single('single')
   }
+  BetData.set_is_bet_single('series')
 }
 
+const show_merge_change = () => {
+  ref_data.show_merge = !ref_data.show_merge
+  if(ref_data.show_merge){
+   return BetData.set_is_bet_merge('merge')
+  }
+  BetData.set_is_bet_merge('no')
+  
+}
 
 
 </script>
@@ -118,6 +126,11 @@ const set_single_change = val => {
     min-height: 55px;
   }
 
+  .bet-scroll{
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
   .bet-box-content{
     background: var(--q-gb-bg-c-4);
     border: 1px solid var(--q-gb-bd-c-1);
@@ -126,21 +139,60 @@ const set_single_change = val => {
   .bet-delete-all{
     background: var(--q-gb-bg-c-15);
   }
-  .icon-arrow{
+  .switch-single{
+    width: 36px;
+    height: 18px;
+    border-radius: 18px;
+    border: 1px solid var(--q-gb-bd-c-5);
+    position: relative;
+    transition: .3s;
+    &.arrow-single{
+      border: 1px solid var(--q-gb-bd-c-1);
+      span{
+        left: 18px;
+        background:var(--q-gb-bg-c-1) ;
+      }
+    }
+    span{
+      width: 14px;
+      height: 14px;
+      top: 1px;
+      left: 2px;
+      border-radius: 50%;
+      position: absolute;
+      background: var(--q-gb-bg-c-19);
+      transition: .3s;
+    }
+  }
+
+  .merge-checkbox{
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--q-gb-bd-c-5);
+    display: inline-block;
+    border-radius: 4px;
+  }
+
+
+  .icon-arrow-merge{
     background: var(--q-gb-bg-c-1);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
     display: flex;
+    font-size: 12px;
     justify-content: center;
     align-items: center;
     color: var(--q-gb-t-c-1);
-    margin-left: 10px;
     transition: 0.3s;
     transform: rotate(180deg);
     &.arrow{
       transform: rotate(0deg);
     }
+  }
+
+  .icon-arrow-series{
+    
   }
 
   .show_single{
@@ -164,4 +216,9 @@ const set_single_change = val => {
       }
     }
   }
+
+  .bet-text{
+    color: var(--q-gb-t-c-8);
+  }
+  
 </style>

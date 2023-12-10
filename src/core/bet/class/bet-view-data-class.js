@@ -3,13 +3,15 @@
  * 这个类是多个 实例 ，每一个投注对象 就是一个实例
  *
  */
-import { ref } from "vue";
+import { ref,nextTick } from "vue";
 import lodash_ from "lodash"
 import BetData from "./bet-data-class.js"
+import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 
 class BetViewData {
   constructor() { 
     this.init()
+    
   }
   init() {
     // 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
@@ -66,7 +68,7 @@ class BetViewData {
     };
 
     // 串关  专用参数
-    this.bet_special_series = {};
+    this.bet_special_series = [];
     // 普通单关 专用参数
     this.bet_special_single = {};
     // 合并单关 专用参数
@@ -101,6 +103,27 @@ class BetViewData {
     '0402019','0402038','0400450','132113','0402035','0400454','0400455','0402042','0400453','0400459','0400460','0400464','0400475','0400468','0400469','M400004',
     'M400005','M400007','M400009','M400010','DJ002','M400011','M400012','0401038','DJ001','DJ003','DJ004','DJ005']
 
+    // 获取缓存信息
+    nextTick(()=>{
+      this.set_loacl_config()
+    })
+  }
+
+  // 根据缓存信息 设置数据
+  set_loacl_config(){
+    // 获取数据缓存
+    let session_info = LocalStorage.get('bet_view_class');
+    if (!session_info) {
+      return;
+    }
+    if (Object.keys(session_info).length) {
+      for(let item in session_info){
+        if(!['bet_view_version'].includes(item) ){
+          this[item] = session_info[item]
+        }
+      }
+    }
+    this.set_bet_view_version()
   }
   /**
    * 计算确定按钮显示
@@ -121,6 +144,10 @@ class BetViewData {
   set_bet_view_version = lodash_.debounce(() => {
     this.bet_view_version.value = Date.now()
     // console.error('set_bet_view_version',this)
+    nextTick(()=>{
+      LocalStorage.set('bet_view_class',this)
+    })
+    console.error('set_bet_view_version',JSON.parse(JSON.stringify(this)))
   }, 5)
 
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
@@ -153,7 +180,7 @@ class BetViewData {
       this.bet_min_max_money = bet_amount
       
     }else{
-      let special_series = this.bet_special_series.map(item=>{
+      let special_series = this.bet_special_series.map((item,index)=>{
         //  串关使用 type 复连串 30001
         let obj = bet_amount_list.find(page => page.type == item.id) || {}
         if(obj.type){
@@ -163,6 +190,7 @@ class BetViewData {
             max_money: obj.orderMaxPay, // 最大限额
             globalId: obj.globalId,  //  风控响应id
             seriesOdds: obj.seriesOdds, // 赔率  // 串关使用 3串1
+            show_quick: index == 0 ? true : false, // 快捷金额
           }
         }
       })

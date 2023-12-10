@@ -145,7 +145,7 @@ class UserCtr {
   // 刷新后 获取缓存数据
   set_user_info_refresh() {
     // 获取数据缓存
-    let session_info = SessionStorage.get(user_key);
+    let session_info = LocalStorage.get(user_key);
     if (!session_info) {
       return;
     }
