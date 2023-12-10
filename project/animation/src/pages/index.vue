@@ -1,8 +1,13 @@
 <!-- 事件组件，必须参数： 赛种ID：sportId 赛事id：matchId 数据源：dataSourceCode -->
 <template>
     <div style="background: #1a1a1a;">
-        <div style=" height: 60px;">
+        <div>
             参数栏 <b class="text-red">xingxing</b>
+          <top-form
+            @submit="submit"
+            @pause="pause"
+            @reset="reset"
+          />
         </div>
         <div class="row q-pa-lg">
             <!-- 左边 -->
@@ -59,6 +64,7 @@ import timeline from "project/animation/src/pages/components/timeline.vue"
 import svg_area from "project/animation/src/pages/components/svg-area.vue"
 import { test_data } from "project/animation/src/globle/event_data.js"
 import BackendConfig from "project/animation/src/pages/components/backend_config.vue"
+import TopForm from "project/animation/src/pages/components/form.vue"
 import _ from 'lodash';
 import axios from "axios";
 import { uid } from "quasar"
@@ -68,6 +74,7 @@ export default defineComponent({
     components: {
         timeline,
         svg_area,
+        TopForm,
         BackendConfig,
     },
     mixins:[websocket_base],
@@ -94,23 +101,42 @@ export default defineComponent({
     }
  },
  created() {
-    console.warn(this.$route.query)
-    let { sportId, matchId, dataSourceCode } = this.$route.query || {}
-    console.warn(sportId)
-    console.warn(matchId)
-    console.warn(dataSourceCode)
-    // 必须参数判断
-    if(!sportId || !matchId || !dataSourceCode) {
-        console.error('参数缺失')
-        this.set_timer(1)
-    }else {
-        this.get_query_params()
-        this.websocket_connection_connect(1);
-        console.warn(this.websocket_connection_connect)
-        this.get_data_list()
-    }
  },
  methods: {
+   // 启动
+   submit(form){
+     this.initSocket(form)
+   },
+   // 停止
+   pause(){
+     this.set_timer(3)
+     this.websocket_connection_close(1)
+   },
+   // 清空
+   reset(){
+    this.dataObj = []
+   },
+   // 初始化socket
+   initSocket(form = {}){
+     console.warn(this.$route.query)
+     let { sportId, matchId, dataSourceCode } = this.$route.query || {}
+     sportId = form.sportId || sportId
+     matchId = form.matchId || matchId
+     dataSourceCode = form.dataSourceCode || dataSourceCode
+     console.warn(sportId)
+     console.warn(matchId)
+     console.warn(dataSourceCode)
+     // 必须参数判断
+     if(!sportId || !matchId || !dataSourceCode) {
+       console.error('参数缺失')
+       this.set_timer(1)
+     }else {
+       this.get_query_params()
+       this.websocket_connection_connect(1);
+       console.warn(this.websocket_connection_connect)
+       this.get_data_list()
+     }
+   },
     // type 1 开始 2 结束
     set_timer(type) {
         if(type == 1) {
