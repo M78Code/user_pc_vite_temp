@@ -41,7 +41,7 @@ export function usedetailData(route) {
 
   const matchDetailList = ref([]);
   const {
-    get_matchDetail_getVirtualMatchOddsInfo:get_detail_list,  //接口
+    get_match_virtual_plays:get_detail_list,  //接口
     get_virtual_match_detail:get_detail_data,
   
   } = api_virtual; // 接口
