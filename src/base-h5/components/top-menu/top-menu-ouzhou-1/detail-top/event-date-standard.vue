@@ -123,7 +123,7 @@ const computed_process_name = computed(() => {
     if (
         lodash.get(match, 'csid')== 3 &&
         props.show_page == "match-list" &&
-        process_name.indexOf("第") == 0
+        process_name?.indexOf("第") == 0
     ) {
         //欧洲版，不用换行
         return props.date_show_type === 'inline' ? process_name : process_name.replace(" ", "<br/>");

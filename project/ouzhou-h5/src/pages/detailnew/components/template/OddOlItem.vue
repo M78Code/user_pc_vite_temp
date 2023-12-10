@@ -3,25 +3,25 @@
     :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
   >
     <div class="icontainer" v-if="vif"
+      :class="{'ol-v-hide': isLock}"
       @click="onClick"
     >
       <template v-if="isLock" @click.stop>
-        <div class="ol-lock">
+        <div class="ol-lock" :class="{'ol-v-show': isLock}">
           <img :src="odd_lock_ouzhou" alt="lock" class="ol-lock-img">
         </div>
       </template>
-      <template v-else>
-        <div class="item ol-name" :alt="olName">
-          <span class="ol-name-span">{{ olName }}</span>
+      <div class="item ol-name" :alt="olName">
+        <span class="ol-name-span">{{ olName }}</span>
+      </div>
+      <div class="separate"></div>
+      <div class="item ol-content">
+        <div class="ol-content-ov">
+          <span>{{ ov }}</span>
+          <img class="odd-image" v-show="status != 'none'"
+            :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
         </div>
-        <div class="separate"></div>
-        <div class="item ol-content">
-          <div class="ol-content-ov">
-            <span>{{ ov }}</span>
-            <img class="odd-image" :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
-          </div>
-        </div>
-      </template>
+      </div>
     </div>
     <!-- 赛果 -->
     <div class="icontainer ol-result" v-else
@@ -57,7 +57,7 @@ const props = withDefaults(defineProps<{
   value: TYPES.OlResult|TYPES.Ol,
   type?: TYPES.OlItemType
 }>(), {
-  type: 'default'
+  type: 'column'
 })
 const sportId = MatchDetailCalss.params.sportId
 // @ts-ignore
@@ -69,6 +69,7 @@ const olName = (function(){
   }
   return props.value.on || props.value.ott
 })()
+const placeholder = olName.slice(0,1)
 // const active = computed(()=> BetData.bet_oid_list.includes(props.value.oid))
 const active = computed(() => state.active == props.value.oid)
 const status: Ref<'up' | 'down' | 'none'> = ref('none')
@@ -115,6 +116,12 @@ function resetStatus() {
   text-overflow: ellipsis;
   text-wrap: nowrap;
 }
+.ol-v-hide{
+  visibility: hidden;
+}
+.ol-v-show{
+  visibility: visible;
+}
 
 .component.odd-ol-item{
   width: 100%;
@@ -140,9 +147,7 @@ function resetStatus() {
 
   &.up,
   &.down {
-    .odd-image {
-      visibility: visible;
-    }
+
   }
 
   &.up {
@@ -155,8 +160,10 @@ function resetStatus() {
 }
 
 .icontainer {
+  position: relative;
   display: flex;
   width: 100%;
+  align-items: center;
   &.ol-result{
     --private-ol-content-color: #8A8986; //#TODO: css var
   }
@@ -198,11 +205,15 @@ function resetStatus() {
   height: var(--private-local-odd-image-size);
   position: absolute;
   object-fit: contain;
-  visibility: hidden;
   left: 100%;
 }
 
 .ol-lock {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -211,23 +222,72 @@ function resetStatus() {
 
 .ol-lock-img {
   width: 16px;
-  height: 16px;
+  // height: 1rem;
+  line-height: 100%;
 }
-.component.fill{
-  .icontainer{
-    padding: 0 20px;
-  }
-  .ol-name{
-    text-align: left;
-    justify-content: start;
-    @extend .overflow;
-    .ol-name-span{
+.component{
+  &.fill{
+    .icontainer{
+      padding: 0 20px;
+    }
+    .ol-name{
+      text-align: left;
+      justify-content: start;
       @extend .overflow;
+      .ol-name-span{
+        @extend .overflow;
+      }
+    }
+    .ol-content{
+      flex: none;
+      justify-content: end;
     }
   }
-  .ol-content{
-    flex: none;
-    justify-content: end;
+  &.column{
+    padding: 10px 0;
+    .icontainer{
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .separate{
+      display: none;
+    }
+    .item{
+      margin: 2px 5px;
+      justify-content: center;
+    }
+    .ol-name{
+      @extend .overflow;
+      width: 100%;
+      text-align: center;
+      .ol-name-span{
+        @extend .overflow;
+      }
+    }
+  }
+  &.auto{
+    .icontainer{
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .separate{
+      display: none;
+    }
+    .item,.ol-lock-img{
+      margin: 2px 5px;
+    }
+    .item{
+      flex: 1;
+      justify-content: center;
+    }
+    .ol-name{
+      flex-basis: 50%;
+    }
+    .ol-content{
+      flex-basis: 40%;
+    }
   }
 }
 </style>
