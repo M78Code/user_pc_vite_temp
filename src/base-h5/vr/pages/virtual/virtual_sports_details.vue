@@ -19,7 +19,7 @@
       </div>
     </div>
     <!--视频，tab和玩法集部分-->
-    <template>
+    <template v-if="true">
       <div class="detail-header-bg"></div>
       <div class="detail-header">
         <!--视频区域-->

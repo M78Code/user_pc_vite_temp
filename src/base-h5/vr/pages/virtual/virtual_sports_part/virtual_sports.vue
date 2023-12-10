@@ -12,7 +12,7 @@
     <div class="tab-wrapper">
       <div class="tab-item" :class="{active:i == tab_item_i}" v-for="(tab_item,i) of tab_items"
         :key="i" @click="tab_item_click_handle(i,null,'user_change')">
-        {{tab_item.name}}
+        <div>{{tab_item.name}}</div>
       </div>
     </div>
 
@@ -578,6 +578,12 @@ export default {
     margin-right: 0.06rem;
     padding: 0 0.1rem;
     flex-shrink: 0;
+    &.active {
+      color: var(--q-gb-t-c-1);
+      >div {
+        border-bottom: 2px solid var(--q-gb-t-c-1);
+      }
+    }
   }
 }
 

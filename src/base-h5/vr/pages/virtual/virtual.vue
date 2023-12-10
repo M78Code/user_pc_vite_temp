@@ -435,6 +435,11 @@ export default {
           min-width: fit-content;
           padding-right: 0.38rem;
           position: relative;
+          .icon {
+            // 后期换成精灵图
+            border: 1px solid gray;
+            border-radius: 50%;
+          }
 
           &:last-child {
             padding-right: 0.2rem;
