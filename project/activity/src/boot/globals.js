@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 全局注册
  */
-import lodash from "lodash";
+ 
 
 
 import {tooltip} from "project_path/src/core/index.js"
@@ -14,10 +14,7 @@ import load_data from "project/activity/src/components/load_data/load_data.vue";
 
 import * as error_mapping from "project/activity/src/config/error_code_mapping.js";
  
-// import * as virtual_common from "project/activity/src/public/mixins/common/virtual_common.js";
-// 该文件再 bet_item_mixin.js, bet_item_mixin.js 中使用由于最小投注单元会导致引入次数过多,因此暂时提出为公共的
-// 导入自定义高精度计算工具js
-import math from "project/activity/src/boot/mathjs.js"
+ 
  
 // 加载公共样式
 import 'project/activity/src/css/common.scss';
@@ -116,17 +113,12 @@ export default async (app) => {//app, router, store,
     }
   }
 
-  window._ = lodash;
-
  
-  // window.$matchlist = matchlist
-  // 高精度运算工具对象(例子:this.$mathjs.multiply(1.13,100000))
-  window.$mathjs = math;
+ 
   // 用户相关的 全局 单实例 类
   // window.userCtr = userCtr
   // 全局图片路径前缀 区分本地/打包
-  window.$g_image_preffix = process.env.NODE_ENV === "development" ? '' : '/' + BUILD_VERSION
-
+ 
   // HTMLImageElement扩展 play()和stop()， 用于控制gif播放
   if ('getContext' in document.createElement('canvas')) {
     HTMLImageElement.prototype.play = function() {
