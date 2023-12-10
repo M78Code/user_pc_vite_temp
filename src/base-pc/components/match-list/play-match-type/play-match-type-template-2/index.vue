@@ -2,12 +2,20 @@
   <!-- 滚球盘 标题-->
   
   <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj,null,!MenuData.is_home())">
-    <div class="left-box">
-      <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="MenuData.current_ball_type"
+    <div class="left-box" v-if="!MenuData.is_home()">
+      <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
         :sport_id="MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-active-image" size="18" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
       
       <span>{{ BaseData.menus_i18n_map[Number(MenuData.current_ball_type) + 100] }}</span>
+      <!-- 赛事数量 -->
+    </div>
+    <div class="left-box" v-else>
+      <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
+        :sport_id="card_style_obj.csid" :key="card_style_obj.csid" key_name="pc-left-menu-bg-active-image" size="18" class="icon" color_type="gray_ball" />
+      <!-- 滚球盘 -->
+      
+      <span>{{ BaseData.menus_i18n_map[Number(card_style_obj.csid) + 100] }}</span>
       <!-- 赛事数量 -->
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
