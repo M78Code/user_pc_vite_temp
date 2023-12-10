@@ -11,7 +11,7 @@ import { defineComponent } from "vue";
 
 import LayoutH5 from "project/activity/src/layouts/layout-h5.vue";
 
-import app_mixin from "./src/mixins/app-mixin.js";
+import app_mixin from "./src/mixins/app_mixin/app-mixin.js";
 
 export default defineComponent({
   name: "App",
@@ -30,10 +30,10 @@ export default defineComponent({
     test_init() {
       let online_obj = {
         gr: "COMMON",
-        token: "db33df96d94e7c8476d3c772b22ea1f943ae4972",
+        token: "7da8eba371de2057f7246c1ecb817bc1a66337f4",
         lang: "zh",
         pb: "1",
-        best_api: "https://api.jlsdfj012.com",
+        best_api: "https://api.lkjklkyi.com",
       };
 
       let final_obj = online_obj;
@@ -45,3 +45,4 @@ export default defineComponent({
   },
 });
 </script>
+ 

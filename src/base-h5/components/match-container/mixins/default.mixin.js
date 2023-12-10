@@ -219,7 +219,7 @@ export default defineComponent({
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
       // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag) && MenuData.is_today()
+      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag) && (MenuData.is_today() || MenuData.is_mix())
     },
     // 获取赛事数量
     get_match_count () {
@@ -243,7 +243,11 @@ export default defineComponent({
         is_show = t && true
       })
       return is_show
-    }
+    },
+    // 联赛折叠状态
+    ball_seed_collapsed ()  {
+      return !lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${this.match_of_list.csid}`, true)
+    },
   },
   watch: {
     match_of_list: {
