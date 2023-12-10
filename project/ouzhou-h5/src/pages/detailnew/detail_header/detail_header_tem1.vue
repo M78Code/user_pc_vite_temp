@@ -108,7 +108,7 @@
       </template>
     </div>
      <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.csid == 5"  :detail_data="get_match_detail" />
+     <matchScore v-if="get_match_detail.csid == 5 "  :detail_data="get_match_detail" />
   </div>
 </template>
 
