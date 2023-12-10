@@ -904,7 +904,7 @@ export const details_main = () => {
     // 清空操作类的mid
     MatchDataWarehouseInstance.remove_match(lodash.get(route, 'params.mid'))
     MatchDetailCalss.set_match_details_params({})
-    LocalStorage.remove("LocalStorage")
+    LocalStorage.remove("YUAN_MATCH_DETAIL_DATA")
   })
   const on_listeners = () => {
     // #TODO: IMIT
