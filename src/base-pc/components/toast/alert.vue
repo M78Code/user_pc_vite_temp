@@ -105,10 +105,11 @@ function show_alert(data) {
   text.value = data.text || "";
   if (text.value == "" || is_show.value) return;
   is_show.value = true;
-
+  backDrop.value = true;//不允许点击空白关闭
   btn_text.value = data.btn_text || i18n_t('common.confirm')
   // 弹框时,关闭视频播放窗口
   useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, { cmd: "colse" })
+
 }
 /**
  * @Description:域名错误弹窗
