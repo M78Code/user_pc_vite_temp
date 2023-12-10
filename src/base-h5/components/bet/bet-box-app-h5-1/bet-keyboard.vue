@@ -57,7 +57,6 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr, LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
-import lodash_ from 'lodash'
 
 const active_index = ref(BetData.active_index)
 const money = ref('') //用户输入金额
@@ -259,7 +258,7 @@ const _handleNumberKey = (num, e) => {
   }else{
     ol_type = 'id'
   }
-  ol_id = lodash_.get(BetData.bet_keyboard_config,ol_type)
+  ol_id = lodash.get(BetData.bet_keyboard_config,ol_type)
   let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
 
   // 显示最大金额
@@ -333,7 +332,7 @@ onUnmounted(() => {
     background-color: var(--q-gb-bg-c-15);
     color: var(--q-gb-t-c-1);
     font-size: 0.18rem;
-    font-weight: bold;
+    font-weight: 700;
     border-radius: 0.08rem;
     margin: 0 .02rem;
     padding: .05rem 0;
