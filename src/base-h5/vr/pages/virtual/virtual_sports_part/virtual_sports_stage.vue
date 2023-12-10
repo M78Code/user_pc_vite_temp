@@ -382,6 +382,7 @@ export default {
       let video_wrap_dom = document.querySelector('.video-playing-er');
 
       if(!video_wrap_dom){
+        clearTimeout(this.timer_super30);
         this.timer_super30 = setTimeout(() => {
           this.init_video_player();
         },500);
@@ -410,20 +411,20 @@ export default {
       }
       this.video_voice = false
       // 监听视频可以播放
-      this.player.on('canplaythrough', () => {
-        if(!this.player) return;
-        if(!this.video_voice){
-          this.player.video.muted = true;
-          this.player.video.setAttribute('autoplay','autoplay');
-        }
+      // this.player.on('canplaythrough', () => {
+      //   if(!this.player) return;
+      //   if(!this.video_voice){
+      //     this.player.video.muted = true;
+      //     this.player.video.setAttribute('autoplay','autoplay');
+      //   }
 
-        // 右侧菜单为显示状态则暂停视频播放
-        if (!this.right_menu_show) {
-          this.player.play()
-        } else {
-          this.player.pause()
-        }
-      });
+      //   // 右侧菜单为显示状态则暂停视频播放
+      //   if (!this.right_menu_show) {
+      //     this.player.play()
+      //   } else {
+      //     this.player.pause()
+      //   }
+      // });
       // 播放
       this.player.on('play',() => {
         this.video_play_stauts = 0;

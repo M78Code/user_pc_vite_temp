@@ -200,7 +200,6 @@ export default {
   },
   created() {
     this.timer1_ = 0;
-    pre_load_video.load_player_js('old')
   },
   mounted(){
     this.emitters = [
@@ -208,6 +207,7 @@ export default {
       useMittOn(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2, this.match_ended_status2_handle).off,
     ]
     this.match_ended_status2_handle();
+    pre_load_video.load_player_js('old')
   },
   methods:{
 	set_current_league(data){VR_CTR.set_current_league(data)},
