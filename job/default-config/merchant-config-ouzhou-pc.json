@@ -49,6 +49,12 @@
         "params": {
           "tableClass": "bg-deep-purple-14"
         }
+      },
+      "MatchFooterScore": {
+        "use_component": "MatchFooterScore2",
+        "params": {
+          "tableClass": "bg-deep-purple-14"
+        }
       }
     }
   }
