@@ -157,7 +157,7 @@ const reset_all_card_data = () => {
  */
 
 export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
-  (match_list, is_ws_call, is_remove_call, is_five_leagues) => {
+  (match_list, is_ws_call, is_remove_call, is_five_leagues=false) => {
     let current_csid = MenuData.left_menu_result.lv1_mi;
     // 虚拟体育 不走卡片逻辑
     if (MenuData.is_vr()) {
@@ -219,11 +219,11 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj =
       );
     } else if ([9].includes(MatchListCardData.match_list_mapping_relation_obj_type)) {
       if (is_five_leagues) {
-        // compute_match_list_style_obj_and_match_list_mapping_relation_obj_type7(
-        //   match_list,
-        //   is_ws_call,
-        //   is_five_leagues
-        // );
+        compute_match_list_style_obj_and_match_list_mapping_relation_obj_type7(
+          match_list,
+          is_ws_call,
+          is_five_leagues
+        );
       } else {
         compute_match_list_style_obj_and_match_list_mapping_relation_obj_type4(
           match_list,

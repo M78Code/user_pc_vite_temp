@@ -153,9 +153,9 @@ export const init_home_matches = async () => {
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
     MatchDataWarehouse_PC_List_Common.set_list(get_home_matches.concat(get_five_leagues_list));
     MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(get_home_matches);
-    // MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-    //   get_five_leagues_list, null, null, true
-    // );
+    MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+      get_five_leagues_list, null, null, true
+    );
     set_load_data_state("data")
   }
   await axios_loop({
@@ -196,19 +196,19 @@ export const init_home_matches = async () => {
       set_load_data_state("refresh")
     }
   })
-  return
   // 暂时隐藏五大联赛
   axios_loop({
     axios_api: get_five_leagues_list_api,
     fun_then: function (res) {
-      console.log("res",res)
+
       try {
         //五大联赛，只显示滚球数据
         if (res?.length) {
-          res = res.filter(match =>  {
-            if (get_match_status(match.ms)) return match
+          res = res.filter(match => {
+            return !!get_match_status(match.ms)
           })
         }
+        console.log("jiffy5", res)
         match_list.push(...res)
         set_league_list_obj(match_list)
         SessionStorage.set('get_five_leagues_list', res)
