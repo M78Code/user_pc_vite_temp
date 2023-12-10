@@ -43,13 +43,13 @@ const matchDetail = ref({})
 const matchResults = ref([])
 
 //#region 初始化
-getMatchDetail({ mid, cuid })
-initial()
+initial({mid})
 useMitt(MITT_TYPES.EMIT_REFRESH_DETAILS,initial)
 //#endregion
 
-function initial(){
+function initial({mid}){
   loading.value = true
+  getMatchDetail({ mid, cuid })
   api_analysis.get_match_result({mid,cuid}).then(res=>{
     if(res.code == '200'){
       matchResults.value = res.data

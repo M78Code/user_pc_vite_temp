@@ -61,7 +61,7 @@ const ChangeActive = function () {
 
 <template>
     <span v-show="false"></span>
-    <nav class="option" @click="ChangeActive">
+    <nav class="option" :class="{active}" @click="ChangeActive">
         <aside class="mhn team-image">
             <p class="tips textOverflow1">{{ detail_data?.mhn }}</p>
             <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
@@ -103,7 +103,15 @@ const ChangeActive = function () {
     justify-content: center;
     height: 56px;
     background: var(--q-gb-bg-c-16);
-
+    position: relative;
+    &.active::before{
+        content: '';
+        display: block;
+        position: absolute;
+        pointer-events: none;
+        inset: 0;
+        background: #FF70001A;
+    }
     .team-image {
         flex: 1;
         height: 56px;

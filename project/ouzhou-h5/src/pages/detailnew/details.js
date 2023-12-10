@@ -274,7 +274,7 @@ export const details_main = (router, route) => {
   function update_data(val) {
     if (!val) return;
     match_detail.value = getMidInfo(val);
-    match_odds_info.value = lodash.get(getMidInfo(val), "odds_info");
+    match_odds_info.value = lodash.get(getMidInfo(val), "odds_info",[]);
   }
   /**
    * @description: 从仓库获取获取赛事信息
@@ -522,8 +522,8 @@ export const details_main = (router, route) => {
   }
   let message_fun = null;
   onMounted(() => {
-    MatchDataWarehouseInstance.value.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
-    match_detail.value = MatchDataWarehouseInstance.value.get_quick_mid_obj(mid.value);
+    // MatchDataWarehouseInstance.value.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
+    // match_detail.value = MatchDataWarehouseInstance.value.get_quick_mid_obj(mid.value);
     // match_odds_info.value = lodash.get(MatchDataBaseH5.get_quick_mid_obj(mid.value),"hps","[]")
     // match_detail.value = MatchDataBaseH5.get_quick_mid_obj(mid.value) || []
     loading.value = true;
@@ -596,6 +596,7 @@ export const details_main = (router, route) => {
     off()
     // 关闭详情订阅
     MatchDataWarehouseInstance.value.set_active_mids([])
+    LocalStorage.remove("YUAN_MATCH_DETAIL_DATA")
   })
   // 监听赛事状态mmp的值
   watch(
