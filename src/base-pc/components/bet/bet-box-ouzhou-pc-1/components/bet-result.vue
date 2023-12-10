@@ -7,12 +7,13 @@
                     <span class="text-flow-none">{{ items.playOptionName}}</span> 
                     <span class="bet-market mx-4 text-ff7">{{ items.marketValue }}</span>
                 </div>
-                <div class="w-100 f-s-c my-4">
+                <div class="w-100 my-4">
                     <span class="mr-4 text-009" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                 </div>
+                <div class="w-100 text-8a8 fon12 font400">{{items.matchName}}</div>
                 <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
                 </div>
             </div>
