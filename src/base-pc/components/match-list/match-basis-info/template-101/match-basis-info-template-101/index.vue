@@ -235,19 +235,19 @@ watch(() => match.value.mf, (n) => {
 // 监听主比分变化
 watch(home_score, (n, o) => {
   //推送时间是否过期
-  let is_time_out = MatchDataWarehouse_PC_List_Common.ws_match_key_upd_time_cache_get_time() < 3000
+  let is_time_out = get_remote_time() - MatchDataWarehouse_PC_List_Common.ws_match_key_upd_time_cache_get_time(match.value, 'msc') < 3000
   // 足球 并且已开赛
-  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
+  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && n > o && is_time_out) {
     reset_event();
     is_show_home_goal.value = true;
   }
 }, { deep: true })
 // 监听主比分变化
-watch(away_score, (n) => {
+watch(away_score, (n, o) => {
   //推送时间是否过期
-  let is_time_out = MatchDataWarehouse_PC_List_Common.ws_match_key_upd_time_cache_get_time() < 3000
+  let is_time_out = get_remote_time() - MatchDataWarehouse_PC_List_Common.ws_match_key_upd_time_cache_get_time(match.value, 'msc') < 3000
   // 足球 并且已开赛
-  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && is_time_out) {
+  if (match.value.csid == 1 && get_match_status(match.value.ms, [110]) == 1 && n != 0 && n > o && is_time_out) {
     reset_event();
     is_show_away_goal.value = true;
   }

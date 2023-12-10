@@ -22,7 +22,7 @@
         <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
           <div class="odds-item" v-if="item.hl[0].hs != 2">
-            {{ item.hpn }} ++{{ item.hpid }}
+            {{ item.hpn }}
             <span v-if="item.hps && get_match_status(detail_info.ms) == 1">
               ({{ item.hps.split("|")[1] }})
             </span>
@@ -64,7 +64,7 @@
                   class="odds-title-li"
                 >
                   <span
-                    v-if="![0, 1, 2, 3, 7, 10, 18].includes(item.hpt)"
+                    v-if="![0, 1, 2, 3, 7, 10,14, 18].includes(item.hpt)"
                     class="handicap-value-text"
                     >{{ opt.osn }}</span
                   >
@@ -128,7 +128,7 @@
             </div>
             <!-- 公共模板 -->
             <common-template
-              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt) && item.hpid != 103"
+              v-if="[0, 1, 2, 3, 7, 10,13,14,15].includes(item.hpt) && item.hpid != 103"
               :match_info="item"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
