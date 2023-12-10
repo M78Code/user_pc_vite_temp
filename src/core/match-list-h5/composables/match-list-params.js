@@ -17,7 +17,6 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData} from "src/output/module/menu-data.js"
 import PageSourceData from "src/core/page-source/page-source.js";
 import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
-
 import { ref } from "vue"
 
 // 接口出错时，uid的 字符串
@@ -179,7 +178,8 @@ const get_base_params = (main_menu_type) => {
     // type: lodash.get(MenuData, 'current_lv_1_menu.mi'),
     type: 1,
     //排序	 int 类型 1 按热门排序 2 按时间排序
-    sort: PageSourceData.sort_type,
+    // sort: PageSourceData.sort_type,50093
+    sort: UserCtr.sort_type,
     //标准版和简版 1为新手版  2为标准版
     device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
   };

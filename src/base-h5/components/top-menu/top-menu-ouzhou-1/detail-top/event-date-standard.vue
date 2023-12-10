@@ -172,9 +172,9 @@ const covert_mct = ({ mct, mmp, ms }) => {
         <div v-if="ms_info?.ms != 110 && show_counting_down(ms_info)">
             <div class="process_name" v-if="!!computed_process_name" v-html="computed_process_name"></div>
             <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
-            <CountingDownSecond ref="counting-down-second" :title="mmp_map_title" :mmp="ms_info?.mmp"
+            <CountingDownSecond ref="counting-down-second"  :mmp="ms_info?.mmp"
                                 :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+ms_info?.csid)" :m_id="ms_info?.mid"
-                                :second="ms_info?.mst" :match="ms_info" @counting-wrapper-width="update_counting_down_up_wrapper_width">
+                                :second="ms_info?.mst" :match="ms_info" >
             </CountingDownSecond>
         </div>
     </div>
@@ -195,4 +195,4 @@ const covert_mct = ({ mct, mmp, ms }) => {
         font-size: 0.15rem;
     }
 }
-</style>src/output/indexsrc/core/format/common/module/format-msc.js
+</style>

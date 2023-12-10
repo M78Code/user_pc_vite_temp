@@ -60,7 +60,7 @@ const tabClick = (item) => {
     text-transform: capitalize;
     color: var(--q-gb-t-c-4);
     cursor: pointer;
-
+    flex:1;
   }
 
   .is-active {
