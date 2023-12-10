@@ -149,6 +149,13 @@
               :current_ol="current_ol"
               @betItemClick="betItemClick"
             />
+             <!-- vr 虚拟体育模板 -->
+             <virtual-template
+              v-if="[11].includes(item.hpt)"
+              :match_info="item"
+              :current_ol="current_ol"
+              @betItemClick="betItemClick"
+            />
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -187,6 +194,7 @@ import {
 import template5 from "./template5.vue";
 import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";
+import virtualTemplate from "./virtual-template.vue";
 import betItem from "./bet-item-list-new-data.vue";
 import { BackTop } from "src/components/back-top";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
