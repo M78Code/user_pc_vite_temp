@@ -44,16 +44,17 @@
                 </span>
                 <div
                   v-else
-                  style="color: #8a8986; display: flex; align-items: center"
+                  style="color: #8a8986; display: flex; align-items: center;flex-wrap: nowrap;"
                 >
                   <!-- 倒/正计时组件 -->
-                  <div style="margin-right: 25px">
-                    <match-process
-                      :match="detail_info"
-                      show_page="match-list"
-                      :rows="1"
-                    />
-                  </div>
+                 <!-- 倒/正计时组件 -->
+                 <div style="margin-right: 10px;display: flex;">
+                  <match-process
+                    :match="detail_info"
+                    show_page="match-list"
+                    :rows="1"
+                  />
+             </div>
                   <img
                     :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
                     alt=""
