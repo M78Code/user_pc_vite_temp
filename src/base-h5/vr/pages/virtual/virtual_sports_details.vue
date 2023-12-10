@@ -10,7 +10,7 @@
       <div class="type-bg bg1001">
         <div class="back-wrap">
           <!-- 返回按钮 -->
-          <div class="detail-back" @click="$common.go_where({back_to: 'go_back_from_virtual_detail'})"></div>
+          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})">返回</div>
           <!-- 虚拟体育 -->
           <div class="col">{{current_league.name}}</div>
           <!--刷新按钮-->
@@ -62,6 +62,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
 import ServerTime from "src/core/server-time/server-time.js"
 import { reactive } from 'vue'
+import { go_where } from "src/output/index.js";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -109,6 +111,8 @@ export default {
       basketball_status:0,
       // 默认不刷新
       refreshing:false,
+      router: useRouter(),
+      route: useRoute()
     }
   },
   watch: {
@@ -197,6 +201,8 @@ export default {
     set_current_gotodetail_match(){},
     set_video_process_data(data){VR_CTR.set_video_process_data(data)},
     set_is_show_details_analyse(){},
+
+    go_where,
     /**
      * 虚拟体育刷新
      */
