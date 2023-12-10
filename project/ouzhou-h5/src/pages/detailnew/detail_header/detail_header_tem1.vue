@@ -47,7 +47,7 @@
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">
-         <span :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
+         <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
          <span>{{ get_match_detail.mhn }}</span>
         </div>
         <span v-if="false">{{ detail_count }}</span>
@@ -59,7 +59,7 @@
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">
-         <span :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
+         <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
           <span>{{ get_match_detail.man }}</span>
 
           
@@ -108,7 +108,7 @@
       </template>
     </div>
      <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.csid == 5"  :detail_data="get_match_detail" />
+     <matchScore v-if="get_match_detail.csid == 5 "  :detail_data="get_match_detail" />
   </div>
 </template>
 
@@ -192,11 +192,11 @@ const status = computed(() => {
 });
 
 watch(() => props.get_match_detail, (value) => {
+  if(lodash.isEmpty(value)) return
   console.log(value, "props.get_match_detail");
   // format_time_zone(+item.mgt).Format(i18n_t('time4'))
   const now = Date.now();
-
-  if (props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0) {
+  if ((props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0)) {
     start_text.value = Math.floor((+props.get_match_detail.mgt - now)) 
   }
   
@@ -207,12 +207,14 @@ watch(() => props.get_match_detail, (value) => {
   if (s1_data['S103']) {
     console.log('网球比分', s1_data['S103']);
     tennis_point.value = s1_data['S103'];
+  }else {
+    tennis_point.value =[0,0]
   }
 })
 
 //比分
 const detail_count = computed(() => {
-  return scoew_icon_list.value['S1'];
+  return scoew_icon_list.value['S1'] || [0,0];
 })
 
 const show_time_counting = computed(() => {
@@ -380,6 +382,7 @@ const scoew_icon_list = ref({})
  *@return {*}
  */
 const set_scoew_icon_list = (new_value) => {
+  scoew_icon_list.value = {};
   if (new_value && new_value.msc) {
     for (let key in new_value.msc) {
       let score_key_arr = new_value.msc[key].split("|");
@@ -389,7 +392,7 @@ const set_scoew_icon_list = (new_value) => {
         away: score_value_arr[1],
       };
     }
-    // console.log("scoew_icon_list", scoew_icon_list);
+    
   }
 };
 
@@ -459,8 +462,9 @@ watch(props.get_match_detail, (new_value, old_value) => {
 watch(
   () => props.get_match_detail?.msc,
   (msc) => {
-    set_scoew_icon_list({msc});
-    set_basketball_score_icon_list();
+      set_scoew_icon_list({msc});
+      set_basketball_score_icon_list();
+    
   },
   { immediate: false, deep: true }
 );

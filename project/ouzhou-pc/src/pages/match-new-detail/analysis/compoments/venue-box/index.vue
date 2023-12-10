@@ -70,7 +70,6 @@
 <script setup>
 import { onMounted, ref, computed, watch } from "vue";
 import animal_box from "./animal_box.vue";
-import sport_icon from "./sport_icon.vue";
 import score_info from "./score_info.vue";
 import commingSoon from "./comming-soon.vue";
 import { LOCAL_PROJECT_FILE_PREFIX, MenuData } from "src/output/index.js";

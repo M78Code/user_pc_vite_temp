@@ -302,13 +302,13 @@ const video_leave = () => {
     position: absolute;
     top: 32px;
     right: 10px;
-    width: 70%;
+    width: 80%;
     &.is-iframe{
       width:95%;
     }
     .content-wrap {
       background-color: rgba(0, 0, 0, 0.8);
-      padding: 9px 28px;
+      padding: 9px 8px;
       font-size: 12px;
       color: #fff;
     }

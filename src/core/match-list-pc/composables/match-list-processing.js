@@ -271,6 +271,9 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collect, backend_run }) => {
 	is_show_hot.value = false;
+	if (!Array.isArray(match_list)) {
+		match_list = []
+	}
 	match_list.forEach(match => {
 		match_collect_status(match)
 	})

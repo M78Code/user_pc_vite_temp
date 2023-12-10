@@ -74,7 +74,7 @@ export const set_card_show_level = () => {
   // 可视区域赛事ID
   let show_mids_arr = [];
   // 遍历所有卡片
-  const list_arry=MatchListCardData.match_list_card_key_arr
+  const list_arry=lodash.clone(MatchListCardData.match_list_card_key_arr)
   if(MenuData.is_home())
   {
     list_arry.push(...MatchListCardData.five_leagues_card_key_arr)

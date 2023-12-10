@@ -1,5 +1,5 @@
 
-import { ref, watch } from "vue";
+import { onUnmounted, reactive, ref, watch } from "vue";
 import lodash_ from "lodash"
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -19,10 +19,25 @@ const mi_400_obj = ref([]);
 const mi_500_obj = ref([]);
 const vr_menu_obj = ref([]);
 
+const ref_data = reactive({
+    time_out_1:null,
+    time_out_ :null,
+    time_type:1,
+    time_list: []
+}) 
+
 resolve_mew_menu_res();
 
 watch(MenuData.menu_data_version, () => {
         resolve_mew_menu_res();
+})
+
+onUnmounted(()=>{
+    clearInterval(ref_data.time_out_1)
+    clearInterval(ref_data.time_out_)
+
+    ref_data.time_out_ = null
+    ref_data.time_out_1 = null
 })
 
 /**
@@ -86,6 +101,7 @@ function resolve_mew_menu_res() {
                 resolve_mew_menu_res_mi_400()
             }
         }
+        ref_data.time_type = type
         //滚球  常规 +电竞
         resolve_mew_menu_res_mi_100_2000(type);
     } else if (MenuData.menu_root == 400) {
@@ -145,6 +161,7 @@ async function resolve_mew_menu_res_mi_100_2000(type) {
     });
     // 收藏
     if(MenuData.is_collect){
+        ref_data.time_list = mi_100_list
         mi_100_list = await get_menu_of_favorite_count(mi_100_list,type)
     }
    
@@ -194,6 +211,7 @@ function compute_quanbu_euid() {
     };
 }
 
+
 // 收藏切换获取最新的赛种数量数据
 async function  get_menu_of_favorite_count(list,type) {
     let euid_list = ''
@@ -202,6 +220,13 @@ async function  get_menu_of_favorite_count(list,type) {
         euid_list += MenuData.get_mid_for_euid(item.mi) + ','
         item.ct = 0
     })
+  
+    clearInterval(ref_data.time_out_)
+    clearInterval(ref_data.time_out_1)
+
+      ref_data.time_out_ = null
+    ref_data.time_out_1 = null
+
     let type_ = {
         1:1,
         2:3,
@@ -240,8 +265,30 @@ async function  get_menu_of_favorite_count(list,type) {
                 return item
             })
         }
+        mi_100_arr.value = list
+
+        ref_data.time_out_ = setInterval(()=>{
+            if(MenuData.is_collect){
+                get_menu_of_favorite_count(ref_data.time_list,ref_data.time_type)
+            }else{
+                clearInterval(ref_data.time_out_)
+            }
+            
+        },5000)
+       
         return list
     } catch(error){
+        
+        mi_100_arr.value = list
+        ref_data.time_out_1 = setInterval(()=>{
+            if(MenuData.is_collect){
+                get_menu_of_favorite_count(ref_data.time_list,ref_data.time_type)
+            }else{
+                clearInterval(ref_data.time_out_)
+            }
+           
+        },5000)
+      
         return list
     }
 }
@@ -268,6 +315,8 @@ function resolve_mew_menu_res_mi_400() {
 
     // 收藏
     if(MenuData.is_collect){
+        ref_data.time_list = mi_400_arr
+        ref_data.time_type = 400
         mi_100_arr.value = get_menu_of_favorite_count(mi_400_arr,400)
     }
 
