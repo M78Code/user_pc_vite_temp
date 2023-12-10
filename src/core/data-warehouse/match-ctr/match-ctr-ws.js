@@ -199,6 +199,8 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       let skt_data = ws_obj.cd;
       // var 事件 skt_data.cmec !== 'goal 避免接口返回 goal 事件
+      // 设置赛事比分更新时间
+      this.match_ctr.ws_match_key_upd_time_cache_set(match,'msc', ctsp);
       const var_item = lodash.find(UserCtr.get_var_event_i18n(), (t) => t.nameCode === skt_data.cmec)
       var_item && skt_data.cmec !== 'goal' && useMittEmit(MITT_TYPES.EMIT_VAR_EVENT, { skt_data, var_item });
       if(match){
@@ -248,7 +250,7 @@ export default class MatchDataBaseWS
         // 格式化列表赛事(部分数组转对象)
         this.match_ctr.list_serialized_match_obj([match]);
         // 设置赛事比分更新时间
-        this.match_ctr.ws_match_key_upd_time_cache_set(match,'msc');
+        this.match_ctr.ws_match_key_upd_time_cache_set(match,'msc', ctsp);
       }
     }
   }
