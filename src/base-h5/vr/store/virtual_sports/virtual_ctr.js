@@ -2,7 +2,7 @@
 /**
  * @description 虚拟体育全局操控类(数据持久化操作改造而来)
  */
-// import { reactive,toRef} from 'vue'
+import { reactive,toRef} from 'vue'
 class VirtualCtr {
   constructor() {
     // 初始化数据
@@ -15,7 +15,7 @@ class VirtualCtr {
    */
   init(){
     // 所有赛事列表数据转obj对象
-    this.state = { 
+    this.state = reactive({ 
       // 虚拟体育赛事接口请求中, 用于防治重复请求
       virtual_data_loading: 0,
       //当前选中的联赛
@@ -36,7 +36,7 @@ class VirtualCtr {
       prev_v_sports:{},
       // 是否是用户（顶部按钮）刷新
       is_user_refreshing: false,
-    };
+    });
   }
 
   //get方法
