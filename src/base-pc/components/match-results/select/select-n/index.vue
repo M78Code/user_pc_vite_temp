@@ -141,7 +141,7 @@ const selectSport = lodash.throttle((item,index) => {
   showOption();
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
   useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);
-}, 300)
+}, 1000)
 // const selectSport = (item,index) => {
 //   sport.value = item;
 //   active_sport.value = index;
