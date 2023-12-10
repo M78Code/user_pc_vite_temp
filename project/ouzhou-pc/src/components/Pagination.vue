@@ -81,8 +81,7 @@ export default defineComponent({
   props: {
     // 当前列表数量
     count: {
-      type: Number || String,
-      default: () => 0,
+      type: null,
     },
 
     betTotalAmount: {

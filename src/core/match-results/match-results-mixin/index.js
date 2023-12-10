@@ -108,7 +108,7 @@ export default {
   computed: {
     cur_row() {
       return lodash.findIndex(this.results_order_list, item =>item.playId==this.play_id);
-    } 
+    },
   },
   watch: {
     cur_row: {
@@ -123,15 +123,15 @@ export default {
       },
       immediate:true
     },
-    'props.results_list': {
-      handler(new_) {
-          nextTick(()=>{
-            let obj = this.yabo_common.get_refs_info('scrollArea', null, this);
-            obj && obj.setScrollPosition();
-          });
-      },
-      immediate:true
-    },
+    // results_list: {
+    //   handler(new_) {
+    //       nextTick(()=>{
+    //         let obj = this.yabo_common.get_refs_info('scrollArea', null, this);
+    //         obj && obj.setScrollPosition();
+    //       });
+    //   },
+    //   deep:true
+    // },
   },
   methods: {
     /**
