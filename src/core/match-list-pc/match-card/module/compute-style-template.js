@@ -415,7 +415,7 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 			style_obj.add_handicap_height +
 			style_obj.tab_play_total_height
 		} else {
-			style_obj.total_height = 80;		
+			style_obj.total_height = 80 + style_obj.cur_handicap_height;		
 		}
 	}
 	return style_obj;
