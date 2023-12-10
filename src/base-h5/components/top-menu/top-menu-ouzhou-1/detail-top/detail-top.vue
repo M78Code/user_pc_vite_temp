@@ -16,7 +16,6 @@
                   :key="index" :detail_data="item" 
                   :active="active == index"
                   :index="index"
-                  v-close-popup
                   @ChangeActive="change_active(item, index)"
                 />
               </div>

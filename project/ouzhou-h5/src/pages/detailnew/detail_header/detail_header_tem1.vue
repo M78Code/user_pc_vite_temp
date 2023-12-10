@@ -47,7 +47,7 @@
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">
-         <span :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
+         <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
          <span>{{ get_match_detail.mhn }}</span>
         </div>
         <span v-if="false">{{ detail_count }}</span>
@@ -59,7 +59,7 @@
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">
-         <span :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
+         <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
           <span>{{ get_match_detail.man }}</span>
 
           
@@ -192,6 +192,8 @@ const status = computed(() => {
 });
 
 watch(() => props.get_match_detail, (value) => {
+  if(lodash.isEmpty(value)) return
+  console.log(value, "props.get_match_detail");
   // format_time_zone(+item.mgt).Format(i18n_t('time4'))
   const now = Date.now();
   if ((props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0)) {
