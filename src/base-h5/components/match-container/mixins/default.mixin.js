@@ -19,6 +19,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
+import BaseData from "src/core/base-data/base-data.js";
 
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
@@ -82,6 +83,12 @@ export default defineComponent({
     // 当前赛事数据
     match () {
       return this.match_of_list;
+    },
+    menu_sport(){
+      return {
+        menu_sport_id:MenuData.menu_mi.value,
+        menu_sport_name:BaseData.menus_i18n_map[MenuData.menu_mi.value]
+      }
     },
     is_show_all () {
       return MenuData.is_zaopan() || MenuData.is_scroll_ball()
