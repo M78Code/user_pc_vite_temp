@@ -24,7 +24,7 @@
       </section>
     </template>
     <template v-else>
-      <NoData class="empty"  which='noMatch' height='400'></NoData>
+      <NoData class="empty"  :which='which' height='400'></NoData>
     </template>
     <!-- 回到顶部按钮组件 -->
     <ScrollTop :list_scroll_top="scroll_top" @back-top="go_to_top" />
@@ -88,6 +88,8 @@ const scroll_top = ref(0)
 const page_style = ref(null)
 // 当前可视区的 mids 用于获取赔率
 const active_mids = ref([])
+const which = ref('noMatch')
+
 
 onMounted(() => {
   emitters.value = {
@@ -99,8 +101,19 @@ onMounted(() => {
     emitter_2: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, () => {
       nextTick(() => go_to_top())
     }).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
   }
 })
+
+/**
+ * @description: 赛事列表为空通知事件函数
+ */
+ const upd_match_is_empty = (obj = {}) => {
+  // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
+  const { state = false, type = 'noMatch' } = obj
+  which.value = type
+  // match_is_empty.value = state;
+}
 
 /**
  * @description 开启 IntersectionObserver 赛事卡片监听
