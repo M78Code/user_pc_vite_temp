@@ -998,7 +998,7 @@ class MenuData {
   }
   // 是不是 常规赛种下的冠军
   is_common_kemp(mi) {
-    return this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
+    return this.left_menu_result.lv1_mi && this.left_menu_result.lv1_mi != 400 && this.menu_root == 400
   }
 
   is_collect_kemp() {
