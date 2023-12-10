@@ -253,7 +253,7 @@ const tab_click = (type) => {
 }
 
 .home-vs-away{
-  width: 150px;
+  max-width: 130px;
   overflow: hidden;
   display: inline-block;
   text-overflow: ellipsis;
