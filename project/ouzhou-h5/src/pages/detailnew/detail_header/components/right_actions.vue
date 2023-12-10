@@ -100,7 +100,7 @@ const mapObj = computed(() => {
 
 const score_point = computed(() => {
     console.log(scoew_icon_list.value, "[scoew_icon_list.value");
-    return props.detail.msc ?  [0,0] : [scoew_icon_list.value.S1.home, scoew_icon_list.value.S1.away]
+    return [scoew_icon_list.value.S1.home, scoew_icon_list.value.S1.away]
 })
 
 // 是否时视频
