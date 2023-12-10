@@ -905,7 +905,6 @@ const set_orderNo_bet_obj = order_no_list => {
 
 // 获取盘口值 附加值
 const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
-
     // ## 详情页的取值，直接取 ol 层级的 `ott` + `on`,当遇到下面几种玩法时，直接取 `otv`,
     // 3-全场让球赛果  69-上半场让球赛果  71-下半场让球赛果  
     // 220-球员得分 221-球员三分球 271-球员助攻 272-球员篮板
@@ -964,14 +963,21 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
                 a = ol_obj.on.split(' ')[0]
                 b = ol_obj.on.split(' ')[1]
             }
+            //大小玩法 ol_obj.show_bgc为true 先这么取值
+            if(ol_obj.show_bgc){
+                a = ol_obj.otv.split(' ')[0]
+                b = ol_obj.otv.split(' ')[2]
+            }
         }
-
+            
         // 平 不变色
         if(ol_obj.ot == 'X'){
             text = `${b}` 
         }else{
             text = `${a} <span class='ty-span'>${b}</span>` 
         }
+
+        
 
     }
 

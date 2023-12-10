@@ -12,7 +12,7 @@
     <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
     <!-- v-if="match_detail?.mvs > -1 " -->
     <!-- 动画组件 -->
-    <!-- <div v-if="match_detail?.mvs > -1 ">
+    <div v-if="match_detail?.mvs > -1 ">
       <detail_header_tem2 :get_match_detail="match_detail || {}" :label="label"/>
     </div>
     
@@ -22,9 +22,8 @@
           <detail_header_tem1 :get_match_detail="match_detail || {}" @handle-change="handle_change"/>
         </div>
       </div>
-    </div> -->
-    <!-- TODO: 统一使用一个组件，此组件里面会判断 -->
-    <detail_header_tem2 v-if="match_detail?.mvs" :get_match_detail="match_detail || {}" :label="match_detail?.mvs <= -1 ? 'score' : ''"/>
+    </div>
+    <!-- <detail_header_tem2 v-if="match_detail?.mvs" :get_match_detail="match_detail || {}" :label="match_detail?.mvs <= -1 ? 'score' : ''"/> -->
     <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail || {}"/>
     </div>
