@@ -816,8 +816,8 @@ class MatchMeta {
       // 滚球不需要
       if (MenuData.is_scroll_ball() || MenuData.is_zaopan()) {
         is_classify = false
-      } else {
-        // 今日、早盘需要 开赛、未开赛归类
+      } else if (MenuData.is_today() || MenuData.is_mix()) {
+        // 今日、串关需要 开赛、未开赛归类
         is_classify = true
       }
     } else {
@@ -1032,6 +1032,8 @@ class MatchMeta {
 
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_current_page_render_list(scroll_top)
+
+    console.log(match_datas)
 
     // 欧洲版首页 五大联赛 当前渲染的 mids
     this.match_mids = match_datas.map(t =>  t.mid)
