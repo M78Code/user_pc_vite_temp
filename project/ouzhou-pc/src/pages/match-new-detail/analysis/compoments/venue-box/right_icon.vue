@@ -5,7 +5,7 @@
   <!-- 右上角提示內容 -->
   <div class="right-icon" @click.stop="is_show_content = !is_show_content">
     <!-- 提示消息 -->
-    <icon class="icon" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
+    <icon class="icon" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? iconActiveColor : iconNormalColor"/>
     <!-- 提示内容 -->
     <div :class="['tip-content']" v-if="is_show_content" @click.stop>
       <div class="content-wrap relative-position">
@@ -21,6 +21,17 @@
 import {ref} from "vue";
 import { i18n_t } from "src/output/index.js";
 import icon from "src/components/icon/icon-1/index.vue";
+
+const props = defineProps({
+  iconNormalColor: {
+    type: String,
+    default: '#fff'
+  },
+  iconActiveColor: {
+    type: String,
+    default: 'rgba(255,255,255,.7)'
+  }
+})
 
 const is_show_content = ref(false); //是否显示提示信息
 
