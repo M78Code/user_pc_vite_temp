@@ -67,6 +67,7 @@ import virtualFooterMenu from 'src/base-h5/vr/pages/virtual/virtual_sports_part/
 import axios_api_loop from "src/core/http/axios-loop.js"
 import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 
 import lodash from "lodash"
 
@@ -177,9 +178,9 @@ export default {
     // ]),
     set_list_scroll_top_iconshow(){},
     set_menu_type(){},
-    set_virtual_current_sub_menuid(){},
-    set_curr_sub_menu_type(){},
-    set_virtual_data_loading(){},
+    set_virtual_current_sub_menuid(data){VR_CTR.set_virtual_current_sub_menuid(data)},
+    set_curr_sub_menu_type(data){VR_CTR.set_curr_sub_menu_type(data)},
+    set_virtual_data_loading(data){VR_CTR.set_virtual_data_loading(data)},
     set_current_esport_csid(){},
     set_is_user_refreshing(){},
     /**
@@ -315,7 +316,7 @@ export default {
     //   get_theme:'get_theme',
     //   right_menu_show:'get_is_show_menu',
     // }),
-    get_virtual_current_sub_menuid(){return 1},
+    get_virtual_current_sub_menuid(){return VR_CTR.get_virtual_current_sub_menuid()},
     get_curr_sub_menu_type(){return 1},
     get_prev_menu_type(){return 1},
     get_is_close_video(){return 1},

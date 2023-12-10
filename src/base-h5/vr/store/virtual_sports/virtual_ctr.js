@@ -36,8 +36,14 @@ class VirtualCtr {
       prev_v_sports:{},
       // 是否是用户（顶部按钮）刷新
       is_user_refreshing: false,
+      // 当前选中的二级菜单id
+      current_sub_menuid: "",
       // 虚拟体育赛事接口请求中, 用于防治重复请求
       virtual_data_loading: 0,
+      //虚拟体育子菜单
+      virtual_menu_list: [],
+      // 当前虚拟体育选中的二级菜单id
+      virtual_current_sub_menuid: "",
     });
   }
 
@@ -69,12 +75,18 @@ class VirtualCtr {
   get_is_user_refreshing() {
     return this.state.is_user_refreshing
   }
+  get_virtual_menu_list() {
+    return this.state.virtual_menu_list;
+  }
   get_virtual_data_loading() {
     return this.state.virtual_data_loading;
   }
-  get_virtual_data_loading(state) {
-    return state.virtual_data_loading;
+  get_virtual_current_sub_menuid() {
+    return this.state.virtual_current_sub_menuid;
   }
+  get_current_sub_menuid() {
+    return this.state.current_sub_menuid;
+  },
 
   // get发放2
   prev_v_sports(){
@@ -104,9 +116,18 @@ class VirtualCtr {
   is_user_refreshing() {
     return this.state.is_user_refreshing
   }
+  virtual_menu_list() {
+    return this.state.virtual_menu_list;
+  },
   virtual_data_loading() {
     return this.state.virtual_data_loading;
-  }
+  },
+  virtual_current_sub_menuid() {
+    return this.state.virtual_current_sub_menuid;
+  },
+  current_sub_menuid() {
+    return this.state.current_sub_menuid;
+  },
 
   // set方法
   set_prev_v_sports(value){
@@ -146,6 +167,18 @@ class VirtualCtr {
   }
   set_virtual_data_loading(value){
     this.state.virtual_data_loading = value;
+  }
+  set_virtual_data_loading(v) {
+    this.state.virtual_data_loading = v;
+  }
+  set_virtual_menu_list(v) {
+    this.state.virtual_menu_list = v;
+  }
+  set_virtual_current_sub_menuid(v) {
+    this.state.virtual_current_sub_menuid = v;
+  }
+  set_current_sub_menuid(v) {
+    this.state.current_sub_menuid = v;
   }
 }
 const VR_CTR = new VirtualCtr();

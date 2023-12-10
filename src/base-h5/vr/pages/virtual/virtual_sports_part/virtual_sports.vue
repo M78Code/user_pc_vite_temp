@@ -460,7 +460,7 @@ export default {
     get_video_process_data(){return VR_CTR.get_video_process_data()},
     get_prev_v_sports_params(){return VR_CTR.get_prev_v_sports_params()},
     get_prev_v_sports(){return VR_CTR.get_prev_v_sports()},
-    sub_menuid(){return 1},
+    sub_menuid(){return VR_CTR.get_current_sub_menuid()},
     sub_menu_type(){return 1},
     is_show_analyse(){return 1},
     get_bet_list(){return 1},

@@ -62,7 +62,7 @@ export default {
     get_detail_data(){return {}},
     get_access_config(){return {}},
     matchid(){return ''},
-    sub_menu_id(){return 0},
+    sub_menu_id(){return VR_CTR.get_current_sub_menuid()},
     sub_menu_type(){return 0},
     is_show_analyse(){return 0},
 
