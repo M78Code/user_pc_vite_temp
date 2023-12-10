@@ -86,7 +86,7 @@ class VirtualCtr {
   }
   get_current_sub_menuid() {
     return this.state.current_sub_menuid;
-  },
+  }
 
   // get发放2
   prev_v_sports(){
@@ -118,16 +118,16 @@ class VirtualCtr {
   }
   virtual_menu_list() {
     return this.state.virtual_menu_list;
-  },
+  }
   virtual_data_loading() {
     return this.state.virtual_data_loading;
-  },
+  }
   virtual_current_sub_menuid() {
     return this.state.virtual_current_sub_menuid;
-  },
+  }
   current_sub_menuid() {
     return this.state.current_sub_menuid;
-  },
+  }
 
   // set方法
   set_prev_v_sports(value){
