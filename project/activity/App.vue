@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div v-if="is_mobile">    <LayoutH5 />  </div>
-    <div v-else>    <LayoutPC />  </div>
+
+    <div  >    <LayoutH5 />  </div>
+    <!-- <div v-if="is_mobile">    <LayoutH5 />  </div>
+    <div v-else>    <LayoutPC />  </div> -->
  
   </div>
 </template>
@@ -10,7 +12,7 @@
 import { defineComponent } from "vue";
 
 import LayoutH5 from "project/activity/src/layouts/layout-h5.vue";
-import LayoutPC from "project/activity/src/layouts/layout-pc.vue";
+// import LayoutPC from "project/activity/src/layouts/layout-pc.vue";
 
 import app_mixin from "./src/mixins/app_mixin/app-mixin.js";
 
@@ -19,7 +21,7 @@ export default defineComponent({
   mixins: [app_mixin],
   components: {
     LayoutH5,
-    LayoutPC
+    // LayoutPC
   },
   computed: {
     is_mobile: () => this.$q.platform.is.mobile,

@@ -411,7 +411,8 @@ class MatchMeta {
       // 一级菜单筛选类型 1滚球 2 今日 3早盘 400冠军  6串关
       type,
       //排序	 int 类型 1 按热门排序 2 按时间排序
-      sort: PageSourceData.sort_type,
+      sort: UserCtr.sort_type,
+      // sort: PageSourceData.sort_type,
       //标准版和简版 1为新手版  2为标准版
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
       hpsFlag
@@ -429,7 +430,8 @@ class MatchMeta {
       euid,
       "cuid": UserCtr.get_uid(),
       "type": 100,
-      "sort": PageSourceData.sort_type,
+      "sort": UserCtr.sort_type,
+      // "sort": PageSourceData.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
@@ -520,6 +522,7 @@ class MatchMeta {
       // 接口请求成功，重置接口限频次数
       this.error_http_count.match = 1
       const list = lodash.get(res, 'data', [])
+      console.error('listlistlist',list)
       const length = lodash.get(list, 'length', 0)
       // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
       if (length < 1) return this.set_page_match_empty_status({ state: true });
@@ -1160,7 +1163,8 @@ class MatchMeta {
       const params = {
         mids: mids.length > 0 ? mids : match_mids,
         cuid: UserCtr.get_uid(),
-        sort: PageSourceData.sort_type,
+        sort: UserCtr.sort_type,
+        // sort: PageSourceData.sort_type,
         euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
         device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
       };

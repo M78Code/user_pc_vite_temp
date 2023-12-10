@@ -14,7 +14,8 @@ import {  MenuData } from 'src/output/module/menu-data.js'
 import { nextTick } from "vue";
 import MatchMeta from './match-meta'
 import { get_now_server } from 'src/core/utils/common/module/other.js'
-
+import axios_api_loop from "src/core/http/axios-loop.js"
+import { get_handicap_index_by } from 'src/core/match-list-pc/match-handle-data.js'
 // import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 class MatchPage {
   //当前调用的赛事列表接口方法
@@ -135,6 +136,8 @@ class MatchPage {
       //TODO DOM滚动到顶部的方法不应该在这里
       // this.scroll_list_wrapper_by(0) 
       this.get_match_data_list();
+      this.footer_refresh_match_list();
+      useMittEmit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
     }
     // 筛选
     else if (obj && obj.text == "filter") {

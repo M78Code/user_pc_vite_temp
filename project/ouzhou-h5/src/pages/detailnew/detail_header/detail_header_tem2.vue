@@ -93,7 +93,7 @@ const props = defineProps({
   }
 });
 
-watch(props.label, (value) => {
+watch(()=>props.label, (value) => {
   right_actions_label.value = value;
 })
 // 点击返回的时候会触发此函数
@@ -135,7 +135,7 @@ const status = computed(() => {
     }
 
     if (props.label == 'video') {
-      return 1;
+      return 3;
     }
   }
   // <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
