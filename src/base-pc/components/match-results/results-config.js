@@ -575,7 +575,7 @@ export const useGetResultConfig = () => {
       state.refresh_finish = true;
 
       if (code == 200 && data.records.length) {
-        var results = data.records;
+        let results = data.records;
         state.load_data_state = "data";
         // 虚拟赛事不需要格式化  虚拟足球 篮球除外
         if (
@@ -633,6 +633,8 @@ export const useGetResultConfig = () => {
         state.results_list = [];
         state.load_data_state = "empty";
       }
+    }).catch(err=>{
+      console.error('errerrerr',err)
     })
   };
 
@@ -1157,7 +1159,6 @@ export const useGetResultConfig = () => {
    * @param {Array} tableData 分页组件传过来的值
    */
   const pageSizeChange = (v) => {
-    console.error('vvvvvvvvvvv222v22')
     state.results_params.page.size = v.value
     get_results();
   }
