@@ -403,6 +403,8 @@ class MatchMeta {
     const hpsFlag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     const current_lv_1_menu_i = lodash.get(MenuData, 'current_lv_1_menu_i')
     const type = MenuData.menu_id_map(current_lv_1_menu_i) ? MenuData.menu_id_map(current_lv_1_menu_i) : current_lv_1_menu_i
+    console.log('current_lv_1_menu_i', MenuData.menu_id_map(current_lv_1_menu_i));
+
     return {
       cuid: UserCtr.get_uid(), // 508895784655200024
       euid: euid ? euid : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
