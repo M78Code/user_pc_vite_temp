@@ -30,10 +30,6 @@
       <div class="stage-score" ref="stage_score">
         <span v-for="(score, index) in lodash.get(score_list, '[0]', [])" :key="index" class="item">{{ score.home }}-{{
           score.away }}</span>
-        <span v-for="(score, index) in lodash.get(score_list, '[0]', [])" :key="index" class="item">{{ score.home }}-{{
-          score.away }}</span>
-        <span v-for="(score, index) in lodash.get(score_list, '[0]', [])" :key="index" class="item">{{ score.home }}-{{
-          score.away }}</span>
       </div>
       <span class="scroll-arrow arrow-right" v-show="more_right_icon" @click="scorll('right')">
         <i aria-hidden="true" class="icon-arrow-right q-icon c-icon" style="color: #6d7278; font-size: 10px"></i>
