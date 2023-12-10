@@ -12,7 +12,7 @@
       </span>
       <span v-else class="odds" :class="[{'is_up': status == 10, 'is_down': status == -10,'white_text':BetData.bet_oid_list.includes(ol_data.id_) }]">
         <span>{{ odds_value() }}</span>
-        <span class='change-icon icon-red' :class="{'icon-red':status == 10,'icon-green':status == -10}"></span>
+        <span class='change-icon' :class="{'icon-red':status == 10,'icon-green':status == -10}"></span>
         <!-- <img class="up_down"  :src="is_up_app" alt="" /> -->
         <!-- <img class="up_down" v-if="status == -10" :src="is_down_app" alt="" /> -->
       </span>

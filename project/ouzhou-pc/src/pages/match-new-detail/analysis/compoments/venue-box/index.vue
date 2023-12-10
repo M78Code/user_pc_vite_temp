@@ -18,9 +18,9 @@
             style="margin: 0 10px"
           />
           <!--<span class="analysis-top-txt">{{ detail_info.tn }}</span>-->
-          <span class="home-vs-away">{{ detail_info.mhn }} </span>
+          <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
           <span class="match-detail-head-name m-10">v</span>
-          <span class="home-vs-away">{{ detail_info.man }}</span>
+          <span class="home-vs-away" :title="detail_info.man">{{ detail_info.man }}</span>
         </div>
         <div class="analysis-top-right">
           <!-- 视频图标 -->
@@ -251,4 +251,16 @@ const tab_click = (type) => {
 .stage-303 {
   color: rgb(255, 112, 0) !important;
 }
-</style>src/core/utils/common/index
+
+.home-vs-away{
+  max-width: 130px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+.m-10{
+  margin: 0 10px;
+}
+</style>

@@ -604,7 +604,7 @@ export default defineComponent({
   height:0;
 }
 .details-fat {
-  background-color: var(--q-gb-bg-c-17);
+  background-color: var(--q-gb-bg-c-19);
 .details-f9 {
   // background: var(--q-color-page-bg-color-9);
 }
