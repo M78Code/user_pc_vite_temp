@@ -9,19 +9,16 @@
 
   <div class="temp-simple">
     <div v-for="item in match_info.hl" :key="item.hid">
-      <div
-        class="temp_grid"
-      >
+      <div class="temp_grid">
         <template v-for="(o, index) in item.ol" :key="index">
-          <div v-if="o && o.oid" style="width:20%">
+          <div v-if="o && o.oid" style="width: 20%">
             <div
               :class="{
                 'temp-active':
                   current_ol && BetData.bet_oid_list.includes(o.oid),
                 temp: true,
                 'temp-right':
-                  item.ol.length % 2 == 0 &&
-                  index == item.ol.length - 1 
+                  item.ol.length % 2 == 0 && index == item.ol.length - 1,
               }"
               @click="betItemClick(item, o)"
             >
@@ -34,14 +31,19 @@
                   width: 100%;
                 "
               >
-                <span class="oid-width" :title="o.ott">{{ o.ott }}</span>
-                <span
+                <!-- <span class="oid-width" :title="o.ott">{{ o.ott }}</span> -->
+                <div
                   :style="{
                     color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',
                   }"
                   class="temp-on oid-width"
-                  >{{ o.on }}</span
                 >
+                <div  style="margin-right: 4px;">
+                  <img :src="get_icon(o.otv.split('/')[0])" alt=""  style="margin-right: 4px;">
+                  <img :src="get_icon(o.otv.split('/')[1])" alt="" >
+                </div>
+                  <!-- <span>{{ o.on }}</span> -->
+                </div>
               </div>
               <div
                 v-show="!item.hs"
@@ -88,6 +90,10 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  get_icon: {
+    type: Function,
+    default: () => {},
+  },
 });
 const emit = defineEmits(["betItemClick"]);
 const columnNum = ref(0); // 获取当前分成几列展示
@@ -95,7 +101,7 @@ const columnNum = ref(0); // 获取当前分成几列展示
 const columnTotal = (item) => {
   let total;
   const { match_info } = props;
-  total = 5
+  total = 5;
   columnNum.value = total;
   return `repeat(${total}, 1fr)`;
 };
@@ -108,9 +114,7 @@ const betItemClick = (item, o) => {
   emit("betItemClick", item, o, props.match_info.hpn);
 };
 
-
-onMounted(() => {
-});
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -174,7 +178,6 @@ onMounted(() => {
     // margin-left: 10px;
   }
 }
-
 
 .oid-width {
   // min-width: 50px;
