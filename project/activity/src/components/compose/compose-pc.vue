@@ -930,7 +930,7 @@ svg {
     position: absolute;
     left: 380px;
     top: 225px;
-    background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/star_bg.png")
+    background: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/star_bg.png")
       no-repeat center center;
     background-size: 100% auto;
 
