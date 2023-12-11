@@ -3,28 +3,31 @@
     <div class="header">
         <div class="tabs">
             <div v-for="(item, index) in tabList" :key="'tabs' + index" class="tabs-item"  
-                :class="store.tabActive === item ? 'active' : ''">
-                <span @click="changeTab(item, index)">{{
+                >
+                <span :class="['tabs-item-text', store.tabActive === item ? 'active' : '']" @click="changeTab(item, index)">{{
                     i18n_t(`ouzhou.match.${item?.toLowerCase()}`)
                 }}</span>
-            </div>
-            <!-- league的下拉项 -->
-            <div class="select" v-if="store.tabActive == 'League'" @click="toggerModel">
-                <span class="select-text" ref="dateOptionsRef">{{
-                    i18n_t(store.curSelectedOption.label)   
-                }}</span>
-                <span class="down_arrow"></span>
-            </div>
-            <template v-if="store.tabModel && store.tabActive == 'League'">
-                <ul class="option-list" :style="DateOptionsOffset">
-                    <template v-for="(item, index) in store.selectOptions" :key="index">
-                        <li :class="store.dateIndex == index ? 'active' : ''
-                            " @click="changeDate(index)">
-                            {{ i18n_t(item.label) }}
-                        </li>
+                <template v-if="item === 'League'">
+                    <!-- league的下拉项 -->
+                    <div class="select" v-if="store.tabActive == 'League'" @click="toggerModel">
+                        <span class="select-text" ref="dateOptionsRef">{{
+                            i18n_t(store.curSelectedOption.label)   
+                        }}</span>
+                        <span class="down_arrow"></span>
+                    </div>
+                    <template v-if="store.tabModel && store.tabActive == 'League'">
+                        <ul class="option-list" :style="DateOptionsOffset">
+                            <template v-for="(item, index) in store.selectOptions" :key="index">
+                                <li :class="store.dateIndex == index ? 'active' : ''
+                                    " @click="changeDate(index)">
+                                    {{ i18n_t(item.label) }}
+                                </li>
+                            </template>
+                        </ul>
                     </template>
-                </ul>
-            </template>
+                </template>
+            </div>
+         
         </div>
         <!-- :class="'store.current_menu_mi_' + store.current_menu_mi" -->
         <div :style="{ backgroundPositionY: `${farmatSportImg(store.current_menu_mi)}px` }"
@@ -248,25 +251,29 @@ const areaListChange = (item) => {
     .tabs {
         width: 100%;
         height: 49px;
-        padding: 16px 0 15px 21px;
+        padding: 0px 0 0px 21px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         border-bottom: 1px solid var(--q-gb-bg-c-1);
         position: relative;
+        box-sizing: border-box;
 
         div {
             font-weight: 500;
-            padding: 11px 0 11px;
+            // padding: 11px 0 11px;
             color: rgba(138, 137, 134, 1);
             border-bottom: 3px solid rgba(255, 255, 255, 0);
-            height: 49px;
+            height: .49rem;
             display: flex;
             align-items: center;
-
-            span {
-                height: 19px;
-            }
+        }
+        .tabs-item-text {
+            height: .5rem;
+            display: flex;
+            align-items: center;
+            padding-top: .14rem;
+            border-bottom: 3px solid transparent;
         }
 
         .select {
@@ -274,8 +281,9 @@ const areaListChange = (item) => {
             align-items: center;
             z-index: 2;
             font-weight: 400;
-            padding-top: 0.16rem;
+            padding-top: 0.14rem;
             justify-content: flex-start;
+            margin-left: 0.05rem;
 
             :deep(.q-field__control) {
                 &::before {
