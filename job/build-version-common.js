@@ -142,6 +142,10 @@ const ENVSTR_MAP = {
   
 
 export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
+
+   const {  PROJECT_NAME,
+    DEFAULT_VERSION_NAME,
+    NEED_DELETE_PROJECT,} = RESOLVE_PROJECT_FN(config.PROJECT)
   //是否需要 BUILD_VERSION 版本素材隔离
     const NEED_BUILD_VERSION = config.NEED_BUILD_VERSION
     const VERSION_STR =  NEED_BUILD_VERSION? format_date(new Date().getTime()):'';
@@ -184,9 +188,12 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
 
 
     return {
-        ...RESOLVE_PROJECT_FN(config.PROJECT),
+       
         ...RESOLVE_ENV_FN(config.ENVSTR),
         ...NODE_ENV_CONFIG,
+        PROJECT_NAME,
+        DEFAULT_VERSION_NAME,
+        NEED_DELETE_PROJECT,
         IS_TOPIC_PROJECT,
         IS_FOR_NEIBU_TEST,
         BUILD_DIR_NAME,
