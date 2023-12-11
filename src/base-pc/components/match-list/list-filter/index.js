@@ -140,9 +140,9 @@ async function resolve_mew_menu_res_mi_100_2000(type) {
     //过滤常规球类
     let mi_100_list = [];
     let mi_2000_list = [];
-  
+    let mew_menu_list_res = lodash_.cloneDeep(BaseData.mew_menu_list_res)
     // 遍历 新菜单数据
-    BaseData.mew_menu_list_res.map((x) => {
+    mew_menu_list_res.map((x) => {
         // 拿到 基础赛种 id
         let mif = 1 * x.mi;
         //常规体育
@@ -162,7 +162,7 @@ async function resolve_mew_menu_res_mi_100_2000(type) {
     });
     // 收藏
     if(MenuData.is_collect){
-        ref_data.time_list = mi_100_list
+        ref_data.time_list = lodash_.cloneDeep(mi_100_list)
         mi_100_list = await get_menu_of_favorite_count(mi_100_list,type)
     }
    
@@ -317,7 +317,7 @@ function resolve_mew_menu_res_mi_400() {
 
     // 收藏
     if(MenuData.is_collect){
-        ref_data.time_list = mi_400_arr
+        ref_data.time_list = lodash_.cloneDeep(mi_400_arr)
         ref_data.time_type = 400
         mi_100_arr.value = get_menu_of_favorite_count(mi_400_arr,400)
     }
