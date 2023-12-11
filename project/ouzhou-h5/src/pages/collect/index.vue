@@ -67,6 +67,7 @@ const tabData = ref([
  */
 const on_update = async (val,type) => {
   val = val || tabValue.value;
+  timer.value && clearTimeout(timer.value);
   state.slideMenu_sport = await getListCount(val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val),val);
   // state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
   MenuData.set_current_lv1_menu(val);
