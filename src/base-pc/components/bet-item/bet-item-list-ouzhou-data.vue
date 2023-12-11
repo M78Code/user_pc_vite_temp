@@ -3,7 +3,7 @@
   <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
     :class="[
       ol_data.class,
-      `csid${match?.csid}`,
+      `csid${csid || match?.csid}`,
       odds_lift,
       BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
       odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) && 'can-hover',
@@ -14,7 +14,7 @@
       'handicap-value',
       {
         'color-highlight': ol_data.handicap_highlight,
-        style2: ol_data.onbl && match?.csid == 2,
+        style2: ol_data.onbl && csid || match?.csid == 2,
         left_cell: utils_info.is_iframe,
         'injury-time-goal': ol_data.ot === 'ClutchGoal',
         nogoal: ol_data.ot === 'NoGoal',
@@ -41,7 +41,7 @@
           ol_data.ov,
           ol_data._hpid,
           '',
-          match?.csid
+          csid || match?.csid
         ) }}
       </span>
       <div class="odds-arrows-wrap">
@@ -73,7 +73,7 @@ const props = defineProps({
   },
   active_score: {
     type: String,
-    default: () => { }
+    default: () => ''
   },
   match_data_type: {
     type: String,
@@ -82,7 +82,11 @@ const props = defineProps({
   is_scroll_ball: {
     type: Boolean,
     default: () => false
-  }
+  },
+  csid: {
+    type: String,
+    default: () => ''
+  },
 });
 const is_mounted = ref(true);
 // 赔率升降 up:上升 down:下降
