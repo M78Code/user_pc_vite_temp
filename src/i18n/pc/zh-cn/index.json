@@ -2866,7 +2866,29 @@
     "HK": "香港盘",
     "ID": "印尼盘",
     "MY": "马来盘",
-    "US": "美式盘"
+    "US": "美式盘",
+    "zh":{
+      "EU": "欧洲盘",
+      "GB": "英式盘",
+      "HK": "香港盘",
+      "ID": "印尼盘",
+      "MY": "马来盘",
+      "US": "美式盘",
+      "morning_session":"赛前",
+      "list_today_play_title":"滚球",
+      "match_winner":"冠军"
+    },
+    "en":{ 
+      "EU": "DEC",
+      "GB": "Fractional",
+      "HK": "HK",
+      "ID": "Indonesian",
+      "MY": "Malaysian",
+      "US": "American",
+      "morning_session":"Prematch",  
+      "list_today_play_title":"IN-PLAY",
+      "match_winner":"Outrights"
+    }
   },
   "results": {
     "all_score": "全场比分",

@@ -54,19 +54,19 @@
           </p>
           <p class="text-center title">
             <img
-              src="~public/activity/yazhou-pc/activity_imgs/imgs/text-left.svg"
+              src="activity/yazhou-pc/activity_imgs/imgs/text-left.svg"
               alt=""
             />
             &nbsp;&nbsp;大奖等您拿&nbsp;&nbsp;
             <img
-              src="~public/activity/yazhou-pc/activity_imgs/imgs/text-right.svg"
+              src="activity/yazhou-pc/activity_imgs/imgs/text-right.svg"
               alt=""
             />
           </p>
           <div class="gifts text-333">
             <p @click.stop="changeBox(3, true)">
               <img
-                src="~public/activity/yazhou-pc/activity_imgs/imgs/lucky/gift1.png"
+                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift1.png"
                 class=""
                 alt=""
                 :class="
@@ -79,7 +79,7 @@
             </p>
             <p @click.stop="changeBox(2, true)">
               <img
-                src="~public/activity/yazhou-pc/activity_imgs/imgs/lucky/gift2.png"
+                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift2.png"
                 class=""
                 alt=""
                 :class="
@@ -92,7 +92,7 @@
             </p>
             <p @click.stop="changeBox(1, true)">
               <img
-                src="~public/activity/yazhou-pc/activity_imgs/imgs/lucky/gift3.png"
+                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift3.png"
                 class=""
                 alt=""
                 :class="
@@ -144,7 +144,7 @@
             <div class="btns">
               <p class="text-orange text-center btn_blue">
                 <img
-                  src="~public/activity/yazhou-pc/activity_imgs/imgs/juan_red.png"
+                  src="activity/yazhou-pc/activity_imgs/imgs/juan_red.png"
                   alt=""
                 />
                 奖券：{{ tokenNum }}
@@ -162,7 +162,7 @@
               >
                 拆盒1次 <br />
                 <img
-                  src="~public/activity/yazhou-pc/activity_imgs/imgs/juan_white.png"
+                  src="activity/yazhou-pc/activity_imgs/imgs/juan_white.png"
                   alt=""
                 />
                 x <span>{{ current_open_box.token }}</span>
@@ -302,7 +302,7 @@
       <q-layout view="Lhh lpR fff" container class="history">
         <img
           class="close"
-          src="~public/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
+          src="activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
           alt=""
           @click="closeHistoryList"
           width="30px"
@@ -380,7 +380,7 @@
       >
         <img
           class="close"
-          src="~public/activity/yazhou-pc/activity_imgs/imgs/lucky/close.png"
+          src="activity/yazhou-pc/activity_imgs/imgs/lucky/close.png"
           alt=""
           @click="getLottery = false"
           width="30px"
@@ -406,9 +406,9 @@
       </q-layout>
     </q-dialog>
     <Alert :is_show="showAlert" :text="bettingMsg" :isMaintaining="isMaintaining" />
-    <img v-if="activityObj.period == 2" src="~public/activity/yazhou-pc/activity_imgs/imgs/silver_box.png" alt="" style="display: none">
-    <img v-if="activityObj.period == 2" src="~public/activity/yazhou-pc/activity_imgs/imgs/gold_box.png" alt="" style="display: none">
-    <img v-if="activityObj.period == 2" src="~public/activity/yazhou-pc/activity_imgs/imgs/diamond_box.png" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/silver_box.png" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/gold_box.png" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/diamond_box.png" alt="" style="display: none">
     <Toast v-if="showToast" :text="$t('common.limited')" />
   </div>
 </template>
@@ -1181,4 +1181,3 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
-project/activity/src/pages/yazhou-pc/common-pc
