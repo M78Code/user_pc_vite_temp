@@ -22,7 +22,7 @@
                         label="随机推送事件" 
                     />
                     <b class="text-blue">自动生成事件开启中。。。</b>
-                    <svg_area :svg_src="svg_src" :current_event_code="current_event_code" />
+                    <svg_area :current_event_code="current_event_code" />
                 </div>
                 <!-- 比分 -->
                 <div style="height: 100px;">
@@ -82,7 +82,6 @@ export default defineComponent({
     // sportId=1&dataSourceCode=PA&matchId=2928959
     
     return {
-        svg_src: '',
         current_event_code: '',
         websocket_connection_1_url: WEB_ENV,
         dataObj: [],
@@ -231,7 +230,6 @@ export default defineComponent({
         let data_ = test_data[index] 
         const {eventCode} = data_ || {}
         this.current_event_code = eventCode
-        this.svg_src = (event_animation[eventCode] || {}).animation_svg_path
         console.warn(data_)
         let ws_obj = {
             "ack": 0,

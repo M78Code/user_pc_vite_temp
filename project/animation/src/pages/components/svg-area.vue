@@ -19,10 +19,6 @@ export default defineComponent({
     svg_tmp,
   },
   computed:{
-    tmp(){
-      const {animation_svg_tmp} = event_animation[this.current_event_code] || {}
-      return animation_svg_tmp;
-    },
   },
   data() {
     return {
