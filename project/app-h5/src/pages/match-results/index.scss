@@ -76,8 +76,8 @@
     }
 }
 .match-results-container-styles {
-    height: calc(100% - 1.25rem);
-    // overflow-y: scroll;
+    flex: 10;
+    height: 0;
 	.match-list-container {
 		z-index: 0;
 		overflow: hidden;

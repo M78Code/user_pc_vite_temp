@@ -6,24 +6,22 @@ import { ref } from 'vue'
 import lodash from 'lodash'
 import { api_common, api_match_list, api_match, api_home } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
-import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
+import { MenuData } from "src/output/module/menu-data.js"
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
-import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
+import { useMittEmit, MITT_TYPES, project_name} from "src/output/module/constant-utils.js"
+
 import { 
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
   MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
 } from 'src/output/module/match-data-base.js'
 
-
-import { useMittEmit, MITT_TYPES,project_name,} from "src/output/module/constant-utils.js"
-import {  MenuData,} from "src/output/module/menu-data.js"
 
 class MatchMeta {
 
@@ -62,6 +60,8 @@ class MatchMeta {
     }
     // 是否ws触发
     this.is_ws_trigger = false
+    // 防抖定时器
+    this.debounce_timer = null
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -956,23 +956,29 @@ class MatchMeta {
       this.complete_matchs = matchs_data
       this.complete_mids = result_mids
     }
-    
-    if (!is_virtual) {
-      // 清除虚拟计算信息
-      VirtualList.clear_virtual_info()
-      this.match_mids = lodash.uniq(result_mids)
-      if (type === 2){
-        // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
-        this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
-      } else if (type === 1) {
-        // 获取赔率
-        this.handle_submit_warehouse({ list: matchs_data, warehouse })
-      }
-    } else {
-      // 计算所需渲染数据
-      this.compute_page_render_list({ scrollTop: scroll_top, merge, type }) 
-    }
 
+    // 复刻版 下的 新手版
+    if (this.is_observer_type()) {
+      useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+    } else {
+      if (!is_virtual) {
+        // 清除虚拟计算信息
+        VirtualList.clear_virtual_info()
+        this.match_mids = lodash.uniq(result_mids)
+        if (type === 2){
+          // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
+          this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
+        } else if (type === 1) {
+          // 获取赔率
+          this.handle_submit_warehouse({ list: matchs_data, warehouse })
+        }
+      } else {
+        // 计算所需渲染数据
+        this.compute_page_render_list({ scrollTop: scroll_top, merge, type }) 
+        
+      }
+    }
+    
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
 
@@ -1038,8 +1044,6 @@ class MatchMeta {
     // 虚拟列表所需渲染数据
     const match_datas = VirtualList.compute_current_page_render_list(scroll_top)
 
-    console.log(match_datas)
-
     // 欧洲版首页 五大联赛 当前渲染的 mids
     this.match_mids = match_datas.map(t =>  t.mid)
 
@@ -1061,6 +1065,14 @@ class MatchMeta {
    */
   is_other_warehouse (name) {
     return ['MatchDataWarehouse_ouzhou_PC_five_league_List_Common'].includes(name)
+  }
+
+  /**
+   * @description 是否 observer-wrapper 组件模式
+   * @returns 
+   */
+  is_observer_type () {
+    return project_name == 'app-h5' && UserCtr.standard_edition == 1
   }
 
   /**
@@ -1116,9 +1128,18 @@ class MatchMeta {
       if (item) {
         const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
+
+        // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
+        if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
+
         // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
-        this.is_ws_trigger = true
-        this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+        if (this.debounce_timer) return
+        this.debounce_timer = setTimeout(() => {
+          this.is_ws_trigger = true
+          this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+          clearTimeout(this.debounce_timer)
+          this.debounce_timer = null
+        }, 1000)
       }
     }
   }
