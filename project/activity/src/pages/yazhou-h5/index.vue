@@ -79,15 +79,18 @@
           :key="'lucky'"
           @to_maintenance="to_maintenance"
         />
+        
         <SlotMachine
           v-if="tab_Id == 10010"
           :isIphoneX="isIphoneX"
           :inStartTime="inStartTime"
           :inEndTime="inEndTime"
           :activityIndex="activity_index"
-          :key="'lucky'"
+          :key="'SlotMachine'"
           @to_maintenance="to_maintenance"
         />
+
+       
       </div>
       <!-- 活动挂维护页面 -->
       <div v-show="is_maintaining" class="maintain-main">

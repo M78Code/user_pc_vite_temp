@@ -60,7 +60,7 @@ function use_match_footer_score(props) {
      * 比分溢出时滚动方法
      */
     function scorll(type) {
-        let length = lodash.get(props.match, "score_list.length", 0);
+        let length = lodash.get(score_list, "[0].length", 0);
         if (!stage_score.value || length < 5) return;
         let stageScore = stage_score.value;
         switch (type) {
