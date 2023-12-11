@@ -105,7 +105,7 @@ export const get_current_odds_list = ({ first_hpid, second_hpid }) => {
 export const match_template_config = {
   ...TemplateCommon.match_style_template,
     // 主盘口高度
-    main_handicap_height:70,
+    main_handicap_height:80,
 }
 
 

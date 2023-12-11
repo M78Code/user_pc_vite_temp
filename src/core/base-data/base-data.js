@@ -208,7 +208,6 @@ class BaseData {
     list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
   }
-
   /**
    * @description 获取所有的元数据
    * @returns
