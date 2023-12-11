@@ -3,16 +3,16 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 项目默认公共样式
  */
-//  @import url("~public/lib/font/font-roboto.min.css");
+//  @import url("/activity/lib/font/font-roboto.min.css");
 
 @font-face {
     font-family: "Number-regular";
-    // src: url("~public/image/common/DINPro-Regular.otf");
+    // src: url($SCSSPROJECTPATH+"/activity/image/common/DINPro-Regular.otf");
   }
   
   @font-face {
     font-family: "Number-medium";
-    // src: url("~public/image/common/DINPro-Medium.otf");
+    // src: url($SCSSPROJECTPATH+"/activity/image/common/DINPro-Medium.otf");
   }
   .din-regular {
     font-family: "Number-regular";

@@ -136,7 +136,7 @@ class AxiosHttp {
     // 38913	一般	高	缺陷	【日常】【生产】【PC】Y0商户偶现关机/重启后，首次跳转我们场馆，页面展示异常，显示网络不给力
     //  这个bug 产生原因是 safari 浏览器 强缓存页面导致 。 页面走不了 域名判定流程 ，在挂机启动的时候，初始化没有走域名判定流程
     // 如果没有最快的最优域名 也没有 弹出 token失效的 弹窗,直接走到了这里的 主程序请求流程
-    console.log("api_domain", api_domain);
+    // console.log("api_domain", api_domain);
     if (!api_domain) {
       //session 缓存的 是否 因为设置页面API 域名错误 刷新过
       let has_reload = SessionStorage .get("set_root_domain_error_force_reload");

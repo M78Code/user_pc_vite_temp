@@ -1,14 +1,9 @@
-<!--
- * @Date: 2021-06-02 14:37:10
- * @FilePath: /user-pc1/project/activity/src/components/public_alert/public_alert.vue
- * @Description: 公共弹窗
- * @Author: Echo
--->
+ 
 <template>
   <q-dialog v-model="isShow">
     <div class="dialog_content">
       <!-- <div class="alert-wrap">
-        <img src="~public/yazhou-pc/image/image/logout_notice.png" alt="" width="100%">
+        <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/image/image/logout_notice.png`"  alt="" width="100%">
 
         <div class="row items-center relative-position">
           <div class="text">{{t("login.login_out_dear_user")}}</div>

@@ -140,9 +140,9 @@ async function resolve_mew_menu_res_mi_100_2000(type) {
     //过滤常规球类
     let mi_100_list = [];
     let mi_2000_list = [];
-  
+    let mew_menu_list_res = lodash_.cloneDeep(BaseData.mew_menu_list_res)
     // 遍历 新菜单数据
-    BaseData.mew_menu_list_res.map((x) => {
+    mew_menu_list_res.map((x) => {
         // 拿到 基础赛种 id
         let mif = 1 * x.mi;
         //常规体育
@@ -162,7 +162,7 @@ async function resolve_mew_menu_res_mi_100_2000(type) {
     });
     // 收藏
     if(MenuData.is_collect){
-        ref_data.time_list = mi_100_list
+        ref_data.time_list = lodash_.cloneDeep(mi_100_list)
         mi_100_list = await get_menu_of_favorite_count(mi_100_list,type)
     }
    
@@ -215,6 +215,7 @@ function compute_quanbu_euid() {
 
 // 收藏切换获取最新的赛种数量数据
 async function  get_menu_of_favorite_count(list,type) {
+    return list
     let euid_list = ''
     // 获取对应的旧菜单id    
     list.forEach(item =>{
@@ -244,39 +245,39 @@ async function  get_menu_of_favorite_count(list,type) {
         cuid: UserCtr.get_cuid(),
     }
     try{
-        const { code,data } = await api_common.get_collect_menu_count_pc(parmas)
-        ref_data.time_count = 0
-        if(code == 200){
-            let collect_list = data || []
+        // const { code,data } = await api_common.get_collect_menu_count_pc(parmas)
+        // ref_data.time_count = 0
+        // if(code == 200){
+        //     let collect_list = data || []
            
-            list = list.map(item=>{
-                item.ct = 0
-                collect_list.forEach(obj=>{
-                    if(obj.sportId){
-                        if(type == 400){
-                            if(item.mi == (type + obj.sportId*1)){
-                                item.ct = obj.count
-                            }
-                        }else{
-                            if(item.mi == (100 + obj.sportId*1)+''+type){
-                                item.ct = obj.count
-                            }
-                        }
-                    }
-                })
-                return item
-            })
-        }
-        mi_100_arr.value = list
+        //     list = list.map(item=>{
+        //         item.ct = 0
+        //         collect_list.forEach(obj=>{
+        //             if(obj.sportId){
+        //                 if(type == 400){
+        //                     if(item.mi == (type + obj.sportId*1)){
+        //                         item.ct = obj.count
+        //                     }
+        //                 }else{
+        //                     if(item.mi == (100 + obj.sportId*1)+''+type){
+        //                         item.ct = obj.count
+        //                     }
+        //                 }
+        //             }
+        //         })
+        //         return item
+        //     })
+        // }
+        // mi_100_arr.value = list
 
-        ref_data.time_out_ = setInterval(()=>{
-            if(MenuData.is_collect){
-                get_menu_of_favorite_count(ref_data.time_list,ref_data.time_type)
-            }else{
-                clearInterval(ref_data.time_out_)
-            }
+        // ref_data.time_out_ = setInterval(()=>{
+        //     if(MenuData.is_collect){
+        //         get_menu_of_favorite_count(ref_data.time_list,ref_data.time_type)
+        //     }else{
+        //         clearInterval(ref_data.time_out_)
+        //     }
             
-        },5000)
+        // },5000)
        
         return list
     } catch(error){
@@ -309,15 +310,15 @@ function resolve_mew_menu_res_mi_400() {
     })
     // 后期删除 
     if(!IS_FOR_NEIBU_TEST){
-        let csid_ = [401,402]
-        mi_400_arr = mi_400_arr.filter( item=>csid_.includes(item.mi*1))
+        let csid_ = BaseData.left_menu_base_mi_arr;
+        mi_400_arr = mi_400_arr.filter( item=>csid_.includes(+item.mif))
     }
    
     mi_400_obj.value = mi_400_arr
 
     // 收藏
     if(MenuData.is_collect){
-        ref_data.time_list = mi_400_arr
+        ref_data.time_list = lodash_.cloneDeep(mi_400_arr)
         ref_data.time_type = 400
         mi_100_arr.value = get_menu_of_favorite_count(mi_400_arr,400)
     }

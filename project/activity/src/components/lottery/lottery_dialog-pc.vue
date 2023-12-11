@@ -56,7 +56,7 @@ export default {
   width: 750px;
   max-width: 750px;
   height: 600px;
-  background: url("/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
+  background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
     no-repeat center;
   ::v-deep .scroll {
     overflow: hidden;
