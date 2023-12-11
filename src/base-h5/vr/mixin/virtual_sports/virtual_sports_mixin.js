@@ -72,8 +72,9 @@ export default {
 	set_virtual_data_loading(data){VR_CTR.set_virtual_data_loading(data)},
 	set_prev_v_sports(data){VR_CTR.set_prev_v_sports(data)},
 	set_current_batch(data){
-    if(data && data.match){
-      MatchDataBaseH5.set_list(data.match);
+    console.error('data:',data);
+    if(data && data.matchs){
+      MatchDataBaseH5.set_list(data.matchs);
     } else {
       if(Array.isArray(data)){
         MatchDataBaseH5.set_list(data);
