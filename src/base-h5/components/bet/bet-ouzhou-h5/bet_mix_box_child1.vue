@@ -34,7 +34,7 @@
                        <span class="text-two-span">{{items.playName}}
                          <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
-                        <span v-if="ref_data.only_win.includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span>
+                        <span v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span>
                         <span v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span>
                         
                       </div>
@@ -53,15 +53,11 @@
   <script setup>
   import { compute_value_by_cur_odd_type } from "src/output/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr } from "src/output/index.js";
+  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr,only_win } from "src/output/index.js";
 import { reactive } from "vue";
 
   const props = defineProps({
     items:{}
-  })
-
-  const ref_data = reactive({
-     only_win: [1,37,242,1,153,20001,20043],
   })
 
   const type = 2;//1:不涨也不少    2：增长     3：减少

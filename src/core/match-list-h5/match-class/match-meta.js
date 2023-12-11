@@ -522,7 +522,6 @@ class MatchMeta {
       // 接口请求成功，重置接口限频次数
       this.error_http_count.match = 1
       const list = lodash.get(res, 'data', [])
-      console.error('listlistlist',list)
       const length = lodash.get(list, 'length', 0)
       // 接口报错不对页面进行处理， 渲染元数据； 只当接口返回空数据时才处理
       if (length < 1) return this.set_page_match_empty_status({ state: true });
