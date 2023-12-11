@@ -16,7 +16,7 @@
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
-    <!-- <div class="detail-header-score row">
+    <div class="detail-header-score row">
       <div class="detail-home col-5">
         <div class="detail-home-info">
           <img class="team_img" :src="`${img_url_host}${get_match_detail.mhlu}`" alt="" />
@@ -61,7 +61,8 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
+    
     <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'" :detail="props.get_match_detail"
                   :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
   </div>
@@ -212,6 +213,7 @@ const football_score_icon_list = ref([
 ])
 
 const handle_change = (value) => {
+  console.log(33333);
   right_actions_label.value = value;
 }
 
