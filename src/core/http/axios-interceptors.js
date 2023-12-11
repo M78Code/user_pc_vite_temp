@@ -223,13 +223,13 @@ function handle_count_error(error) {
   console.log("http --错误 -----1----", error_max, err_count);
   //  错误 超过最大错误次数
   if (err_count > error_max) {
-    console.log("http --错误 -----2----");
-    console.log("error.config.url--", error.config);
-    console.log("error.config.baseURL----", error.config.baseURL);
-    console.log("http --错误 -----3----");
-    console.log(
-      "发送EMIT_API_DOMAIN_UPD_CMD >>http>>> " + JSON.stringify(error)
-    );
+    // console.log("http --错误 -----2----");
+    // console.log("error.config.url--", error.config);
+    // console.log("error.config.baseURL----", error.config.baseURL);
+    // console.log("http --错误 -----3----");
+    // console.log(
+    //   "发送EMIT_API_DOMAIN_UPD_CMD >>http>>> " + JSON.stringify(error)
+    // );
 
     // 接受ws断开命令  
     // 此处在接口 出现 502 后 一直死循环请求接口，导致页面崩溃
