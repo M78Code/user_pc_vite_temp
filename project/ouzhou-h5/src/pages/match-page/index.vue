@@ -41,7 +41,7 @@ onMounted(() => {
       store[key] = data[key]
     })
     MatchMeta.clear_match_info()
-    MatchMeta.get_ouzhou_leagues_list_data(data.selectLeague.tid, data.curSelectedOption.timestamp)
+    MatchMeta.get_ouzhou_leagues_list_data(data?.selectLeague?.tid, data?.curSelectedOption?.timestamp)
 	} else {
     MatchMeta.set_prev_scroll(0)
     initMatchPage()
