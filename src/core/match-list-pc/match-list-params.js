@@ -62,19 +62,19 @@ function match_list_all_params() {
     // is_collect 是否收藏
     // menu_current_mi 当前选中的菜单id----终极菜单id 根据此id获取对应的旧菜单id 
     // get_mid_for_euid 通过当前选中的菜单id获取对应的旧菜单id
-    const { menu_root, left_menu_result, mid_menu_result, is_collect, get_mid_for_euid, menu_current_mi,current_ball_type } = MenuData
+    const { menu_root, left_menu_result, mid_menu_result, is_collect, get_mid_for_euid, menu_current_mi, current_ball_type } = MenuData
     // mid_menu_mi 中间键 赛种菜单id 
     // md 中间键 时间id
     // tid 中间键 联赛id  // vr体育 下的赛种对应的联赛
     // csid 赛种id  // 电竞 下的赛种id
-    let { mid_menu_mi, md, tid, csid } = mid_menu_result || {};
+    let { current_mi,filter_tab, md, tid, csid } = mid_menu_result || {};
     // lv1_mi 一级 赛种菜单id
     // lv2_mi 二级玩法菜单id 
     let { lv1_mi, lv2_mi } = left_menu_result || {};
     let apiType = 1;
-     // 父级euid
+    // 父级euid
     let euid = ''
-    let api_name = api_params[menu_root]?.match ||api_params.other.match
+    let api_name = api_params[menu_root]?.match || api_params[lv1_mi]?.match || api_params.other.match;
     // 前端控制是否禁用收藏功能
     // 前端配置写死，世界杯后删除
     // 前端开    后台开       >开
@@ -94,7 +94,7 @@ function match_list_all_params() {
         apiType = 2
         api_name = api_params[menu_root] ? api_params[menu_root].colloet : api_params.other.colloet
     }
-   
+
     let config = {
         is_collect,
         root: menu_root,
@@ -107,15 +107,25 @@ function match_list_all_params() {
             },
         }
     }
-   
+
     // 当前 pid 和 orpt
     let lv2_mi_info = BaseData.mi_info_map[`mi_${menu_current_mi}`] || {};
     delete lv2_mi_info.h5_euid
-    if ([2, 3, 202, 203].includes(Number(menu_root))) {
+    if (MenuData.is_esports()) {
+        // 电子竞技
+        lv2_mi_info = {
+            "category": 1,
+            "csid": filter_tab - 2000,
+            "collect": 1,
+            "selectionHour": null,
+            "tid": "",
+            md,
+        }
+    } else if ([2, 3, 202, 203].includes(Number(menu_root))) {
         // 今日 早盘 常规赛事
         if (lv1_mi == 118) {
             // 娱乐下只有冠军 直接写死
-            euid = [3,203].includes(menu_root)  ? '3020212' : '3020112'
+            euid = [3, 203].includes(menu_root) ? '3020212' : '3020112'
         } else {
             euid = get_mid_for_euid(menu_current_mi)
         }
@@ -126,11 +136,11 @@ function match_list_all_params() {
             ...lv2_mi_info,
             euid,
         }
-        if ([3,203].includes(menu_root*1)) {
+        if ([3, 203].includes(menu_root * 1)) {
             // 早盘获取选中的时间
-            lv2_mi_info.md = md+''
+            lv2_mi_info.md = md + ''
             lv2_mi_info.tid = ''
-            lv2_mi_info.orpt ='0'
+            lv2_mi_info.orpt = '0'
             // lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
         }
     } else if (menu_root == 400) {
@@ -141,16 +151,6 @@ function match_list_all_params() {
             "outrightMatches": 1,
             tid: '',
             "orpt": 18,
-        }
-    } else if (menu_root == 2000) {
-        // 电子竞技
-        lv2_mi_info = {
-            "category": 1,
-            "csid": menu_current_mi - 2000,
-            "collect": 1,
-            "selectionHour": null,
-            "tid": "",
-            md,
         }
     } else if (menu_root == 500) {
         // euid = get_mid_for_euid(menu_current_mi)
@@ -170,7 +170,7 @@ function match_list_all_params() {
             // ...lv2_mi_info,
             apiType,
             // hotMatches: euid == "30199" ? '1' : '', // 热门赛事 全部/赛事 才是1
-            euid:'30199',
+            euid: '30199',
             "orpt": '-1',  // 热门赛事 竞足 12，其他-1
             pids: '',
             csid: current_ball_type,
@@ -198,7 +198,7 @@ function match_list_all_params() {
         }
     }
     // 收藏点击冠军时，修改orpt为18
-    if(menu_current_mi == 30401){
+    if (menu_current_mi == 30401) {
         lv2_mi_info.orpt = '18'
         lv2_mi_info.sportId = ''
         lv2_mi_info.outrightMatches = 1
@@ -212,7 +212,7 @@ function match_list_all_params() {
     )
     return config
 }
-export function get_collet_match_list_params(){
+export function get_collet_match_list_params() {
     return {}
 }
 //请求 参数的说明

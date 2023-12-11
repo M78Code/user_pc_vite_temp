@@ -5,7 +5,7 @@
   <!-- :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon-black.svg`" alt=""> -->
   <div class="select-league" :style="bounced_high">
     <div class="sl-header">
-      <div class="sl-btn" @click="closedHandle">取消</div>
+      <div class="sl-btn" @click="closed">取消</div>
       <div class="sl-title">选择联赛</div>
       <div class="sl-btn" @click="finishHandle">完成</div>
     </div>
@@ -47,42 +47,51 @@ import matchFilter from "src/base-h5/components/match-filter/index.vue";
 import { reactive, toRefs, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
-
+import { UserCtr } from "src/output/index.js";
 defineOptions({
   name: "selectLeague" // 设置组件名称
 });
 
 const router = useRouter();
 //数据
-const state = reactive({
-  //搜索值
-  search_val: ""
-});
+
+//选中的值
+const search_val = ref('')
+//选中的值
+const select_list = ref([])
 //组件数据
-const matchRef = ref(null);
-let { search_val } = toRefs(state);
+let matchRef = ref(null);
 
 let rem_1 = (window.innerWidth * 100) / 375;
 const bounced_high = {
   height: window.innerHeight - rem_1 + 50 + "px !important"
 };
-const emit = defineEmits(["closedHandle", "finishHandle", "search_fn"]);
+const emit = defineEmits(["search_fn","closedHandle"]);
 
-const closedHandle = () => {
-  emit("closedHandle");
-};
 
+/**
+ * @description: 筛选完成
+ * @param {Array} select_list 选中的数据
+ */
 const finishHandle = () => {
-  console.log('matchRefmatchRef',matchRef)
-  let filter_data = [];
-  filter_data = [matchRef.value.list || []].filter(v => v.select);
-  emit("closedHandle", filter_data);
+  select_list.value = matchRef.value.list.filter(v=>v.select)
   // 派发首页设置菜单展开事件
   useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
     open: true
   });
-  
-  // emit("finishHandle");
+  //设置选中数据
+  UserCtr.set_league_select_list(select_list)
+  emit("closedHandle");
+};
+/**
+ * @description: 取消
+ * @param 
+ */
+const closed = () => {
+  emit("closedHandle");
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SETTING_SHOW, {
+    open: true,
+  });
 };
 defineProps({});
 </script>
