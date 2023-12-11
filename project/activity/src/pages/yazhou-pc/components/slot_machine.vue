@@ -1,29 +1,27 @@
-<!--
- * @Date: 2022-02-11 11:46:29
- * @FilePath: /user-pc1/project/activity/src/pages/yazhou-pc/slot_machine/index.vue
- * @Description: 老虎机活动
- * @Author:
--->
 <template>
   <div class="tabs_content" @touchmove="handleTouch" @mousewheel="handleTouch">
     <div class="introduction text-666">
       <p>活动对象：<span class="text-orange">本场馆全体会员</span></p>
       <p class="activity-date-time">
         活动时间：
-        <span class="text-666" v-if="activityObj.showTime == 'toStart'"
-          >距离活动开始还有
-          <span v-if="activityTime.day">{{ activityTime.day }}天</span>
-          <span>{{ activityTime.hr }}:</span>
-          <span>{{ activityTime.min }}:</span>
-          <span>{{ activityTime.sec }}</span>
-        </span>
-        <span v-else-if="activityObj.showTime == 'toEnd'" class="text-666"
-          >距离活动结束还有
-          <span>{{ activityTime.hr }}:</span>
-          <span>{{ activityTime.min }}:</span>
-          <span>{{ activityTime.sec }}</span>
-        </span>
-        <span v-else>{{ activityTime }}</span>
+        <template v-if="get_user.activityList[activityIndex].period == 1">
+            <span class="count_down_css">
+              <span>距离活动开始还有</span>
+              <ActiveCountDown :endTime='inStartTime' :noNeedCss="true"></ActiveCountDown>
+            </span>
+          </template>
+          <template v-else-if="get_user.activityList[activityIndex].period == 2">
+            <template v-if="get_user.activityList[activityIndex].type == 2 && inEndTime">
+              <span class="count_down_css">
+                <span>距离活动关闭还有</span>
+                <ActiveCountDown :endTime='inEndTime' :noNeedCss="true"></ActiveCountDown>
+              </span>
+            </template>
+            <span v-else>活动长期有效</span>
+          </template>
+          <span v-else>
+            活动结束
+          </span>
       </p>
       <p>
         活动内容：<span class="text-orange"
@@ -98,24 +96,24 @@
         <p class="triangles" v-if="triangle_fade > 0">
           <img
             class="left"
-            :src="`${$g_image_preffix}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_fade/0${triangle_fade}.png`"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_fade/0${triangle_fade}.png`"
             alt=""
           />
           <img
             class="right"
-            :src="`${$g_image_preffix}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_fade/0${triangle_fade}.png`"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_fade/0${triangle_fade}.png`"
             alt=""
           />
         </p>
         <p class="triangles" v-else>
           <img
             class="left"
-            :src="`${$g_image_preffix}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_run/0${triangle_run}.png`"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_run/0${triangle_run}.png`"
             alt=""
           />
           <img
             class="right"
-            :src="`${$g_image_preffix}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_run/0${triangle_run}.png`"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_run/0${triangle_run}.png`"
             alt=""
           />
         </p>
@@ -251,7 +249,7 @@
         <!-- 摇杆 -->
         <div class="rocker">
           <img
-            :src="`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/rocker_${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/image/activity_imgs/imgs/slot_machine/rocker_${
               (_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1
             }/0${rocker_anim_index}.png`"
             alt=""
@@ -293,7 +291,7 @@
         >
           <img
             v-if="currentSlotIndex == index && index < 3"
-            :src="`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/image/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`"
           />
           <img
             v-else
@@ -360,12 +358,7 @@
       </p>
       <p>为避免文字理解差异，本场馆保留本活动最终解释权。</p>
     </div>
-    <!-- 登录失效一类的弹窗 -->
-    <Alert
-      :is_show="showAlert"
-      :text="noticeMsg"
-      :isMaintaining="isMaintaining"
-    />
+ 
     <!-- 游戏记录弹窗 -->
     <q-dialog v-model="gameHistory">
       <q-layout view="Lhh lpR fff" container class="history">
@@ -552,801 +545,26 @@
   </div>
 </template>
 <script>
-import { api_activity } from "src/api/index.js";
-import common from "project/activity/src/pages/yazhou-pc/common";
-import Alert from "project/activity/src/components/public_alert/public_alert.vue";
-import format_date_base from "project/activity/src/mixins/common/formartmixin.js";
-import NumberScroll from "project/activity/src/pages/yazhou-pc/slot_machine/number_scroll.vue";
-import compose from "project/activity/src/pages/yazhou-pc/slot_machine/compose.vue";
-import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
-import utils from "project/activity/src/utils/utils.js";
-import _ from "lodash";
-//头部引入
-import {
-  useMittOn,
-  useMittEmit,
-  useMittEmitterGenerator,
-  MITT_TYPES,
-} from "src/core/index.js";
+
+import slot_machine_mixin  from "project/activity/src/mixins/slot_machine/slot_machine.js";  
+import NumberScroll from 'project/activity/src/components/number_scroll/number_scroll-pc.vue';
+import compose from 'project/activity/src/components/compose/compose-pc.vue';
+import DataPager from "project/activity/src/components/data_pager/data_pager-pc.vue";
+import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-pc.vue";
 export default {
-  mixins: [common, format_date_base],
-  data() {
-    return {
-      is_init: false, // 老虎机是否已经初始化
-      animationClass: [], //3个抽奖模块对应的动画属性,方便后来对应添加和移除该class样式
-      currentSlotIndex: 0, // 当前显示的老虎机下标 0白银 1黄金 2钻石
-      activityTime: "", //活动时间
-      historiesBar: ["彩金记录", "合成记录", "重置记录"],
-      currentSlotData: [], // 三个老虎机的配置和数据
-      notStart: true, //是否显示开始滚动按钮
-      runResetSlotAnim: false, // 开始重置按钮动画
-      runStartAnim: false,
-      currentSlotId: "", // 当前老虎机id
-      showAlert: false, // 展示notice提示
-      isMaintaining: false, // 当前是否是维护状态
-      noticeMsg: "活动现已维护，感谢您的支持", // notice 提示内容
-      rocker_anim_index: 1, // 摇杆动画序列初始帧值
-      triangle_fade: 0, // 三角形闪动
-      triangle_run: 1, // 三角形光走动
-      // 彩灯跑动
-      light_run_pink: 1,
-      light_run_blue: 1,
-      light_run_yellow: 1,
-      spin_success: false, // 展示抽奖成功后的彩灯闪动效果
-      gameHistory: false, // 是否展示游戏记录弹窗
-      historyDataState: "data",
-      gameHistoryLists: {
-        list: [],
-        params: {
-          total: 0,
-          type: 1, // 1 彩金记录 2合  成记录 3重置记录
-          current: 1, // 分页，当前第几页
-          size: 6, //每页多少条数据，默认6条
-        },
-        total_all: 0, // 总数量
-      },
-      goToPage: 1,
-      // 老虎机状态
-      tiger_status: "stop",
-      // 老虎机结果
-      tiger_result: [10, 10, 10, 10],
-      caijin_transfer: false, // 彩金文字缩放动效
-      player: null,
-      start_video: 0, // 合成开始动效
-      showMerge: false, // 合成弹窗
-      maximizedToggle: true,
-      currTicketId: null, // 当前要合成的奖券的id
-      beforeGameResult: {}, // 前一次的抽奖结果
-      currentAwardSlotId: "", // 当前需要领彩金的老虎机id
-      is_show_compose: false, // 是否显示合成页面
-      slotCurrentResult: {}, // 老虎机抽奖结果
-      initNums: [], // 改变此变量可以重置数字滚轮
-      tips: {
-        // toast 提示窗
-        statu: false,
-        message: "",
-      },
-      activityTips: {
-        // ui 图提示框
-        status: false,
-        msg: "",
-      },
-      lottery: {
-        // 三种奖券的数量
-        silver: 0,
-        gold: 0,
-        diamond: 0,
-      },
-      isFirstTime: false, // 是否是第一次提示（用户5天未领取奖金
-      showToast: false, //显示提示
-      _: _,
-      $g_image_preffix: "/public/yazhou-pc/",
-    };
-  },
-  watch: {
-    goToPage(new_) {
-      if (new_ > this.gameHistoryLists.params.total) {
-        this.goToPage = this.gameHistoryLists.params.total;
-      } else if (new_ < 1) {
-        this.goToPage = 1;
-      }
-    },
-  },
+  mixins: [ slot_machine_mixin],
   components: {
-    Toast,
-    Alert,
+ 
+    ActiveCountDown,
     NumberScroll,
-    compose,
+     DataPager,
+    compose
   },
-  props: {
-    activityObj: {},
-  },
-  created() {
-    // 计算活动时间的显示文案
-    if (this.activityObj.showTime == "toStart") {
-      // 距离活动开始的倒计时
-      this.countdown(
-        this.activityObj.startAndEndTime.split(",")[0],
-        this.activityObj.showTime
-      );
-    } else if (this.activityObj.showTime == "toEnd") {
-      // 距离活动结束的倒计时
-      this.countdown(
-        this.activityObj.startAndEndTime.split(",")[1],
-        this.activityObj.showTime,
-        "sysTime"
-      );
-    } else {
-      // 活动长期有效 || 活动已结束
-      this.activityTime = this.activityObj.showTime;
-    }
-    // 定时器
-    this.lights_run_timer = {
-      // 跑马灯跑动动效
-      pink_run: null,
-      blue_run: null,
-      yellow_run: null,
-    };
-    this.timerObj = {};
-    this.triangle_fade_timer = null;
-    this.triangle_run_interval_timer = null;
-    this.timeout_obj = {};
-    // 获取老虎机配置
-    this.get_activity_slot_config();
-    this.init();
-    // 老虎机重置和抽奖请求需要节流处理
-    this.resetSlot = _.throttle(this.resetSlot, 800);
-    this.start = _.throttle(this.start, 800);
-    // 记录当前时间
-    this.totalTime = 0;
-
-    // 每天0点重新获取老虎机配置
-    this.morningTimer = setInterval(() => {
-      // 服务器时间戳
-      let stime = this.mx_get_remote_time();
-      let _now = this.utc_to_gmt_no_8_ms2_(stime);
-      if (_now.h == "00" && _now.mm == "00" && _now.s == "00") {
-        this.get_activity_slot_config();
-      }
-    }, 1000);
-
-    // 合成页面的三种奖券的配置
-    this.synthConfig = null;
-    // toast 定时器id
-    this.timer_tips = null;
-
-    this.machine_images = window.vue;
-
-    // 站点 tab 休眠状态转激活
-    // this.$root.$on(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
-  },
-  methods: {
-    /**
-     * 初始化动画
-     */
-    init() {
-      this.spin_success = false;
-      clearInterval(this.triangle_fade_timer);
-      clearInterval(this.triangle_run_interval_timer);
-      Object.keys(this.lights_run_timer).forEach((item) =>
-        clearInterval(this.lights_run_timer[item])
-      );
-      clearTimeout(this.timerObj.timer1);
-      clearTimeout(this.timerObj.timer2);
-      this.triangle_run = 1;
-      this.light_run_pink = 1;
-      this.light_run_blue = 1;
-      this.light_run_yellow = 1;
-      // 老虎机小三角形[光走动]帧动画
-      this.triangle_run_interval_timer = setInterval(() => {
-        this.triangle_run += 1;
-        if (this.triangle_run > 3) {
-          this.triangle_run = 1;
-        }
-      }, 200);
-      // 三色灯跑动效果
-      this.lights_run_timer.pink_run = setInterval(() => {
-        this.light_run_pink += 1;
-        if (this.light_run_pink > 26) {
-          this.light_run_pink = 1;
-        }
-      }, 300);
-      this.timerObj.timer1 = setTimeout(() => {
-        this.lights_run_timer.blue_run = setInterval(() => {
-          this.light_run_blue += 1;
-          if (this.light_run_blue > 26) {
-            this.light_run_blue = 1;
-          }
-        }, 300);
-      }, 1000);
-      this.timerObj.timer2 = setTimeout(() => {
-        this.lights_run_timer.yellow_run = setInterval(() => {
-          this.light_run_yellow += 1;
-          if (this.light_run_yellow > 26) {
-            this.light_run_yellow = 1;
-          }
-        }, 300);
-      }, 2000);
-    },
-    /**
-     * 播放合成页的背景音乐
-     */
-    play_show_card() {
-      this.$refs.showCard.play();
-    },
-    /**
-     * 获取老虎机配置
-     * type 0默认情况，不做特殊处理 1抽奖后的调用，不需要判断是否有需要领取的结果
-     */
-    get_activity_slot_config(type = 0) {
-      api_activity
-        .get_activity_slot_config()
-        .then((res) => {
-          let { code, data } = { ...res.data };
-          if (code == 200 && _.get(data, "length")) {
-            this.currentSlotData = data;
-            let beforeGameResult = {};
-            data.forEach((item, index) => {
-              // 获取三种奖券的数量
-              if (item.slotId == 1) {
-                this.lottery.silver = item.tokenNum;
-              } else if (item.slotId == 2) {
-                this.lottery.gold = item.tokenNum;
-              } else if (item.slotId == 3) {
-                this.lottery.diamond = item.tokenNum;
-              }
-              // 是否有上一次未领取的奖金
-              if (item.beforeGameResult != null) {
-                beforeGameResult = item.beforeGameResult;
-                beforeGameResult.reward = this.format_float(
-                  Number(beforeGameResult.reward) / 100
-                );
-                this.currentAwardSlotId = item.slotId;
-                if (index == 0) {
-                  this.initNums = beforeGameResult.slotResult;
-                }
-                if (type == 0) {
-                  this.notStart = false;
-                }
-              }
-              // 用户是否有超过5天未领取的奖金
-              if (item.gameResultMsg) {
-                this.activityTips = {
-                  status: true,
-                  msg: "您的彩金由于长时间未领取，系统已自动派发至您的账户中",
-                };
-                this.isFirstTime = true;
-              }
-            });
-            this.beforeGameResult = beforeGameResult;
-            this.is_init = true;
-          } else if (code == "0410505") {
-            // 弹窗提示用户 当前已经维护
-            this.isMaintaining = true;
-            this.showAlert = true;
-            this.noticeMsg = "活动现已维护，感谢您的支持";
-            // 其他情况的接口提示
-          } else {
-            this.toast(res.data.msg);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-    /**
-     * @Description 更新奖券数量
-     * @param {undefined} undefined
-     */
-    update_slots_config(obj) {
-      if (obj) {
-        Object.assign(this.lottery, obj);
-      } else {
-        this.get_activity_slot_config();
-      }
-    },
-    /**
-     * 游戏记录-跳转至n页动作
-     * @param {*} current 当前页面
-     * @param {*} type 1彩金记录 2合成记录 3重置记录
-     * @param {*} size 每页多少条数据
-     * @param {*} e
-     */
-    get_activity_slot_get_game_record_go_to_page() {
-      // 游戏记录
-      this.get_activity_slot_get_game_record(
-        this.goToPage,
-        this.gameHistoryLists.params.type
-      );
-    },
-    /**
-     * 游戏记录
-     * @param {*} current 当前页面
-     * @param {*} type 1彩金记录 2合成记录 3重置记录
-     * @param {*} size 每页多少条数据
-     * @param {*} e
-     */
-    get_activity_slot_get_game_record(current = 1, type = 1, size = 6) {
-      if (this.activityTips.status) {
-        return;
-      }
-      const params = {
-        type,
-        current,
-        size,
-      };
-      // 获取当前历史记录的配置信息
-      this.gameHistoryLists.params.type = Number(type);
-      this.gameHistoryLists.params.current = Number(current);
-      this.historyDataState = "loading";
-      this.gameHistoryLists.list = [];
-      this.goToPage = current;
-      api_activity
-        .get_activity_slot_get_game_record(params)
-        .then((res) => {
-          let { code, data } = { ...res.data };
-          if (code == "0401038") {
-            this.showToast = true;
-            this.historyDataState = "api_limited";
-            let timer = setTimeout(() => {
-              this.showToast = false;
-              clearTimeout(timer);
-            }, 500);
-          }
-          if (code == 200 && _.get(data, "records")) {
-            // 展示游戏记录弹窗
-            this.gameHistory = true;
-            this.totalTime = new Date().getTime();
-            this.gameHistoryLists.params.total = Number(data.pages);
-            if (_.get(data, "records.length")) {
-              data.records.forEach((item, index) => {
-                if (item.create_time) {
-                  // 计算格式化时间
-                  let _time = this.format_date_base(item.create_time);
-                  let _format = `${_time[0]}-${_time[1]}-${_time[2]} ${_time[3]}:${_time[4]}`;
-                  item.create_time = _format;
-                } else {
-                  item.create_time = "-";
-                }
-                this.gameHistoryLists.list[index] = item;
-              });
-              this.historyDataState = "data";
-              this.$nextTick(() => {
-                utils.set_page_aria_hidden();
-              });
-            } else {
-              // 没数据就显示【暂无数据】
-              this.historyDataState = "empty";
-              this.gameHistoryLists.list = [];
-            }
-            // 设置总数量
-            this.gameHistoryLists.total_all = _.get(data, "total", 0);
-          } else if (code == "0410505") {
-            this.isMaintaining = true;
-            this.showAlert = true;
-            this.noticeMsg = "活动现已维护，感谢您的支持";
-            // 没数据就显示【暂无数据】
-            this.historyDataState = "empty";
-            this.gameHistoryLists.list = [];
-            // 其他情况的接口提示
-          } else {
-            // 没数据就显示【暂无数据】
-            this.historyDataState = "empty";
-            this.gameHistoryLists.list = [];
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          // 没数据就显示【暂无数据】
-          this.historyDataState = "empty";
-          this.gameHistoryLists.list = [];
-          this.gameHistoryLists.total_all = 0;
-        });
-    },
-    /**
-     * 分页组件分页方法
-     * @param {*} e 分页组件当前页
-     */
-    pagination_next(e) {
-      // 此写法是为了解决 quasar1.X版本 q-pagination 组件接收分页值时会自动触发方法的问题
-      if (new Date().getTime() - this.totalTime < 100) {
-        return;
-      } else {
-        this.get_activity_slot_get_game_record(
-          e,
-          this.gameHistoryLists.params.type
-        );
-      }
-    },
-    /**
-     * 切换老虎机
-     * @param {*} number 0 白银 1黄金 2钻石
-     */
-    switch_slots(number) {
-      if (number > 3 || this.tiger_status != "stop" || this.activityTips.status)
-        return;
-      this.currentSlotIndex = number;
-      // 如果有前一次的抽奖结果未领取
-      if (
-        _.get(this.currentSlotData[this.currentSlotIndex], "beforeGameResult")
-      ) {
-        // 数字滚轮展示前一次抽奖结果
-        this.initNums = _.get(
-          this.currentSlotData[this.currentSlotIndex],
-          "beforeGameResult.slotResult"
-        );
-      } else {
-        // 否则数字滚轮显示默认值
-        this.initNums = [10, 10, 10, 10];
-      }
-      this.init();
-    },
-    /**
-     * 重置按钮
-     */
-    resetSlot() {
-      // 如果当前没有道具则不允许重置
-      if (
-        !_.get(
-          this.currentSlotData[this.currentSlotIndex],
-          "beforeGameResult.propName"
-        ) ||
-        this.activityTips.status
-      ) {
-        return;
-      }
-      // 开始展示重置时的动画
-      this.runResetSlotAnim = true;
-      this.timerObj.timer3 = setTimeout(() => {
-        this.runResetSlotAnim = false;
-        clearTimeout(this.timerObj.timer3);
-      }, 800);
-      api_activity
-        .get_activity_slot_resetprop({
-          slotId: this.currentSlotData[this.currentSlotIndex].slotId,
-        })
-        .then((res) => {
-          let { code, data } = { ...res.data };
-          if (code == 200) {
-            // 新的道具名字
-            this.currentSlotData[
-              this.currentSlotIndex
-            ].beforeGameResult.propName = data.propName;
-            // 新的金额
-            this.beforeGameResult.reward = this.format_float(
-              Number(data.reward) / 100
-            );
-            // 道具栏动画
-            this.caijin_transfer = true;
-            this.timerObj.timer4 = setTimeout(() => {
-              this.caijin_transfer = false;
-            }, 3000);
-            // 重置成功后更新奖券
-            this.get_activity_slot_config();
-          } else if (code == "0410505") {
-            this.isMaintaining = true;
-            this.showAlert = true;
-            this.noticeMsg = "活动现已维护，感谢您的支持";
-            // 其他情况的接口提示
-          } else {
-            // 奖券数不够
-            if (code == "reset_no_ticket") {
-              this.activityTips = {
-                // ui 图提示框
-                status: true,
-                msg: res.data.msg,
-              };
-            } else {
-              this.toast(res.data.msg);
-            }
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          this.toast(err);
-        });
-    },
-    /**
-     * 开始滚动/确认领取
-     * @param {*} type start 开始滚动 confirm 确认领取
-     */
-    start(type) {
-      // 老虎机未初始化 或者有弹窗提示 或者老虎机在滚动过程中，不允许点击
-      if (
-        !this.is_init ||
-        this.activityTips.status ||
-        this.tiger_status != "stop"
-      ) {
-        return;
-      }
-      // 按钮动画
-      this.runStartAnim = true;
-      this.timerObj.timer5 = setTimeout(() => {
-        this.runStartAnim = false;
-        clearTimeout(this.timerObj.timer5);
-      }, 500);
-      let api_;
-      if (type == "start") {
-        // 是否提示 尚有奖励未领取，不可滚动,阻止摇杆操作
-        if (
-          _.get(this.currentSlotData[this.currentSlotIndex], "gameTimes") == 0
-        ) {
-          // 抽奖数量不足时
-          return;
-        } else if (
-          _.get(this.currentSlotData[this.currentSlotIndex], "tokenNum") <
-          _.get(this.currentSlotData[this.currentSlotIndex], "lotteryNum")
-        ) {
-          // 奖券数不够抽奖一次时
-          return;
-        } else if (Object.keys(this.beforeGameResult).length != 0) {
-          // 有奖励未领取的场景
-          this.toast("尚有奖励未领取，不可滚动");
-          return;
-        }
-        // 播放音乐
-        this.$refs.audioStart.play();
-        // 摇杆动画按钮延迟0.5s
-        let timer_play = setTimeout(() => {
-          let rocker = setInterval(() => {
-            this.rocker_anim_index += 1;
-            if (this.rocker_anim_index > 8) {
-              clearInterval(rocker);
-              this.rocker_anim_index = 1;
-            }
-          }, 15);
-          this.$refs.afterAudioStart.play();
-          clearTimeout(timer_play);
-        }, 500);
-        // 数字滚轮滚动
-        if (this.tiger_status == "stop") {
-          this.tiger_status = "runing";
-        }
-        // 抽奖
-        api_ = api_activity.get_activity_slot_spin({
-          slotId: this.currentSlotData[this.currentSlotIndex].slotId,
-        });
-      } else {
-        // 领奖
-        api_ = api_activity.get_activity_slot_get_award({
-          slotId: this.currentAwardSlotId,
-        });
-      }
-      api_
-        .then((res) => {
-          let { code, data } = { ...res.data };
-          if (code == 200) {
-            if (type == "start") {
-              // 抽奖成功后处理动画
-              this.slot_spin_end();
-              // 获取抽奖结果,停止老虎机滚动
-              if (_.get(data, "slotResult.length")) {
-                data.slotResult.forEach((item) => {
-                  if (item == 0) {
-                    item == 10;
-                  }
-                });
-                this.slotCurrentResult = data;
-                // 准备停止滚轮
-                this.stopping(data.slotResult);
-              }
-            } else {
-              // 领取
-              this.toast("领取彩金成功");
-              this.beforeGameResult = {};
-              this.notStart = true;
-              this.initNums = [10, 10, 10, 10];
-              this.init();
-              this.get_activity_slot_config();
-            }
-          } else if (code == "0410505") {
-            this.isMaintaining = true;
-            this.showAlert = true;
-            this.noticeMsg = "活动现已维护，感谢您的支持";
-            // 其他情况的接口提示
-          } else {
-            // 强制停止并初始化滚轮
-            this.$refs.number_scroll.force_stop();
-            this.toast(res.data.msg);
-            this.get_activity_slot_config();
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          // 强制停止并初始化滚轮
-          this.$refs.number_scroll.force_stop();
-          this.toast("服务无响应，请稍后再试");
-        });
-    },
-    /**
-     * 抽奖结果已返回，开始减速
-     * @param {*} result
-     */
-    stopping(result = [10, 10, 10, 10]) {
-      // 运行状态才能停止老虎机
-      if (this.tiger_status == "runing") {
-        // 传入抽奖结果
-        this.tiger_result = result;
-        this.tiger_status = "stopping";
-      }
-    },
-    /**
-     * 滚轮完全停止后的处理
-     */
-    stop() {
-      this.tiger_status = "stop";
-      // 抽奖成功后展示领取按钮
-      this.notStart = false;
-      if (this.beforeGameResult.reward) {
-        // 抽奖金额
-        this.beforeGameResult.reward = this.format_float(
-          Number(this.slotCurrentResult.reward) / 100
-        );
-      }
-      // 道具名字
-      if (!this.currentSlotData[this.currentSlotIndex].beforeGameResult) {
-        this.currentSlotData[this.currentSlotIndex].beforeGameResult = {
-          propName: this.slotCurrentResult.propName,
-        };
-      } else {
-        this.currentSlotData[this.currentSlotIndex].beforeGameResult[
-          "propName"
-        ] = this.slotCurrentResult.propName;
-      }
-      // 彩金动画
-      this.caijin_transfer = true;
-      this.timerObj.timer6 = setTimeout(() => {
-        this.caijin_transfer = false;
-      }, 3000);
-
-      this.get_activity_slot_config(1);
-    },
-    /**
-     * 由于该弹窗自带的隐藏动画比较诡异切暂时没有找到相关处理接口，所以在执行隐藏动画前手动关闭
-     * @param {*} msg
-     */
-    warningNotice(msg) {
-      useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg);
-      // 手动隐藏提示弹窗
-      clearTimeout(this.timeout_obj.timer2);
-      this.timeout_obj.timer2 = setTimeout(() => {
-        let n = document.getElementsByClassName("q-notification");
-        for (let i = 0; i < n.length; i++) {
-          n[i].style.opacity = "0";
-        }
-      }, 1500);
-    },
-    /**
-     * @description: 自定义提示
-     * @param {String} message 提示语
-     */
-    toast(message) {
-      /**清除定时器 */
-      clearTimeout(this.timer_tips);
-      this.timer_tips = null;
-      this.tips = {
-        statu: true,
-        message: message,
-      };
-      this.timer_tips = setTimeout(() => {
-        this.tips.statu = false;
-      }, 2000);
-    },
-    /**
-     * 格式化数字成保留两位小数
-     * @param {*} num 要格式化的数字
-     */
-    format_float(num) {
-      if (!num) {
-        return;
-      }
-      let reg = /\./;
-      let str = String(num);
-      if (reg.test(str)) {
-        if (str.substring(str.indexOf(".")).length < 3) {
-          return str + "0";
-        } else {
-          return str.substring(0, str.indexOf(".") + 2);
-        }
-      } else {
-        return num + ".00";
-      }
-    },
-    /**
-     * 抽奖成功后的动画处理
-     */
-    slot_spin_end() {
-      // 从亮到暗的次数
-      let count1 = 1;
-      clearInterval(this.triangle_run_interval_timer);
-      // 三角形闪动
-      this.triangle_fade_timer = setInterval(() => {
-        this.triangle_fade += 1;
-        if (this.triangle_fade > 7) {
-          count1 += 1;
-          this.triangle_fade = 1;
-          if (count1 > 10) {
-            clearInterval(this.triangle_fade_timer);
-          }
-        }
-      }, 30);
-      // 跑马灯从跑动变为三色灯光闪动
-      // 停止跑动动效
-      Object.keys(this.lights_run_timer).forEach((item) =>
-        clearInterval(this.lights_run_timer[item])
-      );
-      this.spin_success = true;
-    },
-    /**
-     * 获取服务器时间的年月日时分秒
-     */
-    utc_to_gmt_no_8_ms2_(value) {
-      if (!value) {
-        return "";
-      }
-      let time = utils.format_time_zone_millisecond(parseInt(value));
-      let [y, m, d, h, mm, s] = this.format_date_base(time);
-      return { y, m, d, h, mm, s };
-    },
-    /***
-     * 关闭提示弹窗
-     */
-    closeActivityTips() {
-      this.activityTips.status = false;
-      // 如果是首次提示就更新一下老虎机配置
-      if (this.isFirstTime) {
-        this.isFirstTime = false;
-        this.get_activity_slot_config();
-      }
-    },
-    /**
-     * 阻止页面滚动
-     * @param {*} e 事件对象
-     */
-    handleTouch(e) {
-      let evt = e || window.event;
-      // 弹窗显示的时候不允许滚动页面
-      if (this.activityTips.status) {
-        evt.preventDefault();
-        evt.stopPropagation();
-      }
-    },
-    /**
-     * 页面是否处于后台运行
-     */
-    emit_site_tab_active() {
-      // 页面在后台运行时关掉音效
-      if (document.visibilityState == "hidden") {
-        this.$refs.slot_bg_loop.pause();
-        this.$refs.audioStart.pause();
-        this.$refs.afterAudioStart.pause();
-        this.$refs.showCard.pause();
-      } else {
-        this.$refs.slot_bg_loop.load();
-        this.$refs.audioStart.load();
-        this.$refs.afterAudioStart.load();
-        this.$refs.showCard.load();
-      }
-    },
-  },
-  beforeDestroy() {
-    this.debounce_throttle_cancel(this.resetSlot);
-    this.debounce_throttle_cancel(this.start);
-    clearInterval(this.triangle_run_interval_timer);
-    Object.keys(this.lights_run_timer).forEach((item) =>
-      clearInterval(this.lights_run_timer[item])
-    );
-
-    clearInterval(this.morningTimer);
-    clearTimeout(this.timeout_obj.timer2);
-    Object.keys(this.timerObj).forEach((item) =>
-      clearTimeout(this.timerObj[item])
-    );
-    // 站点 tab 休眠状态转激活
-    // this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
-  },
-};
+}
 </script>
+
+
+
 
 <style lang="scss" scoped>
 .tabs_content {

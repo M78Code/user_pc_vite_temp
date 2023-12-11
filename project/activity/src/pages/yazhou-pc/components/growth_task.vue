@@ -6,6 +6,8 @@
 -->
 <template>
   <div class="tabs_content">
+
+    
     <div class="introduction text-666">
       <p>活动对象：<span class="text-orange">本场馆全体会员</span></p>
       <p class="activity-date-time"> 
@@ -49,6 +51,9 @@
      
       </p>
     </div>
+
+
+
     <div class="activity_content">
       <div class="content_title">
         活动内容
@@ -121,7 +126,7 @@
             <template v-if="[1, 3].includes(v.bonusType)">
               <img
                 class="completed"
-                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/completed${
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/completed${
                   get_theme.includes('y0') ? '_y0' : ''
                 }.svg`"
                 alt=""
@@ -270,12 +275,12 @@
         <img
           class="colse2"
           @click="daily_task_success = false"
-          src="activity/yazhou-h5/activity/colse2.png"
+          src="activity/yazhou-pc/activity/colse2.png"
         />
       </div>
     </q-dialog>
 
- 
+  </div>
   </div>
 </template>
 
