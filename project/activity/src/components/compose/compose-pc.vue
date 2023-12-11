@@ -12,27 +12,56 @@
         <div class="circle"></div>
         <svg>
           <filter id="wavy">
-            <feTurbulence x="0" y="0" baseFrequency="0.009" numOctaves="5" speed="2">
-              <animate attributeName="baseFrequency" dur="60s" values="0.02; 0.005; 0.02" repeatCount="indefinite"></animate>
+            <feTurbulence
+              x="0"
+              y="0"
+              baseFrequency="0.009"
+              numOctaves="5"
+              speed="2"
+            >
+              <animate
+                attributeName="baseFrequency"
+                dur="60s"
+                values="0.02; 0.005; 0.02"
+                repeatCount="indefinite"
+              ></animate>
             </feTurbulence>
-            <feDisplacementMap in="SourceGraphic" scale="30"></feDisplacementMap>
+            <feDisplacementMap
+              in="SourceGraphic"
+              scale="30"
+            ></feDisplacementMap>
           </filter>
         </svg>
 
         <!-- 关闭按钮 -->
-        <img @click="$emit('close_compose')" src="~public/image/activity_imgs/imgs/slot_machine/close.svg" alt="" class="close" width="38">
+        <img
+          @click="$emit('close_compose')"
+          src="~public/image/activity_imgs/imgs/slot_machine/close.svg"
+          alt=""
+          class="close"
+          width="38"
+        />
 
         <!-- 奖券数量 -->
         <div class="two_lottories_num">
           <!-- 合成材料名称和数量 -->
           <p>
-            <img src="~public/image/activity_imgs/imgs/slot_machine/normal_voucher.png" alt="" width="58">
-            {{currentSynthConfig.baseTicketName}}: {{currentSynthConfig.ownBaseTicket}}
+            <img
+              src="~public/image/activity_imgs/imgs/slot_machine/normal_voucher.png"
+              alt=""
+              width="58"
+            />
+            {{ currentSynthConfig.baseTicketName }}:
+            {{ currentSynthConfig.ownBaseTicket }}
           </p>
           <!-- 幸运奖券 -->
           <p>
-            <img src="~public/image/activity_imgs/imgs/slot_machine/lucky_voucher.png" alt="" width="56">
-            幸运奖券: {{luckyTicket}}
+            <img
+              src="~public/image/activity_imgs/imgs/slot_machine/lucky_voucher.png"
+              alt=""
+              width="56"
+            />
+            幸运奖券: {{ luckyTicket }}
           </p>
         </div>
         <!-- 中间奖券部 -->
@@ -42,96 +71,190 @@
           <div class="ring-content">
             <!-- 等待合成 -->
             <template v-if="step != 'synthSucc'">
-              <div class="sp-card donghua"><img :src="lottery_obj[cur_select_card].img" alt=""></div>
-              <div class="synth-name">合成{{lottery_obj[cur_select_card].name}}</div>
+              <div class="sp-card donghua">
+                <img :src="lottery_obj[cur_select_card].img" alt="" />
+              </div>
+              <div class="synth-name">
+                合成{{ lottery_obj[cur_select_card].name }}
+              </div>
             </template>
             <!-- 合成成功 -->
             <template v-else-if="step == 'synthSucc'">
               <!-- 合白银 什么奖券都没有 -->
-              <template v-if="synthSucc.returnTicketNum == 0 && synthSucc.synthToken == 0 && synthSucc.returnTicketId == 1">
-                <div class="sp-card donghua2 two1"><img :src="lottery_obj[cur_select_card].img" alt=""></div>
-                <div class="synth-number two1">+{{synthSucc.synthToken}}</div>
+              <template
+                v-if="
+                  synthSucc.returnTicketNum == 0 &&
+                  synthSucc.synthToken == 0 &&
+                  synthSucc.returnTicketId == 1
+                "
+              >
+                <div class="sp-card donghua2 two1">
+                  <img :src="lottery_obj[cur_select_card].img" alt="" />
+                </div>
+                <div class="synth-number two1">+{{ synthSucc.synthToken }}</div>
                 <div class="bitmap two"></div>
-                <div class="synth-number two2">+{{synthSucc.returnTicketNum}}</div>
+                <div class="synth-number two2">
+                  +{{ synthSucc.returnTicketNum }}
+                </div>
               </template>
               <!-- 合其他 什么奖券都没有 -->
-              <div class="two-card" v-else-if="synthSucc.returnTicketNum == 0 && synthSucc.synthToken == 0">
-                <div class="sp-card donghua2 two1"><img :src="lottery_obj[cur_select_card-1].img" alt=""></div>
-                <div class="synth-number two1">+{{synthSucc.returnTicketNum}}</div>
-                <div class="sp-card donghua2 two2"><img :src="lottery_obj[cur_select_card].img" alt=""></div>
-                <div class="synth-number two2">+{{synthSucc.synthToken}}</div>
+              <div
+                class="two-card"
+                v-else-if="
+                  synthSucc.returnTicketNum == 0 && synthSucc.synthToken == 0
+                "
+              >
+                <div class="sp-card donghua2 two1">
+                  <img :src="lottery_obj[cur_select_card - 1].img" alt="" />
+                </div>
+                <div class="synth-number two1">
+                  +{{ synthSucc.returnTicketNum }}
+                </div>
+                <div class="sp-card donghua2 two2">
+                  <img :src="lottery_obj[cur_select_card].img" alt="" />
+                </div>
+                <div class="synth-number two2">+{{ synthSucc.synthToken }}</div>
               </div>
               <!-- 单张普通奖券 -->
-              <template v-else-if="synthSucc.returnTicketId == 1 && synthSucc.synthToken == 0">
+              <template
+                v-else-if="
+                  synthSucc.returnTicketId == 1 && synthSucc.synthToken == 0
+                "
+              >
                 <div class="bitmap"></div>
-                <div class="synth-number one-bitmap">+{{synthSucc.returnTicketNum}}</div>
+                <div class="synth-number one-bitmap">
+                  +{{ synthSucc.returnTicketNum }}
+                </div>
               </template>
               <!-- 合成单张高级奖券 -->
               <template v-else-if="synthSucc.returnTicketNum == 0">
-                <div class="sp-card donghua2"><img :src="lottery_obj[cur_select_card].img" alt=""></div>
-                <div class="synth-number">+{{synthSucc.synthToken}}</div>
+                <div class="sp-card donghua2">
+                  <img :src="lottery_obj[cur_select_card].img" alt="" />
+                </div>
+                <div class="synth-number">+{{ synthSucc.synthToken }}</div>
               </template>
               <!-- 返回单张高级奖券 -->
               <template v-else-if="synthSucc.synthToken == 0">
-                <div class="sp-card donghua2"><img :src="lottery_obj[cur_select_card-1].img" alt=""></div>
-                <div class="synth-number">+{{synthSucc.returnTicketNum}}</div>
+                <div class="sp-card donghua2">
+                  <img :src="lottery_obj[cur_select_card - 1].img" alt="" />
+                </div>
+                <div class="synth-number">+{{ synthSucc.returnTicketNum }}</div>
               </template>
               <!-- 高级奖券加普通奖券 -->
               <div class="two-card" v-else-if="synthSucc.returnTicketId == 1">
-                <div class="sp-card donghua2 two1"><img :src="lottery_obj[cur_select_card].img" alt=""></div>
-                <div class="synth-number two1">+{{synthSucc.synthToken}}</div>
+                <div class="sp-card donghua2 two1">
+                  <img :src="lottery_obj[cur_select_card].img" alt="" />
+                </div>
+                <div class="synth-number two1">+{{ synthSucc.synthToken }}</div>
                 <div class="bitmap two"></div>
-                <div class="synth-number two2">+{{synthSucc.returnTicketNum}}</div>
+                <div class="synth-number two2">
+                  +{{ synthSucc.returnTicketNum }}
+                </div>
               </div>
               <!-- 两张高级奖券 -->
               <div class="two-card" v-else>
-                <div class="sp-card donghua2 two1"><img :src="lottery_obj[cur_select_card-1].img" alt=""></div>
-                <div class="synth-number two1">+{{synthSucc.returnTicketNum}}</div>
-                <div class="sp-card donghua2 two2"><img :src="lottery_obj[cur_select_card].img" alt=""></div>
-                <div class="synth-number two2">+{{synthSucc.synthToken}}</div>
+                <div class="sp-card donghua2 two1">
+                  <img :src="lottery_obj[cur_select_card - 1].img" alt="" />
+                </div>
+                <div class="synth-number two1">
+                  +{{ synthSucc.returnTicketNum }}
+                </div>
+                <div class="sp-card donghua2 two2">
+                  <img :src="lottery_obj[cur_select_card].img" alt="" />
+                </div>
+                <div class="synth-number two2">+{{ synthSucc.synthToken }}</div>
               </div>
             </template>
           </div>
-
         </div>
 
         <!-- 奖券列表 -->
-        <lottery @select_card="select_card" :cur_select_card="cur_select_card" :is_show_card="is_show_card" :lotteryNum="lotteryNum" :lottery_obj="lottery_obj" />
+        <lottery
+          @select_card="select_card"
+          :cur_select_card="cur_select_card"
+          :is_show_card="is_show_card"
+          :lotteryNum="lotteryNum"
+          :lottery_obj="lottery_obj"
+        />
         <!-- 滑动条部分 -->
         <div class="synthSlider" v-if="step == 'normal'">
           <div class="item">
-            <div class="slider-number" v-text="currentSynthConfig.ownBaseTicket < currentSynthConfig.baseTicketNum ? '0' : '1'"></div>
+            <div class="slider-number">
+              {{
+                currentSynthConfig.ownBaseTicket <
+                currentSynthConfig.baseTicketNum
+                  ? "0"
+                  : "1"
+              }}
+            </div>
             <div class="add-btn dec" @click="set_volume(1)">-</div>
             <slider
               v-model="volume"
-              :min="currentSynthConfig.ownBaseTicket  < currentSynthConfig.baseTicketNum ? 0 : 1"
-              :max="currentSynthConfig.ownBaseTicket  < currentSynthConfig.baseTicketNum ? 0 : currentSynthMaxNum"
+              @change_is_mousedown="is_mousedown = $event"
+              :min="currentSynthConfig.ownBaseTicket == 0 ? 0 : 1"
+              :max="
+                currentSynthConfig.ownBaseTicket == 0 ? 0 : currentSynthMaxNum
+              "
             />
             <div class="add-btn add" @click="set_volume(2)">+</div>
-            <div class="slider-number" v-text="currentSynthConfig.ownBaseTicket < currentSynthConfig.baseTicketNum ? 0 : currentSynthMaxNum"></div>
+            <div class="slider-number">
+              {{
+                currentSynthConfig.ownBaseTicket == 0 ? 0 : currentSynthMaxNum
+              }}
+            </div>
           </div>
           <div class="action">
             <div class="consume">
               <p>
-                {{currentSynthConfig.baseTicketName}}消耗: <span class="num">{{volume * (currentSynthConfig.baseTicketNum || 0)}}</span>张
+                {{ currentSynthConfig.baseTicketName }}消耗:
+                <span class="num">{{
+                  volume * (currentSynthConfig.baseTicketNum || 0)
+                }}</span
+                >张
               </p>
               <p>
-                成功率: <span class="num">{{currentSynthConfig.syntheticRate}}%</span>
+                成功率:
+                <span class="num">{{ currentSynthConfig.syntheticRate }}%</span>
               </p>
             </div>
             <div class="synthButtons">
-              <!-- <p> -->
-                <span @click="get_synth_ticket(volume)">开始合成{{volume}}张</span>
-                <span @click="step = currentSynthConfig.syntheticRate == 100 ? 'normal' :'toUpgrade'" :class="{'get_gray': currentSynthConfig.syntheticRate == 100}">合成提升</span>
-              <!-- </p> -->
+              <span @click="get_synth_ticket(volume)"
+                >开始合成{{ volume }}张</span
+              >
+              <span
+                @click="
+                  step =
+                    currentSynthConfig.syntheticRate == 100
+                      ? 'normal'
+                      : 'toUpgrade'
+                "
+                :class="{ get_gray: currentSynthConfig.syntheticRate == 100 }"
+                >合成提升</span
+              >
             </div>
             <div class="tips">
               <p>
-                <img src="~public/image/activity_imgs/imgs/slot_machine/msg.svg" alt="" width="18" />
-                每 {{currentSynthConfig.baseTicketNum}} 张{{currentSynthConfig.baseTicketName}}可以合成1张{{currentSynthConfig.ticketName}}</p>
+                <img
+                  src="~public/image/activity_imgs/imgs/slot_machine/msg.svg"
+                  alt=""
+                  width="18"
+                />
+                每消耗{{ currentSynthConfig.baseTicketNum }}张{{
+                  currentSynthConfig.baseTicketName
+                }}可以合成1张{{ currentSynthConfig.ticketName }}
+              </p>
               <p>
-                <img src="~public/image/activity_imgs/imgs/slot_machine/msg.svg" alt="" width="18" />
-                每 {{currentSynthConfig.syntheticImproveNumber}} 张幸运奖券，即可提升 {{currentSynthConfig.syntheticImproveRate}}% 的合成成功率</p>
+                <img
+                  src="~public/image/activity_imgs/imgs/slot_machine/msg.svg"
+                  alt=""
+                  width="18"
+                />
+                每消耗{{
+                  currentSynthConfig.syntheticImproveNumber
+                }}张幸运奖券，即可提升{{
+                  currentSynthConfig.syntheticImproveRate
+                }}%的合成成功率
+              </p>
             </div>
           </div>
         </div>
@@ -139,7 +262,11 @@
         <div class="confirm" v-else-if="step == 'toUpgrade'">
           <p class="confirmTips">
             <span>确定提升？</span>
-            您将消耗{{currentSynthConfig.syntheticImproveNumber}}张幸运奖券来换取{{currentSynthConfig.syntheticImproveRate}}%的合成成功率
+            您将消耗{{
+              currentSynthConfig.syntheticImproveNumber
+            }}张幸运奖券来换取{{
+              currentSynthConfig.syntheticImproveRate
+            }}%的合成成功率
           </p>
           <p class="confirmBtns">
             <span @click="get_improve_rate">确定</span>
@@ -148,62 +275,101 @@
         </div>
         <!-- 合成率提升完成 -->
         <div class="upgrade" v-else-if="step == 'upgradeSucc'">
-          <span class="head-odds">{{currentSynthConfig.syntheticRate}}%</span>
-          <img src="~public/image/activity_imgs/imgs/slot_machine/top.svg" alt="">
+          <span class="head-odds">{{ currentSynthConfig.syntheticRate }}%</span>
+          <img
+            src="~public/image/activity_imgs/imgs/slot_machine/top.svg"
+            alt=""
+          />
           <span class="finish">提升完成！</span>
-          <span class="footer-odds">合成成功率已提升到了{{currentSynthConfig.syntheticRate}}%</span>
+          <span class="footer-odds"
+            >合成成功率已提升到了{{ currentSynthConfig.syntheticRate }}%</span
+          >
         </div>
         <!-- 合成成功 synthSucc -->
         <div class="synthSucc" v-else>
           <p>
             <span class="msg">你已顺利合成完毕！</span>
-            <span>获得 {{synthSucc.synthToken}} 张{{currentSynthConfig.ticketName}}</span>
-            <span>，返回 {{synthSucc.returnTicketNum}} 张{{synthSucc.returnTicketName}}</span>
+            <span
+              >获得 {{ synthSucc.synthToken }} 张{{
+                currentSynthConfig.ticketName
+              }}</span
+            >
+            <span
+              >，返回 {{ synthSucc.returnTicketNum }} 张{{
+                synthSucc.returnTicketName
+              }}</span
+            >
           </p>
           <p class="synthSuccBtns">
-            <span @click="step = 'normal';is_show_card = true">再次合成</span>
+            <span
+              @click="
+                step = 'normal';
+                is_show_card = true;
+              "
+              >再次合成</span
+            >
             <span @click="$emit('close_compose')">返回</span>
           </p>
           <p>
-            <img src="~public/image/activity_imgs/imgs/slot_machine/msg.svg" alt="" width="18" />
-            每 {{currentSynthConfig.baseTicketNum}} 张{{currentSynthConfig.baseTicketName}}可以合成 1 张{{currentSynthConfig.ticketName}}</p>
+            <img
+              src="~public/image/activity_imgs/imgs/slot_machine/msg.svg"
+              alt=""
+              width="18"
+            />
+            每 {{ currentSynthConfig.baseTicketNum }} 张{{
+              currentSynthConfig.baseTicketName
+            }}可以合成 1 张{{ currentSynthConfig.ticketName }}
+          </p>
         </div>
 
         <!-- 粒子扩散 -->
-        <div class="particle" v-for="(item,index) in particle_list" :key="index" :style="item"></div>
-
+        <div
+          class="particle"
+          v-for="(item, index) in particle_list"
+          :key="index"
+          :style="item"
+        ></div>
       </div>
-
     </div>
-    <div class="toast_tips" v-if="tips.statu">{{tips.message}}</div>
+    <div class="toast_tips" v-if="tips.statu">{{ tips.message }}</div>
     <!-- 登录失效/维护提示一类的弹窗 -->
-    <Alert :is_show="showAlert" :text="noticeMsg" :isMaintaining="isMaintaining" />
+    <Alert
+      :is_show="showAlert"
+      :text="noticeMsg"
+      :isMaintaining="isMaintaining"
+    />
     <!-- 选中卡片 -->
-    <audio src="~public/image/activity_imgs/imgs/slot_machine/media/selectedCard.mp3" ref="selectedCard"></audio>
+    <audio
+      src="~public/image/activity_imgs/imgs/slot_machine/media/selectedCard.mp3"
+      ref="selectedCard"
+    ></audio>
     <!-- 卡片旋转展示 -->
-    <audio src="~public/image/activity_imgs/imgs/slot_machine/media/showCard.mp3" ref="showCard"></audio>
-
+    <audio
+      src="~public/image/activity_imgs/imgs/slot_machine/media/showCard.mp3"
+      ref="showCard"
+    ></audio>
   </q-scroll-area>
-
 </template>
 
 <script>
-import {api_activity} from "src/api/index.js";
-import slider from "project/activity/src/pages/yazhou-pc/slot_machine/slider.vue"
-import lottery from "project/activity/src/pages/yazhou-pc/slot_machine/lottery.vue"
+import { api_activity } from "src/api/index.js";
+import slider from "../slider/slider-pc.vue";
+import lottery from "../lottery/lottery-pc.vue";
 import Alert from "project/activity/src/components/public_alert/public_alert.vue";
-import silver_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/silver_card.png";
-import gold_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/gold_card.png";
-import diamond_card from "public/yazhou-pc/image/activity_imgs/imgs/slot_machine/diamond_card.png";
-//头部引入  
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+//头部引入
+import {
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "src/core/index.js";
 // 生成随机数
-const random = function(minNum,maxNum){
-  return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
-}
+const random = function (minNum, maxNum) {
+  return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+};
 
 export default {
-  components:{
+  components: {
     slider,
     lottery,
     Alert,
@@ -211,8 +377,8 @@ export default {
   props: {
     lotteryNum: {
       type: Object,
-      default: {}
-    }
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -221,96 +387,108 @@ export default {
       luckyTicket: 0, // 幸运奖券数量
       currentSynthMaxNum: 0, // 当前最高可合成的奖券张数
       volume: 0, // 合成页--提升合成率滑动条数字
-      step: 'normal', // 合成页当前流程节点 （控制不同状态下的操作按钮的显示和隐藏    synthSucc: 合成成功   normal：等待合成  toUpgrade：提成合成率  upgradeSucc：合成率提成完成
-      ring_class:'danshan1', // 圆灯类
+      step: "normal", // 合成页当前流程节点 （控制不同状态下的操作按钮的显示和隐藏    synthSucc: 合成成功   normal：等待合成  toUpgrade：提成合成率  upgradeSucc：合成率提成完成
+      ring_class: "danshan1", // 圆灯类
       // 奖券样式
-      particle_list:[], // 粒子动画
-      cur_select_card:1, // 当前选中奖券
-      is_show_card:false, // 是否显示卡片
+      particle_list: [], // 粒子动画
+      cur_select_card: 1, // 当前选中奖券
+      is_show_card: false, // 是否显示卡片
       timeout_obj: {}, // 定时器ID
       tips: {
         statu: false,
-        message: ''
+        message: "",
       },
       showAlert: false, // 展示notice提示
       isMaintaining: false, // 当前是否是维护状态
-      noticeMsg: '',
+      noticeMsg: "",
       // 奖券对象
-      lottery_obj:{
-        '1':{
-          type:1,
-          name:'白银奖券',
-          img: silver_card,
-          key:'silver'
+      lottery_obj: {
+        1: {
+          type: 1,
+          name: "白银奖券",
+          img: "activity/yazhou-pc/activity_imgs/imgs/slot_machine/silver_card.png",
+          key: "silver",
         },
-        '2':{
-          type:2,
-          name:'黄金奖券',
-          img: gold_card,
-          key:'gold'
+        2: {
+          type: 2,
+          name: "黄金奖券",
+          img: "activity/yazhou-pc/activity_imgs/imgs/slot_machine/gold_card.png",
+          key: "gold",
         },
-        '3':{
-          type:3,
-          name:'钻石奖券',
-          img: diamond_card,
-          key:'diamond'
+        3: {
+          type: 3,
+          name: "钻石奖券",
+          img: "activity/yazhou-pc/activity_imgs/imgs/slot_machine/diamond_card.png",
+          key: "diamond",
         },
-      }
-    }
+      },
+    };
   },
   watch: {
     step: {
       handler(n) {
-        if (n == 'normal') {
-          this.get_lottory_merge()
+        if (n == "normal") {
+          this.get_lottory_merge();
         }
-      }
-    }
+      },
+    },
   },
-  created(){
+  created() {
     // 动画帧数
-    this.frame = 0
+    this.frame = 0;
     // 当前奖券背景索引
-    this.card_index = 0
-    this.get_lottory_merge()
-    this.create_particle()
+    this.card_index = 0;
+    this.get_lottory_merge();
+    this.create_particle();
     // 定时器id
     this.timer_tips = null;
     window.addEventListener("resize", this.scale_func);
   },
-  mounted(){
-    this.timer_id = setInterval(()=>{
-      this.animation()
-    },16)
-    this.is_show_card = true
-    this.scale_func()
+  mounted() {
+    this.timer_id = setInterval(() => {
+      this.animation();
+    }, 16);
+    this.is_show_card = true;
+    this.scale_func();
   },
-  beforeDestroy(){
+  beforeDestroy() {
     window.removeEventListener("resize", this.scale_func);
-    clearInterval(this.timer_id)
+    clearInterval(this.timer_id);
   },
   methods: {
     // 元素缩放
     scale_func() {
       // dom的高度
-      let d_height = this.$refs.composeContent.offsetHeight
+      let d_height = this.$refs.composeContent.offsetHeight;
       // 窗口的高度
-      let win_height = window.innerHeight
+      let win_height = window.innerHeight;
       // 缩放的比例
-      let scaleNum = win_height/d_height
+      let scaleNum = win_height / d_height;
       // margintop的值
-      let margin_top = win_height - (win_height*scaleNum + 44)
-      const scalDom = document.querySelector('.compose-wrap')
+      let margin_top = win_height - (win_height * scaleNum + 44);
+      const scalDom = document.querySelector(".compose-wrap");
 
-      console.log('resize', margin_top, win_height, d_height, window.innerHeight)
+      console.log(
+        "resize",
+        margin_top,
+        win_height,
+        d_height,
+        window.innerHeight
+      );
       if (scaleNum < 1) {
-        scalDom.style.setProperty('--qq--activity-scale', scaleNum)
-        scalDom.style.setProperty('--qq--activity-margin-top', `-${margin_top}px`)
-        scalDom.style.setProperty('--qq--activity-bg-margin-top', `-${margin_top-44}px`)
+        scalDom.style.setProperty("--qq--activity-scale", scaleNum);
+        scalDom.style.setProperty(
+          "--qq--activity-margin-top",
+          `-${margin_top}px`
+        );
+        scalDom.style.setProperty(
+          "--qq--activity-bg-margin-top",
+          `-${margin_top - 44}px`
+        );
       } else {
-        scalDom.style.setProperty('--qq--activity-scale', 1)
-        scalDom.style.setProperty('--qq--activity-margin-top', `0px`)
-        scalDom.style.setProperty('--qq--activity-bg-margin-top', `0px`)
+        scalDom.style.setProperty("--qq--activity-scale", 1);
+        scalDom.style.setProperty("--qq--activity-margin-top", `0px`);
+        scalDom.style.setProperty("--qq--activity-bg-margin-top", `0px`);
       }
     },
     /**
@@ -321,52 +499,62 @@ export default {
      * syntheticRate 合成成功率
      */
     get_lottory_merge() {
-      this.$emit('play_show_card')
-      api_activity.get_synth_config().then( res => {
-        let {code} = {...res.data}
-        if (code == '0401038') {
-          this.toast(this.$t('common.limited'));
-          return
-        } 
+      this.$emit("play_show_card");
+      api_activity
+        .get_synth_config()
+        .then((res) => {
+          let { code } = { ...res.data };
+          if (code == "0401038") {
+            this.toast(this.$t("common.limited"));
+            return;
+          }
 
-        if (code == 200 && _.get(res, 'data.data.synthConfig.length')) {
-          // 所有奖券的配置
-          this.synthConfig = _.get(res, 'data.data.synthConfig');
-          // 当前选中的奖券的配置，默认选中白银
-          let tokenNum = {}
-          this.synthConfig.forEach(item => {
-            if(this.lottery_obj[item.type]){
-              tokenNum[this.lottery_obj[item.type].key] = item.ticketNum
-            }
-            if(item.type == this.cur_select_card){
-              this.currentSynthConfig = item
-            }
-          })
-          // 更新老虎机配置
-          this.$emit('update_slots_config',tokenNum)
-          this.currTicketId = this.currentSynthConfig.ticketId;
-          // 当前最高可合成的奖券数
-          this.currentSynthMaxNum = Math.floor(Number(this.currentSynthConfig.ownBaseTicket) / Number(this.currentSynthConfig.baseTicketNum))
-          // 幸运奖券数量
-          this.luckyTicket = _.get(res, 'data.data.luckyTicket');
-        } else if (code == '0410505') {
-          this.isMaintaining = true;
-          this.showAlert = true;
-          this.noticeMsg = "活动现已维护，感谢您的支持";
-        } else {
-          this.toast(_.get(res, 'data.msg'));
-        }
-        // 如果当前基础奖券数量可以合成一张以上上级奖券
-        if (this.currentSynthConfig.ownBaseTicket >= this.currentSynthConfig.baseTicketNum) {
-          // 滑动条默认显示0
-          this.volume = 1;
-        }else{
-          // 否则就是0
-          this.volume = 0
-        }
-      }).catch(err => {
-        console.error(err)
-      })
+          if (code == 200 && _.get(res, "data.data.synthConfig.length")) {
+            // 所有奖券的配置
+            this.synthConfig = _.get(res, "data.data.synthConfig");
+            // 当前选中的奖券的配置，默认选中白银
+            let tokenNum = {};
+            this.synthConfig.forEach((item) => {
+              if (this.lottery_obj[item.type]) {
+                tokenNum[this.lottery_obj[item.type].key] = item.ticketNum;
+              }
+              if (item.type == this.cur_select_card) {
+                this.currentSynthConfig = item;
+              }
+            });
+            // 更新老虎机配置
+            this.$emit("update_slots_config", tokenNum);
+            this.currTicketId = this.currentSynthConfig.ticketId;
+            // 当前最高可合成的奖券数
+            this.currentSynthMaxNum = Math.floor(
+              Number(this.currentSynthConfig.ownBaseTicket) /
+                Number(this.currentSynthConfig.baseTicketNum)
+            );
+            // 幸运奖券数量
+            this.luckyTicket = _.get(res, "data.data.luckyTicket");
+          } else if (code == "0410505") {
+            this.isMaintaining = true;
+            this.showAlert = true;
+            this.noticeMsg = "活动现已维护，感谢您的支持";
+          } else {
+            this.$toast(res.msg, 1500);
+          }
+          // 如果当前基础奖券数量可以合成一张以上上级奖券
+          if (
+            this.currentSynthConfig.ownBaseTicket >=
+            this.currentSynthConfig.baseTicketNum
+          ) {
+            // 滑动条默认显示0
+            this.volume = 1;
+          } else {
+            // 否则就是0
+            this.volume = 0;
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$toast(err, 1500);
+        });
     },
     /**
      * 合成页---选择要合成的奖券类型
@@ -374,47 +562,58 @@ export default {
      */
     select_card(type) {
       // 用户选择的奖券的配置数据
-      this.currentSynthConfig = this.synthConfig.find(item => item.type == type);
+      this.currentSynthConfig = this.synthConfig.find(
+        (item) => item.type == type
+      );
       this.currTicketId = this.currentSynthConfig.ticketId;
-      this.cur_select_card = type
+      this.cur_select_card = type;
       // 当前最高可合成的奖券数
-      this.currentSynthMaxNum = Math.floor(this.currentSynthConfig.ownBaseTicket / this.currentSynthConfig.baseTicketNum)
+      this.currentSynthMaxNum = Math.floor(
+        this.currentSynthConfig.ownBaseTicket /
+          this.currentSynthConfig.baseTicketNum
+      );
       // 如果当前基础奖券数量不够就默认为0
-      this.volume = this.currentSynthMaxNum == 0 ? 0 : 1;
+      this.volume = this.currentSynthConfig.ownBaseTicket == 0 ? 0 : 1;
       // 防止短时间内切换，先重载再播放
-      this.$refs.selectedCard.load()
-      this.$refs.selectedCard.play()
+      this.$refs.selectedCard.load();
+      this.$refs.selectedCard.play();
     },
     /**
      * 提升合成成功率
      */
     get_improve_rate() {
-      if (Number(this.luckyTicket) < Number(this.currentSynthConfig.syntheticImproveNumber)) {
-        this.toast("当前幸运奖券数不足");
+      if (
+        Number(this.luckyTicket) <
+        Number(this.currentSynthConfig.syntheticImproveNumber)
+      ) {
+        this.$toast("当前幸运奖券数不足", 1500);
         return;
       }
-      api_activity.get_improve_rate({ticketId: this.currTicketId}).then(res => {
-        let {code, data} = {...res.data}
-        if (code == 200) {
-          this.luckyTicket = data.luckyTicket;
-          this.currentSynthConfig.syntheticRate = data.syntheticRate;
-          this.step = 'upgradeSucc';
-          // 合成成功提示展示两秒后切回初始页面
-          setTimeout(() => {
-            this.step = 'normal'
-          }, 2000);
-        } else if (code == '0410505') {
+      api_activity
+        .get_improve_rate({ ticketId: this.currTicketId })
+        .then((res) => {
+          let { code, data } = { ...res };
+          if (code == 200) {
+            this.luckyTicket = data.luckyTicket;
+            this.currentSynthConfig.syntheticRate = data.syntheticRate;
+            this.step = "upgradeSucc";
+            // 合成成功提示展示两秒后切回初始页面
+            setTimeout(() => {
+              this.step = "normal";
+            }, 2000);
+          } else if (code == "0410505") {
             this.isMaintaining = true;
             this.showAlert = true;
             this.noticeMsg = "活动现已维护，感谢您的支持";
-          // 其他情况的接口提示
-        } else {
-          this.toast(_.get(res, 'data.msg'))
-        }
-      }).catch(err => {
-        console.error(err)
-        this.toast(err)
-      })
+            // 其他情况的接口提示
+          } else {
+            this.$toast(res.msg, 1500);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$toast(err, 1500);
+        });
     },
     /**
      * 合成奖券
@@ -422,103 +621,101 @@ export default {
      */
     get_synth_ticket(synthCount) {
       if (!synthCount) {
-        if (!this.currentSynthConfig.baseTicketName) {
-          this.toast(`网络异常`);
-        } else {
-          this.toast(`${this.currentSynthConfig.baseTicketName}数不足`)
-        }
+        this.$toast(`${this.currentSynthConfig.baseTicketName}数不足`, 1500);
         return;
       }
       let params = {
         synthCount, // 要合成的张数
-        ticketId: this.currTicketId // 要合成的奖券id
-      }
-      api_activity.get_synth_ticket(params).then(res => {
-        let {code, data} = {...res.data}
-        if (code == 200) {
-          // 合成成功隐藏卡片列表
-          this.is_show_card = false
-          // 合成结果
-          this.synthSucc = data || {};
-          // 新的合成成功率
-          this.currentSynthConfig.syntheticRate = data.syntheticRate;
-          this.step = 'synthSucc';
-          this.$emit('update_slots_config');
-          // 合成完成后更新数据
-          this.get_lottory_merge()
-        } else if (code == '0410505') {
-          this.isMaintaining = true;
-          this.showAlert = true;
-          this.noticeMsg = "活动现已维护，感谢您的支持";
-          // 其他情况的接口提示
-        } else {
-          this.toast(_.get(res, 'data.msg'));
-        }
-      }).catch(err => {
-        console.error(err)
-        if (err.toString().indexOf('Network Error') > -1) {
-          this.toast('网络异常');
-        } else {
-          this.toast(err)
-        }
-      })
+        ticketId: this.currTicketId, // 要合成的奖券id
+      };
+      api_activity
+        .get_synth_ticket(params)
+        .then((res) => {
+          let { code, data } = { ...res };
+          if (code == 200) {
+            // 合成成功隐藏卡片列表
+            this.is_show_card = false;
+            this.synthSucc = data;
+            this.currentSynthConfig.baseTicketNum -= Number(
+              data.reduceBaseTicketNum
+            );
+            this.currentSynthConfig.syntheticRate = data.syntheticRate;
+            this.step = "synthSucc";
+            this.$emit("update_slots_config");
+            // 合成完成后更新数据
+            this.get_lottory_merge();
+          } else if (["0410505"].includes(code)) {
+            // 活动突然挂维护时，触发下边方法，刷新活动页面，变成活动维护页面
+            useMittEmit(MITT_TYPES.EMIT_TO_MAINTENANCE);
+            return;
+          } else {
+            this.$toast(res.msg, 1500);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$toast(err, 1500);
+        });
     },
     /**
      * @Description 合成数量自增自减
      * @param {undefined} undefined   type 1 减 2 加
-    */
-    set_volume(type){
-      let min = this.currentSynthConfig.ownBaseTicket == 0 ? 0 : 1
-      let max = this.currentSynthConfig.ownBaseTicket == 0 ? 0 : this.currentSynthMaxNum
-      if(type == 1 && this.volume > min){
-        this.volume--
-      }else if(type == 2 && this.volume < max){
-        this.volume++
+     */
+    set_volume(type) {
+      let min = this.currentSynthConfig.ownBaseTicket == 0 ? 0 : 1;
+      let max =
+        this.currentSynthConfig.ownBaseTicket == 0
+          ? 0
+          : this.currentSynthMaxNum;
+      if (type == 1 && this.volume > min) {
+        this.volume--;
+      } else if (type == 2 && this.volume < max) {
+        this.volume++;
       }
     },
     /**
      * @Description 动画
      * @param {undefined} undefined
-    */
-    animation(){
-      this.frame++
-      let deng = parseInt(this.frame / 25 ) % 2
-      if(this.step == 'synthSucc'){
-        this.ring_class = deng == 0 ? 'quanshan1' : 'quanshan2'
-      }else{
-        this.ring_class = deng == 0 ? 'danshan1' : 'danshan2'
+     */
+    animation() {
+      this.frame++;
+      let deng = parseInt(this.frame / 25) % 2;
+      if (this.step == "synthSucc") {
+        this.ring_class = deng == 0 ? "quanshan1" : "quanshan2";
+      } else {
+        this.ring_class = deng == 0 ? "danshan1" : "danshan2";
       }
     },
     /**
      * @Description 生成粒子
      * @param {undefined} undefined
-    */
-    create_particle(){
+     */
+    create_particle() {
       // 生成粒子
-      let width = 1200
-      let height = 860
-      let count = 30
+      let width = 1200;
+      let height = 860;
+      let count = 30;
 
-      let particle_list = []
-      for(let i = 0; i < count * 4; i++){
-        let p1 = i % count * (width / count)
-        let p2 = i % count * (height / count)
-        let t = random(1000,2000) / 100
-        let t2 = random(1000,2000) / 100
-        let size = random(5,8)
-        let style
-        if(i < count){
-          style = `width:${size}px;height:${size}px;transform: translate(${p1}px, 0px);animation-duration: ${t}s;animation-delay: ${-t2}s;`
-        }else if(i < count * 2){
-          style = `width:${size}px;height:${size}px;transform: translate(0px, ${p2}px);animation-duration: ${t}s;animation-delay: ${-t2}s;`
-        }else if(i < count * 3){
-          style = `width:${size}px;height:${size}px;transform: translate(${p1}px, ${height}px);animation-duration: ${t}s;animation-delay: ${-t2}s;`
-        }else{
-          style = `width:${size}px;height:${size}px;transform: translate(${width}px, ${p2}px);animation-duration: ${t}s;animation-delay: ${-t2}s;`
+      let particle_list = [];
+      for (let i = 0; i < count * 4; i++) {
+        let p1 = (i % count) * (width / count);
+        let p2 = (i % count) * (height / count);
+        let t = random(1000, 2000) / 100;
+        let t2 = random(1000, 2000) / 100;
+        let size = random(5, 8);
+        let style;
+        if (i < count) {
+          style = `width:${size}px;height:${size}px;transform: translate(${p1}px, 0px);animation-duration: ${t}s;animation-delay: ${-t2}s;`;
+        } else if (i < count * 2) {
+          style = `width:${size}px;height:${size}px;transform: translate(0px, ${p2}px);animation-duration: ${t}s;animation-delay: ${-t2}s;`;
+        } else if (i < count * 3) {
+          style = `width:${size}px;height:${size}px;transform: translate(${p1}px, ${height}px);animation-duration: ${t}s;animation-delay: ${-t2}s;`;
+        } else {
+          style = `width:${size}px;height:${size}px;transform: translate(${width}px, ${p2}px);animation-duration: ${t}s;animation-delay: ${-t2}s;`;
         }
-        particle_list.push(style)
+        particle_list.push(style);
       }
-      this.particle_list = particle_list
+      this.particle_list = particle_list;
     },
     /**
      * notice 提示
@@ -528,7 +725,9 @@ export default {
     warningNotice(msg, time = 1800) {
       useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, msg);
       // 手动隐藏提示弹窗
-      if (this.timeout_obj.timer2) {clearTimeout(this.timeout_obj.timer2)};
+      if (this.timeout_obj.timer2) {
+        clearTimeout(this.timeout_obj.timer2);
+      }
       this.timeout_obj.timer2 = setTimeout(() => {
         let n = document.getElementsByClassName("q-notification");
         for (let i = 0; i < n.length; i++) {
@@ -542,8 +741,8 @@ export default {
      */
     toast(message) {
       /**清除定时器 */
-      clearTimeout(this.timer_tips)
-      this.timer_tips = null
+      clearTimeout(this.timer_tips);
+      this.timer_tips = null;
       this.tips = {
         statu: true,
         message: message,
@@ -563,20 +762,24 @@ export default {
   --bor: 5px;
   --boxShadow: calc(var(--huoyan_size) / 12);
 }
+
 /*  大小圆旋转动画 */
 @keyframes card_move {
   0% {
     transform: translateY(10px);
   }
+
   100% {
     transform: translateY(-10px);
   }
 }
+
 /*  旋转动画 */
 @keyframes xuanzhuan {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -590,16 +793,20 @@ export default {
     width: 2px;
     height: 2px;
   }
+
   19% {
     opacity: 0;
   }
+
   20% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
+
 .particle {
   position: absolute;
   left: 0;
@@ -622,6 +829,7 @@ export default {
   filter: url(#wavy) blur(1px);
   animation: xuanzhuan 50s linear infinite;
 }
+
 .circle:before,
 .circle:after {
   content: "";
@@ -638,6 +846,7 @@ svg {
   width: 0;
   height: 0;
 }
+
 .compose-wrap {
   position: fixed;
   width: 100%;
@@ -647,10 +856,12 @@ svg {
   left: 0;
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.6);
-  ::v-deep .scroll{
+
+  ::v-deep .scroll {
     overflow: auto;
   }
 }
+
 .compose-bg {
   width: 100%;
   position: relative;
@@ -658,6 +869,7 @@ svg {
   background-position: center top;
   background-image: url("~public/image/activity_imgs/imgs/slot_machine/bg.png");
   background-size: 1920px auto;
+
   &:before {
     content: "";
     position: absolute;
@@ -673,6 +885,7 @@ svg {
     margin-top: var(--activity-bg-margin-top);
   }
 }
+
 .compose-content {
   width: 1200px;
   margin: auto;
@@ -680,13 +893,15 @@ svg {
   padding-top: 20px;
   transform: scale(var(--activity-scale));
   margin-top: var(--activity-margin-top);
-   /*  关闭按钮 */
+
+  /*  关闭按钮 */
   .close {
     cursor: pointer;
     position: absolute;
     right: 30px;
     top: 100px;
   }
+
   /*  奖券数量 */
   .two_lottories_num {
     display: flex;
@@ -697,14 +912,17 @@ svg {
     color: #fff;
     font-size: 20px;
     text-shadow: 1px 1px 4px #05121e;
+
     p {
       margin-right: 15px;
     }
+
     img {
       vertical-align: middle;
       margin-right: 10px;
     }
   }
+
   /*  发光的圆环 */
   .ring {
     width: 440px;
@@ -715,6 +933,7 @@ svg {
     background: url("~public/image/activity_imgs/imgs/slot_machine/star_bg.png")
       no-repeat center center;
     background-size: 100% auto;
+
     /*  圆环背景 */
     &:before {
       content: "";
@@ -725,6 +944,7 @@ svg {
         no-repeat center center;
       background-size: 371px auto;
     }
+
     /*  六角形 */
     &:after {
       content: "";
@@ -738,18 +958,23 @@ svg {
       animation: xuanzhuan 5s linear infinite;
       opacity: 0.5;
     }
+
     &.danshan1 .ring-lamp {
       background-image: url("~public/image/activity_imgs/imgs/slot_machine/danshan1.png");
     }
+
     &.danshan2 .ring-lamp {
       background-image: url("~public/image/activity_imgs/imgs/slot_machine/danshan2.png");
     }
+
     &.quanshan1 .ring-lamp {
       background-image: url("~public/image/activity_imgs/imgs/slot_machine/quanshan1.png");
     }
+
     &.quanshan2 .ring-lamp {
       background-image: url("~public/image/activity_imgs/imgs/slot_machine/quanshan2.png");
     }
+
     /*  灯 */
     .ring-lamp {
       content: "";
@@ -759,10 +984,12 @@ svg {
       top: 0;
       left: 0;
     }
+
     .ring-content {
       position: relative;
       z-index: 3;
     }
+
     .synth-name {
       font-size: 18px;
       color: #fff;
@@ -775,17 +1002,20 @@ svg {
         transform: scale(1.5);
         opacity: 0;
       }
+
       30% {
         transform: scale(1.5);
         opacity: 0;
       }
     }
+
     .bitmap {
       width: 190px;
       height: 190px;
       background: url("~public/image/activity_imgs/imgs/slot_machine/bitmap.png");
       background-size: 100% auto;
       animation: card_donghua2 2s;
+
       &.two {
         width: 150px;
         height: 150px;
@@ -794,30 +1024,38 @@ svg {
         bottom: 10px;
       }
     }
+
     .sp-card {
       width: 300px;
+
       &.donghua {
         animation: card_move 1.5s ease-in-out infinite alternate;
       }
+
       &.donghua2 {
         animation: card_donghua2 2s;
       }
+
       img {
         width: 100%;
         transform: rotate(-15deg);
       }
     }
+
     .two-card {
       width: 300px;
       height: 200px;
       position: relative;
+
       .sp-card {
         width: 230px;
         position: absolute;
+
         &.two1 {
           top: 0;
           left: 0;
         }
+
         &.two2 {
           right: 0;
           top: 80px;
@@ -831,15 +1069,18 @@ svg {
         transform: translate(0px, 0px);
         opacity: 0;
       }
+
       99% {
         transform: translate(5px, -20px);
         opacity: 1;
       }
+
       100% {
         transform: translate(10px, -20px);
         opacity: 0;
       }
     }
+
     .synth-number {
       font-size: 30px;
       color: #fff;
@@ -850,14 +1091,17 @@ svg {
       animation: synth_number_move 3s ease;
       opacity: 0;
       font-style: italic;
+
       &.two1 {
         top: -10px;
         left: 70px;
       }
+
       &.two2 {
         top: 200px;
         left: 130px;
       }
+
       &.one-bitmap {
         top: 180px;
         left: 100px;
@@ -865,6 +1109,7 @@ svg {
     }
   }
 }
+
 /*  滑动条部分 */
 .synthSlider,
 .confirm,
@@ -879,6 +1124,7 @@ svg {
   position: relative;
   z-index: 6;
 }
+
 .synthSlider {
   .item {
     margin: auto;
@@ -887,6 +1133,7 @@ svg {
     display: flex;
     align-items: center;
     position: relative;
+
     .slider-number {
       width: 47px;
       height: 30px;
@@ -902,6 +1149,7 @@ svg {
       font-size: 18px;
       color: #20082d;
     }
+
     .add-btn {
       width: 20px;
       height: 20px;
@@ -910,16 +1158,20 @@ svg {
       top: -20px;
       text-align: center;
       line-height: 20px;
+
       &.dec {
         left: 35px;
       }
+
       &.add {
         right: 35px;
       }
     }
   }
+
   .action {
     margin-bottom: 20px;
+
     /*  合成奖券箭头背景  */
     &::before {
       content: "";
@@ -933,10 +1185,12 @@ svg {
       background-position: center -145px;
       z-index: -1;
     }
+
     .consume,
     .synthButtons {
       display: flex;
       justify-content: center;
+
       & > * {
         &:nth-child(1) {
           margin-right: 100px;
@@ -944,16 +1198,20 @@ svg {
         }
       }
     }
+
     .consume {
       margin-bottom: 20px;
       font-size: 14px;
       font-weight: 400;
+
       .num {
         font-size: 18px;
       }
     }
+
     .synthButtons {
       margin: 50px auto 25px;
+
       span {
         display: block;
         width: 188px;
@@ -965,6 +1223,7 @@ svg {
         background: #e89e43;
         cursor: pointer;
         padding-right: 15px;
+
         &:nth-child(2) {
           &:after {
             content: "";
@@ -979,43 +1238,52 @@ svg {
           }
         }
       }
+
       .get_gray {
         filter: grayscale(100%);
         cursor: not-allowed;
       }
     }
+
     .tips {
       display: flex;
       justify-content: center;
       font-size: 16px;
       font-weight: 500;
+
       p {
         img {
           vertical-align: sub;
         }
       }
+
       p:nth-child(1) {
         margin-right: 20px;
       }
     }
   }
 }
+
 .confirm {
   p {
     text-align: center;
   }
+
   .confirmTips {
     font-size: 18px;
     font-weight: 500;
+
     span {
       font-size: 24px;
-      color: #FF7000;
+      color: #ff7000;
       display: block;
       margin: 0 auto 5px;
     }
   }
+
   .confirmBtns {
     margin-top: 25px;
+
     span {
       display: inline-block;
       width: 188px;
@@ -1031,12 +1299,14 @@ svg {
       color: #fff;
       margin-right: 100px;
     }
+
     span:nth-child(2) {
       background-color: #fff;
       color: #454242;
     }
   }
 }
+
 /*  合成率提升完成 */
 .upgrade {
   display: flex;
@@ -1044,23 +1314,27 @@ svg {
   justify-content: center;
   align-items: center;
   top: -160px;
+
   .head-odds {
     font-size: 68px;
     color: #ffffff;
     font-weight: 600;
     padding-left: 15px;
   }
+
   img {
     width: 70px;
     animation: card_move 1s ease-in-out infinite alternate;
   }
+
   .finish {
     font-size: 24px;
-    color: #FF7000;
+    color: #ff7000;
     text-align: center;
     font-weight: 500;
     margin-bottom: 10px;
   }
+
   .footer-odds {
     font-size: 18px;
     color: #ffffff;
@@ -1068,31 +1342,38 @@ svg {
     font-weight: 500;
   }
 }
+
 /*  合成成功 */
 .synthSucc {
   p {
     text-align: center;
+
     .msg {
       display: block;
       font-size: 24px;
-      color: #FF7000;
+      color: #ff7000;
       font-weight: 500;
     }
+
     &:nth-child(1) {
       font-weight: 500;
     }
+
     &:nth-child(3) {
       font-weight: 500;
       font-size: 16px;
+
       img {
         vertical-align: sub;
       }
     }
   }
+
   .synthSuccBtns {
     display: flex;
     justify-content: center;
     margin: 30px auto;
+
     span {
       display: inline-block;
       width: 188px;
@@ -1101,17 +1382,20 @@ svg {
       text-align: center;
       border-radius: 26px;
     }
+
     span:nth-child(1) {
       background-color: #e89e43;
       color: #fff;
       margin-right: 100px;
     }
+
     span:nth-child(2) {
       background-color: #fff;
       color: #454242;
     }
   }
 }
+
 /*  合成材料数滑动条 */
 .q-item__section--side {
   display: inline-block;
@@ -1121,13 +1405,16 @@ svg {
   line-height: 34px;
   background: #fff;
   color: #333;
+
   &:nth-child(1) {
     margin-right: 15px;
   }
+
   &:nth-child(3) {
     margin-left: 15px;
   }
 }
+
 .toast_tips {
   position: fixed;
   top: 50%;
