@@ -196,6 +196,7 @@ const hand_cilck_move = (left) => {
 export {
     compute_get_date_menu_list_params,
     handle_click_menu_mi_3_date,
+    get_data_menu_result,
     get_date_menu_list,
     set_mid_menu_result,
     hand_cilck_move,

@@ -204,7 +204,7 @@
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
                <!-- 缩放按钮 -->
-              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
+              <img v-if="get_is_full_screen" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
             
               <div class="col-1 go-back-btn-wrap" @click="close_video" >
                 <div class="video_back"></div>
@@ -313,7 +313,7 @@ export default {
     matchScore,
     footballEvents,
     "analysis-football-matches": analysis_football_matches,  //足球分析
-    // "basketball-match-analysis": basketball_match_analysis,  //篮球分析
+    "basketball-match-analysis": basketball_match_analysis,  //篮球分析
     "tabs": () => import("src/base-pc/components/match-detail/match_info/tabs.vue"),
     "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider-x.vue"),
   },
@@ -416,7 +416,7 @@ export default {
       // 用户令牌信息
       get_user_token(){return '';},
       //视频单页是否已加载     作用：防止白屏
-      get_iframe_onload(){return '';},
+      // get_iframe_onload(){return '';},
       // 置顶按钮是否高亮
       get_zhiding(){return '';},
       // 点击视频或者是动画的时候玩法集是否固定

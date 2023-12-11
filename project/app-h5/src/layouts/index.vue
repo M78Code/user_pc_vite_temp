@@ -63,7 +63,7 @@ import {
   nextTick,
 } from "vue";
 import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js"; 
 // import { FooterWapper } from "src/components/footer/index.js";
 import { Tabbar } from 'src/base-h5/components/menu/app-h5-menu/index'
 // import { MenuWapper } from "src/base-h5/components/menu";
