@@ -17,7 +17,7 @@
 </template>
 <script>
 import { api_activity } from "src/api/index.js"
-import common from "project/activity/src/pages/yazhou-pc/common";
+import common from "project/activity/src/mixins/common/common.js";
 import format_date_base from "project/activity/src/mixins/common/formartmixin.js";
 export default {
     name: 'BettingEveryday',

@@ -47,7 +47,7 @@ import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "s
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
@@ -217,6 +217,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 设置二级菜单 
       MenuData.set_current_lv_2_menu_i(obj_)
       handle_match_render_data()
+    } else {
+      useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: true, type: 'noMatch' });
     }
   }
 
@@ -255,7 +257,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     // 电竞
     if(MenuData.top_menu_title.mi == 2000){
-      MatchMeta.get_esports_match()
+      // 初始进入会调多次接口
+      // MatchMeta.get_esports_match()
     }
     // 收藏
     if(MenuData.top_menu_title.mi == 50000){
