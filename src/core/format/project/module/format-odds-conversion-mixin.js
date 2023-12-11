@@ -6,8 +6,10 @@
  * 使用  {{ compute_value_by_cur_odd_type(val}}
  * 实现 匹配不到 后 向下 取值
  */
+import lodash_ from "lodash"
 import { esports_csid } from "src/core/constant/common/module/csid.js"
 import UserCtr from 'src/core/user-config/user-ctr'
+import { MenuData } from "src/output"
  
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
@@ -19,6 +21,29 @@ const oddsTable = {
   US: '5',
   ID: '6',
 }
+
+// 独赢类玩法
+export const only_win = {
+  1:[1,13,17,25,32,101,105,106,111,119,126,129,231,310,311,326,329,333,345,346,353,370,384],
+  2:[37,43,44,48,54,60,66,153],
+  3:[242,283],
+  4:[1,259],
+  5:[153,162,168],
+  6:[17,37],
+  7:[153],
+  8:[153],
+  9:[153,162],
+  10:[153],
+  11:[1,17,259,],
+  12:[153,339],
+  13:[153,162],
+  14:[1,17,126],
+  15:[1,17,48,54,60,66],
+  16:[1,17,44,50,56,62,259],
+  1001:[20001,20010,20013,20025,20026,20030],
+  1004:[20043],
+}
+
 const bet_chat_room_type = ''
 /** 赔率映射表 */
 const odds_coversion_map = {}
@@ -52,7 +77,7 @@ const acc_sub = (num1, num2 = num1) => {
 //   odds_coversion_map = store.getState().odds_coversion_map || {}
 //   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
-export const compute_value_by_cur_odd_type = (val, hpid, arr=[], csid) => {
+export const compute_value_by_cur_odd_type = (val, hpid, arr=[], csid = 1) => {
   let cur_odd = UserCtr.odds.cur_odds;//当前赔率"EU" /HK
   /**
    * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
@@ -68,8 +93,9 @@ export const compute_value_by_cur_odd_type = (val, hpid, arr=[], csid) => {
   // 从欧盘转到港盘
   if ([2].includes(oddsTable[cur_odd]*1) && cur_odd == 'HK') {
     str = calc_odds(odds_val, csid);
-   
-    if(![1, 37, 153].includes(parseInt(hpid))){
+    // 独赢类玩法 没有欧赔 冠军也没有
+    let only_win_csid = lodash_.get(only_win,`${csid}`,[])
+    if(!only_win_csid.includes(parseInt(hpid)) || MenuData.is_kemp()){
       str = change_EU_HK(str);
       //聊天室跟单特殊处理
       if (arr && arr.includes(oddsTable[cur_odd]) && bet_chat_room_type == "HK") {
