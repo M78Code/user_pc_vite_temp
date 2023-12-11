@@ -116,7 +116,7 @@
   .settle-dialog {
     position: relative;
     overflow: hidden;   
-    color: var(--q-cathectic-color-1);
+    color: var(--q-cathectic-color-19);
     .content-m {
         padding-top: 0.2rem;
       }
