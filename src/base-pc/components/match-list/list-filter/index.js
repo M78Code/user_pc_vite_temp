@@ -309,8 +309,8 @@ function resolve_mew_menu_res_mi_400() {
     })
     // 后期删除 
     if(!IS_FOR_NEIBU_TEST){
-        let csid_ = [401,402]
-        mi_400_arr = mi_400_arr.filter( item=>csid_.includes(item.mi*1))
+        let csid_ = BaseData.left_menu_base_mi_arr;
+        mi_400_arr = mi_400_arr.filter( item=>csid_.includes(+item.mif))
     }
    
     mi_400_obj.value = mi_400_arr
