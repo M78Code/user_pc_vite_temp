@@ -42,6 +42,18 @@
       <div class="test-line" v-if="show_debug">
         {{current_match.mid}}
       </div>
+      <div class="virtual-video-play-team">
+              <div class="vsm-options" v-for="(item, index) in match_list_by_no" :key="index">
+                <div class="teams">
+                  <span>{{item.teams[0]}}</span>
+                  <span>0</span>
+                </div>
+                <div class="teams">
+                  <span>{{item.teams[1]}}</span>
+                  <span>0</span>
+                </div>
+              </div>
+          </div>
     </div>
     <div class="virtual-sports-card"></div>
     <template v-if="!no_virtual_match">
@@ -651,4 +663,34 @@ export default {
 .v-sports-main-list-style {
   padding-bottom: .48rem;
 }
+
+.virtual-video-play-team {
+    display: flex;
+    padding: .1rem;
+    padding-bottom: 0;
+    background: var(--q-gb-bd-c-1);
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    border-bottom-left-radius: .04rem;
+    border-bottom-right-radius: .04rem;
+    .vsm-options {
+      width: 1.76rem;
+      height: .4rem;
+      background: var(--q-gb-bg-c-18);
+      border-radius: .04rem;
+      margin-bottom: .08rem;
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      flex-direction: column;
+      font-size: .12rem;
+      padding: .02rem .12rem;
+      .teams {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+  }
 </style>
