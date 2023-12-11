@@ -29,7 +29,7 @@
                           <span v-if="[4,19,143,113].includes(item.playId*1)">{{item.matchType == 2? item.mark_score : ''}}</span>
                          </span>
                       </div>
-                      <div class="nonebox4-content-left-content-text-three" v-if="items.matchType != 3">{{item.matchName}}</div>
+                      <div class="nonebox4-content-left-content-text-three" v-if="item.matchType != 3">{{item.matchName}}</div>
                       <div class="nonebox4-content-left-content-text-three">{{item.matchInfo}}</div>
                     </div>
                     <div class="flex">
