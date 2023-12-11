@@ -11,7 +11,7 @@
           <!-- <SportIcon size="20"  :status="false" :sport_id="String(Number(match.csid ) + 100)" />
           <span>{{ match.csna }}</span> -->
           <SportIcon size="20"  :status="false" :sport_id="menu_sport.menu_sport_id || String(Number(match.csid ) + 100)" />
-          <span>{{[1902, 1912].includes(+MenuData.current_lv_2_menu_i) ? menu_sport.menu_sport_name : match.csna }}</span>
+          <span>{{[190, 191].includes(+MenuData.menu_mi.value) ? menu_sport.menu_sport_name || match.csna : match.csna }}</span>
         </div>
         <div class="select_time">
           <span @click.stop>
