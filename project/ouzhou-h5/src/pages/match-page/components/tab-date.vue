@@ -73,15 +73,20 @@ import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import STANDARD_KEY from "src/core/standard-key";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import { api_common } from "src/api";
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
 const dateOptionsRef = ref(null);
-const week = dateWeekMatchesFormat();
+// const week = dateWeekMatchesFormat();
+const week = ref([]);
 const tabList = computed(()=>{
-    return MenuData.menu_list.map((item)=>{return +item.mi}).includes(400)?store.tabOptions:store.tabOptions.filter(n=>{return n !=='Outrights'})
+    const menu_list = MenuData.menu_list.map((item)=>{return +item.mi});
+    const matches = store.tabOptions.filter(n=>{return n ==='Matches'});//电足电篮不展示冠军和联赛
+    const not_outrights = store.tabOptions.filter(n=>{return n !=='Outrights'});
+    return [190,191].includes(+store.current_menu_mi)?matches:menu_list.includes(400)?store.tabOptions:not_outrights;
 })
 const DateOptionsOffset = computed(() => {
     const domWidth = document.body.clientWidth || document.documentElement.clientWidth
@@ -97,6 +102,31 @@ const DateOptionsOffset = computed(() => {
     }
 })
 /**
+ * 获取对应日期
+ */
+const getDateList = async () =>{
+    const euid = MenuData.get_euid(`${MenuData.menu_mi.value}3`);
+    if(!euid){
+        return [{name:i18n_t('ouzhou.match.today'),val:'',type:0}];
+    };
+    // 3020212  118  娱乐
+    const params = {
+        euid:MenuData.get_euid(`${MenuData.menu_mi.value}3`),
+    };
+    const res = await api_common.post_date_menu(params);
+    if(res?.code == '200'){
+        const data = res?.data?.filter((n)=>{return !!n.field1}).map((item)=>{
+            return {
+                name: item.menuName,
+                val: item.field1,
+                type: 1
+            }
+        })||[];
+        return [...[{name:i18n_t('ouzhou.match.today'),val:'',type:0}],...data]
+    }
+    return [];
+};
+/**
  * tab点击
  * @param {*} name 
  */
@@ -107,7 +137,7 @@ const changeTab = (name, index) => {
     store.dateIndex = 0
     emit("changeTab", name);
     if (name === 'Matches') {
-        changeDatetab(week[0], 0)
+        changeDatetab(week.value[0], 0)
     }
 }
 /**
@@ -134,7 +164,7 @@ const changeDate = (index) => {
 const changeDatetab = (item, index) => {
     if (store.menu_time === item?.val) return
     store.tabModel = false;
-    const move_index = week.findIndex((t, _index) => _index === index);
+    const move_index = week.value.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     store.second_tab_index = index;
     // MenuData.set_date_time(item.val, item.type);
@@ -160,37 +190,38 @@ const changeDatetab = (item, index) => {
     
     emit("changeDate", item.val);
 };
-
 /**
  * 默认请求今日数据
- * @param {*} mi 
+ * @param {*} val 
  */
-const setDefaultData = (val) => {
+const setDefaultData = async (val,type) => {
     // 重置
-    // store.tabActive = 'Matches'
+    if(!type)store.tabActive = 'Matches';
+    week.value = await getDateList();
     MenuData.set_current_lv1_menu(2);
     // MenuData.set_menu_mi(val);
     store.current_menu_mi = val;
     //球种改变设置今日
     // MenuData.set_date_time(week[0].val);
-    store.menu_time = week[0].val
+    store.menu_time = week.value[0].val
     store.second_tab_index = 0;
     scrollDateRef.value && scrollDateRef.value.scrollTo(0, "start-force");
 }
 
-watch(() => store.areaList, () => {
+// watch(() => store.areaList, () => {
     // console.log(store.areaList.lenght)
     // if (store.areaList.lenght) {
     //     const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
     //     const offset = index < 0 ? 0 : index
     //     areaListChange(store.areaList[offset], offset)
     // }
-})
-onMounted(() => {
+// })
+onMounted(async () => {
     //当前激活球种id  如果本地有存储值就取本地存储的值
     const session_info = LocalStorage.get(menu_h5);
-    setDefaultData(session_info?.menu_mi || MenuData.menu_mi.value || '101');//默认足球
+    setDefaultData(session_info?.menu_mi || MenuData.menu_mi.value || '101',1);//默认足球
     store.curSelectedOption = store.selectOptions[0]
+    week.value = await getDateList();
     emitters.value = {
         emitters_1: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
     }

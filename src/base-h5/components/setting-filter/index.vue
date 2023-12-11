@@ -7,8 +7,8 @@
     <div class="setting-top setting-item">
       <div class="title">
         联赛筛选
-        <span>全部</span>
-        <!-- <span>(已选16)</span> -->
+        <span v-if="league_select_count > 0">(已选{{league_select_count}}) </span>
+        <span v-else>全部</span>
       </div>
       <div>
       </div>
@@ -59,15 +59,9 @@
 </template>
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES,SessionStorage } from "src/output/index.js";
-import {LOCAL_PROJECT_FILE_PREFIX} from "src/output/index.js";
-import {
-  ref,
- 
-} from "vue";
+import { useMittEmit, MITT_TYPES,SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import {ref,computed} from "vue";
 import Switch from "./components/switch.vue";
-
-import { UserCtr } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { default_theme_key } from "src/core/theme/";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
@@ -131,6 +125,12 @@ const closedHandle = () => {
     text: "footer-refresh"
   })
 };
+/**
+ * 选中的联赛数量
+ */
+const league_select_count = computed(() =>{
+  return UserCtr.league_select_list.length
+})
 /**
  * 打开联赛筛选框
  */
