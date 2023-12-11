@@ -24,7 +24,7 @@ declare namespace TYPES {
     mrmc: string,
     mess: number,
     mmp: string,
-    mms: number,
+    /** 视频数量 */ mms: number,
     mbmty: number,
     mhlu: Array<K.mhlu>,
     seid: string,
@@ -34,7 +34,7 @@ declare namespace TYPES {
     mat: string,
     mng: number,
     mststr: string,
-    mvs: number,
+    /** 动画数量 */ mvs: number,
     mearlys: number,
     mft: number,
   }
