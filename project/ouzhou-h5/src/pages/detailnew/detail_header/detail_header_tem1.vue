@@ -22,7 +22,7 @@
         </span>
        
         
-        <div class="match-detail-time-collect" v-if="show_collect" >
+        <div class="match-detail-time-collect" v-show="show_collect" >
           <!-- 显示视频按钮 -->
           <div v-if="status == 1 || status == 3" @click="handleChange('video')">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video"/>
@@ -122,6 +122,7 @@ import { LOCAL_PROJECT_FILE_PREFIX,format_time_zone_time, format_time_zone  } fr
 import matchScore from "./match-score/index.vue"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_tc } from "src/boot/i18n";
+import NavbarSubscribe from "src/base-h5/components/top-menu/top-menu-ouzhou-1/detail-top/nav-bar-subscribe";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -149,7 +150,7 @@ const set_serving_side = (item, side) => {
 // 网球当前比分
 const tennis_point = ref([0,0])
 
-const emits = defineEmits('handle-change')
+const emits = defineEmits('handleChange')
 
 const start_text = ref(-1)
 
@@ -190,6 +191,11 @@ const status = computed(() => {
   return 4;
  
 });
+
+watch(status, (value)=> {
+  // if (status == 4) {}
+  NavbarSubscribe.instance.change_status(true);
+})
 
 watch(() => props.get_match_detail, (value) => {
   if(lodash.isEmpty(value)) return
@@ -345,7 +351,8 @@ const get_sports_bg = (csid) => {
 };
 
 const handleChange = (label)  => {
-  emits('handle-change', label)
+  console.log(111);
+  emits('handleChange', label)
 }
 
 const set_basketball_score_icon_list = () => {

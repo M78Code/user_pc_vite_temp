@@ -169,8 +169,8 @@ const covert_mct = ({ mct, mmp, ms }) => {
             <CountingDownStart :match="ms_info" :index="index" :mgt_time="ms_info?.mgt"></CountingDownStart>
         </div>
         <!--倒计时或正计时-->
-        <div v-if="ms_info?.ms != 110 && show_counting_down(ms_info)">
-            <div class="process_name" v-if="!!computed_process_name" v-html="computed_process_name"></div>
+        <div v-if="ms_info?.ms != 110 && show_counting_down(ms_info)" class="ongoing">
+            <div class="process_name" v-if="!!computed_process_name">{{ computed_process_name }}</div>
             <!--足球csid:1 冰球csid:4 橄榄球csid:14 DotaCsid:101 累加 排球csid:9 倒计时-->
             <CountingDownSecond ref="counting-down-second"  :mmp="ms_info?.mmp"
                                 :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+ms_info?.csid)" :m_id="ms_info?.mid"
@@ -191,6 +191,13 @@ const covert_mct = ({ mct, mmp, ms }) => {
         position: relative !important;
         width: auto !important;
     }
+
+    .ongoing{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
     .process_name{
         font-size: 0.15rem;
     }

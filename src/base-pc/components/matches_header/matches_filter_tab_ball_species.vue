@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
+import { ref, onMounted, onBeforeUnmount, reactive, nextTick, watch } from "vue";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -105,10 +105,6 @@ const ref_data = reactive({
 // const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
 
 onMounted(() => {
-  if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
-    show_right_btn.value = true;
-  }
-
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
 
@@ -117,13 +113,20 @@ onMounted(() => {
     handle_click_menu_mi_1({mi:1011,mif:101})
     return
   }
-
   handle_click_menu_mi_1({mi: current_mi ,mif: current_mi+''.substring(0,3) })
-
   ref_data.emit_lsit = {
       emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, set_ref_base_menu).off,
   }
+})
 
+watch(() => mi_100_arr.value , () => {
+  nextTick(() => {
+    if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
+      show_right_btn.value = true;
+    } else {
+      show_right_btn.value = false;
+    }
+  })
 })
 
 // 菜单数量修改
@@ -138,25 +141,6 @@ const set_ref_base_menu = (list=[] ) => {
       return item
     })
   }
-}
-/**
- * 
- * @param {Number} item.mi
- * @description 过滤mi<300
- */
-
-const filter_min_mi_300 = (originalArray)=>{
-  return originalArray.filter(item => parseInt(item.mi) < 300&&item.ct>0);
-}
-
-/**
- * 
- * @param {Number} item.mi
- * @description 过滤ct=0的列表数据
- */
-
- const filter_ct_list = (originalArray)=>{
-  return originalArray.filter(item => item.ct>0);
 }
 /**
  * 
@@ -183,7 +167,7 @@ const on_scroll = (e) => {
   }else{
     show_left_btn.value = false;
   }
-  if(scrollLeft == (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
+  if((scrollLeft + 2) >= (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
     show_right_btn.value = false;
   }else{
     show_right_btn.value = true;
@@ -348,6 +332,7 @@ onBeforeUnmount(() => {
   align-items: center;
   position: absolute;
   top: 0;
+  z-index: 3;
   .shadow-box {
     width: 10px;
     height: 55px;

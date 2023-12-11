@@ -112,7 +112,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           break
 
         case 2000:
-          ref_data.scroll_data_list = BaseData.dianjing_sublist
+          // ref_data.scroll_data_list = BaseData.dianjing_sublist
           nextTick(()=>{
             dJdateTabMenu.value.set_active_val();
             dJdateTabMenu.value.changeTabMenu(BaseData.dianjing_sublist[0],0);
@@ -167,14 +167,34 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       } catch(_) {} 
     })
   })
-
-  // 早盘 串关
-  const set_scroll_early_single = (val = {}) => {
-    const menu_list = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
+  /**
+   * 电竞菜单处理
+   */
+  const set_scroll_early_dj = (val = {}) =>{
+    const menu_list = BaseData.dianjing_sublist;
     let early_single = []
     if(Object.keys(val).length){
       for(let item in val){
-        let mi = 100 + item*1 +''+ MenuData.current_lv_1_menu_i
+        let mi = 2000 + item*1 +'';
+        let obj = menu_list.find(page => page.mi == mi) || {}
+        if(obj.mi){
+          obj.ct = val[item]
+          early_single.push(obj)
+        }
+      }
+    }
+    const res_list = 
+    +MenuData.get_menu_type_special() == 2000
+    ref_data.scroll_data_list = BaseData.dianjing_sublist
+  }
+  // 早盘 串关
+  const set_scroll_early_single = (val = {}) => {
+    const is_lv_1 = [3,6].includes(+MenuData.current_lv_1_menu_i);
+    const menu_list = is_lv_1?MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i):BaseData.dianjing_sublist;
+    let early_single = []
+    if(Object.keys(val).length){
+      for(let item in val){
+        let mi = is_lv_1?100+ item*1 +''+ MenuData.current_lv_1_menu_i:2000+ item*1 +'';
         let obj = menu_list.find(page => page.mi == mi) || {}
         if(obj.mi){
           obj.ct = val[item]
