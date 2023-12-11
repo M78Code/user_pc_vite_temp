@@ -47,7 +47,7 @@
       </div>
       <div class="lucky_box content text-666">
         <div class="showGifts relative-position">
-          <load-data :state="isLoading" v-if="isLoading != 'data'"> </load-data>
+          <!-- <load-data :state="isLoading" v-if="isLoading != 'data'"> </load-data> -->
           <!-- 非活动结束状态 -->
           <p class="text-center text-666 drawTime" v-show="get_user.activityList[activityIndex].period != 3">
             每天 <span class="text-orange">12:00:00</span> 开抢
@@ -63,49 +63,23 @@
               alt=""
             />
           </p>
+
+
+
           <div class="gifts text-333">
-            <p @click.stop="changeBox(3, true)">
-              <img
-                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift1.png"
-                class=""
-                alt=""
-                :class="
-                  current_open_box.currentBox == 3
-                    ? 'animate-bounce-up'
-                    : 'opacity '
-                "
-              />
-              <span>钻石盲盒</span>
-            </p>
-            <p @click.stop="changeBox(2, true)">
-              <img
-                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift2.png"
-                class=""
-                alt=""
-                :class="
-                  current_open_box.currentBox == 2
-                    ? 'animate-bounce-up'
-                    : 'opacity '
-                "
-              />
-              <span>黄金盲盒</span>
-            </p>
-            <p @click.stop="changeBox(1, true)">
-              <img
-                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift3.png"
-                class=""
-                alt=""
-                :class="
-                  current_open_box.currentBox == 1
-                    ? 'animate-bounce-up'
-                    : 'opacity'
-                "
-              />
-              <span>白银盲盒</span>
-            </p>
+
+            <div v-for="(item, i ) in lihe_list" :key="i+'i'" @click="lihe_list_click(item, i, 'frequent_clicks')">
+            <img :class="{'animate-bounce-up': lihe_index == i, ' opacity_': lihe_index != i}" :src="item.url" alt="" style="z-index:unset;">
+            <span>{{ item.name }}</span>
           </div>
+
+        
+          </div>
+
+
+
           <!-- 活动未开始 -->
-          <div v-if="activityObj.period == 1">
+          <div v-if="get_user.activityList[activityIndex].period == 1">
             <p class="timer text-center text-666">
               <span class="text-orange">{{ day || '00' }} </span>天&nbsp;
               <span class="text-orange">{{ hr || '00' }} </span>时&nbsp;
@@ -116,18 +90,10 @@
             <p class="timer_btn text-white text-center">敬请期待</p>
           </div>
           <!-- 活动已开始并且当前盲盒数量为0 -->
-          <div v-if="activityObj.period == 2 && current_open_box.boxNum == 0">
-            <p class="timer_title text-center">
-              距离下一次开盒还有
-            </p>
-            <p class="timer text-center">
-              <span class="text-orange">{{ nextOpenTime.h || '00' }} </span>小时&nbsp;
-              <span class="text-orange">{{ nextOpenTime.m || '00' }} </span>分&nbsp;
-              <span class="text-orange">{{ nextOpenTime.s || '00' }} </span>秒
-            </p>
-          </div>
+
+       
           <!-- 活动已开始 -->
-          <div class="active_start" v-if="activityObj.period == 2">
+          <div class="active_start" v-if="get_user.activityList[activityIndex].period == 2">
             <p class="text-center title">
               今日剩余<span class="text-orange">{{
                 current_open_box.boxNum
@@ -185,8 +151,10 @@
               </p>
             </div>
           </div>
+
+
           <!-- 活动已结束 -->
-          <div class="active_end" v-if="activityObj.period == 3">
+          <div class="active_end" v-if="get_user.activityList[activityIndex].period == 3">
             <p class="text-orange text-center">活动已结束</p>
             <p
               class="bettingHistory text-666 text-center"
@@ -197,13 +165,13 @@
           </div>
           <p
             class="text-center title bonus_list_title text-white"
-            v-if="top50Info.data.length > 0 && activityObj.period > 1"
+            v-if="lucky_top_50.length > 0 && get_user.activityList[activityIndex].period > 1"
           >
             幸运盲盒拆盒榜
           </p>
           <div
             class="bonus_list table text-center table_top50"
-            v-if="top50Info.data.length > 0 && activityObj.period > 1"
+            v-if="lucky_top_50.length > 0 && get_user.activityList[activityIndex].period > 1"
           >
             <div class="text-333">
               <span>{{ top50.account }}</span>
@@ -211,7 +179,7 @@
               <span>{{ top50.time }}</span>
             </div>
             <div class="scroll_up" ref="scrollUp">
-              <div v-for="(item, i) in top50Info.data" :key="i">
+              <div v-for="(item, i) in lucky_top_50" :key="i">
                 <span>{{ item ? item.userName : "-" }}</span>
                 <span v-if="item && item.remark">{{ item.remark }}</span>
                 <span v-if="item && !item.remark">{{
@@ -223,26 +191,15 @@
           </div>
           <div
             class="pagination_wrap pagination_top50"
-            v-if="top50Info.data.length > 0 && activityObj.period > 1"
+            v-if="lucky_top_50.data.length > 0 && get_user.activityList[activityIndex].period > 1"
           >
             <div class="pagination_with_input">
-              <q-pagination
-                class="pagination pager"
-                v-model="top50Info.currentPage"
-                :max="top50Info.maxPage"
-                direction-links
-                boundary-numbers
-                :max-pages="10"
-                @input="top50NextPage"
-              ></q-pagination>
-              <p class="goto_page text-666">
-                &nbsp;&nbsp;跳转至&nbsp;&nbsp;<input
-                  type="number"
-                  v-model="top50Info.top50goToPage"
-                  :max="top50Info.maxPage"
-                  @keyup="top50NextPage($event)"
-                />&nbsp;&nbsp;页
-              </p>
+              <DataPager
+              class="record-data-pager"
+              :total="top50_page_info.pages"
+              :pageSize = 5
+              @change="top50_page_changed"
+            />
             </div>
           </div>
           <!-- 盲盒奖品展示列表 -->
@@ -254,26 +211,21 @@
               <span>白银盲盒</span>
             </p>
             <div class="bonus_list_body">
-              <p class="text-666">
-                <span v-for="(item, i) in luckyBonus[0]" :key="i">{{
-                  item
-                }}</span>
-              </p>
-              <p class="text-666">
-                <span v-for="(item, i) in luckyBonus[1]" :key="i">{{
-                  item
-                }}</span>
-              </p>
-              <p class="text-666">
-                <span v-for="(item, i) in luckyBonus[2]" :key="i">{{
-                  item
-                }}</span>
-              </p>
+              <div >
+                <span v-for="(v,i) in prizes[1]" :key="i+'pid'">{{ v.name }}</span>
+              </div>
+              <div>
+                <span v-for="(v,i) in prizes[2]" :key="i+'rid'">{{ v.name }}</span>
+              </div>
+              <div>
+                <span v-for="(v,i) in prizes[3]" :key="i+'zid'">{{ v.name }}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- 活动规则 -->
     <div class="activity_rules text-gray">
       <div class="content_title">
         活动规则
@@ -288,7 +240,7 @@
         盲盒奖励实时派发，仅需在本场馆完成1倍流水即可出款；
       </p>
       <p>
-        本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<span color="#ff7000">1.5</font>或香港盘<span color="#ff7000">0.5</font>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；
+        本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<span color="#ff7000">1.5</span>或香港盘<span color="#ff7000">0.5</span>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；
       </p>
       <p>
         每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，在活动期间仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回彩金及所产生利润的权利；
@@ -297,124 +249,70 @@
         为避免文字理解差异，本场馆保留本活动最终解释权。
       </p>
     </div>
-    <!-- 用户开盲盒的历史记录 -->
-    <q-dialog v-model="showHistory">
-      <q-layout view="Lhh lpR fff" container class="history">
-        <img
-          class="close"
-          src="activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
-          alt=""
-          @click="closeHistoryList"
-          width="30px"
-        />
-        <div class="betting_history">
-          <div class="content_title text-center text-333">
+     <!-- 历史记录弹框 -->
+     <q-dialog v-model="history_alert">
+      <div class="history-dialog" :class="{'isIphoneX':isIphoneX}" @click.self="history_alert = false">
+        <div class="history-record">
+          <div class="choice-title">
             历史记录
           </div>
-          <div class="table table_history">
-            <div class="text-333 text-center">
-              <span>盲盒类型</span>
-              <span>奖券消耗数</span>
-              <span>奖励</span>
-              <span>拆盒时间</span>
-            </div>
-            <load-data :state="hisToryListDataState">
-              <div
-              class="text-666 text-center"
-              v-for="(item, index) in historyList"
-              :key="index"
-              >
-                <span>{{
-                  item.boxType == 1
-                    ? "白银盲盒"
-                    : item.boxType == 2
-                    ? "黄金盲盒"
-                    : "钻石盲盒"
-                }}</span>
-                <span>{{ item.useToken || "-" }}</span>
-                <span
-                  v-if="item && item.remark"
-                  :style="{
-                    'line-height': '51px'
-                  }"
-                  >{{ item.remark }}</span
-                >
-                <span v-if="item && !item.remark">{{
-                  item ? item.awardStr : "-"
-                }}</span>
-                <span>{{ item.createTime || "-" }}</span>
-              </div>
-            </load-data>
-          </div>
-          <div class="pagination_wrap" v-if="historyList.length > 0">
-            <div class="pagination_with_input">
-              <q-pagination
-                class="pagination pager"
-                v-model="historyParams.cpn"
-                :max="hisTotal"
-                direction-links
-                boundary-numbers
-                :max-pages="10"
-                @input="getBettingHistory"
-              ></q-pagination>
-              <p class="goto_page text-666">
-                &nbsp;&nbsp;跳转至&nbsp;&nbsp;<input
-                  type="number"
-                  v-model="goToPage"
-                  :max="hisTotal"
-                  @keyup="goToHistoryPage($event)"
-                />&nbsp;&nbsp;页
+          <div class="history-content">
+            <div class="blind-table Member-Ranking">
+              <p class="text-white"><span>盲盒类型</span><span>奖券消耗数</span><span>奖励</span><span>拆盒时间</span></p>
+              <p v-for="(v, i) in history_records" :key="i+'vip'">
+                <span>{{ v.boxType==1 ? '白银盲盒' : v.boxType==2 ? '黄金盲盒 ' : v.boxType==3 ? '钻石盲盒' : '---' }}</span>
+                <span>{{ v.useToken }}</span>
+                <span :class="{'ellipsis-2-lines': v.remark}">
+                  <div>{{ v.remark || v.awardStr }}</div>
+                </span>
+                <span>{{new Date(+(v.createTime)).Format('yyyy-MM-dd hh:mm')}}</span>
               </p>
             </div>
           </div>
+          <DataPager
+            class="record-data-pager"
+            :total="result_page_info.pages"
+            :pageSize = 7
+            @change="data_page_changed"
+          />
+          <img class="close"  @click="history_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png"/>
         </div>
-      </q-layout>
+      </div>
     </q-dialog>
-    <!-- 拆盲盒提示弹窗 -->
-    <q-dialog v-model="getLottery">
-      <q-layout
-        view="Lhh lpR fff"
-        container
-        class="lottery"
-        :style="{ background: `url(${current_open_box.box})` }"
-      >
-        <img
-          class="close"
-          src="activity/yazhou-pc/activity_imgs/imgs/lucky/close.png"
-          alt=""
-          @click="getLottery = false"
-          width="30px"
-        />
-        <div class="content">
-          <p class="money text-center">
-            <span class="text-red">{{ current_open_box.money}}</span
-            ><span class="text-666">元</span>
-          </p>
-          <p v-if="getLotterySuc" class="title text-666 text-center">
-            恭喜获得
-          </p>
-          <p v-if="!getLotterySuc" class="title text-orange text-center">
-            领取失败，请重新领取奖券
-          </p>
-          <p
-            class="get_once_more text-center text-white"
-            @click="getLottery = false"
-          >
-            我知道了
-          </p>
+    <!-- 点击获奖的弹框 -->
+    <q-dialog v-model="gift_box_alert">
+      <div class="gift_box_dialog">
+        <img class="gift-img" :src="blind_box_url" alt="">
+        <div class="money">
+          <span>{{ amount_of_winning }}</span>
+          元
         </div>
-      </q-layout>
+        <span>恭喜获得</span>
+        <div class="gift-btn" v-if="false">
+          <p>再拆1次</p>
+          <div class="flex align_items justify-center">
+            <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
+            <span>x {{lihe_name.Number_tokens_consumed}}</span>
+          </div>
+        </div>
+        <div class="get-more-tokens" v-else @click="gift_box_alert = false">
+          我知道了
+        </div>
+        <img class="close-img" @click="gift_box_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png" alt="">
+      </div>
     </q-dialog>
+
+
     <Alert :is_show="showAlert" :text="bettingMsg" :isMaintaining="isMaintaining" />
-    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/silver_box.png" alt="" style="display: none">
-    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/gold_box.png" alt="" style="display: none">
-    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/diamond_box.png" alt="" style="display: none">
+    <img v-if="get_user.activityList[activityIndex].period == 2" src="activity/yazhou-pc/activity_imgs/imgs/silver_box.png" alt="" style="display: none">
+    <img v-if="get_user.activityList[activityIndex].period == 2" src="activity/yazhou-pc/activity_imgs/imgs/gold_box.png" alt="" style="display: none">
+    <img v-if="get_user.activityList[activityIndex].period == 2" src="activity/yazhou-pc/activity_imgs/imgs/diamond_box.png" alt="" style="display: none">
     <Toast v-if="showToast" :text="$t('common.limited')" />
   </div>
 </template>
 <script>
-import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
-import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
+import DataPager from "project/activity/src/components/data_pager/data_pager-pc.vue";
+import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-pc.vue";
 import lucky_blind_box_mixin  from "project/activity/src/mixins/lucky_blind_box/lucky_blind_box.js";  
 export default {
 
