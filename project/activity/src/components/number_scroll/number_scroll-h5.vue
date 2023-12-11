@@ -32,7 +32,7 @@ export default {
     // 老虎机配置
     config: {
       type: Object,
-      default(){
+      default:()=>{
         return {
           // 老虎机列数
           col:4,
@@ -104,7 +104,7 @@ export default {
     this.item_total_height = this.config.item_height * this.config.row
     this.set_position_obj('init')
   },
-  beforeDestroy(){
+  beforeUnmount(){
     clearInterval(this.timer_id)
     this.timer_id = null
   },

@@ -91,7 +91,8 @@ const props = defineProps({
 const is_mounted = ref(true);
 // 赔率升降 up:上升 down:下降
 const odds_lift = ref("");
-const match = inject('match');
+//添加默认值 防警告
+const match = inject('match', null);
 
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {

@@ -3,26 +3,34 @@
  * @Date: 2021-08-27 14:35:35
  * @Description: 活动公用方法
  */
+import _ from "lodash"
 import {
   UserCtr,
   LOCAL_COMMON_FILE_PREFIX,
   LOCAL_PROJECT_FILE_PREFIX,
 } from "project_path/src/core/index.js";
-
+ 
 export default {
   data() {
     return {
+      _,
       count_down: "",
       LOCAL_COMMON_FILE_PREFIX,
       LOCAL_PROJECT_FILE_PREFIX,
     };
   },
+ 
   computed: {
     get_user() {
       return UserCtr.get_user();
     },
+    get_theme() {
+      return UserCtr.theme || "";
+    },
   },
   methods: {
+
+
     // 比较当前时间是否在指定时间段内 1 未开始  2 进行中   3 已结束
     isDuringDate(
       beginDateStr = "2021/01/01 00:00:00",

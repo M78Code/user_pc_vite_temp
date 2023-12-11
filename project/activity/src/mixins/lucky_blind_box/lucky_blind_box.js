@@ -288,7 +288,7 @@ export default {
           this.lottery_loading = false
           if (err.type == "openbox_cencel") {
             this.$toast(err.message, 1500)
-          }else if(err.type == 'activity_page_destroyed'){
+          }else if(err.type == 'activity_page_unmounted'){
           } else {
             this.$toast("网络异常，请重新抽取", 1500)
           }
@@ -359,7 +359,7 @@ export default {
       return {y, m, d, h, mm, s}
     }
   },
-  destroyed() {
+  unmounted() {
     clearInterval(this.up_date_Info);
     this.up_date_Info = null;
 

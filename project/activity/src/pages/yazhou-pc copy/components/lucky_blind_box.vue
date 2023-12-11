@@ -1168,7 +1168,7 @@ export default {
     }
 
   },
-  destroyed() {
+  unmounted() {
     clearInterval(this.nextOpenTimer);
     clearTimeout(this.countTimer);
     if (this.countTimer1) {

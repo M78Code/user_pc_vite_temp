@@ -36,11 +36,11 @@ export default {
      
     },
     noNeedCss: {
-      type: false,
+      type: Boolean,
     
     },
     timer: {
-      type: false,
+      type: Boolean,
   
     },
   },
@@ -148,7 +148,7 @@ export default {
       return { y, m, d, h, mm, s };
     },
   },
-  destroyed() {
+  unmounted() {
     clearInterval(this.time1_);
     this.time1_ = null;
 
