@@ -62,7 +62,7 @@ export default {
   mounted(){
     this.width = this.$refs.slider.clientWidth
   },
-  beforeDestroy(){
+  beforeUnmount(){
     // 鼠标事件取消监听
     document.removeEventListener("mousemove", this.mousemove);
     document.removeEventListener("mouseup", this.mouseup);

@@ -167,69 +167,11 @@ export default async (app) => {//app, router, store,
     };
   }
 
-  /**
-   * @description: lodash debounce 防抖函数功能
-   * @param {Function} func 要防抖动的函数
-   * @param {number} wait 需要延迟的毫秒数
-   * @param {Object}  options 选项对象
-   *        options.leading=false {boolean} 指定在延迟开始前调用
-   *        options.maxWait {number} 设置 func 允许被延迟的最大值
-   *        options.trailing=true {boolean} 指定在延迟结束后调用
-   */
-  window.debounce=(func,wait,options)=>{
-    let res = null;
-    if(func && (typeof(func)=='function'))
-    {
-      res = _.debounce(func,wait,options);
-    } else {
-      res = func
-    }
-    return res;
-  }
-
-  /**
-   * @description: lodash throttle 节流函数功能
-   * @param {Function} func 要防抖动的函数
-   * @param {number} wait 需要延迟的毫秒数
-   * @param {Object}  options 选项对象
-   *        options.leading=false {boolean} 指定在延迟开始前调用
-   *        options.trailing=true {boolean} 指定在延迟结束后调用
-   */
-  window.throttle=(func,wait,options)=>{
-    let res = null;
-    if(func && (typeof(func)=='function'))
-    {
-      res = _.throttle(func,wait,options);
-    } else {
-      res = func
-    }
-    return res;
-  }
-  // lodash debounce防抖函数和throttle节流函数功能cancel函数调用
-  window.debounce_throttle_cancel=(fun)=>{
-    if(fun && fun.cancel && (typeof(fun.cancel)=='function'))
-    {
-      fun.cancel();
-    }
-  }
-
-  /**
-   * @description: 获取图片完整网络路径
-   * @param {String} path 图片路径
-   * @return {String} csid 球种类型
-   */
-  window.get_file_path = ()=>''
 
 
-  // 获取赛事阶段国际化字符串
-  // @param: mmp-比赛阶段
-  // @param: sport_type-球种
-  window.mmpName = function (sportType, mmp) {
-    let name = `mmp.${sportType}.${mmp}`
-    let ret = i18n_t(`mmp.${sportType}.${mmp}`);
-    return name == ret ? '' : ret;
-  }
 
+ 
+ 
   /** 组件  **************************/
 
   // 可变色和大小的 icon

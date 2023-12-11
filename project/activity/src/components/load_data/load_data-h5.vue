@@ -214,7 +214,7 @@ this.emitters_off=emitters_off
     },
  
   },
-  destroyed () {
+  unmounted () {
  
 //移除相应监听事件 //视图销毁钩子函数内执行
 if(this.emitters_off){this.emitters_off()} 
