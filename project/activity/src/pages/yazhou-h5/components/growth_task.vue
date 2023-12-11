@@ -205,7 +205,7 @@
           <img
             class="close"
             @click="history_alert = false"
-            src="/activity/yazhou-h5/activity/lucky/close.png"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`"
           />
         </div>
       </div>

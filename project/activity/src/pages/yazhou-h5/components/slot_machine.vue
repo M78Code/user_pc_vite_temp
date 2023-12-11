@@ -55,9 +55,9 @@
           <span class="dot dot_run_1"></span>
         </div>
         <!-- 老虎机主体图片 -->
-        <img class="machine"  src="/activity/yazhou-h5/activity/slot_machine/machine_diamond.png" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 3 ? 2: 1}" alt="">
-        <img class="machine"  src="/activity/yazhou-h5/activity/slot_machine/machine_gold.png" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 2 ? 2: 1}" alt="">
-        <img class="machine"  src="/activity/yazhou-h5/activity/slot_machine/machine_silver.png" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 1 ? 2: 1}" alt="">
+        <img class="machine"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/machine_diamond.png`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 3 ? 2: 1}" alt="">
+        <img class="machine"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/machine_gold.png`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 2 ? 2: 1}" alt="">
+        <img class="machine"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/machine_silver.png`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 1 ? 2: 1}" alt="">
         <!-- 今日抽奖剩余次数 -->
         <p class="draws_number">
           <span v-if="_.get(currentSlotData[currentSlotIndex], 'gameTimes') > -1">今日抽奖剩余：{{_.get(currentSlotData[currentSlotIndex], 'gameTimes')}}次 | 0时重置</span>
@@ -85,12 +85,12 @@
           <!-- 重置 -->
           <p class="resetBtn" @click="resetSlot">
             <template>
-              <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  src="/activity/yazhou-h5/activity/slot_machine/reset_btn_top.png" alt="">
-              <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  src="/activity/yazhou-h5/activity/slot_machine/reset_btn_top_gray.png" alt="">
+              <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/reset_btn_top.png`" alt="">
+              <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/reset_btn_top_gray.png`" alt="">
             </template>
             <template>
-              <img class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')"  src="/activity/yazhou-h5/activity/slot_machine/reset_btn_btm.png" alt="">
-              <img class="btm" v-else  src="/activity/yazhou-h5/activity/slot_machine/reset_btn_btm_gray.png" alt="">
+              <img class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/reset_btn_btm.png`" alt="">
+              <img class="btm" v-else  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/reset_btn_btm_gray.png`" alt="">
             </template>
               <span>{{_.get(currentSlotData[currentSlotIndex], `resetTicketNumber`)}}张{{_.get(currentSlotData[currentSlotIndex], `resetTicketName`)}}</span>
             </p>
@@ -98,19 +98,19 @@
           <p v-if="!_.get(currentSlotData[currentSlotIndex], 'beforeGameResult') || !is_init" class="startScreen" @click="start('start')">
             <template>
               <!-- 置灰按钮 -->
-              <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top"  src="/activity/yazhou-h5/activity/slot_machine/start_btn_top_gray.png" alt="">
-              <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  src="/activity/yazhou-h5/activity/slot_machine/start_btn_top.png" alt="">
+              <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_top_gray.png`" alt="">
+              <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_top.png`" alt="">
             </template>
             <template>
-              <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0"  src="/activity/yazhou-h5/activity/slot_machine/start_btn_btm_gray.png" alt="">
-              <img class="btm" v-else  src="/activity/yazhou-h5/activity/slot_machine/start_btn_btm.png" alt="">
+              <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_btm_gray.png`" alt="">
+              <img class="btm" v-else  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_btm.png`" alt="">
             </template>
             <span>{{_.get(currentSlotData[currentSlotIndex], 'lotteryNum')}}张{{_.get(currentSlotData[currentSlotIndex], 'ticketName')}}</span>
           </p>
           <!-- 确认领取 -->
           <p v-else class="confirm" @click="start('confirm')">
-            <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  src="/activity/yazhou-h5/activity/slot_machine/confirm_btn_top.png" alt="">
-            <img class="btm"  src="/activity/yazhou-h5/activity/slot_machine/start_btn_btm.png" alt="">
+            <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/confirm_btn_top.png`" alt="">
+            <img class="btm"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_btm.png`" alt="">
           </p>
         </div>
         <!-- 摇杆 -->
@@ -118,8 +118,8 @@
           <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1}/0${rocker_anim_index}.png`)" alt="">
         </div>
         <!-- 老虎机周围的装饰 -->
-        <img class="goldmoney"  src="/activity/yazhou-h5/activity/slot_machine/goldmoney.png" alt="">
-        <img class="footbaler"  src="/activity/yazhou-h5/activity/slot_machine/footbaler.png" alt="">
+        <img class="goldmoney"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/goldmoney.png`" alt="">
+        <img class="footbaler"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/footbaler.png`" alt="">
         <!-- 彩灯 -->
         <span v-for="(item, index) in new Array(26)" :key="index" class="normal_light"
         :class="[`normal_light_${index + 1}`,
@@ -280,7 +280,7 @@
               />
             </div>
           </div>
-          <img class="close"  @click="gameHistory = false"  src="/activity/yazhou-h5/activity/lucky/close.png"/>
+          <img class="close"  @click="gameHistory = false"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`"/>
         </div>
       </div>
     </q-dialog>
@@ -304,12 +304,12 @@
       </div>
     </div>
     <!-- 背景音循环 -->
-    <audio  src="/activity/yazhou-h5/activity/slot_machine/media/slot_bg_loop.mp3" ref="slot_bg_loop" autoplay loop />
+    <audio  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/slot_bg_loop.mp3`" ref="slot_bg_loop" autoplay loop />
     <!-- 开始滚动按钮按下 -->
-    <audio  src="/activity/yazhou-h5/activity/slot_machine/media/start_btn.mp3" ref="audioStart"></audio>
+    <audio  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/start_btn.mp3`" ref="audioStart"></audio>
     <!-- 摇杆 -->
-    <audio  src="/activity/yazhou-h5/activity/slot_machine/media/after_start_btn.mp3" ref="afterAudioStart"></audio>
-    <audio  src="/activity/yazhou-h5/activity/slot_machine/media/showCard.mp3" ref="showCard"></audio>
+    <audio  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/after_start_btn.mp3`" ref="afterAudioStart"></audio>
+    <audio  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/showCard.mp3`" ref="showCard"></audio>
   </div>
 </template>
 

@@ -212,7 +212,7 @@
     <!-- 历史记录弹框 -->
     <q-dialog v-model="history_alert">
       <q-layout view="Lhh lpR fff" container class="receiveHistory">
-        <img class="close" src="/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png" alt="" @click.self="history_alert = false" width="30px">
+        <img class="close" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png`" alt="" @click.self="history_alert = false" width="30px">
         <div class="betting_history">
           <div class="content_title text-center text-333">
             领取记录

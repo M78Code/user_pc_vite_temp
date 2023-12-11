@@ -36,7 +36,7 @@
         <!-- 关闭按钮 -->
         <img
           @click="$emit('close_compose')"
-          src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/close.svg"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/close.svg`"
           alt=""
           class="close"
           width="38"
@@ -47,7 +47,7 @@
           <!-- 合成材料名称和数量 -->
           <p>
             <img
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/normal_voucher.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/normal_voucher.png`"
               alt=""
               width="58"
             />
@@ -57,7 +57,7 @@
           <!-- 幸运奖券 -->
           <p>
             <img
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/lucky_voucher.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/lucky_voucher.png`"
               alt=""
               width="56"
             />
@@ -235,7 +235,7 @@
             <div class="tips">
               <p>
                 <img
-                  src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg`"
                   alt=""
                   width="18"
                 />
@@ -245,7 +245,7 @@
               </p>
               <p>
                 <img
-                  src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg`"
                   alt=""
                   width="18"
                 />
@@ -277,7 +277,7 @@
         <div class="upgrade" v-else-if="step == 'upgradeSucc'">
           <span class="head-odds">{{ currentSynthConfig.syntheticRate }}%</span>
           <img
-            src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/top.svg"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/top.svg`"
             alt=""
           />
           <span class="finish">提升完成！</span>
@@ -312,7 +312,7 @@
           </p>
           <p>
             <img
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg`"
               alt=""
               width="18"
             />
@@ -340,12 +340,12 @@
     />
     <!-- 选中卡片 -->
     <audio
-      src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/selectedCard.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/selectedCard.mp3`"
       ref="selectedCard"
     ></audio>
     <!-- 卡片旋转展示 -->
     <audio
-      src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3`"
       ref="showCard"
     ></audio>
   </q-scroll-area>

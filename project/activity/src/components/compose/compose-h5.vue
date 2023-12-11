@@ -9,7 +9,7 @@
     <!-- 关闭按钮 -->
     <img
       @click="$emit('close_compose')"
-      src="/activity/yazhou-h5/activity/slot_machine/close_top.png"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/close_top.png`"
       alt=""
       class="close"
       width="38"
@@ -27,7 +27,7 @@
           <!-- 合成材料名称和数量 -->
           <p>
             <img
-              src="/activity/yazhou-h5/activity/slot_machine/normal_voucher.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/normal_voucher.png`"
               alt=""
             />
             {{ currentSynthConfig.baseTicketName }}:
@@ -36,7 +36,7 @@
           <!-- 幸运奖券 -->
           <p>
             <img
-              src="/activity/yazhou-h5/activity/slot_machine/lucky_voucher.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/lucky_voucher.png`"
               alt=""
             />
             幸运奖券: {{ luckyTicket }}
@@ -207,7 +207,7 @@
             <div class="tips">
               <p>
                 <img
-                  src="/activity/yazhou-h5/activity/slot_machine/msg.svg"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/msg.svg`"
                   alt=""
                 />
                 每消耗{{ currentSynthConfig.baseTicketNum }}张{{
@@ -216,7 +216,7 @@
               </p>
               <p>
                 <img
-                  src="/activity/yazhou-h5/activity/slot_machine/msg.svg"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/msg.svg`"
                   alt=""
                 />
                 每消耗{{
@@ -246,7 +246,7 @@
         <!-- 合成率提升完成 -->
         <div class="upgrade" v-else-if="step == 'upgradeSucc'">
           <span>{{ currentSynthConfig.syntheticRate }}%</span>
-          <img src="/activity/yazhou-h5/activity/slot_machine/top.svg" alt="" />
+          <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/top.svg`" alt="" />
           <span>提升完成！</span>合成成功率已提升到了{{
             currentSynthConfig.syntheticRate
           }}%
@@ -277,7 +277,7 @@
           </p>
           <p class="tipsMsg">
             <img
-              src="/activity/yazhou-h5/activity/slot_machine/msg.svg"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/msg.svg`"
               alt=""
             />
             每{{ currentSynthConfig.baseTicketNum }}张{{
@@ -293,12 +293,12 @@
     </div>
     <!-- 选中卡片 -->
     <audio
-      src="/activity/yazhou-h5/activity/slot_machine/media/selectedCard.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/selectedCard.mp3`"
       ref="selectedCard"
     ></audio>
     <!-- 卡片旋转展示 -->
     <audio
-      src="/activity/yazhou-h5/activity/slot_machine/media/showCard.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/showCard.mp3`"
       ref="showCard"
     ></audio>
   </div>
