@@ -13,7 +13,7 @@
                         <span class="select-text">{{
                             i18n_t(store.curSelectedOption.label)   
                         }}</span>
-                        <span class="down_arrow"></span>
+                        <span :class="['down_arrow', store.tabModel && 'down_arrow_active']"></span>
                     </div>
                     <template v-if="store.tabModel && store.tabActive == 'League'">
                         <ul class="option-list" :style="DateOptionsOffset">
@@ -301,6 +301,10 @@ const areaListChange = (item) => {
 
             .down_arrow {
                 position: relative;
+            }
+
+            .down_arrow_active {
+                transform: rotate(180deg);
             }
 
             .down_arrow::after {
