@@ -22,7 +22,7 @@
 <script>
 export default {
   props: {
-    cur_select_card:  ''  ,
+    cur_select_card: Number | String,
     is_show_card: Boolean,
     lotteryNum: {
       type: Object,

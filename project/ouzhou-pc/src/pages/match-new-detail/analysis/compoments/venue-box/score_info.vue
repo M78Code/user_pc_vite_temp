@@ -55,6 +55,7 @@
                     :rows="1"
                   />
              </div>
+                  <div class="score-right-icon"><right-icon iconNormalColor="#8A8986" iconActiveColor="#8A8986" /></div>
                   <img
                     :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
                     alt=""
@@ -71,6 +72,7 @@
                   {{ col.tooltip }}
                 </q-tooltip>
               </div>
+
             </div>
           </q-th>
         </q-tr>
@@ -190,6 +192,7 @@ import {
 } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 import { handle_course_data } from "src/core/utils/matches_list.js";
+import rightIcon from "./right_icon.vue";
 // import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
@@ -681,4 +684,28 @@ watch(
 //  //color: var(--qq--yb-text-color1) !important;
 //  color: rgb(255, 112, 0) !important;
 //}
+
+.score-right-icon :deep(.right-icon) {
+  position: static;
+  width: auto;
+  .icon {
+    position: static;
+  }
+  .tip-content {
+    right: 0;
+    width: 100%;
+    .content-wrap {
+      z-index: 999;
+    }
+    .content {
+      white-space: normal;
+      line-height: normal;
+    }
+    .yb-icon-triangle {
+      right: 0;
+      display: none;
+    }
+  }
+}
+
 </style>

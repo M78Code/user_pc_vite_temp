@@ -1,5 +1,5 @@
 import * as MITT_TYPES_PROJECT from "base_path/core/mitt/mitt-keys.js";
-import * as MITT_TYPES_DEFAULT from "src/core/mitt/mitt-keys";
+import * as MITT_TYPES_DEFAULT from "base_path/core/mitt/mitt-keys";
 
 declare module 'src/core/mitt/index.js' {
   type MittType = (typeof MITT_TYPES_DEFAULT & typeof MITT_TYPES_PROJECT);
