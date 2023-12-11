@@ -128,7 +128,7 @@ export default {
 .c-slider {
   width: 674px;
   height: 30px;
-  background: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slider_bg.png")
+  background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slider_bg.png")
     center center;
   background-size: 117% auto;
   filter: drop-shadow(0px 0px 2px #d8d8d8);
@@ -141,7 +141,7 @@ export default {
   .slider-btn {
     width: 60px;
     height: 60px;
-    background: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slider_btn.png")
+    background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slider_btn.png")
       center center no-repeat;
     background-size: 200%;
     border-radius: 50%;

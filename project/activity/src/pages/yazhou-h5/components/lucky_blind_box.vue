@@ -2,15 +2,15 @@
   <div class="lucky_blind_box">
     <!-- 图片预加载   -->
     <div style="display: none">
-      <img  src="activity/yazhou-h5/activity/lucky/gift1.png" alt="">
-      <img  src="activity/yazhou-h5/activity/lucky/gift2.png" alt="">
-      <img  src="activity/yazhou-h5/activity/lucky/gift3.png" alt="">
+      <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/gift1.png`" alt="">
+      <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/gift2.png`" alt="">
+      <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/gift3.png`" alt="">
     </div>
     <!-- 抽奖按钮点击时loading   -->
     <div v-show="lottery_loading" class="fullscreen">
       <div class="fullscreen_loading">
         <span>抽盒中......</span>
-        <img alt class="loading-static-animation" src="public/yazhou-h5/image/bw3/svg/loading-more.svg"/>
+        <img alt class="loading-static-animation"   :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/image/bw3/svg/loading-more.sv`" />
       </div>
     </div>
     <div class="active-object">
@@ -65,9 +65,9 @@
           开抢
         </div>
         <div class="wait-for-u">
-          <img class="line-left" src="activity/yazhou-h5/activity/lucky/line-left.png" alt="">
+          <img class="line-left" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/line-left.png`" alt="">
           <span>大奖等您拿</span>
-          <img class="line-right" src="activity/yazhou-h5/activity/lucky/line-right.png" alt="">
+          <img class="line-right" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/line-right.png`" alt="">
         </div>
         <div class="Gift-box">
           <div v-for="(item, i ) in lihe_list" :key="i+'i'" @click="lihe_list_click(item, i, 'frequent_clicks')">
@@ -101,7 +101,7 @@
             </p>
             <div class="Token-history">
               <div>
-                <img  src="activity/yazhou-h5/activity/diamond.png" alt="">
+                <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/diamond.png`" alt="">
                 <span>奖券:{{ get_Lucky_box.tokenNum || 0}}</span>
               </div>
               <div class="zoom_in"
@@ -114,7 +114,7 @@
                      }">
                 <span>{{btn_click ? '拆盒1次' :`${count_down_click}s后再次拆盒`}}</span>
                 <div class="flex align_items" v-if="btn_click">
-                  <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
+                  <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/diamond1.png`" alt="">
                   <span>x {{lihe_name.Number_tokens_consumed}}</span>
                 </div>
               </div>
@@ -259,7 +259,7 @@
         <div class="gift-btn" v-if="false">
           <p>再拆1次</p>
           <div class="flex align_items justify-center">
-            <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
+            <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/diamond1.png`" alt="">
             <span>x {{lihe_name.Number_tokens_consumed}}</span>
           </div>
         </div>
