@@ -417,7 +417,7 @@ const submit_handle = type => {
     }
 
     let params = {
-        "userId": UserCtr.get_uid(),
+        // "userId": UserCtr.get_uid(),
         "acceptOdds": 2,  // 接受赔率变化情况
         "tenantId": 1,
         "deviceType": BetData.deviceType,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
