@@ -8,7 +8,7 @@
     :class="[
       ol_data.class,
       odds_state,
-      `csid${route.query.csid}`,
+      `csid${route.params.csid}`,
       odds_lift,
       {
         'show-odds-icon': odds_state != 'seal',
