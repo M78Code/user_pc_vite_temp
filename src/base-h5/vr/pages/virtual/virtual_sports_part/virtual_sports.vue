@@ -552,7 +552,6 @@ export default {
       }
     },
     current_sub_menu(){
-      console.error(66677, this.current_league)
       let prev_league_id = ''
       if(this.current_league){
         prev_league_id = this.current_league.menuId;

@@ -710,7 +710,6 @@ export default {
           }
         temp = this.save_hshow(temp); // 保存当前相关hshow状态;
         MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
-        console.error('MatchDataWarehouseInstance>>>>',MatchDataWarehouseInstance);
         this.matchInfoCtr.setList(lodash.cloneDeep(temp))
         delete res.data;
         if(callback) callback();

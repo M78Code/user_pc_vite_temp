@@ -409,6 +409,7 @@ export default {
           this.seek_to_target = time_/1000;
         }
       }
+      this.player.video.muted = true;
       this.video_voice = false
       // 监听视频可以播放
       // this.player.on('canplaythrough', () => {
