@@ -85,7 +85,7 @@ const route = useRoute();
 // favouritse
 const go_to_favouritse = () => {
   // 点击收藏时清除其他球种选中状态
-  if(MenuData.is_collect)return
+  // if(MenuData.is_collect)return
   MenuData.left_menu_result.lv1_mi = ''
   // 点击菜单的时候如果在详情页应跳转出来先
   if (['league','details'].includes(route.name)) {
@@ -113,9 +113,9 @@ const go_to_favouritse = () => {
  * @returns {undefind} 无返回值
  */
 const jump_func = (payload ={},type) => {
-  if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
-    return
-  }
+  // if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
+  //   return
+  // }
    // 点击菜单的时候如果在详情页应跳转出来先
   if (['league','details','search'].includes(route.name)) {
     router.push('/home')

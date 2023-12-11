@@ -995,7 +995,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.debounce_throttle_cancel(this.resetSlot)
     this.debounce_throttle_cancel(this.start)
     clearInterval(this.triangle_run_interval_timer)
