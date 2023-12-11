@@ -3,7 +3,7 @@
   <div v-if="is_mounted && odds_state != 'close'" class="c-bet-item yb-flex-center relative-position yb-family-odds"
     :class="[
       ol_data.class,
-      `csid${match.csid}`,
+      `csid${match?.csid}`,
       odds_lift,
       BetData.bet_oid_list.includes(ol_data.oid) ? 'active' : '',
       odds_state != 'seal' && odds_state !== 'lock' && (ol_data.ov || score) && 'can-hover',
@@ -14,7 +14,7 @@
       'handicap-value',
       {
         'color-highlight': ol_data.handicap_highlight,
-        style2: ol_data.onbl && match.csid == 2,
+        style2: ol_data.onbl && match?.csid == 2,
         left_cell: utils_info.is_iframe,
         'injury-time-goal': ol_data.ot === 'ClutchGoal',
         nogoal: ol_data.ot === 'NoGoal',
@@ -41,7 +41,7 @@
           ol_data.ov,
           ol_data._hpid,
           '',
-          match.csid
+          match?.csid
         ) }}
       </span>
       <div class="odds-arrows-wrap">
@@ -85,15 +85,17 @@ const props = defineProps({
   }
 });
 const is_mounted = ref(true);
-const match = inject('match')
+// 赔率升降 up:上升 down:下降
+const odds_lift = ref("");
+const match = inject('match');
+
 // 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
 const odds_state = computed(() => {
   let { _mhs, _hs, os } = props.ol_data || {};
   return get_odds_state(_mhs, _hs, os);
 });
 
-// 赔率升降 up:上升 down:下降
-const odds_lift = ref("");
+
 const emit = defineEmits(['update_score'])
 //玩法比分
 const score = computed(() => {
