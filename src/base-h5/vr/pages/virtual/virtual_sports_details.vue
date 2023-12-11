@@ -64,6 +64,7 @@ import ServerTime from "src/core/server-time/server-time.js"
 import { reactive } from 'vue'
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
+import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -158,7 +159,8 @@ export default {
         else{
           Object.assign(this.current_match,data);
         }
-
+        MatchDataWarehouseInstance.clear(); 
+        MatchDataWarehouseInstance.set_match_details(this.current_match);
         let now_se = ServerTime.get_remote_time();
         let mgt_n = Number(data.mgt);
         if(now_se > mgt_n){

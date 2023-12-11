@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
+// import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new.vue"
+import tournament_play_new from "src/base-h5/components/details/components/tournament-play/tournament-play-new-2.vue"
  // 引入接口封装文件
 import { api_common } from "src/api/index.js";
  // 引入投注逻辑mixin
@@ -53,6 +54,7 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import { debounce } from "lodash";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
+import {MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
 
 const { height, width, css} = dom
 
@@ -281,19 +283,19 @@ export default {
         let info = axios_debounce_cache[url_key].can_send_request(params)
         if(info.can_send){
           //直接发请求 单次数 请求的方法
-          if(cb) {cb()}
+          if(cb) {cb(params)}
         }else{
           // 记录timer
           if(timer) clearTimeout(timer)
           timer = setTimeout(() => {
             //直接发请求 单次数 请求的方法
-            if(cb) {cb()}
+            if(cb) {cb(params)}
             timer =null
           }, info.delay_time ||1000);
         }
       }else{
         //直接发请求 多次数  循环请求 的方法
-        if(cb) {cb()}
+        if(cb) {cb(params)}
       }
     },
 
@@ -659,9 +661,9 @@ export default {
     socket_upd_list(skt_data,callback){
       let mid
       if(this.$route.name == "virtual_sports"){
-        mid = this.get_current_mid
+        mid = this.get_current_mid || this.mid
       }else if(this.$route.name == "virtual_sports_details"){
-        mid = this.$route.query.mid
+        mid = this.$route.query.mid || this.mid
       }
       console.log(mid, this.$route, '666');
       
@@ -707,6 +709,8 @@ export default {
             });
           }
         temp = this.save_hshow(temp); // 保存当前相关hshow状态;
+        MatchDataWarehouseInstance.set_match_details(this.current_match,temp);
+        console.error('MatchDataWarehouseInstance>>>>',MatchDataWarehouseInstance);
         this.matchInfoCtr.setList(lodash.cloneDeep(temp))
         delete res.data;
         if(callback) callback();

@@ -396,6 +396,15 @@ export default defineComponent({
       return max;
     }
     /**
+     * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
+     * @param {Number} value 需要转换的值
+     * @return {Number}
+     */
+    const rem = (value) => {
+      let font_size = (innerWidth * 100) / 375;
+      return Math.ceil(value * font_size);
+    };
+    /**
      *@description 6号模板点击收起的时候，要调整滚动距离回到展开之前的高度
      *@return {Undefined} undefined
      */

@@ -278,6 +278,15 @@ export default defineComponent({
       return reg.test(val)
     };
     /**
+     * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
+     * @param {Number} value 需要转换的值
+     * @return {Number}
+     */
+    const rem = (value) => {
+      let font_size = (innerWidth * 100) / 375;
+      return Math.ceil(value * font_size);
+    };
+    /**
      *@description 0号模板点击收起的时候，要调整滚动距离
      *@return {Undefined} undefined
      */
@@ -303,7 +312,8 @@ export default defineComponent({
       hide_show_more_layout,
       LOCAL_PROJECT_FILE_PREFIX,
       BetData,
-      go_to_bet
+      go_to_bet,
+      calc_win
     }
   }
 })
