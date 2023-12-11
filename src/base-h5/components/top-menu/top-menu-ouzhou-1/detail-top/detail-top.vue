@@ -80,9 +80,12 @@ if(route.params.tid){
 /** 获取下拉列表 */
 function getDropDownList(tid='') {
   const matchDetail = LocalStorage.get("YUAN_MATCH_DETAIL_DATA")
-  let mgt = Number(matchDetail.mgt);
-  let date_ = new Date(mgt).toLocaleDateString()
-  let time_ = new Date(date_).getTime()
+  let time_ = null
+  if(matchDetail&&matchDetail.mgt){
+    let mgt = Number(matchDetail.mgt);
+    let date_ = new Date(mgt).toLocaleDateString()
+    time_ = new Date(date_).getTime()
+  }
   tid && api_common.get_matchDetail_getMatchDetailByTournamentId({
     tId: tid,
     type: isMatchResultRoute? 1 : (void 0),
@@ -148,7 +151,7 @@ function change_active(item, index) {
   if(isMatchResultRoute){
     name = 'result'
   }
-  router.replace({ name: 'result', params});
+  router.replace({ name, params});
   refreshAll(params)
 }
 /**
