@@ -122,6 +122,7 @@ export default {
     width: 3.61rem;
     height: 0.24rem;
     margin: 0 auto;
+    border-bottom: 1px solid #eee;
 
     .odd-title-wrapper {
       width: 1.92rem;

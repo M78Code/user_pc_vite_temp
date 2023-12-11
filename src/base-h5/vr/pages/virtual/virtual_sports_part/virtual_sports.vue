@@ -15,7 +15,8 @@
         <div>{{tab_item.name}}</div>
       </div>
     </div>
-    <div class="virtual-sports-card">
+    <div class="virtual-content-wrapper">
+      <div class="virtual-sports-card">
       <div class="tab-title" @click.stop="expend_video = !expend_video">
         <div class="league-name right-border">{{ lengue_name }}</div>
         <div class="status">
@@ -54,88 +55,99 @@
                 </div>
               </div>
           </div>
-    </div>
-    <div class="virtual-sports-card"></div>
-    <template v-if="!no_virtual_match">
-      <!--赛事轮|期菜单-->
-      <match-tab
-        :is_reset_tab_i="is_reset_tab_i"
-        :no_list="no_title_list"
-        :is_user_switch_league="is_user_switch_league"
-        :auto_change_tab_i_first="auto_change_tab_i_first"
-        :current_league="tab_items[tab_item_i]"
-        :current_match="current_match"
-        :is_basket_ball_next_no="is_basket_ball_next_no"
-        :v_menu_changed="v_menu_changed"
-        :before_match_tab_trend="before_match_tab_trend"
-        @sub_nav_change="sub_nav_changed"
-        @trend_event_change="trend_event_change"
-        @time_ended="timer_ended_handle"
-        @update_next_batch_match="v_basket_ball_update_n"
-      ></match-tab>
-      <!--  虚拟体育主列表页面  -->
-      <div
-          v-if="!ranking_list_change"
-          class="v-sports-main-list"
-          :class="{'v-sports-main-list-style': get_newer_standard_edition === 1}"
-          :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
-      >
-        <!-- 虚拟体育足球赛事列表 -->
-        <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
-          :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
-          @switch_match="switch_match_handle"  @start="match_start_handle">
-        </v-s-match-list>
-
-        <div v-if="current_match.match_status == 0">
-          <!-- 赛马切换玩法集tab组件 -->
-          <virtual-sports-tab
-            :batch="current_match_id"
-            v-if="![1001,1004].includes(sub_menu_type)">
-          </virtual-sports-tab>
-          <!-- 打印请勿删除 -->
-          <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
-          <!-- 赛马投注区域 -->
-          <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(sub_menu_type)">
-            <virtual-sports-category
-                :top_menu_changed="top_menu_changed"
-                :current_match="match_list_by_no[0]"
-                source='sports'
-                @top_menu_change="handle_top_menu_change"
-            />
+      </div>
+      <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
+        <div class="tab-title tab-border" @click.stop="expend_match(match_item_batch)">
+          <div class="league-name right-border">{{ lengue_name }}</div>
+          <div class="status">
+            <span class="num">{{ match_item_batch.no }}</span>
+            <span class="state">比赛中</span>
+            <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
+        <template v-if="match_item_batch.is_expend">
+            <!--  虚拟体育主列表页面  -->
+            <div
+                v-if="!ranking_list_change"
+                class="v-sports-main-list"
+                :class="{'v-sports-main-list-style': get_newer_standard_edition === 1}"
+                :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
+            >
+              <!-- 虚拟体育足球赛事列表 -->
+              <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
+                :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
+                @switch_match="switch_match_handle"  @start="match_start_handle">
+              </v-s-match-list>
 
-        <!-- 注释勿删除 -->
-        <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
-          <!-- 打印请勿删除 -->
-          <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
-          <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-          <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
-          <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
-          <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
-        </div>
-        <!-- 注释勿删除 -->
-      </div>
-      <!-- 排行榜页面,小组赛淘汰赛页面  -->
-      <div v-else class="list-wrapper">
-        <!--  足球 页面  -->
-        <div v-if="[1001,1004].includes(sub_menu_type)">
-          <!--  足球小组赛,淘汰赛页面  -->
-          <group-knockout
-            v-if="tab_items[tab_item_i] ? tab_items[tab_item_i].field3 != '': false"
-            :tid="menu_list[tab_item_i].field1"
-            :current_match="current_match"
-          />
-          <!--  足球排行榜页面  -->
-          <football-ranking-list v-else :tid="menu_list[tab_item_i].field1"/>
-        </div>
-        <!--  非足球排行榜页面  -->
-        <ranking-list-start v-else :mid="current_match.mid"/>
-      </div>
-      <!-- 占位撑开高度 -->
-    </template>
-    <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
+              <div v-if="current_match.match_status == 0">
+                <!-- 赛马切换玩法集tab组件 -->
+                <virtual-sports-tab
+                  :batch="current_match_id"
+                  v-if="![1001,1004].includes(sub_menu_type)">
+                </virtual-sports-tab>
+                <!-- 打印请勿删除 -->
+                <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+                <!-- 赛马投注区域 -->
+                <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(sub_menu_type)">
+                  <virtual-sports-category
+                      :top_menu_changed="top_menu_changed"
+                      :current_match="match_list_by_no[0]"
+                      source='sports'
+                      @top_menu_change="handle_top_menu_change"
+                  />
+                </div>
+              </div>
 
+              <!-- 注释勿删除 -->
+              <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+                <!-- 打印请勿删除 -->
+                <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+                <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
+                <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
+                <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
+                <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
+              </div>
+              <!-- 注释勿删除 -->
+            </div>
+            <!-- 排行榜页面,小组赛淘汰赛页面  -->
+            <div v-else class="list-wrapper">
+              <!--  足球 页面  -->
+              <div v-if="[1001,1004].includes(sub_menu_type)">
+                <!--  足球小组赛,淘汰赛页面  -->
+                <group-knockout
+                  v-if="tab_items[tab_item_i] ? tab_items[tab_item_i].field3 != '': false"
+                  :tid="menu_list[tab_item_i].field1"
+                  :current_match="current_match"
+                />
+                <!--  足球排行榜页面  -->
+                <football-ranking-list v-else :tid="menu_list[tab_item_i].field1"/>
+              </div>
+              <!--  非足球排行榜页面  -->
+              <ranking-list-start v-else :mid="current_match.mid"/>
+            </div>
+        </template>
+      </div>
+      <template v-if="!no_virtual_match">
+        <!--赛事轮|期菜单-->
+        <!-- <match-tab
+          :is_reset_tab_i="is_reset_tab_i"
+          :no_list="no_title_list"
+          :is_user_switch_league="is_user_switch_league"
+          :auto_change_tab_i_first="auto_change_tab_i_first"
+          :current_league="tab_items[tab_item_i]"
+          :current_match="current_match"
+          :is_basket_ball_next_no="is_basket_ball_next_no"
+          :v_menu_changed="v_menu_changed"
+          :before_match_tab_trend="before_match_tab_trend"
+          @sub_nav_change="sub_nav_changed"
+          @trend_event_change="trend_event_change"
+          @time_ended="timer_ended_handle"
+          @update_next_batch_match="v_basket_ball_update_n"
+        ></match-tab> -->
+        <!-- 占位撑开高度 -->
+      </template>
+      </div>
+      <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
   </div>
 </template>
 
@@ -474,6 +486,10 @@ export default {
         this[timer] = null
       }
     },
+    // 展开或者收缩联赛
+    expend_match(item){
+      item.is_expend = !item.is_expend;
+    }
   },
   computed:{
     //
@@ -496,6 +512,12 @@ export default {
     get_bet_list(){return []},
     get_betbar_show(){return 1},
     get_newer_standard_edition(){return 1},
+    // 当前联赛的全部轮次
+    match_list_all_batches(){
+      const match_list_all_batches = [...this.virtual_match_list];
+      match_list_all_batches[0] && (match_list_all_batches[0].is_expend = true);
+      return match_list_all_batches
+    },
 
     //标签页列表
     tab_items(){
@@ -597,6 +619,7 @@ export default {
   overflow: auto;
   align-items: center;
   padding: 0 0.08rem;
+  background-color: var(--q-gb-bd-c-3);
 
   .tab-item {
     height: 0.26rem;
@@ -622,7 +645,6 @@ export default {
   padding-right: 9px;
   &.tab-border {
     border-bottom: 1px solid #eee;
-    height: 24px;
   }
   .league-name{
     color: #303442;
@@ -647,7 +669,10 @@ export default {
     }
   }
 }
-
+.virtual-content-wrapper {
+  padding: 0.08rem 0.05rem 0;
+  background: #f8f9fa;
+}
 .virtual-sports-card {
   background: #fff;
   border-radius: 4px;
