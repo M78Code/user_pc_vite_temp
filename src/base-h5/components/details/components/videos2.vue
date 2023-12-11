@@ -74,8 +74,9 @@
         </div>
         <!-- 视频单页项目-->
         <!-- {{ iframe_src+'&rdm='+iframe_rdm }} -->
+        <!-- {{iframe_show  }} {{ is_show_no_handle}} {{iframe_src  }} iframe_show && !is_show_no_handle && -->
         <iframe 
-        v-if="iframe_show && !is_show_no_handle && iframe_src" 
+        v-if=" iframe_src" 
         v-show="!is_playing_replay" 
         ref="iframe" id="bdIframe" 
         style="width:100%;height:100%;" 
