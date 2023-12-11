@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, toRef } from 'vue';
+import { computed, ref, watch, provide } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 // import { get_15mins_odds_list } from "src/core/match-list-pc/list-template/module/template-101.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -44,6 +44,7 @@ const props = defineProps({
   idx: Number
 });
 const match = MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.get_quick_mid_obj_ref(props.mid)
+provide("match",match)
 const jump_to_details = () => {
   let obj = {
     pre_route : route.name
