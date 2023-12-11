@@ -163,8 +163,9 @@ const status = computed(() => {
 nav_bar_subscribe.change_status(false);
 watch(status, (value) => {
   console.log(status, "status====");
+    
     // 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示
-    if (value == 2) {
+    if ([1,2].includes(+value)) {
       right_actions_label.value = 'animation';
     }
     if (value == 3) {
