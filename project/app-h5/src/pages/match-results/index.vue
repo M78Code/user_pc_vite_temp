@@ -27,10 +27,11 @@
 
     <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
-    <div class="match-results-container-styles">
-        <ObserverWrapper :match_list="matchs_data" com_type="ouzhou-h5"></ObserverWrapper>
-        <!-- <match-container /> -->
-    </div>
+     <ObserverWrapper :match_list="state.matchs_data" com_type="ouzhou-h5"></ObserverWrapper>
+    <!-- <div class="match-results-container-styles">
+       
+        <match-container />
+    </div> -->
 
     <!-- <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
