@@ -1,5 +1,5 @@
 <template>
-  <div class="component odd-ol-item"
+  <div class="component odd-ol-item" v-if="value.os != 3"
     :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
   >
     <div class="icontainer" v-if="vif"
@@ -88,10 +88,16 @@ const ov = computed(() => {
 const isLock = computed(() => {
   if (props.value) {
     // @ts-ignore
-    return props.value.os == 2 || ov.value == 0 || props.value._hs == 1 || props.value._ms == 1
-  } else {
-    return true
+    const { _mhs,_hs } = props.value
+    if(_mhs == 0 || _mhs == 11){
+      if( _hs == 0 || _hs == 11){
+        if(props.value.os == 1){
+          return Number(ov.value) == 0 
+        }
+      }
+    }
   }
+  return true
 })
 function onClick(){
   if(isLock.value){
