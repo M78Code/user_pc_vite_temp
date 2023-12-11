@@ -25,7 +25,7 @@
 export default {
   props: {
     getLotterySuc: Boolean,
-    getLotteryNum: String | Number,
+    getLotteryNum:  '',
     getLotteryAgain: {},
     getLotteryDialog: Boolean
   },
