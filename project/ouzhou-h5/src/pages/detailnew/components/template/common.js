@@ -52,11 +52,16 @@ const common = {
    * @returns {TYPES.OlItemType}
    */
   getOlType(oddInfo){
+    const {hpt} = oddInfo
     if(oddInfo.hpt == 0){
       if(oddInfo.title.length){
         return 'fill'
       }
-    }else if(oddInfo.hpt == 18 || (oddInfo.hpt == 3 && !common.haveTitle(oddInfo))){
+    }else if(hpt == 3){
+      if(!common.haveTitle(oddInfo)){
+        return 'column'
+      }
+    }else if(oddInfo.hpt == 18){
       return 'fill'
     }
     return 'default'

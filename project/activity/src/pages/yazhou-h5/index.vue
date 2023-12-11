@@ -11,7 +11,7 @@
       v-show="the_first_time_show"
     >
       <img
-        src="/public/yazhou-h5/image/svg/go-back-icon-theme02.svg"
+        :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/common/go-back-icon-theme02.svg`"
         class="back_btn"
         @click="go_where({ back_to: 'go_back_from_activity' })"
         v-show="is_maintaining"
@@ -19,7 +19,7 @@
       <!-- 活动返回按钮 及 标题 -->
       <div class="head yb_px14 yb_fontsize14" v-if="!isAPP && !is_maintaining">
         <img
-          src="/public/yazhou-h5/image/svg/go-back-icon-theme02.svg"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/common/go-back-icon-theme02.svg`"
           @click="go_where({ back_to: 'go_back_from_activity' })"
         />
         <span>{{

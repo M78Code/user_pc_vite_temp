@@ -17,7 +17,8 @@
       <div class="separate"></div>
       <div class="item ol-content">
         <div class="ol-content-ov">
-          <span>{{ ov }}</span>
+          <span v-if="isLock">0.xx</span>
+          <span v-else>{{ ov }}</span>
           <img class="odd-image" v-show="status != 'none'"
             :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
         </div>
