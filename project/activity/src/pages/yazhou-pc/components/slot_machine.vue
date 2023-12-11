@@ -8,162 +8,370 @@
   <div class="tabs_content" @touchmove="handleTouch" @mousewheel="handleTouch">
     <div class="introduction text-666">
       <p>活动对象：<span class="text-orange">本场馆全体会员</span></p>
-      <p class="activity-date-time">活动时间：
-        <span class="text-666" v-if="activityObj.showTime == 'toStart'">距离活动开始还有
-          <span v-if="activityTime.day">{{activityTime.day}}天</span>
-          <span>{{activityTime.hr}}:</span>
-          <span>{{activityTime.min}}:</span>
-          <span>{{activityTime.sec}}</span>
+      <p class="activity-date-time">
+        活动时间：
+        <span class="text-666" v-if="activityObj.showTime == 'toStart'"
+          >距离活动开始还有
+          <span v-if="activityTime.day">{{ activityTime.day }}天</span>
+          <span>{{ activityTime.hr }}:</span>
+          <span>{{ activityTime.min }}:</span>
+          <span>{{ activityTime.sec }}</span>
         </span>
-        <span v-else-if="activityObj.showTime == 'toEnd'" class="text-666">距离活动结束还有
-          <span>{{activityTime.hr}}:</span>
-          <span>{{activityTime.min}}:</span>
-          <span>{{activityTime.sec}}</span>
+        <span v-else-if="activityObj.showTime == 'toEnd'" class="text-666"
+          >距离活动结束还有
+          <span>{{ activityTime.hr }}:</span>
+          <span>{{ activityTime.min }}:</span>
+          <span>{{ activityTime.sec }}</span>
         </span>
-        <span v-else>{{activityTime}}</span>
+        <span v-else>{{ activityTime }}</span>
       </p>
-      <p>活动内容：<span class="text-orange">本场馆内完成任务获得的普通奖券，可在合成系统中向上合成为白银、黄金、钻石奖券，用以参加对应档次的老虎机抽奖</span></p>
+      <p>
+        活动内容：<span class="text-orange"
+          >本场馆内完成任务获得的普通奖券，可在合成系统中向上合成为白银、黄金、钻石奖券，用以参加对应档次的老虎机抽奖</span
+        >
+      </p>
     </div>
     <div class="slot_machine_content">
       <!-- 老虎机主体 -->
-        <div class="slot_machine relative-position">
-          <div class="caijin">
-            <!-- 彩金道具 -->
-            <p :class="{'caijin_transfer': caijin_transfer}">
-              {{_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName') || '惊喜道具'}}
-            </p>
-            <span class="dot dot_run"></span>
-            <span class="dot dot_run_1"></span>
-          </div>
-          <!-- 老虎机主体图片 -->
-          <img class="machine" :src="`${machine_images.machine_diamond}`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 3 ? 2: 1}" alt="">
-          <img class="machine" :src="`${machine_images.machine_gold}`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 2 ? 2: 1}" alt="">
-          <img class="machine" :src="`${machine_images.machine_silver}`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 1 ? 2: 1}" alt="">
-          <!-- 今日抽奖剩余次数 -->
-          <p class="draws_number">
-            <span v-if="_.get(currentSlotData[currentSlotIndex], 'gameTimes') > -1">今日抽奖剩余：{{_.get(currentSlotData[currentSlotIndex], 'gameTimes')}}次 | 0时重置</span>
+      <div class="slot_machine relative-position">
+        <div class="caijin">
+          <!-- 彩金道具 -->
+          <p :class="{ caijin_transfer: caijin_transfer }">
+            {{
+              _.get(
+                currentSlotData[currentSlotIndex],
+                "beforeGameResult.propName"
+              ) || "惊喜道具"
+            }}
           </p>
-          <!-- 数字滚轮 -->
-          <div class="scroller">
-            <NumberScroll  :status="tiger_status" :result="tiger_result" :initArr="initNums" @stop="stop" ref="number_scroll" />
-          </div>
-          <!-- 两边的小三角形 -->
-          <p class="triangles" v-if="triangle_fade > 0">
-            <img class="left" :src="(`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
-            <img class="right" :src="(`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
-          </p>
-          <p class="triangles" v-else>
-            <img class="left" :src="(`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
-            <img class="right" :src="(`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
-          </p>
+          <span class="dot dot_run"></span>
+          <span class="dot dot_run_1"></span>
+        </div>
+        <!-- 老虎机主体图片 -->
+        <img
+          class="machine"
+          :src="`${machine_images.machine_diamond}`"
+          :style="{
+            'z-index':
+              _.get(currentSlotData[currentSlotIndex], 'slotId') == 3 ? 2 : 1,
+          }"
+          alt=""
+        />
+        <img
+          class="machine"
+          :src="`${machine_images.machine_gold}`"
+          :style="{
+            'z-index':
+              _.get(currentSlotData[currentSlotIndex], 'slotId') == 2 ? 2 : 1,
+          }"
+          alt=""
+        />
+        <img
+          class="machine"
+          :src="`${machine_images.machine_silver}`"
+          :style="{
+            'z-index':
+              _.get(currentSlotData[currentSlotIndex], 'slotId') == 1 ? 2 : 1,
+          }"
+          alt=""
+        />
+        <!-- 今日抽奖剩余次数 -->
+        <p class="draws_number">
+          <span
+            v-if="_.get(currentSlotData[currentSlotIndex], 'gameTimes') > -1"
+            >今日抽奖剩余：{{
+              _.get(currentSlotData[currentSlotIndex], "gameTimes")
+            }}次 | 0时重置</span
+          >
+        </p>
+        <!-- 数字滚轮 -->
+        <div class="scroller">
+          <NumberScroll
+            :status="tiger_status"
+            :result="tiger_result"
+            :initArr="initNums"
+            @stop="stop"
+            ref="number_scroll"
+          />
+        </div>
+        <!-- 两边的小三角形 -->
+        <p class="triangles" v-if="triangle_fade > 0">
+          <img
+            class="left"
+            :src="`${$g_image_preffix}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_fade/0${triangle_fade}.png`"
+            alt=""
+          />
+          <img
+            class="right"
+            :src="`${$g_image_preffix}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_fade/0${triangle_fade}.png`"
+            alt=""
+          />
+        </p>
+        <p class="triangles" v-else>
+          <img
+            class="left"
+            :src="`${$g_image_preffix}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_run/0${triangle_run}.png`"
+            alt=""
+          />
+          <img
+            class="right"
+            :src="`${$g_image_preffix}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/triangle_run/0${triangle_run}.png`"
+            alt=""
+          />
+        </p>
 
-          <!-- 当前奖金 -->
-          <p class="currentBonus">
-            当前奖励: <span>{{_.get(currentSlotData[currentSlotIndex], "beforeGameResult.reward") || '0.00'}}</span>
+        <!-- 当前奖金 -->
+        <p class="currentBonus">
+          当前奖励:
+          <span>{{
+            _.get(
+              currentSlotData[currentSlotIndex],
+              "beforeGameResult.reward"
+            ) || "0.00"
+          }}</span>
+        </p>
+        <!-- 操作按钮 -->
+        <div class="actionBtns">
+          <!-- 重置 -->
+          <p class="resetBtn">
+            <img
+              class="top"
+              v-if="
+                _.get(
+                  currentSlotData[currentSlotIndex],
+                  'beforeGameResult.propName'
+                )
+              "
+              :class="runResetSlotAnim ? 'resetBtnAnim' : ''"
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top.png"
+              alt=""
+            />
+            <img
+              class="top"
+              v-else
+              :class="runResetSlotAnim ? 'resetBtnAnim' : ''"
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top_gray.png"
+              alt=""
+            />
+            <img
+              @click="resetSlot"
+              class="btm"
+              v-if="
+                _.get(
+                  currentSlotData[currentSlotIndex],
+                  'beforeGameResult.propName'
+                )
+              "
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm.png"
+              alt=""
+            />
+            <img
+              class="btm"
+              v-else
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm_gray.png"
+              alt=""
+            />
+            <span
+              >{{
+                _.get(currentSlotData[currentSlotIndex], `resetTicketNumber`)
+              }}张{{
+                _.get(currentSlotData[currentSlotIndex], `resetTicketName`)
+              }}</span
+            >
           </p>
-          <!-- 操作按钮 -->
-          <div class="actionBtns">
-            <!-- 重置 -->
-            <p class="resetBtn" >
-              <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top.png" alt="">
-              <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top_gray.png" alt="">
-              <img @click="resetSlot" class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm.png" alt="">
-              <img class="btm" v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm_gray.png" alt="">
-              <span>{{_.get(currentSlotData[currentSlotIndex], `resetTicketNumber`)}}张{{_.get(currentSlotData[currentSlotIndex], `resetTicketName`)}}</span>
-            </p>
-            <!-- 开始滚动 -->
-            <p v-if="!_.get(currentSlotData[currentSlotIndex], 'beforeGameResult') || !is_init" class="startScreen" >
-                <!-- 置灰按钮 -->
-              <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top_gray.png" alt="">
-              <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top.png" alt="">
-              <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm_gray.png" alt="">
-              <img @click="start('start')" class="btm" v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png" alt="">
-              <span>{{_.get(currentSlotData[currentSlotIndex], 'lotteryNum')}}张{{_.get(currentSlotData[currentSlotIndex], 'ticketName')}}</span>
-            </p>
-            <!-- 确认领取 -->
-            <p v-else class="confirm" >
-              <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/confirm_btn_top.png" alt="">
-              <img @click="start('confirm')" class="btm" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png" alt="">
-            </p>
-          </div>
-          <!-- 摇杆 -->
-          <div class="rocker">
-            <img :src="(`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1}/0${rocker_anim_index}.png`)" alt="">
-          </div>
-          <!-- 老虎机周围的装饰 -->
-          <img class="goldmoney" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/goldmoney.png" alt="">
-          <img class="footbaler" src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/footbaler.png" alt="">
-          <!-- 彩灯 -->
-          <span v-for="(item, index) in 26"
+          <!-- 开始滚动 -->
+          <p
+            v-if="
+              !_.get(currentSlotData[currentSlotIndex], 'beforeGameResult') ||
+              !is_init
+            "
+            class="startScreen"
+          >
+            <!-- 置灰按钮 -->
+            <img
+              v-if="
+                !is_init ||
+                _.get(currentSlotData[currentSlotIndex], 'tokenNum') <
+                  _.get(currentSlotData[currentSlotIndex], 'lotteryNum') ||
+                Object.keys(beforeGameResult).length != 0 ||
+                _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0
+              "
+              class="top"
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top_gray.png"
+              alt=""
+            />
+            <img
+              v-else
+              class="top"
+              :class="runStartAnim ? 'startBtnAnim' : ''"
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top.png"
+              alt=""
+            />
+            <img
+              class="btm"
+              v-if="
+                !is_init ||
+                _.get(currentSlotData[currentSlotIndex], 'tokenNum') <
+                  _.get(currentSlotData[currentSlotIndex], 'lotteryNum') ||
+                Object.keys(beforeGameResult).length != 0 ||
+                _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0
+              "
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm_gray.png"
+              alt=""
+            />
+            <img
+              @click="start('start')"
+              class="btm"
+              v-else
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png"
+              alt=""
+            />
+            <span
+              >{{ _.get(currentSlotData[currentSlotIndex], "lotteryNum") }}张{{
+                _.get(currentSlotData[currentSlotIndex], "ticketName")
+              }}</span
+            >
+          </p>
+          <!-- 确认领取 -->
+          <p v-else class="confirm">
+            <img
+              class="top"
+              :class="runStartAnim ? 'startBtnAnim' : ''"
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/confirm_btn_top.png"
+              alt=""
+            />
+            <img
+              @click="start('confirm')"
+              class="btm"
+              src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png"
+              alt=""
+            />
+          </p>
+        </div>
+        <!-- 摇杆 -->
+        <div class="rocker">
+          <img
+            :src="`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/rocker_${
+              (_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1
+            }/0${rocker_anim_index}.png`"
+            alt=""
+          />
+        </div>
+        <!-- 老虎机周围的装饰 -->
+        <img
+          class="goldmoney"
+          src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/goldmoney.png"
+          alt=""
+        />
+        <img
+          class="footbaler"
+          src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/footbaler.png"
+          alt=""
+        />
+        <!-- 彩灯 -->
+        <span
+          v-for="(item, index) in 26"
           :key="index"
           class="normal_light"
           :class="[
             `normal_light_${index + 1}`,
-            {'light_run_pink': light_run_pink == index + 1, 'light_run_blue': light_run_blue == index + 1, 'light_run_yellow': light_run_yellow == index + 1},
-            {'three_colors': spin_success}]"
-          ></span>
-        </div>
-        <!-- 切换老虎机的按钮 -->
-        <div class="switch_slots" v-if="currentSlotData.length">
-          <p @click="switch_slots(index)" v-for="(item, index) in currentSlotData" :key="index">
-            <img v-if="currentSlotIndex == index && index < 3" :src="(`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`)" />
-            <img v-else src="~public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/grey_rocker.png" />
-            <span :class="currentSlotIndex == index ? 'active': ''">
-              <span>{{item.slotName}}</span>
-              <br>
-              (奖券：{{item.tokenNum}})
-            </span>
-          </p>
-        </div>
-        <!-- 合成奖券和游戏记录按钮 -->
-        <div class="btns">
-          <p class="synthetic_lottory" @click="is_show_compose = true">合成奖券</p>
-          <p class="game_history" @click="get_activity_slot_get_game_record(1, 1)">游戏记录</p>
-        </div>
+            {
+              light_run_pink: light_run_pink == index + 1,
+              light_run_blue: light_run_blue == index + 1,
+              light_run_yellow: light_run_yellow == index + 1,
+            },
+            { three_colors: spin_success },
+          ]"
+        ></span>
+      </div>
+      <!-- 切换老虎机的按钮 -->
+      <div class="switch_slots" v-if="currentSlotData.length">
+        <p
+          @click="switch_slots(index)"
+          v-for="(item, index) in currentSlotData"
+          :key="index"
+        >
+          <img
+            v-if="currentSlotIndex == index && index < 3"
+            :src="`${$g_image_preffix}/image/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`"
+          />
+          <img
+            v-else
+            src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/grey_rocker.png"
+          />
+          <span :class="currentSlotIndex == index ? 'active' : ''">
+            <span>{{ item.slotName }}</span>
+            <br />
+            (奖券：{{ item.tokenNum }})
+          </span>
+        </p>
+      </div>
+      <!-- 合成奖券和游戏记录按钮 -->
+      <div class="btns">
+        <p class="synthetic_lottory" @click="is_show_compose = true">
+          合成奖券
+        </p>
+        <p
+          class="game_history"
+          @click="get_activity_slot_get_game_record(1, 1)"
+        >
+          游戏记录
+        </p>
+      </div>
     </div>
     <div class="activity_rules text-gray">
-      <div class="content_title">
-        活动规则
-      </div>
+      <div class="content_title">活动规则</div>
       <p>
         会员完成任务获得的普通奖券，可在合成系统中向上合成为白银、黄金、钻石奖券，用以参加对应档次的老虎机抽奖；
       </p>
-      <p>
-        每次抽奖获取随机奖金，并搭配随机道具享受奖金加乘；
-      </p>
+      <p>每次抽奖获取随机奖金，并搭配随机道具享受奖金加乘；</p>
       <p>
         老虎机抽奖获得的奖金不可重置，道具可以消耗奖券重置，重置次数无上限；
       </p>
       <p>
         合成系统：
-        <br><span>a)	4张普通奖券兑换1张白银奖券、4张白银奖券兑换1张黄金奖券、4张黄金奖券兑换1张钻石奖券，若合成失败有机会返还兑换前奖券；</span>
-        <br><span>b)	合成后的奖券仅可用于老虎机抽奖或向上合成更高等级奖券，不可分解成低等级奖券。</span>
+        <br /><span
+          >a)
+          4张普通奖券兑换1张白银奖券、4张白银奖券兑换1张黄金奖券、4张黄金奖券兑换1张钻石奖券，若合成失败有机会返还兑换前奖券；</span
+        >
+        <br /><span
+          >b)
+          合成后的奖券仅可用于老虎机抽奖或向上合成更高等级奖券，不可分解成低等级奖券。</span
+        >
       </p>
       <p>
         老虎机抽奖：
-        <br><span>a)	老虎机奖励=随机奖金*随机道具(幸运奖券为提升合成几率用道具，若抽取到此项道具，当次奖金默认为一倍)；</span>
-        <br><span>b)	随机道具可消耗老虎机对应档次的奖券进行重置，重置次数无上限；</span>
-        <br><span>c)	点击【确认领取】后，老虎机奖励将派发至本场馆钱包；</span>
-        <br><span>d)	未点击【确认领取】，内容自使用当日起计算保留5天，保留期间仅可进行道具重置，不可使用其他档次的老虎机，若保留时间结束仍未点击【确认领取】，系统将默认当下结果派发奖金至本场馆钱包。</span>
+        <br /><span
+          >a)
+          老虎机奖励=随机奖金*随机道具(幸运奖券为提升合成几率用道具，若抽取到此项道具，当次奖金默认为一倍)；</span
+        >
+        <br /><span
+          >b) 随机道具可消耗老虎机对应档次的奖券进行重置，重置次数无上限；</span
+        >
+        <br /><span>c) 点击【确认领取】后，老虎机奖励将派发至本场馆钱包；</span>
+        <br /><span
+          >d)
+          未点击【确认领取】，内容自使用当日起计算保留5天，保留期间仅可进行道具重置，不可使用其他档次的老虎机，若保留时间结束仍未点击【确认领取】，系统将默认当下结果派发奖金至本场馆钱包。</span
+        >
       </p>
-      <p>
-        奖金实时派发至本场馆钱包，仅需在本场馆完成1倍流水即可取款；
-      </p>
+      <p>奖金实时派发至本场馆钱包，仅需在本场馆完成1倍流水即可取款；</p>
       <p>
         每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台设备使用者，仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回奖金及所产生利润的权利；
       </p>
-      <p>
-        为避免文字理解差异，本场馆保留本活动最终解释权。
-      </p>
+      <p>为避免文字理解差异，本场馆保留本活动最终解释权。</p>
     </div>
     <!-- 登录失效一类的弹窗 -->
-    <Alert :is_show="showAlert" :text="noticeMsg" :isMaintaining="isMaintaining" />
+    <Alert
+      :is_show="showAlert"
+      :text="noticeMsg"
+      :isMaintaining="isMaintaining"
+    />
     <!-- 游戏记录弹窗 -->
     <q-dialog v-model="gameHistory">
       <q-layout view="Lhh lpR fff" container class="history">
         <img
           class="close"
-          src="~public/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
+          src="activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
           alt=""
           @click="gameHistory = false"
           width="30px"
@@ -173,13 +381,24 @@
             游戏记录
           </div> -->
           <div class="tab_bar">
-            <p v-for="(item, index) in historiesBar"
+            <p
+              v-for="(item, index) in historiesBar"
               :key="index"
               @click.stop="get_activity_slot_get_game_record(1, index + 1, 6)"
-               :class="index + 1 == gameHistoryLists.params.type ? 'active text-orange': ''">{{item}}</p>
+              :class="
+                index + 1 == gameHistoryLists.params.type
+                  ? 'active text-orange'
+                  : ''
+              "
+            >
+              {{ item }}
+            </p>
           </div>
           <!-- 彩金记录 -->
-          <div class="table table_history" v-if="gameHistoryLists.params.type == 1">
+          <div
+            class="table table_history"
+            v-if="gameHistoryLists.params.type == 1"
+          >
             <div class="text-333 text-center">
               <span>滚轴奖金</span>
               <span>道具倍率</span>
@@ -193,14 +412,21 @@
                 :key="index"
               >
                 <span>{{ Number(item.award) / 100 || "-" }}</span>
-                <span>{{ (item.prop_times == undefined || item.prop_times == '--') ? '--' : `奖金${item.prop_times}倍卡` }}</span>
+                <span>{{
+                  item.prop_times == undefined || item.prop_times == "--"
+                    ? "--"
+                    : `奖金${item.prop_times}倍卡`
+                }}</span>
                 <span>{{ Number(item.total_award) / 100 || "-" }}</span>
                 <span>{{ item.create_time || "-" }}</span>
               </div>
             </load-data>
           </div>
           <!-- 奖券合成 -->
-          <div class="table table_history" v-else-if="gameHistoryLists.params.type == 2">
+          <div
+            class="table table_history"
+            v-else-if="gameHistoryLists.params.type == 2"
+          >
             <div class="text-333 text-center">
               <span>消耗奖券数</span>
               <span>合成奖券数</span>
@@ -209,14 +435,28 @@
             </div>
             <load-data :state="historyDataState" :limit_height="360">
               <div
-              class="text-666 text-center"
-              v-for="(item, index) in gameHistoryLists.list"
-              :key="index"
+                class="text-666 text-center"
+                v-for="(item, index) in gameHistoryLists.list"
+                :key="index"
               >
-                <span v-show="item.source_token+''">{{ item.source_token }}张<br>{{item.source_token_type}}</span>
-                <span v-show="item.target_token+''">{{ item.target_token }}张<br>{{item.target_token_type}}</span>
-                <span v-show="item.return_token+''">{{ item.return_token }}张<br>{{item.return_token_type}}</span>
-                <span v-show="item.source_token+''">{{ item.create_time || "-"  }}</span>
+                <span v-show="item.source_token + ''"
+                  >{{ item.source_token }}张<br />{{
+                    item.source_token_type
+                  }}</span
+                >
+                <span v-show="item.target_token + ''"
+                  >{{ item.target_token }}张<br />{{
+                    item.target_token_type
+                  }}</span
+                >
+                <span v-show="item.return_token + ''"
+                  >{{ item.return_token }}张<br />{{
+                    item.return_token_type
+                  }}</span
+                >
+                <span v-show="item.source_token + ''">{{
+                  item.create_time || "-"
+                }}</span>
               </div>
             </load-data>
           </div>
@@ -230,14 +470,14 @@
             </div>
             <load-data :state="historyDataState" :limit_height="360">
               <div
-              class="text-666 text-center"
-              v-for="(item, index) in gameHistoryLists.list"
-              :key="index"
+                class="text-666 text-center"
+                v-for="(item, index) in gameHistoryLists.list"
+                :key="index"
               >
-                <span>{{ item.prop_type || "-"  }}</span>
-                <span>{{ item.use_token || "-"  }}</span>
-                <span>{{ item.use_token_type || "-"  }}</span>
-                <span>{{ item.create_time || "-"  }}</span>
+                <span>{{ item.prop_type || "-" }}</span>
+                <span>{{ item.use_token || "-" }}</span>
+                <span>{{ item.use_token_type || "-" }}</span>
+                <span>{{ item.create_time || "-" }}</span>
               </div>
             </load-data>
           </div>
@@ -275,40 +515,59 @@
       @play_show_card="play_show_card"
     />
     <!-- 接口数据问题提示弹窗 -->
-    <div class="toast_tips" v-if="tips.statu">{{tips.message}}</div>
+    <div class="toast_tips" v-if="tips.statu">{{ tips.message }}</div>
     <!-- 活动ui提示弹窗 -->
     <div class="activity_alert" v-if="activityTips.status">
       <p class="close" @click="closeActivityTips">+</p>
       <p class="title">奖券</p>
       <div class="content">
-        <p class="msg">{{activityTips.msg}}</p>
+        <p class="msg">{{ activityTips.msg }}</p>
         <div class="btns">
           <span @click="closeActivityTips">关闭</span>
         </div>
       </div>
     </div>
     <!-- 背景音循环 -->
-    <audio src="/public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/slot_bg_loop.mp3" ref="slot_bg_loop" autoplay loop />
+    <audio
+      src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/slot_bg_loop.mp3"
+      ref="slot_bg_loop"
+      autoplay
+      loop
+    />
     <!-- 开始滚动按钮按下 -->
-    <audio src="/public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/start_btn.mp3" ref="audioStart"></audio>
+    <audio
+      src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/start_btn.mp3"
+      ref="audioStart"
+    ></audio>
     <!-- 摇杆 -->
-    <audio src="/public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/after_start_btn.mp3" ref="afterAudioStart"></audio>
-    <audio src="/public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3" ref="showCard"></audio>
+    <audio
+      src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/after_start_btn.mp3"
+      ref="afterAudioStart"
+    ></audio>
+    <audio
+      src="activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3"
+      ref="showCard"
+    ></audio>
     <Toast v-if="showToast" :text="$t('common.limited')" />
   </div>
 </template>
 <script>
-import {api_activity} from "src/api/index.js";
+import { api_activity } from "src/api/index.js";
 import common from "project/activity/src/pages/yazhou-pc/common";
 import Alert from "project/activity/src/components/public_alert/public_alert.vue";
 import format_date_base from "project/activity/src/mixins/common/formartmixin.js";
-import NumberScroll from "project/activity/src/pages/yazhou-pc/slot_machine/number_scroll.vue"
-import compose from "project/activity/src/pages/yazhou-pc/slot_machine/compose.vue"
+import NumberScroll from "project/activity/src/pages/yazhou-pc/slot_machine/number_scroll.vue";
+import compose from "project/activity/src/pages/yazhou-pc/slot_machine/compose.vue";
 import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
-import utils from 'project/activity/src/utils/utils.js';
-import _ from 'lodash';
-//头部引入  
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+import utils from "project/activity/src/utils/utils.js";
+import _ from "lodash";
+//头部引入
+import {
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "src/core/index.js";
 export default {
   mixins: [common, format_date_base],
   data() {
@@ -317,19 +576,15 @@ export default {
       animationClass: [], //3个抽奖模块对应的动画属性,方便后来对应添加和移除该class样式
       currentSlotIndex: 0, // 当前显示的老虎机下标 0白银 1黄金 2钻石
       activityTime: "", //活动时间
-      historiesBar: [
-        '彩金记录',
-        '合成记录',
-        '重置记录'
-      ],
+      historiesBar: ["彩金记录", "合成记录", "重置记录"],
       currentSlotData: [], // 三个老虎机的配置和数据
       notStart: true, //是否显示开始滚动按钮
       runResetSlotAnim: false, // 开始重置按钮动画
       runStartAnim: false,
-      currentSlotId: '', // 当前老虎机id
+      currentSlotId: "", // 当前老虎机id
       showAlert: false, // 展示notice提示
       isMaintaining: false, // 当前是否是维护状态
-      noticeMsg: '活动现已维护，感谢您的支持', // notice 提示内容
+      noticeMsg: "活动现已维护，感谢您的支持", // notice 提示内容
       rocker_anim_index: 1, // 摇杆动画序列初始帧值
       triangle_fade: 0, // 三角形闪动
       triangle_run: 1, // 三角形光走动
@@ -339,7 +594,7 @@ export default {
       light_run_yellow: 1,
       spin_success: false, // 展示抽奖成功后的彩灯闪动效果
       gameHistory: false, // 是否展示游戏记录弹窗
-      historyDataState: 'data',
+      historyDataState: "data",
       gameHistoryLists: {
         list: [],
         params: {
@@ -348,13 +603,13 @@ export default {
           current: 1, // 分页，当前第几页
           size: 6, //每页多少条数据，默认6条
         },
-        total_all:0,// 总数量
+        total_all: 0, // 总数量
       },
       goToPage: 1,
       // 老虎机状态
-      tiger_status:'stop',
+      tiger_status: "stop",
       // 老虎机结果
-      tiger_result:[10,10,10,10],
+      tiger_result: [10, 10, 10, 10],
       caijin_transfer: false, // 彩金文字缩放动效
       player: null,
       start_video: 0, // 合成开始动效
@@ -362,34 +617,37 @@ export default {
       maximizedToggle: true,
       currTicketId: null, // 当前要合成的奖券的id
       beforeGameResult: {}, // 前一次的抽奖结果
-      currentAwardSlotId: '', // 当前需要领彩金的老虎机id
-      is_show_compose:false, // 是否显示合成页面
+      currentAwardSlotId: "", // 当前需要领彩金的老虎机id
+      is_show_compose: false, // 是否显示合成页面
       slotCurrentResult: {}, // 老虎机抽奖结果
       initNums: [], // 改变此变量可以重置数字滚轮
-      tips: { // toast 提示窗
+      tips: {
+        // toast 提示窗
         statu: false,
-        message: ''
+        message: "",
       },
-      activityTips: { // ui 图提示框
+      activityTips: {
+        // ui 图提示框
         status: false,
-        msg: ""
+        msg: "",
       },
-      lottery: { // 三种奖券的数量
+      lottery: {
+        // 三种奖券的数量
         silver: 0,
         gold: 0,
-        diamond: 0
+        diamond: 0,
       },
       isFirstTime: false, // 是否是第一次提示（用户5天未领取奖金
-      showToast: false,//显示提示
-      _:_,
-      $g_image_preffix: '/public/yazhou-pc/'
-    }
+      showToast: false, //显示提示
+      _: _,
+      $g_image_preffix: "/public/yazhou-pc/",
+    };
   },
   watch: {
     goToPage(new_) {
       if (new_ > this.gameHistoryLists.params.total) {
         this.goToPage = this.gameHistoryLists.params.total;
-      } else if(new_ < 1){
+      } else if (new_ < 1) {
         this.goToPage = 1;
       }
     },
@@ -398,39 +656,47 @@ export default {
     Toast,
     Alert,
     NumberScroll,
-    compose
+    compose,
   },
   props: {
-    activityObj: {}
+    activityObj: {},
   },
   created() {
     // 计算活动时间的显示文案
-    if (this.activityObj.showTime == 'toStart') {
+    if (this.activityObj.showTime == "toStart") {
       // 距离活动开始的倒计时
-      this.countdown(this.activityObj.startAndEndTime.split(',')[0], this.activityObj.showTime);
-    } else if (this.activityObj.showTime == 'toEnd') {
+      this.countdown(
+        this.activityObj.startAndEndTime.split(",")[0],
+        this.activityObj.showTime
+      );
+    } else if (this.activityObj.showTime == "toEnd") {
       // 距离活动结束的倒计时
-      this.countdown(this.activityObj.startAndEndTime.split(',')[1], this.activityObj.showTime, 'sysTime');
+      this.countdown(
+        this.activityObj.startAndEndTime.split(",")[1],
+        this.activityObj.showTime,
+        "sysTime"
+      );
     } else {
       // 活动长期有效 || 活动已结束
       this.activityTime = this.activityObj.showTime;
     }
     // 定时器
-    this.lights_run_timer = { // 跑马灯跑动动效
+    this.lights_run_timer = {
+      // 跑马灯跑动动效
       pink_run: null,
       blue_run: null,
-      yellow_run: null
+      yellow_run: null,
     };
     this.timerObj = {};
     this.triangle_fade_timer = null;
     this.triangle_run_interval_timer = null;
     this.timeout_obj = {};
     // 获取老虎机配置
-    this.get_activity_slot_config()
-    this.init()
+    this.get_activity_slot_config();
+    this.init();
     // 老虎机重置和抽奖请求需要节流处理
-    this.resetSlot = _.throttle(this.resetSlot, 800)
-    this.start = _.throttle(this.start, 800)
+    this.resetSlot = _.throttle(this.resetSlot, 800);
+    this.start = _.throttle(this.start, 800);
     // 记录当前时间
     this.totalTime = 0;
 
@@ -439,10 +705,10 @@ export default {
       // 服务器时间戳
       let stime = this.mx_get_remote_time();
       let _now = this.utc_to_gmt_no_8_ms2_(stime);
-      if (_now.h == '00' && _now.mm == '00' && _now.s == '00') {
-        this.get_activity_slot_config()
+      if (_now.h == "00" && _now.mm == "00" && _now.s == "00") {
+        this.get_activity_slot_config();
       }
-    }, 1000)
+    }, 1000);
 
     // 合成页面的三种奖券的配置
     this.synthConfig = null;
@@ -451,9 +717,8 @@ export default {
 
     this.machine_images = window.vue;
 
-     // 站点 tab 休眠状态转激活
-     // this.$root.$on(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
-
+    // 站点 tab 休眠状态转激活
+    // this.$root.$on(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
   },
   methods: {
     /**
@@ -462,10 +727,12 @@ export default {
     init() {
       this.spin_success = false;
       clearInterval(this.triangle_fade_timer);
-      clearInterval(this.triangle_run_interval_timer)
-      Object.keys(this.lights_run_timer).forEach(item => clearInterval(this.lights_run_timer[item]))
-      clearTimeout(this.timerObj.timer1)
-      clearTimeout(this.timerObj.timer2)
+      clearInterval(this.triangle_run_interval_timer);
+      Object.keys(this.lights_run_timer).forEach((item) =>
+        clearInterval(this.lights_run_timer[item])
+      );
+      clearTimeout(this.timerObj.timer1);
+      clearTimeout(this.timerObj.timer2);
       this.triangle_run = 1;
       this.light_run_pink = 1;
       this.light_run_blue = 1;
@@ -476,7 +743,7 @@ export default {
         if (this.triangle_run > 3) {
           this.triangle_run = 1;
         }
-      }, 200)
+      }, 200);
       // 三色灯跑动效果
       this.lights_run_timer.pink_run = setInterval(() => {
         this.light_run_pink += 1;
@@ -490,7 +757,7 @@ export default {
           if (this.light_run_blue > 26) {
             this.light_run_blue = 1;
           }
-        }, 300)
+        }, 300);
       }, 1000);
       this.timerObj.timer2 = setTimeout(() => {
         this.lights_run_timer.yellow_run = setInterval(() => {
@@ -498,79 +765,84 @@ export default {
           if (this.light_run_yellow > 26) {
             this.light_run_yellow = 1;
           }
-        }, 300)
+        }, 300);
       }, 2000);
     },
     /**
      * 播放合成页的背景音乐
      */
     play_show_card() {
-      this.$refs.showCard.play()
+      this.$refs.showCard.play();
     },
     /**
      * 获取老虎机配置
      * type 0默认情况，不做特殊处理 1抽奖后的调用，不需要判断是否有需要领取的结果
      */
     get_activity_slot_config(type = 0) {
-      api_activity.get_activity_slot_config().then(res => {
-        let {code, data} = {...res.data}
-        if (code == 200 && _.get(data, 'length')) {
-          this.currentSlotData = data;
-          let beforeGameResult = {}
-          data.forEach((item, index) => {
-            // 获取三种奖券的数量
-            if (item.slotId == 1) {
-              this.lottery.silver = item.tokenNum
-            } else if (item.slotId == 2) {
-              this.lottery.gold = item.tokenNum
-            } else if (item.slotId == 3) {
-              this.lottery.diamond = item.tokenNum
-            }
-            // 是否有上一次未领取的奖金
-            if (item.beforeGameResult != null) {
-              beforeGameResult = item.beforeGameResult
-              beforeGameResult.reward = this.format_float(Number(beforeGameResult.reward) / 100)
-              this.currentAwardSlotId = item.slotId;
-              if (index == 0) {
-                this.initNums = beforeGameResult.slotResult
+      api_activity
+        .get_activity_slot_config()
+        .then((res) => {
+          let { code, data } = { ...res.data };
+          if (code == 200 && _.get(data, "length")) {
+            this.currentSlotData = data;
+            let beforeGameResult = {};
+            data.forEach((item, index) => {
+              // 获取三种奖券的数量
+              if (item.slotId == 1) {
+                this.lottery.silver = item.tokenNum;
+              } else if (item.slotId == 2) {
+                this.lottery.gold = item.tokenNum;
+              } else if (item.slotId == 3) {
+                this.lottery.diamond = item.tokenNum;
               }
-              if (type == 0) {
-                this.notStart = false
+              // 是否有上一次未领取的奖金
+              if (item.beforeGameResult != null) {
+                beforeGameResult = item.beforeGameResult;
+                beforeGameResult.reward = this.format_float(
+                  Number(beforeGameResult.reward) / 100
+                );
+                this.currentAwardSlotId = item.slotId;
+                if (index == 0) {
+                  this.initNums = beforeGameResult.slotResult;
+                }
+                if (type == 0) {
+                  this.notStart = false;
+                }
               }
-            }
-            // 用户是否有超过5天未领取的奖金
-            if (item.gameResultMsg) {
-              this.activityTips = {
-                status: true,
-                msg: "您的彩金由于长时间未领取，系统已自动派发至您的账户中"
+              // 用户是否有超过5天未领取的奖金
+              if (item.gameResultMsg) {
+                this.activityTips = {
+                  status: true,
+                  msg: "您的彩金由于长时间未领取，系统已自动派发至您的账户中",
+                };
+                this.isFirstTime = true;
               }
-              this.isFirstTime = true;
-            }
-          })
-          this.beforeGameResult = beforeGameResult
-          this.is_init = true
-        } else if (code == '0410505') {
-          // 弹窗提示用户 当前已经维护
-          this.isMaintaining = true;
-          this.showAlert = true;
-          this.noticeMsg = "活动现已维护，感谢您的支持";
-          // 其他情况的接口提示
-        } else {
-          this.toast(res.data.msg)
-        }
-      }).catch(err => {
-        console.error(err)
-      })
+            });
+            this.beforeGameResult = beforeGameResult;
+            this.is_init = true;
+          } else if (code == "0410505") {
+            // 弹窗提示用户 当前已经维护
+            this.isMaintaining = true;
+            this.showAlert = true;
+            this.noticeMsg = "活动现已维护，感谢您的支持";
+            // 其他情况的接口提示
+          } else {
+            this.toast(res.data.msg);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
     /**
      * @Description 更新奖券数量
      * @param {undefined} undefined
-    */
-    update_slots_config(obj){
-      if(obj){
-        Object.assign(this.lottery,obj)
-      }else{
-        this.get_activity_slot_config()
+     */
+    update_slots_config(obj) {
+      if (obj) {
+        Object.assign(this.lottery, obj);
+      } else {
+        this.get_activity_slot_config();
       }
     },
     /**
@@ -580,9 +852,12 @@ export default {
      * @param {*} size 每页多少条数据
      * @param {*} e
      */
-    get_activity_slot_get_game_record_go_to_page(){
+    get_activity_slot_get_game_record_go_to_page() {
       // 游戏记录
-      this.get_activity_slot_get_game_record(this.goToPage,this.gameHistoryLists.params.type);
+      this.get_activity_slot_get_game_record(
+        this.goToPage,
+        this.gameHistoryLists.params.type
+      );
     },
     /**
      * 游戏记录
@@ -591,77 +866,82 @@ export default {
      * @param {*} size 每页多少条数据
      * @param {*} e
      */
-    get_activity_slot_get_game_record(current = 1,type = 1, size = 6) {
-      if (this.activityTips.status) {return}
+    get_activity_slot_get_game_record(current = 1, type = 1, size = 6) {
+      if (this.activityTips.status) {
+        return;
+      }
       const params = {
         type,
         current,
-        size
-      }
+        size,
+      };
       // 获取当前历史记录的配置信息
       this.gameHistoryLists.params.type = Number(type);
       this.gameHistoryLists.params.current = Number(current);
-      this.historyDataState = 'loading';
+      this.historyDataState = "loading";
       this.gameHistoryLists.list = [];
       this.goToPage = current;
-      api_activity.get_activity_slot_get_game_record(params).then(res => {
-        let {code, data} = {...res.data}
-        if(code=='0401038'){    
-          this.showToast = true
-          this.historyDataState = 'api_limited'
-          let timer = setTimeout(()=>{
-            this.showToast = false
-            clearTimeout(timer);
-          }, 500)
-        }
-        if (code == 200 && _.get(data, 'records')) {
-          // 展示游戏记录弹窗
-          this.gameHistory = true;
-          this.totalTime = new Date().getTime();
-          this.gameHistoryLists.params.total = Number(data.pages);
-          if (_.get(data, 'records.length')) {
-            data.records.forEach((item, index) => {
-              if (item.create_time) {
-                // 计算格式化时间
-                let _time = this.format_date_base(item.create_time);
-                let _format = `${_time[0]}-${_time[1]}-${_time[2]} ${_time[3]}:${_time[4]}`
-                item.create_time = _format
-              } else {
-                item.create_time = "-";
-              }
-              this.gameHistoryLists.list[index] = item;
-            });
-            this.historyDataState = 'data';
-            this.$nextTick(() => {
-              utils.set_page_aria_hidden()
-            })            
-          } else {
-            // 没数据就显示【暂无数据】
-            this.historyDataState = 'empty';
-            this.gameHistoryLists.list = [];
+      api_activity
+        .get_activity_slot_get_game_record(params)
+        .then((res) => {
+          let { code, data } = { ...res.data };
+          if (code == "0401038") {
+            this.showToast = true;
+            this.historyDataState = "api_limited";
+            let timer = setTimeout(() => {
+              this.showToast = false;
+              clearTimeout(timer);
+            }, 500);
           }
-          // 设置总数量
-          this.gameHistoryLists.total_all = _.get(data, 'total', 0);
-        } else if (code == '0410505') {
+          if (code == 200 && _.get(data, "records")) {
+            // 展示游戏记录弹窗
+            this.gameHistory = true;
+            this.totalTime = new Date().getTime();
+            this.gameHistoryLists.params.total = Number(data.pages);
+            if (_.get(data, "records.length")) {
+              data.records.forEach((item, index) => {
+                if (item.create_time) {
+                  // 计算格式化时间
+                  let _time = this.format_date_base(item.create_time);
+                  let _format = `${_time[0]}-${_time[1]}-${_time[2]} ${_time[3]}:${_time[4]}`;
+                  item.create_time = _format;
+                } else {
+                  item.create_time = "-";
+                }
+                this.gameHistoryLists.list[index] = item;
+              });
+              this.historyDataState = "data";
+              this.$nextTick(() => {
+                utils.set_page_aria_hidden();
+              });
+            } else {
+              // 没数据就显示【暂无数据】
+              this.historyDataState = "empty";
+              this.gameHistoryLists.list = [];
+            }
+            // 设置总数量
+            this.gameHistoryLists.total_all = _.get(data, "total", 0);
+          } else if (code == "0410505") {
             this.isMaintaining = true;
             this.showAlert = true;
             this.noticeMsg = "活动现已维护，感谢您的支持";
             // 没数据就显示【暂无数据】
-            this.historyDataState = 'empty';
+            this.historyDataState = "empty";
             this.gameHistoryLists.list = [];
-          // 其他情况的接口提示
-        } else {
+            // 其他情况的接口提示
+          } else {
+            // 没数据就显示【暂无数据】
+            this.historyDataState = "empty";
+            this.gameHistoryLists.list = [];
+          }
+        })
+        .catch((err) => {
+          console.error(err);
           // 没数据就显示【暂无数据】
-          this.historyDataState = 'empty';
+          this.historyDataState = "empty";
           this.gameHistoryLists.list = [];
-        }
-      }).catch((err) => {
-        console.error(err);
-        // 没数据就显示【暂无数据】
-        this.historyDataState = 'empty';
-        this.gameHistoryLists.list = [];
-        this.gameHistoryLists.total_all = 0;
-      });
+          this.gameHistoryLists.total_all = 0;
+        });
     },
     /**
      * 分页组件分页方法
@@ -672,7 +952,10 @@ export default {
       if (new Date().getTime() - this.totalTime < 100) {
         return;
       } else {
-        this.get_activity_slot_get_game_record(e,this.gameHistoryLists.params.type);
+        this.get_activity_slot_get_game_record(
+          e,
+          this.gameHistoryLists.params.type
+        );
       }
     },
     /**
@@ -680,64 +963,88 @@ export default {
      * @param {*} number 0 白银 1黄金 2钻石
      */
     switch_slots(number) {
-      if (number > 3 || this.tiger_status != 'stop' || this.activityTips.status) return
+      if (number > 3 || this.tiger_status != "stop" || this.activityTips.status)
+        return;
       this.currentSlotIndex = number;
       // 如果有前一次的抽奖结果未领取
-      if (_.get(this.currentSlotData[this.currentSlotIndex], 'beforeGameResult')) {
+      if (
+        _.get(this.currentSlotData[this.currentSlotIndex], "beforeGameResult")
+      ) {
         // 数字滚轮展示前一次抽奖结果
-        this.initNums = _.get(this.currentSlotData[this.currentSlotIndex], 'beforeGameResult.slotResult')
+        this.initNums = _.get(
+          this.currentSlotData[this.currentSlotIndex],
+          "beforeGameResult.slotResult"
+        );
       } else {
         // 否则数字滚轮显示默认值
         this.initNums = [10, 10, 10, 10];
       }
-      this.init()
+      this.init();
     },
     /**
      * 重置按钮
      */
     resetSlot() {
       // 如果当前没有道具则不允许重置
-      if (!_.get(this.currentSlotData[this.currentSlotIndex], 'beforeGameResult.propName') || this.activityTips.status) {return}
+      if (
+        !_.get(
+          this.currentSlotData[this.currentSlotIndex],
+          "beforeGameResult.propName"
+        ) ||
+        this.activityTips.status
+      ) {
+        return;
+      }
       // 开始展示重置时的动画
       this.runResetSlotAnim = true;
       this.timerObj.timer3 = setTimeout(() => {
         this.runResetSlotAnim = false;
-        clearTimeout(this.timerObj.timer3)
+        clearTimeout(this.timerObj.timer3);
       }, 800);
-      api_activity.get_activity_slot_resetprop({slotId: this.currentSlotData[this.currentSlotIndex].slotId}).then(res => {
-        let {code, data} = {...res.data}
-        if (code == 200) {
-          // 新的道具名字
-          this.currentSlotData[this.currentSlotIndex].beforeGameResult.propName = data.propName;
-          // 新的金额
-          this.beforeGameResult.reward = this.format_float(Number(data.reward) / 100)
-          // 道具栏动画
-          this.caijin_transfer = true
-          this.timerObj.timer4 = setTimeout(() => {
-            this.caijin_transfer = false
-          }, 3000);
-          // 重置成功后更新奖券
-          this.get_activity_slot_config()
-        } else if (code == '0410505') {
+      api_activity
+        .get_activity_slot_resetprop({
+          slotId: this.currentSlotData[this.currentSlotIndex].slotId,
+        })
+        .then((res) => {
+          let { code, data } = { ...res.data };
+          if (code == 200) {
+            // 新的道具名字
+            this.currentSlotData[
+              this.currentSlotIndex
+            ].beforeGameResult.propName = data.propName;
+            // 新的金额
+            this.beforeGameResult.reward = this.format_float(
+              Number(data.reward) / 100
+            );
+            // 道具栏动画
+            this.caijin_transfer = true;
+            this.timerObj.timer4 = setTimeout(() => {
+              this.caijin_transfer = false;
+            }, 3000);
+            // 重置成功后更新奖券
+            this.get_activity_slot_config();
+          } else if (code == "0410505") {
             this.isMaintaining = true;
             this.showAlert = true;
             this.noticeMsg = "活动现已维护，感谢您的支持";
-          // 其他情况的接口提示
-        } else {
-          // 奖券数不够
-          if (code == 'reset_no_ticket') {
-            this.activityTips = { // ui 图提示框
-              status: true,
-              msg: res.data.msg
-            }
+            // 其他情况的接口提示
           } else {
-            this.toast(res.data.msg)
+            // 奖券数不够
+            if (code == "reset_no_ticket") {
+              this.activityTips = {
+                // ui 图提示框
+                status: true,
+                msg: res.data.msg,
+              };
+            } else {
+              this.toast(res.data.msg);
+            }
           }
-        }
-      }).catch(err => {
-        console.error(err)
-        this.toast(err)
-      })
+        })
+        .catch((err) => {
+          console.error(err);
+          this.toast(err);
+        });
     },
     /**
      * 开始滚动/确认领取
@@ -745,25 +1052,34 @@ export default {
      */
     start(type) {
       // 老虎机未初始化 或者有弹窗提示 或者老虎机在滚动过程中，不允许点击
-      if(!this.is_init || this.activityTips.status || this.tiger_status != 'stop'){
-        return
+      if (
+        !this.is_init ||
+        this.activityTips.status ||
+        this.tiger_status != "stop"
+      ) {
+        return;
       }
       // 按钮动画
       this.runStartAnim = true;
       this.timerObj.timer5 = setTimeout(() => {
         this.runStartAnim = false;
-        clearTimeout(this.timerObj.timer5)
+        clearTimeout(this.timerObj.timer5);
       }, 500);
       let api_;
-      if (type == 'start') {
+      if (type == "start") {
         // 是否提示 尚有奖励未领取，不可滚动,阻止摇杆操作
-        if(_.get(this.currentSlotData[this.currentSlotIndex], 'gameTimes') == 0){
+        if (
+          _.get(this.currentSlotData[this.currentSlotIndex], "gameTimes") == 0
+        ) {
           // 抽奖数量不足时
           return;
-        } else if(_.get(this.currentSlotData[this.currentSlotIndex], 'tokenNum') < _.get(this.currentSlotData[this.currentSlotIndex], 'lotteryNum')){
+        } else if (
+          _.get(this.currentSlotData[this.currentSlotIndex], "tokenNum") <
+          _.get(this.currentSlotData[this.currentSlotIndex], "lotteryNum")
+        ) {
           // 奖券数不够抽奖一次时
           return;
-        } else if(Object.keys(this.beforeGameResult).length != 0){
+        } else if (Object.keys(this.beforeGameResult).length != 0) {
           // 有奖励未领取的场景
           this.toast("尚有奖励未领取，不可滚动");
           return;
@@ -775,103 +1091,115 @@ export default {
           let rocker = setInterval(() => {
             this.rocker_anim_index += 1;
             if (this.rocker_anim_index > 8) {
-              clearInterval(rocker)
+              clearInterval(rocker);
               this.rocker_anim_index = 1;
             }
           }, 15);
-          this.$refs.afterAudioStart.play()
+          this.$refs.afterAudioStart.play();
           clearTimeout(timer_play);
         }, 500);
         // 数字滚轮滚动
-        if (this.tiger_status == 'stop') {
-          this.tiger_status = 'runing'
+        if (this.tiger_status == "stop") {
+          this.tiger_status = "runing";
         }
         // 抽奖
-        api_ = api_activity.get_activity_slot_spin({slotId: this.currentSlotData[this.currentSlotIndex].slotId})
+        api_ = api_activity.get_activity_slot_spin({
+          slotId: this.currentSlotData[this.currentSlotIndex].slotId,
+        });
       } else {
         // 领奖
-        api_ = api_activity.get_activity_slot_get_award({slotId: this.currentAwardSlotId})
+        api_ = api_activity.get_activity_slot_get_award({
+          slotId: this.currentAwardSlotId,
+        });
       }
-      api_.then(res => {
-        let {code, data} = {...res.data}
-        if (code == 200) {
-          if (type == 'start') {
-            // 抽奖成功后处理动画
-            this.slot_spin_end()
-            // 获取抽奖结果,停止老虎机滚动
-            if (_.get(data, 'slotResult.length')) {
-              data.slotResult.forEach(item => {
-                if (item == 0) {
-                  item == 10;
-                }
-              })
-              this.slotCurrentResult = data;
-              // 准备停止滚轮
-              this.stopping(data.slotResult);
+      api_
+        .then((res) => {
+          let { code, data } = { ...res.data };
+          if (code == 200) {
+            if (type == "start") {
+              // 抽奖成功后处理动画
+              this.slot_spin_end();
+              // 获取抽奖结果,停止老虎机滚动
+              if (_.get(data, "slotResult.length")) {
+                data.slotResult.forEach((item) => {
+                  if (item == 0) {
+                    item == 10;
+                  }
+                });
+                this.slotCurrentResult = data;
+                // 准备停止滚轮
+                this.stopping(data.slotResult);
+              }
+            } else {
+              // 领取
+              this.toast("领取彩金成功");
+              this.beforeGameResult = {};
+              this.notStart = true;
+              this.initNums = [10, 10, 10, 10];
+              this.init();
+              this.get_activity_slot_config();
             }
+          } else if (code == "0410505") {
+            this.isMaintaining = true;
+            this.showAlert = true;
+            this.noticeMsg = "活动现已维护，感谢您的支持";
+            // 其他情况的接口提示
           } else {
-            // 领取
-            this.toast('领取彩金成功');
-            this.beforeGameResult = {};
-            this.notStart = true;
-            this.initNums = [10, 10, 10, 10];
-            this.init()
-            this.get_activity_slot_config()
+            // 强制停止并初始化滚轮
+            this.$refs.number_scroll.force_stop();
+            this.toast(res.data.msg);
+            this.get_activity_slot_config();
           }
-        } else if (code == '0410505') {
-          this.isMaintaining = true;
-          this.showAlert = true;
-          this.noticeMsg = "活动现已维护，感谢您的支持";
-          // 其他情况的接口提示
-        } else {
+        })
+        .catch((err) => {
+          console.error(err);
           // 强制停止并初始化滚轮
-          this.$refs.number_scroll.force_stop()
-          this.toast(res.data.msg);
-          this.get_activity_slot_config()
-        }
-      }).catch(err=>{
-        console.error(err)
-        // 强制停止并初始化滚轮
-        this.$refs.number_scroll.force_stop()
-        this.toast("服务无响应，请稍后再试")
-      })
+          this.$refs.number_scroll.force_stop();
+          this.toast("服务无响应，请稍后再试");
+        });
     },
     /**
      * 抽奖结果已返回，开始减速
      * @param {*} result
      */
-    stopping(result = [10,10,10,10]){
+    stopping(result = [10, 10, 10, 10]) {
       // 运行状态才能停止老虎机
-      if(this.tiger_status == 'runing'){
+      if (this.tiger_status == "runing") {
         // 传入抽奖结果
-        this.tiger_result = result
-        this.tiger_status = 'stopping'
+        this.tiger_result = result;
+        this.tiger_status = "stopping";
       }
     },
     /**
      * 滚轮完全停止后的处理
      */
-    stop(){
-      this.tiger_status = 'stop'
+    stop() {
+      this.tiger_status = "stop";
       // 抽奖成功后展示领取按钮
       this.notStart = false;
-      if(this.beforeGameResult.reward){
+      if (this.beforeGameResult.reward) {
         // 抽奖金额
-      this.beforeGameResult.reward = this.format_float(Number(this.slotCurrentResult.reward) / 100)
+        this.beforeGameResult.reward = this.format_float(
+          Number(this.slotCurrentResult.reward) / 100
+        );
       }
       // 道具名字
       if (!this.currentSlotData[this.currentSlotIndex].beforeGameResult) {
-        this.currentSlotData[this.currentSlotIndex].beforeGameResult = {propName: this.slotCurrentResult.propName}
+        this.currentSlotData[this.currentSlotIndex].beforeGameResult = {
+          propName: this.slotCurrentResult.propName,
+        };
       } else {
-        this.currentSlotData[this.currentSlotIndex].beforeGameResult['propName'] = this.slotCurrentResult.propName;
+        this.currentSlotData[this.currentSlotIndex].beforeGameResult[
+          "propName"
+        ] = this.slotCurrentResult.propName;
       }
       // 彩金动画
-      this.caijin_transfer = true
+      this.caijin_transfer = true;
       this.timerObj.timer6 = setTimeout(() => {
-        this.caijin_transfer = false
+        this.caijin_transfer = false;
       }, 3000);
 
-      this.get_activity_slot_config(1)
+      this.get_activity_slot_config(1);
     },
     /**
      * 由于该弹窗自带的隐藏动画比较诡异切暂时没有找到相关处理接口，所以在执行隐藏动画前手动关闭
@@ -894,8 +1222,8 @@ export default {
      */
     toast(message) {
       /**清除定时器 */
-      clearTimeout(this.timer_tips)
-      this.timer_tips = null
+      clearTimeout(this.timer_tips);
+      this.timer_tips = null;
       this.tips = {
         statu: true,
         message: message,
@@ -909,17 +1237,19 @@ export default {
      * @param {*} num 要格式化的数字
      */
     format_float(num) {
-      if (!num) {return}
+      if (!num) {
+        return;
+      }
       let reg = /\./;
       let str = String(num);
       if (reg.test(str)) {
-        if (str.substring(str.indexOf('.')).length < 3) {
-          return str + '0';
+        if (str.substring(str.indexOf(".")).length < 3) {
+          return str + "0";
         } else {
-          return str.substring(0, str.indexOf('.') + 2)
+          return str.substring(0, str.indexOf(".") + 2);
         }
       } else {
-        return num + '.00'
+        return num + ".00";
       }
     },
     /**
@@ -928,7 +1258,7 @@ export default {
     slot_spin_end() {
       // 从亮到暗的次数
       let count1 = 1;
-      clearInterval(this.triangle_run_interval_timer)
+      clearInterval(this.triangle_run_interval_timer);
       // 三角形闪动
       this.triangle_fade_timer = setInterval(() => {
         this.triangle_fade += 1;
@@ -936,23 +1266,27 @@ export default {
           count1 += 1;
           this.triangle_fade = 1;
           if (count1 > 10) {
-            clearInterval(this.triangle_fade_timer)
+            clearInterval(this.triangle_fade_timer);
           }
         }
       }, 30);
       // 跑马灯从跑动变为三色灯光闪动
       // 停止跑动动效
-      Object.keys(this.lights_run_timer).forEach(item => clearInterval(this.lights_run_timer[item]))
+      Object.keys(this.lights_run_timer).forEach((item) =>
+        clearInterval(this.lights_run_timer[item])
+      );
       this.spin_success = true;
     },
     /**
      * 获取服务器时间的年月日时分秒
      */
     utc_to_gmt_no_8_ms2_(value) {
-      if (!value) { return '' }
+      if (!value) {
+        return "";
+      }
       let time = utils.format_time_zone_millisecond(parseInt(value));
-      let [y, m, d, h, mm, s] = this.format_date_base(time)
-      return {y, m, d, h, mm, s}
+      let [y, m, d, h, mm, s] = this.format_date_base(time);
+      return { y, m, d, h, mm, s };
     },
     /***
      * 关闭提示弹窗
@@ -962,7 +1296,7 @@ export default {
       // 如果是首次提示就更新一下老虎机配置
       if (this.isFirstTime) {
         this.isFirstTime = false;
-        this.get_activity_slot_config()
+        this.get_activity_slot_config();
       }
     },
     /**
@@ -973,41 +1307,53 @@ export default {
       let evt = e || window.event;
       // 弹窗显示的时候不允许滚动页面
       if (this.activityTips.status) {
-        evt.preventDefault()
+        evt.preventDefault();
         evt.stopPropagation();
       }
     },
     /**
      * 页面是否处于后台运行
      */
-     emit_site_tab_active() {
+    emit_site_tab_active() {
       // 页面在后台运行时关掉音效
-      if (document.visibilityState == 'hidden') {
-        this.$refs.slot_bg_loop.pause()
-        this.$refs.audioStart.pause()
-        this.$refs.afterAudioStart.pause()
-        this.$refs.showCard.pause()
+      if (document.visibilityState == "hidden") {
+        this.$refs.slot_bg_loop.pause();
+        this.$refs.audioStart.pause();
+        this.$refs.afterAudioStart.pause();
+        this.$refs.showCard.pause();
       } else {
-        this.$refs.slot_bg_loop.load()
-        this.$refs.audioStart.load()
-        this.$refs.afterAudioStart.load()
-        this.$refs.showCard.load()
+        this.$refs.slot_bg_loop.load();
+        this.$refs.audioStart.load();
+        this.$refs.afterAudioStart.load();
+        this.$refs.showCard.load();
       }
-    }
+    },
   },
+<<<<<<< Updated upstream
   beforeUnmount() {
     this.debounce_throttle_cancel(this.resetSlot)
     this.debounce_throttle_cancel(this.start)
     clearInterval(this.triangle_run_interval_timer)
     Object.keys(this.lights_run_timer).forEach(item => clearInterval(this.lights_run_timer[item]))
+=======
+  beforeDestroy() {
+    this.debounce_throttle_cancel(this.resetSlot);
+    this.debounce_throttle_cancel(this.start);
+    clearInterval(this.triangle_run_interval_timer);
+    Object.keys(this.lights_run_timer).forEach((item) =>
+      clearInterval(this.lights_run_timer[item])
+    );
+>>>>>>> Stashed changes
 
     clearInterval(this.morningTimer);
     clearTimeout(this.timeout_obj.timer2);
-    Object.keys(this.timerObj).forEach(item => clearTimeout(this.timerObj[item]))
-   // 站点 tab 休眠状态转激活
-   // this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
-  }
-}
+    Object.keys(this.timerObj).forEach((item) =>
+      clearTimeout(this.timerObj[item])
+    );
+    // 站点 tab 休眠状态转激活
+    // this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -1046,8 +1392,8 @@ export default {
     }
   }
   .slot_machine_content {
-    background: url("public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg") no-repeat top
-      center;
+    background: url("public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg")
+      no-repeat top center;
     background-size: 105%;
     margin-top: 80px;
     /*  老虎机 */
@@ -1246,9 +1592,12 @@ export default {
             height: 3px;
             border-radius: 50%;
             background: var(--qq--activity-bg-color-9);
-            box-shadow: 0 0 2px 2px var(--qq--activity-box-shadow-3), 100px -45px 2px 1px var(--qq--activity-box-shadow-3),
-              120px -20px 2px 2px var(--qq--activity-box-shadow-3), 160px -20px 2px 2px var(--qq--activity-box-shadow-3),
-              200px -25px 2px 2px var(--qq--activity-box-shadow-3), 300px -10px 2.5px 2px var(--qq--activity-box-shadow-3);
+            box-shadow: 0 0 2px 2px var(--qq--activity-box-shadow-3),
+              100px -45px 2px 1px var(--qq--activity-box-shadow-3),
+              120px -20px 2px 2px var(--qq--activity-box-shadow-3),
+              160px -20px 2px 2px var(--qq--activity-box-shadow-3),
+              200px -25px 2px 2px var(--qq--activity-box-shadow-3),
+              300px -10px 2.5px 2px var(--qq--activity-box-shadow-3);
             left: 20px;
             bottom: 3px;
           }
@@ -1257,8 +1606,10 @@ export default {
             height: 3px;
             border-radius: 50%;
             background: var(--qq--activity-bg-color-9);
-            box-shadow: 0px 0 2px 2px var(--qq--activity-box-shadow-3), 50px -6px 2px 2px var(--qq--activity-box-shadow-3),
-              100px -45px 2px 1px var(--qq--activity-box-shadow-3), 250px -25px 2px 2px var(--qq--activity-box-shadow-3),
+            box-shadow: 0px 0 2px 2px var(--qq--activity-box-shadow-3),
+              50px -6px 2px 2px var(--qq--activity-box-shadow-3),
+              100px -45px 2px 1px var(--qq--activity-box-shadow-3),
+              250px -25px 2px 2px var(--qq--activity-box-shadow-3),
               300px -10px 2px 2px var(--qq--activity-box-shadow-3);
             left: 50px;
             bottom: -30px;
@@ -1479,7 +1830,7 @@ export default {
       }
       .synthetic_lottory {
         background-image: var(--qq--activity-bd-img-5);
-        color: var(--qq--activity-text-color-active);;
+        color: var(--qq--activity-text-color-active);
         margin-right: 80px;
       }
       .game_history {
@@ -1581,7 +1932,7 @@ export default {
     .content_title {
       width: 260px;
       height: 62px;
-      background-image: url("~public/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
+      background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
@@ -1890,56 +2241,121 @@ export default {
 }
 
 @keyframes lightsLight {
-  0% { /*  白 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-14) 80%);
+  0% {
+    /*  白 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-14) 80%
+    );
     box-shadow: 0px 3px 0px 0px var(--qq--activity-box-shadow-4);
   }
-  8.3% { /*  红 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-15) 80%);
+  8.3% {
+    /*  红 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-15) 80%
+    );
     filter: drop-shadow(0px 0px 10px var(--qq--activity-bg-color-15));
   }
-  16.6% { /*  白 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-14) 80%);
+  16.6% {
+    /*  白 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-14) 80%
+    );
     box-shadow: 0px 3px 0px 0px var(--qq--activity-box-shadow-4);
   }
-  25% { /*  红 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-15) 80%);
+  25% {
+    /*  红 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-15) 80%
+    );
     filter: drop-shadow(0px 0px 10px var(--qq--activity-bg-color-15));
   }
-  33.2% { /*  白 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-14) 80%);
+  33.2% {
+    /*  白 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-14) 80%
+    );
     box-shadow: 0px 3px 0px 0px var(--qq--activity-box-shadow-4);
   }
-  41.4% { /*  黄 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, yellow 80%);
+  41.4% {
+    /*  黄 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      yellow 80%
+    );
     filter: drop-shadow(0px 0px 10px yellow);
   }
-  50% { /*  白 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-14) 80%);
+  50% {
+    /*  白 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-14) 80%
+    );
     box-shadow: 0px 3px 0px 0px var(--qq--activity-box-shadow-4);
   }
-  58.3% { /*  黄 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, yellow 80%);
+  58.3% {
+    /*  黄 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      yellow 80%
+    );
     filter: drop-shadow(0px 0px 10px yellow);
   }
-  66.6% { /*  白 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-14) 80%);
+  66.6% {
+    /*  白 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-14) 80%
+    );
     box-shadow: 0px 3px 0px 0px var(--qq--activity-box-shadow-4);
   }
-  75% { /*  蓝 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, deepskyblue 80%);
+  75% {
+    /*  蓝 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      deepskyblue 80%
+    );
     filter: drop-shadow(0px 0px 10px deepskyblue);
   }
-  83.3% { /*  白 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-14) 80%);
+  83.3% {
+    /*  白 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-14) 80%
+    );
     box-shadow: 0px 3px 0px 0px var(--qq--activity-box-shadow-4);
   }
-  91.6% { /*  蓝 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, deepskyblue 80%);
+  91.6% {
+    /*  蓝 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      deepskyblue 80%
+    );
     filter: drop-shadow(0px 0px 10px deepskyblue);
   }
-  100% { /*  白 */
-    background-image: radial-gradient(at 50% 40%, var(--qq--activity-bg-color-13) 2px, var(--qq--activity-bg-color-14) 80%);
+  100% {
+    /*  白 */
+    background-image: radial-gradient(
+      at 50% 40%,
+      var(--qq--activity-bg-color-13) 2px,
+      var(--qq--activity-bg-color-14) 80%
+    );
     box-shadow: 0px 3px 0px 0px var(--qq--activity-box-shadow-4);
   }
 }
