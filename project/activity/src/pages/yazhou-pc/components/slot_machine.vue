@@ -1329,13 +1329,6 @@ export default {
       }
     },
   },
-<<<<<<< Updated upstream
-  beforeUnmount() {
-    this.debounce_throttle_cancel(this.resetSlot)
-    this.debounce_throttle_cancel(this.start)
-    clearInterval(this.triangle_run_interval_timer)
-    Object.keys(this.lights_run_timer).forEach(item => clearInterval(this.lights_run_timer[item]))
-=======
   beforeDestroy() {
     this.debounce_throttle_cancel(this.resetSlot);
     this.debounce_throttle_cancel(this.start);
@@ -1343,7 +1336,6 @@ export default {
     Object.keys(this.lights_run_timer).forEach((item) =>
       clearInterval(this.lights_run_timer[item])
     );
->>>>>>> Stashed changes
 
     clearInterval(this.morningTimer);
     clearTimeout(this.timeout_obj.timer2);
