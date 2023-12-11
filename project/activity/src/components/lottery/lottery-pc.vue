@@ -26,10 +26,10 @@ export default {
     is_show_card: Boolean,
     lotteryNum: {
       type: Object,
-      default: {}
+      default: ()=>{}
     },
     lottery_obj: Object
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

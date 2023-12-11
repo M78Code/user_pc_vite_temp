@@ -123,15 +123,11 @@ export default {
       },
       immediate:true
     },
-    // results_list: {
-    //   handler(new_) {
-    //       nextTick(()=>{
-    //         let obj = this.yabo_common.get_refs_info('scrollArea', null, this);
-    //         obj && obj.setScrollPosition();
-    //       });
-    //   },
-    //   deep:true
-    // },
+    load_data_state:{
+      handler(val){
+        this.$refs.scrollArea.setScrollPosition('vertical', 10)
+      }
+    }
   },
   methods: {
     /**
