@@ -17,17 +17,9 @@ import { import_json_data } from "./util.js";
 
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
-const { BUILD_VERSION, CURRENT_ENV,BUILD_DIR_NAME } = BUILD_VERSION_CONFIG;
+const { BUILD_VERSION, CURRENT_ENV,BUILD_DIR_NAME ,BUILD_OUTDIR } = BUILD_VERSION_CONFIG;
  
-// 命令行参数
-const argv_param = ("" + process.argv[2]).trim();
-// is_dist  是 true 则 则 目录在 dist/spa 下生成oss 目录
-const is_dist = argv_param == "dist";
-const is_backup = argv_param == "backup";
-const is_output = argv_param == "output";
-if (is_dist) {
-  remove_file(`./dist/${BUILD_DIR_NAME}/${BUILD_VERSION}/oss`);
-}
+
 // return  false
 // OSS--开发---- https://api-json.sportxxx25o1bmw.com/dev.json
 // OSS--测试---- https://api-json.sportxxx25o1bmw.com/test.json
@@ -56,24 +48,42 @@ const ENV_OSS_OBJ = {
 export const compute_oss_file_path_arr = (current_env) => {
   return ENV_OSS_OBJ[current_env] || [];
 };
-let oss_arr = [];
-// 创建文件夹
-let check_dir = "";
+
+
+// 命令行参数
+const argv_param = ("" + process.argv[2]).trim();
+//生产打包构建 ：  目标是最终打包生成到  `./dist/${BUILD_DIR_NAME}/oss`  ，用于最终的生产构建
+const is_dist = argv_param == "dist";
+//本地备份OSS文件： 目标是备份 所有OSS 文件到本地 ，用于备份
+const is_backup = argv_param == "backup";  
+//生成脚本用OSS文件：目标是输出到  ./job/output 目录下 用于 内部脚本流程
+const is_output = argv_param == "output";
+
+ 
+
+// 当前环境的 远程服务端 OSS 路径数组 
+let server_oss_url_arr = [];
+// oss 文件生成的 目标路径
+let local_oss_target_dir = "";
+//生产打包构建 
 if (is_dist) {
-  oss_arr = compute_oss_file_path_arr(CURRENT_ENV);
-  check_dir = `./dist/${BUILD_DIR_NAME}/oss`;
+  //生产构建 删除 构建生成目录下的的OSS 目录，也就是打包的时候从public/oss内拷贝过来的
+  remove_file(`./${BUILD_OUTDIR}/oss`);
+  server_oss_url_arr = compute_oss_file_path_arr(CURRENT_ENV);
+  local_oss_target_dir = `./dist/${BUILD_DIR_NAME}/oss`;
 }
+//本地备份OSS文件 
 if (is_backup) {
   for (let env in ENV_OSS_OBJ) {
-    oss_arr = [...oss_arr, ...ENV_OSS_OBJ[env]];
+    server_oss_url_arr = [...server_oss_url_arr, ...ENV_OSS_OBJ[env]];
   }
-  check_dir = "./job/backup-oss";
+  local_oss_target_dir = "./job/backup-oss";
 }
-// 输出到
+//生成脚本用OSS文件
 if (is_output) {
-  oss_arr = compute_oss_file_path_arr(CURRENT_ENV);
+  server_oss_url_arr = compute_oss_file_path_arr(CURRENT_ENV);
   // 创建文件夹
-  check_dir = "./job/output/oss";
+  local_oss_target_dir = "./job/output/oss";
 }
 let zhixing_job = is_dist || is_backup || is_output;
 const write_oss_fn = async () => {
@@ -83,14 +93,14 @@ const write_oss_fn = async () => {
     return arr[arr.length - 1].trim();
   }
   //确保  输出目录存在
-  ensure_write_folder_exist(check_dir);
+  ensure_write_folder_exist(local_oss_target_dir);
   let oss_data_obj = {};
   // 拉取服务器资源 写入本地
-  for (let i = 0; i < oss_arr.length; i++) {
-    let file_name = compute_file_name(oss_arr[i]);
+  for (let i = 0; i < server_oss_url_arr.length; i++) {
+    let file_name = compute_file_name(server_oss_url_arr[i]);
 
     try {
-      const res = await axios.get(oss_arr[i],{timeout:5000});
+      const res = await axios.get(server_oss_url_arr[i],{timeout:5000});
 
       if (res.data) {
         oss_data_obj[file_name] = res.data;
@@ -112,7 +122,7 @@ const write_oss_fn = async () => {
   }
 
   const write_file_fn = (file_name, data) => {
-    let full_path = `${check_dir}/${file_name}`;
+    let full_path = `${local_oss_target_dir}/${file_name}`;
     write_file(full_path, JSON.stringify(data));
   };
   setTimeout(function () {
