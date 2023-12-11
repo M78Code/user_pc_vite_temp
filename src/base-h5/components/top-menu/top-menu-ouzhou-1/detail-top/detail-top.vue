@@ -151,7 +151,7 @@ function change_active(item, index) {
   if(isMatchResultRoute){
     name = 'result'
   }
-  router.replace({ name: 'result', params});
+  router.replace({ name, params});
   refreshAll(params)
 }
 /**
