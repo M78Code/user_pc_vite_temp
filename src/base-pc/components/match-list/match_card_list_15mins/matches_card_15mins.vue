@@ -78,7 +78,7 @@ const ols_data = computed(() => {
     return ol
   })
 })
-watch(() => match.hSpecial, (v, o) => {
+watch(() => match.value.hSpecial, (v, o) => {
   if (v != o && v != undefined && o != undefined) {
     // 15分钟玩法阶段改变
     useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES)
