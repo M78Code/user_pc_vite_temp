@@ -105,11 +105,6 @@
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
-                    <!-- 赛事回合数mfo -->
-                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
-                      {{ match.mfo }}
-                    </div>
-
                     <!--即将开赛 ms = 110-->
                     <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
                       {{ i18n_t(`ms[${match.ms}]`) }}
@@ -132,6 +127,12 @@
                         :second="match.mst" :match="match" @counting-wrapper-width="update_counting_down_up_wrapper_width">
                       </CountingDownSecond>
                     </div>
+
+                    <!-- 赛事回合数mfo -->
+                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                      {{ '(' + match.mfo + ')' }}
+                    </div>
+
                   </div>
 
                   <!-- 电竞串关标识 -->
@@ -269,15 +270,9 @@
                       </div>
                     </div>
                   </div>
-                  </div>
-                 <div class="right-scroe">
-                    <!-- 右边盘口组件 -->
-                    <OddListWrap :main_source="main_source" :match="match_of_list" />
-                    <!-- 比分组件 -->
-                    <div class="w-score-result row justify-end" v-show="match.ms != 0 && match.csid != 1">
-                      <score-list :match="match"></score-list>
-                    </div>
-                 </div>
+                </div>
+                <!-- 右边盘口组件 -->
+                <OddListWrap :main_source="main_source" :match="match_of_list" />
                 </div>
               </div>
             </div>
@@ -952,18 +947,8 @@ export default {
 
   .w-score-result {
     position: absolute;
-    right: 0;
-    bottom: 0.01rem;
-    padding-top: 0.17rem;
-    :deep(.score-se-inner){
-      max-width: 250px;
-      .score{
-        color: #303442 !important;
-      }
-      .b-score-wrapper{
-        color: #303442 !important;
-      }
-    }
+    right: 0.11rem;
+    bottom: 0.13rem;
   }
 
   .odd-list-inner {
@@ -1006,6 +991,10 @@ export default {
         padding-top: 0.1rem;
         padding-bottom: 0.1rem;
       }
+    }
+
+    .w-score-result {
+      padding-top: 0.17rem;
     }
 
     .team-wrapper2 {
@@ -1587,7 +1576,7 @@ export default {
   }
 
   .mfo-title {
-    margin-right: .05rem;
+    margin-left: .05rem;
   }
 
   .flag-chuan {
