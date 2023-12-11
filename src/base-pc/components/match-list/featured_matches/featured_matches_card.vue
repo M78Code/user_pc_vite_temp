@@ -125,6 +125,7 @@ function get_col_ols_data(_mid) {
     let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
     // 15mins 和 featured赛事展示的投注项名称
     ols_data['otb'] = item.otb
+    ols_data.csid=csid;
     return ols_data;
   })
 }
