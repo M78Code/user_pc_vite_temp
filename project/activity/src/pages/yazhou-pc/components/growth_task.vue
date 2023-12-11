@@ -6,6 +6,8 @@
 -->
 <template>
   <div class="tabs_content">
+
+    
     <div class="introduction text-666">
       <p>活动对象：<span class="text-orange">本场馆全体会员</span></p>
       <p class="activity-date-time"> 
@@ -49,6 +51,9 @@
      
       </p>
     </div>
+
+
+
     <div class="activity_content">
       <div class="content_title">
         活动内容
@@ -275,7 +280,7 @@
       </div>
     </q-dialog>
 
- 
+  </div>
   </div>
 </template>
 
