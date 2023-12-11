@@ -374,7 +374,7 @@ export default {
     position: absolute;
     left: 2px;
     background-size: 115px auto;
-    background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/image/common/png/number.png");
+    background-image: url($SCSSPROJECTPATH+"/yazhou-pc/image/common/png/number.png");
   }
   .row-item-1 {
     background-position: 4.5px 0;

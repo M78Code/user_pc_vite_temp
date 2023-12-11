@@ -664,7 +664,7 @@ export default {
           line-height: normal;
         }
         p:nth-child(2) {
-          background: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/juan_red.png")
+          background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/juan_red.png")
             no-repeat 75px center;
           background-size: 26px;
         }
@@ -694,7 +694,7 @@ export default {
   width: 750px;
   max-width: 750px;
   height: 600px;
-  background: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
+  background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
     no-repeat center;
   ::v-deep .scroll {
     overflow: hidden;
