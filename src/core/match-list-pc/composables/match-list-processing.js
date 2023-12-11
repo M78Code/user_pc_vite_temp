@@ -186,6 +186,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// 计算列表卡片样式
 		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
+			backend_run
 		);
 		// if (lodash.isFunction(this.SCMD_C9)) {
 		// 	// C9订阅
@@ -288,6 +289,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
+		backend_run
 	);
 	// 设置收藏数量
 	// 只有预加载会传 true
