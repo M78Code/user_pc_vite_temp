@@ -93,9 +93,9 @@ const props = defineProps({
   }
 });
 
-watch(()=>props.label, (value) => {
-  right_actions_label.value = value;
-})
+// watch(()=>props.label, (value) => {
+//   right_actions_label.value = value;
+// })
 // 点击返回的时候会触发此函数
 const listener = (status) => {
   if (!status) {
@@ -121,7 +121,7 @@ const iframe_rdm = ref("")
 iframe_rdm.value = new Date().getTime();
 // 状态，是视频还是动画
 /** @type {import('vue').Ref<'animation'|'video'>} */
-const right_actions_label = ref('animation')
+const right_actions_label = ref('')
 const animation_src = ref("");
 /** @type {import('vue').ComputedRef<number>} 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示 */
 const status = computed(() => {
@@ -160,7 +160,8 @@ const status = computed(() => {
 });
 // 默认为animation，所以设置为false
 nav_bar_subscribe.change_status(false);
-watch(() => status, (value) => {
+watch(status, (value) => {
+  console.log(status, "status====");
     // 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示
     if (value == 2) {
       right_actions_label.value = 'animation';
