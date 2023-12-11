@@ -25,7 +25,7 @@ const scoreComponent = {
 <style lang="scss" scoped>
 .match_score {
     width: 100%;
-    height: 32px;
+    // height: 32px;
     overflow: hidden;
 }
 </style>

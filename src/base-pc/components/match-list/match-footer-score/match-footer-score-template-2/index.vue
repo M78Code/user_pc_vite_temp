@@ -64,7 +64,7 @@
 const props = defineProps({
   match: {
     type: Object,
-    default: () => { },
+    default: () =>( { }),
   },
   // 是否显示比分内容
   is_show_score_content: {
@@ -81,7 +81,7 @@ const {
   more_right_icon,
   stage_score,
   match_status,
-} = use_match_footer_score(props.match)
+} = use_match_footer_score(props)
 
 </script>
 

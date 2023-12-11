@@ -199,7 +199,7 @@ const compute_local_project_file_path=(str='')=>{
     str= str.substring(1)
   }
   //不论本地开发还是生产打包 一定有前缀
-  return  `${LOCAL_COMMON_FILE_PREFIX}/${str}`
+  return  `${LOCAL_PROJECT_FILE_PREFIX}/${str}`
 
 }
 /**
