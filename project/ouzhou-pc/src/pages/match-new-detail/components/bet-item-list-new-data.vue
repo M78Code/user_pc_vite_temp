@@ -296,6 +296,9 @@ onUnmounted(() => {
 }
 .odds-arrows-wrap {
   position: relative;
+  display: flex;
+  align-items: center;
+  // min-width: 150px;
   .up {
     color: var(--q-gb-t-c-7) !important;
   }
@@ -312,9 +315,10 @@ onUnmounted(() => {
 .odds-icon {
   width: 10px;
   height: 10px;
-  position: absolute;
-  right: -12px;
-  top: 18px;
+  margin-left: 5px;
+  // position: absolute;
+  // right: -12px;
+  // top: 18px;
   overflow: hidden;
   display: none;
 }
