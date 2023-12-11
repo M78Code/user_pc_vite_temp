@@ -106,7 +106,7 @@
 
 
 
-        <load-data :state="get_data_loading">
+        <load-data  state="data">
 
           
           <div 
@@ -190,13 +190,13 @@
       <p v-else>
         单笔注单投注<span>≥100</span>元，方可视为每日任务活动有效注单；
       </p>
-      <p v-if="isGrow">
+      <p v-if="actId == 1">
         成长任务数据每小时更新一次，在下个自然周/自然月数据将自动清零重新计算，请会员于自然周期最后一天提前<span>一小时</span>完成任务并领取奖券，避免因数据延迟导致领取失败；
       </p>
       <p v-else>
         每日任务数据每<span>5</span>分钟更新一次，在次日数据将自动清零重新计算，请会员每日提前<span>30</span>分钟完成任务并领取奖券，避免因数据延迟导致领取失败；
       </p>
-      <p v-if="isGrow">
+      <p v-if="actId == 1">
         成长任务活动有效注单以结算时间为准。任何低于欧洲盘<span>1.5</span>(香港盘<span>0.5</span>)水位、同场赛事中投注对等盘口、串关注单，皆不予计算；
       </p>
       <p v-else>
@@ -223,7 +223,7 @@
               <p>奖券数量</p>
               <p>领取时间</p>
             </div>
-            <load-data :state="false">
+            <load-data  state="data">
               <div class="text-666 text-center table_content" v-for="(item, index) in history_records" :key="index">
                 <p><span>{{item.taskName}}</span></p>
                 <p><span>{{item.ticketNum}}</span></p>

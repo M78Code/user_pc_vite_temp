@@ -508,7 +508,7 @@
       @play_show_card="play_show_card"
     />
     <!-- 接口数据问题提示弹窗 -->
-    <div class="toast_tips" v-if="tips.statu">{{ tips.message }}</div>
+    <div class="toast_tips" v-if="activityTips.statu">{{ activityTips.message }}</div>
     <!-- 活动ui提示弹窗 -->
     <div class="activity_alert" v-if="activityTips.status">
       <p class="close" @click="closeActivityTips">+</p>
@@ -541,7 +541,7 @@
       src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3"
       ref="showCard"
     ></audio>
-    <Toast v-if="showToast" :text="$t('common.limited')" />
+    <!-- <Toast v-if="showToast" :text="$t('common.limited')" /> -->
   </div>
 </template>
 <script>
