@@ -417,7 +417,7 @@ const submit_handle = type => {
     }
 
     let params = {
-        "userId": UserCtr.get_uid(),
+        // "userId": UserCtr.get_uid(),
         "acceptOdds": 2,  // 接受赔率变化情况
         "tenantId": 1,
         "deviceType": BetData.deviceType,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
@@ -741,6 +741,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+        hl_os: hl_obj.hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+        mid_os: mid_obj.ms, // 赛事状态 0:未开赛 1:赛事进行中  2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
@@ -928,8 +930,9 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
-    let detail_mark = [13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
+    let detail_mark = [3,13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
     let lsit_mark = [2,173,38,114]
+    let list_head = [359,31,340,383,13,102]
     // 详情
     if(is_detail){
         // 有球头 球头需要变色
@@ -938,9 +941,14 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }else{
             text = `${ol_obj.ott || ''} ${ol_obj.on}`  
         }
-        if(detail_mark.includes(ol_obj._hpid*1)){
+        if(detail_mark.includes(ol_obj._hpid*1) && ol_obj.ot == 'X' ){
             text = `${ol_obj.otv}` 
         }
+        // 
+        if(list_head.includes(ol_obj._hpid*1)){
+            text = `${ol_obj.otv}` 
+        }
+
     }else{
         let a = '' ,b = '' 
         b = ol_obj.on 

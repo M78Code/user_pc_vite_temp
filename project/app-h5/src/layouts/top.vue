@@ -25,7 +25,7 @@
      <!-- 筛选+搜索  已脱离文档流-->
     <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
-        <setect-league @closedHandle="select_dialog = false"></setect-league>
+        <setect-league @closedHandle="setect_league_chose"></setect-league>
     </div>
   </template>
 
@@ -93,7 +93,12 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 滑动菜单选中的菜单id
     current_mi: ''
   })
-
+  /**
+   * 联赛筛选处理-关闭
+   */
+  const setect_league_chose = ()=>{
+     select_dialog.value = false;
+  }
   const changeList = (list) =>{
     ref_data.scroll_data_list = list;
   }

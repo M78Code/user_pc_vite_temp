@@ -979,7 +979,10 @@ class MenuData {
     //   this.menu_root == 2000 ||
     //   (this.match_list_api_config || {}).sports == "dianjing"
     // );
-    return this._is_cur_mi(2000, mi)
+    if(mi){
+      return this._is_cur_mi(2000, mi)
+    }
+    return this._is_cur_mi(2000, mi) || this._is_cur_mi(2000, this.left_menu_result.lv1_mi)
   }
   /**
    * 是否选中了串关

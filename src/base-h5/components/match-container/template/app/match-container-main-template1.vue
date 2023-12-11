@@ -105,6 +105,11 @@
                   <!-- 赛事日期标准版 -->
                   <div :class="['timer-wrapper-c flex items-center', { esports: is_esports, 'din-regular': is_esports }]">
 
+                    <!-- 赛事回合数mfo -->
+                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
+                      {{ match.mfo }}
+                    </div>
+
                     <!--即将开赛 ms = 110-->
                     <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
                       {{ i18n_t(`ms[${match.ms}]`) }}
@@ -127,12 +132,6 @@
                         :second="match.mst" :match="match" @counting-wrapper-width="update_counting_down_up_wrapper_width">
                       </CountingDownSecond>
                     </div>
-
-                    <!-- 赛事回合数mfo -->
-                    <div v-if="match.mfo" class="mfo-title" :class="{ 'is-ms1': match.ms == 1 }">
-                      {{ '(' + match.mfo + ')' }}
-                    </div>
-
                   </div>
 
                   <!-- 电竞串关标识 -->
@@ -1576,7 +1575,7 @@ export default {
   }
 
   .mfo-title {
-    margin-left: .05rem;
+    margin-right: .05rem;
   }
 
   .flag-chuan {

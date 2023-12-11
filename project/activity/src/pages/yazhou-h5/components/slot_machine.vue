@@ -1,9 +1,3 @@
-<!--
- * @Date: 2022-02-11 11:46:29
- * @FilePath: /user-h5/src/public/activity_page/activity_task/components/slot_machine.vue
- * @Description: 老虎机活动
- * @Author:
--->
 <template>
   <div class="tabs_content" @touchmove="handleTouch" @mousewheel="handleTouch" @click="handleTouch">
 
@@ -329,7 +323,7 @@ import ActiveCountDown from "project/activity/src/components/active_count_down/a
 export default {
   mixins: [ slot_machine_mixin],
   components: {
-    // Alert,
+ 
     ActiveCountDown,
     NumberScroll,
      DataPager,

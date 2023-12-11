@@ -204,9 +204,15 @@ class MenuData {
     let csid = "",
         v1_mi = [0,300,2000,50000];
     if(v1_mi.includes(+mi))return;//全部 vr 电竞 收藏
-    if(+mi>1000 && +mi<2000){csid = Number(this.recombine_menu_desc(mi))-100;}//常规
-    else if(+mi>400 && +mi<1000){csid = +mi-400}//冠军
-    else{csid = mi};//vr 电竞球种
+    if(+mi>1000 && +mi<2000){
+      csid = Number(this.recombine_menu_desc(mi))-100;
+    }//常规
+    else if(+mi>400 && +mi<1000){
+      csid = +mi-400
+    }//冠军
+    else{
+      csid = mi
+    };//vr 电竞球种
     this.menu_csid = mi;
     this.update()
   }

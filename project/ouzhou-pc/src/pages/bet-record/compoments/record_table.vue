@@ -49,7 +49,7 @@
               <!-- 单关 -->
               <template v-else>
                 <template v-for="(item, index) in props.row.orderVOS" :key="index">
-                  <div>{{ match_type[item.matchType] }}</div>
+                  <div>{{matchType(item.matchType, props.row.langCode)}}</div>
                   <span>
                   {{ item.playName }}
                   <span
@@ -78,7 +78,7 @@
                         <!-- （1-1） -->
                           <span v-if="item.matchType != 1 && item.scoreBenchmark && item.playId != '334'">({{format_score(item.scoreBenchmark)}})</span>
                         <!-- [欧洲盘]-->
-                          <span>[{{marketType(item.marketType, props.row.langCode)}}]</span>                      </span>
+                          <span>[{{marketType(item.marketType, props.row.langCode)}}]</span></span>
                       <div>
                         <span>{{ item.marketValue }}</span>
                         <span style="margin-left:15px;color:#ff7000">@{{ item.oddFinally }}</span>
@@ -455,25 +455,25 @@ const item_status =(type) => {
  */
 const marketType = (type, langCode='zh') => {
   var res = "";
-  if(type && langCode) {
+    if(type && langCode) {
     switch (type) {
       case "EU":
-        res = i18n_t(`odds.EU`); //"欧洲盘";
+        res = i18n_t(`odds.${langCode}.EU`); //"欧洲盘";
         break;
       case "HK":
-        res = i18n_t(`odds.HK`); //"香港盘";
+        res = i18n_t(`odds.${langCode}.HK`); //"香港盘";
         break;
       case "US":
-        res = i18n_t(`odds.US`); //"美式盘";
+        res = i18n_t(`odds.${langCode}.US`); //"美式盘";
         break;
       case "ID":
-        res = i18n_t(`odds.ID`); //"印尼盘";
+        res = i18n_t(`odds.${langCode}.ID`); //"印尼盘";
         break;
       case "MY":
-        res = i18n_t(`odds.MY`); //"马来盘";
+        res = i18n_t(`odds.${langCode}.MY`); //"马来盘";
         break;
       case "GB":
-        res = i18n_t(`odds.GB`); //"英式盘";
+        res = i18n_t(`odds.${langCode}.GB`); //"英式盘";
         break;
       default:
         res = "";
@@ -491,7 +491,22 @@ const matchType = (type, langCode=UserCtr.lang) => {
   if(type && langCode) {
     res = match_type[type]
   }
-  return res;
+
+  if(type && langCode) {
+        switch (parseInt(type)) {
+          case 1:
+            res = i18n_t(`odds.${langCode}.morning_session`); //"赛前";
+            break;
+          case 2:
+            res = i18n_t(`odds.${langCode}.list_today_play_title`);//"滚球";
+            break;
+          case 3:
+            res =i18n_t(`odds.${langCode}.match_winner`); //"冠军";
+            break;
+        }
+      }
+      return res;
+
 }
 /**
  * 投注状态

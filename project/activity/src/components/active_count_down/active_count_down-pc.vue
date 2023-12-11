@@ -238,7 +238,7 @@ export default {
         },
         
     },
-    beforeDestroy() {
+    beforeUnmount() {
         clearInterval(this.updateInteval)
         if (this.countTimer1) {
             clearTimeout(this.countTimer1)

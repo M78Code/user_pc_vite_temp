@@ -112,6 +112,8 @@ class UserCtr {
       // 详细信息
       list: []
     }
+    //弹窗 联赛筛选的数据
+    this.league_select_list = []
     //获取资源配置(商户后台配置的图片、跳转链接)
     this.resources_obj = {}
     // 用户信息版本
@@ -137,6 +139,7 @@ class UserCtr {
     this.c305_data_change = ''
     // var事件国际化信息
     this.var_event_i18n = []
+
     nextTick(()=>{
       this.get_system_time()
     })
@@ -248,6 +251,13 @@ class UserCtr {
     LocalStorage.set("theme", theme.value || theme)
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
+  }
+  /**
+   * 联赛赛选的数据发生变化
+  */
+  set_league_select_list(val) {
+    this.league_select_list = val.value
+    this.update()
   }
   set_cur_odds(odd) {
     this.set_pre_odds(this.odds.cur_odds)
