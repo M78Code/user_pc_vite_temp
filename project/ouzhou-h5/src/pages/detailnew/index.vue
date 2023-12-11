@@ -141,6 +141,11 @@ export default {
       console.log(value, "valuessss");
       label.value = value;
     }
+
+    watch(() => route.params.mid, (value) => {
+      label.value = "";
+    })
+
     return{
       label,
       handle_change,

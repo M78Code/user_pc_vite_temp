@@ -1,6 +1,6 @@
 <template>
 	<div class="matches_header_wrap" :style="`height:${match_list_top}`">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{ MenuData.is_collect_kemp() }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}--{{ BaseData.base_data_version }}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{MenuData.menu_current_mi }}-{{MenuData.menu_root}}-{{MenuData.is_kemp()}}- {{ MenuData.is_collect_kemp() }}-{{MenuData.is_common_kemp() }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}--{{ BaseData.base_data_version }}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
 			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect) ? 'matches_outrights' : '']">
@@ -32,8 +32,8 @@
 			</div>
 		</div>
 		<MatchesFilterTab v-if="MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp()) || MenuData.is_collect || MenuData.is_top_events()"  />
-		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues() || MenuData.is_esports()" />
-		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
+		<MatchesDateTab v-else-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues() || MenuData.is_esports()" />
+		<MatchesLeaguesTab v-else-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
 </template>
 
@@ -48,6 +48,7 @@ import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/output/i
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import { resolve_mew_menu_res } from "src/base-pc/components/match-list/list-filter/index.js"
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const tab_list = ref([])
@@ -115,7 +116,11 @@ const ouzhou_time_list = [
 
 onMounted(()=>{
 	set_tab_list(MenuData.menu_root)
-	mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_tab_list).off ]
+	mitt_list = [ 
+		useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_tab_list).off,
+		useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_OUTRIGHTS,set_tab_list).off,
+		useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_FAVOURITES,set_tab_list).off,
+	]
 })
 
 onUnmounted(()=>{
@@ -152,7 +157,8 @@ const set_tab_list = (news_) =>{
 	// 滚球
 	if( news_ == 1 ){
 		matches_header_title.value = 'ouzhou.match.inplay'
-   		match_list_top.value = '146px'
+		match_list_top.value = '146px'
+		resolve_mew_menu_res()
 	}
 	
 	// 左侧菜单
@@ -190,6 +196,7 @@ const set_tab_list = (news_) =>{
 		matches_header_title.value = 'list.outright'
 		match_list_top.value = '146px'
 		tab_list.value = []
+		resolve_mew_menu_res()
 	}
 
 	// 电竞
@@ -296,7 +303,6 @@ const checked_current_tab = (payload,type) => {
 			MenuData.set_current_ball_type(MenuData.current_ball_type || 1)
 			MenuData.set_menu_current_mi(MenuData.menu_current_mi || obj.current_mi)
 		}
-	
 	}
 	if (MenuData.is_esports()) {
 		obj.current_mi = payload.value*1
@@ -304,6 +310,10 @@ const checked_current_tab = (payload,type) => {
 	}
 	// get_sport_banner()
 	MenuData.set_mid_menu_result(obj)
+
+	if(MenuData.is_collect){
+		resolve_mew_menu_res()
+	}
 }
 
 </script>

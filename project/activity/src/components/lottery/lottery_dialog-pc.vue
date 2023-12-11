@@ -8,12 +8,12 @@
 <template>
   <q-dialog v-model="isShow">
       <q-layout view="Lhh lpR fff" container class="lottery">
-        <img class="close" src="~public/image/activity_imgs/imgs/dialog_close.png" alt="" @click.stop="$emit('close_lottery_dialog')" width="30px">
+        <img class="close" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png`" alt="" @click.stop="$emit('close_lottery_dialog')" width="30px">
         <div class="content">
           <p v-if="getLotterySuc" class="title text-orange text-center">恭喜您，获得<span>{{getLotteryNum}}</span>张奖券</p>
           <p v-if="!getLotterySuc" class="title text-orange text-center">领取失败，请重新领取奖券</p>
-          <img v-if="getLotterySuc" src="~public/image/activity_imgs/imgs/get_lottery_suc.png" alt="">
-          <img v-if="!getLotterySuc" src="~public/image/activity_imgs/imgs/get_lottery_fail.png" alt="">
+          <img v-if="getLotterySuc" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_lottery_suc.png`" alt="">
+          <img v-if="!getLotterySuc" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_lottery_fail.png`" alt="">
           <p v-if="getLotterySuc" class="go_lottery text-white text-center" @click="$emit('close_lottery_dialog')">我知道了</p>
           <p v-if="!getLotterySuc" class="reget text-white text-center" @click="getAgain">重新领取</p>
         </div>
@@ -56,7 +56,7 @@ export default {
   width: 750px;
   max-width: 750px;
   height: 600px;
-  background: url("~public/image/activity_imgs/imgs/get_lottery_bg.png")
+  background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
     no-repeat center;
   ::v-deep .scroll {
     overflow: hidden;

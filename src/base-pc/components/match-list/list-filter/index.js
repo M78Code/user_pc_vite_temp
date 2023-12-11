@@ -27,11 +27,11 @@ const ref_data = reactive({
     time_count:0,
 }) 
 
-resolve_mew_menu_res();
+// resolve_mew_menu_res();
 
-watch(MenuData.menu_data_version, () => {
-        resolve_mew_menu_res();
-})
+// watch(MenuData.menu_data_version, () => {
+//         resolve_mew_menu_res();
+// })
 
 onUnmounted(()=>{
     clearInterval(ref_data.time_out_1)
@@ -346,6 +346,7 @@ function compute_mi_400_sl_mi_csid(mi) {
  * 单个菜单按钮点击   滚球 的
  */
 function handle_click_menu_mi_1(detail = {}) {
+    
     let obj = {
         // 当前赛种 菜单id
         mid_menu_mi: detail.mi,  
@@ -402,6 +403,7 @@ export {
     mi_400_obj,
     vr_menu_obj,
     menu_mi,
+    resolve_mew_menu_res,
     compute_quanbu_num_mi_1,
     handle_click_menu_mi_400, handle_click_menu_mi_1, compute_mi_400_sl_mi_csid, compute_quanbu_num_mi_400,
     get_ouzhou_leagues_data
