@@ -27,12 +27,12 @@
         </div>
       </div>
     </div>
-    <div class="flex">
+    <div class="flex" v-if="match_style_obj.data_tpl_id==109">
       <div :style="`width:${match_list_tpl_size.process_team_width}px !important;height:28px !important;`">
       </div>
       <div class="flex col items-start">
         <!-- 赛事比分 -->
-        <MatchFooterScore use_component_key="MatchFooterScore2" :match_style_obj="match_style_obj"  v-if="match_style_obj.data_tpl_id==109" :match="match" style="width: 100%;" :is_show_score_content="true">
+        <MatchFooterScore use_component_key="MatchFooterScore2" :match_style_obj="match_style_obj"   :match="match" style="width: 100%;" :is_show_score_content="true">
         </MatchFooterScore>
       </div>
     </div>

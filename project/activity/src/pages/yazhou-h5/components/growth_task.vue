@@ -205,7 +205,7 @@
           <img
             class="close"
             @click="history_alert = false"
-            src="activity/yazhou-h5/activity/lucky/close.png"
+            src="/activity/yazhou-h5/activity/lucky/close.png"
           />
         </div>
       </div>

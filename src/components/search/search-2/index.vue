@@ -262,10 +262,10 @@ export default defineComponent({
   left: 50%;
   bottom: 0;
   z-index: 999;
-  min-width: 1470px;
-  transform: translateX(-50%);
+  min-width: 1450px;
+  transform: translateX(-730px);
   &.iframe {
-    top: 50px !important;
+    // top: 50px !important;
   }
 
   &.hide-search {
@@ -292,7 +292,7 @@ export default defineComponent({
   .search-result {
     // box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
     margin-top: 9px;
-    width: 1470px;
+    width: 1450px;
   }
 
   &.mini {
