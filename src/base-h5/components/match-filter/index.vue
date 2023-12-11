@@ -145,6 +145,8 @@ const all_checked = computed(() => {
   return list.value.every(({ select }) => select); // 选中所有
 })
 const emit = defineEmits(["selectHandle"]);
+//暴露出去的方法和数据
+defineExpose({list})
 const props = defineProps({
   search_val: {
     type: String,
@@ -414,6 +416,17 @@ function type_select(li_item) {
      return i
   }); // 初始化select
 }
+// 获取已选择的联赛数据
+const get_league_select_list = ()=>{
+  list.value = list.value.map(sub=>{
+    UserCtr.league_select_list.forEach(item=>{
+      if (sub.id === item.id){
+        sub.select = item.select
+      }
+    })
+     return sub
+  })
+}
 // 获取筛选数据外层列表
 function fetch_filter_match() {
   let m_type = -1, m_id = -1;
@@ -484,7 +497,7 @@ function fetch_filter_match() {
       // 动态生成有联赛的字母，并非A - Z 全量字母；
       dynamic_letters(list.value)
       scroll_obj_fn(-1);
-      
+      get_league_select_list()
     } catch (e) {
       list_data_loading.value = false;
       console.error(e);
