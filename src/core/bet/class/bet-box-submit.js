@@ -927,9 +927,9 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     if(is_detail){
         // 有球头 球头需要变色
         if(hl_obj.hv){
-            text = `${ol_obj.ott} <span class='ty-span'>${ol_obj.on}</span>`  
+            text = `${ol_obj.ott || ''} <span class='ty-span'>${ol_obj.on}</span>`  
         }else{
-            text = `${ol_obj.ott} ${ol_obj.on}`  
+            text = `${ol_obj.ott || ''} ${ol_obj.on}`  
         }
         if(detail_mark.includes(ol_obj._hpid*1)){
             text = `${ol_obj.otv}` 
