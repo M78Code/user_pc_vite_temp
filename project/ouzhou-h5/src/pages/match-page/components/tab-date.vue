@@ -284,6 +284,7 @@ const areaListChange = (item) => {
             padding-top: 0.14rem;
             justify-content: flex-start;
             margin-left: 0.05rem;
+            padding-bottom: 0.03rem;
 
             :deep(.q-field__control) {
                 &::before {
