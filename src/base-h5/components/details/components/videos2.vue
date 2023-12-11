@@ -203,10 +203,10 @@
           </template>
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
-              <!-- 缩放按钮 -->
-            <img src="" alt="exit" class="exit-img" @onlick="exit_browser_full_screen"/>
+               <!-- 缩放按钮 -->
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
             
-              <div class="col-1 go-back-btn-wrap" @click="close_video" v-if="show_animation_and_video_status">
+              <div class="col-1 go-back-btn-wrap" @click="close_video" >
                 <div class="video_back"></div>
               </div>
               <!-- 动画不显示对阵信息 -->
@@ -936,7 +936,6 @@ export default {
     },
     /**
      * @Description 设置全屏
-     * @param {undefined} undefined
      */
     set_full_screen(){
       if(this.get_is_full_screen){
@@ -2350,9 +2349,9 @@ export default {
   right: 0.3rem;
   bottom: 0.3rem;
   top: 80vh;
-  width: 20px;
-  height: 20px;
-  background: red;
+  width: .15rem;
+  z-index: 99999;
+  height: .15rem;
 }
 /* ************** 视频全屏的样式 ************** -E */
 </style>
