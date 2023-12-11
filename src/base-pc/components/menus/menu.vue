@@ -220,7 +220,7 @@ const outrights = () => {
   let obj = {
     lv1_mi : 400,
     has_mid_menu: true, // 有中间菜单
-    lv2_mi: 101 +''+ 4, // 二级菜单id
+    lv2_mi: 401, // 二级菜单id
     menu_type: 1, // 左侧热门或者赛种
   }
   //太多了 后续做优化
