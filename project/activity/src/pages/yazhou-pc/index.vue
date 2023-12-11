@@ -6,7 +6,8 @@
 -->
 <template>
   <q-scroll-area class="five-activity-action" ref="scrollareaRef">
-    <load-data :state="allPageState">
+    {{ tab_Id }}
+    <div state="false">
       <!-- 头部 banner 图 -->
       <div class="top-banner">
         <img
@@ -79,7 +80,7 @@
           />
         </div>
       </div>
-    </load-data>
+    </div>
 
     <!-- 活动挂维护页面 -->
     <div v-show="is_maintaining" class="maintain-main">

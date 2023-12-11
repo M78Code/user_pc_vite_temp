@@ -27,7 +27,7 @@
   </q-dialog>
 </template>
 <script>
-import utils from 'project/activity/src/utils/utils.js'
+ 
 export default {
   name: 'Alert',
   props: {
@@ -70,7 +70,7 @@ export default {
     },
     confirm(){
       if (this.isMaintaining) {
-        utils.redirect_router('/activity_aegis');
+   
       }
       this.isShow = false;
       this.alertText = "";
