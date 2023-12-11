@@ -111,18 +111,20 @@ class MenuData {
    */
   set_init_menu_list(arr){
     let menu_list = [],
+        menu_arr = [],
         top_events_list = [],
         champion_list = [],
         data = arr || BaseData.mew_menu_list_res
-      
     // const session_info = SessionStorage.get(menu_h5);
     let session_info = LocalStorage.get(menu_h5);
     //常规球种
     menu_list = IS_FOR_NEIBU_TEST?[...BaseData.left_menu_base_mi,{mi:400,ct:0},{mi:2000,ct:0}]:[...BaseData.left_menu_base_mi,{mi:400,ct:0}];
+    menu_arr = menu_list.map((item)=>{return +item.mi});
     //热门球种
-    top_events_list = data.find((item)=>{return item.mi==5000}).sl || [];
+    top_events_list = (data.find((item)=>{return item.mi==5000}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-4900)});
+
     //冠军
-    champion_list = data.find((item)=>{return item.mi==400}).sl || [];
+    champion_list = (data.find((item)=>{return item.mi==400}).sl || []).filter((n)=>{return menu_arr.includes(+n.mi-300)});
     //热门球种不存在取常规球种  1
     // top_events_list = top_events_list.length?top_events_list.map((item)=>{
     //   return {

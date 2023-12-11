@@ -11,7 +11,7 @@
           <!-- <SportIcon size="20"  :status="false" :sport_id="String(Number(match.csid ) + 100)" />
           <span>{{ match.csna }}</span> -->
           <SportIcon size="20"  :status="false" :sport_id="menu_sport.menu_sport_id || String(Number(match.csid ) + 100)" />
-          <span>{{ menu_sport.menu_sport_name||match.csna }}</span>
+          <span>{{[1902, 1912].includes(+MenuData.current_lv_2_menu_i) ? menu_sport.menu_sport_name : match.csna }}</span>
         </div>
         <div class="select_time">
           <span @click.stop>
@@ -289,6 +289,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { i18n_t, compute_img_url, compute_css_obj, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5  } from "src/output/index.js"
 import { format_time_zone } from "src/output/index.js"
+import { MenuData } from "src/output/module/menu-data.js"
 import { have_collect_ouzhou, no_collect_ouzhou, neutral_site } from 'src/base-h5/core/utils/local-image.js'
 import { sports_play_data, use_sports_play_title } from 'src/output/index.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
@@ -320,7 +321,6 @@ export default {
     CountingDownSecond,
   },
   setup (ctx) {
-
     const match_hpid = ref('')
     const hps_play_data = ref([])
     const sports_play_title = use_sports_play_title()
@@ -375,7 +375,7 @@ export default {
     return { 
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id,LOCAL_PROJECT_FILE_PREFIX, have_collect_ouzhou,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, compute_css_obj, show_sport_title, no_collect_ouzhou,
-      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site
+      PageSourceData, get_match_panel, hps_play_data, on_select_play, select_play, match_hpid, neutral_site, MenuData
     }
   }
 }
