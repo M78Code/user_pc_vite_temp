@@ -44,9 +44,9 @@ onMounted(() => {
     MatchMeta.get_ouzhou_leagues_list_data(data.selectLeague.tid, data.curSelectedOption.timestamp)
 	} else {
     MatchMeta.set_prev_scroll(0)
-    onTabChange()
     initMatchPage()
-    BaseData.is_emit && MatchMeta.set_origin_match_data()
+    onTabChange()
+    // BaseData.is_emit && MatchMeta.set_origin_match_data()
     // 接口请求防抖
     handler_func = lodash.debounce(({ cmd, data }) => {
       MatchMeta.handle_ws_directive({ cmd, data })
@@ -96,7 +96,6 @@ const cacheStoreData = () => {
 }
 
 const onTabChange = e => {
-  console.log(store.tabActive)
   switch (store.tabActive) {
     case 'Matches':
       clearSessionStorageData()
