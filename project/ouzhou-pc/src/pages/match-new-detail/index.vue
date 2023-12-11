@@ -170,9 +170,9 @@ export default {
         name: "details",
         params,
       });
-      setTimeout(() => {
-        refresh();
-      }, 200);
+      // setTimeout(() => {
+      //   refresh();
+      // }, 200);
     };
 
     const refresh_click = lodash.debounce(() => {

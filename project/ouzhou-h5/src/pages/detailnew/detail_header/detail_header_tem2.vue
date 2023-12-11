@@ -16,7 +16,7 @@
     </div>
     <!-- <SwitchButtons></SwitchButtons> -->
     <!-- 比分版 -->
-    <div class="detail-header-score row">
+    <!-- <div class="detail-header-score row">
       <div class="detail-home col-5">
         <div class="detail-home-info">
           <img class="team_img" :src="`${img_url_host}${get_match_detail.mhlu}`" alt="" />
@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-    
+     -->
     <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'" :detail="props.get_match_detail"
                   :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
   </div>
@@ -163,8 +163,9 @@ const status = computed(() => {
 nav_bar_subscribe.change_status(false);
 watch(status, (value) => {
   console.log(status, "status====");
+    
     // 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示
-    if (value == 2) {
+    if ([1,2].includes(+value)) {
       right_actions_label.value = 'animation';
     }
     if (value == 3) {

@@ -74,7 +74,7 @@
         </div>
         <!-- 视频单页项目-->
         <!-- {{ iframe_src+'&rdm='+iframe_rdm }} -->
-        <!-- {{iframe_show  }} {{ is_show_no_handle}} {{iframe_src  }} iframe_show && !is_show_no_handle && -->
+        <!-- iframe_show && !is_show_no_handle && iframe_src-->
         <iframe 
         v-if=" iframe_src" 
         v-show="!is_playing_replay" 
@@ -197,11 +197,16 @@
               <div style="margin-left:auto" v-if="get_menu_type !== 3000">
                 <match-score :detail_data="get_detail_data"></match-score>
               </div>
+
+              
             </div>
           </template>
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
-              <div class="col-1 go-back-btn-wrap" @click="close_video" v-if="show_animation_and_video_status">
+               <!-- 缩放按钮 -->
+              <img v-if="get_is_full_screen" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
+            
+              <div class="col-1 go-back-btn-wrap" @click="close_video" >
                 <div class="video_back"></div>
               </div>
               <!-- 动画不显示对阵信息 -->
@@ -931,7 +936,6 @@ export default {
     },
     /**
      * @Description 设置全屏
-     * @param {undefined} undefined
      */
     set_full_screen(){
       if(this.get_is_full_screen){
@@ -2340,6 +2344,14 @@ export default {
     right: .35rem;
   }
 }
-
+.exit-img {
+  position: absolute;
+  right: 0.3rem;
+  bottom: 0.3rem;
+  top: 80vh;
+  width: .15rem;
+  z-index: 99999;
+  height: .15rem;
+}
 /* ************** 视频全屏的样式 ************** -E */
 </style>

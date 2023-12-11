@@ -1,27 +1,40 @@
-<!--
- * @Date: 2021-05-19 13:28:30
- * @FilePath: /user-pc1/project/activity/src/pages/yazhou-pc/lucky_box/lucky_box.vue
- * @Description: 东京奥运会---幸运盲盒
- * @Author: Echo
--->
 <template>
   <div class="tabs_content">
     <div class="introduction text-666">
       <p>活动对象：<span class="text-orange">本场馆全体会员</span></p>
-      <p>活动时间：
-        <span class="text-666"  v-if="activityObj.showTime == 'toStart'">距离活动开始还有
-          <span v-if="activityTime.day" style="color: #ff0602;">{{activityTime.day}}天</span>
-          <span style="color: #ff0602;">{{activityTime.hr}}:</span>
-          <span style="color: #ff0602;">{{activityTime.min}}:</span>
-          <span style="color: #ff0602;">{{activityTime.sec}}</span>
+
+      <p class="activity-date-time"> 
+
+<span>活动时间：</span>
+    <template v-if="get_user.activityList[activityIndex].period == 1">
+      <span class="count_down_css">
+        <span>距离活动开始还有</span>
+        <ActiveCountDown
+          :endTime="inStartTime"
+          :noNeedCss="true"
+        ></ActiveCountDown>
+      </span>
+    </template>
+    <template
+      v-else-if="get_user.activityList[activityIndex].period == 2"
+    >
+      <template
+        v-if="get_user.activityList[activityIndex].type == 2 && inEndTime"
+      >
+        <span class="count_down_css">
+          <span>距离活动关闭还有</span>
+          <ActiveCountDown
+            :endTime="inEndTime"
+            :noNeedCss="true"
+          ></ActiveCountDown>
         </span>
-        <span class="text-666" v-else-if="activityObj.showTime == 'toEnd'">距离活动结束还有
-          <span style="color: #ff0602;">{{activityTime.hr}}:</span>
-          <span style="color: #ff0602;">{{activityTime.min}}:</span>
-          <span style="color: #ff0602;">{{activityTime.sec}}</span>
-        </span>
-        <span v-else style="color: #ff0602;">{{activityTime}}</span>
-      </p>
+      </template>
+      <span v-else>活动长期有效</span>
+    </template>
+    <span v-else> 活动结束 </span>
+
+
+</p>
       <p>
         活动内容：<span class="text-orange"
           >本场馆内满足任务条件的会员可以获得奖券，消耗奖券可以兑换不同等级的盲盒，并抽取盲盒的随机奖金，每个盲盒100%中奖，让您的奖金收获不停刺激不断！</span
@@ -36,24 +49,24 @@
         <div class="showGifts relative-position">
           <load-data :state="isLoading" v-if="isLoading != 'data'"> </load-data>
           <!-- 非活动结束状态 -->
-          <p class="text-center text-666 drawTime" v-if="activityObj.period != 3">
+          <p class="text-center text-666 drawTime" v-show="get_user.activityList[activityIndex].period != 3">
             每天 <span class="text-orange">12:00:00</span> 开抢
           </p>
           <p class="text-center title">
             <img
-              src="~public/activity/yazhou-pc/activity_imgs/imgs/text-left.svg"
+              src="activity/yazhou-pc/activity_imgs/imgs/text-left.svg"
               alt=""
             />
             &nbsp;&nbsp;大奖等您拿&nbsp;&nbsp;
             <img
-              src="~public/activity/yazhou-pc/activity_imgs/imgs/text-right.svg"
+              src="activity/yazhou-pc/activity_imgs/imgs/text-right.svg"
               alt=""
             />
           </p>
           <div class="gifts text-333">
             <p @click.stop="changeBox(3, true)">
               <img
-                src="~public/activity/yazhou-pc/activity_imgs/imgs/lucky/gift1.png"
+                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift1.png"
                 class=""
                 alt=""
                 :class="
@@ -66,7 +79,7 @@
             </p>
             <p @click.stop="changeBox(2, true)">
               <img
-                src="~public/activity/yazhou-pc/activity_imgs/imgs/lucky/gift2.png"
+                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift2.png"
                 class=""
                 alt=""
                 :class="
@@ -79,7 +92,7 @@
             </p>
             <p @click.stop="changeBox(1, true)">
               <img
-                src="~public/activity/yazhou-pc/activity_imgs/imgs/lucky/gift3.png"
+                src="activity/yazhou-pc/activity_imgs/imgs/lucky/gift3.png"
                 class=""
                 alt=""
                 :class="
@@ -131,7 +144,7 @@
             <div class="btns">
               <p class="text-orange text-center btn_blue">
                 <img
-                  src="~public/activity/yazhou-pc/activity_imgs/imgs/juan_red.png"
+                  src="activity/yazhou-pc/activity_imgs/imgs/juan_red.png"
                   alt=""
                 />
                 奖券：{{ tokenNum }}
@@ -149,7 +162,7 @@
               >
                 拆盒1次 <br />
                 <img
-                  src="~public/activity/yazhou-pc/activity_imgs/imgs/juan_white.png"
+                  src="activity/yazhou-pc/activity_imgs/imgs/juan_white.png"
                   alt=""
                 />
                 x <span>{{ current_open_box.token }}</span>
@@ -275,7 +288,7 @@
         盲盒奖励实时派发，仅需在本场馆完成1倍流水即可出款；
       </p>
       <p>
-        本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<font color="#ff7000">1.5</font>或香港盘<font color="#ff7000">0.5</font>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；
+        本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<span color="#ff7000">1.5</font>或香港盘<span color="#ff7000">0.5</font>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；
       </p>
       <p>
         每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，在活动期间仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回彩金及所产生利润的权利；
@@ -289,7 +302,7 @@
       <q-layout view="Lhh lpR fff" container class="history">
         <img
           class="close"
-          src="~public/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
+          src="activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
           alt=""
           @click="closeHistoryList"
           width="30px"
@@ -367,7 +380,7 @@
       >
         <img
           class="close"
-          src="~public/activity/yazhou-pc/activity_imgs/imgs/lucky/close.png"
+          src="activity/yazhou-pc/activity_imgs/imgs/lucky/close.png"
           alt=""
           @click="getLottery = false"
           width="30px"
@@ -393,794 +406,24 @@
       </q-layout>
     </q-dialog>
     <Alert :is_show="showAlert" :text="bettingMsg" :isMaintaining="isMaintaining" />
-    <img v-if="activityObj.period == 2" src="~public/activity/yazhou-pc/activity_imgs/imgs/silver_box.png" alt="" style="display: none">
-    <img v-if="activityObj.period == 2" src="~public/activity/yazhou-pc/activity_imgs/imgs/gold_box.png" alt="" style="display: none">
-    <img v-if="activityObj.period == 2" src="~public/activity/yazhou-pc/activity_imgs/imgs/diamond_box.png" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/silver_box.png" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/gold_box.png" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" src="activity/yazhou-pc/activity_imgs/imgs/diamond_box.png" alt="" style="display: none">
     <Toast v-if="showToast" :text="$t('common.limited')" />
   </div>
 </template>
 <script>
-import {api_activity} from "src/api/index.js";
-import Alert from "project/activity/src/components/public_alert/public_alert.vue";
-import common from "project/activity/src/pages/yazhou-pc/common";
-import Toast from "project/activity/src/pages/yazhou-pc/toast.vue";
-import format_date_base from "project/activity/src/mixins/common/formartmixin.js";
-import utils from 'project/activity/src/utils/utils.js'
-
- 
-import { UserCtr } from "project_path/src/core/index.js";
-//头部引入  
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/index.js";
+import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
+import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
+import lucky_blind_box_mixin  from "project/activity/src/mixins/lucky_blind_box/lucky_blind_box.js";  
 export default {
-  name: "LuckyBox",
-  mixins: [common, format_date_base],
-  props: {
-    activityObj: {
-      type: Object,
-      default: {}
-    }
-  },
-  data() {
-    return {
-      // 开盒是否成功
-      getLotterySuc: false,
-      getLottery: false,
-      // 是否展示接口异常提示弹窗
-      showAlert: false,
-      // 接口异常时的弹窗提示语
-      bettingMsg: "",
-      // 距离活动开始剩余时间
-      day: "",
-      hr: "",
-      min: "",
-      sec: "",
-      // 奖券数量
-      tokenNum: 0,
-      // 各个盲盒剩余数量
-      boxNumber: {
-        diamonds: 0,
-        golds: 0,
-        silvers: 0,
-      },
-      // 是否展示历史记录
-      showHistory: false,
-      current_open_box: {
-        // 拆盒所得金额
-        money: "--.--",
-        // 是否再开一次
-        openAgain: true,
-        // 当前盲盒类型 3 钻石 2 黄金 1 白银
-        currentBox: 3,
-        // 拆盒子需要的 token 数量
-        token: 28,
-        // 盲盒数量
-        boxNum: 0,
-        // 实物奖品名字
-        name: "",
-      },
-      lastTimeOpenBox: {
-        // 记录上一次投注数据
-        currentBox: 0,
-        isAgain: false
-      },
-      get_gray: false,
-      top50: {
-        account: "游戏账号",
-        bonus: "奖项",
-        time: "获奖时间",
-        data: []
-      },
-      // 拆盒历史记录
-      historyList: [],
-      // 拆盲盒历史记录接口参数
-      historyParams: {
-        userId: "",
-        cps: 7,
-        cpn: 1,
-        from: "tokyo",
-        inStartTime: "",
-        inEndTime: ""
-      },
-      // 历史记录最大页数
-      hisTotal: 0,
-      // 用户id
-      uid: "",
-      // 用户获奖金额
-      userAward: 0,
-      // 是否展示距离下一次开盒倒计时
-      nextOpenBox: false,
-      // 距离下一次开盲盒的倒计时
-      nextOpenTime: {
-        h: "00",
-        m: "00",
-        s: "00"
-      },
-      // 计时器
-      nextOpenTimer: "",
-      // 请求参数
-      params: {
-        from: "tokyo",
-        userId: "",
-        activityId: "10009",
-        inStartTime: "",
-        inEndTime: ""
-      },
-      // 历史记录翻页输入框
-      goToPage: 1,
-      top50Info: {
-        // top50 分页数据
-        account: "游戏账号",
-        bonus: "奖项",
-        time: "获奖时间",
-        maxPage: 0,
-        currentPage: 1,
-        top50goToPage: 1,
-        data: []
-      },
-      // 拆盒间隔时间
-      openBoxTime: 0,
-      // 倒计时按钮是否被点击
-      timerIsClick: false,
-      isLoading: "data",
-      // 盲盒奖品展示
-      luckyBonus: [[], [], []],
-      // 是否展示预设时间
-      isPreTime: false,
-      // 盲盒数据
-      boxRes: {},
-      // 计时器
-      countTimer: null,
-      // 活动时间
-      activityTime: {},
-      // 每种盲盒开盒所需奖券数
-      openBoxToken: {
-        diamonds: 128,
-        gold: 36,
-        silver: 12
-      },
-      // 领取记录数据加载状态
-      hisToryListDataState: 'empty',
-      //定时器集合
-      timeout_obj:{},
-      // 是否是维护状态
-      isMaintaining: false,
-      // 显示提示
-      showToast:false,
-    };
-  },
-  components: {
-    Alert,Toast
-  },
-  computed: {
-    vx_get_user: function() {
-      return  UserCtr.get_user();
-    }
-  },
-  created() {
-    this.init();
-  },
-  methods: {
-    init() {
-      this.uid = _.get(this.vx_get_user, "userId");
-      this.params.userId = this.uid;
-      this.getLuckyBoxInfo();
-      if (this.activityObj.period != 1) {
-        this.getLuckyBoxTop50();
-      } else {
-        this.countdown(Number(this.activityObj.startTime), null);
-      }
-      if (this.activityObj.showTime == 'toStart') {
-        this.countdown(this.activityObj.startAndEndTime.split(',')[0], this.activityObj.showTime);
-      } else if (this.activityObj.showTime == 'toEnd') {
-        this.countdown(this.activityObj.startAndEndTime.split(',')[1], this.activityObj.showTime, 'sysTime');
-      } else {
-        this.activityTime = this.activityObj.showTime;
-      }
-    },
-    toGetLottery() {
-      this.getLottery = false;
-      this.getLotterySuc = false;
-      this.getLuckyBoxInfo();
-    },
-    // 幸运盲盒 top50排行榜
-    getLuckyBoxTop50() {
-      if (this.activityObj.startAndEndTime) {
-        this.params.inStartTime = this.activityObj.startAndEndTime.split(",")[0];
-        this.params.inEndTime = "";
-      }
-      api_activity.get_activity_lucky_box_top50(this.params).then(res => {
-        let code = _.get(res, "data.code");
-        let data = _.get(res, "data.data");
-        if (code == 200) {
-          if (data && data.length > 0) {
-            data.forEach((item, index) => {
-              this.top50.data[index] = item;
-              if (item.createTime != "") {
-                // 计算格式化时间
-                let _time = this.format_date_base(item.createTime);
-                let _format = `${_time[0]}-${_time[1]}-${_time[2]} ${_time[3]}:${_time[4]}`;
-                this.top50.data[index].createTime = _format;
-              } else {
-                this.top50.data[index].createTime = "-";
-              }
-            });
-            this.top50Info.maxPage = Math.ceil(this.top50.data.length / 5);
-            this.top50Info.currentPage = 1;
-            this.top50NextPage();
-          } else {
-            this.top50.data = [];
-          }
-        } else {
-          if(code == "0401038"){
-            this.showToast = true
-            return
-          }
-          this.top50.data = [];
-          if (code == "0401013") {
-            this.isMaintaining = false;
-            this.showAlert = true;
-            this.bettingMsg = res.data.msg;
-          }
-        }
-      });
-    },
-    /**
-     * @description: top50分页
-     * @param {*} e
-     * @return {*}
-     */
-    top50NextPage(e) {
-      // top50 分页功能
-      if (!this.top50Info.top50goToPage) return;
-      let num = 0;
-      if (e && e.keyCode) {
-        if (
-          e.keyCode == 13 &&
-          this.top50Info.top50goToPage != "" &&
-          Number(this.top50Info.top50goToPage) <= Number(this.top50Info.maxPage)
-        ) {
-          this.top50Info.currentPage = Number(this.top50Info.top50goToPage);
-          num = Number(this.top50Info.top50goToPage);
-        } else {
-          return;
-        }
-      } else {
-        num = this.top50Info.currentPage;
-      }
 
-      this.top50Info.data = [];
-      let j;
-      if (this.top50.data.length - (num - 1) * 5 >= 5) {
-        j = num * 5;
-      } else {
-        j = this.top50.data.length;
-      }
-      for (let i = (num - 1) * 5; i < j; i++) {
-        this.top50Info.data.push(this.top50.data[i]);
-      }
-      this.$nextTick(() => {
-        utils.set_page_aria_hidden()
-      })      
-    },
-    /***
-     * describe: 获取盲盒数据以及展示奖品列表
-     * @param isClick
-     */
-    getLuckyBoxInfo(isclick, box) {
-      if (isclick != true && this.current_open_box.boxNum != 0) {
-        this.isLoading = "loading";
-        this.tokenNum = "--";
-        this.current_open_box.boxNum = "--";
-      }
-      this.luckyBonus = [[], [], []];
-      api_activity.get_activity_lucky_box_info(this.params).then(res => {
-        let code = _.get(res, "data.code");
-        let data = _.get(res, "data.data");
-        if (code == 200 && data) {
-
-          if (this.activityObj.period != 1) {
-            let dailyLuckyBoxNumber = data.dailyLuckyBoxNumber;
-            this.openBoxToken.silver = data.boxToken[0];
-            this.openBoxToken.gold = data.boxToken[1];
-            this.openBoxToken.diamonds = data.boxToken[2];
-            this.tokenNum = data.tokenNum || 0;
-            // 每种盲盒的数量
-            this.boxNumber = {...dailyLuckyBoxNumber};
-            this.boxRes = data;
-            if (isclick == true && box) {
-              this.changeBox(box, false, data);
-            } else {
-              this.isLoading = "data";
-              // 如果一种盲盒没有了则自动选择另一种盲盒，全部为0则进入倒计时
-              if (
-                dailyLuckyBoxNumber.diamonds == 0 &&
-                data.dailyLuckyBoxNumber.golds == 0
-              ) {
-                // 白银盲盒
-                if (dailyLuckyBoxNumber.silvers > 0) {
-                  this.current_open_box.currentBox = 1;
-                  this.current_open_box.token = this.openBoxToken.silver;
-                  this.current_open_box.boxNum = dailyLuckyBoxNumber.silvers;
-                } else {
-                  this.nextOpenBox = true;
-                  // 盲盒数为0的时候获取预设时间
-                  this.getPerSettingTime(data);
-                }
-              } else if (dailyLuckyBoxNumber.diamonds == 0) {
-                // 黄金
-                this.current_open_box.currentBox = 2;
-                this.current_open_box.token = this.openBoxToken.gold;
-                this.current_open_box.boxNum = dailyLuckyBoxNumber.golds;
-              } else if (dailyLuckyBoxNumber.golds == 0) {
-                // 白银
-                this.current_open_box.currentBox = 1;
-                this.current_open_box.token = this.openBoxToken.silver;
-                this.current_open_box.boxNum = dailyLuckyBoxNumber.silvers;
-              }
-              if (dailyLuckyBoxNumber.diamonds > 0) {
-                // 钻石
-                this.current_open_box.currentBox = 3;
-                this.current_open_box.token = this.openBoxToken.diamonds;
-                this.current_open_box.boxNum = dailyLuckyBoxNumber.diamonds;
-              }
-              if (this.tokenNum <= this.openBoxToken.silver || this.tokenNum < this.openBoxToken.gold) {
-                if (this.tokenNum < this.openBoxToken.silver) {
-                  this.get_gray = true;
-                } else {
-                  this.get_gray = false;
-                }
-                this.changeBox(1, false, data);
-              } else if (this.tokenNum < this.openBoxToken.diamonds && this.tokenNum >= this.openBoxToken.gold) {
-                this.get_gray = false;
-                this.changeBox(2, false, data);
-              } else {
-                this.get_gray = false;
-                this.changeBox(3, false, data);
-              }
-              if (this.tokenNum < this.current_open_box.token) {
-                this.current_open_box.openAgain = false;
-              }
-              if(this.lastTimeOpenBox.currentBox != 0) {
-                this.changeBox(this.lastTimeOpenBox.currentBox, false, data);
-              }
-            }
-          }
-          if (data.lucky && data.lucky.length > 0) {
-            data.lucky.forEach(item => {
-              if (item.boxType == 3) {
-                this.luckyBonus[0].push(item.name);
-              }
-              if (item.boxType == 2) {
-                this.luckyBonus[1].push(item.name);
-              }
-              if (item.boxType == 1) {
-                this.luckyBonus[2].push(item.name);
-              }
-            });
-          } else {
-            this.luckyBonus = [];
-          }
-        } else {
-          if(code == "0401038"){
-            this.showToast = true       
-          }else if (code == "0401013") {
-            this.isMaintaining = false;
-            this.showAlert = true;
-            this.bettingMsg = res.data.msg;
-          }
-        }
-      });
-    },
-    /**
-     * @description 获取用户的开盲盒记录
-     * @param {Number} num 分页页数
-     */
-    getBettingHistory(num) {
-      this.hisToryListDataState = 'loading';
-      // 如果有传页数就获取对应的页数
-      if (Number(num) > 0) {
-        this.historyParams.cpn = num;
-      }
-      // 服务器时间
-      let stime = this.mx_get_remote_time();
-      let nineDaysAgo = new Date(stime - 1000 * 60 * 60 * 24 * 90);
-      nineDaysAgo = new Date(`${nineDaysAgo.getFullYear()}-${nineDaysAgo.getMonth() + 1}-${nineDaysAgo.getDate()}`);
-      this.historyParams.inStartTime = nineDaysAgo.getTime();
-      this.historyParams.inEndTime = "";
-      this.historyList = [];
-      this.historyParams.userId = this.uid;
-      api_activity
-        .get_activity_lucky_box_history(this.historyParams)
-        .then(res => {
-          let code = _.get(res, "data.code");          
-          let data = _.get(res, "data.data");
-          let records = _.get(res, "data.data.records");
-          if (code == 200) {
-            if (records && records.length) {
-              this.hisToryListDataState = 'data';
-              records.forEach((item, index) => {
-                if (item.createTime) {
-                  // 计算格式化时间
-                  let _time = this.format_date_base(item.createTime);
-                  let _format = `${_time[0]}-${_time[1]}-${_time[2]} ${_time[3]}:${_time[4]}`
-                  item.createTime = _format
-                } else {
-                  item.createTime = "-";
-                }
-                this.historyList[index] = item;
-              });
-              utils.set_page_aria_hidden()
-            } else {
-              this.historyList = [];
-              this.hisToryListDataState = 'empty';
-            }
-            this.historyParams.cpn = data.current ? Number(data.current) : 0;
-            this.showHistory = true;
-            this.hisTotal = Math.ceil(data.total / 7);
-          } else {
-            if(code=='0401038'){         
-              this.showHistory = true;     
-              this.hisToryListDataState = 'api_limited'
-              return
-            } else if (code == "0401013") {
-              this.isMaintaining = false;
-              this.showAlert = true;
-              this.bettingMsg = res.data.msg;
-            }
-            this.hisToryListDataState = 'empty';
-          }
-        }).catch(err => {
-          this.hisToryListDataState = 'empty';
-        });
-    },
-    /**
-     * @description 切换盲盒
-     * @param {Number} n 3 钻石 2 黄金 1 白银
-     * @param {Boolean} isClick 是否是用户手动切换的
-     * @param {Object} data 上一次获取的盲盒数据
-     */
-    changeBox(n, isclick, data) {
-      this.nextOpenTime.h = '';
-      this.nextOpenTime.m = '';
-      this.nextOpenTime.s = '';
-      if (this.activityObj.period != 1) {
-        clearTimeout(this.countTimer);
-      }
-
-      let Odata = data;
-      this.isPreTime = false;
-      // 选择盲盒类型
-      this.current_open_box.currentBox = n;
-      // 钻石
-      if (n == 3) {
-        this.current_open_box.box =  require('public/image/activity_imgs/imgs/diamond_box.png');
-        this.current_open_box.token = this.openBoxToken.diamonds;
-        this.current_open_box.boxNum = this.boxNumber.diamonds;
-        // 黄金
-      } else if (n == 2) {
-        this.current_open_box.box =  require('public/image/activity_imgs/imgs/gold_box.png');
-        this.current_open_box.token = this.openBoxToken.gold;
-        this.current_open_box.boxNum = this.boxNumber.golds;
-        // 白银
-      } else {
-        this.current_open_box.box = require('public/image/activity_imgs/imgs/silver_box.png');
-        this.current_open_box.token = this.openBoxToken.silver;
-        this.current_open_box.boxNum = this.boxNumber.silvers;
-      }
-      // 当前盲盒所需奖券数大于系统剩余盲盒数时，置灰判断为 false
-      this.current_open_box.token > this.tokenNum ? this.get_gray = true : this.get_gray = false;
-      if (isclick == true) {
-        this.lastTimeOpenBox.currentBox = 0;
-        this.getLuckyBoxInfo(isclick, n); // 每次切换盲盒都调用更新一下页面数据
-        Odata = this.boxRes;
-      }
-      // 如果当前盲盒数量为 0，就展示距离下一次开盲盒的倒计时并且计算是下一轮还是下一天
-      if (this.current_open_box.boxNum == 0) {
-        this.nextOpenBox = true;
-        // 盲盒数为0时获取预设时间设置
-        this.getPerSettingTime(Odata);
-      } else {
-        this.nextOpenBox = false;
-      }
-      this.lastTimeOpenBox.isAgain = false;
-      if (this.tokenNum < this.current_open_box.token) {
-        this.current_open_box.openAgain = false;
-      }
-    },
-    /**
-     * 拆盲盒
-     */
-    async openBox() {
-      this.getLottery = false;
-      if (this.activityObj.period == 3) {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '活动已结束');
-        return;
-      }
-      if (this.current_open_box.boxNum == 0) {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '当前盲盒已被抢完');
-        this.getLuckyBoxInfo();
-        return;
-      }
-      // 如果当前按钮置灰或者盲盒数量为0，则不予回应
-      if (this.get_gray || this.current_open_box.boxNum == 0) return;
-      const params = {
-        boxType:
-          this.lastTimeOpenBox.isAgain == true
-            ? this.lastTimeOpenBox.currentBox
-            : this.current_open_box.currentBox,
-        from: "tokyo",
-        userId: this.uid
-      };
-      // 开盲盒间隔时间中不允许再次触发点击
-      if (this.timerIsClick == false) {
-        if (this.openBoxTime > 0) {
-          this.timerIsClick = true;
-          useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, '操作过于频繁，请稍后再试');
-          return;
-        }
-      } else {
-        if (this.openBoxTime == 0) {
-          this.timerIsClick = false;
-        } else {
-          return;
-        }
-      }
-      // 抽盲盒时先展示 loading ，接口返回后再取消展示
-      // box_opening
-      this.isLoading = "box_opening";
-      try {
-        const res = await api_activity.get_activity_open_lucky_box(params);
-        let code = _.get(res, "data.code");
-        let data = _.get(res, "data.data");
-        if (code == 200 && data) {
-          this.isLoading = "data";
-          this.getLottery = true;
-          this.getLotterySuc = true;
-          this.current_open_box.money = data.award;
-          this.current_open_box.boxNum -= 1;
-          this.current_open_box.name = data.name;
-          this.lastTimeOpenBox = { ...this.current_open_box };
-          this.lastTimeOpenBox.isAgain = true;
-          // 获取盲盒数据以及展示奖品列表
-          this.getLuckyBoxInfo(true, params.boxType);
-          // 开盒成功之后就开始倒计时
-          if (this.timeout_obj.timer1) {clearTimeout(this.timeout_obj.timer1)};
-            this.timeout_obj.timer1 = setTimeout(() => {
-            this.openBoxTime = 5;
-            // 限制用户每隔5秒开一次盲盒(展示5s，实际需要6s)
-            const openBoxTimer = setInterval(() => {
-              this.openBoxTime -= 1;
-              if (this.openBoxTime == 0) {
-                clearInterval(openBoxTimer);
-              }
-            }, 1000);
-          }, 1000);
-          utils.gtag_event_send('PC_luckybox_getAwardClick', 'PC_活动', 'PC_幸运盲盒', parseInt(data.award))
-        } else {
-          this.isLoading = "data";
-          // 登录失效提示
-          if (code == "0401013") {
-            this.isMaintaining = false;
-            this.showAlert = true;
-            this.bettingMsg = res.data.msg;
-          // 活动维护提示
-          } else if (code == '0410505') {
-            this.isMaintaining = true;
-            this.showAlert = true;
-            this.bettingMsg = "活动现已维护，感谢您的支持";
-          // 其他情况的接口提示
-          } else {
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, res.data.msg);
-          }
-          this.getLuckyBoxInfo(true, params.boxType);
-        }
-      } catch (error) {
-        this.isLoading = "data";
-        let text;
-        if (error.type == "openbox_cencel") {
-          text = error.message;
-        } else {
-          text = "网络异常，请重新抽取";
-        }
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, text);
-      }
-      this.checkToken();
-    },
-    /**
-     * 关闭历史记录弹窗
-     */
-    closeHistoryList() {
-      this.showHistory = false;
-    },
-    /**
-     * 跳转到平台首页，目前版本已经取消了这个交互
-     */
-    goToHomePage() {
-      let url = window.localStorage.getItem("home_url");
-      window.open(url, "_blank");
-    },
-    /**
-     * 计算倒计时时间
-     * time1: 开始派送时间 秒
-     * time2: 倒计时结束时间 秒
-     */
-    getNextOpenTime() {
-      // 到晚上12点结束
-      clearInterval(this.nextOpenTimer);
-      // 服务器当前时间
-      let sysTime = this.mx_get_remote_time();
-      // 重复写一次是为了防止在快速点击的时候时间不更新的问题
-      let now = this.utc_to_gmt_no_8_ms2_(sysTime);
-      let hours = now.h;
-      let min = now.mm;
-      let sec = now.s;
-        hours = (hours <= 11 ? 11 : (23 + 12)) - hours < 10 ? "0" + ((hours <= 11 ? 11 : (23 + 12)) - hours) : (hours <= 11 ? 11 : (23 + 12)) - hours ;
-        min = 59 - min < 10 ? "0" + (59 - min) : 59 - min;
-        sec = 59 - sec < 10 ? "0" + (59 - sec) : 59 - sec;
-      this.nextOpenTime.h = hours;
-      this.nextOpenTime.m = min;
-      this.nextOpenTime.s = sec;
-      this.nextOpenTimer = setInterval(() => {
-        sysTime = this.mx_get_remote_time();
-        now = this.utc_to_gmt_no_8_ms2_(sysTime);
-        hours = now.h;
-        min = now.mm;
-        sec = now.s;
-        hours = (hours <= 11 ? 11 : (23 + 12)) - hours < 10 ? "0" + ((hours <= 11 ? 11 : (23 + 12)) - hours) : (hours <= 11 ? 11 : (23 + 12)) - hours;
-        min = 59 - min < 10 ? "0" + (59 - min) : 59 - min;
-        sec = 59 - sec < 10 ? "0" + (59 - sec) : 59 - sec;
-        // 倒计时结束而接口返回还是不正常的时候停止倒计时并且显示为 00:00:00
-        if (parseInt(hours) <= 0 && parseInt(min) <= 0 && parseInt(sec) <= 0) {
-          this.nextOpenTime.h = '00';
-          this.nextOpenTime.m = '00';
-          this.nextOpenTime.s = '00';
-          clearInterval(this.nextOpenTimer)
-        } else {
-          this.nextOpenTime.h = hours;
-          this.nextOpenTime.m = min;
-          this.nextOpenTime.s = sec;
-        }
-        // 晚上12点直接刷新---------默认刷新时间改成中午12点
-        if (hours == "12" && min == "00" && sec == "00") {
-          clearInterval(this.nextOpenTimer)
-          let timer_info = setTimeout(() => {
-            this.getLuckyBoxInfo();
-            clearTimeout(timer_info);
-          }, 1000);
-        }
-      }, 1000);
-    },
-    /**
-     * 获取用户剩余的奖券个数
-     */
-    checkToken() {
-      api_activity.get_activity_lucky_box_token_num().then(res => {
-        let code = _.get(res, "data.code");
-        let data = _.get(res, "data.data");
-        if (code == 200) {
-          this.tokenNum = data.tokenNum;
-          if (this.tokenNum < this.current_open_box.token) {
-            this.current_open_box.openAgain = false;
-          }
-        } else {
-          if (code == "0401013") {
-            this.isMaintaining = false;
-            this.showAlert = true;
-            this.bettingMsg = res.data.msg;
-          }
-        }
-      });
-    },
-    /**
-     * 历史记录跳转到 * 页
-     * @param e 用户输入的页数
-     */
-    goToHistoryPage(e) {
-      if (!this.goToPage) return;
-      let gotoPage = Number(this.goToPage);
-      if (gotoPage == this.historyParams.cpn) {return}
-      if (
-        e.keyCode == 13 &&
-        this.goToPage != "" &&
-        gotoPage <= Number(this.hisTotal)
-      ) {
-        this.getBettingHistory(gotoPage);
-      } else {
-        if (gotoPage > Number(this.hisTotal)) {
-          this.goToPage = this.hisTotal;
-        }
-        if (gotoPage < 1) {
-          this.goToPage = 1;
-        }
-      }
-    },
-    // 获取预设时间设置
-    getPerSettingTime(data) {
-      // 如果没有预设时间设置就不处理
-      if (!data.timeRemaining) return;
-      let timeRemaining = data.timeRemaining;
-      // 判断是否有预设数据，如果有就展示批次派发的倒计时
-      let obj = {},
-        remaining = timeRemaining;
-      if (remaining && remaining.length > 0) {
-        obj = remaining.find(item => item.boxType == this.current_open_box.currentBox && item.showRate) || {};
-      }
-      let currentBoxNum = this.current_open_box.currentBox == 1 ? data.dailyLuckyBoxNumber.silvers : this.current_open_box.currentBox == 2 ? data.dailyLuckyBoxNumber.golds : data.dailyLuckyBoxNumber.diamonds;
-      // 如果盒子数量为0并且没有预设时间就开始倒计时
-      if (currentBoxNum == 0 && obj.showRate) {
-        // 如果时间 > 0 就用间隔时间倒计时，否则就倒计时到晚上12点
-        if (Number(obj.showRate) > 0) {
-          this.isPreTime = true;
-          let time1 = new Date().getTime() + Number(obj.showRate);
-          this.nextOpenTime.h = '';
-          this.nextOpenTime.m = '';
-          this.nextOpenTime.s = '';
-          clearInterval(this.nextOpenTimer);
-          this.countdown(time1, 'rank')
-        } else {
-          if (this.countTimer1) {
-            clearTimeout(this.countTimer1);
-          }
-          this.getNextOpenTime();
-        }
-      } else {
-        clearTimeout(this.countTimer);
-        this.isPreTime = false;
-        this.getNextOpenTime();
-      }
-    },
-    // 秒数转换成时间
-    secTransferToTime(time2) {
-      let overTimeHour  = 0; // 时
-      let overTimeMin = 0; // 分
-      let overTimeSec = 0; // 秒
-      // 1小时及以上
-      if (time2 >= 3600) {
-        overTimeHour = Math.floor(time2 / 60 / 60); // 今天时间 小时
-        if (time2 - 3600 * overTimeHour >= 60 ) { // 如果算完小时有剩余时间，就计算分钟
-          overTimeMin = Math.floor(time2 / 60 % 60); // 分钟
-        } else if (time2 % 60 > 0 && time2 % 60 < 60) {
-          overTimeSec = time2 % 60;
-        }
-      // 1-59分钟分钟
-      } else if (time2 >= 60) {
-        overTimeMin = Math.floor(time2 / 60);
-        if (time2 % 60 > 0 && time2 % 60 < 60) {
-          overTimeSec = time2 % 60;
-        }
-      } else {
-        overTimeSec = time2;
-      }
-      if (overTimeHour == 24 && overTimeMin == 0 && overTimeSec == 0) {
-        return '0,0,0'
-      } else {
-        return `${overTimeHour},${overTimeMin},${overTimeSec}`
-      }
-    },
-    /**
-     * 获取服务器时间的年月日时分秒
-     */
-    utc_to_gmt_no_8_ms2_(value) {
-      if (!value) { return '' }
-      let time = utils.format_time_zone_millisecond(parseInt(value));
-      let [y, m, d, h, mm, s] = this.format_date_base(time)
-      return {y, m, d, h, mm, s}
-    }
-
+  mixins: [ lucky_blind_box_mixin],
+  components:{
+    DataPager,
+    ActiveCountDown
   },
-  destroyed() {
-    clearInterval(this.nextOpenTimer);
-    clearTimeout(this.countTimer);
-    if (this.countTimer1) {
-      clearTimeout(this.countTimer1)
-    }
-     /**清除定时器 */
-        if(this.timer) {
-          clearTimeout(this.timer)
-          this.timer =null
-    }
-  }
-};
+}
 </script>
 <style lang="scss" scoped>
 .lucky_box {
@@ -1938,4 +1181,3 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
-project/activity/src/pages/yazhou-pc/common-pc

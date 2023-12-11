@@ -395,7 +395,7 @@ export default {
       this.is_show_card = true;
     });
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.timer_id);
     this.timer_id = null;
 

@@ -9,10 +9,11 @@
       <div class="match-detail-time">
         <span class="match-detail-time-label" v-if="!lodash.isEmpty(get_match_detail)">
           
-          <match-stage :detail_data="get_match_detail" v-if="start_text == -1"></match-stage>
-          <span v-else>
-            {{ i18n_tc('list.after_time_start2', [minue]) }}
+          <!-- {{get_match_detail?.ms }}{{start_text}} -->
+          <span v-if="start_time  && get_match_detail.ms == 0  ">
+            {{ i18n_tc('list.after_time_start2', [getLongTime]) }}
           </span>
+          <match-stage :detail_data="get_match_detail"  v-else ></match-stage>
           <q-badge
             v-if="get_match_detail.mng == 1"
             text-color="white"
@@ -107,8 +108,9 @@
         </div>
       </template>
     </div>
+     <div v-show="false">{{ get_match_detail.csid  }}</div>
      <!-- 比分组件 目前只写了网球比分组件 -->
-     <matchScore v-if="get_match_detail.csid == 5 "  :detail_data="get_match_detail" />
+     <matchScore v-if="get_match_detail.csid == 5"  :detail_data="get_match_detail" />
   </div>
 </template>
 
@@ -135,7 +137,6 @@ const props = defineProps({
     default : true
   }
 });
-
 
 /**
      * @description: 设置发球方绿点显示
@@ -216,7 +217,7 @@ watch(() => props.get_match_detail, (value) => {
   }else {
     tennis_point.value =[0,0]
   }
-})
+},{deep:true})
 
 //比分
 const detail_count = computed(() => {
@@ -453,9 +454,7 @@ const collect_click = () => {
 // }, 200);
 
 onMounted(()=>{
-  setTimeout(function (){
-    console.log(props.get_match_detail?.ms,"赛果没有比分截图这里")
-  },1200)
+  
 })
 
 // console.log(scoew_icon_list.value,"-------------------------------------------------",props.get_match_detail.msc_obj)
@@ -481,6 +480,42 @@ watch(()=>props.get_match_detail?.mle,
     immediate:true
   }
 )
+  // 赛事开赛时间倒计时是否显示
+const  start_time = ref(true)
+// 赛事开始倒计时时间(赛事开始时间-当前时间)
+const  longTime = ref(null)
+let timerInterval =null
+const getLongTime=computed(()=>{
+   // mgt:赛事开始时间
+   let now = new Date().getTime();
+  // 赛事开始时间-当前时间 小于一小时并且大于0的时候显示 赛事倒计时
+  let bool = (+props.get_match_detail.mgt - now < 3600 * 1000) && (props.get_match_detail.mgt - now >0) ? true:false;
+  // 赛事开始倒计时时间(整数)
+  let time = Math.floor( (+props.get_match_detail.mgt -now ) / 1000 / 60 );
+  // 赛事开赛时间倒计时为0的时候 让倒计时显示为1分钟
+  if(time == 0){ time += 1 }
+  // 此时true或者false 控制是否显示倒计时时间
+  start_time.value = bool;
+  // 计算出来的倒计时时间赋值给data的变量显示在页面上
+  longTime.value = time;
+
+  timerInterval = setInterval(()=>{
+    let now = new Date().getTime();
+    // 判断赛事开始时间-当前时间 小于0的时候 清除定时器
+    if(+props.get_match_detail.mgt - now < 0 ){
+      clearInterval(timerInterval);
+      // 不显示倒计时
+      start_time.value = false;
+      // 此时同步更新match_stage组件的时间
+      // this.$root.$emit(this.emit_cmd.EMIT_MATCH_NOSTART);
+    }
+    // 同上注释
+    let time = Math.floor( (+props.get_match_detail.mgt - now )/ 1000 / 60);
+    if(time == 0){ time += 1 }
+    longTime.value = time;
+  }, 1000 * 1)
+  return longTime.value 
+})
 </script>
 
 <style lang="scss" scoped>

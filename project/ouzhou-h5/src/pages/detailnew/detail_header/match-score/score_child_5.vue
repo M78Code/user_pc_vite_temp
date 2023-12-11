@@ -25,7 +25,7 @@ const scoreArray = computed(() => {
 </script>
 
 <template>
-    <ul class="score_child_5">
+    <ul class="score_child_5" v-if="scoreArray.length > 0">
         <li v-for="(item, key) of scoreArray" :key="key" class="score">
             <span>{{ item.home }}</span>
             <span>-</span>
@@ -37,7 +37,7 @@ const scoreArray = computed(() => {
 <style scoped lang="scss">
 .score_child_5 {
     width: 100%;
-    height: 100%;
+    height: 32px;
     display: flex;
     background: #ffffff;
     align-items: center;

@@ -1,8 +1,3 @@
-<!--
- * @Author: ledron
- * @Date: 2021-08-25
- * @Description: 幸运盲盒活动
--->
 <template>
   <div class="lucky_blind_box">
     <!-- 图片预加载   -->
