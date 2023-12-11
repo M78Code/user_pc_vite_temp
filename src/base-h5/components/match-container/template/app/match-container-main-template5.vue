@@ -441,6 +441,11 @@ export default {
     }
   }
 
+  .match-status-title {
+    display: flex;
+    align-items: center;
+  }
+
   .match-inner-container {
     margin: 0 auto;
     display: flex;
