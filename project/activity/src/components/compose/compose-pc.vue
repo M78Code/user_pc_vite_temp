@@ -451,7 +451,7 @@ export default {
     this.is_show_card = true;
     this.scale_func();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener("resize", this.scale_func);
     clearInterval(this.timer_id);
   },

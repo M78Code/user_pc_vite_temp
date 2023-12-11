@@ -311,7 +311,7 @@ export default {
       }, 800);
     },
   },
-  destroyed() {
+  unmounted() {
     if (this.first_timer1) {
       clearTimeout(this.first_timer1);
       this.first_timer1 = null;
