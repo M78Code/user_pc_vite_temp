@@ -95,6 +95,7 @@ export default {
       pip_mouseover:false,
        //视屏播放类型
       vx_play_media:MatchDetailCalss.play_media,
+      LOCAL_PROJECT_FILE_PREFIX: LOCAL_PROJECT_FILE_PREFIX
     }
   },
   computed:{

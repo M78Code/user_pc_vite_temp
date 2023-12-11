@@ -26,7 +26,7 @@ export default defineConfig({
     }),
 
     quasar({
-      sassVariables: path.resolve(__dirname, `../../project/${project}/src/css/quasar.variables.scss`)
+      sassVariables: `app/job/output/css/variables.scss`,
     }),
   ],
   css:{

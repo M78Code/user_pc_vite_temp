@@ -21,6 +21,7 @@
           alt=""
         />
         <div>
+
           <span>活动时间：</span>
           <template v-if="get_user.activityList[activityIndex].period == 1">
             <span class="count_down_css">
@@ -48,6 +49,8 @@
             <span v-else>活动长期有效</span>
           </template>
           <span v-else> 活动结束 </span>
+
+
         </div>
       </div>
       <div>
@@ -87,7 +90,10 @@
             <span>{{ i == 0 ? "天" : "元" }}</span>
           </div>
         </div>
+
       </div>
+
+
       <div class="table">
         <p>
           <span>任务事项</span>
@@ -98,6 +104,9 @@
           </span>
           <span>领取状态</span>
         </p>
+
+
+
         <p
           v-for="(v, i) in get_everyDay_list"
           :key="i + '_id_'"
@@ -196,12 +205,12 @@
           <img
             class="close"
             @click="history_alert = false"
-            src="activity/yazhou-h5/activity/lucky/close.png"
+            src="/activity/yazhou-h5/activity/lucky/close.png"
           />
         </div>
       </div>
     </q-dialog>
-
+   <!-- 领取奖券弹窗 -->
     <q-dialog v-model="daily_task_success">
       <div class="daily_task_dialog" @click.self="daily_task_success = false">
         <div class="task_success">

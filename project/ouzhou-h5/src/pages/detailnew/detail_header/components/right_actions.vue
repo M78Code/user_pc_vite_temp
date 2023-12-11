@@ -164,6 +164,7 @@ let select = ref(list.value[0].label);
  * }
  */
 const handleClick = (item, index) => {
+    debugger
     switch (item.label) {
         // 切换动画
         case 'animation':
