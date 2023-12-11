@@ -426,8 +426,9 @@ onMounted(() => {});
       overflow: hidden;
       width: 50%;
       min-width: 100px;
-      display: block;
-      margin-left: -40px;
+      display: flex;
+     justify-content: flex-start;
+     margin-left: 15px;
       color: var(--q-gb-t-c-2);
     }
   }
