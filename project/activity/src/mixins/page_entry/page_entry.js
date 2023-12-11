@@ -184,12 +184,14 @@ export default {
     },
     // tab 选项卡切换
     async tab_click(item, activityId, index, is_click, is_first_time) {
+
       let isCurrentTab = this.tab_Id == activityId;
+
       this.tab_Id = activityId;
       this.activity_index = index;
       this.inStartTime = +item.inStartTime;
       this.inEndTime = +item.inEndTime;
-
+      console.log( ' this.tab_Id-', this.tab_Id);
       if (UserCtr.get_user_token() && is_click != "not_need_click") {
         // 数据是否来源网络
         let user_data_from_net = true;
