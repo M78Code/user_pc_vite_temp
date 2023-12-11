@@ -99,11 +99,12 @@ const go_to_favouritse = () => {
     filter_tab: 3001, // 滚球 3001 早盘 3002  今日 3003
     current_mi: 1011, // 当前选中的赛种id
   }
+  MenuData.set_menu_current_mi(1011)
   MenuData.set_mid_menu_result(mid_config)
   MenuData.set_current_ball_type(1)
 
   // nextTick(()=>{
-    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_FAVOURITES)
   // })
 }
 /**
@@ -211,7 +212,7 @@ const esportsClick = ()=>{
 }
 // 冠军
 const outrights = () => {
-  if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return
+  // if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return
  // 点击菜单的时候如果在详情页应跳转出来先
  if (['league','details'].includes(route.name)) {
     router.push('/home')
@@ -237,7 +238,7 @@ const outrights = () => {
   MenuData.set_mid_menu_result(mid_config)
 
   nextTick(()=>{
-    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,1014)
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_OUTRIGHTS,401)
   })
 }
 
