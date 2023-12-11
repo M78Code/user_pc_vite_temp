@@ -928,8 +928,9 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
-    let detail_mark = [13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
+    let detail_mark = [3,13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
     let lsit_mark = [2,173,38,114]
+    let list_head = [359,31,340,383,13,102]
     // 详情
     if(is_detail){
         // 有球头 球头需要变色
@@ -938,9 +939,14 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }else{
             text = `${ol_obj.ott || ''} ${ol_obj.on}`  
         }
-        if(detail_mark.includes(ol_obj._hpid*1)){
+        if(detail_mark.includes(ol_obj._hpid*1) && ol_obj.ot == 'X' ){
             text = `${ol_obj.otv}` 
         }
+        // 
+        if(list_head.includes(ol_obj._hpid*1)){
+            text = `${ol_obj.otv}` 
+        }
+
     }else{
         let a = '' ,b = '' 
         b = ol_obj.on 
