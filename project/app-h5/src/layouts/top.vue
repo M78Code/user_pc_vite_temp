@@ -255,7 +255,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     // 电竞
     if(MenuData.top_menu_title.mi == 2000){
-      MatchMeta.get_esports_match()
+      // 初始进入会调多次接口
+      // MatchMeta.get_esports_match()
     }
     // 收藏
     if(MenuData.top_menu_title.mi == 50000){

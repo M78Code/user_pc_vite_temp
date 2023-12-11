@@ -243,7 +243,7 @@
             :pageSize = 7
             @change="data_page_changed"
           />
-          <img class="close"  @click="history_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png"/>
+          <img class="close"  @click="history_alert = false"  src="/activity/yazhou-h5/activity/lucky/close.png"/>
         </div>
       </div>
     </q-dialog>
@@ -266,7 +266,7 @@
         <div class="get-more-tokens" v-else @click="gift_box_alert = false">
           我知道了
         </div>
-        <img class="close-img" @click="gift_box_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png" alt="">
+        <img class="close-img" @click="gift_box_alert = false"  src="/activity/yazhou-h5/activity/lucky/close.png" alt="">
       </div>
     </q-dialog>
 
