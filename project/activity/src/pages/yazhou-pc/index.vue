@@ -11,7 +11,7 @@
       <!-- 头部 banner 图 -->
       <div class="top-banner">
         <img
-          src="/activity/yazhou-pc/common/activity_banner/banner_slot.jpg"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/common/activity_banner/banner_slot.jpg`"
           alt=""
           width="100%"
         />

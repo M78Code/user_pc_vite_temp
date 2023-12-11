@@ -10,7 +10,7 @@
     <load-data :state="allPageState">
       <div class="activity_aegis">
         <div class="banner">
-          <img src="/activity/yazhou-pc/activity_imgs/imgs/activity_aegis_banner.png" alt="">
+          <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/activity_aegis_banner.png`" alt="">
         </div>
         <div class="text text-center">
           <h3>{{ title }}</h3>
