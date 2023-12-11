@@ -21,9 +21,11 @@
         <div class="team-wrapper" :class="{standard:get_newer_standard_edition == 2}">
           <!-- 战队名称 -->
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+            <img v-img="([lodash.get(match_item,'mhlu'), lodash.get(match_item,'frmhn')])" />
             <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
           </div>
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
+            <img v-img="([lodash.get(match_item,'malu'), lodash.get(match_item,'frman')])" />
             <div class="ellipsis">
               {{match_item.teams ? match_item.teams[1] : ''}}
             </div>
@@ -57,10 +59,6 @@
               v-show="match_item.match_status == 2">
               Fin.
             </div>
-            <!-- 玩法数量 -->
-            <div v-if="match_item.mc">
-              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+`: i18n_t('footer_menu.more')}}
-            </div>
           </div>
         </div>
       </div>
@@ -69,7 +67,7 @@
         :class="{standard:get_newer_standard_edition == 2,simple:get_newer_standard_edition == 1}"
       >
         <!-- 比分和视频icon -->
-        <div class="score-wrap">
+        <div class="score-wrap" v-if="false">
           <div class="score"
             v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
             {{match_item.home}}
@@ -104,6 +102,11 @@
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
           </template>
+           <!-- 玩法数量 -->
+           <div v-if="match_item.mc" class="play-count">
+              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+ >`: i18n_t('footer_menu.more')}}
+            </div>
+
           <!--标准版赔率容器-->
           <div class="standard-odd-l-w" v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
             :class="{'status2':standard_odd_status == 1}" v-if="get_newer_standard_edition == 2">
@@ -531,7 +534,7 @@ export default {
     get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },
     get_theme(){return 'theme01'},
-    get_access_config(){return false;},
+    get_access_config(){return {handicapNum: true}},
     
     show_debugger_line(){
       let wsl = sessionStorage.getItem('wsl');
@@ -611,11 +614,11 @@ export default {
   min-height: 0.9rem;
   margin: 0 auto 0.08rem auto;
   border-radius: 0.08rem;
-
+  border-bottom: 1px solid #e9e9e9;
   position: relative;
 
   &.standard {
-    height: 1.2rem;
+    height: 1.4rem;
   }
 
   .test-line {
@@ -624,6 +627,12 @@ export default {
     top: 0;
     color: red;
     z-index: 2;
+  }
+
+  .team-title img {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
   }
 
   .match-data-item {
@@ -638,31 +647,31 @@ export default {
 
     &.standard {
       .team-w-container {
-        padding-top: 0.13rem;
+        padding-top: 0.21rem;
       }
 
       .team-title {
-        height: 0.3rem;
+        height: 0.32rem;
         line-height: 0.3rem;
         margin-bottom: 0.02rem;
+
       }
     }
 
     .team-w-container {
-      flex: 1;
+      flex-grow: 1;
+      width: 50%
     }
 
     .team-wrapper {
       flex: 1;
-
-      margin-left: 0.21rem;
       font-weight: bold;
 
       &.standard {
         height: 1.07rem;
 
         .team-title {
-          width: 0.72rem;
+          width: 1.4rem;
         }
       }
     }
@@ -692,7 +701,7 @@ export default {
 
     .m-c-container {
       &.standard {
-        width: 2.33rem;
+        width: 1.92rem;
 
         .score-wrap {
           padding-top: 0.13rem;
@@ -747,14 +756,19 @@ export default {
     }
 
     &.standard {
-      height: 1.04rem;
+      height: 1.07rem;
     }
 
     .profession {
       padding-top: 0.13rem;
-      height: 1.07rem;
+      height: 1.21rem;
       overflow: hidden;
       position: relative;
+
+      .play-count {
+          text-align: right;
+          padding-right: 0.1rem;
+      }
 
       .slide_icon {
         position: absolute;
@@ -813,11 +827,11 @@ export default {
 
       .odd-wrap-min {
         width: 0.6rem;
-        height: 0.3rem;
+        height: 0.32rem;
         overflow: hidden;
         border-radius: 0.02rem;
         margin-bottom: 0.02rem;
-
+        background-color: var(--q-gb-bg-c-18);
         &.hp-2, &.hp-0 {
           height: 0.46rem;
         }
@@ -865,18 +879,21 @@ export default {
 
     .team-title {
       height: 0.23rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       margin-bottom: 0.03rem;
-      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // white-space: nowrap;
+      // position: relative;
 
       .ellipsis {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
+        // position: absolute;
+        // left: 0;
+        // top: 0;
+        // width: 100%;
+        // height: 100%;
       }
     }
   }
