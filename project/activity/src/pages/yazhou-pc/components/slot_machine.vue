@@ -248,8 +248,8 @@
         </div>
         <!-- 摇杆 -->
         <div class="rocker">
-          <img
-            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/rocker_${
+          <img 
+            :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-pc/activity_imgs/imgs/slot_machine/rocker_${
               (_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1
             }/0${rocker_anim_index}.png`"
             alt=""
@@ -291,7 +291,7 @@
         >
           <img
             v-if="currentSlotIndex == index && index < 3"
-            :src="`${$LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`"
+            :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-pc/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`"
           />
           <img
             v-else
