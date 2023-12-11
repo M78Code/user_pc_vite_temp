@@ -7,7 +7,7 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div v-if="[10].includes(match_info.hpt)" class="temp-simple">
-    <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
+    <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(match_info.hl[0]) }">
       <div
         v-for="o in match_info.hl[0].ol"
         :key="o?.oid"
