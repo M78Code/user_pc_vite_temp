@@ -121,7 +121,7 @@
             <template v-if="[1, 3].includes(v.bonusType)">
               <img
                 class="completed"
-                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/completed${
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/completed${
                   get_theme.includes('y0') ? '_y0' : ''
                 }.svg`"
                 alt=""
@@ -270,7 +270,7 @@
         <img
           class="colse2"
           @click="daily_task_success = false"
-          src="activity/yazhou-h5/activity/colse2.png"
+          src="activity/yazhou-pc/activity/colse2.png"
         />
       </div>
     </q-dialog>

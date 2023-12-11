@@ -275,7 +275,7 @@
             :pageSize = 7
             @change="data_page_changed"
           />
-          <img class="close"  @click="history_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png"/>
+          <img class="close"  @click="history_alert = false"  src="activity/yazhou-pc/activity/lucky/close.png"/>
         </div>
       </div>
     </q-dialog>
@@ -291,14 +291,14 @@
         <div class="gift-btn" v-if="false">
           <p>再拆1次</p>
           <div class="flex align_items justify-center">
-            <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
+            <img  src="activity/yazhou-pc/activity/diamond1.png" alt="">
             <span>x {{lihe_name.Number_tokens_consumed}}</span>
           </div>
         </div>
         <div class="get-more-tokens" v-else @click="gift_box_alert = false">
           我知道了
         </div>
-        <img class="close-img" @click="gift_box_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png" alt="">
+        <img class="close-img" @click="gift_box_alert = false"  src="activity/yazhou-pc/activity/lucky/close.png" alt="">
       </div>
     </q-dialog>
 
