@@ -131,6 +131,7 @@
             <common-template
               v-if="[0, 1, 2, 3, 7, 10,13,14,15].includes(item.hpt) && item.hpid != 103"
               :match_info="item"
+              :get_icon="get_icon"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
             />
@@ -155,6 +156,7 @@
               v-if="[11].includes(item.hpt)"
               :match_info="item"
               :current_ol="current_ol"
+              :get_icon="get_icon"
               @betItemClick="betItemClick"
             />
           </q-card-section>
@@ -285,6 +287,13 @@ const sun_ol = (ol, item) => {
 // 一键置顶
 const set_top = (item) => {
   useMittEmit(MITT_TYPES.EMIT_SET_PLAT_TOP, item);
+};
+// 获取图片
+const get_icon = (otn) => {
+  return new URL(
+    `${LOCAL_PROJECT_FILE_PREFIX}/image/ranking/${props.detail_info.csid}_${otn}.png`,
+    import.meta.url
+  ).href;
 };
 
 //  投注项点击投注,

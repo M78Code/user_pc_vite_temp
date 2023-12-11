@@ -60,7 +60,7 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 import { useMittEmit, MITT_TYPES,SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
-import {ref,computed} from "vue";
+import {ref,computed,nextTick} from "vue";
 import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { default_theme_key } from "src/core/theme/";
@@ -168,11 +168,12 @@ const version_handle = item => {
   UserCtr.set_standard_edition(status);
   useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
   MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
-  // if (status === 1) {
-  //   setTimeout(() => {
-  //     useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-  //   }, 1000)
-  // }
+  // 新手版
+  if (status === 1) {
+    nextTick(() => {
+      useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+    })
+  }
 };
 /**
  *@description 处理排序规则

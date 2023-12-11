@@ -191,31 +191,24 @@ const changeDatetab = (item, index) => {
     emit("changeDate", item.val);
 };
 /**
- * 默认请求今日数据
+ * 默认请求数据
  * @param {*} val 
  */
 const setDefaultData = async (val,type) => {
-    // 重置
-    if(!type)store.tabActive = 'Matches';
-    week.value = await getDateList();
-    MenuData.set_current_lv1_menu(2);
-    // MenuData.set_menu_mi(val);
+    // 刷新or更换球种 重置
+    if(!type){
+        MenuData.set_current_lv1_menu(2);
+        store.tabActive = 'Matches';
+        store.second_tab_index = 0;
+        store.menu_time = week.value[0].val;
+    }
     store.current_menu_mi = val;
-    //球种改变设置今日
-    // MenuData.set_date_time(week[0].val);
-    store.menu_time = week.value[0].val
-    store.second_tab_index = 0;
-    scrollDateRef.value && scrollDateRef.value.scrollTo(0, "start-force");
+    week.value = await getDateList();
+    //滚动到缓存位置
+    const index =  week.value.findIndex((item)=>{return item.val === store.menu_time});
+    scrollDateRef.value && scrollDateRef.value.scrollTo(index?index-2:0, "start-force");
+    
 }
-
-// watch(() => store.areaList, () => {
-    // console.log(store.areaList.lenght)
-    // if (store.areaList.lenght) {
-    //     const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
-    //     const offset = index < 0 ? 0 : index
-    //     areaListChange(store.areaList[offset], offset)
-    // }
-// })
 onMounted(async () => {
     //当前激活球种id  如果本地有存储值就取本地存储的值
     const session_info = LocalStorage.get(menu_h5);
@@ -343,7 +336,7 @@ const areaListChange = (item) => {
 
     // 七天时间tabs样式
     .date_time {
-        /* height:44px; */
+        height:55px;
         min-width: 100%;
         display: flex;
         align-items: center;
@@ -444,6 +437,7 @@ const areaListChange = (item) => {
 
         :deep(.scroll) {
             width: 100%;
+            height:100%;
             border-bottom: 10px solid #E2E2E2;
         }
     }

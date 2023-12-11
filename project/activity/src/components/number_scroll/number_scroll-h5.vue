@@ -22,7 +22,7 @@
       ></div>
     </div>
     <!-- 老虎机停止时的音效 -->
-    <audio  src="activity/yazhou-h5/activity/slot_machine/media/num_scroll_stop.mp3" ref="num_scroll_stop"></audio>
+    <audio  src="/activity/yazhou-h5/activity/slot_machine/media/num_scroll_stop.mp3" ref="num_scroll_stop"></audio>
   </div>
 </template>
 

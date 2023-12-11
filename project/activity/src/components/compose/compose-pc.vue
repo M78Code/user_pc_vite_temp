@@ -362,7 +362,7 @@ import {
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,
-} from "src/core/index.js";
+} from "project/activity/src/core/index.js";
 // 生成随机数
 const random = function (minNum, maxNum) {
   return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
