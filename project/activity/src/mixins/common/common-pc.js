@@ -16,10 +16,11 @@ export default {
     }
   },
   mixins: [time_format_mixin],
-  destroyed(){
+  unmounted(){
     clearTimeout(this.countTimer1)
     clearTimeout(this.countTimer2)
   },
+ 
   methods: {
     /**
      * @description: 

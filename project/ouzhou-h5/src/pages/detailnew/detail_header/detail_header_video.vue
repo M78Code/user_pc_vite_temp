@@ -36,7 +36,7 @@ const get_show_video = ref(false);
 console.log(route.params, "params");
 const { detailsReducer } = store.getState()
 const hd_sd = ref(detailsReducer.hd_sd)
-watch(route.params.mid, (value) => {
+watch(() => route.params.mid, (value) => {
   detail_data = lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {});
   icon_click_muUrl();
 })
@@ -75,7 +75,7 @@ const check_url = (url, which) => {
         media_src: url,
         active: which ? which : 'muUrl',
       };
-      console.error(data);
+      console.error(data, 'media_data');
       MatchDetailCalss.set_video_url(data);
       // 开启视频
       useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true),

@@ -197,10 +197,15 @@
               <div style="margin-left:auto" v-if="get_menu_type !== 3000">
                 <match-score :detail_data="get_detail_data"></match-score>
               </div>
+
+              
             </div>
           </template>
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
+              <!-- 缩放按钮 -->
+            <img src="" alt="exit" class="exit-img" @onlick="exit_browser_full_screen"/>
+            
               <div class="col-1 go-back-btn-wrap" @click="close_video" v-if="show_animation_and_video_status">
                 <div class="video_back"></div>
               </div>
@@ -2340,6 +2345,14 @@ export default {
     right: .35rem;
   }
 }
-
+.exit-img {
+  position: absolute;
+  right: 0.3rem;
+  bottom: 0.3rem;
+  top: 80vh;
+  width: 20px;
+  height: 20px;
+  background: red;
+}
 /* ************** 视频全屏的样式 ************** -E */
 </style>
