@@ -18,14 +18,14 @@
                     <div>{{ i18n_t('app_h5.handicap_tutorial.home_team') }}</div>
                     <div v-if="state.source !== 'bigAndSmallBall'" class="score">{{ option.homeTeamScore }}</div>
                 </div>
-                <div class="teams-logo">队标位</div>
+                <div class="teams-logo"><img :src="compute_local_project_file_path('/image/svg/home-team-icon.svg')" alt=""></div>
             </div>
             <div class="center">
                 <div class="vs">VS</div>
                 <div v-if="state.source !== 'bigAndSmallBall'" class="text-style" v-html="option.condition"></div>
             </div>
             <div class="right">
-                <div class="teams-logo">队标位</div>
+                <div class="teams-logo"><img :src="compute_local_project_file_path('/image/svg/away-team-icon.svg')" alt=""></div>
                 <div class="teams">
                     <div>{{ i18n_t('app_h5.handicap_tutorial.away_team') }}</div>
                     <div v-if="state.source !== 'bigAndSmallBall'" class="score">{{ option.awayTeamScore }}</div>
@@ -41,7 +41,7 @@
                         <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_home_team') }}</div>
                         <div :class="['result', item.winIsWho === 'homeTeam' && 'win']">{{ item.homeTeam }}</div>
                     </div>
-                    <div v-if="item.winIsWho === 'homeTeam'" class="win-icon">筹</div>
+                    <div v-if="item.winIsWho === 'homeTeam'" class="win-icon"><img :src="compute_local_project_file_path('/image/png/coin.png')" alt=""></div>
                 </div>
                 <div class="center">
                     <div class="round-ball">
@@ -55,7 +55,7 @@
                         <div class="title">{{ i18n_t('app_h5.handicap_tutorial.bet_away_team') }}</div>
                         <div :class="['result', item.winIsWho === 'awayTeam' && 'win']">{{ item.awayTeam }}</div>
                     </div>
-                    <div v-if="item.winIsWho === 'awayTeam'" class="win-icon">筹</div>
+                    <div v-if="item.winIsWho === 'awayTeam'" class="win-icon"><img :src="compute_local_project_file_path('/image/png/coin.png')" alt=""></div>
                     <!-- <div class="win-icon"></div> -->
                 </div>
             </div>
@@ -64,9 +64,9 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, compute_css_obj } from "src/output/index.js";
+import { i18n_t, compute_local_project_file_path } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
-import { onMounted, onBeforeMount, reactive } from "vue";
+import { reactive } from "vue";
 
 defineOptions({
     name: 'matchResultHt' // 设置组件名称
@@ -197,15 +197,15 @@ const state = reactive({
             }
         }
 
-        .teams-logo {
-            width: .4rem;
-            height: .4rem;
-            background-color: var(--q-gb-t-c-1);
-            border-radius: .4rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        // .teams-logo {
+        //     width: .4rem;
+        //     height: .4rem;
+        //     background-color: var(--q-gb-t-c-1);
+        //     border-radius: .4rem;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+        // }
     }
 
     .match-result-list {
@@ -255,16 +255,16 @@ const state = reactive({
                 }
             }
 
-            .win-icon {
-                position: absolute;
-                width: .2rem;
-                height: .2rem;
-                border-radius: .2rem;
-                background-color: var(--q-gb-t-c-1);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
+            // .win-icon {
+            //     position: absolute;
+            //     width: .2rem;
+            //     height: .2rem;
+            //     border-radius: .2rem;
+            //     background-color: var(--q-gb-t-c-1);
+            //     display: flex;
+            //     justify-content: center;
+            //     align-items: center;
+            // }
 
             .left {
                 justify-content: center;
