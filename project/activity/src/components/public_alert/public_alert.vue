@@ -8,7 +8,7 @@
   <q-dialog v-model="isShow">
     <div class="dialog_content">
       <!-- <div class="alert-wrap">
-        <img src="~public/yazhou-pc/image/image/logout_notice.png" alt="" width="100%">
+        <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/image/image/logout_notice.png`"  alt="" width="100%">
 
         <div class="row items-center relative-position">
           <div class="text">{{t("login.login_out_dear_user")}}</div>
