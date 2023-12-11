@@ -204,7 +204,7 @@
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
                <!-- 缩放按钮 -->
-              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
+              <img v-if="get_is_full_screen" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
             
               <div class="col-1 go-back-btn-wrap" @click="close_video" >
                 <div class="video_back"></div>
