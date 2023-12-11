@@ -24,6 +24,7 @@ import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import { MenuData } from 'src/output/module/menu-data.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js"
+import { only_win } from 'src/core/format/project/module/format-odds-conversion-mixin.js'
 
 let time_out = null
 let time_api_out = null
@@ -31,7 +32,7 @@ let count_api = 0
 // 是否点击了投注按钮
 let submit_btn = false
 // 独赢类玩法
-const only_win = [1, 37, 153]
+
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
@@ -116,7 +117,8 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "dataSource": item.dataSource,   // 数据源
                 }
                 // 独赢类玩法 只有欧洲版
-                if(only_win.includes(item.playId *1)){
+                let only_win_csid = lodash_.get(only_win,`${item.sportId}`,[])
+                if(only_win_csid.includes(item.playId *1)){
                     bet_s_obj.marketTypeFinally = 'EU'
                 }
                 bet_s_list.push(bet_s_obj)
@@ -157,7 +159,8 @@ const set_bet_order_list = (bet_list, is_single) => {
             }
 
             // 独赢类玩法 只有欧洲版
-            if(only_win.includes(item.playId *1)){
+            let only_win_csid = lodash_.get(only_win,`${item.sportId}`,[])
+            if(only_win_csid.includes(item.playId *1)){
                 bet_s_obj.marketTypeFinally = 'EU'
             }
 
@@ -383,10 +386,8 @@ const set_bet_pre_list = bet_appoint => {
 
 // 提交投注信息 
 const submit_handle = type => {
-    console.error('进来了')
     // 
     if(submit_btn) return
-    console.error('111111')
     // 单关才有预约投注
      // 是否预约投注  1 预约  0 不预约
     //  是否合并投注  bet_single_list。length  0:1个 1:多个
@@ -744,6 +745,12 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         device_type: BetData.deviceType, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
+    // 独赢类玩法 只有欧洲版
+    let only_win_csid = lodash_.get(only_win,`${bet_obj.sportId}`,[])
+    if(only_win_csid.includes(bet_obj.playId *1)){
+        bet_obj.marketTypeFinally = 'EU'
+    }
+            
     // 冠军 
     if(MenuData.is_kemp()){
         bet_obj.handicap = ol_obj.on
@@ -927,20 +934,18 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     if(is_detail){
         // 有球头 球头需要变色
         if(hl_obj.hv){
-            text = `${ol_obj.ott} <span class='ty-span'>${ol_obj.on}</span>`  
+            text = `${ol_obj.ott || ''} <span class='ty-span'>${ol_obj.on}</span>`  
         }else{
-            text = `${ol_obj.ott} ${ol_obj.on}`  
+            text = `${ol_obj.ott || ''} ${ol_obj.on}`  
         }
         if(detail_mark.includes(ol_obj._hpid*1)){
             text = `${ol_obj.otv}` 
         }
     }else{
         let a = '' ,b = '' 
-        a = ol_obj.ott
-        b = ol_obj.on
+        b = ol_obj.on 
         if(ol_obj.ots == 'T1'){
-            
-            a = mid_obj.mhn
+            a = mid_obj.mhn 
         }
         if(ol_obj.ots == 'T2'){
             a = mid_obj.man
@@ -955,31 +960,17 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
         // 首页大小类玩法
         if(['Over',"Under"].includes(ol_obj.ot)){
-            // 英文列表是 简写
-            a =  UserCtr.lang == 'en' ? ol_obj.ot : ol_obj.onbl
-            b = ol_obj.onb
-
             // h5数据格式和pc不一样
-            if(BetData.deviceType == 1){
-                a = ol_obj.on.split(' ')[0]
-                b = ol_obj.on.split(' ')[1]
-            }
-            //大小玩法 ol_obj.show_bgc为true 先这么取值
-            if(ol_obj.show_bgc){
-                a = ol_obj.otv.split(' ')[0]
-                b = ol_obj.otv.split(' ')[2]
-            }
+            a = ol_obj.on.split(' ')[0] 
+            b = ol_obj.on.split(' ')[1] 
         }
             
         // 平 不变色
         if(ol_obj.ot == 'X'){
-            text = `${a}<span class='ty-span'>${b}</span>`  
+            text = `${b }` 
         }else{
-            text = `${a}<span class='ty-span'>${b}</span>` 
+            text = `${a} <span class='ty-span'>${b}</span>` 
         }
-
-        
-
     }
 
     return text

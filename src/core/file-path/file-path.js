@@ -5,7 +5,7 @@ const e_sport_csids = [101, 100, 102, 103];
  
 import {GLOBAL_CONSTANT } from "src/core/constant/global/index.js"
 // 目前环境信息
-const {BUILD_VERSION, NODE_ENV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME } = window.BUILDIN_CONFIG;
+const {BUILD_VERSION, IS_DEV, CURRENT_ENV, DOMAIN_RESULT, PROJECT_NAME ,IS_TOPIC_PROJECT,LOCAL_COMMON_FILE_PREFIX, LOCAL_PROJECT_FILE_PREFIX} = window.BUILDIN_CONFIG;
 let project_name = PROJECT_NAME
 const src_rdm = Date.now();
 // 字母顺序
@@ -76,7 +76,7 @@ const get_server_file_path = (path, csid = 0) => {
     return `${api_domain}/${path}`;
   }
 
-  if ((NODE_ENV == 'development')) {
+  if (IS_DEV) {
     // let api_domain = config.domain[CURRENT_ENV][0]; //config没有赋值domain 从老项目迁移
     const { img_domains } = DOMAIN_RESULT_
     let api_domain = img_domains[0]
@@ -180,37 +180,26 @@ let image_is_exist = function (url, img) {
 
 /**
  * 计算本地图片路径 和 project 有关 
- * 因为在 vite.config.js  内 base 已指定  BUILD_VERSION  并且带 / 所以这里理论上 根本就用不到这个方法只需要在配置图片的时候不要加前/  不用加 前缀/
+ * 因为在 vite.config.js  内 base 已指定  前缀  并且带 / 所以这里理论上 根本就用不到这个方法只需要在配置图片的时候不要加前/  不用加 前缀/
  *  如果要带/ 走这里的 路径 
  * 
  * 示例： 
  * 图片本地地址：  public/yazhou-h5/image/menu/refesh.svg
  * 本地运行地址：   /yazhou-h5/image/menu/refesh.svg
- * 线上打包地址：   `/${BUILD_VERSION}/yazhou-h5/image/menu/refesh.svg`
+ * 线上打包地址：   `/${前缀}/yazhou-h5/image/menu/refesh.svg`
  * 
  * 
  * 传参： 
  */
 
 const compute_local_project_file_path=(str='')=>{
+  //归正
   str =''+str
   if(str.startsWith('/')){
     str= str.substring(1)
   }
-  let str2 =''
-  if(BUILD_VERSION){
-    str2 =`/${BUILD_VERSION}/${PROJECT_NAME}/${str}`
-  
-  }else{
-    str2 =`${PROJECT_NAME}/${str}`
-  }
-  if(NODE_ENV == 'development'){
-    return '/'+ str2
-  }else{
-    //生产环境因为有 base 路径这里不能拼接 / 否则会走到 域名目录 而不是资源目录 
-    return   str2
-  }
-  
+  //不论本地开发还是生产打包 一定有前缀
+  return  `${LOCAL_PROJECT_FILE_PREFIX}/${str}`
 
 }
 /**
@@ -220,29 +209,20 @@ const compute_local_project_file_path=(str='')=>{
  * @returns 
  */
 const compute_local_common_file_path=(str='')=>{
+    //归正
   str =''+str
   if(str.startsWith('/')){
     str= str.substring(1)
   }
-  let str2 =''
-  if(BUILD_VERSION){
-    str2 =`/${BUILD_VERSION}/${str}`
-  
-  }else{
-    str2 =str
-  }
-  if(NODE_ENV == 'development'){
-    return '/'+ str2
-  }else{
-    //生产环境因为有 base 路径这里不能拼接 / 否则会走到 域名目录 而不是资源目录 
-    return   str2
-  }
+ 
+  return   IS_DEV?`/${str}` :  `${LOCAL_COMMON_FILE_PREFIX}/${str}`
+ 
 
 }
-//本地项目内文件  公用的 不带项目标识专用目录的 
-const LOCAL_COMMON_FILE_PREFIX =  BUILD_VERSION ? `/${BUILD_VERSION}` :''
-//本地项目内文件  单个项目 专用的 带 项目 专用目录的 
-const LOCAL_PROJECT_FILE_PREFIX =  BUILD_VERSION ? `/${BUILD_VERSION}/${PROJECT_NAME}` :`/${PROJECT_NAME}`
+// //本地项目内文件  公用的 不带项目标识专用目录的 
+// const LOCAL_COMMON_FILE_PREFIX =  BUILD_VERSION ? `/${BUILD_VERSION}` :''
+// //本地项目内文件  单个项目 专用的 带 项目 专用目录的 
+// const LOCAL_PROJECT_FILE_PREFIX =  BUILD_VERSION ? `/${BUILD_VERSION}/${PROJECT_NAME}` :`/${PROJECT_NAME}`
 
 
 

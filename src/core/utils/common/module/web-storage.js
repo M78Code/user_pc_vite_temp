@@ -73,6 +73,7 @@ const WebStorage = class WebStorage {
    * @param {string} key
    * @param {*} def
    * @memberof Cache
+   * @returns {Object}
    */
   get(key, def) {
     const _val = this.storage.getItem(this.getKey(key));

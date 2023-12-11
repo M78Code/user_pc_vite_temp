@@ -16,7 +16,6 @@
                   :key="index" :detail_data="item" 
                   :active="active == index"
                   :index="index"
-                  v-close-popup
                   @ChangeActive="change_active(item, index)"
                 />
               </div>
@@ -40,6 +39,7 @@ import {
   useMittEmit, MITT_TYPES,
   MatchDataWarehouse_H5_Detail_Common,
   MatchDataWarehouse_H5_List_Common,
+  LocalStorage,
 } from "src/output/index.js";
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
@@ -56,7 +56,6 @@ const show_list = ref(false);
 const detail_top_pop = ref(null);
 const isMatchResultRoute = route.name == 'result'
 const refLeagueName = ref('')
-
 
 const mid = computed(()=>{
   return route.params.mid
@@ -80,10 +79,17 @@ if(route.params.tid){
 }
 /** 获取下拉列表 */
 function getDropDownList(tid='') {
+  const matchDetail = LocalStorage.get("YUAN_MATCH_DETAIL_DATA")
+  let time_ = null
+  if(matchDetail&&matchDetail.mgt){
+    let mgt = Number(matchDetail.mgt);
+    let date_ = new Date(mgt).toLocaleDateString()
+    time_ = new Date(date_).getTime()
+  }
   tid && api_common.get_matchDetail_getMatchDetailByTournamentId({
     tId: tid,
     type: isMatchResultRoute? 1 : (void 0),
-    dateTime: Date.now()
+    dateTime: time_
   }).then(res => {
     if(res.code == '200'){
       return drop_down_list.value = res.data
@@ -140,7 +146,12 @@ function change_active(item, index) {
   else {
   */
   const params = { mid: item.mid, csid: item.csid, tid:item.tid }
-  router.replace({ name: 'category', params});
+
+  let name = 'category'
+  if(isMatchResultRoute){
+    name = 'result'
+  }
+  router.replace({ name, params});
   refreshAll(params)
 }
 /**

@@ -180,7 +180,7 @@
       </div>
     </div>
     <load-data :state="load_data_state" color="light">
-      <q-scroll-area ref="scrollArea" class="rule-scroll-area" :style="{ height: '100%',color:'red' }">
+      <q-scroll-area ref="scrollArea" class="rule-scroll-area" :style="{ height: '100%'}">
         <div class="tbale-body">
           <div v-for="(item, index) in results_list" :key="item.tnameCode + index">
             <div class="table-tr-td" :class="{ active: index == activeIndex }" @click="get_tr_detail(item, index)">
@@ -468,7 +468,7 @@
             <div v-if="index == activeIndex" class="wrap-load">
               <!--v-if="item.playBack&&show_play_back"-->
               <div class="tab_change_content"  v-if="false">
-                <tabs :value="current_events_type" :tabs="tab_list" @click="change_video_history_list"></tabs>
+                <q-tabs :value="current_events_type" :tabs="tab_list" @click="change_video_history_list"></q-tabs>
               </div>
               <!-- 精彩回放视频滚动列表 -->
               <!-- <div class="play_back_event" v-if="item.playBack&&show_play_back">

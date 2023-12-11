@@ -13,7 +13,7 @@
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                     <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none text-009 font400" v-if="[1].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
+                    <span class="text-a1a text-flow-none text-009 font400" v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
                     <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                 </div>
                 <div class="w-100 fon12 font400 text-8A8986-i">{{ items.tid_name }}</div>
@@ -74,7 +74,7 @@
 <script setup>
 
 import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney } from "src/output/index.js"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import mathJs from 'src/core/bet/common/mathjs.js'

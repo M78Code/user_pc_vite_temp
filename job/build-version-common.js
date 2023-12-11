@@ -142,6 +142,11 @@ const ENVSTR_MAP = {
   
 
 export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
+  
+   const  RESOLVE_PROJECT_OBJ  =RESOLVE_PROJECT_FN(config.PROJECT) 
+   //布局名字
+   const {  PROJECT_NAME } = RESOLVE_PROJECT_OBJ
+ 
   //是否需要 BUILD_VERSION 版本素材隔离
     const NEED_BUILD_VERSION = config.NEED_BUILD_VERSION
     const VERSION_STR =  NEED_BUILD_VERSION? format_date(new Date().getTime()):'';
@@ -151,24 +156,51 @@ export const RESOLVE_BUILD_VERSION_COMMON_FN=(config)=>{
     const BUILD_VERSION=  IS_DEV ? "" : VERSION_STR
     //构建目录名字
     const BUILD_DIR_NAME =config.BUILD_DIR_NAME
-    //打包构建输出目录
-    const BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_VERSION?`${BUILD_VERSION}/`:""}` 
-    //开发或生产环境服务的公共基础路径
-    const BUILD_BASE = IS_DEV ? '/' : (   BUILD_VERSION?`/${BUILD_VERSION}/`:"/" )
     //是否是用于内部测试
     const IS_FOR_NEIBU_TEST  = COMPUTE_IS_FOR_NEIBU_TEST_FN(config.ENVSTR)
 
+     
+    //打包构建输出目录
+    let BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/`+`${BUILD_VERSION?BUILD_VERSION+'/':""}`
+    //开发或生产环境服务的公共基础路径
+    let BUILD_BASE = IS_DEV ? '/' : (   BUILD_VERSION?`/${BUILD_VERSION}/`:"/" )
+
+    //本地项目内文件  公用的 不带项目标识专用目录的 
+    let LOCAL_COMMON_FILE_PREFIX =  BUILD_VERSION ? `/${BUILD_VERSION}` :''
+    //本地项目内文件  单个项目 专用的 带 项目 专用目录的 
+    let LOCAL_PROJECT_FILE_PREFIX =  BUILD_VERSION ? `/${BUILD_VERSION}/${PROJECT_NAME}` :`/${PROJECT_NAME}`
+
+    //是否是主题类项目 域名规则  topic.aa.com/${PROJECT}/
+    const {IS_TOPIC_PROJECT =false} = config
+    // 主题 top 类的项目 生产 打包 需要再加一层  生产构建必须 有版本缓存 因此一定有 BUILD_VERSION
+
+    if(!IS_DEV&& IS_TOPIC_PROJECT){
+    //打包构建输出目录
+    BUILD_OUTDIR=`dist/${BUILD_DIR_NAME}/${BUILD_DIR_NAME}/`+`${BUILD_VERSION?BUILD_VERSION+'/':""}`
+    //开发或生产环境服务的公共基础路径
+    BUILD_BASE =     `/${BUILD_DIR_NAME}/${BUILD_VERSION}/` 
+    //本地项目内文件  公用的 不带项目标识专用目录的 
+    LOCAL_COMMON_FILE_PREFIX =   `/${BUILD_DIR_NAME}/${BUILD_VERSION}`  
+    //本地项目内文件  单个项目 专用的 带 项目 专用目录的 
+    LOCAL_PROJECT_FILE_PREFIX =   `/${BUILD_DIR_NAME}/${BUILD_VERSION}/${PROJECT_NAME}`  
+
+
+}
+
 
     return {
-        ...RESOLVE_PROJECT_FN(config.PROJECT),
+       
         ...RESOLVE_ENV_FN(config.ENVSTR),
         ...NODE_ENV_CONFIG,
- 
+        ...RESOLVE_PROJECT_OBJ,
+        IS_TOPIC_PROJECT,
         IS_FOR_NEIBU_TEST,
         BUILD_DIR_NAME,
         BUILD_VERSION,
         BUILD_OUTDIR ,
-        BUILD_BASE
+        BUILD_BASE,
+        LOCAL_COMMON_FILE_PREFIX,
+        LOCAL_PROJECT_FILE_PREFIX
 
 
     }

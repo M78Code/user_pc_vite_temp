@@ -1,9 +1,5 @@
 <!--
- * @Description: 欧洲h5赛果详情已不再共用该模板, 仍共用component中的template
- * template模板改动请同步 ./odds_info.vue
- * 动态component中的template模板需要兼容赛果详情
- * import ResultOlItem from "../../result/ResultOlItem.vue";
- * 于OlItem位置引入ResultOlItem组件即可
+ * @Description: 已弃用
 -->
 <template>
     <div class="component  odds-info bevis-odds-info match-detail-odds">

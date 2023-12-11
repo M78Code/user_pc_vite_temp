@@ -17,7 +17,8 @@
       <div class="separate"></div>
       <div class="item ol-content">
         <div class="ol-content-ov">
-          <span>{{ ov }}</span>
+          <span v-if="isLock">0.xx</span>
+          <span v-else>{{ ov }}</span>
           <img class="odd-image" v-show="status != 'none'"
             :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
         </div>
@@ -87,7 +88,7 @@ const ov = computed(() => {
 const isLock = computed(() => {
   if (props.value) {
     // @ts-ignore
-    return props.value.os == 2 || ov.value == 0 || props.value._hs == 1
+    return props.value.os == 2 || ov.value == 0 || props.value._hs == 1 || props.value._ms == 1
   } else {
     return true
   }

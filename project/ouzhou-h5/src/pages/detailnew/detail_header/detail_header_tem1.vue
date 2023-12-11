@@ -22,7 +22,7 @@
         </span>
        
         
-        <div class="match-detail-time-collect" v-if="show_collect" >
+        <div class="match-detail-time-collect" v-show="show_collect" >
           <!-- 显示视频按钮 -->
           <div v-if="status == 1 || status == 3" @click="handleChange('video')">
             <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/detail/video_gray.png`" alt="" class="icon-video"/>
@@ -47,7 +47,7 @@
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">
-         <span :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
+         <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'home') ? 'active-circle':'circle']"></span> 
          <span>{{ get_match_detail.mhn }}</span>
         </div>
         <span v-if="false">{{ detail_count }}</span>
@@ -59,7 +59,7 @@
       </div>
       <div class="match-detail-score">
         <div class="match-detail-team-name">
-         <span :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
+         <span v-if="get_match_detail.csid == 5 " :class="[set_serving_side(props.get_match_detail, 'away')? 'active-circle':'circle']"></span> 
           <span>{{ get_match_detail.man }}</span>
 
           
@@ -122,6 +122,7 @@ import { LOCAL_PROJECT_FILE_PREFIX,format_time_zone_time, format_time_zone  } fr
 import matchScore from "./match-score/index.vue"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_tc } from "src/boot/i18n";
+import NavbarSubscribe from "src/base-h5/components/top-menu/top-menu-ouzhou-1/detail-top/nav-bar-subscribe";
 // import UserCtr from 'src/core/user-config/user-ctr.js'
 /** @type {{get_match_detail:TYPES.MatchDetail}} */
 const props = defineProps({
@@ -149,7 +150,7 @@ const set_serving_side = (item, side) => {
 // 网球当前比分
 const tennis_point = ref([0,0])
 
-const emits = defineEmits('handle-change')
+const emits = defineEmits('handleChange')
 
 const start_text = ref(-1)
 
@@ -191,12 +192,17 @@ const status = computed(() => {
  
 });
 
+watch(status, (value)=> {
+  // if (status == 4) {}
+  NavbarSubscribe.instance.change_status(true);
+})
+
 watch(() => props.get_match_detail, (value) => {
+  if(lodash.isEmpty(value)) return
   console.log(value, "props.get_match_detail");
   // format_time_zone(+item.mgt).Format(i18n_t('time4'))
   const now = Date.now();
-
-  if (props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0) {
+  if ((props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0)) {
     start_text.value = Math.floor((+props.get_match_detail.mgt - now)) 
   }
   
@@ -207,12 +213,14 @@ watch(() => props.get_match_detail, (value) => {
   if (s1_data['S103']) {
     console.log('网球比分', s1_data['S103']);
     tennis_point.value = s1_data['S103'];
+  }else {
+    tennis_point.value =[0,0]
   }
 })
 
 //比分
 const detail_count = computed(() => {
-  return scoew_icon_list.value['S1'];
+  return scoew_icon_list.value['S1'] || [0,0];
 })
 
 const show_time_counting = computed(() => {
@@ -343,7 +351,8 @@ const get_sports_bg = (csid) => {
 };
 
 const handleChange = (label)  => {
-  emits('handle-change', label)
+  console.log(111);
+  emits('handleChange', label)
 }
 
 const set_basketball_score_icon_list = () => {
@@ -380,6 +389,7 @@ const scoew_icon_list = ref({})
  *@return {*}
  */
 const set_scoew_icon_list = (new_value) => {
+  scoew_icon_list.value = {};
   if (new_value && new_value.msc) {
     for (let key in new_value.msc) {
       let score_key_arr = new_value.msc[key].split("|");
@@ -389,7 +399,7 @@ const set_scoew_icon_list = (new_value) => {
         away: score_value_arr[1],
       };
     }
-    // console.log("scoew_icon_list", scoew_icon_list);
+    
   }
 };
 
@@ -459,8 +469,9 @@ watch(props.get_match_detail, (new_value, old_value) => {
 watch(
   () => props.get_match_detail?.msc,
   (msc) => {
-    set_scoew_icon_list({msc});
-    set_basketball_score_icon_list();
+      set_scoew_icon_list({msc});
+      set_basketball_score_icon_list();
+    
   },
   { immediate: false, deep: true }
 );

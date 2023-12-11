@@ -108,7 +108,7 @@ export default {
   computed: {
     cur_row() {
       return lodash.findIndex(this.results_order_list, item =>item.playId==this.play_id);
-    } 
+    },
   },
   watch: {
     cur_row: {
@@ -122,6 +122,11 @@ export default {
         }
       },
       immediate:true
+    },
+    load_data_state:{
+      handler(val){
+        this.$refs.scrollArea.setScrollPosition('vertical', 10)
+      }
     }
   },
   methods: {

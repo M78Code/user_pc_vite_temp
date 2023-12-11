@@ -40,6 +40,7 @@ type NameRouterType = RouteLocationRaw | {
 declare module 'vue-router' {
   declare interface Router {
     push(to:RouteLocationRaw | NameRouterType );
+    replace(to:RouteLocationRaw | NameRouterType );
   }
 }
 

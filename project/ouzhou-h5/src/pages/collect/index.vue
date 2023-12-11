@@ -37,7 +37,8 @@ const state = reactive({
   slideMenu_sport: [], // 赛种
 })
 const tabValue = ref(MenuData.collect_menu || 1);
-const scrollListRef = ref(null)
+const scrollListRef = ref(null);
+const timer = ref(null);//5秒 加载收藏数量
 const tabData = ref([
   {
     name:"inplay",
@@ -121,6 +122,7 @@ const getListCount = async (list,type) =>{
             return item
         })
     }
+    timer.value = setTimeout(()=>getListCount(list,type),5000);
     return collect
 }
 /**
@@ -148,7 +150,7 @@ onMounted(()=>{
 onUnmounted(() => {
   MenuData.set_collect_id('');
   useMittOn(MITT_TYPES.EMIT_COLLECT_MATCH_OZ).off
-
+  timer.value && clearTimeout(timer.value);
 })
 </script>
 <style scoped lang="scss">

@@ -61,7 +61,8 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
+     -->
     <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'" :detail="props.get_match_detail"
                   :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
   </div>
@@ -93,9 +94,9 @@ const props = defineProps({
   }
 });
 
-watch(props.label, (value) => {
-  right_actions_label.value = value;
-})
+// watch(()=>props.label, (value) => {
+//   right_actions_label.value = value;
+// })
 // 点击返回的时候会触发此函数
 const listener = (status) => {
   if (!status) {
@@ -121,7 +122,7 @@ const iframe_rdm = ref("")
 iframe_rdm.value = new Date().getTime();
 // 状态，是视频还是动画
 /** @type {import('vue').Ref<'animation'|'video'>} */
-const right_actions_label = ref('animation')
+const right_actions_label = ref('')
 const animation_src = ref("");
 /** @type {import('vue').ComputedRef<number>} 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示 */
 const status = computed(() => {
@@ -129,12 +130,13 @@ const status = computed(() => {
   const get_detail_data = props.get_match_detail;
   // 优先判断label
   if (props.label) {
+    console.log(props.label, "props.label");
     if (props.label == 'animation') {
       return 2;
     }
 
     if (props.label == 'video') {
-      return 1;
+      return 3;
     }
   }
   // <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
@@ -159,7 +161,8 @@ const status = computed(() => {
 });
 // 默认为animation，所以设置为false
 nav_bar_subscribe.change_status(false);
-watch(() => status, (value) => {
+watch(status, (value) => {
+  console.log(status, "status====");
     // 1: 动画视频可以切换 2: 只显示动画 3：只显示视频 4：都不显示
     if (value == 2) {
       right_actions_label.value = 'animation';
@@ -210,6 +213,7 @@ const football_score_icon_list = ref([
 ])
 
 const handle_change = (value) => {
+  console.log(33333);
   right_actions_label.value = value;
 }
 

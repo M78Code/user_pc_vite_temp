@@ -44,16 +44,18 @@
                 </span>
                 <div
                   v-else
-                  style="color: #8a8986; display: flex; align-items: center"
+                  style="color: #8a8986; display: flex; align-items: center;flex-wrap: nowrap;"
                 >
                   <!-- 倒/正计时组件 -->
-                  <div style="margin-right: 25px">
-                    <match-process
-                      :match="detail_info"
-                      show_page="match-list"
-                      :rows="1"
-                    />
-                  </div>
+                 <!-- 倒/正计时组件 -->
+                 <div style="margin-right: 10px;display: flex;">
+                  <match-process
+                    :match="detail_info"
+                    show_page="match-list"
+                    :rows="1"
+                  />
+             </div>
+                  <div class="score-right-icon"><right-icon iconNormalColor="#8A8986" iconActiveColor="#8A8986" /></div>
                   <img
                     :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/png/neutral.png`"
                     alt=""
@@ -70,6 +72,7 @@
                   {{ col.tooltip }}
                 </q-tooltip>
               </div>
+
             </div>
           </q-th>
         </q-tr>
@@ -83,20 +86,22 @@
                 [`csid_${lodash.get(detail_info, 'csid')}`]: true,
               }"
             >
-              <!-- 发球方小圆点 -->
+              <!-- 网球，羽毛球，乒乓球，排球，等这些赛种才有发球方的。篮球足球等不显示发球方 Bug单号：50460 -->
               <span
-                class="round"
-                v-if="
-                  lodash.get(detail_info, 'mmp') != 0 &&
-                  lodash.get(detail_info, 'csid') != '4' &&
-                  ((lodash.get(detail_info, 'mat') == 'away' &&
-                    props.rowIndex === 1) ||
-                    (lodash.get(detail_info, 'mat') == 'home' &&
-                      props.rowIndex === 0))
-                "
-              >
+                  class="round"
+                  v-if="
+                    lodash.get(detail_info, 'mmp') != 0 &&
+                    lodash.get(detail_info, 'csid') != '4' &&
+                    ((lodash.get(detail_info, 'mat') == 'away') ||
+                      (lodash.get(detail_info, 'mat') == 'home' ))
+                  "
+                  :class="[((lodash.get(detail_info, 'mat') == 'away' &&
+                      props.rowIndex === 1) ||
+                      (lodash.get(detail_info, 'mat') == 'home' &&
+                      props.rowIndex === 0)) && 'active']">
+
               </span>
-              <span v-else style="background-color: #d9d9d9"  class="round"></span>
+
               <span class="txt">{{ props.row.name }}</span>
             </span>
           </q-td>
@@ -187,6 +192,7 @@ import {
 } from "src/output/index.js";
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js";
 import { handle_course_data } from "src/core/utils/matches_list.js";
+import rightIcon from "./right_icon.vue";
 // import _ from "lodash";
 // import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 
@@ -650,10 +656,10 @@ watch(
   align-items: center;
   text-overflow: ellipsis;
   &.csid_1 {
-    margin-left: 4px;
+    margin-left: 11px;
   }
   &.csid_2 {
-    margin-left: 8px;
+    margin-left: 15px;
   }
 }
 
@@ -666,8 +672,11 @@ watch(
   width: 6px;
   height: 6px;
   border-radius: 8px;
-  background-color: var(--q-gb-bg-c-1);
+  background-color: #d9d9d9;
   margin-right: 4px;
+}
+.round.active {
+  background-color: var(--q-gb-bg-c-1);
 }
 
 //.stage-13,.stage-14,.stage-15,
@@ -675,4 +684,28 @@ watch(
 //  //color: var(--qq--yb-text-color1) !important;
 //  color: rgb(255, 112, 0) !important;
 //}
+
+.score-right-icon :deep(.right-icon) {
+  position: static;
+  width: auto;
+  .icon {
+    position: static;
+  }
+  .tip-content {
+    right: 0;
+    width: 100%;
+    .content-wrap {
+      z-index: 999;
+    }
+    .content {
+      white-space: normal;
+      line-height: normal;
+    }
+    .yb-icon-triangle {
+      right: 0;
+      display: none;
+    }
+  }
+}
+
 </style>

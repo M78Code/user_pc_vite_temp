@@ -61,7 +61,7 @@ let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(match.value)
 let match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].width_config
 const col_ols_data = computed(() => {
   try {
-    let { hn, mid } = match.value
+    let { hn, mid,csid } = match.value
     let handicap_type = hn || 1
     const many_obj = get_match_to_map_obj(match.value); //非坑位对象
     const hn_obj = lodash.get(MatchListData, "list_to_obj.hn_obj", {})
@@ -73,6 +73,7 @@ const col_ols_data = computed(() => {
         // 获取投注项内容 
         return lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config]||{};
       })
+      col.csid=csid;
       return col
     })
   } catch (e) {
