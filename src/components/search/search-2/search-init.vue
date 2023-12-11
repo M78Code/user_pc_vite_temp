@@ -259,7 +259,7 @@ onMounted(init)
         border-radius: 2px;
         font-size: 14px;
         cursor: pointer;
-        width: 1470px;
+        width: 1450px;
         overflow: hidden;
 
         &:hover {
