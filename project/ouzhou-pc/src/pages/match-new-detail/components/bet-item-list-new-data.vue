@@ -8,7 +8,7 @@
     :class="[
       ol_data.class,
       odds_state,
-      `csid${ol_data.csid}`,
+      `csid${route.params.csid}`,
       odds_lift,
       {
         'show-odds-icon': odds_state != 'seal',
@@ -85,12 +85,13 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
-import lodash from "lodash";
+// import lodash from "lodash";
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { get_odds_active } from "src/output/index.js";
 import { format_odds_value } from "src/output/index.js";
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
+import { useRoute } from "vue-router";
 
 const is_mounted = ref(true);
 
@@ -100,6 +101,8 @@ const is_mounted = ref(true);
 const odds_lift = ref("");
 // 是否红升绿降中
 const odds_lift_show = ref(false);
+
+const route = useRoute()
 
 // 定时器对象
 let timer_obj = {};
