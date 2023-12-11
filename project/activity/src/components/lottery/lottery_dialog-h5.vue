@@ -35,7 +35,7 @@
         <img
           class="colse2"
           @click="daily_task_success = false"
-          src="activity/yazhou-h5/activity/colse2.png"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/colse2.png`"
         />
       </div>
     </q-dialog>
@@ -77,7 +77,7 @@ export default {
   width: 750px;
   max-width: 750px;
   height: 600px;
-  background: url("~public/image/activity_imgs/imgs/get_lottery_bg.png")
+  background: url("/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
     no-repeat center;
   ::v-deep .scroll {
     overflow: hidden;

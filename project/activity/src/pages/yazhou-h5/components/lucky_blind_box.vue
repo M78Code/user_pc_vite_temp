@@ -75,7 +75,9 @@
             <span>{{ item.name }}</span>
           </div>
         </div>
+             
         <div class="Lucky_blind_box_content">
+             <!-- 活动未开始 -->
           <template v-if="get_user.activityList[activityIndex].period == 1">
             <ActiveCountDown :endTime='inStartTime'></ActiveCountDown>
             <div class="juli">距离活动开始还有</div>
@@ -91,6 +93,7 @@
             <div class="juli">距离下一次盲盒派发还有</div>
             <ActiveCountDown :endTime='next_time' @time-end="get_Lucky_box_init('first')"></ActiveCountDown>
           </template>
+
           <div class="Unboxing-list" v-if="get_user.activityList[activityIndex].period == 2 ">
             <p>
               今日剩余 <span class="red">{{ lihe_name.num_ber || 0 }}</span> 个
@@ -120,6 +123,7 @@
               </div>
             </div>
           </div>
+
           <div class="end-time" v-if="get_user.activityList[activityIndex].period == 3">
             <p>活动已结束</p>
             <div class="end-btn btn" @click="expand_history(1)">
@@ -165,58 +169,8 @@
         </div>
       </div>
     </div>
-    <!-- 历史记录弹框 -->
-    <q-dialog v-model="history_alert">
-      <div class="history-dialog" :class="{'isIphoneX':isIphoneX}" @click.self="history_alert = false">
-        <div class="history-record">
-          <div class="choice-title">
-            历史记录
-          </div>
-          <div class="history-content">
-            <div class="blind-table Member-Ranking">
-              <p class="text-white"><span>盲盒类型</span><span>奖券消耗数</span><span>奖励</span><span>拆盒时间</span></p>
-              <p v-for="(v, i) in history_records" :key="i+'vip'">
-                <span>{{ v.boxType==1 ? '白银盲盒' : v.boxType==2 ? '黄金盲盒 ' : v.boxType==3 ? '钻石盲盒' : '---' }}</span>
-                <span>{{ v.useToken }}</span>
-                <span :class="{'ellipsis-2-lines': v.remark}">
-                  <div>{{ v.remark || v.awardStr }}</div>
-                </span>
-                <span>{{new Date(+(v.createTime)).Format('yyyy-MM-dd hh:mm')}}</span>
-              </p>
-            </div>
-          </div>
-          <DataPager
-            class="record-data-pager"
-            :total="result_page_info.pages"
-            :pageSize = 7
-            @change="data_page_changed"
-          />
-          <img class="close"  @click="history_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png"/>
-        </div>
-      </div>
-    </q-dialog>
-    <!-- 点击获奖的弹框 -->
-    <q-dialog v-model="gift_box_alert">
-      <div class="gift_box_dialog">
-        <img class="gift-img" :src="blind_box_url" alt="">
-        <div class="money">
-          <span>{{ amount_of_winning }}</span>
-          元
-        </div>
-        <span>恭喜获得</span>
-        <div class="gift-btn" v-if="false">
-          <p>再拆1次</p>
-          <div class="flex align_items justify-center">
-            <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
-            <span>x {{lihe_name.Number_tokens_consumed}}</span>
-          </div>
-        </div>
-        <div class="get-more-tokens" v-else @click="gift_box_alert = false">
-          我知道了
-        </div>
-        <img class="close-img" @click="gift_box_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png" alt="">
-      </div>
-    </q-dialog>
+
+
     <!--活动规则-->
     <div class="activity-rules">
       <div class="title">
@@ -261,6 +215,61 @@
         </div>
       </div>
     </div>
+
+
+        <!-- 历史记录弹框 -->
+        <q-dialog v-model="history_alert">
+      <div class="history-dialog" :class="{'isIphoneX':isIphoneX}" @click.self="history_alert = false">
+        <div class="history-record">
+          <div class="choice-title">
+            历史记录
+          </div>
+          <div class="history-content">
+            <div class="blind-table Member-Ranking">
+              <p class="text-white"><span>盲盒类型</span><span>奖券消耗数</span><span>奖励</span><span>拆盒时间</span></p>
+              <p v-for="(v, i) in history_records" :key="i+'vip'">
+                <span>{{ v.boxType==1 ? '白银盲盒' : v.boxType==2 ? '黄金盲盒 ' : v.boxType==3 ? '钻石盲盒' : '---' }}</span>
+                <span>{{ v.useToken }}</span>
+                <span :class="{'ellipsis-2-lines': v.remark}">
+                  <div>{{ v.remark || v.awardStr }}</div>
+                </span>
+                <span>{{new Date(+(v.createTime)).Format('yyyy-MM-dd hh:mm')}}</span>
+              </p>
+            </div>
+          </div>
+          <DataPager
+            class="record-data-pager"
+            :total="result_page_info.pages"
+            :pageSize = 7
+            @change="data_page_changed"
+          />
+          <img class="close"  @click="history_alert = false"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`"/>
+        </div>
+      </div>
+    </q-dialog>
+    <!-- 点击获奖的弹框 -->
+    <q-dialog v-model="gift_box_alert">
+      <div class="gift_box_dialog">
+        <img class="gift-img" :src="blind_box_url" alt="">
+        <div class="money">
+          <span>{{ amount_of_winning }}</span>
+          元
+        </div>
+        <span>恭喜获得</span>
+        <div class="gift-btn" v-if="false">
+          <p>再拆1次</p>
+          <div class="flex align_items justify-center">
+            <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
+            <span>x {{lihe_name.Number_tokens_consumed}}</span>
+          </div>
+        </div>
+        <div class="get-more-tokens" v-else @click="gift_box_alert = false">
+          我知道了
+        </div>
+        <img class="close-img" @click="gift_box_alert = false"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`" alt="">
+      </div>
+    </q-dialog>
+
   </div>
 </template>
 

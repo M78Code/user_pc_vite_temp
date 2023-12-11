@@ -200,7 +200,6 @@ watch(status, (value)=> {
 
 watch(() => props.get_match_detail, (value) => {
   if(lodash.isEmpty(value)) return
-  console.log(value, "props.get_match_detail");
   // format_time_zone(+item.mgt).Format(i18n_t('time4'))
   const now = Date.now();
   if ((props.get_match_detail.mgt && +props.get_match_detail.mgt - now > 0)) {

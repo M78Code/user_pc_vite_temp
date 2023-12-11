@@ -3,15 +3,39 @@ import {api_activity} from "src/api/index.js";
 
 import common from "project/activity/src/mixins/common/common.js";
 import formartmixin from 'project/activity/src/mixins/common/formartmixin.js';
-import { UserCtr } from "project_path/src/core/index.js";
+import { UserCtr ,LOCAL_COMMON_FILE_PREFIX } from "project_path/src/core/index.js";
 import {  format_time_zone_time } from "project_path/src/core/index.js"
 import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin.js";
+import { throttle } from "lodash";
+
+let machine_images_pc = [
+  LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-pc/activity_imgs/imgs/slot_machine/machine_silver.png',
+  LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-pc/activity_imgs/imgs/slot_machine/machine_gold.png',
+  LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-pc/activity_imgs/imgs/slot_machine/machine_diamond.png'
+];
+
+let machine_images_h5 = [
+  LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-h5/activity/slot_machine/machine_silver.png',
+  LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-h5/activity/slot_machine/machine_gold.png',
+  LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-h5/activity/slot_machine/machine_diamond.png'
+];
+
+
+ 
+ 
 export default {
+  inject: ['is_mobile'],
+
+  setup(props) {
+    
+  },
+ 
   name: 'slot_machine',
   mixins: [common, formartmixin,acticity_mixin],
   emits:['to_maintenance'],
   data() {
     return {
+
       is_init: false, // 老虎机是否已经初始化
       animationClass: [], //3个抽奖模块对应的动画属性,方便后来对应添加和移除该class样式
       currentSlotIndex: 0, // 当前显示的老虎机下标 0白银 1黄金 2钻石
@@ -86,6 +110,10 @@ export default {
     }
   },
   computed: {
+    machine_images(){
+    return this.is_mobile?machine_images_h5 :machine_images_pc
+
+    },
     get_user() {
         return UserCtr.get_user();
     },
@@ -118,8 +146,8 @@ export default {
     this.timerPlayVideo = null;
     this.get_activity_slot_config()
     // 老虎机操作请求需要节流
-    this.resetSlot = this.throttle(this.resetSlot, 800)
-    this.start = this.throttle(this.start, 800)
+    this.resetSlot =  throttle(this.resetSlot, 800)
+    this.start =   throttle(this.start, 800)
     setTimeout(() => {
       // let width = 800
       let width = this.$refs.scroller.clientWidth
@@ -161,6 +189,15 @@ export default {
     document.addEventListener('visibilitychange', this.isHidden)
   },
   methods: {
+       
+    // lodash debounce防抖函数和throttle节流函数功能cancel函数调用
+    debounce_throttle_cancel(fun) {
+      if (fun && fun.cancel && typeof fun.cancel == "function") {
+        fun.cancel();
+      }
+    },
+ 
+
     /**
      * 初始化动画处理
      */

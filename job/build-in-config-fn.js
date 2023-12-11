@@ -81,7 +81,7 @@ const AUTO_API = process.env.AUTO_API || false;
    
     LOCAL_FUNCTION_SWITCH,  
     SERVER_GLOBAL_SWITCH:{},
-    GLOBAL_IMAGE_PREFFIX:  IS_PROD ? '/' + BUILD_VERSION:''  ,
+    
     API_PREFIX,
     OSS_FILE_ARR:compute_oss_file_path_arr(current_env),
     OSS_FILE_NAME: current_env_build_in_oss.file,

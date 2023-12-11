@@ -231,8 +231,14 @@ this.bet_appoint_ball_head= null */
   /**
    * 设置 是否接受更好赔率
   */
-  set_bet_is_accept() {
-    this.bet_is_accept = !this.bet_is_accept
+  set_bet_is_accept(val) {
+    this.bet_is_accept = val
+    BetViewDataClass.set_bet_before_message({code:'0402018',message:"bet.bet_upd"})
+
+    setTimeout(()=>{
+      BetViewDataClass.set_bet_before_message({code:'',message:""})
+    },5000)
+
     this.set_bet_data_class_version()
   }
 
@@ -874,6 +880,14 @@ this.bet_appoint_ball_head= null */
               ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
               // 设置 投注项状态  1：开 2：封 3：关 4：锁
               ol_obj.ol_os = ws_ol_obj.os
+              // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+              ol_obj.hl_hs = item.hs
+
+              // 盘口变更中 需要显示盘口变更的状态
+              if(item.hs == 11 && ws_ol_obj.os == 1){
+                this.set_bet_is_accept('mark_change')
+              }
+
               // 获取新的比分
               ol_obj.mark_score = get_score_config(ol_obj)
 

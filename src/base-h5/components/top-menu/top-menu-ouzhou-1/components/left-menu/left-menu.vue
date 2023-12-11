@@ -41,7 +41,7 @@
         <div class="menu_container">
           <h5>{{ i18n_t("ouzhou.menu.all_sports")}}</h5>
           <template  v-for="item in leftDataList" :key="item.mi">
-            <div v-if="![2000,300].includes(item.mi)" class="menu_item" :class="[
+            <div v-if="![2000,300].includes(item.mi) && item.ct>0" class="menu_item" :class="[
               // { active: meta_data_store.current_menu.mi == item.mi },
             ]" @click="change_current_menu(item)"
               :data-id="item.mi">

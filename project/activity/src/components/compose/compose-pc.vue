@@ -36,7 +36,7 @@
         <!-- 关闭按钮 -->
         <img
           @click="$emit('close_compose')"
-          src="~public/image/activity_imgs/imgs/slot_machine/close.svg"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/close.svg`"
           alt=""
           class="close"
           width="38"
@@ -47,7 +47,7 @@
           <!-- 合成材料名称和数量 -->
           <p>
             <img
-              src="~public/image/activity_imgs/imgs/slot_machine/normal_voucher.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/normal_voucher.png`"
               alt=""
               width="58"
             />
@@ -57,7 +57,7 @@
           <!-- 幸运奖券 -->
           <p>
             <img
-              src="~public/image/activity_imgs/imgs/slot_machine/lucky_voucher.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/lucky_voucher.png`"
               alt=""
               width="56"
             />
@@ -235,7 +235,7 @@
             <div class="tips">
               <p>
                 <img
-                  src="~public/image/activity_imgs/imgs/slot_machine/msg.svg"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg`"
                   alt=""
                   width="18"
                 />
@@ -245,7 +245,7 @@
               </p>
               <p>
                 <img
-                  src="~public/image/activity_imgs/imgs/slot_machine/msg.svg"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg`"
                   alt=""
                   width="18"
                 />
@@ -277,7 +277,7 @@
         <div class="upgrade" v-else-if="step == 'upgradeSucc'">
           <span class="head-odds">{{ currentSynthConfig.syntheticRate }}%</span>
           <img
-            src="~public/image/activity_imgs/imgs/slot_machine/top.svg"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/top.svg`"
             alt=""
           />
           <span class="finish">提升完成！</span>
@@ -312,7 +312,7 @@
           </p>
           <p>
             <img
-              src="~public/image/activity_imgs/imgs/slot_machine/msg.svg"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/msg.svg`"
               alt=""
               width="18"
             />
@@ -340,12 +340,12 @@
     />
     <!-- 选中卡片 -->
     <audio
-      src="~public/image/activity_imgs/imgs/slot_machine/media/selectedCard.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/selectedCard.mp3`"
       ref="selectedCard"
     ></audio>
     <!-- 卡片旋转展示 -->
     <audio
-      src="~public/image/activity_imgs/imgs/slot_machine/media/showCard.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3`"
       ref="showCard"
     ></audio>
   </q-scroll-area>
@@ -362,7 +362,7 @@ import {
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,
-} from "src/core/index.js";
+} from "project/activity/src/core/index.js";
 // 生成随机数
 const random = function (minNum, maxNum) {
   return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
@@ -406,19 +406,19 @@ export default {
         1: {
           type: 1,
           name: "白银奖券",
-          img: "activity/yazhou-pc/activity_imgs/imgs/slot_machine/silver_card.png",
+          img: "/activity/yazhou-pc/activity_imgs/imgs/slot_machine/silver_card.png",
           key: "silver",
         },
         2: {
           type: 2,
           name: "黄金奖券",
-          img: "activity/yazhou-pc/activity_imgs/imgs/slot_machine/gold_card.png",
+          img: "/activity/yazhou-pc/activity_imgs/imgs/slot_machine/gold_card.png",
           key: "gold",
         },
         3: {
           type: 3,
           name: "钻石奖券",
-          img: "activity/yazhou-pc/activity_imgs/imgs/slot_machine/diamond_card.png",
+          img: "/activity/yazhou-pc/activity_imgs/imgs/slot_machine/diamond_card.png",
           key: "diamond",
         },
       },
@@ -867,7 +867,7 @@ svg {
   position: relative;
   min-height: 960px;
   background-position: center top;
-  background-image: url("~public/image/activity_imgs/imgs/slot_machine/bg.png");
+  background-image: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/bg.png");
   background-size: 1920px auto;
 
   &:before {
@@ -878,7 +878,7 @@ svg {
     left: 0px;
     top: -68px;
     background-position: center center;
-    background-image: url("~public/image/activity_imgs/imgs/slot_machine/bg2.png");
+    background-image: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/bg2.png");
     background-size: 1000px auto;
     background-repeat: no-repeat;
     transform: scale(var(--activity-scale));
@@ -930,7 +930,7 @@ svg {
     position: absolute;
     left: 380px;
     top: 225px;
-    background: url("~public/image/activity_imgs/imgs/slot_machine/star_bg.png")
+    background: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/star_bg.png")
       no-repeat center center;
     background-size: 100% auto;
 
@@ -940,7 +940,7 @@ svg {
       position: absolute;
       width: 100%;
       height: 100%;
-      background: url("~public/image/activity_imgs/imgs/slot_machine/ring.png")
+      background: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/ring.png")
         no-repeat center center;
       background-size: 371px auto;
     }
@@ -953,26 +953,26 @@ svg {
       height: 100%;
       top: 0;
       left: 0;
-      background: url("~public/image/activity_imgs/imgs/slot_machine/star.png")
+      background: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/star.png")
         no-repeat center center;
       animation: xuanzhuan 5s linear infinite;
       opacity: 0.5;
     }
 
     &.danshan1 .ring-lamp {
-      background-image: url("~public/image/activity_imgs/imgs/slot_machine/danshan1.png");
+      background-image: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/danshan1.png");
     }
 
     &.danshan2 .ring-lamp {
-      background-image: url("~public/image/activity_imgs/imgs/slot_machine/danshan2.png");
+      background-image: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/danshan2.png");
     }
 
     &.quanshan1 .ring-lamp {
-      background-image: url("~public/image/activity_imgs/imgs/slot_machine/quanshan1.png");
+      background-image: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/quanshan1.png");
     }
 
     &.quanshan2 .ring-lamp {
-      background-image: url("~public/image/activity_imgs/imgs/slot_machine/quanshan2.png");
+      background-image: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/quanshan2.png");
     }
 
     /*  灯 */
@@ -1012,7 +1012,7 @@ svg {
     .bitmap {
       width: 190px;
       height: 190px;
-      background: url("~public/image/activity_imgs/imgs/slot_machine/bitmap.png");
+      background: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/bitmap.png");
       background-size: 100% auto;
       animation: card_donghua2 2s;
 
@@ -1179,7 +1179,7 @@ svg {
       top: 20px;
       width: 900px;
       height: 133px;
-      background-image: url("~public/image/activity_imgs/imgs/slot_machine/synthesis_bg.png");
+      background-image: url("/activity/yazhou-pc/activity_imgs/imgs/slot_machine/synthesis_bg.png");
       background-size: 550px;
       background-repeat: no-repeat;
       background-position: center -145px;

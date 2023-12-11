@@ -6,11 +6,12 @@
 -->
 <template>
   <q-scroll-area class="five-activity-action" ref="scrollareaRef">
-    <load-data :state="allPageState">
+    {{ tab_Id }}
+    <div state="false">
       <!-- 头部 banner 图 -->
       <div class="top-banner">
         <img
-          src="~public/activity/yazhou-pc/common/activity_banner/banner_slot.jpg"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/common/activity_banner/banner_slot.jpg`"
           alt=""
           width="100%"
         />
@@ -79,7 +80,7 @@
           />
         </div>
       </div>
-    </load-data>
+    </div>
 
     <!-- 活动挂维护页面 -->
     <div v-show="is_maintaining" class="maintain-main">
@@ -336,10 +337,19 @@ p {
 }
 
 .q-menu {
-  .q-virtual-scroll__content {
-    .q-item {
-      width: 260px !important;
-      padding-left: 30px;
+    .q-virtual-scroll__content {
+        .q-item {
+            width: 260px !important;
+            padding-left: 30px;
+        }
+
+        .q-item--active {
+            background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            background-position-x: 7px;
+            background-position-y: 15px;
+        }
     }
 
     .q-item--active {
@@ -350,7 +360,7 @@ p {
       background-position-y: 15px;
     }
   }
-}
+
 
 .text-blue {
   color: var(--qq--activity-text-color-blue) !important;
