@@ -100,15 +100,17 @@
   // };
 
   const update_time = async (time) => {
-    const week = await dateWeekFormat();
-    // let arr = [{label:'',value: 'ouzhou.match.today',type:2},...dateWeekFormat(new Date(time))];
-    let arr = [...[{label:'',name: i18n_t('ouzhou.match.today'),type:2}],...week];
-    current_filter_list.value = arr;
-    let obj = {
-      label: MenuData.mid_menu_result.md,
-      type: MenuData.menu_root == 202 ? 2 : 3
+    if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
+      const week = await dateWeekFormat();
+      // let arr = [{label:'',value: 'ouzhou.match.today',type:2},...dateWeekFormat(new Date(time))];
+      let arr = [...[{label:'',name: i18n_t('ouzhou.match.today'),type:2}],...week];
+      current_filter_list.value = arr;
+      let obj = {
+        label: MenuData.mid_menu_result.md,
+        type: MenuData.menu_root == 202 ? 2 : 3
+      }
+      handle_click_menu_mi_3_date(obj)
     }
-    handle_click_menu_mi_3_date(obj)
   }
 
  

@@ -275,7 +275,7 @@
         <img
           class="colse2"
           @click="daily_task_success = false"
-          src="activity/yazhou-pc/activity/colse2.png"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"
         />
       </div>
     </q-dialog>
@@ -664,7 +664,7 @@ export default {
           line-height: normal;
         }
         p:nth-child(2) {
-          background: url("public/activity/yazhou-pc/activity_imgs/imgs/juan_red.png")
+          background: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/juan_red.png")
             no-repeat 75px center;
           background-size: 26px;
         }
@@ -694,7 +694,7 @@ export default {
   width: 750px;
   max-width: 750px;
   height: 600px;
-  background: url("public/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
+  background: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
     no-repeat center;
   ::v-deep .scroll {
     overflow: hidden;
