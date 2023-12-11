@@ -1,5 +1,5 @@
 <template>
-  <div class="component template-4 template4">
+  <div class="component template-column">
     <div class="main ol-list-container">
       <template v-for="title in data.title" :key="title.otd">
         <div class="ol-column">
@@ -35,7 +35,7 @@ const olType = common.getOlTypeOfTemplate4(props.data)
 </script>
 
 <style scoped lang="scss">
-.component.template4{
+.component.template-column{
   display: flex;
   flex-direction: column;
   background-color: #fff;
