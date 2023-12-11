@@ -180,7 +180,7 @@
       </div>
     </div>
     <load-data :state="load_data_state" color="light">
-      <q-scroll-area ref="scrollArea" class="rule-scroll-area" :style="{ height: '100%',color:'red' }">
+      <q-scroll-area ref="scrollArea" class="rule-scroll-area" :style="{ height: '100%'}">
         <div class="tbale-body">
           <div v-for="(item, index) in results_list" :key="item.tnameCode + index">
             <div class="table-tr-td" :class="{ active: index == activeIndex }" @click="get_tr_detail(item, index)">

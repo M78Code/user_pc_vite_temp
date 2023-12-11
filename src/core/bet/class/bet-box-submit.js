@@ -936,11 +936,9 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
     }else{
         let a = '' ,b = '' 
-        a = ol_obj.ott
-        b = ol_obj.on
+        b = ol_obj.on 
         if(ol_obj.ots == 'T1'){
-            
-            a = mid_obj.mhn
+            a = mid_obj.mhn 
         }
         if(ol_obj.ots == 'T2'){
             a = mid_obj.man
@@ -956,15 +954,15 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         // 首页大小类玩法
         if(['Over',"Under"].includes(ol_obj.ot)){
             // h5数据格式和pc不一样
-            a = ol_obj.on.split(' ')[0]
-            b = ol_obj.on.split(' ')[1]
+            a = ol_obj.on.split(' ')[0] 
+            b = ol_obj.on.split(' ')[1] 
         }
             
         // 平 不变色
         if(ol_obj.ot == 'X'){
-            text = `${a}<span class='ty-span'>${b}</span>`  
+            text = `${b }` 
         }else{
-            text = `${a}<span class='ty-span'>${b}</span>` 
+            text = `${a} <span class='ty-span'>${b}</span>` 
         }
     }
 
