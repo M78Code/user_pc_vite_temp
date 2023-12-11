@@ -6,7 +6,6 @@
   <main class="main-container">
     <template v-if="match_list">
       <section class="observer-container" ref="container" @scroll="handler_container_scroll">
-        
           <div class="observer-item" 
             v-for="item, index in match_list" 
             :key="item.mid" 
@@ -41,6 +40,10 @@ import { onMounted, computed, watch, ref, nextTick, onUnmounted } from 'vue';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { compute_local_project_file_path, project_name } from 'src/output/index.js';
+import NoData from "src/base-h5/components/common/no-data.vue"; 
+import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
+import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
+
 // yazhou-h5 亚洲版
 import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item.vue';
 // app-h5 复刻版
@@ -49,9 +52,6 @@ import ObserverItem2 from 'src/base-h5/components/observer-wrapper/observer-item
 import ObserverItem3 from 'src/base-h5/components/observer-wrapper/observer-item3.vue';
 //app-h5 新手版  -- 临时
 import ObserverItem4 from 'src/base-h5/components/observer-wrapper/observer-item4.vue';
-import NoData from "src/base-h5/components/common/no-data.vue"; 
-import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
-import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
 
 const defer_render = use_defer_render()
 const props = defineProps({
@@ -67,6 +67,15 @@ const props = defineProps({
   }
 })
 
+const container = ref(null)
+const observer = ref(null)
+const emitters = ref({})
+const scroll_top = ref(0)
+const page_style = ref(null)
+// 当前可视区的 mids 用于获取赔率
+const active_mids = ref([])
+const which = ref('noMatch')
+
 // 组件配置
 const com_config = {
   'app-h5': ObserverItem2,
@@ -79,17 +88,6 @@ const com_config = {
 const target_com = computed(() => {
   return com_config[props.com_type]
 })
-
-
-const container = ref(null)
-const observer = ref(null)
-const emitters = ref({})
-const scroll_top = ref(0)
-const page_style = ref(null)
-// 当前可视区的 mids 用于获取赔率
-const active_mids = ref([])
-const which = ref('noMatch')
-
 
 onMounted(() => {
   emitters.value = {
