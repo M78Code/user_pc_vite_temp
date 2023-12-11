@@ -135,10 +135,18 @@
                 <q-page-sticky ref="silider" position="bottom-left" :offset="fabPos">
                   <div class="jiantou" :disable="draggingFab" v-touch-pan.right.prevent.mouse="handle_silider"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false"></div>
                 </q-page-sticky>
-                <div class="middle">{{ i18n_t('bet.betting') }}<span class="yb-info-money">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "0.00") }}</span></div>
+                <div class="middle">
+                  {{ i18n_t('bet.betting') }}
+                  <span class="yb-info-money">
+                    <!-- {{ i18n_t('app_h5.bet.bet_win').replace("%s", "0.00") }} -->
+                  <span>{{i18n_t('bet.total_win2')}}</span>
+                  <span>
+                        {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,BetData.bet_single_list[0].oddFinally), BetData.bet_amount)) || '0.00' }}
+                  </span>
+                  </span>
+                </div>
                 <div class="roll-right"><img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""></div>
               </div>
-
               <!-- <slider v-if="BetViewDataClass.bet_order_status == 1"></slider> -->
               <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
               <div v-if="BetViewDataClass.bet_order_status == 5" class="row justify-center items-center content-center yb-info yb-info-hui">
@@ -197,16 +205,15 @@ import betCollusionInput from './bet-collusion-input.vue'
 
 
 
-
+import mathJs from 'src/core/bet/common/mathjs.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path } from "src/output/index.js";
+import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path,formatMoney } from "src/output/index.js";
 import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
 import { get_query_bet_amount_common, submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
 import { format_money3, format_money2 } from 'src/output/index.js'
 import acceptRules from "./accept-rules.vue"
-
 //串关的按钮
 const is_strand = ref(true)
 const scroll_box = ref()
