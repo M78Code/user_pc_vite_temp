@@ -125,10 +125,11 @@ export default defineComponent({
 /*************** 我知道了 开始 *************** -S*/
 .content-box > footer {
   font-size: 0.16rem;
-  color: var(--q-gb-t-c-12);
+  color: var(--q-gb-t-c-1);
   margin-bottom: -0.06rem;
   padding: 0.12rem 0.2rem 0;
   font-weight: 700;
+  border-top: 1px solid var(--q-gb-bg-c-18);
 }
 
 /*************** 我知道了 结束 *************** -S*/
@@ -136,13 +137,13 @@ export default defineComponent({
 <style lang="scss">
 /*************** 矩形叶开始 *************** -S*/
 .rules-wet {
-  color: var(--q-gb-t-c-14);
+  // color: var(--q-gb-t-c-14);
   text-align: center;
   display: inline-block;
   width: 0.16rem;
   height: 0.16rem;
   line-height: 0.18rem;
-  background-color: var(--q-gb-bg-c-13);
+  // background-color: var(--q-gb-bg-c-13);
   border-radius: 8px 0 8px 0;
 }
 
