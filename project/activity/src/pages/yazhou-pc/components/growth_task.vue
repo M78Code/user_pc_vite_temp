@@ -212,7 +212,7 @@
     <!-- 历史记录弹框 -->
     <q-dialog v-model="history_alert">
       <q-layout view="Lhh lpR fff" container class="receiveHistory">
-        <img class="close" src="/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png" alt="" @click.self="history_alert = false" width="30px">
+        <img class="close" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png`" alt="" @click.self="history_alert = false" width="30px">
         <div class="betting_history">
           <div class="content_title text-center text-333">
             领取记录
@@ -275,7 +275,7 @@
         <img
           class="colse2"
           @click="daily_task_success = false"
-          src="activity/yazhou-pc/activity/colse2.png"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"
         />
       </div>
     </q-dialog>
@@ -664,7 +664,7 @@ export default {
           line-height: normal;
         }
         p:nth-child(2) {
-          background: url("public/activity/yazhou-pc/activity_imgs/imgs/juan_red.png")
+          background: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/juan_red.png")
             no-repeat 75px center;
           background-size: 26px;
         }
@@ -694,7 +694,7 @@ export default {
   width: 750px;
   max-width: 750px;
   height: 600px;
-  background: url("public/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
+  background: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
     no-repeat center;
   ::v-deep .scroll {
     overflow: hidden;

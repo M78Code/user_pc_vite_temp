@@ -141,14 +141,14 @@
                 )
               "
               :class="runResetSlotAnim ? 'resetBtnAnim' : ''"
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top.png`"
               alt=""
             />
             <img
               class="top"
               v-else
               :class="runResetSlotAnim ? 'resetBtnAnim' : ''"
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top_gray.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_top_gray.png`"
               alt=""
             />
             <img
@@ -160,13 +160,13 @@
                   'beforeGameResult.propName'
                 )
               "
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm.png`"
               alt=""
             />
             <img
               class="btm"
               v-else
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm_gray.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/reset_btn_btm_gray.png`"
               alt=""
             />
             <span
@@ -195,14 +195,14 @@
                 _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0
               "
               class="top"
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top_gray.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top_gray.png`"
               alt=""
             />
             <img
               v-else
               class="top"
               :class="runStartAnim ? 'startBtnAnim' : ''"
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_top.png`"
               alt=""
             />
             <img
@@ -214,14 +214,14 @@
                 Object.keys(beforeGameResult).length != 0 ||
                 _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0
               "
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm_gray.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm_gray.png`"
               alt=""
             />
             <img
               @click="start('start')"
               class="btm"
               v-else
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png`"
               alt=""
             />
             <span
@@ -235,21 +235,21 @@
             <img
               class="top"
               :class="runStartAnim ? 'startBtnAnim' : ''"
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/confirm_btn_top.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/confirm_btn_top.png`"
               alt=""
             />
             <img
               @click="start('confirm')"
               class="btm"
-              src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/start_btn_btm.png`"
               alt=""
             />
           </p>
         </div>
         <!-- 摇杆 -->
         <div class="rocker">
-          <img
-            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/rocker_${
+          <img 
+            :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-pc/activity_imgs/imgs/slot_machine/rocker_${
               (_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1
             }/0${rocker_anim_index}.png`"
             alt=""
@@ -258,12 +258,12 @@
         <!-- 老虎机周围的装饰 -->
         <img
           class="goldmoney"
-          src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/goldmoney.png"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/goldmoney.png`"
           alt=""
         />
         <img
           class="footbaler"
-          src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/footbaler.png"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/footbaler.png`"
           alt=""
         />
         <!-- 彩灯 -->
@@ -291,11 +291,11 @@
         >
           <img
             v-if="currentSlotIndex == index && index < 3"
-            :src="`${$LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`"
+            :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-pc/activity_imgs/imgs/slot_machine/rocker_${item.slotId}.png`"
           />
           <img
             v-else
-            src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/grey_rocker.png"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/grey_rocker.png`"
           />
           <span :class="currentSlotIndex == index ? 'active' : ''">
             <span>{{ item.slotName }}</span>
@@ -364,7 +364,7 @@
       <q-layout view="Lhh lpR fff" container class="history">
         <img
           class="close"
-          src="/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png`"
           alt=""
           @click="gameHistory = false"
           width="30px"
@@ -522,23 +522,23 @@
     </div>
     <!-- 背景音循环 -->
     <audio
-      src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/slot_bg_loop.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/slot_bg_loop.mp3`"
       ref="slot_bg_loop"
       autoplay
       loop
     />
     <!-- 开始滚动按钮按下 -->
     <audio
-      src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/start_btn.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/start_btn.mp3`"
       ref="audioStart"
     ></audio>
     <!-- 摇杆 -->
     <audio
-      src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/after_start_btn.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/after_start_btn.mp3`"
       ref="afterAudioStart"
     ></audio>
     <audio
-      src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/showCard.mp3`"
       ref="showCard"
     ></audio>
     <!-- <Toast v-if="showToast" :text="$t('common.limited')" /> -->
@@ -602,7 +602,7 @@ export default {
     }
   }
   .slot_machine_content {
-    background: url("public/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg")
+    background: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg")
       no-repeat top center;
     background-size: 105%;
     margin-top: 80px;
@@ -1142,7 +1142,7 @@ export default {
     .content_title {
       width: 260px;
       height: 62px;
-      background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
+      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;

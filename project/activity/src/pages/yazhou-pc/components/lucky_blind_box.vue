@@ -54,12 +54,12 @@
           </p>
           <p class="text-center title">
             <img
-              src="/activity/yazhou-pc/activity_imgs/imgs/text-left.svg"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/text-left.svg`"
               alt=""
             />
             &nbsp;&nbsp;大奖等您拿&nbsp;&nbsp;
             <img
-              src="/activity/yazhou-pc/activity_imgs/imgs/text-right.svg"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/text-right.svg`"
               alt=""
             />
           </p>
@@ -73,7 +73,7 @@
             <span>{{ item.name }}</span>
             <p @click.stop="changeBox(3, true)">
               <img
-                src="/activity/yazhou-pc/activity_imgs/imgs/lucky/gift1.png"
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/lucky/gift1.png`"
                 class=""
                 alt=""
                 :class="
@@ -86,7 +86,7 @@
             </p>
             <p @click.stop="changeBox(2, true)">
               <img
-                src="/activity/yazhou-pc/activity_imgs/imgs/lucky/gift2.png"
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/lucky/gift2.png`"
                 class=""
                 alt=""
                 :class="
@@ -99,7 +99,7 @@
             </p>
             <p @click.stop="changeBox(1, true)">
               <img
-                src="/activity/yazhou-pc/activity_imgs/imgs/lucky/gift3.png"
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/lucky/gift3.png`"
                 class=""
                 alt=""
                 :class="
@@ -149,7 +149,7 @@
             <div class="btns">
               <p class="text-orange text-center btn_blue">
                 <img
-                  src="/activity/yazhou-pc/activity_imgs/imgs/juan_red.png"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/juan_red.png`"
                   alt=""
                 />
                 奖券：{{ tokenNum }}
@@ -167,7 +167,7 @@
               >
                 拆盒1次 <br />
                 <img
-                  src="/activity/yazhou-pc/activity_imgs/imgs/juan_white.png"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/juan_white.png`"
                   alt=""
                 />
                 x <span>{{ current_open_box.token }}</span>
@@ -314,7 +314,7 @@
             :pageSize = 7
             @change="data_page_changed"
           />
-          <img class="close"  @click="history_alert = false"  src="activity/yazhou-pc/activity/lucky/close.png"/>
+          <img class="close"  @click="history_alert = false"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/lucky/close.png`"/>
         </div>
       </div>
     </q-dialog>
@@ -330,22 +330,22 @@
         <div class="gift-btn" v-if="false">
           <p>再拆1次</p>
           <div class="flex align_items justify-center">
-            <img  src="activity/yazhou-pc/activity/diamond1.png" alt="">
+            <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/diamond1.png`" alt="">
             <span>x {{lihe_name.Number_tokens_consumed}}</span>
           </div>
         </div>
         <div class="get-more-tokens" v-else @click="gift_box_alert = false">
           我知道了
         </div>
-        <img class="close-img" @click="gift_box_alert = false"  src="activity/yazhou-pc/activity/lucky/close.png" alt="">
+        <img class="close-img" @click="gift_box_alert = false"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/lucky/close.png`" alt="">
       </div>
     </q-dialog>
 
 
     <Alert :is_show="showAlert" :text="bettingMsg" :isMaintaining="isMaintaining" />
-    <img v-if="activityObj.period == 2" src="/activity/yazhou-pc/activity_imgs/imgs/silver_box.png" alt="" style="display: none">
-    <img v-if="activityObj.period == 2" src="/activity/yazhou-pc/activity_imgs/imgs/gold_box.png" alt="" style="display: none">
-    <img v-if="activityObj.period == 2" src="/activity/yazhou-pc/activity_imgs/imgs/diamond_box.png" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/silver_box.png`" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/gold_box.png`" alt="" style="display: none">
+    <img v-if="activityObj.period == 2" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/diamond_box.png`" alt="" style="display: none">
     <Toast v-if="showToast" :text="$t('common.limited')" />
   </div>
 </template>
@@ -426,7 +426,7 @@ export default {
       margin: 0 auto 25px;
     }
     .timer_btn {
-      background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
+      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
       width: 200px;
       height: 60px;
       line-height: 60px;
@@ -477,7 +477,7 @@ export default {
           font-size: 18px;
         }
         .btn_blue {
-          background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/lottery.svg");
+          background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/lottery.svg");
           cursor: auto;
           img {
             width: 32px;
@@ -486,7 +486,7 @@ export default {
           }
         }
         .btn_red {
-          background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
+          background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
           line-height: 8px;
           padding-top: 15px;
           margin: 0 35px;
@@ -525,7 +525,7 @@ export default {
         }
         /*  按钮置灰 */
         .btn_gray {
-          background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg");
+          background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg");
         }
       }
     }
@@ -538,7 +538,7 @@ export default {
         margin-bottom: 20px;
       }
       .bettingHistory {
-        background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg");
+        background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg");
         border-radius: 30px;
         font-size: 18px !important;
         font-family: PingFangSC-Medium;
@@ -555,14 +555,14 @@ export default {
       line-height: 48px;
       font-family: PingFangSC-Medium;
       font-size: 18px !important;
-      background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/btn_bg.png");
+      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/btn_bg.png");
       margin: 70px auto 50px;
     }
     .bonus_title {
       width: 234px;
       height: 56px;
       line-height: 48px;
-      background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/btn_bg.png");
+      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/btn_bg.png");
       font-family: PingFangSC-Medium;
       font-size: 18px;
       margin: 40px auto 30px;
@@ -836,7 +836,7 @@ export default {
     .content_title {
       width: 260px;
       height: 62px;
-      background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
+      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
@@ -951,7 +951,7 @@ export default {
     width: 200px;
     height: 60px;
     line-height: 60px;
-    background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
+    background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
     border-radius: 28px;
     font-size: 18px;
     margin: 0 auto;

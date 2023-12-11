@@ -208,7 +208,6 @@ export const init_home_matches = async () => {
             return !!get_match_status(match.ms)
           })
         }
-        console.log("jiffy5", res)
         match_list.push(...res)
         set_league_list_obj(match_list)
         SessionStorage.set('get_five_leagues_list', res)

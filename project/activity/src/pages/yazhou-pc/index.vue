@@ -11,7 +11,7 @@
       <!-- 头部 banner 图 -->
       <div class="top-banner">
         <img
-          src="/activity/yazhou-pc/common/activity_banner/banner_slot.jpg"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/common/activity_banner/banner_slot.jpg`"
           alt=""
           width="100%"
         />
@@ -344,7 +344,7 @@ p {
         }
 
         .q-item--active {
-            background-image: url("public/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
+            background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
             background-repeat: no-repeat;
             background-size: 16px;
             background-position-x: 7px;
@@ -353,7 +353,7 @@ p {
     }
 
     .q-item--active {
-      background-image: url("~public/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
+      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
       background-repeat: no-repeat;
       background-size: 16px;
       background-position-x: 7px;

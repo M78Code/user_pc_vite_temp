@@ -22,7 +22,7 @@
       ></div>
     </div>
     <!-- 老虎机停止时的音效 -->
-    <audio src="/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/num_scroll_stop.mp3" ref="num_scroll_stop"></audio>
+    <audio :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/media/num_scroll_stop.mp3`" ref="num_scroll_stop"></audio>
   </div>
 </template>
 
@@ -374,7 +374,7 @@ export default {
     position: absolute;
     left: 2px;
     background-size: 115px auto;
-    background-image: url("public/yazhou-pc/image/common/png/number.png");
+    background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/image/common/png/number.png");
   }
   .row-item-1 {
     background-position: 4.5px 0;

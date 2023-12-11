@@ -205,7 +205,7 @@
           <img
             class="close"
             @click="history_alert = false"
-            src="/activity/yazhou-h5/activity/lucky/close.png"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`"
           />
         </div>
       </div>
@@ -240,7 +240,7 @@
         <img
           class="colse2"
           @click="daily_task_success = false"
-          src="activity/yazhou-h5/activity/colse2.png"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/colse2.png`"
         />
       </div>
     </q-dialog>
