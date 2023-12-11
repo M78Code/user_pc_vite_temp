@@ -16,7 +16,7 @@
         <q-card-section>
           <div class="text-h6">
             <slot name="img">
-              <img src="/activity/yazhou-pc/activity_imgs/imgs/warn.svg" />
+              <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/warn.svg`" />
             </slot>
           </div>
           <slot name="msg">{{text}}</slot>

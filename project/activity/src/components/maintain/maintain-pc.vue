@@ -10,7 +10,7 @@
     <load-data :state="allPageState">
       <div class="activity_aegis">
         <div class="banner">
-          <img src="/activity/yazhou-pc/activity_imgs/imgs/activity_aegis_banner.png" alt="">
+          <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/activity_aegis_banner.png`" alt="">
         </div>
         <div class="text text-center">
           <h3>{{ title }}</h3>
@@ -68,7 +68,7 @@ export default {
 .activity_aegis_scroll {
   min-width: 1200px;
   height: 100vh;
-  background-image: url("/activity/yazhou-pc/activity_imgs/imgs/activity_aegis_bg.jpg");
+  background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/activity_aegis_bg.jpg");
   background-color: #dbdce1;
   background-size: cover;
   background-repeat: no-repeat;

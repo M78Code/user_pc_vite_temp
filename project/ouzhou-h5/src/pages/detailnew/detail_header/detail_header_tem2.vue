@@ -116,7 +116,6 @@ const  is_collect = computed(()=>{
   if(lodash.isEmpty(props.get_match_detail)) return
   return matchCollect.get_match_collect_state(props.get_match_detail)
 }) 
-
 const scoew_icon_list = ref({});
 const iframe_rdm = ref("")
 iframe_rdm.value = new Date().getTime();
@@ -128,6 +127,7 @@ const animation_src = ref("");
 const status = computed(() => {
   // 动画>源视频>比分板  
   const get_detail_data = props.get_match_detail;
+  
   // 优先判断label
   if (props.label) {
     console.log(props.label, "props.label");

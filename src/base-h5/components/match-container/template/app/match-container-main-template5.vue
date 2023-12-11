@@ -708,10 +708,11 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-15) !important;
+    // background: var(--q-gb-bg-c-15) !important;
     height: 25px;
-    border-bottom: 1px solid #F2F2F6;
-
+    border-bottom: 1px solid var(--q-gb-bg-c-19);
+    border-top: 1px solid var(--q-gb-bg-c-19);
+    border-color: var(--q-gb-bg-c-19) !important;
     &.bottom {
       margin-top: 0.05rem;
     }
@@ -725,7 +726,7 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: var(--q-gb-bg-c-17);
+    background: var(--q-gb-bg-c-10);
     line-height: 20px;
     font-size: 11px;
 
@@ -806,7 +807,7 @@ export default {
 
   .match-content {
     width: 100%;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-18);
     padding: 0 9px;
 
     .event-team {
@@ -877,7 +878,7 @@ export default {
             height: 32px;
             flex-shrink: 0;
             border-radius: 2px;
-            background: var(--sys-brand-secodary-secondary-50, #F2F2F6);
+            background: var(--q-gb-bg-c-15);
             text-align: center;
             display: flex;
             flex-direction: column;

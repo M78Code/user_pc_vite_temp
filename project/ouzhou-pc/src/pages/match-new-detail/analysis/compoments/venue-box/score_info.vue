@@ -68,7 +68,7 @@
 
               <div v-else>
                 <img :src="get_icon(col.icon)" alt="" class="top-icon" />
-                <q-tooltip v-if="col.tooltip">
+                <q-tooltip v-if="col.tooltip&&col.icon!='C01'">
                   {{ col.tooltip }}
                 </q-tooltip>
               </div>
@@ -602,10 +602,10 @@ watch(
     const {cds,csid} = detail_info
     //  如果是C01数据，隐藏角球黄牌红牌点球  cds=='C01'&&
     if (cds=='C01'&&[1,3].includes(Number(csid))) {
-      columns.value[1].icon = '1'
-      columns.value[2].icon = '1'
-      columns.value[3].icon = '1'
-      columns.value[4].icon = '1' 
+      columns.value[1].icon = 'C01'
+      columns.value[2].icon = 'C01'
+      columns.value[3].icon = 'C01'
+      columns.value[4].icon = 'C01' 
     }
 
     insetColumnTooltip();
