@@ -106,7 +106,7 @@ const DateOptionsOffset = computed(() => {
  */
 const getDateList = async () =>{
     const euid = MenuData.get_euid(`${MenuData.menu_mi.value}3`);
-    if(!euid){
+    if(!euid || [190,191].includes(+MenuData.menu_mi.value)){
         return [{name:i18n_t('ouzhou.match.today'),val:'',type:0}];
     };
     // 3020212  118  娱乐
