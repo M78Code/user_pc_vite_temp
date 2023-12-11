@@ -88,7 +88,7 @@ const props = defineProps({
 })
 
 const ref_data = reactive({
-    only_win: [1,37,242,1,153,20001,20043],
+    only_win: [1,17,25,37,242,1,153,20001,20043], // 独赢类玩法
     show_money: false, // 显示快捷金额
     max_money: 0, // 最大限额
     money_list: [],
