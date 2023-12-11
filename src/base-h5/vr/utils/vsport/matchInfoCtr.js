@@ -190,10 +190,10 @@ export default class MatchInfoCtr
               item3.ol.forEach(item4 => {
                 // 押注项设置盘口状态
                 Object.assign(item4, {
-                  hs: (item3.hs ? item3.hs : 0),
+                  _hs: (item3.hs ? item3.hs : 0),
                   // ms: (item.mhs ? item.mhs : mhs),
-                  ms: (flag ? 0 : item.mhs ? item.mhs : 0),
-                  mid: item.mid,
+                  _mhs: (flag ? 0 : item.mhs ? item.mhs : 0),
+                  _mid: item.mid,
                   hid: item3.hid,
                   id_: item3.hn ? `${item.mid}_${item.chpid || item.hpid}_${item4.ot}_${item3.hn}`: item4.oid,
                   os:item4.result != undefined ? 1 : item4.os,  //赛果接口没有里层的os，需要拼一个

@@ -9,6 +9,8 @@ import { api_common } from "src/api/index.js";
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
+
 export default {
   data(){
     return {
@@ -48,6 +50,7 @@ export default {
       v_match_ended_score_dict:{},
       skeleton: true,
       get_pre_score_time:null,
+      MatchDataBaseH5
     }
   },
   created () {
@@ -63,11 +66,21 @@ export default {
     this.emitters = [
       useMittOn(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA, this.no_virtual_menu_data).off,
     ]
+    MatchDataBaseH5.clear();
   },
   methods:{
 	set_virtual_data_loading(data){VR_CTR.set_virtual_data_loading(data)},
 	set_prev_v_sports(data){VR_CTR.set_prev_v_sports(data)},
-	set_current_batch(data){VR_CTR.set_current_batch(data)},
+	set_current_batch(data){
+    if(data && data.match){
+      MatchDataBaseH5.set_list(data.match);
+    } else {
+      if(Array.isArray(data)){
+        MatchDataBaseH5.set_list(data);
+      }
+    }
+    VR_CTR.set_current_batch(data);
+  },
     /**
      * @description: 虚拟菜单数据未空时的逻辑处理函数
      * @return {*}

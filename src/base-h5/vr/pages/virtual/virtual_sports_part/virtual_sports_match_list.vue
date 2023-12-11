@@ -17,7 +17,7 @@
         </div>
       </div>
       <v-sports-match-item v-for="(match_item,i) in virtual_match_list" :match_selected_i="selected_match_i"
-        :key="i" :i="i" :match_item="match_item" @switch_match="switch_match_handle"
+        :key="i" :i="i" :match_item="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)" @switch_match="switch_match_handle"
         @odd_pan="odd_pan_handle" :other_status="standard_odd_status">
       </v-sports-match-item>
     </div>
@@ -31,6 +31,7 @@ import virtual_sports_match_item from "src/base-h5/vr/pages/virtual/virtual_spor
 // import betting from 'project_path/mixins/betting/betting.js';
 import SVirtual from "src/base-h5/vr/components/skeleton/virtual_sports/virtual.vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js"
 
 export default {
   // mixins:[betting],
@@ -45,6 +46,7 @@ export default {
       selected_match_i:0,
       v_match_hps:[],
       standard_odd_status:0,
+      MatchDataBaseH5,
     }
   },
   mounted() {
