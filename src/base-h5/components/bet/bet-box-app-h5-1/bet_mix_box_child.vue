@@ -8,7 +8,7 @@
 
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <!-- 投注中的蒙层，所有不能点击 -->
-    <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
+    <!-- <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div> -->
 
     <div v-show="false">{{ BetData.bet_data_class_version }} {{BetViewDataClass.bet_view_version}}</div>
 
@@ -153,9 +153,12 @@
           <div v-if="BetData.is_bet_single">
             <div :class="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single?'yb-strand':'yb-nostrand'" @click.stop="set_is_bet_single">+串</div>
           </div>
-          <div class="yb-dan-btn" v-else @click.stop="set_is_bet_single">
+          <div class="yb-dan-btn" v-else @click.stop="set_chain_bet">
             <div>{{ i18n_t('common.single') }}</div>
           </div>
+
+          <!-- 串关投注 -->
+          <div class="chain_bet" v-if="!BetData.is_bet_single"></div>
 
         </div>
 
@@ -271,12 +274,14 @@ const is_bet_check_rc = () => {
   return res;
 }
 
-// 单关 串关切换
-const set_is_bet_single = () =>{
-  // BetData.set_is_bet_single()
-  // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
-  BetData.set_is_bet_single()
-  BetData.set_bet_state_show(false)
+// 串关
+const set_chain_bet = () =>{
+  BetData.is_bet_single = false
+  reset_silider()
+  console.log('BetData.is_bet_single', BetData.is_bet_single);
+  if(!BetData.is_bet_single) {
+    pack_up()
+  }
 }
 // 投注事件
 const pack_up = (val) => {
@@ -289,7 +294,13 @@ const pack_up = (val) => {
 }
 
 // 滑块初始化坐标
-const fabPos = reactive([ 20, 11 ])
+const fabPos = reactive([0, 11])
+// 处理单关和串关投注的silider位置
+if(BetData.is_bet_single) {
+  fabPos[0] = 20
+} else {
+  fabPos[0] = 77
+}
 const draggingFab = ref(false)
 const silider = ref(null)
 // 向右滑动投注
@@ -316,8 +327,12 @@ let timer;
 const reset_silider = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      fabPos.value = [ 20, 11 ]
-      silider.value.offset[0] = 20
+      if(!BetData.is_bet_single) {
+        silider.value.offset[0] = 77
+      } else {
+        fabPos.value = [ 20, 11 ]
+        silider.value.offset[0] = 20
+      }
     }, 300)
 }
 
@@ -328,6 +343,7 @@ const submit_order = (type) => {
 }
 
 //切换是否接受更好赔率
+BetData.bet_is_accept = true // 默认选中接受
 const toggle_accept = () => {
   BetData.set_bet_is_accept()
 }
@@ -763,4 +779,14 @@ background: var(--q-gb-t-c-5) !important;
 .set-opacity{
   background:var(--q-gb-bg-c-9)
 }
+// .chain_bet {
+//   width: 0.48rem;
+//   height: 0.48rem;
+//   position: fixed;
+//   bottom: .5rem;
+//   right: .5rem;
+//   z-index: 9999;
+//   // background-color: #f00;
+//   // background: url($SCSSPROJECTPATH+"/image/bet/chuan_bet.png") no-repeat center / contain;
+// }
 </style>

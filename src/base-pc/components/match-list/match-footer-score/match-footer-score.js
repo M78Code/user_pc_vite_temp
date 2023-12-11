@@ -4,17 +4,17 @@ import { get_match_status } from 'src/output/index.js'
 import lodash from 'lodash';
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // 赛事模板宽度
-function use_match_footer_score(match) {
+function use_match_footer_score(props) {
     const more_right_icon = ref(false);
     const more_left_icon = ref(false);
     const stage_score = ref(null);
     // 当前赛事状态
     const match_status = computed(() => {
-        const status = get_match_status(match.ms, [110]);
+        const status = get_match_status(props.match.ms, [110]);
         return status;
     });
     const score_list = computed(() => {
-        return get_history_score_list(match)
+        return get_history_score_list(props.match)
     });
     onMounted(() => {
         // 异步设置组件是否挂载完成
@@ -60,7 +60,7 @@ function use_match_footer_score(match) {
      * 比分溢出时滚动方法
      */
     function scorll(type) {
-        let length = lodash.get(match, "score_list.length", 0);
+        let length = lodash.get(score_list, "[0].length", 0);
         if (!stage_score.value || length < 5) return;
         let stageScore = stage_score.value;
         switch (type) {
