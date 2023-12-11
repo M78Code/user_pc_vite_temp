@@ -65,8 +65,8 @@ const olName = `'${props.data.ol[0].on}'`
     }
   }
   &.hpt-3:not(.have-title){
-    .odd-ol-wrap{
-      flex-direction: column;
+    .component.odd-ol-item{
+      flex-basis: calc(100%/3);
     }
   }
   &.hpt-5{

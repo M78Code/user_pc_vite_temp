@@ -24,8 +24,8 @@
       </div>
     </div>
     <!-- <detail_header_tem2 v-if="match_detail?.mvs" :get_match_detail="match_detail || {}" :label="match_detail?.mvs <= -1 ? 'score' : ''"/> -->
-    <div class="change-header-fix" ref="change_header_fix" 
-      :style="{ visibility: (changeHeader||match_detail?.mvs > -1||match_detail.mms > -1) ? 'visible' : 'hidden' }">
+    <div class="change-header-fix" ref="change_header_fix"
+      :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail || {}"/>
     </div>
     <div class="detail-container-position">

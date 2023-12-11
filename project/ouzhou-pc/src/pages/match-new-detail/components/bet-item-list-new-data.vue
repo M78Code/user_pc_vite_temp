@@ -70,6 +70,7 @@
         >
           {{ compute_value_by_cur_odd_type(ol_data.ov, ol_data._hpid, "", ol_data.csid) }}
         </span>
+        <span class="default-point" v-if="!odds_lift"></span>
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
           <div class="odds-icon odds-up"></div>
@@ -298,6 +299,7 @@ onUnmounted(() => {
   position: relative;
   display: flex;
   align-items: center;
+  margin-left: 10px;
   // min-width: 150px;
   .up {
     color: var(--q-gb-t-c-7) !important;
@@ -311,6 +313,13 @@ onUnmounted(() => {
   .active {
     color: var(--q-gb-t-c-1) ;
   }
+}
+.default-point{
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+  display: inline-block;
+
 }
 .odds-icon {
   width: 10px;
