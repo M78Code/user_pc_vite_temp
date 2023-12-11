@@ -849,19 +849,19 @@ export default {
   position: relative;
 
   &.horse {
-    background-image: var(--q-color-com-img-bg-141);
+    background-image: url($SCSSPROJECTPATH+"/image/png/virtual_horse.png");
   }
 
   &.dog {
-    background-image: var(--q-color-com-img-bg-142);
+    background-image: url($SCSSPROJECTPATH+"/image/png/virtual_match_dog.png");
   }
 
   &.basketball {
-    // background-image: var(--q-color-com-img-bg-143);
+    background-image: url($SCSSPROJECTPATH+"/image/png/virtual_match_basketball.png");
   }
 
   &.motorcycle {
-    background-image: var(--q-color-com-img-bg-144);
+    background-image: url($SCSSPROJECTPATH+"/image/png/virtual_match_motorcycle.png");
   }
 
   &.dirt_motorcycle {
@@ -940,6 +940,7 @@ export default {
       top: 0;
       right: -0.24rem;
       overflow: hidden;
+      background-color: rgb(242, 53, 13);
 
       .update-timer {
         position: absolute;

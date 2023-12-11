@@ -710,6 +710,9 @@ export default {
       flex-direction: column;
       font-size: .12rem;
       padding: .02rem .12rem;
+      &.active {
+        background: #C9CDDB;
+      }
       .teams {
         display: flex;
         justify-content: space-between;

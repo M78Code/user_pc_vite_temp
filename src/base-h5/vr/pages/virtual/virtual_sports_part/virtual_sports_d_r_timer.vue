@@ -6,7 +6,7 @@
 <template>
   <div class="d-m-i-wrap" v-show="team_obj&&team_list_sort">
     <div class="rank-wrapper">
-      <div class="dynamic-l-item border-gray" v-for="(item,index) of team_list_sort" :key="index" :ref="`dynamic-dom-item-${index}`"
+      <div class="dynamic-l-item" v-for="(item,index) of team_list_sort" :key="index" :ref="`dynamic-dom-item-${index}`"
       :style="{top:`${get_list_i_top(index)}rem`}"
       >
         <div class="row justify-between dynamic-title">
@@ -157,22 +157,24 @@ export default {
       left: 0;
       top: 0;
       transition: top 0.4s;
+      border-radius: 4px;
+      background: #F2F2F6;
 
-      &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        border: 1px solid;
-        border-right: 0;
-        border-radius: 0.16rem 0 0 0.16rem;
-        width: 200%;
-        height: 200%;
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5);
-        -webkit-transform-origin: left top;
-        transform-origin: left top;
-      }
+      // &::after {
+      //   content: '';
+      //   position: absolute;
+      //   left: 0;
+      //   top: 0;
+      //   border: 1px solid;
+      //   border-right: 0;
+      //   border-radius: 0.16rem 0 0 0.16rem;
+      //   width: 200%;
+      //   height: 200%;
+      //   -webkit-transform: scale(0.5);
+      //   transform: scale(0.5);
+      //   -webkit-transform-origin: left top;
+      //   transform-origin: left top;
+      // }
     }
   }
 
@@ -222,25 +224,27 @@ export default {
   text-align: center;
   font-size: 0.16rem;
   letter-spacing: 0;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
+  background: #F2F2F6;
 
-  &::after {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 200%;
-    height: 200%;
-    -webkit-transform: scale(0.5);
-    transform: scale(0.5);
-    -webkit-transform-origin: left top;
-    transform-origin: left top;
-    border: 1px solid;
-    border-left: 0;
-    border-radius: 0 0.16rem 0.16rem 0;
-    overflow: hidden;
-  }
+  // &::after {
+  //   content: "";
+  //   pointer-events: none;
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   width: 200%;
+  //   height: 200%;
+  //   -webkit-transform: scale(0.5);
+  //   transform: scale(0.5);
+  //   -webkit-transform-origin: left top;
+  //   transform-origin: left top;
+  //   border: 1px solid;
+  //   border-left: 0;
+  //   border-radius: 0 0.16rem 0.16rem 0;
+  //   overflow: hidden;
+  // }
 }
 
 

@@ -246,6 +246,8 @@ export default {
 .dynamic-title {
   height: 0.48rem;
   line-height: 0.48rem;
+  border-radius: 4px;
+  background: #F2F2F6;
 }
 
 /*************** 赛马名称结束 *************** -E*/
@@ -258,22 +260,22 @@ export default {
   position: relative;
   border-radius: .08rem;
 
-  &::after {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 200%;
-    height: 200%;
-    -webkit-transform: scale(0.5);
-    transform: scale(0.5);
-    -webkit-transform-origin: left top;
-    transform-origin: left top;
-    border: 1px solid;
-    border-radius: 0.16rem;
-    overflow: hidden;
-  }
+  // &::after {
+  //   content: "";
+  //   pointer-events: none;
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   width: 200%;
+  //   height: 200%;
+  //   -webkit-transform: scale(0.5);
+  //   transform: scale(0.5);
+  //   -webkit-transform-origin: left top;
+  //   transform-origin: left top;
+  //   border: 1px solid;
+  //   border-radius: 0.16rem;
+  //   overflow: hidden;
+  // }
 }
 
 
