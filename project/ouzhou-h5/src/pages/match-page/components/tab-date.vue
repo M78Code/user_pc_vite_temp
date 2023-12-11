@@ -9,11 +9,11 @@
                 }}</span>
                 <template v-if="item === 'League'">
                     <!-- league的下拉项 -->
-                    <div class="select" v-if="store.tabActive == 'League'" @click="toggerModel">
-                        <span class="select-text" ref="dateOptionsRef">{{
+                    <div class="select" v-if="store.tabActive == 'League'" ref="dateOptionsRef" @click="toggerModel">
+                        <span class="select-text">{{
                             i18n_t(store.curSelectedOption.label)   
                         }}</span>
-                        <span class="down_arrow"></span>
+                        <span :class="['down_arrow', store.tabModel && 'down_arrow_active']"></span>
                     </div>
                     <template v-if="store.tabModel && store.tabActive == 'League'">
                         <ul class="option-list" :style="DateOptionsOffset">
@@ -94,12 +94,13 @@ const tabList = computed(()=>{
 const DateOptionsOffset = computed(() => {
     const domWidth = document.body.clientWidth || document.documentElement.clientWidth
     const selfWitdh = 160
-    const offset = dateOptionsRef.value.offsetLeft
+    const offset = dateOptionsRef.value[0].offsetLeft
     const exceed = domWidth - (selfWitdh + offset)
     let result = offset
     if (exceed < 0) { // 超出
         result = offset + exceed
     }
+    console.log('DateOptionsOffsetDateOptionsOffsetDateOptionsOffsetDateOptionsOffset', offset)
     return {
         'left': result + 'px'
     }
@@ -300,6 +301,10 @@ const areaListChange = (item) => {
 
             .down_arrow {
                 position: relative;
+            }
+
+            .down_arrow_active {
+                transform: rotate(180deg);
             }
 
             .down_arrow::after {

@@ -82,12 +82,12 @@ const odd_status = computed(() => {
   overflow: hidden;
 
   &.active {
-    background-color: var(--q-gb-bg-c-1) !important;
+    background-color: var(--q-gb-bg-c-22) !important;
     .odds {
-      color: var(--q-gb-t-c-2)!important;
+      color: var(--q-gb-t-c-20)!important;
     }
     .on {
-      color: var(--q-gb-t-c-2)!important;
+      color: var(--q-gb-t-c-20)!important;
     }
   }
 

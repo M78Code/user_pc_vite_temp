@@ -10,7 +10,7 @@
             <div class="filter-tab-item">
               <div class="filter-icon">
                 <sport-icon :sport_id="BaseData.compute_sport_id(item.mif)" :key_name="MenuData.menu_current_mi == item.mi ?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image'"  size="22" class="icon" />
-                <div class="filter-count">{{ item.ct || 0 }}</div>
+                <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
               </div>
               <div :class="{ checked_text: MenuData.menu_current_mi == item.mi }" class="label-text">
                 {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif] || "" }}
