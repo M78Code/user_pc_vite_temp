@@ -14,6 +14,54 @@ export default {
     };
   },
   methods: {
+    
+  /**
+   * @description: lodash debounce 防抖函数功能
+   * @param {Function} func 要防抖动的函数
+   * @param {number} wait 需要延迟的毫秒数
+   * @param {Object}  options 选项对象
+   *        options.leading=false {boolean} 指定在延迟开始前调用
+   *        options.maxWait {number} 设置 func 允许被延迟的最大值
+   *        options.trailing=true {boolean} 指定在延迟结束后调用
+   */
+   debounce(func,wait,options){
+    let res = null;
+    if(func && (typeof(func)=='function'))
+    {
+      res = _.debounce(func,wait,options);
+    } else {
+      res = func
+    }
+    return res;
+  },
+
+
+      // lodash debounce防抖函数和throttle节流函数功能cancel函数调用
+  debounce_throttle_cancel(fun){
+    if(fun && fun.cancel && (typeof(fun.cancel)=='function'))
+    {
+      fun.cancel();
+    }
+  },
+      /**
+   * @description: lodash throttle 节流函数功能
+   * @param {Function} func 要防抖动的函数
+   * @param {number} wait 需要延迟的毫秒数
+   * @param {Object}  options 选项对象
+   *        options.leading=false {boolean} 指定在延迟开始前调用
+   *        options.trailing=true {boolean} 指定在延迟结束后调用
+   */
+ throttle (func,wait,options) {
+    let res = null;
+    if(func && (typeof(func)=='function'))
+    {
+      res = _.throttle(func,wait,options);
+    } else {
+      res = func
+    }
+    return res;
+  },
+
     /**
      * @description: 用户金额格式化
      * @param {Number} value 用户金额

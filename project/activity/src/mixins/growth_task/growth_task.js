@@ -264,14 +264,7 @@ export default {
       }
     },
   },
-  computed: {
-    get_user() {
-      return UserCtr.get_user();
-    },
-    get_theme() {
-      return UserCtr.theme || "";
-    },
-  },
+
   unmounted() {
     clearInterval(this.up_date_Info);
     clearTimeout(this.timer1_);
