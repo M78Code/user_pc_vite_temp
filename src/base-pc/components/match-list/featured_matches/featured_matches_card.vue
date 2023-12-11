@@ -31,7 +31,7 @@
           <div class="top-line"></div>
           <div class="odds_item bet-item-wrap-ouzhou" v-for="ol_data in get_col_ols_data(item.mid)"
             :key="ol_data.oid + '_' + ol_data._hpid + '_' + ol_data._ot">
-            <betItem :ol_data="ol_data" match_data_type="pc_hots_list"></betItem>
+            <betItem :ol_data="ol_data" :csid="item.csid" match_data_type="pc_hots_list"></betItem>
           </div>
         </div>
       </div>
@@ -124,8 +124,6 @@ function get_col_ols_data(_mid) {
     // 获取投注项内容 
     let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
     // 15mins 和 featured赛事展示的投注项名称
-    ols_data['otb'] = item.otb
-    ols_data.csid=csid;
     return ols_data;
   })
 }
