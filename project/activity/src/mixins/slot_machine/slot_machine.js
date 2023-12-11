@@ -6,7 +6,7 @@ import formartmixin from 'project/activity/src/mixins/common/formartmixin.js';
 import { UserCtr ,LOCAL_COMMON_FILE_PREFIX } from "project_path/src/core/index.js";
 import {  format_time_zone_time } from "project_path/src/core/index.js"
 import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin.js";
-
+import { throttle } from "lodash";
 
 let machine_images_pc = [
   LOCAL_COMMON_FILE_PREFIX+'/activity/yazhou-pc/activity_imgs/imgs/slot_machine/machine_silver.png',
@@ -146,8 +146,8 @@ export default {
     this.timerPlayVideo = null;
     this.get_activity_slot_config()
     // 老虎机操作请求需要节流
-    this.resetSlot = this.throttle(this.resetSlot, 800)
-    this.start = this.throttle(this.start, 800)
+    this.resetSlot =  throttle(this.resetSlot, 800)
+    this.start =   throttle(this.start, 800)
     setTimeout(() => {
       // let width = 800
       let width = this.$refs.scroller.clientWidth
@@ -189,6 +189,15 @@ export default {
     document.addEventListener('visibilitychange', this.isHidden)
   },
   methods: {
+       
+    // lodash debounce防抖函数和throttle节流函数功能cancel函数调用
+    debounce_throttle_cancel(fun) {
+      if (fun && fun.cancel && typeof fun.cancel == "function") {
+        fun.cancel();
+      }
+    },
+ 
+
     /**
      * 初始化动画处理
      */
