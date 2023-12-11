@@ -867,7 +867,7 @@ svg {
   position: relative;
   min-height: 960px;
   background-position: center top;
-  background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/bg.png");
+  background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/bg.png");
   background-size: 1920px auto;
 
   &:before {
@@ -878,7 +878,7 @@ svg {
     left: 0px;
     top: -68px;
     background-position: center center;
-    background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/bg2.png");
+    background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/bg2.png");
     background-size: 1000px auto;
     background-repeat: no-repeat;
     transform: scale(var(--activity-scale));
@@ -940,7 +940,7 @@ svg {
       position: absolute;
       width: 100%;
       height: 100%;
-      background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/ring.png")
+      background: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/ring.png")
         no-repeat center center;
       background-size: 371px auto;
     }
@@ -953,26 +953,26 @@ svg {
       height: 100%;
       top: 0;
       left: 0;
-      background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/star.png")
+      background: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/star.png")
         no-repeat center center;
       animation: xuanzhuan 5s linear infinite;
       opacity: 0.5;
     }
 
     &.danshan1 .ring-lamp {
-      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/danshan1.png");
+      background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/danshan1.png");
     }
 
     &.danshan2 .ring-lamp {
-      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/danshan2.png");
+      background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/danshan2.png");
     }
 
     &.quanshan1 .ring-lamp {
-      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/quanshan1.png");
+      background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/quanshan1.png");
     }
 
     &.quanshan2 .ring-lamp {
-      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/quanshan2.png");
+      background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/quanshan2.png");
     }
 
     /*  灯 */
@@ -1012,7 +1012,7 @@ svg {
     .bitmap {
       width: 190px;
       height: 190px;
-      background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/bitmap.png");
+      background: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/bitmap.png");
       background-size: 100% auto;
       animation: card_donghua2 2s;
 
@@ -1179,7 +1179,7 @@ svg {
       top: 20px;
       width: 900px;
       height: 133px;
-      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/synthesis_bg.png");
+      background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/synthesis_bg.png");
       background-size: 550px;
       background-repeat: no-repeat;
       background-position: center -145px;

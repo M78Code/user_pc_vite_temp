@@ -344,7 +344,7 @@ p {
         }
 
         .q-item--active {
-            background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
+            background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
             background-repeat: no-repeat;
             background-size: 16px;
             background-position-x: 7px;
@@ -353,7 +353,7 @@ p {
     }
 
     .q-item--active {
-      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
+      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/got.svg") !important;
       background-repeat: no-repeat;
       background-size: 16px;
       background-position-x: 7px;
