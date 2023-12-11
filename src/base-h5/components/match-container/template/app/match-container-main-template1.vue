@@ -269,9 +269,15 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- 右边盘口组件 -->
-                <OddListWrap :main_source="main_source" :match="match_of_list" />
+                  </div>
+                 <div class="right-scroe">
+                    <!-- 右边盘口组件 -->
+                    <OddListWrap :main_source="main_source" :match="match_of_list" />
+                    <!-- 比分组件 -->
+                    <div class="w-score-result row justify-end" v-show="match.ms != 0 && match.csid != 1">
+                      <score-list :match="match"></score-list>
+                    </div>
+                 </div>
                 </div>
               </div>
             </div>
@@ -946,8 +952,18 @@ export default {
 
   .w-score-result {
     position: absolute;
-    right: 0.11rem;
-    bottom: 0.13rem;
+    right: 0;
+    bottom: 0.01rem;
+    padding-top: 0.17rem;
+    :deep(.score-se-inner){
+      max-width: 250px;
+      .score{
+        color: #303442 !important;
+      }
+      .b-score-wrapper{
+        color: #303442 !important;
+      }
+    }
   }
 
   .odd-list-inner {
@@ -990,10 +1006,6 @@ export default {
         padding-top: 0.1rem;
         padding-bottom: 0.1rem;
       }
-    }
-
-    .w-score-result {
-      padding-top: 0.17rem;
     }
 
     .team-wrapper2 {
