@@ -16,10 +16,12 @@
           </div>
         </div>
       </div>
-      <v-sports-match-item v-for="(match_item,i) in virtual_match_list" :match_selected_i="selected_match_i"
-        :key="i" :i="i" :match_item="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)" @switch_match="switch_match_handle"
-        @odd_pan="odd_pan_handle" :other_status="standard_odd_status">
-      </v-sports-match-item>
+      <template v-for="(match_item,i) in virtual_match_list" :key="i">
+        <v-sports-match-item :match_selected_i="selected_match_i" v-if="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)"
+          :i="i" :match_item="MatchDataBaseH5.get_quick_mid_obj(match_item.mid)" @switch_match="switch_match_handle"
+          @odd_pan="odd_pan_handle" :other_status="standard_odd_status">
+        </v-sports-match-item>
+      </template>
     </div>
   </div>
 </template>
