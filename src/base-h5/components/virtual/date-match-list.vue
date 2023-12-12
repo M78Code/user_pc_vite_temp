@@ -141,7 +141,7 @@ export default {
       if(this.v_m_status == 2){
         this.set_match_ended_m();
         this.timer2 = setTimeout( () => {
-          this.$root.$emit(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END);
+          useMittEmit(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END);
         },14000)
       }
     }
@@ -190,10 +190,10 @@ export default {
         this.m_status = 1
         clearInterval(this.interval_id_b)
         this.timer4 = setTimeout( () => {
-          this.$root.$emit(this.emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED);
+          useMittEmit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
         },4000)
         this.timer5 = setTimeout( () => {
-          this.$root.$emit(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END);
+          useMittEmit(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END);
         },6000)
       }
     },
@@ -262,7 +262,7 @@ export default {
       }
       else
       {
-        this.$root.$emit(this.emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED);
+        useMittEmit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
         this.started_second = 0;
         return;
       }
@@ -280,7 +280,7 @@ export default {
         this.counting_down_time--;
       }
       else{
-        this.$root.$emit(this.emit_cmd.EMIT_INGAME_RESULT_SHOW_END);
+        useMittEmit(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END);
         return;
       }
       clearTimeout(this.second_timeout);
