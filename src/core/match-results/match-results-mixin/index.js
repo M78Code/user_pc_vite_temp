@@ -8,6 +8,7 @@ import lodash from 'lodash'
 import { formatTime } from 'src/output/module/constant-utils.js'
 import { i18n_t } from "src/boot/i18n.js";
 import { nextTick } from "vue";
+import UserCtr from "src/core/user-config/user-ctr.js";
 export default {
   data() {
     return {
@@ -15,6 +16,7 @@ export default {
       i18n_t,
       timer: null,
       show_loading: false,
+      lang : UserCtr.lang,
       snoke_score_data:{
         // 第一局比分
         // 第...局比分
