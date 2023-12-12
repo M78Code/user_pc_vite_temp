@@ -602,7 +602,7 @@ export default {
     }
   }
   .slot_machine_content {
-    background: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg")
+    background: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg")
       no-repeat top center;
     background-size: 105%;
     margin-top: 80px;
