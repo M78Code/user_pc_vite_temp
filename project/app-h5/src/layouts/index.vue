@@ -3,6 +3,7 @@
  * @Description:
 -->
 <template>
+  <div style="display: none;">{{ BetData.bet_data_class_version }}</div>
   <q-layout view="lHh Lpr lFf" class="layout_container">
     <q-page-container id="app-h5" class="page_container" :style="`height:${inner_height}px`">
       <!-- <layout-header /> -->
@@ -42,7 +43,11 @@
         <!-- 结算弹窗 -->
         <settle-dialog></settle-dialog>
       </div>
-
+    
+      <!-- 串关投注 --> 
+      <div class="chain_bet" @click="show_chain_bet" v-if="!BetData.is_bet_single">
+        <span class="count">1</span>
+      </div>
 
     </q-page-container>
   </q-layout>
@@ -80,6 +85,7 @@ import { api_common } from "src/api/index.js";
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetRecordClass from "src/core/bet-record/bet-record.js";
 import {debounce} from "lodash";
+// import betMixBoxChild from "src/base-h5/components/bet/bet-box-app-h5-1/bet_mix_box_child.vue";
 
 // 活动弹出框
 const activityLayer = defineAsyncComponent(() => import("src/base-h5/components/common/activity-layer.vue"))
@@ -94,6 +100,7 @@ const toast = defineAsyncComponent(() =>
 // );
 
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
 
@@ -202,6 +209,11 @@ const init_local_server_time = () => {
     });
   });
 }
+
+const show_chain_bet = () => {
+  BetData.set_bet_state_show(1)
+}
+
 onMounted(() => {
   window.onresize = debounce((e) => {
     console.log(e)
@@ -394,5 +406,32 @@ if (UserCtr.get_user_token()) {
   }
 
   /* **********注单记录********************* *-E*/
+}
+// 串关按钮
+.chain_bet {
+  width: 0.48rem;
+  height: 0.48rem;
+  position: fixed;
+  bottom: .72rem;
+  right: .14rem;
+  z-index: 9999;
+  // background-color: #f00;
+  background: url($SCSSPROJECTPATH+"/image/bet/chuan_bet.png") no-repeat center / contain;
+  // position: relative;
+  .count {
+    width: 0.2rem;
+    height: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--q-gb-bg-c-15);
+    border-radius: 50%;
+    color: var(--q-gb-bg-c-15);
+    background-color: #f76565;
+    position: absolute;
+    top: -.06rem;
+    right: -.06rem;
+    font-weight: 600;
+  }
 }
 </style>
