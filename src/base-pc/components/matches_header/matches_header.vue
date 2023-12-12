@@ -324,7 +324,6 @@ const checked_current_tab = (payload,type) => {
 	}
 	// get_sport_banner()
 
-
 	if(MenuData.is_collect || [1002].includes(payload.value*1)){
 		resolve_mew_menu_res()
 	}

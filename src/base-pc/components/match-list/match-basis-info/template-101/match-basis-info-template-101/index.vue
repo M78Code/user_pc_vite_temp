@@ -378,6 +378,7 @@ onUnmounted(() => {
     display: flex;
     height: 16px;
     align-items: center;
+    cursor: pointer;
     &+.row-item {
       margin-top: 4px;
     }
