@@ -216,6 +216,7 @@ function key_down(event) {
             overflow: hidden;
             overflow-x: auto;
             display: flex;
+            padding-right: 0.3rem;
             &::-webkit-scrollbar {
                 display: none;
             }

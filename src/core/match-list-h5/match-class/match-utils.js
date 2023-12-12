@@ -33,6 +33,7 @@ class MatchUtils {
       started[0].in_progress_total = s_length
       this.get_match_total_by_csid('progress', started)
     }
+
     const n_length = lodash.get(not_started, 'length', 0)
     if (n_length > 0) {
       not_started[0].start_flag = 2
@@ -88,7 +89,7 @@ class MatchUtils {
     // 当前赛事
     let is_show_ball_title = false
     const match = list[i]
-    if ([1,2].includes(match.start_flag)) {
+    if ([1,2].includes(+match.start_flag)) {
       is_show_ball_title = true
     } else if (i === 0) {
       is_show_ball_title = true
@@ -145,7 +146,7 @@ class MatchUtils {
    * @param {*} i 赛事下标
    * @returns Boolean 
    */
-  get_match_is_show_league (i, mids)  {
+  get_origin_match_is_show_league (i, mids)  {
     // 当前赛事
     const match = BaseData.resolve_base_info_by_mid(mids[i])
     let is_show_league = false
@@ -157,6 +158,29 @@ class MatchUtils {
     } else {
       is_show_league = true
     }
+    // 显示开赛、未开赛 一定显示联赛标题
+    if ([1,2].includes(+match.start_flag)) is_show_league = true
+    return is_show_league
+  }
+  /**
+   * @description 非元数据 是否展示联赛标题   
+   * @param {*} i 赛事下标
+   * @returns Boolean 
+   */
+  get_match_is_show_league (i, list)  {
+    // 当前赛事
+    const match = list[i]
+    let is_show_league = false
+    if (!match) return false
+    if (i > 0) {
+      const prev_match = list[i - 1]
+       // 上一个赛事对象
+      is_show_league = prev_match && i === 0 ? true : match.tid !== prev_match.tid
+    } else {
+      is_show_league = true
+    }
+    // 显示开赛、未开赛 一定显示联赛标题
+    if ([1,2].includes(+match.start_flag)) is_show_league = true
     return is_show_league
   }
   /**

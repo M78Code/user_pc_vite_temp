@@ -740,7 +740,7 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
  * @return Undefined Undefined
  */
 const get_ol_list = (hp_item, hp_i_i) => {
-  let ol_list = props.match.csid === 1 ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
+  let ol_list = props.match.csid == 1 ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
   if (lodash.get(hp_item, "hl[0].ol")) {
     ol_list = hp_item.hl[0].ol;
   } else {

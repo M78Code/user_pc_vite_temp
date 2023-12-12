@@ -146,9 +146,7 @@ onMounted(() => {});
     }
   }
 
-  & > div:last-child {
-    // border-right: none;
-  }
+ 
 }
 
 // 两列展示最后一列为左边的数据的话应给加一个有边框
@@ -173,10 +171,7 @@ onMounted(() => {});
     // color: var(--q-gb-t-c-1);
   }
 
-  .temp-on {
-    // color: var(--q-gb-t-c-1) !important;
-    // margin-left: 10px;
-  }
+
 }
 
 .oid-width {
