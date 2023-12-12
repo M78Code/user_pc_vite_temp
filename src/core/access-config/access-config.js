@@ -92,21 +92,29 @@ class GlobalAccessConfig {
    * &clearcache=1
   */
   set_enter_params_switch(data) {
-    const _data = data || {
-      LOG: SEARCH_PARAMS.init_param.get('log'),
-      // DOM_ID_SHOW: SEARCH_PARAMS.init_param.get('DOM_ID_SHOW'),
-      // ENABLE_COLLECT_API: SEARCH_PARAMS.init_param.get('ENABLE_COLLECT_API'),
-      // AUTO_API: SEARCH_PARAMS.init_param.get('api'),
-      httplog: SEARCH_PARAMS.init_param.get('httplog'),
-      wsl: SEARCH_PARAMS.init_param.get('wsl'),
-      env: SEARCH_PARAMS.init_param.get('env'),
-      tag: SEARCH_PARAMS.init_param.get('tag'),
-      pb: SEARCH_PARAMS.init_param.get('pb'),
-    }
+    //默认是url里面的值 如果设置可以替换
+    const _data = Object.assign({
+      httplog: SEARCH_PARAMS.init_param.get('httplog'),//开启httplog日志
+      wsl: SEARCH_PARAMS.init_param.get('wsl'),//开启日志
+      env: SEARCH_PARAMS.init_param.get('env'),//增加env
+      tag: SEARCH_PARAMS.init_param.get('tag'),//增加tag
+      pb: SEARCH_PARAMS.init_param.get('pb'),//增加PB
+      ag: SEARCH_PARAMS.init_param.get('ag'),//增加AG
+    },data||{})
+    // AUTO_API: SEARCH_PARAMS.init_param.get('api'), //自动API
+     //下面这3个值没在url上找到
+    //LOG: SEARCH_PARAMS.init_param.get('log'),
+    // DOM_ID_SHOW: SEARCH_PARAMS.init_param.get('DOM_ID_SHOW'),  //是否显示DOM ID
+    // ENABLE_COLLECT_API: SEARCH_PARAMS.init_param.get('ENABLE_COLLECT_API'),//前端控制是否禁用收藏功能
+
+    //LOCAL_FUNCTION_SWITCH 打包配置
     this.other = Object.assign({}, LOCAL_FUNCTION_SWITCH, _data);
   }
   get_wsl() {
     return this.other?.wsl;
+  }
+  get_ag() {
+    return this.other?.ag;
   }
   get_env() {
     return this.other?.env;
