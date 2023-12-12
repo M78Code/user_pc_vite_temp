@@ -509,7 +509,7 @@ export default {
     padding: 0 0 0 0 !important;
   }
   .timer-layout0 {
-
+    padding: 0 0 0 0 !important;
   }
 }
 
