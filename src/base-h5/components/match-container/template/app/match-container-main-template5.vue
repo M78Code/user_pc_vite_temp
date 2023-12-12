@@ -863,7 +863,7 @@ export default {
         justify-content: center;
         /* justify-content: space-between; */
         /* padding-right: 46px; */
-        margin-top: 8px;
+        margin: .08rem 0;
 
         .bet_btn {
           display: flex;
