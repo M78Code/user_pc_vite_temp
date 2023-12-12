@@ -410,6 +410,7 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
+  background: var(--q-gb-bg-c-18);
 
   .match-status-fixed {
     width: 100%;
@@ -773,6 +774,7 @@ export default {
   .league {
     height: 0.26rem;
     border-radius: .08rem .08rem 0 0;
+    background-color: var(--q-gb-bg-c-17) !important;
 
     .league-t-wrap {
       width: 100%;
