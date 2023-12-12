@@ -47,7 +47,7 @@
          srcset="">
         </div>
       </div>
-      <div class="setting-item">
+      <div class="setting-item" @click="jump_webpage">
         <div class="title">前往旧版</div>
         <div class="goto-website">前往网页版</div>
       </div>
@@ -71,9 +71,22 @@ defineOptions({
 
 const router = useRouter();
 
+/**
+ * @description 跳转至盘口教程
+ * @param 
+ * @return 
+ */
 const jumpHandle = () => {
-  router.push({ name: "handicapTutorial" }); // 此处跳转至盘口教程
+  router.push({ name: "handicapTutorial" }); // 
   closedHandle();
+};
+/**
+ * @description 跳转网页版
+ * @param 
+ * @return 
+ */
+const jump_webpage = () => {
+  console.log('跳转网页版')
 };
 
 defineProps({});

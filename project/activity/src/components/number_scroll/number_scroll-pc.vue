@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { LOCAL_COMMON_FILE_PREFIX } from "project_path/src/core/index.js";
 export default {
   props:{
     // 老虎机配置
@@ -73,6 +74,7 @@ export default {
     return {
       // 每个数字位置对象
       position_obj,
+      LOCAL_COMMON_FILE_PREFIX: LOCAL_COMMON_FILE_PREFIX
     }
   },
   watch:{
@@ -374,7 +376,7 @@ export default {
     position: absolute;
     left: 2px;
     background-size: 115px auto;
-    background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/image/common/png/number.png");
+    background-image: url("/yazhou-pc/image/common/png/number.png");
   }
   .row-item-1 {
     background-position: 4.5px 0;

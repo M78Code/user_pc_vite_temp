@@ -120,25 +120,6 @@ export default defineComponent({
       }
       return muUrl_icon
     },
-    // TODO: 判断是否显示体育类型
-    show_sport_title () {
-      if (is_detail.value) { return false }
-      if (is_hot.value) {
-        // 热门
-        if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }
-        if (this.i === 0) { return true }
-        if (this.prev_match && this.match) {
-          return this.prev_match.csid !== this.match.csid;
-        }
-      } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+menu_type.value)) {
-        if (this.i === 0) { return true }
-        if (this.prev_match && this.match) {
-          return this.prev_match.csid !== this.match.csid;
-        }
-      } else {
-        return false;
-      }
-    },
     
     // 是否显示视频图标, 点击跳转 去到详情页视频直播
     is_show_video_icon() {

@@ -68,7 +68,7 @@ export default {
 .activity_aegis_scroll {
   min-width: 1200px;
   height: 100vh;
-  background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/activity_aegis_bg.jpg");
+  background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/activity_aegis_bg.jpg");
   background-color: #dbdce1;
   background-size: cover;
   background-repeat: no-repeat;

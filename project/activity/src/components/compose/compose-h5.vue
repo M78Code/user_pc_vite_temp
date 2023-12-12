@@ -246,7 +246,10 @@
         <!-- 合成率提升完成 -->
         <div class="upgrade" v-else-if="step == 'upgradeSucc'">
           <span>{{ currentSynthConfig.syntheticRate }}%</span>
-          <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/top.svg`" alt="" />
+          <img
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/top.svg`"
+            alt=""
+          />
           <span>提升完成！</span>合成成功率已提升到了{{
             currentSynthConfig.syntheticRate
           }}%
@@ -313,13 +316,8 @@ const random = function (minNum, maxNum) {
   return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
 };
 //头部引入
-import {
-  useMittOn,
-  useMittEmit,
-  useMittEmitterGenerator,
-  MITT_TYPES,
-} from "project_path/src/core/index.js";
-import { rem } from "project_path/src/core/index.js";
+import { LOCAL_COMMON_FILE_PREFIX } from "project_path/src/core/index.js";
+import { rem, useMittEmit, MITT_TYPES } from "project_path/src/core/index.js";
 
 export default {
   name: "compose",
@@ -369,6 +367,7 @@ export default {
           key: "diamond",
         },
       },
+      LOCAL_COMMON_FILE_PREFIX: LOCAL_COMMON_FILE_PREFIX,
     };
   },
   watch: {

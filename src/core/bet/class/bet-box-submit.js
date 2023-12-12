@@ -1041,7 +1041,7 @@ const   go_to_bet=(ol_item)=>{
       _mid,  //赛事id mid_obj
     }
     let other = {
-      is_detail: false,
+      is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
       // 根据赛事纬度判断当前赛事属于 那种投注类型
       bet_type: 'common_bet',

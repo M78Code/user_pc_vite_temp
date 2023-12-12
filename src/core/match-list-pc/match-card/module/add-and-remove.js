@@ -199,7 +199,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   }
   // 滚球 重新计算菜单数量
   if (
-    MenuData.menu_data.cur_level1_menu == "play" &&
+    MenuData.cur_level1_menu == "play" &&
     !page_source == "collect"
   ) {
     MatchListData.match_list_data.compute_sport_count(remove_mid);

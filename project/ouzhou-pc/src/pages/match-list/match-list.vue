@@ -5,10 +5,10 @@
 -->
 <template>
   <div class="yb-match-list full-height relative-position" :data-version="MatchListCardDataClass.list_version">
-    <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl">
+    <!-- <div class="test-info-wrap" v-if="GlobalAccessConfig.get_wsl()">
    {{ MatchListCardDataClass.list_version }}--   {{ load_data_state }}-- length---  {{ match_list_card_key_arr.length }}
     </div> -->
-    <div class="test-info-wrap" v-show="GlobalAccessConfig.other.wsl || 1">
+    <div class="test-info-wrap" v-show="GlobalAccessConfig.get_wsl()">
       <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
       <!-- 临时调试用 -->
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">

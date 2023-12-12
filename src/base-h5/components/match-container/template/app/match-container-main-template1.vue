@@ -1135,7 +1135,7 @@ export default {
         }
 
         .team-title-inner-con {
-          width: 1.31rem;
+          width: 1.21rem;
           position: relative;
           line-height: 0.14rem;
           display: flex;

@@ -872,8 +872,8 @@ this.bet_appoint_ball_head= null */
 
               // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
               // 投注项和状态一致不更新数据 
-              if(ol_obj.odds == ws_ol_obj.ov &&  ol_obj.ol_os == ws_ol_obj.os){
-                return
+              if(ol_obj.odds == ws_ol_obj.ov){
+                ol_obj.red_green = ''
               }
              
               // 重新设置赔率
