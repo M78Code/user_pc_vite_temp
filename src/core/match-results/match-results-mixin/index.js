@@ -129,7 +129,7 @@ export default {
     },
     load_data_state:{
       handler(val){
-        this.$refs.scrollArea.setScrollPosition('vertical', 1)
+        this.$refs.scrollArea.setScrollPosition('vertical', 0)
       }
     }
   },
