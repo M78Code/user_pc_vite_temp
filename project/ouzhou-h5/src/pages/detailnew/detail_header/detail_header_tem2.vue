@@ -1,5 +1,5 @@
 <template>
-  <div class="detail_header_tem2">
+  <div class="component detail_header_tem2">
     <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-156':'detail-header-221']">
       <iframe v-if="animation_src && right_actions_label == 'animation'"
         id="replayIframe"
@@ -488,9 +488,9 @@ onMounted(() => {
 }
 
 .mt-30 {
-  margin-top: 30px;
+  padding-top: 30px;
 }
 .mt-10 {
-  margin-top: 10px;
+  padding-top: 10px;
 }
 </style>
