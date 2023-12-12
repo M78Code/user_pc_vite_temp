@@ -223,6 +223,7 @@ const handleClick = (item, index) => {
     // width: 100%; // 不需要100%吧? 挡住其他ui事件了
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     .list {
         // padding-top: 30px;
     }
