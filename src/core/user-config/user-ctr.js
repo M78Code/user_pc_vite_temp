@@ -1140,12 +1140,40 @@ class UserCtr {
     icon_el.setAttribute("type", "image/png");
     icon_el.setAttribute("href", config.icon);
 
+    // 设置用户配置样式
+    // let style_html = `
+    //   body.theme01${merchant_style}{background-color:#${config.body_bg_day}!important;}
+    //   body.theme02${merchant_style}{background-color:#${config.body_bg_night}!important;}
+    //   .c-max-width{max-width:${config.max_width}px  !important;}
+    //   .theme01${merchant_style} .custom-format-img-logo-01{background-image: url("${config.day_logo}")!important;}
+    //   .custom-format-img-logo-01-theme01{background-image: url("${config.day_logo}") !important;}
+    //   .theme02${merchant_style} .custom-format-img-logo-01{background-image: url("${config.night_logo}") !important;}
+    //   .custom-format-img-logo-04{background-image: url("${config.compatible_logo}") !important;}
+    // `
+    // let style_html = `
+    //   .custom-format-img-logo-04{background-image: url("${config.compatible_logo}") !important;}
+    // `;
+    // // loading图片
+    // if (config.loadLogoUrl) {
+    //   style_html += `.custom-format-img-loading{background-image: url("${config.loadLogoUrl}") !important;}`;
+    // }
+    // // 视频异常
+    // if (config.videoLogoUrl) {
+    //   style_html += `.custom-format-web-icon-05{background-image: url("${config.videoLogoUrl}") !important;}`;
+    // }
+    // 默认联赛logo
+    // if(config.leagueLogoUrl){
+    //   style_html += `
+    //   .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
+    //   .theme01 img.leagues-logo-default[src^=data]{background-image: url("${config.leagueLogoUrl}") !important;}
+    //   .theme02 img.leagues-logo-default[src^=data]{background-image: url("${config.leagueLogoUrl}") !important;}
+    //   `
+    // }
     // 设置主题色
-    // let theme =
-    //   "theme0" +
-    //   config.default_theme[window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME];
-    // let theme = lodash.get(window, 'vue.$store.getters.get_theme', 'theme01')
-    // window.vue.$store.dispatch('set_theme',theme)
+    // if(!window.vue.$store.getters.get_theme){
+    //   let theme = 'theme0'+config.default_theme[window.BUILDIN_CONFIG.PROJECT_NAME]
+    //   window.vue.$store.dispatch('set_theme',theme)
+    // }
   }
   // 设置 用户token
   set_user_token(token) {
