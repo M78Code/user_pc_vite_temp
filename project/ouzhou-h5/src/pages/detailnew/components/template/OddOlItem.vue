@@ -1,5 +1,5 @@
 <template>
-  <div class="component odd-ol-item" v-if="value.os != 3"
+  <div class="component odd-ol-item" v-show="value.os != 3"
     :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
   >
     <div class="icontainer" v-if="vif"
