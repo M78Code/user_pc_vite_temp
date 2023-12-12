@@ -71,6 +71,8 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
+    <!-- 视频info说明弹窗,和切换高清和标清的 弹框 -->
+    <info-rules v-if="get_info_show"></info-rules>
   </div>
 </template>
 
@@ -89,7 +91,7 @@ import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
 import { i18n_t } from "src/output/index.js"
-
+import infoRules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import './index.scss'
 export default {
   components:{
@@ -102,6 +104,7 @@ export default {
     loading_page,
     event_analysis,
     OddsListContrainer,
+    infoRules
   },
   setup(ctx){
     const router = useRouter();
@@ -132,7 +135,8 @@ export default {
      touchstart,
      detail_tabs_change,
      changeHeader,
-     MatchDataWarehouseInstance
+     MatchDataWarehouseInstance,
+     get_info_show
     } = details_main(router,route)
 
     const label = ref("");
@@ -175,6 +179,7 @@ export default {
       mid,
       MatchDataWarehouseInstance,
       allCloseState,
+      get_info_show
      }
   } 
 }
@@ -240,11 +245,20 @@ export default {
     background-color: var(--q-gb-bg-c-2);
     .tab-active {
       color: var(--q-gb-t-c-1);
-      
       .tab-text {
         display: inline-block;
         font-weight: 500;
-        border-bottom: 3px solid var(--q-gb-bd-c-1);
+        position:relative;
+       &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        bottom: 0;
+        left:0;
+        background:var(--q-gb-bd-c-1);
+      }
+       // border-bottom: 3px solid var(--q-gb-bd-c-1);
       }
     }
     .tabs-item {

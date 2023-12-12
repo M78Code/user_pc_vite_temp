@@ -51,8 +51,8 @@
                 <div class="progress">
                   
                   <div class="progressbar">
-                    <q-slider readonly reverse :model-value="detail_info[item.value_key]['percentage']" :min="0" :max="50" track-size="5px" color="amber-7" thumb-size="'0'" style="margin-right:6px"/>
-                    <q-slider readonly   :model-value="detail_info[item.value_key]['away_percentage']" :min="0" :max="50" track-size="5px" color="indigo-12" :thumb-size="'0'" />
+                    <q-slider readonly reverse v-model="detail_info[item.value_key]['percentage']" :min="0" :max="50" track-size="5px" color="amber-7" thumb-size="'0'" style="margin-right:6px"/>
+                    <q-slider readonly   v-model="detail_info[item.value_key]['away_percentage']" :min="0" :max="50" track-size="5px" color="indigo-12" :thumb-size="'0'" />
                   </div>
                   
                 </div>
