@@ -426,7 +426,7 @@ export default {
       margin: 0 auto 25px;
     }
     .timer_btn {
-      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
+      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
       width: 200px;
       height: 60px;
       line-height: 60px;
@@ -477,7 +477,7 @@ export default {
           font-size: 18px;
         }
         .btn_blue {
-          background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/lottery.svg");
+          background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/lottery.svg");
           cursor: auto;
           img {
             width: 32px;
@@ -486,7 +486,7 @@ export default {
           }
         }
         .btn_red {
-          background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
+          background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
           line-height: 8px;
           padding-top: 15px;
           margin: 0 35px;
@@ -525,7 +525,7 @@ export default {
         }
         /*  按钮置灰 */
         .btn_gray {
-          background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg");
+          background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg");
         }
       }
     }
@@ -538,7 +538,7 @@ export default {
         margin-bottom: 20px;
       }
       .bettingHistory {
-        background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg");
+        background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg");
         border-radius: 30px;
         font-size: 18px !important;
         font-family: PingFangSC-Medium;
@@ -555,14 +555,14 @@ export default {
       line-height: 48px;
       font-family: PingFangSC-Medium;
       font-size: 18px !important;
-      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/btn_bg.png");
+      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/btn_bg.png");
       margin: 70px auto 50px;
     }
     .bonus_title {
       width: 234px;
       height: 56px;
       line-height: 48px;
-      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/btn_bg.png");
+      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/btn_bg.png");
       font-family: PingFangSC-Medium;
       font-size: 18px;
       margin: 40px auto 30px;
@@ -836,7 +836,7 @@ export default {
     .content_title {
       width: 260px;
       height: 62px;
-      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
+      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
@@ -951,7 +951,7 @@ export default {
     width: 200px;
     height: 60px;
     line-height: 60px;
-    background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
+    background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/waiting.svg");
     border-radius: 28px;
     font-size: 18px;
     margin: 0 auto;

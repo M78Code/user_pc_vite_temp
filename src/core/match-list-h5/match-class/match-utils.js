@@ -236,7 +236,7 @@ class MatchUtils {
    *  2. 如果不足20场按菜单球种排序补充上，直到展示20场数据。
    */
   get_home_in_play_data (list) {
-    const match_data = list.sort((a,b) => +a.csid - +b.csid)
+    const match_data = list.sort((a,b) => Number(a.csid) - Number(b.csid))
     const csid_obj = {}
     const result = []
     match_data.some(t => {

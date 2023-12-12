@@ -602,7 +602,7 @@ export default {
     }
   }
   .slot_machine_content {
-    background: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg")
+    background: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/slot_machine_bg.jpg")
       no-repeat top center;
     background-size: 105%;
     margin-top: 80px;
@@ -1142,7 +1142,7 @@ export default {
     .content_title {
       width: 260px;
       height: 62px;
-      background-image: url($SCSSPROJECTPATH+"/activity/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
+      background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;

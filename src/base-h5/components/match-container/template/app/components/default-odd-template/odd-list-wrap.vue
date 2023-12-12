@@ -1178,6 +1178,11 @@ onUnmounted(() => {
       &.hp-2, &.hp-0 {
         height: 0.49rem;
       }
+      &.hp-3{
+        :deep(.odd-title){
+          margin-bottom: 0.01rem;
+        }
+      }
 
       &:last-child {
         margin-bottom: 0;

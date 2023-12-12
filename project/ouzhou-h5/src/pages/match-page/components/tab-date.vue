@@ -100,7 +100,6 @@ const DateOptionsOffset = computed(() => {
     if (exceed < 0) { // 超出
         result = offset + exceed
     }
-    console.log('DateOptionsOffsetDateOptionsOffsetDateOptionsOffsetDateOptionsOffset', offset)
     return {
         'left': result + 'px'
     }

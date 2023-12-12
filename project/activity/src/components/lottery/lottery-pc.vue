@@ -71,7 +71,7 @@ export default {
     .big-ring {
       background-image: linear-gradient(180deg, #336db5, #e9f0ff);
       &.active:after {
-        background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/diamond_active.png");
+        background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/diamond_active.png");
       }
       .small-ring:after {
         background-image: linear-gradient(180deg, #a8bad2, #bcc5fa);
@@ -92,7 +92,7 @@ export default {
     .big-ring {
       background-image: linear-gradient(180deg, #ef8307, #ffd6b9);
       &.active:after {
-        background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/gold_active.png");
+        background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/gold_active.png");
       }
       .small-ring:after {
         background-image: linear-gradient(180deg, #ffd7a7, #ffb762);
@@ -113,7 +113,7 @@ export default {
     .big-ring {
       background-image: linear-gradient(180deg, #888888, #f7f7f7);
       &.active:after {
-        background-image: url($SCSSPROJECTPATH+"/activity/yazhou-pc/activity_imgs/imgs/slot_machine/silver_active.png");
+        background-image: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/slot_machine/silver_active.png");
       }
       .small-ring:after {
         background-image: linear-gradient(180deg, #e0e0e0, #fafafa);
