@@ -95,8 +95,6 @@ import {
   computed,
   onUnmounted,
   watch,
-  defineExpose,
-  defineEmits
 } from "vue";
 import { useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
