@@ -7,7 +7,7 @@
       <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
      <!-- 开赛标题  -->
       <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
-        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
+        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }, i !== 0 && 'mt5px']" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
@@ -429,6 +429,10 @@ export default {
       border-top: 2px solid rgba(233, 91, 91, 0.51);
     }
 
+    &.mt5px {
+      margin-top: .05rem;
+    }
+
     img {
       margin-right: .06rem;
       width: .13rem;
@@ -455,8 +459,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-15);
-
+    background: var(--q-gb-bg-c-10);
+    // box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+    // border-radius: .04rem;
     .buffer-container {
       background: var(--q-gb-bg-c-17);
       height: 5px;
@@ -717,6 +722,7 @@ export default {
     border-bottom: 1px solid var(--q-gb-bg-c-19);
     border-top: 1px solid var(--q-gb-bg-c-19);
     border-color: var(--q-gb-bg-c-19) !important;
+    margin-top: 0.05rem;
     &.bottom {
       margin-top: 0.05rem;
     }
@@ -733,6 +739,8 @@ export default {
     background: var(--q-gb-bg-c-10);
     line-height: 19px;
     font-size: 11px;
+    margin-bottom: -.05rem;
+    margin-top: 0;
 
     .score-inner-span {
       width: 100%;

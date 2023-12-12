@@ -92,7 +92,7 @@ import { ref, computed } from 'vue';
 import comSelect from "src/base-pc/components/match-results/select/select/index.vue";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { t, GlobalSwitchClass, PageSourceData,LayOutMain_pc } from "src/output/index.js";
+import { t, PageSourceData,LayOutMain_pc } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import store from 'src/store-redux/index.js';
@@ -200,7 +200,7 @@ const page_title = computed(() => {
 })
 // 前端控制是否禁用收藏功能
 const enable_collect_api = computed(() => {
-  return  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.ENABLE_COLLECT_API;
+  return  GlobalAccessConfig.GET_ENABLE_COLLECT_API() || GlobalAccessConfig.get_collectSwitch()
 })
 //设置即将开赛筛选列表
 let hour = t('common.hour')

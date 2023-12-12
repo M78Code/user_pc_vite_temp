@@ -222,16 +222,16 @@
         "bet_col_2": "让局"
       },
       "bet_col_30002": {
-        "bet_col_T1": "全局获胜",
-        "bet_col_T2": "全局获胜"
+        "bet_col_T1": "1",
+        "bet_col_T2": "2"
       },
       "bet_col_30001": {
-        "bet_col_T1": "地图让分",
-        "bet_col_T2": "地图让分"
+        "bet_col_T1": "让分",
+        "bet_col_T2": "让分"
       },
       "bet_col_30003": {
-        "bet_col_Over": "地图总分",
-        "bet_col_Under": "地图总分"
+        "bet_col_Over": "总数",
+        "bet_col_Under": "总数"
       }
     }
   },

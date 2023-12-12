@@ -881,6 +881,7 @@ class MatchMeta {
     })
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
+    this.set_page_match_empty_status({ state: false }); 
   }
 
   /**

@@ -6,7 +6,7 @@
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\bet-record\compoments\tableConfig.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,computed } from 'vue'
 import { api_match_list } from 'src/api'
 import { responseData } from './mock'
 import { i18n_t, } from 'src/output/index.js'
@@ -23,7 +23,7 @@ export function useGetOrderList () {
   const columns = ref([
     {
       name: 'sn',
-      label: i18n_t("bet_record.number"),
+      label: computed(()=>{ return i18n_t("bet_record.number")}),
       align: 'center',
       field: 'sn',
       headerStyle: 'width: 18px',
@@ -33,32 +33,36 @@ export function useGetOrderList () {
     {
       name: 'datails',
       align: 'left',
-      label: i18n_t("ouzhou.record.datails"),
+      label: computed(()=>{ return i18n_t("ouzhou.record.datails")}),
       field: 'datails',
       sortable: true
     },
     {
       name: 'bettingType',
-      label: i18n_t("bet_record.betting_play"),
+      label: computed(()=>{ return i18n_t("bet_record.betting_play")}),
       align: 'left',
       field: 'bettingType'
     },
-    { name: 'detail', label: i18n_t("bet_record.options"), align: 'left', field: 'detail' },
+    { name: 'detail', 
+      label: computed(()=>{ return i18n_t("bet_record.options")}) , 
+      align: 'left', 
+      field: 'detail' 
+    },
     {
       name: 'totalStake',
-      label: i18n_t("bet_record.bets_forehead"),
+      label: computed(()=>{ return i18n_t("bet_record.bets_forehead")}),
       align: 'left',
       field: 'totalStake'
     },
     {
       name: 'highestWin',
-      label: i18n_t("common.maxn_amount_val"),
+      label: computed(()=>{ return i18n_t("common.maxn_amount_val")}),
       align: 'left',
       field: 'highestWin'
     },
     {
       name: 'status',
-      label: i18n_t("bet_record.status"),
+      label: computed(()=>{ return i18n_t("bet_record.status")}),
       align: 'left',
       field: 'status'
       // sortable: true,
