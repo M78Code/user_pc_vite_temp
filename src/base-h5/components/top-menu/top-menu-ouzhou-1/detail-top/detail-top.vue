@@ -2,13 +2,13 @@
   <div class="component detail-top-info detail-top">
     <div class="sport-info" @click="toHome">
       <span>{{ getCsna }}</span>
-      <img class="bakc-icon" src="../img/back.png" alt="" />
+      <img class="bakc-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
     </div>
     <div class="detail-select" v-if="drop_down_list.length||true">
       <div class="detail-select-nav">
         <q-btn class="label">
           <span class="btn-label">{{ leagueName||refLeagueName }}</span>
-          <img v-if="drop_down_list.length" class="down-icon" :class="[{ 'up-icon': show_list }]" src="../img/top-down.png" alt="" />
+          <img v-if="drop_down_list.length" class="down-icon" :class="[{ 'up-icon': show_list }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/top-down.png`" alt="" />
           <q-menu class="detail-top-pop">
             <div class="detail-top-pop-content" ref="detail_top_pop">
               <div class="match_detail_top_list">
@@ -26,7 +26,7 @@
 
     </div>
     <div class="refresh" @click.capture>
-      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""  @touchend="refreshAll"
+      <img ref="refresh_icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/refresh.png`" alt="" srcset=""  @touchend="refreshAll"
        :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']" />
     </div>
   </div>
@@ -48,6 +48,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import DetailTopMsOptions from "./detail-top-ms-options.vue";
 import NavbarSubscribe from "./nav-bar-subscribe";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 const route = useRoute()
 const router = useRouter();
 const refresh_is_active = ref(false);

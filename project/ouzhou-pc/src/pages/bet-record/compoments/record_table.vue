@@ -273,7 +273,7 @@ const props = defineProps({
     default: ''
   },
   timeType: {
-    type: String,
+    type: [ String, Number ],
     default: ''
   }
 })

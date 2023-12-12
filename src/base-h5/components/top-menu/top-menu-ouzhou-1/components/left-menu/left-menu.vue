@@ -10,7 +10,7 @@
     <q-list>
       <q-item-label header class="q-list-content">
         <!-- Esports---VR Sports 电竞  VR-->
-        <template v-if="sportsGenre.length">
+        <template v-if="MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(300)||MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(2000)">
           <div class="sports-genre">
             <template v-for="(item, index) in sportsGenre" :key="index">
               <div v-if="MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(+item.mi)" class="item" :class="[

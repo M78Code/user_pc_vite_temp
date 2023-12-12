@@ -25,10 +25,10 @@
             <span>{{ score_list[item.value_key].away }}</span>
           </div>
           <div class="detail-slider-line"  v-if="score_list[item.value_key]">
-            <q-slider readonly reverse :model-value="score_list[item.value_key].percentage" :min="0" :max="120" track-size="5px" color="amber-7"
-              :thumb-size="0" style="margin-right:6px" />
-            <q-slider readonly :model-value="score_list[item.value_key].away_percentage" :min="0" :max="120" track-size="5px" color="indigo-12"
-              :thumb-size="0" />
+            <q-slider readonly reverse v-model:value="score_list[item.value_key].percentage" :min="0" :max="120" track-size="5px" color="amber-7"
+              :thumb-size="'0'" style="margin-right:6px" />
+            <q-slider readonly v-model:value="score_list[item.value_key].away_percentage" :min="0" :max="120" track-size="5px" color="indigo-12"
+              :thumb-size="'0'" />
           </div>
         </div>
         <!-- 犯规条 篮球赛事才有 -->
@@ -47,11 +47,11 @@
             <div class="home-stop stop">
               <span class="dot dot-h" v-for="item in  5" :key="item"></span>
             </div>
-            <div class="slider-main">
-              <q-slider readonly reverse :model-value="score_list['S111']['home']+'%'" :min="0" :max="50" track-size="5px" color="amber-7"
-                :thumb-size="0" style="margin-right:6px" />
-              <q-slider readonly :model-value="score_list['S111']['away']+'%'" :min="0" :max="50" track-size="5px" color="indigo-12"
-                :thumb-size="0" />
+            <div class="slider-main">{{score_list['S111']['home']}}
+              <q-slider readonly reverse v-model:value="score_list['S111']['home']" :min="0" :max="50" track-size="5px" color="amber-7"
+                :thumb-size="'0'" style="margin-right:6px" />
+              <q-slider readonly v-model:value="score_list['S111']['away']" :min="0" :max="50" track-size="5px" color="indigo-12"
+                :thumb-size="'0'" />
             </div>
             <div class="home-stop stop">
               <span class="dot dot-h-r" v-for="item in  5" :key="item"></span>

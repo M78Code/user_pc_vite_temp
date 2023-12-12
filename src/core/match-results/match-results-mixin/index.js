@@ -16,7 +16,6 @@ export default {
       i18n_t,
       timer: null,
       show_loading: false,
-      lang : UserCtr.lang,
       snoke_score_data:{
         // 第一局比分
         // 第...局比分
@@ -111,6 +110,9 @@ export default {
     cur_row() {
       return lodash.findIndex(this.results_order_list, item =>item.playId==this.play_id);
     },
+    lang() {
+      return UserCtr.lang;
+    },
   },
   watch: {
     cur_row: {
@@ -127,7 +129,7 @@ export default {
     },
     load_data_state:{
       handler(val){
-        this.$refs.scrollArea.setScrollPosition('vertical', 10)
+        this.$refs.scrollArea.setScrollPosition('vertical', 1)
       }
     }
   },

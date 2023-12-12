@@ -173,15 +173,6 @@ const ipt_change = () => {
     emit("ipt_search", [input_val.value, Number(is_hot.value)]);
   }, 500);
 };
-// const showFc = () =>{
-//   isShow.value = true;
-//   menu.value = "all";
-//   props.list.forEach(item => {
-//       if (!active_tournament.value.includes(item.id)) {
-//         active_tournament.value.push(item.id);
-//       }
-//     });
-// }
 /**
  * @description: 全选
  * @param {}
@@ -427,12 +418,12 @@ watch(
   },
   { immediate: true, deep: true }
 );
-watch(props.sport_id, res => {
+watch(()=>props.sport_id, (res) => {
   is_select.value = false;
   menu.value = "all";
   input_val.value = i18n_t("select.all"); //全部
 });
-watch(props.cancel, res => {
+watch(()=>props.cancel, (res) => {
   isShow.value = false;
 });
 
