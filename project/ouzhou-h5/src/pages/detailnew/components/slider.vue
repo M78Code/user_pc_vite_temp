@@ -20,9 +20,10 @@
       width: {
           type: Number,
           default: 200
-      }
+      },
   })
-  
+  /** 回传进度小数 */
+  const emits = defineEmits(['change'])
   /** @type {import('vue').Ref<HTMLElement|null>} */
   const start = ref(null); // 移动节点
   /** @type {import('vue').Ref<HTMLElement|null>} */
@@ -40,7 +41,7 @@
   
   const volumn = computed(() => left.value / slider_size.value.width);
   
-  const start_percentage = computed(() => start_size.value.width / slider_size.value.width)
+  const start_percentage = computed(() => start_size.value.width / slider_size.value.width / 2)
   
   watch(volumn, (value) => {
       console.log(value, "value");
@@ -87,6 +88,7 @@
   }
   
   const handle_end = () => {
+      emits('change', volumn.value)
       is_start.value = false;
   }
   
@@ -111,7 +113,7 @@
     width: 200px;
     height: 10px;
     border-radius: 10px;
-    background-color: red;
+    background-color: #e7e9e27e;
     position: relative;
   }
   .start {
@@ -119,14 +121,15 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #fff;
+    background: #E7E9E2;
     top: -5px;
     z-index: 999;
   }
   
   .progress {
-      background: #ECECEC;
+      background: #E7E9E2;
       height: 100%;
+      border-radius: 10px;
   }
   </style>
   
