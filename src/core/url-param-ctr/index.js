@@ -264,7 +264,7 @@ const watch_route_fun = (to, from)=>{
       hash = hash.substring(0,hash.indexOf('?'));
       document.location.hash=hash;
     }
-    window.history.replaceState('', '', get_url_no_param());
+    window.history.replaceState(window.history.state, '', get_url_no_param());
   }, 200);
 }
 

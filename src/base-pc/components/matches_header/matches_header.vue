@@ -4,7 +4,7 @@
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
 			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect) ? 'matches_outrights' : '']">
-				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ $t(matches_header_title) }}</div>
+				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ is_left_sports ?  matches_header_title : i18n_t(matches_header_title) }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
 				<div v-else class="matches_tab" >
 					<template v-if="tab_list.length">
@@ -59,6 +59,8 @@ const match_list_top = ref('80px')
 const show_leagues = ref (false)
 // 是否选中联赛时间
 const active_time = ref(24)
+
+const is_left_sports = ref(false)
 
 const matches_header_title = ref("ouzhou.match.matches");
 
@@ -144,6 +146,7 @@ const set_active_time = (item) => {
 // 设置 头部信息配置
 const set_tab_list = (news_) =>{
 	tab_list.value = []
+	is_left_sports.value = false
 	// 首页
 	if(news_ == 0 || news_ == 500){
 		tab_list.value =  lodash_.get( ref_data.ouzhou_filter_config,'home_tab', [])
@@ -174,6 +177,7 @@ const set_tab_list = (news_) =>{
 		// 	tab_list.value = sport_tab
 		// }
 		if(!MenuData.is_collect){
+			is_left_sports.value = true
 			// 设置赛种名称
 			matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 		}
