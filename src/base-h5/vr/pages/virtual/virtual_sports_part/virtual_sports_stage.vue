@@ -136,7 +136,7 @@
           </div>
         </div>
         <!-- 下一轮的时间 -->
-        <div class="mmp-status row justify-center items-center" v-show="next_batch_title || next_match_time">
+        <div class="mmp-status row justify-end items-center" v-show="next_batch_title || next_match_time">
           <div class="inner">
             <div class="stage">{{next_batch_title}}</div>
             <div class="times">{{next_match_time}}</div>
@@ -1037,16 +1037,17 @@ export default {
 }
 
 .mmp-status {
-  margin-top: 0.15rem;
+  margin-top: 0.4rem;
+  margin-right: 0.12rem;
 
   .inner {
     display: flex;
     align-items: center;
     padding: 0 0.05rem 0 0.1rem;
-    height: 0.3rem;
+    height: 0.24rem;
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
-    border-radius: 0.15rem;
+    border-radius: 0.08rem;
 
     .icon {
       width: 0.22rem;
@@ -1067,8 +1068,8 @@ export default {
 
 .times {
 
-  font-size: 0.16rem;
-  color: var(--q-color-fs-color-50);
+  font-size: 0.1rem;
+  color: #FEBE55;
   text-align: center;
   padding-left: 0.06rem;
 }

@@ -17,44 +17,47 @@
     </div>
     <div class="virtual-content-wrapper">
       <div class="virtual-sports-card">
-      <div class="tab-title" @click.stop="expend_video = !expend_video">
-        <div class="league-name right-border">{{ lengue_name }}</div>
-        <div class="status">
-          <span class="num">第10轮</span>
-          <span class="state">比赛中</span>
-          <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
-        </div>
-      </div>
-      <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
-          <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
-      <virtual-sports-stage ref="virtual_sports_stage"
-        :is_before_destroy="is_before_destroy"
-        :key="current_match.mid"
-        :m_status="current_match.match_status"
-        :virtual_match_list="match_list_by_no"
-        :current_match="current_match" source='list'
-        :is_video_playing="is_video_playing"
-        :v_match_router_ente="v_match_router_ente"
-        :virtual_result_rank_data="virtual_result_rank_data"
-        @basketball_end="basketball_end_handle"
-        @time_ended="timer_ended_handle"
-        @update_next_batch_match="update_n_batch_handle">
-      </virtual-sports-stage>
-      <div class="test-line" v-if="show_debug">
-        {{current_match.mid}}
-      </div>
-      <div class="virtual-video-play-team">
-              <div class="vsm-options" v-for="(item, index) in match_list_by_no" :key="index">
-                <div class="teams">
-                  <span>{{item.teams[0]}}</span>
-                  <span>0</span>
-                </div>
-                <div class="teams">
-                  <span>{{item.teams[1]}}</span>
-                  <span>0</span>
-                </div>
-              </div>
+        <div class="tab-title" @click.stop="expend_video = !expend_video">
+          <div class="league-name right-border">{{ lengue_name }}</div>
+          <div class="status">
+            <span class="num">{{current_match.no}}</span>
+            <span class="state">比赛中</span>
+            <icon-wapper class="icon" :class="[!expend_video && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
+        </div>
+        <div v-show="expend_video">
+          <!--选中的赛事阶段组件包含赛前倒计时,赛中视频,完赛等状态-->
+          <!--此组件:key去除后有问题, 赛事倒计时时钟颜色红黄错乱-->
+          <virtual-sports-stage ref="virtual_sports_stage"
+            :is_before_destroy="is_before_destroy"
+            :key="current_match.mid"
+            :m_status="current_match.match_status"
+            :virtual_match_list="match_list_by_no"
+            :current_match="current_match" source='list'
+            :is_video_playing="is_video_playing"
+            :v_match_router_ente="v_match_router_ente"
+            :virtual_result_rank_data="virtual_result_rank_data"
+            @basketball_end="basketball_end_handle"
+            @time_ended="timer_ended_handle"
+            @update_next_batch_match="update_n_batch_handle">
+          </virtual-sports-stage>
+          <div class="test-line" v-if="show_debug">
+            {{current_match.mid}}
+          </div>
+          <div class="virtual-video-play-team">
+                  <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
+                  v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
+                    <div class="teams">
+                      <span>{{item.teams[0]}}</span>
+                      <span>{{item.home || 0}}</span>
+                    </div>
+                    <div class="teams">
+                      <span>{{item.teams[1]}}</span>
+                      <span>{{item.away || 0}}</span>
+                    </div>
+                  </div>
+          </div>
+        </div>
       </div>
       <div class="virtual-sports-card" v-for="(match_item_batch, i) in match_list_all_batches" :key="i">
         <div class="tab-title tab-border" @click.stop="expend_match(match_item_batch)">
