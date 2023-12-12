@@ -13,7 +13,7 @@
             </div>
             <!-- <ListFilter current_mi="1001"/> -->
         </div>
-        <div class="test-info-wrap" v-if="GlobalAccessConfig.other.wsl || 1">
+        <div class="test-info-wrap" v-if="GlobalAccessConfig.get_wsl()">
             <div>{{ MenuData.mid_menu_result.match_tpl_number }}</div>
             <!-- 临时调试 -->
             <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>

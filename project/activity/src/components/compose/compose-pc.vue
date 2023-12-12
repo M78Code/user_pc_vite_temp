@@ -360,9 +360,8 @@ import Alert from "project/activity/src/components/public_alert/public_alert.vue
 import {
   useMittOn,
   useMittEmit,
-  useMittEmitterGenerator,
-  MITT_TYPES,
-} from "project/activity/src/core/index.js";
+  LOCAL_COMMON_FILE_PREFIX,
+  MITT_TYPES} from "project/activity/src/core/index.js";
 // 生成随机数
 const random = function (minNum, maxNum) {
   return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
@@ -382,6 +381,7 @@ export default {
   },
   data() {
     return {
+      LOCAL_COMMON_FILE_PREFIX:LOCAL_COMMON_FILE_PREFIX,
       currentSynthConfig: {}, // 合成页--当前选中的奖券配置
       synthSucc: {}, // 合成奖券后返回的配置
       luckyTicket: 0, // 幸运奖券数量
