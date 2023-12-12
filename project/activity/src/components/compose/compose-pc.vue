@@ -406,19 +406,19 @@ export default {
         1: {
           type: 1,
           name: "白银奖券",
-          img: "/activity/yazhou-pc/activity_imgs/imgs/slot_machine/silver_card.png",
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/silver_card.png`,
           key: "silver",
         },
         2: {
           type: 2,
           name: "黄金奖券",
-          img: "/activity/yazhou-pc/activity_imgs/imgs/slot_machine/gold_card.png",
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/gold_card.png`,
           key: "gold",
         },
         3: {
           type: 3,
           name: "钻石奖券",
-          img: "/activity/yazhou-pc/activity_imgs/imgs/slot_machine/diamond_card.png",
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/slot_machine/diamond_card.png`,
           key: "diamond",
         },
       },
