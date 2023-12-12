@@ -22,11 +22,12 @@
       ></div>
     </div>
     <!-- 老虎机停止时的音效 -->
-    <audio  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/num_scroll_stop.mp3`" ref="num_scroll_stop"></audio>
+    <audio  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/media/num_scroll_stop.mp3`" ref="num_scroll_stop"></audio>
   </div>
 </template>
 
 <script>
+import { LOCAL_COMMON_FILE_PREFIX} from "project_path/src/core/index.js";
 export default {
   props:{
     // 老虎机配置
@@ -73,6 +74,7 @@ export default {
     return {
       // 每个数字位置对象
       position_obj,
+      LOCAL_COMMON_FILE_PREFIX: LOCAL_COMMON_FILE_PREFIX
     }
   },
   watch:{
@@ -383,7 +385,7 @@ export default {
   //     @if $number == 10 {
   //       background-image: var(--qq--color-com-img-bg-166);
   //     } @else {
-  //       background-image: url('~public/activity/yazhou-h5/activity/slot_machine/numbers/#{$number}.png');
+  //       background-image: url($SCSSPROJECTPATH+'/yazhou-h5/activity/slot_machine/numbers/#{$number}.png');
   //     }
   //   }
   // }

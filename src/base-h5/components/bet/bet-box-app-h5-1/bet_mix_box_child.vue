@@ -140,9 +140,13 @@
                   <span class="yb-info-money">
                     <!-- {{ i18n_t('app_h5.bet.bet_win').replace("%s", "0.00") }} -->
                   <span>{{i18n_t('bet.total_win2')}}</span>
-                  <span>
-                        {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,BetData.bet_single_list?.[0]?.oddFinally), BetData.bet_amount)) || '0.00' }}
-                  </span>
+                  <span v-if="[1].includes(BetData.bet_single_list[0].playId*1)">
+                    {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,BetData.bet_single_list[0].oddFinally), BetData.bet_amount)) || '0.00' }}
+                </span>
+                <span  v-else>
+                    {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,BetData.bet_single_list[0].oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }}
+                </span>
+
                   </span>
                 </div>
                 <div class="roll-right"><img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""></div>
@@ -204,7 +208,7 @@ import betCollusionInput from './bet-collusion-input.vue'
 import mathJs from 'src/core/bet/common/mathjs.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path,formatMoney } from "src/output/index.js";
+import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path,formatMoney,UserCtr } from "src/output/index.js";
 import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
 import { get_query_bet_amount_common, submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
@@ -246,6 +250,13 @@ const hide_bet_series_but = () => {
   }
   return res;
 }
+
+  // 单关 串关切换
+  const set_is_bet_single = (type) =>{
+    console.log(type,"-----type")
+    BetData.set_is_bet_single()
+    useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, type);
+  }
 
 // 投注成功，最高可赢 滚动条需下拉到底
 const update_scroll_top = () => {

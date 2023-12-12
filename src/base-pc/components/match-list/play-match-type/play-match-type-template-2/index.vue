@@ -7,7 +7,8 @@
         :sport_id="MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-image" size="18" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
       
-      <span>{{ BaseData.menus_i18n_map[Number(MenuData.current_ball_type) + 100] }}</span>
+      <span v-if="MenuData.is_esports()">{{ BaseData.menus_i18n_map[Number(MenuData.current_ball_type)] }}</span>
+      <span v-else>{{ BaseData.menus_i18n_map[Number(MenuData.current_ball_type) + 100] }}</span>
       <!-- 赛事数量 -->
     </div>
     <div class="left-box" v-else>

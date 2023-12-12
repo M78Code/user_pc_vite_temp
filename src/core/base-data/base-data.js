@@ -9,6 +9,7 @@ import { i18n_t, i18n } from "src/boot/i18n.js";
 import { dianjing_sublist } from "src/output/module/constant-utils.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import BaseWsMessage from "./base-ws-message"
+
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 //   约定 四个 值
@@ -19,7 +20,7 @@ const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 // 30000  虚拟赛事 VR
 
 //  1001  1004
-import userCtr from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash_, { reject } from "lodash";
 
 import { api_base_data, api_common } from "src/api/index.js";
@@ -205,8 +206,13 @@ class BaseData {
   }
   // 菜单数量变化
   set_base_c301_change(list = []) {
-    list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
+    let list_obj = {}
+    list.forEach(item => {
+      item.mi = this.base_menu_id_togger()[item.menuId]
+      list_obj[item.mi] = item.count
+    })
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
+    this.set_left_menu_init(this.mew_menu_list_res,list_obj,'ws')
   }
   /**
    * @description 获取所有的元数据
@@ -344,7 +350,7 @@ class BaseData {
     // console.warn("init_user_info",res.data)
     // let user_info = lodash_.get(res,'data.data',{})
     // let user_info = lodash_.get(res,'data.data',{})
-    let user_info = userCtr.get_user_info_data()
+    let user_info = UserCtr.get_user_info_data()
     if (user_info && Object.keys(user_info).length) {
       // let old_user = JSON.stringify(store.getters.get_user)
       // let new_user = JSON.stringify(user_info)
@@ -524,7 +530,7 @@ class BaseData {
   /**
    * 计算 左侧菜单数据
    */
-  set_left_menu_init(menu_info) {
+  set_left_menu_init(menu_info,list_obj={},from) {
     // 有数据才去对比 替换
     if (menu_info.length) {
       const left_menu = [],
@@ -539,12 +545,17 @@ class BaseData {
           if (!this.filterSport_arr.includes(item.mi)) {
             left_menu.push(Number(item.mi));
             // 计算菜单数量列表
-            if(item.sl){
-              let total = item.sl.reduce((cur,obj)=> {
-                return cur + Number(obj.ct)
-              },0)
-             item.ct = total
+            if(from == 'ws'){
+              item.ct = lodash_.get(list_obj,`${item.mi}`,item.ct) 
+            }else{
+              if(item.sl){
+                let total = item.sl.reduce((cur,obj)=> {
+                  return cur + Number(obj.ct)
+                },0)
+               item.ct = total
+              }
             }
+            
             left_menu_mi.push(item)
           }
         }
@@ -558,6 +569,31 @@ class BaseData {
           esport_menu.push(obj);
         }
       });
+      // openElectronicTy 电子体育 openElectronicFootball 电子足球 openElectronicBasketball 电子篮球  filterSport 关闭的赛种
+      let {openElectronicTy,openElectronicFootball,openElectronicBasketball,filterSport} = lodash_.get(UserCtr,'user_info',{})
+      let filter_list = []
+      // 电子体育 优选级 高于其他两个
+      if(openElectronicTy){
+        // 电子体育关 所有都关
+        // 电子足球开 赛种都关闭 电子足球也关 
+        if(openElectronicFootball){
+          if( filterSport.includes('-1') && filterSport.includes('-2') && filterSport.includes('-3') ){
+            filter_list.push(90) 
+          }
+        }
+        // 篮球同上
+        if(openElectronicBasketball){
+          if( filterSport.includes('-4')){
+            filter_list.push(91) 
+          }
+        }
+      }else{
+        filter_list = [90,91]
+      }
+
+     
+      let left_menu_list = []
+      
       /**
        *  一期只有足球篮球  暂定
        *  重置默认数据
@@ -571,11 +607,20 @@ class BaseData {
             list_mi_lsit.push(item)
           }
         })
-        this.left_menu_base_mi = list_mi_lsit;
+        left_menu_list = list_mi_lsit
       }else{
         this.left_menu_base_mi_arr = left_menu ; 
-        this.left_menu_base_mi = left_menu_mi;
+        left_menu_list = left_menu_mi;
       }
+
+      // 赛种筛选
+      left_menu_list.filter(item => {
+        if(filter_list.includes(item.mi * 1)){
+          item.ct = 0
+        }
+      })
+
+      this.left_menu_base_mi = left_menu_list;
 
       this.sports_mi = sports_mi;
 

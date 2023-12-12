@@ -13,7 +13,7 @@
                         <span class="select-text">{{
                             i18n_t(store.curSelectedOption.label)   
                         }}</span>
-                        <span class="down_arrow"></span>
+                        <span :class="['down_arrow', store.tabModel && 'down_arrow_active']"></span>
                     </div>
                     <template v-if="store.tabModel && store.tabActive == 'League'">
                         <ul class="option-list" :style="DateOptionsOffset">
@@ -100,7 +100,6 @@ const DateOptionsOffset = computed(() => {
     if (exceed < 0) { // 超出
         result = offset + exceed
     }
-    console.log('DateOptionsOffsetDateOptionsOffsetDateOptionsOffsetDateOptionsOffset', offset)
     return {
         'left': result + 'px'
     }
@@ -218,7 +217,7 @@ onMounted(async () => {
     const session_info = LocalStorage.get(menu_h5);
     setDefaultData(session_info?.menu_mi || MenuData.menu_mi.value || '101',1);//默认足球
     store.curSelectedOption = store.selectOptions[0]
-    week.value = await getDateList();
+    // week.value = await getDateList();
     emitters.value = {
         emitters_1: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
     }
@@ -301,6 +300,10 @@ const areaListChange = (item) => {
 
             .down_arrow {
                 position: relative;
+            }
+
+            .down_arrow_active {
+                transform: rotate(180deg);
             }
 
             .down_arrow::after {

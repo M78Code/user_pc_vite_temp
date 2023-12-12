@@ -396,7 +396,10 @@ const submit_handle = type => {
     submit_btn = true
     if(BetData.is_bet_single){
         let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
-        if(ol_obj.ol_os != 1){
+        // 投注项状态 1：开 2：封 3：关 4：锁
+        // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+        // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+        if(ol_obj.ol_os != 1 || ol_obj.hl_hs != 0 || ol_obj.mid_mhs != 0){
             set_submit_btn()
             return set_error_message_config({code:"0402001"},'bet')
         }
@@ -741,8 +744,8 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
-        hl_os: hl_obj.hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
-        mid_os: mid_obj.ms, // 赛事状态 0:未开赛 1:赛事进行中  2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
+        hl_hs: hl_obj.hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+        mid_mhs: mid_obj.mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
@@ -1041,7 +1044,7 @@ const   go_to_bet=(ol_item)=>{
       _mid,  //赛事id mid_obj
     }
     let other = {
-      is_detail: false,
+      is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
       // 根据赛事纬度判断当前赛事属于 那种投注类型
       bet_type: 'common_bet',

@@ -47,7 +47,7 @@
          srcset="">
         </div>
       </div>
-      <div class="setting-item">
+      <div class="setting-item" @click="jump_webpage">
         <div class="title">前往旧版</div>
         <div class="goto-website">前往网页版</div>
       </div>
@@ -59,7 +59,7 @@
 </template>
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES,SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { useMittEmit, MITT_TYPES,SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name } from "src/output/index.js";
 import {ref,computed,nextTick} from "vue";
 import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
@@ -71,9 +71,22 @@ defineOptions({
 
 const router = useRouter();
 
+/**
+ * @description 跳转至盘口教程
+ * @param 
+ * @return 
+ */
 const jumpHandle = () => {
-  router.push({ name: "handicapTutorial" }); // 此处跳转至盘口教程
+  router.push({ name: "handicapTutorial" }); // 
   closedHandle();
+};
+/**
+ * @description 跳转网页版
+ * @param 
+ * @return 
+ */
+const jump_webpage = () => {
+  console.log('跳转网页版')
 };
 
 defineProps({});
@@ -167,12 +180,15 @@ const version_handle = item => {
   const status = item.switchValue === "rightVal" ? 2 : 1;
   UserCtr.set_standard_edition(status);
   useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);
-  MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
   // 新手版
   if (status === 1) {
-    nextTick(() => {
-      useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
-    })
+    if (project_name === 'app-h5') {
+      nextTick(() => {
+        useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+      })
+    }
+  } else {
+    MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
   }
 };
 /**

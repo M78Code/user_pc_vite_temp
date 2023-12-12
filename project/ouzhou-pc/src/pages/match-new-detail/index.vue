@@ -497,4 +497,20 @@ export default {
   cursor: pointer;
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
+
+
+// 这里添加的css为了修复Bug：49115 【UAT】【欧洲版二期】【PC】足篮赛事详情页顶部栏赛事开赛时间/赛事进行时间偏上没有居中展示
+.leagal-time {
+  padding: 4px 10px 2px 10px !important;
+}
+.leagal-time :deep(.date-wrap) {
+  padding: 0 0 0 5px !important;
+  .timer-layout2 {
+    padding: 0 0 0 0 !important;
+  }
+  .timer-layout0 {
+    padding: 0 0 0 0 !important;
+  }
+}
+
 </style>

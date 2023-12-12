@@ -99,7 +99,6 @@ class MatchMeta {
     // 获取真实数据
     this.http_params.md = md
 
-
     // 是否需要开赛、未开赛归类
     is_match && this.get_target_match_data({ md })
 
@@ -190,7 +189,6 @@ class MatchMeta {
       const csna = BaseData?.menus_i18n_map[`${100 + Number(match.csid)}`]
       // 联赛名称
       const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
-      // 球种名称
       // 赛事其他操作
       this.match_assistance_operations(target, index)
       return { ...target, tn, csna, is_meta: true }
@@ -270,7 +268,7 @@ class MatchMeta {
    */
   set_match_default_properties(match, index, mids) {
     // 是否展示联赛标题
-    const is_show_league = MatchUtils.get_match_is_show_league(index, mids)
+    const is_show_league = MatchUtils.get_origin_match_is_show_league(index, mids)
     const is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
     // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
     const handicap_index = MatchUtils.get_handicap_index_by(match);
@@ -877,12 +875,13 @@ class MatchMeta {
     MatchFold.clear_fold_info()
     target_list.forEach((t, i) => {
       Object.assign(t, {
-        is_show_league: i === 0 ? true : target_list[i].tid !== target_list[i - 1].tid
+        is_show_league: MatchUtils.get_match_is_show_league(i, target_list)
       })
       this.match_assistance_operations(t, i)
     })
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
+    this.set_page_match_empty_status({ state: false }); 
   }
 
   /**
@@ -938,7 +937,7 @@ class MatchMeta {
       
       Object.assign(match, params, {
         is_show_ball_title,
-        is_show_league: index === 0 ? true : target_data[index].tid !== target_data[index - 1].tid
+        is_show_league: MatchUtils.get_match_is_show_league(index, target_data)
       })
       //  赛事操作
       this.match_assistance_operations(match, index)

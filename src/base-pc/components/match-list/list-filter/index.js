@@ -33,13 +33,21 @@ const ref_data = reactive({
 //         resolve_mew_menu_res();
 // })
 
-onUnmounted(()=>{
+// onUnmounted(()=>{
+//     clearInterval(ref_data.time_out_1)
+//     clearInterval(ref_data.time_out_)
+
+//     ref_data.time_out_ = null
+//     ref_data.time_out_1 = null
+// })
+
+function un_mounted() {
     clearInterval(ref_data.time_out_1)
     clearInterval(ref_data.time_out_)
 
     ref_data.time_out_ = null
     ref_data.time_out_1 = null
-})
+}
 
 /**
  *全部 数量计算 滚球
@@ -215,6 +223,7 @@ function compute_quanbu_euid() {
 
 // 收藏切换获取最新的赛种数量数据
 async function  get_menu_of_favorite_count(list,type) {
+    return list
     let euid_list = ''
     // 获取对应的旧菜单id    
     list.forEach(item =>{
@@ -244,39 +253,39 @@ async function  get_menu_of_favorite_count(list,type) {
         cuid: UserCtr.get_cuid(),
     }
     try{
-        const { code,data } = await api_common.get_collect_menu_count_pc(parmas)
-        ref_data.time_count = 0
-        if(code == 200){
-            let collect_list = data || []
+        // const { code,data } = await api_common.get_collect_menu_count_pc(parmas)
+        // ref_data.time_count = 0
+        // if(code == 200){
+        //     let collect_list = data || []
            
-            list = list.map(item=>{
-                item.ct = 0
-                collect_list.forEach(obj=>{
-                    if(obj.sportId){
-                        if(type == 400){
-                            if(item.mi == (type + obj.sportId*1)){
-                                item.ct = obj.count
-                            }
-                        }else{
-                            if(item.mi == (100 + obj.sportId*1)+''+type){
-                                item.ct = obj.count
-                            }
-                        }
-                    }
-                })
-                return item
-            })
-        }
-        mi_100_arr.value = list
+        //     list = list.map(item=>{
+        //         item.ct = 0
+        //         collect_list.forEach(obj=>{
+        //             if(obj.sportId){
+        //                 if(type == 400){
+        //                     if(item.mi == (type + obj.sportId*1)){
+        //                         item.ct = obj.count
+        //                     }
+        //                 }else{
+        //                     if(item.mi == (100 + obj.sportId*1)+''+type){
+        //                         item.ct = obj.count
+        //                     }
+        //                 }
+        //             }
+        //         })
+        //         return item
+        //     })
+        // }
+        // mi_100_arr.value = list
 
-        ref_data.time_out_ = setInterval(()=>{
-            if(MenuData.is_collect){
-                get_menu_of_favorite_count(ref_data.time_list,ref_data.time_type)
-            }else{
-                clearInterval(ref_data.time_out_)
-            }
+        // ref_data.time_out_ = setInterval(()=>{
+        //     if(MenuData.is_collect){
+        //         get_menu_of_favorite_count(ref_data.time_list,ref_data.time_type)
+        //     }else{
+        //         clearInterval(ref_data.time_out_)
+        //     }
             
-        },5000)
+        // },5000)
        
         return list
     } catch(error){
@@ -406,5 +415,6 @@ export {
     resolve_mew_menu_res,
     compute_quanbu_num_mi_1,
     handle_click_menu_mi_400, handle_click_menu_mi_1, compute_mi_400_sl_mi_csid, compute_quanbu_num_mi_400,
-    get_ouzhou_leagues_data
+    get_ouzhou_leagues_data,
+    un_mounted
 }
