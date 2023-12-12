@@ -44,7 +44,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
-import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/output/index.js"
+import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t, } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
@@ -206,7 +206,7 @@ const set_tab_list = (news_) =>{
 
 	// 电竞
 	if (MenuData.is_esports()) {
-		matches_header_title.value = '电子竞技'
+		matches_header_title.value = 'common.e_sports'
 		match_list_top.value = '134px'
 		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'esports', [])  
 		tab_list.value = ouzhou_filter_config
@@ -231,6 +231,7 @@ const set_tab_list = (news_) =>{
 watch(BaseData.base_data_version,()=>{
 	//元数据变化后 需要改变球种的ii8n 翻译是i18n来的
 	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
+		is_left_sports.value = true
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
 })
