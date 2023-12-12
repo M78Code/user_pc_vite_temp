@@ -467,6 +467,24 @@ export default {
       height: 5px;
       width: 100%;
     }
+    .match-content{
+      border-radius: 0 0 8px 8px;
+      &.collapsed{
+        border-top: none;
+      }
+    }
+    &.collapsed{
+      > .match-indent{
+        border-radius: 8px !important;
+        border-bottom: 1px solid #fff !important;
+        border: 1px solid #fff;
+      }
+    }
+    > .match-indent{
+      border: 1px solid #fff;
+      border-radius: 8px 8px 0 0 !important;
+      border-bottom: 1px solid #E4E6ED !important;
+    }
   }
 
   .favorite-icon-top {
@@ -754,7 +772,7 @@ export default {
   /* **************联赛展示********************** -S*/
   .league {
     height: 0.26rem;
-    border-radius: 0;
+    border-radius: .08rem .08rem 0 0;
 
     .league-t-wrap {
       width: 100%;
