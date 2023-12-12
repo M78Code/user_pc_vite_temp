@@ -100,7 +100,7 @@
   // };
 
   const update_time = async (time) => {
-    if(MenuData.is_left_today() || MenuData.is_left_zaopan() ){
+    if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_esports()){
       let arr = [{label:'',name: i18n_t('ouzhou.match.today'),type:2}]
       // 电子赛事 没有早盘日期
       if(!MenuData.is_electron_match()){
