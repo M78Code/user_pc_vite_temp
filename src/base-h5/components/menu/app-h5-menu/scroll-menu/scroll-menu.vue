@@ -68,6 +68,7 @@ const emits = defineEmits(['changeList'])
  * 二级菜单事件
 */
 function set_menu_lv2(item = {},event) {
+  if (props.current_mi === item.mi) return
   // if (item.mi === 2000) router.push('/esports')
   event = event || scrollTab.value[0];
   // 选中后点击无效
@@ -75,8 +76,8 @@ function set_menu_lv2(item = {},event) {
   scrollMenuEvent(event,".s-menu-container",".current");
   emits('changeMenu',item)
   nextTick(()=>{
-  // 设置菜单点击事件
-  useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
+    // 设置菜单点击事件
+    useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
   })
 }
 /**

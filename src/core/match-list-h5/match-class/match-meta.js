@@ -99,7 +99,6 @@ class MatchMeta {
     // 获取真实数据
     this.http_params.md = md
 
-
     // 是否需要开赛、未开赛归类
     is_match && this.get_target_match_data({ md })
 
