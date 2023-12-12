@@ -31,7 +31,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MenuData,useMittOn,MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from 'vue-router';
-import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
+import { get_ouzhou_leagues_data, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
 
 // route.params.type  1 从联赛列表进入 2 从普通赛事详情进入
 
@@ -86,6 +86,7 @@ const set_active_league = (item) => {
 	router.push(`/league/${route.params.sportId}/${item.id}/${route.params.type}`)
 }
 onUnmounted(()=>{
+	un_mounted()
 	off()
 })
 const getName = () => {

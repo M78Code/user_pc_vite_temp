@@ -48,7 +48,7 @@ import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/output/i
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
-import { resolve_mew_menu_res } from "src/base-pc/components/match-list/list-filter/index.js"
+import { resolve_mew_menu_res, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const tab_list = ref([])
@@ -127,6 +127,7 @@ onMounted(()=>{
 
 onUnmounted(()=>{
 	mitt_list.forEach(item => item());
+	un_mounted()
 })
 
 const set_show_leagues = () => {
