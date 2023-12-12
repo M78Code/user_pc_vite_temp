@@ -7,7 +7,7 @@
 <template>
     <div class="sub-menu-date-w">
         <div class="sport-m-container">
-          <div class="s-menu-container flex">
+          <div class="s-menu-container flex" >
             <template  v-for="(item,index) in scrollDataList" :key="index">
               <!-- 全部 vr 收藏 电竞显示  -->
               <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" >
@@ -44,7 +44,7 @@ const ref_data = reactive({
     emit_lsit:{}
 })
 const router = useRouter()
-const menu_show_id = reactive([0,300,50000,2000]);//全部 vr 收藏 电竞显示
+const menu_show_id = reactive([0,300,50000,2000,28]);//全部 vr 收藏 电竞显示
 const scrollTab = ref(null);
 const props = defineProps({
   // 滑动菜单数据
@@ -63,7 +63,7 @@ const props = defineProps({
   },
 })
 
-const emits = defineEmits(['changeList'])
+const emits = defineEmits(['changeList','changeMenu'])
 /**
  * 二级菜单事件
 */
@@ -174,10 +174,16 @@ onUnmounted(()=>{
           min-width: 0.52rem;
           height: 100%;
           flex-shrink: 0;
+          background-color: var(--q-gb-bg-c-15);
           color: var(--q-gb-t-c-19);
           &.current {
             //color: var(--q-gb-bd-c-2);
             color: var(--q-gb-t-c-20);
+            position: -webkit-sticky;
+            position: sticky;
+            right: 0;
+            left: 0;
+            z-index: 2;
             .inner-w {
               position: relative;
               font-size: 0.1rem;
@@ -208,7 +214,8 @@ onUnmounted(()=>{
                 height: 1px;
                 line-height: 1;
                 position: absolute;
-                right: -0.03rem;
+                // right: -0.03rem;
+                right:0;
                 top: 0;
                 font-size: 0.11rem;
               }

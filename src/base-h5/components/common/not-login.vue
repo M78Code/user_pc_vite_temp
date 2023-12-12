@@ -14,8 +14,6 @@ const get_no_token_image = computed(() => {
 })
 
 onMounted(() => {
-  // 设置 title
-  document.title = '';
 })
 
 </script>

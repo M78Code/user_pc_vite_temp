@@ -1,14 +1,18 @@
 <template>
-  <div class="detail_header_tem2">
-    <div :class="['detail-header-video', right_actions_label == 'score'?'detail-header-156':'detail-header-221']">
-      <iframe v-if="animation_src && right_actions_label == 'animation'"
-        id="replayIframe"
-        :src="animation_src+'&rdm='+iframe_rdm"
-        style="width:100%;height:100%;"
-        allow="autoplay"
-        frameborder="0"
-        scrolling="no"
-      ></iframe>
+  <div class="component detail_header_tem2">
+    <div class="detail-header-video"
+      :class="[right_actions_label == 'score'?'detail-header-156':'']"
+    >
+      <div class="iframe-wrap" v-if="animation_src && right_actions_label == 'animation'">
+        <iframe class="animation"
+          id="replayIframe"
+          :src="animation_src+'&rdm='+iframe_rdm"
+          style="width:100%;height:100%;"
+          allow="autoplay"
+          frameborder="0"
+          scrolling="no"
+        ></iframe>
+      </div>
       <custom_video class="custom-video" :status="status" v-if="right_actions_label == 'video'" :get_detail_data="detail"/>
       <!-- {{ detail }} -->
       <score_component :get_match_detail="detail" 
@@ -64,7 +68,7 @@
     </div>
      -->
     <right_actions @handle-type="handle_type" v-show="right_actions_label != 'score'" :detail="props.get_match_detail"
-                  :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" :class="[right_actions_label == 'score'?'mt-10':'mt-30']"/>
+                  :status="status" :right-actions-label="right_actions_label" :is-collect="is_collect" />
   </div>
 </template>
   
@@ -378,6 +382,14 @@ onMounted(() => {
       width: 100vw;
       height: 140px;
     }
+    .iframe-wrap{
+      position: relative;
+      width: 100%;
+      padding-bottom: 55%;
+      .animation{
+        position: absolute;
+      }
+    }
   }
   .detail-header-score {
     display: flex;
@@ -488,9 +500,9 @@ onMounted(() => {
 }
 
 .mt-30 {
-  margin-top: 30px;
+  padding-top: 30px;
 }
 .mt-10 {
-  margin-top: 10px;
+  padding-top: 10px;
 }
 </style>

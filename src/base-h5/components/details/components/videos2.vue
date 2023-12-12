@@ -85,6 +85,8 @@
         scrolling="no" 
         :src="iframe_src+'&rdm='+iframe_rdm"
         ></iframe>
+        <!-- TODO: 音量控制, 需要iframe通信，暂无方法 -->
+        <slider class="slider-container" v-if="false" @change="change_volumn"/>
         <!-- 视频单页项目精彩回放页面-->
         <iframe
             v-if="is_playing_replay"
@@ -306,7 +308,7 @@ import basketball_match_analysis from "src/base-h5/components/details/analysis-m
 import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
-
+import slider from "src/base-h5/components/details/components/slider/slider.vue"
 export default {
   name: "videos",
   components: {
@@ -316,6 +318,7 @@ export default {
     "basketball-match-analysis": basketball_match_analysis,  //篮球分析
     "tabs": () => import("src/base-pc/components/match-detail/match_info/tabs.vue"),
     "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider-x.vue"),
+    slider: slider
   },
   data() {
     return {
@@ -778,7 +781,9 @@ export default {
       set_bet_list(){},
       set_is_hengping(){},
       set_is_dp_video_full_screen(){},
-
+      change_volumn(volumn) {
+        console.log(volumn,this.$refs.iframe,  "volumn");
+      },
       // 设置iframe标签是否开启
     set_iframe_onload(param) {
       this.get_iframe_onload = param
@@ -2353,5 +2358,12 @@ export default {
   z-index: 99999;
   height: .15rem;
 }
+
 /* ************** 视频全屏的样式 ************** -E */
+.slider-container {
+  position: absolute;
+  bottom: 20px;
+  left: 60px;
+}
+
 </style>

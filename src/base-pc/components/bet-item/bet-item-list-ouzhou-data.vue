@@ -21,10 +21,12 @@
       },
     ]">
       <span class="handicap-more" v-show="ol_data.onbl">{{ ol_data.onbl }}&nbsp;</span>
-      <div class="handicap-value-text" :class="{
-        mvr:score||!['1', '32'].includes(ol_data._hpid)
-      }">{{ score }} <span v-show="!['1', '32'].includes(ol_data._hpid)">{{ ol_data.onb
-      }}</span></div>
+      <div class="handicap-value-text" :class="{ mvr:score||!['1', '32'].includes(ol_data._hpid)}">
+        {{ score }} 
+        <span v-show="!['1', '32'].includes(ol_data._hpid)">
+          {{ ol_data.onb}}
+        </span>
+      </div>
     </div>
     <!-- 赔率 -->
     <div class="odds" :class="[odds_lift]" :style="[1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
@@ -332,10 +334,10 @@ onUnmounted(() => {
   white-space: nowrap;
 
   &.style2 {
-    min-width: 57%;
+    // min-width: 57%;
 
     .handicap-value-text {
-      min-width: 30px;
+      // min-width: 30px;
     }
   }
 

@@ -2,20 +2,11 @@
   <!-- 滚球盘 标题-->
   
   <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj,null,!MenuData.is_home())">
-    <div class="left-box" v-if="!MenuData.is_home()">
+    <div class="left-box">
       <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
-        :sport_id="MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-image" size="18" class="icon" color_type="gray_ball" />
+        :sport_id="get_sport_id()" :key="get_sport_id()" key_name="pc-left-menu-bg-image" size="18" class="icon" color_type="gray_ball" />
       <!-- 滚球盘 -->
-      
-      <span>{{ BaseData.menus_i18n_map[Number(MenuData.current_ball_type) + 100] }}</span>
-      <!-- 赛事数量 -->
-    </div>
-    <div class="left-box" v-else>
-      <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
-        :sport_id="card_style_obj.csid" :key="card_style_obj.csid" key_name="pc-left-menu-bg-image" size="18" class="icon" color_type="gray_ball" />
-      <!-- 滚球盘 -->
-      
-      <span>{{ BaseData.menus_i18n_map[Number(card_style_obj.csid) + 100] }}</span>
+      <span>{{ BaseData.menus_i18n_map[get_card_csid()] }}</span>
       <!-- 赛事数量 -->
     </div>
     <span v-if="cur_title_info.show_num" class="match-number">{{ cur_title_info.match_count }}</span>
@@ -71,6 +62,33 @@ function handle_click() {
     }, { once: true })
   }
 }
+
+const get_card_csid = () => {
+  let csid = 1
+  if (!MenuData.is_home()) {
+    csid = Number(MenuData.current_ball_type) + 100
+    if (MenuData.is_esports()) {
+      csid = Number(props.card_style_obj?.csid) + 2000
+    }
+  } else {
+    csid = Number(props.card_style_obj?.csid) + 100
+  }
+  return csid
+}
+
+const get_sport_id = () => {
+  let sport_id = 1
+  if (!MenuData.is_home()) {
+    sport_id = MenuData.current_ball_type
+    if (MenuData.is_esports()) {
+      sport_id = props.card_style_obj?.csid
+    }
+  } else {
+    sport_id = props.card_style_obj?.csid
+  }
+  return sport_id
+}
+
 const cur_title_info = computed(() => {
  
   let { card_type = 'no_start_title', csid, match_count } = props.card_style_obj;
