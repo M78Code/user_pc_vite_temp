@@ -91,9 +91,28 @@ class GlobalAccessConfig {
    * &timestamp=1695535910860
    * &clearcache=1
   */
-  set_enter_params_switch(data = {}) {
-    this.other = Object.assign({}, LOCAL_FUNCTION_SWITCH, data);
-    this.other.wsl=false
+  set_enter_params_switch(data) {
+    const _data = data || {
+      LOG: SEARCH_PARAMS.init_param.get('log'),
+      // DOM_ID_SHOW: SEARCH_PARAMS.init_param.get('DOM_ID_SHOW'),
+      // ENABLE_COLLECT_API: SEARCH_PARAMS.init_param.get('ENABLE_COLLECT_API'),
+      // AUTO_API: SEARCH_PARAMS.init_param.get('api'),
+      httplog: SEARCH_PARAMS.init_param.get('httplog'),
+      wsl: SEARCH_PARAMS.init_param.get('wsl'),
+      env: SEARCH_PARAMS.init_param.get('env'),
+      tag: SEARCH_PARAMS.init_param.get('tag'),
+      pb: SEARCH_PARAMS.init_param.get('pb'),
+    }
+    this.other = Object.assign({}, LOCAL_FUNCTION_SWITCH, _data);
+  }
+  get_wsl() {
+    return this.other?.wsl;
+  }
+  get_env() {
+    return this.other?.env;
+  }
+  get_pb() {
+    return this.other?.pb;
   }
   // 设置页面是否进入休眠状态
   set_vue_hidden_run(payload) {
