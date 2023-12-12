@@ -100,7 +100,7 @@
   // };
 
   const update_time = async (time) => {
-    if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
+    if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_esports()){
       const week = await dateWeekFormat();
       // let arr = [{label:'',value: 'ouzhou.match.today',type:2},...dateWeekFormat(new Date(time))];
       let arr = [...[{label:'',name: i18n_t('ouzhou.match.today'),type:2}],...week];
