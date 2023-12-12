@@ -525,7 +525,7 @@ class BaseData {
   /**
    * 计算 左侧菜单数据
    */
-  set_left_menu_init(menu_info) {
+  set_left_menu_init(menu_info,list_obj={},from) {
     // 有数据才去对比 替换
     if (menu_info.length) {
       const left_menu = [],
