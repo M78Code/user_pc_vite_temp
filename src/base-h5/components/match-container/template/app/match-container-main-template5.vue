@@ -914,7 +914,7 @@ export default {
             display: flex;
             flex-direction: column;
             justify-content: center;
-
+            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
             &.active {
               background: var(--sys-brand-secodary-secondary-200, #C9CDDB);
             }
