@@ -135,7 +135,7 @@ export default {
   .table-col {
     &:first-child {
       display: flex;
-      // align-items: center;
+      align-items: center;
       width: 13%;
     }
     &:nth-child(2) {

@@ -10,7 +10,7 @@
     <q-list>
       <q-item-label header class="q-list-content">
         <!-- Esports---VR Sports 电竞  VR-->
-        <template v-if="sportsGenre.length">
+        <template v-if="MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(300)||MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(2000)">
           <div class="sports-genre">
             <template v-for="(item, index) in sportsGenre" :key="index">
               <div v-if="MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(+item.mi)" class="item" :class="[
@@ -107,6 +107,9 @@ const defaultSports = reactive([
   // { name: "Entertainment", mi: "118" },
 ])
 const popularList = ref([]);//点击排序
+
+const current_mi = ref('')
+
 /**
  * 排序
  * @param {*} arr 
@@ -149,6 +152,8 @@ const set_menu_obj = (data) => {
  * @param {*} m_data 
  */
 const change_current_menu = (item) => {
+  if (['matchList', 'champion'].includes(route.name) && current_mi.value && current_mi.value === item.mi) return emits('isLeftDrawer');
+  current_mi.value = item.mi
   MenuData.set_current_lv1_menu('2');
   MenuData.set_menu_mi(item.mi);
   setPopularSort(item.mi);
@@ -167,7 +172,7 @@ const change_current_menu = (item) => {
   if(item.mi == 400){
     return router.push({name: 'champion'})
   }else{
-    MatchMeta.set_origin_match_data()
+    // MatchMeta.set_origin_match_data()
     // 重置所选 球种默认玩法 hpid
     MatchResponsive.reset_match_hpid_by_csid()
   }
@@ -175,7 +180,7 @@ const change_current_menu = (item) => {
     //跳转今日列表
     router.push({name: 'matchList'})
   }
-  
+  console.log(MenuData)
 }
 /**
  * 初始化

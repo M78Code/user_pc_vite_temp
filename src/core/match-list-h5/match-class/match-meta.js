@@ -99,7 +99,6 @@ class MatchMeta {
     // 获取真实数据
     this.http_params.md = md
 
-
     // 是否需要开赛、未开赛归类
     is_match && this.get_target_match_data({ md })
 
@@ -882,6 +881,7 @@ class MatchMeta {
     })
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
+    this.set_page_match_empty_status({ state: false }); 
   }
 
   /**

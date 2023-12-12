@@ -131,7 +131,7 @@
               <!-- 投注 -->
               <!--  @click="submit_order"  -->
               <div v-if="BetViewDataClass.bet_order_status == 1" :class="{ 'set-opacity': true }"
-                class="row justify-center items-center content-center yb-info" @click="submit_order">
+                class="row justify-center items-center content-center yb-info">
                 <q-page-sticky ref="silider" position="bottom-left" :offset="fabPos">
                   <div class="jiantou" :disable="draggingFab" v-touch-pan.right.prevent.mouse="handle_silider"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false"></div>
                 </q-page-sticky>
