@@ -86,11 +86,8 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
 // import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+import { LOCAL_PROJECT_FILE_PREFIX ,get_odds_active,format_odds_value,compute_value_by_cur_odd_type} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { get_odds_active } from "src/output/index.js";
-import { format_odds_value } from "src/output/index.js";
-import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import { useRoute } from "vue-router";
 import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 
@@ -179,6 +176,8 @@ const get_odds_state = (mhs, hs, os) => {
     2: "seal",
     // 关盘
     3: "close",
+    // 封盘
+    4: "seal",
   };
   if (!id) {
     state = "disable";
