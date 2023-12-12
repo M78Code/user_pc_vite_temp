@@ -69,6 +69,7 @@ import { debounce_throttle_cancel } from "src/core/utils/common/module/other.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import lodash from "lodash"
+import tab_move from "src/core/tab-move/tab-move.js";
 
 export default {
   name:'match_main',
@@ -154,7 +155,7 @@ export default {
     // this.$root.$off(this.emit_cmd.EMIT_COUNTING_DOWN_START_ENDED,this.counting_down_start_ended_on);
     this.emitters && this.emitters.map((x) => x());
 
-    utils.clear_timer();
+    this.clear_timer();
 
     // 删除虚拟体育赛狗和赛马玩法缓存
     for (const key in sessionStorage) {
@@ -218,7 +219,7 @@ export default {
      * 虚拟体育菜单切换
      */
     virtual_menu_changed(i){
-      utils.tab_move(i, this.$refs.scroll_main, this.$refs.scroll_box)
+      tab_move.tab_move(i, this.$refs.scroll_main, this.$refs.scroll_box)
       this.sub_menu_i = i;
       this.current_sub_menu = this.sub_menu_list[i];
       this.virtual_sports_params.csid = this.current_sub_menu.menuId;
@@ -303,6 +304,19 @@ export default {
       }
       this.current_sub_menu = menues[this.sub_menu_i];
     },
+    // 批量清除定时器
+    clear_timer() {
+      const timer_arr = [
+          'timer1_',
+          'scrollItemTimer',
+          'scrollItemTimer2',
+      ]
+
+      for (const timer of timer_arr) {
+        clearTimeout(this[timer])
+        this[timer] = null
+      }
+    }
   },
   computed: {
     // ...mapGetters({
