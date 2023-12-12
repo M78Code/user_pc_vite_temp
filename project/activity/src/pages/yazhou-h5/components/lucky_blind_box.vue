@@ -278,7 +278,6 @@ import DataPager from "project/activity/src/components/data_pager/data_pager-h5.
 import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
 import lucky_blind_box_mixin  from "project/activity/src/mixins/lucky_blind_box/lucky_blind_box.js";  
 export default {
-
   mixins: [ lucky_blind_box_mixin],
   components:{
     DataPager,

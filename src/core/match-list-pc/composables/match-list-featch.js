@@ -6,6 +6,8 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-c
 import PageSourceData from "src/core/page-source/page-source.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { MatchDataWarehouse_PC_List_Common  } from "src/output/module/match-data-base.js";
+import { GlobalAccessConfig  } from "src/output/";
+
 import { get_tab_param_build } from 'src/core/match-list-pc/composables/match-list-other.js';
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
@@ -41,7 +43,7 @@ function remove_match_data(mid,MatchListData=MatchDataWarehouse_PC_List_Common) 
 const set_home_loading_time_record = (status) => {
   if (
     window.init_loading_time_obj &&
-    lodash.get(window, "env.config.DOM_ID_SHOW")
+    GlobalAccessConfig.get_DOM_ID_SHOW()
   ) {
     if (!window.init_loading_time_obj.list_end_time) {
       window.init_loading_time_obj.list_end_time = new Date().getTime();

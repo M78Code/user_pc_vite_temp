@@ -9,7 +9,7 @@
   <!-- 规则 / 公告 头部 -->
   <template v-if="is_rule_page">
     <div class="top_header_rule" @click="go_back">
-      <img src="./img/back.png" alt="" />
+      <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
       <span>{{ i18n_t("ouzhou.setting_menu.personal") }}</span>
       <span class="line"></span>
       <!-- <span class="f_weight">Announcement</span> -->
@@ -26,7 +26,7 @@
         <!-- 个人中心 vr 电竞 头部 -->
         <template v-else-if="is_personal_page">
           <div class="back" @click="go_back">
-            <img src="./img/back.png" alt="" />
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
             {{ i18n_t("ouzhou.setting_menu.back") }}</div>
         </template>
         <!-- home 头部 -->
@@ -34,19 +34,19 @@
           <!--左侧菜单 -->
           <div class="navigation" @click="toggleLeftDrawer" >
             <!-- <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" /> -->
-            <img  src="./img/navigation.png" alt="">
+            <img  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/navigation.png`" alt="">
           </div>
 
           <!-- 搜索 -->
           <div class="top_info_search">
             <input type="search" maxlength="15" :placeholder="`${i18n_t('search.search_title')}`" @input="search_match" @focus="to_search_page" />
-            <img src="./img/top_seach.png" alt="" />
+            <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/top_seach.png`" alt="" />
           </div>
           <!-- 头像 -->
           <div class="top_info_right">
             <span class="top_avatar" @click="jump_personal">
               <!-- <span class="badge"></span> -->
-              <img src="./img/top_avatar.png" alt="" />
+              <img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/top_avatar.png`" alt="" />
             </span>
             <span class="info_amount">{{ format_money2(amount) }}</span>
           </div>
@@ -69,7 +69,7 @@ import { format_money2,UserCtr } from "src/output/index.js";
 import leftMenu from "./components/left-menu/left-menu.vue";
 import detailTopInfo from "./detail-top/detail-top.vue";
 import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js" 
-
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 const router = useRouter();
 const route = useRoute()
 const amount = ref(UserCtr.balance)
@@ -166,7 +166,7 @@ onUnmounted(()=>{
   justify-content: space-between;
   //color: rgba(255, 255, 255, 1);
   color: var(--q-gb-t-c-2);
-  background: url('./img/top_bg.png') no-repeat;
+  background: url($SCSSPROJECTPATH+'/image/menu/top-menu/top_bg.png') no-repeat;
   background-size: cover;
   .navigation{
     width: 18px;
@@ -260,7 +260,7 @@ onUnmounted(()=>{
   padding: 0 15px;
   font-size: 12px;
   color:var(--q-gb-t-c-3);
-  background: url('./img/top_bg.png') no-repeat;
+  background: url($SCSSPROJECTPATH+'/image/menu/top-menu/top_bg.png') no-repeat;
   background-size: cover;
   height:.5rem;
   > img {
@@ -279,7 +279,7 @@ onUnmounted(()=>{
   }
 }
 .top_header_rule{
-  background: url('./img/top_bg_rule.jpg') no-repeat;
+  background: url($SCSSPROJECTPATH+'/image/menu/top-menu/top_bg_rule.jpg') no-repeat;
   background-size: cover;
 }
 :deep(.fullscreen) {
