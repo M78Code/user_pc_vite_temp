@@ -12,8 +12,8 @@
             <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.betMoney)/100) }}</div>
         </div>
         <div class="nonebox4-content-result">
-            <div class="nonebox4-content-result-left">{{i18n_t('app_h5.bet.bet_winner')}}</div>
-            <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.maxWinMoney)/100) }}</div>
+            <div class="nonebox4-content-result-left">{{i18n_t('bet.bet_win')}}</div>
+            <div class="nonebox4-content-result-right">  {{ format_currency(parseFloat(item.maxWinMoney)/100) }}</div> 
         </div>
     </div>
   </div>
