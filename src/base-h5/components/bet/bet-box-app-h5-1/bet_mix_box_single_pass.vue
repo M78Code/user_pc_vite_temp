@@ -12,7 +12,7 @@
               <div class="nonebox4-content-left-content" :class="!item.home?'nonebox4-content-left-content-no':''">
                   <div class="nonebox4-content-left-content-xian"></div>
                   <div class="nonebox4-content-left-content-text">
-                      <div>{{ item.playName }} <span class="font-color">【{{i18n_t(`odds.${UserCtr.odds.cur_odds}`)}}】</span></div>
+                      <div>{{ item.playName }}<span class="font-color">【{{i18n_t(`odds.${UserCtr.odds.cur_odds}`)}}】</span></div>
                       <div v-if="item.home">{{ item.home }} VS {{ item.away }}</div> 
                       <div>{{ item.tid_name }}</div>
                   </div>
@@ -38,7 +38,6 @@
       },
       index:{}
   })
-  
   </script>
   
   <style lang="scss" scoped>

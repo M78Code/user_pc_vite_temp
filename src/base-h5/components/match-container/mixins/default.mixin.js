@@ -373,10 +373,11 @@ export default defineComponent({
     handle_ball_seed_fold () {
       const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
-      // 不需要虚拟计算，欧洲版五大联赛、赛事个数小于18 则 return
-      if (is_virtual || ['five_league'].includes(warehouse_type) || MatchMeta.complete_matchs.length < 18) return
+      // 不需要虚拟计算，欧洲版五大联赛
+      if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
-      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
+      // 赛事个数小于18 不需要继续获取赔率
+      if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     /**
      * @description 联赛折叠
@@ -386,10 +387,11 @@ export default defineComponent({
       // 首页热门，详情页，不需要用到折叠
       if (is_hot.value || is_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list, start_flag)
-      // 不需要虚拟计算，欧洲版五大联赛、赛事个数小于18 则 return
-      if (is_virtual || ['five_league'].includes(warehouse_type) || MatchMeta.complete_matchs.length < 18) return
+      // 不需要虚拟计算，欧洲版五大联赛
+      if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
-      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
+      // 赛事个数小于18 不需要继续获取赔率
+      if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器
