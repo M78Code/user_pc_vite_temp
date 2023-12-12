@@ -33,13 +33,21 @@ const ref_data = reactive({
 //         resolve_mew_menu_res();
 // })
 
-onUnmounted(()=>{
+// onUnmounted(()=>{
+//     clearInterval(ref_data.time_out_1)
+//     clearInterval(ref_data.time_out_)
+
+//     ref_data.time_out_ = null
+//     ref_data.time_out_1 = null
+// })
+
+function un_mounted() {
     clearInterval(ref_data.time_out_1)
     clearInterval(ref_data.time_out_)
 
     ref_data.time_out_ = null
     ref_data.time_out_1 = null
-})
+}
 
 /**
  *全部 数量计算 滚球
@@ -407,5 +415,6 @@ export {
     resolve_mew_menu_res,
     compute_quanbu_num_mi_1,
     handle_click_menu_mi_400, handle_click_menu_mi_1, compute_mi_400_sl_mi_csid, compute_quanbu_num_mi_400,
-    get_ouzhou_leagues_data
+    get_ouzhou_leagues_data,
+    un_mounted
 }
