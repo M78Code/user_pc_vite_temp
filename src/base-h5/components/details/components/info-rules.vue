@@ -33,9 +33,12 @@ export default defineComponent({
   name: "info_rules",
 
   setup(props, evnet) {
-    const data = reactive();
      //视频info说明
      const rules = ref(i18n_t("info_rules.rules"))
+    //  todo 后续
+     const get_is_hengping = ref(false)
+     const get_hd_sd_show = ref(false)
+     const get_hd_sd = ref(1)
     // #TODO vuex
     // computed: {
     //   // 是否显示info说明
@@ -72,7 +75,10 @@ export default defineComponent({
       rules,
       i18n_t,
       change_show,
-      video_switching
+      video_switching,
+      get_is_hengping,
+      get_hd_sd_show,
+      get_hd_sd
     }
   }
 })
@@ -90,7 +96,7 @@ export default defineComponent({
 
 /*************** 内容父盒子开始 *************** -S*/
 .content-box {
-  background-color: var(--q-gb-bg-c-15);
+  background-color: var(--q-gb-bg-c-2);
   color: #414655;//var(--q-detials-color-6);
   border-radius: 0.16rem;
   width: 3.2rem;
