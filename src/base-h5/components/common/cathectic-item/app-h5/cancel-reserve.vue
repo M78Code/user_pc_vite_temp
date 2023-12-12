@@ -6,7 +6,7 @@
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
     <div class="cancel-btn" @click="alertTips=true;">{{i18n_t('app_h5.bet.cancel_appoint')}}</div>
     <!-- 取消预约弹框 -->
-    <q-dialog v-model="alertTips">
+    <!-- <q-dialog v-model="alertTips">
       <div class="tips-main">
         <h2>{{ i18n_t('app_h5.cathectic.kind_tips') }}</h2>
         <p>{{ i18n_t('app_h5.cathectic.confirm_cancel_reservation') }}</p>
@@ -15,7 +15,7 @@
           <span @click="cancle_pre_order">{{ i18n_t('common.ok') }}</span>
         </div>
       </div>
-    </q-dialog>
+    </q-dialog> -->
 </template>
 
 <script setup>
