@@ -44,7 +44,7 @@
           <div class="test-line" v-if="show_debug">
             {{current_match.mid}}
           </div>
-          <div class="virtual-video-play-team">
+          <div class="virtual-video-play-team" v-if="[1001,1004].includes(sub_menu_type)">
                   <div class="vsm-options" :class="[current_match.mid === item.mid && 'active']"
                   v-for="(item, index) in match_list_by_no" :key="index" @click.stop="switch_match_handle(index)">
                     <div class="teams">
@@ -64,7 +64,7 @@
           <div class="league-name right-border">{{ lengue_name }}</div>
           <div class="status">
             <span class="num">{{ match_item_batch.no }}</span>
-            <span class="state">比赛中</span>
+            <!-- <span class="state">比赛中</span> -->
             <icon-wapper class="icon" :class="[!match_item_batch.is_expend && 'expend_icon']" color="#e1e1e1" name="icon-arrow" size="15px" />
           </div>
         </div>
@@ -82,35 +82,54 @@
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list>
 
-              <div v-if="current_match.match_status == 0">
-                <!-- 赛马切换玩法集tab组件 -->
-                <virtual-sports-tab
-                  :batch="current_match_id"
-                  v-if="![1001,1004].includes(sub_menu_type)">
-                </virtual-sports-tab>
-                <!-- 打印请勿删除 -->
-                <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
-                <!-- 赛马投注区域 -->
-                <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(sub_menu_type)">
-                  <virtual-sports-category
-                      :top_menu_changed="top_menu_changed"
-                      :current_match="match_list_by_no[0]"
-                      source='sports'
-                      @top_menu_change="handle_top_menu_change"
-                  />
+              <div>current_match.match_status: {{ current_match.match_status }}</div>
+              <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
+              <template v-if="current_match.mid == match_item_batch.matchs[0].mid">
+                  <div v-if="current_match.match_status == 0">
+                    <!-- 赛马切换玩法集tab组件 -->
+                    <virtual-sports-tab
+                      :batch="current_match_id"
+                      v-if="![1001,1004].includes(sub_menu_type)">
+                    </virtual-sports-tab>
+                    <!-- 打印请勿删除 -->
+                    <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+                    <!-- 赛马投注区域 -->
+                    <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(sub_menu_type)">
+                      <virtual-sports-category
+                          :top_menu_changed="top_menu_changed"
+                          :current_match="match_list_by_no[0]"
+                          source='sports'
+                          @top_menu_change="handle_top_menu_change"
+                      />
+                    </div>
+                  </div>
+                  <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
+                  <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
+                  <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
+                  <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
+              </template>
+              <!-- 除当前赛事外，展示赔率信息 -->
+              <template v-else>
+                <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
+                  <div>
+                    <!-- 赛马切换玩法集tab组件 -->
+                    <virtual-sports-tab
+                      :batch="match_item_batch.matchs[0]?.mid">
+                    </virtual-sports-tab>
+                    <!-- 打印请勿删除 -->
+                    <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
+                    <!-- 赛马投注区域 -->
+                    <div>
+                      <virtual-sports-category
+                          :top_menu_changed="top_menu_changed"
+                          :current_match="match_item_batch.matchs[0]"
+                          source='sports'
+                          @top_menu_change="handle_top_menu_change"
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <!-- 注释勿删除 -->
-              <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
-                <!-- 打印请勿删除 -->
-                <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
-                <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-                <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
-                <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
-                <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
-              </div>
-              <!-- 注释勿删除 -->
+              </template>
             </div>
             <!-- 排行榜页面,小组赛淘汰赛页面  -->
             <div v-else class="list-wrapper">
@@ -492,7 +511,10 @@ export default {
     // 展开或者收缩联赛
     expend_match(item){
       item.is_expend = !item.is_expend;
-      item.is_expend && this.sub_nav_click_handle(item.batchNo);
+      // 足蓝展开列表时，数据仓库增加list
+      if([1001,1004].includes(this.sub_menu_type)){
+        item.is_expend && this.sub_nav_click_handle(item.batchNo);
+      }
     },
     set_detail_data(data){
       // TODO 需要对应
@@ -513,8 +535,8 @@ export default {
       })
 
       //将赛马赛事信息跟新到vuex
-      let match_info = lodash.get(current_sub_nav,'matchs[0]')
-      match_info && this.set_detail_data(lodash.cloneDeep(match_info))
+      // let match_info = lodash.get(current_sub_nav,'matchs[0]')
+      // match_info && this.set_detail_data(lodash.cloneDeep(match_info))
       
       //赛马传递赛事集合唯一赛事的赛事id
       if([1002, 1011, 1010, 1009].includes(this.sub_menu_type)){
@@ -523,7 +545,7 @@ export default {
           mid = current_sub_nav.match[0].mid;
         }catch(e){console.error(e)}
         if(mid){
-          this.set_current_mid(mid);
+          // this.set_current_mid(mid);
         }
       }
     },
