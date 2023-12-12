@@ -40,7 +40,7 @@
               :max="50"
               track-size="5px"
               color="amber-7"
-              :thumb-size="0"
+              thumb-size="0"
               style="margin-right: 6px"
             />
             <!-- score_list[item.value_key].away_percentage -->
@@ -51,7 +51,7 @@
               :max="50"
               track-size="5px"
               color="indigo-12"
-              :thumb-size="0"
+              thumb-size="0"
             />
           </div>
         </div>
@@ -85,7 +85,7 @@
                 :max="100"
                 track-size="5px"
                 color="amber-7"
-                :thumb-size="0"
+                thumb-size="0"
                 style="margin-right: 6px"
               />
               <q-slider
@@ -95,7 +95,7 @@
                 :max="100"
                 track-size="5px"
                 color="indigo-12"
-                :thumb-size="0"
+                thumb-size="0"
               />
             </div>
             <div class="home-stop stop">
