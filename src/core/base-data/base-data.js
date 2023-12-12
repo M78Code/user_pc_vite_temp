@@ -19,7 +19,7 @@ const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 // 30000  虚拟赛事 VR
 
 //  1001  1004
-import userCtr from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import lodash_, { reject } from "lodash";
 
 import { api_base_data, api_common } from "src/api/index.js";
@@ -205,7 +205,12 @@ class BaseData {
   }
   // 菜单数量变化
   set_base_c301_change(list = []) {
-    list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
+    let list_obj = {}
+    list.forEach(item => {
+      item.mi = this.base_menu_id_togger()[item.menuId]
+      list_obj[item.mi] = item.count
+    })
+
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
     this.set_left_menu_init(this.mew_menu_list_res,list_obj,'ws')
   }
@@ -345,7 +350,7 @@ class BaseData {
     // console.warn("init_user_info",res.data)
     // let user_info = lodash_.get(res,'data.data',{})
     // let user_info = lodash_.get(res,'data.data',{})
-    let user_info = userCtr.get_user_info_data()
+    let user_info = UserCtr.get_user_info_data()
     if (user_info && Object.keys(user_info).length) {
       // let old_user = JSON.stringify(store.getters.get_user)
       // let new_user = JSON.stringify(user_info)
