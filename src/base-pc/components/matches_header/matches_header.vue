@@ -310,12 +310,20 @@ const checked_current_tab = (payload,type) => {
 			MenuData.set_menu_current_mi(MenuData.menu_current_mi || obj.current_mi)
 		}
 	}
+
+	// 刷新页面 使用数据
+	if(!type){
+		obj.current_mi = MenuData.menu_current_mi
+	}
+
+	MenuData.set_mid_menu_result(obj)
+
 	if (MenuData.is_esports()) {
 		obj.current_mi = payload.value*1
 		MenuData.set_menu_current_mi(obj.current_mi)
 	}
 	// get_sport_banner()
-	MenuData.set_mid_menu_result(obj)
+
 
 	if(MenuData.is_collect || [1002].includes(payload.value*1)){
 		resolve_mew_menu_res()
