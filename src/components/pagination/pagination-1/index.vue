@@ -153,7 +153,7 @@ const props = defineProps({
     default: () => {}
   },
   reset_pagination: {
-    type: Number,
+    type: [ Number, String ],
     default: 1
   }
 });
