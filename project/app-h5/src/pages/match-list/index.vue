@@ -90,7 +90,6 @@ onMounted(() => {
 
   // 增加监听接受返回的监听函数
   message_fun = ws_message_listener.ws_add_message_listener((cmd, data) => {
-    handler_func({ cmd, data })
     if (['C101', 'C102', 'C104', 'C901'].includes(cmd)) {
       MatchMeta.handle_remove_match(data)
     } else {

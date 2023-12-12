@@ -884,6 +884,13 @@ class AllDomain {
       JSON.stringify(api)
     );
     if (!check_ok) {
+      //补偿逻辑 如果没有api流程走不下去了 没有刷新过 先刷新下尝试解决问题
+      //compute_current_local_api_pool 应该是找这个方法的问题 this.local_api_pool没筛选出值 暂时很难找到 862行计算的
+      const reload_num=LocalStorage.get("reload",0)
+      if(reload_num==0){
+        LocalStorage.set("reload",reload_num+1)
+        window.location.reload()
+      }
       // console.log('compute_api_domain_firstone_by_currentTimeMillis--检查失败',);
       return false;
     }

@@ -449,16 +449,6 @@ onMounted(() => {});
 
 .tem4-active {
   background-color: var(--q-gb-bg-c-5) !important;
-  span {
-    // &:nth-child(1) {
-    //   width: 50%;
-    //   display: block;
-    //   text-align: right;
-    //   margin-right: 10px;
-    //   overflow: hidden;
-    //   color: var(--q-gb-t-c-14);
-    // }
-  }
 
   &:hover {
     background: var(--q-gb-bg-c-5) !important;

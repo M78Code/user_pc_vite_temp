@@ -1061,7 +1061,7 @@ export default {
 
 .stage {
 
-  font-size: 0.14rem;
+  font-size: 0.1rem;
   color: #F5F8FA;
   text-align: center;
 }

@@ -253,7 +253,7 @@ onMounted(() => {});
 .temp-active {
   background-color: var(--q-gb-bg-c-5) !important;
   // color: var(--q-gb-t-c-1);
-  border-bottom-color: var(--q-gb-bg-c-1) !important;
+  // border-bottom-color: var(--q-gb-bg-c-1) !important;
   &:hover {
     background-color: var(--q-gb-bg-c-5) !important;
     // color: var(--q-gb-t-c-1);

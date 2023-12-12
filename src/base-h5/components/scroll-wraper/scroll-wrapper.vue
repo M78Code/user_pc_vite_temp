@@ -36,9 +36,9 @@
         <div style="color:#AAAEB8;font-size:.12rem;"> {{ $t("scroll_wrapper.is_footer") }} </div>
       </div>
     </div>
-    <div class="err_box" v-if="MatchMeta.match_mids.length < 1">
-       <img class="scroll-title-icon" :src="no_data_app" alt="">
-    </div>
+    <!-- <div class="err_box" v-if="MatchMeta.match_mids.length < 1">
+       <img class="scroll-title-icon" :src="compute_local_project_file_path('/image/png/no_data_app.png')" alt="">
+    </div> -->
     <!-- 回到顶部按钮组件 -->
     <ScrollTop :list_scroll_top="scroll_top" @back-top="goto_top" />
   </div>

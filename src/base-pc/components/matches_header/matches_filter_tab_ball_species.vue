@@ -107,6 +107,7 @@ const ref_data = reactive({
 onMounted(() => {
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
+  console.error('current_mi',current_mi)
   if (!current_mi) {
     // 默认选中当前第一个tab
     if(MenuData.is_kemp()){
@@ -120,7 +121,7 @@ onMounted(() => {
     return
   }
   if(MenuData.is_kemp()){
-    handle_click_menu_mi_400({mi: current_mi ,mif: current_mi -100 })
+    handle_click_menu_mi_400({mi: current_mi ,mif: current_mi -300 })
   }else{
     handle_click_menu_mi_1({mi: current_mi ,mif: current_mi -100 })
   }
@@ -165,10 +166,11 @@ const choose_filter_tab = (item) => {
   // 获取最新的 数据
   if(MenuData.is_kemp()){
     handle_click_menu_mi_400(item)
+    MenuData.set_current_ball_type(item.mif - 300)
   }else{
     handle_click_menu_mi_1(item)
+    MenuData.set_current_ball_type(item.mif - 100)
   }
-  MenuData.set_current_ball_type(item.mif - 100)
 };
 
 /**

@@ -107,6 +107,9 @@ const defaultSports = reactive([
   // { name: "Entertainment", mi: "118" },
 ])
 const popularList = ref([]);//点击排序
+
+const current_mi = ref('')
+
 /**
  * 排序
  * @param {*} arr 
@@ -149,7 +152,8 @@ const set_menu_obj = (data) => {
  * @param {*} m_data 
  */
 const change_current_menu = (item) => {
-  MenuData.set_current_lv1_menu('2');
+  if (['matchList', 'champion'].includes(route.name) && current_mi.value && current_mi.value === item.mi) return emits('isLeftDrawer');
+  current_mi.value = item.mi
   MenuData.set_menu_mi(item.mi);
   setPopularSort(item.mi);
   // 设置菜单对应源数据
@@ -167,15 +171,15 @@ const change_current_menu = (item) => {
   if(item.mi == 400){
     return router.push({name: 'champion'})
   }else{
-    MatchMeta.set_origin_match_data()
+    // MatchMeta.set_origin_match_data()
     // 重置所选 球种默认玩法 hpid
+    MenuData.set_current_lv1_menu('2');
     MatchResponsive.reset_match_hpid_by_csid()
   }
   if(route.name != "matchList"){
     //跳转今日列表
     router.push({name: 'matchList'})
   }
-  
 }
 /**
  * 初始化

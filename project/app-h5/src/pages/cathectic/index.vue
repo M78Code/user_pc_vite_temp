@@ -87,6 +87,7 @@
     // 未结算页面不显示切换栏，所以高度可以高些
     const baseHeight = BetRecordClass.selected === 3 ? 700: 375
     let rem_1 = window.innerWidth * 100 / baseHeight;
+    console.error('782424786236876233278',window.innerHeight,window.innerWidth)
     ele.style['height'] = window.innerHeight - rem_1 + 'px';
   }
   

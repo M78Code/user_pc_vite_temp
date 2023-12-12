@@ -77,7 +77,7 @@
                 :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
             >
               <!-- 虚拟体育足球赛事列表 -->
-              <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
+              <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
                 :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list>
@@ -492,7 +492,41 @@ export default {
     // 展开或者收缩联赛
     expend_match(item){
       item.is_expend = !item.is_expend;
-    }
+      item.is_expend && this.sub_nav_click_handle(item.batchNo);
+    },
+    set_detail_data(data){
+      // TODO 需要对应
+      VR_CTR.set_detail_data(data)
+    },
+    /**
+     * 批次变化
+     * @param {String|Number} batchNo 当前最新期号
+     * @param {Undefined}
+     */
+     sub_nav_click_handle(batchNo){
+      this.sub_nav_focus_i = lodash.findIndex(this.match_list_all_batches,{batchNo:batchNo});
+      let current_sub_nav = this.match_list_all_batches[this.sub_nav_focus_i];
+      
+      this.sub_nav_changed({
+        nav: current_sub_nav,
+        i: this.sub_nav_focus_i
+      })
+
+      //将赛马赛事信息跟新到vuex
+      let match_info = lodash.get(current_sub_nav,'matchs[0]')
+      match_info && this.set_detail_data(lodash.cloneDeep(match_info))
+      
+      //赛马传递赛事集合唯一赛事的赛事id
+      if([1002, 1011, 1010, 1009].includes(this.sub_menu_type)){
+        let mid = '';
+        try{
+          mid = current_sub_nav.match[0].mid;
+        }catch(e){console.error(e)}
+        if(mid){
+          this.set_current_mid(mid);
+        }
+      }
+    },
   },
   computed:{
     //
@@ -702,7 +736,7 @@ export default {
     border-bottom-left-radius: .04rem;
     border-bottom-right-radius: .04rem;
     .vsm-options {
-      width: 1.76rem;
+      width: 48%;
       height: .4rem;
       background: var(--q-gb-bg-c-18);
       border-radius: .04rem;

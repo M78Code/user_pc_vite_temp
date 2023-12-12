@@ -7,13 +7,11 @@
 <!-- 网球 -->
 <!-- 可能会产生滚动，故用class  menu-s -->
   <div class='score_child_5 mx-12 font-style menu-s'>
-    <template>
       <span v-for="(item, key) of score_array" :key="key">
         <span>&nbsp;&nbsp;</span>
         <span :class="{'activeText':(score_array.length == key + 1 && detail_data.mo != 1)}" style="letter-spacing: 0.015rem">{{ $filters.score_format(item)}}</span>
         <span>&nbsp;&nbsp;</span>
       </span>
-    </template>
   </div>
 </template>
 

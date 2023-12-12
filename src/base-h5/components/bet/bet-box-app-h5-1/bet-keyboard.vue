@@ -259,6 +259,7 @@ const _handleNumberKey = (num, e) => {
     ol_type = 'id'
   }
   ol_id = lodash.get(BetData.bet_keyboard_config,ol_type)
+  console.log('BetViewDataClass.bet_min_max_money', BetViewDataClass)
   let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
 
   // 显示最大金额

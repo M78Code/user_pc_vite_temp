@@ -401,7 +401,6 @@ class MatchMeta {
     const hpsFlag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     const current_lv_1_menu_i = lodash.get(MenuData, 'current_lv_1_menu_i')
     const type = MenuData.menu_id_map(current_lv_1_menu_i) ? MenuData.menu_id_map(current_lv_1_menu_i) : current_lv_1_menu_i
-    console.log('current_lv_1_menu_i', MenuData.menu_id_map(current_lv_1_menu_i));
 
     return {
       cuid: UserCtr.get_uid(), // 508895784655200024
@@ -422,6 +421,7 @@ class MatchMeta {
    */
   async get_champion_match() {
     MatchFold.clear_fold_info()
+    MatchDataBaseH5.clear()
     const menu_lv_v2 = MenuData.current_lv_2_menu_i;
     const euid = lodash.get(BaseData.mi_info_map, `mi_${menu_lv_v2}.h5_euid`, '40602')
     const res = await api_common.post_match_full_list({
@@ -881,6 +881,7 @@ class MatchMeta {
     })
     // 不需要调用赔率接口
     MatchDataBaseH5.set_list(target_list)
+    this.set_page_match_empty_status({ state: false }); 
   }
 
   /**
