@@ -323,7 +323,6 @@ import ActiveCountDown from "project/activity/src/components/active_count_down/a
 export default {
   mixins: [ slot_machine_mixin],
   components: {
- 
     ActiveCountDown,
     NumberScroll,
      DataPager,

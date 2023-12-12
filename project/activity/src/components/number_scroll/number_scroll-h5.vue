@@ -385,7 +385,7 @@ export default {
   //     @if $number == 10 {
   //       background-image: var(--qq--color-com-img-bg-166);
   //     } @else {
-  //       background-image: url('~public/activity/yazhou-h5/activity/slot_machine/numbers/#{$number}.png');
+  //       background-image: url($SCSSPROJECTPATH+'/yazhou-h5/activity/slot_machine/numbers/#{$number}.png');
   //     }
   //   }
   // }
