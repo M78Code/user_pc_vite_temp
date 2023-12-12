@@ -991,7 +991,13 @@ class MenuData {
   is_mix(mi) {
     return this._is_cur_mi(6, mi)
   }
-
+  /*
+    * 是否为电子赛事
+    *  mi [number|string] 要比对的值
+  */
+  is_electron_match(mi) {
+    return [190,191].includes(this.left_menu_result.lv1_mi * 1) 
+  }
   /**
    * 是否为首页
    *  mi [number|string] 要比对的值
