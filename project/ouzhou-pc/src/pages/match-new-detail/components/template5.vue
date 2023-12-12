@@ -171,7 +171,7 @@ onMounted(() => {});
 .temp-active {
   background-color: var(--q-gb-bg-c-5) !important;
   color: var(--q-gb-t-c-1) ;
-  border-bottom: none !important;
+  // border-bottom: none !important;
   &:hover {
     background-color: var(--q-gb-bg-c-5) !important;
     color: var(--q-gb-t-c-1);
