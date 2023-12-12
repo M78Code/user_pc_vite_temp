@@ -35,9 +35,9 @@ const mitt_list = [
     }).off
 ]
 
-onBeforeUnmount(() => {
-    mitt_list.forEach(i => i())
-})
+// onBeforeUnmount(() => {
+//     mitt_list.forEach(i => i())
+// })
 
 export {
     theme, lang, show_favorite_list, user_info, sort_type, standard_edition, resources_obj, match_mids

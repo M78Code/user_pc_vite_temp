@@ -95,8 +95,8 @@ const ref_data = reactive({
 		esports:[
 			{ label: 'ouzhou.match.lol', value: 2100 },
 			{ label: 'ouzhou.match.dota', value: 2101 },
-			{ label: 'ouzhou.match.kog', value: 2102 },
-			{ label: 'ouzhou.match.csgo', value: 2103 }	
+			{ label: 'ouzhou.match.csgo', value: 2102 },
+			{ label: 'ouzhou.match.kog', value: 2103 },
 		],
 		// vr_sports: [
       	// 	{ label: 'ouzhou.match.vr_football', value: 30301 }, //vr足球
@@ -166,7 +166,7 @@ const set_tab_list = (news_) =>{
 	}
 	
 	// 左侧菜单
-	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp() || !MenuData.is_esports()){
+	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
 		let sport_tab = lodash_.get( ref_data.ouzhou_filter_config,'sport_tab', [])  
 		if ([90, 91].includes(+MenuData.current_ball_type)) {
 			sport_tab = sport_tab.filter((n)=>{return n.value != 4003 && n.value != 4002})
@@ -203,7 +203,6 @@ const set_tab_list = (news_) =>{
 		tab_list.value = []
 		resolve_mew_menu_res()
 	}
-
 	// 电竞
 	if (MenuData.is_esports()) {
 		is_left_sports.value = true

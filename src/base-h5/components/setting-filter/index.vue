@@ -6,9 +6,12 @@
   <div class="setting-filter">
     <div class="setting-top setting-item">
       <div class="title">
-        联赛筛选
-        <span v-if="league_select_count > 0">(已选{{league_select_count}}) </span>
-        <span v-else>全部</span>
+    <!-- 联赛筛选 -->
+         {{ i18n_t('footer_menu.league_filter') }}
+         <!-- 已选 -->
+        <span v-if="league_select_count > 0">( {{ i18n_t('footer_menu.selected') }}{{league_select_count}}) </span>
+        <!-- 全部 -->
+        <span v-else> {{ i18n_t('highlights.type.all') }}</span>
       </div>
       <div>
       </div>
@@ -19,7 +22,8 @@
             alt=""
           />
         <p>
-        更多
+        <!-- 更多 -->
+          {{ i18n_t('footer_menu.more') }}
         <img  
           :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/left_icon.svg`"
           srcset="">
@@ -40,7 +44,8 @@
         </div>
       </div>
       <div class="setting-item border" @click="jumpHandle">
-        <div class="title">盘口教程</div>
+      <!-- 盘口教程 -->
+        <div class="title">{{ i18n_t('app_h5.cathectic.handicap_tutorial') }}</div>
         <div class="more">
         <img  
         :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/left_icon.svg`"
@@ -48,12 +53,15 @@
         </div>
       </div>
       <div class="setting-item" @click="jump_webpage">
-        <div class="title">前往旧版</div>
-        <div class="goto-website">前往网页版</div>
+      <!-- 前往旧版 -->
+        <div class="title"> {{ i18n_t('app_h5.filter.go_old_version') }}</div>
+        <!-- 前往网页版 -->
+        <div class="goto-website"> {{ i18n_t('app_h5.filter.go_web_version') }}</div>
       </div>
     </div>
     <div class="closed-btn" @click="closedHandle">
-      <span>关闭</span>
+    <!-- 关闭 -->
+      <span> {{ i18n_t('analysis_football_matches.shut_down') }}</span>
     </div>
   </div>
 </template>
@@ -65,6 +73,7 @@ import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { default_theme_key } from "src/core/theme/";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
+import { i18n_t } from "src/boot/i18n.js";;
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
@@ -95,38 +104,38 @@ const emit = defineEmits(["closedHandle"]);
 
 const setting_list = ref([
   {
-    name: "投注模式",
-    leftVal: "新手版",
-    rightVal: "专业版",
+    name: i18n_t('footer_menu.bet_model'),//"投注模式"
+    leftVal: i18n_t('footer_menu.new_v'),//"新手版"
+    rightVal: i18n_t('footer_menu.pro_v'),//"专业版
     switchValue: UserCtr.standard_edition === 2 ? "rightVal" : "leftVal",
     mark: "version"
   },
   {
-    name: "排序规则",
-    leftVal: "热门",
-    rightVal: "时间",
+    name: i18n_t('footer_menu.sort_title'),//"排序规则"
+    leftVal: i18n_t('footer_menu.hot'),//"热门
+    rightVal: i18n_t('footer_menu.time'),//"时间
     switchValue: UserCtr.sort_type === 2 ? "rightVal" : "leftVal",
     mark: "sort"
   },
   {
-    name: "盘口设置",
-    leftVal: "欧洲盘",
-    rightVal: "香港盘",
+    name: i18n_t('footer_menu.odds_set'),//"盘口设置
+    leftVal: i18n_t('odds.EU'),//"欧洲盘
+    rightVal: i18n_t('odds.HK'),//"香港盘
     switchValue: UserCtr.odds.cur_odds === "HK" ? "rightVal" : "leftVal",
     mark: "Handicap"
   },
   // { name: '字号大小', leftVal: '默认', rightVal: '放大',mark:'size' },
   {
-    name: "主题风格",
-    leftVal: "日间",
-    rightVal: "夜间",
+    name: i18n_t('footer_menu.theme'),//"主题风格
+    leftVal: i18n_t('footer_menu.daytime'),//"日间
+    rightVal: i18n_t('footer_menu.night'),//"夜间
     switchValue: UserCtr.theme === "theme-1" ? "rightVal" : "leftVal",
     mark: "theme"
   },
   {
-    name: "每日活动",
-    leftVal: "开启",
-    rightVal: "关闭",
+    name: i18n_t('footer_menu.daily_activities'),//"每日活动
+    leftVal: i18n_t('footer_menu.turn_on'),//"开启
+    rightVal: i18n_t('common.close'),//"关闭
     switchValue: UserCtr.daily_activities ? "leftVal" : "rightVal",
     mark: "activity"
   }

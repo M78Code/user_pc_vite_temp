@@ -953,7 +953,7 @@ export default defineComponent({
             media_type:"auto", // 直播类型
             time: Date.now()
           })
-          let params= { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid }
+          let params= flag ? { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } : { mid: item.mid, csid: item.csid, tid: item.tid }
           // this.$router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid, tid: item.tid } });
           let name = 'category' //赛事详情
           if(this.$route.name == 'matchResults' ||item.ms==4){
