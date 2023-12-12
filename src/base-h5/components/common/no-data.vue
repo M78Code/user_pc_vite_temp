@@ -31,7 +31,7 @@ import { useRoute } from 'vue-router'
 import { i18n_t ,} from "src/boot/i18n.js";
 import { useMittEmit,compute_css_obj, MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import { PROJECT_NAME } from 'src/output/module/menu-data.js'
-import { no_data_img, no_data_app,no_data_new_app, no_data_collect, no_data_ouzhou, coming_soon, no_wifi } from 'src/base-h5/core/utils/local-image.js'
+import { no_data_new_app, no_data_collect, no_data_ouzhou, coming_soon, no_wifi } from 'src/base-h5/core/utils/local-image.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { is_collect } from 'src/base-h5/mixin/menu.js'
 
