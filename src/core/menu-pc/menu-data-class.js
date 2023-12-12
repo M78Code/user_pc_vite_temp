@@ -157,7 +157,6 @@ class MenuData {
   // 设置当前选中的赛种
   set_current_ball_type(val) {
     this.current_ball_type = val
-    console.error('ssss',val)
     this.set_menu_data_version();
   }
 
