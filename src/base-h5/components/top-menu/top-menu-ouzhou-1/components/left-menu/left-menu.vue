@@ -154,7 +154,6 @@ const set_menu_obj = (data) => {
 const change_current_menu = (item) => {
   if (['matchList', 'champion'].includes(route.name) && current_mi.value && current_mi.value === item.mi) return emits('isLeftDrawer');
   current_mi.value = item.mi
-  MenuData.set_current_lv1_menu('2');
   MenuData.set_menu_mi(item.mi);
   setPopularSort(item.mi);
   // 设置菜单对应源数据
@@ -174,13 +173,13 @@ const change_current_menu = (item) => {
   }else{
     // MatchMeta.set_origin_match_data()
     // 重置所选 球种默认玩法 hpid
+    MenuData.set_current_lv1_menu('2');
     MatchResponsive.reset_match_hpid_by_csid()
   }
   if(route.name != "matchList"){
     //跳转今日列表
     router.push({name: 'matchList'})
   }
-  console.log(MenuData)
 }
 /**
  * 初始化
