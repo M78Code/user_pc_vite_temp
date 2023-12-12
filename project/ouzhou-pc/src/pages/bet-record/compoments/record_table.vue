@@ -488,9 +488,9 @@ const marketType = (type, langCode='zh') => {
  */
 const matchType = (type, langCode=UserCtr.lang) => {
   let res = "";
-  if(type && langCode) {
-    res = match_type[type]
-  }
+  // if(type && langCode) {
+  //   res = match_type[type]
+  // }
 
   if(type && langCode) {
         switch (parseInt(type)) {

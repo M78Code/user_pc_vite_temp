@@ -238,6 +238,10 @@ function handle_destroyed() {
  * 元数据加载的方法
  */
 function init_page_when_base_data_first_loaded() {
+	// 首页不走元数据加载  不需要设置元数据loading状态 loading状态已经设置过了
+	if (MenuData.is_home()) {
+		return
+	}	
 	set_load_data_state("loading") //loading
 	//设置元数据 列表 返回boolean
 	if (PROJECT_NAME == 'ouzhou-pc') {

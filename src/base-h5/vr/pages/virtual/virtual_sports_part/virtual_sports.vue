@@ -77,7 +77,7 @@
                 :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
             >
               <!-- 虚拟体育足球赛事列表 -->
-              <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_list_by_no"
+              <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
                 :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list>
@@ -702,7 +702,7 @@ export default {
     border-bottom-left-radius: .04rem;
     border-bottom-right-radius: .04rem;
     .vsm-options {
-      width: 1.76rem;
+      width: 48%;
       height: .4rem;
       background: var(--q-gb-bg-c-18);
       border-radius: .04rem;

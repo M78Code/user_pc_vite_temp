@@ -44,7 +44,7 @@ import { compute_css_obj } from 'src/core/server-img/index.js'
 import MatchesFilterTab from "./matches_filter_tab_ball_species.vue";
 import MatchesDateTab from "./matches_filter_tab.vue";
 import MatchesLeaguesTab from "./matches_filter_tab_leagues.vue"
-import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/output/index.js"
+import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t, } from "src/output/index.js"
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
@@ -206,7 +206,7 @@ const set_tab_list = (news_) =>{
 
 	// 电竞
 	if (MenuData.is_esports()) {
-		matches_header_title.value = '电子竞技'
+		matches_header_title.value = 'common.e_sports'
 		match_list_top.value = '134px'
 		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'esports', [])  
 		tab_list.value = ouzhou_filter_config
@@ -231,6 +231,7 @@ const set_tab_list = (news_) =>{
 watch(BaseData.base_data_version,()=>{
 	//元数据变化后 需要改变球种的ii8n 翻译是i18n来的
 	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
+		is_left_sports.value = true
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
 })
@@ -257,7 +258,7 @@ const checked_current_tab = (payload,type) => {
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
-    	useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
+    useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
 	}
 
 	// 左侧菜单点击后 tab切换
@@ -309,14 +310,22 @@ const checked_current_tab = (payload,type) => {
 			MenuData.set_menu_current_mi(MenuData.menu_current_mi || obj.current_mi)
 		}
 	}
+
+	// 刷新页面 使用数据
+	if(!type){
+		obj.current_mi = MenuData.menu_current_mi
+	}
+
+	MenuData.set_mid_menu_result(obj)
+
 	if (MenuData.is_esports()) {
 		obj.current_mi = payload.value*1
 		MenuData.set_menu_current_mi(obj.current_mi)
 	}
 	// get_sport_banner()
-	MenuData.set_mid_menu_result(obj)
 
-	if(MenuData.is_collect){
+
+	if(MenuData.is_collect || [1002].includes(payload.value*1)){
 		resolve_mew_menu_res()
 	}
 }

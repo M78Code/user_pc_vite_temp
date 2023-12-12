@@ -333,6 +333,7 @@ export default {
   },
   data() {
     return {
+      LOCAL_COMMON_FILE_PREFIX: LOCAL_COMMON_FILE_PREFIX,
       currentSynthConfig: {}, // 合成页--当前选中的奖券配置
       volume: 0, // 合成页--提升合成率滑动条数字
       currentSynthMaxNum: 0, // 当前最高可合成的奖券张数
@@ -351,23 +352,22 @@ export default {
         1: {
           type: 1,
           name: "白银奖券",
-          img: `/activity/yazhou-h5/activity/slot_machine/silver_card.png`,
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/silver_card.png`,
           key: "silver",
         },
         2: {
           type: 2,
           name: "黄金奖券",
-          img: `/activity/yazhou-h5/activity/slot_machine/gold_card.png`,
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/gold_card.png`,
           key: "gold",
         },
         3: {
           type: 3,
           name: "钻石奖券",
-          img: `/activity/yazhou-h5/activity/slot_machine/diamond_card.png`,
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/diamond_card.png`,
           key: "diamond",
         },
       },
-      LOCAL_COMMON_FILE_PREFIX: LOCAL_COMMON_FILE_PREFIX,
     };
   },
   watch: {
