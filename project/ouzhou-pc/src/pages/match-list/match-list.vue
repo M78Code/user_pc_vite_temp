@@ -106,8 +106,7 @@ import {
 } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
-import {
-  PageSourceData, compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
+import { compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
 } from "src/output/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
@@ -121,7 +120,6 @@ import {
 } from "./index"
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
-const { page_source } = PageSourceData;
 export default {
   components: {
     LeagueTab,
@@ -158,16 +156,13 @@ export default {
         five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
       })
     };
-    const is_conming_soon = computed(() => {
-      return load_data_state.value != 'loading' && ((!match_list_card_key_arr.value.length && !MenuData.is_leagues()) || (!get_league_list().length && MenuData.is_leagues()))
-    })
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
+      mounted_fn();
       get_data_info()
       mitt_list = [useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, get_data_info).off, // 15分钟赛事数据
       useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, get_data_info).off]
-      mounted_fn();
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
@@ -179,8 +174,7 @@ export default {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
     })
-
-    watch(MatchListCardDataClass.list_version, (list_version) => {
+    watch(MatchListCardDataClass.list_version, () => {
       MatchListCardDataClass_match_list_card_key_arr();
     });
     const get_data_info = async (type = 0) => {
@@ -197,7 +191,6 @@ export default {
     }
     return {
       show_refresh_mask,
-      page_source, is_conming_soon,
       GlobalAccessConfig,
       matches_15mins_list,
       match_count,

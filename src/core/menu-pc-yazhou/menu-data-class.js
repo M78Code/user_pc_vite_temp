@@ -110,7 +110,7 @@ class MenuData {
 
   // 设置 菜单的版本变化
   set_menu_data_version(){
-    useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA)
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA)
     this.menu_data_version.value = Date.now()
   }
   /**
@@ -719,7 +719,7 @@ class MenuData {
     this.set_bet_category();
 
     // 菜单数据缓存 //从元数据拿值
-    useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, {})
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
     nextTick(()=>{
       SessionStorage.set(menu_key,this)

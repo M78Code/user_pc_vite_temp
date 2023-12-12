@@ -166,7 +166,7 @@ const set_tab_list = (news_) =>{
 	}
 	
 	// 左侧菜单
-	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
+	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp() || !MenuData.is_esports()){
 		let sport_tab = lodash_.get( ref_data.ouzhou_filter_config,'sport_tab', [])  
 		if ([90, 91].includes(+MenuData.current_ball_type)) {
 			sport_tab = sport_tab.filter((n)=>{return n.value != 4003 && n.value != 4002})
@@ -206,7 +206,8 @@ const set_tab_list = (news_) =>{
 
 	// 电竞
 	if (MenuData.is_esports()) {
-		matches_header_title.value = 'common.e_sports'
+		is_left_sports.value = true
+		matches_header_title.value = BaseData.menus_i18n_map[2000]
 		match_list_top.value = '134px'
 		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'esports', [])  
 		tab_list.value = ouzhou_filter_config
