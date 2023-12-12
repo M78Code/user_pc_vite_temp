@@ -644,8 +644,7 @@ onUnmounted(() => {
 	height: 50px;
 	line-height: 50px;
 	width: 100%;
-	-background-color: var(--q-gb-bg-c-1);
-	background: url('/src/base-h5/components/top-menu/top-menu-ouzhou-1/img/top_bg.png') no-repeat;
+	background-color: var(--q-gb-bg-c-1);
 
 	img {
 		position: absolute;

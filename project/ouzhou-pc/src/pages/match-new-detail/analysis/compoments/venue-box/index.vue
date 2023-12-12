@@ -54,7 +54,7 @@
       <!-- 比分 -->
 
       <score_info
-        v-show="score_key && [1, 3].includes(Number(detail_info.ms))"
+        v-if="score_key && [1, 3].includes(Number(detail_info.ms))"
         :score_list="score_list"
         :detail_info="detail_info"
       />
