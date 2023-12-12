@@ -653,65 +653,6 @@ class UserCtr {
   }
 
   /**
-   * 计算设置 网页 基础信息的 最终配置
-   */
-
-  compute_set_web_meta_config() {
-    // http://test-user-h5-bw3.sportxxxifbdxm2.com/?jz=1&partnerId=489637#/
-    //  #TODO
-    let json = sessionStorage.getItem("merchant_config_json");
-    //  let config =  lodash.get(window.env,'config.html_info') || {}
-    let config = htmlVariables;
-    if (json) {
-      // 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
-
-      let merchant_config = JSON.parse(json);
-
-      // 浏览器icon
-      if (merchant_config.pcLogoUrl) {
-        config.icon = get_server_file_path(merchant_config.pcLogoUrl);
-      }
-      // 最大宽度
-      if (merchant_config.inlineWidth) {
-        config.max_width = merchant_config.inlineWidth;
-      }
-      // 主logo白色
-      if (lodash.get(merchant_config, "configMap.1")) {
-        config.day_logo = get_server_file_path(merchant_config.configMap[1]);
-      }
-      // 主logo黑色
-      if (lodash.get(merchant_config, "configMap.2")) {
-        config.night_logo = get_server_file_path(merchant_config.configMap[2]);
-      }
-      // 兼容页logo
-      if (merchant_config.compatLogoUrl) {
-        config.compatible_logo = get_server_file_path(merchant_config.compatLogoUrl);
-      }
-      // loading图片
-      if (merchant_config.loadLogoUrl) {
-        config.loadLogoUrl = get_server_file_path(merchant_config.loadLogoUrl);
-      }
-      // 视频异常
-      if (merchant_config.videoLogoUrl) {
-        config.videoLogoUrl = get_server_file_path(merchant_config.videoLogoUrl);
-      }
-      // 默认联赛logo
-      if (merchant_config.leagueLogoUrl) {
-        this.set_league_logo_url(merchant_config.leagueLogoUrl);
-        // config.leagueLogoUrl = get_server_file_path(merchant_config.leagueLogoUrl)
-      }
-      // 专业版默认主题色
-      if (merchant_config.profesTag) {
-        config.default_theme.yabo = merchant_config.profesTag;
-      }
-    } else {
-      // 1.本身就是预览，接口炸了，那么按照前端自己的默认配置 设置
-    }
-
-    return config;
-  }
-
-  /**
    * @Description 判断联赛logo是否可用 并设置联赛logo
    * @param {undefined} undefined
    */
@@ -738,91 +679,7 @@ class UserCtr {
     };
     img.src = url;
   }
-  /**
-   * 预览配置 接口出错 后 按照前端默认的配置来设置 整个网页 基础信息
-   * 几个场景：
-   * 1.本身就是预览，接口炸了，那么按照前端自己的默认配置 设置
-   * 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
-   *
-   *
-   */
-  set_web_meta_by_config() {
-    //计算 后的  设置 网页 基础信息的 最终配置
-    let config = this.compute_set_web_meta_config();
-    // 设置标题
-    let title_el = document.createElement("title");
-
-    let lang = ""; //获取语言 window.vue.$store.getters.get_lang
-
-    let title_str = this.get_web_title(lang);
-
-    title_el.innerHTML = title_str;
-
-    let metas = document.getElementsByTagName("meta");
-    for (let i = 0; i < metas.length; i++) {
-      if (
-        metas[i].getAttribute("name") == "description" ||
-        metas[i].getAttribute("name") == "product-name"
-      ) {
-        metas[i].setAttribute("content", title_str);
-      }
-    }
-
-    // 修改网站icon
-    let icon_el = document.getElementById("link_icon");
-    if (icon_el) {
-      icon_el.setAttribute("rel", "icon");
-      icon_el.setAttribute("type", "image/x-icon");
-      if (sessionStorage.getItem("hide_logo_icon") === "0") {
-        icon_el.setAttribute("href", config.icon);
-      }
-    }
-    // 设置样式
-    let style_el = document.createElement("style");
-    // 获取商户样式_y0
-    const user_data_info = this.get_getuserinfo_data();
-    const _data = lodash.get(user_data_info, "data", {});
-    let merchant_style = _data.stm === "blue" ? "_y0" : "";
-    // let style_html = `
-    //   body.theme01${merchant_style}{background-color:#${config.body_bg_day}!important;}
-    //   body.theme02${merchant_style}{background-color:#${config.body_bg_night}!important;}
-    //   .c-max-width{max-width:${config.max_width}px  !important;}
-    //   .theme01${merchant_style} .custom-format-img-logo-01{background-image: url("${config.day_logo}")!important;}
-    //   .custom-format-img-logo-01-theme01{background-image: url("${config.day_logo}") !important;}
-    //   .theme02${merchant_style} .custom-format-img-logo-01{background-image: url("${config.night_logo}") !important;}
-    //   .custom-format-img-logo-04{background-image: url("${config.compatible_logo}") !important;}
-    // `
-    let style_html = `
-      .custom-format-img-logo-04{background-image: url("${config.compatible_logo}") !important;}
-    `;
-    // loading图片
-    if (config.loadLogoUrl) {
-      style_html += `.custom-format-img-loading{background-image: url("${config.loadLogoUrl}") !important;}`;
-    }
-    // 视频异常
-    if (config.videoLogoUrl) {
-      style_html += `.custom-format-web-icon-05{background-image: url("${config.videoLogoUrl}") !important;}`;
-    }
-    // 默认联赛logo
-    // if(config.leagueLogoUrl){
-    //   style_html += `
-    //   .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
-    //   .theme01 img.leagues-logo-default[src^=data]{background-image: url("${config.leagueLogoUrl}") !important;}
-    //   .theme02 img.leagues-logo-default[src^=data]{background-image: url("${config.leagueLogoUrl}") !important;}
-    //   `
-    // }
-    style_el.innerHTML = style_html;
-    document.head.appendChild(title_el);
-    document.head.appendChild(style_el);
-
-    // 设置主题色
-    // if(!window.vue.$store.getters.get_theme){
-    //   let theme = 'theme0'+config.default_theme[window.BUILDIN_CONFIG.PROJECT_NAME]
-    //   window.vue.$store.dispatch('set_theme',theme)
-    // }
-    // window.vue.$store.dispatch('init_loading_theme')
-    //  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD);
-  }
+  
   /**
    * @Description 设置网站标题
    * @param {undefined} undefined
@@ -1023,6 +880,7 @@ class UserCtr {
     this.set_user_info(lodash.get(res, "data.data", {}))
     //上传数据
     infoUpload.upload_data(lodash.get(res, "data.data", {}));
+    this.set_web_meta_by_config();
   }
   /**
    *  常规体育的 图片地址 
@@ -1219,7 +1077,7 @@ class UserCtr {
    */
   compute_set_web_meta_config() {
     // http://test-user-h5-bw3.sportxxxifbdxm2.com/?jz=1&partnerId=489637#/
-    let json = sessionStorage.getItem("has_merchant_config");
+    let json = sessionStorage.getItem("merchant_config_json");
     // let config = lodash.get(window.env, "config."html_info) || {};
     let config = htmlVariables;
     if (json) {
@@ -1274,33 +1132,18 @@ class UserCtr {
   set_web_meta_by_config() {
     //计算 后的  设置 网页 基础信息的 最终配置
     let config = this.compute_set_web_meta_config();
-    let dom_ = document;
-    let lang = this.lang;
     // 设置标题
-    let title_el = dom_.createElement("title");
-    let title_str = this.get_web_title(lang);
-    title_el.innerHTML = title_str;
-    let metas = domlodash.getElementsByTagName("meta");
-    for (let i = 0; i < metas.length; i++) {
-      if (
-        metas[i].getAttribute("name") == "description" ||
-        metas[i].getAttribute("name") == "product-name"
-      ) {
-        metas[i].setAttribute("content", title_str);
-      }
-    }
+    this.set_web_title(this.lang);
     // 设置网站icon
-    let icon_el = dom_.createElement("link");
+    let icon_el = document.getElementById("link_icon");
     icon_el.setAttribute("rel", "icon");
     icon_el.setAttribute("type", "image/png");
     icon_el.setAttribute("href", config.icon);
 
-    dom_.head.appendChild(title_el);
-    dom_.head.appendChild(icon_el);
     // 设置主题色
-    let theme =
-      "theme0" +
-      config.default_theme[window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME];
+    // let theme =
+    //   "theme0" +
+    //   config.default_theme[window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME];
     // let theme = lodash.get(window, 'vue.$store.getters.get_theme', 'theme01')
     // window.vue.$store.dispatch('set_theme',theme)
   }

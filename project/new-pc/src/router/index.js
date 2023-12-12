@@ -9,9 +9,6 @@ const router = createRouter({
 // 全局路由守卫
 router.beforeEach((to, from, next) => {
   // console.log(to, from)
-  if (to.meta.title) {
-    document.title = `${to.meta.title}`;
-  }
   next()
 })
 
