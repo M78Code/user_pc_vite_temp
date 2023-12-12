@@ -591,9 +591,17 @@ export const details_main = (router, route) => {
       })
     }
   });
+  const  get_info_show = ref(false)
+  // 控制视频说明弹窗
+  const video_description_show = (is_show) => {
+      get_info_show.value = is_show
+  }
+  const {off:off_video_show} = useMittOn(MITT_TYPES.EMIT_VIDEO_DESCRIPTION_SHOW, video_description_show)
   onUnmounted(()=>{
     //关闭监听
     off()
+    //关闭视频信息订阅
+    off_video_show()
     // 关闭详情订阅
     MatchDataWarehouseInstance.value.set_active_mids([])
     LocalStorage.remove("YUAN_MATCH_DETAIL_DATA")
@@ -749,5 +757,6 @@ export const details_main = (router, route) => {
     touchstart,
     detail_tabs_change,
     allCloseState,
+    get_info_show
   };
 };
