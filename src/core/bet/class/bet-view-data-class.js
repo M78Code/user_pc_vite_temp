@@ -190,6 +190,7 @@ class BetViewData {
             max_money: obj.orderMaxPay, // 最大限额
             globalId: obj.globalId,  //  风控响应id
             seriesOdds: obj.seriesOdds, // 赔率  // 串关使用 3串1
+            bet_amount: '', // 投注金额
             show_quick: index == 0 ? true : false, // 快捷金额
           }
         }
@@ -430,7 +431,6 @@ class BetViewData {
   // 串关专用参数
   set_bet_special_series(array) {
     this.bet_special_series = array
-    console.error('array',array)
     this.set_bet_view_version()
   }
 

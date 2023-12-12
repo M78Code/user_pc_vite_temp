@@ -53,8 +53,8 @@
             <template v-if="BetData.bet_s_list.length > 1">
               <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" />
 
-              <div class="f-s-c cursor" @click="set_show_single()">
-                <sapn>{{ i18n_t('bet.bet_n_') }}</sapn>
+              <div class="f-s-c cursor h44 pl-30 bor-b" @click="set_show_single()">
+                <sapn class="fon12 font400 text-8a8">{{ i18n_t('bet.bet_n_') }}</sapn>
                 <span class="icon-arrow icon-arrow-series" :class="ref_data.show_single ?'arrow':''"></span>
               </div>
               <!-- 复式连串过关投注 限额 -->
@@ -77,6 +77,12 @@
               <betResult :items="item" :key="index" :index="index" />
             </div>
           </template>
+          <template v-else>
+            <div v-for="(item,index) in BetViewDataClass.orderNo_bet_single_obj" :key="item.orderNo">
+              <betResult :items="item" :key="index" :index="index" />
+            </div>
+          </template>
+          
         </template>
       </div>
        
