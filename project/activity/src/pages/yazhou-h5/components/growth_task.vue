@@ -21,7 +21,6 @@
           alt=""
         />
         <div>
-
           <span>活动时间：</span>
           <template v-if="get_user.activityList[activityIndex].period == 1">
             <span class="count_down_css">
@@ -49,8 +48,6 @@
             <span v-else>活动长期有效</span>
           </template>
           <span v-else> 活动结束 </span>
-
-
         </div>
       </div>
       <div>
@@ -90,9 +87,7 @@
             <span>{{ i == 0 ? "天" : "元" }}</span>
           </div>
         </div>
-
       </div>
-
 
       <div class="table">
         <p>
@@ -104,8 +99,6 @@
           </span>
           <span>领取状态</span>
         </p>
-
-
 
         <p
           v-for="(v, i) in get_everyDay_list"
@@ -210,7 +203,7 @@
         </div>
       </div>
     </q-dialog>
-   <!-- 领取奖券弹窗 -->
+    <!-- 领取奖券弹窗 -->
     <q-dialog v-model="daily_task_success">
       <div class="daily_task_dialog" @click.self="daily_task_success = false">
         <div class="task_success">
@@ -245,8 +238,6 @@
       </div>
     </q-dialog>
 
-
-    
     <div class="activity-rules">
       <div class="title">活动规则</div>
       <div class="rules-object">
@@ -365,21 +356,21 @@
 <script>
 import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
 import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
-import growth_task_mixin  from "project/activity/src/mixins/growth_task/growth_task.js";  
+import growth_task_mixin from "project/activity/src/mixins/growth_task/growth_task.js";
 export default {
-  mixins: [ growth_task_mixin],
+  mixins: [growth_task_mixin],
   components: {
     DataPager,
     ActiveCountDown,
   },
-}
+};
 </script>
  
  
 
 <style lang="scss" scoped>
 @import "../../../css/activity.scss";
- 
+
 .table {
   width: 3.2rem;
   min-height: 1.5rem;

@@ -212,7 +212,7 @@ class BaseData {
       list_obj[item.mi] = item.count
     })
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
-    this.set_left_menu_init(this.left_menu_base_mi,list_obj,'ws')
+    this.set_left_menu_init(this.mew_menu_list_res,list_obj,'ws')
   }
   /**
    * @description 获取所有的元数据
