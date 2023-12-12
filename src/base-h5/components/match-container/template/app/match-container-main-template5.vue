@@ -731,7 +731,7 @@ export default {
     font-size: 12px;
     padding: 0 5px 0 20px;
     background: var(--q-gb-bg-c-10);
-    line-height: 20px;
+    line-height: 19px;
     font-size: 11px;
 
     .score-inner-span {
@@ -757,7 +757,7 @@ export default {
       .favorited-icon {
         width: 14px;
         height: 14px;
-        margin: 0 4px 0 7px;
+        margin: 0 4px 0 0.11rem;
         /* position: relative;
         top: 1px; */
         flex-shrink: 0;
@@ -770,7 +770,7 @@ export default {
       width: 100%;
       height: 100%;
       padding-right: 5px;
-      transform: translateY(1px);
+      // transform: translateY(1px);
       text-overflow: ellipsis;
       flex-wrap: nowrap;
       align-items: center;
