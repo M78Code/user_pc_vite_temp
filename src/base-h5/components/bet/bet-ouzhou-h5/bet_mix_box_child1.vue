@@ -15,7 +15,7 @@
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap.replace('undefined','')"></div>
                         <div>
-                            <div class="nonebox4-content-right" v-if="items.ol_os == 1">
+                            <div class="nonebox4-content-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                                 @{{compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId)}}
                               </div>
