@@ -95,8 +95,8 @@ const ref_data = reactive({
 		esports:[
 			{ label: 'ouzhou.match.lol', value: 2100 },
 			{ label: 'ouzhou.match.dota', value: 2101 },
-			{ label: 'ouzhou.match.kog', value: 2102 },
-			{ label: 'ouzhou.match.csgo', value: 2103 }	
+			{ label: 'ouzhou.match.csgo', value: 2102 },
+			{ label: 'ouzhou.match.kog', value: 2103 },
 		],
 		// vr_sports: [
       	// 	{ label: 'ouzhou.match.vr_football', value: 30301 }, //vr足球
