@@ -430,6 +430,7 @@ class BetViewData {
   // 串关专用参数
   set_bet_special_series(array) {
     this.bet_special_series = array
+    console.error('array',array)
     this.set_bet_view_version()
   }
 

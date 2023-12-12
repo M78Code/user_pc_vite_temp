@@ -12,7 +12,9 @@
           <span class="icon-delete"></span>
           <span class="ml-16">{{i18n_t('common.del_all')}}</span>
         </div>
-       
+
+        <!-- {{BetData.is_bet_single}}-{{ BetData.is_bet_merge }} -->
+        
         <div class="cursor re f-e-c bet-text">
            <!--  单关 合并 切换 -->
           <div class="f-e-c" @click="show_merge_change()" v-if="BetData.is_bet_single">
@@ -25,7 +27,7 @@
             <span v-if="BetData.is_bet_single">{{ i18n_t('bet.bet_one_') }}</span>
             <span v-if="!BetData.is_bet_single">{{ i18n_t('bet.bet_series') }}</span>
 
-            <div class="switch-single ml-4" :class="ref_data.show_single ? '':'arrow-single'">
+            <div class="switch-single ml-4" :class="BetData.is_bet_single ? '':'arrow-single'">
               <span></span>
             </div>
           </div>
@@ -51,16 +53,17 @@
             <template v-if="BetData.bet_s_list.length > 1">
               <betSpecialInput :items="BetViewDataClass.bet_special_series[0]" />
 
-              <div class="f-s-c">
+              <div class="f-s-c cursor" @click="set_show_single()">
                 <sapn>{{ i18n_t('bet.bet_n_') }}</sapn>
                 <span class="icon-arrow icon-arrow-series" :class="ref_data.show_single ?'arrow':''"></span>
               </div>
               <!-- 复式连串过关投注 限额 -->
-              <template v-if="BetData.bet_s_list.length > 1">
-                
-                <div v-for="(item,index) in BetViewDataClass.bet_special_series" :key="index" class="bor-b">
-                  <betSpecialInput :items="item" />
-                </div>
+              <template v-if="BetData.bet_s_list.length > 1 && ref_data.show_single ">
+                <template v-for="(item,index) in BetViewDataClass.bet_special_series" :key="index" >
+                  <div class="bor-b" v-if="index != 0">
+                    <betSpecialInput :items="item" />
+                  </div>
+                </template>
               </template>
             </template>
 
@@ -96,24 +99,30 @@ import betSpecialInput from "./components/bet-special-input.vue"
 
 const ref_data = reactive({
   show_single: false,
-  show_merge: false,
 })
 
-const show_single_change = () => {
-  ref_data.show_single = !ref_data.show_single
-  if(ref_data.show_single){
-   return BetData.set_is_bet_single('single')
+// 复合式串关 开关
+const set_show_single = () =>{
+  // 串关数 大于3条才可以开启 复式串关
+  if(BetData.bet_s_list.length > 2){
+    ref_data.show_single = !ref_data.show_single
   }
-  BetData.set_is_bet_single('series')
 }
 
-const show_merge_change = () => {
-  ref_data.show_merge = !ref_data.show_merge
-  if(ref_data.show_merge){
-   return BetData.set_is_bet_merge('merge')
+// 单关/串关 切换
+const show_single_change = () => {
+  if(BetData.is_bet_single){
+   return BetData.set_is_bet_single('series')
   }
-  BetData.set_is_bet_merge('no')
-  
+  BetData.set_is_bet_single('single')
+}
+
+// 单关/ 合并切换
+const show_merge_change = () => {
+  if(BetData.is_bet_merge){
+   return BetData.set_is_bet_merge('no')
+  }
+  BetData.set_is_bet_merge('merge')
 }
 
 

@@ -23,10 +23,10 @@
                 </div>
             
             </div>
-            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}</div>
+            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
         </div>
         <div>
-            {{ ref_data.show_quick }}
+            {{ items.show_quick }}
             <ul class="bet-bet-money f-b-c" v-show="items.show_quick ">
                 <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
                     {{index == 'max' ? '' : '+' }}{{obj}}
@@ -172,9 +172,9 @@ const show_quick_amount = state => {
     let money_list = []
     if(state){
         if (BetData.bet_is_single) {
-           money_list = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
+           money_list = lodash_.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
         } else {
-           money_list = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
+           money_list = lodash_.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
         }
     }
     let obj = {
@@ -182,6 +182,20 @@ const show_quick_amount = state => {
         money_list,
         max_money: props.items.max_money,
     }
+
+    // 取消全部的快捷金额按钮
+    let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
+    let oid = lodash_.get(props,'items.playOptionsId','')
+
+    list.filter(item => {
+        item.show_quick = false
+         // 显示指定投注项的快捷金额按钮
+        if(item.playOptionsId == oid){
+            item.show_quick = true
+        }
+    })
+    BetViewDataClass.set_bet_special_series(list)
+
     set_show_quick_money(obj)
 }
 

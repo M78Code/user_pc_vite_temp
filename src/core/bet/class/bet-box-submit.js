@@ -23,12 +23,8 @@ import { ALL_SPORT_PLAY } from "src/output/module/constant-utils.js"
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import { MenuData } from 'src/output/module/menu-data.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-<<<<<<< HEAD
 import { i18n_t,i18n_tc } from "src/boot/i18n.js"
-=======
-import { i18n_t } from "src/boot/i18n.js"
 import { only_win } from 'src/core/format/project/module/format-odds-conversion-mixin.js'
->>>>>>> components-1207
 
 let time_out = null
 let time_api_out = null
@@ -416,7 +412,6 @@ const submit_handle = type => {
                 set_submit_btn()
                 // 已失效
                 set_error_message_config({code:"0402001"},'bet')
-                break
             }
             
             // 投注金额 验证
@@ -425,7 +420,6 @@ const submit_handle = type => {
                 set_submit_btn()
                 // 请您输入投注金额
                 set_error_message_config({code:"M400005"},'bet')
-                break
             }
             
             // 投注金额未达最低限额
@@ -435,7 +429,6 @@ const submit_handle = type => {
                 set_submit_btn()
                 // 投注金额未达最低限额
                 set_error_message_config({code:"M400010"},'bet')
-                break
             }
         }
 

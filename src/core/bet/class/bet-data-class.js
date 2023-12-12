@@ -567,6 +567,7 @@ this.bet_appoint_ball_head= null */
 
   // 设置 切换单关/串关切换
   set_is_bet_single(state) {
+    console.error('sss',state)
     // 单关 切换到串关 / 
     if (this.is_bet_single) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
