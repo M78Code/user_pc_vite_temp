@@ -9,7 +9,7 @@
     <!-- 关闭按钮 -->
     <img
       @click="$emit('close_compose')"
-      :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/close_top.png`"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/close_top.png`"
       alt=""
       class="close"
       width="38"
@@ -27,7 +27,7 @@
           <!-- 合成材料名称和数量 -->
           <p>
             <img
-              :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/normal_voucher.png`"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/normal_voucher.png`"
               alt=""
             />
             {{ currentSynthConfig.baseTicketName }}:
@@ -36,7 +36,7 @@
           <!-- 幸运奖券 -->
           <p>
             <img
-              :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/lucky_voucher.png`"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/lucky_voucher.png`"
               alt=""
             />
             幸运奖券: {{ luckyTicket }}
@@ -246,7 +246,10 @@
         <!-- 合成率提升完成 -->
         <div class="upgrade" v-else-if="step == 'upgradeSucc'">
           <span>{{ currentSynthConfig.syntheticRate }}%</span>
-          <img :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/top.svg`" alt="" />
+          <img
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/top.svg`"
+            alt=""
+          />
           <span>提升完成！</span>合成成功率已提升到了{{
             currentSynthConfig.syntheticRate
           }}%
@@ -277,7 +280,7 @@
           </p>
           <p class="tipsMsg">
             <img
-              :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/msg.svg`"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/msg.svg`"
               alt=""
             />
             每{{ currentSynthConfig.baseTicketNum }}张{{
@@ -293,12 +296,12 @@
     </div>
     <!-- 选中卡片 -->
     <audio
-      :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/media/selectedCard.mp3`"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/selectedCard.mp3`"
       ref="selectedCard"
     ></audio>
     <!-- 卡片旋转展示 -->
     <audio
-      :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/media/showCard.mp3`"
+      :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/showCard.mp3`"
       ref="showCard"
     ></audio>
   </div>
@@ -313,13 +316,8 @@ const random = function (minNum, maxNum) {
   return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
 };
 //头部引入
-import {
-  useMittOn,
-  useMittEmit,
-  useMittEmitterGenerator,
-  MITT_TYPES,
-} from "project_path/src/core/index.js";
-import { rem } from "project_path/src/core/index.js";
+import { LOCAL_COMMON_FILE_PREFIX } from "project_path/src/core/index.js";
+import { rem, useMittEmit, MITT_TYPES } from "project_path/src/core/index.js";
 
 export default {
   name: "compose",
@@ -335,6 +333,7 @@ export default {
   },
   data() {
     return {
+      LOCAL_COMMON_FILE_PREFIX: LOCAL_COMMON_FILE_PREFIX,
       currentSynthConfig: {}, // 合成页--当前选中的奖券配置
       volume: 0, // 合成页--提升合成率滑动条数字
       currentSynthMaxNum: 0, // 当前最高可合成的奖券张数
@@ -353,19 +352,19 @@ export default {
         1: {
           type: 1,
           name: "白银奖券",
-          img: `/activity/yazhou-h5/activity/slot_machine/silver_card.png`,
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/silver_card.png`,
           key: "silver",
         },
         2: {
           type: 2,
           name: "黄金奖券",
-          img: `/activity/yazhou-h5/activity/slot_machine/gold_card.png`,
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/gold_card.png`,
           key: "gold",
         },
         3: {
           type: 3,
           name: "钻石奖券",
-          img: `/activity/yazhou-h5/activity/slot_machine/diamond_card.png`,
+          img: `${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/diamond_card.png`,
           key: "diamond",
         },
       },

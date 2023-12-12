@@ -207,7 +207,7 @@ export default defineComponent({
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
       // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag) && (MenuData.is_today() || MenuData.is_mix())
+      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(+this.match_of_list.start_flag) && (MenuData.is_today() || MenuData.is_mix())
     },
     // 获取赛事数量
     get_match_count () {
@@ -373,7 +373,8 @@ export default defineComponent({
     handle_ball_seed_fold () {
       const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
-      if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // 不需要虚拟计算，欧洲版五大联赛、赛事个数小于18 则 return
+      if (is_virtual || ['five_league'].includes(warehouse_type) || MatchMeta.complete_matchs.length < 18) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
@@ -385,7 +386,8 @@ export default defineComponent({
       // 首页热门，详情页，不需要用到折叠
       if (is_hot.value || is_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list, start_flag)
-      if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // 不需要虚拟计算，欧洲版五大联赛、赛事个数小于18 则 return
+      if (is_virtual || ['five_league'].includes(warehouse_type) || MatchMeta.complete_matchs.length < 18) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },

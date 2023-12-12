@@ -872,12 +872,12 @@ this.bet_appoint_ball_head= null */
 
               // console.error('(ol_obj.odds',ol_obj.red_green,ol_obj.odds,ws_ol_obj.ov )
               // 投注项和状态一致不更新数据 
-              if(ol_obj.odds == ws_ol_obj.ov &&  ol_obj.ol_os == ws_ol_obj.os){
-                return
+              if(ol_obj.odds == ws_ol_obj.ov){
+                ol_obj.red_green = ''
               }
-             
               // 重新设置赔率
               ol_obj.odds = parseFloat(ws_ol_obj.ov) ? ws_ol_obj.ov*1 : ol_obj.odds
+              
               // 设置 投注项状态  1：开 2：封 3：关 4：锁
               ol_obj.ol_os = ws_ol_obj.os
               // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
@@ -890,7 +890,7 @@ this.bet_appoint_ball_head= null */
 
               // 获取新的比分
               ol_obj.mark_score = get_score_config(ol_obj)
-
+              // 赔率数据
               ol_obj.oddFinally = compute_value_by_cur_odd_type(ws_ol_obj.ov*1, ol_obj.playId, '', ol_obj.sportId)
               // 更新投注项内容
               this.set_ws_message_bet_info(ol_obj,ol_obj_index)
@@ -907,6 +907,44 @@ this.bet_appoint_ball_head= null */
     }
   }
 
+  // 赛事级别盘口状态
+  set_bet_c104_change( obj={} ) {
+    // ws 每次推送的 mid只有一个 
+    let mid = lodash_.get(obj,'mid')
+    // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+    let mhs = lodash_.get(obj,'ms')
+    // 单关/串关 属性名
+    let single_name = ''
+    // 单关/串关 属性值
+    let array_list = []
+    // 单关/串关 赛事列表
+    let mid_list = []
+    if(this.bet_single_list){
+      single_name = 'bet_single_list'
+    } else {
+      single_name = 'bet_s_list'
+    }
+
+    array_list = lodash_.cloneDeep(lodash_.get(this,single_name))
+    // 获取单关下的赛事id 多个（单关合并）
+    mid_list = array_list.map(item => item.matchId) || []
+
+    // 判断赛事级别盘口状态 中是否包含 投注项中的赛事
+    if(mid_list.includes(mid)){
+      array_list.filter(item => {
+        // 在赛事盘口状态下的 投注项 设置 对应的赛事级别 用于 失效投注项
+        if(item.matchId == mid){
+          item.mid_mhs = mhs 
+        }
+      })
+
+      this[single_name] = array_list
+
+      this.set_bet_data_class_version()
+    }
+  }
+
+  // 订单状态
   set_bet_c201_change( obj={} ) {
     // 订单id
     // 订单状态 订单状态(1:投注成功 2:投注失败)

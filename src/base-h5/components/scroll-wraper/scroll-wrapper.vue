@@ -62,6 +62,7 @@ import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
+import { no_data_app } from 'src/base-h5/core/utils/local-image.js'
 
 // 避免定时器每次滚动总是触发
 const props = defineProps({
