@@ -83,6 +83,7 @@
             "172": "HDP", 
             "173": "Total Points", 
             "181": "HDP", 
+            "182": "Total Frames", 
             "202": "Total Frames",
             "242": "Winner",
             "243": "HDP",
@@ -129,12 +130,12 @@
         "bet_col_2": "Away"
       },
       "bet_col_38": {
-        "bet_col_Over": "Over",
-        "bet_col_Under": "Under"
+        "bet_col_1": "Total",
+        "bet_col_2": "Total"
       },
       "bet_col_39": {
-        "bet_col_1": "1",
-        "bet_col_2": "2"
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
       },
       "bet_col_153": {
         "bet_col_1": "Home",
@@ -147,6 +148,22 @@
       "bet_col_155": {
         "bet_col_1": "1",
         "bet_col_2": "2"
+      },
+      "bet_col_172": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
+      },
+      "bet_col_173": {
+        "bet_col_1": "Total",
+        "bet_col_2": "Total"
+      },
+      "bet_col_181": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_182": {
+        "bet_col_1": "Over",
+        "bet_col_2": "Under"
       }
     },
     "search": {

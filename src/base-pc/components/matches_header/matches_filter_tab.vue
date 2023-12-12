@@ -100,10 +100,14 @@
   // };
 
   const update_time = async (time) => {
-    if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
-      const week = await dateWeekFormat();
-      // let arr = [{label:'',value: 'ouzhou.match.today',type:2},...dateWeekFormat(new Date(time))];
-      let arr = [...[{label:'',name: i18n_t('ouzhou.match.today'),type:2}],...week];
+    if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_esports()){
+      let arr = [{label:'',name: i18n_t('ouzhou.match.today'),type:2}]
+      // 电子赛事 没有早盘日期
+      if(!MenuData.is_electron_match()){
+        const week = await dateWeekFormat();
+        arr = [...[{label:'',name: i18n_t('ouzhou.match.today'),type:2}],...week];
+      }
+     
       current_filter_list.value = arr;
       let obj = {
         label: MenuData.mid_menu_result.md,

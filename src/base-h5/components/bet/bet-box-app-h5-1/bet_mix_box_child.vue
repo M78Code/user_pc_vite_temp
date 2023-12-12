@@ -131,7 +131,7 @@
               <!-- 投注 -->
               <!--  @click="submit_order"  -->
               <div v-if="BetViewDataClass.bet_order_status == 1" :class="{ 'set-opacity': true }"
-                class="row justify-center items-center content-center yb-info" @click="submit_order">
+                class="row justify-center items-center content-center yb-info">
                 <q-page-sticky ref="silider" position="bottom-left" :offset="fabPos">
                   <div class="jiantou" :disable="draggingFab" v-touch-pan.right.prevent.mouse="handle_silider"><img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false"></div>
                 </q-page-sticky>
@@ -140,9 +140,13 @@
                   <span class="yb-info-money">
                     <!-- {{ i18n_t('app_h5.bet.bet_win').replace("%s", "0.00") }} -->
                   <span>{{i18n_t('bet.total_win2')}}</span>
-                  <span>
-                        {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,BetData.bet_single_list[0].oddFinally), BetData.bet_amount)) || '0.00' }}
-                  </span>
+                  <span v-if="[1].includes(BetData.bet_single_list[0].playId*1)">
+                    {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,BetData.bet_single_list[0].oddFinally), BetData.bet_amount)) || '0.00' }}
+                </span>
+                <span  v-else>
+                    {{ formatMoney(mathJs.subtract(mathJs.multiply(BetData.bet_amount,BetData.bet_single_list[0].oddFinally),(UserCtr.odds.cur_odds == 'HK' ? 0 : BetData.bet_amount))) || '0.00' }}
+                </span>
+
                   </span>
                 </div>
                 <div class="roll-right"><img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt=""></div>
@@ -159,15 +163,11 @@
 
           <!--串关-->
           <div v-if="BetData.is_bet_single">
-            <div :class="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single?'yb-strand':'yb-nostrand'" @click.stop="set_is_bet_single">+串</div>
+            <div :class="BetViewDataClass.bet_order_status == 1 && BetData.is_bet_single?'yb-strand':'yb-nostrand'" @click.stop="set_chain_bet(true)">+串</div>
           </div>
-          <div class="yb-dan-btn" v-else @click.stop="set_chain_bet">
+          <div class="yb-dan-btn" v-else @click="set_chain_bet(false)">
             <div>{{ i18n_t('common.single') }}</div>
           </div>
-
-          <!-- 串关投注 -->
-          <div class="chain_bet" v-if="!BetData.is_bet_single"></div>
-
         </div>
 
       <!--投注后的 确定按钮 -->
@@ -208,7 +208,7 @@ import betCollusionInput from './bet-collusion-input.vue'
 import mathJs from 'src/core/bet/common/mathjs.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path,formatMoney } from "src/output/index.js";
+import { i18n_t, compute_css_obj,useMittOn, useMittEmit, MITT_TYPES, compute_local_project_file_path,formatMoney,UserCtr } from "src/output/index.js";
 import { ref, onMounted, watch, computed, onUnmounted, reactive } from 'vue';
 import { get_query_bet_amount_common, submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
@@ -251,6 +251,13 @@ const hide_bet_series_but = () => {
   return res;
 }
 
+  // 单关 串关切换
+  const set_is_bet_single = (type) =>{
+    console.log(type,"-----type")
+    BetData.set_is_bet_single()
+    useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, type);
+  }
+
 // 投注成功，最高可赢 滚动条需下拉到底
 const update_scroll_top = () => {
   if (scroll_box.value) {
@@ -282,13 +289,9 @@ const is_bet_check_rc = () => {
 }
 
 // 串关
-const set_chain_bet = () =>{
-  BetData.is_bet_single = false
-  reset_silider()
-  console.log('BetData.is_bet_single', BetData.is_bet_single);
-  if(!BetData.is_bet_single) {
-    pack_up()
-  }
+const set_chain_bet = (state) =>{
+  BetData.set_is_bet_single(state)
+  pack_up()
 }
 // 投注事件
 const pack_up = (val) => {
@@ -298,31 +301,33 @@ const pack_up = (val) => {
   useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX, false);
   BetData.set_clear_bet_info()
   BetViewDataClass.set_clear_bet_view_config()
+  BetData.set_bet_data_class_version()
 }
 
 // 滑块初始化坐标
-const fabPos = reactive([0, 11])
+const fabPos = ref([20, 11])
 // 处理单关和串关投注的silider位置
-if(BetData.is_bet_single) {
-  fabPos[0] = 20
-} else {
-  fabPos[0] = 77
+const init_silider_position = () => {
+  if(BetData.is_bet_single) {
+    fabPos.value[0] = 20
+    silider.value.offset[0] = 20
+  } else {
+    fabPos.value[0] = 77
+    silider.value.offset[0] = 77
+  }
 }
 const draggingFab = ref(false)
 const silider = ref(null)
 // 向右滑动投注
 const handle_silider = (e) => {
+  draggingFab.value = e.isFirst !== true && e.isFinal !== true
+  fabPos.value[0] = e.distance.x
+  silider.value.offset[0] = e.distance.x
   if (e.distance.x > 234 || e.isFinal) {
     reset_silider()
     return
   }
-  draggingFab.value = e.isFirst !== true && e.isFinal !== true
   // console.log('e', e, silider);
-  fabPos.value = [
-    fabPos[0] - e.delta.x,
-    fabPos[1] - e.delta.y
-  ]
-  silider.value.offset[0] = e.distance.x
   if(e.distance.x > '180') {
     submit_handle()
     reset_silider()
@@ -334,12 +339,7 @@ let timer;
 const reset_silider = () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if(!BetData.is_bet_single) {
-        silider.value.offset[0] = 77
-      } else {
-        fabPos.value = [ 20, 11 ]
-        silider.value.offset[0] = 20
-      }
+      init_silider_position()
     }, 300)
 }
 
@@ -394,6 +394,7 @@ const calc_class = computed(() => {
 })
 
 onMounted(() => {
+  init_silider_position()
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
   let munu_type = true
   if (munu_type) {
@@ -786,14 +787,4 @@ background: var(--q-gb-t-c-5) !important;
 .set-opacity{
   background:var(--q-gb-bg-c-9)
 }
-// .chain_bet {
-//   width: 0.48rem;
-//   height: 0.48rem;
-//   position: fixed;
-//   bottom: .5rem;
-//   right: .5rem;
-//   z-index: 9999;
-//   // background-color: #f00;
-//   // background: url($SCSSPROJECTPATH+"/image/bet/chuan_bet.png") no-repeat center / contain;
-// }
 </style>

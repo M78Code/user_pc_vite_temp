@@ -39,7 +39,6 @@ usePageVisibilityChange(
 );
 // 引入 当前  植入配置
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
-console.log(BUILDIN_CONFIG,'DOMAIN_RESULT');
 /**
  * 去掉 api 参数 reload
  */

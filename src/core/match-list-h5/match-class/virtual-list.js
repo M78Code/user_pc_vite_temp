@@ -98,6 +98,8 @@ class VirtualList {
     const { reduce_buffer_height, match_stage_height, show_league_height, playing_title_height, main_handicap_height, ball_title_height } 
       = template_config.match_template_config
 
+    // if (match.mid === '2978915') debugger
+
     // 要减去的缓冲高度 
     const buffer_height = 2
     // --------- 以下是赛事高度计算逻辑  只要有改动均需看下其他 H5 项目有没有影响 改动需谨慎； 特别配置去模板默认配置加上 ------------------------------------
@@ -156,12 +158,19 @@ class VirtualList {
       const virtual_key = this.get_match_height_key(mid)
       // 赛事高度
       const match_height = this.get_match_total_height(match, index)
+      
       // 退出循环
       if (match_count >= page_count) return true 
       if (match.mid && accrual_height > start_position) {
+
         // 列表页每一个赛事的 translateY( ${top}px) top 定位值
         this.mid_top_map[virtual_key] = accrual_height;
+        
         if (match_height > 0 && (is_show_league || show_card)) {
+
+          // debugger
+          // console.log(`mid-${mid}:::${match_height}`)
+
           // 列表页赛事数据
           match_datas.push(match);
           match_count++; //赛事容器数量加1

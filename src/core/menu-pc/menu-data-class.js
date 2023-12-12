@@ -157,7 +157,6 @@ class MenuData {
   // 设置当前选中的赛种
   set_current_ball_type(val) {
     this.current_ball_type = val
-    console.error('ssss',val)
     this.set_menu_data_version();
   }
 
@@ -721,7 +720,7 @@ class MenuData {
     this.set_bet_category();
 
     // 菜单数据缓存 //从元数据拿值
-    useMittEmit(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, {})
+    useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, {})
     useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, {}) //从接口拿值
     nextTick(()=>{
       SessionStorage.set(menu_key,this)
@@ -991,7 +990,13 @@ class MenuData {
   is_mix(mi) {
     return this._is_cur_mi(6, mi)
   }
-
+  /*
+    * 是否为电子赛事
+    *  mi [number|string] 要比对的值
+  */
+  is_electron_match(mi) {
+    return [190,191].includes(this.left_menu_result.lv1_mi * 1) 
+  }
   /**
    * 是否为首页
    *  mi [number|string] 要比对的值

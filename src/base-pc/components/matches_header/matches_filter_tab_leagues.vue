@@ -34,7 +34,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch, nextTick } from "vue";
-import { get_ouzhou_leagues_data } from "src/base-pc/components/match-list/list-filter/index.js"
+import { get_ouzhou_leagues_data, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import { compute_img_url } from 'src/core/server-img/index.js'
 import { useMittOn,MITT_TYPES } from 'src/output/index.js';
@@ -146,6 +146,7 @@ onUnmounted(() => {
   clearInterval(interval_id);
   interval_id = null;
   off()
+  un_mounted()
 })
 </script>
 

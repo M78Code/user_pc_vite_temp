@@ -151,7 +151,7 @@ const set_serving_side = (item, side) => {
 // 网球当前比分
 const tennis_point = ref([0,0])
 
-const emits = defineEmits('handleChange')
+const emits = defineEmits(['handle-change'])
 
 const start_text = ref(-1)
 
@@ -352,7 +352,7 @@ const get_sports_bg = (csid) => {
 
 const handleChange = (label)  => {
   console.log(111);
-  emits('handleChange', label)
+  emits('handle-change', label)
 }
 
 const set_basketball_score_icon_list = () => {

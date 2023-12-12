@@ -47,7 +47,7 @@ const router = createRouter({
         {
           path: "/virtual",  // vr体育
           name: "virtual_sports",
-          component: () => import("../pages/virtual/index.vue"),
+          component: () => import("src/base-h5/vr/pages/virtual/virtual.vue"),
         },
         {
           path: "/esports", // 电竞
@@ -106,7 +106,7 @@ const router = createRouter({
           {
             path: "/virtual_sports_details",
             name: "virtual_sports_details",
-            component: () => import("../pages/details/virtual-sports-details.vue"),
+            component: () => import("src/base-h5/vr/pages/virtual/virtual_sports_details.vue"),
             children: [
               {
                 path: "virtual_sports_category/:id?",
