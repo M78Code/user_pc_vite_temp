@@ -75,20 +75,15 @@ function match_list_all_params() {
     // 父级euid
     let euid = ''
     let api_name = api_params[menu_root]?.match || api_params[lv1_mi]?.match || api_params.other.match;
-    // 前端控制是否禁用收藏功能
-    // 前端配置写死，世界杯后删除
-    // 前端开    后台开       >开
-    // 前端开    后台关       >关
-    // 前端关    后台开       >关
-    // 前端关    后台关       >关
-    const enable_collect_api = window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.ENABLE_COLLECT_API;
     // type === "collect"
     if (is_collect) {
+        // 前端控制是否禁用收藏功能
+        // 前端配置写死，世界杯后删除
         // 前端开    后台开       >开
         // 前端开    后台关       >关
         // 前端关    后台开       >关
         // 前端关    后台关       >关
-        if (!enable_collect_api || !GlobalAccessConfig.get_collectSwitch()) {
+        if (!GlobalAccessConfig.GET_ENABLE_COLLECT_API() || !GlobalAccessConfig.get_collectSwitch()) {
             return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
         }
         apiType = 2
