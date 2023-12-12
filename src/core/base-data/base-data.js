@@ -540,11 +540,15 @@ class BaseData {
           if (!this.filterSport_arr.includes(item.mi)) {
             left_menu.push(Number(item.mi));
             // 计算菜单数量列表
-            if(item.sl){
-              let total = item.sl.reduce((cur,obj)=> {
-                return cur + Number(obj.ct)
-              },0)
-             item.ct = total
+            if(from == 'ws'){
+              item.ct = lodash_.get(list_obj,`${item.mi}`,item.ct) 
+            }else{
+              if(item.sl){
+                let total = item.sl.reduce((cur,obj)=> {
+                  return cur + Number(obj.ct)
+                },0)
+               item.ct = total
+              }
             }
             left_menu_mi.push(item)
           }
