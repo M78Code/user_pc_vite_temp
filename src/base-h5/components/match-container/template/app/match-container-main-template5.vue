@@ -7,7 +7,7 @@
       <!-- <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div> -->
      <!-- 开赛标题  -->
       <div v-if="is_show_opening_title" @click.stop="handle_ball_seed_fold"
-        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }]" >
+        :class="['match-status-fixed', { progress: +match.start_flag === 1, not_begin: +match.start_flag === 2 }, i !== 0 && 'mt5px']" >
         <!-- 进行中 -->
         <template v-if="+match.start_flag === 1">
           <div class="match-status-title">
@@ -429,6 +429,10 @@ export default {
       border-top: 2px solid rgba(233, 91, 91, 0.51);
     }
 
+    &.mt5px {
+      margin-top: .05rem;
+    }
+
     img {
       margin-right: .06rem;
       width: .13rem;
@@ -455,12 +459,31 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-15);
-
+    background: var(--q-gb-bg-c-18) !important;
+    // box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+    // border-radius: .04rem;
     .buffer-container {
       background: var(--q-gb-bg-c-17);
       height: 5px;
       width: 100%;
+    }
+    .match-content{
+      border-radius: 0 0 8px 8px;
+      &.collapsed{
+        border-top: none;
+      }
+    }
+    &.collapsed{
+      > .match-indent{
+        border-radius: 8px !important;
+        border-bottom: 1px solid #fff !important;
+        border: 1px solid #fff;
+      }
+    }
+    > .match-indent{
+      border: 1px solid #fff;
+      border-radius: 8px 8px 0 0 !important;
+      border-bottom: 1px solid #E4E6ED !important;
     }
   }
 
@@ -717,6 +740,7 @@ export default {
     border-bottom: 1px solid var(--q-gb-bg-c-19);
     border-top: 1px solid var(--q-gb-bg-c-19);
     border-color: var(--q-gb-bg-c-19) !important;
+    margin-top: 0.05rem;
     &.bottom {
       margin-top: 0.05rem;
     }
@@ -730,9 +754,12 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-18);
     line-height: 19px;
     font-size: 11px;
+    margin-bottom: -.05rem;
+    margin-top: 0;
+    border-bottom: 0;
 
     .score-inner-span {
       width: 100%;
@@ -745,7 +772,7 @@ export default {
   /* **************联赛展示********************** -S*/
   .league {
     height: 0.26rem;
-    border-radius: 0;
+    border-radius: .08rem .08rem 0 0;
 
     .league-t-wrap {
       width: 100%;
@@ -811,8 +838,8 @@ export default {
 
   .match-content {
     width: 100%;
-    background: var(--q-gb-bg-c-18);
-    padding: 0 9px;
+    background: var(--q-gb-bg-c-17);
+    padding: 4px 9px 0;
 
     .event-team {
       padding: 8px 0;
@@ -917,6 +944,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: .01rem solid var(--q-gb-bg-c-19);
       // padding: 4px 0 0;
 
       .right {

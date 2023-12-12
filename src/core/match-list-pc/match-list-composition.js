@@ -60,7 +60,7 @@ useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, ({ is_socket = undefined }) => {
 	}, 80);
 })
 //请求元数据
-useMittOn(MITT_TYPES.EMIT_UPDATE_CURRENT_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 50));
+useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, lodash.debounce(init_page_when_base_data_first_loaded, 50));
 /**
 * @description 请求数据
 * @param  {boolean} is_socket   是否 socket 调用
@@ -238,6 +238,10 @@ function handle_destroyed() {
  * 元数据加载的方法
  */
 function init_page_when_base_data_first_loaded() {
+	// 首页不走元数据加载  不需要设置元数据loading状态 loading状态已经设置过了
+	if (MenuData.is_home()) {
+		return
+	}	
 	set_load_data_state("loading") //loading
 	//设置元数据 列表 返回boolean
 	if (PROJECT_NAME == 'ouzhou-pc') {

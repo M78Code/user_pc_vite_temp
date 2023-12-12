@@ -1,5 +1,5 @@
 <!--
- * 早盘，今日赛事页面
+ * 欧洲版早盘，今日赛事页面
 -->
 <template>
   <tab-date v-show="!store.isLeagueDetail" @changeTab="onTabChange" @changeDate="onChangeDate" @changeArea="onChangeArea"/>
@@ -70,7 +70,6 @@ onMounted(() => {
       if (!BaseData.is_emit) {
         MatchMeta.set_origin_match_data()
       }
-      console.log('MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE')
     }).off,
     emitter_2: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, () => {
       store.isLeagueDetail = false
