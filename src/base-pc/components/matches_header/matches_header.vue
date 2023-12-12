@@ -166,7 +166,7 @@ const set_tab_list = (news_) =>{
 	}
 	
 	// 左侧菜单
-	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp() || !MenuData.is_esports()){
+	if(MenuData.is_left_today() || MenuData.is_left_zaopan() || MenuData.is_common_kemp()){
 		let sport_tab = lodash_.get( ref_data.ouzhou_filter_config,'sport_tab', [])  
 		if ([90, 91].includes(+MenuData.current_ball_type)) {
 			sport_tab = sport_tab.filter((n)=>{return n.value != 4003 && n.value != 4002})
