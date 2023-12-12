@@ -80,7 +80,7 @@
               <q-slider
                 readonly
                 reverse
-                :model-value="cale_score(score_list['S111']['home'])"
+                :model-value="+score_list['S111']['home']"
                 :min="0"
                 :max="100"
                 track-size="5px"
@@ -90,7 +90,7 @@
               />
               <q-slider
                 readonly
-                :model-value="cale_score(score_list['S111']['away'])"
+                :model-value="+score_list['S111']['away']"
                 :min="0"
                 :max="100"
                 track-size="5px"
