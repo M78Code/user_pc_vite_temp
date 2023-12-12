@@ -1,38 +1,48 @@
 <template>
-  <div class="match-tpl-101 flex flex-start items-center">
+  <div class="match-tpl-101">
     <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
-    <!-- 赛事基础信息 -->
-    <div class="basic-col"
-      :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
-      <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
-      <component :is="current_basic_info()" :match="match" show_type="all"></component>
-      <!-- <basis-info101 :match="match" show_type="all" /> -->
-      <!-- <basis-info105 v-else :match="match" show_type="all" /> -->
+    <div class="flex flex-start items-center">
+      <!-- 赛事基础信息 -->
+      <div class="basic-col"
+        :style="`width:${match_list_tpl_size.process_team_width}px !important;height:80px !important;`">
+        <!-- 比赛进程 网球，羽毛球用105模板，别的用101 -->
+        <component :is="current_basic_info()" :match="match" show_type="all"></component>
+        <!-- <basis-info101 :match="match" show_type="all" /> -->
+        <!-- <basis-info105 v-else :match="match" show_type="all" /> -->
+      </div>
+      <!-- 竖线 -->
+      <div class="vertical-line"></div>
+      <!-- 图标信息 -->
+      <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
+        <icon-box :match="match"></icon-box>
+      </div>
+      <!-- 投注信息 -->
+      <match-handicap :handicap_list="handicap_list" use_component_key="MatchHandicap2" />
+      <!-- 比分板 -->
+      <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
+        :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
+        <!-- 图片资源有问题，先用文字替代  -->
+        <div
+          :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })">
+        </div>
+      </div>
     </div>
-    <!-- 竖线 -->
-    <div class="vertical-line"></div>
-    <!-- 图标信息 -->
-    <div :style="`width:${match_list_tpl_size.play_icon_width}px !important;`">
-      <icon-box :match="match"></icon-box>
-    </div>
-    <!-- 投注信息 -->
-    <match-handicap :handicap_list="handicap_list" use_component_key="MatchHandicap2" />
-    <!-- 比分板 -->
-    <div v-tooltip="{ content: i18n_t('common.score_board') }" class="score-board"
-      :style="`width:${match_list_tpl_size.media_width}px !important;`" @click="jump_to_details()">
-      <!-- 图片资源有问题，先用文字替代  -->
-      <div :style="compute_css_obj({ key: current_mid == match.mid && MenuData.is_scroll_ball() ? 'pc-home-score-active' : 'pc-home-score-board' })"></div>
+    <div class="flex" v-if="match_style_obj.data_tpl_id==109">
+      <div :style="`width:${match_list_tpl_size.process_team_width}px !important;height:28px !important;`">
+      </div>
+      <div class="flex col items-start">
+        <!-- 赛事比分 -->
+        <MatchFooterScore use_component_key="MatchFooterScore2" :match_style_obj="match_style_obj"   :match="match" style="width: 100%;" :is_show_score_content="true">
+        </MatchFooterScore>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
-import { ref, watch, defineProps, nextTick, inject } from 'vue';
-import lodash from 'lodash'
-
-import { MatchDataWarehouse_PC_List_Common as MatchListData, MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
-import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
+import { ref, watch,  inject } from 'vue';
+import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/base-pc/components/match-list/match-footer-score/index.js"
+import {MenuData, MatchDataWarehouse_PC_Detail_Common as MatchDataWarehouseInstance, } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import { socket_remove_match } from "src/core/match-list-pc/match-list-composition.js";
@@ -50,18 +60,18 @@ export default {
     BasisInfo101,
     BasisInfo105,
     MatchHandicap,
-    IconBox
+    IconBox, MatchFooterScore
   },
   props: {
-      is_show_more: {
-        type: Boolean,
-        default: () => false
-      },
+    is_show_more: {
+      type: Boolean,
+      default: () => false
+    },
   },
   setup(props) {
     const router = useRouter()
-    const match=inject("match")
-    const {mid}=match.value||{}
+    const match = inject("match")
+    const { mid } = match.value || {}
     let match_style_obj = MatchListCardDataClass.get_card_obj_bymid(mid)
     let current_mid = MatchListCardDataClass.current_mid;
     //101号模板 默认就是 101的宽高配置 不会改变
@@ -79,14 +89,14 @@ export default {
         handicap_list.value = match_tpl_info.get_current_odds_list(MatchListCardDataClass.get_csid_current_hpids(csid))
       }
     }, { deep: true, immediate: true })
-    
+
     watch(() => MatchListCardDataClass.current_mid, (new_value, old_value) => {
       current_mid = new_value
     }, { deep: true, immediate: true })
-    
-    watch(() => [match.value.ms, match.value.mmp],() => {
+
+    watch(() => [match.value.ms, match.value.mmp], () => {
       if (match.value?.mmp || match.value?.ms) {
-        check_match_end(match.value, socket_remove_match)      
+        check_match_end(match.value, socket_remove_match)
       }
     }, { immediate: true, deep: true })
     function current_basic_info() {
@@ -104,12 +114,12 @@ export default {
     // })
     function jump_to_details() {
       const { tid, csid, mid } = match.value;
-      MatchListCardDataClass.set_current_mid(mid); 
-      if(MenuData.is_scroll_ball()){
+      MatchListCardDataClass.set_current_mid(mid);
+      if (MenuData.is_scroll_ball()) {
         // 控制右侧比分板
         MatchDataWarehouseInstance.set_match_details(match.value, [])
         useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mid);
-      }else {
+      } else {
         //比分板跳转到详情页
         router.push({
           name: 'details',
@@ -132,7 +142,8 @@ export default {
       handicap_list,
       match,
       MenuData,
-      current_mid
+      current_mid,
+      match_style_obj
     }
   }
 }

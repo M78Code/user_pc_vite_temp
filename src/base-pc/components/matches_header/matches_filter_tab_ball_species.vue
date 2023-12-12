@@ -1,7 +1,7 @@
 <template>
   <div class="current-filter-wrap" ref="area_obj_wrap">
     <div class="current-filter-list" @scroll="on_scroll" ref="area_obj">
-      <div v-show="false">{{UserCtr.user_version}}-{{BaseData.base_data_version}}</div>
+      <div v-show="false">{{UserCtr.user_version}}-{{BaseData.base_data_version}}-{{MenuData.menu_data_version}}</div>
       <!-- 常规体育 -->
       <!-- 暂时只显示足、篮 => [101, 102] -->
       <template v-for="(item, index) in mi_100_arr" :key="index">
@@ -10,7 +10,7 @@
             <div class="filter-tab-item">
               <div class="filter-icon">
                 <sport-icon :sport_id="BaseData.compute_sport_id(item.mif)" :key_name="MenuData.menu_current_mi == item.mi ?'pc-left-menu-bg-active-image':'pc-left-menu-bg-image'"  size="22" class="icon" />
-                <div class="filter-count">{{ item.ct || 0 }}</div>
+                <div class="filter-count" v-if="!MenuData.is_collect">{{ item.ct || 0 }}</div>
               </div>
               <div :class="{ checked_text: MenuData.menu_current_mi == item.mi }" class="label-text">
                 {{  BaseData.menus_i18n_map[MenuData.is_kemp()? item.mi : item.mif] || "" }}
@@ -79,11 +79,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, reactive } from "vue";
+import { ref, onMounted, onBeforeUnmount, reactive, nextTick, watch } from "vue";
 import sportIcon from "src/components/sport_icon/sport-icon.vue";
 import BaseData from "src/core/base-data/base-data.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1 } from "src/base-pc/components/match-list/list-filter/index.js"
+import { mi_100_arr,mi_2000_arr,handle_click_menu_mi_1,handle_click_menu_mi_400,resolve_mew_menu_res, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
 import { MenuData ,useMittOn,MITT_TYPES, } from "src/output/index.js"
 import { compute_img_url } from 'src/core/server-img/index.js'
 
@@ -105,25 +105,40 @@ const ref_data = reactive({
 // const top_events = ref([ 101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,114, 104, 106, 118, 400, 300,]);
 
 onMounted(() => {
-  if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
-    show_right_btn.value = true;
-  }
-
   //判断接口是否正常返回数据
   const { current_mi } = MenuData.mid_menu_result
-
   if (!current_mi) {
     // 默认选中当前第一个tab
-    handle_click_menu_mi_1({mi:1011,mif:101})
+    if(MenuData.is_kemp()){
+      handle_click_menu_mi_400({mi:401,mif:101})
+    }else{
+      handle_click_menu_mi_1({mi:1011,mif:101})
+      if(MenuData.is_scroll_ball()){
+        resolve_mew_menu_res()
+      }
+    }
     return
   }
-
-  handle_click_menu_mi_1({mi: current_mi ,mif: current_mi+''.substring(0,3) })
-
-  ref_data.emit_lsit = {
-      emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, set_ref_base_menu).off,
+  if(MenuData.is_kemp()){
+    handle_click_menu_mi_400({mi: current_mi ,mif: current_mi -100 })
+  }else{
+    handle_click_menu_mi_1({mi: current_mi ,mif: current_mi -100 })
   }
 
+  ref_data.emit_lsit = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE, set_ref_base_menu).off,
+  }
+  un_mounted()
+})
+
+watch(() => mi_100_arr.value , () => {
+  nextTick(() => {
+    if (area_obj.value?.scrollWidth > area_obj_wrap.value?.clientWidth) {
+      show_right_btn.value = true;
+    } else {
+      show_right_btn.value = false;
+    }
+  })
 })
 
 // 菜单数量修改
@@ -141,25 +156,6 @@ const set_ref_base_menu = (list=[] ) => {
 }
 /**
  * 
- * @param {Number} item.mi
- * @description 过滤mi<300
- */
-
-const filter_min_mi_300 = (originalArray)=>{
-  return originalArray.filter(item => parseInt(item.mi) < 300&&item.ct>0);
-}
-
-/**
- * 
- * @param {Number} item.mi
- * @description 过滤ct=0的列表数据
- */
-
- const filter_ct_list = (originalArray)=>{
-  return originalArray.filter(item => item.ct>0);
-}
-/**
- * 
  * @param {Number} item.mif 
  * @description 当前选择的tab高亮 通过id属性映射
  */
@@ -167,7 +163,11 @@ const filter_min_mi_300 = (originalArray)=>{
  
 const choose_filter_tab = (item) => {
   // 获取最新的 数据
-  handle_click_menu_mi_1(item)
+  if(MenuData.is_kemp()){
+    handle_click_menu_mi_400(item)
+  }else{
+    handle_click_menu_mi_1(item)
+  }
   MenuData.set_current_ball_type(item.mif - 100)
 };
 
@@ -183,7 +183,7 @@ const on_scroll = (e) => {
   }else{
     show_left_btn.value = false;
   }
-  if(scrollLeft == (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
+  if((scrollLeft + 2) >= (area_obj.value.scrollWidth - area_obj.value.clientWidth)){
     show_right_btn.value = false;
   }else{
     show_right_btn.value = true;
@@ -348,6 +348,7 @@ onBeforeUnmount(() => {
   align-items: center;
   position: absolute;
   top: 0;
+  z-index: 3;
   .shadow-box {
     width: 10px;
     height: 55px;

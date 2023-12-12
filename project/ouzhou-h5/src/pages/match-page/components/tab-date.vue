@@ -3,28 +3,31 @@
     <div class="header">
         <div class="tabs">
             <div v-for="(item, index) in tabList" :key="'tabs' + index" class="tabs-item"  
-                :class="store.tabActive === item ? 'active' : ''">
-                <span @click="changeTab(item, index)">{{
+                >
+                <span :class="['tabs-item-text', store.tabActive === item ? 'active' : '']" @click="changeTab(item, index)">{{
                     i18n_t(`ouzhou.match.${item?.toLowerCase()}`)
                 }}</span>
-            </div>
-            <!-- league的下拉项 -->
-            <div class="select" v-if="store.tabActive == 'League'" @click="toggerModel">
-                <span class="select-text" ref="dateOptionsRef">{{
-                    i18n_t(store.curSelectedOption.label)   
-                }}</span>
-                <span class="down_arrow"></span>
-            </div>
-            <template v-if="store.tabModel && store.tabActive == 'League'">
-                <ul class="option-list" :style="DateOptionsOffset">
-                    <template v-for="(item, index) in store.selectOptions" :key="index">
-                        <li :class="store.dateIndex == index ? 'active' : ''
-                            " @click="changeDate(index)">
-                            {{ i18n_t(item.label) }}
-                        </li>
+                <template v-if="item === 'League'">
+                    <!-- league的下拉项 -->
+                    <div class="select" v-if="store.tabActive == 'League'" ref="dateOptionsRef" @click="toggerModel">
+                        <span class="select-text">{{
+                            i18n_t(store.curSelectedOption.label)   
+                        }}</span>
+                        <span :class="['down_arrow', store.tabModel && 'down_arrow_active']"></span>
+                    </div>
+                    <template v-if="store.tabModel && store.tabActive == 'League'">
+                        <ul class="option-list" :style="DateOptionsOffset">
+                            <template v-for="(item, index) in store.selectOptions" :key="index">
+                                <li :class="store.dateIndex == index ? 'active' : ''
+                                    " @click="changeDate(index)">
+                                    {{ i18n_t(item.label) }}
+                                </li>
+                            </template>
+                        </ul>
                     </template>
-                </ul>
-            </template>
+                </template>
+            </div>
+         
         </div>
         <!-- :class="'store.current_menu_mi_' + store.current_menu_mi" -->
         <div :style="{ backgroundPositionY: `${farmatSportImg(store.current_menu_mi)}px` }"
@@ -73,20 +76,25 @@ import { store } from "project_path/src/pages/match-page/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 import STANDARD_KEY from "src/core/standard-key";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+import { api_common } from "src/api";
 const menu_h5 = STANDARD_KEY.get("menu_h5");
 const emitters = ref({})
 const emit = defineEmits(["changeDate", "changeTab", "changeArea"]);
 const scrollDateRef = ref(null);
 const scrollRefArea = ref(null);
 const dateOptionsRef = ref(null);
-const week = dateWeekMatchesFormat();
+// const week = dateWeekMatchesFormat();
+const week = ref([]);
 const tabList = computed(()=>{
-    return MenuData.menu_list.map((item)=>{return +item.mi}).includes(400)?store.tabOptions:store.tabOptions.filter(n=>{return n !=='Outrights'})
+    const menu_list = MenuData.menu_list.map((item)=>{return +item.mi});
+    const matches = store.tabOptions.filter(n=>{return n ==='Matches'});//电足电篮不展示冠军和联赛
+    const not_outrights = store.tabOptions.filter(n=>{return n !=='Outrights'});
+    return [190,191].includes(+store.current_menu_mi)?matches:menu_list.includes(400)?store.tabOptions:not_outrights;
 })
 const DateOptionsOffset = computed(() => {
     const domWidth = document.body.clientWidth || document.documentElement.clientWidth
     const selfWitdh = 160
-    const offset = dateOptionsRef.value.offsetLeft
+    const offset = dateOptionsRef.value[0].offsetLeft
     const exceed = domWidth - (selfWitdh + offset)
     let result = offset
     if (exceed < 0) { // 超出
@@ -96,6 +104,31 @@ const DateOptionsOffset = computed(() => {
         'left': result + 'px'
     }
 })
+/**
+ * 获取对应日期
+ */
+const getDateList = async () =>{
+    const euid = MenuData.get_euid(`${MenuData.menu_mi.value}3`);
+    if(!euid || [190,191].includes(+MenuData.menu_mi.value)){
+        return [{name:i18n_t('ouzhou.match.today'),val:'',type:0}];
+    };
+    // 3020212  118  娱乐
+    const params = {
+        euid:MenuData.get_euid(`${MenuData.menu_mi.value}3`),
+    };
+    const res = await api_common.post_date_menu(params);
+    if(res?.code == '200'){
+        const data = res?.data?.filter((n)=>{return !!n.field1}).map((item)=>{
+            return {
+                name: item.menuName,
+                val: item.field1,
+                type: 1
+            }
+        })||[];
+        return [...[{name:i18n_t('ouzhou.match.today'),val:'',type:0}],...data]
+    }
+    return [];
+};
 /**
  * tab点击
  * @param {*} name 
@@ -107,7 +140,7 @@ const changeTab = (name, index) => {
     store.dateIndex = 0
     emit("changeTab", name);
     if (name === 'Matches') {
-        changeDatetab(week[0], 0)
+        changeDatetab(week.value[0], 0)
     }
 }
 /**
@@ -134,7 +167,7 @@ const changeDate = (index) => {
 const changeDatetab = (item, index) => {
     if (store.menu_time === item?.val) return
     store.tabModel = false;
-    const move_index = week.findIndex((t, _index) => _index === index);
+    const move_index = week.value.findIndex((t, _index) => _index === index);
     scrollDateRef.value && scrollDateRef.value.scrollTo(move_index - 2, "start-force");
     store.second_tab_index = index;
     // MenuData.set_date_time(item.val, item.type);
@@ -160,37 +193,31 @@ const changeDatetab = (item, index) => {
     
     emit("changeDate", item.val);
 };
-
 /**
- * 默认请求今日数据
- * @param {*} mi 
+ * 默认请求数据
+ * @param {*} val 
  */
-const setDefaultData = (val) => {
-    // 重置
-    // store.tabActive = 'Matches'
-    MenuData.set_current_lv1_menu(2);
-    // MenuData.set_menu_mi(val);
+const setDefaultData = async (val,type) => {
+    // 刷新or更换球种 重置
+    if(!type){
+        MenuData.set_current_lv1_menu(2);
+        store.tabActive = 'Matches';
+        store.second_tab_index = 0;
+        store.menu_time = week.value[0].val;
+    }
     store.current_menu_mi = val;
-    //球种改变设置今日
-    // MenuData.set_date_time(week[0].val);
-    store.menu_time = week[0].val
-    store.second_tab_index = 0;
-    scrollDateRef.value && scrollDateRef.value.scrollTo(0, "start-force");
+    week.value = await getDateList();
+    //滚动到缓存位置
+    const index =  week.value.findIndex((item)=>{return item.val === store.menu_time});
+    scrollDateRef.value && scrollDateRef.value.scrollTo(index?index-2:0, "start-force");
+    
 }
-
-watch(() => store.areaList, () => {
-    // console.log(store.areaList.lenght)
-    // if (store.areaList.lenght) {
-    //     const index = store.areaList.findIndex(i => i.id === store.selectArea.id)
-    //     const offset = index < 0 ? 0 : index
-    //     areaListChange(store.areaList[offset], offset)
-    // }
-})
-onMounted(() => {
+onMounted(async () => {
     //当前激活球种id  如果本地有存储值就取本地存储的值
     const session_info = LocalStorage.get(menu_h5);
-    setDefaultData(session_info?.menu_mi || MenuData.menu_mi.value || '101');//默认足球
+    setDefaultData(session_info?.menu_mi || MenuData.menu_mi.value || '101',1);//默认足球
     store.curSelectedOption = store.selectOptions[0]
+    week.value = await getDateList();
     emitters.value = {
         emitters_1: useMittOn(MITT_TYPES.EMIT_OUZHOU_LEFT_MENU_CHANGE, setDefaultData).off
     }
@@ -224,25 +251,29 @@ const areaListChange = (item) => {
     .tabs {
         width: 100%;
         height: 49px;
-        padding: 16px 0 15px 21px;
+        padding: 0px 0 0px 21px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         border-bottom: 1px solid var(--q-gb-bg-c-1);
         position: relative;
+        box-sizing: border-box;
 
         div {
             font-weight: 500;
-            padding: 11px 0 11px;
+            // padding: 11px 0 11px;
             color: rgba(138, 137, 134, 1);
             border-bottom: 3px solid rgba(255, 255, 255, 0);
-            height: 49px;
+            height: .49rem;
             display: flex;
             align-items: center;
-
-            span {
-                height: 19px;
-            }
+        }
+        .tabs-item-text {
+            height: .5rem;
+            display: flex;
+            align-items: center;
+            padding-top: .14rem;
+            border-bottom: 3px solid transparent;
         }
 
         .select {
@@ -250,8 +281,10 @@ const areaListChange = (item) => {
             align-items: center;
             z-index: 2;
             font-weight: 400;
-            padding-top: 0.16rem;
+            padding-top: 0.14rem;
             justify-content: flex-start;
+            margin-left: 0.05rem;
+            padding-bottom: 0.03rem;
 
             :deep(.q-field__control) {
                 &::before {
@@ -267,6 +300,10 @@ const areaListChange = (item) => {
 
             .down_arrow {
                 position: relative;
+            }
+
+            .down_arrow_active {
+                transform: rotate(180deg);
             }
 
             .down_arrow::after {
@@ -312,7 +349,7 @@ const areaListChange = (item) => {
 
     // 七天时间tabs样式
     .date_time {
-        /* height:44px; */
+        height:55px;
         min-width: 100%;
         display: flex;
         align-items: center;
@@ -413,6 +450,7 @@ const areaListChange = (item) => {
 
         :deep(.scroll) {
             width: 100%;
+            height:100%;
             border-bottom: 10px solid #E2E2E2;
         }
     }

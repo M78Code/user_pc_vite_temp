@@ -11,7 +11,7 @@
       v-show="the_first_time_show"
     >
       <img
-        src="/public/yazhou-h5/image/svg/go-back-icon-theme02.svg"
+        :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/common/go-back-icon-theme02.svg`"
         class="back_btn"
         @click="go_where({ back_to: 'go_back_from_activity' })"
         v-show="is_maintaining"
@@ -19,7 +19,7 @@
       <!-- 活动返回按钮 及 标题 -->
       <div class="head yb_px14 yb_fontsize14" v-if="!isAPP && !is_maintaining">
         <img
-          src="/public/yazhou-h5/image/svg/go-back-icon-theme02.svg"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/common/go-back-icon-theme02.svg`"
           @click="go_where({ back_to: 'go_back_from_activity' })"
         />
         <span>{{
@@ -46,7 +46,7 @@
           </div>
         </div>
         <!-- 每日任务组件 -->
-        <growth-task
+        <GrowthTask
           v-if="tab_Id == 10007"
           :key="'daily'"
           :isIphoneX="isIphoneX"
@@ -79,15 +79,18 @@
           :key="'lucky'"
           @to_maintenance="to_maintenance"
         />
+        
         <SlotMachine
           v-if="tab_Id == 10010"
           :isIphoneX="isIphoneX"
           :inStartTime="inStartTime"
           :inEndTime="inEndTime"
           :activityIndex="activity_index"
-          :key="'lucky'"
+          :key="'SlotMachine'"
           @to_maintenance="to_maintenance"
         />
+
+       
       </div>
       <!-- 活动挂维护页面 -->
       <div v-show="is_maintaining" class="maintain-main">
@@ -166,7 +169,8 @@ export default {
   .activity_task-header {
     width: 100%;
     padding-top: 100%;
-    background: var(--q-color-com-img-bg-148) no-repeat;
+    background: var(--qq--color-com-img-bg-148) no-repeat;
+    // backgrounurl($SCSSPROJECTPATH+"/ty/activity/yazhou-h5/activity/activity-header_slot.png") no-repeat;
     background-size: 100% auto;
     background-color: #fdfcfa;
     background-position: center;
@@ -233,7 +237,7 @@ export default {
   left: 0;
   bottom: 0;
   right: 0;
-  background: var(--q-color-com-img-bg-131) no-repeat;
+  background: var(--qq--color-com-img-bg-131) no-repeat;
   background-size: 100% 100%;
 
   .maintain-main {

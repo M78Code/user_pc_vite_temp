@@ -10,7 +10,8 @@ import {
   axios_loop as axios_api_loop,
   MenuData,
   SearchData,
-  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5
+  MatchDataWarehouse_H5_List_Common as MatchDataBaseH5,
+  LocalStorage
 } from "src/output/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import * as ws_message_listener from "src/core/utils/common/module/ws-message.js";
@@ -273,7 +274,7 @@ export const details_main = (router, route) => {
   function update_data(val) {
     if (!val) return;
     match_detail.value = getMidInfo(val);
-    match_odds_info.value = lodash.get(getMidInfo(val), "odds_info");
+    match_odds_info.value = lodash.get(getMidInfo(val), "odds_info",[]);
   }
   /**
    * @description: 从仓库获取获取赛事信息
@@ -521,7 +522,8 @@ export const details_main = (router, route) => {
   }
   let message_fun = null;
   onMounted(() => {
-    console.log(MatchDataBaseH5.get_quick_mid_obj(mid.value),'MatchDataBaseH5.get_quick_mid_obj(mid)');
+    // MatchDataWarehouseInstance.value.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
+    // match_detail.value = MatchDataWarehouseInstance.value.get_quick_mid_obj(mid.value);
     // match_odds_info.value = lodash.get(MatchDataBaseH5.get_quick_mid_obj(mid.value),"hps","[]")
     // match_detail.value = MatchDataBaseH5.get_quick_mid_obj(mid.value) || []
     loading.value = true;
@@ -589,11 +591,20 @@ export const details_main = (router, route) => {
       })
     }
   });
+  const  get_info_show = ref(false)
+  // 控制视频说明弹窗
+  const video_description_show = (is_show) => {
+      get_info_show.value = is_show
+  }
+  const {off:off_video_show} = useMittOn(MITT_TYPES.EMIT_VIDEO_DESCRIPTION_SHOW, video_description_show)
   onUnmounted(()=>{
     //关闭监听
     off()
+    //关闭视频信息订阅
+    off_video_show()
     // 关闭详情订阅
     MatchDataWarehouseInstance.value.set_active_mids([])
+    LocalStorage.remove("YUAN_MATCH_DETAIL_DATA")
   })
   // 监听赛事状态mmp的值
   watch(
@@ -746,5 +757,6 @@ export const details_main = (router, route) => {
     touchstart,
     detail_tabs_change,
     allCloseState,
+    get_info_show
   };
 };

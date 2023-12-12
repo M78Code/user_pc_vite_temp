@@ -6,8 +6,13 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div class="match-detail-odds" ref="scrollRef">
-    <div v-for="item in matchDetail" :key="item.topKey" :class="{'odds-wrap':item.hl[0].hs != 2}">
+    <div
+      v-for="item in matchDetail"
+      :key="item.topKey"
+      :class="{ 'odds-wrap': item.hl[0].hs != 2 }"
+    >
       <q-expansion-item
+      v-if="item.hl[0].hs != 2"
         v-model="item.expanded"
         :expand-icon-toggle="false"
         :hide-expand-icon="true"
@@ -17,9 +22,11 @@
       >
         <!-- 赛事玩法名称  hs: 0开 1封 2关 11锁  -->
         <template v-slot:header>
-          <div class="odds-item" v-if="item.hl[0].hs != 2">
-        {{ item.hpn }}
-            <span v-if="item.hps&&get_match_status(detail_info.ms) == 1"> ({{ item.hps.split("|")[1] }}) </span>
+          <div class="odds-item">
+            {{ item.hpn }}
+            <span v-if="item.hps && get_match_status(detail_info.ms) == 1">
+              ({{ item.hps.split("|")[1] }})
+            </span>
             <!-- 一键置顶 -->
             <img
               :src="parseInt(item.hton) > 0 ? set_top__active_png : set_top_png"
@@ -58,7 +65,7 @@
                   class="odds-title-li"
                 >
                   <span
-                    v-if="![0, 1, 2, 3, 7, 10, 18].includes(item.hpt)"
+                    v-if="![0, 1, 2, 3, 7, 10,14, 18].includes(item.hpt)"
                     class="handicap-value-text"
                     >{{ opt.osn }}</span
                   >
@@ -84,7 +91,6 @@
                               'tem4-active': BetData.bet_oid_list.includes(
                                 ol.oid
                               ),
-                             
                             }"
                             @click="betItemClick(item.hl[0], ol, item.hpn)"
                           >
@@ -123,8 +129,9 @@
             </div>
             <!-- 公共模板 -->
             <common-template
-              v-if="[0, 1, 2, 3, 7, 10].includes(item.hpt) && item.hpid != 103"
+              v-if="[0, 1, 2, 3, 7, 10,13,14,15].includes(item.hpt) && item.hpid != 103"
               :match_info="item"
+              :get_icon="get_icon"
               :current_ol="current_ol"
               @betItemClick="betItemClick"
             />
@@ -142,6 +149,14 @@
               :match_info="item"
               :hpid="item.hpid"
               :current_ol="current_ol"
+              @betItemClick="betItemClick"
+            />
+             <!-- vr 虚拟体育模板 -->
+             <virtual-template
+              v-if="[11].includes(item.hpt)"
+              :match_info="item"
+              :current_ol="current_ol"
+              :get_icon="get_icon"
               @betItemClick="betItemClick"
             />
           </q-card-section>
@@ -169,17 +184,20 @@
     </div> -->
 
     <back-top :scroll-ele="scrollRef" />
-
   </div>
 </template>
 
 <script setup>
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { onMounted, ref, computed } from "vue";
-import { LOCAL_PROJECT_FILE_PREFIX ,get_match_status} from "src/output/index.js";
+import {
+  LOCAL_PROJECT_FILE_PREFIX,
+  get_match_status,
+} from "src/output/index.js";
 import template5 from "./template5.vue";
 import template18 from "./template18.vue";
 import commonTemplate from "./common-template.vue";
+import virtualTemplate from "./virtual-template.vue";
 import betItem from "./bet-item-list-new-data.vue";
 import { BackTop } from "src/components/back-top";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js";
@@ -225,7 +243,6 @@ const columnTotal = (item) => {
   return `repeat(${total}, 1fr)`;
 };
 
-
 //  模板4 数据处理
 const sun_ol = (ol, item) => {
   let maxCount = 0;
@@ -270,6 +287,13 @@ const sun_ol = (ol, item) => {
 // 一键置顶
 const set_top = (item) => {
   useMittEmit(MITT_TYPES.EMIT_SET_PLAT_TOP, item);
+};
+// 获取图片
+const get_icon = (otn) => {
+  return new URL(
+    `${LOCAL_PROJECT_FILE_PREFIX}/image/ranking/${props.detail_info.csid}_${otn}.png`,
+    import.meta.url
+  ).href;
 };
 
 //  投注项点击投注,
@@ -384,10 +408,11 @@ onMounted(() => {});
 
 .tem4 {
   height: 45px;
-  line-height: 45px;
+  // line-height: 45px;
   // padding: 0 20px;
   display: flex;
   font-weight: 500;
+  align-items: center;
   // justify-content: center;
   color: var(--q-gb-t-c-5);
   //  border-top: 1px solid #E2E2E2;
@@ -397,18 +422,22 @@ onMounted(() => {});
   span {
     &:nth-child(1) {
       width: 50%;
-      display: block;
       text-align: right;
       padding-right: 20px;
       overflow: hidden;
+      text-overflow: ellipsis;
+       display: -webkit-box; /*1*/
+      -webkit-line-clamp: 2; /*2*/ /*第几行裁剪*/
+      -webkit-box-orient: vertical; /*3*/
       color: var(--q-gb-t-c-5);
     }
     &:nth-child(2) {
       overflow: hidden;
       width: 50%;
       min-width: 100px;
-      display: block;
-      margin-left: -40px;
+      display: flex;
+     justify-content: flex-start;
+     margin-left: 15px;
       color: var(--q-gb-t-c-2);
     }
   }
@@ -432,7 +461,7 @@ onMounted(() => {});
   }
 
   &:hover {
-    background:var(--q-gb-bg-c-5) !important;
+    background: var(--q-gb-bg-c-5) !important;
     // color: var(--q-gb-t-c-1);
   }
 }

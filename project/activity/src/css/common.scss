@@ -172,10 +172,10 @@
     display: none;
   }
   .custom-format-web-icon-05 {
-    background-image: url("~public/image/common/svg/novideo@2x.png") !important;
+    background-image: url("/activity/image/common/svg/novideo@2x.png") !important;
   }
   .custom-format-web-icon-06 {
-    background-image: url("~public/image/common/png/novideo.png") !important;
+    background-image: url($SCSSPROJECTPATH+"/image/common/png/novideo.png") !important;
   }
   .match-hot {
     position: absolute;
@@ -183,9 +183,7 @@
     left: 0px;
     height: 20px;
   }
-  .q-scrollarea {
-    contain: none;
-  }
+ 
   
   /* 自定义滚动条 */
   [class*=theme0] {

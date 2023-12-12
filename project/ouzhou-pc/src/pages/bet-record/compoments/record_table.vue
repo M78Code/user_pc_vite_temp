@@ -48,8 +48,8 @@
               <template v-if="props.row.seriesType != '1' || props.row.seriesType == '3'">{{props.row.seriesValue}}</template>
               <!-- 单关 -->
               <template v-else>
-                <template v-for="(item, index) in props.row.orderVOS">
-                  <div>{{ match_type[item.matchType] }}</div>
+                <template v-for="(item, index) in props.row.orderVOS" :key="index">
+                  <div>{{matchType(item.matchType, props.row.langCode)}}</div>
                   <span>
                   {{ item.playName }}
                   <span
@@ -64,13 +64,12 @@
             <q-td key="detail" :props="props">
               <div class="detail-options">
                 <div class="record-detail-list">
-                  <div v-for="(item, index) in props.row.orderVOS" class="record-detail">
+                  <div v-for="(item, index) in props.row.orderVOS" :key="index" class="record-detail">
                     <div class="record-detail-item">
                       <div class="record-detail-icon">
-                        <sport_icon :sport_id="item.sportId" :status="false" size="18px" class="icon"
-                                    style="margin:0 10px" />
+                       
+                        <sport-icon :sport_id="cts_mid.includes(props.row.managerCode*1) ? item.sportId == 1 ? '90': 91  : item.sportId" key_name="pc-left-menu-bg-image" size="18" class="icon"  style="margin:0 10px"/>
                       </div>
-
                       <span> {{ item.matchName }}</span>
                       <span v-if="item.matchType !=3" style="color:#8A8986">{{ item.matchInfo }}</span>
                       <span>
@@ -79,7 +78,7 @@
                         <!-- （1-1） -->
                           <span v-if="item.matchType != 1 && item.scoreBenchmark && item.playId != '334'">({{format_score(item.scoreBenchmark)}})</span>
                         <!-- [欧洲盘]-->
-                          <span>[{{marketType(item.marketType, props.row.langCode)}}]</span>                      </span>
+                          <span>[{{marketType(item.marketType, props.row.langCode)}}]</span></span>
                       <div>
                         <span>{{ item.marketValue }}</span>
                         <span style="margin-left:15px;color:#ff7000">@{{ item.oddFinally }}</span>
@@ -95,10 +94,6 @@
                         v-if="!props.row.acCode && item.beginTime&&props.row.seriesType!=3"
                       >{{formatTime(item.beginTime, lang=='vi'?'hh:MM dd/mm':'mm/dd hh:MM')}}</span>
 
-                      <span
-                        class="time"
-                        v-if="!props.row.acCode && item.beginTime&&props.row.seriesType==3"
-                      >{{formatTime(item.beginTime, lang=='vi'?'hh:MM:SS dd/mm':'mm/dd hh:MM:SS')}}</span>
                       <!-- <span style="color:#8A8986">bet closed:{{
                         formatTime(item.beginTime, "yyyy-mm-dd hh:MM:ss")
                       }}
@@ -254,6 +249,7 @@ import { formatTime } from 'src/output/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_balance, LOCAL_PROJECT_FILE_PREFIX,i18n_t } from 'src/output/index.js'
 import Pagination from 'project_path/src/components/Pagination.vue'
+import sportIcon from "src/components/sport_icon/sport-icon.vue";
 // import { PaginationWrapper } from "src/components/pagination/index.js";
 import sport_icon from './sport_icon.vue'
 // import football_icon from 'src/assets/images/football_icon.png'
@@ -267,6 +263,9 @@ const pageCurrent = ref('1')
 const getRowIndex = (rowIndex) => {
   return (pageCurrent.value - 1) * pageSize.value + rowIndex + 1;
 }
+
+const cts_mid = ref([15,27,28,23,31,32,24,33,34])
+
 const emit = defineEmits(['itemFilter'])
 const props = defineProps({
   current_tab: {
@@ -274,10 +273,12 @@ const props = defineProps({
     default: ''
   },
   timeType: {
-    type: String,
+    type: [ String, Number ],
     default: ''
   }
 })
+
+console.error('sss',props)
 
 const match_type = {
   1: i18n_t("bet.morning_session"),
@@ -454,25 +455,25 @@ const item_status =(type) => {
  */
 const marketType = (type, langCode='zh') => {
   var res = "";
-  if(type && langCode) {
+    if(type && langCode) {
     switch (type) {
       case "EU":
-        res = i18n_t(`odds.EU`); //"欧洲盘";
+        res = i18n_t(`odds.${langCode}.EU`); //"欧洲盘";
         break;
       case "HK":
-        res = i18n_t(`odds.HK`); //"香港盘";
+        res = i18n_t(`odds.${langCode}.HK`); //"香港盘";
         break;
       case "US":
-        res = i18n_t(`odds.US`); //"美式盘";
+        res = i18n_t(`odds.${langCode}.US`); //"美式盘";
         break;
       case "ID":
-        res = i18n_t(`odds.ID`); //"印尼盘";
+        res = i18n_t(`odds.${langCode}.ID`); //"印尼盘";
         break;
       case "MY":
-        res = i18n_t(`odds.MY`); //"马来盘";
+        res = i18n_t(`odds.${langCode}.MY`); //"马来盘";
         break;
       case "GB":
-        res = i18n_t(`odds.GB`); //"英式盘";
+        res = i18n_t(`odds.${langCode}.GB`); //"英式盘";
         break;
       default:
         res = "";
@@ -490,7 +491,22 @@ const matchType = (type, langCode=UserCtr.lang) => {
   if(type && langCode) {
     res = match_type[type]
   }
-  return res;
+
+  if(type && langCode) {
+        switch (parseInt(type)) {
+          case 1:
+            res = i18n_t(`odds.${langCode}.morning_session`); //"赛前";
+            break;
+          case 2:
+            res = i18n_t(`odds.${langCode}.list_today_play_title`);//"滚球";
+            break;
+          case 3:
+            res =i18n_t(`odds.${langCode}.match_winner`); //"冠军";
+            break;
+        }
+      }
+      return res;
+
 }
 /**
  * 投注状态

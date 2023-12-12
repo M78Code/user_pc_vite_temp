@@ -8,7 +8,7 @@
     :class="[
       ol_data.class,
       odds_state,
-      `csid${ol_data.csid}`,
+      `csid${route.params.csid}`,
       odds_lift,
       {
         'show-odds-icon': odds_state != 'seal',
@@ -24,7 +24,7 @@
         {
           'color-highlight': ol_data.handicap_highlight,
           style2: ol_data.onbl && ol_data.csid == 2,
-          left_cell: is_iframe,
+          left_cell: utils_infois_iframe,
           'injury-time-goal': ol_data.ot === 'ClutchGoal',
           nogoal: ol_data.ot === 'NoGoal',
         },
@@ -42,7 +42,7 @@
       :style="
         [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
           +ol_data._hpid
-        ) && is_iframe
+        ) && utils_info.is_iframe
           ? 'flex:1.5'
           : ''
       "
@@ -70,6 +70,7 @@
         >
           {{ compute_value_by_cur_odd_type(ol_data.ov, ol_data._hpid, "", ol_data.csid) }}
         </span>
+        <span class="default-point" v-if="!odds_lift"></span>
         <div v-if="odds_state != 'seal'">
           <!-- 红升、绿降 -->
           <div class="odds-icon odds-up"></div>
@@ -84,12 +85,11 @@
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 import { onMounted, ref, onUnmounted, computed, watch } from "vue";
-import lodash from "lodash";
-import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
+// import lodash from "lodash";
+import { LOCAL_PROJECT_FILE_PREFIX ,get_odds_active,format_odds_value,compute_value_by_cur_odd_type} from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { get_odds_active } from "src/output/index.js";
-import { format_odds_value } from "src/output/index.js";
-import { compute_value_by_cur_odd_type } from "src/output/index.js";
+import { useRoute } from "vue-router";
+import { utils_info } from 'src/core/utils/common/module/match-list-utils.js'
 
 const is_mounted = ref(true);
 
@@ -99,6 +99,8 @@ const is_mounted = ref(true);
 const odds_lift = ref("");
 // 是否红升绿降中
 const odds_lift_show = ref(false);
+
+const route = useRoute()
 
 // 定时器对象
 let timer_obj = {};
@@ -174,6 +176,8 @@ const get_odds_state = (mhs, hs, os) => {
     2: "seal",
     // 关盘
     3: "close",
+    // 封盘
+    4: "seal",
   };
   if (!id) {
     state = "disable";
@@ -296,6 +300,10 @@ onUnmounted(() => {
 }
 .odds-arrows-wrap {
   position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  // min-width: 150px;
   .up {
     color: var(--q-gb-t-c-7) !important;
   }
@@ -309,12 +317,20 @@ onUnmounted(() => {
     color: var(--q-gb-t-c-1) ;
   }
 }
+.default-point{
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+  display: inline-block;
+
+}
 .odds-icon {
   width: 10px;
   height: 10px;
-  position: absolute;
-  right: -12px;
-  top: 18px;
+  margin-left: 5px;
+  // position: absolute;
+  // right: -12px;
+  // top: 18px;
   overflow: hidden;
   display: none;
 }

@@ -271,11 +271,13 @@ export default defineComponent({
    * @return {*}
    */ 
   const toggle_handicap =(fewer)=>{
-   if(fewer != 3 && Array.isArray( match_list_normal_data.value)){
-       match_list_normal_data.value.map((item)=>{
+    let odds_info =  lodash.get(MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid),"odds_info",[])
+   if(fewer != 3 && Array.isArray( odds_info)){
+    odds_info.map((item)=>{
           fewer == 1 ?  item.hshow =  'Yes':item.hshow = 'No'
        })
    }
+   MatchDataWarehouseInstance.set_match_details(MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid),odds_info)
   }
   //一键折叠盘口
   const {off}  = useMittOn(MITT_TYPES.EMIT_DETAILS_TOGGLE_HANDICAP, toggle_handicap);

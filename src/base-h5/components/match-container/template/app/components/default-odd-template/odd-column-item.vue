@@ -571,17 +571,13 @@ onUnmounted(() => {
   }
 
   .odd-value {
-    font-size: 0.16rem;
+    font-size: 0.12rem;
     display: flex;
     align-items: center;
     line-height: 1;
     position: relative;
     min-height: 0.16rem;
     color: var(--q-color-fs-color-115);
-
-    &.standard {
-      font-size: 0.12rem;
-    }
 
     &.three {
       font-size: 0.11rem;
@@ -591,8 +587,8 @@ onUnmounted(() => {
       height: 11px;
     }
     .is_up{
-      //color: #E95B5B;
-      color: var(--q-gb-t-c-21);
+      color: #E95B5B;
+      // color: var(--q-gb-t-c-21);
     }
     .is_down{
       color: #4AB06A;
@@ -614,7 +610,6 @@ onUnmounted(() => {
     &.standard {
       margin-bottom: 0.03rem;
       font-size: 0.12rem;
-    
     }
 
     &.three {

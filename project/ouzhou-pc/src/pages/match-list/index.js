@@ -6,11 +6,11 @@ import {
   LayOutMain_pc,
   MenuData, axios_loop, get_match_status, SessionStorage
 } from "src/output";
-import UserCtr from "src/core/user-config/user-ctr.js";
+
 import { ref } from 'vue'
 import { set_load_data_state } from 'src/core/match-list-pc/match-list-composition.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import { api_bymids } from 'src/core/match-list-pc/composables/match-list-featch.js'
+import { set_league_list_obj } from 'src/core/match-list-pc/composables/match-list-featch.js'
 import { set_match_play_current_index } from 'src/core/match-list-pc/composables/match-list-other.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -148,14 +148,14 @@ export const init_home_matches = async () => {
   };
   const match_list = []
   const get_home_matches = SessionStorage.get('get_home_matches', [])
-  // const get_five_leagues_list = SessionStorage.get('get_five_leagues_list', [])
+  const get_five_leagues_list = SessionStorage.get('get_five_leagues_list', [])
   if (get_home_matches.length > 0) { //数据缓存先
     MATCH_LIST_TEMPLATE_CONFIG[`template_101_config`].set_template_width(lodash.trim(LayOutMain_pc.layout_content_width - 15, 'px'), false)
-    MatchDataWarehouse_PC_List_Common.set_list(get_home_matches);
+    MatchDataWarehouse_PC_List_Common.set_list(get_home_matches.concat(get_five_leagues_list));
     MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(get_home_matches);
-    // MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-    //   get_five_leagues_list, null, null, true
-    // );
+    MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+      get_five_leagues_list, null, null, true
+    );
     set_load_data_state("data")
   }
   await axios_loop({
@@ -184,6 +184,7 @@ export const init_home_matches = async () => {
         //过滤前20条数据
         sort_list = filter_20_match_new(sort_list);
         match_list.push(...sort_list)
+        set_league_list_obj(match_list)
         // 将球种排序
         MatchDataWarehouse_PC_List_Common.set_list(match_list);
         SessionStorage.set('get_home_matches', sort_list)
@@ -196,26 +197,28 @@ export const init_home_matches = async () => {
     }
   })
   // 暂时隐藏五大联赛
-  // axios_loop({
-  //   axios_api: get_five_leagues_list_api,
-  //   fun_then: function (res) {
-  //     try {
-  //       //五大联赛，只显示滚球数据
-  //       if (res?.length) {
-  //         res = res.filter(match =>  {
-  //           if (get_match_status(match.ms)) return match
-  //         })
-  //       }
-  //       match_list.push(...res)
-  //       SessionStorage.set('get_five_leagues_list', res)
-  //       MatchDataWarehouse_PC_List_Common.set_list(match_list);
-  //       MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-  //         res, null, null, true
-  //       );
-  //     } catch (error) {
-  //     }
-  //   },
-  // })
+  axios_loop({
+    axios_api: get_five_leagues_list_api,
+    fun_then: function (res) {
+
+      try {
+        //五大联赛，只显示滚球数据
+        if (res?.length) {
+          res = res.filter(match => {
+            return !!get_match_status(match.ms)
+          })
+        }
+        match_list.push(...res)
+        set_league_list_obj(match_list)
+        SessionStorage.set('get_five_leagues_list', res)
+        MatchDataWarehouse_PC_List_Common.set_list(match_list);
+        MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+          res, null, null, true
+        );
+      } catch (error) {
+      }
+    },
+  })
 
 };
 export {

@@ -29,7 +29,8 @@ export const get_elimination_rank = (params, config={}, url  = "/v1/w/virtual/ge
 // 篮球比分
 export const get_basketball_score = (params, config={}, url  = "/v1/w/virtual/getMatchScore") => http.post(`${prefix}${url}`, params, config)
 
-
+//玩法详情
+export const get_match_virtual_plays = (params, config = {}, url = "/v1/w/matchDetail/getVirtualMatchOddsInfo") => http.get(`${prefix}${url}`, params)
 
  
   

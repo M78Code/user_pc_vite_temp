@@ -47,7 +47,7 @@
         <div class="standard-odd-list row"  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
           <div class="odd-column-w" :key="hp_i_i+''+standard_odd_status" :class="{'boxing':match.csid == 12 } "
                v-for="(hp_item_obj,hp_i_i) in fill_empty_hps(get_hp_list(standard_odd_status))">
-            <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_item_obj,hp_i_i)}`"
+            <div class="odd-wrap-min" :class="[`hp-${get_ol_length(hp_item_obj,hp_i_i)}`, { 'is-small': match.csid != 1 }]"
                 :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
               <odd-column-item
                 :placeholder="ol_item.placeholder"
@@ -740,7 +740,7 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
  * @return Undefined Undefined
  */
 const get_ol_list = (hp_item, hp_i_i) => {
-  let ol_list = [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }];
+  let ol_list = props.match.csid == 1 ? [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }] : [{ placeholder: 1 }, { placeholder: 1 }];
   if (lodash.get(hp_item, "hl[0].ol")) {
     ol_list = hp_item.hl[0].ol;
   } else {
@@ -1178,6 +1178,11 @@ onUnmounted(() => {
       &.hp-2, &.hp-0 {
         height: 0.49rem;
       }
+      &.hp-3{
+        :deep(.odd-title){
+          margin-bottom: 0.01rem;
+        }
+      }
 
       &:last-child {
         margin-bottom: 0;
@@ -1185,6 +1190,19 @@ onUnmounted(() => {
 
       &.column2 {
         height: 0.46rem;
+      }
+      &.is-small{
+        height: 0.32rem;
+        :deep(.odd-title) {
+          font-size: 0.1rem;
+          &.standard {
+            margin-bottom: 0;
+          }
+
+          &.three {
+            font-size: 0.1rem;
+          }
+        }
       }
     }
 

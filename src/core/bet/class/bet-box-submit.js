@@ -23,7 +23,12 @@ import { ALL_SPORT_PLAY } from "src/output/module/constant-utils.js"
 import { useMittEmit, MITT_TYPES  } from "src/core/mitt/index.js"
 import { MenuData } from 'src/output/module/menu-data.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
+<<<<<<< HEAD
 import { i18n_t,i18n_tc } from "src/boot/i18n.js"
+=======
+import { i18n_t } from "src/boot/i18n.js"
+import { only_win } from 'src/core/format/project/module/format-odds-conversion-mixin.js'
+>>>>>>> components-1207
 
 let time_out = null
 let time_api_out = null
@@ -31,7 +36,7 @@ let count_api = 0
 // 是否点击了投注按钮
 let submit_btn = false
 // 独赢类玩法
-const only_win = [1, 37, 153]
+
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
@@ -116,7 +121,8 @@ const set_bet_order_list = (bet_list, is_single) => {
                     "dataSource": item.dataSource,   // 数据源
                 }
                 // 独赢类玩法 只有欧洲版
-                if(only_win.includes(item.playId *1)){
+                let only_win_csid = lodash_.get(only_win,`${item.sportId}`,[])
+                if(only_win_csid.includes(item.playId *1)){
                     bet_s_obj.marketTypeFinally = 'EU'
                 }
                 bet_s_list.push(bet_s_obj)
@@ -157,7 +163,8 @@ const set_bet_order_list = (bet_list, is_single) => {
             }
 
             // 独赢类玩法 只有欧洲版
-            if(only_win.includes(item.playId *1)){
+            let only_win_csid = lodash_.get(only_win,`${item.sportId}`,[])
+            if(only_win_csid.includes(item.playId *1)){
                 bet_s_obj.marketTypeFinally = 'EU'
             }
 
@@ -394,12 +401,18 @@ const submit_handle = type => {
     // 是否投注中遇到了问题 
     let is_bet_error = false
     if(BetData.is_bet_single){
-       
-        // 判断是否输入了投注金额
-        for(let item of BetData.bet_single_list){
-            // 判断是否已失效
-            if(item.ol_os != 1){
-                is_bet_error = true
+        let ol_obj = lodash_.get(BetData.bet_single_list,'[0]','')
+        // 投注项状态 1：开 2：封 3：关 4：锁
+        // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+        // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
+        if(ol_obj.ol_os != 1 || ol_obj.hl_hs != 0 || ol_obj.mid_mhs != 0){
+            set_submit_btn()
+            return set_error_message_config({code:"0402001"},'bet')
+        }
+        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionId}`, {})
+        if(BetData.bet_amount){
+            // 投注金额未达最低限额
+            if(BetData.bet_amount*1 < min_max.min_money*1 ){
                 set_submit_btn()
                 // 已失效
                 set_error_message_config({code:"0402001"},'bet')
@@ -436,7 +449,7 @@ const submit_handle = type => {
     }
 
     let params = {
-        "userId": UserCtr.get_uid(),
+        // "userId": UserCtr.get_uid(),
         "acceptOdds": 2,  // 接受赔率变化情况
         "tenantId": 1,
         "deviceType": BetData.deviceType,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
@@ -555,7 +568,7 @@ const submit_handle = type => {
                         obj.mid = item.matchId 
                     })
                     // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
-                }else{
+                } else {
                     seriesOrders[0].orderDetailList.forEach( item => {
                         obj.hid = item.marketId 
                         obj.mid = item.matchId 
@@ -768,10 +781,18 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         mark_score: get_mark_score(ol_obj,mid_obj), // 是否显示基准分
         mbmty: mid_obj.mbmty, //  2 or 4的  都属于电子类型的赛事
         ol_os: ol_obj.os, // 投注项状态 1：开 2：封 3：关 4：锁
+        hl_hs: hl_obj.hs, // 盘口状态，玩法级别 0：开 1：封 2：关 11：锁
+        mid_mhs: mid_obj.mhs, // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
         match_ctr: other.match_data_type, // 数据仓库 获取比分
         device_type: BetData.deviceType, // 设备号
         // oid, _hid, _hn, _mid, // 存起来 获取最新的数据 判断是否已失效
     }
+    // 独赢类玩法 只有欧洲版
+    let only_win_csid = lodash_.get(only_win,`${bet_obj.sportId}`,[])
+    if(only_win_csid.includes(bet_obj.playId *1)){
+        bet_obj.marketTypeFinally = 'EU'
+    }
+            
     // 冠军 
     if(MenuData.is_kemp()){
         bet_obj.handicap = ol_obj.on
@@ -956,7 +977,6 @@ const set_orderNo_bet_obj = order_no_list => {
 
 // 获取盘口值 附加值
 const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
-
     // ## 详情页的取值，直接取 ol 层级的 `ott` + `on`,当遇到下面几种玩法时，直接取 `otv`,
     // 3-全场让球赛果  69-上半场让球赛果  71-下半场让球赛果  
     // 220-球员得分 221-球员三分球 271-球员助攻 272-球员篮板
@@ -973,25 +993,30 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
     // console.error('get_handicap', ol_obj, mid_obj)
     let text = ''
     // 展示用的 + 投注项
-    let detail_mark = [13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
+    let detail_mark = [3,13,69,71,102,107,101,106,105,171,216,220,221,271,272,339]
     let lsit_mark = [2,173,38,114]
+    let list_head = [359,31,340,383,13,102]
     // 详情
     if(is_detail){
         // 有球头 球头需要变色
         if(hl_obj.hv){
-            text = `${ol_obj.ott} <span class='ty-span'>${ol_obj.on}</span>`  
+            text = `${ol_obj.ott || ''} <span class='ty-span'>${ol_obj.on}</span>`  
         }else{
-            text = `${ol_obj.ott} ${ol_obj.on}`  
+            text = `${ol_obj.ott || ''} ${ol_obj.on}`  
         }
-        if(detail_mark.includes(ol_obj._hpid*1)){
+        if(detail_mark.includes(ol_obj._hpid*1) && ol_obj.ot == 'X' ){
             text = `${ol_obj.otv}` 
         }
+        // 
+        if(list_head.includes(ol_obj._hpid*1)){
+            text = `${ol_obj.otv}` 
+        }
+
     }else{
         let a = '' ,b = '' 
-        b = ol_obj.on
-
+        b = ol_obj.on 
         if(ol_obj.ots == 'T1'){
-            a = mid_obj.mhn
+            a = mid_obj.mhn 
         }
         if(ol_obj.ots == 'T2'){
             a = mid_obj.man
@@ -1006,17 +1031,17 @@ const get_handicap = (ol_obj,hl_obj,mid_obj,is_detail) => {
         }
         // 首页大小类玩法
         if(['Over',"Under"].includes(ol_obj.ot)){
-            a = ol_obj.on.split(' ')[0]
-            b = ol_obj.on.split(' ')[1]
+            // h5数据格式和pc不一样
+            a = ol_obj.on.split(' ')[0] 
+            b = ol_obj.on.split(' ')[1] 
         }
-
+            
         // 平 不变色
         if(ol_obj.ot == 'X'){
-            text = `${b}` 
+            text = `${b }` 
         }else{
             text = `${a} <span class='ty-span'>${b}</span>` 
         }
-
     }
 
     return text
@@ -1079,7 +1104,7 @@ const   go_to_bet=(ol_item)=>{
       _mid,  //赛事id mid_obj
     }
     let other = {
-      is_detail: false,
+      is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
       // 根据赛事纬度判断当前赛事属于 那种投注类型
       bet_type: 'common_bet',

@@ -21,7 +21,7 @@ export default {
   mixins: [acticity_mixin],
   data() {
     return {
-      $g_image_preffix: window.$g_image_preffix,
+  
       cumulative_betting_list: [
         { name2: "有效投注天数", mBet: "-" },
         { name2: "有效投注额", mBet: "-" },
@@ -87,7 +87,7 @@ export default {
         // 跟产品沟通接口有限频，前端不用做限制
         if (is_time_limit()) return; //  防止调用多次接口
         let parameter = { current, size: 7, actId: this.actId };
-        let { code, data } = await api_activity.get_receiveRecord(parameter);
+        let { code, data } = await api_activity.get_activity_receive_record(parameter);
         if (code == 200 && data.records.length > 0) {
           // data.records.map((item, index) => {
           //   if (item.taskName.includes("\n")) {
@@ -142,7 +142,7 @@ export default {
         const param = {
           actId: this.actId,
         };
-        let { code, data } = await api_activity.get_details(param, { type: 1 });
+        let { code, data } = await api_activity.get_activity_list_details(param, { type: 1 });
         if (code == 200 && data.length > 0) {
           if (
             this.isDuringDate(this.inStartTime, this.inEndTime) == 1 ||
@@ -183,7 +183,7 @@ export default {
           ty: this.actId == 1 ? 0 : 1,
           rdm: new Date().getTime(),
         };
-        let { code, data, msg } = await api_activity.get_task_receive(
+        let { code, data, msg } = await api_activity.get_tokyo_receive_lottery(
           parameter
         );
         if (code == 200 && Object.keys(data).length > 0) {
@@ -250,7 +250,7 @@ export default {
     },
     // 用户每周每月的统计
     async get_task_every_week() {
-      let { code, data } = await api_activity.get_task_everyWeek();
+      let { code, data } = await api_activity.get_activity_user_betting_info();
       if (code == 200 && Object.keys(data).length > 0) {
         this.cumulative_betting_list.forEach((item, i) => {
           if (i == 0) {
@@ -264,14 +264,7 @@ export default {
       }
     },
   },
-  computed: {
-    get_user() {
-      return UserCtr.get_user();
-    },
-    get_theme() {
-      return UserCtr.theme || "";
-    },
-  },
+
   unmounted() {
     clearInterval(this.up_date_Info);
     clearTimeout(this.timer1_);

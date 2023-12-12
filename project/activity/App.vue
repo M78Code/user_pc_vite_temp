@@ -1,8 +1,10 @@
 <template>
   <div>
-    <!-- <div v-if="is_mobile"><PageH5 /></div> -->
-    <!-- <div class=" ">动画单独项目</div> -->
-    <LayoutH5 />
+
+    <!-- <div  >    <LayoutH5 />  </div> -->
+ <div v-if="is_mobile">    <LayoutH5 />  </div>
+    <div v-else>    <LayoutPC />  </div>
+ 
   </div>
 </template>
 
@@ -10,17 +12,27 @@
 import { defineComponent } from "vue";
 
 import LayoutH5 from "project/activity/src/layouts/layout-h5.vue";
+import LayoutPC from "project/activity/src/layouts/layout-pc.vue";
 
 import app_mixin from "./src/mixins/app_mixin/app-mixin.js";
+import { Platform  } from 'quasar'
+ 
 
 export default defineComponent({
+  
   name: "App",
   mixins: [app_mixin],
   components: {
     LayoutH5,
+    LayoutPC
+  },
+  provide:{
+    is_mobile: Platform.is.mobile
   },
   computed: {
-    is_mobile: () => this.$q.platform.is.mobile,
+    is_mobile(){
+       return Platform.is.mobile
+    }
   },
   created() {
     this.test_init();
@@ -45,4 +57,4 @@ export default defineComponent({
   },
 });
 </script>
-./src/mixins/app_mixin/app-mixin.js
+ 

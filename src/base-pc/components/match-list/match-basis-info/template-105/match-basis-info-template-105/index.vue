@@ -39,19 +39,19 @@
       </div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name home ellipsis allow-user-select" :class="{'bold':lodash.get(match, 'team_let_ball')=='T1'}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
+          <div class="team-name home ellipsis allow-user-select" :class="{'bold': handicap_index == 1}" v-tooltip="{content:lodash.get(match, 'mhn')+play_name_obj.suffix_name,overflow:1}">
             {{lodash.get(match, 'mhn')}}
           </div>
           <!-- 发球方 -->
-          <div class="serve-ball" :class="[match.mat == 'home' && 'active']">
+          <div class="serve-ball" :class="[match.mat == 'home' && 'active']" v-if="get_match_status(match.ms)">
             <div class="point"></div>
           </div>
         </div>
       </div>
       <!-- 当前盘下的当前局比分 -->
-      <div class="score">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
+      <div class="score" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S103.home') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.home') }}</div>
+      <div class="score-game" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S1.home') }}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item kedui-item">
@@ -74,18 +74,18 @@
         <div class="row no-wrap absolute-full">
           <div
             class="team-name away ellipsis allow-user-select"
-            :class="{'bold':lodash.get(match, 'team_let_ball')=='T2'}"
+            :class="{'bold':handicap_index == 2}"
           >{{lodash.get(match, 'man')}}{{play_name_obj.suffix_name}}</div>
           <!-- 发球方 -->
-          <div class="serve-ball" :class="[match.mat == 'away' && 'active']">
+          <div class="serve-ball" :class="[match.mat == 'away' && 'active']" v-if="get_match_status(match.ms)">
             <div class="point"></div>
           </div>
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
+      <div class="score" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S103.away') }}</div>
       <!-- 当前局比分 -->
-      <div class="score-game">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
+      <div class="score-game" v-if="get_match_status(match.ms)">{{ lodash.get(match, 'msc_obj.S1.away') }}</div>
     </div>
 
 
@@ -108,6 +108,8 @@ import { useRouter,useRoute } from "vue-router";
 import { format_mst_data } from 'src/core/utils/matches_list.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
+import { get_handicap_index_by } from 'src/core/match-list-pc/match-handle-data.js'
+
 const match=inject('match');
 
 const router = useRouter()
@@ -182,6 +184,10 @@ const play_name_obj = computed(() => {
     }
   }
   return play_name_obj
+})
+
+let handicap_index = computed(() => {
+  return get_handicap_index_by(match.value)
 })
 
 /**
@@ -364,6 +370,9 @@ onUnmounted(() => {
     }
     .team-name {
       max-width: 180px;
+      &.bold {
+        color: var(--q-gb-t-c-2);
+      }
     }
     &.kedui-item {
       color: var(--q-gb-t-c-8);

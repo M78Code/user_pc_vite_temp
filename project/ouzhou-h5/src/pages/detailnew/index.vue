@@ -10,19 +10,22 @@
     <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
     <!-- <template v-if="get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))"> -->
     <!-- 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画 -->
-      <div v-if="match_detail?.mvs > -1">
-      <!-- 动画组件 -->
+    <!-- v-if="match_detail?.mvs > -1 " -->
+    <!-- 动画组件 -->
+    <div v-if="match_detail?.mvs > -1 || label">
       <detail_header_tem2 :get_match_detail="match_detail || {}" :label="label"/>
     </div>
+    
     <div v-else class="mini-header-container"  @click="onClickTest">
       <div class="header-fix" ref="header_fix">
-         <!-- v-if="!changeHeader" -->
         <div ref="scroll_video_height" class="relative-position scroll_video_h">
           <detail_header_tem1 :get_match_detail="match_detail || {}" @handle-change="handle_change"/>
         </div>
       </div>
     </div>
-    <div class="change-header-fix" ref="change_header_fix" :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
+    <!-- <detail_header_tem2 v-if="match_detail?.mvs" :get_match_detail="match_detail || {}" :label="match_detail?.mvs <= -1 ? 'score' : ''"/> -->
+    <div class="change-header-fix" ref="change_header_fix"
+      :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail || {}"/>
     </div>
     <div class="detail-container-position">
@@ -68,6 +71,8 @@
         </q-tab-panel>
       </q-tab-panels>
     </div>
+    <!-- 视频info说明弹窗,和切换高清和标清的 弹框 -->
+    <info-rules v-if="get_info_show"></info-rules>
   </div>
 </template>
 
@@ -86,7 +91,7 @@ import loading_page from 'src/components/details/loading/index.vue'
 import event_analysis from "./components/event_analysis.vue";
 import { details_main } from "./details.js";
 import { i18n_t } from "src/output/index.js"
-
+import infoRules from "src/base-h5/components/details/components/info-rules.vue"  // 视频info说明弹框
 // import './index.scss'
 export default {
   components:{
@@ -99,6 +104,7 @@ export default {
     loading_page,
     event_analysis,
     OddsListContrainer,
+    infoRules
   },
   setup(ctx){
     const router = useRouter();
@@ -129,7 +135,8 @@ export default {
      touchstart,
      detail_tabs_change,
      changeHeader,
-     MatchDataWarehouseInstance
+     MatchDataWarehouseInstance,
+     get_info_show
     } = details_main(router,route)
 
     const label = ref("");
@@ -138,7 +145,13 @@ export default {
       console.log(value, "valuessss");
       label.value = value;
     }
+
+    watch(() => route.params.mid, (value) => {
+      label.value = "";
+    })
+
     return{
+      label,
       handle_change,
       detail_store,
       match_odds_info,
@@ -166,6 +179,7 @@ export default {
       mid,
       MatchDataWarehouseInstance,
       allCloseState,
+      get_info_show
      }
   } 
 }
@@ -231,11 +245,20 @@ export default {
     background-color: var(--q-gb-bg-c-2);
     .tab-active {
       color: var(--q-gb-t-c-1);
-      
       .tab-text {
         display: inline-block;
         font-weight: 500;
-        border-bottom: 3px solid var(--q-gb-bd-c-1);
+        position:relative;
+       &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        bottom: 0;
+        left:0;
+        background:var(--q-gb-bd-c-1);
+      }
+       // border-bottom: 3px solid var(--q-gb-bd-c-1);
       }
     }
     .tabs-item {

@@ -17,8 +17,11 @@
       <!-- 遮罩层样式.bottom-wrap -->
       <div class="bottom-wrap col search-result relative-position">
         <div class="sports-tab" ref="tab" v-if="sports_list.length">
-          <div v-for="(item, index) in sports_list" :key="item.id" @click="set_sports_tab_index(index)"
-            :class="['tab', sports_tab_index === index ? 'active' : '']">{{ item.sportName }}</div>
+          <search-tab-warp 
+            :sports_list="sports_list" 
+            :sports_tab_index="sports_tab_index"
+            @change_tabs="set_sports_tab_index"
+          ></search-tab-warp>
         </div>
         <!-- 初始化 -->
         <search-int
@@ -60,6 +63,8 @@ import SearchPCClass from 'src/core/search-class/seach-pc-ouzhou-calss.js';
 import { LayOutMain_pc } from 'src/output/index.js'
 // 搜索初始化组件
 import searchInt from "./search-init.vue"
+// 搜索tabs组件
+import searchTabWarp from "./search_tab_warp.vue"
 //搜索赛事组件
 import searchSports from "./search-sports.vue"
 // 搜索玩法组件
@@ -171,8 +176,8 @@ function set_sports_list() {
   api_search.get_search_sport().then(res => {
     if (lodash.get(res, 'code') == 200) {
       const list = lodash.get(res, 'data') || []
-      // 内部测试展示所有球种，线上只放开足、篮
-      const ls = ["1", "2"] 
+      // 内部测试展示所有球种，线上只放开足、篮 网 电足 电篮
+      const ls = ["1", "2","5","90","91"];
       sports_list = IS_FOR_NEIBU_TEST ? list : list.filter(item => ls.includes(item.id))
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id
@@ -257,10 +262,10 @@ export default defineComponent({
   left: 50%;
   bottom: 0;
   z-index: 999;
-  min-width: 1470px;
-  transform: translateX(-50%);
+  min-width: 1450px;
+  transform: translateX(-730px);
   &.iframe {
-    top: 50px !important;
+    // top: 50px !important;
   }
 
   &.hide-search {
@@ -287,6 +292,7 @@ export default defineComponent({
   .search-result {
     // box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
     margin-top: 9px;
+    width: 1450px;
   }
 
   &.mini {
@@ -304,25 +310,6 @@ export default defineComponent({
 	width: 100%;
 	z-index: 1;
 	color: var(--q-gb-t-c-5);
-	.tab {
-		background-color: var(--q-gb-bg-c-4);
-		border-radius: 40px;
-		text-align: center;
-		font-size: 14px;
-		flex-shrink: 0;
-		padding: 6px 20px;
-    cursor: pointer;
-    margin-right: 10px;
-
-		&:last-child {
-			margin-right: 0;
-		}
-
-		&.active {
-			background-color: var(--q-gb-bg-c-1);
-			color: var(--q-gb-t-c-1);
-		}
-
-	}
+  width: 100%;
 }
 </style>

@@ -44,11 +44,11 @@ const props = defineProps({
     default: () => [],
   },
   modelValue: {
-    type: String || Number,
+    type: [String, Number],
   },
 });
 
-const active_value = ref("");
+const active_value = ref(props.tab_options[0]?.value ?? '');
 
 const wrapRef = ref(null) //item_wrap_width
 const itemWrapRef = ref(null) // item_total_width

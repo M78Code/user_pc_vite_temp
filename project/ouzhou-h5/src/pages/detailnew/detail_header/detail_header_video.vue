@@ -1,8 +1,8 @@
 <template>
     <div class="container">
         <!-- /video.html?random=0.01897129618346205&controls=1&dplayer-volume=1&url=https%3A%2F%2Fsrv185-52.beterstream.xyz%2Flive%2FSetka-Cup-FIFA-2%2Fmulty.m3u8%3Fmatch_id%3D10913285%26s_id%3D1%26t_id%3D4503%26stats%3Dstatsbeter.co%26timestamp%3D1701748089%26key%3DVTJGc2RHVmtYMS9LcUw3RlNFMVd6SDBnOXpkOWlDUGJVNFNGTU8wVGp5NENKSFhsQzJTTU55cUM5RCtvWHpsTndzS0dRVGhVdWRnOVE5Y0x3SlNMd2ovOXZWS05uQi9NS1U3eW5qN0RYc1RkM3pKQWJxbGVPRVpRMXNpRFpFZDFvVE5hRk45aTdiMjZxR0svdFBRdHFXa1kycUdUU1hCeFJPZXZoeWxLa3Q0PQ%3D%3D&is_client=1 -->
-        <custom_video v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  
-                      :show_go_back="show_go_back" :show_icon_status="false" @change_go_back="change_go_back"/>
+        <custom_video :key="route.params.mid" v-if="get_show_video"  :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  
+                      :show_go_back="show_go_back" :show_icon_status="false" />
     </div>
 </template>
 
@@ -13,7 +13,7 @@ import { MITT_TYPES, MatchDataWarehouse_H5_Detail_Common, MatchDetailCalss, useM
 import UserCtr from "src/core/user-config/user-ctr.js";
 import video from "src/core/video/video.js"   // 视频相关公共方法
 import { useRoute } from 'vue-router';
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted, defineProps, computed, watch } from "vue";
 import { api_common } from 'src/api';
 import store from "src/store-redux/index.js";
 const props = defineProps({
@@ -26,7 +26,7 @@ const props = defineProps({
 
 
 const route = useRoute();
-const detail_data = lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {});
+let detail_data = lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {});
 // /视频说明是否展示
 const tips = ref(false);
 // 随机数props传参是否显示视频对阵信息，还可以控制动画显示返回按钮
@@ -36,6 +36,11 @@ const get_show_video = ref(false);
 console.log(route.params, "params");
 const { detailsReducer } = store.getState()
 const hd_sd = ref(detailsReducer.hd_sd)
+watch(() => route.params.mid, (value) => {
+  detail_data = lodash.get(MatchDataWarehouse_H5_Detail_Common,`list_to_obj.mid_obj[${route.params.mid}_]`, {});
+  icon_click_muUrl();
+})
+
 const get_media_detail = async() => {
     const params = {
         mid: route.params.mid,
@@ -49,6 +54,9 @@ const get_media_detail = async() => {
 }
 
 const check_url = (url, which) => {
+  console.log(33333);
+  // TODO: 视频源切换先设置fasle，强制重新加载iframe
+  get_show_video.value = false;
   // 本地代码连接 调试 时，打开此注释即可播放视频------勿删除此注释
   // let data = {
   //   media_src:url,
@@ -67,7 +75,7 @@ const check_url = (url, which) => {
         media_src: url,
         active: which ? which : 'muUrl',
       };
-      console.error(data);
+      console.error(data, 'media_data');
       MatchDetailCalss.set_video_url(data);
       // 开启视频
       useMittEmit(MITT_TYPES.EMIT_SET_SHOW_VIDEO, true),

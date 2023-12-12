@@ -1,5 +1,5 @@
 <template>
-  <div class="component odd-ol-item"
+  <div class="component odd-ol-item" v-if="value.os != 3"
     :class="[{ 'active': active }, status, type, calcOlResult(value['result'])]"
   >
     <div class="icontainer" v-if="vif"
@@ -17,7 +17,8 @@
       <div class="separate"></div>
       <div class="item ol-content">
         <div class="ol-content-ov">
-          <span>{{ ov }}</span>
+          <span v-if="isLock">0.xx</span>
+          <span v-else>{{ ov }}</span>
           <img class="odd-image" v-show="status != 'none'"
             :src="oddUp ? ouzhou_hps_up : ouzhou_hps_down" />
         </div>
@@ -57,7 +58,7 @@ const props = withDefaults(defineProps<{
   value: TYPES.OlResult|TYPES.Ol,
   type?: TYPES.OlItemType
 }>(), {
-  type: 'column'
+  type: 'default'
 })
 const sportId = MatchDetailCalss.params.sportId
 // @ts-ignore
@@ -87,10 +88,16 @@ const ov = computed(() => {
 const isLock = computed(() => {
   if (props.value) {
     // @ts-ignore
-    return props.value.os == 2 || ov.value == 0 || props.value._hs == 1
-  } else {
-    return true
+    const { _mhs,_hs } = props.value
+    if(_mhs == 0 || _mhs == 11){
+      if( _hs == 0 || _hs == 11){
+        if(props.value.os == 1){
+          return Number(ov.value) == 0 
+        }
+      }
+    }
   }
+  return true
 })
 function onClick(){
   if(isLock.value){
@@ -267,7 +274,9 @@ function resetStatus() {
     }
   }
   &.auto{
+    padding: 10px 0;
     .icontainer{
+      margin-top: 10px;
       width: 100%;
       flex-wrap: wrap;
       justify-content: center;
@@ -286,7 +295,7 @@ function resetStatus() {
       flex-basis: 50%;
     }
     .ol-content{
-      flex-basis: 40%;
+      flex-basis: 30%;
     }
   }
 }

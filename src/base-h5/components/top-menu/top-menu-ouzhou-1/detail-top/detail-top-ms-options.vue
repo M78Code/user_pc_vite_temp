@@ -61,16 +61,16 @@ const ChangeActive = function () {
 
 <template>
     <span v-show="false"></span>
-    <nav class="option" @click="ChangeActive">
+    <nav class="option" :class="{active}" @click="ChangeActive">
         <aside class="mhn team-image">
             <p class="tips textOverflow1">{{ detail_data?.mhn }}</p>
             <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
             <div class="figure">
                 <teamImg :type="0" :url="detail_data.mhlu[0]" :fr="detail_data.frmhn[0]" :size="22"
                          :csid="detail_data.csid"/>
-                <teamImg v-if="detail_data.mhlu.length > 1" :type="0" :url="detail_data.mhlu[1]"
+                <!-- <teamImg v-if="detail_data.mhlu.length > 1" :type="0" :url="detail_data.mhlu[1]"
                          :fr="detail_data.frmhn[1]"
-                         :size="22" :csid="detail_data.csid" style="margin-left:-0.08rem;"/>
+                         :size="22" :csid="detail_data.csid" style="margin-left:-0.08rem;"/> -->
             </div>
 
         </aside>
@@ -86,10 +86,10 @@ const ChangeActive = function () {
                 <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
                 <team-img :type="1" :url="detail_data.malu[0]" :fr="detail_data.frman[0]" :size="22"
                           :csid="detail_data.csid"/>
-                <team-img v-if="detail_data.malu.length > 1" :type="1" :url="detail_data.malu[1]"
+                <!-- <team-img v-if="detail_data.malu.length > 1" :type="1" :url="detail_data.malu[1]"
                           :fr="detail_data.frman[1]"
                           :csid="detail_data.csid"
-                          :size="22"/>
+                          :size="22"/> -->
             </div>
             <p class="tips textOverflow1">{{ detail_data?.man }}</p>
         </aside>
@@ -103,7 +103,15 @@ const ChangeActive = function () {
     justify-content: center;
     height: 56px;
     background: var(--q-gb-bg-c-16);
-
+    position: relative;
+    &.active::before{
+        content: '';
+        display: block;
+        position: absolute;
+        pointer-events: none;
+        inset: 0;
+        background: #FF70001A;
+    }
     .team-image {
         flex: 1;
         height: 56px;

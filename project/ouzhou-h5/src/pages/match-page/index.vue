@@ -41,12 +41,12 @@ onMounted(() => {
       store[key] = data[key]
     })
     MatchMeta.clear_match_info()
-    MatchMeta.get_ouzhou_leagues_list_data(data.selectLeague.tid, data.curSelectedOption.timestamp)
+    MatchMeta.get_ouzhou_leagues_list_data(data?.selectLeague?.tid, data?.curSelectedOption?.timestamp)
 	} else {
     MatchMeta.set_prev_scroll(0)
-    onTabChange()
     initMatchPage()
-    BaseData.is_emit && MatchMeta.set_origin_match_data()
+    onTabChange()
+    // BaseData.is_emit && MatchMeta.set_origin_match_data()
     // 接口请求防抖
     handler_func = lodash.debounce(({ cmd, data }) => {
       MatchMeta.handle_ws_directive({ cmd, data })
@@ -96,13 +96,17 @@ const cacheStoreData = () => {
 }
 
 const onTabChange = e => {
-  console.log(store.tabActive)
   switch (store.tabActive) {
     case 'Matches':
       clearSessionStorageData()
-      MenuData.set_current_lv1_menu('2');
-      MatchMeta.set_prev_scroll(0)
-      MatchMeta.set_origin_match_data()
+      if(!store.menu_time){
+        MenuData.set_current_lv1_menu('2');
+        MatchMeta.set_prev_scroll(0)
+        MatchMeta.set_origin_match_data()
+      }else{
+        MatchMeta.filter_match_by_time(store.menu_time)
+        MatchMeta.get_target_match_data({ md: store.menu_time })
+      }
       break
     case 'League':
       MenuData.set_current_lv1_menu(2);

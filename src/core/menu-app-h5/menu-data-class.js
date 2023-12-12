@@ -204,9 +204,15 @@ class MenuData {
     let csid = "",
         v1_mi = [0,300,2000,50000];
     if(v1_mi.includes(+mi))return;//全部 vr 电竞 收藏
-    if(+mi>1000 && +mi<2000){csid = Number(this.recombine_menu_desc(mi))-100;}//常规
-    else if(+mi>400 && +mi<1000){csid = +mi-400}//冠军
-    else{csid = mi};//vr 电竞球种
+    if(+mi>1000 && +mi<2000){
+      csid = Number(this.recombine_menu_desc(mi))-100;
+    }//常规
+    else if(+mi>400 && +mi<1000){
+      csid = +mi-400
+    }//冠军
+    else{
+      csid = mi
+    };//vr 电竞球种
     this.menu_csid = mi;
     this.update()
   }
@@ -258,7 +264,11 @@ class MenuData {
       /// 4 早盘 11 串关
       config.params.type = this.current_lv_1_menu_i == 3 ? 4 : 11
     }
-
+    if(this.get_menu_type_special()==2000 ){
+      config.api = "get_esports_date_menu_count"
+      /// 4 早盘 11 串关
+      config.params.category = 1;//1常规2冠军
+    }
     this.menu_match_date_api_config = config
   }
   /**

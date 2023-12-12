@@ -1,14 +1,14 @@
 <template>
 	<div class="matches_header_wrap" :style="`height:${match_list_top}`">
-		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{ MenuData.is_collect_kemp() }}-{{MenuData.menu_root}}-{{ MenuData.is_collect}}-{{MenuData.is_kemp()}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}--{{ BaseData.base_data_version }}</div>
+		<div v-show="false">{{MenuData.menu_data_version}}-{{MenuData.mid_menu_result.filter_tab }}-{{MenuData.menu_current_mi }}-{{MenuData.menu_root}}-{{MenuData.is_kemp()}}- {{ MenuData.is_collect_kemp() }}-{{MenuData.is_common_kemp() }}-{{ MenuData.is_collect}}-{{ MenuData.is_top_events()}}-{{MenuData.is_left_today()}}-{{MenuData.is_left_zaopan()}}--{{ BaseData.base_data_version }}</div>
 		<div class="matches_header">
 			<div class="header_banne header_banner" :style="compute_css_obj({ key: 'pc-home-featured-image', position: MenuData.current_ball_type })"></div>
-			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp()) ? 'matches_outrights' : '']">
-				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ $t(matches_header_title) }}</div>
+			<div :class="['matches-title', (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect) ? 'matches_outrights' : '']">
+				<div class="current_match_title" :class="MenuData.is_scroll_ball() ?'all_matches':''">{{ is_left_sports ?  matches_header_title : i18n_t(matches_header_title) }}</div>
 				<div class="match_all_matches" v-if="MenuData.is_scroll_ball()">{{ i18n_t('ouzhou.match.all_matches')}}</div>
 				<div v-else class="matches_tab" >
 					<template v-if="tab_list.length">
-						<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item)"
+						<div v-for="item in tab_list" :key="item.value" @click="checked_current_tab(item,'change')"
 							:class="{ 'checked': item.value == MenuData.mid_menu_result.filter_tab }">
 							{{ i18n_t(item.label) }}
 							<!-- 点击联赛后出现的时间筛选 -->
@@ -32,8 +32,8 @@
 			</div>
 		</div>
 		<MatchesFilterTab v-if="MenuData.is_scroll_ball() || MenuData.is_hot() || (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp()) || MenuData.is_collect || MenuData.is_top_events()"  />
-		<MatchesDateTab v-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues() || MenuData.is_esports()" />
-		<MatchesLeaguesTab v-if="MenuData.is_leagues()" :date="active_time" />
+		<MatchesDateTab v-else-if="(MenuData.is_left_today() || MenuData.is_left_zaopan()) && !MenuData.is_leagues() || MenuData.is_esports()" />
+		<MatchesLeaguesTab v-else-if="MenuData.is_leagues()" :date="active_time" />
 	</div>
 </template>
 
@@ -48,6 +48,7 @@ import { MenuData, useMittOn,MITT_TYPES, useMittEmit,i18n_t } from "src/output/i
 import BaseData from "src/core/base-data/base-data.js";
 import MatchLeagueData from 'src/core/match-list-pc/match-league-data.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import { resolve_mew_menu_res, un_mounted } from "src/base-pc/components/match-list/list-filter/index.js"
 const { PROJECT_NAME,IS_FOR_NEIBU_TEST } = BUILD_VERSION_CONFIG;
 
 const tab_list = ref([])
@@ -58,6 +59,8 @@ const match_list_top = ref('80px')
 const show_leagues = ref (false)
 // 是否选中联赛时间
 const active_time = ref(24)
+
+const is_left_sports = ref(false)
 
 const matches_header_title = ref("ouzhou.match.matches");
 
@@ -95,14 +98,14 @@ const ref_data = reactive({
 			{ label: 'ouzhou.match.kog', value: 2102 },
 			{ label: 'ouzhou.match.csgo', value: 2103 }	
 		],
-		vr_sports: [
-      { label: 'ouzhou.match.vr_football', value: 30301 }, //vr足球
-			{ label: 'ouzhou.match.vr_basketball', value: 30304 }, //vr篮球
-			{ label: 'ouzhou.match.vr_horse_racing', value: 30311 }, //vr赛马
-			{ label: 'ouzhou.match.vr_greyhounds', value: 30302 }, //vr赛狗
-			{ label: 'ouzhou.match.vr_motorbike', value: 30312 }, //vr摩托车
-			{ label: 'ouzhou.match.vr_speedway', value: 30313 }	//vr泥地摩托车
-		]
+		// vr_sports: [
+      	// 	{ label: 'ouzhou.match.vr_football', value: 30301 }, //vr足球
+		// 	{ label: 'ouzhou.match.vr_basketball', value: 30304 }, //vr篮球
+		// 	{ label: 'ouzhou.match.vr_horse_racing', value: 30311 }, //vr赛马
+		// 	{ label: 'ouzhou.match.vr_greyhounds', value: 30302 }, //vr赛狗
+		// 	{ label: 'ouzhou.match.vr_motorbike', value: 30312 }, //vr摩托车
+		// 	{ label: 'ouzhou.match.vr_speedway', value: 30313 }	//vr泥地摩托车
+		// ]
 	},
 	
 }) 
@@ -115,11 +118,16 @@ const ouzhou_time_list = [
 
 onMounted(()=>{
 	set_tab_list(MenuData.menu_root)
-	mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_tab_list).off ]
+	mitt_list = [ 
+		useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,set_tab_list).off,
+		useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_OUTRIGHTS,set_tab_list).off,
+		useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_FAVOURITES,set_tab_list).off,
+	]
 })
 
 onUnmounted(()=>{
 	mitt_list.forEach(item => item());
+	un_mounted()
 })
 
 const set_show_leagues = () => {
@@ -139,6 +147,7 @@ const set_active_time = (item) => {
 // 设置 头部信息配置
 const set_tab_list = (news_) =>{
 	tab_list.value = []
+	is_left_sports.value = false
 	// 首页
 	if(news_ == 0 || news_ == 500){
 		tab_list.value =  lodash_.get( ref_data.ouzhou_filter_config,'home_tab', [])
@@ -152,7 +161,8 @@ const set_tab_list = (news_) =>{
 	// 滚球
 	if( news_ == 1 ){
 		matches_header_title.value = 'ouzhou.match.inplay'
-   		match_list_top.value = '146px'
+		match_list_top.value = '146px'
+		resolve_mew_menu_res()
 	}
 	
 	// 左侧菜单
@@ -161,35 +171,37 @@ const set_tab_list = (news_) =>{
 		if ([90, 91].includes(+MenuData.current_ball_type)) {
 			sport_tab = sport_tab.filter((n)=>{return n.value != 4003 && n.value != 4002})
 		}
-		if(IS_FOR_NEIBU_TEST){
+		// if(IS_FOR_NEIBU_TEST){
 			tab_list.value = sport_tab; 
-		}else{
-			sport_tab = sport_tab.filter((n)=>{return n.value != 4003})
-			tab_list.value = sport_tab
+		// }else{
+		// 	sport_tab = sport_tab.filter((n)=>{return n.value != 4003})
+		// 	tab_list.value = sport_tab
+		// }
+		if(!MenuData.is_collect){
+			is_left_sports.value = true
+			// 设置赛种名称
+			matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 		}
-		
-		// 设置赛种名称
-		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
 
 	// 收藏
 	if (MenuData.is_collect) {
 		matches_header_title.value = 'ouzhou.menu.collect';
 		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'favouritse_tab', [])  
-		if(IS_FOR_NEIBU_TEST){
+		// if(IS_FOR_NEIBU_TEST){
 			tab_list.value = ouzhou_filter_config; 
-		}else{
-			// ouzhou_filter_config.push( { label: 'menu.match_winner', value: 3004 })
-			ouzhou_filter_config = ouzhou_filter_config.filter((n)=>{return n.value != 3004})
-			 tab_list.value = ouzhou_filter_config
-		}
+		// }else{
+		// 	ouzhou_filter_config = ouzhou_filter_config.filter((n)=>{return n.value != 3004})
+		// 	 tab_list.value = ouzhou_filter_config
+		// }
 		
 	}
 	// 冠军
-	if (MenuData.is_kemp() && !MenuData.is_common_kemp()) {
+	if (MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect) {
 		matches_header_title.value = 'list.outright'
 		match_list_top.value = '146px'
 		tab_list.value = []
+		resolve_mew_menu_res()
 	}
 
 	// 电竞
@@ -201,12 +213,12 @@ const set_tab_list = (news_) =>{
 	}
 
 	// vr体育
-	if (MenuData.is_vr()) {
-		matches_header_title.value = 'VR体育'
-		match_list_top.value = '134px'
-		let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'vr_sports', [])  
-		tab_list.value = ouzhou_filter_config
-	}
+	// if (MenuData.is_vr()) {
+	// 	matches_header_title.value = 'VR体育'
+	// 	match_list_top.value = '134px'
+	// 	let ouzhou_filter_config = lodash_.get( ref_data.ouzhou_filter_config,'vr_sports', [])  
+	// 	tab_list.value = ouzhou_filter_config
+	// }
 
 	if (tab_list.value.length) {
 		if(MenuData.mid_menu_result.filter_tab){
@@ -222,8 +234,7 @@ watch(BaseData.base_data_version,()=>{
 		matches_header_title.value = BaseData.menus_i18n_map[MenuData.left_menu_result.lv1_mi] 
 	}
 })
-const checked_current_tab = payload => {
-// debugger
+const checked_current_tab = (payload,type) => {
 	let obj = {
 		...MenuData.mid_menu_result,
 		filter_tab: payload.value*1,
@@ -273,7 +284,7 @@ const checked_current_tab = payload => {
 	if(MenuData.is_collect){
 		//切换滚球 今日 早盘  球种初始化为足球背景
 	 	// MenuData.set_current_ball_type(1)
-	 	MenuData.set_current_ball_type(MenuData.menu_current_mi || 1)
+	 	// MenuData.set_current_ball_type(MenuData.menu_current_mi - 400 || 1)
 		if( payload.value == 3001){
 			obj.current_mi = 1011
 		}
@@ -289,8 +300,14 @@ const checked_current_tab = payload => {
 		}else{
 			MenuData.set_menu_root(2)
 		}
-		// MenuData.set_menu_current_mi(obj.current_mi)
-		MenuData.set_menu_current_mi(MenuData.menu_current_mi || obj.current_mi)
+
+		if(type){
+			MenuData.set_current_ball_type(1)
+			MenuData.set_menu_current_mi(obj.current_mi)
+		}else{
+			MenuData.set_current_ball_type(MenuData.current_ball_type || 1)
+			MenuData.set_menu_current_mi(MenuData.menu_current_mi || obj.current_mi)
+		}
 	}
 	if (MenuData.is_esports()) {
 		obj.current_mi = payload.value*1
@@ -298,6 +315,10 @@ const checked_current_tab = payload => {
 	}
 	// get_sport_banner()
 	MenuData.set_mid_menu_result(obj)
+
+	if(MenuData.is_collect){
+		resolve_mew_menu_res()
+	}
 }
 
 </script>

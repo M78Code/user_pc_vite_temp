@@ -1,12 +1,14 @@
 import { reactive } from "vue";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import DefaultTemplate from './DefaultTemplate.vue';
-import Template4 from './Template4.vue';
+import TemplateColumn from './TemplateColumn.vue';
 import Template14 from './Template14.vue';
 
 const hideTitle = [0,18]
 const innerTitle = [12,14]
-const templates = new Map([[4,Template4],[14,Template14]])
+const templates = new Map([[4,TemplateColumn],[14,Template14],[6,TemplateColumn]])
+
+const rowHpid = '106,107'
 
 const other = {
   is_detail: true,
@@ -50,12 +52,27 @@ const common = {
    * @returns {TYPES.OlItemType}
    */
   getOlType(oddInfo){
+    const {hpt} = oddInfo
     if(oddInfo.hpt == 0){
       if(oddInfo.title.length){
         return 'fill'
       }
-    }else if(oddInfo.hpt == 18 || (oddInfo.hpt == 3 && !common.haveTitle(oddInfo))){
+    }else if(hpt == 3){
+      if(!common.haveTitle(oddInfo)){
+        return 'column'
+      }
+    }else if(oddInfo.hpt == 18){
       return 'fill'
+    }
+    return 'default'
+  },
+  /**
+   * @param {TYPES.OddInfo} oddInfo
+   * @returns {TYPES.OlItemType}
+   */
+  getOlTypeOfTemplate4(oddInfo){
+    if(oddInfo.hpid == '344'){
+      return 'column'
     }
     return 'default'
   },

@@ -4,22 +4,27 @@
 
 <template>
   <main class="main-container">
-    <section class="observer-container" ref="container" @scroll="handler_container_scroll">
-      <div class="observer-item" 
-        v-for="item, index in match_list" 
-        :key="item.mid" 
-        :data-mid="item.mid" 
-        :data-index="index"
-        :style="get_item_style(item, index)">
-        <!-- 赛事卡片 -->
-        <slot name="content" :item="item" :index="index">
-          <template v-if="is_show_match_item(index)">
-            <!-- <ObserverItem3 :index="index" :item="item"></ObserverItem3> -->
-            <component :is="target_com" :index="index" :item="item"></component>
-          </template>
-        </slot>
-      </div>
-    </section>
+    <template v-if="match_list">
+      <section class="observer-container" ref="container" @scroll="handler_container_scroll">
+          <div class="observer-item" 
+            v-for="item, index in match_list" 
+            :key="item.mid" 
+            :data-mid="item.mid" 
+            :data-index="index"
+            :style="get_item_style(item, index)">
+            <!-- 赛事卡片 -->
+            <slot name="content" :item="item" :index="index">
+              <template v-if="is_show_match_item(index)">
+                <!-- <ObserverItem3 :index="index" :item="item"></ObserverItem3> -->
+                <component :is="target_com" :index="index" :item="item"></component>
+              </template>
+            </slot>
+          </div>
+      </section>
+    </template>
+    <template v-else>
+      <NoData class="empty"  :which='which' height='400'></NoData>
+    </template>
     <!-- 回到顶部按钮组件 -->
     <ScrollTop :list_scroll_top="scroll_top" @back-top="go_to_top" />
   </main>
@@ -35,6 +40,10 @@ import { onMounted, computed, watch, ref, nextTick, onUnmounted } from 'vue';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { compute_local_project_file_path, project_name } from 'src/output/index.js';
+import NoData from "src/base-h5/components/common/no-data.vue"; 
+import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
+import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
+
 // yazhou-h5 亚洲版
 import ObserverItem from 'src/base-h5/components/observer-wrapper/observer-item.vue';
 // app-h5 复刻版
@@ -43,8 +52,6 @@ import ObserverItem2 from 'src/base-h5/components/observer-wrapper/observer-item
 import ObserverItem3 from 'src/base-h5/components/observer-wrapper/observer-item3.vue';
 //app-h5 新手版  -- 临时
 import ObserverItem4 from 'src/base-h5/components/observer-wrapper/observer-item4.vue';
-import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
-import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
 
 const defer_render = use_defer_render()
 const props = defineProps({
@@ -60,6 +67,15 @@ const props = defineProps({
   }
 })
 
+const container = ref(null)
+const observer = ref(null)
+const emitters = ref({})
+const scroll_top = ref(0)
+const page_style = ref(null)
+// 当前可视区的 mids 用于获取赔率
+const active_mids = ref([])
+const which = ref('noMatch')
+
 // 组件配置
 const com_config = {
   'app-h5': ObserverItem2,
@@ -73,15 +89,6 @@ const target_com = computed(() => {
   return com_config[props.com_type]
 })
 
-
-const container = ref(null)
-const observer = ref(null)
-const emitters = ref({})
-const scroll_top = ref(0)
-const page_style = ref(null)
-// 当前可视区的 mids 用于获取赔率
-const active_mids = ref([])
-
 onMounted(() => {
   emitters.value = {
     // 重新设置监听对象
@@ -92,8 +99,19 @@ onMounted(() => {
     emitter_2: useMittOn(MITT_TYPES.EMIT_GOT_TO_TOP, () => {
       nextTick(() => go_to_top())
     }).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
   }
 })
+
+/**
+ * @description: 赛事列表为空通知事件函数
+ */
+ const upd_match_is_empty = (obj = {}) => {
+  // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
+  const { state = false, type = 'noMatch' } = obj
+  which.value = type
+  // match_is_empty.value = state;
+}
 
 /**
  * @description 开启 IntersectionObserver 赛事卡片监听
@@ -241,6 +259,14 @@ onUnmounted(() => {
     .observer-item{
       content-visibility: auto;
       background-size: 100% 100%;
+      .empty {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: -0.3rem;
+      }
     }
   }
 }

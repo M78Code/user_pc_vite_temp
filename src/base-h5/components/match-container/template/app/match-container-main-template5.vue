@@ -32,9 +32,9 @@
         </span>
       </div> -->
       <!--体育类别 -- 标题  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-      <!-- <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
+      <div v-if="show_sport_title" @click="handle_ball_seed_fold" :class="['sport-title match-indent', { home_hot_page: is_hot, is_gunqiu: [1].includes(+menu_type), first: i == 0, }]">
         <span class="score-inner-span"> {{ match_of_list.csna }}{{ '(' + menu_lv2.ct + ')' }} </span>
-      </div> -->
+      </div>
 
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', { 'collapsed': !collapsed }]">
@@ -242,7 +242,7 @@ import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_
 import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import lodash from 'lodash';
-import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
 import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn } from "src/output/index.js"
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
@@ -282,7 +282,11 @@ export default {
 
     const isCollectMenuTab = ref(false) //当前是否是收藏菜单
 
-
+    // 是否显示球种标题
+    const show_sport_title = computed(() => {
+      const { is_show_ball_title } = props.match_of_list
+      return is_show_ball_title
+    })
 
     const go_to_bet = (ol) => {
       if (ol.os !== 1) return
@@ -375,7 +379,7 @@ export default {
       isCollectMenuTab,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
-      in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item,
+      in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title,
       normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app
     }
   }
@@ -441,8 +445,13 @@ export default {
     }
   }
 
+  .match-status-title {
+    display: flex;
+    align-items: center;
+  }
+
   .match-inner-container {
-    margin: 0 auto;
+    margin: 0 0.05rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -703,10 +712,11 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-15) !important;
+    // background: var(--q-gb-bg-c-15) !important;
     height: 25px;
-    border-bottom: 1px solid #F2F2F6;
-
+    border-bottom: 1px solid var(--q-gb-bg-c-19);
+    border-top: 1px solid var(--q-gb-bg-c-19);
+    border-color: var(--q-gb-bg-c-19) !important;
     &.bottom {
       margin-top: 0.05rem;
     }
@@ -720,8 +730,8 @@ export default {
     border-radius: 0;
     font-size: 12px;
     padding: 0 5px 0 20px;
-    background: var(--q-gb-bg-c-17);
-    line-height: 20px;
+    background: var(--q-gb-bg-c-10);
+    line-height: 19px;
     font-size: 11px;
 
     .score-inner-span {
@@ -747,7 +757,7 @@ export default {
       .favorited-icon {
         width: 14px;
         height: 14px;
-        margin: 0 4px 0 7px;
+        margin: 0 4px 0 0.11rem;
         /* position: relative;
         top: 1px; */
         flex-shrink: 0;
@@ -760,7 +770,7 @@ export default {
       width: 100%;
       height: 100%;
       padding-right: 5px;
-      transform: translateY(1px);
+      // transform: translateY(1px);
       text-overflow: ellipsis;
       flex-wrap: nowrap;
       align-items: center;
@@ -801,7 +811,7 @@ export default {
 
   .match-content {
     width: 100%;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-18);
     padding: 0 9px;
 
     .event-team {
@@ -853,7 +863,7 @@ export default {
         justify-content: center;
         /* justify-content: space-between; */
         /* padding-right: 46px; */
-        margin-top: 8px;
+        margin: .08rem 0;
 
         .bet_btn {
           display: flex;
@@ -872,7 +882,7 @@ export default {
             height: 32px;
             flex-shrink: 0;
             border-radius: 2px;
-            background: var(--sys-brand-secodary-secondary-50, #F2F2F6);
+            background: var(--q-gb-bg-c-15);
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -944,7 +954,9 @@ export default {
 
         .score-title-text {
           height:100%;
-          margin-top: .02rem;
+          display: flex;
+          align-items: center;
+          // margin-top: .02rem;
         }
 
         .timer-wrapper-c {

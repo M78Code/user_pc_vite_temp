@@ -131,7 +131,7 @@ export const category_info = (category_arr=[]) => {
   });
   // ==================================
   // 监听详情数据仓库版本号更新odds_info数据
-  watch(() => MatchDataWarehouseInstance.value.list_to_obj, () => {
+  watch(() => get_detail_data.value, () => {
     match_list_normal()
     match_list_new()
   },{deep:true})

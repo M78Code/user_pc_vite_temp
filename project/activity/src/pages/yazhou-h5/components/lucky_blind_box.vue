@@ -1,33 +1,28 @@
-<!--
- * @Author: ledron
- * @Date: 2021-08-25
- * @Description: 幸运盲盒活动
--->
 <template>
   <div class="lucky_blind_box">
     <!-- 图片预加载   -->
     <div style="display: none">
-      <img  src="activity/yazhou-h5/activity/lucky/gift1.png" alt="">
-      <img  src="activity/yazhou-h5/activity/lucky/gift2.png" alt="">
-      <img  src="activity/yazhou-h5/activity/lucky/gift3.png" alt="">
+      <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/gift1.png`" alt="">
+      <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/gift2.png`" alt="">
+      <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/gift3.png`" alt="">
     </div>
     <!-- 抽奖按钮点击时loading   -->
     <div v-show="lottery_loading" class="fullscreen">
       <div class="fullscreen_loading">
         <span>抽盒中......</span>
-        <img alt class="loading-static-animation" src="public/yazhou-h5/image/bw3/svg/loading-more.svg"/>
+        <img alt class="loading-static-animation"   :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/image/bw3/svg/loading-more.sv`" />
       </div>
     </div>
     <div class="active-object">
       <div>
-        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动对象：</span>
           <span>本场馆全体会员</span>
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span>活动时间：</span>
           <template v-if="get_user.activityList[activityIndex].period == 1">
@@ -51,7 +46,7 @@
         </div>
       </div>
       <div>
-        <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
           <span style="width: 1.91rem">活动内容：</span>
           <span>本场馆内满足任务条件的会员可以获得奖券，消耗奖券可以兑换不同等级的盲盒，并抽取盲盒的随机奖金，每个盲盒100%中奖，让您的奖金收获不停刺激不断！</span>
@@ -70,9 +65,9 @@
           开抢
         </div>
         <div class="wait-for-u">
-          <img class="line-left" src="activity/yazhou-h5/activity/lucky/line-left.png" alt="">
+          <img class="line-left" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/line-left.png`" alt="">
           <span>大奖等您拿</span>
-          <img class="line-right" src="activity/yazhou-h5/activity/lucky/line-right.png" alt="">
+          <img class="line-right" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/line-right.png`" alt="">
         </div>
         <div class="Gift-box">
           <div v-for="(item, i ) in lihe_list" :key="i+'i'" @click="lihe_list_click(item, i, 'frequent_clicks')">
@@ -80,7 +75,9 @@
             <span>{{ item.name }}</span>
           </div>
         </div>
+             
         <div class="Lucky_blind_box_content">
+             <!-- 活动未开始 -->
           <template v-if="get_user.activityList[activityIndex].period == 1">
             <ActiveCountDown :endTime='inStartTime'></ActiveCountDown>
             <div class="juli">距离活动开始还有</div>
@@ -96,6 +93,7 @@
             <div class="juli">距离下一次盲盒派发还有</div>
             <ActiveCountDown :endTime='next_time' @time-end="get_Lucky_box_init('first')"></ActiveCountDown>
           </template>
+
           <div class="Unboxing-list" v-if="get_user.activityList[activityIndex].period == 2 ">
             <p>
               今日剩余 <span class="red">{{ lihe_name.num_ber || 0 }}</span> 个
@@ -103,7 +101,7 @@
             </p>
             <div class="Token-history">
               <div>
-                <img  src="activity/yazhou-h5/activity/diamond.png" alt="">
+                <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/diamond.png`" alt="">
                 <span>奖券:{{ get_Lucky_box.tokenNum || 0}}</span>
               </div>
               <div class="zoom_in"
@@ -116,7 +114,7 @@
                      }">
                 <span>{{btn_click ? '拆盒1次' :`${count_down_click}s后再次拆盒`}}</span>
                 <div class="flex align_items" v-if="btn_click">
-                  <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
+                  <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/diamond1.png`" alt="">
                   <span>x {{lihe_name.Number_tokens_consumed}}</span>
                 </div>
               </div>
@@ -125,6 +123,7 @@
               </div>
             </div>
           </div>
+
           <div class="end-time" v-if="get_user.activityList[activityIndex].period == 3">
             <p>活动已结束</p>
             <div class="end-btn btn" @click="expand_history(1)">
@@ -170,8 +169,56 @@
         </div>
       </div>
     </div>
-    <!-- 历史记录弹框 -->
-    <q-dialog v-model="history_alert">
+
+
+    <!--活动规则-->
+    <div class="activity-rules">
+      <div class="title">
+        活动规则
+      </div>
+      <div class="rules-object">
+        <div>
+          <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <div>
+            <span>会员可根据完成任务获得的奖券数量，抽取三种不同等级盲盒，每种盲盒皆为100%中奖；</span>
+          </div>
+        </div>
+        <div>
+          <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <div>
+            <span>盲盒数量将于每日12:00、15:00、18:00、21:00、00:00添加数量，先抽先得，如抽完后需待下次更新时间；</span>
+          </div>
+        </div>
+        <div>
+          <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <div>
+            <span>盲盒奖励实时派发，仅需在本场馆完成1倍流水即可出款；</span>
+          </div>
+        </div>
+        <div>
+          <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <div>
+            <span>本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<span color="#ff7000">1.5</span>或香港盘<span color="#ff7000">0.5</span>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；</span>
+          </div>
+        </div>
+        <div>
+          <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <div>
+            <span>每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，在活动期间仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回彩金及所产生利润的权利；</span>
+          </div>
+        </div>
+        <div>
+          <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
+          <div>
+            <span>为避免文字理解差异，本场馆保留本活动最终解释权。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+        <!-- 历史记录弹框 -->
+        <q-dialog v-model="history_alert">
       <div class="history-dialog" :class="{'isIphoneX':isIphoneX}" @click.self="history_alert = false">
         <div class="history-record">
           <div class="choice-title">
@@ -196,7 +243,7 @@
             :pageSize = 7
             @change="data_page_changed"
           />
-          <img class="close"  @click="history_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png"/>
+          <img class="close"  @click="history_alert = false"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`"/>
         </div>
       </div>
     </q-dialog>
@@ -212,66 +259,23 @@
         <div class="gift-btn" v-if="false">
           <p>再拆1次</p>
           <div class="flex align_items justify-center">
-            <img  src="activity/yazhou-h5/activity/diamond1.png" alt="">
+            <img  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/diamond1.png`" alt="">
             <span>x {{lihe_name.Number_tokens_consumed}}</span>
           </div>
         </div>
         <div class="get-more-tokens" v-else @click="gift_box_alert = false">
           我知道了
         </div>
-        <img class="close-img" @click="gift_box_alert = false"  src="activity/yazhou-h5/activity/lucky/close.png" alt="">
+        <img class="close-img" @click="gift_box_alert = false"  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`" alt="">
       </div>
     </q-dialog>
-    <!--活动规则-->
-    <div class="activity-rules">
-      <div class="title">
-        活动规则
-      </div>
-      <div class="rules-object">
-        <div>
-          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
-          <div>
-            <span>会员可根据完成任务获得的奖券数量，抽取三种不同等级盲盒，每种盲盒皆为100%中奖；</span>
-          </div>
-        </div>
-        <div>
-          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
-          <div>
-            <span>盲盒数量将于每日12:00、15:00、18:00、21:00、00:00添加数量，先抽先得，如抽完后需待下次更新时间；</span>
-          </div>
-        </div>
-        <div>
-          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
-          <div>
-            <span>盲盒奖励实时派发，仅需在本场馆完成1倍流水即可出款；</span>
-          </div>
-        </div>
-        <div>
-          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
-          <div>
-            <span>本活动仅计算有效注单，且所有注单皆以结算时间为准，任何低于欧洲盘<span color="#ff7000">1.5</span>或香港盘<span color="#ff7000">0.5</span>水位、同一赛事中同时投注对等盘口、提前结算以及串关注单，将不予计算（不包含串关注单）；</span>
-          </div>
-        </div>
-        <div>
-          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
-          <div>
-            <span>每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，在活动期间仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回彩金及所产生利润的权利；</span>
-          </div>
-        </div>
-        <div>
-          <img :src="(`${ $g_image_preffix }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
-          <div>
-            <span>为避免文字理解差异，本场馆保留本活动最终解释权。</span>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 
 <script>
-import DataPager from "project/activity/src/components/data_pager/data_pager.vue";
-import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down.vue";
+import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
+import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
 import lucky_blind_box_mixin  from "project/activity/src/mixins/lucky_blind_box/lucky_blind_box.js";  
 export default {
 
@@ -471,7 +475,7 @@ export default {
         padding: 0 0.1rem;
         width: 1.4rem;
         height: 0.3rem;
-        background-image: var(--q-color-com-img-bg-164);
+        background-image: var(--qq--color-com-img-bg-164);
         background-size: cover;
         background-repeat: no-repeat;
         font-family: SourceHanSansSC-Medium;
@@ -647,7 +651,7 @@ export default {
 .gift_box_dialog {
   width: 3.45rem;
   height: 4.2rem;
-  background: var(--q-color-com-img-bg-165) no-repeat;
+  background: var(--qq--color-com-img-bg-165) no-repeat;
   background-size: 100% 100%;
   box-shadow: 0 0.06rem 0.15rem 0 rgba(0, 0, 0, 0.11);
   border-radius: 0.2rem;
@@ -792,7 +796,7 @@ export default {
   content: "";
   display: block;
   position: absolute;
-  background: var(--q-color-com-img-bg-165) no-repeat;
+  background: var(--qq--color-com-img-bg-165) no-repeat;
   background-size: 100% 100%;
   width: 0;
   height: 0;

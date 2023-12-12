@@ -15,7 +15,7 @@
                       <div class="nonebox4-content-left-content-text-one">
                         <div class="nonebox4-content-left-content-text-one-tit" v-html="items.handicap.replace('undefined','')"></div>
                         <div>
-                            <div class="nonebox4-content-right" v-if="items.ol_os == 1">
+                            <div class="nonebox4-content-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                               <div class="nonebox4-content-right-profit" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                                 @{{compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId)}}
                               </div>
@@ -34,7 +34,7 @@
                        <span class="text-two-span">{{items.playName}}
                          <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                         </span>
-                        <span v-if="[1].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span>
+                        <span v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span>
                         <span v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}]</span>
                         
                       </div>
@@ -53,7 +53,8 @@
   <script setup>
   import { compute_value_by_cur_odd_type } from "src/output/index.js"
   import BetData from "src/core/bet/class/bet-data-class.js";
-  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr } from "src/output/index.js";
+  import { useMittEmit, MITT_TYPES,LOCAL_PROJECT_FILE_PREFIX,i18n_t ,UserCtr,only_win } from "src/output/index.js";
+import { reactive } from "vue";
 
   const props = defineProps({
     items:{}

@@ -2,7 +2,8 @@ import BaseData from "src/core/base-data/base-data.js";
 import lodash_ from "lodash"
 import { nextTick } from "vue"
 import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
-
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 class BaseWsMessage {
   constructor(){
     this.count = 0
@@ -11,9 +12,9 @@ class BaseWsMessage {
   init(){
     this.message_fun = null
     this.run()
-    setTimeout(()=>{
-      this.set_menu_c5_message()
-    },1000)
+    // setTimeout(()=>{
+    //   this.set_menu_c5_message()
+    // },1000)
   }
 
   /**
@@ -38,7 +39,7 @@ class BaseWsMessage {
   set_menu_c5_message() {
     let cmd_obj = {};
     cmd_obj.cmd = "C5";
-    cmd_obj.cdt = "4";
+    cmd_obj.cdt = PROJECT_NAME.includes('h5')?"7":"4";
     this.send_msg(cmd_obj);
   }
 

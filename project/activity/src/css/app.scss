@@ -3,16 +3,16 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 项目默认公共样式
  */
-//  @import url("~public/lib/font/font-roboto.min.css");
+//  @import url("/activity/lib/font/font-roboto.min.css");
 
 @font-face {
     font-family: "Number-regular";
-    // src: url("~public/image/common/DINPro-Regular.otf");
+    // src: url($SCSSPROJECTPATH+"/image/common/DINPro-Regular.otf");
   }
   
   @font-face {
     font-family: "Number-medium";
-    // src: url("~public/image/common/DINPro-Medium.otf");
+    // src: url($SCSSPROJECTPATH+"/image/common/DINPro-Medium.otf");
   }
   .din-regular {
     font-family: "Number-regular";
@@ -358,94 +358,7 @@
   div[class*="ranking-bg-style"] {
     background-size: 100% 100%;
   }
-//   .ranking-bg-style1-1 {
-//     background-image: url("~public/image/yabo/svg/virtual/ranking/style1_1.svg");
-//     &.csid-1002,
-//     &.csid-1010 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1002_1.svg");
-//     }
-//     &.csid-1009 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1009_1.svg");
-//     }
-//   }
-//   .ranking-bg-style1-2 {
-//     background-image: url("~public/image/yabo/svg/virtual/ranking/style1_2.svg");
-//     &.csid-1002,
-//     &.csid-1010 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1002_2.svg");
-//     }
-//     &.csid-1009 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1009_2.svg");
-//     }
-//   }
-//   .ranking-bg-style1-3 {
-//     background-image: url("~public/image/yabo/svg/virtual/ranking/style1_3.svg");
-//     &.csid-1002,
-//     &.csid-1010 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1002_3.svg");
-//     }
-//     &.csid-1009 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1009_3.svg");
-//     }
-//   }
-//   .ranking-bg-style1-4 {
-//     background-image: url("~public/image/yabo/svg/virtual/ranking/style1_4.svg");
-//     &.csid-1002,
-//     &.csid-1010 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1002_4.svg");
-//     }
-//     &.csid-1009 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1009_4.svg");
-//     }
-//   }
-//   .ranking-bg-style1-5 {
-//     background-image: url("~public/image/yabo/svg/virtual/ranking/style1_5.svg");
-//     &.csid-1002 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1002_5.svg");
-//     }
-//     &.csid-1010 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1010_5.svg");
-//     }
-//   }
-//   .ranking-bg-style1-6 {
-//     background-image: url("~public/image/yabo/svg/virtual/ranking/style1_6.svg");
-//     &.csid-1002 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1002_6.svg");
-//     }
-//     &.csid-1010 {
-//       background-image: url("~public/image/yabo/svg/virtual/ranking/csid_1010_6.svg");
-//     }
-//   }
-  
-  /* *** 虚拟体育 ************ -E */
-  
-//   /*  默认联赛logo */
-//   .theme01 .leagues-logo-default,.theme01_y0 .leagues-logo-default  {
-//     background-image: url("~public/image/yabo/svg/league_logo_01.svg") !important;
-//   }
-  
-//   /*  默认联赛logo */
-//   .theme02 .leagues-logo-default,.theme02_y0 .leagues-logo-default {
-//     background-image: url("~public/image/yabo/svg/league_logo_02.svg") !important;
-//   }
-  
-  /*  足球进球 动图 */
-//   .yb-goal-gif {
-//     margin-left: 5px;
-//     min-width: 12px;
-//     height: 12px;
-//     background-image: url("~public/image/common/png/goal_gif_02.png");
-//     background-repeat: no-repeat;
-//     background-position: 0% 0;
-//     background-size: auto 100%;
-//     animation: 1s goal-gif infinite steps(29, end);
-//   }
-//   .theme02_y0,.theme01_y0{
-//     .yb-goal-gif{
-//       background-image: url("~public/image/common/png/goal_gif.png");
-//     }
-  
-//   }
+
   
   @keyframes goal-gif {
     from {
@@ -518,7 +431,7 @@
   }
   
   :root {
-    --q-color-primary: var(--qq--y0-btn-hover);  
+    --qq--color-primary: var(--qq--y0-btn-hover);  
   }
   .pager{
     .text-primary {

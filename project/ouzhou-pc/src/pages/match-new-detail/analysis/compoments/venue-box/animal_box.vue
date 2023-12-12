@@ -5,21 +5,7 @@
 -->
 <template>
   <div class="box-bc relative-position" @mouseenter="video_enter" @mouseleave="video_leave">
-
-    <!-- 右上角提示內容 -->
-    <div class="right-icon" @click.stop="is_show_content = !is_show_content">
-      <!-- 提示消息 -->
-      <icon class="icon" :class="is_show_content && 'active'" size="14px" name="icon-tips3" :color="is_show_content ? 'rgba(255,255,255,.7)' : '#fff'"/>
-      <!-- 提示内容 -->
-      <div :class="['tip-content']" v-if="is_show_content" @click.stop>
-        <div class="content-wrap relative-position">
-          <div class="yb-icon-triangle"></div>
-          <!-- 此版面现实的所有直播内容仅供参考........ -->
-          <div class="content">{{ i18n_t("common.live_notice") }}</div>
-        </div>
-      </div>
-    </div>
-
+    <right-icon />
     <div class="iframe_box">
       <iframe
         id="video-iframe"
@@ -57,9 +43,9 @@ import { LOCAL_PROJECT_FILE_PREFIX, i18n_t } from "src/output/index.js";
 import video from "src/core/video/video.js";
 import url_add_param from "src/core/enter-params/util/index.js";
 import video_type_ctr from "src/core/video/video_type_ctr.vue";
-import icon from "src/components/icon/icon-1/index.vue";
 import loading from "../../../components/loading/index.vue";
 import _ from "lodash";
+import rightIcon from "./right_icon.vue";
 const props = defineProps({
   detail_info: {
     // 赛事详情
@@ -74,7 +60,6 @@ const props = defineProps({
 });
 const iframe_loading = ref();
 const is_video_hover = ref(false); // 鼠标是否经过视频
-const is_show_content = ref(false); //是否显示提示信息
 
 const { post_video_url } = api_match_list; // 接口
 watch(
@@ -281,46 +266,6 @@ const video_leave = () => {
 }
 .box-bc :deep(.xl-screen-wrap) {
   display: none !important;
-}
-
-.right-icon {
-  position: absolute;
-  width: 100%;
-  z-index: 8;
-  //声明图标
-  .icon {
-
-    position: absolute;
-    top: 12px;
-    right: 15px;
-    cursor: pointer;
-
-  }
-
-  //声明容器
-  .tip-content {
-    position: absolute;
-    top: 32px;
-    right: 10px;
-    width: 70%;
-    &.is-iframe{
-      width:95%;
-    }
-    .content-wrap {
-      background-color: rgba(0, 0, 0, 0.8);
-      padding: 9px 28px;
-      font-size: 12px;
-      color: #fff;
-    }
-    .yb-icon-triangle {
-      position: absolute;
-      top: -5px;
-      right: 7.5px;
-      &::before {
-        background-color: rgba(0, 0, 0, 0.8);
-      }
-    }
-  }
 }
 
 </style>

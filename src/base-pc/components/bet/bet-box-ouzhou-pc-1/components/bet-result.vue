@@ -12,8 +12,10 @@
                     <span class="text-a1a text-flow-none font400">{{ items.playName }}
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
+                    
+                    <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
                 </div>
-                <div class="w-100 text-8a8 fon12 font400">{{items.matchName}}</div>
+                <div class="w-100 text-8a8 fon12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
                 <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
                 </div>
             </div>

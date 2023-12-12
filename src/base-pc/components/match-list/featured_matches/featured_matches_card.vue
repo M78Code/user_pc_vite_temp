@@ -31,7 +31,7 @@
           <div class="top-line"></div>
           <div class="odds_item bet-item-wrap-ouzhou" v-for="ol_data in get_col_ols_data(item.mid)"
             :key="ol_data.oid + '_' + ol_data._hpid + '_' + ol_data._ot">
-            <betItem :ol_data="ol_data" match_data_type="pc_hots_list"></betItem>
+            <betItem :ol_data="ol_data" :csid="item.csid" match_data_type="pc_hots_list"></betItem>
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@ import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_t
 import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
 import { api_details } from 'src/api';
 import template2 from './template2.vue';
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import { compute_css_obj } from 'src/core/server-img/index.js'
 import { MatchDataWarehouse_ouzhou_PC_hots_List_Common, MenuData, SessionStorage, MITT_TYPES, useMittOn, get_match_status } from "src/output/index.js"
@@ -57,6 +57,7 @@ import { get_ouzhou_data_tpl_id, get_handicap_index_by, get_match_to_map_obj, ge
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 
 const router = useRouter();
+const route = useRoute();
 const cache_data = SessionStorage.get('get_hots', []);
 if (cache_data.length) {
   MatchDataWarehouse_ouzhou_PC_hots_List_Common.set_list(cache_data);
@@ -123,12 +124,15 @@ function get_col_ols_data(_mid) {
     // 获取投注项内容 
     let ols_data = lodash.get(hn_obj, hn_obj_config) || many_obj[hn_obj_config] || {};
     // 15mins 和 featured赛事展示的投注项名称
-    ols_data['otb'] = item.otb
     return ols_data;
   })
 }
 // // 选中当前td 使td高亮 且将投注信息存储到数据仓库中
 const toJump = (item) => {
+  let obj = {
+    pre_route : route.name
+  }
+  MenuData.set_router_info(obj)
   router.push({
     name: "details",
     params: {

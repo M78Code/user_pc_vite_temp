@@ -264,7 +264,8 @@ const watch_route_fun = (to, from)=>{
       hash = hash.substring(0,hash.indexOf('?'));
       document.location.hash=hash;
     }
-    window.history.replaceState('', '', get_url_no_param());
+    // 使用replaceState时需要传入当前history的state  具体可查文档中关于replaceState的使用 https://router.vuejs.org/guide/migration/
+    window.history.replaceState(window.history.state, '', get_url_no_param());
   }, 200);
 }
 

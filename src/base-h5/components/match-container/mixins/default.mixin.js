@@ -19,6 +19,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { lang, standard_edition, theme } from 'src/base-h5/mixin/userctr.js'
 import { is_hot, menu_type, is_detail, is_results, menu_lv1 } from 'src/base-h5/mixin/menu.js'
+import BaseData from "src/core/base-data/base-data.js";
 
 
 // i: 每个组件的 props 赛事下标， 来源 === 组件
@@ -83,6 +84,12 @@ export default defineComponent({
     match () {
       return this.match_of_list;
     },
+    menu_sport(){
+      return {
+        menu_sport_id:MenuData.menu_mi.value,
+        menu_sport_name:BaseData.menus_i18n_map[MenuData.menu_mi.value]
+      }
+    },
     is_show_all () {
       return MenuData.is_zaopan() || MenuData.is_scroll_ball()
     },
@@ -112,25 +119,6 @@ export default defineComponent({
         muUrl_icon = is_theme01 ? muUrl_theme01 : muUrl_theme02
       }
       return muUrl_icon
-    },
-    // TODO: 判断是否显示体育类型
-    show_sport_title () {
-      if (is_detail.value) { return false }
-      if (is_hot.value) {
-        // 热门
-        if (lodash.get(MenuData.hot_tab_menu, 'index') !== 0) { return false }
-        if (this.i === 0) { return true }
-        if (this.prev_match && this.match) {
-          return this.prev_match.csid !== this.match.csid;
-        }
-      } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+menu_type.value)) {
-        if (this.i === 0) { return true }
-        if (this.prev_match && this.match) {
-          return this.prev_match.csid !== this.match.csid;
-        }
-      } else {
-        return false;
-      }
     },
     
     // 是否显示视频图标, 点击跳转 去到详情页视频直播
@@ -219,7 +207,7 @@ export default defineComponent({
     is_show_opening_title () {
       const menu_lv_v1 = MenuData.current_lv_1_menu_i
       // 今日、早盘、串关
-      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(this.match_of_list.start_flag) && MenuData.is_today()
+      return [1,2,3,6].includes(+menu_lv_v1) && [1,2].includes(+this.match_of_list.start_flag) && (MenuData.is_today() || MenuData.is_mix())
     },
     // 获取赛事数量
     get_match_count () {
@@ -243,7 +231,11 @@ export default defineComponent({
         is_show = t && true
       })
       return is_show
-    }
+    },
+    // 联赛折叠状态
+    ball_seed_collapsed ()  {
+      return !lodash.get(MatchFold.ball_seed_csid_fold_obj.value, `csid_${this.match_of_list.csid}`, true)
+    },
   },
   watch: {
     match_of_list: {
@@ -381,7 +373,8 @@ export default defineComponent({
     handle_ball_seed_fold () {
       const { csid, is_virtual = false, start_flag = '', warehouse_type = '' } = this.match_of_list
       MatchFold.set_ball_seed_match_fold(this.match_of_list, start_flag)
-      if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // 不需要虚拟计算，欧洲版五大联赛、赛事个数小于18 则 return
+      if (is_virtual || ['five_league'].includes(warehouse_type) || MatchMeta.complete_matchs.length < 18) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
@@ -393,7 +386,8 @@ export default defineComponent({
       // 首页热门，详情页，不需要用到折叠
       if (is_hot.value || is_detail.value) return;
       MatchFold.set_league_fold(this.match_of_list, start_flag)
-      if (is_virtual || ['five_league'].includes(warehouse_type)) return
+      // 不需要虚拟计算，欧洲版五大联赛、赛事个数小于18 则 return
+      if (is_virtual || ['five_league'].includes(warehouse_type) || MatchMeta.complete_matchs.length < 18) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },

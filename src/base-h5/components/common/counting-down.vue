@@ -11,7 +11,7 @@
     <span class="title-space-1" ref="title-space" v-show="title">
       {{title}}
     </span>
-    <span v-if="show_time_counting" ref="counting" class="counting" v-html="counting_time_ctr_show_format(match,counting_time)"></span>
+    <span v-if="show_time_counting" ref="counting" class="counting" v-html="counting_time_ctr_show_format_ouzhou(match,counting_time)"></span>
     <span ref="special-match" class="special din-regular" :class="{'mar-l5': u_like}" :data-d="`${match.csid}-${match.mmp}`"
       v-show="[2,4,6,15,16].includes(+match.csid) && [301,302,303].includes(+match.mmp)"><!--csid:16水球-->
       {{match.mlet}}
@@ -25,7 +25,7 @@ import lodash from 'lodash'
 import { ref, computed, watch, nextTick, onActivated, onMounted, onUnmounted, onDeactivated } from "vue"
 import { i18n_t, match_vr_step } from 'src/output/index.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { counting_time_ctr_show_format } from 'src/core/format/common/index.js'
+import { counting_time_ctr_show_format, counting_time_ctr_show_format_ouzhou } from 'src/core/format/common/index.js'
 const props = defineProps({
   m_id:String|Number, // 赛事id
   is_add:Boolean,     // 是否为累加计时器
@@ -493,7 +493,7 @@ onUnmounted(() => {
   .counting, .special {
     color: var(--q-gb-t-c-19);
     //color: #5A6074;
-    font-size: 0.14rem;
+    font-size: 0.12rem;
     font-weight: 500;
   }
 

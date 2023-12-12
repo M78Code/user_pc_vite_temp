@@ -10,7 +10,7 @@
     <div class="search-tab-wap">
     <!-- <div class="search-tab-wap"> -->
         <div class="search-tab-content">
-            <ul class="search-tab-content-ul">
+            <ul class="search-tab-content-ul" v-show="!drawerRight">
                 <li ref="searchTab" :class="{ active: activeOn === index }" v-for="(item, index) in dataList" :key="index"
                     @click="changeTab(item.tid,index,$event)">
                     <!-- <img v-show="item.img" :src="item.img" /> -->
@@ -18,15 +18,19 @@
                       :style="compute_css_obj({key: activeOn === index ? 'league-sport-active-image' : 'league-sport-icon-image', position:format_type(item)})"></span>
                     {{ item.name }}
                 </li>
+							<div v-show="!drawerRight" class="search-tab-content-img" @click="drawerRight = true"
+							>
+									<img :src="search" />
+							</div>
             </ul>
-            <div class="search-tab-content-img" @click="drawerRight = !drawerRight"
-             >
-                <img :src="search" />
+            <div class="search" v-show="drawerRight">
+                <input class="search-input" type="text" v-model="keyword" :placeholder="i18n_t('ouzhou.search.placeholder')" />
+                <span @click="reset">{{ i18n_t('common.cancel') }}</span>
             </div>
             <!-- <div class="search-tab-content-img" @click="searchClick">
                 <img :src="search" />
             </div> -->
-        <q-drawer
+        <!-- <q-drawer
             side="right"
             v-model="drawerRight"
             show-if-above
@@ -39,7 +43,7 @@
         <q-scroll-area class="fit">
             <screenModal class="screenModal" @select_change="select_change"></screenModal>
         </q-scroll-area>
-      </q-drawer>
+      </q-drawer> -->
         </div>
     </div>
 </template>
@@ -51,7 +55,7 @@ import {scrollMenuEvent} from "../utils";
 // import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
 import  screenModal from './screen-modal.vue';
 // import { MenuData } from "src/output/index.js";
-import { compute_css_obj,league_sprite_images_postion } from "src/output/index.js";
+import { i18n_t, compute_css_obj,league_sprite_images_postion } from "src/output/index.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 const props = defineProps({
     dataList: {
@@ -69,7 +73,7 @@ const props = defineProps({
                 name: "世界杯",
                 val: 1,
                 img: "",
-                tid: '10011003169, 10011003541'
+                tid: '10011003169,10011003541'
             },
             {
                 name: "欧冠",
@@ -83,7 +87,7 @@ const props = defineProps({
                 name: "英超",
                 val: 3,
                 img: "",
-                tid: '10011000, 1292581040691029461',
+                tid: '180,10011000,1292581040691029461',
 
             },
             {
@@ -114,7 +118,7 @@ const props = defineProps({
                 // SRL中国超级联赛 SRL China Super League - 10011020404
                 name: "中超",
                 val: 8,
-                tid: "10011006344, 10011020404"
+                tid: "10011006344,10011020404,1682748478869187623"
             }
         ]
     },
@@ -125,6 +129,7 @@ const props = defineProps({
 });
 const drawerRight = ref(false)
 const searchTab = ref(null)
+const keyword = ref('')
 
 const activeOn = ref(props.defaultVal || 0);//默认值
 const league_data = ref([])
@@ -178,6 +183,10 @@ const searchClick = () => {
     is_show.value = true
     console.log('is_showis_showis_showis_show',is_show)
 }
+const reset = () => {
+	drawerRight.value = false;
+	keyword.value = '';
+}
 // 键入回车换行
 function key_down(event) {
   event = event || window.event;
@@ -199,6 +208,7 @@ function key_down(event) {
         height: 0.32rem;
         line-height: 0.32rem;
         display: flex;
+				position: relative;
 
         ul {
             flex: 1;
@@ -206,6 +216,7 @@ function key_down(event) {
             overflow: hidden;
             overflow-x: auto;
             display: flex;
+            padding-right: 0.3rem;
             &::-webkit-scrollbar {
                 display: none;
             }
@@ -255,8 +266,11 @@ function key_down(event) {
         }
 
         .search-tab-content-img {
-            width: 0.38rem;
+            width: 0.3rem;
             text-align: center;
+						position: absolute;
+						right: 0;
+						background-color: #fff;
             img {
                 width: 0.18rem;
                 height: 0.18rem;
@@ -267,9 +281,28 @@ function key_down(event) {
 
     }
 }
-.screenModal{
-    min-height: 8.4rem;
-    height: auto;
+.search {
+	width: 100%; 
+	flex: 1 1;
+  font-size: 12px;
+	font-family: PingFang SC;
+	color: var(--q-gb-t-c-19);
+	.search-input {
+		width: 90%;
+		border-radius: .25rem;
+		outline: none;
+		border: 1px solid var(--q-gb-bg-c-18);
+		height: 0.25rem;
+		padding-left: 0.12rem;
+	}
+	::placeholder {
+		color: var(--q-gb-t-c-19);
+	}
+	span {
+    margin-left: 0.12rem;
+    font-size: 12px;
+    color: var(--q-gb-t-c-19);
+	}
 }
 </style>
  

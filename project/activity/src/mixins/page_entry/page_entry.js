@@ -1,11 +1,22 @@
 
-let over = "activity/yazhou-h5/activity/over.png";
-let stay_tuned = "activity/yazhou-h5/activity/stay_tuned.png";
-let playing = "activity/yazhou-h5/activity/playing.png";
+let over = "/activity/yazhou-h5/activity/over.png";
+let stay_tuned = "/activity/yazhou-h5/activity/stay_tuned.png";
+let playing = "/activity/yazhou-h5/activity/playing.png";
 
 
 import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin.js";
 import { UserCtr } from "project_path/src/core/index.js";
+
+
+
+const img_config={
+  "com-img-bg-131":"/activity/yazhou-h5/activity/maintain_main/maintain_bg.jpg",
+  "com-img-bg-148": "/activity/yazhou-h5/activity/activity-header_slot.png"
+}
+
+
+
+
 
 import { ref } from "vue";
 import { GATAG, ZHUGE } from "project_path/src/core/index.js";
@@ -164,21 +175,23 @@ export default {
     // 活动时间状态图片 period 或者 this.isDuringDate(time1,time2)： 1 未开始  2 进行中   3 已结束
     activity_status_picture(item) {
       if (item.period == 1) {
-        item.state_url = stay_tuned;
+        item.state_url = `${this.LOCAL_COMMON_FILE_PREFIX}${stay_tuned}` ;
       } else if (item.period == 2) {
-        item.state_url = playing;
+        item.state_url = `${this.LOCAL_COMMON_FILE_PREFIX}${playing}` ;
       } else if (item.period == 3) {
-        item.state_url = over;
+        item.state_url = `${this.LOCAL_COMMON_FILE_PREFIX}${over}` ;
       }
     },
     // tab 选项卡切换
     async tab_click(item, activityId, index, is_click, is_first_time) {
+
       let isCurrentTab = this.tab_Id == activityId;
+
       this.tab_Id = activityId;
       this.activity_index = index;
       this.inStartTime = +item.inStartTime;
       this.inEndTime = +item.inEndTime;
-
+      console.log( ' this.tab_Id-', this.tab_Id);
       if (UserCtr.get_user_token() && is_click != "not_need_click") {
         // 数据是否来源网络
         let user_data_from_net = true;
@@ -300,7 +313,7 @@ export default {
       }, 800);
     },
   },
-  destroyed() {
+  unmounted() {
     if (this.first_timer1) {
       clearTimeout(this.first_timer1);
       this.first_timer1 = null;

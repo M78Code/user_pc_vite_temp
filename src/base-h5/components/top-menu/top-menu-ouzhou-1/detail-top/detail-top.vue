@@ -2,13 +2,13 @@
   <div class="component detail-top-info detail-top">
     <div class="sport-info" @click="toHome">
       <span>{{ getCsna }}</span>
-      <img class="bakc-icon" src="../img/back.png" alt="" />
+      <img class="bakc-icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/back.png`" alt="" />
     </div>
     <div class="detail-select" v-if="drop_down_list.length||true">
       <div class="detail-select-nav">
         <q-btn class="label">
           <span class="btn-label">{{ leagueName||refLeagueName }}</span>
-          <img v-if="drop_down_list.length" class="down-icon" :class="[{ 'up-icon': show_list }]" src="../img/top-down.png" alt="" />
+          <img v-if="drop_down_list.length" class="down-icon" :class="[{ 'up-icon': show_list }]" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/top-down.png`" alt="" />
           <q-menu class="detail-top-pop">
             <div class="detail-top-pop-content" ref="detail_top_pop">
               <div class="match_detail_top_list">
@@ -16,7 +16,6 @@
                   :key="index" :detail_data="item" 
                   :active="active == index"
                   :index="index"
-                  v-close-popup
                   @ChangeActive="change_active(item, index)"
                 />
               </div>
@@ -27,7 +26,7 @@
 
     </div>
     <div class="refresh" @click.capture>
-      <img ref="refresh_icon" src="../img/refresh.png" alt="" srcset=""  @touchend="refreshAll"
+      <img ref="refresh_icon" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/menu/top-menu/refresh.png`" alt="" srcset=""  @touchend="refreshAll"
        :class="[{ 'refresh-active': refresh_is_active }, 'refresh-icon']" />
     </div>
   </div>
@@ -40,6 +39,7 @@ import {
   useMittEmit, MITT_TYPES,
   MatchDataWarehouse_H5_Detail_Common,
   MatchDataWarehouse_H5_List_Common,
+  LocalStorage,
 } from "src/output/index.js";
 import { api_common } from "src/api/index";
 import BaseData from "src/core/base-data/base-data.js";
@@ -48,6 +48,7 @@ import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import DetailTopMsOptions from "./detail-top-ms-options.vue";
 import NavbarSubscribe from "./nav-bar-subscribe";
+import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 const route = useRoute()
 const router = useRouter();
 const refresh_is_active = ref(false);
@@ -56,7 +57,6 @@ const show_list = ref(false);
 const detail_top_pop = ref(null);
 const isMatchResultRoute = route.name == 'result'
 const refLeagueName = ref('')
-
 
 const mid = computed(()=>{
   return route.params.mid
@@ -80,10 +80,17 @@ if(route.params.tid){
 }
 /** 获取下拉列表 */
 function getDropDownList(tid='') {
+  const matchDetail = LocalStorage.get("YUAN_MATCH_DETAIL_DATA")
+  let time_ = null
+  if(matchDetail&&matchDetail.mgt){
+    let mgt = Number(matchDetail.mgt);
+    let date_ = new Date(mgt).toLocaleDateString()
+    time_ = new Date(date_).getTime()
+  }
   tid && api_common.get_matchDetail_getMatchDetailByTournamentId({
     tId: tid,
     type: isMatchResultRoute? 1 : (void 0),
-    dateTime: Date.now()
+    dateTime: time_
   }).then(res => {
     if(res.code == '200'){
       return drop_down_list.value = res.data
@@ -140,7 +147,12 @@ function change_active(item, index) {
   else {
   */
   const params = { mid: item.mid, csid: item.csid, tid:item.tid }
-  router.replace({ name: 'category', params});
+
+  let name = 'category'
+  if(isMatchResultRoute){
+    name = 'result'
+  }
+  router.replace({ name, params});
   refreshAll(params)
 }
 /**

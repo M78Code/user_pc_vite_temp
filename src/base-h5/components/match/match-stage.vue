@@ -8,7 +8,7 @@
     <span v-if="!['result_details', 'match_result'].includes($route.name)">
       <!-- 赛事未开赛 -->
       <span v-if="detail_data.ms == 0">
-        <span v-if="!one_hour">
+        <span >
           <!-- 距离开赛时间大于1小时 显示月和日 .Format(i18n_t('time3'))-->
           <!-- {{(new Date(+detail_data.mgt)).Format(i18n_t('time3'))}} -->
           {{ formatTime(+detail_data.mgt, "DD/mm hh:MM") }}
@@ -109,6 +109,9 @@ watch(
     immediate: true
   }
 )
+
+// const id = props.detail_data.csid || 101
+// const dComponent = defineAsyncComponent(()=>import(`./stage/stage-child-${id}.vue`))
 
 // 计算bool的值 控制是否显示赛事时间
 function initEvent() {

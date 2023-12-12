@@ -10,7 +10,7 @@
     <q-list>
       <q-item-label header class="q-list-content">
         <!-- Esports---VR Sports 电竞  VR-->
-        <template v-if="sportsGenre.length">
+        <template v-if="MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(300)||MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(2000)">
           <div class="sports-genre">
             <template v-for="(item, index) in sportsGenre" :key="index">
               <div v-if="MenuData.menu_list?.map((n)=>{return +n.mi})?.includes(+item.mi)" class="item" :class="[
@@ -41,7 +41,7 @@
         <div class="menu_container">
           <h5>{{ i18n_t("ouzhou.menu.all_sports")}}</h5>
           <template  v-for="item in leftDataList" :key="item.mi">
-            <div v-if="![2000,300].includes(item.mi)" class="menu_item" :class="[
+            <div v-if="![2000,300].includes(item.mi) && item.ct>0" class="menu_item" :class="[
               // { active: meta_data_store.current_menu.mi == item.mi },
             ]" @click="change_current_menu(item)"
               :data-id="item.mi">

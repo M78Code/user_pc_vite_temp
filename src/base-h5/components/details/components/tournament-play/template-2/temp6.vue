@@ -330,7 +330,7 @@ export default defineComponent({
       return ""
     });
     const get_detail_data = computed(() => {
-      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid)
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(this.item_data,'mid'))
     });
     const hide_show_more_layout = computed(() => {
       let ret = true;
@@ -395,6 +395,15 @@ export default defineComponent({
       });
       return max;
     }
+    /**
+     * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
+     * @param {Number} value 需要转换的值
+     * @return {Number}
+     */
+    const rem = (value) => {
+      let font_size = (innerWidth * 100) / 375;
+      return Math.ceil(value * font_size);
+    };
     /**
      *@description 6号模板点击收起的时候，要调整滚动距离回到展开之前的高度
      *@return {Undefined} undefined

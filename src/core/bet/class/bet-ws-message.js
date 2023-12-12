@@ -102,20 +102,32 @@ class BetWsMessage {
         // ws推送消息分流
         const ws_cmd = lodash_.get(data,'cmd')
         switch (ws_cmd) {
+          // 赛事级别盘口状态  赛事移除或结束 投注项需要失效
+          case 'C104':
+            this.MSG_C104(data);
+            break;
+          // 赛事 盘口赔率推送
           case 'C105':
             this.MSG_C105(data);
             break;
+          // 投注项 盘口赔率推送
           case 'C106':
             this.MSG_C106(data);
             break;
-            case 'C201':
+          // 注单状态
+          case 'C201':
             this.MSG_C201(data);
             break;
+          
           default:
             break;
         }
       }
     }
+  }
+  // 赛事级别盘口状态
+  MSG_C104(obj) {
+    BetData.set_bet_c104_change(obj.cd)
   }
   // 赛事订阅盘口赔率变更 修改投注项变更
   MSG_C105(obj) {

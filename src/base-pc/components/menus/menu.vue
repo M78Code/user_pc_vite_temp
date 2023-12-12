@@ -40,20 +40,22 @@
       </ul>
     </div>
     <div class="menu-nav-line" />
-    <div class="menu-nav-li" v-if="IS_FOR_NEIBU_TEST">
+    <div class="menu-nav-li" >
       <ul class="menu-list">
         <li class="f-s-c" @click="outrights" :class="{ 'menu_checked': MenuData.is_kemp() && !MenuData.is_common_kemp() && !MenuData.is_collect_kemp() }">
           <sport-icon :sport_id="BaseData.compute_sport_id(400)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
           {{ (BaseData.menus_i18n_map || {})[400] || "" }}
         </li>
-        <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
-          <sport-icon :sport_id="BaseData.compute_sport_id(2000)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
-          {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
-        </li>
-        <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
-          <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
-          {{ (BaseData.menus_i18n_map || {})[300] || "" }}
-        </li>
+        <template v-if="IS_FOR_NEIBU_TEST">
+          <li class="f-s-c" @click="esportsClick" :class="{ 'menu_checked': MenuData.is_esports()}">
+            <sport-icon :sport_id="BaseData.compute_sport_id(2000)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
+            {{ (BaseData.menus_i18n_map || {})[2000] || "" }}
+          </li>
+          <li class="f-s-c" @click="vrClick()" :class="{ 'menu_checked': MenuData.is_vr()}">
+            <sport-icon :sport_id="BaseData.compute_sport_id(300)" key_name="pc-left-menu-bg-active-image" size="18" class="icon" />
+            {{ (BaseData.menus_i18n_map || {})[300] || "" }}
+          </li>
+        </template>
       </ul>
     </div>
 
@@ -83,7 +85,7 @@ const route = useRoute();
 // favouritse
 const go_to_favouritse = () => {
   // 点击收藏时清除其他球种选中状态
-  if(MenuData.is_collect)return
+  // if(MenuData.is_collect)return
   MenuData.left_menu_result.lv1_mi = ''
   // 点击菜单的时候如果在详情页应跳转出来先
   if (['league','details'].includes(route.name)) {
@@ -97,11 +99,12 @@ const go_to_favouritse = () => {
     filter_tab: 3001, // 滚球 3001 早盘 3002  今日 3003
     current_mi: 1011, // 当前选中的赛种id
   }
+  MenuData.set_menu_current_mi(1011)
   MenuData.set_mid_menu_result(mid_config)
   MenuData.set_current_ball_type(1)
 
   // nextTick(()=>{
-    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE)
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_FAVOURITES)
   // })
 }
 /**
@@ -111,9 +114,9 @@ const go_to_favouritse = () => {
  * @returns {undefind} 无返回值
  */
 const jump_func = (payload ={},type) => {
-  if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
-    return
-  }
+  // if(MenuData.left_menu_result.lv1_mi  == payload.mi && MenuData.left_menu_result.menu_type==type ){
+  //   return
+  // }
    // 点击菜单的时候如果在详情页应跳转出来先
   if (['league','details','search'].includes(route.name)) {
     router.push('/home')
@@ -209,7 +212,7 @@ const esportsClick = ()=>{
 }
 // 冠军
 const outrights = () => {
-  if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return
+  // if(!MenuData.is_common_kemp() && !MenuData.is_collect_kemp() && MenuData.is_kemp())return
  // 点击菜单的时候如果在详情页应跳转出来先
  if (['league','details'].includes(route.name)) {
     router.push('/home')
@@ -217,7 +220,7 @@ const outrights = () => {
   let obj = {
     lv1_mi : 400,
     has_mid_menu: true, // 有中间菜单
-    lv2_mi: 101 +''+ 4, // 二级菜单id
+    lv2_mi: 401, // 二级菜单id
     menu_type: 1, // 左侧热门或者赛种
   }
   //太多了 后续做优化
@@ -235,7 +238,7 @@ const outrights = () => {
   MenuData.set_mid_menu_result(mid_config)
 
   nextTick(()=>{
-    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,1014)
+    useMittEmit(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE_OUTRIGHTS,401)
   })
 }
 

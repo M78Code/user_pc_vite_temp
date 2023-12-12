@@ -161,6 +161,7 @@ export const useGetResultConfig = () => {
     hasSelectedMatch: " ", // 当前是否有选中联赛
     hotIsNull: false, // 热门联赛列表是否为空
     paramsVideo: {}, //精彩回放参数
+    is_need_request:true,//是否需要请求
   });
 
   const test = ref(100)
@@ -500,8 +501,13 @@ export const useGetResultConfig = () => {
         }
         state.api_league_type = data;
         if (state.init && (!tid || type == 1)) {
-          get_results(); //获取表格数据
+            get_results(); //获取表格数据
           state.init = false;
+          let timer = null
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            state.is_need_request = true
+          }, 300);
         } else {
           // 联赛下拉框点【取消】的时候赛果列表继续展示 暂无数据
           if (state.isSelectConfirmed != 0) {
@@ -857,6 +863,7 @@ export const useGetResultConfig = () => {
    * @param {n} 0 体育下拉框 1 冠军球种
    */
   const choose_sport = (n = 0) => {
+    state.is_need_request = false
     // 如果查询的时间不在支持查询的时间区间内
     if (!test_time()) {
       return;
@@ -1142,9 +1149,10 @@ export const useGetResultConfig = () => {
    * @param {Array} tableData 分页组件传过来的值
    */
   const changePage = (v) => {
-    v.current = v.current < 1 ? 1 : v.current
     state.results_params.page.current = v.current;
-    get_results();
+      if (state.is_need_request){
+        get_results(); //获取表格数据
+      }
   }
   /**
    * @description: 去那页

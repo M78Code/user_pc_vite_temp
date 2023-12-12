@@ -170,9 +170,9 @@ export default {
         name: "details",
         params,
       });
-      setTimeout(() => {
-        refresh();
-      }, 200);
+      // setTimeout(() => {
+      //   refresh();
+      // }, 200);
     };
 
     const refresh_click = lodash.debounce(() => {
@@ -206,13 +206,18 @@ export default {
 
     const sport_ball_type = {
       1: 0,
-      2: 90,
+      2: 450,
       3: 450,
-      5: 540,
-      7: 1170,
-      8: 180,
-      9: 270,
-      10: 360,
+      4: 980,
+      5: 2790,
+      6: 90,
+      7: 890,
+      8: 890,
+      9: 1440,
+      10: 1900,
+      11: 1990,
+      12: 540,
+      14: 180,
     };
     return {
       tabList,
@@ -492,4 +497,20 @@ export default {
   cursor: pointer;
 }
 //q-item-type row no-wrap q-item--clickable q-link cursor-pointer q-focusable q-hoverable
+
+
+// 这里添加的css为了修复Bug：49115 【UAT】【欧洲版二期】【PC】足篮赛事详情页顶部栏赛事开赛时间/赛事进行时间偏上没有居中展示
+.leagal-time {
+  padding: 4px 10px 2px 10px !important;
+}
+.leagal-time :deep(.date-wrap) {
+  padding: 0 0 0 5px !important;
+  .timer-layout2 {
+    padding: 0 0 0 0 !important;
+  }
+  .timer-layout0 {
+    padding: 0 0 0 0 !important;
+  }
+}
+
 </style>

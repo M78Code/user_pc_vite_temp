@@ -8,6 +8,7 @@ import lodash from 'lodash'
 import { formatTime } from 'src/output/module/constant-utils.js'
 import { i18n_t } from "src/boot/i18n.js";
 import { nextTick } from "vue";
+import UserCtr from "src/core/user-config/user-ctr.js";
 export default {
   data() {
     return {
@@ -108,7 +109,10 @@ export default {
   computed: {
     cur_row() {
       return lodash.findIndex(this.results_order_list, item =>item.playId==this.play_id);
-    } 
+    },
+    lang() {
+      return UserCtr.lang;
+    },
   },
   watch: {
     cur_row: {
@@ -122,6 +126,11 @@ export default {
         }
       },
       immediate:true
+    },
+    load_data_state:{
+      handler(val){
+        this.$refs.scrollArea.setScrollPosition('vertical', 1)
+      }
     }
   },
   methods: {

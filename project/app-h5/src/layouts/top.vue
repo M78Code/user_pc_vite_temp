@@ -13,9 +13,8 @@
     <div v-if="[3,6].includes(MenuData.current_lv_1_menu_mi.value)">
       <DateTab ref="dateTabMenu" :dataList="dataList[MenuData.current_lv_1_menu_i]"  />
     </div>
-
-    <div v-if="[2000].includes(MenuData.current_lv_2_menu_i)">
-        <DateTab :dataList="dataList[MenuData.current_lv_2_menu_i]"  />
+    <div v-if="+MenuData.get_menu_type_special() == 2000">
+        <DateTab ref="dJdateTabMenu" :dataList="dataList[2000]"  />
     </div>
     <!-- 滑动菜单组件 -->
     <ScrollMenu ref="scrollTabMenu" :scrollDataList="ref_data.scroll_data_list" @changeList="changeList" :current_mi="ref_data.current_mi" />
@@ -26,7 +25,7 @@
      <!-- 筛选+搜索  已脱离文档流-->
     <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
-        <setect-league @closedHandle="select_dialog = false"></setect-league>
+        <setect-league @closedHandle="setect_league_chose"></setect-league>
     </div>
   </template>
 
@@ -48,7 +47,7 @@ import { MenuData,MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "s
 import MatchFold from 'src/core/match-fold'
 import BaseData from "src/core/base-data/base-data.js";
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
-import { useMittOn,MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 
 import { dateTabList } from "src/base-h5/components/menu/app-h5-menu/utils";
 
@@ -58,8 +57,9 @@ import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 const is_first = ref(true)
 const route = useRoute();
 const inner_height = window.innerHeight;  // 视口高度
-const select_dialog = ref(false);//暂时筛选窗口
+const select_dialog = ref(false);//暂时筛选窗口dJ
 const dateTabMenu = ref(null);//时间dom
+const dJdateTabMenu = ref(null);//电竞时间dom
 const scrollTabMenu = ref(null);//滚球dom
 const searchTabMenu = ref(null);//足球tab dom
 // 监听搜索框状态
@@ -93,7 +93,12 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 滑动菜单选中的菜单id
     current_mi: ''
   })
-
+  /**
+   * 联赛筛选处理-关闭
+   */
+  const setect_league_chose = ()=>{
+     select_dialog.value = false;
+  }
   const changeList = (list) =>{
     ref_data.scroll_data_list = list;
   }
@@ -112,7 +117,11 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
           break
 
         case 2000:
-          ref_data.scroll_data_list = BaseData.dianjing_sublist
+          // ref_data.scroll_data_list = BaseData.dianjing_sublist
+          nextTick(()=>{
+            dJdateTabMenu.value.set_active_val();
+            dJdateTabMenu.value.changeTabMenu(BaseData.dianjing_sublist[0],0);
+          })
           break  
         
         case 50000:
@@ -130,8 +139,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 设置vr /收藏 电竞 头信息
       MenuData.set_top_menu_title(val)
       // 清空一级菜单显示 用于后续更新
-      MenuData.current_lv_1_menu_mi.value = ''
-
+      // MenuData.current_lv_1_menu_mi.value = ''
+      MenuData.set_current_lv1_menu('');
       let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
       ref_data.current_mi = obj.mi
@@ -142,13 +151,14 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     set_menu_mi_change_get_api_data()
   }
   watch(()=> MenuData.current_lv_1_menu_mi.value, new_ => {
-    ref_data.scroll_data_list = [];
     // 今日 滚球 冠军
     if( [1,2,400].includes(1*new_) ){
+      ref_data.scroll_data_list = [];
       set_scroll_data_list(new_)
     }
     //早盘 串关
     if( [3,6].includes(1*new_)){
+      ref_data.scroll_data_list = [];
       nextTick(()=>{
         dateTabMenu.value.set_active_val()
         dateTabMenu.value.changeTabMenu(dataList[MenuData.current_lv_1_menu_i]?.[0],0)
@@ -162,14 +172,34 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       } catch(_) {} 
     })
   })
-
-  // 早盘 串关
-  const set_scroll_early_single = (val = {}) => {
-    const menu_list = MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i)
+  /**
+   * 电竞菜单处理
+   */
+  const set_scroll_early_dj = (val = {}) =>{
+    const menu_list = BaseData.dianjing_sublist;
     let early_single = []
     if(Object.keys(val).length){
       for(let item in val){
-        let mi = 100 + item*1 +''+ MenuData.current_lv_1_menu_i
+        let mi = 2000 + item*1 +'';
+        let obj = menu_list.find(page => page.mi == mi) || {}
+        if(obj.mi){
+          obj.ct = val[item]
+          early_single.push(obj)
+        }
+      }
+    }
+    const res_list = 
+    +MenuData.get_menu_type_special() == 2000
+    ref_data.scroll_data_list = BaseData.dianjing_sublist
+  }
+  // 早盘 串关
+  const set_scroll_early_single = (val = {}) => {
+    const is_lv_1 = [3,6].includes(+MenuData.current_lv_1_menu_i);
+    const menu_list = is_lv_1?MenuData.get_menu_lvmi_list_only(MenuData.current_lv_1_menu_i):BaseData.dianjing_sublist;
+    let early_single = []
+    if(Object.keys(val).length){
+      for(let item in val){
+        let mi = is_lv_1?100+ item*1 +''+ MenuData.current_lv_1_menu_i:2000+ item*1 +'';
         let obj = menu_list.find(page => page.mi == mi) || {}
         if(obj.mi){
           obj.ct = val[item]
@@ -187,6 +217,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 设置二级菜单 
       MenuData.set_current_lv_2_menu_i(obj_)
       handle_match_render_data()
+    } else {
+      useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: true, type: 'noMatch' });
     }
   }
 
@@ -225,7 +257,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     }
     // 电竞
     if(MenuData.top_menu_title.mi == 2000){
-      MatchMeta.get_esports_match()
+      // 初始进入会调多次接口
+      // MatchMeta.get_esports_match()
     }
     // 收藏
     if(MenuData.top_menu_title.mi == 50000){

@@ -81,8 +81,7 @@ export default defineComponent({
   props: {
     // 当前列表数量
     count: {
-      type: Number || String,
-      default: () => 0,
+      type: null,
     },
 
     betTotalAmount: {
@@ -122,7 +121,7 @@ export default defineComponent({
       default: ()=>{},
     },
     reset_pagination: {
-      type: Number,
+      type: [ Number, String ],
       default: 1,
     },
     page: {
@@ -181,7 +180,7 @@ export default defineComponent({
       })
     })
     watch(() => props.reset_pagination, (newVal) => {
-       state.current = +newVal;
+       state.current = 1;
     })
 
 

@@ -13,14 +13,14 @@
                         <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
                     </span>
                     <!-- 盘口 -->
-                    <span class="text-a1a text-flow-none text-009 font400" v-if="[1].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
+                    <span class="text-a1a text-flow-none text-009 font400" v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
                     <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
                 </div>
                 <div class="w-100 fon12 font400 text-8A8986-i">{{ items.tid_name }}</div>
                 <div class="w-100 fon12 font400 text-8A8986-i" v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
                 </div>
             </div>
-            <div class="fw-e-s bet-right" v-if="items.ol_os == 1">
+            <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
                 <div class="f-c-c bet-money">
                     <span class="font14 font700 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
                         @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
@@ -65,7 +65,7 @@
 <script setup>
 
 import { onMounted, onUnmounted, reactive } from "vue"
-import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney } from "src/output/index.js"
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 

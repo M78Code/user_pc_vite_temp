@@ -4,7 +4,8 @@
     <div class="current-filter-list" @scroll="on_scroll">
       <div class="current-filter-tab" v-for="(item, index) in current_filter_list" :key="index">
         <div class="filter-label" @click="choose_filter_tab(item, index)" :class="{ 'checked': MenuData.mid_menu_result.md == item.label }">
-          {{ $t(item.value, {month: $t(`ouzhou.time.month_` + item.month), day: item.day}) }}
+          {{item.name}}
+          <!-- {{ $t(item.value, {month: $t(`ouzhou.time.month_` + item.month), day: item.day}) }} -->
           <div class="current-mark" :class="{'show-mark':  MenuData.mid_menu_result.md == item.label}"></div>
         </div>
         <div class="filter-tab-split-line" v-show="index != current_filter_list.length - 1"></div>
@@ -28,11 +29,11 @@
 </template>
 
 <script setup>
-  import { ref,onMounted } from 'vue';
-  import { MenuData } from 'src/output/index.js'
-  import { handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
+  import { ref,onMounted,onUnmounted } from 'vue';
+  import { MenuData, useMittOn,MITT_TYPES, i18n_t} from 'src/output/index.js'
+  import { get_data_menu_result,handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { compute_img_url } from 'src/core/server-img/index.js'
-  import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
+  // import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
     // 是否显示左边按钮
   const show_left_btn = ref(false);
   // 是否显示右边按钮
@@ -42,57 +43,74 @@
 
   let area_obj = null;
   let area_obj_wrap = null;
-
+  let mitt_list = null;//监听菜单变化
   let time = ''
-  onMounted(async ()=>{
+  onMounted(()=>{
+    update_time()
     area_obj = document.querySelector('.current-filter-list');
     area_obj_wrap = document.querySelector('.current-filter-wrap');
     if (area_obj?.scrollWidth >= area_obj_wrap?.clientWidth) {
       show_right_btn.value = true;
     }
-
-    time = LocalStorage.get('server_time') || new Date().getTime()
-    update_time(time)
-
-    let obj = {
-      label: MenuData.mid_menu_result.md,
-      type: MenuData.menu_root == 202 ? 2 : 3
-    }
-    handle_click_menu_mi_3_date(obj)
+    // time = LocalStorage.get('server_time') || new Date().getTime()
+    mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,update_time).off ]
   })
-
+  onUnmounted(()=>{
+    mitt_list.forEach(item => item());
+  })
+  /**
+   * 获取日期
+   */
+  const dateWeekFormat = async () =>{
+    const res = await get_data_menu_result();
+    if(!res || !res?.length)return [];
+    return res?.filter((n)=>{return !!n.md}).map((item)=>{
+      return {
+        name: item.menuName,
+        label: item.md,
+        type: 3
+      }
+    })
+  }
   /**
    * 一周时间
    * @param {*} day 
    * @returns 
    */
-  const dateWeekFormat = (day) => {
-    let result = [];
-    Date.prototype.getMonthDay = function (i) {
-        let date_time = new Date(this.setHours(12, 0, 0, 0))
-        let month = date_time.getMonth() + 1;
-        let day = date_time.getDate();
-        return {
-          label: date_time.getTime(),
-          value: i == 0 ? 'ouzhou.match.tomorrow' : 'ouzhou.time.date',
-          type: 3,
-          month: month,
-          day: day
-        };
-    }
+  // const dateWeekFormat = (day) => {
+  //   let result = [];
+  //   Date.prototype.getMonthDay = function (i) {
+  //       let date_time = new Date(this.setHours(12, 0, 0, 0))
+  //       let month = date_time.getMonth() + 1;
+  //       let day = date_time.getDate();
+  //       return {
+  //         label: date_time.getTime(),
+  //         value: i == 0 ? 'ouzhou.match.tomorrow' : 'ouzhou.time.date',
+  //         type: 3,
+  //         month: month,
+  //         day: day
+  //       };
+  //   }
    
-    for (let i = 0; i < 6; i++) {
-        day.setDate(day.getDate() + 1);
-        result.push(day.getMonthDay(i))
+  //   for (let i = 0; i < 6; i++) {
+  //       day.setDate(day.getDate() + 1);
+  //       result.push(day.getMonthDay(i))
+  //   }
+  //   return result;
+  // };
+
+  const update_time = async (time) => {
+    if(MenuData.is_left_today() || MenuData.is_left_zaopan()){
+      const week = await dateWeekFormat();
+      // let arr = [{label:'',value: 'ouzhou.match.today',type:2},...dateWeekFormat(new Date(time))];
+      let arr = [...[{label:'',name: i18n_t('ouzhou.match.today'),type:2}],...week];
+      current_filter_list.value = arr;
+      let obj = {
+        label: MenuData.mid_menu_result.md,
+        type: MenuData.menu_root == 202 ? 2 : 3
+      }
+      handle_click_menu_mi_3_date(obj)
     }
-    return result;
-  };
-
-  const update_time = (time) => {
-
-    let arr = [{label:'',value: 'ouzhou.match.today',type:2},...dateWeekFormat(new Date(time))];
-
-    current_filter_list.value = arr
   }
 
  

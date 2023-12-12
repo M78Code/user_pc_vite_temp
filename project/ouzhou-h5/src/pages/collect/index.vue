@@ -13,7 +13,7 @@
           <q-tab v-for="(item,index) in tabData" :key="index" :name="item.val" :label="item.label" />
         </q-tabs>
       </div>
-      <scroll-list ref="scrollListRef" menu_type="50000" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
+      <scroll-list ref="scrollListRef" :is_show_badge="false" menu_type="50000" :current_mi="state.current_mi" :menuList="state.slideMenu_sport" @changeMenu="changeMenu"/>
       <!-- 收藏 -->
       <div class="match-container">
         <MatchContainer />
@@ -37,7 +37,8 @@ const state = reactive({
   slideMenu_sport: [], // 赛种
 })
 const tabValue = ref(MenuData.collect_menu || 1);
-const scrollListRef = ref(null)
+const scrollListRef = ref(null);
+// const timer = ref(null);//5秒 加载收藏数量
 const tabData = ref([
   {
     name:"inplay",
@@ -66,7 +67,9 @@ const tabData = ref([
  */
 const on_update = async (val,type) => {
   val = val || tabValue.value;
-  state.slideMenu_sport = await getListCount(val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val),val);
+  // timer.value && clearTimeout(timer.value);
+  // state.slideMenu_sport = await getListCount(val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val),val);
+  state.slideMenu_sport =val == 400?MenuData.champion_list:MenuData.get_menu_lvmi_list_only(val);
   // state.slideMenu_sport= MenuData.get_menu_lvmi_list_only(val);
   MenuData.set_current_lv1_menu(val);
   const index = MenuData.collect_menu?state.slideMenu_sport?.findIndex(n=>{return n.mi == MenuData.menu_mi.value}):0;
@@ -121,6 +124,7 @@ const getListCount = async (list,type) =>{
             return item
         })
     }
+    // timer.value = setTimeout(()=>getListCount(list,type),5000);
     return collect
 }
 /**
@@ -148,7 +152,7 @@ onMounted(()=>{
 onUnmounted(() => {
   MenuData.set_collect_id('');
   useMittOn(MITT_TYPES.EMIT_COLLECT_MATCH_OZ).off
-
+  // timer.value && clearTimeout(timer.value);
 })
 </script>
 <style scoped lang="scss">

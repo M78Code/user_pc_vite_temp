@@ -47,6 +47,7 @@ const tabClick = (item) => {
     display: flex;
     align-items: center;
     margin-left: 16px;
+    width:100%;
   }
 
   .tabs-item {
@@ -60,7 +61,8 @@ const tabClick = (item) => {
     text-transform: capitalize;
     color: var(--q-gb-t-c-4);
     cursor: pointer;
-
+    flex:1;
+    text-align:center;
   }
 
   .is-active {

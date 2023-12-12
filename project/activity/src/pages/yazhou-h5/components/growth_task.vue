@@ -3,7 +3,7 @@
     <div class="active-object">
       <div>
         <img
-          :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
             get_theme.includes('y0') ? '_y0' : ''
           }.png`"
           alt=""
@@ -15,12 +15,13 @@
       </div>
       <div>
         <img
-          :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
             get_theme.includes('y0') ? '_y0' : ''
           }.png`"
           alt=""
         />
         <div>
+
           <span>活动时间：</span>
           <template v-if="get_user.activityList[activityIndex].period == 1">
             <span class="count_down_css">
@@ -48,11 +49,13 @@
             <span v-else>活动长期有效</span>
           </template>
           <span v-else> 活动结束 </span>
+
+
         </div>
       </div>
       <div>
         <img
-          :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
             get_theme.includes('y0') ? '_y0' : ''
           }.png`"
           alt=""
@@ -87,7 +90,10 @@
             <span>{{ i == 0 ? "天" : "元" }}</span>
           </div>
         </div>
+
       </div>
+
+
       <div class="table">
         <p>
           <span>任务事项</span>
@@ -98,6 +104,9 @@
           </span>
           <span>领取状态</span>
         </p>
+
+
+
         <p
           v-for="(v, i) in get_everyDay_list"
           :key="i + '_id_'"
@@ -114,7 +123,7 @@
             <template v-if="[1, 3].includes(v.bonusType)">
               <img
                 class="completed"
-                :src="`${$g_image_preffix}/activity/yazhou-h5/activity/completed${
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/completed${
                   get_theme.includes('y0') ? '_y0' : ''
                 }.svg`"
                 alt=""
@@ -146,7 +155,7 @@
           <img
             alt
             class="loading-static-animation"
-            src="image/wwwassets/bw3/svg/loading-more.svg"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/common/loading-more.svg`"
           />
         </q-inner-loading>
       </div>
@@ -196,11 +205,12 @@
           <img
             class="close"
             @click="history_alert = false"
-            src="activity/yazhou-h5/activity/lucky/close.png"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`"
           />
         </div>
       </div>
     </q-dialog>
+   <!-- 领取奖券弹窗 -->
     <q-dialog v-model="daily_task_success">
       <div class="daily_task_dialog" @click.self="daily_task_success = false">
         <div class="task_success">
@@ -230,16 +240,19 @@
         <img
           class="colse2"
           @click="daily_task_success = false"
-          src="activity/yazhou-h5/activity/colse2.png"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/colse2.png`"
         />
       </div>
     </q-dialog>
+
+
+    
     <div class="activity-rules">
       <div class="title">活动规则</div>
       <div class="rules-object">
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -254,7 +267,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -272,7 +285,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -295,7 +308,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -321,7 +334,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -334,7 +347,7 @@
         </div>
         <div>
           <img
-            :src="`${$g_image_preffix}/activity/yazhou-h5/activity/smaller${
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${
               get_theme.includes('y0') ? '_y0' : ''
             }.png`"
             alt=""
@@ -350,8 +363,8 @@
 
 
 <script>
-import DataPager from "project/activity/src/components/data_pager/data_pager.vue";
-import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down.vue";
+import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
+import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
 import growth_task_mixin  from "project/activity/src/mixins/growth_task/growth_task.js";  
 export default {
   mixins: [ growth_task_mixin],
@@ -630,7 +643,7 @@ export default {
   height: 2.8rem;
   position: relative;
   z-index: -1;
-  background: var(--q-color-com-img-bg-160) no-repeat;
+  background: var(--qq--color-com-img-bg-160) no-repeat;
   background-size: 100% 100%;
   display: flex;
   flex-direction: column;

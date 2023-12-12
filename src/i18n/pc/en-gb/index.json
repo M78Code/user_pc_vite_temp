@@ -123,7 +123,7 @@
       "placeholder": "Enter league or team",
       "close": "Close",
       "view_all_match": "View all soccer",
-      "underway": "UNDERWAY",
+      "underway": "IN-PLAY",
       "no_search_rezult": "No results found. please try a different search term.",
       "dogfall": "Draw"
     },
@@ -170,8 +170,8 @@
         "bet_col_2": "HDP"
       },
       "bet_col_37": {
-        "bet_col_1": "Home",
-        "bet_col_2": "Away"
+        "bet_col_1": "1",
+        "bet_col_2": "2"
       },
       "bet_col_38": {
         "bet_col_Over": "Total",
@@ -2839,7 +2839,29 @@
     "HK": "HK",
     "ID": "Indonesian",
     "MY": "Malaysian",
-    "US": "American"
+    "US": "American",
+    "en":{ 
+      "EU": "DEC",
+      "GB": "Fractional",
+      "HK": "HK",
+      "ID": "Indonesian",
+      "MY": "Malaysian",
+      "US": "American",
+      "morning_session":"Prematch",  
+      "list_today_play_title":"IN-PLAY",
+      "match_winner":"Outrights"
+    },
+    "zh":{
+        "EU": "欧洲盘",
+        "GB": "英式盘",
+        "HK": "香港盘",
+        "ID": "印尼盘",
+        "MY": "马来盘",
+        "US": "美式盘",
+        "morning_session":"赛前",
+        "list_today_play_title":"滚球",
+        "match_winner":"冠军"
+    }
   },
   "results": {
     "all_score": "FT",

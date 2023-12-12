@@ -8,21 +8,16 @@ import MatchListCardData from "./match-list-card-data-class";
 import { league_list_obj } from '../../composables/match-list-featch.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { fold_template } from "../config/card-template-config.js"
+import { MenuData } from 'src/output/module/menu-data.js'
 import { replace } from "lodash";
 
-//引入菜单类
-const MenuData = {
-  menu_data: {
-    is_show_hot: false,
-  },
-};
 const { page_source, route_name } = PageSourceData;
 /**
  * @Description 移除一场联赛
  * @param {number} remove_tid 移除的联赛ID
  */
 export const remove_league = (remove_tid, callback) => {
-  if (MenuData.menu_data.is_esports) {
+  if (MenuData.is_esports()) {
     // 列表接口数据类型为联赛列表
     let all_league_obj = league_list_obj.value;
     // 遍历所有赛事数据
@@ -45,12 +40,10 @@ export const remove_league = (remove_tid, callback) => {
   } else {
     // 列表接口数据类型为赛事列表
     let match_list = MatchListData.match_list;
-
     // 移除联赛ID一样的赛事
     lodash.remove(match_list, (match) => {
       return match.tid == remove_tid;
     });
-
     //当没有数据时，返回到首页
     if (match_list.length == 0) {
       if (callback && callback.length_0_fn) {
@@ -206,7 +199,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
   }
   // 滚球 重新计算菜单数量
   if (
-    MenuData.menu_data.cur_level1_menu == "play" &&
+    MenuData.cur_level1_menu == "play" &&
     !page_source == "collect"
   ) {
     MatchListData.match_list_data.compute_sport_count(remove_mid);

@@ -27,9 +27,11 @@
 
     <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
-    <div class="match-results-container-styles">
+     <ObserverWrapper :match_list="state.matchs_data" com_type="ouzhou-h5"></ObserverWrapper>
+    <!-- <div class="match-results-container-styles">
+       
         <match-container />
-    </div>
+    </div> -->
 
     <!-- <div v-if="state.select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
@@ -43,14 +45,17 @@ import lodash_ from 'lodash'
 import { onMounted, onUnmounted, reactive } from "vue";
 import { ScrollMenu } from 'src/base-h5/components/menu/app-h5-menu/index'
 import navigationBar from 'src/base-h5/components/tutorial/navigation-bar/index.vue'
-import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
-import matchContainer from "src/base-h5/components/match-list/index.vue";
-import setectLeague from 'src/base-h5/components/setect-league/index.vue'
+// import settingFilter from 'src/base-h5/components/setting-filter/index.vue'
+// import matchContainer from "src/base-h5/components/match-list/index.vue";
+// import setectLeague from 'src/base-h5/components/setect-league/index.vue'
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import { scrollMenuEvent } from "src/base-h5/components/menu/app-h5-menu/utils.js"
 import MatchMeta from "src/core/match-list-h5/match-class/match-meta.js";
 import { api_analysis } from "src/api/"
-import { useMittOn,MITT_TYPES,MenuData,compute_local_project_file_path } from "src/output/index.js"
+import { MenuData,compute_local_project_file_path } from "src/output/index.js"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt";
+
+import ObserverWrapper from 'src/base-h5/components/observer-wrapper/index.vue';
 
 
 // 新修改
@@ -67,6 +72,7 @@ const state = reactive({
     slideMenu_date: [], // 时间
     slideMenu_sport: [], // 赛种
     current_mi: '', // 当前选中的赛种
+    matchs_data: []
 })
 
 const switchHandle = val => {
@@ -111,7 +117,7 @@ const set_scroll_data_list = (data_list = []) => {
 }
 
 // 设置滑动菜单的选中id
-const set_scroll_current = item => {
+const set_scroll_current = async item => {
     if (!item) return
     state.current_mi = item.mi
     let params = {
@@ -120,7 +126,8 @@ const set_scroll_current = item => {
         sport:item.sport
     }
     MenuData.set_result_menu_api_params(params)
-    MatchMeta.get_results_match()
+    state.matchs_data = await MatchMeta.get_results_match()
+    useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
 }
 
 const goBackAssign = () => {

@@ -7,7 +7,10 @@
 <template>
   <div v-show="false">{{ BetData.bet_data_class_version }}</div>
   <div v-if="[10].includes(match_info.hpt)" class="temp-simple">
-    <div class="temp_grid" :style="{ gridTemplateColumns: columnTotal(item) }">
+    <div
+      class="temp_grid"
+      :style="{ gridTemplateColumns: columnTotal(match_info.hl[0]) }"
+    >
       <div
         v-for="o in match_info.hl[0].ol"
         :key="o?.oid"
@@ -20,7 +23,7 @@
         <div
           :title="o.ott"
           :style="{
-            color: BetData.bet_oid_list.includes(o.oid) ? '#ffffff' : '#484848',
+            color: '#484848',
           }"
           v-show="!match_info.hl[0].hs"
           class="oid-width"
@@ -86,14 +89,17 @@
                   "
                   v-html="getOn(match_info, o)"
                 ></span>
-                <span
+                <div
                   v-else
                   :style="{
                     color: [1].includes(match_info.hpt) ? '' : '#1A1A1A',
                   }"
                   class="temp-on oid-width"
-                  >{{ o.on }}</span
                 >
+                <!-- vr 体育才有的图片 -->
+                <img :src="get_icon(o.otn)" alt="" v-if="o.otn" style="margin-right: 4px;">
+                  <span>{{ o.on }}</span>
+                </div>
               </div>
               <div
                 v-show="!item.hs"
@@ -138,6 +144,10 @@ const props = defineProps({
   },
   current_ol: {
     type: Object,
+    default: () => {},
+  },
+  get_icon: {
+    type: Function,
     default: () => {},
   },
 });
@@ -186,15 +196,11 @@ const getOn = (match_info, o) => {
   return result;
 };
 
-const odds_change = (obj) => {
-};
-
 // 事件执行函数
 
 const active = ref(1);
 
-onMounted(() => {
-});
+onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -258,7 +264,6 @@ onMounted(() => {
     // margin-left: 10px;
   }
 }
-
 
 .oid-width {
   // min-width: 50px;

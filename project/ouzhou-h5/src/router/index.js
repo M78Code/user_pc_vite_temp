@@ -184,13 +184,13 @@ const router = createRouter({
 /**
  * 不清除menuid路由
  */
-const detailsName = ['category','result'];
+const detailsName = ['category','result','personal'];
 /**
  * 路由切换清除默认球种
  */
 router.beforeEach((to, from, next) => {
     if(!!to.name && !!from.name && to.name !== from.name && to.name !== "matchList" && !detailsName.includes(to.name) && !detailsName.includes(from.name)){
-        LocalStorage.remove("nemu-h5");
+        LocalStorage.remove("menu_h5");
         MenuData.clear_menu_id();
     }
     next()

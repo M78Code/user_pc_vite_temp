@@ -133,7 +133,7 @@ export default {
     // 首次加载 盲盒数量 接口
     this.get_Lucky_box_init('first')
     // 榜单前50名统计 接口
-    this.get_lucky_box_top50()
+    this.get_activity_lucky_box_top50()
     // 箭头00：00：00 点整时，调用初始化方法
     this.listen_for_time()
 
@@ -200,7 +200,7 @@ export default {
     async get_Lucky_box_init(Unboxing) {
       try {
         // diamonds 钻石盲盒 golds 黄金盲盒 silvers 白银盲盒
-        let {code , data} = await api_activity.get_Lucky_box_index_param({userId: this.get_user.userId})
+        let {code , data} = await api_activity.get_activity_lucky_box_info({userId: this.get_user.userId})
         if(code == 200 && Object.keys(data).length > 0) {
           // 处理下个盲盒的剩下时间
           let blind_box_time = []
@@ -258,7 +258,7 @@ export default {
         try {
           this.lottery_loading = true
           // boxType	盲盒类型，1：白银盲盒  2：黄金盲盒  3：钻石盲盒
-          let {code , data, msg} = await api_activity.get_open_lucky_box1({boxType: this.lihe_name.box_type})
+          let {code , data, msg} = await api_activity.get_activity_open_lucky_box({boxType: this.lihe_name.box_type})
           if(code == 200 && Object.keys(data).length > 0) {
             // costTokenNum 消耗奖券数
             this.amount_of_winning = data.award
@@ -288,7 +288,7 @@ export default {
           this.lottery_loading = false
           if (err.type == "openbox_cencel") {
             this.$toast(err.message, 1500)
-          }else if(err.type == 'activity_page_destroyed'){
+          }else if(err.type == 'activity_page_unmounted'){
           } else {
             this.$toast("网络异常，请重新抽取", 1500)
           }
@@ -315,7 +315,7 @@ export default {
           activityId: this.get_user.activityList[this.activityIndex].activityId,
           inStartTime: nineDaysAgo.getTime()
         }
-        let {code , data} = await api_activity.get_lucky_box_history(parameter)
+        let {code , data} = await api_activity.get_activity_lucky_box_history(parameter)
         if(code == 200 && data.records.length > 0) {
           this.history_records = data.records
           // this.$set(this.result_page_info, 'pages' , +data.total )
@@ -332,7 +332,7 @@ export default {
       }
     },
     // 排行榜前五十
-    async get_lucky_box_top50() {
+    async get_activity_lucky_box_top50() {
       try {
         let parameter = {
           from: 'activity_task',
@@ -340,7 +340,7 @@ export default {
           inEndTime: (this.get_user.activityList[this.activityIndex].period != 3 && this.inEndTime) ? this.inEndTime : null,
           activityId: this.get_user.activityList[this.activityIndex].activityId
         }
-        let {code , data} = await api_activity.get_lucky_box_top50(parameter)
+        let {code , data} = await api_activity.get_activity_lucky_box_top50(parameter)
         if(code == 200 && Object.keys(data).length > 0) {
           this.lucky_top_50 = data
           // this.$set(this.top50_page_info, 'pages' , +data.length )
@@ -359,7 +359,7 @@ export default {
       return {y, m, d, h, mm, s}
     }
   },
-  destroyed() {
+  unmounted() {
     clearInterval(this.up_date_Info);
     this.up_date_Info = null;
 

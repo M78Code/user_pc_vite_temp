@@ -6,24 +6,22 @@ import { ref } from 'vue'
 import lodash from 'lodash'
 import { api_common, api_match_list, api_match, api_home } from "src/api/index.js";
 import BaseData from 'src/core/base-data/base-data.js'
-import MatchPage from 'src/core/match-list-h5/match-class/match-page'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MatchFold from 'src/core/match-fold'
 import MatchCollect from 'src/core/match-collect'
+import { MenuData } from "src/output/module/menu-data.js"
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
-import PageSourceData from "src/core/page-source/page-source.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
+import { useMittEmit, MITT_TYPES, project_name} from "src/output/module/constant-utils.js"
+
 import { 
   MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MatchDataWarehouse_ouzhou_PC_hots_List_Common as MatchDataBaseHotsH5,
   MatchDataWarehouse_ouzhou_PC_five_league_List_Common as MatchDataBaseFiveLeagueH5, MatchDataWarehouse_ouzhou_PC_l5mins_List_Common as MatchDataBasel5minsH5, 
   MatchDataWarehouse_ouzhou_PC_in_play_List_Common as MatchDataBaseInPlayH5
 } from 'src/output/module/match-data-base.js'
 
-
-import { useMittEmit, MITT_TYPES,project_name,} from "src/output/module/constant-utils.js"
-import {  MenuData,} from "src/output/module/menu-data.js"
 
 class MatchMeta {
 
@@ -62,6 +60,8 @@ class MatchMeta {
     }
     // 是否ws触发
     this.is_ws_trigger = false
+    // 防抖定时器
+    this.debounce_timer = null
     // 重置折叠对象
     MatchFold.clear_fold_info()
     // 重置收藏对象
@@ -98,7 +98,6 @@ class MatchMeta {
 
     // 获取真实数据
     this.http_params.md = md
-
 
     // 是否需要开赛、未开赛归类
     is_match && this.get_target_match_data({ md })
@@ -190,7 +189,6 @@ class MatchMeta {
       const csna = BaseData?.menus_i18n_map[`${100 + Number(match.csid)}`]
       // 联赛名称
       const tn = BaseData?.tids_map[`tid_${match.tid}`]?.tn
-      // 球种名称
       // 赛事其他操作
       this.match_assistance_operations(target, index)
       return { ...target, tn, csna, is_meta: true }
@@ -270,7 +268,7 @@ class MatchMeta {
    */
   set_match_default_properties(match, index, mids) {
     // 是否展示联赛标题
-    const is_show_league = MatchUtils.get_match_is_show_league(index, mids)
+    const is_show_league = MatchUtils.get_origin_match_is_show_league(index, mids)
     const is_show_no_play = MatchUtils.get_match_is_show_no_play(index, mids)
     // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
     const handicap_index = MatchUtils.get_handicap_index_by(match);
@@ -403,13 +401,16 @@ class MatchMeta {
     const hpsFlag = MenuData.is_kemp() || MenuData.get_menu_type() == 28 ? "" : 0
     const current_lv_1_menu_i = lodash.get(MenuData, 'current_lv_1_menu_i')
     const type = MenuData.menu_id_map(current_lv_1_menu_i) ? MenuData.menu_id_map(current_lv_1_menu_i) : current_lv_1_menu_i
+    console.log('current_lv_1_menu_i', MenuData.menu_id_map(current_lv_1_menu_i));
+
     return {
       cuid: UserCtr.get_uid(), // 508895784655200024
       euid: euid ? euid : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
       // 一级菜单筛选类型 1滚球 2 今日 3早盘 400冠军  6串关
       type,
       //排序	 int 类型 1 按热门排序 2 按时间排序
-      sort: PageSourceData.sort_type,
+      sort: UserCtr.sort_type,
+      // sort: PageSourceData.sort_type,
       //标准版和简版 1为新手版  2为标准版
       device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
       hpsFlag
@@ -427,7 +428,8 @@ class MatchMeta {
       euid,
       "cuid": UserCtr.get_uid(),
       "type": 100,
-      "sort": PageSourceData.sort_type,
+      "sort": UserCtr.sort_type,
+      // "sort": PageSourceData.sort_type,
       "device": ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     })
     if (+res.code !== 200) return this.set_page_match_empty_status({ state: true, type: res.code == '0401038' ? 'noWifi' : 'noMatch' }); 
@@ -726,6 +728,7 @@ class MatchMeta {
    * @description 获取收藏赛事
    */
   async get_collect_match () {
+    this.clear_match_info()
     const mid = MenuData.current_lv_2_menu_i
     let mid_list = lodash.get(MenuData,'collect_list')
     let lv1_mi = lodash.get(MenuData,'current_lv_1_menu_i')
@@ -816,8 +819,8 @@ class MatchMeta {
       // 滚球不需要
       if (MenuData.is_scroll_ball() || MenuData.is_zaopan()) {
         is_classify = false
-      } else {
-        // 今日、早盘需要 开赛、未开赛归类
+      } else if (MenuData.is_today() || MenuData.is_mix()) {
+        // 今日、串关需要 开赛、未开赛归类
         is_classify = true
       }
     } else {
@@ -872,7 +875,7 @@ class MatchMeta {
     MatchFold.clear_fold_info()
     target_list.forEach((t, i) => {
       Object.assign(t, {
-        is_show_league: i === 0 ? true : target_list[i].tid !== target_list[i - 1].tid
+        is_show_league: MatchUtils.get_match_is_show_league(i, target_list)
       })
       this.match_assistance_operations(t, i)
     })
@@ -933,7 +936,7 @@ class MatchMeta {
       
       Object.assign(match, params, {
         is_show_ball_title,
-        is_show_league: index === 0 ? true : target_data[index].tid !== target_data[index - 1].tid
+        is_show_league: MatchUtils.get_match_is_show_league(index, target_data)
       })
       //  赛事操作
       this.match_assistance_operations(match, index)
@@ -951,23 +954,29 @@ class MatchMeta {
       this.complete_matchs = matchs_data
       this.complete_mids = result_mids
     }
-    
-    if (!is_virtual) {
-      // 清除虚拟计算信息
-      VirtualList.clear_virtual_info()
-      this.match_mids = lodash.uniq(result_mids)
-      if (type === 2){
-        // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
-        this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
-      } else if (type === 1) {
-        // 获取赔率
-        this.handle_submit_warehouse({ list: matchs_data, warehouse })
-      }
-    } else {
-      // 计算所需渲染数据
-      this.compute_page_render_list({ scrollTop: scroll_top, merge, type }) 
-    }
 
+    // 复刻版 下的 新手版
+    if (this.is_observer_type()) {
+      useMittEmit(MITT_TYPES.EMIT_HANDLE_START_OBSERVER);
+    } else {
+      if (!is_virtual) {
+        // 清除虚拟计算信息
+        VirtualList.clear_virtual_info()
+        this.match_mids = lodash.uniq(result_mids)
+        if (type === 2){
+          // 不获取赔率  type 删除收藏赛事 需要以最新的为准 提交仓库需设置 merge: 'cover'
+          this.handle_update_match_info({ list: matchs_data, warehouse, merge: merge })
+        } else if (type === 1) {
+          // 获取赔率
+          this.handle_submit_warehouse({ list: matchs_data, warehouse })
+        }
+      } else {
+        // 计算所需渲染数据
+        this.compute_page_render_list({ scrollTop: scroll_top, merge, type }) 
+        
+      }
+    }
+    
     // 重置数据为空状态
     this.set_page_match_empty_status({ state: false })
 
@@ -1057,6 +1066,14 @@ class MatchMeta {
   }
 
   /**
+   * @description 是否 observer-wrapper 组件模式
+   * @returns 
+   */
+  is_observer_type () {
+    return project_name == 'app-h5' && UserCtr.standard_edition == 1
+  }
+
+  /**
    * @description 重置 prev_scroll 
    */
   set_prev_scroll (val) {
@@ -1109,9 +1126,18 @@ class MatchMeta {
       if (item) {
         const index = this.match_mids.findIndex(t => t === mid)
         this.complete_matchs.splice(index, 1)
+
+        // 复刻版 新手版 使用的是 observer-wrapper 组件模式 不需要重新计算
+        if (project_name == 'app-h5' && UserCtr.standard_edition == 1) return;
+
         // 移除赛事需要重新走虚拟计算逻辑， 不然偏移量不对
-        this.is_ws_trigger = true
-        this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+        if (this.debounce_timer) return
+        this.debounce_timer = setTimeout(() => {
+          this.is_ws_trigger = true
+          this.handler_match_list_data({ list: this.complete_matchs, scroll_top: this.prev_scroll, merge: 'cover', type: 2 })
+          clearTimeout(this.debounce_timer)
+          this.debounce_timer = null
+        }, 1000)
       }
     }
   }
@@ -1156,7 +1182,8 @@ class MatchMeta {
       const params = {
         mids: mids.length > 0 ? mids : match_mids,
         cuid: UserCtr.get_uid(),
-        sort: PageSourceData.sort_type,
+        sort: UserCtr.sort_type,
+        // sort: PageSourceData.sort_type,
         euid: MenuData.is_jinzu() ? "" : MenuData.get_euid(lodash.get(MenuData, 'current_lv_2_menu_i')),
         device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition],
       };

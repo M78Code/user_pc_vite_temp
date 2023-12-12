@@ -19,6 +19,7 @@
 </template>
   
 <script setup>
+import lodash from 'lodash'
 import { onMounted, onUnmounted,ref, nextTick } from "vue";
 import { scrollMenuEvent } from "../utils";
 import { MenuData } from "src/output/index.js";
@@ -40,11 +41,11 @@ const props = defineProps({
 const dateTab = ref(null)
 const activeOn = ref(0);//默认值
 
-onMounted(() => {
-    nextTick(()=>{
-        changeTabMenu(props.dataList?.[0],0)
-    })
-})
+// onMounted(() => {
+//     nextTick(()=>{
+//         // changeTabMenu(props.dataList?.[0],0)
+//     })
+// })
 onUnmounted(()=>{
     set_active_val()
 })
@@ -53,6 +54,7 @@ onUnmounted(()=>{
 * @param {*} val 
 */
 const changeTabMenu = (item, i, event) => {
+    
     event = event || dateTab.value[0];
     if(activeOn.value === i)return;
     activeOn.value = i;
@@ -63,8 +65,15 @@ const changeTabMenu = (item, i, event) => {
 
     scrollMenuEvent(event, ".date-tab-content-ul", ".active");
 
-    MatchMeta.filter_match_by_time(item?.val)
-    MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
+    if (MenuData.is_esports()) {
+        // 电竞 初始调用时没值 不掉接口
+        const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
+        if (csid) MatchMeta.get_esports_match()
+    } else {
+        MatchMeta.filter_match_by_time(item?.val)
+        MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
+    }
+    
 }
 /**
  * 默认值
