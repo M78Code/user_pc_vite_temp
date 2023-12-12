@@ -252,7 +252,7 @@ const checked_current_tab = (payload,type) => {
 	// 还原top_event热门赛种 和 常规赛事的切换
 	if (1001 == payload.value) {
 		MenuData.set_menu_root(0)
-    	useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
+    useMittEmit(MITT_TYPES.EMIT_SET_HOME_MATCHES,payload.value*1)
 	}
 
 	// 左侧菜单点击后 tab切换
@@ -311,7 +311,7 @@ const checked_current_tab = (payload,type) => {
 	// get_sport_banner()
 	MenuData.set_mid_menu_result(obj)
 
-	if(MenuData.is_collect){
+	if(MenuData.is_collect || [1002].includes(payload.value*1)){
 		resolve_mew_menu_res()
 	}
 }

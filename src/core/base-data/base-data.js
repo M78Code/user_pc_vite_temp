@@ -207,6 +207,7 @@ class BaseData {
   set_base_c301_change(list = []) {
     list.forEach(item => item.mi = this.base_menu_id_togger()[item.menuId])
     useMittEmit(MITT_TYPES.EMIT_SET_BESE_MENU_COUNT_CHANGE,list)
+    this.set_left_menu_init(this.mew_menu_list_res,list_obj,'ws')
   }
   /**
    * @description 获取所有的元数据
