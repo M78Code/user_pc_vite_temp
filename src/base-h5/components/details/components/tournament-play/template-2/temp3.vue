@@ -126,7 +126,7 @@ export default defineComponent({
     const route = useRoute()
     const mid = route.params.mid;
     const get_detail_data = computed(() => {
-      return MatchDataWarehouseInstance.get_quick_mid_obj(mid||lodash.get(this.item_data,'mid'))
+      return MatchDataWarehouseInstance.get_quick_mid_obj(mid||lodash.get(props.item_data,'mid'))
     });
     const get_is_hengping = computed(() => {
       return ""

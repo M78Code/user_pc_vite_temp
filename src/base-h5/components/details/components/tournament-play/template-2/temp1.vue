@@ -340,7 +340,7 @@ export default defineComponent({
       return ""
     });
     const get_detail_data = computed(() => {
-      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(this.item_data,'mid'))
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(props.item_data,'mid'))
     });
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes(route.name)

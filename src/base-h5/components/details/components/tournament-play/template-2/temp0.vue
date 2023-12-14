@@ -218,7 +218,7 @@ export default defineComponent({
       return ""
     });
     const get_detail_data = computed(() => {
-      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(this.item_data,'mid'))
+      return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(props.item_data,'mid'))
     });
     /**
      * @description: 判断是否隐藏加载更多和收起功能

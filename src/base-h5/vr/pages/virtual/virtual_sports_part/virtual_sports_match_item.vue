@@ -210,7 +210,7 @@ export default {
     // ]),
     // ...mapMutations(['set_current_gotodetail_match','set_toast']),
     set_details_item(){},
-    set_current_gotodetail_match(){},
+    set_current_gotodetail_match(data){ return VR_CTR.set_current_gotodetail_match(data) },
     set_toast(){},
     /**
      * 篮球早盘倒计时结束显示列表比分
