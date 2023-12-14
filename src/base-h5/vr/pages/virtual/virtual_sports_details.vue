@@ -32,8 +32,10 @@
             @time_ended="timer_ended_handle">
           </virtual-sports-stage>
         </div>
+        <!--历史战绩，投注，排行榜tab键-->
+        <virtual-sports-detail-tab />
         <!--热门等tab键-->
-        <virtual-sports-tab @virtual_play_height="virtual_play_height"></virtual-sports-tab>
+        <!-- <virtual-sports-tab @virtual_play_height="virtual_play_height"></virtual-sports-tab> -->
         <div class="debug-test" v-if="show_debug">
           {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
@@ -52,7 +54,8 @@
 import common from "src/base-h5/vr/mixin/constant/module/common.js"
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
 import virtual_sports_tab from 'src/base-h5/vr/components/virtual_sports_tab.vue'
-import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
+import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue'
+import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue"
 import virtual_match_statistic from 'src/base-h5/vr/components/virtual_match_statistic.vue'
 import {api_v_sports} from "src/base-h5/vr/api";
 import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
@@ -99,6 +102,7 @@ export default {
     'virtual-match-statistic': virtual_match_statistic,
     'virtual-sports-stage': virtual_sports_stage,
     'virtual-sports-category': virtual_sports_category,
+    'virtual-sports-detail-tab': virtual_sports_detail_tab
   },
   data(){
     return{

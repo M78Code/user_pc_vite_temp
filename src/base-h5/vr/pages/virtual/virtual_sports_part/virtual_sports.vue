@@ -85,6 +85,7 @@
               <div>current_match.match_status: {{ current_match.match_status }}</div>
               <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
               <template v-if="current_match.mid == match_item_batch.matchs[0].mid">
+                   <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
                   <div v-if="current_match.match_status == 0">
                     <!-- 赛马切换玩法集tab组件 -->
                     <virtual-sports-tab
