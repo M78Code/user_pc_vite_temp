@@ -33,9 +33,7 @@
           </virtual-sports-stage>
         </div>
         <!--历史战绩，投注，排行榜tab键-->
-        <virtual-sports-detail-tab />
-        <!--热门等tab键-->
-        <!-- <virtual-sports-tab @virtual_play_height="virtual_play_height"></virtual-sports-tab> -->
+        <virtual-sports-detail-tab @virtual_play_height="virtual_play_height" @change_tab="change_tab" />
         <div class="debug-test" v-if="show_debug">
           {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
@@ -44,8 +42,12 @@
     </template>
      <!--玩法集区域 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
-      <virtual-sports-category v-if="match && !is_show_analyse" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
-      <virtual-match-statistic v-if="match && is_show_analyse" />
+      <!-- 赔率列表页面 -->
+      <virtual-sports-category v-if="match && tabs_name == 'bet'" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
+      <!-- 历史战绩页面 -->
+      <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
+      <!-- 足球排行榜页面  :tid="menu_list[tab_item_i].field1"-->
+      <football-ranking-list  v-if="match && tabs_name == 'rank'" :tid="current_league.field1" />
     </div>
   </div>
 </template>
@@ -54,8 +56,8 @@
 import common from "src/base-h5/vr/mixin/constant/module/common.js"
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
 import virtual_sports_tab from 'src/base-h5/vr/components/virtual_sports_tab.vue'
-import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue'
-import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue"
+import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue'
+import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
 import virtual_match_statistic from 'src/base-h5/vr/components/virtual_match_statistic.vue'
 import {api_v_sports} from "src/base-h5/vr/api";
 import virtual_sports_stage from 'src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
@@ -68,6 +70,7 @@ import { reactive } from 'vue'
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
+import footballRankingList from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -102,7 +105,8 @@ export default {
     'virtual-match-statistic': virtual_match_statistic,
     'virtual-sports-stage': virtual_sports_stage,
     'virtual-sports-category': virtual_sports_category,
-    'virtual-sports-detail-tab': virtual_sports_detail_tab
+    'virtual-sports-detail-tab': virtual_sports_detail_tab,
+    'football-ranking-list': footballRankingList
   },
   data(){
     return{
@@ -117,7 +121,8 @@ export default {
       // 默认不刷新
       refreshing:false,
       router: useRouter(),
-      route: useRoute()
+      route: useRoute(),
+      tabs_name: 'bet'
     }
   },
   watch: {
@@ -209,6 +214,10 @@ export default {
     set_is_show_details_analyse(){},
 
     go_where,
+    //切换详情页主tab 
+    change_tab(tabs){
+      this.tabs_name = tabs
+    },
     /**
      * 虚拟体育刷新
      */

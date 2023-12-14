@@ -5,8 +5,8 @@
 <template>
   <div ref='details_tab' class="row vir-details-tab" v-cloak>
     <q-tabs v-model="viewTab" inline-label narrow-indicator class="bg-tabs" active-color="active-tab"
-      @update:model-value="change_tab" :content-class="curr_active_tab">
-      <q-tab v-for="item in tab_list" :label="item.name" :key="item.id" />
+      @update:model-value="change_tab">
+      <q-tab v-for="item in tab_list" :label="item.label" :name="item.name" :key="item.id" />
     </q-tabs>
 
   </div>
@@ -17,11 +17,18 @@ export default {
   name: 'virtual_sports_detail_tab',
   data() {
     return {
+      viewTab: 'bet',
       tab_list: [
-        { name: "历史战绩", id: 1 },
-        { name: "投注", id: 2 },
-        { name: "排行榜", id: 3 }
+        { label: "历史战绩", id: 1, name: 'lszj' },
+        { label: "投注", id: 2, name: 'bet' },
+        { label: "排行榜", id: 3, name: 'rank' }
       ]
+    }
+  },
+  methods: {
+    change_tab (val){
+      this.viewTab =val
+      this.$emit('change_tab',val)
     }
   }
 }
@@ -31,6 +38,37 @@ export default {
   height: 0.4rem;
   margin-bottom: 0.04rem;
   width: 100%;
+}
+.bg-tabs {
+  width:100%;
+  background: var(--q-gb-bg-c-15);
+  
+.bg-active-tab {
+  background: var(--q-gb-bg-c-15);
+
+}
+}
+::v-deep.q-tab {
+  min-height: 0.4rem;
+  height: 0.4rem;
+
+  &.text-active-tab {
+    .q-tab__label {
+      font-weight: bolder;
+      color: var(--q-gb-t-c-1);
+    }
+  }
+
+  .q-tab__indicator {
+  color: var(--q-gb-bg-c-13);
+  border-radius: 1.5px;
+  z-index: 1;
+}
+  .q-tab__label {
+    font-size: 0.14rem;
+    color: var(--q-gb-t-c-19);
+    
+  }
 }
 
 .menu-third {
