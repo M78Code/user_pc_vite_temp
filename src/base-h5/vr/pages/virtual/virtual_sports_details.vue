@@ -10,7 +10,7 @@
       <div class="type-bg bg1001">
         <div class="back-wrap">
           <!-- 返回按钮 -->
-          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})">返回</div>
+          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div>
           <!-- 虚拟体育 -->
           <div class="col">{{current_league.name}}</div>
           <!--刷新按钮-->
@@ -70,7 +70,7 @@ import { reactive } from 'vue'
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
-import footballRankingList from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
+import footballRankingList from "src/base-h5/vr/pages/virtual/virtual_sports_part/football-ranking-list-2.vue"
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -209,7 +209,7 @@ export default {
     set_detail_data(){},
     set_current_sub_menuid(data){return VR_CTR.set_current_sub_menuid(data)},
     set_curr_sub_menu_type(data){ return VR_CTR.set_curr_sub_menu_type(data) },
-    set_current_gotodetail_match(){},
+    set_current_gotodetail_match(data){ return VR_CTR.set_current_gotodetail_match(data) },
     set_video_process_data(data){VR_CTR.set_video_process_data(data)},
     set_is_show_details_analyse(){},
 
@@ -275,7 +275,9 @@ export default {
         return
       }
       if(video_p_data){
-        let match_mid = this.$route.query.mid
+        let match_mid = this.$route.query.mid || this.current_match.mid;
+        console.log('match_midmatch_mid', match_mid);
+        
         if(video_p_data.detail){
           let m_o_video = video_p_data.detail[match_mid];
           if(!m_o_video) return;
@@ -423,6 +425,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
@@ -430,7 +433,7 @@ export default {
 /*  头部 */
 .virtual-head {
   width: 100%;
-  position: sticky;
+  position: absolute;
   top: 0;
   z-index: 100;
   height: 0.44rem;
@@ -449,9 +452,15 @@ export default {
     .detail-back {
       width: 0.3rem;
       height: 100%;
-      background: var(--q-color-com-img-bg-3) center no-repeat;
+      background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
       background-size: 0.1rem auto;
       margin-left: 0.05rem;
+      & + div {
+        color: #fff;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
 
     /*  刷新按钮 */
@@ -518,7 +527,7 @@ export default {
 .detail-header {
   position: sticky;
   width: 100%;
-  top: 0.44rem;
+  top: 0;
   right: 0;
   z-index: 99;
 
@@ -547,6 +556,11 @@ export default {
 
 .detail-main2 {
   margin-bottom: 0.5rem;
+}
+::v-deep.stage-wrapper .banner {
+  width: 100%;
+  height: 2.54rem;
+  border-radius: 0;
 }
 </style>
 
