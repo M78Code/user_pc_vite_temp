@@ -34,7 +34,7 @@
         <!-- 常规详情页显示内容 -->
         <template v-else>
           <div class="row real-time">
-            <div class="time-line half-line"></div>
+            <div class="time-line half-line start-half-line"></div>
             <div class="dot-real-time"></div>
             <div class="item-flag item-flag-real-time"></div>
             <div class="item-content real-time-content hairline-border">
