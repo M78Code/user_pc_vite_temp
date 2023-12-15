@@ -276,7 +276,7 @@ const addnum = computed(() => {
     ref_data.add_num = lodash.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200, qfi: 500 })
     return ref_data.add_num
   } else {
-    ref_data.add_num = lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })
+    ref_data.add_num = lodash.get(UserCtr, 'cvo.single', { qon: 200, qtw: 500, qth: 1000, qfo: 2000, qfi: 5000 })
     return ref_data.add_num
   }
 })
