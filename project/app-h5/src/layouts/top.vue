@@ -22,7 +22,7 @@
     <!-- <SwitchWap /> -->
     <!--  -->
     <!-- v-if="MenuData.current_lv_1_menu_i =='2'" -->
-    <SearchTab ref="searchTabMenu" v-if="MenuData.menu_csid === 1"/>
+    <SearchTab ref="searchTabMenu" v-if="MenuData.menu_csid === 1 && MenuData.current_lv_1_menu_mi.value != 400"/>
      <!-- 筛选+搜索  已脱离文档流-->
     <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
         <div style="height:100%;width: 100%" @click="select_dialog = false" />
