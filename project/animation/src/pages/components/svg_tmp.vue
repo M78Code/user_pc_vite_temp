@@ -1,8 +1,8 @@
 <template>
-  <div style="position: absolute;color: white;">
+  <!-- <div style="position: absolute;color: white;">
     {{ current_event_code }}~~
     {{ textAnimateParams }}--
-  </div>
+  </div> -->
   <svg :width="width" :height="height" :key="key_1">
     <path :d="svgPath.path" :fill="pathAnimateColors[0]">
       <animate
@@ -62,6 +62,7 @@ export default defineComponent({
     pathAnimateParams(){
       const {svg_path_config} = event_animation[this.current_event_code] || {}
       const {pathAnimateParams} = svg_path_config || {}
+      
       return pathAnimateParams || {};
     },
     pathAnimateColors(){
