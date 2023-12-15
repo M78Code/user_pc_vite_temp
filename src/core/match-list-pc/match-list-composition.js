@@ -133,18 +133,21 @@ export function fetch_match_list(is_socket = false, cut) {
 								is_socket,
 								cut
 							);
+							//不是ws就通知已经加载完成 连同返回接口数据
+							!is_socket && useMittEmit(MITT_TYPESEMIT_FETCH_MATCH_LIST_FINISHED, res)
 						} finally {
-							if (lodash.get(res, "data.length") != undefined || lodash.get(res, "data.data.length") != undefined) {
-								const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
-								set_load_data_state(len ? 'data' : 'empty')
-							}
-							else {
-								const livedata = lodash.get(res, "data.livedata.length", 0)
-								const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
-								set_load_data_state(livedata + nolivedata > 0 ? 'data' : 'empty')
+							if (!is_socket) {
+								if (lodash.get(res, "data.length") != undefined || lodash.get(res, "data.data.length") != undefined) {
+									const len = lodash.get(res, "data.length", 0) || lodash.get(res, "data.data.length", 0)
+									set_load_data_state(len ? 'data' : 'empty')
+								}
+								else {
+									const livedata = lodash.get(res, "data.livedata.length", 0)
+									const nolivedata = lodash.get(res, "data.nolivedata.length", 0)
+									set_load_data_state(livedata + nolivedata > 0 ? 'data' : 'empty')
+								}
 							}
 						}
-
 					} else if (res.code == "0401038") {
 						// let is_collect = this.vx_layout_list_type == 'collect'
 						// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
@@ -158,7 +161,6 @@ export function fetch_match_list(is_socket = false, cut) {
 					} else {
 						if (!is_socket) {
 							set_load_data_state("empty")
-
 						}
 					}
 					show_refresh_mask.value = false;
@@ -264,7 +266,7 @@ function mounted_fn(fun) {
 	// is_vr_numer.value = 0;
 	function default_fun() {
 		//默认加载方式
-		useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE,{ is_socket: true })
+		useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, { is_socket: true })
 	}
 	mitt_list = [
 		// 站点 tab 休眠状态转激活
