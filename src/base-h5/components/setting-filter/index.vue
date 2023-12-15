@@ -186,6 +186,7 @@ const switch_handle = item => {
  *@return {Undefined} undefined
  */
 const version_handle = item => {
+  // 用户版本 移动端有简版 1 和标准版 2
   const status = item.switchValue === "rightVal" ? 2 : 1;
   UserCtr.set_standard_edition(status);
   useMittEmit(MITT_TYPES.EMIT_GOT_TO_TOP);

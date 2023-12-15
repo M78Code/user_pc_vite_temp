@@ -7,45 +7,26 @@
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
-    <!-- <div class="item-header">
+    <div class="item-header">
       {{ data_b.seriesValue }}
-    </div> -->
-    <div class="body-info">
-      <div>
-          <template v-if="data_b.seriesType != '3' && Item.matchType != 4">
-            {{ i18n_t(`matchtype.${Item.matchType}`) }}
-          </template>
-
-        <p>{{Item.playName}}盘口&nbsp; {{Item.playName}}</p>
-        <!-- <p>{{Item.playName}}{{ i18n_t(`analysis.handicap`) }}&nbsp; {{Item.playName}}</p> -->
-      </div>
-      <span>
-        <span>
-          <template v-if="!([1011, 1002, 1010, 1009].includes(+Item.sportId) && calc_num(Item) && calc_num(Item).length > 1)">
-            {{(BetRecordClass.selected === 1 || BetRecordClass.selected === 2) ? Item.playOptionName: Item.marketValue}}
-          </template>
-        </span>
-        <!-- 大3.5  -->
-        @{{ Item.oddFinally }}
-      </span>
     </div>
     <div class="item-main three-more">
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
         <div class="items" v-if="item.isBoolean">
-          <!-- <div class="top">
+          <div class="top">
             <p>{{item.matchName}}<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
             <span>{{ item.oddFinally }}</span>
-          </div> -->
-          <!-- <p class="list">
+          </div>
+          <p class="list">
             <span>{{item.playName}}</span>
-          </p> -->
+          </p>
           <!-- 结算页面显示 -->
           <div class="list score" v-if="BetRecordClass.selected == 3">
             <p>{{item.settleScore}}</p>
             <span :class="calc_item_bet_result(item).color">{{calc_item_bet_result(item).text}}</span>
           </div>
           <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
-          <!-- <span class="info">
+          <span class="info">
             {{item.sportName}}
             <span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>
             &ensp;{{item.playName}}
@@ -53,7 +34,7 @@
               ({{item.scoreBenchmark}})
             </template>
             &ensp;[{{i18n_t(`odds.${item.marketType}`)}}]
-          </span> -->
+          </span>
         </div>
       </template>
       <!-- 串关时大于3条时,显示 展开收起按钮-->
@@ -64,9 +45,7 @@
       </div>
     </div>
     <div class="foot-main">
-      <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> <span @click="copy">{{data_b.orderNo}}</span></p>
-      <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
-      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
+      <!-- <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p> -->
       <!-- 可赢额、结算, 注单状态： -->
       <item-footer :data_f="data_b"></item-footer>
     </div>
@@ -82,9 +61,6 @@ import { i18n_t } from 'src/output/index.js'
 import { format_money2 } from 'src/output/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
 import { formatTime } from 'src/output/index.js'
-import ClipboardJS from "clipboard";
-import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
-import { Platform } from "quasar";
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开
@@ -135,32 +111,7 @@ const toggle_box = () => {
     }
     return { text, color }
   }
-  /**
- *@description 复制订单号
-  *@param {Object} evt 事件对象
-  */
-const copy = (evt) => {
-  let orderno = props.data_b.orderNo
-  const clipboard = new ClipboardJS(".text-left", {
-    text: () => orderno
-  })
-  clipboard.on('success', () => {
-    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("bet_record.copy_suc"))
-    // h5嵌入时Safari阻止弹窗
-    if (!Platform.is.safari) {
-      try {
-        location.href = `pasteOrderAction://paste?orderSN=${orderno}`;
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    clipboard.destroy()
-  })
-  clipboard.on('error', () => {
-    clipboard.destroy()
-  })
-  clipboard.onClick(evt)
-}
+
 
 </script>
 
@@ -180,7 +131,6 @@ template {
     padding: 0.12rem;
 
     .items {
-
       &:last-child {
 
         .list,
@@ -213,6 +163,20 @@ template {
           display: flex;
           justify-content: space-between;
         }
+        &.play {
+          display: flex;
+          align-items: center;
+        }
+        .play-market {
+          margin-right: 0.1rem;
+          &:last-child{
+            margin-right: 0;
+            max-width: 2.2rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
       }
 
       .info {
@@ -222,7 +186,9 @@ template {
         font-size: 0.12rem;
         color: var(--q-gb-bg-c-6);
         display: block;
-        padding-bottom: 0.1rem;
+        &.bot {
+          padding-bottom: 0.1rem;
+        }
       }
     }
   }
