@@ -1,3 +1,11 @@
+/**
+ * 2021 亚洲版本 H5  活动 主题色专用  
+ * 项目标识：yazhou_h5
+ */
+// 主题橙色----日间版   theme01
+// 主题橙色----夜间版  theme02
+// 主题蓝色----日间版   theme01_y0
+// 主题蓝色----夜间版  theme02_y0
 // 公用变量
 const theme_common = {
   // 渐变背景图和背景图片
@@ -43,12 +51,10 @@ const theme_common = {
   "com-img-bg-218": "/activity/yazhou-h5/activity/slot_machine/numbers/9.png",
 };
 
-// 主题橙色----日间版   theme01
-// 主题橙色----夜间版  theme02
-// 主题蓝色----日间版   theme01_y0
-// 主题蓝色----夜间版  theme02_y0
 
-const theme_other = {
+
+// 主题差异化的 
+const theme_different = {
   "img-bg-99": {
     theme01: "/activity/yazhou-h5/activity/smaller.png",
     theme02: "/activity/yazhou-h5/activity/smaller.png",
@@ -56,8 +62,8 @@ const theme_other = {
     theme02_y0: "/activity/yazhou-h5/activity/smaller_y0.png",
   },
 };
-
-const theme = {
+// 未知的，代码内有用的  
+const theme_unknown = {
   "activity-text-gray": "",
   "bg-image-url3": "",
   "bg-image-url51": "",
@@ -73,3 +79,11 @@ const theme = {
   "yb-bg-color1": "",
   "yb-text-color1": "",
 };
+
+
+export default {
+  ...theme_common,
+  ...theme_different,
+  ...theme_unknown,
+
+}

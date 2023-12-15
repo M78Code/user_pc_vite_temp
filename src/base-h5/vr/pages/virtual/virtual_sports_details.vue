@@ -10,7 +10,7 @@
       <div class="type-bg bg1001">
         <div class="back-wrap">
           <!-- 返回按钮 -->
-          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})">返回</div>
+          <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual_detail', route_name:route.name,route,router})"></div>
           <!-- 虚拟体育 -->
           <div class="col">{{current_league.name}}</div>
           <!--刷新按钮-->
@@ -32,8 +32,8 @@
             @time_ended="timer_ended_handle">
           </virtual-sports-stage>
         </div>
-        <!--热门等tab键-->
-        <virtual-sports-tab @virtual_play_height="virtual_play_height"></virtual-sports-tab>
+        <!--历史战绩，投注，排行榜tab键-->
+        <virtual-sports-detail-tab @virtual_play_height="virtual_play_height" @change_tab="change_tab" />
         <div class="debug-test" v-if="show_debug">
           {{`batchNo:${current_batch.batchNo}-csid:${sub_menuid}-mid:${current_match.mid}`}}<br />
           {{`orderNo:${current_match.orderNo}-tid:${current_league.menuId}`}}
@@ -42,8 +42,12 @@
     </template>
      <!--玩法集区域 -->
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
-      <virtual-sports-category v-if="match && !is_show_analyse" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
-      <virtual-match-statistic v-if="match && is_show_analyse" />
+      <!-- 赔率列表页面 -->
+      <virtual-sports-category v-if="match && tabs_name == 'bet'" :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
+      <!-- 历史战绩页面 -->
+      <virtual-match-statistic v-if="match && tabs_name == 'lszj'" />
+      <!-- 足球排行榜页面  :tid="menu_list[tab_item_i].field1"-->
+      <football-ranking-list  v-if="match && tabs_name == 'rank'" :tid="current_league.field1" />
     </div>
   </div>
 </template>
@@ -52,6 +56,7 @@
 import common from "src/base-h5/vr/mixin/constant/module/common.js"
 import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sports_mixin.js"
 import virtual_sports_tab from 'src/base-h5/vr/components/virtual_sports_tab.vue'
+import virtual_sports_detail_tab from 'src/base-h5/vr/pages/virtual/details/children/virtual_sports_detail_tab.vue'
 import virtual_sports_category from "src/base-h5/vr/pages/virtual/details/children/virtual_sports_category.vue"
 import virtual_match_statistic from 'src/base-h5/vr/components/virtual_match_statistic.vue'
 import {api_v_sports} from "src/base-h5/vr/api";
@@ -65,6 +70,7 @@ import { reactive } from 'vue'
 import { go_where } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import { MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance} from "src/output/index.js"
+import footballRankingList from "src/base-h5/vr/pages/virtual/virtual_sports_part/football-ranking-list-2.vue"
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -99,6 +105,8 @@ export default {
     'virtual-match-statistic': virtual_match_statistic,
     'virtual-sports-stage': virtual_sports_stage,
     'virtual-sports-category': virtual_sports_category,
+    'virtual-sports-detail-tab': virtual_sports_detail_tab,
+    'football-ranking-list': footballRankingList
   },
   data(){
     return{
@@ -113,7 +121,8 @@ export default {
       // 默认不刷新
       refreshing:false,
       router: useRouter(),
-      route: useRoute()
+      route: useRoute(),
+      tabs_name: 'bet'
     }
   },
   watch: {
@@ -200,11 +209,15 @@ export default {
     set_detail_data(){},
     set_current_sub_menuid(data){return VR_CTR.set_current_sub_menuid(data)},
     set_curr_sub_menu_type(data){ return VR_CTR.set_curr_sub_menu_type(data) },
-    set_current_gotodetail_match(){},
+    set_current_gotodetail_match(data){ return VR_CTR.set_current_gotodetail_match(data) },
     set_video_process_data(data){VR_CTR.set_video_process_data(data)},
     set_is_show_details_analyse(){},
 
     go_where,
+    //切换详情页主tab 
+    change_tab(tabs){
+      this.tabs_name = tabs
+    },
     /**
      * 虚拟体育刷新
      */
@@ -262,7 +275,9 @@ export default {
         return
       }
       if(video_p_data){
-        let match_mid = this.$route.query.mid
+        let match_mid = this.$route.query.mid || this.current_match.mid;
+        console.log('match_midmatch_mid', match_mid);
+        
         if(video_p_data.detail){
           let m_o_video = video_p_data.detail[match_mid];
           if(!m_o_video) return;
@@ -410,6 +425,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .virtual-detail {
   height: calc(var(--vh, 1vh) * 100);
   overflow: auto;
@@ -417,7 +433,7 @@ export default {
 /*  头部 */
 .virtual-head {
   width: 100%;
-  position: sticky;
+  position: absolute;
   top: 0;
   z-index: 100;
   height: 0.44rem;
@@ -436,9 +452,15 @@ export default {
     .detail-back {
       width: 0.3rem;
       height: 100%;
-      background: var(--q-color-com-img-bg-3) center no-repeat;
+      background: url($SCSSPROJECTPATH + '/image/common/go_back.svg') no-repeat center / 96% 96%;
       background-size: 0.1rem auto;
       margin-left: 0.05rem;
+      & + div {
+        color: #fff;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
 
     /*  刷新按钮 */
@@ -505,7 +527,7 @@ export default {
 .detail-header {
   position: sticky;
   width: 100%;
-  top: 0.44rem;
+  top: 0;
   right: 0;
   z-index: 99;
 
@@ -534,6 +556,11 @@ export default {
 
 .detail-main2 {
   margin-bottom: 0.5rem;
+}
+::v-deep.stage-wrapper .banner {
+  width: 100%;
+  height: 2.54rem;
+  border-radius: 0;
 }
 </style>
 

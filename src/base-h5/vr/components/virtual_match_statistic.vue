@@ -1,66 +1,79 @@
 <!--
- * @Author: Supermark 
- * @Date: 2021-01-05 20:25
- * @Description: 虚拟体育详情页赛事统计
+ * @Date: 2023-12-14
+ * @Description: 复刻版-虚拟体育详情页赛事统计
 -->
 <template>
   <div class="c-match-startistic">
-    <!-- 历史战绩 -->
-    <div class="historical-record">{{i18n_t('collect.historical_record')}}</div>
-    <!-- 比分板 -->
-    <div class="score-list">
-      <div
-        v-for="(score, index) in datas.score_list"
-        :key="index+'-'"
-        class="score-item items-center row"
-      >
-        <div class="info main">
-          <span
-            :class="['line', score.home == 0 && 'line0']"
-            :style="`width:${score.home * 10}%`"
-          ></span>
-          <span class="score">{{ score.home }}</span>
-        </div>
-        <div class="separate"></div>
-        <div class="info away">
-          <span
-            :class="['line', score.away == 0 && 'line0']"
-            :style="`width:${score.away * 10}%`"
-          ></span>
-          <span class="score">{{ score.away }}</span>
+    <div class="bg-card-startistic">
+      <!-- 比分板 -->
+      <div class="score-list">
+        <div
+          v-for="(score, index) in datas.score_list"
+          :key="index+'-'"
+          class="score-item items-center col"
+        >
+          <div class="score-header row justify-center items-center">
+            <div class="left team team-home">
+              <span class="score">{{ score.home }}</span>
+            </div>
+            <div class="separate"></div>
+            <div class="right team team-away">
+              <span class="score">{{ score.away }}</span>
+            </div>
+          </div>
+          <!-- 占比条 -->
+          <div class="score-line row">
+            <div class="info main">
+              <span
+                :class="['line', score.home == 0 && 'line0']"
+                :style="`width:${score.home * 10}%`"
+              ></span>
+            </div>
+            <div class="separate"></div>
+            <div class="info away">
+              <span
+                :class="['line', score.away == 0 && 'line0']"
+                :style="`width:${score.away * 10}%`"
+              ></span>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
-    <!-- 胜负百分比 -->
-    <div class="result-wrap row">
-      <div class="home item  column items-center">
-        <div class="win-percent">{{ datas.win_home }}%</div>
+      
+      <!-- 胜负百分比 -->
+      <div class="result-wrap row">
+        <div class="home item  column items-center">
+          <div class="win-percent">{{ datas.win_home }}%</div>
 
-        <div class="result-list row ">
-          <div
-            v-for="(item, index) in datas.result_home"
-            :key="index"
-            :class="['result-item', 'item-' + item]"
-          >
-            {{ item }}
+          <div class="result-list row ">
+            <div
+              v-for="(item, index) in datas.result_home"
+              :key="index"
+              :class="['result-item', 'item-' + item]"
+            >
+              {{ item }}
+            </div>
+          </div>
+        </div>
+        <div class="separate">
+
+        </div>
+        <div class="away item column items-center">
+          <div class="win-percent">{{ datas.win_away }}%</div>
+
+          <div class="result-list row">
+            <div
+              v-for="(item, index) in datas.result_away"
+              :key="index"
+              :class="['result-item', 'item-' + item]"
+            >
+              {{ item }}
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="away item column items-center">
-        <div class="win-percent">{{ datas.win_away }}%</div>
-
-        <div class="result-list row">
-           <div
-            v-for="(item, index) in datas.result_away"
-            :key="index"
-            :class="['result-item', 'item-' + item]"
-          >
-            {{ item }}
-          </div>
-        </div>
-      </div>
-    </div>
+    </div> 
   </div>
 </template>
  
@@ -77,7 +90,11 @@ export default {
     // ...mapGetters({
     //   match:'get_current_gotodetail_match'
     // }),
-    match(){return VR_CTR.get_current_gotodetail_match()},
+    match(){
+      console.log('VR_CTR', VR_CTR);
+      
+      return VR_CTR.get_current_gotodetail_match()
+    },
   },
   created() {
     this.datas = this.format_datas();
@@ -145,34 +162,87 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.historical-record {
-  height: 0.48rem;
-  line-height: 0.48rem;
-  padding-left: 0.28rem;
-  font-size: 0.16rem;
-  position: relative;
-
-  &:after {
-    content: " ";
-    display: block;
-    position: absolute;
-    width: 3px;
-    height: 0.12rem;
-    top: 0.18rem;
-    left: 0.19rem;
-    border-radius: 1.5px;
-  }
-}
 
 .c-match-startistic {
+     background-color:var(--q-color-page-bg-color-2);
+    color: var(--q-gb-t-c-3);
+    &::after {
+      border-color: var(--q-gb-bd-c-3) !important;
+    }
+    .score-list {
+      .score-item {
+        .info {
+          .score {
+            color: var(--q-gb-t-c-3);
+          }
+          .line {
+            background:#E95B5B;
+          }
+          &.away {
+            .line {
+              background: #74C4FF;
+            }
+          }
+        }
+        .separate {
+          background-color: var(--q-gb-t-c-18);
+        }
+      }
+    }
+    .result-wrap {
+      border-bottom: 1px solid  var(--q-color-border-color-27);
+      .item {
+        .result-list {
+          .result-item {
+            background: #74C4FF;
+            color:var(--q-gb-t-c-13);
+            &.item-W {
+              background: #E95B5B;
+            }
+            &.item-L {
+              background: #4AB06A;
+
+            }
+          }
+        }
+      }
+    }
+  }
+.c-match-startistic {
   min-width: 3.75rem;
-
+  padding:0.05rem;
+  background:#F8F9FA;
+  .bg-card-startistic{
+    background: var(--q-gb-bg-c-15);
+    border-radius: 4px;
+    padding: 0.08rem;
+  }
   .score-list {
-    margin-top: 0.2rem;
-
+    // margin-top: 0.2rem;
     .score-item {
 
       font-size: 0.12rem;
+      font-weight: 700;
+      color: var(--q-gb-t-c-18);
+      margin-bottom: 0.12rem;
+      .score-header{
+        padding: .05rem 0;
+      }
+      .score-line{
+        //按照设计图的3px太细了，故设置4px
+        --private-score-line-height: .04rem;
+        height: var(--private-score-line-height);
+        background-color: var(--q-gb-bg-c-18);
+        .separate{
+          background-color: transparent;
+        }
+      }
+      .separate {
+        text-align: center;
+        margin: 0 .025rem;
+        height: 0.02rem;
+        width: 0.06rem;
+      }
 
       .info {
         flex: 1;
@@ -186,12 +256,11 @@ export default {
         }
 
         .line {
-          border-radius: 2px;
-          margin-right: 0.08rem;
-          height: 0.04rem;
+          border-radius: 1rem 0 0 1rem;
+          height: var(--private-score-line-height);
 
           &.line0 {
-            width: 2px !important;
+            
           }
         }
 
@@ -199,35 +268,35 @@ export default {
           flex-direction: row-reverse;
 
           .line {
-            margin: 0 0 0 0.08rem;
+            border-radius: 0rem 1rem 1rem 0rem;
           }
         }
-      }
-
-      .separate {
-        margin: 0 0.13rem;
-        width: 0.08rem;
-        height: 0.02rem;
       }
     }
   }
 
   .result-wrap {
     margin-top: 0.2rem;
-    padding: 0 0.7rem;
+    // padding: 0 0.7rem;
     padding-bottom: 0.35rem;
-
+    .separate{
+      width: 0.08rem;
+    }
     .item {
       flex: 1;
-
+      background-color: var(--q-gb-bg-c-18);
+      border-radius: 0.04rem;
+      padding: .08rem 0;
       .result-list {
-        margin-top: 0.08rem;
-
+        margin-top: 0.04rem;
+        font-size: 0.10rem;
+        display: flex;
+        justify-content: center;
         .result-item {
           border-radius: 2px;
+          margin: 0.02rem;
           text-align: center;
-          margin: 0 0.01rem;
-          width: 0.16rem;
+          width: 0.20rem;
           height: 0.16rem;
         }
       }
@@ -235,4 +304,3 @@ export default {
   }
 }
 </style>
-

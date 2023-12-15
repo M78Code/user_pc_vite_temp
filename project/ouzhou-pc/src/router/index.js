@@ -16,10 +16,6 @@ router.beforeEach((to, from, next) => {
     if (!to.name) {
         return next('/home')
     }
-    if (to.meta.title) {
-        document.title = `${to.meta.title}`;
-    }
-
     /**
      * 48111 【SIT】【欧洲版二期】【PC】滚球页面，点击赛事详情，菜单导航显示错误
      * 48448 【SIT】【欧洲版二期】【PC】经常访问，足球，详情页面，没有菜单导航

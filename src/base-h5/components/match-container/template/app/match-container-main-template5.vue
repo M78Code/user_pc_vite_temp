@@ -410,6 +410,7 @@ export default {
   width: 100%;
   height: auto;
   position: relative;
+  background: var(--q-gb-bg-c-18);
 
   .match-status-fixed {
     width: 100%;
@@ -466,6 +467,24 @@ export default {
       background: var(--q-gb-bg-c-17);
       height: 5px;
       width: 100%;
+    }
+    .match-content{
+      border-radius: 0 0 8px 8px;
+      &.collapsed{
+        border-top: none;
+      }
+    }
+    &.collapsed{
+      > .match-indent{
+        border-radius: 8px !important;
+        border-bottom: 1px solid #fff !important;
+        border: 1px solid #fff;
+      }
+    }
+    > .match-indent{
+      border: 1px solid #fff;
+      border-radius: 8px 8px 0 0 !important;
+      border-bottom: 1px solid #E4E6ED !important;
     }
   }
 
@@ -754,7 +773,8 @@ export default {
   /* **************联赛展示********************** -S*/
   .league {
     height: 0.26rem;
-    border-radius: 0;
+    border-radius: .08rem .08rem 0 0;
+    background-color: var(--q-gb-bg-c-17) !important;
 
     .league-t-wrap {
       width: 100%;
@@ -896,7 +916,7 @@ export default {
             display: flex;
             flex-direction: column;
             justify-content: center;
-
+            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
             &.active {
               background: var(--sys-brand-secodary-secondary-200, #C9CDDB);
             }

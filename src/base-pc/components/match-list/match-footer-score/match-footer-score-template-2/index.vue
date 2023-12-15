@@ -90,7 +90,7 @@ const {
   position: relative;
   display: flex;
   justify-content: space-between;
-
+  cursor: default;
   .scroll-arrow {
     position: absolute;
     $top: -1px;
@@ -121,7 +121,7 @@ const {
     margin-right: 30px;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
-
+    cursor: default;
     &::-webkit-scrollbar {
       width: 0 !important;
     }

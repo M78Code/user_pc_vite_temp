@@ -2,7 +2,7 @@
   <div>
 
     <!-- <div  >    <LayoutH5 />  </div> -->
- <div v-if="is_mobile">    <LayoutH5 />  </div>
+   <div v-if="is_mobile">    <LayoutH5 />  </div>
     <div v-else>    <LayoutPC />  </div>
  
   </div>

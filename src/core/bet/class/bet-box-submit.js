@@ -1036,7 +1036,7 @@ const get_market_is_show = (obj={}) =>{
     return !!hl_obj.hid
 }
 const   go_to_bet=(ol_item)=>{
-    const {oid,_hid,_hn,_mid } = ol_item
+    const {oid,_hid,_hn,_mid,_hpid } = ol_item
     let params = {
       oid, // 投注项id ol_obj
       _hid, // hl_obj 
@@ -1052,6 +1052,7 @@ const   go_to_bet=(ol_item)=>{
       device_type: 1,  
       // 数据仓库类型
       match_data_type: "h5_detail",
+      play_name:ALL_SPORT_PLAY[_hpid],
   }
     set_bet_obj_config(params,other)
 }   
