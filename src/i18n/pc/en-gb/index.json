@@ -60,8 +60,8 @@
         "2": "O/U",
         "4": "HDP",
         "37": "Moneyline",
-        "38": "Total",
-        "39": "Spread",
+        "38": "Total Points",
+        "39": "Point Handicap",
         "153": "Winner",
         "154": "Set Handicap",
         "155": "Game Handicap",
@@ -71,8 +71,8 @@
         "182": "Total Points",
         "202": "Total Frames",
         "242": "Winner",
-        "243": "HDP",
-        "244": "Total Goals",
+        "243": "Handicap",
+        "244": "Total",
         "30001": "Map Handicap",
         "30002": "Match Winner",
         "30003": "Total Maps"
@@ -223,6 +223,18 @@
       "bet_col_30003": {
         "bet_col_Over": "Total",
         "bet_col_Under": "Total"
+      },
+      "bet_col_242": {
+        "bet_col_1": "1",
+        "bet_col_2": "2"
+      },
+      "bet_col_244": {
+        "bet_col_Over": "Over",
+        "bet_col_Under": "Under"
+      },
+      "bet_col_243": {
+        "bet_col_1": "HDP",
+        "bet_col_2": "HDP"
       }
     }
   },

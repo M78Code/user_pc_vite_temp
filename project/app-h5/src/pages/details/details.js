@@ -224,8 +224,15 @@ export const details_main = () => {
   watch(() => MatchDataWarehouseInstance.data_version.version, () => {
     state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
   })
+
+  const change_fullscreen = (value) => {
+    console.log(value, "change_fullscreen");
+    state_data.get_is_dp_video_full_screen = value;
+  }
+  
   // // 刷新页面时获取当前玩法集ID
   onMounted(() => {
+    // useMittOn(MITT_TYPES.EMIT_SET_SHOW_VIDEO, full_screen_callback),
     // LocalStorage.get("YUAN_MATCH_DETAIL_DATA")
     MatchDataWarehouseInstance.set_match_details(LocalStorage.get("YUAN_MATCH_DETAIL_DATA"),[])
     state_data.detail_data = MatchDataWarehouseInstance.get_quick_mid_obj(matchid.value);
@@ -1011,6 +1018,7 @@ export const details_main = () => {
     off_listeners,
     clear_timer,
     LOCAL_PROJECT_FILE_PREFIX,
+    change_fullscreen
   };
 };
 

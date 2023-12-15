@@ -21,7 +21,7 @@
     width: 1.98rem;
     height: 0.36rem;
     margin: auto;
-    background-image: var(--qq--color-com-img-bg-119);
+    background-image: var(--qq--com-img-bg-119);
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
@@ -206,7 +206,7 @@
       width: 1.98rem;
       height: 0.36rem;
       margin: auto;
-      background: var(--qq--color-com-img-bg-119) no-repeat;
+      background: var(--qq--com-img-bg-119) no-repeat;
       background-size: 100% 100%;
       display: flex;
       justify-content: center;
@@ -311,7 +311,7 @@
   .activity-rules {
     border: 1px solid #A4BEFE;
     .title {
-      background-image: var(--qq--color-com-img-bg-125);
+      background-image: var(--qq--com-img-bg-125);
       color: #fff;
     }
     .go-to-lottery {
@@ -368,7 +368,7 @@
       border: 0.02rem solid #A4BEFE !important;
       box-shadow: 0 0.02rem 0.1rem 0 rgb(0 0 0 / 10%) !important;
       .choice-title {
-        background: var(--qq--color-com-img-bg-124) no-repeat;
+        background: var(--qq--com-img-bg-124) no-repeat;
         background-size: 100%;
         color: #fff;
       }
@@ -432,4 +432,24 @@
       }
     }
   }
+
+  .q-dialog--modal {
+    .q-dialog__backdrop {
+      backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+      background-color: var(--q-color-page-bg-color-78) !important;
+    }
+  }
+  .q-dialog__backdrop {
+    backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+    background-color: var(--q-color-page-bg-color-78);
+  }
+
 }
+
+
+  
+
+
+
+
+

@@ -14,7 +14,7 @@ import { MenuData} from "src/output/module/menu-data.js"
  * click_card_obj 点击的联赛卡片对象
  */
 export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie =
-	(click_card_obj) => {
+	(click_card_obj,is_computed=true) => {
 		click_card_obj.is_league_fold = !click_card_obj.is_league_fold;
 		// 折叠的联赛容器卡片
 		let league_container_card_obj =
@@ -49,7 +49,7 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
 			}
 		}
 		// 计算所有卡片偏移量 和列表总高度
-		conpute_match_list_card_offset();
+		is_computed&&conpute_match_list_card_offset();
 	};
 /**
  * 新增赛事重新设置折叠

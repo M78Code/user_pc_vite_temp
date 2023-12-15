@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { Quasar } from "quasar";
-import "./src/css/app.scss"
+import "./src/css/app.scss";
+import "quasar/dist/quasar.css";
 // import './style.css'
 import App from './App.vue'
  

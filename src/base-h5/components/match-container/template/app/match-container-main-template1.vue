@@ -270,8 +270,13 @@
                     </div>
                   </div>
                 </div>
-                <!-- 右边盘口组件 -->
-                <OddListWrap :main_source="main_source" :match="match_of_list" />
+
+                <div class="right-content-style">
+                  <!-- 右边盘口组件 -->
+                  <OddListWrap :main_source="main_source" :match="match_of_list" />
+                  <!-- <score-list :main_source="main_source" :match="match"></score-list> -->
+                </div>
+                
                 </div>
               </div>
             </div>
@@ -290,7 +295,7 @@ import { ref, computed, watch, nextTick } from 'vue'
 import { IconWapper } from 'src/components/icon'
 import CountingDownSecond from 'src/base-h5/components/common/counting-down.vue';
 import CountingDownStart from 'src/base-h5/components/common/counting-down-start.vue';
-import ScoreList from 'src/base-h5/components/match-list/components/score-list.vue';
+import ScoreList from 'src/base-h5/components/match-container/template/app/components/score-list-5/index.vue';
 import ImageCacheLoad from "src/base-h5/components/match-list/components/public-cache-image.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { i18n_t, compute_img_url, compute_css_obj, MenuData, LOCAL_PROJECT_FILE_PREFIX ,PageSourceData } from "src/output/index.js"
@@ -938,6 +943,14 @@ export default {
   height: auto;
   position: relative;
   height: 1.12rem;
+
+  .right-content-style {
+    position: relative;
+    .score-section {
+      position: absolute;
+      bottom: .02rem;
+    }
+  }
 
   &.simple,
   &.result {
