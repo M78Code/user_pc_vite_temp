@@ -31,7 +31,7 @@ export default defineComponent({
 
   async created() {
     let token =
-      sessionStorage.getItem("token") ||
+      SEARCH_PARAMS.init_param.get("token") ||
       UserCtr.get_user_token() ||
       window.SEARCH_PARAMS.get_url_param(window.location.href).get("token");
     await UserCtr.get_user_info(token);
