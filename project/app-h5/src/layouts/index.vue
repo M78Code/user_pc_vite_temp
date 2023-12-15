@@ -162,6 +162,13 @@ const touchend_event_fun = (event) => {
 const gesturestart_event_fun = (event) => {
   event.preventDefault();
 };
+/**
+ * @description: 设置当前版本 
+ */
+const set_standard_edition_fun = () => {
+  const status =  sessionStorage.getItem('standard_edition') || 2
+    UserCtr.set_standard_edition(status);
+};
 
 //计算投注记录框的样式
 const calc_bottom = () => {
@@ -215,6 +222,9 @@ const show_chain_bet = () => {
 }
 
 onMounted(() => {
+    //设置当前默认版本
+  set_standard_edition_fun()
+  //获取当前版本默认值
   window.onresize = debounce((e) => {
     console.log(e)
     inner_height.value = window.innerHeight

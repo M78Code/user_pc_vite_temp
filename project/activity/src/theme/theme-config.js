@@ -37,7 +37,7 @@ const compute_theme_map = (project_config, theme) => {
  */
 
 const set_theme_style_sheet=(content)=> {
-  theme_style_content = `:root{${ content}\n}` 
+  const theme_style_content = `:root{${ content}\n}` 
   const root_var_stylesheet = document.querySelector('#root-var')
   if (!root_var_stylesheet) {
       // 创建style标签

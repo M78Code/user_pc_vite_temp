@@ -383,50 +383,50 @@ export default {
   // @for $number from 1 through 10 {
   //   .row-item-#{$number} {
   //     @if $number == 10 {
-  //       background-image: var(--qq--color-com-img-bg-166);
+  //       background-image: var(--qq--com-img-bg-166);
   //     } @else {
   //       background-image: url($SCSSPROJECTPATH+'/yazhou-h5/activity/slot_machine/numbers/#{$number}.png');
   //     }
   //   }
   // }
     .row-item-1 {
-      background-image: var(--qq--color-com-img-bg-210);
+      background-image: var(--qq--com-img-bg-210);
     }
 
     .row-item-2 {
-      background-image: var(--qq--color-com-img-bg-211);
+      background-image: var(--qq--com-img-bg-211);
     }
 
     .row-item-3 {
-      background-image: var(--qq--color-com-img-bg-212);
+      background-image: var(--qq--com-img-bg-212);
     }
 
     .row-item-4 {
-      background-image: var(--qq--color-com-img-bg-213);
+      background-image: var(--qq--com-img-bg-213);
     }
 
     .row-item-5 {
-      background-image: var(--qq--color-com-img-bg-214);
+      background-image: var(--qq--com-img-bg-214);
     }
 
     .row-item-6 {
-      background-image: var(--qq--color-com-img-bg-215);
+      background-image: var(--qq--com-img-bg-215);
     }
 
     .row-item-7 {
-      background-image: var(--qq--color-com-img-bg-216);
+      background-image: var(--qq--com-img-bg-216);
     }
 
     .row-item-8 {
-      background-image: var(--qq--color-com-img-bg-217);
+      background-image: var(--qq--com-img-bg-217);
     }
 
     .row-item-9 {
-      background-image: var(--qq--color-com-img-bg-218);
+      background-image: var(--qq--com-img-bg-218);
     }
 
     .row-item-10 {
-      background-image: var(--qq--color-com-img-bg-166);
+      background-image: var(--qq--com-img-bg-166);
     }
 
 }

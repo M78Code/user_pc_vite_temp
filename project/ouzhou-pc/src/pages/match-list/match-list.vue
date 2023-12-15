@@ -26,7 +26,7 @@
     <div v-show="false"> {{ MenuData.menu_data_version }}{{ MatchListCardDataClass.list_version }}</div>
     <MatchesHeader />
     <!-- 列表容器 -->
-    <load-data  v-if="MenuData.menu_root_show_shoucang != 300&& !MenuData.is_leagues()" :state="load_data_state">
+    <load-data v-if="MenuData.menu_root_show_shoucang != 300 && !MenuData.is_leagues()" :state="load_data_state">
       <!--此处先写死高度用来调试UI -->
       <!-- 滚球其他列表 -->
       <scroll-list
@@ -45,8 +45,9 @@
         <!-- 滚球标题 -->
         <Match-Main-Title :title="$t('menu.match_playing')" :match_count="match_count"
           v-show="match_list_card_key_arr.length && MenuData.is_home()" />
-        
-        <div v-for="card_key in match_list_card_key_arr" :key="card_key" :class="{'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home()}">
+
+        <div v-for="card_key in match_list_card_key_arr" :key="card_key"
+          :class="{ 'have_margin': card_key.indexOf('sport_title') != -1 && card_key != 'sport_title_1' && MenuData.is_home() }">
           <match-list-card :card_key="card_key" :key="`match-list-card-${card_key}`" />
         </div>
         <Match-Main-Title :title="$t('ouzhou.match.top_leagues')"
@@ -60,8 +61,8 @@
         </template>
       </scroll-list>
     </load-data>
-    <load-data v-if="MenuData.is_leagues()" :state="get_league_list().length?'data':'empty'"
-     :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
+    <load-data v-if="MenuData.is_leagues()" :state="get_league_list().length ? 'data' : 'empty'"
+      :style="{ width: `${LayOutMain_pc.oz_layout_content - (LayOutMain_pc.oz_right_width + LayOutMain_pc.oz_left_width)}px`, }">
       <scroll-list>
         <div v-for="league_item in get_league_list()" :class="`card_key_${league_item.id} league_card`">
           <play-match-league :league_obj="league_item" />
@@ -106,7 +107,8 @@ import {
 } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
-import { compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES,useMittEmit,
+import {
+  compute_css_obj, LayOutMain_pc, MenuData, useMittOn, MITT_TYPES, useMittEmit,
   GlobalAccessConfig, MatchDataWarehouse_ouzhou_PC_five_league_List_Common
 } from "src/output/index.js";
 import CurrentMatchTitle from "src/base-pc/components/match-list/current_match_title.vue";
@@ -156,13 +158,16 @@ export default {
         five_leagues_card_key_arr.value = MatchListCardDataClass.five_leagues_card_key_arr;
       })
     };
+
+
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      mounted_fn();
       get_data_info()
-      mitt_list = [useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, get_data_info).off, // 15分钟赛事数据
-      useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, get_data_info).off]
+      mitt_list = [
+        useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, get_data_info,).off, // 15分钟赛事数据
+      ]
+      mounted_fn(get_data_info);
       MatchListCardDataClass_match_list_card_key_arr();
     });
     onUnmounted(() => {
@@ -177,17 +182,19 @@ export default {
     watch(MatchListCardDataClass.list_version, () => {
       MatchListCardDataClass_match_list_card_key_arr();
     });
-    const get_data_info = async (type = 0) => {
+    async function get_data_info(type = 0) {
       // 判断是不是首页下的 featured 页面
       if (MenuData.is_featured() || type == 1001) {
         await init_home_matches();
+      } else {
+        useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, { is_socket: true })
       }
     }
-    function on_go_top(){
-      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)
+    function on_go_top() {
+      useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
     }
     function get_league_list() {
-      return MatchLeagueData.get_league_list()||[]
+      return MatchLeagueData.get_league_list() || []
     }
     return {
       show_refresh_mask,

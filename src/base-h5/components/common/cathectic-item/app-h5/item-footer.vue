@@ -19,6 +19,11 @@
     <p v-else class="acount">
       <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
       <span :class="[calc_amount_settle(data_f).color]">{{ calc_amount_settle(data_f).text }}</span>
+     
+    </p>
+    <p>
+      <label>{{ i18n_t('bet_record.l/w') }}：</label>
+      <span>{{ calc_settle(data_f).text }}</span>
     </p>
   </template>
   <!-- 注单状态： -->
@@ -66,18 +71,21 @@ let props = defineProps({
     type: Object
   }
 })
-
 // 已结算 => 结算金额
 const calc_amount_settle = (data_f) => {
   let text = ''
   let color = 'black'
-  text = `${outcome[data_f.outcome]} ${format_balance(data_f.profitAmount)}${i18n_t('common.unit')}`
+  text = `${format_balance(data_f.profitAmount)}${i18n_t('common.unit')}`
   if(data_f.outcome == 4 || data_f.outcome == 5) {
     color = ''
   }
   return { text, color }
 }
-
+const calc_settle = (data_f) => {
+  let text = ''
+  text = `${outcome[data_f.outcome]}`
+  return { text }
+}
 // 已结算 => 注单状态
 const calc_text_settle = (data_f) => {
   let text = ''

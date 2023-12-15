@@ -11,26 +11,19 @@ import { PROJECT_NAME } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
-// import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
-// import video from "src/core/video/video.js";
-import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import { MenuData } from "src/output/module/menu-data.js"
 import { fethc_collect_match, collect_count } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
 import { mx_use_list_res, mx_list_res } from './composables/match-list-processing.js'
 import { set_base_data_init, set_base_data_init_ouzhou } from './match-list-metadata.js';
-// import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
-// import store from "src/store-redux/index.js";
 import ServerTime from 'src/core/server-time/server-time.js';
-// import filterHeader from 'src/core/filter-header/filter-header.js'
 import get_match_list_params from './match-list-params.js'
 import { match_list_handle_set } from './match-handle-data.js'
 // const route = router.currentRoute.value
 const { page_source } = PageSourceData;
-const { load_video_resources } = pre_load_video
 // 数据请求状态
 const load_data_state = ref("loading");
 // 是否展示强力推荐
@@ -241,7 +234,7 @@ function init_page_when_base_data_first_loaded() {
 	// 首页不走元数据加载  不需要设置元数据loading状态 loading状态已经设置过了
 	if (MenuData.is_home()) {
 		return
-	}	
+	}
 	set_load_data_state("loading") //loading
 	//设置元数据 列表 返回boolean
 	if (PROJECT_NAME == 'ouzhou-pc') {
@@ -258,29 +251,27 @@ function init_page_when_base_data_first_loaded() {
 	// 	30000
 	// );
 }
-function mounted_fn() {
+/**
+ * 初始化方法
+ * @param {*} fun 
+ */
+function mounted_fn(fun) {
 	// fetch_match_list();
 	// 开启自动化测试功能
 	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-	// 列表数据仓库
-	// MatchListData.init();
 	timer_obj.value = {};
-	// store.dispatch({
-	// 	type: "SET_IS_ROLL_SHOW_BANNER",
-	// 	data: false,
-	// });
-	// store.dispatch({
-	// 	type: "SET_IS_SHOW_BANNER",
-	// 	data: false,
-	// });
 	api_error_count = 0;
 	// is_vr_numer.value = 0;
+	function default_fun() {
+		//默认加载方式
+		useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE,{ is_socket: true })
+	}
 	mitt_list = [
 		// 站点 tab 休眠状态转激活
-		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off,
-		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, () => fetch_match_list(true)).off,
+		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, fun || default_fun).off,
+		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fun || default_fun).off, //语言切换
 	]
-	load_video_resources();
+	// load_video_resources();
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
 // 		// bug 版本没有变化 也可以进入
@@ -307,7 +298,7 @@ function mounted_fn() {
  * // 处理服务器返回的 列表 数据   fetch_match_list
  */
 export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
-	if (lodash.get(data, "data.livedata") || lodash.get(data, "data.nolivedata")) {
+	if (lodash.has(data, 'data.livedata') || lodash.has(data, 'data.nolivedata')) {
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法
@@ -464,19 +455,6 @@ function check_match_last_update_time() {
 	}
 };
 /**
- * 发送站点选项卡事件
- */
-function emit_site_tab_active() {
-	if (!MenuData.is_home()) {
-		fetch_match_list(true);
-	}
-};
-
-function get_collect_match_list() {
-	get_collet_match_list_params()
-
-}
-/**
 	 * @Description 设置数据加载状态
 	 * @param {string} 数据加载状态
 	 * @param {undefined} undefined
@@ -484,8 +462,6 @@ function get_collect_match_list() {
 function set_load_data_state(data) {
 	load_data_state.value = data;
 };
-
-
 export {
 	load_data_state,
 	is_loading,

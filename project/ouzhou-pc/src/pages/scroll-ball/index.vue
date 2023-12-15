@@ -31,7 +31,7 @@
                 </template>
                 <div v-for="card_key in match_list_card_key_arr" :key="card_key" :card_key="card_key"
                     :data-card-key="card_key" :class="`card_key   ${card_key}`">
-                    <match-list-card :card_key="card_key"/>
+                    <match-list-card :card_key="card_key" />
                 </div>
                 <template v-slot:after>
                     <div style="height:15px"></div>
@@ -57,9 +57,9 @@ import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "s
 
 import match_list_card from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import {mounted_fn, handle_destroyed,load_data_state,   on_refresh } from "src/core/match-list-pc/match-list-composition.js";
+import { mounted_fn, handle_destroyed, load_data_state, on_refresh } from "src/core/match-list-pc/match-list-composition.js";
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
-import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj,useMittEmit,MITT_TYPES, LayOutMain_pc } from "src/output/index.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData, GlobalAccessConfig, PageSourceData, compute_css_obj, useMittOn,useMittEmit, MITT_TYPES, LayOutMain_pc } from "src/output/index.js";
 import use_match_list_ws from 'src/core/match-list-pc/composables/match-list-ws.js'
 import "../match-list/match_list.scss";
 const { page_source } = PageSourceData;
@@ -85,7 +85,7 @@ export default {
             has_mid_menu: true,
         });
         MenuData.set_menu_root(1)
-        const {ws_destroyed}= use_match_list_ws(MatchListData)
+        const { ws_destroyed } = use_match_list_ws(MatchListData)
         const match_list_card_key_arr = ref([])
         const { proxy } = getCurrentInstance()
         const MatchListCardDataClass_match_list_card_key_arr = () => {
@@ -99,9 +99,12 @@ export default {
                 }
             })
             if (mids_arr.length) {
-                const mid_index = mids_arr.findIndex(item =>item == MatchListCardDataClass.current_mid.value)
+                const mid_index = mids_arr.findIndex(item => item == MatchListCardDataClass.current_mid.value)
                 useMittEmit(MITT_TYPES.EMIT_SHOW_DETAILS, mids_arr[mid_index >= 0 ? mid_index : 0]);
             }
+        }
+        function refresh() {
+            useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, { is_socket: true })
         }
         onMounted(() => {
             LayOutMain_pc.set_oz_show_right(true)
@@ -111,14 +114,14 @@ export default {
         });
         onUnmounted(() => {
             ws_destroyed()
-             handle_destroyed()
+            handle_destroyed()
         })
         onActivated(() => {
             LayOutMain_pc.set_oz_show_right(true)
             LayOutMain_pc.set_oz_show_left(false)
         })
-        function on_go_top(){
-            useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP,0)
+        function on_go_top() {
+            useMittEmit(MITT_TYPES.EMIT_SET_MATCH_LIST_SCROLL_TOP, 0)
         }
         watch(
             MatchListCardDataClass.list_version,
@@ -127,7 +130,7 @@ export default {
                 proxy?.$forceUpdate()
             }
         )
-      
+
         return {
             MenuData,
             MatchListData,

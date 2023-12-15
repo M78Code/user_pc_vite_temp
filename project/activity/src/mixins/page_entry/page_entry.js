@@ -88,7 +88,7 @@ export default {
 
     let act = "10008";
     //isAPP为true时,活动中心返回按钮就隐藏 不传isAPP或者为false时就正常显示
-    if (sessionStorage.getItem("isAPP") == 1) {
+    if (SEARCH_PARAMS.init_param.get("isAPP") == 1) {
       this.isAPP = true;
     }
 
