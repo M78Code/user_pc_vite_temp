@@ -100,7 +100,7 @@ const cur_title_info = computed(() => {
       name: lodash.get(BaseData.csids_map,`csid_${csid}`,{}).csna,
       match_count: lodash.get(MatchListCardData, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
       show_num: MenuData.menu_root != 400 && route.name != "search",
-      func_name: 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie'
+      func_name: 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie_2'
     },
     //滚球标题
     play_title: {
