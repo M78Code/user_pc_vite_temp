@@ -80,6 +80,7 @@ function set_menu_lv2(item = {},event) {
     useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
   })
 }
+
 /**
  * 初始化滚动条
  */
