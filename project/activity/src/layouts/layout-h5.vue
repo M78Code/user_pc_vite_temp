@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-page-container>
-      <q-page class="flex flex-center">
+      <q-page class="flex flex-center h5-root">
         <div>动画单独项目</div>
     
         <q-scroll-area style="height: 100vh; max-width: 100vw; width: 100vw;  overflow: scroll;" @scroll="handle_scroll"   >
@@ -24,4 +24,11 @@ export default {
  
 }
 </script>
+<style lang="scss">
+.h5-root {
+  .q-scrollarea { 
+    overflow: hidden !important;
+  }
+}
+</style>
  

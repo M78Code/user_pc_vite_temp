@@ -432,4 +432,24 @@
       }
     }
   }
+
+  .q-dialog--modal {
+    .q-dialog__backdrop {
+      backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+      background-color: var(--q-color-page-bg-color-78) !important;
+    }
+  }
+  .q-dialog__backdrop {
+    backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+    background-color: var(--q-color-page-bg-color-78);
+  }
+
 }
+
+
+  
+
+
+
+
+

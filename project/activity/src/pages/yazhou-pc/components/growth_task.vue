@@ -9,107 +9,137 @@
     <div class="introduction text-666">
       <p>活动对象：<span class="text-orange">本场馆全体会员</span></p>
       <p class="activity-date-time">
-
         <span>活动时间：</span>
         <template v-if="get_user.activityList[activityIndex].period == 1">
           <span class="count_down_css">
             <span>距离活动开始还有</span>
-            <ActiveCountDown :endTime="inStartTime" :noNeedCss="true"></ActiveCountDown>
+            <ActiveCountDown
+              :endTime="inStartTime"
+              :noNeedCss="true"
+            ></ActiveCountDown>
           </span>
         </template>
         <template v-else-if="get_user.activityList[activityIndex].period == 2">
-          <template v-if="get_user.activityList[activityIndex].type == 2 && inEndTime">
+          <template
+            v-if="get_user.activityList[activityIndex].type == 2 && inEndTime"
+          >
             <span class="count_down_css">
               <span>距离活动关闭还有</span>
-              <ActiveCountDown :endTime="inEndTime" :noNeedCss="true"></ActiveCountDown>
+              <ActiveCountDown
+                :endTime="inEndTime"
+                :noNeedCss="true"
+              ></ActiveCountDown>
             </span>
           </template>
           <span v-else>活动长期有效</span>
         </template>
         <span v-else> 活动结束 </span>
       </p>
-      <p>活动内容：
-        <span class="text-orange"> {{
-          actId == 1
-          ? "『每日』达成指定任务，即可获得对应数量的普通奖券，普通奖券可至『老虎机』进行合成并参与老虎机抽奖。"
-          : "『每周/月』达成指定任务，即可获得对应数量的普通奖券，普通奖券可至『老虎机』进行合成并参与老虎机抽奖。"
-        }}</span>
-
+      <p>
+        活动内容：
+        <span class="text-orange">
+          {{
+            actId == 1
+              ? "『每日』达成指定任务，即可获得对应数量的普通奖券，普通奖券可至『老虎机』进行合成并参与老虎机抽奖。"
+              : "『每周/月』达成指定任务，即可获得对应数量的普通奖券，普通奖券可至『老虎机』进行合成并参与老虎机抽奖。"
+          }}</span
+        >
       </p>
     </div>
     <div class="activity_content">
-      <div class="content_title">
-        活动内容
-      </div>
+      <div class="content_title">活动内容</div>
       <!-- 成长任务展示这个模块 -->
       <div v-if="actId == 2" class="betting_data text-center text-333">
-        <div v-for="(item, i) in cumulative_betting_list" :key="i + '_iid'" :class="{
-          not_first_div:
-            (i == 1 || i == 2) && item.mBet && item.mBet.length > 8,
-        }">
+        <div
+          v-for="(item, i) in cumulative_betting_list"
+          :key="i + '_iid'"
+          :class="i == 1 ? `relative-position`: i + '_iid'"
+        >
           <p class="relative-position">
             <span> {{ i == 1 ? "本周" : "本月" }}累计 {{ item.name2 }} </span>
-            <span class="text-orange"> {{ item.mBet != null ? item.mBet : "-" }} </span> <span>{{ i == 0 ? "天" : "元"
-            }}</span>
+            <span class="text-orange">
+              {{ item.mBet != null ? item.mBet : "-" }}
+            </span>
+            <span>{{ i == 0 ? "天" : "元" }}</span>
           </p>
         </div>
-        <div class="table">
-          <div class="table-header text-333">
-            <p>任务事项</p>
-            <p>状态</p>
-            <p>奖券数量</p>
-            <p>领取状态</p>
-          </div>
-        <load-data  state="data">
-        <div 
+      </div>
+      <div class="table">
+        <div class="table-header text-333">
+          <p>任务事项</p>
+          <p>状态</p>
+          <p>奖券数量</p>
+          <p>领取状态</p>
+        </div>
+        <load-data state="data">
+          <div
             v-for="(v, i) in get_everyDay_list"
             :key="i + '_id_'"
             v-show="get_everyDay_list.length > 0"
             :class="{ 'last-row': i == get_everyDay_list.length - 1 }"
             class="table-body relative-position"
           >
-              <p v-html="v.taskName"></p>
-              <p :class="{
+            <p v-html="v.taskName"></p>
+            <p
+              :class="{
                 'to-be-completed': [2].includes(v.bonusType),
                 completed: [1, 3].includes(v.bonusType),
-              }">
-                <template v-if="[1, 3].includes(v.bonusType)">
-                  <img class="completed" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/completed${get_theme.includes('y0') ? '_y0' : ''
-                    }.svg`" alt="" />
-                  <div class="to-be-completed-stata">已完成</div>
-                </template>
-                <template v-else> 未完成 </template>
-              </p>
-              <p class="ticket-num">{{ v.ticketNum }}</p>
-              <p> 
-                <div v-if="v.bonusType == 1">已领取</div>
-                <div v-else-if="v.bonusType == 2" class="to-be-completed">
-                  待完成
-                </div>
-                <div v-else-if="v.bonusType == 3" class="receive flex align_items justify-center"
-                  :class="{ 'Ash-grey': isDuringDate(inStartTime, inEndTime) == 3 }"
-                  @click.stop="task_receive_btn(v.bonusId)">
-                  领取
-                </div>
-              </p>
+              }"
+            >
+              <template v-if="[1, 3].includes(v.bonusType)">
+                <img
+                  class="completed"
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/completed${
+                    get_theme.includes('y0') ? '_y0' : ''
+                  }.svg`"
+                  alt=""
+                />
+                <div class="to-be-completed-stata">已完成</div>
+              </template>
+              <template v-else> 未完成 </template>
+            </p>
+            <p class="ticket-num">{{ v.ticketNum }}</p>
+
+            <div v-if="v.bonusType == 1">已领取</div>
+            <div v-else-if="v.bonusType == 2" class="to-be-completed">
+              待完成
             </div>
-          </load-data>
-        </div>
-        <p class="text-center updateInteval"><span>每{{ actId == 1 ? "5分钟" : "小时" }}更新一次</span></p>
-        <p class="history text-center text-333" @click="show_dialog(1)">领取记录</p>
-        <div class="task_intro">
-          <p>您可每日按照指定任务进行完成，完成指定任务后可获得普通奖券，普通奖券可用于合成系统，参加老虎机抽奖。同时也可一键领取全部已完成任务，诚邀您的参与！</p>
-          <p>
-            <span class="text-orange text-center" @click="all_receive(null)">一键领取</span>
-          </p>
-        </div>
+            <div
+              v-else-if="v.bonusType == 3"
+              class="receive flex align_items justify-center"
+              :class="{ 'Ash-grey': isDuringDate(inStartTime, inEndTime) == 3 }"
+              @click.stop="task_receive_btn(v.bonusId)"
+            >
+              领取
+            </div>
+          </div>
+        </load-data>
       </div>
-      <div class="activity_rules text-gray">
-        <div class="content_title">
-          活动规则
-        </div>
+      <p class="text-center updateInteval">
+        <span>每{{ actId == 1 ? "5分钟" : "小时" }}更新一次</span>
+      </p>
+      <p class="history text-center text-333" @click="show_dialog(1)">
+        领取记录
+      </p>
+      <div class="task_intro">
         <p>
-          {{ actId == 1 ? '会员每日达成指定任务，即可获得对应数量的普通奖券；' : '会员周期内达成指定任务，即可获得对应数量的普通奖券；' }}
+          您可每日按照指定任务进行完成，完成指定任务后可获得普通奖券，普通奖券可用于合成系统，参加老虎机抽奖。同时也可一键领取全部已完成任务，诚邀您的参与！
+        </p>
+        <p>
+          <span class="text-orange text-center" @click="all_receive(null)"
+            >一键领取</span
+          >
+        </p>
+      </div>
+
+      <div class="activity_rules text-gray">
+        <div class="content_title">活动规则</div>
+        <p>
+          {{
+            actId == 1
+              ? "会员每日达成指定任务，即可获得对应数量的普通奖券；"
+              : "会员周期内达成指定任务，即可获得对应数量的普通奖券；"
+          }}
         </p>
         <p v-if="actId == 1">
           每日在本场馆累计投注<span>≥100</span>元，即视为投注1天；
@@ -132,19 +162,20 @@
         <p>
           每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台电脑使用者，仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回奖金及所产生利润的权利；
         </p>
-        <p>
-          为避免文字理解差异，本场馆保留本活动最终解释权。
-        </p>
+        <p>为避免文字理解差异，本场馆保留本活动最终解释权。</p>
       </div>
       <!-- 历史记录弹框 -->
       <q-dialog v-model="history_alert">
         <q-layout view="Lhh lpR fff" container class="receiveHistory">
-          <img class="close" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png`"
-            alt="" @click.self="history_alert = false" width="30px">
+          <img
+            class="close"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/dialog_close.png`"
+            alt=""
+            @click.self="history_alert = false"
+            width="30px"
+          />
           <div class="betting_history">
-            <div class="content_title text-center text-333">
-              领取记录
-            </div>
+            <div class="content_title text-center text-333">领取记录</div>
             <div class="table table_history relative-position">
               <div class="text-333 text-center">
                 <p>任务</p>
@@ -152,17 +183,30 @@
                 <p>领取时间</p>
               </div>
               <load-data state="data">
-                <div class="text-666 text-center table_content" v-for="(item, index) in history_records" :key="index">
-                  <p><span>{{ item.taskName }}</span></p>
-                  <p><span>{{ item.ticketNum }}</span></p>
-                  <p><span>{{ item.receiveTime }}</span></p>
+                <div
+                  class="text-666 text-center table_content"
+                  v-for="(item, index) in history_records"
+                  :key="index"
+                >
+                  <p>
+                    <span>{{ item.taskName }}</span>
+                  </p>
+                  <p>
+                    <span>{{ item.ticketNum }}</span>
+                  </p>
+                  <p>
+                    <span>{{ item.receiveTime }}</span>
+                  </p>
                 </div>
               </load-data>
             </div>
             <div class="pagination_wrap" v-if="history_records.length > 0">
-              <DataPager class="record-data-pager" :total="result_page_info.total" :pageSize="7"
-                @change="data_page_changed" />
-
+              <DataPager
+                class="record-data-pager"
+                :total="result_page_info.total"
+                :pageSize="7"
+                @change="data_page_changed"
+              />
             </div>
           </div>
         </q-layout>
@@ -174,20 +218,31 @@
             <div class="title">
               {{
                 pop_parameter.ticket >= 0
-                ? `恭喜您，获得 ${pop_parameter.ticket} 张奖券`
-                : "领取失败，请重新领取奖券"
+                  ? `恭喜您，获得 ${pop_parameter.ticket} 张奖券`
+                  : "领取失败，请重新领取奖券"
               }}
             </div>
-            <img :src="pop_parameter.ticket >= 0
+            <img
+              :src="
+                pop_parameter.ticket >= 0
                   ? pop_parameter.success
                   : pop_parameter.failure
-                " alt="" />
-            <div class="Go-to-lottery" :class="{ failure: pop_parameter.ticket < 0 }" @click="Reclaim">
+              "
+              alt=""
+            />
+            <div
+              class="Go-to-lottery"
+              :class="{ failure: pop_parameter.ticket < 0 }"
+              @click="Reclaim"
+            >
               {{ pop_parameter.ticket >= 0 ? "我知道了" : "重新领取" }}
             </div>
           </div>
-          <img class="colse2" @click="daily_task_success = false"
-            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`" />
+          <img
+            class="colse2"
+            @click="daily_task_success = false"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/colse2.png`"
+          />
         </div>
       </q-dialog>
     </div>
@@ -410,7 +465,7 @@ export default {
       border-radius: 30px;
       display: flex;
 
-      p {
+      div {
         flex: 1;
         font-family: PingFangSC-Medium;
         font-size: 18px;
