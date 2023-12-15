@@ -791,12 +791,11 @@ const set_bet_obj_config = (params = {}, other = {}) => {
 // 设置玩法名称
 const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     let play_name = ALL_SPORT_PLAY[hpid] //玩法名称
-
     // 需要配置玩法比分的 玩法
     let play_id = [4]
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
-        play_name = other.play_name
+        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
           // 冠军玩法 部分玩法hpid相同 
@@ -1063,7 +1062,6 @@ const   go_to_bet=(ol_item)=>{
       device_type: 1,  
       // 数据仓库类型
       match_data_type: "h5_detail",
-      play_name:ALL_SPORT_PLAY[_hpid],
   }
     set_bet_obj_config(params,other)
 }   
