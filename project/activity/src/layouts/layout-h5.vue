@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       //项目CSS变量键
-      css_var_project_key: 'yazhou_pc'
+      css_var_project_key: 'yazhou_h5'
     }
   },
  
