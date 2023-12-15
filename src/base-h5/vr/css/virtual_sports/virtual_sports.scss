@@ -43,7 +43,7 @@
     .tabs-bar-nav {
       .tabs-tab.tabs-active {
         .icon {
-          background-image: var(--q-color-img-bg-55) !important;
+          background-image: url($SCSSPROJECTPATH+"/image/png/sport_menu_active.png") !important;
         }
       }
     }

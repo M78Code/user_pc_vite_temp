@@ -10,8 +10,8 @@
         <div class="analysis-top-l">
           <!-- <div class="v-icon switch-icon"></div> -->
           <sport-icon style="margin: 0 10px"
-          :sport_id="MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-image" size="20" class="icon" />
-
+          :sport_id="MenuData.current_ball_type=='0'?detail_info.csid:MenuData.current_ball_type" :key="MenuData.current_ball_type" key_name="pc-left-menu-bg-image" size="20" class="icon" />
+    
           <!--<span class="analysis-top-txt">{{ detail_info.tn }}</span>-->
           <span class="home-vs-away" :title="detail_info.mhn">{{ detail_info.mhn }} </span>
           <span class="match-detail-head-name m-10">v</span>

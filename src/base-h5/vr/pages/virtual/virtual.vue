@@ -448,13 +448,6 @@ export default {
           align-items: center;
           min-width: fit-content;
           padding-right: 0.38rem;
-          position: relative;
-          .icon {
-            // 后期换成精灵图
-            border: 1px solid gray;
-            border-radius: 50%;
-          }
-
           &:last-child {
             padding-right: 0.2rem;
           }
@@ -464,7 +457,7 @@ export default {
             width: 0.22rem;
             height: 0.22rem;
             margin-bottom: 0.1rem;
-            background: var(--q-color-com-img-bg-140) no-repeat 0 0 / 0.22rem 19.52rem;
+            background: url($SCSSPROJECTPATH+"/image/png/sport_menu.png") no-repeat 0 0 / 0.22rem 19.52rem;
             --per: -0.32rem;
 
             .menu-new-icon {
@@ -489,6 +482,10 @@ export default {
             font-family: PingFangSC-Medium;
             font-size: 0.1rem;
             text-align: center;
+            color: #C9CDDB;
+          }
+          &.tabs-active > span {
+            color: #303442;
           }
           
         }
