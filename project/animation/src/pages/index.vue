@@ -1,8 +1,8 @@
 <!-- 事件组件，必须参数： 赛种ID：sportId 赛事id：matchId 数据源：dataSourceCode -->
 <template>
-    <div style="background: #1a1a1a;">
+    <div style="background: #1a1a1a; border: 1px solid #1a1a1a">
         <div>
-            参数栏 <b class="text-red">xingxing</b>
+            <!-- 参数栏 <b class="text-red">xingxing</b> -->
           <top-form
             @submit="submit"
             @pause="pause"
@@ -14,23 +14,23 @@
             <div class="col-6">
                 <!-- 动画 -->
                 <div class="q-ml-sm">
-                    <b class="text-red">足球动画区域（xingxing）</b>
+                    <!-- <b class="text-red">足球动画区域（xingxing）</b> -->
                     <br>
                     <q-btn 
                         color="secondary" 
                         @click="get_event_code()" 
                         label="随机推送事件" 
                     />
-                    <b class="text-blue">自动生成事件开启中。。。</b>
+                    <!-- <b class="text-blue">自动生成事件开启中。。。</b> -->
                     <svg_area :current_event_code="current_event_code" />
                 </div>
                 <!-- 比分 -->
                 <div style="height: 100px;">
-                    赛事比分区域<b class="text-red">lowen</b>
+                    <!-- 赛事比分区域<b class="text-red">lowen</b> -->
                 </div>
                 <!-- 对接后台展示区域 -->
                 <div style="height: 100px;">
-                    对接后台展示区域<b class="text-red">freeze</b>
+                    <!-- 对接后台展示区域<b class="text-red">freeze</b> -->
                 </div>
             </div>
             <!-- 右边 -->
@@ -117,57 +117,21 @@ export default defineComponent({
    },
    // 初始化socket
    initSocket(form = {}){
-     console.warn(this.$route.query)
-     let { sportId, matchId, dataSourceCode } = this.$route.query || {}
-     sportId = form.sportId || sportId
-     matchId = form.matchId || matchId
-     dataSourceCode = form.dataSourceCode || dataSourceCode
-     console.warn(sportId)
-     console.warn(matchId)
-     console.warn(dataSourceCode)
-     // 必须参数判断
-     if(!sportId || !matchId || !dataSourceCode) {
-       console.error('参数缺失')
-       this.set_timer(1)
-     }else {
-       this.get_query_params()
-       this.websocket_connection_connect(1);
-       console.warn(this.websocket_connection_connect)
-       this.get_data_list()
-     }
+    console.warn('------')
+    console.warn(form)
+    this.get_query_params(form)
+    this.websocket_connection_connect(1);
+    this.get_data_list()
    },
-    // type 1 开始 2 结束
-    set_timer(type) {
-        if(type == 1) {
-            this.set_timer(2)
-            this.autoEventTimer = setInterval(()=> {
-                this.get_event_code()
-            },2000)
-        }else {
-            clearInterval(this.autoEventTimer)
-            this.autoEventTimer = null
-        }
-    },
-    set_websocket_data(data) {
-        // console.warn('页面接收到消息')
-        // console.warn(data)
-        console.log(/\{/.test(data.data))
-        if (/\{/.test(data.data)) {
-           let convert_data = JSON.parse(data.data);
-           let { command, responseData,ack,msgId } = convert_data;
-           if (command === 30013) {
-            this.dataObj.unshift(responseData)
-           }
-        }
-    },
-    // 获取query参数
-    get_query_params() {
-        let { sportId, matchId, dataSourceCode } = this.$route.query || {}
+   // 获取query参数
+   get_query_params(from) {
+        let { sportId, matchId, dataSourceCode } = from
         this.queryParams = {
             sportId,
             matchId,
             dataSourceCode
         }
+        console.warn(this.queryParams)
     },
     // 获取ws请求参数
     get_ws_params() {
@@ -222,6 +186,32 @@ export default defineComponent({
         }).catch(err => {
             console.error(err)
         })
+    },
+
+
+    // type 1 开始 2 结束
+    set_timer(type) {
+        if(type == 1) {
+            this.set_timer(2)
+            this.autoEventTimer = setInterval(()=> {
+                this.get_event_code()
+            },2000)
+        }else {
+            clearInterval(this.autoEventTimer)
+            this.autoEventTimer = null
+        }
+    },
+    set_websocket_data(data) {
+        // console.warn('页面接收到消息')
+        // console.warn(data)
+        console.log(/\{/.test(data.data))
+        if (/\{/.test(data.data)) {
+           let convert_data = JSON.parse(data.data);
+           let { command, responseData,ack,msgId } = convert_data;
+           if (command === 30013) {
+            this.dataObj.unshift(responseData)
+           }
+        }
     },
     // 生成随机事件
     get_event_code() {

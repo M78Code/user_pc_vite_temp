@@ -6,7 +6,7 @@
       class="q-gutter-md form"
       ref="form"
     >
-      <span class="label">参数ID</span>
+      <span class="label">赛种ID</span>
       <input
         v-model="form.sportId"
       />
@@ -36,8 +36,8 @@ export default {
       isStart: false,
       form: {
         sportId: '1',
-        matchId: 'PD',
-        dataSourceCode: '2951964',
+        matchId: '2988076',
+        dataSourceCode: 'PD',
         token: '',
       },
     };

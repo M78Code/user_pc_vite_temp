@@ -2,7 +2,7 @@
   <div>
     <div class="animation-content bg">
       <svg_tmp :height="svgHeight" :width="svgWidth" :current_event_code="current_event_code"></svg_tmp>
-      <img ref="bgConainer" src="/public/animation/足球背景.png">
+      <!-- <img ref="bgConainer" src="/public/animation/足球背景.png"> -->
     </div>
   </div>
 </template>

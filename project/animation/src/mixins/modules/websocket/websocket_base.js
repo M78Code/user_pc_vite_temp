@@ -180,12 +180,6 @@ export default {
         console.error('-----WS----连接错误')
         //websocket连接错误
         this.websocket_onerror(which); // 连接错误 进入重连
-        this.$q.notify({
-          type:"warning",
-          message: `WS-连接错误`,
-          // color: "teal",
-          position: "top",
-        });
       };
       this[`websocket_connection_${which}`].onmessage = event => {
         //获取websocket消息  然后将数据存入vuex

@@ -1,4 +1,8 @@
 <template>
+  <div style="position: absolute;color: white;">
+    {{ current_event_code }}~~
+    {{ textAnimateParams }}--
+  </div>
   <svg :width="width" :height="height" :key="key_1">
     <path :d="svgPath.path" :fill="pathAnimateColors[0]">
       <animate
@@ -15,9 +19,11 @@
         :fill="fill"
         :repeatCount="pathAnimateParams.repeatCount" />
     </path>
-    <text :style="{
-      fill: textAnimateColors[0]
-    }" :x="textAnimateParams.x" :y="textAnimateParams.y">
+    <text 
+      :style="{ fill: textAnimateColors[0] }" 
+      :x="textAnimateParams.x" 
+      :y="textAnimateParams.y"
+    >
       {{ textAnimateParams.text }}
       <animate
         attributeName="x"
