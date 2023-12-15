@@ -79,34 +79,35 @@
             :class="{ 'last-row': i == get_everyDay_list.length - 1 }"
             class="table-body relative-position"
           >
-            <p v-html="v.taskName"></p>
+            <p class="" v-html="v.taskName"></p>
             <p
+              class="td-item"
               :class="{
                 'to-be-completed': [2].includes(v.bonusType),
                 completed: [1, 3].includes(v.bonusType),
               }"
             >
               <template v-if="[1, 3].includes(v.bonusType)">
+                <span class=" to-be-completed-stata">已完成</span>
                 <img
                   class="completed"
-                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity/completed${
+                  :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_box${
                     get_theme.includes('y0') ? '_y0' : ''
                   }.svg`"
                   alt=""
                 />
-                <div class="to-be-completed-stata">已完成</div>
               </template>
               <template v-else> 未完成 </template>
             </p>
-            <p class="ticket-num">{{ v.ticketNum }}</p>
+            <p class="td-item ticket-num">{{ v.ticketNum }}</p>
 
-            <div v-if="v.bonusType == 1">已领取</div>
-            <div v-else-if="v.bonusType == 2" class="to-be-completed">
+            <div class="td-item" v-if="v.bonusType == 1">已领取</div>
+            <div v-else-if="v.bonusType == 2" class="td-item to-be-completed">
               待完成
             </div>
             <div
               v-else-if="v.bonusType == 3"
-              class="receive flex align_items justify-center"
+              class="td-item receive flex align_items justify-center"
               :class="{ 'Ash-grey': isDuringDate(inStartTime, inEndTime) == 3 }"
               @click.stop="task_receive_btn(v.bonusId)"
             >
@@ -277,6 +278,17 @@ export default {
       overflow: hidden;
       font-size: 16px;
 
+      .td-item{
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        &.completed{
+          display: flex;
+          .completed{
+            margin-left: 5px;
+          }
+        }
+      }
       .table-header {
         background: var(--qq--activity-bg-color-4);
         height: 100%;
@@ -297,7 +309,6 @@ export default {
       div {
         display: flex;
         margin: 0;
-
         p {
           text-align: center;
           flex: 1;
