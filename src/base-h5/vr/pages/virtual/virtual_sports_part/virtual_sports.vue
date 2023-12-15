@@ -73,7 +73,7 @@
             <div
                 v-if="!ranking_list_change"
                 class="v-sports-main-list"
-                :class="{'v-sports-main-list-style': get_newer_standard_edition === 1}"
+                :class="{'v-sports-main-list-style': standard_edition === 1}"
                 :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
             >
               <!-- 虚拟体育足球赛事列表 -->
@@ -82,7 +82,6 @@
                 @switch_match="switch_match_handle"  @start="match_start_handle">
               </v-s-match-list>
 
-              <div>current_match.match_status: {{ current_match.match_status }}</div>
               <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
               <template v-if="current_match.mid == match_item_batch.matchs[0].mid && ![1001,1004].includes(sub_menu_type)">
                    <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
@@ -195,6 +194,7 @@ import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
 import { IconWapper } from 'src/components/icon'
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -256,7 +256,9 @@ export default {
       // 当前联赛名称
       lengue_name: '',
       // 是否展开视频
-      expend_video: true
+      expend_video: true,
+      // 1:新手版 2:专业版
+      standard_edition
     }
   },
   created() {
@@ -570,7 +572,6 @@ export default {
     is_show_analyse(){return VR_CTR.get_is_show_details_analyse()},
     get_bet_list(){return []},
     get_betbar_show(){return 1},
-    get_newer_standard_edition(){return 1},
     // 当前联赛的全部轮次
     match_list_all_batches(){
       const match_list_all_batches = [...this.virtual_match_list];
