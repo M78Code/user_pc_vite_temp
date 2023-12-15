@@ -6,9 +6,11 @@
 <template>
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <div class="settle-void" @touchmove.prevent>
-    <img :src="compute_local_project_file_path('/image/bet/no-data.png')">
+    <!-- <img :src="compute_local_project_file_path('/image/bet/no-data.png')"> -->
+    <img :src="compute_local_project_file_path('/image/bet/def_nobetrecord.png')">
     <template>
       <p class="centerText">{{ i18n_t( 'app_h5.cathectic.' + formatInternationalText(BetRecordClass.selected) ) }}</p>
+      <!-- <p>如需查询历史记录，请访问历史记录</p> -->
     </template>
   </div>
 </template>
