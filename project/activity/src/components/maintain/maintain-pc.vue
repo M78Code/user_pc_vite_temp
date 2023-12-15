@@ -79,14 +79,14 @@ export default {
   .relative-position {
     .full-width {
       .load-data-wrap {
-        ::v-deep .loading-wrap {
+        :deep(.loading-wrap) {
           margin-top: 400px;
         }
       }
     }
   }
 
-  ::v-deep .q-scrollarea__thumb {
+  :deep(.q-scrollarea__thumb) {
     right: 3.5px;
     background: #d1d5d8;
     border-radius: 4px;

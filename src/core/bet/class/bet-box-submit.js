@@ -80,6 +80,7 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             }
         })
     }
+    console.error('order_min_max_money', order_min_max_money)
     return order_min_max_money
 }
 
@@ -245,10 +246,15 @@ const get_query_bet_amount_common = (obj) => {
     }
     // 获取限额请求参数数据
     params.orderMaxBetMoney = get_query_bet_amount_params()
+    // params.orderMaxBetMoney[0].matchType = 3
 
     // 获取额度接口合并
     api_betting.query_bet_amount(params).then((res = {}) => {
+        //https://api.0yeex2e.com/yewu13/v1/betOrder/queryBetAmount?t=1702623780432
+        //https://api-c.sportxxx1zx.com/yewu13/v1/betOrder/queryBetAmount?t=1702625369663
+        console.error('res.code', res.code)
         if (res.code == 200) {
+            // alert(11111)
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             // 串关不更新
@@ -350,14 +356,18 @@ const get_query_bet_amount_pre = () => {
 
 //设置获取限额参数 
 const get_query_bet_amount_params = () =>{
+    console.error('11111111111111111111')
+    console.error('单穿', BetData.is_bet_merge)
     let order_min_max_money = []
     // 单关 
     if (BetData.is_bet_single) {
         // 单关 合并 多条数据 
         if (BetData.is_bet_merge) {
+            console.error(111)
             // 参数 投注列表 +  是否单关/串关  + 是否单关合并
             order_min_max_money = set_min_max_money(BetData.bet_single_list, true, true)
         } else {
+            console.error(222)
             // 单关 不合并 只有一条
             order_min_max_money = set_min_max_money(BetData.bet_single_list, true, false)
         }
@@ -366,6 +376,7 @@ const get_query_bet_amount_params = () =>{
         // 参数 投注列表 +  是否单关/串关  + 是否单关合并
         order_min_max_money = set_min_max_money(BetData.bet_s_list, false, false)
     }
+    console.error('order_min_max_money', order_min_max_money)
     return order_min_max_money
 }
 
@@ -679,7 +690,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // 点击投注项 显示投注栏
         BetData.set_h5_bet_box_show(true)
       
-        BetData.set_bet_keyboard_show(true)
+        BetData.set_bet_keyboard_show(false)
         // BetViewDataClass.set_bet_keyboard_show(true)
     }else{
         // pc 数据仓库
@@ -780,12 +791,11 @@ const set_bet_obj_config = (params = {}, other = {}) => {
 // 设置玩法名称
 const set_play_name = ({hl_obj,hn_obj,mid_obj,ol_obj,hpid,other}) => {
     let play_name = ALL_SPORT_PLAY[hpid] //玩法名称
-
     // 需要配置玩法比分的 玩法
     let play_id = [4]
     // 详情 并且本地没有配置玩法
     if(other.is_detail){
-        play_name = other.play_name
+        play_name = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
     }else{
         let hpn = lodash_.get(mid_obj.play_obj,`hpid_${hpid}.hpn`,'')
           // 冠军玩法 部分玩法hpid相同 
@@ -1052,7 +1062,6 @@ const   go_to_bet=(ol_item)=>{
       device_type: 1,  
       // 数据仓库类型
       match_data_type: "h5_detail",
-      play_name:ALL_SPORT_PLAY[_hpid],
   }
     set_bet_obj_config(params,other)
 }   

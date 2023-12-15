@@ -9,7 +9,7 @@ import { get_match_status } from 'src/output/module/constant-utils.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import BaseData from "src/core/base-data/base-data.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/module/match-data-base.js";
-import { match_state_convert_score_dict,history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
+import { match_state_convert_score_dict, history_score_dict } from 'src/core/constant/project/module/data-class-ctr/score-keys.js'
 /**
    * @Description  根据菜单ID 获取一个菜单对象
    * @param {number} menu_id 菜单ID
@@ -515,13 +515,21 @@ export function get_handicap_w_id(csid) {
     return sport_id_convert;
 }
 
-/*额外给赛事添加对象*/
+/**
+ * 给赛事对象添加额外属性
+ * tpl_id
+ * api_update_time
+ */
 export function match_list_handle_set(match_list) {
-    if (Object.prototype.toString.call(match_list) == '[object Array]')
+    if (Object.prototype.toString.call(match_list) == '[object Array]') {
+        const date_now = Date.now();
         match_list.forEach(match => {
-            match.tpl_id = get_match_template_id(match)
+            match.tpl_id = get_match_template_id(match);
+            match.api_update_time = date_now;
         })
+    }
 }
+
 
 /**
 * @description 获取比分 比分变化 或者 赛事阶段变化时调用

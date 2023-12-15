@@ -42,8 +42,3 @@ const olType:TYPES.OlItemType = 'column'
   }
 }
 </style>
-<style lang="scss">
-.template14.title-2{
-  
-}
-</style>

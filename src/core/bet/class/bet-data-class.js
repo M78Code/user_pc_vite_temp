@@ -192,7 +192,7 @@ this.bet_appoint_ball_head= null */
     
     this.bet_keyboard_config = {}
     // 键盘状态
-    this.bet_keyboard_show = true;
+    this.bet_keyboard_show = false;
     // h5 投注栏默认隐藏
     this.h5_bet_box_show = false
   }

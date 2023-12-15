@@ -48,19 +48,17 @@ let qs_lang = window.SEARCH_PARAMS.init_param.get('lang') //如果url带语言�
 qs_lang = map_lang[qs_lang] ? qs_lang : undefined //兜底 如果url带语言就是url语言  浏览器语言存在就是浏览器语言 不然就默认en英语
 
 let locale_lang = LocalStorage.get('lang'); //緩存的值
-locale_lang = map_lang[locale_lang] ? locale_lang : qs_lang || browser_lang //
-
+locale_lang = map_lang[locale_lang] ? locale_lang : browser_lang //
 if (qs_lang) { //url存在语言
   LocalStorage.set('lang', qs_lang) //缓存语言
 } else if (!LocalStorage.get('lang')) { //没有设定过语言 | 缓存的语言不在支持的语言中
   LocalStorage.set('lang', locale_lang) //缓存语言
 }
-
 // 所有语中使用到的公共的国际化字符串
 // import * as other from 'src/i18n/common-lang'
 const i18n = createI18n({
-  locale: locale_lang,
-  fallbackLocale: locale_lang,
+  locale: qs_lang || locale_lang,
+  fallbackLocale: 'en',
   // 增加所有语中使用到的公共的国际化字符串
   messages: {},
   legacy: true,

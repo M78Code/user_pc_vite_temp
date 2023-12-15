@@ -79,7 +79,7 @@ export default {
   height: 600px;
   background: url($SCSSPROJECTPATH+"/yazhou-pc/activity_imgs/imgs/get_lottery_bg.png")
     no-repeat center;
-  ::v-deep .scroll {
+  :deep(.scroll) {
     overflow: hidden;
   }
   .close {

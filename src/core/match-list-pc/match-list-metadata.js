@@ -2,7 +2,7 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/output/m
 import BaseData from 'src/core/base-data/base-data.js';
 import { MenuData } from "src/output/module/menu-data.js"
 import { set_match_base_info_by_mids_info } from 'src/core/match-list-pc/composables/match-list-featch.js'
-import { handle_match_list_request_when_ok } from './match-list-composition.js'
+import { handle_match_list_request_when_ok } from './composables/match-list-processing'
 import { match_list_handle_set } from './match-handle-data.js'
 // 根据 mid 获取 联赛列表数据
 function get_match_list_by_mid_for_base_data_res(mid, csid, type) {

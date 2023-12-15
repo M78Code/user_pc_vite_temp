@@ -3,10 +3,11 @@ import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import DefaultTemplate from './DefaultTemplate.vue';
 import TemplateColumn from './TemplateColumn.vue';
 import Template14 from './Template14.vue';
+import Template18 from './Template18.vue';
 
 const hideTitle = [0,18]
 const innerTitle = [12,14]
-const templates = new Map([[4,TemplateColumn],[14,Template14],[6,TemplateColumn]])
+const templates = new Map([[4,TemplateColumn],[6,TemplateColumn],[14,Template14],[18,Template18]])
 
 const rowHpid = '106,107'
 

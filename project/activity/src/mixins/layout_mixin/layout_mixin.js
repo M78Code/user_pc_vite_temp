@@ -37,17 +37,35 @@ export default defineComponent({
     await UserCtr.get_user_info(token);
     // document.getElementById("loading-root-ele")?.style?.visibility = "hidden";
     // html宽度基准值不为375的商户(如：外层样式宽度为750)
-    this.wpx = url_search.get("wpx");
+    this.wpx = SEARCH_PARAMS.init_param.get("wpx");
     this.inner_height = window.innerHeight;
     //created 内 执行
     this.handle_generat_emitters();
     // this.onResize()
     this.limit_rem();
+    let theme = this.get_project_theme();
+    UserCtr.set_theme(theme);
     // 设置 主题色 
-    change_theme_variable( this.css_var_project_key ,'theme01')
+    change_theme_variable( this.css_var_project_key ,theme)
   },
   mounted() {},
   methods: {
+    /**
+     * @description 设置项目主题设置
+     */
+    get_project_theme() {
+      let res = '';
+      // 默认 白色版
+      const default_theme = SEARCH_PARAMS.init_param.get('theme') || _.get(UserCtr.user_info, 'configVO.h5Default', 1)
+      // 商户 主题色系
+      let is_y0 = (SEARCH_PARAMS.init_param.get('stm') == 'blue' || UserCtr.user_info.stm === 'blue') 
+      if (is_y0) {
+        res = `theme0${default_theme}_y0`;
+      } else {
+        res = `theme0${default_theme}`;
+      }
+      return res;
+    },
     /**
      * @description 主题初始化设置 1.用户已切换过主题 （区分常规-蓝色来回切换） 2.用户初次进入页面
      *
