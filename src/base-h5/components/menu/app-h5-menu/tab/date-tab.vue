@@ -39,29 +39,31 @@ const props = defineProps({
 
 });
 const dateTab = ref(null)
-const activeOn = ref(0);//默认值
+const activeOn = ref(MenuData.data_tab_index);//默认值
 
 // onMounted(() => {
 //     nextTick(()=>{
-//         // changeTabMenu(props.dataList?.[0],0)
+//         changeTabMenu(props.dataList?.[0],0)
 //     })
 // })
 onUnmounted(()=>{
     set_active_val()
 })
 /**
-* 选中事件
-* @param {*} val 
-*/
-const changeTabMenu = (item, i, event) => {
-    
+ * 选中事件
+ * @param {*} item 
+ * @param {*} i 
+ * @param {*} event 
+ * @param {*} type 
+ */
+const changeTabMenu = (item, i, event,type) => {
     event = event || dateTab.value[0];
     if(activeOn.value === i)return;
     activeOn.value = i;
     // 设置日期
-    MenuData.set_date_time(props.dataList?.[i]?.val)
+    MenuData.set_date_time(i,props.dataList?.[i]?.val)
 
-    set_menu_match_date()
+    set_menu_match_date(type)
 
     scrollMenuEvent(event, ".date-tab-content-ul", ".active");
 
@@ -82,12 +84,12 @@ const set_active_val = () =>{
     activeOn.value = '';
 }
 // 根据菜单数据 请求接口    
-const set_menu_match_date = () => {
+const set_menu_match_date = (type) => {
     // 获取菜单中的数据 进去接口请求
     const { menu_match_date_api_config: { api, params } } = MenuData
     api_common[api](params).then(res => {
         // if(res.code == 200 ){
-        useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, res.data || {})
+        useMittEmit(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, {val:res.data ||{},type:type})
         // }
     })
 }
