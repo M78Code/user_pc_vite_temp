@@ -1,3 +1,8 @@
+import {
+ 
+        LOCAL_COMMON_FILE_PREFIX,
+        LOCAL_PROJECT_FILE_PREFIX,
+      } from "project_path/src/core/index.js";
 /**
  * 2021 亚洲版本 PC  活动 主题色专用
  * 项目标识：yazhou_pc
@@ -186,54 +191,54 @@ const theme_different = {
 
   /**背景图片 */
   "activity-bd-img-1": {
-    theme01: `/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg`,
-    theme01_y0: `/activity/yazhou-pc/activity_imgs/imgs/title_bg_y0.svg`,
-    theme02: `/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg`,
-    theme02_y0: `/activity/yazhou-pc/activity_imgs/imgs/title_bg_y0.svg`,
+    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg)`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/title_bg_y0.svg)`,
+    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/title_bg.svg)`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/title_bg_y0.svg)`,
   },
   "activity-bd-img-2": {
-    theme01: `/activity/yazhou-pc/activity_imgs/imgs/text-pre.png`,
-    theme01_y0: `/activity/yazhou-pc/activity_imgs/imgs/text-pre_y0.svg`,
-    theme02: `/activity/yazhou-pc/activity_imgs/imgs/text-pre.png`,
-    theme02_y0: `/activity/yazhou-pc/activity_imgs/imgs/text-pre_y0.svg`,
+    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/text-pre.png)`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/text-pre_y0.svg)`,
+    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/text-pre.png)`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/text-pre_y0.svg)`,
   },
   "activity-bd-img-3": {
     theme01: `linear-gradient(0deg, #f7f8f8 0%, #e3e3e3 31%, #ffffff 100%)`,
-    theme01_y0: `/activity/yazhou-pc/activity_imgs/imgs/game_record.png`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/game_record.png)`,
     theme02: `linear-gradient(0deg, #f7f8f8 0%, #e3e3e3 31%, #ffffff 100%)`,
-    theme02_y0: `/activity/yazhou-pc/activity_imgs/imgs/game_record.png`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/game_record.png)`,
   },
   "activity-bd-img-4": {
-    theme01: `/activity/yazhou-pc/activity_imgs/imgs/get_all_bonus.svg`,
-    theme01_y0: `/activity/yazhou-pc/activity_imgs/imgs/get_all_bonus_y0.svg`,
-    theme02: `/activity/yazhou-pc/activity_imgs/imgs/get_all_bonus.svg`,
-    theme02_y0: `/activity/yazhou-pc/activity_imgs/imgs/get_all_bonus_y0.svg`,
+    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_all_bonus.svg)`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_all_bonus_y0.svg)`,
+    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_all_bonus.svg)`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_all_bonus_y0.svg)`,
   },
   "activity-bd-img-5": {
-    theme01: `/activity/yazhou-pc/activity_imgs/imgs/waiting.svg`,
-    theme01_y0: `/activity/yazhou-pc/activity_imgs/imgs/waiting_y0.svg`,
-    theme02: `/activity/yazhou-pc/activity_imgs/imgs/waiting.svg`,
-    theme02_y0: `/activity/yazhou-pc/activity_imgs/imgs/waiting_y0.svg`,
+    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/waiting.svg)`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/waiting_y0.svg)`,
+    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/waiting.svg)`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/waiting_y0.svg)`,
   },
   "activity-bd-img-6": {
-    theme01: `/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg`,
-    theme01_y0: `/activity/yazhou-pc/activity_imgs/imgs/game_record.png`,
-    theme02: `/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg`,
-    theme02_y0: `/activity/yazhou-pc/activity_imgs/imgs/game_record.png`,
+    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg)`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/game_record.png)`,
+    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/history_list_bg.svg)`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/game_record.png)`,
   },
 
   /**按钮背景图 */
   "activity-btn-bg-img1": {
-    theme01: `/activity/yazhou-pc/activity_imgs/imgs/get_box.svg`,
-    theme01_y0: `/activity/yazhou-pc/activity_imgs/imgs/get_box_y0.svg)`,
-    theme02: `/activity/yazhou-pc/activity_imgs/imgs/get_box.svg`,
-    theme02_y0: `/activity/yazhou-pc/activity_imgs/imgs/get_box_y0.svg)`,
+    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_box.svg)`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_box_y0.svg))`,
+    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_box.svg)`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_box_y0.svg))`,
   },
   "activity-btn-bg-img2": {
-    theme01: `/activity/yazhou-pc/activity_imgs/imgs/get_bonus.svg`,
-    theme01_y0: `/activity/yazhou-pc/activity_imgs/imgs/get_bonus_y0.svg)`,
-    theme02: `/activity/yazhou-pc/activity_imgs/imgs/get_bonus.svg`,
-    theme02_y0: `/activity/yazhou-pc/activity_imgs/imgs/get_bonus_y0.svg)`,
+    theme01: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus.svg)`,
+    theme01_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus_y0.svg))`,
+    theme02: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus.svg)`,
+    theme02_y0: `url(${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/get_bonus_y0.svg))`,
   },
 };
 
