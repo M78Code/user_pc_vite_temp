@@ -167,7 +167,7 @@ const gesturestart_event_fun = (event) => {
  */
 const set_standard_edition_fun = () => {
   const status =  sessionStorage.getItem('standard_edition') || 2
-  UserCtr.set_standard_edition(status);
+    UserCtr.set_standard_edition(status);
 };
 
 //计算投注记录框的样式
@@ -222,6 +222,8 @@ const show_chain_bet = () => {
 }
 
 onMounted(() => {
+    //设置当前默认版本
+  set_standard_edition_fun()
   //获取当前版本默认值
   window.onresize = debounce((e) => {
     console.log(e)
@@ -244,8 +246,6 @@ onMounted(() => {
   });
   // 设置设备类型
   BetData.set_device_type(1)
-  //设置当前版本默认
-  set_standard_edition_fun()
 });
 const mitt_list = [
   // 监听设置框状态
