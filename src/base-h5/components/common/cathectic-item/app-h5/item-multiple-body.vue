@@ -76,7 +76,6 @@ let props = defineProps({
     type: Object
   }
 })
-
 const show_data_orderVOS = computed(() => {
   // orderVOS 长度大于3 且按钮是收起状态, 隐藏多于3条的
   if(box_bool.value === false && props.data_b.orderVOS.length > 3) {
