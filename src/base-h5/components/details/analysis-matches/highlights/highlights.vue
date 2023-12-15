@@ -64,7 +64,6 @@
                 <span class="text" v-scroll-text>{{i18n_t('mmp')[2][40]}} {{event.homeAway}} {{i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
               </div>
               <div class="text-scroller" v-else>
-                {{event.eventCode}}
                 <span class="text" v-scroll-text>{{event.homeAway}} {{  i18n_tc(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
               </div>
             </div>
