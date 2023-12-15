@@ -2,6 +2,8 @@
 import { defineComponent, defineAsyncComponent } from "vue";
 import _ from "lodash";
 
+import {change_theme_variable} from  "../../theme/theme-config.js"
+
 //头部引入
 import {
   useMittOn,
@@ -41,6 +43,8 @@ export default defineComponent({
     this.handle_generat_emitters();
     // this.onResize()
     this.limit_rem();
+    // 设置 主题色 
+    change_theme_variable( this.css_var_project_key ,'theme01')
   },
   mounted() {},
   methods: {

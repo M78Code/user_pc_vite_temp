@@ -1,7 +1,7 @@
 <template>
   <!-- 滚球盘 标题-->
   
-  <div class="play-match-type-2" @click="MatchListCardData[cur_title_info.func_name](card_style_obj,null,!MenuData.is_home())">
+  <div class="play-match-type-2" @click="cur_title_info.func_name(card_style_obj)">
     <div class="left-box">
       <sport-icon v-if="card_style_obj?.card_type == 'sport_title'" :data-id="card_style_obj.csid"
         :sport_id="get_sport_id()" :key="get_sport_id()" key_name="pc-left-menu-bg-image" size="18" class="icon" color_type="gray_ball" />
@@ -44,9 +44,13 @@ import MenuData from 'src/core/menu-pc/menu-data-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import BaseData from "src/core/base-data/base-data.js";
-
+import {
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie_2
+} from 'src/core/match-list-pc/match-card/module/fold-csid.js';
+import {
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie
+} from 'src/core/match-list-pc/match-card/module/fold-tid.js';
 const route = useRoute()
-// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
   card_style_obj: {
     type: Object,
@@ -92,7 +96,6 @@ const get_sport_id = () => {
 const cur_title_info = computed(() => {
  
   let { card_type = 'no_start_title', csid, match_count } = props.card_style_obj;
-  let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
   let title_obj = {
     //球种标题
     sport_title: {
@@ -100,21 +103,21 @@ const cur_title_info = computed(() => {
       name: lodash.get(BaseData.csids_map,`csid_${csid}`,{}).csna,
       match_count: lodash.get(MatchListCardData, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
       show_num: MenuData.menu_root != 400 && route.name != "search",
-      func_name: 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie'
+      func_name: recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie_2
     },
     //滚球标题
     play_title: {
       name: t("menu.match_play"),
       match_count,
       show_num: true,
-      func_name
+      func_name:recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie
     },
     //未开赛标题
     no_start_title: {
       name: t("list.match_no_start"),
       match_count,
       show_num: true,
-      func_name
+      func_name:recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie
     },
   };
   return title_obj[card_type];

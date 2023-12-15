@@ -84,18 +84,17 @@
 
               <div>current_match.match_status: {{ current_match.match_status }}</div>
               <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
-              <template v-if="current_match.mid == match_item_batch.matchs[0].mid">
+              <template v-if="current_match.mid == match_item_batch.matchs[0].mid && ![1001,1004].includes(sub_menu_type)">
                    <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
                   <div v-if="current_match.match_status == 0">
                     <!-- 赛马切换玩法集tab组件 -->
                     <virtual-sports-tab
-                      :batch="current_match_id"
-                      v-if="![1001,1004].includes(sub_menu_type)">
+                      :batch="current_match_id">
                     </virtual-sports-tab>
                     <!-- 打印请勿删除 -->
                     <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
                     <!-- 赛马投注区域 -->
-                    <div v-if="match_list_by_no && match_list_by_no.length && ![1001,1004].includes(sub_menu_type)">
+                    <div v-if="match_list_by_no && match_list_by_no.length">
                       <virtual-sports-category
                           :top_menu_changed="top_menu_changed"
                           :current_match="match_list_by_no[0]"

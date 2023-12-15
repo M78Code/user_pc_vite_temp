@@ -169,7 +169,7 @@ export default {
   .activity_task-header {
     width: 100%;
     padding-top: 100%;
-    background: var(--qq--color-com-img-bg-148) no-repeat;
+    background: var(--qq--com-img-bg-148) no-repeat;
     // backgrounurl($SCSSPROJECTPATH+"/ty/activity/yazhou-h5/activity/activity-header_slot.png") no-repeat;
     background-size: 100% auto;
     background-color: #fdfcfa;
@@ -237,7 +237,7 @@ export default {
   left: 0;
   bottom: 0;
   right: 0;
-  background: var(--qq--color-com-img-bg-131) no-repeat;
+  background: var(--qq--com-img-bg-131) no-repeat;
   background-size: 100% 100%;
 
   .maintain-main {
