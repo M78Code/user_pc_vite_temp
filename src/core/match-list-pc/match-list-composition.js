@@ -17,7 +17,7 @@ import { MenuData } from "src/output/module/menu-data.js"
 import { fethc_collect_match, collect_count } from "./composables/match-list-collect.js";
 import { api_bymids } from "./composables/match-list-featch.js";
 // import virtual_composable_fn from "./composables/match-list-virtual.js";
-import { mx_use_list_res, mx_list_res } from './composables/match-list-processing.js'
+import { handle_match_list_request_when_ok } from './composables/match-list-processing.js'
 import { set_base_data_init, set_base_data_init_ouzhou } from './match-list-metadata.js';
 import ServerTime from 'src/core/server-time/server-time.js';
 import get_match_list_params from './match-list-params.js'
@@ -57,10 +57,9 @@ useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST_METADATA, lodash.debounce(init_page_w
 /**
 * @description 请求数据
 * @param  {boolean} is_socket   是否 socket 调用
-* @param  {boolean} cut   是否 切换右侧详情  true 不切换
 * @param {Object} params 其他参数
 */
-export function fetch_match_list(is_socket = false, cut) {
+export function fetch_match_list(is_socket = false) {
 	clearTimeout(axios_debounce_timer2); //取消上一次请求
 	const match_list_params = get_match_list_params();
 	// 设置当前为赛事列表
@@ -131,7 +130,6 @@ export function fetch_match_list(is_socket = false, cut) {
 							handle_match_list_request_when_ok(
 								JSON.parse(JSON.stringify(res)),
 								is_socket,
-								cut
 							);
 							//不是ws就通知已经加载完成 连同返回接口数据
 							!is_socket && useMittEmit(MITT_TYPESEMIT_FETCH_MATCH_LIST_FINISHED, res)
@@ -178,7 +176,7 @@ export function fetch_match_list(is_socket = false, cut) {
 					// 重复拉列表的次数小于5   3秒后再次拉接口
 					if (api_error_count < 5) {
 						get_match_list_timeid = setTimeout(() => {
-							fetch_match_list(is_socket, cut);
+							fetch_match_list(is_socket);
 						}, 3000);
 					} else {
 						set_load_data_state("refresh")
@@ -234,9 +232,9 @@ function handle_destroyed() {
  */
 function init_page_when_base_data_first_loaded() {
 	// 首页不走元数据加载  不需要设置元数据loading状态 loading状态已经设置过了
-	if (MenuData.is_home()) {
-		return
-	}
+	// if (MenuData.is_home()) {
+	// 	return
+	// }
 	set_load_data_state("loading") //loading
 	//设置元数据 列表 返回boolean
 	if (PROJECT_NAME == 'ouzhou-pc') {
@@ -248,10 +246,10 @@ function init_page_when_base_data_first_loaded() {
 		set_load_data_state("data")
 	}
 	//释放试图 
-	// check_match_last_update_timer_id = setInterval(
-	// 	check_match_last_update_time(),
-	// 	30000
-	// );
+	check_match_last_update_timer_id = setInterval(
+		check_match_last_update_time,
+		30000
+	);
 }
 /**
  * 初始化方法
@@ -296,26 +294,6 @@ function mounted_fn(fun) {
 // onUnmounted(() => {
 // 	handle_destroyed()
 // });
-/**
- * // 处理服务器返回的 列表 数据   fetch_match_list
- */
-export function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
-	if (lodash.has(data, 'data.livedata') || lodash.has(data, 'data.nolivedata')) {
-		//       mx_list_res
-		//    今日早盘   常规球种下的  常规 玩法
-		//    电竞 单页  所有玩法
-		mx_list_res(data, is_socket, cut, collect);
-	} else {
-		//  mx_use_list_res
-		// 滚球单页 下所有
-		// 热门 单页下 所有
-		//  冠军  单页      ，
-		//  今日早盘   常规球种下的   常规球种下的 冠军
-		// 虚拟体育 单页 的  所有赛种
-		// 收藏
-		mx_use_list_res(data, is_socket, cut, collect);
-	}
-};
 /**
  * @description 获取强力推荐赛事
  * @param  {boolean} backend_run 是否后台 调用
@@ -396,10 +374,9 @@ function get_hot_match_list(backend_run = false) {
  * @return {undefined} undefined
  */
 function on_refresh() {
-	fetch_match_list(2);
+	fetch_match_list(true);
 	show_refresh_mask.value = true;
 };
-
 /**
  * @Description:移除赛事
  * @Author success
@@ -428,8 +405,8 @@ function socket_remove_match(match) {
  */
 function check_match_last_update_time() {
 	// 非滚球 今日 不检查
-	if (![1, 2].includes(MenuData.menu_root)) {
-		return;
+	if (![1, 2,202].includes(MenuData.menu_root)) {
+		return
 	}
 	let mids = [];
 	let now_time = ServerTime.get_remote_time();
@@ -453,6 +430,7 @@ function check_match_last_update_time() {
 		}
 	});
 	if (mids.length > 0) {
+		console.log('mids',mids)
 		api_bymids({ mids });
 	}
 };
@@ -475,6 +453,5 @@ export {
 	set_load_data_state,
 	check_match_last_update_time,
 	mounted_fn,
-	handle_destroyed,
-	mx_use_list_res
+	handle_destroyed
 }

@@ -958,7 +958,7 @@ export default {
     }
   }
 
-  ::v-deep .q-icon {
+  :deep(.q-icon) {
     color: var(--qq--activity-text-color-6);
     display: inline-block;
     font-size: 16px;
@@ -969,7 +969,7 @@ export default {
     border-radius: 2px;
   }
 
-  ::v-deep .q-btn {
+  :deep(.q-btn) {
     min-width: 24px !important;
     width: 24px;
     height: 24px;
@@ -999,26 +999,26 @@ export default {
     }
   }
 
-  ::v-deep .scroll {
+  :deep(.scroll) {
     overflow: hidden;
   }
 
-  ::v-deep .bg-primary {
+  :deep(.bg-primary) {
     background: var(--qq--activity-bg-color-7) !important;
   }
 
-  ::v-deep .q-btn__wrapper {
+  :deep(.q-btn__wrappers) {
     width: 24px;
     height: 24px;
     padding-top: 0;
   }
 
-  ::v-deep .q-btn__wrapper:before {
+  :deep(.q-btn__wrapper:before) {
     box-shadow: none;
     border: 0.5px solid var(--qq--activity-bd-color-6);
   }
 
-  ::v-deep .text-white {
+  :deep(.text-white) {
     & .q-btn__wrapper:before {
       border: 0 none;
     }
@@ -1044,7 +1044,7 @@ export default {
     z-index: 99;
   }
 
-  ::v-deep .absolute-full {
+  :deep(.absolute-full) {
     display: flex;
     align-items: center;
     justify-content: center;

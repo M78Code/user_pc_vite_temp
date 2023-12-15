@@ -231,12 +231,15 @@ class UserCtr {
    * 设置语言变化
   */
   set_lang(data) {
-    if(this.lang == data)return;
-    this.lang = data;
-    this.user_info.languageName = data;
-    LocalStorage.set('lang',data)
-    useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
-    this.update()
+    if(data){
+      SEARCH_PARAMS.init_param_set({lang:data});
+      if(this.lang == data)return;
+      this.lang = data;
+      this.user_info.languageName = data;
+      LocalStorage.set('lang',data)
+      useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
+      this.update()
+    }
   }
   /**
   * 设置主题变化

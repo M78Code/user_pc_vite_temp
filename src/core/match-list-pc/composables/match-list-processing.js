@@ -3,9 +3,9 @@ import { ref } from 'vue';
 import lodash from 'lodash';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
-import { MenuData }  from "src/output/module/menu-data.js";
+import { MenuData } from "src/output/module/menu-data.js";
 
-import {   match_collect_status, set_collect_count, mx_collect_count  } from "./match-list-collect.js";
+import { match_collect_status, set_collect_count, mx_collect_count } from "./match-list-collect.js";
 
 import { api_bymids, set_league_list_obj } from "./match-list-featch.js";
 import PageSourceData from "src/core/page-source/page-source.js";
@@ -24,7 +24,7 @@ const load_data_state = ref(null);
 let hot_match_list_timeout;
 let vx_layout_list_type = 'match'
 
-console.error('MenuData-------', );
+console.error('MenuData-------',);
 // 是否虚拟体育
 let is_virtual = MenuData.is_vr();
 const { route_name } = PageSourceData;
@@ -70,7 +70,7 @@ const deal_with_list_data = (data) => {
 		let mid = item.mids.split(',');
 
 		mid.forEach(option => {
-			const match=MatchListData.get_quick_mid_obj(mid)||{}
+			const match = MatchListData.get_quick_mid_obj(mid) || {}
 			let mid_info = {
 				...item,
 				mid: option,
@@ -90,11 +90,9 @@ const deal_with_list_data = (data) => {
  * @description 专业处理服务器返回的 列表 数据---联赛结构
  * @param {object} data   服务器返回数据
  * @param {boolean} backend_run / is_socket 是否静默拉取 
- * @param  {boolean} cut   是否 切换右侧详情  true 不切换
- * @param  {boolean} collect   是否 请求收藏数量  true 不请求
  * @return {undefined} undefined
  */
-const mx_list_res = (data, backend_run, cut, collect) => {
+const mx_list_res = (data, backend_run) => {
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
 	// 将全量数据接口 切割成含有mid元素的对象数组
@@ -117,25 +115,25 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// if (vx_filter_select_obj.value.length > 0) {
 		// 	mx_collect_count();
 		// } else {
-			try {
-				// 组装所有赛事,检测赛事收藏,算总共的收藏赛事数量
-				all_league_list.forEach(item => {
-					let mids_ = lodash.get(item, 'mids', '').split(',');
-					mids_.forEach(mid_ => {
-						// 组装所有赛事
-						const temp_match = { mid: mid_, csid: item.csid, tid: item.tid }
-						// 设置收藏信息
-						match_collect_status(temp_match)
-					});
+		try {
+			// 组装所有赛事,检测赛事收藏,算总共的收藏赛事数量
+			all_league_list.forEach(item => {
+				let mids_ = lodash.get(item, 'mids', '').split(',');
+				mids_.forEach(mid_ => {
+					// 组装所有赛事
+					const temp_match = { mid: mid_, csid: item.csid, tid: item.tid }
+					// 设置收藏信息
+					match_collect_status(temp_match)
 				});
-			} catch (error) {
-				count_mf = lodash.get(data, 'data.collectCount', 0)
-				console.error(error);
-			}
-			// set_collect_count({
-			// 	type: "set",
-			// 	count: lodash.get(data, "data.collectCount", 0),
-			// });
+			});
+		} catch (error) {
+			count_mf = lodash.get(data, 'data.collectCount', 0)
+			console.error(error);
+		}
+		// set_collect_count({
+		// 	type: "set",
+		// 	count: lodash.get(data, "data.collectCount", 0),
+		// });
 		// }
 		// 如果是专业版 && 今日、早盘、串关之间的切换 && 之前有筛选 && 并且当前没有筛选
 		if (
@@ -270,7 +268,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 /***
  * @description 当接口状态为成功且有数据时 调用此方法
  */
-const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collect, backend_run }) => {
+const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, backend_run }) => {
 	is_show_hot.value = false;
 	if (!Array.isArray(match_list)) {
 		match_list = []
@@ -291,11 +289,6 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 		match_list,
 		backend_run
 	);
-	// 设置收藏数量
-	// 只有预加载会传 true
-	if (!collect) {
-		mx_collect_count();
-	}
 	if (!backend_run) {
 		if (!is_virtual || is_search) {
 			// 非虚拟体育——设置赛事列表选中赛事
@@ -344,7 +337,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({ match_list, collec
 /***
  * 当接口状态为异常状态时  调用此方法
  */
-const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, collect, backend_run }) => {
+const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, backend_run }) => {
 	if (is_virtual && !is_search) {
 		// 右侧切换
 		// MatchListDetailMiddleware.set_vsport_params({
@@ -409,7 +402,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = ({ match_list, collect,
  * @param  {boolean} collect   是否 请求收藏数量  true 不请求
  * @return {undefined} undefined
  */
-const mx_use_list_res = (data, backend_run, cut, collect) => {
+const mx_use_list_res = (data, backend_run) => {
 	let code = lodash.get(data, "code");
 	clearTimeout(virtual_list_timeout_id);
 	// 赛事列表
@@ -419,21 +412,45 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	}
 	set_league_list_obj(match_list)
 	//虚拟体育 接口数据结构转换
-	// lockie
-	if (is_virtual && !is_search && false) {
-		// 格式化
-		match_list = virtual_sport_format(match_list);
-	}
+	// // lockie
+	// if (is_virtual && !is_search && false) {
+	// 	// 格式化
+	// 	match_list = virtual_sport_format(match_list);
+	// }
 	if (code == 200 && match_list) {
-		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, collect, backend_run });
+		mx_use_list_res_when_code_200_and_list_length_gt_0({ match_list, backend_run });
 	} else {
-		mx_use_list_res_when_code_error_or_list_length_0({ match_list, collect, backend_run });
+		mx_use_list_res_when_code_error_or_list_length_0({ match_list, backend_run });
 	}
 };
-
+/**
+ * 
+ * @param {object} data 要处理数据
+ * @param {booble} is_socket 
+ * @param {*} cut 
+ * @param {*} collect 
+ */
+function handle_match_list_request_when_ok(data, is_socket, cut, collect) {
+	if (lodash.has(data, 'data.livedata') || lodash.has(data, 'data.nolivedata')) {
+		//       mx_list_res
+		//    今日早盘   常规球种下的  常规 玩法
+		//    电竞 单页  所有玩法
+		mx_list_res(data, is_socket, cut, collect);
+	} else {
+		//  mx_use_list_res
+		// 滚球单页 下所有
+		// 热门 单页下 所有
+		//  冠军  单页      ，
+		//  今日早盘   常规球种下的   常规球种下的 冠军
+		// 虚拟体育 单页 的  所有赛种
+		// 收藏
+		mx_use_list_res(data, is_socket, cut, collect);
+	}
+};
 export {
 	// 处理服务器返回的 列表 数据 ---滚球
 	mx_use_list_res,
 	// 处理服务器返回的 列表 数据 ---联赛结构
-	mx_list_res
+	mx_list_res,
+	handle_match_list_request_when_ok
 }
