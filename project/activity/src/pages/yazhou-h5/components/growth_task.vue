@@ -634,7 +634,7 @@ export default {
   height: 2.8rem;
   position: relative;
   z-index: -1;
-  background: var(--qq--color-com-img-bg-160) no-repeat;
+  background: var(--qq--com-img-bg-160) no-repeat;
   background-size: 100% 100%;
   display: flex;
   flex-direction: column;

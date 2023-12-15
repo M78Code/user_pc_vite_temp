@@ -366,7 +366,7 @@ export default {
   }
 
   .slot_machine_content {
-    background:  var(--qq--color-com-img-bg-122) no-repeat top center;
+    background:  var(--qq--com-img-bg-122) no-repeat top center;
     background-size: 120%;
     margin-top: 0.8rem;
     // 老虎机
@@ -854,14 +854,14 @@ export default {
       }
 
       .synthetic_lottory {
-        background-image: var(--qq--color-com-img-bg-117);
+        background-image: var(--qq--com-img-bg-117);
         background-size: cover;
         color: #fff;
         margin-right: 0.2rem;
       }
 
       .game_history {
-        background-image: var(--qq--color-com-img-bg-118);
+        background-image: var(--qq--com-img-bg-118);
         background-size: cover;
         color: #333;
       }
@@ -874,7 +874,7 @@ export default {
     }
 
     p {
-      background: var(--qq--color-img-bg-99) no-repeat left 0.07rem;
+      background: var(--qq--img-bg-99) no-repeat left 0.07rem;
       padding-left: 0.17rem;
       background-size: 0.12rem;
       line-height: 27px;
@@ -891,14 +891,14 @@ export default {
 .theme02_y0 {
   .activity-rules {
     p {
-      background: var(--qq--color-com-img-bg-121) no-repeat left 0.07rem;
+      background: var(--qq--com-img-bg-121) no-repeat left 0.07rem;
     }
   }
   .tabs_content {
     .slot_machine_content {
       .btns {
         .synthetic_lottory {
-          background-image: var(--qq--color-com-img-bg-120);
+          background-image: var(--qq--com-img-bg-120);
         }
       }
     }
