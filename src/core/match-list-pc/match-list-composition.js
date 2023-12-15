@@ -232,9 +232,9 @@ function handle_destroyed() {
  */
 function init_page_when_base_data_first_loaded() {
 	// 首页不走元数据加载  不需要设置元数据loading状态 loading状态已经设置过了
-	if (MenuData.is_home()) {
-		return
-	}
+	// if (MenuData.is_home()) {
+	// 	return
+	// }
 	set_load_data_state("loading") //loading
 	//设置元数据 列表 返回boolean
 	if (PROJECT_NAME == 'ouzhou-pc') {
@@ -246,10 +246,10 @@ function init_page_when_base_data_first_loaded() {
 		set_load_data_state("data")
 	}
 	//释放试图 
-	// check_match_last_update_timer_id = setInterval(
-	// 	check_match_last_update_time(),
-	// 	30000
-	// );
+	check_match_last_update_timer_id = setInterval(
+		check_match_last_update_time,
+		30000
+	);
 }
 /**
  * 初始化方法
@@ -405,8 +405,8 @@ function socket_remove_match(match) {
  */
 function check_match_last_update_time() {
 	// 非滚球 今日 不检查
-	if (![1, 2].includes(MenuData.menu_root)) {
-		return;
+	if (![1, 2,202].includes(MenuData.menu_root)) {
+		return
 	}
 	let mids = [];
 	let now_time = ServerTime.get_remote_time();
@@ -430,6 +430,7 @@ function check_match_last_update_time() {
 		}
 	});
 	if (mids.length > 0) {
+		console.log('mids',mids)
 		api_bymids({ mids });
 	}
 };
