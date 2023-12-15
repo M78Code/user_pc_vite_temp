@@ -31,13 +31,13 @@ export default defineComponent({
 
   async created() {
     let token =
-      sessionStorage.getItem("token") ||
+      SEARCH_PARAMS.init_param.get("token") ||
       UserCtr.get_user_token() ||
       window.SEARCH_PARAMS.get_url_param(window.location.href).get("token");
     await UserCtr.get_user_info(token);
     // document.getElementById("loading-root-ele")?.style?.visibility = "hidden";
     // html宽度基准值不为375的商户(如：外层样式宽度为750)
-    this.wpx = url_search.get("wpx");
+    this.wpx = SEARCH_PARAMS.init_param.get("wpx");
     this.inner_height = window.innerHeight;
     //created 内 执行
     this.handle_generat_emitters();

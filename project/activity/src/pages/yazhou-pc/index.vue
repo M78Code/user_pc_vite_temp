@@ -6,7 +6,7 @@
 -->
 <template>
   <q-scroll-area class="five-activity-action" ref="scrollareaRef">
-    {{ tab_Id }}
+    <!-- {{ tab_Id }} -->
     <div state="false">
       <!-- 头部 banner 图 -->
       <div class="top-banner">
@@ -30,7 +30,7 @@
             >
               <span>
                 {{ item.activityId == "10010" ? "老虎机" : item.name }}
-                <img :src="item.state_url" />
+                <img class="state_url" :src="item.state_url" />
               </span>
             </div>
           </div>
@@ -186,6 +186,7 @@ export default {
       box-shadow: var(--qq--activity-box-shadow);
 
       .tab-item {
+        position: relative;
         display: inline-block;
         flex: 1;
         line-height: 60px;
@@ -197,6 +198,12 @@ export default {
         transition: all 0.2s;
         color: var(--qq--activity-text-color-3);
 
+        .state_url{
+          position: absolute;
+          width: 84px;
+          top: -20px;
+          right: 12%;
+        }
         .tips {
           position: absolute;
           width: 84px;

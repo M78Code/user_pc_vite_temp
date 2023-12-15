@@ -1,4 +1,4 @@
-<!--
+<!--data_b
  * @Author:
  * @Date:
  * @Description: bw3新版矩形框中部
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="foot-main">
-      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
+      <!-- <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p> -->
       <!-- 可赢额、结算, 注单状态： -->
       <item-footer :data_f="data_b"></item-footer>
     </div>
@@ -60,6 +60,7 @@ import { bet_result } from "src/core/bet-record/util.js";
 import { i18n_t } from 'src/output/index.js'
 import { format_money2 } from 'src/output/index.js'
 import { itemFooter } from "src/base-h5/components/common/cathectic-item/app-h5/index";
+import { formatTime } from 'src/output/index.js'
 //按钮名字
 let btn_text = ref(i18n_t("bet_record.pack_down"))
 //是否展开
@@ -70,7 +71,9 @@ let props = defineProps({
     type: Object
   }
 })
-
+const Item = computed(() => {
+  return props.data_b.orderVOS[0] || []
+})
 const show_data_orderVOS = computed(() => {
   // orderVOS 长度大于3 且按钮是收起状态, 隐藏多于3条的
   if(box_bool.value === false && props.data_b.orderVOS.length > 3) {
@@ -128,7 +131,6 @@ template {
     padding: 0.12rem;
 
     .items {
-
       &:last-child {
 
         .list,
@@ -161,6 +163,20 @@ template {
           display: flex;
           justify-content: space-between;
         }
+        &.play {
+          display: flex;
+          align-items: center;
+        }
+        .play-market {
+          margin-right: 0.1rem;
+          &:last-child{
+            margin-right: 0;
+            max-width: 2.2rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
       }
 
       .info {
@@ -170,7 +186,9 @@ template {
         font-size: 0.12rem;
         color: var(--q-gb-bg-c-6);
         display: block;
-        padding-bottom: 0.1rem;
+        &.bot {
+          padding-bottom: 0.1rem;
+        }
       }
     }
   }
@@ -207,6 +225,20 @@ template {
       &.acount {
         color: var(--q-gb-bg-c-13);
       }
+    }
+  }
+  .body-info {
+    margin: 0.12rem;
+    margin-bottom: 0;
+    text-align: center;
+    background-color: var(--q-gb-bg-c-13);
+    padding: 0.12rem;
+    border-radius: 0.1rem;
+    color: var(--q-gb-t-c-14);
+    & > div {
+      display: flex;
+      font-weight: bold;
+      justify-content: space-around;
     }
   }
   .green {

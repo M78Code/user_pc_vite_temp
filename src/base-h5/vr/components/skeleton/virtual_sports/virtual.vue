@@ -19,7 +19,7 @@
 
 
       <!-- 标准版 -->
-      <div class="version_biaozhun" v-if="get_newer_standard_edition == 2">
+      <div class="version_biaozhun" v-if="standard_edition == 2">
         <div v-for="(item, index) in 6" :key="index" class="item">
           <div class="wrap">
             <div class="left">
@@ -49,7 +49,7 @@
       </div>
 
       <!-- 简版 -->
-      <div class="version_jian" v-if="get_newer_standard_edition == 1">
+      <div class="version_jian" v-if="standard_edition == 1">
         <div v-for="(item, index) in 6" :key="index" class="item">
           <div class="item-row">
             <div class="row-left">
@@ -73,16 +73,19 @@
 
 <script>
 import skeleton from 'src/base-h5/vr/components/skeleton/index.vue'
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+
 export default {
   components:{ skeleton },
   computed:{
     // ...mapGetters(["get_newer_standard_edition"]),
-    get_newer_standard_edition(){ return ''}
+    // get_newer_standard_edition(){ return ''}
   },
   data(){
     return {
+      standard_edition,
       thumbStyle:{
-        background: "transparent"
+        background: "transparent",
       }
     }
   }

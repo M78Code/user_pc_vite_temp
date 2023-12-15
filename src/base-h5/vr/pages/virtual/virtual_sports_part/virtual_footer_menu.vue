@@ -4,7 +4,7 @@
  * @Description: 赛事列表页右下角可拖拽的菜单组件
 -->
 <template>
-  <div class="virtual-footer-menu" v-if="get_newer_standard_edition == 1" :class="{black2:get_theme.includes('theme02')}">
+  <div class="virtual-footer-menu" v-if="standard_edition == 1" :class="{black2:get_theme.includes('theme02')}">
     <!-- 刷新按钮 -->
     <!-- <div class="refesh-wrap yb-flex-center" @click="set_loading">
       <img :class="{rotate:is_refresh}" src="image/bw3/svg/virtual-sports/refresh.svg">
@@ -35,6 +35,7 @@
 
 <script>
 import { debounce } from "lodash";
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 
 export default {
@@ -46,6 +47,7 @@ export default {
       sub_footer_menu_i:0,
       //上一次的
       prev_floating_sub:'prev-floating-sub-i',
+      standard_edition
     }
   },
   created(){
@@ -105,7 +107,6 @@ export default {
     // ]),
     get_show_favorite_list(){return ''},
     get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },
-    get_newer_standard_edition(){return ''},
     get_theme(){return 'theme01'},
 
     footer_sub_m_list(){

@@ -104,7 +104,10 @@
         height: .04rem;
         border-radius: 50%;
         z-index: 10;
-        background-color: var(--q-gb-bg-c-12);
+        background-color: var(--q-analysis-text-color-31);
+      }
+      .dot-real-time {
+        background-color: var(--q-analysis-text-color-28);
       }
       .time-line {
         position: absolute;
@@ -112,7 +115,10 @@
         top: 0;
         width: 1px;
         height: .55rem;
-        background-color: var(--q-gb-bg-c-12);
+        background-color: var(--q-analysis-text-color-31);
+        &.start-half-line {
+          background-color: var(--q-analysis-text-color-28);
+        }
       }
       .time-line-ball {
         position: absolute;
@@ -124,8 +130,7 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
         z-index: 10;
-        background-color: var(--q-gb-bg-c-14);
-        background-image: url($SCSSPROJECTPATH + "/image/svg/details/time-line-ball.svg");
+        background-image: url($SCSSPROJECTPATH + "/image/svg/details/time-line-ball_y0.svg");
       }
       &.real-time, &.game-over {
         .time-line {
