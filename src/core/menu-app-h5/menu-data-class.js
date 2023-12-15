@@ -12,7 +12,7 @@
 
 import { api_common, api_analysis } from "src/api";
 import lodash_ from "lodash";
-import { ref ,nextTick} from "vue";
+import { ref } from "vue";
 import { SessionStorage, sprite_images_postion } from "src/output/module/constant-utils.js";
 import {
   useMittEmit,
@@ -20,12 +20,10 @@ import {
 } from "src/core/mitt/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BaseData from "src/core/base-data/base-data.js";
-import STANDARD_KEY from "src/core/standard-key";
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
   RESULT_SUB_MENU_CACHE: "RESULT_SUB_MENU_CACHE", //赛果 缓存
 };
-const fk_menu_h5_key = STANDARD_KEY.get("fk_menu_h5_key")
 const menu_type_config = {
   1: 1,
   2: 3,
@@ -44,9 +42,6 @@ class MenuData {
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash_.debounce(() => {
       that.update_time.value = Date.now();
-      // nextTick(()=>{
-      //   SessionStorage.set(fk_menu_h5_key,this)
-      // })
     }, 16);
     //提供销毁函数
     this.destroy = () => {
@@ -91,7 +86,6 @@ class MenuData {
     this.data_tab_index = 0;
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
-    // this.set_menu_h5_key_refresh()
   }
 
   // 初始化需要使用的数据
@@ -1063,22 +1057,6 @@ class MenuData {
     this.set_cache_class({
       footer_sub_menu_id
     })
-  }
-  // 刷新后 获取缓存数据
-  set_menu_h5_key_refresh() {
-    const notItem = ['current_lv_1_menu_mi','current_lv_2_menu_mi','menu_csid','top_menu_title']
-    // 获取数据缓存
-    let session_info = SessionStorage.get(fk_menu_h5_key);
-    if (!session_info) {
-      return;
-    }
-    if (Object.keys(session_info).length) {
-      for(let item in session_info){
-        if(!notItem.includes(item)){
-          this[item] = session_info[item]
-        }
-      }
-    }
   }
     /**
    * 设置值 并且缓存
