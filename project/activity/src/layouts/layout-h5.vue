@@ -21,6 +21,12 @@ export default {
     PageH5,
   },
   mixins: [ layout_mixin],
+  data() {
+    return {
+      //项目CSS变量键
+      css_var_project_key: 'yazhou_pc'
+    }
+  },
  
 }
 </script>
