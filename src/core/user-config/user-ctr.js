@@ -382,6 +382,7 @@ class UserCtr {
   */
   set_standard_edition(v) {
     this.standard_edition = v;
+    sessionStorage.setItem('standard_edition', v)
     useMittEmit(MITT_TYPES.EMIT_STANDARD_EDITION_CHANGE, this.standard_edition)
     // set_newer_standard_edition(edition);
     // set_secondary_unfold_map({}); // 清空次要玩法折叠的记录，收起来
