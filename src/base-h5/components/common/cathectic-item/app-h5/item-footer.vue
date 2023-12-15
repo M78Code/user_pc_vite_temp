@@ -1,8 +1,10 @@
 <template>
-  <!-- 可赢额、结算 -->
+  <!-- 投注额 -->
+  <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_f.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
+  
   <template>
     <!-- orderStatus 订单状态(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
-    <!-- 在未结算页 -->
+    <!-- 在未结算页 => 可赢额 -->
     <p v-if="BetRecordClass.selected !== 3" class="acount">
       <label>{{ i18n_t('app_h5.cathectic.winnable') }}：</label> 
       <template v-if="data_f.orderStatus == 1 || data_f.orderStatus == 2 || data_f.orderStatus == 4">
@@ -16,16 +18,36 @@
       </template>
     </p>
     <!-- 在已结算页 -->
-    <p v-else class="acount">
-      <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
-      <span :class="[calc_amount_settle(data_f).color]">{{ calc_amount_settle(data_f).text }}</span>
-     
+    <template v-else>
+      <!-- 结算  -->
+      <p class="acount">
+        <label>{{i18n_t('app_h5.cathectic.settle')}}：</label> 
+        <span>{{ format_balance(data_f.profitAmount) }}{{i18n_t('common.unit')}}</span>
+      </p>
+      <!-- 输/赢  -->
+      <p>
+        <label>{{i18n_t('bet_record.l/w')}}：</label> 
+        <span :class="{'red': data_f.profit > 0}">
+          {{ data_f.profit > 0 ? i18n_t('bet_record.bet_no_status04') : i18n_t('bet_record.bet_no_status03') }}
+        </span>
+      </p>
+    </template>
+  </template>
+
+  <!-- 非单关 -->
+  <template v-if="data_f.seriesType !== '1'">
+    <p>
+      <!-- 投注单号 -->
+      <label>{{i18n_t('bet.order_no')}}：</label> 
+      <span>{{data_f.orderNo}}</span>
     </p>
     <p>
-      <label>{{ i18n_t('bet_record.l/w') }}：</label>
-      <span>{{ calc_settle(data_f).text }}</span>
+      <!-- 投注时间 -->
+      <label>{{i18n_t('bet_record.time')}}：</label>
+      <span>{{formatTime(+data_f.betTime, 'yyyy-mm-dd hh:MM')}}</span>
     </p>
   </template>
+
   <!-- 注单状态： -->
   <p>
     <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
@@ -38,22 +60,17 @@
         <template v-else>{{ i18n_t('pre_record.booking') }}</template>
       </span>
 
-      <!-- 未结算页 -->
-      <span v-else-if="BetRecordClass.selected === 0">
+      <!-- 未结算页、已结算页 -->
+      <template v-else>
         <!-- 订单状态(确认中。。) -->
-        <template v-if="data_f.orderStatus == '3'">
+        <span v-if="data_f.orderStatus == '3'">
           {{ confirming.text }}
-        </template>
+        </span>
         <!-- 订单状态(非确认中) -->
-        <template v-else>
+        <span v-else>
           {{ calc_text(data_f).text }}
-        </template>
-      </span>
-
-      <!-- 已结算页 -->
-      <span v-else>
-        {{ calc_text_settle(data_f) }}
-      </span>
+        </span>
+      </template>
     </template>
   </p>
 </template>
@@ -61,53 +78,15 @@
 <script setup>
 import { reactive, onMounted, onUnmounted } from 'vue'
 import BetRecordClass from "src/core/bet-record/bet-record.js";
-import { calc_text } from "src/core/bet-record/util.js";
+import { calc_text, outcome } from "src/core/bet-record/util.js";
 import { i18n_t } from "src/boot/i18n.js";;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-import { outcome } from "src/core/bet-record/util.js";
 import { formatTime, format_money2, format_balance } from 'src/output/index.js'
 let props = defineProps({
   data_f: {
     type: Object
   }
 })
-// 已结算 => 结算金额
-const calc_amount_settle = (data_f) => {
-  let text = ''
-  let color = 'black'
-  text = `${format_balance(data_f.profitAmount)}${i18n_t('common.unit')}`
-  if(data_f.outcome == 4 || data_f.outcome == 5) {
-    color = ''
-  }
-  return { text, color }
-}
-const calc_settle = (data_f) => {
-  let text = ''
-  text = `${outcome[data_f.outcome]}`
-  return { text }
-}
-// 已结算 => 注单状态
-const calc_text_settle = (data_f) => {
-  let text = ''
-  switch (data_f.orderStatus) {
-    case '0':
-    case '1':
-      text = i18n_t('bet_record.successful_betting')
-      break;
-    case '2':
-      text = i18n_t('bet_record.invalid_bet')
-      break
-    case '3':
-      text = i18n_t('bet_record.confirming')
-      break
-    case '4':
-      text = i18n_t('bet.bet_err')
-      break
-    default:
-      break
-  }
-  return text
-}
 
 // 订单确认中。。。
 const confirming = reactive({
@@ -158,4 +137,23 @@ p {
       color: var(--q-gb-bg-c-13);
     }
 }
+.green {
+    color: #69C969
+  }
+
+  .red {
+    color: #E93D3D
+  }
+
+  .black {
+    color: #666666
+  }
+
+  .orange {
+    color: #FFB001
+  }
+
+  .gray {
+    color: #D2D2D2
+  }
 </style>

@@ -167,7 +167,7 @@ const gesturestart_event_fun = (event) => {
  */
 const set_standard_edition_fun = () => {
   const status =  sessionStorage.getItem('standard_edition') || 2
-    UserCtr.set_standard_edition(status);
+    UserCtr.set_standard_edition(Number(status));
 };
 
 //计算投注记录框的样式

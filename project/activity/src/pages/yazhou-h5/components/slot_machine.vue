@@ -1,185 +1,266 @@
 <template>
   <div class="tabs_content" @touchmove="handleTouch" @mousewheel="handleTouch" @click="handleTouch">
-
     <div class="introduction text-666">
       <div class="active-object">
-      <div>
-        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
-          <span>活动对象：</span>
-          <span>本场馆全体会员</span>
+          <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''
+            }.png`" alt="" />
+          <div>
+            <span>活动对象：</span>
+            <span>本场馆全体会员</span>
+          </div>
         </div>
-      </div>
-      <div>
-        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
-          <span>活动时间：</span>
-          <template v-if="get_user.activityList[activityIndex].period == 1">
-            <span class="count_down_css">
-              <span>距离活动开始还有</span>
-              <ActiveCountDown :endTime='inStartTime' :noNeedCss="true"></ActiveCountDown>
-            </span>
-          </template>
-          <template v-else-if="get_user.activityList[activityIndex].period == 2">
-            <template v-if="get_user.activityList[activityIndex].type == 2 && inEndTime">
+          <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''
+            }.png`" alt="" />
+          <div>
+            <span>活动时间：</span>
+            <template v-if="get_user.activityList[activityIndex].period == 1">
               <span class="count_down_css">
-                <span>距离活动关闭还有</span>
-                <ActiveCountDown :endTime='inEndTime' :noNeedCss="true"></ActiveCountDown>
+                <span>距离活动开始还有</span>
+                <ActiveCountDown :endTime="inStartTime" :noNeedCss="true"></ActiveCountDown>
               </span>
             </template>
-            <span v-else>活动长期有效</span>
-          </template>
-          <span v-else>
-            活动结束
-          </span>
+            <template v-else-if="get_user.activityList[activityIndex].period == 2">
+              <template v-if="get_user.activityList[activityIndex].type == 2 && inEndTime
+                ">
+                <span class="count_down_css">
+                  <span>距离活动关闭还有</span>
+                  <ActiveCountDown :endTime="inEndTime" :noNeedCss="true"></ActiveCountDown>
+                </span>
+              </template>
+              <span v-else>活动长期有效</span>
+            </template>
+            <span v-else> 活动结束 </span>
+          </div>
         </div>
-      </div>
-      <div>
-        <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''}.png`)" alt="">
         <div>
-          <span style="width: 1.91rem">活动内容：</span>
-          <span>本场馆内完成任务获得的普通奖券，可在合成系统中向上合成为白银、黄金、钻石奖券，用以参加对应档次的老虎机抽奖</span>
+          <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/smaller${get_theme.includes('y0') ? '_y0' : ''
+            }.png`" alt="" />
+          <div>
+            <span style="width: 1.91rem">活动内容：</span>
+            <span>本场馆内完成任务获得的普通奖券，可在合成系统中向上合成为白银、黄金、钻石奖券，用以参加对应档次的老虎机抽奖</span>
+          </div>
         </div>
       </div>
-    </div>
     </div>
     <div class="slot_machine_content">
       <!-- 老虎机主体 -->
       <div class="slot_machine relative-position">
         <!-- 彩金道具 -->
         <div class="caijin">
-          <p :class="{'caijin_transfer': caijin_transfer}">
-            {{_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName') || '惊喜道具'}}
+          <p :class="{ caijin_transfer: caijin_transfer }">
+            {{
+              _.get(
+                currentSlotData[currentSlotIndex],
+                "beforeGameResult.propName"
+              ) || "惊喜道具"
+            }}
           </p>
           <span class="dot dot_run"></span>
           <span class="dot dot_run_1"></span>
         </div>
         <!-- 老虎机主体图片 -->
-        <img class="machine"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/machine_diamond.png`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 3 ? 2: 1}" alt="">
-        <img class="machine"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/machine_gold.png`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 2 ? 2: 1}" alt="">
-        <img class="machine"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/machine_silver.png`" :style="{'z-index': _.get(currentSlotData[currentSlotIndex], 'slotId') == 1 ? 2: 1}" alt="">
+        <img class="machine"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/machine_diamond.png`" :style="{
+            'z-index':
+              _.get(currentSlotData[currentSlotIndex], 'slotId') == 3 ? 2 : 1,
+          }" alt="" />
+        <img class="machine"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/machine_gold.png`" :style="{
+            'z-index':
+              _.get(currentSlotData[currentSlotIndex], 'slotId') == 2 ? 2 : 1,
+          }" alt="" />
+        <img class="machine"
+          :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/machine_silver.png`" :style="{
+            'z-index':
+              _.get(currentSlotData[currentSlotIndex], 'slotId') == 1 ? 2 : 1,
+          }" alt="" />
         <!-- 今日抽奖剩余次数 -->
         <p class="draws_number">
-          <span v-if="_.get(currentSlotData[currentSlotIndex], 'gameTimes') > -1">今日抽奖剩余：{{_.get(currentSlotData[currentSlotIndex], 'gameTimes')}}次 | 0时重置</span>
+          <span v-if="_.get(currentSlotData[currentSlotIndex], 'gameTimes') > -1">今日抽奖剩余：{{
+            _.get(currentSlotData[currentSlotIndex], "gameTimes")
+          }}次 | 0时重置</span>
         </p>
         <!-- 数字滚轮 -->
         <div class="scroller" ref="scroller">
-          <NumberScroll :status="tiger_status" :result="tiger_result" :initArr="initNums" @stop="stop" :config="slot_config" v-if="showNumScroll" ref="number_scroll" />
+          <NumberScroll :status="tiger_status" :result="tiger_result" :initArr="initNums" @stop="stop"
+            :config="slot_config" v-if="showNumScroll" ref="number_scroll" />
         </div>
         <!-- 两边的小三角形 -->
         <p class="triangles" v-if="triangle_fade > 0">
-          <img class="left" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
-          <img class="right" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`)" alt="">
+          <img class="left"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`"
+            alt="" />
+          <img class="right"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/triangle_fade/0${triangle_fade}.png`"
+            alt="" />
         </p>
         <p class="triangles" v-else>
-          <img class="left" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
-          <img class="right" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`)" alt="">
+          <img class="left"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`"
+            alt="" />
+          <img class="right"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/triangle_run/0${triangle_run}.png`"
+            alt="" />
         </p>
 
         <!-- 当前奖金 -->
         <p class="currentBonus">
-          当前奖励: <span>{{_.get(currentSlotData[currentSlotIndex], "beforeGameResult.reward") || '0.00'}}</span>
+          当前奖励:
+          <span>{{
+            _.get(
+              currentSlotData[currentSlotIndex],
+              "beforeGameResult.reward"
+            ) || "0.00"
+          }}</span>
         </p>
         <!-- 操作按钮 -->
         <div class="actionBtns">
           <!-- 重置 -->
           <p class="resetBtn" @click="resetSlot">
-            <template>
-              <img class="top" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')" :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/reset_btn_top.png`" alt="">
-              <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/reset_btn_top_gray.png`" alt="">
-            </template>
-            <template>
-              <img class="btm" v-if="_.get(currentSlotData[currentSlotIndex], 'beforeGameResult.propName')"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/reset_btn_btm.png`" alt="">
-              <img class="btm" v-else  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/reset_btn_btm_gray.png`" alt="">
-            </template>
-              <span>{{_.get(currentSlotData[currentSlotIndex], `resetTicketNumber`)}}张{{_.get(currentSlotData[currentSlotIndex], `resetTicketName`)}}</span>
-            </p>
+            <!-- <template> -->
+              <img class="top" v-if="_.get(
+                    currentSlotData[currentSlotIndex],
+                    'beforeGameResult.propName'
+                  )
+                  " :class="runResetSlotAnim ? 'resetBtnAnim' : ''"
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/reset_btn_top.png`" alt="" />
+              <img class="top" v-else :class="runResetSlotAnim ? 'resetBtnAnim' : ''"
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/reset_btn_top_gray.png`"
+                alt="" />
+            <!-- </template> -->
+            <!-- <template> -->
+              <img class="btm" v-if="_.get(
+                currentSlotData[currentSlotIndex],
+                'beforeGameResult.propName'
+              )
+                " :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/reset_btn_btm.png`"
+                alt="" />
+              <img class="btm" v-else
+                :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/reset_btn_btm_gray.png`"
+                alt="" />
+            <!-- </template> -->
+            <span>{{
+              _.get(currentSlotData[currentSlotIndex], `resetTicketNumber`)
+            }}张{{
+              _.get(currentSlotData[currentSlotIndex], `resetTicketName`)
+            }}</span>
+          </p>
           <!-- 开始滚动 -->
-          <p v-if="!_.get(currentSlotData[currentSlotIndex], 'beforeGameResult') || !is_init" class="startScreen" @click="start('start')">
-            <template>
-              <!-- 置灰按钮 -->
-              <img v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0" class="top"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/start_btn_top_gray.png`" alt="">
-              <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/start_btn_top.png`" alt="">
-            </template>
-            <template>
-              <img class="btm" v-if="!is_init || _.get(currentSlotData[currentSlotIndex], 'tokenNum') < _.get(currentSlotData[currentSlotIndex], 'lotteryNum') || Object.keys(beforeGameResult).length != 0 || _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/start_btn_btm_gray.png`" alt="">
-              <img class="btm" v-else  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/start_btn_btm.png`" alt="">
-            </template>
-            <span>{{_.get(currentSlotData[currentSlotIndex], 'lotteryNum')}}张{{_.get(currentSlotData[currentSlotIndex], 'ticketName')}}</span>
+          <p v-if="!_.get(currentSlotData[currentSlotIndex], 'beforeGameResult') ||
+              !is_init
+              " class="startScreen" @click="start('start')">
+            <!-- <template> -->
+            <!-- 置灰按钮 -->
+            <img v-if="!is_init ||
+              _.get(currentSlotData[currentSlotIndex], 'tokenNum') <
+              _.get(currentSlotData[currentSlotIndex], 'lotteryNum') ||
+              Object.keys(beforeGameResult).length != 0 ||
+              _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0
+              " class="top"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_top_gray.png`"
+              alt="" />
+            <img v-else class="top" :class="runStartAnim ? 'startBtnAnim' : ''"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_top.png`" alt="" />
+            <!-- </template> -->
+            <!-- <template> -->
+            <img class="btm" v-if="!is_init ||
+              _.get(currentSlotData[currentSlotIndex], 'tokenNum') <
+              _.get(currentSlotData[currentSlotIndex], 'lotteryNum') ||
+              Object.keys(beforeGameResult).length != 0 ||
+              _.get(currentSlotData[currentSlotIndex], 'gameTimes') == 0
+              " :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_btm_gray.png`"
+              alt="" />
+            <img class="btm" v-else
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_btm.png`" alt="" />
+            <!-- </template> -->
+            <span>{{ _.get(currentSlotData[currentSlotIndex], "lotteryNum") }}张{{
+              _.get(currentSlotData[currentSlotIndex], "ticketName")
+            }}</span>
           </p>
           <!-- 确认领取 -->
           <p v-else class="confirm" @click="start('confirm')">
-            <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/confirm_btn_top.png`" alt="">
-            <img class="btm"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/start_btn_btm.png`" alt="">
+            <img class="top" :class="runStartAnim ? 'startBtnAnim' : ''"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/confirm_btn_top.png`" alt="" />
+            <img class="btm"
+              :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/start_btn_btm.png`" alt="" />
           </p>
         </div>
         <!-- 摇杆 -->
         <div class="rocker">
-          <img :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1}/0${rocker_anim_index}.png`)" alt="">
+          <img :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/rocker_${(_.get(currentSlotData[currentSlotIndex], 'slotId') || 1) - 1
+            }/0${rocker_anim_index}.png`" alt="" />
         </div>
         <!-- 老虎机周围的装饰 -->
-        <img class="goldmoney"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/goldmoney.png`" alt="">
-        <img class="footbaler"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/footbaler.png`" alt="">
+        <img class="goldmoney" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/goldmoney.png`"
+          alt="" />
+        <img class="footbaler" :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/footbaler.png`"
+          alt="" />
         <!-- 彩灯 -->
-        <span v-for="(item, index) in new Array(26)" :key="index" class="normal_light"
-        :class="[`normal_light_${index + 1}`,
-        {'light_run_pink': light_run_pink == index + 1,
-        'light_run_blue': light_run_blue == index + 1,
-        'light_run_yellow': light_run_yellow == index + 1},
-        {'three_colors': spin_success}]"></span>
+        <span v-for="(item, index) in new Array(26)" :key="index" class="normal_light" :class="[
+          `normal_light_${index + 1}`,
+          {
+            light_run_pink: light_run_pink == index + 1,
+            light_run_blue: light_run_blue == index + 1,
+            light_run_yellow: light_run_yellow == index + 1,
+          },
+          { three_colors: spin_success },
+        ]"></span>
       </div>
       <!-- 切换老虎机的按钮 -->
       <div class="switch_slots" v-if="currentSlotData.length">
         <p @click="switch_slots(index)" v-for="(item, index) in currentSlotData" :key="index">
-          <img v-if="currentSlotIndex == index && index < 3" :src="(`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/rocker_${item.slotId}.png`)" />
-          <img v-else  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/grey_rocker.png`" />
-          <span :class="currentSlotIndex == index ? 'active': ''">
-            <span>{{item.slotName}}</span>
-            <br>
-            (奖券：{{item.tokenNum}})
+          <img v-if="currentSlotIndex == index && index < 3"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/rocker_${item.slotId}.png`" />
+          <img v-else :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/grey_rocker.png`" />
+          <span :class="currentSlotIndex == index ? 'active' : ''">
+            <span>{{ item.slotName }}</span>
+            <br />
+            (奖券：{{ item.tokenNum }})
           </span>
         </p>
       </div>
       <!-- 合成奖券和游戏记录按钮 -->
       <div class="btns">
-          <p class="synthetic_lottory" @click="activityTips.status ? '' : is_show_compose = true">合成奖券</p>
-          <p class="game_history" @click="get_activity_slot_get_game_record(1, 1)">游戏记录</p>
-        </div>
+        <p class="synthetic_lottory" @click="activityTips.status ? '' : (is_show_compose = true)">
+          合成奖券
+        </p>
+        <p class="game_history" @click="get_activity_slot_get_game_record(1, 1)">
+          游戏记录
+        </p>
+      </div>
     </div>
     <div class="activity-rules text-gray">
-      <div class="title">
-        活动规则
-      </div>
+      <div class="title">活动规则</div>
       <p>
         会员完成任务获得的普通奖券，可在合成系统中向上合成为白银、黄金、钻石奖券，用以参加对应档次的老虎机抽奖；
       </p>
-      <p>
-        每次抽奖获取随机奖金，并搭配随机道具享受奖金加乘；
-      </p>
+      <p>每次抽奖获取随机奖金，并搭配随机道具享受奖金加乘；</p>
       <p>
         老虎机抽奖获得的奖金不可重置，道具可以消耗奖券重置，重置次数无上限；
       </p>
       <p>
         合成系统：
-        <br><span>a)	4张普通奖券兑换1张白银奖券、4张白银奖券兑换1张黄金奖券、4张黄金奖券兑换1张钻石奖券，若合成失败有机会返还兑换前奖券；</span>
-        <br><span>b)	合成后的奖券仅可用于老虎机抽奖或向上合成更高等级奖券，不可分解成低等级奖券。</span>
+        <br /><span>a)
+          4张普通奖券兑换1张白银奖券、4张白银奖券兑换1张黄金奖券、4张黄金奖券兑换1张钻石奖券，若合成失败有机会返还兑换前奖券；</span>
+        <br /><span>b)
+          合成后的奖券仅可用于老虎机抽奖或向上合成更高等级奖券，不可分解成低等级奖券。</span>
       </p>
       <p>
         老虎机抽奖：
-        <br><span>a)	老虎机奖励=随机奖金*随机道具(幸运奖券为提升合成几率用道具，若抽取到此项道具，当次奖金默认为一倍)；</span>
-        <br><span>b)	随机道具可消耗老虎机对应档次的奖券进行重置，重置次数无上限；</span>
-        <br><span>c)	点击【确认领取】后，老虎机奖励将派发至本场馆钱包；</span>
-        <br><span>d)	未点击【确认领取】，内容自使用当日起计算保留5天，保留期间仅可进行道具重置，不可使用其他档次的老虎机，若保留时间结束仍未点击【确认领取】，系统将默认当下结果派发奖金至本场馆钱包。</span>
+        <br /><span>a)
+          老虎机奖励=随机奖金*随机道具(幸运奖券为提升合成几率用道具，若抽取到此项道具，当次奖金默认为一倍)；</span>
+        <br /><span>b) 随机道具可消耗老虎机对应档次的奖券进行重置，重置次数无上限；</span>
+        <br /><span>c) 点击【确认领取】后，老虎机奖励将派发至本场馆钱包；</span>
+        <br /><span>d)
+          未点击【确认领取】，内容自使用当日起计算保留5天，保留期间仅可进行道具重置，不可使用其他档次的老虎机，若保留时间结束仍未点击【确认领取】，系统将默认当下结果派发奖金至本场馆钱包。</span>
       </p>
-      <p>
-        奖金实时派发至本场馆钱包，仅需在本场馆完成1倍流水即可取款；
-      </p>
+      <p>奖金实时派发至本场馆钱包，仅需在本场馆完成1倍流水即可取款；</p>
       <p>
         每位有效会员、每个手机号、每个电子邮箱、每张银行卡、每个IP地址、每台设备使用者，仅可享受1次优惠，如会员使用一切不正当投注、套利等违规行为，我们将保留无限期审核扣回奖金及所产生利润的权利；
       </p>
-      <p>
-        为避免文字理解差异，本场馆保留本活动最终解释权。
-      </p>
+      <p>为避免文字理解差异，本场馆保留本活动最终解释权。</p>
     </div>
     <!-- 游戏记录弹窗 -->
     <q-dialog v-model="gameHistory">
@@ -189,10 +270,11 @@
             游戏记录
           </div> -->
           <div class="tab_bar">
-            <p v-for="(item, index) in historiesBar"
-              :key="index"
+            <p v-for="(item, index) in historiesBar" :key="index"
               @click.stop="get_activity_slot_get_game_record(1, index + 1, 6)"
-               :class="index + 1 == gameHistoryLists.params.type ? 'active': ''">{{item}}</p>
+              :class="index + 1 == gameHistoryLists.params.type ? 'active' : ''">
+              {{ item }}
+            </p>
           </div>
           <!-- 彩金记录 -->
           <div class="table table_history" v-if="gameHistoryLists.params.type == 1">
@@ -203,20 +285,22 @@
               <span>领取时间</span>
             </div>
             <!-- <load-data :state="historyDataState"> -->
-              <div
-              class="text-666 text-center"
-              :class="{'last-row': index==gameHistoryLists.list.length-1}"
-              v-for="(item, index) in gameHistoryLists.list"
-              :key="index"
-              >
-                <span>{{ Number(item.award) / 100 || "-" }}</span>
-                <span>{{ (item.prop_times == undefined || item.prop_times == '--') ? '--' : `奖金${item.prop_times}倍卡` }}</span>
-                <span>{{ Number(item.total_award) / 100 || "-" }}</span>
-                <span>{{ new Date(+(item.create_time)).Format('yyyy-MM-dd hh:mm') || "-" }}</span>
-              </div>
-              <div v-if="!_.get(gameHistoryLists.list, 'length')" class="no-data">
-                暂无数据
-              </div>
+            <div class="text-666 text-center" :class="{ 'last-row': index == gameHistoryLists.list.length - 1 }"
+              v-for="(item, index) in gameHistoryLists.list" :key="index">
+              <span>{{ Number(item.award) / 100 || "-" }}</span>
+              <span>{{
+                item.prop_times == undefined || item.prop_times == "--"
+                ? "--"
+                : `奖金${item.prop_times}倍卡`
+              }}</span>
+              <span>{{ Number(item.total_award) / 100 || "-" }}</span>
+              <span>{{
+                new Date(+item.create_time).Format("yyyy-MM-dd hh:mm") || "-"
+              }}</span>
+            </div>
+            <div v-if="!_.get(gameHistoryLists.list, 'length')" class="no-data">
+              暂无数据
+            </div>
             <!-- </load-data> -->
           </div>
           <!-- 奖券合成 -->
@@ -228,20 +312,24 @@
               <span>合成时间</span>
             </div>
             <!-- <load-data :state="historyDataState"> -->
-              <div
-              class="text-666 text-center"
-              :class="{'last-row': index==gameHistoryLists.list.length-1}"
-              v-for="(item, index) in gameHistoryLists.list"
-              :key="index"
-              >
-                <span v-if="item.source_token!=undefined">{{ item.source_token }}张<br>{{item.source_token_type}}</span><span v-else><br></span>
-                <span v-if="item.target_token!=undefined">{{ item.target_token }}张<br>{{item.target_token_type}}</span><span v-else><br></span>
-                <span v-if="item.return_token!=undefined">{{ item.return_token }}张<br>{{item.return_token_type}}</span><span v-else><br></span>
-                <span v-if="item.source_token!=undefined">{{ new Date(+(item.create_time)).Format('yyyy-MM-dd hh:mm') }}</span><span v-else><br></span>
-              </div>
-              <div v-if="!_.get(gameHistoryLists.list, 'length')" class="no-data">
-                暂无数据
-              </div>
+            <div class="text-666 text-center" :class="{ 'last-row': index == gameHistoryLists.list.length - 1 }"
+              v-for="(item, index) in gameHistoryLists.list" :key="index">
+              <span v-if="item.source_token != undefined">{{ item.source_token }}张<br />{{
+                item.source_token_type
+              }}</span><span v-else><br /></span>
+              <span v-if="item.target_token != undefined">{{ item.target_token }}张<br />{{
+                item.target_token_type
+              }}</span><span v-else><br /></span>
+              <span v-if="item.return_token != undefined">{{ item.return_token }}张<br />{{
+                item.return_token_type
+              }}</span><span v-else><br /></span>
+              <span v-if="item.source_token != undefined">{{
+                new Date(+item.create_time).Format("yyyy-MM-dd hh:mm")
+              }}</span><span v-else><br /></span>
+            </div>
+            <div v-if="!_.get(gameHistoryLists.list, 'length')" class="no-data">
+              暂无数据
+            </div>
             <!-- </load-data> -->
           </div>
           <!-- 重置道具 -->
@@ -253,82 +341,82 @@
               <span>重置时间</span>
             </div>
             <!-- <load-data :state="historyDataState"> -->
-              <div
-              class="text-666 text-center"
-              :class="{'last-row': index==gameHistoryLists.list.length-1}"
-              v-for="(item, index) in gameHistoryLists.list"
-              :key="index"
-              >
-                <span>{{ item.prop_type!=undefined?item.prop_type:'' }}</span>
-                <span>{{ item.use_token!=undefined?item.use_token:''}}</span>
-                <span>{{ item.use_token_type!=undefined?item.use_token_type:''}}</span>
-                <span>{{ item.prop_type!=undefined?new Date(+(item.create_time)).Format('yyyy-MM-dd hh:mm'):''}}</span>
-              </div>
-              <div v-if="!_.get(gameHistoryLists.list, 'length')" class="no-data">
-                暂无数据
-              </div>
+            <div class="text-666 text-center" :class="{ 'last-row': index == gameHistoryLists.list.length - 1 }"
+              v-for="(item, index) in gameHistoryLists.list" :key="index">
+              <span>{{
+                item.prop_type != undefined ? item.prop_type : ""
+              }}</span>
+              <span>{{
+                item.use_token != undefined ? item.use_token : ""
+              }}</span>
+              <span>{{
+                item.use_token_type != undefined ? item.use_token_type : ""
+              }}</span>
+              <span>{{
+                item.prop_type != undefined
+                ? new Date(+item.create_time).Format("yyyy-MM-dd hh:mm")
+                : ""
+              }}</span>
+            </div>
+            <div v-if="!_.get(gameHistoryLists.list, 'length')" class="no-data">
+              暂无数据
+            </div>
             <!-- </load-data> -->
           </div>
           <div class="pagination_wrap" v-if="gameHistoryLists.list.length > 0">
             <div class="pagination_with_input">
-              <DataPager
-                :key="gameHistoryLists.params.type"
-                class="record-data-pager"
-                :total="gameHistoryLists.params.total"
-                :pageSize="6"
-                @change="pagination_next"
-              />
+              <DataPager :key="gameHistoryLists.params.type" class="record-data-pager"
+                :total="gameHistoryLists.params.total" :pageSize="6" @change="pagination_next" />
             </div>
           </div>
-          <img class="close"  @click="gameHistory = false"  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/lucky/close.png`"/>
+          <img class="close" @click="gameHistory = false"
+            :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/lucky/close.png`" />
         </div>
       </div>
     </q-dialog>
     <!-- 合成页面弹窗 -->
-    <compose
-      v-if="is_show_compose"
-      @close_compose="is_show_compose = false"
-      @update_slots_config="update_slots_config"
-      :lotteryNum="lottery"
-      @play_show_card="play_show_card"
-    />
+    <compose v-if="is_show_compose" @close_compose="is_show_compose = false" @update_slots_config="update_slots_config"
+      :lotteryNum="lottery" @play_show_card="play_show_card" />
     <!-- 活动ui提示弹窗 -->
     <div class="activity_alert" v-if="activityTips.status">
       <p class="close" @click="closeActivityTips">+</p>
       <p class="title">奖券</p>
       <div class="content">
-        <p class="msg">{{activityTips.msg}}</p>
+        <p class="msg">{{ activityTips.msg }}</p>
         <div class="btns">
           <span @click="closeActivityTips">关闭</span>
         </div>
       </div>
     </div>
     <!-- 背景音循环 -->
-    <audio  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/media/slot_bg_loop.mp3`" ref="slot_bg_loop" autoplay loop />
+    <audio :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/slot_bg_loop.mp3`"
+      ref="slot_bg_loop" autoplay loop />
     <!-- 开始滚动按钮按下 -->
-    <audio  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/media/start_btn.mp3`" ref="audioStart"></audio>
+    <audio :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/start_btn.mp3`"
+      ref="audioStart"></audio>
     <!-- 摇杆 -->
-    <audio  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/media/after_start_btn.mp3`" ref="afterAudioStart"></audio>
-    <audio  :src="`${ LOCAL_COMMON_FILE_PREFIX }/activity/yazhou-h5/activity/slot_machine/media/showCard.mp3`" ref="showCard"></audio>
+    <audio :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/after_start_btn.mp3`"
+      ref="afterAudioStart"></audio>
+    <audio :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/activity/slot_machine/media/showCard.mp3`"
+      ref="showCard"></audio>
   </div>
 </template>
 
 <script>
-
-import slot_machine_mixin  from "project/activity/src/mixins/slot_machine/slot_machine.js";  
-import NumberScroll from 'project/activity/src/components/number_scroll/number_scroll-h5.vue';
-import compose from 'project/activity/src/components/compose/compose-h5.vue';
+import slot_machine_mixin from "project/activity/src/mixins/slot_machine/slot_machine.js";
+import NumberScroll from "project/activity/src/components/number_scroll/number_scroll-h5.vue";
+import compose from "project/activity/src/components/compose/compose-h5.vue";
 import DataPager from "project/activity/src/components/data_pager/data_pager-h5.vue";
 import ActiveCountDown from "project/activity/src/components/active_count_down/active_count_down-h5.vue";
 export default {
-  mixins: [ slot_machine_mixin],
+  mixins: [slot_machine_mixin],
   components: {
     ActiveCountDown,
     NumberScroll,
-     DataPager,
-    compose
+    DataPager,
+    compose,
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 @import "../../../css/activity.scss";
@@ -366,9 +454,10 @@ export default {
   }
 
   .slot_machine_content {
-    background:  var(--qq--com-img-bg-122) no-repeat top center;
+    background: var(--qq--com-img-bg-122) no-repeat top center;
     background-size: 120%;
     margin-top: 0.8rem;
+
     // 老虎机
     .slot_machine {
       width: 2.79rem;
@@ -393,15 +482,15 @@ export default {
         z-index: 3;
         font-family: PingFangSC-Medium;
 
-        color: #FEE4B5;
+        color: #fee4b5;
 
         span {
           &::before {
             display: inline-block;
-            content: '';
+            content: "";
             width: 0.1rem;
             height: 0.02rem;
-            background: #6B2200;
+            background: #6b2200;
             box-shadow: inset 0 0.01rem 0.02rem 0 rgba(0, 0, 0, 0.5);
             position: absolute;
             top: 0.09rem;
@@ -410,10 +499,10 @@ export default {
 
           &::after {
             display: inline-block;
-            content: '';
+            content: "";
             width: 0.1rem;
             height: 0.02rem;
-            background: #6B2200;
+            background: #6b2200;
             box-shadow: inset 0 0.01rem 0.02rem 0 rgba(0, 0, 0, 0.5);
             position: absolute;
             top: 0.09rem;
@@ -421,6 +510,7 @@ export default {
           }
         }
       }
+
       // 数字滚轮
       .scroller {
         position: absolute;
@@ -429,6 +519,7 @@ export default {
         left: 0.4rem;
         top: 0.86rem;
       }
+
       // 两个三角形的定位
       .triangles {
         position: absolute;
@@ -452,10 +543,11 @@ export default {
           transform: rotateY(180deg);
         }
       }
+
       // 当前奖金
       .currentBonus {
         font-size: 0.1rem;
-        color: #FFFCF4;
+        color: #fffcf4;
         letter-spacing: 0.01rem;
         text-shadow: 0 0.02rem 0.02rem rgba(0, 0, 0, 0.3);
         position: absolute;
@@ -463,12 +555,13 @@ export default {
         bottom: 0.42rem;
         left: 0.45rem;
 
-        & > span {
+        &>span {
           font-size: 0.2rem;
           text-shadow: 0 0.02rem 0.04rem rgba(0, 0, 0, 0.5);
           font-weight: 700;
         }
       }
+
       // 老虎机上的操作按钮
       .actionBtns {
         position: absolute;
@@ -560,6 +653,7 @@ export default {
           width: 100%;
         }
       }
+
       // 顶部彩金倍数显示区
       .caijin {
         width: 1.63rem;
@@ -577,13 +671,13 @@ export default {
           text-align: center;
           font-family: Helvetica;
           font-size: 0.16rem;
-          color: #FFFFFF;
+          color: #ffffff;
           letter-spacing: 0;
           text-shadow: 0 2px 4px #e50000, 0 -2px 3px #f0ff04;
           font-weight: 400;
         }
 
-        & > span.dot {
+        &>span.dot {
           display: block;
           position: absolute;
 
@@ -592,7 +686,18 @@ export default {
             height: 0.02rem;
             border-radius: 50%;
             background: lightyellow;
-            box-shadow: 0 0 0.02rem 0.01rem lightyellow, 0.6rem -0.15rem 0.02rem 0.01rem lightyellow, 0.4rem -0.06rem 0.02rem 0.01rem lightyellow, 0.1rem -0.15rem 0.02rem 0.02rem lightyellow, 1rem -0.2rem 0.02rem 0.01rem lightyellow, 1.3rem -0.2rem 0.02rem 0.02rem lightyellow, 1.7rem -0.25rem 0.03rem 0.02rem lightyellow, 2rem -0.1rem 0.03rem 0.02rem lightyellow, 0.7rem -0.3rem 0.02rem 0.01rem lightyellow, 0.8rem -0.45rem 0.02rem 0.01rem lightyellow, 2.3rem 0 0.02rem 0.01rem lightyellow, 2.4rem -0.1rem 0.03rem 0.02rem lightyellow;
+            box-shadow: 0 0 0.02rem 0.01rem lightyellow,
+              0.6rem -0.15rem 0.02rem 0.01rem lightyellow,
+              0.4rem -0.06rem 0.02rem 0.01rem lightyellow,
+              0.1rem -0.15rem 0.02rem 0.02rem lightyellow,
+              1rem -0.2rem 0.02rem 0.01rem lightyellow,
+              1.3rem -0.2rem 0.02rem 0.02rem lightyellow,
+              1.7rem -0.25rem 0.03rem 0.02rem lightyellow,
+              2rem -0.1rem 0.03rem 0.02rem lightyellow,
+              0.7rem -0.3rem 0.02rem 0.01rem lightyellow,
+              0.8rem -0.45rem 0.02rem 0.01rem lightyellow,
+              2.3rem 0 0.02rem 0.01rem lightyellow,
+              2.4rem -0.1rem 0.03rem 0.02rem lightyellow;
             left: 0.2rem;
             bottom: 0.03rem;
           }
@@ -602,7 +707,14 @@ export default {
             height: 0.02rem;
             border-radius: 50%;
             background: lightyellow;
-            box-shadow: 0 0 0.02rem 0.01rem lightyellow, 1.6rem -15rem 0.02rem 0.01rem lightyellow, 1.4rem -0.06rem 0.03rem 0.02rem lightyellow, 1.1rem -0.15rem 0.02rem 0.02rem lightyellow, 1rem -0.2rem 0.03rem 0.02rem lightyellow, 3.1rem -0.2rem 0.02rem 0.01rem lightyellow, 2.7rem -0.25rem 0.03rem 0.02rem lightyellow, 3rem -0.1rem 0.02rem 0.01rem lightyellow;
+            box-shadow: 0 0 0.02rem 0.01rem lightyellow,
+              1.6rem -15rem 0.02rem 0.01rem lightyellow,
+              1.4rem -0.06rem 0.03rem 0.02rem lightyellow,
+              1.1rem -0.15rem 0.02rem 0.02rem lightyellow,
+              1rem -0.2rem 0.03rem 0.02rem lightyellow,
+              3.1rem -0.2rem 0.02rem 0.01rem lightyellow,
+              2.7rem -0.25rem 0.03rem 0.02rem lightyellow,
+              3rem -0.1rem 0.02rem 0.01rem lightyellow;
             left: 0.4rem;
             bottom: -0.3rem;
           }
@@ -624,13 +736,14 @@ export default {
         z-index: 1;
         width: 0.94rem;
       }
+
       // 彩灯
       .normal_light {
         display: inline-block;
         width: 0.072rem;
         height: 0.072rem;
         border-radius: 50%;
-        background-image: radial-gradient(at 50% 40%, #fff 2px, #A9A9A9 80%);
+        background-image: radial-gradient(at 50% 40%, #fff 2px, #a9a9a9 80%);
         box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3);
         position: absolute;
         z-index: 3;
@@ -765,6 +878,7 @@ export default {
         right: 0.12rem;
         top: 2.79rem;
       }
+
       // 彩灯跑动颜色---粉色
       .light_run_pink {
         background-image: radial-gradient(at 50% 40%, #fff 2px, #ff4040 80%);
@@ -772,7 +886,9 @@ export default {
       }
 
       .light_run_blue {
-        background-image: radial-gradient(at 50% 40%, #fff 2px, deepskyblue 80%);
+        background-image: radial-gradient(at 50% 40%,
+            #fff 2px,
+            deepskyblue 80%);
         filter: drop-shadow(0px 0px 10px deepskyblue);
       }
 
@@ -781,6 +897,7 @@ export default {
         filter: drop-shadow(0px 0px 10px yellow);
       }
     }
+
     // 切换老虎机的按钮
     .switch_slots {
       display: flex;
@@ -788,7 +905,10 @@ export default {
       align-items: center;
       margin-top: 0.3rem;
       height: 0.5rem;
-      background-image: linear-gradient(-88deg, #FFFFFF 0%, #F7F8F9 50%, #FFFFFF 100%);
+      background-image: linear-gradient(-88deg,
+          #ffffff 0%,
+          #f7f8f9 50%,
+          #ffffff 100%);
 
       p {
         flex: 1;
@@ -804,7 +924,7 @@ export default {
           margin-top: 0.12rem;
         }
 
-        & > span {
+        &>span {
           display: inline-block;
           padding-top: 0.07rem;
           text-align: center;
@@ -827,7 +947,7 @@ export default {
 
           &::before {
             display: block;
-            content: '';
+            content: "";
             width: 0.01rem;
             height: 0.3rem;
             background: #d8d8d8;
@@ -838,6 +958,7 @@ export default {
         }
       }
     }
+
     // 奖券合成按钮
     .btns {
       margin-top: 30px;
@@ -887,6 +1008,7 @@ export default {
     }
   }
 }
+
 .theme01_y0,
 .theme02_y0 {
   .activity-rules {
@@ -894,6 +1016,7 @@ export default {
       background: var(--qq--com-img-bg-121) no-repeat left 0.07rem;
     }
   }
+
   .tabs_content {
     .slot_machine_content {
       .btns {
@@ -903,18 +1026,20 @@ export default {
       }
     }
   }
+
   .history-dialog {
     .history-record {
       .tab_bar {
         p {
           &.active {
-            color: #4987FB;
+            color: #4987fb;
           }
         }
       }
     }
   }
 }
+
 // 游戏记录弹窗样式
 .history-dialog {
   .history-record {
@@ -936,25 +1061,25 @@ export default {
         cursor: pointer;
 
         &.active {
-          color: #FF7000;
+          color: #ff7000;
         }
 
         &:nth-child(2)::before {
           display: block;
-          content: '';
+          content: "";
           width: 0.01rem;
           height: 0.14rem;
-          background-color: #D9D9D9;
+          background-color: #d9d9d9;
           position: absolute;
           top: 0.02rem;
         }
 
         &:nth-child(2)::after {
           display: block;
-          content: '';
+          content: "";
           width: 0.01rem;
           height: 0.14rem;
-          background-color: #D9D9D9;
+          background-color: #d9d9d9;
           position: absolute;
           right: 0;
           top: 0.02rem;
@@ -964,14 +1089,14 @@ export default {
 
     .table_history {
       .text-333 {
-        border: 1px solid #E4E4E4;
+        border: 1px solid #e4e4e4;
         border-radius: 0.08rem 0.08rem 0 0;
         border-bottom: 0 none;
         display: flex;
         justify-content: space-between;
         height: 0.46rem;
         line-height: 0.46rem;
-        background: #E7EAEE;
+        background: #e7eaee;
         font-size: 0.12rem;
         color: #565656;
         text-align: center;
@@ -992,7 +1117,7 @@ export default {
       .text-white {
         height: 0.46rem;
         line-height: 0.46rem;
-        background: #E7EAEE;
+        background: #e7eaee;
         font-family: PingFangSC-Medium;
         font-size: 16px;
       }
@@ -1050,9 +1175,9 @@ export default {
     }
   }
 }
+
 // 翻页组件样式
 .pagination_wrap {
-
   display: flex;
   justify-content: center;
   margin: 0.2rem auto;
@@ -1066,7 +1191,7 @@ export default {
     .goto_page {
       input {
         margin-bottom: 0;
-        border: 0.01rem solid #D2D2D2;
+        border: 0.01rem solid #d2d2d2;
         width: 0.32rem;
         height: 0.24rem;
         text-align: center;
@@ -1076,6 +1201,7 @@ export default {
     }
   }
 }
+
 .tabs_content {
   ::v-deep.text-primary {
     color: #666 !important;
@@ -1099,7 +1225,7 @@ export default {
     font-size: 12px;
     border-radius: 2px;
 
-    & > div {
+    &>div {
       height: 24px !important;
       min-height: 24px;
       line-height: 24px;
@@ -1149,11 +1275,17 @@ export default {
     }
   }
 }
+
 // ui 样式的弹窗
 .activity_alert {
   width: 3rem;
   min-height: 1.4rem;
-  background-image: linear-gradient(268deg, #B05500 0%, #F8C90D 31%, #FFF8DE 50%, #F8C600 80%, #AA4B00 100%);
+  background-image: linear-gradient(268deg,
+      #b05500 0%,
+      #f8c90d 31%,
+      #fff8de 50%,
+      #f8c600 80%,
+      #aa4b00 100%);
   border-radius: 0.15rem;
   position: fixed;
   top: 50%;
@@ -1182,7 +1314,7 @@ export default {
 
   .title {
     text-align: center;
-    color: #DE6F04;
+    color: #de6f04;
     height: 0.32rem;
     line-height: 0.32rem;
   }
@@ -1192,9 +1324,9 @@ export default {
     min-height: 0.9rem;
     background: rgba(255, 255, 255, 0.81);
     box-shadow: inset 0 0.01rem 0.08rem 0 rgba(189, 72, 72, 0.5),
-    0 0.02rem 0.04rem 0 rgba(0, 0, 0, 0.27),
-    0 0.02rem 0.07rem 0 rgba(0, 0, 0, 0.26),
-    0 0.02rem 0.14rem 0 rgba(0, 0, 0, 0.05);
+      0 0.02rem 0.04rem 0 rgba(0, 0, 0, 0.27),
+      0 0.02rem 0.07rem 0 rgba(0, 0, 0, 0.26),
+      0 0.02rem 0.14rem 0 rgba(0, 0, 0, 0.05);
     border-radius: 0.15rem;
     margin: 0 auto;
     overflow: hidden;
@@ -1223,12 +1355,13 @@ export default {
         cursor: pointer;
 
         &:nth-child(1) {
-          color: #FF8B00;
+          color: #ff8b00;
         }
       }
     }
   }
 }
+
 // 动画相关----------------------------------------------
 // 重置按钮动画
 .resetBtnAnim {
@@ -1242,6 +1375,7 @@ export default {
   animation-duration: 500ms;
   animation-iteration-count: 1;
 }
+
 // 彩金背景动效
 .dot_run {
   animation-name: dotRun;
@@ -1256,6 +1390,7 @@ export default {
   animation-iteration-count: infinite;
   animation-timing-function: ease-out;
 }
+
 // 彩灯  三种颜色交替闪动
 .three_colors {
   animation-name: lightsLight;
@@ -1263,6 +1398,7 @@ export default {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
+
 // 数字滚动
 .li1 {
   animation-name: scroll1;
@@ -1270,6 +1406,7 @@ export default {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
+
 // 彩金文字缩放动效
 .caijin_transfer {
   animation-name: scaleText;
@@ -1282,6 +1419,7 @@ export default {
   from {
     transform: translateY(0);
   }
+
   to {
     transform: translateY(700px);
   }
@@ -1292,40 +1430,46 @@ export default {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(0.04rem);
   }
+
   100% {
     transform: translateY(0);
   }
 }
 
- @keyframes buttons2 {
+@keyframes buttons2 {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(0.05rem);
   }
+
   100% {
     transform: translateY(0);
   }
 }
 
 /* 开始滚动 & 领取彩金 按钮动画 */
- @keyframes dotRun  {
+@keyframes dotRun {
   0% {
     transform: translateY(60px);
   }
+
   100% {
     transform: translateY(-3px);
   }
 }
 
- @keyframes dotRun1 {
+@keyframes dotRun1 {
   0% {
     transform: translateY(30px);
   }
+
   100% {
     transform: translateY(-60px);
   }
@@ -1334,78 +1478,92 @@ export default {
 @keyframes lightsLight {
   0% {
     // 白
-    background-image: radial-gradient(at 50% 40%, #fff 2px, #A9A9A9 80%);
+    background-image: radial-gradient(at 50% 40%, #fff 2px, #a9a9a9 80%);
     box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3);
   }
+
   8.3% {
     // 红
     background-image: radial-gradient(at 50% 40%, #fff 2px, #ff4040 80%);
     filter: drop-shadow(0px 0px 10px #ff4040);
   }
+
   16.6% {
     // 白
-    background-image: radial-gradient(at 50% 40%, #fff 2px, #A9A9A9 80%);
+    background-image: radial-gradient(at 50% 40%, #fff 2px, #a9a9a9 80%);
     box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3);
   }
+
   25% {
     // 红
     background-image: radial-gradient(at 50% 40%, #fff 2px, #ff4040 80%);
     filter: drop-shadow(0px 0px 10px #ff4040);
   }
+
   33.2% {
     // 白
-    background-image: radial-gradient(at 50% 40%, #fff 2px, #A9A9A9 80%);
+    background-image: radial-gradient(at 50% 40%, #fff 2px, #a9a9a9 80%);
     box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3);
   }
+
   41.4% {
     // 黄
     background-image: radial-gradient(at 50% 40%, #fff 2px, yellow 80%);
     filter: drop-shadow(0px 0px 10px yellow);
   }
+
   50% {
     // 白
-    background-image: radial-gradient(at 50% 40%, #fff 2px, #A9A9A9 80%);
+    background-image: radial-gradient(at 50% 40%, #fff 2px, #a9a9a9 80%);
     box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3);
   }
+
   58.3% {
     // 黄
     background-image: radial-gradient(at 50% 40%, #fff 2px, yellow 80%);
     filter: drop-shadow(0px 0px 10px yellow);
   }
+
   66.6% {
     // 白
-    background-image: radial-gradient(at 50% 40%, #fff 2px, #A9A9A9 80%);
+    background-image: radial-gradient(at 50% 40%, #fff 2px, #a9a9a9 80%);
     box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3);
   }
+
   75% {
     // 蓝
     background-image: radial-gradient(at 50% 40%, #fff 2px, deepskyblue 80%);
     filter: drop-shadow(0px 0px 10px deepskyblue);
   }
+
   83.3% {
     // 白
-    background-image: radial-gradient(at 50% 40%, #fff 2px, #A9A9A9 80%);
+    background-image: radial-gradient(at 50% 40%, #fff 2px, #a9a9a9 80%);
     box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3);
   }
+
   91.6% {
     // 蓝
     background-image: radial-gradient(at 50% 40%, #fff 2px, deepskyblue 80%);
     filter: drop-shadow(0px 0px 10px deepskyblue);
   }
+
   100% {
     // 白
-    background-image: radial-gradient(at 50% 40%, #fff 2px, #A9A9A9 80%);
+    background-image: radial-gradient(at 50% 40%, #fff 2px, #a9a9a9 80%);
     box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.3);
   }
 }
 
-@keyframes scaleText  {
+@keyframes scaleText {
   0% {
     transform: scale(1, 1);
   }
+
   50% {
     transform: scale(0.6, 0.6);
   }
+
   100% {
     transform: scale(1, 1);
   }

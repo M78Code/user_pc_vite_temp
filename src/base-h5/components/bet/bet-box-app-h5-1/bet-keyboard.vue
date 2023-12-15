@@ -30,7 +30,7 @@
                   <div class="nonebox4-fourth-num-sun" data-number='00'>00</div>
               </div>
               <div class="nonebox4-fourth-num">
-                  <div class="nonebox4-fourth-num-sun fontstyle" data-number='max'>{{ i18n_t('bet.max')}}</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;">{{ i18n_t('bet.max')}}</div>
                   <!-- <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div> -->
                   <div class="nonebox4-fourth-num-sun key-cell" data-num="x" @click.stop="_handleDeleteKey()">
                     <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`" alt="" data-num="x">
@@ -259,7 +259,6 @@ const _handleNumberKey = (num, e) => {
     ol_type = 'id'
   }
   ol_id = lodash.get(BetData.bet_keyboard_config,ol_type)
-  console.log('BetViewDataClass.bet_min_max_money', BetViewDataClass)
   let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
 
   // 显示最大金额
@@ -361,9 +360,6 @@ onUnmounted(() => {
     flex: auto;
     height: 25%;
   }
-}
-.fontstyle{
-  font-size: 0.14rem !important;
 }
 .nonebox4-fourth-num-sun {
     width: 100%;

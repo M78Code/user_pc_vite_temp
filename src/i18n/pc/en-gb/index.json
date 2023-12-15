@@ -56,9 +56,9 @@
       "tomorrow": "Tomorrow",
       "all_matches": "All Matches",
       "play_map": {
-        "1": "1X2",
-        "2": "O/U",
-        "4": "HDP",
+        "1": "1 X 2",
+        "2": "Total",
+        "4": "Handicap",
         "37": "Moneyline",
         "38": "Total Points",
         "39": "Point Handicap",

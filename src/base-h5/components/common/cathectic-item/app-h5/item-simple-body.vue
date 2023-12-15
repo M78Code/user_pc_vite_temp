@@ -37,7 +37,6 @@
       <p><label>{{ i18n_t('app_h5.cathectic.bet_number') }}：</label> <span @click="copy">{{data_b.orderNo}}</span></p>
       <p><label>{{i18n_t('bet_record.bet_time')}}：</label> <span>{{formatTime(+data_b.betTime, 'YYYY-mm-DD HH:MM')}}</span></p>
       <p><label>[{{Item.sportName}}] {{Item.matchName}}</label></p>
-      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
       <!-- 可赢额、结算, 注单状态： -->
       <item-footer :data_f="data_b"></item-footer>
     </div>

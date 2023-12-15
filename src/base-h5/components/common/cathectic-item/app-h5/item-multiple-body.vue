@@ -7,6 +7,7 @@
   <div style="display: none;">{{ BetRecordClass.bet_record_version }}</div>
   <!-- 矩形框中部 -->
   <div class="item-body yb_fontsize14">
+    <!-- 串关名称 -->
     <div class="item-header">
       {{ data_b.seriesValue }}
     </div>
@@ -14,19 +15,25 @@
       <template v-for="(item, index) in show_data_orderVOS" :key="index">
         <div class="items" v-if="item.isBoolean">
           <div class="top">
+            <!-- 比赛名称、赔率 -->
             <p>{{item.matchName}}<template v-if="item.sportId == 1001">{{item.matchDay}}&ensp;{{item.batchNo}}</template></p>
             <span>{{ item.oddFinally }}</span>
           </div>
-          <p class="list">
-            <span>{{item.playName}}</span>
+          <!-- 玩法 -->
+          <p class="list play">
+            <span class="play-market">{{item.playName}}</span>
+            <span class="play-market">{{ item.marketValue }}</span>
           </p>
           <!-- 结算页面显示 -->
           <div class="list score" v-if="BetRecordClass.selected == 3">
             <p>{{item.settleScore}}</p>
             <span :class="calc_item_bet_result(item).color">{{calc_item_bet_result(item).text}}</span>
           </div>
-          <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
           <span class="info">
+            {{item.matchInfo}}
+          </span>
+          <!--球类名称 赛前还是滚球 玩法名称 基准分 赔率类型-->
+          <span class="info bot">
             {{item.sportName}}
             <span v-if="data_b.seriesType != '3' && item.matchType != 4" v-html="i18n_t(`matchtype.${item.matchType}`)"></span>
             &ensp;{{item.playName}}
@@ -45,7 +52,6 @@
       </div>
     </div>
     <div class="foot-main">
-      <p><label>{{i18n_t('bet_record.bet_val')}}：</label> <span>{{format_money2(data_b.orderAmountTotal)}}{{ i18n_t('common.unit') }}</span></p>
       <!-- 可赢额、结算, 注单状态： -->
       <item-footer :data_f="data_b"></item-footer>
     </div>
@@ -70,7 +76,6 @@ let props = defineProps({
     type: Object
   }
 })
-
 const show_data_orderVOS = computed(() => {
   // orderVOS 长度大于3 且按钮是收起状态, 隐藏多于3条的
   if(box_bool.value === false && props.data_b.orderVOS.length > 3) {
@@ -128,7 +133,6 @@ template {
     padding: 0.12rem;
 
     .items {
-
       &:last-child {
 
         .list,
@@ -161,6 +165,20 @@ template {
           display: flex;
           justify-content: space-between;
         }
+        &.play {
+          display: flex;
+          align-items: center;
+        }
+        .play-market {
+          margin-right: 0.1rem;
+          &:last-child{
+            margin-right: 0;
+            max-width: 2.2rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
       }
 
       .info {
@@ -170,7 +188,9 @@ template {
         font-size: 0.12rem;
         color: var(--q-gb-bg-c-6);
         display: block;
-        padding-bottom: 0.1rem;
+        &.bot {
+          padding-bottom: 0.1rem;
+        }
       }
     }
   }
