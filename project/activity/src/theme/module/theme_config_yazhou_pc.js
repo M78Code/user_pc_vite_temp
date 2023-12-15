@@ -107,7 +107,7 @@ const theme_common = {
 // 主题差异化的
 const theme_different = {
   "activity-text-color-4": {
-    theme01: "#179CFF",
+    theme01: "#ff7000",
     theme01_y0: "#179CFF",
     theme02: "#ff7000",
     theme02_y0: "#4276FB",

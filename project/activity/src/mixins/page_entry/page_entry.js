@@ -87,12 +87,25 @@ export default {
     // 初始化tab 选项卡
 
     let act = "10008";
+    // 获取设置支持的参数activity
+    let activity = SEARCH_PARAMS.init_param.get('activity');
+    if(activity){
+      try {
+        // 初始化tab 选项卡
+        let act_0 = activity.split(',')[0]
+        if (['10007', '10008', '10009'].includes(act_0)) {
+          act = act_0;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    // 获取设置支持的参数isAPP
     //isAPP为true时,活动中心返回按钮就隐藏 不传isAPP或者为false时就正常显示
     if (SEARCH_PARAMS.init_param.get("isAPP") == 1) {
       this.isAPP = true;
     }
 
-    let params_obj = new URLSearchParams(location.search);
     this.is_maintaining = this.get_user.maintaining;
     // 方便调试, 先放出来正常的活动页面吧
     this.is_maintaining = false;
@@ -124,7 +137,9 @@ export default {
     }
   },
   methods: {
-    go_where() {},
+    go_where() {
+      window.history.back();
+    },
     set_user(args) {
       return UserCtr.set_user_info(args);
     },
