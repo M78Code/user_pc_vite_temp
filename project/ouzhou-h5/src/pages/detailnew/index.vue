@@ -25,7 +25,7 @@
     </div>
     <!-- <detail_header_tem2 v-if="match_detail?.mvs" :get_match_detail="match_detail || {}" :label="match_detail?.mvs <= -1 ? 'score' : ''"/> -->
     <div class="change-header-fix" ref="change_header_fix"
-      :style="{ visibility: (changeHeader||match_detail?.mvs > -1) ? 'visible' : 'hidden' }">
+      :style="{ visibility: (changeHeader||match_detail?.mvs > -1||match_detail?.mms > -1) ? 'visible' : 'hidden' }">
       <detail_header_tem0 :get_match_detail="match_detail || {}"/>
     </div>
     <div class="detail-container-position">
@@ -201,9 +201,11 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
   .mini-header-container {
-    position: sticky;
-    top: 0;
-    z-index: 80;
+    /** 不太清楚这里为什么要吸顶, 现有效果中似乎不需要这个吸顶 */
+    // position: sticky;
+    // top: 0;
+    position: relative;
+    z-index: 102;
     width: 100%;
   }
   .header-fix {
