@@ -857,7 +857,7 @@ svg {
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.6);
 
-  ::v-deep .scroll {
+  :deep(.scroll) {
     overflow: auto;
   }
 }

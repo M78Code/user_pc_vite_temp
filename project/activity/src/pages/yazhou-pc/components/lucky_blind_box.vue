@@ -833,7 +833,7 @@ export default {
     z-index: 99;
   }
 
-  ::v-deep .absolute-full {
+  :deep(.absolute-full) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -999,7 +999,7 @@ export default {
 .tabs_content {
 
   /*  分页按钮样式 */
-  ::v-deep .q-icon {
+  :deep(.q-icon) {
     color: #666;
     display: inline-block;
     font-size: 16px;
@@ -1010,7 +1010,7 @@ export default {
     border-radius: 2px;
   }
 
-  ::v-deep .q-btn {
+  :deep(.q-btn) {
     min-width: 24px !important;
     width: 24px;
     height: 24px;
@@ -1040,36 +1040,36 @@ export default {
     }
   }
 
-  ::v-deep .scroll {
+  :deep(.scroll) {
     overflow: hidden;
   }
 
-  ::v-deep .bg-primary {
+  :deep(.bg-primary) {
     background: #f77000 !important;
   }
 
-  ::v-deep .q-btn__wrapper {
+  :deep(.q-btn__wrapper) {
     width: 24px;
     height: 24px;
     padding-top: 0;
   }
 
-  ::v-deep .q-btn__wrapper:before {
+  :deep(.q-btn__wrapper:before) {
     box-shadow: none;
     border: 0.5px solid #d2d2d2;
   }
 
-  ::v-deep .text-white {
+  :deep(.text-white) {
     & .q-btn__wrapper:before {
       border: 0 none;
     }
   }
 
-  ::v-deep .fixed-full {
+  :deep(.fixed-full) {
     position: absolute !important;
   }
 
-  ::v-deep .q-dialog__inner {
+  :deep(.q-dialog__inner) {
     position: absolute !important;
   }
 }
