@@ -75,6 +75,7 @@ class UserCtr {
 
     // 用户语言
     this.lang = LocalStorage.get("lang");
+
     // 用户主题  日间版本 ，夜间版本 可能有多版本哦 不止二个
     this.theme = LocalStorage.get("theme",  LocalStorage.get('default-theme') );
 
@@ -154,7 +155,7 @@ class UserCtr {
     }
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        if(!['user_version','token_expired_max_process_timer'].includes(item) ){
+        if(!['user_version','token_expired_max_process_timer','lang','theme'].includes(item) ){
           this[item] = session_info[item]
         }
       }
@@ -233,9 +234,8 @@ class UserCtr {
     if(this.lang == data)return;
     this.lang = data;
     this.user_info.languageName = data;
-    useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
-    // console.error('EMIT_LANG_CHANGE',data)
     LocalStorage.set('lang',data)
+    useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
     this.update()
   }
   /**
