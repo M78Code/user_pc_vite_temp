@@ -9,7 +9,7 @@ export default async (app) => {//app, router, store,
   /** 三方类库 **************************/
   // 重写console.log, 支持ws推送console.log日志
   // 是否开启clog打印
-  const clog = (sessionStorage.getItem('clog') == 1)?1: ((location.href.indexOf('clog=1') != -1)?1:0);
+  const clog = (SEARCH_PARAMS.init_param.get('clog') == 1)?1: ((location.href.indexOf('clog=1') != -1)?1:0);
   sessionStorage.setItem('clog', clog);
   if(clog)
   {

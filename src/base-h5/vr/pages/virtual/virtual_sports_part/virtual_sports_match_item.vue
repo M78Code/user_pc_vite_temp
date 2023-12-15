@@ -5,20 +5,20 @@
 -->
 
 <template>
-  <div class="match-item-wrap hairline-border" :class="{standard:get_newer_standard_edition == 2}">
+  <div class="match-item-wrap hairline-border" :class="{standard:standard_edition == 2}">
     <div class="test-line" v-if="show_debugger_line">
       {{match_item.batchNo +'-'+ match_item.mid}}
     </div>
 
     <div class="match-data-item row"
       :class="{
-        standard:get_newer_standard_edition == 2,
-        'items-start':get_newer_standard_edition == 2,
-        'items-center':get_newer_standard_edition == 1
+        standard:standard_edition == 2,
+        'items-start':standard_edition == 2,
+        'items-center':standard_edition == 1
       }">
       <!-- 赛事信息 -->
       <div class="row items-start team-w-container" @click="goto_details(match_item)">
-        <div class="team-wrapper" :class="{standard:get_newer_standard_edition == 2}">
+        <div class="team-wrapper" :class="{standard:standard_edition == 2}">
           <!-- 战队名称 -->
           <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
             <img v-img="([lodash.get(match_item,'mhlu'), lodash.get(match_item,'frmhn')])" />
@@ -31,7 +31,7 @@
             </div>
           </div>
 
-          <div v-if="get_newer_standard_edition == 2"
+          <div v-if="standard_edition == 2"
             class="match-play-count standard row justify-start items-center">
             <!-- 比赛时间 -->
             <div class="time-wrap" v-if="match_item.csid != 1004"
@@ -64,7 +64,7 @@
       </div>
       <!-- 玩法 -->
       <div class="row items-center shrink-0 justify-between m-c-container"
-        :class="{standard:get_newer_standard_edition == 2,simple:get_newer_standard_edition == 1}"
+        :class="{standard:standard_edition == 2,simple:standard_edition == 1}"
       >
         <!-- 比分和视频icon -->
         <div class="score-wrap" v-if="false">
@@ -78,13 +78,13 @@
           </div>
           <!-- 视频icon -->
           <div class="play-icon-wrapper yb-flex-center"
-            v-if="get_newer_standard_edition == 2 && match_item.mms > 0" @click="switch_match_handle(i,match_item)">
+            v-if="standard_edition == 2 && match_item.mms > 0" @click="switch_match_handle(i,match_item)">
             play
             <span class="video-play-icon" :data_si="match_selected_i" :data_i="i"
               :class="get_play_btn_class(match_item,i)" />
           </div>
         </div>
-        <div class="simple-time" v-if="get_newer_standard_edition == 1">
+        <div class="simple-time" v-if="standard_edition == 1">
           <!-- 比赛时间 -->
           <div class="time-wrap" v-show="match_item.show_time > 0 || match_item.match_status == 2 || match_item.match_status == 11" :class="{whistle:match_item.match_status == 2 || match_item.match_status == 11}">
             <div class="time">{{match_item.show_time}}</div>
@@ -97,7 +97,7 @@
           </div>
         </div>
         <!--专业版-->
-        <div class="profession" v-if="get_newer_standard_edition == 2">
+        <div class="profession" v-if="standard_edition == 2">
           <template v-if="get_hp_list(1).length">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
@@ -109,7 +109,7 @@
 
           <!--标准版赔率容器-->
           <div class="standard-odd-l-w" v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
-            :class="{'status2':standard_odd_status == 1}" v-if="get_newer_standard_edition == 2">
+            :class="{'status2':standard_odd_status == 1}" v-if="standard_edition == 2">
             <!--标准版-->
             <div class="standard-odd-list row">
               <div class="odd-column-w" :key="hp_i_i"
@@ -118,7 +118,7 @@
                   :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_i,hp_i_i)">
                   <odd-column-item
                     :placeholder="ol_item.placeholder"
-                    :n_s="get_newer_standard_edition"
+                    :n_s="standard_edition"
                     :column_ceil="get_ol_length(hp_i)"
                     :odd_item_i="ol_item_i"
                     :match="match_item"
@@ -135,7 +135,7 @@
                   :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_i,hp_i_i)">
                   <odd-column-item
                     :placeholder="ol_item.placeholder"
-                    :n_s="get_newer_standard_edition"
+                    :n_s="standard_edition"
                     :column_ceil="get_ol_length(hp_i)"
                     :odd_item_i="ol_item_i"
                     :match="match_item"
@@ -147,13 +147,13 @@
           </div>
         </div>
         <!--新手版-->
-        <div v-if="get_newer_standard_edition == 1" class="bet-item-wrap row border-radius4">
+        <div v-if="standard_edition == 1" class="bet-item-wrap row border-radius4">
           <v-s-odd-item :ol_item="ol_item" :hl_item="get_hl_item(match_item)" @click.native="item_click4(match_item,ol_item)"
             :match_invalid="match_item.invalid" :match="match_item"
             v-for="(ol_item,o_i) of get_ol_list_f_match(match_item)" :key="o_i">
           </v-s-odd-item>
         </div>
-        <div v-if="get_newer_standard_edition == 1"
+        <div v-if="standard_edition == 1"
           class="match-play-count column justify-center items-center simple" @click="goto_details(match_item)">
           <div v-if="match_item.mc">{{match_item.mc}}+</div>
         </div>
@@ -171,6 +171,7 @@ import odd_column_item from "src/base-h5/components/match-list/components/odd-co
 // import betting from 'project_path/mixins/betting/betting.js';
 import virtual_sports_m_item_mixin from 'src/base-h5/vr/mixin/virtual_sports/virtual_sports_m_item_mixin.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 
 export default {
   // mixins:[betting,virtual_sports_m_item_mixin],
@@ -190,7 +191,8 @@ export default {
       arrows: "image/wwwassets/bw3/common/slide_icon_y0.svg",
       arrows_default: "image/wwwassets/bw3/common/slide_icon.svg",
       arrows_reverse: "image/wwwassets/bw3/common/slide_icon_reverse_y0.svg",
-      arrows_default_balck:"image/wwwassets/bw3/common/slide_icon_r.svg"
+      arrows_default_balck:"image/wwwassets/bw3/common/slide_icon_r.svg",
+      standard_edition  //新手版1    标准版  2
     }
   },
   created(){
@@ -530,7 +532,6 @@ export default {
     // }),
     footer_sub_menu_id(){return false;},
     get_video_process_data(){return VR_CTR.get_video_process_data();},
-    get_newer_standard_edition(){return 2;},
     get_n_s_changed_loaded(){return false;},
     get_curr_sub_menu_type(){ return VR_CTR.get_curr_sub_menu_type() },
     get_theme(){return 'theme01'},
@@ -761,11 +762,13 @@ export default {
 
     .profession {
       padding-top: 0.13rem;
-      height: 1.21rem;
+      // height: 1.21rem;
       overflow: hidden;
       position: relative;
 
       .play-count {
+          font-size: 0.1rem;
+          color: #AFB3C8;
           text-align: right;
           padding-right: 0.1rem;
       }
@@ -832,8 +835,11 @@ export default {
         border-radius: 0.02rem;
         margin-bottom: 0.02rem;
         background-color: var(--q-gb-bg-c-18);
+        ::v-deep(.odd-column-item .odd-title){
+          color: #AFB3C8;
+        }
         &.hp-2, &.hp-0 {
-          height: 0.46rem;
+          height: 0.49rem;
         }
 
         &:last-child {

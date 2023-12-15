@@ -88,6 +88,7 @@ class MenuData {
     this.menu_lv_mi_lsit = []
     // 选中的当前时间
     this.date_time = ""
+    this.data_tab_index = 0;
     // 时间api接口及参数信息 
     this.menu_match_date_api_config = {}
     // this.set_menu_h5_key_refresh()
@@ -95,15 +96,19 @@ class MenuData {
 
   // 初始化需要使用的数据
   set_init_menu_list(){
-    const menu_list = []
+    const menu_list = [];
+    const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     BaseData.mew_menu_list_res.forEach(item=> {
       if(item.mi < 300){
         menu_list.push(item)
       }
     })
+    if(current){
+      this.set_cache_class(current)
+    }
     this.menu_list = menu_list
-    this.set_current_lv1_menu(2)
-   
+    this.set_current_lv1_menu(current.current_lv_1_menu_i || 2)
+    
   }
 
   set_collect_list (list) {
@@ -170,7 +175,10 @@ class MenuData {
 
   // 设置 收藏 /vr体育 /电竞头部
   set_top_menu_title(val){
-    this.top_menu_title = val
+    this.top_menu_title = val;
+    this.set_cache_class({
+      top_menu_title:val
+    });
     this.update()
   }
   /**
@@ -188,9 +196,15 @@ class MenuData {
   }
 
   // 设置二级菜单id
-  set_current_lv_2_menu_i(val = {}){
+  set_current_lv_2_menu_i(val = {},type=0){
+    const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
+    val = type?current.current_lv_2_menu:val;
     this.current_lv_2_menu_i = val.mi;
     this.current_lv_2_menu = val;
+    this.set_cache_class({
+      current_lv_2_menu:val,
+      current_lv_2_menu_i:val.mi,
+    });
     this.set_menu_csid(val.mi);
     this.update()
   }
@@ -225,10 +239,13 @@ class MenuData {
    * item [object]当前点击对象
    */
   set_current_lv1_menu(lv1_mi) {
+    const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.current_lv_1_menu_i = lv1_mi
     this.menu_type.value = menu_type_config[lv1_mi]  
-   
+    this.set_cache_class({
+      current_lv_1_menu_i:lv1_mi
+    });
     // 早盘 /串关 不走此逻辑
     if([1,2,400].includes(lv1_mi*1)){
 
@@ -241,7 +258,7 @@ class MenuData {
       if([1].includes(lv1_mi*1)) {
         this.menu_csid = '';
       }
-      this.set_current_lv_2_menu_i( lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
+      this.set_current_lv_2_menu_i( current.current_lv_2_menu || lodash_.get(this.menu_lv_mi_lsit,`[${index}]`,{}))
     }
     this.update();
   }
@@ -252,9 +269,13 @@ class MenuData {
   }
 
   // 设置时间 并且设置时间请求参数
-  set_date_time(time){
-    this.data_time = time
+  set_date_time(index,time){
+    this.data_tab_index = index;
+    this.data_time = time;
     this.set_menu_match_date()
+    this.set_cache_class({
+      data_tab_index:index,
+    });
   }
 
   // 设置时间请求参数
