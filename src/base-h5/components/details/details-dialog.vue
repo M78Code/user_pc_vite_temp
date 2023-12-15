@@ -281,7 +281,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import 'src/base-h5/components/details/styles/details-theme/details-dialog.scss';
 .details-dialog-bg_blue{
-  background: #71c5ff !important;
+  background: #e8f5ff !important;
 }
 .details-dialog {
   max-width: 100%;
