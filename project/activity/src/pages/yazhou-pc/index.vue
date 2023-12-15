@@ -6,7 +6,7 @@
 -->
 <template>
   <q-scroll-area class="five-activity-action" ref="scrollareaRef">
-    {{ tab_Id }}
+    <!-- {{ tab_Id }} -->
     <div state="false">
       <!-- 头部 banner 图 -->
       <div class="top-banner">
