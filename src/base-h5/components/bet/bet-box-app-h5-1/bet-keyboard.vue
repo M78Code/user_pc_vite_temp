@@ -27,7 +27,7 @@
                   <div class="nonebox4-fourth-num-sun" data-number='3'>3</div>
                   <div class="nonebox4-fourth-num-sun" data-number='6'>6</div>
                   <div class="nonebox4-fourth-num-sun" data-number='9'>9</div>
-                  <div class="nonebox4-fourth-num-sun" data-number='10'>00</div>
+                  <div class="nonebox4-fourth-num-sun" data-number='00'>00</div>
               </div>
               <div class="nonebox4-fourth-num">
                   <div class="nonebox4-fourth-num-sun fontstyle" data-number='max'>{{ i18n_t('bet.max')}}</div>
@@ -85,7 +85,7 @@ const test = [
     {label: '9', value: '9', area: 'nine'},
     {label: '0', value: '0', area: 'zero'},
     {label: '.', value: '.', area: 'drop'},
-    {label: '00', value: '10', area: 'ten'},
+    {label: '00', value: '00', area: 'ten'},
     {label: i18n_t('bet.max'), value: 'max', area: 'max'},
     {label: i18n_t('app_h5.bet.delete'), value: 'x', area: 'delete'},
     {label: i18n_t('bet.pack_up'), value: 'shouqi', area: 'cancel'},
