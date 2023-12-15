@@ -1,9 +1,9 @@
 <template>
   <div>
-
-    <!-- <div  >    <LayoutH5 />  </div> -->
-   <div v-if="is_mobile">    <LayoutH5 />  </div>
-    <div v-else>    <LayoutPC />  </div>
+    <template v-if="init_load">
+      <div v-if="is_mobile"><LayoutH5 /></div>
+      <div v-else><LayoutPC /></div>
+    </template>
  
   </div>
 </template>
@@ -34,27 +34,8 @@ export default defineComponent({
        return Platform.is.mobile
     }
   },
-  created() {
-    this.test_init();
-    // console.error('--------------------',_);
-  },
-  methods: {
-    test_init() {
-      let online_obj = {
-        gr: "COMMON",
-        token: "7da8eba371de2057f7246c1ecb817bc1a66337f4",
-        lang: "zh",
-        pb: "1",
-        best_api: "https://api.lkjklkyi.com",
-      };
-
-      let final_obj = online_obj;
-
-      for (let i in final_obj) {
-        sessionStorage.setItem(i, final_obj[i]);
-      }
-    },
-  },
+  // created() {
+  // },
 });
 </script>
  

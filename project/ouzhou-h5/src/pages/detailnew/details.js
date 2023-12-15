@@ -143,6 +143,9 @@ export const details_main = (router, route) => {
   const startY = ref(0);
   const scroller_scroll_top = ref(0);
   const changeHeader = ref(false);
+  function touchIf(){
+    return match_detail.value.mvs <= -1 || match_detail.value.mms <= -1
+  }
   /**
    *@description 监听页面触摸
    *@param {e} e 请求参数
@@ -152,7 +155,7 @@ export const details_main = (router, route) => {
     startY.value = e.targetTouches[0].pageY;
   };
   const touchend = (e) => {
-    if (match_detail.value.mvs <= -1) {
+    if (touchIf()) {
       if (header_fix.value && change_header_fix.value) {
         let px160 =
           header_fix.value.clientHeight - change_header_fix.value.clientHeight;
@@ -171,7 +174,7 @@ export const details_main = (router, route) => {
    *@return {*}
    */
   const touchmove = (e) => {
-    if (match_detail.value.mvs <= -1) {
+    if (touchIf()) {
       if (header_fix.value && change_header_fix.value) {
         let px160 =
           header_fix.value.clientHeight - change_header_fix.value.clientHeight;
