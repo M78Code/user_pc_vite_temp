@@ -548,6 +548,9 @@ export default {
     'show_icon_status', // 是否展示图标
   ],
   watch: {
+    get_is_full_screen(value) {
+      this.$emit('change_fullscreen', value)
+    },
     // 监听用户是否长时间未操作
     get_is_user_no_handle(res){
       if(res && this.iframe_show && this.get_video_url.active == 'muUrl'){

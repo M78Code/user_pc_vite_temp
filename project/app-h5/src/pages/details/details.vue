@@ -18,7 +18,7 @@
       <div >
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
-            <videos v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
+            <videos v-if="get_show_video" @change_fullscreen="change_fullscreen" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
             <details-header  @click.stop :detail_data="detail_data" :view_tab="viewTab" :style="{display:get_show_video?'none':'block'}"></details-header>
           </div>
         </div>
@@ -29,7 +29,7 @@
         </div>
 
         <!-- @click.stop -->
-        <div class="play-wrapper"  ref="play_wrapper" :class="(get_bet_show) ? 'bet-wrapper-show' : 'bet-wrapper-hide'" >
+        <div class="play-wrapper" v-show="!get_is_dp_video_full_screen" ref="play_wrapper" :class="(get_bet_show) ? 'bet-wrapper-show' : 'bet-wrapper-hide'" >
           <!-- 玩法集 start -->
           <div class="details-tab-wrap" :class="{ 'z-index0': get_is_full_screen, 'z-index81': get_bet_show }">
             <!-- 足蓝赛种 才展示 投注/赛事分析 切换tab -->
@@ -250,6 +250,7 @@ export default defineComponent({
       off_listeners,
       clear_timer,
       new_match_detail_ctr,
+      change_fullscreen,
     } = details_main();
     watch(
       () => state_data.data_list,
@@ -285,8 +286,8 @@ export default defineComponent({
       },
       { deep: true }
     );
+    
     // 切换横屏状态时，调整相应玩法集顺序
-
     watch(
       () => state_data.get_is_hengping,
       () => {
@@ -399,6 +400,8 @@ export default defineComponent({
     //     }
     //   }
     // );
+
+    
     onMounted(() => {
       // 原created
       state_data.init_event_timer_count = 0;
@@ -430,7 +433,6 @@ export default defineComponent({
     //   set_video_zhiding(true);
     //   set_change_count(0);
       detail_scroller_height()
-
       state_data.is_creating = true;
       if(state_data.timer1_) { clearTimeout(state_data.timer1_) }
       state_data.timer1_ = setTimeout(() => {
@@ -543,6 +545,7 @@ export default defineComponent({
     // ]),
     return {
       ...toRefs(state_data),
+      change_fullscreen,
       i18n_t,compute_css_obj,compute_img_url,
       is_highlights,
       show_match_analysis_tab,
