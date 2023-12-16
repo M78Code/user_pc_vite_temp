@@ -39,9 +39,9 @@ export default {
       isMoNiEmit: false,
       form: {
         sportId: '1',
-        matchId: '2988076',
-        dataSourceCode: 'PD',
-        token: '',
+        matchId: '2959211',
+        dataSourceCode: 'RB',
+        token: 'bea5eddf73b1549cb330af08cd5255fd7b3e2ba4',
       },
     };
   },
@@ -53,6 +53,7 @@ export default {
       this.$refs.form.validate()
         .then(success => {
           if (success) {
+            sessionStorage.setItem("formData",JSON.stringify(this.form))
             console.log(this.form)
             this.isStart = true
             this.$emit('submit', this.form)
