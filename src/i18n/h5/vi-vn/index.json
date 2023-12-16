@@ -352,7 +352,8 @@
     "mins": " phút",
     "odd_all_closed": "Trận đấu đã đóng hết kèo cược",
     "odd_closed": "Kèo cược đã đóng",
-    "popular_recommendation": "Đề xuất hot"
+    "popular_recommendation": "Đề xuất hot",
+    "non":"không"
   },
   "early": {
     "btn1": "Dừng trả cược sớm",

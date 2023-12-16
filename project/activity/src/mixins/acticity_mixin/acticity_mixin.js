@@ -9,7 +9,7 @@ import {
   LOCAL_COMMON_FILE_PREFIX,
   LOCAL_PROJECT_FILE_PREFIX,
 } from "project_path/src/core/index.js";
- 
+
 export default {
   data() {
     return {
@@ -61,5 +61,24 @@ export default {
       let s = (time.getSeconds() + "").padStart(2, 0);
       return [y, m, d, h, mm, s];
     },
+    HTML_MESSAGE(msg){
+      return `
+        <div style="text-align:center;">
+          <img src="${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-h5/common/warn.svg"/>
+          <p>${msg}</p>
+        </div>
+      `
+    },
+    $toast(msg, dur) {
+      this.$q.notify({
+        position: 'center',
+        message: this.HTML_MESSAGE(msg),
+        timeout: dur,
+        html:true
+      })
+    },
+    t(msg){
+      return this.$t(msg)
+    }
   },
 };
