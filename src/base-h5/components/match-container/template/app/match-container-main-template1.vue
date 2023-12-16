@@ -1252,7 +1252,6 @@ export default {
           background: var(--q-color-page-bg-color-59);
           flex-shrink: 0;
           margin: 0.13rem 0.05rem 0;
-
           &.simple {
             margin-right: 0.03rem;
           }
@@ -1573,6 +1572,7 @@ export default {
       .match-type {
         margin-right: 0.14rem;
       }
+      
       :deep(.counting-down-wrap){
         color: #AFB3C8 !important;
         width: 150px !important;

@@ -239,7 +239,7 @@
           }
           .team-title-container {
             .team-t-title-w {
-              color: var(--q-match-fs-color-1);
+              //color: var(--q-match-fs-color-1);
               &.name {
                 color: var(--q-match-fs-color-1);
                 font-size: 0.12rem ;
@@ -369,13 +369,13 @@
                 background-color: transparent;
               }
               .odd-title {
-                color:  var(--q-color-fs-color-10);
+                color:  var(--q-gb-t-c-19);
                 span {
-                  color:  var(--q-color-fs-color-10);
+                  color:  var(--q-gb-t-c-19);
                 }
               }
               .odd-value {
-                color:var(--q-gb-t-c-20);
+                color:var(--q-gb-t-c-18);
               }
             }
             /* ************** 标准版投注项选择样式 ************** -E */
