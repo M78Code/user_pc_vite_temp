@@ -31,7 +31,7 @@
             :class="{'status2':standard_odd_status == 1}" v-if="standard_edition == 2">
             <!--标准版-->
             <div v-for="(data_i,i) of match_item.hps" :key="i" class="dddd">
-              <div class="hpn-title">
+              <div class="hpn-title" @click="goto_details(match_item)">
                 <span>{{ data_i.hpn }}</span>
                 <span>显示所有盘口 ></span>
               </div>
