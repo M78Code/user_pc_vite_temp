@@ -24,7 +24,7 @@
 import { ref } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {LocalStorage,compute_img_url} from 'src/output/'
-const isShow = ref(!LocalStorage.set('standard_edition'));
+const isShow = ref(!LocalStorage.get('standard_edition'));
 const emits = defineEmits(["change"])
 function set_standard_edition(v) {
     isShow.value = false
@@ -60,7 +60,6 @@ function set_standard_edition(v) {
     .bg {
         padding-top: 12px;
         background: var(--q-gb-bg-c-11);
-        width: 150px;
     }
     .title {
         color: var(--q-gb-t-c-20);
@@ -78,7 +77,7 @@ function set_standard_edition(v) {
 
     img {
         display: block;
-        width: 132px;
+        width: 150px;
         height: 90px;
         margin: 10px auto 0;
     }
