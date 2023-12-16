@@ -141,15 +141,18 @@
                   </div>
                 </div>
                 <!--玩法数量-->
-                <div class="goto-detail" @click='goto_details(match)'>
-                  <span class="count_span" :class="{ esports: 3000 == menu_type }">
-                    <span class="mc-n">
-                      {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
+                <div class="right-score">
+                  <score-list :main_source="main_source" :match="match"></score-list>
+                  <div class="goto-detail" @click='goto_details(match)'>
+                    <span class="count_span" :class="{ esports: 3000 == menu_type }">
+                      <span class="mc-n">
+                        {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) : i18n_t('footer_menu.more') }}+
+                      </span>
+                      <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
+                        <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
+                      </span>
                     </span>
-                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">
-                      <IconWapper color="#888" name="icon-triangle1" size="14px" class="icon-wapper-more" />
-                    </span>
-                  </span>
+                  </div>
                 </div>
               </div>
               <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
@@ -275,7 +278,6 @@
                 <div class="right-content-style">
                   <!-- 右边盘口组件 -->
                   <OddListWrap :main_source="main_source" :match="match_of_list" />
-                  <!-- <score-list :main_source="main_source" :match="match"></score-list> -->
                 </div>
                 
                 </div>
@@ -409,7 +411,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--q-gb-t-c-20);
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
       border-top: 2px solid rgba(116, 196, 255, 0.5);
@@ -1021,7 +1023,7 @@ export default {
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      width: 1.61rem;
+      width: 1.72rem;
       position: relative;
       z-index: 1;
 
@@ -1362,6 +1364,28 @@ export default {
   align-items: center;
   justify-content: space-between;
 
+  .right-score{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    :deep(.score-section){
+      height: 100%;
+      flex: 1;
+      .scroll-container-w{
+        height: 100%;
+        .score-se-inner{
+          height: 100%;
+          width: auto;
+          display: flex;
+          .score-se-inner2{
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+
   &.simple {
     height: 0.34rem;
 
@@ -1437,6 +1461,7 @@ export default {
     }
 
     .goto-detail {
+      width: 30px;
       .count_span {
         .mc-n {
           width: 0.14rem;
@@ -1447,6 +1472,8 @@ export default {
   }
 
   .timer-wrapper-c {
+    position: relative;
+    top: 1px;
     height: 100%;
     color: var(--q-gb-t-c-19);
 
@@ -1458,6 +1485,8 @@ export default {
       height: auto;
     }
     .date-time{
+      position: relative;
+      top: 1px;
       font-size: 12px
     }
   }

@@ -15,7 +15,7 @@
       </div>
       <div>
       </div>
-      <div class="more row items-center justify-between"  @click="searchClick">
+      <div v-if="!is_vr" class="more row items-center justify-between"  @click="searchClick">
        <img
             class="league-icon"
             :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league_icon.svg`"
@@ -75,6 +75,8 @@ import { default_theme_key } from "src/core/theme/";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
 import { i18n_t } from "src/boot/i18n.js";
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
+import { is_vr } from 'src/base-h5/mixin/menu.js'
+
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });

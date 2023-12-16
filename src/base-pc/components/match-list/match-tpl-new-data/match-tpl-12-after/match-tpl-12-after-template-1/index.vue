@@ -97,7 +97,8 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue';
+// import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData, UserCtr } from "src/output/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";

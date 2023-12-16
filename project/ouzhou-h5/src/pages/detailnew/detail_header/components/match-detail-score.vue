@@ -1,6 +1,6 @@
 <!-- 处理网球 -->
 <script setup name="match-detail-score">
-import { defineProps } from "vue"
+// import { defineProps } from "vue"
 const props = defineProps({
 
 })
