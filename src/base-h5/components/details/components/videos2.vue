@@ -88,9 +88,8 @@
         scrolling="no"
         allowfullscreen="true"
         allow="autoplay"
-        :src="iframe_src+'&rdm='+iframe_rdm"
+        :src="`${iframe_src}&rdm=${iframe_rdm}`"
         ></iframe>
-        <slider class="slider-container"  v-show="show_icons && get_video_url.active === 'muUrl'"  @change="change_volumn"/>
         
         <!-- 视频单页项目精彩回放页面-->
         <iframe
@@ -264,10 +263,12 @@
           </div>
         </div>
         <!-- 声音按钮 -->
-        <!-- <div v-show="show_icons && get_video_url.active === 'muUrl' && !load_error" class="voice-btn" @click="toggle_click(2, get_video_url.active)">
+        <div v-show="show_icons && get_video_url.active === 'muUrl' && !load_error" class="voice-btn" @click.stop="toggle_click(2, get_video_url.active)">
           <img v-if="voice" :src="voice_def">
           <img v-else :src="voice_act">
-        </div> -->
+        </div>
+        <slider class="slider-container" :value="current_event_video.voice" v-show="show_icons && get_video_url.active === 'muUrl'"  @change="change_volumn"/>
+
         <!-- 全屏按钮 -->
         <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" class="full-screen-btn" @click="set_full_screen">
           <img v-if="get_is_full_screen"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
@@ -350,7 +351,7 @@ export default {
       analyze_yo: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse2_y0.svg`,
       analyze2_y0: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/analyse_y0.svg`,
       select_item:-1,
-      voice: true,
+      voice: false,
       nail: true,
       show_icons: false, //控制图标默认展示
       iframe_src: '',
@@ -644,9 +645,9 @@ export default {
     get_video_url(new_value, old_value) {
       if(new_value.active == 'muUrl'){
         if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-          this.iframe_src = new_value.media_src + this.dj_http_fix(new_value.media_src) +'controls=1'
+          this.iframe_src = new_value.media_src + this.dj_http_fix(new_value.media_src) +'controls=0'
         } else {
-          this.iframe_src = new_value.media_src + '&controls=1'
+          this.iframe_src = new_value.media_src + '&controls=0'
         }
         //用戶第一次登录 显示 视频指引层
         let is_login_one = localStorage.getItem("is_first_login");
@@ -662,9 +663,9 @@ export default {
       else{
         if (new_value.referUrl && new_value[new_value.active]) {
           if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-            this.iframe_src = new_value[new_value.active] + this.dj_http_fix(new_value[new_value.active]) +'controls=1'
+            this.iframe_src = new_value[new_value.active] + this.dj_http_fix(new_value[new_value.active]) +'controls=0'
           } else {
-            this.iframe_src = new_value[new_value.active] + '&controls=1'
+            this.iframe_src = new_value[new_value.active] + '&controls=0'
           }
           
         }
@@ -798,6 +799,7 @@ export default {
         }
         this.voice = volume > 0;
         this.current_event_video.voice = volume;
+        
         video.send_message(data)
       },
       // 设置iframe标签是否开启
@@ -1100,7 +1102,7 @@ export default {
           break;
         case 'video_line_index':
           // 处理业务逻辑
-          this.voice = true
+          // this.voice = true
           this.video_line_index = data.val
           break;
         case 'onload':
@@ -1153,7 +1155,8 @@ export default {
       // 开启/关闭声音
       if (num == 2) {
         this.voice = !this.voice;
-        this.sendMessage2({cmd: 'voice', val: this.voice})
+        this.change_volumn(this.voice ?1:0)
+        // this.sendMessage2({cmd: 'volume_video', val:this.voice ?1:0})
       }
       if (num == 4) {
         if (this.get_video_url.active == 'lvs') {
@@ -1419,9 +1422,9 @@ export default {
     reload_create_fun(){
       if([ "muUrl", "lvs"].includes(this.get_video_url.active) ){
         if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-          this.iframe_src = this.get_video_url.media_src + this.dj_http_fix(this.get_video_url.media_src) +'controls=1'
+          this.iframe_src = this.get_video_url.media_src + this.dj_http_fix(this.get_video_url.media_src) +'controls=0'
         } else {
-          this.iframe_src = this.get_video_url.media_src + '&controls=1';
+          this.iframe_src = this.get_video_url.media_src + '&controls=0';
         }
       } else {
         if(( this.get_video_url.active == "muUrl" && this.get_video_url.referUrl == '') || ( this.get_video_url.active == "animationUrl" && this.get_video_url.animationUrl == '' )){
@@ -1926,8 +1929,8 @@ export default {
   // 声音按钮
   .voice-btn {
      position: absolute;
-     left: 0;
-     bottom: 0;
+     left: 10px;
+     bottom: 4px;
      width: 60px;
      height: 36px;
      display: flex;
