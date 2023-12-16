@@ -13,7 +13,7 @@
       <div class="bet-box-content">
         <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
         <!-- 单关 投注 -->
-        <div class="bet-scroll">
+        <div class="bet-scroll" :class="!BetData.is_bet_single && BetData.bet_keyboard_show ?'h188':''">
           <div v-if="BetViewDataClass.bet_order_status == 1">
             <template v-if="BetData.is_bet_single">
               <div
@@ -33,37 +33,23 @@
               </div>
 
               <!-- 串关投注 限额 -->
-              <template v-if="BetData.bet_s_list.length > 1">
-                <betSpecialInput
-                  :items="BetViewDataClass.bet_special_series[0]"
-                />
-
-                <div
-                  class="f-s-c cursor h44 pl-30 bor-b"
-                  @click="set_show_single()"
-                >
-                  <sapn class="fon12 font400 text-8a8">{{
-                    i18n_t("bet.bet_n_")
-                  }}</sapn>
-                  <span
-                    class="icon-arrow icon-arrow-series"
-                    :class="ref_data.show_single ? 'arrow' : ''"
-                  ></span>
-                </div>
-                <!-- 复式连串过关投注 限额 -->
-                <template
-                  v-if="BetData.bet_s_list.length > 1 && ref_data.show_single"
-                >
-                  <template
-                    v-for="(item, index) in BetViewDataClass.bet_special_series"
-                    :key="index"
-                  >
-                    <div class="bor-b" v-if="index != 0">
-                      <betSpecialInput :items="item" />
-                    </div>
-                  </template>
+              <!-- 复式连串过关投注 限额 -->
+              <template v-if="BetData.bet_s_list.length > 1"  >
+                <template v-for="(item, index) in BetViewDataClass.bet_special_series" :key="index">
+                  <div class="bor-b">
+                    <betSpecialInput :items="item" />
+                  </div>
                 </template>
               </template>
+
+              <div class="f-s-c cursor h44 pl-30 bor-b cursor" @click="set_show_single()">
+                <sapn class="fon12 font400 text-8a8 f-e-c">
+                  <span class="re icon-mid ">
+                    <i class="icon-del1 icon-add" />
+                  </span> 
+                  添加赛事  
+              </sapn>
+              </div>
             </template>
           </div>
 
@@ -88,6 +74,11 @@
           </template>
         </div>
 
+        <!-- 串关投注 键盘 -->
+        <template v-if="!BetData.is_bet_single">
+          <keyboard v-if="BetData.bet_keyboard_show"/>
+        </template>
+
         <!-- 底部投注信息 -->
         <betFooter />
       </div>
@@ -105,6 +96,7 @@ import betItem from "./components/bet-item.vue"; // 投注列表
 import betFooter from "./components/bet-footer.vue"; // 投注底部信息
 import betResult from "./components/bet-result.vue"; // 投注结果
 import betSpecialInput from "./components/bet-special-input.vue";
+import keyboard from "./components/bet-keyboard.vue";
 
 const ref_data = reactive({
   show_single: false,
@@ -118,12 +110,9 @@ const pack_up = () => {
   BetData.set_bet_box_h5_show(sss);
 };
 
-// 复合式串关 开关
+// 关闭弹窗
 const set_show_single = () => {
-  // 串关数 大于3条才可以开启 复式串关
-  if (BetData.bet_s_list.length > 2) {
-    ref_data.show_single = !ref_data.show_single;
-  }
+  BetData.set_bet_box_h5_show(false)
 };
 
 // 单关/串关 切换
@@ -156,7 +145,7 @@ const show_merge_change = () => {
   width: 100%;
   padding: 0 0.14rem;
   -webkit-overflow-scrolling: touch;
-  border-radius: 24px 24px 0 0;
+  border-radius: .24rem .24rem 0 0;
   //border: 1px solid;
   background-color: var(--q-gb-bg-c-15);
   z-index: 1999;
@@ -164,8 +153,11 @@ const show_merge_change = () => {
 }
 
 .bet-scroll {
-  max-height: 400px;
+  max-height: 4rem;
   overflow-y: auto;
+  &.h188{
+    height: 1.8rem;
+  }
 }
 
 .bet-box-content {
@@ -185,5 +177,9 @@ const show_merge_change = () => {
   z-index: 550;
   // backdrop-filter: blur(5px);
   background: rgba(0, 0, 0, 0.5);
+}
+.icon-mid{
+  position: relative;
+  transform: rotate(45deg);
 }
 </style>

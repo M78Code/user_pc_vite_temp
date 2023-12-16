@@ -112,6 +112,7 @@ watch(() => pre_odds_value, (new_) => {
 })
 
 watch(() => money.value, (new_) => {
+  console.error('ssnew_s,new_',new_)
   let emit_name = 'EMIT_INPUT_BET_MONEY'
   if(BetData.is_bet_single){
     emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
@@ -152,11 +153,6 @@ const _handleKeyPress = (e) => {
       _handleNumberKey(num, e);
       break;
   }
-  let emit_name = 'EMIT_INPUT_BET_MONEY'
-  if(BetData.is_bet_single){
-    emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
-  }
-  useMittEmit(MITT_TYPES[emit_name], { params:BetData.bet_keyboard_config, money:money.value } )
 }
 
 // 小数点 .
@@ -178,7 +174,7 @@ const _handleDecimalPoint = () => {
     money_ = money_ + ".";
   }
   money.value = money_
-  BetData.set_bet_amount(money_)
+ 
 }
 
 // MAX键
@@ -186,7 +182,6 @@ const _handmaxKey = () => {
   let old = BetData.bet_keyboard_config.playOptionsId
   money.value = lodash_.get(BetViewDataClass,`bet_min_max_money['${old}'].max_money`,8888)
 
-  BetData.set_bet_amount(money.value)
 }
 // 删除键
 const _handleDeleteKey = () => {
@@ -194,7 +189,6 @@ const _handleDeleteKey = () => {
   //删除最后一个
   let s = money.value.toString()
   money.value = s.substring(0, s.length - 1);
-  BetData.set_bet_amount(money.value )
 }
 // 数字建
 const _handleNumberKey = (num, e) => {
@@ -233,7 +227,7 @@ const _handleNumberKey = (num, e) => {
     ol_type = 'id'
   }
   ol_id = lodash.get(BetData.bet_keyboard_config,ol_type)
-  let max_money = BetViewDataClass.bet_min_max_money[ol_id].max_money
+  let max_money =lodash.get( BetViewDataClass,`bet_min_max_money[${ol_id}].max_money`,8888)
 
   // 显示最大金额
   if (money_ && +money_ >= +max_money) {
@@ -241,7 +235,6 @@ const _handleNumberKey = (num, e) => {
   }
 
   money.value = money_
-  BetData.set_bet_amount(money_)
 }
 
 // 获取商户配置的 快捷金额
