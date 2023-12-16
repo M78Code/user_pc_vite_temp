@@ -24,7 +24,7 @@
 import { ref } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {LocalStorage,compute_img_url} from 'src/output/'
-const isShow = ref(!LocalStorage.set('standard_edition'));
+const isShow = ref(!LocalStorage.get('standard_edition'));
 const emits = defineEmits(["change"])
 function set_standard_edition(v) {
     isShow.value = false
