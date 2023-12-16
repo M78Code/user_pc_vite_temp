@@ -48,7 +48,7 @@
         repeatCount="indefinite"
       ></animate>
     </ellipse>
-    <text style="fill: rgba(255,255,255,.4)" x="275" y="145">进场事件</text>
+    <text style="fill: rgba(255,255,255,.4)" x="275" y="145">中立事件</text>
   </svg>
   <svg v-else :width="width" :height="height" :key="key_1">
     <path :d="svgPath.path" :fill="pathAnimateColors[0]">

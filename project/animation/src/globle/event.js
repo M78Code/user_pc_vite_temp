@@ -32,7 +32,7 @@ const homeSvgAnimationConfig = {
   },
   // svg 文字动画参数配置
   textAnimateParams: {
-    text: '主场进球', // 配置文字
+    text: '主队事件', // 配置文字
     from: '0', // 从第一个位置 
     to: '100', // =》 到第二个位置
     dur: '0.5s', // 文字动画时间
@@ -78,7 +78,7 @@ const awaySvgAnimationConfig = {
   },
   // svg 文字动画参数配置
   textAnimateParams: {
-    text: '客场进球', // 配置文字
+    text: '客队事件', // 配置文字
     from: '520', // 从第一个位置 
     to: '450', // =》 到第二个位置
     dur: '0.5s', // 文字动画时间
