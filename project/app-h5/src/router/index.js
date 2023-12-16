@@ -120,6 +120,12 @@ const router = createRouter({
               },
             ]
           },
+          //活动页面
+          {
+            path: "/activity",
+            name: "activity",
+            component: () => import("../pages/activity/index.vue"),
+          },
       ],
     },
     {
