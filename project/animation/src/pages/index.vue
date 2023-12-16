@@ -1,31 +1,59 @@
 <!-- 事件组件，必须参数： 赛种ID：sportId 赛事id：matchId 数据源：dataSourceCode -->
 <template>
-    <div class="row q-pa-lg" style="background: #1a1a1a;">
-        <!-- <div class="col-12" @click="get_data_list" style="">拉取数据</div> -->
-        <div class="col-6" style="height: 100vh;overflow: auto;">
-            <timeline
-                class="components-item" 
-                :list="dataObj"
-            />
+    <div style="background: #1a1a1a; border: 1px solid #1a1a1a">
+        <div>
+            <!-- 参数栏 <b class="text-red">xingxing</b> -->
+          <top-form
+            @submit="submit"
+            @pause="pause"
+            @reset="reset"
+          />
         </div>
-       <div class="col q-ml-sm" style="height: 100vh;overflow: auto;">
-        <div
-            v-for="(item, index) in dataObj"
-            :key="index"
-            class="content-list-item text-panda-text-light"
-            style="margin:10px"
-            :class="item.class"
-          >
-            <div class="content-list-item-circle"></div>
-            <div class="content-list-item-time">
+        <div class="row q-pa-lg">
+            <!-- 左边 -->
+            <div class="col-6">
+                <!-- 动画 -->
+                <div class="q-ml-sm">
+                    <!-- <b class="text-red">足球动画区域（xingxing）</b> -->
+                    <br>
+                    <q-btn 
+                        color="secondary" 
+                        @click="get_event_code()" 
+                        label="随机推送事件" 
+                    />
+                    <!-- <b class="text-blue">自动生成事件开启中。。。</b> -->
+                    <svg_area :current_event_code="current_event_code" />
+                </div>
+                <!-- 比分 -->
+                <div style="height: 100px;">
+                    <!-- 赛事比分区域<b class="text-red">lowen</b> -->
+                </div>
+                <!-- 对接后台展示区域 -->
+                <div style="height: 100px;">
+                    <!-- 对接后台展示区域<b class="text-red">freeze</b> -->
+                </div>
             </div>
-            <div class="content-list-item-info">
-              <span>
-                {{ item.currentTime }}' - {{ item.eventName }}
-              </span>
+            <!-- 右边 -->
+            <div class="col-6">
+                <!-- 最新的2条事件 -->
+                <div class="q-py-sm border-1">
+                    <b class="text-red">最新的2条事件</b>
+                    <timeline
+                        class="components-item" 
+                        :list="dataObj.slice(0,2)"
+                    />
+                </div>
+                <!-- 全部事件 -->
+                <div class="q-py-sm q-mt-sm border-1" style="height: calc(100vh - 240px); overflow: auto;">
+                    <b class="text-red">全部事件</b>
+                    <!-- <BackendConfig /> -->
+                    <timeline
+                        class="components-item" 
+                        :list="dataObj"
+                    />
+                </div>
             </div>
         </div>
-       </div>
     </div>
 </template>
 <script>
@@ -33,18 +61,28 @@ import { api_event } from "project/animation/src/public/api/index"
 import { defineComponent } from "vue";
 import websocket_base from "project/animation/src/mixins/modules/websocket/websocket_base.js"
 import timeline from "project/animation/src/pages/components/timeline.vue"
+import svg_area from "project/animation/src/pages/components/svg-area.vue"
+import { test_data } from "project/animation/src/globle/event_data.js"
+import BackendConfig from "project/animation/src/pages/components/backend_config.vue"
+import TopForm from "project/animation/src/pages/components/form.vue"
 import _ from 'lodash';
 import axios from "axios";
 import { uid } from "quasar"
+import { event_animation } from 'project/animation/src/globle/event.js'
 let WEB_ENV = axios.prototype.WS_DOMAIN_FRNGKONG_1
 export default defineComponent({
     components: {
         timeline,
+        svg_area,
+        TopForm,
+        BackendConfig,
     },
     mixins:[websocket_base],
  data() {
     // sportId=1&dataSourceCode=PA&matchId=2928959
+    
     return {
+        current_event_code: '',
         websocket_connection_1_url: WEB_ENV,
         dataObj: [],
         queryParams: null,
@@ -57,49 +95,43 @@ export default defineComponent({
             ],
             "protocolVersion": 2,
             "uuid": uid()
-        }
+        },
+        autoEventTimer: null
     }
  },
  created() {
-    console.warn(this.$route.query)
-    let { sportId, matchId, dataSourceCode } = this.$route.query || {}
-    console.warn(sportId)
-    console.warn(matchId)
-    console.warn(dataSourceCode)
-    // 必须参数判断
-    if(!sportId || !matchId || !dataSourceCode) {
-        console.error('参数缺失')
-    }else {
-        this.get_query_params()
-        this.websocket_connection_connect(1);
-        console.warn(this.websocket_connection_connect)
-        this.get_data_list()
-    }
-    
  },
  methods: {
-    set_websocket_data(data) {
-        console.warn('页面接收到消息')
-        console.warn(data)
-        console.log(/\{/.test(data.data))
-        if (/\{/.test(data.data)) {
-           let convert_data = JSON.parse(data.data);
-           console.warn(convert_data)
-           let { command, responseData,ack,msgId } = convert_data;
-           console.warn(responseData)
-           if (command === 30013) {
-            this.dataObj.unshift(responseData)
-           }
-        }
-    },
-    // 获取query参数
-    get_query_params() {
-        let { sportId, matchId, dataSourceCode } = this.$route.query || {}
+   // 启动
+   submit(form){
+     this.initSocket(form)
+   },
+   // 停止
+   pause(){
+     this.set_timer(3)
+     this.websocket_connection_close(1)
+   },
+   // 清空
+   reset(){
+    this.dataObj = []
+   },
+   // 初始化socket
+   initSocket(form = {}){
+    console.warn('------')
+    console.warn(form)
+    this.get_query_params(form)
+    this.websocket_connection_connect(1);
+    this.get_data_list()
+   },
+   // 获取query参数
+   get_query_params(from) {
+        let { sportId, matchId, dataSourceCode } = from
         this.queryParams = {
             sportId,
             matchId,
             dataSourceCode
         }
+        console.warn(this.queryParams)
     },
     // 获取ws请求参数
     get_ws_params() {
@@ -154,8 +186,55 @@ export default defineComponent({
         }).catch(err => {
             console.error(err)
         })
+    },
+
+
+    // type 1 开始 2 结束
+    set_timer(type) {
+        if(type == 1) {
+            this.set_timer(2)
+            this.autoEventTimer = setInterval(()=> {
+                this.get_event_code()
+            },2000)
+        }else {
+            clearInterval(this.autoEventTimer)
+            this.autoEventTimer = null
         }
-    }
+    },
+    set_websocket_data(data) {
+        // console.warn('页面接收到消息')
+        // console.warn(data)
+        console.log(/\{/.test(data.data))
+        if (/\{/.test(data.data)) {
+           let convert_data = JSON.parse(data.data);
+           let { command, responseData,ack,msgId } = convert_data;
+           if (command === 30013) {
+            this.dataObj.unshift(responseData)
+           }
+        }
+    },
+    // 生成随机事件
+    get_event_code() {
+        console.warn('自动获取生成时间')
+        let index = Math.floor(Math.random()*5)
+        let data_ = test_data[index] 
+        const {eventCode} = data_ || {}
+        this.current_event_code = eventCode
+        console.warn(data_)
+        let ws_obj = {
+            "ack": 0,
+            "command": 30013,
+            "globalId": "BG_0af508f320231206115740840017cca9df66",
+            "msgId": "BG_0af508f320231206115740840017cca9df66",
+            "responseData": data_,
+            "time": new Date().valueOf()
+        }
+        let send = {
+            "data": JSON.stringify(ws_obj)
+        }
+        this.set_websocket_data(send)
+    },
+},
 })
 </script>
 <style lang="scss" scoped>
@@ -164,5 +243,8 @@ export default defineComponent({
     // bug单 7658 要求这样做
     padding-left: 30px;
     // margin auto
+}
+.border-1 {
+    border: 1px solid var(--q-color-panda-table-border);
 }
 </style>
