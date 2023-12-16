@@ -23,7 +23,7 @@ import { reactive,onMounted,onUnmounted,ref } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr,formatMoney, format_money3 } from "src/output/index.js"
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
@@ -61,7 +61,13 @@ onMounted(() => {
  */
  const change_money_handle = (new_money) => {
   console.error('change_money_handle-single',new_money)
-  ref_data.money = new_money.money
+  if( new_money.money*1 > props.items.max_money *1){
+    ref_data.money =  props.items.max_money
+  }else{
+    ref_data.money = new_money.money
+  }
+  BetData.set_bet_amount(ref_data.money)
+  set_special_series('edit')
 }
 
 onUnmounted(() => {
@@ -86,14 +92,8 @@ const set_show_quick_money = (obj = {}) => {
   }, 700);
 }
 
-/**
- *@description 金额输入框点击
- *@param {Undefined}
- *@return {Undefined} undefined
- */
- const input_click = (evnet) => {
-  console.error('ssss',evnet)
-  event.preventDefault()
+// 修改数据内容
+const set_special_series = (money) => {
   let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
   let id = lodash_.get(props,'items.id','')
   list.filter(item => {
@@ -101,12 +101,29 @@ const set_show_quick_money = (obj = {}) => {
       // 显示指定投注项的快捷金额按钮
     if(item.id == id){
         item.show_quick = true
+        if(money == 'edit'){
+          item.bet_amount = ref_data.money
+        }
+        
     }
   })
   BetViewDataClass.set_bet_special_series(list)
+}
+/**
+ *@description 金额输入框点击
+ *@param {Undefined}
+ *@return {Undefined} undefined
+ */
+ const input_click = (evnet) => {
+  event.preventDefault()
+  set_special_series()
   BetData.set_bet_keyboard_show(true)
 
   cursor_flashing()
+
+  // 串关 设置键盘需要设置当前的金额
+  BetData.set_bet_amount(ref_data.money)
+  BetData.set_bet_keyboard_config(props.items)
 }
 </script>
 

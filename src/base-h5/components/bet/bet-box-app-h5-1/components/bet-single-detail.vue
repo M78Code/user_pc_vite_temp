@@ -16,7 +16,7 @@
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
           
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ item.min_money }}-{{ item.max_money }}</span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
           <!-- <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span> -->
         </div>
         <div class="content-rmb">RMB</div>
@@ -133,8 +133,9 @@ const clear_money = () => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
-  console.error('change_money_handle',new_money)
   ref_data.money = new_money.money
+  BetData.set_bet_obj_amount(ref_data.money,props.item.playOptionsId)
+  BetData.set_bet_amount(ref_data.money)
 }
 
 // 限额改变 修改限额内容
