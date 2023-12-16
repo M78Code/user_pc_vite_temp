@@ -4,7 +4,7 @@
     .scroll-wrapper, .observer-container {
       background: var(--q-gb-bg-c-10);
       .s-w-item {
-        background: var(--q-gb-bg-c-10);
+        background: var(--q-gb-bg-c-18) !important;
       }
       .match-container {
         // .odd-list.match-indent.simple {
@@ -38,7 +38,7 @@
           }
         }
         .match-inner-container {
-          background: var(--q-gb-bg-c-17);          
+          // background: var(--q-gb-bg-c-18);          
           .odd-item-wrap-borer-top {
             background-color: var(--q-color-border-color-11);
           }
@@ -128,8 +128,8 @@
           }
         }
         .league {
-          background:var(--q-gb-bg-c-18);
-          border-color: var(--q-gb-bd-c-3);
+          // background:var(--q-gb-bg-c-18);
+          // border-color: var(--q-gb-bd-c-3);
           color: var(--q-gb-t-c-4);
 
           .league-title-text {
@@ -145,7 +145,7 @@
           }
         }
         .date-container {
-           background:var(--q-gb-bg-c-18) ;
+          //  background:var(--q-gb-bg-c-18) ;
           &.simple {
             .title-space-1 {
               color: var(--q-match-fs-color-137);
@@ -233,7 +233,7 @@
           }
         }
         .odd-list {
-           background:var(--q-gb-bg-c-18);
+          //  background:var(--q-gb-bg-c-18);
           &.result {
             border-color: var(--q-gb-bd-c-3);
           }
@@ -364,7 +364,7 @@
             }
             /* ************** 标准版投注项选择样式 ************** -S */
             .odd-column-item2 {
-              background: var(--q-gb-bg-c-15);
+              background: var(--q-gb-bg-c-28);
               &:after {
                 background-color: transparent;
               }

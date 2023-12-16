@@ -450,7 +450,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-15);
+    // background: var(--q-gb-bg-c-15);
 
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
@@ -461,9 +461,9 @@ export default {
       width: 100%;
       padding: 0 10px;
       border-top: 1px solid #E4E6ED;
-      background: var(--q-gb-bg-c-18);
+      // background: var(--q-gb-bg-c-18);
       border-radius: 0 0 8px 8px;
-      border: 1px solid #fff;
+      // border: 1px solid #fff;
       &.collapsed{
         border-top: none;
       }
@@ -472,13 +472,13 @@ export default {
       }
     }
     > .match-indent{
-      border: 1px solid #fff;
+      // border: 1px solid #fff;
       border-radius: 8px 8px 0 0;
-      border-bottom: 1px solid #E4E6ED !important;
+      // border-bottom: 1px solid #E4E6ED !important;
       &.collapsed{
         border-radius: 8px;
-        border-bottom: 1px solid #fff !important;
-        border: 1px solid #fff;
+        // border-bottom: 1px solid #fff !important;
+        // border: 1px solid #fff;
       }
     }
     
@@ -502,7 +502,7 @@ export default {
     display: block;
     position: relative;
     transition: max-height 0.3s;
-    background: var(--q-gb-bg-c-18);
+    // background: var(--q-gb-bg-c-18);
 
     .match-odds-container-border-radius {
       overflow: hidden;
@@ -565,7 +565,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-17);
+    // background: var(--q-gb-bg-c-17);
     &.bottom{
       margin-top: 0.05rem;
     }
@@ -821,7 +821,7 @@ export default {
     font-size: 0.1rem;
     color: var(--q-gb-t-c-20);
     flex-direction: row-reverse;
-    background: var(--q-gb-bg-c-18);
+    // background: var(--q-gb-bg-c-18);
     border-bottom: 1px solid #E4E6ED;
 
     .odd-title-i-w {

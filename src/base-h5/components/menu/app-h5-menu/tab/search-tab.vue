@@ -280,7 +280,7 @@ function key_down(event) {
             text-align: center;
 						position: absolute;
 						right: 0;
-						background-color: #fff;
+						background-color: var(--q-gb-bg-c-27);
             img {
                 width: 0.18rem;
                 height: 0.18rem;
