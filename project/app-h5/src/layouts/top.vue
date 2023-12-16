@@ -277,8 +277,17 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
     const mi_tid_mids_res = lodash_.get(BaseData, 'mi_tid_mids_res')
     if (lodash_.isEmpty(mi_tid_mids_res)) return
-    // 设置菜单对应源数据
-    // MatchMeta.set_origin_match_data()
+
+    if (MenuData.is_esports()) {
+      // 电竞 初始调用时没值 不掉接口
+      const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
+      if (csid) MatchMeta.get_esports_match()
+    } else {
+       // 设置菜单对应源数据 以及 获取数据
+      MatchMeta.set_origin_match_data({ md: MenuData.data_time })
+      // MatchMeta.filter_match_by_time(item?.val)
+      // MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
+    }
 
     // 今日 下 得足球  提前设置 热门联赛
     if (MenuData.current_lv_2_menu_i === '1012') MatchMeta.set_tid_map_mids()
