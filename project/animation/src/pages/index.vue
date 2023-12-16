@@ -29,6 +29,7 @@
                 <!-- 比分 -->
                 <div style="height: 100px;">
                     <!-- 赛事比分区域<b class="text-red">lowen</b> -->
+                    <score-animation />
                 </div>
                 <!-- 对接后台展示区域 -->
                 <div style="height: 100px;">
@@ -68,6 +69,7 @@ import { test_data } from "project/animation/src/globle/event_data.js"
 import event_json_data from "project/animation/src/globle/event.json"
 import BackendConfig from "project/animation/src/pages/components/backend_config.vue"
 import TopForm from "project/animation/src/pages/components/form.vue"
+import ScoreAnimation from "project/animation/src/pages/components/score_animation.vue"
 import _ from 'lodash';
 import axios from "axios";
 import { uid } from "quasar"
@@ -79,6 +81,7 @@ export default defineComponent({
         svg_area,
         TopForm,
         BackendConfig,
+        ScoreAnimation
     },
     mixins:[websocket_base],
  data() {
