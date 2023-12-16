@@ -1,4 +1,5 @@
-import { loadLanguageAsync } from "project_path/src/core/index.js";
+// import { loadLanguageAsync } from "project_path/src/core/index.js";
+import { loadLanguageAsync } from "project_path/src/boot/i18n.js";
 import { throttle } from "lodash";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
  
