@@ -210,7 +210,7 @@
           <template v-else>
             <div class="row justify-between full-height mx-15"  @click.stop="click_mask">
                <!-- 缩放按钮 -->
-              <img v-if="get_is_full_screen" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/>
+              <!-- <img v-if="get_is_full_screen" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`" alt="exit" class="exit-img" @click="set_full_screen"/> -->
             
               <div class="col-1 go-back-btn-wrap" @click="close_video" >
                 <div class="video_back"></div>
@@ -249,7 +249,7 @@
            <!-- 视频 info 说明弹窗 -->
            <div class="img-wrap" v-if="show_animation || get_is_full_screen || media_type === 'progress_bar_video'">
              <!-- 视频info说明弹窗 -->
-             <img :src="tips ? tips_act :tips_def" @click.stop="change_info"/>
+             <!-- <img :src="tips ? tips_act :tips_def" @click.stop="change_info"/> -->
            </div>
 
           <div class="img-wrap" v-if="['1', '2'].includes(get_detail_data.csid) && [0,1,110].includes(+get_detail_data.ms) && get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
@@ -263,11 +263,12 @@
           </div>
         </div>
         <!-- 声音按钮 -->
-        <div v-show="show_icons && get_video_url.active === 'muUrl' && !load_error" class="voice-btn" @click.stop="toggle_click(2, get_video_url.active)">
+        <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay && !load_error" class="voice-btn" @click.stop="toggle_click(2, get_video_url.active)">
           <img v-if="voice" :src="voice_def">
           <img v-else :src="voice_act">
         </div>
-        <slider class="slider-container" :value="current_event_video.voice" v-show="show_icons && get_video_url.active === 'muUrl'"  @change="change_volumn"/>
+        <slider class="slider-container" :value="current_event_video.voice" 
+                v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay"  @change="change_volumn"/>
 
         <!-- 全屏按钮 -->
         <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" class="full-screen-btn" @click="set_full_screen">
