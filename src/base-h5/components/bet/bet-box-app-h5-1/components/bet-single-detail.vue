@@ -133,6 +133,7 @@ const clear_money = () => {
  *@param {Number} new_money 最新金额值
  */
  const change_money_handle = (new_money) => {
+  console.error('change_money_handle',new_money)
   ref_data.money = new_money.money
 }
 

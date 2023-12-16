@@ -1,25 +1,25 @@
 
 
 <template>
-    <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
-    {{ items }}
-    <div class="bet_single_info">
-        <div class="bet_single_detail" ref="bet_single_detail">
-          <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
-            <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-  
-            <span class="money-span" ref="money_span" v-if="ref_data.show_money_span" :style="{ opacity: '1' }"></span>
-            
-            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
-            <!-- <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span> -->
-          </div>
-          <div class="content-rmb">RMB</div>
-        </div>
+  <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
+  <div class="bet_single_info f-b-c">
+    <div>
+      {{ items.name }}
+    </div>
+    <div class="bet_single_detail f-b-c">
+      <div>{{ items.count }}x</div>
+      <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+        
+        <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+        <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
+        <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
       </div>
+    </div>
+  </div>
 </template>
 
 <script setup> 
-import { reactive,onMounted,onUnmounted } from "vue"
+import { reactive,onMounted,onUnmounted,ref } from "vue"
 import lodash_ from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -32,6 +32,7 @@ const props = defineProps({
 })
 
 let flicker_timer = null
+let money_span = ref('')
 
 const ref_data = reactive({
     min_money: '', // 最小投注金额
@@ -45,26 +46,23 @@ const ref_data = reactive({
     show_money_span:false,
 })
 
-// 开启/停止拖拽
-const stop_drap_fn = (state) => {
-    let obj = {
-        ...BetData.bet_box_draggable,
-        draggable: state
-    }
-    BetData.set_bet_box_draggable(obj)
-}
 
 onMounted(() => {
-    // show_quick_amount(true)
-    // // 单关 单注可以默认展开
-    // if(BetData.is_bet_single && !BetData.is_bet_merge){
-    //     show_quick_amount(true)
-    // }
-    show_quick_amount()
-    ref_data.money = props.items.bet_amount
-    
+  ref_data.money = props.items.bet_amount
+    //监听键盘金额改变事件
+    ref_data.emit_lsit = {
+    emitter_1: useMittOn(MITT_TYPES.EMIT_INPUT_BET_MONEY, change_money_handle).off,
+  }
 })
 
+/**
+ *@description 金额改变事件
+ *@param {Number} new_money 最新金额值
+ */
+ const change_money_handle = (new_money) => {
+  console.error('change_money_handle-single',new_money)
+  ref_data.money = new_money.money
+}
 
 onUnmounted(() => {
     Object.values(ref_data.emit_lsit).map((x) => x());
@@ -94,109 +92,22 @@ const set_show_quick_money = (obj = {}) => {
  *@return {Undefined} undefined
  */
  const input_click = (evnet) => {
+  console.error('ssss',evnet)
   event.preventDefault()
-
-  ref_data.show_money_span = true
-
+  let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
+  let id = lodash_.get(props,'items.id','')
+  list.filter(item => {
+    item.show_quick = false
+      // 显示指定投注项的快捷金额按钮
+    if(item.id == id){
+        item.show_quick = true
+    }
+  })
+  BetViewDataClass.set_bet_special_series(list)
   BetData.set_bet_keyboard_show(true)
+
+  cursor_flashing()
 }
-
-// 判断快捷金额按钮是否可点击
-const bet_money_btn_class = (obj, index) => {
-    let className = '';
-    if(props.items.max_money > 0) {
-        if(index != 'max' && (props.items.max_money < obj || props.items.max_money < props.items.bet_amount || UserCtr.balance < obj)) {
-            className = 'disabled'
-        }
-    }
-    return className;
-}
-
-// 快捷金额
-const set_bet_money = obj => {
-    console.error('sss',obj)
-    // 获取当前投注金额
-    let money = props.items.bet_amount
-    let money_ = obj
-    // 设置最大投注金额
-    if(obj == "MAX"){
-        money_ = props.items.max_money
-    }
-    let items_obj = lodash_.get(props,'items',{})
-    // 计算投注金额
-    let money_amount = mathJs.add(money,money_)
-    // 投注金额 不能大于最大投注金额 也不能大于用户约
-    if(money_amount < props.items.max_money && money_amount < UserCtr.balance){
-        items_obj.bet_amount = mathJs.add(money,money_)
-    }else{
-        // 最大限额不能大于余额
-        money_amount = props.items.max_money
-        if(UserCtr.balance < props.items.max_money){
-            money_amount = UserCtr.balance
-        }
-        items_obj.bet_amount = money_amount
-    }
-    ref_data.money = money_amount
-    BetViewDataClass.set_bet_special_series_item(items_obj)
-    
-}
-
-// 键盘回车事件
-const keydown = (e) => {
-    e.preventDefault();
-    // 未投注之前 可以点击
-    if(BetViewDataClass.bet_order_status == 1){
-        submit_handle()
-    }
-}
-
-// 输入判断
-const set_win_money = () => {
-    let items_obj = lodash_.get(props,'items',{})
-    // 输入控制
-    if( ref_data.money < props.items.max_money &&  ref_data.money < UserCtr.balance){
-        items_obj.bet_amount = ref_data.money
-    }else{
-        // 最大限额不能大于余额
-        let money_a = props.items.max_money
-        if(UserCtr.balance < props.items.max_money){
-            money_a = UserCtr.balance
-        }
-        ref_data.money = money_a
-        items_obj.bet_amount = money_a
-    }
-    BetViewDataClass.set_bet_special_series_item(items_obj)
-}
-
-// 快捷金额 state true   false
-const show_quick_amount = () => {
-    let money_list = []
-    if (BetData.bet_is_single) {
-        money_list = lodash_.get(UserCtr, 'cvo.series', { qon: 10, qtw: 50, qth: 100, qfo: 200 })
-    } else {
-        money_list = lodash_.get(UserCtr, 'cvo.single', { qon: 100, qtw: 500, qth: 1000, qfo: 2000 })
-    }
-
-    let obj = {
-        money_list,
-        max_money: props.items.max_money,
-    }
-
-    // 取消全部的快捷金额按钮
-    let list = lodash_.cloneDeep(lodash_.get(BetViewDataClass,'bet_special_series'))
-    let id = lodash_.get(props,'items.id','')
-    list.filter(item => {
-        item.show_quick = false
-         // 显示指定投注项的快捷金额按钮
-        if(item.id == id){
-            item.show_quick = true
-        }
-    })
-    BetViewDataClass.set_bet_special_series(list)
-
-    set_show_quick_money(obj)
-}
-
 </script>
 
 <style scoped lang="scss">
@@ -204,77 +115,28 @@ const show_quick_amount = () => {
 </style>
 
 <style scoped lang="scss">
-.bet_single_info{
-    display: flex;
-    justify-content: space-between;
+  .bet_single_info{
+    width: 100%;
+    font-size: .16rem;
+    background: var(--q-gb-bg-c-22);
+    border-radius: 0.12rem;
+    border-radius: 10px;
+    height: 0.38rem;
+    margin-top: 0.1rem;
+    margin-left: .08rem;
+    padding: 0 .12rem;
   }
-  .bet_single_info_btn{
-      width: 25%;
-      font-size: 16px;
-      background: var(--q-gb-t-c-1);
-      color: var(--q-gb-t-c-14);
-      border-radius: 10px;
-      height: 0.38rem;
-      margin-top: 0.1rem;
-      margin-left: .08rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
-  .nonebox4-third {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      margin-top: 20px;
-  }
-  .nonebox4-third-left {
-      display: flex;
-      flex: 1;
-      align-items: center;
-      font-size: 14px;
-      margin-left: 10px;
-      margin-right: 10px;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-right: 10px;
-      border-radius: 10px;
-      color: #e8f5fe;
-      background-color: #f4f9ff;
-  }
-  @import url("src/base-h5/css/bet/bet_single_detail.scss");
+
   .bet_single_detail{
     margin-top: 0.08rem;
-    background: var(--q-gb-bg-c-22);
-    border-radius: 0.01rem;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 0.12rem;
-    width: 100%;
     height: 0.44rem;
-    .content-rmb{
-      font-family: PingFang SC;
-      
-      font-weight: 500;
-      letter-spacing: 0px;
-      text-align: center;
-      height: 0.4rem;
-      border-radius: 4px;
-      font-size: 0.14rem;
-      padding-right: 0.1rem;
-      position: relative;
-      display: flex;
-      align-items: center;
-      color: var(--q-gb-t-c-11);
-    }
+    width: 1.68rem;
   }
-  .bet-single-detail {
-    height: 0.56rem;
-    position: relative;
-  }
+
   /* ************** 右边内容 ************** -S */
   .content-b {
     height: 0.4rem;
+    width: 1.50rem;
     border-radius: 4px;
     font-size: 0.16rem;
     overflow: hidden;
@@ -283,7 +145,6 @@ const show_quick_amount = () => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 70%;
     .limit-txt {
       color: #C9CDDB;
     }

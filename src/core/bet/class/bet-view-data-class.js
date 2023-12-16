@@ -191,7 +191,7 @@ class BetViewData {
             globalId: obj.globalId,  //  风控响应id
             seriesOdds: obj.seriesOdds, // 赔率  // 串关使用 3串1
             bet_amount: '', // 投注金额
-            show_quick: index == 0 ? true : false, // 快捷金额
+            show_quick: false, // 快捷金额
           }
         }
       })

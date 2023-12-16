@@ -719,7 +719,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         // BetViewDataClass.set_bet_show(true)
         // app-复刻版 逻辑不同
-        if(!PROJECT_NAME =='app-h5'){
+        if(!PROJECT_NAME =='app-h5' || BetData.is_bet_single){
             // 点击投注项 显示投注栏
             BetData.set_bet_box_h5_show(true)
         }
