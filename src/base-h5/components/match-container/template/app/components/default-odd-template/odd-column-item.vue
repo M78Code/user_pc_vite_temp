@@ -86,6 +86,7 @@ const props = defineProps({
   placeholder:Number,// 是否为占位
   n_s:Number,    // 1新手版 2标准版
   column_ceil:Number, //列数量
+  bet_type: String //投注类型
 })
 
 const match_icon_lock = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`
@@ -465,7 +466,7 @@ const item_click3 = lodash.debounce(() => {
         is_detail: false,
         // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
         // 根据赛事纬度判断当前赛事属于 那种投注类型
-        bet_type: 'common_bet',
+        bet_type: props.bet_type ? props.bet_type : 'common_bet',
         // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
         device_type: 1,  
         // 数据仓库类型
