@@ -102,6 +102,7 @@ const ref_data = reactive({
   show_single: false,
 });
 
+// BetData.set_bet_box_h5_show(true)
 // 隐藏投注栏
 const pack_up = () => {
   let sss = !BetData.bet_box_h5_show;
@@ -148,6 +149,7 @@ const show_merge_change = () => {
   //border: 1px solid;
   background-color: var(--q-gb-bg-c-15);
   z-index: 1999;
+  padding-bottom: .2rem;
 }
 
 .bet-scroll {
