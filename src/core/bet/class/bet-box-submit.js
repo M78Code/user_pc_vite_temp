@@ -418,31 +418,22 @@ const submit_handle = type => {
             set_submit_btn()
             return set_error_message_config({code:"0402001"},'bet')
         }
-        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionId}`, {})
-        if(BetData.bet_amount){
-            // 投注金额未达最低限额
-            if(BetData.bet_amount*1 < min_max.min_money*1 ){
-                set_submit_btn()
-                // 已失效
-                set_error_message_config({code:"0402001"},'bet')
-            }
-            
-            // 投注金额 验证
-            if(!item.bet_amount){
-                is_bet_error = true
-                set_submit_btn()
-                // 请您输入投注金额
-                set_error_message_config({code:"M400005"},'bet')
-            }
-            
-            // 投注金额未达最低限额
-            let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${item.playOptionsId}`, {})
-            if(item.bet_amount*1 < min_max.min_money*1 ){
-                is_bet_error = true
-                set_submit_btn()
-                // 投注金额未达最低限额
-                set_error_message_config({code:"M400010"},'bet')
-            }
+        // 投注金额未达最低限额
+        let min_max = lodash_.get(BetViewDataClass.bet_min_max_money, `${ol_obj.playOptionsId}`, {})
+       
+        // 投注金额未达最低限额
+        if(ol_obj.bet_amount*1 < min_max.min_money*1 ){
+            set_submit_btn()
+            // 已失效
+            set_error_message_config({code:"0402001"},'bet')
+        }
+        
+        // 投注金额 验证
+        if(!ol_obj.bet_amount){
+            is_bet_error = true
+            set_submit_btn()
+            // 请您输入投注金额
+            set_error_message_config({code:"M400005"},'bet')
         }
 
         pre_type = BetData.is_bet_pre ? 1 : 0
@@ -648,8 +639,12 @@ const set_error_message_config = (res ={},type,order_state) => {
     }
     // console.error('set_bet_before_message',obj)
     // 获取限额失败的信息
-    BetViewDataClass.set_bet_before_message(obj)
-
+    if(PROJECT_NAME == 'app-h5'){
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t(obj.message));
+    }else{
+        BetViewDataClass.set_bet_before_message(obj)
+    }
+    
     // 需求清除
     if(clear_time){
         time_out = setTimeout(()=>{

@@ -221,13 +221,26 @@ const _handleNumberKey = (num, e) => {
   //超过最大金额  显示最大金额
   let ol_id = ''
   let ol_type = ''
+  let max_money = ''
   if(BetData.is_bet_single){
     ol_type = 'playOptionsId'
   }else{
     ol_type = 'id'
   }
   ol_id = lodash.get(BetData.bet_keyboard_config,ol_type)
-  let max_money =lodash.get( BetViewDataClass,`bet_min_max_money[${ol_id}].max_money`,8888)
+
+  // 获取限额取值
+  if(BetData.is_bet_single){
+    max_money = lodash.get( BetViewDataClass,`bet_min_max_money[${ol_id}].max_money`,8888)
+  }else{
+    let obj_max = BetViewDataClass.bet_special_series.find(item=> item.id == ol_id) || {}
+    if(obj_max.id){
+      max_money = obj_max.max_money
+    }else{
+      // 设置默认限额
+      max_money = 8888
+    }
+  }
 
   // 显示最大金额
   if (money_ && +money_ >= +max_money) {
