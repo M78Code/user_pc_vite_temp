@@ -20,7 +20,11 @@
         </div>
 
         <div class="bet-box-line">
-          <div class="middle font16">{{ i18n_t('bet.betting') }}<span class="yb-info-money font14">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "0.00") }}</span></div>
+          <div class="middle font16">
+            {{ i18n_tc('bet.betting') }}
+            <span class="yb-info-money font14">
+            {{ i18n_tc('app_h5.bet.bet_win',BetData.bet_amount,{"total":BetData.bet_amount}) }}</span>
+          </div>
           <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
         </div>
         <!-- <div @click="set_bet_submit" class="bet-betting  f-c-c font500">{{ i18n_t('bet.betting') }}</div> -->
@@ -42,6 +46,7 @@ import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import mathJs from 'src/core/bet/common/mathjs.js'
 import { i18n_t,UserCtr ,format_money2,compute_local_project_file_path} from "src/output/index.js"
+import { i18n_tc } from "src/boot/i18n.js"
 
 let timer;
 // 向右滑动投注

@@ -288,7 +288,7 @@
       "barcelona": "巴萨"
     },
     "bet": {
-      "bet_win": "可赢%s",
+      "bet_win": "可赢{total}",
       "delete": "删除",
       "confirm": "确认",
       "parlay": "串",

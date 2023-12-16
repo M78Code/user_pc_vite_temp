@@ -119,7 +119,6 @@ function i18n_t(key, args, options) {
 }
 // 新增
 function i18n_tc(key, args, options) {
-  console.error("sss",key, args, options)
   if (!i18n) return key;
   return i18n.global.tc(key, args, options);
 }
