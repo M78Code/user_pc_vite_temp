@@ -200,7 +200,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const change_ms = computed(() => {
-      return lodash.get(item_data,'hl[0].ol[0].os')
+      return lodash.get(props.item_data,'hl[0].ol[0].os')
     });
     return {
       calc_win,
