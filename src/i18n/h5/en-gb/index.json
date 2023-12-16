@@ -1275,7 +1275,8 @@
     "video_info": "Video Info",
     "yes": "Yes",
     "day": "",
-    "match_parlay": "Parlay"
+    "match_parlay": "Parlay",
+    "no_score_data": "No score data yet"
   },
   "match_main": {
     "cut_off": "Bet Closed",
