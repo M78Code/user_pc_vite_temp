@@ -6,19 +6,19 @@
       class="q-gutter-md form"
       ref="form"
     >
-      <span class="label">赛种ID</span>
+      <span class="label text-white">赛种ID</span>
       <input
         v-model="form.sportId"
       />
-      <span class="label">赛事id</span>
+      <span class="label text-white">赛事id</span>
       <input
         v-model="form.matchId"
       />
-      <span class="label">数据源</span>
+      <span class="label text-white">数据源</span>
       <input
         v-model="form.dataSourceCode"
       />
-      <span class="label">token</span>
+      <span class="label text-white">token</span>
       <input
         v-model="form.token"
       />

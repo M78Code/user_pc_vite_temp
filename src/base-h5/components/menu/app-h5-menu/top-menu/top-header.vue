@@ -16,6 +16,7 @@
 <script setup>
 import { MenuData,LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js";
 import { useRoute , useRouter } from "vue-router";
+import { useMittOn,MITT_TYPES, useMittEmit } from "src/core/mitt/index.js"
 const route = useRoute()
 const router = useRouter()
   /**
@@ -24,6 +25,7 @@ const router = useRouter()
   const goBack = () =>{
     MenuData.set_top_menu_title({})
     MenuData.set_init_menu_list()
+    useMittEmit(MITT_TYPES.EMIT_MENU_GO_BACK)
     if (route.name === 'esports_sports') router.back()
   }
 </script>
