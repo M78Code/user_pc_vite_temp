@@ -351,6 +351,9 @@ export const EMIT_SCROLL_TOP_NAV_CHANGE = "EMIT_SCROLL_TOP_NAV_CHANGE"
 // 滑动 时间 获取的数据
 export const EMIT_SCROLL_DATE_TIME_CHANGE = "EMIT_SCROLL_DATE_TIME_CHANGE"
 
+// 菜单左键回退
+export const EMIT_MENU_GO_BACK = "EMIT_MENU_GO_BACK"
+
 // 串关键盘变动金额
 export const EMIT_INPUT_BET_MONEY = "EMIT_INPUT_BET_MONEY"
 

@@ -7,7 +7,7 @@
 <template>
   <div class="match-list-wrapper" :class="{standard: standard_edition == 2}">
     <div>
-      <div class="title-wrap-standard row justify-end" v-if="standard_edition == 2">
+      <div class="title-wrap-standard row justify-end" v-if="standard_edition == 2 && false">
         <div class="odd-title-wrapper row">
           <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
             <div v-for="(hpl_title, hp_i) of i18n_t('list_title.'+csid+'.title')" :key="hp_i">

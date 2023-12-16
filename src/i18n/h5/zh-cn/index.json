@@ -1403,7 +1403,8 @@
     "video": "视频",
     "video_info": "视频信息",
     "yes": "是",
-    "match_parlay": "串"
+    "match_parlay": "串",
+    "no_score_data": "暂无比分数据"
   },
   "match_main": {
     "cut_off": "截止",
