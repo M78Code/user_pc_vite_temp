@@ -505,7 +505,8 @@
 		"sports_panda": "판단 스포츠",
 		"switch_version_btn": "표준 판 들어가기",
 		"switch_version_text": "더 많은 이벤트, 표준 판에 있습니다!",
-		"menu_title":"스포츠"
+		"menu_title":"스포츠",
+		"non":"아닌"
 	},
 	"replay_video": {
 		"all" : "All",

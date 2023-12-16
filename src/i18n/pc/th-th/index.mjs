@@ -509,7 +509,8 @@
         "menu_title":'กีฬา',
         "league_fold": 'ยุบลีก',
         "league_unfold": 'ดูลีกเพิ่มเติม',
-        "highlights": "จุดเด่น" 
+        "highlights": "จุดเด่น",
+        "non":"ไม่"
     },
     "replay_video": {
         "all" : "ทั้งหมด",

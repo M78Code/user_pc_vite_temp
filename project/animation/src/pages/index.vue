@@ -29,7 +29,7 @@
                 <!-- 比分 -->
                 <div style="height: 100px;">
                     <!-- 赛事比分区域<b class="text-red">lowen</b> -->
-                    <score-animation />
+                    <score-animation :params="queryParams" />
                 </div>
                 <!-- 对接后台展示区域 -->
                 <div style="height: 100px;">
@@ -74,6 +74,7 @@ import _ from 'lodash';
 import axios from "axios";
 import { uid } from "quasar"
 import { event_animation } from 'project/animation/src/globle/event.js'
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 let WEB_ENV = axios.prototype.WS_DOMAIN_FRNGKONG_1
 export default defineComponent({
     components: {
@@ -113,6 +114,7 @@ export default defineComponent({
    // 启动
    submit(form){
      this.initSocket(form)
+     useMittEmit(MITT_TYPES.EMIT_SHOW_SCORE,form)
    },
    // 停止
    pause(){
@@ -127,7 +129,7 @@ export default defineComponent({
    emitEvent(){
      this.emitPauseEvent()
      this.moniEventTimer = setInterval(() => {
-       this.get_event_code()
+       this.get_event_code(true)
      }, 1000)
    },
    // 暂停模拟推送
@@ -229,18 +231,24 @@ export default defineComponent({
            let convert_data = JSON.parse(data.data);
            let { command, responseData,ack,msgId } = convert_data;
            if (command === 30013) {
+            this.current_event_obj = responseData || {}
             this.dataObj.unshift(responseData)
            }
         }
     },
     // 生成随机事件
-    get_event_code() {
+    get_event_code(isFullMockData) {
         console.warn('自动获取生成时间')
+      // let data_ = event_json_data[index]
+        let index = Math.floor(Math.random()*5)
+        let data_ = test_data[index] 
+      if(isFullMockData){
+        // 全量mock
         this.selfAddIndex++
-        let index = this.selfAddIndex
-      let data_ = event_json_data[index]
-        // let index = Math.floor(Math.random()*5)
-        // let data_ = test_data[index] 
+        index = this.selfAddIndex
+        const arr = event_json_data.reverse()
+        data_ = arr[index]
+      }
         const {eventCode} = data_ || {}
         this.current_event_obj = data_ || {}
         console.warn(data_)

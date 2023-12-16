@@ -118,7 +118,9 @@
                     :odd_item_i="ol_item_i"
                     :match="match_item"
                     :odd_field="hp_i"
-                    :hl_hs="get_hl_hs(hp_i)"/>
+                    :hl_hs="get_hl_hs(hp_i)"
+                    bet_type="vr_bet"
+                    />
                 </div>
               </div>
             </div>
@@ -135,7 +137,8 @@
                     :odd_item_i="ol_item_i"
                     :match="match_item"
                     :odd_field="hp_i"
-                    :hl_hs="get_hl_hs(hp_i)"/>
+                    :hl_hs="get_hl_hs(hp_i)"
+                    bet_type="vr_bet"/>
                 </div>
               </div>
             </div>
