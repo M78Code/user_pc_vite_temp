@@ -492,7 +492,7 @@ export default {
     }
 
     .set-menu {
-      ::v-deep.filter-icon-wrapper {
+      :deep(.filter-icon-wrapper) {
         width: 0.4rem;
         height: 0.44rem;
         margin-right: 0.1rem;
@@ -557,7 +557,7 @@ export default {
 .detail-main2 {
   margin-bottom: 0.5rem;
 }
-::v-deep.stage-wrapper .banner {
+:deep(.stage-wrapper .banner) {
   width: 100%;
   height: 2.54rem;
   border-radius: 0;

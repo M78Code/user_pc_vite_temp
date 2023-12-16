@@ -414,7 +414,7 @@ export default {
       }
 
       .set-menu {
-        ::v-deep.filter-icon-wrapper {
+        :deep(.filter-icon-wrapper) {
           width: 0.4rem;
           height: 0.44rem;
           margin-right: 0.1rem;

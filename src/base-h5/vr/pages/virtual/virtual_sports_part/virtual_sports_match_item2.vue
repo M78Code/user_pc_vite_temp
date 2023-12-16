@@ -752,7 +752,7 @@ export default {
         border-radius: 0.02rem;
         margin-bottom: 0.02rem;
         background-color: var(--q-gb-bg-c-18);
-        ::v-deep(.odd-column-item .odd-title){
+        :deep(.odd-column-item .odd-title){
           color: #AFB3C8;
         }
         &.hp-2, &.hp-0 {

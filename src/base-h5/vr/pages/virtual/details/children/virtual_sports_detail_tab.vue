@@ -48,7 +48,7 @@ export default {
 
 }
 }
-::v-deep.q-tab {
+:deep(.q-tab) {
   min-height: 0.4rem;
   height: 0.4rem;
 

@@ -8,7 +8,8 @@
 
 <script setup name="play-template-3">
 import BetData from "src/core/bet/class/bet-data-class.js";
-import {computed, defineProps} from "vue";
+// import {computed, defineProps} from "vue";
+import {computed} from "vue";
 import olStatus from "../ol_status.vue";
 import {odd_lock_ouzhou} from "src/base-h5/core/utils/local-image.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/output/index.js"
