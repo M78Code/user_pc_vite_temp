@@ -205,14 +205,8 @@ const is_selected = computed(() => {
 const odds_value = computed(() => {
   if(!props.odd_field) return 0;
   let ov = odd_item.value?.ov
-  let hsw = props.odd_field?.hsw;
-  let csid = null;
-  if(MenuData.get_menu_type() == 3000){
-    csid = props.match.csid;
-  }
-  //  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw, false ,csid);
-  let r1 = ov / 100000
-  return r1 || 0;
+   let r1 = compute_value_by_cur_odd_type(ov||0, odd_item.value?._hpid, '' ,props.match.csid,UserCtr.user_version.value);
+  return Number(r1 || 0);
 })
 
 // 监听玩法变化
