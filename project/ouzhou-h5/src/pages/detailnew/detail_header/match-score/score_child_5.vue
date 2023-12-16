@@ -1,5 +1,6 @@
 <script setup name="score_child_5">
-import {defineProps, computed} from "vue"
+// import {defineProps, computed} from "vue"
+import {computed} from "vue"
 
 const props = defineProps({
     detail_data: {
