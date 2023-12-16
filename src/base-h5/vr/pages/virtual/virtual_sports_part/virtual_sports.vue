@@ -58,27 +58,9 @@
                   </div>
           </div>
           <!-- 赛马：当前赛事展示，展示赔率、排行、赛果 -->
-          <template v-else>
+          <template v-else-if="current_match">
             <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-            <div v-if="current_match.match_status == 0">
-              <!-- 赛马切换玩法集tab组件 -->
-              <virtual-sports-tab
-                :batch="current_match_id">
-              </virtual-sports-tab>
-              <!-- 打印请勿删除 -->
-              <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
-              <!-- 赛马投注区域 -->
-              <div v-if="match_list_by_no && match_list_by_no.length">
-                <virtual-sports-category
-                    :top_menu_changed="top_menu_changed"
-                    :current_match="match_list_by_no[0]"
-                    source='sports'
-                    @top_menu_change="handle_top_menu_change"
-                />
-              </div>
-            </div>
-            <!-- 赛马的动态排名---赛马在比赛过程的时候显示 -->
-            <dynamic-ranking v-if="current_match.match_status == 1" :virtual_match_list="[current_match]" />
+            <dynamic-ranking v-if="current_match.match_status == 0 || current_match.match_status == 1" :virtual_match_list="[current_match]" />
             <!-- 赛马的结果展示页---赛马开奖结束后显示赛果 -->
             <result-page v-if="current_match.match_status == 2" :match_mid="current_match.mid" :current_match="current_match" @send_virtual_result_rank_data='send_virtual_result_rank_data'/>
         </template>
@@ -758,6 +740,9 @@ export default {
   background: #fff;
   border-radius: 4px;
   margin-bottom: .08rem;
+  &:last-of-type {
+    padding-bottom: 0.7rem;
+  }
 }
 
 
