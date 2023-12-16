@@ -81,6 +81,7 @@ const props = defineProps({
         font-style: normal;
         position: relative;
         background: var(--q-gb-bg-c-22);
+        margin-top: .1rem;
         &.bet-disable{
             align-items: center;
         }

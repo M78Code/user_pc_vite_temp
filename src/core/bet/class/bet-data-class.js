@@ -485,7 +485,7 @@ this.bet_appoint_ball_head= null */
 
   // 设置可预约的投注项
   set_bet_pre_list(val) {
-    this.bet_pre_list = val
+    this.bet_pre_list = val || []
     this.set_bet_data_class_version()
   }
 

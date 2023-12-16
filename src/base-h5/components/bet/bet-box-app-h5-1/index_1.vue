@@ -1,6 +1,8 @@
 <template>
   <div v-show="false">
-    {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{  BetViewDataClass.bet_view_version }}-{{ BetData.bet_box_h5_show }}
+    {{ UserCtr.user_version }} -- {{ BetData.bet_data_class_version }}-{{
+      BetViewDataClass.bet_view_version
+    }}-{{ BetData.bet_box_h5_show }}
   </div>
   <div v-if="BetData.bet_box_h5_show">
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
@@ -32,8 +34,8 @@
 
               <!-- 串关投注 限额 -->
               <template v-if="BetData.bet_s_list.length > 1">
-                <betSpecialInput
-                  :items="BetViewDataClass.bet_special_series[0]"
+                <bet-single-detail
+                  :item="BetViewDataClass.bet_special_series[0]"
                 />
 
                 <div
@@ -57,7 +59,7 @@
                     :key="index"
                   >
                     <div class="bor-b" v-if="index != 0">
-                      <betSpecialInput :items="item" />
+                      <bet-single-detail :item="item" />
                     </div>
                   </template>
                 </template>
@@ -102,7 +104,7 @@ import betTitle from "./components/bet-title.vue"; // 投注头部
 import betItem from "./components/bet-item.vue"; // 投注列表
 import betFooter from "./components/bet-footer.vue"; // 投注底部信息
 import betResult from "./components/bet-result.vue"; // 投注结果
-import betSpecialInput from "./components/bet-special-input.vue";
+import betSingleDetail from "./components/bet-single-detail.vue";
 
 const ref_data = reactive({
   show_single: false,
@@ -167,9 +169,11 @@ const show_merge_change = () => {
   background: var(--q-gb-bg-c-15);
   border-top: none;
 }
+
 .bet-text {
   color: var(--q-gb-t-c-8);
 }
+
 .full-shadow {
   width: 100%;
   position: fixed;
