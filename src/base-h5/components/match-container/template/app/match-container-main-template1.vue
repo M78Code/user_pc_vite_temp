@@ -1020,7 +1020,7 @@ export default {
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      width: 1.61rem;
+      width: 1.72rem;
       position: relative;
       z-index: 1;
 
