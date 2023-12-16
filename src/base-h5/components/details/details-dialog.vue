@@ -66,16 +66,9 @@
                 <!-- 相关联赛下的比赛 日期展示 -->
                 <div class="show-font-style-a">
                   <span class="base-header-font">
-                    <!-- 只有足球，篮球，有计时的时候才执行 -->
-                    <match-dialog-stage
-                      :detail_data="detail_data"
-                      v-if="(detail_data.mid == item.mid) && (detail_data.csid == 1 || detail_data.csid == 2)"
-                    ></match-dialog-stage>
-                    <!-- normal -->
                     <match-stage
                       :detail_data="item"
                       :dialog="true"
-                      v-else
                     > </match-stage>
                   </span>
                 </div>

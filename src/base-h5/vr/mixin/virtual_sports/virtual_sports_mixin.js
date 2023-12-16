@@ -72,13 +72,13 @@ export default {
 	set_virtual_data_loading(data){VR_CTR.set_virtual_data_loading(data)},
 	set_prev_v_sports(data){VR_CTR.set_prev_v_sports(data)},
 	set_current_batch(data){
-    if(data && data.matchs){
-      MatchDataBaseH5.set_list(data.matchs);
-    } else {
-      if(Array.isArray(data)){
-        MatchDataBaseH5.set_list(data);
-      }
-    }
+    // if(data && data.matchs){
+    //   MatchDataBaseH5.set_list(data.matchs);
+    // } else {
+    //   if(Array.isArray(data)){
+    //     MatchDataBaseH5.set_list(data);
+    //   }
+    // }
     VR_CTR.set_current_batch(data);
   },
     /**
@@ -145,6 +145,352 @@ export default {
       sessionStorage.setItem(this.virtual_m_list_data_cache_key,JSON.stringify(pre_store_data));
     },
     /**
+     * @description: 数据仓库设置列表数据
+     * @param {Object} no_title_list 赛事数据
+     * @return {String}
+     */
+    match_data_base_set_list(no_title_list){
+      console.error('no_title_list:',no_title_list);
+      no_title_list && no_title_list.forEach(item => {
+        const match_arr = lodash.get(item, 'match');
+        match_arr && match_arr.forEach(match => {
+          let data = [
+            {
+              "chpid" : "20033",
+              "hl" : [
+                {
+                  "hid" : "400143370296512515",
+                  "hs" : 0,
+                  "ol" : [
+                    {
+                      "otv" : "田野卓 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "1",
+                      "ov" : 585000,
+                      "teamId" : "1",
+                      "otn" : "1",
+                      "oid" : "400143370300706818",
+                      "osid" : "win_1",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "田野卓 "
+                    },
+                    {
+                      "otv" : "赖斯 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "2",
+                      "ov" : 303000,
+                      "teamId" : "2",
+                      "otn" : "2",
+                      "oid" : "400143370304901122",
+                      "osid" : "win_2",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "赖斯 "
+                    },
+                    {
+                      "otv" : "卡库拉脱 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "3",
+                      "ov" : 1180000,
+                      "teamId" : "3",
+                      "otn" : "3",
+                      "oid" : "400143370304901125",
+                      "osid" : "win_3",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "卡库拉脱 "
+                    },
+                    {
+                      "otv" : "塔劳 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "4",
+                      "ov" : 1180000,
+                      "teamId" : "4",
+                      "otn" : "4",
+                      "oid" : "400143370309095427",
+                      "osid" : "win_4",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "塔劳 "
+                    },
+                    {
+                      "otv" : "图图 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "5",
+                      "ov" : 518000,
+                      "teamId" : "5",
+                      "otn" : "5",
+                      "oid" : "400143370313289729",
+                      "osid" : "win_5",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "图图 "
+                    },
+                    {
+                      "otv" : "布洛 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "6",
+                      "ov" : 404000,
+                      "teamId" : "6",
+                      "otn" : "6",
+                      "oid" : "400143370313289732",
+                      "osid" : "win_6",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "布洛 "
+                    }
+                  ],
+                  "hv" : null,
+                  "hmt" : 1
+                }
+              ],
+              "hpn" : "冠军",
+              "topKey" : "20033",
+              "mid" : "400143357696299010",
+              "hmm" : 0,
+              "hshow" : "Yes",
+              "title" : [],
+              "hpt" : 9,
+              "hsw" : "1,4,5",
+              "hlid" : "169",
+              "hpid" : "20033",
+              "hpon" : 1,
+              "hton" : "0"
+            },
+            {
+              "chpid" : "20034",
+              "hl" : [
+                {
+                  "hid" : "400143370325872701",
+                  "hs" : 0,
+                  "ol" : [
+                    {
+                      "otv" : "田野卓 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "1",
+                      "ov" : 271000,
+                      "teamId" : "1",
+                      "otn" : "1",
+                      "oid" : "400143370330066946",
+                      "osid" : "place_1",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "田野卓 "
+                    },
+                    {
+                      "otv" : "赖斯 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "2",
+                      "ov" : 159000,
+                      "teamId" : "2",
+                      "otn" : "2",
+                      "oid" : "400143370334261251",
+                      "osid" : "place_2",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "赖斯 "
+                    },
+                    {
+                      "otv" : "卡库拉脱 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "3",
+                      "ov" : 525000,
+                      "teamId" : "3",
+                      "otn" : "3",
+                      "oid" : "400143370338455554",
+                      "osid" : "place_3",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "卡库拉脱 "
+                    },
+                    {
+                      "otv" : "塔劳 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "4",
+                      "ov" : 525000,
+                      "teamId" : "4",
+                      "otn" : "4",
+                      "oid" : "400143370338455557",
+                      "osid" : "place_4",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "塔劳 "
+                    },
+                    {
+                      "otv" : "图图 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "5",
+                      "ov" : 243000,
+                      "teamId" : "5",
+                      "otn" : "5",
+                      "oid" : "400143370342649858",
+                      "osid" : "place_5",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "图图 "
+                    },
+                    {
+                      "otv" : "布洛 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "6",
+                      "ov" : 197000,
+                      "teamId" : "6",
+                      "otn" : "6",
+                      "oid" : "400143370346844164",
+                      "osid" : "place_6",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "布洛 "
+                    }
+                  ],
+                  "hv" : null,
+                  "hmt" : 1
+                }
+              ],
+              "hpn" : "前二",
+              "topKey" : "20034",
+              "mid" : "400143357696299010",
+              "hmm" : 0,
+              "hshow" : "Yes",
+              "title" : [],
+              "hpt" : 9,
+              "hsw" : "1,4,5",
+              "hlid" : "169",
+              "hpid" : "20034",
+              "hpon" : 2,
+              "hton" : "0"
+            },
+            {
+              "chpid" : "20035",
+              "hl" : [
+                {
+                  "hid" : "400143370355232771",
+                  "hs" : 0,
+                  "ol" : [
+                    {
+                      "otv" : "田野卓 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "1",
+                      "ov" : 173000,
+                      "teamId" : "1",
+                      "otn" : "1",
+                      "oid" : "400143370359427076",
+                      "osid" : "show_1",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "田野卓 "
+                    },
+                    {
+                      "otv" : "赖斯 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "2",
+                      "ov" : 116000,
+                      "teamId" : "2",
+                      "otn" : "2",
+                      "oid" : "400143370359427080",
+                      "osid" : "show_2",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "赖斯 "
+                    },
+                    {
+                      "otv" : "卡库拉脱 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "3",
+                      "ov" : 314000,
+                      "teamId" : "3",
+                      "otn" : "3",
+                      "oid" : "400143370363621382",
+                      "osid" : "show_3",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "卡库拉脱 "
+                    },
+                    {
+                      "otv" : "塔劳 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "4",
+                      "ov" : 314000,
+                      "teamId" : "4",
+                      "otn" : "4",
+                      "oid" : "400143370367815683",
+                      "osid" : "show_4",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "塔劳 "
+                    },
+                    {
+                      "otv" : "图图 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "5",
+                      "ov" : 158000,
+                      "teamId" : "5",
+                      "otn" : "5",
+                      "oid" : "400143370372009985",
+                      "osid" : "show_5",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "图图 "
+                    },
+                    {
+                      "otv" : "布洛 ",
+                      "cds" : "GR",
+                      "os" : 1,
+                      "ot" : "6",
+                      "ov" : 135000,
+                      "teamId" : "6",
+                      "otn" : "6",
+                      "oid" : "400143370372009990",
+                      "osid" : "show_6",
+                      "otd" : -1,
+                      "ott" : "",
+                      "on" : "布洛 "
+                    }
+                  ],
+                  "hv" : null,
+                  "hmt" : 1
+                }
+              ],
+              "hpn" : "前三",
+              "topKey" : "20035",
+              "mid" : "400143357696299010",
+              "hmm" : 0,
+              "hshow" : "Yes",
+              "title" : [],
+              "hpt" : 9,
+              "hsw" : "1,4,5",
+              "hlid" : "169",
+              "hpid" : "20035",
+              "hpon" : 3,
+              "hton" : "0"
+            }
+            ]
+          if(!match.hps){
+            match.hps = data;
+          }
+        });
+        MatchDataBaseH5.set_list(match_arr);
+      });
+    },
+    /**
      * @description: 获取虚拟体育赛事列表
      * @param {Object} params 接口参数
      * @return {String}
@@ -163,6 +509,7 @@ export default {
         this.virtual_match_list = [];
         this.match_list_by_no = [];
         this.no_title_list = [];
+        MatchDataBaseH5.clear();
         this.virtual_data_loading = true;
       }
       api_v_sports.get_virtual_sport_list(params).then(res => {
@@ -192,7 +539,7 @@ export default {
               match:m.matchs
             };
           });
-
+          this.match_data_base_set_list(this.no_title_list);
           if(is_user_clicked){
             this.is_user_switch_league = Math.random();
           }
@@ -294,6 +641,7 @@ export default {
               match:m.matchs
             };
           });
+          this.match_data_base_set_list(this.no_title_list);
           if(this.no_title_list && this.no_title_list.length > 1){
             this.is_basket_ball_next_no = Math.random();
           }
@@ -335,6 +683,7 @@ export default {
                 match:m.matchs
               };
             });
+            this.match_data_base_set_list(this.no_title_list);
             // if(this.no_title_list && this.no_title_list.length > 1){
             //   this.is_basket_ball_next_no = Math.random();
             // }
@@ -746,6 +1095,7 @@ export default {
               }
             }
             this.no_title_list = n_title_list;
+            this.match_data_base_set_list(this.no_title_list);
             if(this.tab_league_i == 0){
               this.auto_change_tab_i_first = Math.random();
             }

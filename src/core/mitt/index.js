@@ -32,8 +32,8 @@ try {
  
 
 
-console.error('MITT_TYPES_BASE----------',MITT_TYPES_BASE);
-console.error('MITT_TYPES_PROJECT----------',MITT_TYPES_PROJECT);
+// console.error('MITT_TYPES_BASE----------',MITT_TYPES_BASE);
+// console.error('MITT_TYPES_PROJECT----------',MITT_TYPES_PROJECT);
 
 // let MITT_TYPES_BASE={} 
 // try {
@@ -82,7 +82,7 @@ function useMittOn(type,callback) {
     };
 
   }else{
-    console.error("mitt type 未注册 或者 不规范 :", type);
+    // console.error("mitt type 未注册 或者 不规范 :", type);
     return{
       off:()=>{},
       emit:()=>{},
@@ -118,7 +118,7 @@ function useMittEmit(type, param) {
   if(String(type).startsWith('EMIT_')&&MITT_TYPES[type]){
     emitter.emit(type, param);
   }else{
-    console.error("mitt type 未注册 或者 不规范 :", type);
+    // console.error("mitt type 未注册 或者 不规范 :", type);
   }
 
 }

@@ -7,7 +7,7 @@
   <div class="ranking_list hairline-border">
     <!-- <span class="navigation-title">{{ i18n_t('virtual_sports.leaderboard') }}</span> -->
     <!-- header -->
-    <div class="header">
+    <div v-if="0" class="header">
       <div class="col1"></div>
       <div class="col2">{{ i18n_t('virtual_sports.team') }}</div>
       <div class="col3">{{ i18n_t('virtual_sports.game') }}</div>
@@ -15,7 +15,7 @@
       <div class="col5">{{ i18n_t('virtual_sports.integral') }}</div>
     </div>
     <!-- 小组 -->
-    <div class="group-item" v-if="!no_data">
+    <div  class="group-item" v-if="0 && !no_data">
       <div class="team-item" v-for="(item, i) in ranking_data" :key="i">
         <div class="col1">{{+i + 1}}</div>
         <div class="col2 ellipsis">

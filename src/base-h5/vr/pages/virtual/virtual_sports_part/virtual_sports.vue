@@ -112,19 +112,17 @@
                 <div class="v-sports-ranking" v-if="![1001,1004].includes(sub_menu_type)">
                   <div>
                     <!-- 赛马切换玩法集tab组件 -->
-                    <virtual-sports-tab
+                    <!-- <virtual-sports-tab
                       :batch="match_item_batch.matchs[0]?.mid">
-                    </virtual-sports-tab>
+                    </virtual-sports-tab> -->
                     <!-- 打印请勿删除 -->
                     <!-- <div><span>赛事状态</span>{{current_match.match_status}}</div> -->
                     <!-- 赛马投注区域 -->
                     <div>
-                      <virtual-sports-category
-                          :top_menu_changed="top_menu_changed"
-                          :current_match="match_item_batch.matchs[0]"
-                          source='sports'
-                          @top_menu_change="handle_top_menu_change"
-                      />
+                      <v-s-match-list2 v-if="![1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
+                        :match_list_loaded="match_list_loaded" :csid="sub_menu_type" :v_menu_changed="v_menu_changed"
+                        @switch_match="switch_match_handle"  @start="match_start_handle">
+                      </v-s-match-list2>
                     </div>
                   </div>
                 </div>
@@ -178,6 +176,7 @@ import virtual_sports_mixin from "src/base-h5/vr/mixin/virtual_sports/virtual_sp
 import noData from "src/base-h5/vr/components/common/no_data.vue";
 import matchTab from "src/base-h5/vr/pages/virtual/virtual_sports_part/match_tab.vue"
 import v_s_match_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list.vue"
+import v_s_match_list2 from "src/base-h5/vr/pages/virtual/virtual_sports_part/virtual_sports_match_list2.vue"
 import ranking_list_start from "src/base-h5/vr/pages/virtual/virtual_sports_part/ranking_list_start.vue"
 import group_knockout from "src/base-h5/vr/pages/virtual/virtual_sports_part/group_knockout.vue"
 import football_ranking_list from "src/base-h5/vr/pages/virtual/virtual_sports_part/football_ranking_list.vue"
@@ -640,6 +639,7 @@ export default {
     'virtual-sports-category':virtual_sports_category,
     'match-tab':matchTab,
     'v-s-match-list':v_s_match_list,
+    'v-s-match-list2':v_s_match_list2,
     'ranking-list-start':ranking_list_start,
     'football-ranking-list':football_ranking_list,
     'group-knockout':group_knockout,

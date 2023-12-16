@@ -36,6 +36,7 @@
                                   'win': calc_win(ol_list_0[ol_index0 - 1].result),
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }">
+                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
                               <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_0[ol_index0 - 1].id_)}]">
                                 {{ol_list_0[ol_index0 - 1].on}}
                               </div>
@@ -120,6 +121,7 @@
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
+                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
                               <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_1[ol_index1 - 1].id_)}]">
                                 {{ol_list_1[ol_index1 - 1].on}}
                               </div>
@@ -202,6 +204,7 @@
                                   'is-like-bodan-play': ['344'].includes(item_data.hpid)
                                 }"
                             >
+                              <div class="size-color-imp ellipsis remark details_t_color7 fz_16">{{['367','368','369'].includes(item_data.hpid)?i18n_t('detail.non') : ''}}</div>
                               <div class="size-color ellipsis remark details_t_color6 fz_16" :class="[{'white_text':BetData.bet_oid_list.includes(ol_list_2[ol_index2 - 1].id_)}]">
                                 {{ol_list_2[ol_index2 - 1].on}}
                               </div>

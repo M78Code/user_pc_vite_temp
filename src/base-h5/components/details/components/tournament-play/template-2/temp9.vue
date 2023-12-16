@@ -35,9 +35,11 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
+import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5} from "src/output/index.js"
 export default defineComponent({
   name: "temp9",
-  props: ["item_data", "title"],
+  props: ["item_data", "title","csid"],
   setup(props, evnet) {
     let data = reactive({
       // 冠军投注项集合
@@ -49,22 +51,30 @@ export default defineComponent({
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
-    const get_curr_sub_menu_type = computed(() => {
-      return ""
+    const sub_menu_type = computed(() => {
+      return props.csid;
     });
     watch(
-      () => item_data,
+      () => props.item_data,
       (new_) => {
         this.init()
       },
       {deep: true}
     );
     onMounted(() => {
-      max_count_ol = get_ol_list();
+      // max_count_ol = get_ol_list();
     })
     const get_odds = (item) =>{
-      let val = item.ov / 100000, hsw = props.item_data.hsw;
-      let ov = props.compute_value_by_cur_odd_type(val, null, hsw);
+      let ov = '' ;
+      if(props.item_data){
+        ov =compute_value_by_cur_odd_type(
+          item.ov,
+          props.item_data._hpid,
+          props.item_data.hsw,
+          false,
+          props.item_data.csid || props.csid
+        )
+      }
       return ov ? ov : '';
     };
     const init = () =>{
@@ -76,10 +86,10 @@ export default defineComponent({
      *@param {Number} index 下标，用来识别第几匹马
      *@return {Undefined} undefined
      */
-    const go_to_bet = (index) =>{
+    const go_to_fun = (index) =>{
       let ol_item = data.champion_list[index]
       ol_item.num = index + 1
-      go_to_fun(ol_item)
+      go_to_bet(ol_item)
     };
     onMounted(() => {
       init()
@@ -88,8 +98,8 @@ export default defineComponent({
       ...toRefs(data),
       
       BetData,
-      get_bet_list,
-      get_curr_sub_menu_type,
+      // get_bet_list,
+      sub_menu_type,
       get_odds,
       init,
       go_to_fun,

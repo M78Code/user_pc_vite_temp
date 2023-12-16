@@ -46,9 +46,10 @@ import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import odds_new from "src/base-h5/components/details/components/tournament-play/unit/odds-new.vue";
 // import odd_convert from "src/base-h5/mixins/odds_conversion/odds_conversion.js";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, ref, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittEmit, MITT_TYPES,MatchDataWarehouse_H5_Detail_Common as MatchDataWarehouseInstance } from "src/output/index.js"
 import { LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
+import { useRoute, useRouter } from "vue-router"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
 export default defineComponent({

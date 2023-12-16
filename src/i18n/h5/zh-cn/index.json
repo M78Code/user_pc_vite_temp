@@ -726,7 +726,8 @@
     "mins": "分钟",
     "odd_all_closed": "当前赛事盘口已全部关闭",
     "odd_closed": "盘口已关闭",
-    "popular_recommendation": "热门推荐"
+    "popular_recommendation": "热门推荐",
+    "non":"非"
   },
   "early": {
     "btn1": "暂停提前结算",

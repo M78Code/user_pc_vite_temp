@@ -70,7 +70,7 @@ export default async (app) => {//app, router, store,
     }
   } else {
     if(!IS_DEV){
-      console.log = function(str){};
+      // console.log = function(str){};
     }
   }
   // 用户相关的 全局 单实例 类

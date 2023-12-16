@@ -365,7 +365,8 @@
     "odd_all_closed": "시장이 모두 닫혔습니다",
     "odd_closed": "시장이 닫혔습니다",
     "mins": "분",
-    "popular_recommendation": "강력 추천"
+    "popular_recommendation": "강력 추천",
+    "non":"아닌"
   },
   "early": {
     "btn2": "조기 정산",

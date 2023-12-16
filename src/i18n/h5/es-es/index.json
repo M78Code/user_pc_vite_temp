@@ -380,7 +380,8 @@
     "odd_all_closed": "Los mercados están cerrados",
     "odd_closed": "Mercados cerrados",
     "mins": "minutos",
-    "popular_recommendation": "Popular"
+    "popular_recommendation": "Popular",
+    "non":"not"
   },
   "early": {
     "btn2": "Cobro inmediato",
