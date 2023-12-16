@@ -2,7 +2,7 @@
   <div>
     <div class="animation-content bg">
       <svg_tmp :height="svgHeight" :width="svgWidth" :current_event_obj="current_event_obj"></svg_tmp>
-      <img ref="bgConainer" src="/public/animation/足球背景.png">
+      <img ref="bgConainer" :src="`${LOCAL_COMMON_FILE_PREFIX}/animation/足球背景.png`">
     </div>
   </div>
 </template>
@@ -13,6 +13,9 @@ import svg_tmp from "project/animation/src/pages/components/svg_tmp.vue"
 // import svg2 from "project/animation/src/pages/components/svg2.vue"
 // import svg3 from "project/animation/src/pages/components/svg3.vue"
 import { event_animation } from '../../globle/event.js'
+import {
+  LOCAL_COMMON_FILE_PREFIX,
+} from "project_path/src/core/index.js";
 export default defineComponent({
   props: {
     current_event_obj: {
@@ -29,6 +32,7 @@ export default defineComponent({
   },
   data() {
     return {
+      LOCAL_COMMON_FILE_PREFIX,
       isShowSvg: false,
       svgWidth: '',
       svgHeight: '',
@@ -81,7 +85,7 @@ object{
   height: 260px;
 }
 .animation-content {
-  background-image: url("/public/animation/足球背景.png");
+  //background-image: url("/public/animation/足球背景.png");
   background-repeat: no-repeat;
   background-size: contain;
 }
