@@ -502,7 +502,8 @@
     "hour": "h",
     "menu_title":"Môn Thể Thao",
     "league_fold": "Thu gọn giải đấu",
-    "league_unfold": "Xem thêm giải đấu"
+    "league_unfold": "Xem thêm giải đấu",
+    "non":"không"
   },
   "replay_video": {
     "all": "Tất cả",

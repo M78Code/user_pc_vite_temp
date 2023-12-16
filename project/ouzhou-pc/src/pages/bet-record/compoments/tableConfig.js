@@ -89,7 +89,8 @@ export function useGetOrderList () {
       if(res.code !== '200'){
         if(res.code === '0401038'){
           GlobalSwitchClass.set_tip_show_state(true, {
-            text: '请求过于频繁'
+            // 当前访问人数过多，请稍后再试
+            text: i18n_t('common.limited')
           })
           return ;
         }
