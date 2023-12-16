@@ -688,7 +688,7 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         // BetViewDataClass.set_bet_show(true)
         // 点击投注项 显示投注栏
-        BetData.set_h5_bet_box_show(true)
+        BetData.set_bet_box_h5_show(true)
       
         BetData.set_bet_keyboard_show(false)
         // BetViewDataClass.set_bet_keyboard_show(true)

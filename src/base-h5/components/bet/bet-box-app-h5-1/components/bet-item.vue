@@ -1,0 +1,201 @@
+
+<template>
+    <div class="bet-list bor-b">
+        <div v-show="false">{{BetViewDataClass.bet_view_version}}-{{BetData.bet_data_class_version}}- {{UserCtr.user_version}}</div>
+        <div class="f-b-s bet-content" :class="items.ol_os != 1 ? 'bet-disable' : ''">
+            <div class="fw-s-s bet-left">
+                <div class="w-100 f-s-c  ">
+                    <span class="text-flow-none" v-html="items.handicap"></span> 
+                </div>
+                <div class="w-100 handicap my-4">
+                    <span class="mr-4 text-009 text-flow-none" v-if="items.matchType == 2">{{'[' + i18n_t("bet.bowls") + ']'}}</span>
+                    <span class="text-a1a text-flow-none mr-4 font400 text-a1a-i">{{ items.playName }}
+                        <span v-if="[4,19,143,113].includes(items.playId*1)">{{items.matchType == 2? items.mark_score : ''}}</span>
+                    </span>
+                    <!-- 盘口 -->
+                    <span class="text-a1a text-flow-none text-009 font400" v-if="only_win[items.sportId].includes(items.playId*1)">[{{ i18n_t(`odds.EU`) }}] </span> 
+                    <span class="text-a1a text-flow-none text-009 font400" v-else>[{{ i18n_t(`odds.${UserCtr.odds.cur_odds}`) }}] </span> 
+                </div>
+                <div class="w-100 fon12 font400 ">{{ items.tid_name }}</div>
+                <div class="w-100 fon12 font400 " v-if="items.home">{{ items.home }} <span class="mx-4">v</span> {{ items.away }} {{ items.matchType == 2? items.mark_score : ''}}
+                </div>
+            </div>
+            <div class="fw-e-s bet-right" v-if="items.ol_os == 1 && items.hl_hs == 0 && items.mid_mhs == 0">
+                <div class="f-c-c bet-money">
+                    <span class="font14 font700 bet-odds-value" :class="{'red-up':items.red_green == 'red_up','green-down':items.red_green == 'green_down'}">
+                        @{{ compute_value_by_cur_odd_type(items.odds,items.playId,'',items.sportId) }}
+                    </span>
+
+                    <div class="show_img">
+                        <img v-if="items.red_green == 'red_up'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_up.png`" alt=""/>
+                        <img v-if="items.red_green == 'green_down'" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/image/icon_down.png`" alt=""/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fw-e-s bet-right bet-invalid" v-else>
+                <div class="bet-disabled">
+                    <span>{{ i18n_t('bet.bet_invalid') }}</span>
+                </div>
+            </div>
+          
+        </div>
+        
+        <div v-if="BetData.is_bet_single">
+            <!-- 输入框 -->
+            <bet-single-detail :item="items"></bet-single-detail>
+        </div>
+       
+    </div>
+</template>
+
+<script setup>
+
+import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_TYPES,useMittEmit,UserCtr,i18n_t,formatMoney,only_win } from "src/output/index.js"
+import BetData from 'src/core/bet/class/bet-data-class.js'
+import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
+
+
+import betSingleDetail from "./bet-single-detail.vue"
+
+const props = defineProps({
+    items:{},
+    index:{}
+})
+
+</script>
+
+<style scoped lang="scss">
+@import "../css/bet.scss";
+</style>
+
+<style scoped lang="scss">
+.bet-list {
+   
+    .bet-content {
+        min-height: 76px;
+        padding: 12px;
+        padding-left: 34px;
+        font-size: 13px;
+        font-weight: 500;
+        font-style: normal;
+        position: relative;
+        background: var(--q-gb-bg-c-22);
+        &.bet-disable{
+            align-items: center;
+        }
+
+        .bet-money {
+            height: 34px;
+        }
+
+        .bet-delete {
+            position: absolute;
+            top: 11px;
+            left: 12px;
+            cursor: pointer;
+
+            img {
+                width: 12px;
+                height: 12px;
+            }
+
+            &.bet-icon {
+                cursor: auto;
+            }
+        }
+
+        .bet-odds {
+            height: 34px;
+        }
+
+        .bet-right {
+            width: 160px;
+            &.bet-invalid{
+                height: 100%;
+                .bet-disabled{
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: flex-end;
+                    align-content: center;
+                    align-items: center;
+                    span{
+                        display: inline-block;
+                        padding: 0 20px;
+                        height: 26px;
+                        display: inline-block;
+                        border-radius: 2px;
+                        line-height: 26px;
+                        background: var(--q-gb-bg-c-10);
+                        font-size: 12px;
+                        font-weight: 500;
+                        letter-spacing: 0px;
+                        color: var(--q-gb-t-c-8);
+                    }
+                }
+            }
+        }
+
+        .bet-left {
+            width: 230px;
+            .text-a1a-i {
+                //color: var(--q-gb-t-c-5) !important;
+            }
+        }
+
+       
+    }
+
+    .bet-market{
+        font-family: DIN;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 16px;
+        letter-spacing: 0px;
+        //http://api.sportxxxvo3.com/
+    }
+    .text-flow{
+        max-width: 90%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
+    }
+    .handicap{
+        max-width: 190px;
+    }
+    .text-flow-none{
+        max-width: 84%;
+        line-height: 16px;
+        word-wrap: break-word;
+        :deep(.ty-span) {
+            margin-left: 4px;
+            color: var(--q-gb-t-c-2);
+        }
+    }
+    .bet-odds-value{
+        color: var(--q-gb-t-c-2);
+        margin-right: 7px;
+    }
+    .red-up{
+        color: var(--q-gb-t-c-7);
+    }
+    .green-down{
+        color: var(--q-gb-t-c-6);
+    }
+    .show_img{
+        width:12px;
+        padding: 3px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+
+</style>

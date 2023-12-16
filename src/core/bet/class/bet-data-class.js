@@ -193,17 +193,10 @@ this.bet_appoint_ball_head= null */
     this.bet_keyboard_config = {}
     // 键盘状态
     this.bet_keyboard_show = false;
-    // h5 投注栏默认隐藏
-    this.h5_bet_box_show = false
   }
 
-  set_h5_bet_box_show(val) {
-    this.h5_bet_box_show = val
-    this.set_bet_data_class_version()
-  }
 
   set_bet_box_h5_show (value) {
-    
     this.bet_box_h5_show = value
     this.set_bet_data_class_version()
   }
@@ -466,18 +459,6 @@ this.bet_appoint_ball_head= null */
     this.bet_read_write_refer_obj[custom_id].key = val
   }
 
-  /*
-  设置 是否接受更好赔率
-  */
-  set_is_accept(value) {
-    value = Number(value)
-    if (isNaN(value)) {
-      this.is_accept = value == 1 ? 2 : 1
-    } else {
-      this.is_accept = value;
-    }
-    this.set_bet_data_class_version()
-  }
   /*
   设置 赔率类型
   */
