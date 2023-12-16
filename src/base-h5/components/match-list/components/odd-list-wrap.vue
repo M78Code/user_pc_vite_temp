@@ -32,8 +32,6 @@
         :odd_field="hp_item"
         :hl_hs="hl_hs"
       />
-      {{ 'hl_hs:' + hl_hs }}
-      {{  'match.mhs:' + match.mhs }}
       <template v-if="!ol_list || !ol_list.length">
         <odd-column-item :placeholder="1" :odd_item_i="0"/>
         <!--独赢才显示三个投注-->
