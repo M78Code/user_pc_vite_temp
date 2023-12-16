@@ -94,9 +94,10 @@ watch(UserCtr.user_version, () => {
  * @param {*} type 
  */
 const set_menu_lv1 = item => {
-    
     MenuData.set_current_lv1_menu(item.mi);
     // MenuData.get_menu_lvmi_list(item.mi)
+    // 复刻版早盘，串关需要等待时间接口返回在调用， 在这不调用set_origin_match_data
+    if ([3,6].includes(item.mi)) return
     MatchMeta.set_origin_match_data()
 }
 

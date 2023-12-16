@@ -16,136 +16,31 @@
         'items-start':standard_edition == 2,
         'items-center':standard_edition == 1
       }">
-      <!-- 赛事信息 -->
-      <div class="row items-start team-w-container" @click="goto_details(match_item)" v-if="standard_edition == 2">
-        <div class="team-wrapper" :class="{standard:standard_edition == 2}">
-          <!-- 战队名称 -->
-          <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
-            <img v-img="([lodash.get(match_item,'mhlu'), lodash.get(match_item,'frmhn')])" />
-            <div class="ellipsis">{{match_item.teams ? match_item.teams[0] : ''}}</div>
-          </div>
-          <div class="team-title" :class="{over:[2,11].includes(+match_item.match_status)}">
-            <img v-img="([lodash.get(match_item,'malu'), lodash.get(match_item,'frman')])" />
-            <div class="ellipsis">
-              {{match_item.teams ? match_item.teams[1] : ''}}
-            </div>
-          </div>
-
-          <div
-            v-if="false"
-            class="match-play-count standard row justify-start items-center">
-            <!-- 比赛时间 -->
-            <div class="time-wrap" v-if="match_item.csid != 1004"
-              :class="{whistle:[2,11].includes(+match_item.match_status)}"
-              v-show="match_item.show_time > 0 || [2,11].includes(+match_item.match_status)" >
-              <div class="time">
-                {{match_item.show_time}}
-              </div>
-            </div>
-            <!-- 固定60秒 -->
-            <div v-if="match_item.csid == 1004 && match_item.mmp != 'PREGAME'" class="time-wrap icon-s-wrap"
-              :class="{whistle:[2,11].includes(+match_item.match_status)}"
-              v-show="match_item.match_status == 0 && !is_basketball_score">
-              <div class="time">
-                60
-              </div>
-            </div>
-            <!-- live -->
-            <div v-if="match_item.csid == 1004" class="live-icon-pre icon-s-wrap"
-              v-show="match_item.match_status == 1 || is_basketball_score">
-              live
-            </div>
-            <!-- 结束 -->
-            <div v-if="match_item.csid == 1004" class="finally icon-s-wrap"
-              v-show="match_item.match_status == 2">
-              Fin.
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- 玩法 -->
-      <div class="row items-center shrink-0 justify-between m-c-container"
+      <div class="row items-center justify-between m-c-container"
         :class="{standard:standard_edition == 2,simple:standard_edition == 1}"
       >
-        <!-- 比分和视频icon -->
-        <div class="score-wrap" v-if="false">
-          <div class="score"
-            v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
-            {{match_item.home}}
-          </div>
-          <div class="score"
-            v-if="match_item.mmp == 'INGAME' && (match_item.match_status > 0 || show_basketball_score)">
-            {{match_item.away}}
-          </div>
-          <!-- 视频icon -->
-          <div class="play-icon-wrapper yb-flex-center"
-            v-if="standard_edition == 2 && match_item.mms > 0" @click="switch_match_handle(i,match_item)">
-            play
-            <span class="video-play-icon" :data_si="match_selected_i" :data_i="i"
-              :class="get_play_btn_class(match_item,i)" />
-          </div>
-        </div>
-        <div class="simple-time" v-if="false">
-          <!-- 比赛时间 -->
-          <div class="time-wrap" v-show="match_item.show_time > 0 || match_item.match_status == 2 || match_item.match_status == 11" :class="{whistle:match_item.match_status == 2 || match_item.match_status == 11}">
-            <div class="time">{{match_item.show_time}}</div>
-          </div>
-        </div>
         <!--专业版-->
-        <div class="profession" v-if="standard_edition == 2">
+        <div v-if="standard_edition == 2">
           <template v-if="get_hp_list(1).length">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" v-if="standard_odd_status == 0" :src="get_theme.includes('y0')?arrows:arrows_default">
             <img class="slide_icon" :class="{'animate-effect':standard_odd_status == 0,'animate-effect-r':standard_odd_status == 1}" :src="get_theme.includes('y0')?arrows_reverse:arrows_default_balck" v-else>
           </template>
-           <!-- 玩法数量 -->
-           <div v-if="match_item.mc" class="play-count">
-              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+ >`: i18n_t('footer_menu.more')}}
-            </div>
-
           <!--标准版赔率容器-->
-          <div class="standard-odd-l-w" v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
+          <div v-touch-pan.horizontal.prevent.mouse="odd_wrapper_pan"
             :class="{'status2':standard_odd_status == 1}" v-if="standard_edition == 2">
             <!--标准版-->
             <div v-for="(data_i,i) of match_item.hps" :key="i" class="dddd">
+              <div class="hpn-title">
+                <span>{{ data_i.hpn }}</span>
+                <span>显示所有盘口 ></span>
+              </div>
               <temp9
                 :item_data="data_i||{}"
                 :title="data_i.title"
                 :csid="match_item.csid"
               />
             </div>
-            <!-- <div class="standard-odd-list row">
-              <div class="odd-column-w" :key="hp_i_i"
-                v-for="(hp_i,hp_i_i) of get_hp_list(0)">
-                <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_i,hp_i_i)}`"
-                  :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_i,hp_i_i)">
-                  <odd-column-item
-                    :placeholder="ol_item.placeholder"
-                    :n_s="Number(standard_edition)"
-                    :column_ceil="get_ol_length(hp_i)"
-                    :odd_item_i="ol_item_i"
-                    :match="match_item"
-                    :odd_field="hp_i"
-                    :hl_hs="get_hl_hs(hp_i)"/>
-                </div>
-              </div>
-            </div> -->
-            <!--标准版第二部分-->
-            <!-- <div class="standard-odd-list row second" :class="{'status2':standard_odd_status == 1}" v-if="get_hp_list(1).length">
-              <div class="odd-column-w" :key="hp_i_i"
-                v-for="(hp_i,hp_i_i) of get_hp_list(1)">
-                <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_i,hp_i_i)}`"
-                  :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_i,hp_i_i)">
-                  <odd-column-item
-                    :placeholder="ol_item.placeholder"
-                    :n_s="Number(standard_edition)"
-                    :column_ceil="get_ol_length(hp_i)"
-                    :odd_item_i="ol_item_i"
-                    :match="match_item"
-                    :odd_field="hp_i"
-                    :hl_hs="get_hl_hs(hp_i)"/>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
         <!-- 新手版 -->
@@ -646,10 +541,6 @@ export default {
   border-bottom: 1px solid #e9e9e9;
   position: relative;
 
-  &.standard {
-    height: 1.4rem;
-  }
-
   .test-line {
     position: absolute;
     right: 0;
@@ -667,9 +558,6 @@ export default {
   .match-data-item {
     width: 100%;
     height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
     font-size: 0.14rem;
     justify-content: space-between;
     flex-wrap: nowrap;
@@ -729,8 +617,24 @@ export default {
     }
 
     .m-c-container {
+
+      .hpn-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #eee;
+        height: 0.25rem;
+        margin-top: 0.1rem;
+        span {
+          font-size: 0.12rem;
+          color: #303442;
+        }
+        span + span {
+          font-size: 0.1rem;
+          color: #AFB3C8;
+        }
+      }
       &.standard {
-        width: 1.92rem;
 
         .score-wrap {
           padding-top: 0.13rem;
@@ -783,10 +687,6 @@ export default {
           margin-bottom: 0.05rem;
         }
       }
-    }
-
-    &.standard {
-      height: 1.07rem;
     }
 
     .profession {

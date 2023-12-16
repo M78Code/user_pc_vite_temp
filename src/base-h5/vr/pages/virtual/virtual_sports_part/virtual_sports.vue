@@ -74,7 +74,7 @@
                 v-if="!ranking_list_change"
                 class="v-sports-main-list"
                 :class="{'v-sports-main-list-style': standard_edition === 1}"
-                :style="{'padding-bottom': get_betbar_show ? '0.5rem' : '0'}"
+                :style="{'padding-bottom': get_betbar_show ? '0' : '0'}"
             >
               <!-- 虚拟体育足球赛事列表 -->
               <v-s-match-list v-if="[1001,1004].includes(sub_menu_type)" :virtual_match_list="match_item_batch.matchs"
