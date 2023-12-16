@@ -1,12 +1,12 @@
 import { createApp } from 'vue'
 import { Quasar } from "quasar";
 import App from './App.vue'
+import "./src/css/app.scss"
 import router from 'project/animation/src/router/index.js'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 console.log("BUILDIN_CONFIG-----------pc---", BUILDIN_CONFIG);
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
-import "./src/css/app.scss"
-// import _ from 'lodash';
+import _ from 'lodash';
 // import { HackError } from './hack-error';
 // import { i18n, loadLanguageAsync } from "./src/boot/i18n.js";
 // import global from './src/boot/globals';
@@ -14,7 +14,7 @@ import "./src/css/app.scss"
 // new HackError();
 
 // 兼容旧项目里面的 lodash
-// window._ = _;
+window._ = _;
 const app = createApp(App);
 
 window.vue = app;
@@ -25,5 +25,5 @@ app.use(router);
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
-
+window.$g_image_preffix = process.env.NODE_ENV === "development" ? '' : '/' + BUILD_VERSION
 app.mount('#ty-app')

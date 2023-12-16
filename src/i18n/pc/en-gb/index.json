@@ -60,11 +60,11 @@
           "1": "1 X 2",
           "2": "O/U",
           "4": "HDP"
-        },
+        },   
         "2": {
-          "37": "Moneyline",
-          "38": "Total",
-          "39": "Spread"
+          "37": "Money Line",
+          "38": "Total Points",
+          "39": "Handicap"
         },
         "3": {
           "242": "Winner",
