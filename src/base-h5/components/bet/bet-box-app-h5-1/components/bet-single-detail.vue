@@ -7,7 +7,7 @@
   <!-- 混合过关投注选项 -->
   <div>
     <div v-show="false">{{BetData.bet_data_class_version}}</div>
-    {{ item }}
+
     <div class="bet_single_info">
       <!-- <div class="bet_single_detail" ref="bet_single_detail" :style="BetData.bet_pre_list.includes(item.playOptionsId) ?'width: 73%':'width:100%'"> -->
       <div class="bet_single_detail" ref="bet_single_detail">
@@ -16,7 +16,7 @@
 
           <span class="money-span" ref="money_span" v-if="show_money_span" :style="{ opacity: '1' }"></span>
           
-          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ item.min_money }}-{{ item.max_money }}</span>
+          <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ ref_data.min_money }}-{{ ref_data.max_money }}</span>
           <!-- <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span> -->
         </div>
         <div class="content-rmb">RMB</div>

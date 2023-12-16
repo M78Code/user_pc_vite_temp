@@ -45,7 +45,7 @@
       </div>
     
       <!-- 串关投注 --> 
-      <div class="chain_bet" @click="show_chain_bet" v-if="!BetData.is_bet_single">
+      <div class="chain_bet" @click="show_chain_bet">
         <span class="count">1</span>
       </div>
 
@@ -424,7 +424,7 @@ if (UserCtr.get_user_token()) {
   position: fixed;
   bottom: .72rem;
   right: .14rem;
-  z-index: 9999;
+  z-index: 999;
   // background-color: #f00;
   background: url($SCSSPROJECTPATH+"/image/bet/chuan_bet.png") no-repeat center / contain;
   // position: relative;

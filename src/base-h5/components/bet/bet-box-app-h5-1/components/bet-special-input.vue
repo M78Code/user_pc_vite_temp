@@ -1,38 +1,20 @@
 
 
 <template>
-    <div >
-        <div class="px-12 bet-money" >
-            <div class="f-b-c pl-18 bet-input-info">
-                <div>
-                    <div class="font14">{{items.name}} X{{items.count}} {{items.seriesOdds}}</div>
-                    <div class="font12 h12">
-                        <span class="font400 mr-10 text-8A8986-i"> {{ i18n_t('common.maxn_amount_val') }}</span>
-                        <span class="text-8A8986-i font500" v-if="[1].includes(items.playId*1)"> 
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds), items.bet_amount))  }} 
-                        </span>
-                        <span class="text-8A8986-i font500" v-else>
-                            {{ formatMoney(mathJs.subtract(mathJs.multiply(items.bet_amount,items.seriesOdds),(UserCtr.odds.cur_odds == 'HK' ? 0 : items.bet_amount))) }} 
-                        </span>
-                    </div>
-                </div>
-        
-                <div>
-                    <input class="bet-input" v-model="ref_data.money" type="number" @input="set_win_money" @click="show_quick_amount()" @focus="stop_drap_fn(false)" @blur="stop_drap_fn(true)" @keydown.enter="keydown($event)"
-                    :placeholder="`${i18n_t('bet.money_range')} ${format_money3(items.min_money)}~${format_money3(items.max_money)}`" maxLength="11"  />
-                </div>
+    <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
+    <div class="bet_single_info">
+        <div class="bet_single_detail" ref="bet_single_detail">
+          <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+            <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
+  
+            <span class="money-span" ref="money_span" v-if="ref_data.show_money_span" :style="{ opacity: '1' }"></span>
             
-            </div>
-            <div v-show="false">{{ UserCtr.user_version }}{{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}</div>
+            <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
+            <!-- <span @click.stop="clear_money" class="money-close" :style="{ opacity: ref_data.money > 0 ? '1' : '0' }">x</span> -->
+          </div>
+          <div class="content-rmb">RMB</div>
         </div>
-        <div>
-            <ul class="bet-bet-money f-b-c" v-show="items.show_quick">
-                <li class="bet-money-li f-c-c font14" @click="set_bet_money(obj)" v-for="(obj, index) in ref_data.money_list" :key="obj" :class="bet_money_btn_class(obj, index)" >
-                    {{index == 'max' ? '' : '+' }}{{obj}}
-                </li>
-            </ul>
-        </div>
-    </div>
+      </div>
 </template>
 
 <script setup> 
@@ -48,6 +30,8 @@ const props = defineProps({
     items:{},
 })
 
+let flicker_timer = null
+
 const ref_data = reactive({
     min_money: '', // 最小投注金额
     max_money: '', // 最大投注金额
@@ -57,6 +41,7 @@ const ref_data = reactive({
     seriesOdds: '', // 赔率
     show_quick: false, // 显示快捷金额
     emit_lsit: {},
+    show_money_span:false,
 })
 
 // 开启/停止拖拽
@@ -91,6 +76,29 @@ const set_show_quick_money = (obj = {}) => {
     props.items.max_money = obj.max_money
 }
 
+/**
+ *@description 光标闪动，animation有兼容问题，用函数替代
+ *@return {Undefined} undefined
+ */
+ const cursor_flashing = () => {
+  clearInterval(flicker_timer)
+  flicker_timer = setInterval(() => {
+    money_span.value && money_span.value.classList.toggle('money-span3')
+  }, 700);
+}
+
+/**
+ *@description 金额输入框点击
+ *@param {Undefined}
+ *@return {Undefined} undefined
+ */
+ const input_click = (evnet) => {
+  event.preventDefault()
+
+  ref_data.show_money_span = true
+
+  BetData.set_bet_keyboard_show(true)
+}
 
 // 判断快捷金额按钮是否可点击
 const bet_money_btn_class = (obj, index) => {
@@ -195,99 +203,147 @@ const show_quick_amount = () => {
 </style>
 
 <style scoped lang="scss">
-
-
-.bet-bet-money {
-    width: 100%;
-    padding: 10px 12px;
-    background: var(--q-gb-bg-c-15);
-    border-top: 1px solid var(--q-gb-bd-c-6);
-
-    .bet-money-li {
-        width: 76px;
-        height: 30px;
-        border: 0.5px solid var(--q-gb-bd-c-5);
-        background: var(--q-gb-bg-c-4);
-        color: #505050;
-        border-radius: 2px;
-        transition: .3s;
-        cursor: pointer;
-
-        &:hover {
-            // border: 1px solid #FF7000;
-            border: 1px solid var(--q-gb-bd-c-1);
-        }
-        &.disabled{
-            background: var(--q-gb-bg-c-19);
-        }
-    }
-}
-
-.bet-money{
-    background: var(--q-gb-bg-c-15);
-    .bet-input-info{
-        height: 58px;
-    }
-    .text-8A8986-i {
-        color: var(--q-gb-t-c-8) !important
-    }
-}
-.bet-input-focus{
-    position: relative;
-    background: var(--q-gb-bg-c-18);
-    transition: .3s;
-}
-.bet-input{
-    width: 160px;
-    height: 34px;
-    background: none;
-    border: 0.5px solid var(--q-gb-bd-c-5);
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 2px;
-    padding: 0 0 0 8px;
+.bet_single_info{
     display: flex;
-    align-itemss: center;
-    transition: .3s;
-    caret-color:var(--q-gb-t-c-2) ;
-     
-    &:focus,&:focus-visible{
-        transition: .02s;
-        outline: none;   
-       // padding-left: 14px;
-        border: 0.5px solid var(--q-gb-bd-c-1);
-        box-shadow: 0px 1px 4px rgba(255, 112, 0, 0.1);
-        background: var(--q-gb-bg-c-18);
+    justify-content: space-between;
+  }
+  .bet_single_info_btn{
+      width: 25%;
+      font-size: 16px;
+      background: var(--q-gb-t-c-1);
+      color: var(--q-gb-t-c-14);
+      border-radius: 10px;
+      height: 0.38rem;
+      margin-top: 0.1rem;
+      margin-left: .08rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  .nonebox4-third {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 20px;
+  }
+  .nonebox4-third-left {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      font-size: 14px;
+      margin-left: 10px;
+      margin-right: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-right: 10px;
+      border-radius: 10px;
+      color: #e8f5fe;
+      background-color: #f4f9ff;
+  }
+  @import url("src/base-h5/css/bet/bet_single_detail.scss");
+  .bet_single_detail{
+    margin-top: 0.08rem;
+    background: var(--q-gb-bg-c-22);
+    border-radius: 0.01rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0.12rem;
+    width: 100%;
+    height: 0.44rem;
+    .content-rmb{
+      font-family: PingFang SC;
+      
+      font-weight: 500;
+      letter-spacing: 0px;
+      text-align: center;
+      height: 0.4rem;
+      border-radius: 4px;
+      font-size: 0.14rem;
+      padding-right: 0.1rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      color: var(--q-gb-t-c-11);
     }
-    &::-webkit-input-placeholder {/*Chrome/Safari*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-itemss: center;
-        color: var(--q-gb-t-c-8);
+  }
+  .bet-single-detail {
+    height: 0.56rem;
+    position: relative;
+  }
+  /* ************** 右边内容 ************** -S */
+  .content-b {
+    height: 0.4rem;
+    border-radius: 4px;
+    font-size: 0.16rem;
+    overflow: hidden;
+    padding-left: 0.1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 70%;
+    .limit-txt {
+      color: #C9CDDB;
     }
-    &::-moz-placeholder {/*Firefox*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-itemss: center;
-        color: var(--q-gb-t-c-8);
+  }
+  /* ************** 右边内容 ************** -E */
+  .set-opacity {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+  .money-number {
+    margin-top: 1px;
+    font-family: Akrobat;
+    font-weight: 700;
+  }
+  .money-span {
+    width: 0.02rem;
+    height: 0.16rem;
+    margin: 0 1px;
+    background: var(--q-gb-bg-c-1);
+    &.money-span3{
+      background: transparent;
     }
-    &::-ms-input-placeholder {/*IE*/
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        display: flex;
-        align-itemss: center;
-        color: var(--q-gb-t-c-8);
+  }
+  .money-close {
+    position: absolute;
+    top: 50%;
+    right: 0.08rem;
+    width: 0.15rem;
+    height: 0.15rem;
+    line-height: 0.15rem;
+    text-align: center;
+    margin-top: -0.09rem;
+    background: gray;
+    color: #FFFFFF;
+    border-radius: 50%;
+    font-size: 13px;
+  }
+  /* ************** 左边内容 ************** -S */
+  .content-t {
+    padding-left: 0.12rem;
+    margin-right: auto;
+  
+    p:nth-child(1) {
+      position: relative;
+  
+      &::after {
+        content: "";
+        width: 3px;
+        height: 0.12rem;
+        border-radius: 2px;
+        position: absolute;
+        left: -0.08rem;
+        top: 50%;
+        transform: translateY(-58%);
+      }
     }
-}
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-}
-input[type='number'] {
-  -moz-appearance: textfield;
-}
+  
+    p:nth-child(2) {
+      font-size: 0.11rem;
+      line-height: 0.14rem;
+    }
+  }
+  
 </style>
