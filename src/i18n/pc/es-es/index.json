@@ -505,7 +505,8 @@
 		"sports_panda": "PandaSports",
 		"switch_version_btn": "Versión estándar",
 		"switch_version_text": "Más concursos, ¡todo en %s edición estándar!",
-		"menu_title":"DEPORTES"
+		"menu_title":"DEPORTES",
+		"non":"no"
 	},
 	"replay_video": {
 		"all" : "All",

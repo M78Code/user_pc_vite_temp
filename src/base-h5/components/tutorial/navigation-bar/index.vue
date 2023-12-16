@@ -28,6 +28,7 @@
 import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter,useRoute } from "vue-router";
 import {compute_local_project_file_path} from "src/output/index.js";
+import { MenuData } from "src/output/module/menu-data.js"
 
 defineOptions({
     name: 'navigationBar' // 设置组件名称
@@ -55,6 +56,9 @@ const props = defineProps({
 })
 
 const set_back = () => {
+    MenuData.set_current_lv1_menu('');
+    MenuData.set_top_menu_title({})
+    MenuData.set_init_menu_list()
     router.back()
     if (props.goBackAssign !== null) {
         props.goBackAssign()

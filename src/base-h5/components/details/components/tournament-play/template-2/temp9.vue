@@ -116,12 +116,18 @@ export default defineComponent({
     overflow: hidden;
   }
 }
-
+.virtual-bet-wrapper {
+  justify-content: space-between;
+}
 .champion-item {
   box-sizing: border-box;
-  height: 0.52rem;
+  height: 0.4rem;
   padding: 0 0.15rem;
   align-items: center;
+  width: 49%;
+  background: #F2F2F6;
+  margin-top: 0.08rem;
+  border-radius: 0.04rem;
 
   &:nth-child(2), &:nth-child(1) {
     border-top: 0px solid red;
@@ -133,7 +139,7 @@ export default defineComponent({
 
   .temp9-name {
 
-    font-size: 0.14rem;
+    font-size: 0.12rem;
 
     line-height: 0.18rem;
     padding-left: 0.1rem;
@@ -146,7 +152,7 @@ export default defineComponent({
 
   .temp9-ov {
 
-    font-size: 0.16rem;
+    font-size: 0.1rem;
 
     letter-spacing: 0;
   }
@@ -157,7 +163,7 @@ export default defineComponent({
   height: 0.2rem;
   line-height: 0.2rem;
   text-align: center;
-  background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png") no-repeat 0 0 / 100%;
   --per: -0.3rem;
 }
 

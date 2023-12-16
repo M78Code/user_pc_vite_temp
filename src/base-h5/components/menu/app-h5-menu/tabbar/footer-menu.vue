@@ -106,7 +106,7 @@ const menu_item_click = (item = {}) => {
         const timer = setTimeout(() => {
           loading.value = false
           clearTimeout(timer);
-        }, 1000);
+        }, 500);
         useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-refresh",
         });

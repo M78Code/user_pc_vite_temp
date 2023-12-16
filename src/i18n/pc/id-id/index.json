@@ -502,7 +502,8 @@
 		"menu_title":"SPORTS",
 		"league_fold": "Tutup Liga",
         "league_unfold": "Tampilkan Liga",
-		"highlights": "Pilih" 
+		"highlights": "Pilih",
+		"non":"Non"
 	},
 	"replay_video": {
         "all" : "Semua", 

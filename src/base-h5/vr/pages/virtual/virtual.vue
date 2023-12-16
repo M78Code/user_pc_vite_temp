@@ -11,7 +11,7 @@
         <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="back-wrap">
-            <div class="detail-back" @click="$common.go_where({back_to: 'go_back_from_virtual'})"></div>
+            <div class="detail-back" @click="go_where({back_to: 'go_back_from_virtual',  route_name:route.name,route,router})"></div>
             <!-- 虚拟体育 -->
             <div class="col">{{i18n_t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
@@ -70,6 +70,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import VR_CTR from "src/base-h5/vr/store/virtual_sports/virtual_ctr.js"
 import lodash from "lodash"
 import tab_move from "src/core/tab-move/tab-move.js";
+import { useRouter, useRoute } from "vue-router";
+import { go_where } from "src/output/index.js";
 
 export default {
   name:'match_main',
@@ -96,6 +98,8 @@ export default {
       v_match_router_ente:0,
       // 赛事列表滑动高度
       list_scroll_top: 0,
+      router: useRouter(),
+      route: useRoute(),
     };
   },
   created(){
@@ -316,7 +320,8 @@ export default {
         clearTimeout(this[timer])
         this[timer] = null
       }
-    }
+    },
+    go_where
   },
   computed: {
     // ...mapGetters({
@@ -380,10 +385,11 @@ export default {
       height: 0.44rem;
 
       .detail-back {
-        width: 0.3rem;
-        height: 100%;
+        width: 0.08rem;
+        height: 0.14rem;
         background-size: 0.1rem auto;
         margin-left: 0.05rem;
+        margin-right: 0.1rem;
       }
 
       /*  刷新按钮 */

@@ -76,8 +76,8 @@
         <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(1)">
       </template>
       <template v-else>
-        <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(0)">
-        <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(1)">
+        <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(1)">
+        <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(0)">
         <!-- <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i> -->
       </template>
@@ -1192,7 +1192,7 @@ onUnmounted(() => {
         height: 0.46rem;
       }
       &.is-small{
-        height: 0.32rem;
+        // height: 0.32rem;
         :deep(.odd-title) {
           font-size: 0.1rem;
           &.standard {
@@ -1222,4 +1222,4 @@ onUnmounted(() => {
     }
   }
 }
-</style>/index.js
+</style>

@@ -4,7 +4,8 @@
 
 <template>
   <div style="display: none;">{{ MatchDataBaseH5.data_version.version }}</div>
-  <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
+  <div style="display: none;">{{BetData.bet_data_class_version}}</div>
+  <div class="odd-column-item" :class="odds_class_object()" @click.stop="item_click3" :id="dom_id_show && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 -->
     <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
@@ -70,7 +71,7 @@ import PageSourceData  from  "src/core/page-source/page-source.js";
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import { MatchDataWarehouse_H5_List_Common as MatchDataBaseH5 } from "src/output/index.js"
 import { is_up_app, is_down_app } from 'src/base-h5/core/utils/local-image.js'
-
+import BetData from "src/core/bet/class/bet-data-class.js";
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
 // TODO: 其他模块得 store  待添加
@@ -86,6 +87,7 @@ const props = defineProps({
   placeholder:Number,// 是否为占位
   n_s:Number,    // 1新手版 2标准版
   column_ceil:Number, //列数量
+  bet_type: String //投注类型
 })
 
 const match_icon_lock = `${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`
@@ -148,20 +150,21 @@ const is_down = computed(() => {
 })
 
 // 判断边框border-radius样式
-const odds_class_object = computed(() => {
+const odds_class_object = () => {
   let result = {
     'odd-column-item2':is_selected,
     'is-standard':PageSourceData.get_newer_standard_edition() === 2,
     'first-radius': props.odd_item_i === 0,
     'last-radius': props.odd_item_i > 1,
-    'is-jiaoqiu':MenuData.footer_sub_menu_id == 114,
+    'is-jiaoqiu':MenuData.footer_sub_menu_id == 114, 
+    'active': BetData.bet_oid_list.includes(odd_item.value.oid)
   };
   if(PageSourceData.get_newer_standard_edition() == 2){
     delete result['first-radius'];
     delete result['last-radius'];
   }
   return result;
-})
+}
 
 /**
  * @description: 盘口状态  1.开盘，    2封盘，   3关盘 ，    4 锁盘
@@ -465,7 +468,7 @@ const item_click3 = lodash.debounce(() => {
         is_detail: false,
         // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
         // 根据赛事纬度判断当前赛事属于 那种投注类型
-        bet_type: 'common_bet',
+        bet_type: props.bet_type ? props.bet_type : 'common_bet',
         // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
         device_type: 1,  
         // 数据仓库类型
@@ -473,6 +476,7 @@ const item_click3 = lodash.debounce(() => {
 
     }
       set_bet_obj_config(params,other)
+      console.log('asbudasfhbaf', BetData, oid);
     }
   }
 }, 450, {'leading': true, trailing: false})
@@ -635,5 +639,14 @@ onUnmounted(() => {
 
 .flag-random {
   display: none;
+}
+.active {
+  background: var(--q-gb-bg-c-24) !important;
+  .odd-title {
+    color: var(--q-gb-t-c-25) !important;  
+  }
+  .odd-value {
+    color: var(--q-gb-t-c-25) !important;  
+  }
 }
 </style>

@@ -111,6 +111,9 @@ const upd_match_is_empty = (obj = {}) => {
 // 绑定相关事件监听
 const on_listeners = () => {
   emitters.value = {
+    emitter_2: useMittOn(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE, (val) => {
+      MatchMeta.footer_event({ ...val, text: 'filter' })
+    }).off,
     emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, upd_match_is_empty).off,
     emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, MatchPage.bet_odd_synchronize_handle).off,
     emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,

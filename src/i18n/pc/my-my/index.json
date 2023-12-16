@@ -505,7 +505,8 @@
     "sports_panda": "PandaSports",
     "switch_version_btn": "စံဗားရှင်း",
     "switch_version_text": "နောက်ထပ် ပြိုင်ပွဲများ၊ အားလုံးကို %s standard edition တွင်ပါရှိသည်။",
-    "menu_title":"အားကစားများ စာရင်း"
+    "menu_title":"အားကစားများ စာရင်း",
+    "non":"မဟုတ်ဘူ"
   },
   "replay_video": {
     "all" : "All",

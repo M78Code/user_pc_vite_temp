@@ -6,19 +6,19 @@
       class="q-gutter-md form"
       ref="form"
     >
-      <span class="label">赛种ID</span>
+      <span class="label text-white">赛种ID</span>
       <input
         v-model="form.sportId"
       />
-      <span class="label">赛事id</span>
+      <span class="label text-white">赛事id</span>
       <input
         v-model="form.matchId"
       />
-      <span class="label">数据源</span>
+      <span class="label text-white">数据源</span>
       <input
         v-model="form.dataSourceCode"
       />
-      <span class="label">token</span>
+      <span class="label text-white">token</span>
       <input
         v-model="form.token"
       />
@@ -39,9 +39,9 @@ export default {
       isMoNiEmit: false,
       form: {
         sportId: '1',
-        matchId: '2988076',
-        dataSourceCode: 'PD',
-        token: '',
+        matchId: '2977347',
+        dataSourceCode: 'RB',
+        token: 'bea5eddf73b1549cb330af08cd5255fd7b3e2ba4',
       },
     };
   },
@@ -53,6 +53,7 @@ export default {
       this.$refs.form.validate()
         .then(success => {
           if (success) {
+            sessionStorage.setItem("formData",JSON.stringify(this.form))
             console.log(this.form)
             this.isStart = true
             this.$emit('submit', this.form)
