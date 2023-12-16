@@ -195,7 +195,7 @@ export default defineComponent({
   -webkit-overflow-scrolling: auto;
   white-space: nowrap;
   padding:0.02rem 0;
-
+  color: var(--q-gb-t-c-19);
   &::-webkit-scrollbar {
     display: none;
   }

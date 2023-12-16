@@ -534,7 +534,7 @@ background: var(--q-gb-t-c-5) !important;
 }
 
 .yb-info-one{
-  color: var(--q-gb-t-c-6);
+  color: var(--q-gb-t-c-11);
 }
 .yb-info-two{
   color: var(--q-gb-t-c-7);
@@ -545,7 +545,7 @@ background: var(--q-gb-t-c-5) !important;
     width: 100%;
     font-size: 16px;
     text-align: center;
-    color: #FFFFFF;
+    color: var(--q-gb-t-c-14);
     background-color: var(--q-gb-t-c-1);
     border-radius: 12px;
     margin-bottom: .2rem ;
@@ -579,7 +579,7 @@ background: var(--q-gb-t-c-5) !important;
   border-radius: 24px 24px 0 0;
   //border: 1px solid;
   background-color: var(--q-gb-bg-c-23);
-
+  color: var(--q-gb-t-c-18);
   .yb_pl14 {
     margin-right: 0.01rem;
 

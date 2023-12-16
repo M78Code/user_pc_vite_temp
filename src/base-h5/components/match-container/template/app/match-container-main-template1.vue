@@ -409,7 +409,7 @@ export default {
     padding-left: 0.17rem;
     display: flex;
     align-items: center;
-    color: var(--q-gb-t-c-20);
+    color: var(--q-gb-t-c-18);
     background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
@@ -912,7 +912,7 @@ export default {
     }
      // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
-      color: #303442;
+      color: var(--q-gb-t-c-18);
       line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
@@ -1212,7 +1212,7 @@ export default {
             -webkit-box-orient: vertical;
             text-overflow: ellipsis;
             word-break: break-all;
-            color: var(--q-gb-t-c-20) !important;
+            color: var(--q-gb-t-c-18);
 
             &.is-handicap {
               font-weight: bold;

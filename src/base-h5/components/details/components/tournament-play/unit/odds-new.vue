@@ -118,7 +118,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .odds_new {
   width: 100%;
-  color: #303442; // var(--q-detials-color-6);
+  color: var(--q-gb-t-c-18); // var(--q-detials-color-6);
   font-size: 0.14rem; //todo app-h5
   font-weight: 700;
   letter-spacing: 0;
@@ -153,11 +153,13 @@ export default defineComponent({
     width: 12px;
     height: 11px;
 }
+
 .is_up{
       //color: #E95B5B;
       color: var(--q-gb-t-c-21);
     }
  .is_down{
-   color: #4AB06A;
+   //color: #4AB06A;
+   color: var(--gb-t-c-2);
  }
 </style>

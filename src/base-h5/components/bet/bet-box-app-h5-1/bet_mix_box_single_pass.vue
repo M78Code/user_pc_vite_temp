@@ -61,6 +61,7 @@
       display: flex;
       justify-content: space-between;
       background: var(--q-gb-bg-c-22);
+      color: var(--q-gb-t-c-24);
       padding: 10px;
       border-radius: 0.12rem;
   }

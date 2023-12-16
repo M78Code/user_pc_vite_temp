@@ -296,7 +296,7 @@ function key_down(event) {
 	flex: 1 1;
   font-size: 12px;
 	font-family: PingFang SC;
-	color: var(--q-gb-t-c-19);
+	color: var(--q-gb-t-c-17);
 	.search-input {
 		width: 90%;
 		border-radius: .25rem;
@@ -306,7 +306,7 @@ function key_down(event) {
 		padding-left: 0.12rem;
 	}
 	::placeholder {
-		color: var(--q-gb-t-c-19);
+		color: var(--q-gb-t-c-16);
 	}
 	span {
     margin-left: 0.12rem;

@@ -139,9 +139,10 @@
       height: 0.34rem;
       line-height: 0.34rem;
       width: 30%;
+      color: var(--q-gb-t-c-24);
       &.active-p {
         background: var(--q-gb-bg-c-13);
-        color: var(--q-gb-bg-c-15);
+        color: var(--q-gb-t-c-14);
       }
     }
   }
