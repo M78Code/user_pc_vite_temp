@@ -352,7 +352,8 @@
     "mins": "分鐘",
     "odd_all_closed": "當前賽事盤口已全部關閉",
     "odd_closed": "盤口已關閉",
-    "popular_recommendation": "熱門推薦"
+    "popular_recommendation": "熱門推薦",
+    "non":"非"
   },
   "early": {
     "btn1": "暫停提前結算",
