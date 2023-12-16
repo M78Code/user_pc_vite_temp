@@ -356,17 +356,17 @@ export default {
       return format_odds(ov, obv)
 
     }
-
+    let mitt_list=[]
     onMounted(() => {
-      useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, e => {
+     mitt_list=[useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, e => {
         isCollectMenuTab.value = e.mi === 50000
-      })
+      }).off]
       VirtualList.set_is_show_ball(false)
       VirtualList.set_is_change_handicap_height(-20)
     })
 
     onUnmounted(() => {
-      useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE).off
+      mitt_list.forEach(i=>i())
       VirtualList.set_is_show_ball(true)
       VirtualList.set_is_change_handicap_height(0)
     })
