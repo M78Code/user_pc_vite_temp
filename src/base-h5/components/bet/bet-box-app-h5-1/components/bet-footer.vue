@@ -5,7 +5,7 @@
     <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
     
     <!-- 自动接受更好的赔率 -->
-    <div @click="set_bet_is_accept()">
+    <div class="accept" @click="set_bet_is_accept()">
         <div :class="BetData.bet_is_accept ? 'active':'' "></div>
         自动接受更好的赔率
     </div>
@@ -19,15 +19,18 @@
             </q-page-sticky>
         </div>
 
-        <div @click="set_bet_submit" class="bet-betting  f-c-c font500">{{ i18n_t('bet.betting') }}</div>
+        <div class="bet-box-line">
+          <div class="middle font16">{{ i18n_t('bet.betting') }}<span class="yb-info-money font14">{{ i18n_t('app_h5.bet.bet_win').replace("%s", "0.00") }}</span></div>
+          <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
+        </div>
+        <!-- <div @click="set_bet_submit" class="bet-betting  f-c-c font500">{{ i18n_t('bet.betting') }}</div> -->
 
         <div @click="set_bet_single" class="bet-single f-c-c font500" :class="BetData.is_bet_single ? 'font14':'font16'">
-          {{ BetData.is_bet_single ? '单关投注':'+串' }}
+          <p>{{ BetData.is_bet_single ? '单关投注':'+串' }}</p>
         </div>
 
    </div>
 
-   <div class="bet-box-line"></div>
     
 </template>
 
@@ -42,7 +45,7 @@ import { i18n_t,UserCtr ,format_money2,compute_local_project_file_path} from "sr
 
 let timer;
 // 向右滑动投注
-const fab_pos = ref([20, 11])
+const fab_pos = ref([20, 23])
 const dragging_fab = ref(false)
 // 滑块组件数据
 const silider = ref(null)
@@ -151,7 +154,6 @@ const set_confirm = () => {
   background: var(--q-gb-t-c-5) !important;
   }
   .yb-info-money{
-    font-size: 0.12rem;
     color:rgba(255, 255, 255, 0.6);
     margin-left: 0.05rem;
   }
@@ -161,6 +163,9 @@ const set_confirm = () => {
   }
   .yb-info-two{
     color: var(--q-gb-t-c-7);
+  }
+  .accept {
+    margin: .08rem 0;
   }
   .jiantou{
     height: 0.44rem;
@@ -187,18 +192,37 @@ const set_confirm = () => {
   }
 
   .bet-box-line{
+    display: flex;
+    justify-content: space-around;
     width: 100%;
-    height: .64rem;
+    height: .5rem;
+    border-radius: 30px;
+    background: linear-gradient(358deg, #179CFF 1.96%, #45B0FF 98.3%);
+    box-shadow: 0px 2px 12px 0px rgba(0, 174, 255, 0.10);
+    .middle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: .55rem;
+      color: var(--q-gb-bg-c-15);
+    }
+    img {
+      width: 0.5rem;
+    }
   }
   .bet-single{
     width: 0.5rem;
     height: .5rem;
     border-radius: 50%;
-    background: var(--q-gb-bg-c-19);
+    background: #E8F5FF;
     color: var(--q-gb-t-c-1);
     padding: .03rem 0.1rem;
     text-align: center;
-    line-height: 14px;
+    line-height: 16px;
+    margin-left: .08rem;
+    p {
+      width: 0.34rem;
+    }
   }
 //后续删掉
   .bet-betting{
