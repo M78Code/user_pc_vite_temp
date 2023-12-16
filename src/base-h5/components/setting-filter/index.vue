@@ -73,7 +73,8 @@ import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
 import { default_theme_key } from "src/core/theme/";
 import MatchMeta from 'src/core/match-list-h5/match-class/match-meta';
-import { i18n_t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
+import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 defineOptions({
   name: "settingFilter" // 设置组件名称
 });
@@ -198,6 +199,7 @@ const version_handle = item => {
       })
     }
   } else {
+    VirtualList.set_is_show_ball(true)
     MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
   }
 };
