@@ -229,6 +229,7 @@ export default defineComponent({
            let convert_data = JSON.parse(data.data);
            let { command, responseData,ack,msgId } = convert_data;
            if (command === 30013) {
+            this.current_event_obj = responseData || {}
             this.dataObj.unshift(responseData)
            }
         }
