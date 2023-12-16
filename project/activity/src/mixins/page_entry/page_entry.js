@@ -154,12 +154,12 @@ export default {
     },
     // 初始化tab 选项卡
     initialization_menu(activityList = [], act_copy) {
-      console.log("activityList----------", activityList);
+      // console.log("activityList----------", activityList);
       this.tab_list = _.cloneDeep(activityList || []);
       this.tab_list.forEach((item, i) => {
         // 商户跳转过来时,有带 act参数，调用方法
         if (act_copy == item.activityId) {
-          console.log("有带 act参数，调用方法");
+          // console.log("有带 act参数，调用方法");
           this.tab_Id = act_copy;
           this.tab_click(
             _.cloneDeep(activityList)[i],
@@ -170,7 +170,7 @@ export default {
           );
         } else if (i == 0) {
           // 默认调用第一个
-          console.log("默认调用第一个");
+          // console.log("默认调用第一个");
           this.tab_Id = item.activityId;
           this.tab_click(
             _.cloneDeep(activityList)[0],
@@ -206,7 +206,7 @@ export default {
       this.activity_index = index;
       this.inStartTime = +item.inStartTime;
       this.inEndTime = +item.inEndTime;
-      console.log( ' this.tab_Id-', this.tab_Id);
+      // console.log( ' this.tab_Id-', this.tab_Id);
       if (UserCtr.get_user_token() && is_click != "not_need_click") {
         // 数据是否来源网络
         let user_data_from_net = true;

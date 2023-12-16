@@ -304,8 +304,26 @@ const pack_up = (val) => {
   BetData.set_bet_data_class_version()
 }
 
-// 滑块初始化坐标
+// 向右滑动投注
 const fabPos = ref([20, 11])
+const silider = ref(null)
+const draggingFab = ref(false)
+const handle_silider = (e) => {
+  draggingFab.value = e.isFirst !== true && e.isFinal !== true
+  if (e.distance.x > 234 || e.isFinal) {
+    reset_silider()
+    return
+  }
+  // console.log('e', e, silider);
+  if(e.distance.x > 180) {
+    submit_handle()
+    reset_silider()
+  }
+  fabPos.value[0] = e.distance.x
+  silider.value.offset[0] = e.distance.x
+}
+
+// 滑块初始化坐标
 // 处理单关和串关投注的silider位置
 const init_silider_position = () => {
   if(BetData.is_bet_single) {
@@ -316,31 +334,14 @@ const init_silider_position = () => {
     silider.value.offset[0] = 77
   }
 }
-const draggingFab = ref(false)
-const silider = ref(null)
-// 向右滑动投注
-const handle_silider = (e) => {
-  draggingFab.value = e.isFirst !== true && e.isFinal !== true
-  fabPos.value[0] = e.distance.x
-  silider.value.offset[0] = e.distance.x
-  if (e.distance.x > 234 || e.isFinal) {
-    reset_silider()
-    return
-  }
-  // console.log('e', e, silider);
-  if(e.distance.x > '180') {
-    submit_handle()
-    reset_silider()
-  }
-}
 
 // 重置solider位置
 let timer;
 const reset_silider = () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      init_silider_position()
-    }, 300)
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    init_silider_position()
+  }, 300)
 }
 
 const submit_order = (type) => {

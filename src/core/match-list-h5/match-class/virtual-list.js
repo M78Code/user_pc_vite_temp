@@ -99,7 +99,6 @@ class VirtualList {
       = template_config.match_template_config
 
     // if (match.mid === '2978915') debugger
-
     // 要减去的缓冲高度 
     const buffer_height = 2
     // --------- 以下是赛事高度计算逻辑  只要有改动均需看下其他 H5 项目有没有影响 改动需谨慎； 特别配置去模板默认配置加上 ------------------------------------

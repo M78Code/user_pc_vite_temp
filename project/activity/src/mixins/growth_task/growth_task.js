@@ -4,7 +4,8 @@ import { api_activity } from "src/api/index.js";
 import acticity_mixin from "project/activity/src/mixins/acticity_mixin/acticity_mixin";
 import { UserCtr } from "project_path/src/core/index.js";
 import { GATAG, is_time_limit } from "project_path/src/core/index.js";
- 
+
+
 export default {
   name: "growth_task",
   props: {
@@ -46,6 +47,7 @@ export default {
       // 历史记录分页
       result_page_info: { current: 1, total: 1 },
       day_week_month_time_limit_timer: null,
+      change_time: null
     };
   },
   created() {
@@ -59,7 +61,7 @@ export default {
     } else {
       // 活动列表接口
       this.get_daily_task_list();
-      console.log("不是凌晨 00：00 - 00:05  分之间");
+      // console.log("不是凌晨 00：00 - 00:05  分之间");
     }
     // 箭头00：00：00 点整时，调用初始化方法
     this.listen_for_time();
@@ -85,7 +87,7 @@ export default {
     async show_dialog(current) {
       try {
         // 跟产品沟通接口有限频，前端不用做限制
-        if (is_time_limit()) return; //  防止调用多次接口
+        if (is_time_limit.call(this, null)) return; //  防止调用多次接口
         let parameter = { current, size: 7, actId: this.actId };
         let { code, data } = await api_activity.get_activity_receive_record(parameter);
         if (code == 200 && data.records.length > 0) {
@@ -102,7 +104,8 @@ export default {
           this.$emit("to_maintenance");
           return;
         } else if (["0401038"].includes(code)) {
-          const msg_nodata_22 = i18n_t("msg.msg_nodata_22");
+          // const msg_nodata_22 = i18n_t("msg.msg_nodata_22");
+          const msg_nodata_22 = this.$t("msg.msg_nodata_22");
           this.$toast(msg_nodata_22, 1500);
         } else {
           this.$toast("暂无历史记录数据", 1500);
@@ -163,7 +166,7 @@ export default {
           this.get_everyDay_list = [];
           this.has_data = false;
           if (["0401038"].includes(code)) {
-            const msg_nodata_22 = i18n_t("msg.msg_nodata_22");
+            const msg_nodata_22 = this.$t("msg.msg_nodata_22");
             this.$toast(msg_nodata_22, 1500);
           }
         }

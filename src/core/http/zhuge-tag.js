@@ -168,7 +168,7 @@ class ZHUGE {
       [objKey.terminal]: "PC",
     };
     Object.assign(_obj, eventPropsObj);
-    console.log(eventLabel, _obj);
+    // console.log(eventLabel, _obj);
     this.zhuge_track(eventLabel, _obj);
   }
   /**

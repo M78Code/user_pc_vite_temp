@@ -243,8 +243,7 @@ import default_mixin from '../../mixins/default.mixin.js'
 import { compute_value_by_cur_odd_type } from "src/output/index.js";
 import lodash from 'lodash';
 import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
-import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn } from "src/output/index.js"
-import { compute_css_obj } from 'src/core/server-img/index.js'
+import { MITT_TYPES, LOCAL_PROJECT_FILE_PREFIX, useMittOn, compute_css_obj } from "src/output/index.js"
 import { set_bet_obj_config } from "src/core/bet/class/bet-box-submit.js"
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 
@@ -379,7 +378,7 @@ export default {
       isCollectMenuTab,
       lang, theme, i18n_t, compute_img_url, format_time_zone, GlobalAccessConfig, footer_menu_id, LOCAL_PROJECT_FILE_PREFIX,
       is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, standard_edition, footer_menu_id,
-      in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title,
+      in_progress, not_begin, animation_icon, video_icon, icon_date, expand_item, show_sport_title, compute_css_obj,
       normal_img_not_favorite_white, not_favorite_app, normal_img_is_favorite, corner_icon, mearlys_icon_app, midfield_icon_app
     }
   }

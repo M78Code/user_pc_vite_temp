@@ -120,8 +120,7 @@ export default defineComponent({
      * @param {*} info 
      */
     handle_scroll(info){
-      console.log('滚动输出------',info);
-
+      // console.log('滚动输出------',info);
     },
 
     //小屏幕rem适配方案，(375的设计稿，16px，可写成.16rem)

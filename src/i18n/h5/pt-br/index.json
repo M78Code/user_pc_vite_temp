@@ -365,7 +365,8 @@
     "odd_all_closed": "Todas as deficiências para o evento atual foram encerradas",
     "odd_closed": "Handicap fechado",
     "mins": "atas",
-    "popular_recommendation": "Recomendas populares"
+    "popular_recommendation": "Recomendas populares",
+    "non":"não"
   },
   "early": {
     "btn2": "Assentamento Antecipado",

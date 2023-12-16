@@ -350,7 +350,8 @@
     "mins": "นาที",
     "odd_all_closed": "การแข่งขันปิดการเดิมพันทั้งหมด",
     "odd_closed": "เดิมพันถูกปิด",
-    "popular_recommendation": "มาแรงแนะนำ"
+    "popular_recommendation": "มาแรงแนะนำ",
+    "non":"ไม่"
   },
   "early": {
     "btn1": "หยุดจ่ายก่อนกำหนด",

@@ -357,7 +357,8 @@
     "mins": "Minit",
     "odd_all_closed": "All market tertutup",
     "odd_closed": "Market tertutup",
-    "popular_recommendation": "Hot"
+    "popular_recommendation": "Hot",
+    "non":"bukan"
   },
   "early": {
     "btn1": "Suspend cashout",

@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { Quasar } from "quasar";
+import { Quasar, Notify } from "quasar";
 import "./src/css/app.scss";
 import "quasar/dist/quasar.css";
 // import './style.css'
@@ -10,7 +10,6 @@ import _ from 'lodash';
 import { i18n, loadLanguageAsync } from "./src/boot/i18n.js";
 import global from './src/boot/globals';
 
- 
 
 // 兼容旧项目里面的 lodash
 window._ = _;
@@ -22,7 +21,9 @@ app.use(global);
 app.use(i18n);
  
 app.use(Quasar, {
-  plugins: {}, // import Quasar plugins and add here
+  plugins: {
+    Notify
+  }, // import Quasar plugins and add here
 });
 
 app.mount('#ty-app')

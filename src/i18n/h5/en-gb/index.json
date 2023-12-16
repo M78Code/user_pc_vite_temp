@@ -585,7 +585,8 @@
     "mins": " mins",
     "odd_all_closed": "The markets are closed",
     "odd_closed": "Markets closed",
-    "popular_recommendation": "Popular"
+    "popular_recommendation": "Popular",
+    "non":"not"
   },
   "early": {
     "btn1": "Unavailable",

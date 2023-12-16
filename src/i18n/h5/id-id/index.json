@@ -359,7 +359,8 @@
     "mins": "Min",
     "odd_all_closed": "Semua bursa tutup",
     "odd_closed": "Bursa tutup",
-    "popular_recommendation": "Rekom"
+    "popular_recommendation": "Rekom",
+    "non":"tidak"
   },
   "early": {
     "btn1": "Henti cashout",
