@@ -7,7 +7,7 @@
   <span class='show-start-time'>
     <span v-if="start_time" class="fz_12" style="font-weight:400">
       <!-- "after_time_start": "分钟后开赛", -->
-      {{i18n_t("list.after_time_start",[longTime])}}
+      {{i18n_tc("list.after_time_start",[longTime])}}
     </span>
     <span v-else>
       {{ format_H_M(format_time_zone_time(+detail_data.mgt)) }}
@@ -17,6 +17,7 @@
 
 <script>
 import { format_time_zone_time, format_H_M } from "src/output/index.js"
+import { i18n_tc } from "src/boot/i18n.js"
 //国际化
 
 
@@ -30,7 +31,8 @@ export default {
       start_time: false,
       
       format_time_zone_time,
-      format_H_M
+      format_H_M,
+      i18n_tc
     }
   },
   props: ["detail_data"],
