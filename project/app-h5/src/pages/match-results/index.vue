@@ -27,7 +27,7 @@
 
     <ScrollMenu :scrollDataList="state.slideMenu_sport" :is_show_badge="false" :current_mi="state.current_mi" @changeMenu="set_scroll_current"/>
 
-     <ObserverWrapper :match_list="state.matchs_data" com_type="ouzhou-h5"></ObserverWrapper>
+     <ObserverWrapper :match_list="state.matchs_data" com_type="app-h5"></ObserverWrapper>
     <!-- <div class="match-results-container-styles">
        
         <match-container />

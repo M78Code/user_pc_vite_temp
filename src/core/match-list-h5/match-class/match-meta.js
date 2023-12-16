@@ -360,6 +360,23 @@ class MatchMeta {
   }
 
   /**
+   * @description 根据关键字搜索赛事
+   */
+  filter_match_by_name (str) {
+    const keyword = str.replace(/^\s+|\s+$/g, '')
+    if (!keyword) return this.set_origin_match_data()
+    const length = lodash.get(this.complete_matchs, 'length', 0)
+    if (length === 0) return this.set_page_match_empty_status({ state: true }); 
+    const result = []
+    this.complete_matchs.forEach(t => {
+      if (t?.man.indexOf(keyword) !== -1 || t?.mhn.indexOf(keyword) !== -1 || t?.tn.indexOf(keyword) !== -1) result.push(t)
+    })
+    const r_length = lodash.get(result, 'length', 0)
+    if (r_length === 0) return this.set_page_match_empty_status({ state: true })
+    this.handler_match_list_data({ list: result, type: 1, is_virtual: true })
+  }
+
+  /**
    * @description 设置 tid 映射 mids;  避免初始渲染慢， 所以放在 有需要的时候在设置； 比如 热门页面
    * @param {*} list 
    */
@@ -751,7 +768,7 @@ class MatchMeta {
     if (!MenuData.is_collect()) return
     const list = lodash.get(res, 'data', [])
     
-    if (list.length > 0) {
+    if (list && list.length > 0) {
       this.handler_match_list_data({ list: list, is_virtual: false, merge: 'cover' })
       await MatchCollect.get_collect_match_data(list)
       // 该赛事是否收藏
