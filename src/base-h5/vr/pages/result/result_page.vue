@@ -287,7 +287,7 @@ export default {
   line-height: 0.2rem;
   margin-left: 0.22rem;
   text-align: center;
-  background: var(--q-color-com-img-bg-20) no-repeat 0 0 / 100%;
+  background: url($SCSSPROJECTPATH+"/image/png/virtual_num.png")  no-repeat 0 0 / 100%;
   --per: -0.3rem;
 }
 
@@ -344,6 +344,7 @@ export default {
 /*************** 背景颜色 *************** -E*/
 .bor-btm {
   height: 0.88rem;
+  background-color: #F2F2F6;
 }
 
 /*************** 赛果名称开始 *************** -S*/

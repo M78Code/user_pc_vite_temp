@@ -840,7 +840,7 @@ class MatchMeta {
       // 滚球不需要
       if (MenuData.is_scroll_ball() || MenuData.is_zaopan()) {
         is_classify = false
-      } else if (MenuData.is_today() || MenuData.is_mix()) {
+      } else if (MenuData.is_today() || MenuData.is_mix() || MenuData.is_esports()) {
         // 今日、串关需要 开赛、未开赛归类
         is_classify = true
       }
@@ -927,7 +927,7 @@ class MatchMeta {
       MatchResponsive.clear_ball_seed_league_count()
     }
     MatchResponsive.clear_ball_seed_count()
-    
+
     const length = lodash.get(list, 'length', 0)
     
     if (length < 1) return this.set_page_match_empty_status({ state: true });

@@ -138,9 +138,11 @@ export default {
       height: 100%;
       float: right;
       flex-wrap: nowrap;
+      transition: transform 0.2s;
       -webkit-transition: transform 0.2s;
 
       &.status2 {
+        transform: translateX(-1.84rem);
         -webkit-transform: translateX(-1.84rem);
       }
 
