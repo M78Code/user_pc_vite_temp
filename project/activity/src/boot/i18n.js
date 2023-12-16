@@ -10,10 +10,12 @@ import common_lang from 'project/activity/src/i18n/common-lang/index.json'
 
 const i18n = createI18n({
   locale: localStorage.pc_user_base_info && localStorage.pc_user_base_info.languageName || 'zh',
-  // fallbackLocale: 'zh',
+  fallbackLocale: 'zh',
   // 增加所有语中使用到的公共的国际化字符串
   messages:{},
-  silentTranslationWarn: true
+  legacy: true,
+  // 去除控制台i18n警告信息
+  silentTranslationWarn: true,
 })
 
 /**
@@ -39,10 +41,9 @@ function loadLanguageAsync (lang){
   }
   return import(/* webpackChunkName: "lang-[request]" */`project_path/src/i18n/${map_[lang]}/index.json`).then(langfile=>{
     // 设置语言信息
-    i18n.setLocaleMessage(lang, { ...langfile, common_lang });
-    
+    i18n.global.setLocaleMessage(lang, { ...langfile, common_lang });
     // 设置语种
-    i18n.locale = lang;
+    i18n.global.locale = lang;
     return lang;
   })
 }
