@@ -10,7 +10,9 @@
           <div class="s-menu-container flex" >
             <template  v-for="(item,index) in scrollDataList" :key="index">
               <!-- 全部 vr 收藏 电竞显示  -->
-              <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" >
+              <div v-if="item?.ct > 0 || menu_show_id.includes(+item.mi) || +item.mi>2000" ref="scrollTab" 
+                :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] " 
+                 @click="set_menu_lv2(item, $event)" >
               <!-- <div ref="scrollTab" :class="['sport-menu-item', 'flex', 'justify-center',current_mi == item.mi?'current':''] "  @click="set_menu_lv2(item, $event)" > -->
                 <div class="inner-w flex justify-between items-center">
                   <div class="sport-w-icon">
@@ -80,7 +82,7 @@ function set_menu_lv2(item = {},event) {
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
   emits('changeMenu',item)
-  nextTick(()=>{
+  item.mi&&nextTick(()=>{ //收藏是没有change的相当于是页面
     // 设置菜单点击事件
     useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
   })
