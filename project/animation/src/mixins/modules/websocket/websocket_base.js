@@ -10,11 +10,11 @@ export default {
   data() {
     return {
       uuid: "",
-      // time: {
-      //   1: 10000,
-      //   2: 10000,
-      //   3: 15000,  // 心跳多久发一次
-      // },
+      time: {
+        1: 5000,
+        2: 5000,
+        3: 15000,  // 心跳多久发一次
+      },
       timer: { // 心跳计数
         1: null,
         2: null,
@@ -135,7 +135,7 @@ export default {
             this.sending && this.sending_number++
             this.websocket_send_heartbeat({ which });
             // this.set_socket_2_close()
-          }, 10000);  // 多久发一次心跳
+          }, this.time[which]);  // 多久发一次心跳
 
         }else{
           clearTimeout(this.timer[which]);
@@ -174,7 +174,6 @@ export default {
       this[`websocket_connection_${which}`].onclose = event => {
         //关闭websocket
         console.log( 'xxxxxxxxxxxxx' )
-        // this.websocket_onclose(event, which);
       };
       this[`websocket_connection_${which}`].onerror = event => {
         console.error('-----WS----连接错误')
