@@ -4,18 +4,28 @@
 
 <template>
   <template v-if="is_show">
-     <MatchContainerMainTemplate1
-       :i="index"
-       :match_of_list="item">
-     </MatchContainerMainTemplate1>
+    <!-- 赛果玩法 -->
+      <template v-if="is_results">
+        <MatchContainerMainTemplate3
+          :i="index"
+          :match_of_list="item">
+        </MatchContainerMainTemplate3>
+      </template>
+      <template>
+        <MatchContainerMainTemplate1
+          :i="index"
+          :match_of_list="item">
+        </MatchContainerMainTemplate1>
+      </template>
    </template>
 </template>
 
 <script setup>
 import { computed } from 'vue';
+import {is_results } from 'src/base-h5/mixin/menu.js'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-// import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/ouzhou/match-container-main-template1.vue"; 
 import MatchContainerMainTemplate1 from "src/base-h5/components/match-container/template/app/match-container-main-template1.vue"; 
+import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/template/app/match-container-main-template3.vue"; 
 
 const props = defineProps({
  item: {

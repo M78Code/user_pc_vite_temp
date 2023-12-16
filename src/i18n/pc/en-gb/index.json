@@ -62,9 +62,9 @@
           "4": "HDP"
         },
         "2": {
-          "37": "Moneyline",
-          "38": "Total",
-          "39": "Spread"
+          "37": "Money Line",
+          "38": "Total Point",
+          "39": "HDP"
         },
         "3": {
           "242": "Winner",

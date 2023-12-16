@@ -24,7 +24,7 @@
 							</div>
             </ul>
             <div class="search" v-show="drawerRight">
-                <input class="search-input" type="text" v-model="keyword" :placeholder="i18n_t('ouzhou.search.placeholder')" />
+                <input class="search-input" type="text" v-model="keyword" @input="handler_search_match" :placeholder="i18n_t('ouzhou.search.placeholder')" />
                 <span @click="reset">{{ i18n_t('common.cancel') }}</span>
             </div>
             <!-- <div class="search-tab-content-img" @click="searchClick">
@@ -50,6 +50,7 @@
 
 <script setup>
 import { ref } from "vue";
+import lodash from 'lodash'
 import search from "./img/search.svg";
 import {scrollMenuEvent} from "../utils";
 // import {  menu_lv2 } from 'src/base-h5/mixin/menu.js'
@@ -133,6 +134,14 @@ const keyword = ref('')
 
 const activeOn = ref(props.defaultVal || 0);//默认值
 const league_data = ref([])
+
+/**
+ * @description 搜索赛事
+ */
+const handler_search_match = lodash.debounce(() => {
+    MatchMeta.filter_match_by_name(keyword.value)
+}, 1000)
+
 /**
  * @description: 联赛转化背景
  * @param {String} id 球类id
@@ -186,6 +195,7 @@ const searchClick = () => {
 const reset = () => {
 	drawerRight.value = false;
 	keyword.value = '';
+    MatchMeta.filter_match_by_name('')
 }
 // 键入回车换行
 function key_down(event) {

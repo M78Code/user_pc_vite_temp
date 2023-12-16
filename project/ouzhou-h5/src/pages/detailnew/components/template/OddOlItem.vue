@@ -12,6 +12,7 @@
         </div>
       </template>
       <div class="item ol-name" :alt="olName">
+        <span v-if="txt_ol_name" class="ol-name-span2">{{txt_ol_name}}</span>
         <span class="ol-name-span">{{ olName }}</span>
       </div>
       <div class="separate"></div>
@@ -85,6 +86,11 @@ const ov = computed(() => {
   // @ts-ignore
   return compute_value_by_cur_odd_type(props.value.ov, props.value._hpid, '', sportId)
 })
+// 反波胆玩法增加'非'
+const txt_ol_name = computed(() => {
+  let res = (['367','368','369'].includes(props.value._hpid))?i18n_t('detail.non') : '';
+  return res;
+})
 const isLock = computed(() => {
   if (props.value) {
     // @ts-ignore
@@ -116,6 +122,9 @@ function resetStatus() {
 </script>
 
 <style scoped lang="scss">
+.ol-name-span2{
+  margin-right: 2px;
+}
 .overflow {
   flex: 1;
   width: 0;

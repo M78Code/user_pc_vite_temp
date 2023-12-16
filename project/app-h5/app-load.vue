@@ -50,7 +50,7 @@ let timer, timer2;
 const route = useRoute();
 
 onMounted(()=>{
-  useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE,set_global_theme_change )
+  useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE,set_global_theme_change)
 })
 
 watch(
@@ -64,6 +64,7 @@ watch(
 // 设置主题
 const set_global_theme_change = () => {
   Object.assign(page_style, global_color_obj());
+    console.log('page_style',Object.assign(page_style, global_color_obj()))
 }
 
 onBeforeMount(() => {

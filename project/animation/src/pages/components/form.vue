@@ -1,0 +1,98 @@
+<template>
+  <div class="top">
+    <q-form
+      @submit="onSubmit"
+      @reset="onReset"
+      class="q-gutter-md form"
+      ref="form"
+    >
+      <span class="label">赛种ID</span>
+      <input
+        v-model="form.sportId"
+      />
+      <span class="label">赛事id</span>
+      <input
+        v-model="form.matchId"
+      />
+      <span class="label">数据源</span>
+      <input
+        v-model="form.dataSourceCode"
+      />
+      <span class="label">token</span>
+      <input
+        v-model="form.token"
+      />
+      <q-btn v-show="!isStart" label="启动" type="submit" color="primary" flat class="q-ml-sm"/>
+      <q-btn v-show="isStart" label="停止"  color="primary" flat class="q-ml-sm" @click="pause" />
+<!--      <q-btn label="清空" type="reset" color="primary" flat class="q-ml-sm" />-->
+      <q-btn label="清空" color="primary" flat class="q-ml-sm"  @click="reset" />
+    </q-form>
+  </div>
+</template>
+<script>
+export default {
+  data(){
+    return {
+      isStart: false,
+      form: {
+        sportId: '1',
+        matchId: '2988076',
+        dataSourceCode: 'PD',
+        token: '',
+      },
+    };
+  },
+  methods: {
+    validate(){
+      
+    },
+    onSubmit () {
+      this.$refs.form.validate()
+        .then(success => {
+          if (success) {
+            console.log(this.form)
+            this.isStart = true
+            this.$emit('submit', this.form)
+          } else {
+          }
+        })
+    },
+    onReset () {
+      // this.form = {
+      //   sportId: '',
+      //   matchId: '',
+      //   dataSourceCode: '',
+      //   token: '',
+      // }
+      // this.$emit('submit', this.form)
+    },
+    pause(){
+      this.isStart = false
+      this.$emit('pause')
+    },
+    reset(){
+      this.form = {
+        sportId: '',
+        matchId: '',
+        dataSourceCode: '',
+        token: '',
+      }
+      this.$emit('reset')
+    }
+  }
+}
+</script>
+<style scoped lang="scss">
+
+.top {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  //background: #fff;
+  padding-left: 20px;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+}
+</style>
