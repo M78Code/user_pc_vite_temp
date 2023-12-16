@@ -12,7 +12,8 @@ os: 1 开盘 ，2 封盘
 
 
 <script setup name="template5">
-import {defineProps, computed, defineEmits} from "vue"
+// import {defineProps, computed, defineEmits} from "vue"
+import {computed} from "vue"
 import olStatus from "../ol_status.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import {compute_value_by_cur_odd_type, MatchDetailCalss} from "src/output/index.js"

@@ -6,7 +6,8 @@
  * @FilePath: \user-pc-vue3\src\project-ouzhou\pages\detail\index.js
  * @Description: 详情分析页相关接口数据处理
  */
-import { ref, onMounted, computed, onUnmounted,defineProps } from "vue";
+// import { ref, onMounted, computed, onUnmounted,defineProps } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 
 export function useMscData(detail_info) {
 

@@ -30,7 +30,7 @@
                   <div class="nonebox4-fourth-num-sun" data-number='00'>00</div>
               </div>
               <div class="nonebox4-fourth-num">
-                  <div class="nonebox4-fourth-num-sun" data-number='max' style="font-size: 0.14rem;">{{ i18n_t('bet.max')}}</div>
+                  <div class="nonebox4-fourth-num-sun max-font" data-number='max'>{{ i18n_t('bet.max')}}</div>
                   <!-- <div class="nonebox4-fourth-num-sun" data-number='x' @click.stop="_handleDeleteKey()">{{ i18n_t('app_h5.bet.delete')}}</div> -->
                   <div class="nonebox4-fourth-num-sun key-cell" data-num="x" @click.stop="_handleDeleteKey()">
                     <img class="key-cell-img" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/jianpan_del.svg`" alt="" data-num="x">
@@ -389,6 +389,9 @@ onUnmounted(() => {
     border-radius: 6px;
     margin: .02rem 0;
     height: 50px;
+}
+.max-font{
+  font-size: 0.14rem;
 }
 
 .keyboard {

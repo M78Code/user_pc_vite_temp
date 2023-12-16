@@ -57,6 +57,7 @@
   <!-- 商户活动的弹层,只在home页展示，两个都已 脱离文档流-->
   <activity-layer v-if="activity_status" @activity_hide="activity_status = false" :activity_layerimg="activity_layerimg"
     :count_down_time="userBannerTimer" />
+  <StandardEdition></StandardEdition>
 </template>
 
 <script setup>
@@ -67,6 +68,7 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
+import StandardEdition from 'src/base-h5/components/standard-edition/index.vue'
 import { useMittOn, MITT_TYPES, i18n_t, MenuData } from "src/output/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js"; 
 // import { FooterWapper } from "src/components/footer/index.js";

@@ -209,7 +209,7 @@ class MatchUtils {
     return { home_score, away_score }
 	}
   /**
-   * @description 获取 各球种的数量
+   * @description 获取 开赛，未开赛 下的各球种数量
    * @param { String } key
    * @param { Array } list
    */

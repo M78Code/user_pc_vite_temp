@@ -276,7 +276,7 @@ export default {
             }
           }
 
-          ::v-deep.text-warning {
+          :deep(.text-warning) {
             width: 0.8rem;
             margin: 0 0.1rem 0 0.08rem;
             transition: all 0.3s linear;
@@ -326,7 +326,7 @@ export default {
             margin-right: 0.05rem;
           }
 
-          ::v-deep.q-rating {
+          :deep(.q-rating) {
             > i {
               font-size: 0.12rem;
             }

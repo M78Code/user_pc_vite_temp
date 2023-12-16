@@ -34,7 +34,7 @@
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch,ref } from "vue";
 import 'src/base-h5/css/pages/virtual-footer-menu.scss'
-import { i18n_t } from "src/output/index.js"
+import { i18n_t, UserCtr } from "src/output/index.js"
 
 export default defineComponent({
   name: "virtual_footer_menu",
@@ -109,7 +109,7 @@ export default defineComponent({
     const footer_sub_m_list = computed(() => {
       return [
         {
-          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title: UserCtr.lang=='en'?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.win_alone'),
           icon0:'f-icon-sub-duying0.svg',
           icon:'f-icon-sub-duying.svg',
@@ -117,7 +117,7 @@ export default defineComponent({
           id:1   // hpid 独赢
         },
         {
-          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title:UserCtr.lang=='en'?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.rangqiu'),
           icon0:'f-icon-sub-rang0.svg',
           icon:'f-icon-sub-rang.svg',
@@ -125,7 +125,7 @@ export default defineComponent({
           id:4    // hpid 让球
         },
         {
-          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title: UserCtr.lang=='en'?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.daxiao'),
           icon0:'f-icon-sub-daxiao0.svg',
           icon:'f-icon-sub-daxiao.svg',

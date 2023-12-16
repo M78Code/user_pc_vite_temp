@@ -212,7 +212,12 @@ export default defineComponent({
     // 获取赛事数量
     get_match_count () {
       const { csid, start_flag } = this.match_of_list
-      const key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      let key = ''
+      if ([1,2].includes(+start_flag)) {
+        key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      } else {
+        key = `default_csid_${csid}`
+      }
       return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 1)
     },
      // 获取联赛赛事数量
@@ -937,7 +942,6 @@ export default defineComponent({
       // 进入详情前，将当前赛事信息存入仓库
       // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
       //元数据存入本地
-      // debugger
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
       if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
         this.$router.push(`/result_details/${item.mid}/0`);
