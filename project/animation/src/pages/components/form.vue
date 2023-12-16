@@ -53,6 +53,7 @@ export default {
       this.$refs.form.validate()
         .then(success => {
           if (success) {
+            sessionStorage.setItem("formData",JSON.stringify(this.form))
             console.log(this.form)
             this.isStart = true
             this.$emit('submit', this.form)

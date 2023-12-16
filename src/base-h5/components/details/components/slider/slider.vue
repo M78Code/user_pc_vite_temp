@@ -9,7 +9,7 @@
            :style="{
               left: `${volumn * 100}%`
            }"
-           @touchstart="handle_start" @touchmove="handle_move" @touchend="handle_end">
+           @touchstart.stop="handle_start" @touchmove.stop="handle_move" @touchend.stop="handle_end">
       </div>
     </div>
   </template>
@@ -21,6 +21,10 @@
           type: Number,
           default: 100
       },
+      value: {
+        type: Number,
+        default: 0
+      }
   })
   /** 回传进度小数 */
   const emits = defineEmits(['change'])
@@ -43,6 +47,11 @@
   
   const start_percentage = computed(() => start_size.value.width / slider_size.value.width / 2)
   
+  watch(() => props.value, (_) => {
+    console.log(_, "props.value");
+    left.value = _ * slider_size.value.width;
+  })
+
   watch(volumn, (value) => {
       console.log(value, "value");
   })
@@ -67,8 +76,8 @@
       const { clientX } = e.touches[0];
       // 获取手指点击的距离
       const start_x = start.value.getBoundingClientRect().left;
-      console.log(start_x);
-      left.value = clientX - start_x;
+      console.log(start_x, "start_x");
+      left.value = clientX - start_x + left.value;
       is_start.value = true;
   }
   /**
@@ -85,6 +94,7 @@
       if (move_x <= slider_size.value.width - start_size.value.width&& move_x >= 0) {
           left.value = move_x;
       }
+      emits('change', volumn.value)
       console.log(left.value, "clientX");
   }
   
