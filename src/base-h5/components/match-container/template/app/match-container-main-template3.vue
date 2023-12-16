@@ -16,7 +16,7 @@
       <!-- 最核心的div模块     标题 + 倒计时 + 比分 + 赔率盘口模块 -->
       <div :class="['match-inner-container', {'collapsed': !collapsed}]">
          <!-- 缓冲容器， 避免滚动时骨架屏漏光问题 -->
-        <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div>
+        <!-- <div class="buffer-container" v-if="match.is_show_league && i !== 0"></div> -->
         <!--联赛标题 -->
         <div @click="handle_league_fold" v-if="match.is_show_league || (is_hot && get_league_show(i))"
           :class="[('league match-indent hairline-border'), { 'no-radius': show_sport_title, 'no-border': !collapsed}]">
@@ -322,7 +322,7 @@ export default {
     /* 兼容iPhone11边框显示不全 */
     //width: 100%;
     display: flex;
-    padding: 0 0.05rem;
+    padding: 0.05rem;
     flex-direction: column;
     align-items: center;
     background: var(--q-gb-bg-c-15);
@@ -384,8 +384,8 @@ export default {
   &.is_league_tail {
     .match-inner-container {
       box-shadow: var(--q-color-box-shadow-color-4);
-      border-bottom-left-radius: 0.08rem;
-      border-bottom-right-radius: 0.08rem;
+      // border-bottom-left-radius: 0.08rem;
+      // border-bottom-right-radius: 0.08rem;
       //overflow: hidden;
     }
   }
@@ -695,9 +695,9 @@ export default {
     font-size: 0.1rem;
     color: #303442;
     flex-direction: row-reverse;
-    background: #fff;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    background: var(--q-gb-bg-c-18);
+    border-top: 1px solid var(--q-gb-bg-c-19);
+    border-bottom: 1px solid var(--q-gb-bg-c-19);
 
     .odd-title-i-w {
       width: 50%;
