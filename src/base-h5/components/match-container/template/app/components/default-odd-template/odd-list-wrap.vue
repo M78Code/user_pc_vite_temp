@@ -42,7 +42,7 @@
     <!--标准版赔率容器  波胆 5分钟  玩法除外-->
     <template v-if="![18,19].includes(+lodash.get(current_tab_item, 'id'))">
       <div v-if="!show_newer_edition && get_n_s_changed_loaded" v-touch-swipe.mouse.right.left="odd_wrapper_pan"
-        :class="['standard-odd-l-w',{'status2':standard_odd_status == 1}, {'have_score_list': match.csid == 2}]" >
+        :class="['standard-odd-l-w',{'status2':standard_odd_status == 1}]" >
         <!--标准版-->
         <div class="standard-odd-list row"  :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
           <div class="odd-column-w" :key="hp_i_i+''+standard_odd_status" :class="{'boxing':match.csid == 12 } "
@@ -60,10 +60,6 @@
               />
             </div>
           </div>
-        </div>
-        <!-- 历史比分box -->
-        <div class="score_list">
-          <ScoreList :match="match" />
         </div>
       </div>
       <!--标准版 才有的样式 下划线 -->
@@ -167,7 +163,6 @@ import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { i18n_t} from 'src/output/index.js'
 import oddColumnItem from "./odd-column-item.vue";
-import ScoreList from 'src/base-h5/components/match-list/components/score-list-app.vue';
 import { img1, img2, img3, img4, Y0_img_white, slide_icon_0, slide_icon_1 } from 'src/base-h5/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { MenuData,compute_img_url ,UserCtr, compute_css_obj} from "src/output/index.js"
@@ -1131,14 +1126,7 @@ onUnmounted(() => {
     transition: transform 0.2s;
     -webkit-transition: transform 0.2s;
     overflow: hidden;
-    &.have_score_list {
-      width: 1.84rem;
-      .score_list {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
-    }
+
     &.status2 {
       -webkit-transform: translateX(-1.7rem);
       transform: translateX(-1.7rem);
@@ -1170,7 +1158,7 @@ onUnmounted(() => {
     width: 1.84rem;
     flex-shrink: 0;
     position: absolute;
-    // height: 100%;
+    height: 100%;
 
     &.f-child {
       left: 0;
@@ -1204,7 +1192,7 @@ onUnmounted(() => {
         height: 0.46rem;
       }
       &.is-small{
-        height: 0.32rem;
+        // height: 0.32rem;
         :deep(.odd-title) {
           font-size: 0.1rem;
           &.standard {
@@ -1234,4 +1222,4 @@ onUnmounted(() => {
     }
   }
 }
-</style>/index.js
+</style>
