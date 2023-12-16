@@ -48,11 +48,13 @@ const go_to_back = ({back_to, route_name, route, router}) => {
 const go_back_from_virtual = ({back_to, route_name, route, router}) => {
   if(route.query.home && !golistpage){
     router.push(route.query.home);      // 返回到  ‘home’字段的 页面
-  } else if (['rule_description', 'match_list'].includes(route.query.from) || is_close_video || ['result_details', 'match_result'].includes(route.name) || get_golistpage) {
+  // } else if (['rule_description', 'match_list'].includes(route.query.from) || is_close_video || ['result_details', 'match_result'].includes(route.name) || get_golistpage) {
+  } else if (['rule_description', 'match_list'].includes(route.query.from) || is_close_video || ['result_details', 'match_result'].includes(route.name) ) {
     //从规则页返回到虚拟体育页时，再点击返回要返回到列表页
     router.push({name: 'matchList'});
   } else if(is_banner_jump){ // 从视频直播进来返回时
-    router.push({name: 'home'});       // 返回到视频直播页
+    // router.push({name: 'home'});       // 返回到视频直播页
+    router.push({name: 'match'});       // 返回到视频直播页
   } else {
     router.go(-1);        // 返回上一级菜单
   }
