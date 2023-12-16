@@ -88,6 +88,39 @@ const awaySvgAnimationConfig = {
     colors: ['rgba(255,255,255,0)', 'url(#gradient);rgba(255,255,255,.8)']
   }
 }
+const homeSvgAnimationDefaultConfig = {
+  textParams: {
+    x: 110,
+    y: 145,
+    text: '主场事件'
+  },
+  pathParams: {
+    x: 130,
+    y: 140,
+  }
+}
+const awaySvgAnimationDefaultConfig = {
+  textParams: {
+    x: 440,
+    y: 145,
+    text: '客场事件'
+  },
+  pathParams: {
+    x: 460,
+    y: 140,
+  }
+}
+const svgAnimationDefaultConfig = {
+  textParams: {
+    x: 275,
+    y: 145,
+    text: '中立事件',
+  },
+  pathParams: {
+    x: 300,
+    y: 140,
+  }
+}
 
 // 事件动画配置
 export const event_animation = {
@@ -330,5 +363,7 @@ export const svgAnimationConfig = {
   homeSvgAnimationConfig,
   awaySvgAnimationConfig,
   // 默认动画
-  animationDefaultConfig: {},
+  homeSvgAnimationDefaultConfig,
+  awaySvgAnimationDefaultConfig,
+  svgAnimationDefaultConfig,
 }

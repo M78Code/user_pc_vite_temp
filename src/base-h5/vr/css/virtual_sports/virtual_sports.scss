@@ -27,7 +27,8 @@
     .back-wrap {
       color:  var(--q-color-fs-color-54);
       .detail-back {
-        background: var(--q-color-com-img-bg-3) center no-repeat;
+        background: url($SCSSPROJECTPATH+"/image/png/back.png") center no-repeat;
+        background-size: 100% 100%;
       }
       .no-single {
         background: var(--q-color-img-bg-53)  center no-repeat;

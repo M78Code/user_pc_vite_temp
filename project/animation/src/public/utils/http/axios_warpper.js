@@ -42,11 +42,11 @@ axios.defaults.baseURL = api_domain;
 
 axios.prototype.WS_ROOT_DOMAIN = api_domain.replace("http", "ws");
 axios.prototype.WS_DOMAIN_FRNGKONG_1= axios.prototype.WS_ROOT_DOMAIN+'/'+'fengkongws'+'/rcsWebSockets/'
-
 axios.interceptors.request.use(
   config => {
     config.headers["user-id"] = domian[window.BUILDIN_CONFIG.CURRENT_ENV]['userId']
     config.headers["app-id"] = domian[window.BUILDIN_CONFIG.CURRENT_ENV]['appId']
+    config.headers["Requestid"] = sessionStorage.getItem("token") || "";
     return config
   },
   error => {
