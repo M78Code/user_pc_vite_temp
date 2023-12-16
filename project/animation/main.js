@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { Quasar } from "quasar";
 import App from './App.vue'
+import "./src/css/app.scss"
 import router from 'project/animation/src/router/index.js'
 import BUILDIN_CONFIG from "app/job/output/env/index.js";
 console.log("BUILDIN_CONFIG-----------pc---", BUILDIN_CONFIG);
