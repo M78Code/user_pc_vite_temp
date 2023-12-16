@@ -7,6 +7,8 @@
             @submit="submit"
             @pause="pause"
             @reset="reset"
+            @emitEvent="emitEvent"
+            @emitPauseEvent="emitPauseEvent"
           />
         </div>
         <div class="row q-pa-lg">
@@ -22,7 +24,7 @@
                         label="随机推送事件" 
                     />
                     <!-- <b class="text-blue">自动生成事件开启中。。。</b> -->
-                    <svg_area :current_event_code="current_event_code" />
+                    <svg_area :current_event_obj="current_event_obj" />
                 </div>
                 <!-- 比分 -->
                 <div style="height: 100px;">
@@ -63,6 +65,7 @@ import websocket_base from "project/animation/src/mixins/modules/websocket/webso
 import timeline from "project/animation/src/pages/components/timeline.vue"
 import svg_area from "project/animation/src/pages/components/svg-area.vue"
 import { test_data } from "project/animation/src/globle/event_data.js"
+import event_json_data from "project/animation/src/globle/event.json"
 import BackendConfig from "project/animation/src/pages/components/backend_config.vue"
 import TopForm from "project/animation/src/pages/components/form.vue"
 import _ from 'lodash';
@@ -82,7 +85,7 @@ export default defineComponent({
     // sportId=1&dataSourceCode=PA&matchId=2928959
     
     return {
-        current_event_code: '',
+        current_event_obj: {},
         websocket_connection_1_url: WEB_ENV,
         dataObj: [],
         queryParams: null,
@@ -96,7 +99,9 @@ export default defineComponent({
             "protocolVersion": 2,
             "uuid": uid()
         },
-        autoEventTimer: null
+        selfAddIndex: -1,
+        autoEventTimer: null,
+        moniEventTimer: null,
     }
  },
  created() {
@@ -114,6 +119,18 @@ export default defineComponent({
    // 清空
    reset(){
     this.dataObj = []
+   },
+   // 模拟推送
+   emitEvent(){
+     this.emitPauseEvent()
+     this.moniEventTimer = setInterval(() => {
+       this.get_event_code()
+     }, 1000)
+   },
+   // 暂停模拟推送
+   emitPauseEvent(){
+     clearInterval(this.moniEventTimer)
+     this.moniEventTimer = null
    },
    // 初始化socket
    initSocket(form = {}){
@@ -216,10 +233,13 @@ export default defineComponent({
     // 生成随机事件
     get_event_code() {
         console.warn('自动获取生成时间')
-        let index = Math.floor(Math.random()*5)
-        let data_ = test_data[index] 
+        this.selfAddIndex++
+        let index = this.selfAddIndex
+      let data_ = event_json_data[index]
+        // let index = Math.floor(Math.random()*5)
+        // let data_ = test_data[index] 
         const {eventCode} = data_ || {}
-        this.current_event_code = eventCode
+        this.current_event_obj = data_ || {}
         console.warn(data_)
         let ws_obj = {
             "ack": 0,

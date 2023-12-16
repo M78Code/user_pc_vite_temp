@@ -3,7 +3,54 @@
     {{ current_event_code }}~~
     {{ textAnimateParams }}--
   </div> -->
-  <svg :width="width" :height="height" :key="key_1">
+  <svg v-if="isShowDefaultSvg" style="z-index: 10" :width="width" :height="height">
+    <defs>
+      <linearGradient
+        id="grad"
+        x1="0%"
+        y1="0%"
+        x2="100%"
+        y2="0%"
+      >
+        <stop offset="0%" style="stop-color: rgba(0,0,0,.4);stop-opacity: 1" />
+        <stop offset="100%" style="stop-color: rgba(0,0,0,.7);stop-opacity: 1" />
+        <animate
+          attributeName="x1"
+          from="0%"
+          to="100%"
+          dur="1s"
+          repeatCount="indefinite"
+        ></animate>
+        <animate
+          attributeName="x2"
+          from="100%"
+          to="200%"
+          dur="1s"
+          repeatCount="indefinite"
+        ></animate>
+      </linearGradient>
+    </defs>
+    <ellipse cx="300" cy="140" rx="60" ry="40" fill="url(#grad)">
+      <animate
+        attributeName="rx"
+        from="60"
+        to="40"
+        dur="1s"
+        fill="freeze"
+        repeatCount="indefinite"
+      ></animate>
+      <animate
+        attributeName="ry"
+        from="40"
+        to="35"
+        dur="1s"
+        fill="freeze"
+        repeatCount="indefinite"
+      ></animate>
+    </ellipse>
+    <text style="fill: rgba(255,255,255,.4)" x="275" y="145">进场事件</text>
+  </svg>
+  <svg v-else :width="width" :height="height" :key="key_1">
     <path :d="svgPath.path" :fill="pathAnimateColors[0]">
       <animate
         attributeName="d"
@@ -44,9 +91,24 @@
 </template>
 <script>
 import { defineComponent } from 'vue'
-import { event_animation } from 'project/animation/src/globle/event.js'
+import { event_animation, svgAnimationConfig } from 'project/animation/src/globle/event.js'
 export default defineComponent({
-  props: ['width', 'height', 'current_event_code'],
+  props: {
+    width: {
+      type: Number,
+      default: 0
+    },
+    height: {
+      type: Number,
+      default: 0
+    },
+    current_event_obj: {
+      type: Object,
+      default(){
+        return {};
+      }
+    }
+  },
   components: {
   },
   data(){
@@ -55,12 +117,39 @@ export default defineComponent({
       repeatCount: '1', // 1 indefinite
       fill: 'freeze',
       svgPath: {},
+      isShowDefaultSvg: true,
       key_1: false
     };
   },
   computed: {
+    // 获取code
+    current_event_code(){
+      console.log('st this.current_event_obj', this.current_event_obj)
+      return this.current_event_obj.eventCode;
+    },
+    // 获取动画配置
+    animateParams(){
+      const {homeSvgAnimationConfig, awaySvgAnimationConfig,svgAnimationDefaultConfig} = svgAnimationConfig
+      if(Object.keys(this.current_event_obj).length){
+        const {homeAway} = this.current_event_obj
+        if(homeAway === 'home'){
+          // 主场
+          return homeSvgAnimationConfig;
+        }
+        if(homeAway === 'away'){
+          // 客场
+          return awaySvgAnimationConfig;
+        }
+        if(homeAway === 'none' || !homeAway){
+          // 默认配置
+        }
+      }
+      // this.isShowDefaultSvg = true
+    },
+    // 动画路径参数
     pathAnimateParams(){
-      const {svg_path_config} = event_animation[this.current_event_code] || {}
+      // return this.animateParams;
+      const svg_path_config = this.animateParams
       const {pathAnimateParams} = svg_path_config || {}
       
       return pathAnimateParams || {};
@@ -69,7 +158,8 @@ export default defineComponent({
       return this.pathAnimateParams.colors || [];
     },
     textAnimateParams(){
-      const {svg_path_config} = event_animation[this.current_event_code] || {}
+      // return this.animateParams;
+      const svg_path_config = this.animateParams
       const {textAnimateParams} = svg_path_config || {}
       return textAnimateParams || {};
     },
@@ -82,6 +172,9 @@ export default defineComponent({
       if(n !== o){
         this.key_1 = !this.key_1
       }
+      const {homeAway} = this.current_event_obj
+      this.isShowDefaultSvg = homeAway === 'none' || !homeAway
+      console.log('st this.isShowDefaultSvg', this.isShowDefaultSvg)
       this.key_1 = Math.random()
       this.svgPath = this.rightPath()
     },
@@ -116,7 +209,7 @@ export default defineComponent({
       return str;
     },
     createPath(move = 0){
-      const {svg_path_config} = event_animation[this.current_event_code]
+      const svg_path_config = this.animateParams
       const {init,beforePath, startInit} = svg_path_config
       const [x, y] = startInit || init
       const [initX, initY] = init
@@ -161,8 +254,10 @@ export default defineComponent({
     },
     rightPath(){
       if(!this.current_event_code)return '';
-      const {svg_path_config} = event_animation[this.current_event_code]
+      console.log('st animateParams', this.animateParams)
+      const svg_path_config = this.animateParams
       if(!svg_path_config){
+        this.isShowDefaultSvg = true
         console.error('请配置 svg_path_config');
         return '';
       }
