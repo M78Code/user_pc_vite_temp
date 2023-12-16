@@ -131,7 +131,7 @@ export default {
         .row {
           width: 50%;
 
-          & ::v-deep .team-img-s {
+          & :deep(.team-img-s) {
             margin: 0;
           }
 
@@ -144,7 +144,7 @@ export default {
           }
 
           &.d-m-s-d-single {
-            & ::v-deep .team-img-s {
+            & :deep(.team-img-s) {
               width: 0.24rem;
               height: 0.24rem;
 

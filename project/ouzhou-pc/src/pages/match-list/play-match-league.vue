@@ -37,7 +37,8 @@
 </template>
 
 <script setup>
-import { defineProps, ref, computed} from 'vue';
+// import { defineProps, ref, computed} from 'vue';
+import { ref, computed} from 'vue';
 import { useRouter,useRoute } from 'vue-router'
 
 import { GlobalAccessConfig, LayOutMain_pc, LOCAL_PROJECT_FILE_PREFIX, compute_img_url, MenuData } from 'src/output/index.js';

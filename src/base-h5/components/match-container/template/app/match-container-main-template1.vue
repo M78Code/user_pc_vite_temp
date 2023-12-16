@@ -410,7 +410,7 @@ export default {
     display: flex;
     align-items: center;
     color: var(--q-gb-t-c-20);
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-25);
     justify-content: space-between;
     &.progress{
       border-top: 2px solid rgba(116, 196, 255, 0.5);
@@ -1022,7 +1022,7 @@ export default {
     .team-wrapper {
       min-height: 100%;
       height: auto;
-      width: 1.61rem;
+      width: 1.72rem;
       position: relative;
       z-index: 1;
 
