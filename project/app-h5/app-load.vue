@@ -38,6 +38,7 @@ const time_str = ref('');
 const right_menu_show = ref(false);
 // 公共主题色
 const page_style = reactive({});
+const emitters = ref(null)
 
 let vue_hidden_run_flg = false;
 let background_run_time = "";
@@ -50,9 +51,17 @@ let timer, timer2;
 const route = useRoute();
 
 onMounted(()=>{
-  useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE,set_global_theme_change)
+    emitters.value = {
+    // 接受ws断开命令
+    emitter_1: useMittOn(
+      MITT_TYPES.EMIT_THE_THEME_CHANGE,
+      set_global_theme_change
+    ).off
+  };
 })
-
+onUnmounted(() => {
+Object.values(emitters.value).map((x) => x());
+});
 watch(
   () => route.name,
   () => {
@@ -64,7 +73,6 @@ watch(
 // 设置主题
 const set_global_theme_change = () => {
   Object.assign(page_style, global_color_obj());
-    console.log('page_style',Object.assign(page_style, global_color_obj()))
 }
 
 onBeforeMount(() => {
