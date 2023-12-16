@@ -163,7 +163,7 @@ export default {
     onMounted(() => {
       LayOutMain_pc.set_oz_show_right(false);
       LayOutMain_pc.set_oz_show_left(true);
-      get_data_info()
+      MenuData.is_home()&&get_data_info()//欧洲版只有首页才执行  其他是由菜单驱动列表的
       mitt_list = [
         useMittOn(MITT_TYPES.EMIT_SET_HOME_MATCHES, get_data_info,).off, // 15分钟赛事数据
       ]

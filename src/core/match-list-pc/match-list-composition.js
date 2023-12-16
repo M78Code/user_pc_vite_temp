@@ -245,11 +245,7 @@ function init_page_when_base_data_first_loaded() {
 	if (is_has_base_data === true) {  //如果元数据有数据就设定为data
 		set_load_data_state("data")
 	}
-	//释放试图 
-	check_match_last_update_timer_id = setInterval(
-		check_match_last_update_time,
-		30000
-	);
+
 }
 /**
  * 初始化方法
@@ -271,6 +267,11 @@ function mounted_fn(fun) {
 		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, fun || default_fun).off,
 		useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, fun || default_fun).off, //语言切换
 	]
+	//每30秒检查一次可视区域赛事数据最后更新时间 
+	check_match_last_update_timer_id = setInterval(
+		check_match_last_update_time,
+		30000
+	);
 	// load_video_resources();
 }
 // watch(MenuData.match_list_api_config.version, (cur) => {
@@ -405,7 +406,7 @@ function socket_remove_match(match) {
  */
 function check_match_last_update_time() {
 	// 非滚球 今日 不检查
-	if (![1, 2,202].includes(MenuData.menu_root)) {
+	if (![1, 2, 202].includes(MenuData.menu_root)) {
 		return
 	}
 	let mids = [];
@@ -430,7 +431,7 @@ function check_match_last_update_time() {
 		}
 	});
 	if (mids.length > 0) {
-		console.log('mids',mids)
+		console.log('mids', mids)
 		api_bymids({ mids });
 	}
 };
