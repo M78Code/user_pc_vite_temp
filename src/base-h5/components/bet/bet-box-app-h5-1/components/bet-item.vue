@@ -86,7 +86,7 @@ const set_delete = () => {
    
     .bet-content {
         min-height: 76px;
-        padding: 12px;
+        padding: 0.12rem;
         //padding-left: 34px;
         font-size: 13px;
         font-weight: 500;
@@ -155,9 +155,10 @@ const set_delete = () => {
             width: 230px;
             .my-left{
                 padding-left: 0.1rem;
-                border-left: 2px solid #0094FF;
-                margin-top: 0.15rem;
+                border-left: 2px solid var(--q-gb-bg-c-13);
+                margin-top: 0.06rem;
                 color: var(--q-gb-t-c-3);
+                font-size: 0.12rem;
             }
             .text-a1a-i {
                 //color: var(--q-gb-t-c-5) !important;

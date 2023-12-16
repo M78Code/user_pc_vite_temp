@@ -9,15 +9,14 @@
         <div :class="BetData.bet_is_accept ? 'active':'' "></div>
         自动接受更好的赔率
     </div>
-
    <div class="f-e-c bet-submit">
-        <div class="bet-silider">
+        <!-- <div class="bet-silider">
             <q-page-sticky ref="silider" position="bottom-left" :offset="fab_pos">
                 <div class="jiantou" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
                     <img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false">
                 </div>
             </q-page-sticky>
-        </div>
+        </div> -->
 
         <div v-show="!BetData.is_bet_single" class="bet-single del"></div>
 
@@ -197,6 +196,8 @@ const set_confirm = () => {
   .bet-submit{
     width: 100%;
     height: .5rem ;
+    justify-content: space-between;
+    margin-top: 0.08rem;
   }
 
   .del {
@@ -226,7 +227,7 @@ const set_confirm = () => {
   }
   .bet-single{
     width: 0.5rem;
-    height: .5rem;
+    height: 0.5rem;
     border-radius: 50%;
     background: #E8F5FF;
     color: var(--q-gb-t-c-1);

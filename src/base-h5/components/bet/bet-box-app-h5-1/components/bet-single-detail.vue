@@ -248,7 +248,7 @@ onUnmounted(() => {
 }
 /* ************** 右边内容 ************** -S */
 .content-b {
-  height: 0.4rem;
+  height: 0.44rem;
   border-radius: 4px;
   font-size: 0.16rem;
   overflow: hidden;
