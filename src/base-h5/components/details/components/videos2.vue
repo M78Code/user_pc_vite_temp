@@ -270,23 +270,35 @@
         <slider class="slider-container" :value="current_event_video.voice" 
                 v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay"  @change="change_volumn"/>
 
-        <!-- 全屏按钮 -->
-        <div v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" class="full-screen-btn" @click="set_full_screen">
-          <img v-if="get_is_full_screen"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
-          <img v-else  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/full_screen.svg`">
-        </div>
-        <!-- 视频info说明弹窗 -->
-        <div
-          v-show="!show_animation && !get_is_full_screen && show_icons && !load_error && media_type !== 'progress_bar_video'"
-          class="description-popup"
-        >
-          <span class="font_color" @click="show_HD_SD" v-if="get_detail_data.lvs != -1 && lodash.get(get_detail_data,'lss') ==  1&& get_video_url.active == 'lvs'">
-            {{get_hd_sd == 1 ? i18n_t("common.HD"): i18n_t("common.SD")}}
-          </span>
-          <div class="img-wrap">
-            <img :src="tips ? tips_act :tips_def" @click="change_info"/>
+       
+        <div class="actions mb-8">
+          <!-- 视频info说明弹窗 -->
+          <div
+            v-show="!show_animation && !get_is_full_screen && show_icons && !load_error && media_type !== 'progress_bar_video'"
+            class="description-popup ml-8"
+          >
+            <span class="font_color" @click="show_HD_SD" v-if="get_detail_data.lvs != -1 && lodash.get(get_detail_data,'lss') ==  1&& get_video_url.active == 'lvs'">
+              {{get_hd_sd == 1 ? i18n_t("common.HD"): i18n_t("common.SD")}}
+            </span>
+            <img :src="tips ? tips_act :tips_def" @click="change_info" class="w-24 h-24"/>
+
           </div>
+          <!-- 固钉 -->
+          <img @click.stop="fix_top"
+            v-if="fix_status && show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/no_pin.svg`" alt="" class="w-24 h-24 ml-8">
+
+           <!-- 全屏按钮 -->
+          <div 
+            v-show="show_icons && ['muUrl', 'lvs'].includes(get_video_url.active)&& !load_error && !is_playing_replay" 
+            class="full-screen-btn ml-8 mr-14" @click="set_full_screen">
+            <!-- image/svg/pack_up.svg -->
+            <img v-if="get_is_full_screen"  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/svg/pack_up.svg`">
+            <img v-else  :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/details/fullscreen.svg`" class="w-24 h-24 ">
+          </div>
+
+          
         </div>
+       
       </div>
     </div>
     <div class="tips details_bg6 details_t_color1" v-if="tips && video_iframe_status != 'error'">
@@ -331,7 +343,7 @@ export default {
   data() {
     return {
       LOCAL_PROJECT_FILE_PREFIX:LOCAL_PROJECT_FILE_PREFIX,
-      tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_b.svg`,
+      tips_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/details/info.svg`,
       tips_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_a.svg`,
       voice_def: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_i.svg`,
       voice_act: `${LOCAL_PROJECT_FILE_PREFIX}/image/svg/video_h.svg`,
@@ -554,6 +566,7 @@ export default {
     'show_go_back',
     'detail_data', //详情数据
     'show_icon_status', // 是否展示图标
+    'fix_status', // 是否显示固钉
   ],
   watch: {
     get_is_full_screen(value) {
@@ -792,6 +805,9 @@ export default {
       set_bet_list(){},
       set_is_hengping(){},
       set_is_dp_video_full_screen(){},
+      fix_top() {
+
+      },
       // 设置音量
       change_volumn(volume) {
         const data = {
@@ -1940,26 +1956,35 @@ export default {
      z-index: 100;
   }
 
-
-  .full-screen-btn {
+  .actions {
+    display: flex;
+    align-items: center;
     position: absolute;
-    right: 6%;
-    bottom: .10rem;
+    right: 0px;
+    bottom: 2px;
+  }
+  .ml-8 {
+    margin-left: 8px;
+  }
+  .full-screen-btn {
+    // position: absolute;
+    // right: 6%;
+    // bottom: .10rem;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 3;
-    padding: 0.095rem 0.2rem;
+    // padding: 0.095rem 0.2rem;
   }
   .description-popup{
-    position: absolute;
-    right: .53rem;
-    bottom: .02rem;
+    // position: absolute;
+    // right: .53rem;
+    // bottom: .02rem;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 3;
-    padding: 0.095rem 0.2rem;
+    // padding: 0.095rem 0.2rem;
     .font_color{
       color: var(--q-color-com-fs-color-8);
       position: relative;
@@ -2399,5 +2424,16 @@ export default {
   bottom: 20px;
   left: 60px;
 }
-
+.mb-8 {
+  margin-bottom: 8px;
+}
+.w-24 {
+  width: 24px;
+}
+.h-24 {
+  height: 24px;
+}
+.mr-14 {
+  margin-right: 14px;
+}
 </style>

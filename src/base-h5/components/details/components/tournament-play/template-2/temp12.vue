@@ -293,21 +293,21 @@ export default defineComponent({
       return MatchDataWarehouseInstance.get_quick_mid_obj(route.params.mid||lodash.get(props.item_data,'mid'))
     });
     const home_name = computed(() => {
-      return item_data.title[0]
+      return props.item_data.title[0]
     })
     const away_name = computed(() => {
-      return item_data.title[1]
+      return props.item_data.title[1]
     })
     watch(
       // 深度监听数据的变化及时执行os修改函数
-      () => item_data,
+      () => props.item_data,
       (new_) => {
         new_.hl.forEach(hl_item => {
           if(hl_item.ad1 == '1' && hl_item.ol.length){
-            valid_home = true
+            data.valid_home = true
           }
           if(hl_item.ad1 == '2' && hl_item.ol.length){
-            valid_away = true
+            data.valid_away = true
           }
         });
       },
