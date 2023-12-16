@@ -33,7 +33,7 @@
             <div v-for="(data_i,i) of match_item.hps" :key="i" class="dddd">
               <div class="hpn-title">
                 <span>{{ data_i.hpn }}</span>
-                <span>显示所有盘口</span>
+                <span>显示所有盘口 ></span>
               </div>
               <temp9
                 :item_data="data_i||{}"
@@ -620,7 +620,19 @@ export default {
 
       .hpn-title {
         display: flex;
+        align-items: center;
         justify-content: space-between;
+        border-bottom: 1px solid #eee;
+        height: 0.25rem;
+        margin-top: 0.1rem;
+        span {
+          font-size: 0.12rem;
+          color: #303442;
+        }
+        span + span {
+          font-size: 0.1rem;
+          color: #AFB3C8;
+        }
       }
       &.standard {
 
