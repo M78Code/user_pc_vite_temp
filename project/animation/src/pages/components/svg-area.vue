@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="animation-content bg">
-      <svg_tmp :height="svgHeight" :width="svgWidth" :current_event_code="current_event_code"></svg_tmp>
+      <svg_tmp :height="svgHeight" :width="svgWidth" :current_event_obj="current_event_obj"></svg_tmp>
       <img ref="bgConainer" src="/public/animation/足球背景.png">
     </div>
   </div>
@@ -14,7 +14,14 @@ import svg_tmp from "project/animation/src/pages/components/svg_tmp.vue"
 // import svg3 from "project/animation/src/pages/components/svg3.vue"
 import { event_animation } from '../../globle/event.js'
 export default defineComponent({
-  props: ['svg_src', 'current_event_code'],
+  props: {
+    current_event_obj: {
+      type: Object,
+      default(){
+        return {};
+      }
+    }
+  },
   components: {
     svg_tmp,
   },
