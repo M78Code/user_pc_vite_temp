@@ -410,6 +410,14 @@ class MatchMeta {
   }
 
   /**
+   * @description 筛选联赛
+   * @param { tid } 联赛 ID 
+   */
+  filter_match_by_tids (tids = []) {
+    
+  }
+
+  /**
    * 
    * @description 获取赛事请求参数
    * @returns { Object }
@@ -460,7 +468,7 @@ class MatchMeta {
   /**
    * @description 赛果不走元数据， 直接掉接口 不需要走模板计算以及获取赔率，需要虚拟列表计算
    */
-  async get_results_match () {
+  async get_results_match ({ tid = '' } = {}) {
     this.clear_match_info()
     const md = lodash.get(MenuData.result_menu_api_params, 'md')
     const euid = lodash.get(MenuData.result_menu_api_params, 'sport')
@@ -473,6 +481,7 @@ class MatchMeta {
       ...params,
       category,
       md,
+      tid,
       type: 28,
       euid: euid,
       showem: 1, // 新增的参数
@@ -1140,19 +1149,29 @@ class MatchMeta {
    * @return {Undefined} Undefined
    */
   footer_event(obj) {
-
     switch (obj.text) {
-      case "activities":
+      // 活动
+      case "activities": 
         console.log('每日活动')
         break;
+       // 排序
       case "sortRules":
         this.get_target_match_data({})
         break;
-      case "filter":
+      // 筛选
+      case "filter": 
+        const length = lodash.get(obj.select_list, 'length', 0)
+        if (length === 0) return
+        const tid = obj.select_list.map(t => t.id).join(',')
+        if (MenuData.is_results()) { // 赛果时
+          this.get_results_match({tid});
+        } else {
+          this.get_target_match_data({tid})
+        }
         break;
-      case "footer-refresh":
-        if (MenuData.is_results()) {
-          // 赛果时
+      // 刷新
+      case "footer-refresh": 
+        if (MenuData.is_results()) { // 赛果时
           this.get_results_match();
         } else {
           this.get_target_match_data({});
@@ -1161,7 +1180,7 @@ class MatchMeta {
           useMittEmit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
         }
         break;
-      case "mid-refresh":
+      case "mid-refresh": // 赔率刷新
         this.get_match_base_hps_by_mids({ mids: [obj.mid] });
         break;
       case "footer-follow":
@@ -1170,7 +1189,7 @@ class MatchMeta {
         }
         break;
       default:
-        console.log('暂无处理逻辑') 
+        console.log('暂无对应类型') 
     }
   }
 

@@ -94,8 +94,7 @@
                             }"
                             @click="betItemClick(item.hl[0], ol, item.hpn)"
                           >
-                            <span>{{ ol.on }}</span>
-
+                            <span><lable v-if="txt_ol_name_fun(ol)" class="txt-ol-name">{{txt_ol_name_fun(ol)}}</lable>{{ ol.on }}</span>
                             <span>
                               <bet-item
                                 :key="`bet_4_${ol.hild}`"
@@ -243,6 +242,11 @@ const columnTotal = (item) => {
   return `repeat(${total}, 1fr)`;
 };
 
+// 反波胆玩法增加'非'
+const txt_ol_name_fun = (data) => {
+  let res = (['367','368','369'].includes(data._hpid))?i18n_t('common.non') : '';
+  return res;
+};
 //  模板4 数据处理
 const sun_ol = (ol, item) => {
   let maxCount = 0;
@@ -328,6 +332,9 @@ onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
+.txt-ol-name{
+  margin-right: 4px;
+}
 .match-detail-odds {
   height: calc(100vh - 248px);
   overflow-y: auto;
