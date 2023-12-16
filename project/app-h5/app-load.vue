@@ -5,7 +5,7 @@
 -->
 <template>
   <!-- 右侧菜单 -->
-  <div :class="['bw3', { rightMenu: right_menu_show }]" @click.stop="appclick($event)" :style="page_style">
+  <div :class="['bw3', { rightMenu: right_menu_show }]" @click.stop="appclick($event)" :style="page_style.style">
     <ws />
     <!-- 页面路由开始 页面路由开始 页面路由开始 -->
     <!-- 页面路由开始 -->
@@ -18,7 +18,7 @@
 // websocket Log文件
 import ws from "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
-import { useMittEmit,useMittOn, MITT_TYPES } from "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
@@ -37,7 +37,9 @@ const time_str = ref('');
  
 const right_menu_show = ref(false);
 // 公共主题色
-const page_style = reactive({});
+const page_style = reactive({
+  style:''
+});
 const emitters = ref(null)
 
 let vue_hidden_run_flg = false;
@@ -59,9 +61,7 @@ onMounted(()=>{
     ).off
   };
 })
-onUnmounted(() => {
-Object.values(emitters.value).map((x) => x());
-});
+
 watch(
   () => route.name,
   () => {
@@ -71,8 +71,9 @@ watch(
 );
 
 // 设置主题
-const set_global_theme_change = () => {
-  Object.assign(page_style, global_color_obj());
+const set_global_theme_change = (a) => {
+  console.error('set_global_theme_changeset_global_theme_change',a)
+  Object.assign(page_style.style , global_color_obj());
 }
 
 onBeforeMount(() => {
@@ -85,7 +86,7 @@ onBeforeMount(() => {
   // this.init_version_name();
   on_listeners();
   // 公共主题色
-  // page_style = global_color_obj()
+  page_style.style = global_color_obj()
   set_global_theme_change()
   // 初始化启动日志系统--开发模式时日志打开
   // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
@@ -125,7 +126,7 @@ onBeforeMount(() => {
 
 
 onUnmounted(() => {
-  useMittOn(MITT_TYPES.EMIT_THE_THEME_CHANGE ).off
+  Object.values(emitters.value).map((x) => x());
   // 释放日志功能对象
   if (window.wslog && window.wslog.destroyed) {
     window.wslog.beforeUnmount();

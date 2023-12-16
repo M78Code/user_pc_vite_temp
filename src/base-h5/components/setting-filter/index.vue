@@ -67,7 +67,8 @@
 </template>
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { useMittEmit, MITT_TYPES,SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name } from "src/output/index.js";
+import {  useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import {SessionStorage,UserCtr,LOCAL_PROJECT_FILE_PREFIX, project_name } from "src/output/index.js";
 import {ref,computed,nextTick} from "vue";
 import Switch from "./components/switch.vue";
 import { LocalStorage } from "src/core/utils/common/module/web-storage.js";
