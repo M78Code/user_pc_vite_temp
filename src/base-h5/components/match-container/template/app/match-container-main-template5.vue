@@ -182,7 +182,7 @@
             </div>
             <!-- 比分选项 -->
             <div class="odds">
-              <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
+              <!-- <div class="favorite-icon-top match list-m" @click.stop="handle_match_collect">
                 <img v-if="!match_collect_state" class="favorited-icon"
                   src="/src/base-h5/assets/match-list/ico_fav_nor.png" alt="" @click.stop="handle_match_collect" />
                 <img v-if='match_collect_state' class="favorited-icon"
@@ -204,8 +204,8 @@
                     </div>
                   </div>
                 </template>
-              </div>
-              <!-- <OddListWrap :main_source="main_source" :match="match_of_list" /> -->
+              </div> -->
+              <OddListWrap :main_source="main_source" :match="match_of_list" />
             </div>
 
 
