@@ -44,7 +44,7 @@
     <div class="detail-main" :class="{'detail-main2':get_betbar_show}">
       <!-- 赔率列表页面 -->
       <template  v-if="match && tabs_name == 'bet'">
-        <virtual-sports-tab />
+        <virtual-sports-tab :mid="mid" />
         <virtual-sports-category :mid="mid" :current_match="match" :source="'virtual_sports_details'"/>
       </template>
       <!-- 历史战绩页面 -->
