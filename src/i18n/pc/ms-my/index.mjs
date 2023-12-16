@@ -510,7 +510,8 @@ export default {
         "menu_title":'Menu Sports',
         "league_fold": 'Close League',
         "league_unfold": 'See more League',
-        "highlights": "Pilihan"  
+        "highlights": "Pilihan",
+        "non":"not"
     },
     "replay_video": {
         "all" : "All", 

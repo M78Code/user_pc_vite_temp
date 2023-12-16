@@ -510,7 +510,8 @@ export default {
         "menu_title":'體育目錄',
         "league_fold": '聯賽收起',
         "league_unfold": '聯賽展開',
-        "highlights": "精選"
+        "highlights": "精選",
+        "non":"非"
     },
     "replay_video": {
         "all" : "全部",

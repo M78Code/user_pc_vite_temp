@@ -2,7 +2,7 @@
   <div class="relative-position header-top" @touchmove.prevent>
     <!-- 队徽 -->
     <div class="row mx-30 top-style flex1">
-      <div class="col-3 logo-double">
+      <div class="col-3 flex1 logo-double">
         <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
         <team-img
           v-if="!lodash.isEmpty(detail_data)"
@@ -13,7 +13,42 @@
           :size="44"
         ></team-img>
 
-        <div class="score-style flex1">
+        <team-img
+          v-if="
+            lodash.get(detail_data, 'mhlu.length') > 1 &&
+            !lodash.isEmpty(detail_data)
+          "
+          :type="0"
+          :csid="detail_data.csid"
+          :url="detail_data.mhlu[1]"
+          :fr="detail_data.frmhn[1]"
+          :size="44"
+          style="margin-left: -0.1rem"
+        ></team-img>
+        <div class="row name-wrap mhn">
+        <div class="mhn-name ellipsis-2-lines">
+          <template v-if="lodash.get(detail_data, 'mhn', '').includes('/')">
+            <div class="ellipsis">{{ detail_data.mhn.split(" / ")[0] }}/</div>
+            <div class="ellipsis">{{ detail_data.mhn.split(" / ")[1] }}</div>
+          </template>
+          <template v-else>
+            {{ detail_data.mhn }}
+          </template>
+        </div>
+        <!-- 进球动画 -->
+        <div class="goal-wrap" v-if="show_someone.is_show_home_goal">
+          <div class="inner yb-flex-center left">
+            <div class="yb-goal-gif yb-goal-yo"></div>
+            <div class="gif-text">{{ i18n_t("match_result.goal") }}</div>
+          </div>
+        </div>
+        <div class="red-gif" :class="{ flash: show_someone.is_show_home_red }">
+          <div class="inner left"></div>
+        </div>
+      </div>
+      </div>
+
+      <div class="score-style col-3 flex1">{{detail_data.ms }}
           <!-- 0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断 -->
           <!-- 比赛分数or开赛时间 -->
           <span v-if="detail_data.ms == 0">
@@ -51,21 +86,7 @@
             style="position: relative; bottom: 0.05rem"
           ></span>
         </div>
-        <team-img
-          v-if="
-            lodash.get(detail_data, 'mhlu.length') > 1 &&
-            !lodash.isEmpty(detail_data)
-          "
-          :type="0"
-          :csid="detail_data.csid"
-          :url="detail_data.mhlu[1]"
-          :fr="detail_data.frmhn[1]"
-          :size="44"
-          style="margin-left: -0.1rem"
-        ></team-img>
-      </div>
-
-      <div class="col-3 logo-double">
+      <div class="col-3 flex1 logo-double">
         <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
         <team-img
           :type="0"
@@ -83,34 +104,7 @@
           :size="44"
           style="margin-left: -0.1rem"
         ></team-img>
-      </div>
-    </div>
-
-
-    <!-- 队名 -->
-    <div class="mx-4 row team-name ">
-      <div class="row name-wrap mhn">
-        <div class="mhn-name ellipsis-2-lines">
-          <template v-if="lodash.get(detail_data, 'mhn', '').includes('/')">
-            <div class="ellipsis">{{ detail_data.mhn.split(" / ")[0] }}/</div>
-            <div class="ellipsis">{{ detail_data.mhn.split(" / ")[1] }}</div>
-          </template>
-          <template v-else>
-            {{ detail_data.mhn }}
-          </template>
-        </div>
-        <!-- 进球动画 -->
-        <div class="goal-wrap" v-if="show_someone.is_show_home_goal">
-          <div class="inner yb-flex-center left">
-            <div class="yb-goal-gif yb-goal-yo"></div>
-            <div class="gif-text">{{ i18n_t("match_result.goal") }}</div>
-          </div>
-        </div>
-        <div class="red-gif" :class="{ flash: show_someone.is_show_home_red }">
-          <div class="inner left"></div>
-        </div>
-      </div>
-      <div class="row name-wrap">
+        <div class="row name-wrap">
         <div class="red-gif" :class="{ flash: show_someone.is_show_away_red }">
           <div class="inner right"></div>
         </div>
@@ -131,7 +125,11 @@
           </template>
         </div>
       </div>
+      </div>
     </div>
+
+
+
   </div>
 </template>
 

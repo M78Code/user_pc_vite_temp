@@ -503,7 +503,8 @@
     "hour": "ชม",
     "menu_title":"กีฬา",
     "league_fold": "ยุบลีก",
-    "league_unfold": "ดูลีกเพิ่มเติม"
+    "league_unfold": "ดูลีกเพิ่มเติม",
+    "non":"ไม่"
   },
   "replay_video": {
     "all": "ทั้งหมด",

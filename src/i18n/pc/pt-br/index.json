@@ -507,7 +507,8 @@
     "switch_version_text": "Mais testes de corrida,<br/>Tudo em %s Standard Edition!",
     "league_fold": "Close League",
     "league_unfold": "See more League",
-    "menu_title":"Menu de esportes"
+    "menu_title":"Menu de esportes",
+    "non":"não"
   },
   "replay_video": {
     "all" : "All",

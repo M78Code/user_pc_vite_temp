@@ -377,7 +377,7 @@ export default defineComponent({
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       // 赛事个数小于18 不需要继续获取赔率
-      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
+      if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     /**
      * @description 联赛折叠
@@ -391,7 +391,7 @@ export default defineComponent({
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       // 赛事个数小于18 不需要继续获取赔率
-      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
+      if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器
@@ -937,6 +937,7 @@ export default defineComponent({
       // 进入详情前，将当前赛事信息存入仓库
       // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
       //元数据存入本地
+      // debugger
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
       if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
         this.$router.push(`/result_details/${item.mid}/0`);

@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-  import { ref,onMounted,onUnmounted } from 'vue';
+  import { ref,onMounted,onUnmounted, watch } from 'vue';
   import { MenuData, useMittOn,MITT_TYPES, i18n_t} from 'src/output/index.js'
   import { get_data_menu_result,handle_click_menu_mi_3_date } from "src/base-pc/components/tab/date-tab/index.js"
   import { compute_img_url } from 'src/core/server-img/index.js'
@@ -53,7 +53,9 @@
       show_right_btn.value = true;
     }
     // time = LocalStorage.get('server_time') || new Date().getTime()
-    mitt_list = [ useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,update_time).off ]
+    mitt_list = [ 
+      useMittOn(MITT_TYPES.EMIT_SET_LEFT_MENU_CHANGE,update_time).off,
+      useMittOn(MITT_TYPES.EMIT_LANG_CHANGE,update_time).off ]
   })
   onUnmounted(()=>{
     mitt_list.forEach(item => item());
@@ -117,6 +119,12 @@
     }
   }
 
+  // watch(
+  //   () => window.vue.lang,
+  //   () => {
+  //     update_time()
+  //   }
+  // )
  
  const choose_filter_tab = (item ,index) => {
   handle_click_menu_mi_3_date(item)

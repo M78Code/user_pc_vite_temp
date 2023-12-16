@@ -102,6 +102,11 @@ const router = createRouter({
               }
             ]
           },
+          { 
+            path: '/result',
+            name: "result",
+            redirect: { name: 'result_details' }
+          },
         //   // 虚拟赛事详情页
           {
             path: "/virtual_sports_details",

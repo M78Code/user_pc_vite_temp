@@ -9,7 +9,8 @@ import {
     is_eports_csid
 } from "src/output/index.js"
 import PageSourceData from "src/core/page-source/page-source.js";
-import { defineProps, computed } from "vue"
+// import { defineProps, computed } from "vue"
+import { computed } from "vue"
 const props = defineProps({
     ms_info:{
         type: Object,

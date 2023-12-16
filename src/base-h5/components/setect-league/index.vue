@@ -81,7 +81,8 @@ const finishHandle = () => {
   });
   // 触发联赛选择完成事件
   useMittEmit(MITT_TYPES.EMIT_SELECT_LEAGUE_COMPLETE, {
-    open: true
+    open: true,
+    select_list: select_list.value,
   });
   //设置选中数据
   UserCtr.set_league_select_list(select_list)

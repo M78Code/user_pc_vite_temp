@@ -19,7 +19,10 @@ window.vue = app;
 
 app.use(global);
 app.use(i18n);
- 
+app.config.globalProperties.t = i18n.global.t;
+window.t = i18n.global.t;
+app.config.globalProperties.i18n_t = i18n.global.t;
+window.i18n_t = i18n.global.t;
 app.use(Quasar, {
   plugins: {
     Notify

@@ -853,7 +853,8 @@
     "menu_title":"体育菜单",
     "league_fold": "联赛收起",
     "league_unfold": "联赛展开",
-    "highlights": "精选" 
+    "highlights": "精选",
+    "non":"非"
   },
   "replay_video": {
     "all": "全部",
