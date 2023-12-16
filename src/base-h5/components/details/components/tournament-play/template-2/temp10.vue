@@ -21,7 +21,7 @@
             </div>
           </div>
           <div class="odds-style">
-            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.odds,null,MatchDetailCalss.params.sportId)}}</div>
+            <div v-if="item.os != 2">{{compute_value_by_cur_odd_type(item.ov,item._hpid,item._hsw,item._csid)}}</div>
             <div v-else><img :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/common/match-icon-lock.svg`" /></div>
           </div>
         </div>
@@ -41,6 +41,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { project_name,MatchDetailCalss } from "src/output/index.js"
 import { go_to_bet } from "src/core/bet/class/bet-box-submit.js";
+import { compute_value_by_cur_odd_type } from "src/output/index.js"
 export default defineComponent({
   name: "temp10",
   props: ["item_data", "title"],
@@ -66,7 +67,7 @@ export default defineComponent({
     })
     watch(
       // 深度监听数据的变化及时执行os修改函数
-      () => item_data,
+      () => props.item_data,
       () => {
         temp_odds()
       },
@@ -75,8 +76,8 @@ export default defineComponent({
       }
     );
     const temp_odds = () => {
-      hsw_single = _.get(item_data,'hsw').toString()
-      let odd_ol_list = _.get(item_data,'hl[0].ol')
+      data.hsw_single = _.get(props.item_data,'hsw').toString()
+      let odd_ol_list = _.get(props.item_data,'hl[0].ol')
 
       let odds_list = []
       _.forEach(odd_ol_list,(ol_item,i) => {
@@ -89,7 +90,7 @@ export default defineComponent({
         Object.assign(odds_obj,ol_item);
         odds_list.push(odds_obj);
       });
-      odds_list = odds_list
+      data.odds_list = odds_list
     };
     onMounted(() => {
       temp_odds()
@@ -97,6 +98,7 @@ export default defineComponent({
     return {
       ...toRefs(data),
       go_to_bet,
+      compute_value_by_cur_odd_type,
       lodash,
       BetData,
       get_bet_list,
