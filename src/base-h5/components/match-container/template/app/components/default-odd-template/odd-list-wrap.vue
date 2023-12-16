@@ -76,8 +76,8 @@
         <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_0" alt="" v-if="is_show_scroll_dir(1)">
       </template>
       <template v-else>
-        <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(0)">
-        <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(1)">
+        <img class="slide_icon slide_icon_r animate-effect-r" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(1)">
+        <img class="slide_icon slide_icon_l animate-effect" :src="slide_icon_1" alt="" v-if="is_show_scroll_dir(0)">
         <!-- <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i> -->
       </template>
@@ -483,6 +483,7 @@ const fill_empty_hps = (hpsArr) => {
   if ((hpsArr || []).length == 0) {
     return [{ hl: [{}] }, { hl: [{}] }, { hl: [{}] }];
   }
+  console.log(hpsArr)
   return hpsArr;
 };
 // 5分钟玩法

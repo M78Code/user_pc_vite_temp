@@ -212,7 +212,12 @@ export default defineComponent({
     // 获取赛事数量
     get_match_count () {
       const { csid, start_flag } = this.match_of_list
-      const key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      let key = ''
+      if ([1,2].includes(+start_flag)) {
+        key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      } else {
+        key = `default_csid_${csid}`
+      }
       return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 1)
     },
      // 获取联赛赛事数量
@@ -377,7 +382,7 @@ export default defineComponent({
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false })
       // 赛事个数小于18 不需要继续获取赔率
-      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
+      if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     /**
      * @description 联赛折叠
@@ -391,7 +396,7 @@ export default defineComponent({
       if (is_virtual || ['five_league'].includes(warehouse_type)) return
       MatchMeta.compute_page_render_list({ scrollTop: 0, type: 2, is_scroll: false})
       // 赛事个数小于18 不需要继续获取赔率
-      if (!is_results.value) MatchMeta.get_match_base_hps_by_mids({is_again: false})
+      if (!is_results.value && MatchMeta.complete_matchs.length > 17) MatchMeta.get_match_base_hps_by_mids({is_again: false})
     },
     /**
      *启动 组件新初始化后 ，判定组件是否是刚刚新初始化的 定时器

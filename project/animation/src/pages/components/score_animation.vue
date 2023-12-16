@@ -9,7 +9,7 @@ import headerTop from "./header-top.vue"; // 详情页视频区域中部(主副�
 import { api_details } from "project/animation/src/public/api/index"
 // import { MatchDataWarehouse_H5_Detail_Common } from "src/output/index.js";
 import courseData from "src/core/match-detail/match-detail-h5/config/course.js";
-import { ref,onMounted ,watch} from "vue";
+import { ref,onMounted ,onUnmounted} from "vue";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { useRoute } from "vue-router";
@@ -60,16 +60,20 @@ const  get_user_info = async(token, callback)=> {
 const {off} = useMittOn(MITT_TYPES.EMIT_SHOW_SCORE,(val)=>{
   get_user_info(token)
 })
-// const getInfo4s=()=>{
-//   let time = 
-//   timerInterval = setInterval(()=>{
-
-//   }, 40000)
-// }
+let time = null
+const getInfo4s=()=>{
+  time = setInterval(()=>{
+    getMatchDetailMatchInfo()
+  }, 4000)
+}
 onMounted(()=>{
-  useMittOn()
- 
  get_user_info(token)
+ getInfo4s()
+})
+
+onUnmounted(() => {
+  off()
+  clearInterval(time)
 })
 </script>
 <style scoped></style>

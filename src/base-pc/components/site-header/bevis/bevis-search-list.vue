@@ -1,5 +1,6 @@
 <script setup name="bevis-search-list">
-import {defineProps, defineEmits, inject} from "vue"
+// import {defineProps, defineEmits, inject} from "vue"
+import {inject} from "vue"
 
 import {IconWapper} from 'src/components/icon/index.js'
 

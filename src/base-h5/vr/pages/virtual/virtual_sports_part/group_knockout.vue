@@ -157,7 +157,7 @@ export default {
       // }
     }
   }
-  ::v-deep.q-carousel__slide {
+  :deep(.q-carousel__slide) {
     padding: unset;
   }
 }
