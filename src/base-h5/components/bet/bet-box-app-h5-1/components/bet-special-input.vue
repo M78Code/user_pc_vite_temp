@@ -2,6 +2,7 @@
 
 <template>
     <div v-show="false">{{ BetData.bet_data_class_version }}-{{BetViewDataClass.bet_view_version}}</div>
+    {{ items }}
     <div class="bet_single_info">
         <div class="bet_single_detail" ref="bet_single_detail">
           <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">

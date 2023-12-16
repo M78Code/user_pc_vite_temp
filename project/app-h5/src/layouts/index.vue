@@ -45,8 +45,8 @@
       </div>
     
       <!-- 串关投注 --> 
-      <div class="chain_bet" @click="show_chain_bet">
-        <span class="count">1</span>
+      <div class="chain_bet" @click="show_chain_bet" v-if="!BetData.is_bet_single">
+        <span class="count">{{BetData.bet_s_list.length}}</span>
       </div>
 
     </q-page-container>
@@ -218,7 +218,7 @@ const init_local_server_time = () => {
 }
 
 const show_chain_bet = () => {
-  BetData.set_bet_state_show(1)
+  BetData.set_bet_box_h5_show(true)
 }
 
 onMounted(() => {

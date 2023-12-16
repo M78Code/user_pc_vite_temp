@@ -25,6 +25,8 @@ import { MenuData } from 'src/output/module/menu-data.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { only_win } from 'src/core/format/project/module/format-odds-conversion-mixin.js'
+import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
 let time_api_out = null
@@ -716,8 +718,11 @@ const set_bet_obj_config = (params = {}, other = {}) => {
         query = h5_match_data_switch(other.match_data_type)
         // useMittEmit(MITT_TYPES.EMIT_REF_SHOW_BET_BOX,true)
         // BetViewDataClass.set_bet_show(true)
-        // 点击投注项 显示投注栏
-        BetData.set_bet_box_h5_show(true)
+        // app-复刻版 逻辑不同
+        if(!PROJECT_NAME =='app-h5'){
+            // 点击投注项 显示投注栏
+            BetData.set_bet_box_h5_show(true)
+        }
       
         BetData.set_bet_keyboard_show(false)
         // BetViewDataClass.set_bet_keyboard_show(true)

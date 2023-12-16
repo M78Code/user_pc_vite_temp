@@ -38,6 +38,11 @@
                     <span>{{ i18n_t('bet.bet_invalid') }}</span>
                 </div>
             </div>
+
+            <!--  串关 投注 删除投注项 -->
+            <div class="bet-delete" v-if="BetViewDataClass.bet_order_status == 1 && !BetData.is_bet_single" @click="set_delete">
+                <span class="icon-delete"></span>
+            </div>
           
         </div>
         
@@ -62,6 +67,11 @@ const props = defineProps({
     items:{},
     index:{}
 })
+
+const set_delete = () => {
+    BetData.set_delete_bet_info(props.items.playOptionsId,props.index)
+}
+
 
 </script>
 
