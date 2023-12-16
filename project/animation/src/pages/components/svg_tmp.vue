@@ -3,7 +3,7 @@
     {{ current_event_code }}~~
     {{ textAnimateParams }}--
   </div> -->
-  <svg v-if="isShowDefaultSvg" style="z-index: 10" :width="width" :height="height">
+  <svg v-if="isShowDefaultSvg" style="z-index: 10" :width="width" :height="height" :key="key_2">
     <defs>
       <linearGradient
         id="grad"
@@ -30,7 +30,7 @@
         ></animate>
       </linearGradient>
     </defs>
-    <ellipse cx="300" cy="140" rx="60" ry="40" fill="url(#grad)">
+    <ellipse :cx="svgDefaultConfig.pathParams.x" :cy="svgDefaultConfig.pathParams.y" rx="60" ry="40" fill="url(#grad)">
       <animate
         attributeName="rx"
         from="60"
@@ -48,7 +48,8 @@
         repeatCount="indefinite"
       ></animate>
     </ellipse>
-    <text style="fill: rgba(255,255,255,.4)" x="275" y="145">中立事件</text>
+    <text style="fill: rgba(255,255,255,.4)" :x="svgDefaultConfig.textParams.x" :y="svgDefaultConfig.textParams.y">
+      {{ svgDefaultConfig.textParams.text }}</text>
   </svg>
   <svg v-else :width="width" :height="height" :key="key_1">
     <path :d="svgPath.path" :fill="pathAnimateColors[0]">
@@ -118,18 +119,57 @@ export default defineComponent({
       fill: 'freeze',
       svgPath: {},
       isShowDefaultSvg: true,
-      key_1: false
+      key_1: false,
+      key_2: false,
     };
   },
   computed: {
+    isHadConfigAni(){
+      const code = this.current_event_code
+      if(!code)return true;
+      const obj = event_animation[code]
+      return !!obj;
+    },
+    getAniConfig(){
+      const code = this.current_event_code
+      const obj = event_animation[code]
+      if(!obj){
+        // 没有配置 走默认动画
+        this.isShowDefaultSvg = true
+        return svgAnimationConfig;
+      }
+      this.isShowDefaultSvg = false
+      return {
+        // svgAnimationDefaultConfig,
+        ...svgAnimationConfig,
+        homeSvgAnimationConfig: obj.svg_path_config,
+        awaySvgAnimationConfig: obj.svg_path_config
+      };
+    },
+    svgDefaultConfig(){
+      const {homeAway} = this.current_event_obj
+      const {svgAnimationDefaultConfig, awaySvgAnimationDefaultConfig, homeSvgAnimationDefaultConfig} = this.getAniConfig
+      if(homeAway === 'home'){
+        // 主场
+        return homeSvgAnimationDefaultConfig;
+      }
+      if(homeAway === 'away'){
+        // 客场
+        return awaySvgAnimationDefaultConfig;
+      }
+      if(homeAway === 'none' || !homeAway){
+        // 默认配置
+      }
+      return svgAnimationDefaultConfig;
+    },
     // 获取code
     current_event_code(){
-      console.log('st this.current_event_obj', this.current_event_obj)
       return this.current_event_obj.eventCode;
     },
     // 获取动画配置
     animateParams(){
-      const {homeSvgAnimationConfig, awaySvgAnimationConfig,svgAnimationDefaultConfig} = svgAnimationConfig
+      console.log('st ', this.getAniConfig,this.current_event_code )
+      const {homeSvgAnimationConfig, awaySvgAnimationConfig,svgAnimationDefaultConfig} = this.getAniConfig
       if(Object.keys(this.current_event_obj).length){
         const {homeAway} = this.current_event_obj
         if(homeAway === 'home'){
@@ -172,10 +212,9 @@ export default defineComponent({
       if(n !== o){
         this.key_1 = !this.key_1
       }
-      const {homeAway} = this.current_event_obj
-      this.isShowDefaultSvg = homeAway === 'none' || !homeAway
-      console.log('st this.isShowDefaultSvg', this.isShowDefaultSvg)
+      this.isShowDefaultSvg = this.isHadConfigAni
       this.key_1 = Math.random()
+      this.key_2 = Math.random()
       this.svgPath = this.rightPath()
     },
     width(){
@@ -254,7 +293,6 @@ export default defineComponent({
     },
     rightPath(){
       if(!this.current_event_code)return '';
-      console.log('st animateParams', this.animateParams)
       const svg_path_config = this.animateParams
       if(!svg_path_config){
         this.isShowDefaultSvg = true

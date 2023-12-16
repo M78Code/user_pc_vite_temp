@@ -29,6 +29,7 @@
                 <!-- 比分 -->
                 <div style="height: 100px;">
                     <!-- 赛事比分区域<b class="text-red">lowen</b> -->
+                    <score-animation />
                 </div>
                 <!-- 对接后台展示区域 -->
                 <div style="height: 100px;">
@@ -68,6 +69,7 @@ import { test_data } from "project/animation/src/globle/event_data.js"
 import event_json_data from "project/animation/src/globle/event.json"
 import BackendConfig from "project/animation/src/pages/components/backend_config.vue"
 import TopForm from "project/animation/src/pages/components/form.vue"
+import ScoreAnimation from "project/animation/src/pages/components/score_animation.vue"
 import _ from 'lodash';
 import axios from "axios";
 import { uid } from "quasar"
@@ -79,6 +81,7 @@ export default defineComponent({
         svg_area,
         TopForm,
         BackendConfig,
+        ScoreAnimation
     },
     mixins:[websocket_base],
  data() {
@@ -124,7 +127,7 @@ export default defineComponent({
    emitEvent(){
      this.emitPauseEvent()
      this.moniEventTimer = setInterval(() => {
-       this.get_event_code()
+       this.get_event_code(true)
      }, 1000)
    },
    // 暂停模拟推送
@@ -231,13 +234,18 @@ export default defineComponent({
         }
     },
     // 生成随机事件
-    get_event_code() {
+    get_event_code(isFullMockData) {
         console.warn('自动获取生成时间')
+      // let data_ = event_json_data[index]
+        let index = Math.floor(Math.random()*5)
+        let data_ = test_data[index] 
+      if(isFullMockData){
+        // 全量mock
         this.selfAddIndex++
-        let index = this.selfAddIndex
-      let data_ = event_json_data[index]
-        // let index = Math.floor(Math.random()*5)
-        // let data_ = test_data[index] 
+        index = this.selfAddIndex
+        const arr = event_json_data.reverse()
+        data_ = arr[index]
+      }
         const {eventCode} = data_ || {}
         this.current_event_obj = data_ || {}
         console.warn(data_)

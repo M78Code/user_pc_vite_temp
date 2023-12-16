@@ -75,13 +75,6 @@
         }
     }
 }
-.match-results-container-styles {
-    flex: 10;
-    height: 0;
-	.match-list-container {
-		z-index: 0;
-		overflow: hidden;
-		height: 100%;
-    	position: relative;
-	}
+.match-result-contant {
+    background: var(--q-gb-bg-c-18) !important;
 }

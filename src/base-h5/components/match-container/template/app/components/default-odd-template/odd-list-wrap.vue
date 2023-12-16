@@ -1192,7 +1192,7 @@ onUnmounted(() => {
         height: 0.46rem;
       }
       &.is-small{
-        height: 0.32rem;
+        // height: 0.32rem;
         :deep(.odd-title) {
           font-size: 0.1rem;
           &.standard {
@@ -1222,4 +1222,4 @@ onUnmounted(() => {
     }
   }
 }
-</style>/index.js
+</style>

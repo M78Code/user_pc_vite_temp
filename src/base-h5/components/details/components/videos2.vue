@@ -78,15 +78,20 @@
         <iframe 
         v-if=" iframe_src" 
         v-show="!is_playing_replay" 
-        ref="iframe" id="bdIframe" 
+        ref="iframe" id="video-iframe" 
         style="width:100%;height:100%;" 
-        allow="autoplay" 
-        frameborder="0" 
-        scrolling="no" 
+        frameborder="0"
+        marginwidth="0"
+        marginheight="0"
+        hspace="0"
+        vspace="0"
+        scrolling="no"
+        allowfullscreen="true"
+        allow="autoplay"
         :src="iframe_src+'&rdm='+iframe_rdm"
         ></iframe>
-        <!-- TODO: 音量控制, 需要iframe通信，暂无方法 -->
-        <slider class="slider-container" v-if="false" @change="change_volumn"/>
+        <slider class="slider-container"  v-show="show_icons && get_video_url.active === 'muUrl'"  @change="change_volumn"/>
+        
         <!-- 视频单页项目精彩回放页面-->
         <iframe
             v-if="is_playing_replay"
@@ -309,6 +314,7 @@ import { uid } from "quasar"
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { MenuData, MatchDetailCalss,compute_img_url, LOCAL_PROJECT_FILE_PREFIX } from "src/output/index.js"
 import slider from "src/base-h5/components/details/components/slider/slider.vue"
+
 export default {
   name: "videos",
   components: {
@@ -318,7 +324,7 @@ export default {
     "basketball-match-analysis": basketball_match_analysis,  //篮球分析
     "tabs": () => import("src/base-pc/components/match-detail/match_info/tabs.vue"),
     "slider-x": () => import("src/base-h5/components/details/analysis-matches/components/slider-x.vue"),
-    slider: slider
+    slider: slider,
   },
   data() {
     return {
@@ -784,12 +790,31 @@ export default {
       set_bet_list(){},
       set_is_hengping(){},
       set_is_dp_video_full_screen(){},
-      change_volumn(volumn) {
-        console.log(volumn,this.$refs.iframe,  "volumn");
+      // 设置音量
+      change_volumn(volume) {
+        const data = {
+          cmd: 'volume_video',
+          volume
+        }
+        this.voice = volume > 0;
+        this.current_event_video.voice = volume;
+        video.send_message(data)
       },
       // 设置iframe标签是否开启
     set_iframe_onload(param) {
+     
       this.get_iframe_onload = param
+    },
+     /**
+     * @description: 给iframe发送全局视频类型变化事件
+     * @param {int} type 1:高清flv, 2:流畅m3u8
+     * @return {*}
+     */
+    switch_video_url(type = 1) {
+      video.send_message({
+        cmd:'switch_type',
+        val:type
+      })
     },
     /**
      * 电竞赛事url加参数前缀检测函数
@@ -1044,6 +1069,7 @@ export default {
     handleMessage(e) {
       let status_text = ['loading','success','error']
       var data = e.data;
+      
       switch (data.cmd) {
         case 'icon':
           //处理业务逻辑
@@ -1424,6 +1450,7 @@ export default {
      * 初始化视频播放器
      */
     init_video_player(target){
+      console.log(22222);
       let video_wrap_dom = document.querySelector('.video-wrapper')
 
       this.player = new DPlayer({
