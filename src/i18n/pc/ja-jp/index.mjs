@@ -507,7 +507,8 @@ export default {
         "hour":"hrs",
         "league_fold": 'Close League',
         "league_unfold": 'See more League',
-        "highlights": "Highlights" 
+        "highlights": "Highlights",
+        "non":"not"
     },
     "replay_video": {
         "all" : "All",

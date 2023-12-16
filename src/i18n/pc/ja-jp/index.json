@@ -503,7 +503,8 @@
     "menu_title":"SPORTS",
     "league_fold": "Close League",
     "league_unfold": "See more League",
-    "highlights": "Highlights" 
+    "highlights": "Highlights",
+    "non":"Non" 
   },
   "replay_video": {
     "all": "All",

@@ -143,7 +143,7 @@
                 <!-- <odd-list-wrap :main_source="main_source" :match="match_of_list" /> -->
                 <!-- 右边赛果结构 -->
                 <template v-if="matchResultsData.length">
-                  <div class="default-match-results-right">
+                  <div @click='goto_details(match)' class="default-match-results-right">
                     <div class="dmrr-list" v-for="(item, index) in matchResultsData" :key="'dmrr'+index">
                       <div class="dmrr-item">
                         <span>{{item.home}}</span>
@@ -325,7 +325,7 @@ export default {
     padding: 0 0.05rem;
     flex-direction: column;
     align-items: center;
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-18) !important;
     .buffer-container{
       background: var(--q-gb-bg-c-21);
       height: 5px;
@@ -438,7 +438,7 @@ export default {
   .match-indent {
     width: 100%;
     margin: 0 auto;
-    background: var(--q-gb-bg-c-17);
+    background: var(--q-gb-bg-c-17) !important;
     &.bottom{
       margin-top: 0.05rem;
     }

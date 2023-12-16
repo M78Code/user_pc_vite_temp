@@ -508,7 +508,8 @@ export default {
         "menu_title":'Môn Thể Thao',
         "league_fold": 'Thu gọn giải đấu',
         "league_unfold": 'Xem thêm giải đấu',
-        "highlights": "Nổi bật"   
+        "highlights": "Nổi bật",
+        "non":"không"
     },
     "replay_video": {
         "all" : "Tất cả",
