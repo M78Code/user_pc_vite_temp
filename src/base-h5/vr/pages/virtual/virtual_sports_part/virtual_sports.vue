@@ -194,6 +194,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import ServerTime from "src/core/server-time/server-time.js"
 import { IconWapper } from 'src/components/icon'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
+import { api_common } from "src/api/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 export default {
   mixins:[common,virtual_sports_mixin],
@@ -515,7 +517,29 @@ export default {
       // 足蓝展开列表时，数据仓库增加list
       if([1001,1004].includes(this.sub_menu_type)){
         item.is_expend && this.sub_nav_click_handle(item.batchNo);
+      }else {
+        item.is_expend && this.get_detail_odds(item);
       }
+    },
+    // 赛马，赛狗展开时，获取赔率
+    get_detail_odds(item){
+      const match = item.matchs[0];
+      console.log('match', match);
+      let params = {
+          // 当前选中玩法项的id
+          mcid: 0,
+          // 赛事id
+          mid: match.mid,
+          // userId或者uuid
+          cuid: UserCtr.uid,
+        }
+        api_common.get_matchDetail_getVirtualMatchOddsInfo(params).then(res => {
+          if(res.data.length){
+            match.hps = res.data[0]?.plays || [];
+            // 按照hpid从小到大排序 
+            match.hps.sort((x, y) => x.hpid - y.hpid);
+          }
+        })
     },
     set_detail_data(data){
       // TODO 需要对应
