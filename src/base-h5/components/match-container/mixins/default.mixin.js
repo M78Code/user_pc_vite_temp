@@ -937,7 +937,7 @@ export default defineComponent({
       // 进入详情前，将当前赛事信息存入仓库
       // store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
       //元数据存入本地
-      debugger
+      // debugger
       LocalStorage.set("YUAN_MATCH_DETAIL_DATA",MatchDataBaseH5.get_quick_mid_obj(item.mid))
       if (MenuData.current_menu && MenuData.current_menu.main && is_results.value) {
         this.$router.push(`/result_details/${item.mid}/0`);
