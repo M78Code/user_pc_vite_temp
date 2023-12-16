@@ -48,7 +48,14 @@
       </div>
       </div>
 
-      <div class="score-style col-3 flex1">{{detail_data.ms }}
+      <div class="score-style col-3 flex1">
+            <div class="col-6">
+            <!-- 描述比赛进度相关start -->
+            <team-text
+              :detail_data="detail_data"
+            ></team-text>
+            <!-- 描述比赛进度相关end -->
+          </div>
           <!-- 0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断 -->
           <!-- 比赛分数or开赛时间 -->
           <span v-if="detail_data.ms == 0">
@@ -146,7 +153,7 @@ import {
 import lodash from "lodash";
 // 1-足球 2-篮球 3-棒球 4冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球 10-羽毛球
 import TeamImg from "./team-img.vue";   // 详情页蓝色背景上的大型字母图标
-// import TeamText from "src/base-h5/components/details/team-text.vue";   // 中立场赛事展示
+import TeamText from "./team-text.vue";   // 中立场赛事展示
 // import TeamName from "src/base-h5/components/details/team-name.vue";   // 详情页背景上的队伍名称
 
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方

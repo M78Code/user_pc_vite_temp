@@ -91,7 +91,7 @@ const router = createRouter({
         },
           // 赛果详情页
           {
-            path: "/result_details",
+            path: "/result_details/:mid/:csid/:mcid?",
             name: "result_details",
             component: () => import("../pages/details/result-details.vue"),
             children: [
@@ -103,7 +103,7 @@ const router = createRouter({
             ]
           },
           { 
-            path: '/result',
+            path: '/result/:mid/:csid/:mcid?',
             name: "result",
             redirect: { name: 'result_details' }
           },

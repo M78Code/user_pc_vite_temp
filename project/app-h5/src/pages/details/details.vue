@@ -18,7 +18,7 @@
       <div >
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
-            <videos v-if="get_show_video" @change_fullscreen="change_fullscreen" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
+            <videos :fix_status="true" v-if="get_show_video" @change_fullscreen="change_fullscreen" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
             <details-header  @click.stop :detail_data="detail_data" :view_tab="viewTab" :style="{display:get_show_video?'none':'block'}"></details-header>
           </div>
         </div>
@@ -33,8 +33,9 @@
           <!-- 玩法集 start -->
           <div class="details-tab-wrap" :class="{ 'z-index0': get_is_full_screen, 'z-index81': get_bet_show }">
             <!-- 足蓝赛种 才展示 投注/赛事分析 切换tab -->
+            <!--  detail_data.csid !== '2' Bug：50889 -->
             <q-tabs
-                v-if="!get_is_hengping || get_is_dp_video_full_screen"
+                v-if="(!get_is_hengping || get_is_dp_video_full_screen) && detail_data.csid !== '2'"
                 v-model="viewTab"
                 shrink
                 stretch
