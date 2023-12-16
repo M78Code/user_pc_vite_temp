@@ -19,6 +19,8 @@
             </q-page-sticky>
         </div>
 
+        <div v-show="!BetData.is_bet_single" class="bet-single del"></div>
+
         <div class="bet-box-line">
           <div class="middle font16">
             {{ i18n_tc('bet.betting') }}
@@ -104,6 +106,7 @@ const set_bet_is_accept = () => {
 // 投注模式切换
 const set_bet_single = () => {
   BetData.set_is_bet_single()
+  init_silider_position()
 }
 
 // 提交投注信息
@@ -194,6 +197,12 @@ const set_confirm = () => {
   .bet-submit{
     width: 100%;
     height: .5rem ;
+  }
+
+  .del {
+    padding: 0 .25rem !important;
+    margin-left: 0 !important;
+    margin-right: .08rem;
   }
 
   .bet-box-line{
