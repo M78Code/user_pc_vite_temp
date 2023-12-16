@@ -13,6 +13,7 @@ import { MenuData } from "src/output/module/menu-data.js"
 import MatchUtils from 'src/core/match-list-h5/match-class/match-utils';
 import VirtualList from 'src/core/match-list-h5/match-class/virtual-list'
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
+import { PageSourceData, GlobalAccessConfig, ServerTime } from "src/output/index.js";
 import { MATCH_LIST_TEMPLATE_CONFIG } from "src/core/match-list-h5/match-card/template"
 import { useMittEmit, MITT_TYPES, project_name} from "src/output/module/constant-utils.js"
 
@@ -1131,6 +1132,46 @@ class MatchMeta {
    */
   is_valid_match(ms){
     return [0,1,2,7,10,110].includes(+ms); //有效状态包括未开赛与进行中
+  }
+
+  /**
+   * @description: 页脚菜单事件
+   * @param {Object} obj 选中的页脚项目对象
+   * @return {Undefined} Undefined
+   */
+  footer_event(obj) {
+
+    switch (obj.text) {
+      case "activities":
+        console.log('每日活动')
+        break;
+      case "sortRules":
+        this.get_target_match_data({})
+        break;
+      case "filter":
+        break;
+      case "footer-refresh":
+        if (MenuData.is_results()) {
+          // 赛果时
+          this.get_results_match();
+        } else {
+          this.get_target_match_data({});
+        }
+        if (PageSourceData.route_name !== 'match_result') {
+          useMittEmit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
+        }
+        break;
+      case "mid-refresh":
+        this.get_match_base_hps_by_mids({ mids: [obj.mid] });
+        break;
+      case "footer-follow":
+        if (!obj.before_status) {
+          MatchDataBaseH5.clear();
+        }
+        break;
+      default:
+        console.log('暂无处理逻辑') 
+    }
   }
 
   /**

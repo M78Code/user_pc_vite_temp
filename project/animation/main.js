@@ -25,5 +25,4 @@ app.use(router);
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
-window.$g_image_preffix = process.env.NODE_ENV === "development" ? '' : '/' + BUILD_VERSION
 app.mount('#ty-app')

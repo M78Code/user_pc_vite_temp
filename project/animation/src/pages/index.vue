@@ -129,7 +129,7 @@ export default defineComponent({
    emitEvent(){
      this.emitPauseEvent()
      this.moniEventTimer = setInterval(() => {
-       this.get_event_code()
+       this.get_event_code(true)
      }, 1000)
    },
    // 暂停模拟推送
@@ -231,18 +231,24 @@ export default defineComponent({
            let convert_data = JSON.parse(data.data);
            let { command, responseData,ack,msgId } = convert_data;
            if (command === 30013) {
+            this.current_event_obj = responseData || {}
             this.dataObj.unshift(responseData)
            }
         }
     },
     // 生成随机事件
-    get_event_code() {
+    get_event_code(isFullMockData) {
         console.warn('自动获取生成时间')
+      // let data_ = event_json_data[index]
+        let index = Math.floor(Math.random()*5)
+        let data_ = test_data[index] 
+      if(isFullMockData){
+        // 全量mock
         this.selfAddIndex++
-        let index = this.selfAddIndex
-      let data_ = event_json_data[index]
-        // let index = Math.floor(Math.random()*5)
-        // let data_ = test_data[index] 
+        index = this.selfAddIndex
+        const arr = event_json_data.reverse()
+        data_ = arr[index]
+      }
         const {eventCode} = data_ || {}
         this.current_event_obj = data_ || {}
         console.warn(data_)
