@@ -32,7 +32,7 @@
       <div class="left">
         <div class="bg">
           <Svg3 :height="svgHeight" :width="svgWidth" v-if="isShowSvg1" />
-          <img ref="bgConainer" src="/public/animation/足球背景.png">
+<!--          <img ref="bgConainer" src="/public/animation/足球背景.png">-->
         </div>
         <div>11</div>
       </div>

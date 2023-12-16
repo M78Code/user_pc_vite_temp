@@ -72,6 +72,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   onMounted(()=>{
     // set_scroll_data_list(MenuData.current_lv_1_menu_mi.value,1)
     init_data(MenuData.current_lv_1_menu_mi.value,1)
+    useMittOn(MITT_TYPES.EMIT_MENU_GO_BACK, menu_go_back)
     useMittOn(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE, set_scroll_current)
     useMittOn(MITT_TYPES.EMIT_SCROLL_DATE_TIME_CHANGE, set_scroll_early_single)
   })
@@ -96,6 +97,13 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     // 滑动菜单选中的菜单id
     current_mi: ''
   })
+
+  /**
+   * @description 左侧菜单回退
+   */
+  const menu_go_back = (val) => {
+    init_data(MenuData.current_lv_1_menu_mi.value,1)
+  }
   /**
    * 联赛筛选处理-关闭
    */
@@ -139,8 +147,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 设置vr /收藏 电竞 头信息
       MenuData.set_top_menu_title(val)
       // 清空一级菜单显示 用于后续更新
-      // MenuData.current_lv_1_menu_mi.value = ''
-      MenuData.set_current_lv1_menu('');
+      if (+val.mi !== 50000) MenuData.set_current_lv1_menu('');
       let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
@@ -152,6 +159,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       MenuData.set_current_lv_2_menu_i(val)
     }
     
+    // 收藏页 不调用 元数据逻辑
     set_menu_mi_change_get_api_data()
   }
   /**
@@ -283,7 +291,8 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
       if (csid) MatchMeta.get_esports_match()
     } else {
-       // 设置菜单对应源数据 以及 获取数据
+      // 设置菜单对应源数据 以及 获取数据
+      if (MenuData.top_menu_title.mi === 50000) return
       MatchMeta.set_origin_match_data({ md: MenuData.data_time })
       // MatchMeta.filter_match_by_time(item?.val)
       // MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
