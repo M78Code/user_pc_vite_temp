@@ -83,7 +83,7 @@ export default {
         
         // data参数说明: {type:'domain_api',status:0 ,list:[]}
         // 是api域名类型时
-        console.log("---------------- 域名检测初始化完成 ----------------")
+        // console.log("---------------- 域名检测初始化完成 ----------------")
         this.init_net_set();
         // 首次进入,发现最快的域名
         // http初始化方法 会调用 setApiDomain
@@ -133,7 +133,7 @@ export default {
         if (data && window.is_token_invalid_show) {
           return;
         }
-        console.log("触发切网络api域名动作", data);
+        // console.log("触发切网络api域名动作", data);
         // 错误上报相关
         if (data && (data.type == "http" || data.type == "ws")) {
           if (typeof data.data == "string") {

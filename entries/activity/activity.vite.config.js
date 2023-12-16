@@ -7,7 +7,7 @@ import path from "path";
   
 //本地开发端口
 const port = 28400
-console.log("---------启动文件入口目录-------------", __dirname);
+// console.log("---------启动文件入口目录-------------", __dirname);
 import COMPUTE_ENTRY_CONFIG from "../../job/entry-config.js";
 //入口配置
 const  { project, outDir, base,} = COMPUTE_ENTRY_CONFIG({port})
