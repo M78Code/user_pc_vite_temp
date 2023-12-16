@@ -297,8 +297,10 @@ class MatchMeta {
     const { tid, csid, mid, ms } = match
     // 初始化赛事折叠
     // MatchFold.set_match_mid_fold_obj(match)
-    
     MatchResponsive.set_show_match_info(`mid_${match.mid}`, index < 20 ? true : false)
+
+    // 球种数量
+    MatchResponsive.set_default_ball_seed_count(match)
 
     const key = MatchFold.get_match_fold_key(match)
     if (!(key in MatchFold.match_mid_fold_obj.value)) MatchFold.set_match_mid_fold_obj(match)
@@ -407,14 +409,6 @@ class MatchMeta {
     const mids = this.tid_map_mids[`tid_${tid}`].mids
     if (mids.length < 1) return 
     this.get_origin_match_by_mids(mids)
-  }
-
-  /**
-   * @description 筛选联赛
-   * @param { tid } 联赛 ID 
-   */
-  filter_match_by_tids (tids = []) {
-    
   }
 
   /**
@@ -900,6 +894,7 @@ class MatchMeta {
     
     // 重置折叠对象
     MatchFold.clear_fold_info()
+    MatchResponsive.clear_ball_seed_count()
     target_list.forEach((t, i) => {
       Object.assign(t, {
         is_show_league: MatchUtils.get_match_is_show_league(i, target_list)
@@ -931,6 +926,8 @@ class MatchMeta {
     } else {
       MatchResponsive.clear_ball_seed_league_count()
     }
+    MatchResponsive.clear_ball_seed_count()
+    
     const length = lodash.get(list, 'length', 0)
     
     if (length < 1) return this.set_page_match_empty_status({ state: true });

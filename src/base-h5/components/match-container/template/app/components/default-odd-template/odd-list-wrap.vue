@@ -483,6 +483,7 @@ const fill_empty_hps = (hpsArr) => {
   if ((hpsArr || []).length == 0) {
     return [{ hl: [{}] }, { hl: [{}] }, { hl: [{}] }];
   }
+  console.log(hpsArr)
   return hpsArr;
 };
 // 5分钟玩法

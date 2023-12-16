@@ -212,7 +212,12 @@ export default defineComponent({
     // 获取赛事数量
     get_match_count () {
       const { csid, start_flag } = this.match_of_list
-      const key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      let key = ''
+      if ([1,2].includes(+start_flag)) {
+        key = start_flag === 1 ? `progress_csid_${csid}` : `not_csid_${csid}`
+      } else {
+        key = `default_csid_${csid}`
+      }
       return lodash.get(MatchResponsive.ball_seed_count.value, `${key}`, 1)
     },
      // 获取联赛赛事数量
