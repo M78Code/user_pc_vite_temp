@@ -65,17 +65,7 @@ const changeTabMenu = (item, i, event,type) => {
 
     set_menu_match_date(type)
 
-    scrollMenuEvent(event, ".date-tab-content-ul", ".active");
-
-    if (MenuData.is_esports()) {
-        // 电竞 初始调用时没值 不掉接口
-        const csid = lodash.get(MenuData.current_lv_2_menu, 'csid')
-        if (csid) MatchMeta.get_esports_match()
-    } else {
-        MatchMeta.filter_match_by_time(item?.val)
-        MatchMeta.get_target_match_data(!item?.val ? {} : { md: item?.val })
-    }
-    
+    scrollMenuEvent(event, ".date-tab-content-ul", ".active");   
 }
 /**
  * 默认值
