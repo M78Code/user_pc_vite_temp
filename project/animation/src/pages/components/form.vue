@@ -26,6 +26,8 @@
       <q-btn v-show="isStart" label="停止"  color="primary" flat class="q-ml-sm" @click="pause" />
 <!--      <q-btn label="清空" type="reset" color="primary" flat class="q-ml-sm" />-->
       <q-btn label="清空" color="primary" flat class="q-ml-sm"  @click="reset" />
+      <q-btn v-show="!isMoNiEmit" label="模拟推送" color="primary" flat class="q-ml-sm"  @click="emitEvent" />
+      <q-btn v-show="isMoNiEmit" label="暂停模拟推送" color="primary" flat class="q-ml-sm"  @click="emitPauseEvent" />
     </q-form>
   </div>
 </template>
@@ -34,6 +36,7 @@ export default {
   data(){
     return {
       isStart: false,
+      isMoNiEmit: false,
       form: {
         sportId: '1',
         matchId: '2988076',
@@ -78,6 +81,14 @@ export default {
         token: '',
       }
       this.$emit('reset')
+    },
+    emitEvent(){
+      this.isMoNiEmit = true
+      this.$emit('emitEvent')
+    },
+    emitPauseEvent(){
+      this.isMoNiEmit = false
+      this.$emit('emitPauseEvent')
     }
   }
 }
