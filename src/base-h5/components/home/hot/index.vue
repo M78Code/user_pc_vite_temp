@@ -38,7 +38,7 @@
         <may-also-like :from_where="101" v-if="tab_Index == 0 && GlobalAccessConfig.get_hotRecommend()" />
         <!-- 精选赛事  标题-->
         <div class="may_also_like">
-          <div class="title" v-if="tab_Index == 0"> {{ $t('home_popular.featured_events') }} </div>
+          <div class="title" v-if="tab_Index == 0"> {{ i18n_t('home_popular.featured_events') }} </div>
         </div>
         <!-- 精选赛事  标题-->
         <sportsBallsTab ref="sports_balls_tab" :tab_Index="tab_Index"></sportsBallsTab>

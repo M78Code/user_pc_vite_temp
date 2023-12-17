@@ -19,7 +19,7 @@
          <div
           v-if="lodash.get(match, 'mearlys', 0) && match_style_obj.data_tpl_id != 12"
           class="icon-wrap settlement-pre relative-position"
-          v-tooltip="{content: t('bet_record.settlement_pre')}"
+          v-tooltip="{content: i18n_t('bet_record.settlement_pre')}"
         >
            <img class="match_pre" :src="compute_local_project_file_path('/image/png/match_pre.png')"/>
         </div>
@@ -36,7 +36,7 @@
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
       </span>
       <!-- 统计分析 -->
-      <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
+      <div class="sr-link-icon-w" v-tooltip="{content:i18n_t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='details.sr_click_handle(match)'>
         <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
       </div>
       <!-- 玩法数量 -->

@@ -3,16 +3,16 @@
     <!-- 期数区域 -->
     <div class="vir-bask-head" v-if="current_match.mmp == 'INGAME' && !is_end">
       <div>{{current_match.no}}</div>&nbsp;
-      <div>{{t('virtual_sports.match_status.playing')}}</div>
+      <div>{{i18n_t('virtual_sports.match_status.playing')}}</div>
     </div>
-    <div class="vir-bask-head vir-end" v-if="current_match.mmp != 'INGAME'" v-html="t('virtual_sports.match_status.x_to_ended').replace('%s',basketball_end_time)"></div>
+    <div class="vir-bask-head vir-end" v-if="current_match.mmp != 'INGAME'" v-html="i18n_t('virtual_sports.match_status.x_to_ended').replace('%s',basketball_end_time)"></div>
     <!-- 进度区域 -->
     <div class="progress" v-if="!is_end">
       <!-- 中文进度 -->
       <div class="row text-pro">
-        <div class="col">{{t('virtual_sports.match_status.0')}}</div>
-        <div class="col">{{t('virtual_sports.match_status.1')}}</div>
-        <div class="col">{{t('virtual_sports.match_status.2')}}</div>
+        <div class="col">{{i18n_t('virtual_sports.match_status.0')}}</div>
+        <div class="col">{{i18n_t('virtual_sports.match_status.1')}}</div>
+        <div class="col">{{i18n_t('virtual_sports.match_status.2')}}</div>
       </div>
       <!-- 线性进度 -->
       <div class="line-wrap">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <!-- 比赛结束 -->
-    <div v-if="is_end" class="vir-ending">{{t('virtual_sports.match_status.ended')}}</div>
+    <div v-if="is_end" class="vir-ending">{{i18n_t('virtual_sports.match_status.ended')}}</div>
     <!-- 对阵区域 -->
     <div class="against" :class="0 ? 'against-area':'against-area-end'">
       <!-- 主队icon -->

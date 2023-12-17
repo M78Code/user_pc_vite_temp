@@ -7,8 +7,8 @@
   <div class="bet-all-detele">
     <div class="del-info">
       <div class="del-info-icon">删</div>
-      <div class="del-info-name">{{$t('bet.bet')}}</div>
-        <div class="del-info-name">{{$t('bet.total_win2')}} 0.00</div>
+      <div class="del-info-name">{{i18n_t('bet.bet')}}</div>
+        <div class="del-info-name">{{i18n_t('bet.total_win2')}} 0.00</div>
     </div>
     <div class="del-info">
       <div class="del-info-type">{{ i18n_t('app_h5.bet.limit')}}</div>

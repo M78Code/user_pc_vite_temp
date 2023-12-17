@@ -28,7 +28,7 @@
           </q-tooltip>
         </div>
         <div class="score active" :class="{scoring}">
-          <template v-if="match_info.ms != 110">{{scoring?$root.$t('mmp.100.scoring'):main_score.home}}</template>
+          <template v-if="match_info.ms != 110">{{scoring?i18n_t('mmp.100.scoring'):main_score.home}}</template>
         </div>
       </div>
       <div class="time-wrap yb-flex-center">
@@ -36,7 +36,7 @@
       </div>
       <div class="name-wrap right-name">
         <div class="score active" :class="{scoring}">
-          <template v-if="match_info.ms != 110">{{ scoring?$root.$t('mmp.100.scoring'):main_score.away}}</template>
+          <template v-if="match_info.ms != 110">{{ scoring?i18n_t('mmp.100.scoring'):main_score.away}}</template>
         </div>
         <div class="name relative-position">
           <div class="ellipsis yb-absolute">{{match_info.man}}</div>
@@ -59,7 +59,7 @@
       <!-- 统计分析 -->
       <div class="yb-flex-center" v-show="$is_show_sr_flg(match_info)" @click="sr_click_handle">
         <icon size="14px" name="icon-signal" />
-        <q-tooltip v-if="version_name == 'zhuanye'" anchor="top middle" self="center middle" :content-style="tooltip_style">{{$root.$t('common.analysis')}}</q-tooltip>
+        <q-tooltip v-if="version_name == 'zhuanye'" anchor="top middle" self="center middle" :content-style="tooltip_style">{{i18n_t('common.analysis')}}</q-tooltip>
       </div>
       <!-- 刷新按钮 -->
       <div class="refresh">
@@ -68,7 +68,7 @@
       <!-- 退出全屏 -->
       <!-- <div class="yb-flex-center" @click="exit_full_screen">
         <icon size="14px" name="icon-small" />
-        <q-tooltip v-if="version_name == 'zhuanye'" anchor="top middle" self="center middle" :content-style="tooltip_style">{{$root.$t('video.outbig')}}</q-tooltip>
+        <q-tooltip v-if="version_name == 'zhuanye'" anchor="top middle" self="center middle" :content-style="tooltip_style">{{i18n_t('video.outbig')}}</q-tooltip>
       </div> -->
     </div>
   </div>

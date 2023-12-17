@@ -17,14 +17,14 @@ import { t } from "src/boot/i18n.js";
 import { ref } from "vue"
 
 let footer_list = ref([
-  {text: t('match_result.yellow_card')},
-  {text: t('match_result.red_card')},
-  {text: t('match_result.corner_kick')},
-  {text: t('match_result.substitution')},
-  {text: t('match_result.goal')},
-  {text: t('match_result.penalty_kick')},
-  {text: t('match_result.penalty_missed')},
-  {text: t('match_result.own_goals')}
+  {text: i18n_t('match_result.yellow_card')},
+  {text: i18n_t('match_result.red_card')},
+  {text: i18n_t('match_result.corner_kick')},
+  {text: i18n_t('match_result.substitution')},
+  {text: i18n_t('match_result.goal')},
+  {text: i18n_t('match_result.penalty_kick')},
+  {text: i18n_t('match_result.penalty_missed')},
+  {text: i18n_t('match_result.own_goals')}
 ])
 </script>
 

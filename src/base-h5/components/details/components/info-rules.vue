@@ -13,8 +13,8 @@
       <div v-if="get_hd_sd_show" class="hd-sd-css">
         <!-- 文字头 -->
         <header>{{i18n_t("match_info.video") +'  '+ i18n_t("footer_menu.change_simple01")}}</header>
-        <span @click="video_switching(0)" :class="[get_hd_sd == 0 && 'gaoliang']">{{t("common.SD")}}</span>
-        <span @click="video_switching(1)" :class="[get_hd_sd == 1 && 'gaoliang']">{{t("common.HD")}}</span>
+        <span @click="video_switching(0)" :class="[get_hd_sd == 0 && 'gaoliang']">{{i18n_t("common.SD")}}</span>
+        <span @click="video_switching(1)" :class="[get_hd_sd == 1 && 'gaoliang']">{{i18n_t("common.HD")}}</span>
       </div>
     </div>
   </div>

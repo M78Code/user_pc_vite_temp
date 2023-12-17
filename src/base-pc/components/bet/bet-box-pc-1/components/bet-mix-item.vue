@@ -48,14 +48,14 @@
             <!--盘口类型，盘口名称，比分的显示 ref_data.timerly_basic_score 0 滚球-->
             <label class="bet-play-text">
               <template v-if="ref_data.match_ms == 1">
-                <label class="bet-match-playing">{{ $t('menu.match_playing') }}</label>
+                <label class="bet-match-playing">{{ i18n_t('menu.match_playing') }}</label>
               </template>
               {{ item.playName }}
               <template v-if="item.basic_score">
                 ({{ item.basic_score }})
               </template>
               <label class="bet-handicap-name">
-                [{{ $t(`odds.${item.marketTypeFinally}`) }}]
+                [{{ i18n_t(`odds.${item.marketTypeFinally}`) }}]
               </label>
             </label>
           </div>
@@ -89,14 +89,14 @@
           <!--右侧无效按钮  当ref_data.active不是激活和锁盘时-->
           <div class="auto-col" v-if="!(ref_data.active == 1 || ref_data.active == 4)">
             <span class="invalid">
-              {{ $t('common.invalid') }}
+              {{ i18n_t('common.invalid') }}
               <!-- 无效 -->
             </span>
           </div>
           <div class="auto-col" v-else-if="!ref_data.serial_type">
             <span class="invalid serial-msg">
               <!--不支持串关-->
-              {{ $t('bet.no_support_serial') }}
+              {{ i18n_t('bet.no_support_serial') }}
             </span>
           </div>
         </div>

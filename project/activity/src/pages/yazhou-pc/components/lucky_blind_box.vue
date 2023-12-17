@@ -286,7 +286,7 @@
     <img v-if="activityObj.period == 2"
       :src="`${LOCAL_COMMON_FILE_PREFIX}/activity/yazhou-pc/activity_imgs/imgs/diamond_box.png`" alt=""
       style="display: none" />
-    <Toast v-if="showToast" :text="$t('common.limited')" />
+    <Toast v-if="showToast" :text="i18n_t('common.limited')" />
   </div>
 </template>
 <script>

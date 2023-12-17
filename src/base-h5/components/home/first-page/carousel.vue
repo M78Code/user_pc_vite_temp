@@ -60,7 +60,7 @@
                                     }">
                                 <!--即将开赛 ms = 110-->
                                 <template v-if="item.ms == 110">
-                                    <div>{{ $t(`ms[${item.ms}]`) }}</div>
+                                    <div>{{ i18n_t(`ms[${item.ms}]`) }}</div>
                                 </template>
 
                                 <!--一小时内开赛 -->
@@ -74,9 +74,9 @@
                                     !show_start_counting_down(item) &&
                                     !show_counting_down(item)
                                     ">
-                                    <div>{{ $t("list.match_no_start") }}</div>
+                                    <div>{{ i18n_t("list.match_no_start") }}</div>
                                     <div>
-                                        <!-- .Format(t('time4')) -->
+                                        <!-- .Format(i18n_t('time4')) -->
                                         {{ format_time_zone(+item.mgt) }}
                                     </div>
                                 </template>
@@ -84,7 +84,7 @@
                                 <!--倒计时或正计时-->
                                 <template v-if="item.ms != 110 && show_counting_down(item)">
                                     <counting-down-second :title="item.ms == 0
-                                        ? $t('list.match_no_start')
+                                        ? i18n_t('list.match_no_start')
                                         : matchListClass.match_period_map(item)
                                         " :mmp="item.mmp" :m_id="item.mid" :second="item.mst" :match="item" :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)
         " home />

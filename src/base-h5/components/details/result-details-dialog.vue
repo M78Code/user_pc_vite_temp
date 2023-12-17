@@ -46,7 +46,7 @@
                   <span v-if="item.ms == 1 || item.ms == 2 || item.ms == 3 || item.ms == 4 || is_match_result" class="decated">
                     <!-- 增加比分判定中的判断和显示 -->
                     <template v-if="is_eports_scoring(item)">
-                      {{t('mmp.eports_scoring')}}
+                      {{i18n_t('mmp.eports_scoring')}}
                     </template>
                     <template v-if="is_match_result">
                       {{calc_score(item)}}

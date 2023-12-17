@@ -36,14 +36,14 @@
             v-tooltip="{
               content:
                 (item.mi == '50199'
-                  ? t('common.all')
+                  ? i18n_t('common.all')
                   : BaseData.menus_i18n_map[item.mi] + ' ' + item.ct) || '',
               overflow: 1,
             }"
           >
             <span>{{
               (item.mi == "50199"
-                ? t("common.all")
+                ? i18n_t("common.all")
                 : BaseData.menus_i18n_map[item.mi]) || ""
             }}</span>
             <span class="count-text">{{ item.ct }}</span>

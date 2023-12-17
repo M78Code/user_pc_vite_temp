@@ -83,7 +83,7 @@
                   >
                     <!-- 增加比分判定中的判断和显示 -->
                     <template v-if="is_eports_scoring(item)">
-                      {{ $t('mmp.eports_scoring') }}
+                      {{ i18n_t('mmp.eports_scoring') }}
                     </template>
                     <template v-else-if="is_match_result">
                       {{ calc_score(item) }}

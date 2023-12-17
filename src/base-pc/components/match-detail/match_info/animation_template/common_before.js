@@ -36,7 +36,7 @@ export default {
         // 格式化时间
         formatTime(
           this.match_info.mgt,
-          format_string(this.t("time.time_date_1"), "mm", "dd")
+          format_string(i18n_t("time.time_date_1"), "mm", "dd")
         ), //"mm月dd日"
         formatTime(this.match_info.mgt, "hh:MM")
       ];

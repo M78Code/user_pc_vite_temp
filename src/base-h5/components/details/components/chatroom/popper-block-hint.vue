@@ -6,8 +6,8 @@
 <template>
   <div class="popper t-popper" v-if="isShow">
     <div class="popper_content">
-      <div class="popper_text">{{  t('chatroom.block_msg_info2')  }}</div>
-      <div class="m-button t-m-button" @click="toggleShow">{{  `${t('chatroom.pop_content1')}(${countdownSec}s)`  }}</div>
+      <div class="popper_text">{{  i18n_t('chatroom.block_msg_info2')  }}</div>
+      <div class="m-button t-m-button" @click="toggleShow">{{  `${i18n_t('chatroom.pop_content1')}(${countdownSec}s)`  }}</div>
     </div>
   </div>
 

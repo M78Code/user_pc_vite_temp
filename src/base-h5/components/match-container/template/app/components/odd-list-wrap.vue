@@ -88,12 +88,12 @@
       <div class="correct_style_title">
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{ $t('football_playing_way.full_time_draw')}}</span>
+          <span>{{ i18n_t('football_playing_way.full_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{ $t('football_playing_way.half_time_draw')}}</span>
+          <span>{{ i18n_t('football_playing_way.half_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
       </div>

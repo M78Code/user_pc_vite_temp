@@ -46,7 +46,7 @@
         <!-- 中 -->
         <div class="row justify-between yb_my4 yb_fontsize14">
           <span :class="UserCtr.lang == 'vi' && BetViewDataClass.bet_order_status ? 'col-6' : 'col-7'">
-            <template v-if="lodash.get(value_show, 'hps[0].hl[0].hmt') == 0">{{ $t('bet_record.ing')
+            <template v-if="lodash.get(value_show, 'hps[0].hl[0].hmt') == 0">{{ i18n_t('bet_record.ing')
             }}&thinsp;</template>
             <template v-if="get_is_champion">{{ lodash.get(value_show, 'hps[0].hl[0].hps') }}</template>
             <!-- 投注成功后的玩法名称用接口返回的 -->
@@ -71,21 +71,21 @@
             <template v-else>
               <!-- 投注成功 -->
               <span v-if="order_status == 1" class="color1"><img src="image/wwwassets/bw3/svg/bet_chengg.svg"
-                  class="img0">{{ $t('bet.bet_suc') }}</span>
+                  class="img0">{{ i18n_t('bet.bet_suc') }}</span>
               <!-- 投注失败 -->
               <span v-if="order_status == 0" class="color3"><img src="image/wwwassets/bw3/svg/bet_shib.svg"
-                  class="img0">{{ $t('bet.bet_err') }}</span>
+                  class="img0">{{ i18n_t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
               <span v-if="order_status == 2" class="color2">
                 <i class="img0 img1" :style="compute_css_obj('icon-tijiao')"></i>
-                {{ $t('bet.submitted_successfully') }}</span>
+                {{ i18n_t('bet.submitted_successfully') }}</span>
             </template>
           </template>
           <template v-else>
             <!-- 不支持串关 -->
-            <span v-if="hids" class="invalid-span2">{{ $t('bet.invalidation2') }}</span>
+            <span v-if="hids" class="invalid-span2">{{ i18n_t('bet.invalidation2') }}</span>
             <!-- 失效 -->
-            <span v-else-if="pankou_change == 2" class="invalid-span">{{ $t('bet.invalidation') }}</span>
+            <span v-else-if="pankou_change == 2" class="invalid-span">{{ i18n_t('bet.invalidation') }}</span>
           </template>
         </div>
 
@@ -101,8 +101,8 @@
             <template v-else>{{ value_show.mhn }}<span class="q-mx-xs">v</span>{{ value_show.man }}{{ score }}</template>
           </div>
           <div v-if="authorityOptionFlag" class="col-3 row subscribe-button" @click.stop="handlePre(true)">
-            +{{ $t('pre_record.book') }}</div>
-          <div v-if="show_pre"><span class="pre-text">[{{ $t('pre_record.book') }}]</span></div>
+            +{{ i18n_t('pre_record.book') }}</div>
+          <div v-if="show_pre"><span class="pre-text">[{{ i18n_t('pre_record.book') }}]</span></div>
         </div>
         <div class="yb_px10 half-border-bottom" v-if="show_border"></div>
       </div>
@@ -122,7 +122,7 @@
       <div class="operation-line" v-if="is_show_market"></div>
       <!-- 调整盘口 -->
       <div class="subscribe-operation" v-if="is_show_market">
-        <span class="label">{{ $t('pre_record.handicap') }}</span>
+        <span class="label">{{ i18n_t('pre_record.handicap') }}</span>
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(3)"
             :class="show_market_shadow ? 'shadow-show' : null">
@@ -143,7 +143,7 @@
       <div class="operation-line half-border-bottom"></div>
       <!-- 调整赔率 -->
       <div class="subscribe-operation">
-        <span class="label">{{ $t('pre_record.odds') }}</span>
+        <span class="label">{{ i18n_t('pre_record.odds') }}</span>
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(1)"
             :class="pre_shadow_flag ? 'shadow-show' : null">
@@ -175,10 +175,10 @@
         <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
         <div class="bottom-bar row justify-between yb_px14 yb_fontsize14 yb_mb8 ">
           <!--左边， 最高可赢 -->
-          <p><span>{{ $t('bet_record.bet_max_win') }}</span><span class="bottom-bar-sp yb_fontsize14 yb_ml8 ">{{
+          <p><span>{{ i18n_t('bet_record.bet_max_win') }}</span><span class="bottom-bar-sp yb_fontsize14 yb_ml8 ">{{
             (bet_success_obj.maxWinMoney / 100).toFixed(2) }}</span></p>
           <!--右边， 投注金额 -->
-          <p><span>{{ $t('bet.bet_val') }}</span><span class="bottom-bar-sp2 yb_fontsize14 yb_ml8 ">
+          <p><span>{{ i18n_t('bet.bet_val') }}</span><span class="bottom-bar-sp2 yb_fontsize14 yb_ml8 ">
               {{ (bet_success_obj.betMoney / 100).toFixed(2) }}</span></p>
         </div>
       </template>

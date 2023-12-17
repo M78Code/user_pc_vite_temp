@@ -33,16 +33,16 @@
       <div class="lineup-item home">
         <div class="panel">
           <!-- 首发阵容 -->
-          <div class="panel-title">{{ $t('analysis.starting_lineup') }} {{ match.csid == '1' ? lodash.get(lineupData,
+          <div class="panel-title">{{ i18n_t('analysis.starting_lineup') }} {{ match.csid == '1' ? lodash.get(lineupData,
             'home.homeFormation') : '' }}</div>
           <div class="d-table">
             <div class="d-table-h">
               <!-- 位置 -->
-              <div class="d-table-td">{{ $t('analysis.position') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.position') }}</div>
               <!-- 姓名 -->
-              <div class="d-table-td">{{ $t('analysis.name') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.name') }}</div>
               <!-- 号码 -->
-              <div class="d-table-td">{{ $t('analysis.number') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.number') }}</div>
             </div>
             <div class="d-tabel-tr" v-for="(item, index) in lodash.get(lineupData, 'home.up')" :key="index">
               <div class="d-table-td"
@@ -61,16 +61,16 @@
         </div>
         <div class="panel">
           <!-- 替补阵容 -->
-          <div class="panel-title">{{ $t('analysis.bench_lineup') }} {{ match.csid == '1' ? lodash.get(lineupData,
+          <div class="panel-title">{{ i18n_t('analysis.bench_lineup') }} {{ match.csid == '1' ? lodash.get(lineupData,
             'home.homeFormation') : '' }}</div>
           <div class="d-table">
             <div class="d-table-h">
               <!-- 位置 -->
-              <div class="d-table-td">{{ $t('analysis.position') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.position') }}</div>
               <!-- 姓名 -->
-              <div class="d-table-td">{{ $t('analysis.name') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.name') }}</div>
               <!-- 号码 -->
-              <div class="d-table-td">{{ $t('analysis.number') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.number') }}</div>
             </div>
             <div class="d-tabel-tr" v-for="(item, index) in lodash.get(lineupData, 'home.down')" :key="index">
               <div class="d-table-td"
@@ -94,16 +94,16 @@
       <div class="lineup-item away">
         <div class="panel">
           <!-- 首发阵容 -->
-          <div class="panel-title">{{ $t('analysis.starting_lineup') }}
+          <div class="panel-title">{{ i18n_t('analysis.starting_lineup') }}
             {{ match.csid == '1' ? lodash.get(lineupData, 'away.awayFormation') : '' }}</div>
           <div class="d-table">
             <div class="d-table-h">
               <!-- 位置 -->
-              <div class="d-table-td">{{ $t('analysis.position') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.position') }}</div>
               <!-- 姓名 -->
-              <div class="d-table-td">{{ $t('analysis.name') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.name') }}</div>
               <!-- 号码 -->
-              <div class="d-table-td">{{ $t('analysis.number') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.number') }}</div>
             </div>
             <div class="d-tabel-tr" v-for="(item, index) in lodash.get(lineupData, 'away.up')" :key="index">
               <div class="d-table-td"
@@ -122,16 +122,16 @@
         </div>
         <div class="panel">
           <!-- 替补阵容 -->
-          <div class="panel-title">{{ $t('analysis.bench_lineup') }}
+          <div class="panel-title">{{ i18n_t('analysis.bench_lineup') }}
             {{ match.csid == '1' ? lodash.get(lineupData, 'away.awayFormation') : '' }}</div>
           <div class="d-table">
             <div class="d-table-h">
               <!-- 位置 -->
-              <div class="d-table-td">{{ $t('analysis.position') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.position') }}</div>
               <!-- 姓名 -->
-              <div class="d-table-td">{{ $t('analysis.name') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.name') }}</div>
               <!-- 号码 -->
-              <div class="d-table-td">{{ $t('analysis.number') }}</div>
+              <div class="d-table-td">{{ i18n_t('analysis.number') }}</div>
             </div>
             <div class="d-tabel-tr" v-for="(item, index) in lodash.get(lineupData, 'away.down')" :key="index">
               <div class="d-table-td"

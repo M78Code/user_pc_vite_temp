@@ -12,7 +12,7 @@
     <!--</div>-->
     <chat_msg v-for="msgItem in filtered_msg_list" :msgItem="msgItem" :key="msgItem.messageId"></chat_msg>
     <div class="read-more" v-if="read_more_visible" @click="scrollToBottom">
-      {{ t('chatroom.read_more') }}
+      {{ i18n_t('chatroom.read_more') }}
     </div>
   </div>
 </template>
@@ -97,10 +97,10 @@ export default defineComponent({
       let res = '';
       switch (computed_mute_type) {
         case muteType.self_mute:   // 个人禁言
-          res = t('chatroom.mute_hint1');
+          res = i18n_t('chatroom.mute_hint1');
           break;
         case muteType.global_mute:  // 全体禁言
-          res = t('chatroom.mute_hint2');
+          res = i18n_t('chatroom.mute_hint2');
           break;
       }
       return res;

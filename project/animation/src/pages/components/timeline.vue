@@ -46,7 +46,7 @@
         </div>
         <div v-if="list.length == 0" class="text-center q-py-lg">
             no data
-            <!-- {{$t('common.noMatchingData')}}	 -->
+            <!-- {{i18n_t('common.noMatchingData')}}	 -->
         </div>
     </div>
 </template>

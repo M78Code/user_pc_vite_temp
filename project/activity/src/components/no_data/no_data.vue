@@ -6,7 +6,7 @@
 <template>
   <div class="wrap" :class="type_name" :style="{marginBottom:`${marginBottom}`}">
     <div class="img" :class="color" :style="{width: width,height:height}"></div>
-    <div class="text-center"  :style="{color: textColor}">{{msg?msg:t('nodata_msg.no_data_msg_1')}}</div>
+    <div class="text-center"  :style="{color: textColor}">{{msg?msg:i18n_t('nodata_msg.no_data_msg_1')}}</div>
     <div class="nodata-text2" v-if="msg2">{{msg2}}</div>
     <slot />
   </div>

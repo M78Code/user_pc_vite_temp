@@ -19,7 +19,7 @@
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-                <!-- (new Date(name)).Format(t('time2')) -->
+                <!-- (new Date(name)).Format(i18n_t('time2')) -->
                 <span>{{ format_M_D(new Date(name).getTime())}}</span>
                 <span v-if="!value.open && index != 0"><img class="icon-down-arrow" :src="`${LOCAL_PROJECT_FILE_PREFIX}/image/list/league-collapse-icon.svg`" /></span>
               </p>
