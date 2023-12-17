@@ -5,7 +5,6 @@
 <template>
   <template v-if="is_show">
     <!-- 赛果玩法 -->
-    {{ is_kemp }}
       <template v-if="is_results && is_kemp">
         <MatchContainerMainTemplate6
           :i="index"
