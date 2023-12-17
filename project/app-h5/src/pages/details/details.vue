@@ -617,7 +617,7 @@ export default defineComponent({
 }
 }
 .bg-tabs {
-    background: var(--q-gb-bg-c-15);
+    background: var(--q-gb-bg-c-23);
    
   .bg-active-tab {
     background: var(--q-gb-bg-c-15);
@@ -626,7 +626,7 @@ export default defineComponent({
   }
  .details-tab{
   border-top:0.5px solid #F2F2F6;
-  background: var(--q-gb-bg-c-15);
+  background: var(--q-gb-bg-c-23);
  } 
 </style>
 <style lang="scss">

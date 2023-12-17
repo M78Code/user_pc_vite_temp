@@ -121,6 +121,7 @@ defineProps({});
     align-items: baseline;
     .sl-title {
       font-size: 0.18rem;
+      color: var(--q-gb-t-c-18);
     }
     .sl-btn {
       font-size: 0.16rem;
