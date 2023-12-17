@@ -801,7 +801,7 @@ const modify_overtime_status = (vuex_status) => {
  */
 const show_3_space = () => {
   let r = false;
-  if (MenuData.get_footer_sub_menu_id() == 1) {
+  if (MenuData.footer_sub_menu_id == 1) {
     r = [1, 4, 11, 16].includes(props.match.csid * 1);
   }
   if (PageSourceData.page_source == "detail_match_list") {
