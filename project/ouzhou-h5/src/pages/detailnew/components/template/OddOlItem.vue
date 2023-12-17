@@ -58,7 +58,11 @@ import { calcOlResult } from 'src/output/index'
 /** @type {{value: TYPES.OlResult|TYPES.Ol,type?: TYPES.OlItemType}} */
 const props = defineProps({
   value:Object,
-  type:String,
+  type:{
+    type: String,
+    required: false,
+    default: "default"
+  },
 })
 const sportId = MatchDetailCalss.params.sportId
 // @ts-ignore
