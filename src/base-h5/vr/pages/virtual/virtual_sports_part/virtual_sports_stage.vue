@@ -819,6 +819,7 @@ export default {
 .virtual-sports-stage {
   min-height: 2.02rem;
   position: relative;
+  background: var(--q-gb-bg-c-28);
 }
 
 .voice-wrap {

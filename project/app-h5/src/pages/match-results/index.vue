@@ -37,7 +37,6 @@
         <div style="height:100%;width: 100%" @click="state.select_dialog = false"></div>
         <setect-league @closedHandle="state.select_dialog = false" @finishHandle="selectFinishHandle"></setect-league>
     </div> -->
-    
 
 </template>
 <script setup>

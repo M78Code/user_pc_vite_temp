@@ -25,7 +25,7 @@
           <div class="middle font16">
             {{ i18n_t('bet.betting') }}
             <span class="yb-info-money font14">
-            {{ i18n_tc('app_h5.bet.bet_win',BetData.bet_amount,{"total":BetData.bet_amount}) }}</span>
+            {{ i18n_tc('app_h5.bet.bet_win',{"total":BetData.bet_amount}) }}</span>
           </div>
           <img :src="compute_local_project_file_path('/image/gif/roll-right.gif')" alt="">
         </div>
@@ -168,12 +168,14 @@ onMounted(()=>{
   width: calc(100% - 0.1rem);
   background: var(--q-gb-t-c-1);
   margin-left: 0.05rem;
-  padding: 0.1rem 0;
+  padding: 0.12rem 0;
   text-align: center;
   margin-top: 0.05rem;
   border-radius: 0.12rem;
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
+  font-family: PingFang SC;
+  font-weight: 600;
 }
 .sub-total{
   font-size: 0.14rem;

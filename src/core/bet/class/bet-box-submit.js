@@ -545,13 +545,13 @@ const submit_handle = type => {
                 // 盘口Id，多个Id使用逗号分隔
                 // 赛事Id，多个Id使用逗号分隔
                 if(BetData.is_bet_single){
-                    seriesOrders.orderDetailList.forEach( item => {
-                        obj.hid = item.marketId 
-                        obj.mid = item.matchId 
-                    })
+                    let series_orders = lodash_.get(seriesOrders,'[0].orderDetailList', {})
+                    obj.hid = series_orders.marketId 
+                    obj.mid = series_orders.matchId 
+                   
                     // BetData.set_bet_list_info(set_bet_odds_after(BetData.bet_single_list))
                 } else {
-                    seriesOrders[0].orderDetailList.forEach( item => {
+                    seriesOrders.orderDetailList.forEach( item => {
                         obj.hid = item.marketId 
                         obj.mid = item.matchId 
                     })
@@ -624,6 +624,7 @@ const set_error_message_config = (res ={},type,order_state) => {
     }
     // 获取限额失败的信息
     if(PROJECT_NAME == 'app-h5'){
+        console.error('obj.message',obj.message)
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t(obj.message));
     }else{
         BetViewDataClass.set_bet_before_message(obj)

@@ -14,9 +14,10 @@
                     </span>
                     
                     <span class="mr-4 text-009"> [{{ i18n_t(`odds.${items.marketType}`) }}]</span>
-                </div>
+               
                 <div class="w-100 text-8a8 fon12 font400" v-if="items.matchType != 3">{{items.matchName}}</div>
                 <div class="w-100 text-8a8 fon12 font400">{{ items.matchInfo }}
+                </div>
                 </div>
             </div>
 
@@ -29,18 +30,18 @@
 
         <div class="bet-content">
             <div class="bet-result f-b-c" >
-                <span class="font12 font500 bet-returm mr-4">投注金额</span>
-                <span class="font14 font500">{{ format_money2(mathJs.divide(items.betMoney,100))}}</span>
+                <span class="font12 font300 bet-returm mr-4">投注金额</span>
+                <span class="font16 font600">{{ format_money2(mathJs.divide(items.betMoney,100))}}</span>
             </div>
 
             <div class="bet-result f-b-c" >
-                <span class="font12 font500 bet-returm mr-4">可赢金额</span>
-                <span class="font14 font500">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
+                <span class="font12 font300 bet-returm mr-4">可赢金额</span>
+                <span class="font16 font600">{{ format_money2(mathJs.divide(items.maxWinMoney,100))}}</span>
             </div>
 
             <div class="bet-result f-b-c" >
-                <span class="font12 font500 bet-returm mr-4">注单号</span>
-                <span class="font14 font500">{{ items.orderNo }}</span>
+                <span class="font12 font300 bet-returm mr-4">注单号</span>
+                <span class="font12 font300">{{ items.orderNo }}</span>
             </div>
         </div>
 
@@ -146,7 +147,12 @@ const props = defineProps({
             }
         }
     }
-
+     .my-4 {
+            margin: 4px 0;
+            margin: 0.04rem 0;
+            border-left: 2px solid var(--q-gb-bg-c-13);
+            padding: 0 0.04rem;
+      }
     .bet-market{
         font-family: DIN;
         font-size: 13px;
@@ -194,7 +200,7 @@ const props = defineProps({
     width: 100%;
     //background: var(--q-gb-bg-c-15);    
     //padding: 0 .2rem;
-    height: .25rem;
+    height: .24rem;
     .bet-result-info{
         color: var(--q-gb-t-c-5);
         .bet-money{
@@ -212,6 +218,7 @@ const props = defineProps({
     .color000{
         color: var(--q-gb-bg-c-1) !important;
         font-size: 0.14rem;
+        font-family: PingFang SC;
     }
     .font22{
         font-size: 0.22rem;

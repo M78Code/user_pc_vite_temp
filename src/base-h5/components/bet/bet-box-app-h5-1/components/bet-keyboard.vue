@@ -112,7 +112,6 @@ watch(() => pre_odds_value, (new_) => {
 })
 
 watch(() => money.value, (new_) => {
-  console.error('ssnew_s,new_',new_)
   let emit_name = 'EMIT_INPUT_BET_MONEY'
   if(BetData.is_bet_single){
     emit_name = 'EMIT_INPUT_BET_MONEY_SINGLE'
@@ -317,7 +316,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: var(--q-gb-bg-c-15);
+    background-color: var(--q-gb-bg-c-25);
     color: var(--q-gb-t-c-1);
     font-size: 0.18rem;
     font-weight: 700;

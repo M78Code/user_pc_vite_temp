@@ -90,7 +90,7 @@ class UserCtr {
     //排序	 int 类型 1 按热门排序 2 按时间排序 欧洲版默认时间排序
     this.sort_type = 2;
      //每日活动	 Boolean 类型 ture 开启 false 关闭
-     this.daily_activities = false;
+     this.daily_activities =  LocalStorage.get("daily_activities",false);
     //收藏/关注	true/false
     this.show_favorite_list = false;
 
@@ -155,7 +155,7 @@ class UserCtr {
     }
     if (Object.keys(session_info).length) {
       for(let item in session_info){
-        if(!['user_version','token_expired_max_process_timer','lang','theme'].includes(item) ){
+        if(!['user_version','token_expired_max_process_timer','daily_activities','lang','theme'].includes(item) ){
           this[item] = session_info[item]
         }
       }
@@ -222,6 +222,7 @@ class UserCtr {
   */
   set_daily_activities(status) {
     this.daily_activities = status;
+    LocalStorage.set("daily_activities",status);
     useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
       text: "activities",
     });
@@ -252,6 +253,7 @@ class UserCtr {
     const old_theme = LocalStorage.get("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
     document.getElementById('ty-app').classList.replace(old_theme, theme)
     LocalStorage.set("theme", theme.value || theme)
+    LocalStorage.set("default-theme", theme.value || theme)
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
     // 设置主题
