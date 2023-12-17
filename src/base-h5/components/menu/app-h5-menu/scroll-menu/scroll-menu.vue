@@ -34,7 +34,6 @@
       </div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router'
 import { ref,reactive,onMounted,onUnmounted,computed ,nextTick } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
@@ -44,7 +43,6 @@ import { useMittEmit, MITT_TYPES ,useMittOn} from "src/core/mitt/index.js";
 const ref_data = reactive({
     emit_lsit:{}
 })
-const router = useRouter()
 const menu_show_id = reactive([0,300,50000,2000,28]);//全部 vr 收藏 电竞显示
 const scrollTab = ref(null);
 const props = defineProps({

@@ -8,11 +8,11 @@
     </div>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
-      <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+      <div class="content-b" :class="{ 'red-color': !money_ok }" @click="input_click">
         
         <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
-        <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
         <span class="yb_fontsize14 limit-txt" v-show="!ref_data.money">{{ i18n_t('app_h5.bet.limit')}}{{ items.min_money }}-{{ items.max_money }}</span>
+        <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
       </div>
     </div>
   </div>
@@ -166,13 +166,14 @@ const set_special_series = (money,ty_id) => {
     //margin-top: 0.08rem;
     height: 0.44rem;
     width: 1.68rem;
+    font-size: 0.14rem;
   }
 
   /* ************** 右边内容 ************** -S */
   .content-b {
-    height: 0.3rem;
+    height: 0.32rem;
     width: 1.50rem;
-    border-radius: 4px;
+    border-radius: 0.08rem;
     font-size: 0.16rem;
     overflow: hidden;
     //padding-left: 0.1rem;
@@ -184,7 +185,8 @@ const set_special_series = (money,ty_id) => {
     background: var(--q-gb-bg-c-15);
     margin-left: 0.05rem;
     .limit-txt {
-      color: #C9CDDB;
+      color: var(--q-gb-t-c-5);
+      font-size: 0.16rem;
     }
   }
   /* ************** 右边内容 ************** -E */
@@ -201,7 +203,7 @@ const set_special_series = (money,ty_id) => {
     width: 0.02rem;
     height: 0.16rem;
     margin: 0 1px;
-    background: var(--q-gb-bg-c-1);
+    background: var(--q-gb-t-c-1);
     &.money-span3{
       background: transparent;
     }

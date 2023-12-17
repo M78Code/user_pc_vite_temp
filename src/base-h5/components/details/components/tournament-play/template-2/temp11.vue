@@ -60,6 +60,9 @@ export default defineComponent({
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
+    const sub_menu_type = computed(() => {
+      return props.csid;
+    });
     const get_curr_sub_menu_type = computed(() => {
       return ""
     });
@@ -97,7 +100,8 @@ export default defineComponent({
       lodash,
       temp_odds,
       LOCAL_PROJECT_FILE_PREFIX,
-      go_to_bet
+      go_to_bet,
+      sub_menu_type
     }
   }
 })

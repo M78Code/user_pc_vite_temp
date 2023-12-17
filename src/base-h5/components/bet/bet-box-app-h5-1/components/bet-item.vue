@@ -83,6 +83,9 @@ const set_delete = () => {
 </style>
 
 <style scoped lang="scss">
+.font22{
+    font-size: 0.2rem;
+}
 .bet-list {
    
     .bet-content {

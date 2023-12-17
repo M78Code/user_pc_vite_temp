@@ -258,11 +258,11 @@ const MatchDataWarehouseInstance = reactive(MatchDataWarehouse_H5_Detail_Common)
        */
       api_common.get_matchDetail_getMatchDetailByTournamentId(params).then(({ data }) => {
         if(!data || data.length == 0){
-
-            set_toast({
-              txt: i18n_t("bet_record.bet_match_tishi"),
-              is_show: true
-            });
+            //todo优化此处
+            // set_toast({
+            //   txt: i18n_t("bet_record.bet_match_tishi"),
+            //   is_show: true
+            // });
 
           sessionStorage.setItem('match_list_ofdetails','');
           math_list_data.value = [];
