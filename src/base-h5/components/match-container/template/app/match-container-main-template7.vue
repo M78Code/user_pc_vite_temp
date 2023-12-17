@@ -2,7 +2,7 @@
  * @Description: app-h5 赛果
 -->
 <template>
-  <div class="match-container component match-container-main-template3"
+  <div class="match-container component match-container-main-template7"
     :style="{ marginTop: is_hot ? '0' : '' }" 
     :class="[{
       first: i == 0,
@@ -204,7 +204,7 @@ import { is_hot, menu_type, menu_lv2, is_detail, is_esports, is_results, footer_
 import default_mixin from '../../mixins/default.mixin.js'
 
 export default {
-  name: "match-container-main-template3",
+  name: "match-container-main-template7",
   mixins: [default_mixin],
   props: {
     // 当前组件的赛事数据对应列表的赛事
@@ -267,7 +267,7 @@ export default {
 </script>
    
 <style scoped lang="scss">
-.match-container-main-template3{
+.match-container-main-template7{
   // border-top: 0.05rem solid var(--q-gb-bg-c-21)
 }
 /* ********赛事容器相关********** -S*/

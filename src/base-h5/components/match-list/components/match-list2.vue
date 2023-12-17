@@ -21,7 +21,7 @@
               <!-- 赛果玩法 -->
               <template v-else-if="is_results">
                 <!-- 赛果详情精选赛事 -->
-                <template v-if="route.name == 'result_details'">
+                <template v-if="route.name == 'match_result'">
                   <MatchContainerMainTemplate7
                     :i="index"
                     :match_of_list="match_item">
