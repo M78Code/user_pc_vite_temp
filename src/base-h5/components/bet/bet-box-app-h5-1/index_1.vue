@@ -40,13 +40,16 @@
                 </template>
               </template>
 
-              <div class="f-s-c cursor h44 pl-30 bor-b cursor" @click="set_show_single()">
-                <sapn class="fon12 font400 text-8a8 f-e-c">
-                  <span class="re icon-mid ">
+              <div class="add-match fw-c-c cursor h44 pl-30" @click="set_show_single()">
+                <sapn class="fon12 font500 f-e-c">
+                  <span class="re icon-mid mx-6">
                     <i class="icon-del1 icon-add" />
                   </span> 
                   添加赛事  
               </sapn>
+              </div>
+              <div class="scroll-down">
+                <img :src="compute_local_project_file_path('/image/common/slide_icon_y1.svg')" alt="">
               </div>
             </template>
           </div>
@@ -88,7 +91,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { UserCtr } from "src/output/index.js";
+import { UserCtr, compute_local_project_file_path } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import betTitle from "./components/bet-title.vue"; // 投注头部
@@ -160,6 +163,20 @@ const show_merge_change = () => {
   &.h188{
     height: 1.8rem;
   }
+  
+  .scroll-down {
+    position: fixed;
+    left: 50%;
+    bottom: 50%;
+    width: .2rem;
+    height: .2rem;
+    transform: translateY(-.4rem);
+    z-index: 999;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 .bet-box-content {
@@ -183,5 +200,18 @@ const show_merge_change = () => {
 .icon-mid{
   position: relative;
   transform: rotate(45deg);
+}
+.add-match {
+  width: 100%;
+  font-size: .16rem;
+  color: var(--q-gb-t-c-1);
+  background: var(--q-gb-bg-c-22);
+  border-radius: 0.12rem;
+  height: 0.44rem;
+  margin-top: 0.1rem;
+  padding: 0 .12rem;
+  .icon-add:before {
+    color: var(--q-gb-t-c-1);
+  }
 }
 </style>
