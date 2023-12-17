@@ -869,14 +869,18 @@ export default {
         margin-top: .1rem;
         margin-bottom: .1rem;
         :deep(.odd-list-wrap) {
+          display: flex;
+          justify-content: center;
           .odd-list-container {
             width: 2.74rem;
             height: .32rem;
             .odd-column-item {
               background: var(--q-gb-bg-c-15);
+              margin-left: .04rem;
             }
             .odd-title {
               font-size: .1rem;
+              margin-bottom: .02rem;
             }
             .odd-value {
               font-size: .12rem;
