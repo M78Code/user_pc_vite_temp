@@ -8,7 +8,7 @@
     </div>
     <div class="bet_single_detail f-b-c">
       <div>{{ items.count }}x</div>
-      <div class="content-b" :class="{ 'red-color': !money_ok }" @click.stop="input_click">
+      <div class="content-b" :class="{ 'red-color': !money_ok }" @click="input_click">
         
         <span v-if="ref_data.money" class="yb_fontsize20 money-number">{{ ref_data.money }}</span>
         <span class="money-span" ref="money_span" v-if="items.show_quick" :style="{ opacity: '1' }"></span>
@@ -203,7 +203,7 @@ const set_special_series = (money,ty_id) => {
     width: 0.02rem;
     height: 0.16rem;
     margin: 0 1px;
-    background: var(--q-gb-bg-c-1);
+    background: var(--q-gb-t-c-1);
     &.money-span3{
       background: transparent;
     }
