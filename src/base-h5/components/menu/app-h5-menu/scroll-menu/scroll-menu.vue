@@ -35,7 +35,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref,reactive,onMounted,onUnmounted,computed } from "vue";
+import { ref,reactive,onMounted,onUnmounted,computed ,nextTick } from "vue";
 // import lodash_ from "lodash";
 // import BaseData from "src/core/base-data/base-data.js";
 import { compute_css_obj, MenuData } from "src/output/index.js";
@@ -64,7 +64,7 @@ const props = defineProps({
   },
 })
 const scrollDataListNew = computed(()=>{
-  if(MenuData.is_esports())return props.scrollDataList;
+  // if(MenuData.is_esports())return props.scrollDataList;
   return [...[{mi:50000,btn:1,ct:0,title:"收藏"}],...props.scrollDataList]
 })
 const emits = defineEmits(['changeList','changeMenu'])
@@ -83,11 +83,12 @@ function set_menu_lv2(item = {},event) {
   // 选中后点击无效
   // if (item.mi == MenuData.current_lv_2_menu_i) return;
   scrollMenuEvent(event,".s-menu-container",".current");
-  emits('changeMenu',item)
-  // nextTick(()=>{ //收藏是没有change的相当于是页面
-  //   // 设置菜单点击事件
-  //   useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
-  // })
+  // emits('changeMenu',item)
+  nextTick(()=>{ //收藏是没有change的相当于是页面
+    // 设置菜单点击事件
+    emits('changeMenu',item)
+    // useMittEmit(MITT_TYPES.EMIT_SCROLL_TOP_NAV_CHANGE,item)
+  })
 }
 
 /**

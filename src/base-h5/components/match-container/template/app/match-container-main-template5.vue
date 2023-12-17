@@ -182,6 +182,13 @@
             </div>
             <!-- 比分选项 -->
             <div class="odds">
+              <!--赛事列表收藏-->
+              <div class="collect favorite-icon-top match list-m" @click.stop="handle_match_collect">
+                <!-- 未收藏图标 compute_img_url('icon-favorite')-->
+                <img v-if="!match_collect_state" :src="not_favorite_app" alt="">
+                <!-- 收藏图标 compute_img_url('icon-favorite-s')-->
+                <img v-if='match_collect_state' :src="normal_img_is_favorite">
+              </div>
               <OddListWrap :main_source="main_source" :match="match_of_list" />
             </div>
 
@@ -868,6 +875,7 @@ export default {
       .odds {
         margin-top: .1rem;
         margin-bottom: .1rem;
+        position: relative;
         :deep(.odd-list-wrap) {
           display: flex;
           justify-content: center;
@@ -886,6 +894,12 @@ export default {
               font-size: .12rem;
             }
           }
+        }
+        .collect {
+          position: absolute;
+          top: 9px;
+          left: 3px;
+          z-index: 10;
         }
       }
     }

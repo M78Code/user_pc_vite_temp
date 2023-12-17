@@ -118,7 +118,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
     ref_data.scroll_data_list = list;
   }
   // 设置滑动菜单的选中id
-  const set_scroll_current = async (val,type) => {
+  const set_scroll_current = (val,type) => {
     // 设置菜单属性
     if([300,2000].includes(+val.mi)){
       // 设置 对应菜单的数据
@@ -129,6 +129,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
 
         case 2000:
           ref_data.scroll_data_list = [];
+          MenuData.set_current_lv1_menu(2000);
           // ref_data.scroll_data_list = BaseData.dianjing_sublist
           nextTick(()=>{
             const index = type && MenuData.data_tab_index?MenuData.data_tab_index:0;
@@ -153,12 +154,12 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       MenuData.set_top_menu_title(val)
       // 清空一级菜单显示 用于后续更新
       // if (![50000].includes(+val.mi)) MenuData.set_current_lv1_menu('');
-      MenuData.set_current_lv1_menu('');
+     
       let obj = lodash_.get(ref_data.scroll_data_list,`[0]`,{})
       // 设置选中菜单的id
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj.mi
       // 设置二级菜单 
-      MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
+      !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj)
     }else{
       ref_data.current_mi = val.mi
       // 设置二级菜单 
@@ -201,7 +202,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
   watch(()=> MenuData.current_lv_1_menu_mi.value, new_ => {
     init_data(new_)
   })
-  // 早盘 串关
+  // 早盘 串关  电竞
   const set_scroll_early_single = (params) => {
     const {val={},type=0} = params;
     const is_lv_1 = [3,6].includes(+MenuData.current_lv_1_menu_i);
@@ -225,7 +226,7 @@ useMittOn(MITT_TYPES.EMIT_CHANGE_SEARCH_FILTER_SHOW, function (value) {
       // 设置选中菜单的id
       ref_data.current_mi = type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu_i:obj_.mi
       // 设置二级菜单 
-      MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj_)
+      !type && MenuData.set_current_lv_2_menu_i(type && MenuData.current_lv_2_menu_i?MenuData.current_lv_2_menu:obj_)
       handle_match_render_data()
     } else {
       useMittEmit(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, { state: true, type: 'noMatch' });

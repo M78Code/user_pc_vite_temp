@@ -20,10 +20,19 @@
               </template>
               <!-- 赛果玩法 -->
               <template v-else-if="is_results">
-                <MatchContainerMainTemplate3
-                  :i="index"
-                  :match_of_list="match_item">
-                </MatchContainerMainTemplate3>
+                <!-- 赛果详情精选赛事 -->
+                <template v-if="route.name == 'result_details'">
+                  <MatchContainerMainTemplate7
+                    :i="index"
+                    :match_of_list="match_item">
+                  </MatchContainerMainTemplate7>
+                </template>
+                <template v-else>
+                  <MatchContainerMainTemplate3
+                    :i="index"
+                    :match_of_list="match_item">
+                  </MatchContainerMainTemplate3>
+                </template>
               </template>
               <!-- 赛果玩法 -->
               <!-- <template v-else-if="is_kemp">
@@ -66,13 +75,16 @@ import MatchContainerMainTemplate3 from "src/base-h5/components/match-container/
 import MatchContainerMainTemplate5 from "src/base-h5/components/match-container/template/app/match-container-main-template5.vue"; 
 // app-h5 冠军赛果
 import MatchContainerMainTemplate6 from "src/base-h5/components/match-container/template/app/match-container-main-template6.vue"; 
+// app-h5 赛果精选列表
+import MatchContainerMainTemplate7 from "src/base-h5/components/match-container/template/app/match-container-main-template7.vue"; 
 
 // 赛事滚动组件
 import ScrollWrapper from 'src/base-h5/components/scroll-wraper/scroll-wrapper.vue'; 
 
 import { is_kemp, is_results } from 'src/base-h5/mixin/menu.js'
 import { standard_edition } from 'src/base-h5/mixin/userctr.js'
-
+import { useRoute } from "vue-router";
+const route = useRoute()
 </script>
  
 <style scoped lang="scss">
