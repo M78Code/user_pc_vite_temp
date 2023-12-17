@@ -137,31 +137,34 @@ const set_special_series = (money) => {
     font-size: .16rem;
     background: var(--q-gb-bg-c-22);
     border-radius: 0.12rem;
-    border-radius: 10px;
-    height: 0.38rem;
+    height: 0.44rem;
     margin-top: 0.1rem;
-    margin-left: .08rem;
     padding: 0 .12rem;
   }
 
   .bet_single_detail{
-    margin-top: 0.08rem;
     height: 0.44rem;
     width: 1.68rem;
   }
 
   /* ************** 右边内容 ************** -S */
   .content-b {
-    height: 0.4rem;
+    height: 0.32rem;
     width: 1.50rem;
-    border-radius: 4px;
+    border-radius: .08rem;
     font-size: 0.16rem;
-    overflow: hidden;
+    // overflow: hidden;
     padding-left: 0.1rem;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    border: 1px solid #D1EBFF;
+    margin-left: .04rem;
+
+    &:hover {
+      border-color: var(--q-gb-t-c-1);
+    }
     .limit-txt {
       color: #C9CDDB;
     }
@@ -180,7 +183,7 @@ const set_special_series = (money) => {
     width: 0.02rem;
     height: 0.16rem;
     margin: 0 1px;
-    background: var(--q-gb-bg-c-1);
+    background: var(--q-gb-t-c-1);
     &.money-span3{
       background: transparent;
     }

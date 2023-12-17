@@ -5,20 +5,21 @@
     <div v-show="false">  {{BetData.bet_data_class_version}}-{{BetViewDataClass.bet_view_version}}-{{BetViewDataClass.error_code}}-{{BetViewDataClass.error_message}}-{{UserCtr.user_version}}</div>
     
     <!-- 自动接受更好的赔率 -->
-    <div class="accept" @click="set_bet_is_accept()">
-        <div :class="BetData.bet_is_accept ? 'active':'' "></div>
+    <div class="accept" :class="BetData.bet_is_accept ? 'active':'' " @click="set_bet_is_accept()">
         自动接受更好的赔率
     </div>
    <div class="f-e-c bet-submit">
-        <!-- <div class="bet-silider">
+        <div class="bet-silider">
             <q-page-sticky ref="silider" position="bottom-left" :offset="fab_pos">
                 <div class="jiantou" :disable="dragging_fab" v-touch-pan.right.prevent.mouse="handle_silider">
                     <img :src="compute_local_project_file_path('/image/bet/right-arrow.svg')" alt="" draggable="false">
                 </div>
             </q-page-sticky>
-        </div> -->
+        </div>
 
-        <div v-show="!BetData.is_bet_single" class="bet-single del"></div>
+        <div v-show="!BetData.is_bet_single" class="bet-single del">
+          <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
+        </div>
 
         <div class="bet-box-line">
           <div class="middle font16">
@@ -40,7 +41,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue"
+import { onMounted, onUnmounted, ref } from "vue"
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
@@ -55,10 +56,6 @@ const fab_pos = ref([20, 23])
 const dragging_fab = ref(false)
 // 滑块组件数据
 const silider = ref(null)
-
-onMounted(()=>{
-    init_silider_position()
-})
 
 // 滑动投注
 const handle_silider = (e) => {
@@ -138,6 +135,10 @@ const set_confirm = () => {
     BetViewDataClass.set_clear_bet_view_config()
 }
 
+onMounted(()=>{
+  init_silider_position()
+})
+
 </script>
 
 <style scoped lang="scss">
@@ -173,7 +174,12 @@ const set_confirm = () => {
   }
   .accept {
     margin: .08rem 0;
+		text-indent: .3rem;
+		background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat left / contain;
   }
+	.active {
+		background-image: url($SCSSPROJECTPATH+"/image/bet/select_fuke.svg");
+	}
   .jiantou{
     height: 0.44rem;
     width: 0.44rem;
@@ -204,6 +210,9 @@ const set_confirm = () => {
     padding: 0 .25rem !important;
     margin-left: 0 !important;
     margin-right: .08rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .bet-box-line{
