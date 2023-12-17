@@ -331,7 +331,7 @@ const handle_container_scroll = lodash.debounce(($ev) => {
  * @description: 列表回到顶部
  */
 const goto_top = () => {
-  container.value.scrollTo({ top: 0, behavior: 'smooth' });
+  container.value && container.value.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 onUnmounted(() => {

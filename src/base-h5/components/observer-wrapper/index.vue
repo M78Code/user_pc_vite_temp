@@ -16,7 +16,7 @@
             <slot name="content" :item="item" :index="index">
               <template v-if="is_show_match_item(index)">
                 <!-- <ObserverItem3 :index="index" :item="item"></ObserverItem3> -->
-                <component :is="target_com" :index="index" :item="item"></component>
+                <component :is="target_com" :index="index" :item="get_match_item(item)"></component>
               </template>
             </slot>
           </div>
@@ -39,9 +39,9 @@ import VirtualList from 'src/core/match-list-h5/match-class/virtual-list';
 import { onMounted, computed, watch, ref, nextTick, onUnmounted } from 'vue';
 import { use_defer_render } from 'src/core/match-list-h5/match-class/match-hooks';
 import MatchResponsive from 'src/core/match-list-h5/match-class/match-responsive';
-import { compute_local_project_file_path, project_name } from 'src/output/index.js';
 import NoData from "src/base-h5/components/common/no-data.vue"; 
 import ScrollTop from "src/base-h5/components/common/record-scroll/scroll-top.vue";
+import { compute_local_project_file_path, project_name, MatchDataWarehouse_H5_List_Common as MatchDataBaseH5, MenuData } from 'src/output/index.js';
 import { skeleton_white_ouzhou_110, skeleton_white_ouzhou_90, skeleton_white_app_177, skeleton_white_app_117 } from 'src/base-h5/core/utils/local-image.js'
 
 // yazhou-h5 亚洲版
@@ -86,6 +86,7 @@ const com_config = {
 
 // 所渲染的组件
 const target_com = computed(() => {
+  console.log(props.com_type)
   return com_config[props.com_type]
 })
 
@@ -159,6 +160,19 @@ const remove_match = (mid) => {
 }
 
 /**
+ * @description 获取数据仓库赛事数据
+ */
+const get_match_item = (item) => {
+  let result = {}
+  if (MenuData.is_results()) {
+    result = item  
+  } else {
+    result = MatchDataBaseH5.get_quick_mid_obj(item.mid)
+  }
+  return result
+}
+
+/**
  * @description 根据当前可视区 mids 获取赛事赔率
  */
 const get_match_base_by_mids = lodash.debounce(() => {
@@ -206,7 +220,7 @@ const handler_container_scroll = lodash.throttle(($ev) => {
 const go_to_top = () => {
   MatchMeta.set_prev_scroll(0)
   let timer = setTimeout(() => {
-    container.value.scrollTo({ top: 0, behavior: 'smooth' });
+    container.value && container.value.scrollTo({ top: 0, behavior: 'smooth' });
     clearTimeout(timer)
     timer = null
   }, 100)

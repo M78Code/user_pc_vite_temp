@@ -26,6 +26,7 @@ import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { only_win } from "src/core/constant/common/module/csid.js"
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
 import PageSourceData from "src/core/page-source/page-source.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
