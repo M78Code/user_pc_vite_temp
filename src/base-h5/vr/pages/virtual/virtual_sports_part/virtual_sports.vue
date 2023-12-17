@@ -702,7 +702,7 @@ export default {
   overflow: auto;
   align-items: center;
   padding: 0 0.08rem;
-  background-color: var(--q-gb-bd-c-3);
+  background-color: var(--q-gb-bg-c-27);
 
   .tab-item {
     height: 0.26rem;
@@ -755,11 +755,11 @@ export default {
 }
 .virtual-content-wrapper {
   padding: 0.08rem 0.05rem 0;
-  background: #f8f9fa;
   color: var(--q-gb-t-c-18);
+  background: var(--q-gb-bg-c-21);
 }
 .virtual-sports-card {
-  background: #fff;
+  background: var(--q-gb-bg-c-18) ;
   border-radius: 4px;
   margin-bottom: .08rem;
 }
@@ -778,7 +778,7 @@ export default {
     display: flex;
     padding: .1rem;
     padding-bottom: 0;
-    background: var(--q-gb-bd-c-1);
+    background: var(--q-gb-bg-c-28);
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: space-between;
