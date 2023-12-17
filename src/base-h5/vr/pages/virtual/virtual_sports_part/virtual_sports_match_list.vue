@@ -67,7 +67,7 @@ export default {
     //   // 设置玩法项默认选中
     //   "set_details_item",
     // ]),
-    set_details_item(){},
+    set_details_item(data){ VR_CTR.set_details_item(data)  },
     /**
      * 切换赛事
      * @param {Number} i 赛事下标
