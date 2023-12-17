@@ -112,7 +112,7 @@ defineProps({});
   border-radius: 0.16rem 0.16rem 0 0;
   position: absolute;
   bottom: 0;
-  background: var(--q-gb-bg-c-15) !important;
+  background: var(--q-gb-bg-c-15) ;
   backdrop-filter: blur(5px);
   .sl-header {
     display: flex;
@@ -125,7 +125,6 @@ defineProps({});
     .sl-btn {
       font-size: 0.16rem;
       color: var(--q-gb-t-c-1);
-      color: #74C4FF;
     }
   }
   .sl-search {
@@ -134,7 +133,7 @@ defineProps({});
     .sl-input-content {
       height: 0.4rem;
       width: 100%;
-      background: #f2f2f6;
+      background: var(--q-gb-bg-c-18);
       border-radius: 0.4rem;
       padding: 0 0.42rem;
       display: flex;
@@ -160,14 +159,14 @@ defineProps({});
         }
       }
       .sl-input {
-        background:#f2f2f6;
+        background: var(--q-gb-bg-c-18);
         outline: none;
         border: none;
         width: 100%;
         caret-color: #179CFF;
         font-size: 0.14rem;
         &::placeholder{
-          color: #C9CDDB;
+          color: var(--q-gb-t-c-16);
         }
       }
     }

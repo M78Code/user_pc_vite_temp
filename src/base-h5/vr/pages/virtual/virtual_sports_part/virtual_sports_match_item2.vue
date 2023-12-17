@@ -545,7 +545,7 @@ export default {
     position: absolute;
     right: 0;
     top: 0;
-    color: red;
+    color: var(--q-gb-t-c-21);
     z-index: 2;
   }
 
@@ -627,11 +627,11 @@ export default {
         margin-top: 0.1rem;
         span {
           font-size: 0.12rem;
-          color: #303442;
+          color: var(--q-gb-bg-c-18);
         }
         span + span {
           font-size: 0.1rem;
-          color: #AFB3C8;
+          color: var(--q-gb-t-c-19);
         }
       }
       &.standard {
@@ -697,7 +697,7 @@ export default {
 
       .play-count {
           font-size: 0.1rem;
-          color: #AFB3C8;
+          color: var(--q-gb-t-c-19);
           text-align: right;
           padding-right: 0.1rem;
       }
@@ -765,7 +765,7 @@ export default {
         margin-bottom: 0.02rem;
         background-color: var(--q-gb-bg-c-18);
         :deep(.odd-column-item .odd-title){
-          color: #AFB3C8;
+          color: var(--q-gb-t-c-19);
         }
         &.hp-2, &.hp-0 {
           height: 0.49rem;
@@ -955,14 +955,14 @@ export default {
             }
 
             .on {
-              color: var(--sys-brand-secodary-secondary-300, #AFB3C8);
+              color: var(--sys-brand-secodary-secondary-300, --q-gb-bg-c-19);
               text-align: center;
               font-size: 10px;
               font-weight: 500;
             }
 
             .num {
-              color: var(--sys-brand-secodary-secondary-800, #303442);
+              color: var(--sys-brand-secodary-secondary-800, --q-gb-bg-c-18);
               text-align: center;
               font-size: 10px;
               font-weight: 700;

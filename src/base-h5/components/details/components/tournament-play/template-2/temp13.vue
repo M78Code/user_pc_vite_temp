@@ -650,9 +650,9 @@ export default defineComponent({
       margin: 0.04rem;
       text-align: center;
       font-size: 0.14rem;
-      background:var(--q-gb-bg-c-15);
+      background:var(--q-gb-bg-c-28);
       border-radius: 4px;
-      color:#7981A4;
+      color:var(--q-gb-t-c-10);
       width: 0.85rem;
       box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
     }
@@ -689,11 +689,12 @@ export default defineComponent({
 .bet-item-ky-container {
   display:flex;
   justify-content:center;
-  background:var(--q-gb-bg-c-15);
+  background:var(--q-gb-bg-c-28);
   border-radius: 4px;
   align-items:center;
   padding:0 0.04rem;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.04);
+  color: var(--q-gb-t-c-18);
 }
 .bet-card-play-container{
   height:0.48rem

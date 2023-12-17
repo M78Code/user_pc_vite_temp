@@ -1,10 +1,10 @@
 [class*=theme0] {
   .match-list-container, .loading-more-container, .main-container {
-    background: var(--q-gb-bg-c-10);
+    background: var(--q-gb-bg-c-21);
     .scroll-wrapper, .observer-container {
       background: var(--q-gb-bg-c-10);
       .s-w-item {
-        background: var(--q-gb-bg-c-10);
+        background: var(--q-gb-bg-c-18) !important;
       }
       .match-container {
         // .odd-list.match-indent.simple {
@@ -25,7 +25,7 @@
         }
         .sport-title {
           .score-inner-span{
-            color: var(--q-gb-t-c-19);
+            color: var(--q-gb-t-c-24);
           }
           .ball_img {
             background-color:var(--q-color-page-bg-color-2);
@@ -38,7 +38,7 @@
           }
         }
         .match-inner-container {
-          background: var(--q-gb-bg-c-17);          
+          // background: var(--q-gb-bg-c-18);          
           .odd-item-wrap-borer-top {
             background-color: var(--q-color-border-color-11);
           }
@@ -128,8 +128,8 @@
           }
         }
         .league {
-          background:var(--q-gb-bg-c-18);
-          border-color: var(--q-gb-bd-c-3);
+          // background:var(--q-gb-bg-c-18);
+          // border-color: var(--q-gb-bd-c-3);
           color: var(--q-gb-t-c-4);
 
           .league-title-text {
@@ -145,7 +145,7 @@
           }
         }
         .date-container {
-           background:var(--q-gb-bg-c-18) ;
+          //  background:var(--q-gb-bg-c-18) ;
           &.simple {
             .title-space-1 {
               color: var(--q-match-fs-color-137);
@@ -233,13 +233,13 @@
           }
         }
         .odd-list {
-           background:var(--q-gb-bg-c-18);
+          //  background:var(--q-gb-bg-c-18);
           &.result {
             border-color: var(--q-gb-bd-c-3);
           }
           .team-title-container {
             .team-t-title-w {
-              color: var(--q-match-fs-color-1);
+              //color: var(--q-match-fs-color-1);
               &.name {
                 color: var(--q-match-fs-color-1);
                 font-size: 0.12rem ;
@@ -364,18 +364,18 @@
             }
             /* ************** 标准版投注项选择样式 ************** -S */
             .odd-column-item2 {
-              background: var(--q-gb-bg-c-15);
+              background: var(--q-gb-bg-c-28);
               &:after {
                 background-color: transparent;
               }
               .odd-title {
-                color:  var(--q-color-fs-color-10);
+                color:  var(--q-gb-t-c-19);
                 span {
-                  color:  var(--q-color-fs-color-10);
+                  color:  var(--q-gb-t-c-19);
                 }
               }
               .odd-value {
-                color:var(--q-gb-t-c-20);
+                color:var(--q-gb-t-c-18);
               }
             }
             /* ************** 标准版投注项选择样式 ************** -E */

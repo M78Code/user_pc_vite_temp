@@ -134,7 +134,7 @@ p {
   display: flex;
   justify-content: space-between;
   &.acount {
-      color: var(--q-gb-bg-c-13);
+      color: var(--q-gb-t-c-1);
     }
 }
 .green {
