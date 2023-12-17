@@ -1022,7 +1022,7 @@ class MenuData {
    * @returns 
    */
   get_sub_is_all() {
-    return lodash_.isArray(this.current_lv_2_menu)
+    return !this.current_lv_2_menu_i;
   }
   //获取二级菜单 menuid
   get_current_sub_menuid() {

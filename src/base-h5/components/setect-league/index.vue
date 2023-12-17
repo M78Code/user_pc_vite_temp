@@ -36,7 +36,8 @@
       </div>
     </div>
     <!-- <div class="sl-filter-content"> -->
-    <match-filter ref="matchRef" :search_val="search_val"></match-filter>
+    <!-- <match-filter ref="matchRef" :search_val="search_val"></match-filter> -->
+    <match-filter-old ref="matchRefOld" :search_val="search_val"></match-filter-old>
     <!-- </div> -->
   </div>
 </template>
@@ -44,6 +45,7 @@
 import { i18n_t, compute_css_obj } from "src/output/index.js";
 import { useRouter, useRoute } from "vue-router";
 import matchFilter from "src/base-h5/components/match-filter/index.vue";
+import matchFilterOld from "src/base-h5/components/match-filter/index_old.vue";
 import { reactive, toRefs, ref } from "vue";
 import { useMittEmit, MITT_TYPES } from "src/output/index.js";
 import {LOCAL_PROJECT_FILE_PREFIX,compute_local_project_file_path} from "src/output/index.js";
