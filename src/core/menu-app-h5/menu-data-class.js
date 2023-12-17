@@ -245,7 +245,8 @@ class MenuData {
     // const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
     this.current_lv_1_menu_mi.value = lv1_mi  
     this.current_lv_1_menu_i = lv1_mi
-    this.menu_type.value = menu_type_config[lv1_mi]  
+    // this.menu_type.value = menu_type_config[lv1_mi]  
+    this.menu_type.value = lv1_mi;
     this.set_cache_class({
       current_lv_1_menu_i:lv1_mi
     });
@@ -751,7 +752,8 @@ class MenuData {
    *  mi [number|string] 要比对的值
   */
   is_collect(mi) {
-    return this._is_cur_mi_special(50000, mi)
+    // return this._is_cur_mi_special(50000, mi)
+    return this.current_lv_2_menu_i == 50000;
   }
   //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
   get_is_show_three_menu(mi) {
