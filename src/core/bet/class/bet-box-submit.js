@@ -26,6 +26,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t,i18n_tc } from "src/boot/i18n.js"
 import { only_win } from 'src/core/format/project/module/format-odds-conversion-mixin.js'
 import BUILD_VERSION_CONFIG from "app/job/output/version/build-version.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 const { PROJECT_NAME } = BUILD_VERSION_CONFIG;
 
 let time_out = null
@@ -1096,7 +1097,18 @@ const get_market_is_show = (obj={}) =>{
     return !!hl_obj.hid
 }
 const   go_to_bet=(ol_item)=>{
+    debugger
+    // 如果是赛果详情
+    if(PageSourceData.route_name == 'match_result') return
     const {oid,_hid,_hn,_mid,_hpid } = ol_item
+    let bet_type = 'common_bet'
+    if(MenuData.is_esports()){
+        bet_type ="esports_bet"
+    }else if(MenuData.is_kemp()){
+        bet_type ="guanjun_bet"
+    }else if(MenuData.is_vr()){
+        bet_type ="“vr_bet”，"
+    }
     let params = {
       oid, // 投注项id ol_obj
       _hid, // hl_obj 
@@ -1107,7 +1119,7 @@ const   go_to_bet=(ol_item)=>{
       is_detail: true,
       // 投注类型 “vr_bet”， "common_bet", "guanjun_bet", "esports_bet"
       // 根据赛事纬度判断当前赛事属于 那种投注类型
-      bet_type: 'common_bet',
+      bet_type,
       // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
       device_type: 1,  
       // 数据仓库类型

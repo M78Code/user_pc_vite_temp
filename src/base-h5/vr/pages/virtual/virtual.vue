@@ -81,7 +81,7 @@ import tab_move from "src/core/tab-move/tab-move.js";
 import { useRouter, useRoute } from "vue-router";
 import { go_where } from "src/output/index.js";
 
-import { format_money2, compute_local_project_file_path } from "src/output/index.js";
+import { format_money2, compute_local_project_file_path, UserCtr } from "src/output/index.js";
 
 export default {
   name:'match_main',
@@ -110,6 +110,8 @@ export default {
       list_scroll_top: 0,
       router: useRouter(),
       route: useRoute(),
+      // 用户余额
+      balance: 0
     };
   },
   created(){
@@ -180,6 +182,14 @@ export default {
     clearTimeout(this.timer_super27);
     clearTimeout(this.timer_super28);
   },
+  watch: {
+    "UserCtr.user_version": {
+      handler(){
+        this.set_balance(UserCtr.balance)
+      },
+      immediate: true
+    }
+  },
   methods: {
     // ...mapMutations([
     //   "set_list_scroll_top_iconshow", // 设置滚动图标显示
@@ -190,6 +200,9 @@ export default {
     //   'set_current_esport_csid',   // 设置电竞游戏csid
     //   'set_is_user_refreshing',    // 设置用户刷新状态
     // ]),
+    set_balance(balance){
+      this.balance = balance;
+    },
     set_list_scroll_top_iconshow(){},
     set_menu_type(){},
     set_virtual_current_sub_menuid(data){VR_CTR.set_virtual_current_sub_menuid(data)},
@@ -336,7 +349,7 @@ export default {
     },
     go_where,
     format_money2, 
-    compute_local_project_file_path 
+    compute_local_project_file_path
   },
   computed: {
     // ...mapGetters({

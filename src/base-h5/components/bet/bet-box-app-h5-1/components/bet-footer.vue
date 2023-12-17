@@ -17,7 +17,7 @@
             </q-page-sticky>
         </div>
 
-        <div v-show="!BetData.is_bet_single" class="bet-single del">
+        <div v-show="!BetData.is_bet_single" class="bet-single del" @click="BetData.set_clear_bet_info()">
           <img :src="compute_local_project_file_path('/image/svg/delete5.svg')" alt="">
         </div>
 
@@ -39,7 +39,7 @@
     <!-- 投注后 -->
     <div v-else>
       <!--  单关 -->
-      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub">确认</div>
+      <div v-if="BetData.is_bet_single" @click="set_confirm" class="sub font500">确认</div>
       <!--  串关  -->
       <div v-else>
         <div @click="set_confirm" class="sub">注单已确认 <span class="sub-total">合计17,650.00</span></div>
@@ -175,7 +175,6 @@ onMounted(()=>{
   font-size: 0.16rem;
   color: var(--q-gb-t-c-14);
   font-family: PingFang SC;
-  font-weight: 600;
 }
 .sub-total{
   font-size: 0.14rem;
