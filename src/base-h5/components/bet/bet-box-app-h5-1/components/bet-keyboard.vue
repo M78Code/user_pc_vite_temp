@@ -316,7 +316,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: var(--q-gb-bg-c-15);
+    background-color: var(--q-gb-bg-c-25);
     color: var(--q-gb-t-c-1);
     font-size: 0.18rem;
     font-weight: 700;
@@ -355,7 +355,7 @@ onUnmounted(() => {
     flex: 1;
     align-items: center;
     justify-content: center;
-    background-color: var(--q-gb-bg-c-15);
+    background-color: var(--q-gb-bg-c-25);
     //box-shadow: 0 2px 2px #eeeeee;
     color: var(--q-gb-t-c-20);
     font-size: 0.22rem;
