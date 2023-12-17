@@ -55,7 +55,9 @@ class VirtualCtr {
       // 赛事id
       goto_detail_matchid: null,
       //抽屉设置菜单是否显示
-      is_show_menu: false,
+      is_show_menu: false,   
+      // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
+      details_item: 0,
     });
   }
 
@@ -113,6 +115,9 @@ class VirtualCtr {
   }
   get_is_show_menu() {
     return this.state.is_show_menu;
+  }
+  get_details_item() {
+    return this.state.details_item;
   }
 
   
@@ -226,6 +231,9 @@ class VirtualCtr {
   }
   set_is_show_menu(v) {
     this.state.is_show_menu = v;
+  }
+  set_details_item(payload) {
+    this.state.details_item = payload;
   }
 }
 const VR_CTR = new VirtualCtr();

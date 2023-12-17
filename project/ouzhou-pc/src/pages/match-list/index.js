@@ -140,7 +140,7 @@ if (matches_15mins_list.value.length) {
   MatchDataWarehouse_ouzhou_PC_l5mins_List_Common.set_list(matches_15mins_list.value);
 }
 // 获取首页数据
-export const init_home_matches = async () => {
+export const init_home_matches = async (is_socket=true) => {
   const params = {
     type: 1,
     sort: 2,
@@ -193,7 +193,7 @@ export const init_home_matches = async () => {
         console.log(error);
       }
     }, fun_catch() {
-      set_load_data_state("refresh")
+      !is_socket&&set_load_data_state("refresh")
     }
   })
   // 暂时隐藏五大联赛
