@@ -138,7 +138,7 @@ const set_special_series = (money) => {
     background: var(--q-gb-bg-c-22);
     border-radius: 0.12rem;
     height: 0.44rem;
-    margin-top: 0.1rem;
+    margin-top: 0.04rem;
     padding: 0 .12rem;
   }
 

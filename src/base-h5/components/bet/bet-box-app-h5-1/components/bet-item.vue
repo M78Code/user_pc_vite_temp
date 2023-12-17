@@ -86,6 +86,7 @@ const set_delete = () => {
     .bet-content {
         min-height: 76px;
         padding: 0.12rem;
+        margin-bottom: .04rem;
         //padding-left: 34px;
         font-size: 13px;
         font-weight: 500;

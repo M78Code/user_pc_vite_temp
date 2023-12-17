@@ -191,7 +191,7 @@ onMounted(()=>{
   }
   .accept {
     margin: .08rem 0;
-		text-indent: .3rem;
+		text-indent: .24rem;
 		background: url($SCSSPROJECTPATH+"/image/bet/select_b.svg") no-repeat left / contain;
   }
 	.active {

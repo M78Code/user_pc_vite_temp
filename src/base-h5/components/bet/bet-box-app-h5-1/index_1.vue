@@ -49,7 +49,7 @@
               </sapn>
               </div>
               <div class="scroll-down">
-                <img :src="compute_local_project_file_path('/image/common/slide_icon_y0.svg')" alt="">
+                <img :src="compute_local_project_file_path('/image/common/slide_icon_y1.svg')" alt="">
               </div>
             </template>
           </div>
@@ -170,7 +170,7 @@ const show_merge_change = () => {
     bottom: 50%;
     width: .2rem;
     height: .2rem;
-    transform: rotate(-90deg);
+    transform: translateY(-.4rem);
     z-index: 999;
     img {
       width: 100%;
