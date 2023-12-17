@@ -50,7 +50,7 @@
         
         <div v-if="BetData.is_bet_single">
             <!-- 输入框 -->
-            <bet-single-detail :item="items"></bet-single-detail>
+            <bet-single-input :item="items"></bet-single-input>
         </div>
        
     </div>
@@ -62,8 +62,7 @@ import {LOCAL_PROJECT_FILE_PREFIX,compute_value_by_cur_odd_type,useMittOn,MITT_T
 import BetData from 'src/core/bet/class/bet-data-class.js'
 import BetViewDataClass from 'src/core/bet/class/bet-view-data-class.js'
 
-
-import betSingleDetail from "./bet-single-detail.vue"
+import betSingleInput from "./bet-single-input.vue"
 
 const props = defineProps({
     items:{},

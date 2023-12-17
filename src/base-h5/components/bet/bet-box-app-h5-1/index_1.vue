@@ -8,7 +8,9 @@
     <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <div class="bet-box-info">
       <!-- 头部信息 -->
-      <betTitle />
+      <betTitle v-if="BetViewDataClass.bet_order_status == 1"/>
+      <!-- 投注状态 -->
+      <bet-after-title v-else />
       <!-- 展开项 -->
       <div class="bet-box-content">
         <!-- {{BetData.is_bet_single}}-{{BetViewDataClass.bet_order_status}}-{{ BetViewDataClass.orderNo_bet_obj}}-{{ BetData.bet_s_list.length > 1 }}-{{ BetViewDataClass.bet_special_series }} -->
@@ -92,6 +94,7 @@ import { UserCtr } from "src/output/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import betTitle from "./components/bet-title.vue"; // 投注头部
+import betAfterTitle from "./components/bet-after-title.vue";
 import betItem from "./components/bet-item.vue"; // 投注列表
 import betFooter from "./components/bet-footer.vue"; // 投注底部信息
 import betResult from "./components/bet-result.vue"; // 投注结果
